@@ -1,0 +1,25 @@
+<template name="creator_list">
+	<div class="navigation-bar">
+
+			<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>
+
+			<span class="navigation-title">
+				{{collectionName}}
+			</span>
+
+			<div class="pull-right">
+				{{#afModal class="btn btn-primary creator-add" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}} 
+					{{_ "Create"}} 
+				{{/afModal}}
+			</div>
+	</div>
+	<div class="admin-content">
+		<div class="box-body" style="display: block;">
+			{{> tabular table=tabular_table class="table table-striped table-bordered table-condensed"}}
+		</div>
+	</div>
+
+	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+		{{_ "Edit"}}
+	{{/afModal}}
+</template>

@@ -69,6 +69,11 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
 
+    api.addFiles('core.coffee');
+    
+    api.addFiles('models/object.coffee');
+
+    api.addFiles('server/methods/object_init.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
@@ -81,7 +86,6 @@ Package.onUse(function(api) {
     api.addFiles('client/router.coffee', 'client');
     api.addFiles('client/subscribe.coffee', 'client');
 
-
-    api.addFiles('models/object.coffee');
-
+    api.addFiles('client/views/list.html', 'client');
+    api.addFiles('client/views/list.coffee', 'client');
 });
