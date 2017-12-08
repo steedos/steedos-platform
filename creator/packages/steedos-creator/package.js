@@ -1,7 +1,7 @@
 Package.describe({
-    name: 'steedos:record',
+    name: 'steedos:creator',
     version: '0.0.1',
-    summary: 'Steedos Records',
+    summary: 'Steedos Creator',
     git: ''
 });
 
@@ -64,7 +64,7 @@ Package.onUse(function(api) {
     api.use('steedos:accounts@0.0.23');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');
-    api.use('steedos:record-i18n@0.0.1');
+    api.use('steedos:creator-i18n@0.0.1');
     api.use('steedos:autoform@0.0.1');
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
@@ -80,5 +80,8 @@ Package.onUse(function(api) {
     api.addFiles('client/core.coffee', 'client');
     api.addFiles('client/router.coffee', 'client');
     api.addFiles('client/subscribe.coffee', 'client');
+
+
+    api.addFiles('models/object.coffee');
 
 });

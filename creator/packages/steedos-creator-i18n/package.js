@@ -1,7 +1,7 @@
 Package.describe({
-	name: 'steedos:record-i18n',
+	name: 'steedos:creator-i18n',
 	version: '0.0.1',
-	summary: 'Steedos Records',
+	summary: 'Steedos Creator',
 	git: '',
 	documentation: null
 });

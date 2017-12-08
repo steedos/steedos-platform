@@ -121,14 +121,14 @@ steedos:autoform-bs-datetimepicker@1.0.6
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-modals@0.3.9_6
 steedos:base@0.0.61
+steedos:creator@0.0.1
+steedos:creator-i18n@0.0.1
 steedos:datatables-extensions@0.0.1
 steedos:fullcalendar@3.4.0_1
 steedos:i18n@0.0.11
 steedos:ionicons@0.1.7
 steedos:jstree@3.3.2
 steedos:loaders-css@0.1.2
-steedos:record@0.0.1
-steedos:record-i18n@0.0.1
 steedos:smsqueue@0.0.1
 steedos:sso@0.0.4
 steedos:theme@0.0.29
