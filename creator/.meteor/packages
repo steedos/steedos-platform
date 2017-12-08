@@ -1,0 +1,91 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+check@1.2.3
+coffeescript@1.2.4_1
+meteor-base@1.0.4             # Packages every Meteor app needs to have
+mobile-experience@1.0.4       # Packages for a great mobile UX
+mongo@1.1.16                   # The database Meteor supports right now
+blaze-html-templates@1.0.4 # Compile .html files into Meteor Blaze views
+reactive-var@1.0.11            # Reactive variable for tracker
+tracker@1.1.2                 # Meteor's client-side reactive programming library
+
+standard-minifier-css@1.3.4   # CSS minifier run for production mode
+standard-minifier-js@2.1.0    # JS minifier run for production mode
+es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
+ecmascript@0.6.3              # Enable ECMAScript2015+ syntax in app code
+shell-server@0.2.3            # Server-side component of the `meteor shell` command
+
+less
+reload
+session
+
+accounts-ui 
+accounts-password
+
+fortawesome:fontawesome
+tap:i18n
+
+raix:push
+
+aldeed:tabular
+aldeed:collection2
+aldeed:simple-schema
+aldeed:autoform
+steedos:autoform-bs-datetimepicker 
+# tsega:bootstrap3-datetimepicker@=3.1.3_3
+steedos:autoform-modals
+steedos:autoform-bs-minicolors
+
+gwendall:simple-schema-i18n
+
+francocatena:status
+
+steedos:toastr@2.1.3
+
+kadira:flow-router
+kadira:blaze-layout
+meteorhacks:subs-manager
+dburles:collection-helpers
+
+momentjs:moment
+
+steedos:loaders-css
+
+steedos:smsqueue@0.0.1
+
+steedos:useraccounts-core
+steedos:useraccounts-bootstrap
+steedos:useraccounts-flow-routing
+
+steedos:ui
+
+steedos:adminlte@2.3.12_2
+steedos:i18n
+steedos:base
+steedos:accounts
+steedos:theme
+steedos:jstree
+rubaxa:sortable
+steedos:datatables-extensions
+
+matb33:collection-hooks
+
+
+
+smoral:sweetalert@1.1.1
+
+peppelg:bootstrap-3-modal@1.0.4
+
+vazco:universe-autoform-select
+
+keepnox:perfect-scrollbar
+
+steedos:ionicons@0.1.7
+
+steedos:sso
+
+steedos:record

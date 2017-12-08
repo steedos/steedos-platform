@@ -1,0 +1,18 @@
+<template name="recordLayout">
+	{{#if subsReady}}
+		<div class="steedos app-wrapper steedos-calendar skin-blue-light">
+			{{# AdminLTE skin="blue" sidebarMini="true" }}
+				{{> steedosHeader}}
+				{{> recordSidebar}}
+
+				<div class="content-wrapper">
+					{{> Template.dynamic template=main}}
+				</div>
+			{{/ AdminLTE}}
+			{{> autoformModals}}
+		</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
+	{{/if}}
+</template>
