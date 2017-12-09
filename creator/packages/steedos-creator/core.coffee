@@ -13,7 +13,8 @@ Creator.objectClientInit = (collection_name, object)->
 			name: collection_name,
 			collection: Creator.Collections[collection_name],
 			columns: [
-				{data: "name"},
+				{data: "_id", title: '_id'},
+				{data: "name", title: 'name'},
 			]
 			dom: "tp"
 			extraFields: ["_id"]
@@ -43,7 +44,8 @@ Creator.objectServerInit = (collection_name) ->
 			name: collection_name,
 			collection: Creator.Collections[collection_name],
 			columns: [
-				{data: "name"},
+				{data: "_id", title: '_id'},
+				{data: "name", title: 'name'},
 			]
 			dom: "tp"
 			extraFields: ["_id"]
