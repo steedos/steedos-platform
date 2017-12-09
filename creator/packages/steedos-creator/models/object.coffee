@@ -42,6 +42,18 @@ Creator.Collections.objects._simpleSchema = new SimpleSchema
 
 Creator.Collections.objects.attachSchema(Creator.Collections.objects._simpleSchema);
 
+Creator.Collections.objects.set_collection_allow = (collection_name)->
+	console.log("set allow", collection_name)
+	Creator.Collections[collection_name].allow
+		insert: (userId, doc) ->
+			return true
+
+		update: (userId, doc) ->
+			return true
+
+		remove: (userId, doc) ->
+			return true
+
 if Meteor.isServer
 	Creator.Collections.objects.allow 
 		insert: (userId, doc) ->
@@ -72,7 +84,7 @@ Creator.TabularTables["objects"] = new Tabular.Table
 		{ data: "modified" }
 	]
 	dom: "tp"
-	extraFields: ["_id", "space"]
+	extraFields: ["_id", "space", "schema"]
 	lengthChange: false
 	ordering: false
 	pageLength: 10
