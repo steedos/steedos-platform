@@ -21,7 +21,7 @@ Creator.baseSchema =
 		autoform: 
 			omit: true
 	modified:
-		type: Date,
+		type: "Date",
 		optional: true
 		autoform: 
 			omit: true
@@ -30,6 +30,23 @@ Creator.baseSchema =
 		optional: true
 		autoform: 
 			omit: true
+
+	last_activity: 
+		type: Date,
+		optional: true
+		autoform: 
+			omit: true
+	last_viewed: 
+		type: Date,
+		optional: true
+		autoform: 
+			omit: true
+	last_referenced: 
+		type: Date,
+		optional: true
+		autoform: 
+			omit: true
+
 
 
 Meteor.startup ->
@@ -76,15 +93,23 @@ Meteor.startup ->
 
 Creator.getObjectSchema = (obj) ->
 	if obj?.schema
-		schema = JSON.parse(JSON.stringify(obj.schema))
+		schema = obj.schema
 		_.extend(schema, Creator.baseSchema)
 		return schema
 
 Creator.getObjectColumns = (obj, list_view) ->
 	cols = []
 	_.each obj.list_views?[list_view]?.columns, (column_name)->
-		col = {}
-		col.data = column_name
-		col.title = obj.schema[column_name]?.label
-		cols.push(col)
+		if obj.schema[column_name]?.type
+			col = {}
+			col.title = obj.schema[column_name]?.label
+			col.data = column_name
+			col.render =  (val, type, doc) ->
+				if (val instanceof Date) 
+					return moment(val).format('YYYY-MM-DD H:mm')
+				else if (val == null)
+					return ""
+				else
+					return val;
+			cols.push(col)
 	return cols

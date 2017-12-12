@@ -1,6 +1,7 @@
 Creator.Objects.customers = 
 	name: "customers"
 	label: "Customers"
+	icon: "ion-ios-people-outline"
 	schema: 
 		name: 
 			label: "Name",
@@ -14,5 +15,11 @@ Creator.Objects.customers =
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
-
-
+	permissions:
+		default:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false
