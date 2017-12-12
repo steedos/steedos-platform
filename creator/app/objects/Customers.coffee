@@ -4,15 +4,15 @@ Creator.Objects.customers =
 	schema: 
 		name: 
 			label: "Name",
-			type: String
+			type: "String"
 		description: 
 			label: "Description",
-			type: String
-  			optional: true,
+			type: "String",
+			optional: true,
 			autoform:
 				rows: 3
 	list_views:
 		default:
-			columns: ["name", "description"]
+			columns: ["name", "description", "modified"]
 
 
