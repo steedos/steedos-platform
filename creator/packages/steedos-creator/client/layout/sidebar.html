@@ -1,6 +1,22 @@
-<template name="recordSidebar">
+<template name="creatorSidebar">
 	<aside class="main-sidebar">
 		<section class="sidebar">
+			<ul class="nav sidebar-menu" style="width: 100%;">
+				<li class="header header-app">
+					Creator
+				</li>
+				{{#each app_objects}}
+					<li class="inbox {{#if is_current_object}}active{{/if}}">
+						<a href="/creator/crm/{{this}}/list">
+							<i class="ion {{object.icon}}"></i>
+							<span>{{object.label}}</span>
+							<!-- <span class="pull-right-container">
+								<span class="label pull-right bg-red">10</span>
+							</span> -->
+						</a>
+					</li>
+				{{/each}}
+			</ul>
 		</section>
 	</aside>
 </template>

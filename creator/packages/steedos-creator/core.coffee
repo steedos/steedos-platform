@@ -50,15 +50,16 @@ Creator.baseSchema =
 
 
 Meteor.startup ->
-	_.each Creator.Objects, (obj, collection_name)->
-		if !Creator.Collections[collection_name]
+	_.each Creator.Objects, (obj, object_name)->
+		console.log ("init " + object_name)
+		if !Creator.Collections[object_name]
 			schema = Creator.getObjectSchema(obj)
 			_simpleSchema = new SimpleSchema(schema)
-			Creator.Collections[collection_name] = new Meteor.Collection(collection_name)
-			Creator.Collections[collection_name].attachSchema(_simpleSchema)
-			Creator.TabularTables[collection_name] = new Tabular.Table
-				name: collection_name,
-				collection: Creator.Collections[collection_name],
+			Creator.Collections[object_name] = new Meteor.Collection(object_name)
+			Creator.Collections[object_name].attachSchema(_simpleSchema)
+			Creator.TabularTables[object_name] = new Tabular.Table
+				name: object_name,
+				collection: Creator.Collections[object_name],
 				columns: Creator.getObjectColumns(obj, "default")
 				dom: "tp"
 				extraFields: ["_id"]
@@ -70,7 +71,7 @@ Meteor.startup ->
 				autoWidth: true
 				
 			if Meteor.isServer
-				Creator.Collections[collection_name].allow
+				Creator.Collections[object_name].allow
 					insert: (userId, doc) ->
 						return true
 					update: (userId, doc) ->
@@ -78,14 +79,14 @@ Meteor.startup ->
 					remove: (userId, doc) ->
 						return true
 
-				Creator.Collections[collection_name].before.insert (userId, doc)->
+				Creator.Collections[object_name].before.insert (userId, doc)->
 					doc.owner = userId
 					doc.created_by = userId;
 					doc.created = new Date();
 					doc.modified_by = userId;
 					doc.modified = new Date();
 
-				Creator.Collections[collection_name].before.update (userId, doc, fieldNames, modifier, options)->
+				Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
 					modifier.$set = modifier.$set || {};
 					modifier.$set.modified_by = userId
 					modifier.$set.modified = new Date();

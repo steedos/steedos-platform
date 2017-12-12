@@ -5,10 +5,10 @@ checkUserSigned = (context, redirect) ->
 FlowRouter.route '/creator',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		FlowRouter.go "/creator/crm/customers"
+		FlowRouter.go "/creator/crm/customers/list"
 
 
-FlowRouter.route '/creator/:app_id/:object_name',
+FlowRouter.route '/creator/:app_id/:object_name/list',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		Meteor.call "creator_object_init", params.object_name, (error, object)->
