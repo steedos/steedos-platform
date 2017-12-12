@@ -2,8 +2,9 @@ Template.creatorSidebar.helpers
 	app_objects: ()->
 		return Session.get("app_objects")
 
-	is_current_object: ()->
-		return this == FlowRouter.getParam("object_name")
-
-	object: ()->
+	object_i: ()->
 		return Creator.Objects[this]
+
+	object_class_name: (obj)->
+		if (obj == FlowRouter.getParam("object_name"))
+			return "active"

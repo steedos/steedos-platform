@@ -51,7 +51,6 @@ Creator.baseSchema =
 
 Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->
-		console.log ("init " + object_name)
 		if !Creator.Collections[object_name]
 			schema = Creator.getObjectSchema(obj)
 			_simpleSchema = new SimpleSchema(schema)

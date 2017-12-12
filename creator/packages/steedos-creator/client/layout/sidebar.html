@@ -6,10 +6,10 @@
 					Creator
 				</li>
 				{{#each app_objects}}
-					<li class="inbox {{#if is_current_object}}active{{/if}}">
+					<li class="{{object_class_name this}}">
 						<a href="/creator/crm/{{this}}/list">
-							<i class="ion {{object.icon}}"></i>
-							<span>{{object.label}}</span>
+							<i class="ion {{object_i.icon}}"></i>
+							<span>{{object_i.label}}</span>
 							<!-- <span class="pull-right-container">
 								<span class="label pull-right bg-red">10</span>
 							</span> -->

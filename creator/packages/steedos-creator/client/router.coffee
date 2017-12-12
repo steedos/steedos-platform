@@ -11,8 +11,5 @@ FlowRouter.route '/creator',
 FlowRouter.route '/creator/:app_id/:object_name/list',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		Meteor.call "creator_object_init", params.object_name, (error, object)->
-			if object
-				Creator.objectClientInit(params.object_name, object);
-			BlazeLayout.render 'recordLayout',
-				main: "creator_list"
+		BlazeLayout.render 'creatorLayout',
+			main: "creator_list"

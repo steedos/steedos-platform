@@ -1,7 +1,7 @@
 Creator.Objects.customers = 
 	name: "customers"
 	label: "Customers"
-	icon: "ion-ios-people-outline"
+	icon: "ion-ios-world-outline"
 	schema: 
 		name: 
 			label: "Name",
