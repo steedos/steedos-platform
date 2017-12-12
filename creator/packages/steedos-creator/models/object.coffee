@@ -18,7 +18,6 @@ Creator.Collections.objects._simpleSchema = new SimpleSchema
 		optional: true
 		autoform:
 			rows: 10
-
 	created:
 		type: Date,
 		optional: true
@@ -42,17 +41,6 @@ Creator.Collections.objects._simpleSchema = new SimpleSchema
 
 Creator.Collections.objects.attachSchema(Creator.Collections.objects._simpleSchema);
 
-Creator.Collections.objects.set_collection_allow = (collection_name)->
-	console.log("set allow", collection_name)
-	Creator.Collections[collection_name].allow
-		insert: (userId, doc) ->
-			return true
-
-		update: (userId, doc) ->
-			return true
-
-		remove: (userId, doc) ->
-			return true
 
 if Meteor.isServer
 	Creator.Collections.objects.allow 

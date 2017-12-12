@@ -73,8 +73,6 @@ Package.onUse(function(api) {
     
     api.addFiles('models/object.coffee');
 
-    api.addFiles('server/methods/object_init.coffee', 'server');
-
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
     api.addFiles('client/layout/layout.coffee', 'client');
