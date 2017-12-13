@@ -8,23 +8,13 @@ Creator.TabularTables = {}
 
 Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->
-		if !Creator.Collections[object_name]
+		if db[object_name]
+			Creator.Collections[object_name] = db[object_name]
+		else if !Creator.Collections[object_name]
 			schema = Creator.getObjectSchema(obj)
 			_simpleSchema = new SimpleSchema(schema)
 			Creator.Collections[object_name] = new Meteor.Collection(object_name)
 			Creator.Collections[object_name].attachSchema(_simpleSchema)
-			Creator.TabularTables[object_name] = new Tabular.Table
-				name: object_name,
-				collection: Creator.Collections[object_name],
-				columns: Creator.getObjectColumns(obj, "default")
-				dom: "tp"
-				extraFields: ["_id"]
-				lengthChange: false
-				ordering: false
-				pageLength: 10
-				info: false
-				searching: true
-				autoWidth: true
 				
 			if Meteor.isServer
 				Creator.Collections[object_name].allow
@@ -48,10 +38,32 @@ Meteor.startup ->
 					modifier.$set.modified = new Date();
 
 
+		if Meteor.isClient
+				Creator.Collections[object_name].before.insert (userId, doc)->
+					doc.space = Session.get("spaceId")
+
+		Creator.TabularTables[object_name] = new Tabular.Table
+			name: object_name,
+			collection: Creator.Collections[object_name],
+			columns: Creator.getObjectColumns(obj, "default")
+			dom: "tp"
+			extraFields: ["_id"]
+			lengthChange: false
+			ordering: false
+			pageLength: 10
+			info: false
+			searching: true
+			autoWidth: true
+
 Creator.getObjectSchema = (obj) ->
 
 	baseSchema = 
 		owner:
+			type: String,
+			optional: true
+			autoform: 
+				omit: true
+		space:
 			type: String,
 			optional: true
 			autoform: 

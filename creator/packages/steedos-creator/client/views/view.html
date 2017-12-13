@@ -8,9 +8,11 @@
 			</span>
 
 			<div class="pull-right">
-				{{#afModal class="btn btn-primary creator-edit" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
-					{{_ "Edit"}}
-				{{/afModal}}
+				{{#if hasPermission "allowEdit"}}
+					{{#afModal class="btn btn-primary creator-edit" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+						{{_ "Edit"}}
+					{{/afModal}}
+				{{/if}}
 			</div>
 	</div>
 	<div class="admin-content">

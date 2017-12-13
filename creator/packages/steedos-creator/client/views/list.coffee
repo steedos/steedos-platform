@@ -14,6 +14,8 @@ Template.creator_list.helpers
 		if permissions
 			return permissions[permissionName]
 
+	selector: ()->
+		return {space: Session.get("spaceId")}
 
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->

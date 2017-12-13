@@ -18,5 +18,9 @@ Template.creator_view.helpers
 		if Creator.getObjectRecord()
 			return true
 
+	hasPermission: (permissionName)->
+		permissions = Creator.Objects[Session.get("object_name")]?.permissions?.default
+		if permissions
+			return permissions[permissionName]
 
 Template.creator_view.events

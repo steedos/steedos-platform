@@ -8,4 +8,4 @@ FlowRouter.route '/',
 
 Meteor.startup ->
 	Session.set("apps", ["creator"]);
-	Session.set("app_objects", ["customers", "contacts"]); 
+	Session.set("app_objects", ["customers", "contacts", "flow_roles"]); 
