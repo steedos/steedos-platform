@@ -3,11 +3,11 @@
 		<section class="sidebar">
 			<ul class="nav sidebar-menu" style="width: 100%;">
 				<li class="header header-app">
-					Creator
+					{{app_name}}
 				</li>
 				{{#each app_objects}}
 					<li class="{{object_class_name this}}">
-						<a href="/creator/app/{{this}}/list">
+						<a href="/creator/{{app_name}}/{{this}}/list">
 							<i class="ion {{object_i.icon}}"></i>
 							<span>{{object_i.label}}</span>
 							<!-- <span class="pull-right-container">

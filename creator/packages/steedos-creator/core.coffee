@@ -1,5 +1,6 @@
 @Creator = {}
 
+Creator.Apps = {}
 Creator.Objects = {}
 Creator.Collections = {}
 Creator.TabularTables = {}
@@ -7,6 +8,7 @@ Creator.TabularTables = {}
 
 
 Meteor.startup ->
+	Creator.initApps()
 	_.each Creator.Objects, (obj, object_name)->
 		if db[object_name]
 			Creator.Collections[object_name] = db[object_name]
@@ -54,6 +56,17 @@ Meteor.startup ->
 			info: false
 			searching: true
 			autoWidth: true
+
+
+Creator.initApps = ()->
+	if Meteor.isServer
+		_.each Creator.Apps, (app, app_name)->
+			db_app = db.apps.findOne(app_name) 
+			if !db_app
+				app._id = app_name
+				db.apps.insert(app)
+			# else
+			# 	db.apps.update({_id: app_name}, {$set: app})
 
 Creator.getObjectSchema = (obj) ->
 
