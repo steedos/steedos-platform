@@ -2,16 +2,17 @@ Creator.Objects.customers =
 	name: "customers"
 	label: "Customers"
 	icon: "ion-ios-world-outline"
-	schema: 
+	fields:
 		name: 
-			label: "Name",
-			type: "String"
+			label: "Name"
+			type: "text"
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			required: true
 		description: 
-			label: "Description",
-			type: "String",
-			optional: true,
-			autoform:
-				rows: 3
+			label: "Description"
+			type: "textarea"
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
