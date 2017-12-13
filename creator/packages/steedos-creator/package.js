@@ -72,6 +72,8 @@ Package.onUse(function(api) {
     api.addFiles('core.coffee');
     
     api.addFiles('models/object.coffee');
+    
+    api.addFiles('server/publications/object.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
@@ -86,4 +88,6 @@ Package.onUse(function(api) {
 
     api.addFiles('client/views/list.html', 'client');
     api.addFiles('client/views/list.coffee', 'client');
+    api.addFiles('client/views/view.html', 'client');
+    api.addFiles('client/views/view.coffee', 'client');
 });

@@ -121,12 +121,15 @@ Creator.getObjectSchema = (obj) ->
 
 Creator.getObjectColumns = (obj, list_view) ->
 	cols = []
-	_.each obj.list_views?[list_view]?.columns, (column_name)->
-		if obj.fields[column_name]?.type
+	_.each obj.list_views?[list_view]?.columns, (field_name)->
+		field = obj.fields[field_name]
+		if field?.type
 			col = {}
-			col.title = obj.fields[column_name]?.label
-			col.data = column_name
+			col.title = field?.label
+			col.data = field_name
 			col.render =  (val, type, doc) ->
+				if field_name == "name"
+					return "<a href='" + Creator.getObjectUrl(obj.name, doc._id) + "'>" + val + "</a>"
 				if (val instanceof Date) 
 					return moment(val).format('YYYY-MM-DD H:mm')
 				else if (val == null)
@@ -135,3 +138,33 @@ Creator.getObjectColumns = (obj, list_view) ->
 					return val;
 			cols.push(col)
 	return cols
+
+Creator.getObjectUrl = (object_name, id) ->
+	if !object_name
+		object_name = Session.get("object_name")
+	if !object_id
+		object_id = Session.get("object_id")
+	if id
+		return Steedos.absoluteUrl("/creator/app/" + object_name + "/view/" + id)
+	else 
+		return Steedos.absoluteUrl("/creator/app/" + object_name + "/list")
+
+
+Creator.getObject = (object_name)->
+	if !object_name
+		object_name = Session.get("object_name")
+	if object_name
+		return Creator.Objects[object_name]
+
+Creator.getCollection = (object_name)->
+	if !object_name
+		object_name = Session.get("object_name")
+	if object_name
+		return Creator.Collections[object_name]
+
+Creator.getObjectRecord = (object_name, object_id)->
+	if !object_id
+		object_id = Session.get("object_id")
+	collection = Creator.getCollection(object_name)
+	if collection
+		return collection.findOne(object_id)

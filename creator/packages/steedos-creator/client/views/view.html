@@ -1,23 +1,25 @@
 <template name="creator_view">
 	<div class="navigation-bar">
 
-			<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>
+			<a href="{{backUrl}}"><button type="button" class="btn btn-default" name="navigation-back"><i class="ion ion-android-arrow-back"></i></button></a>
 
 			<span class="navigation-title">
-				{{collectionName}}
+				{{record.name}}
 			</span>
 
 			<div class="pull-right">
-				{{#afModal class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+				{{#afModal class="btn btn-primary creator-edit" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
 					{{_ "Edit"}}
 				{{/afModal}}
 			</div>
 	</div>
 	<div class="admin-content">
 		<div class="box-body" style="display: block;">
-			
+			{{#if showForm}}
+				{{> quickForm collection=collection doc=record id="viewRecordForm" type="readonly"}}
+			{{/if}}
 		</div>
 	</div>
 
 
-</template>
+</template> 
