@@ -1,6 +1,6 @@
-Creator.Collections.objects = new Mongo.Collection('objects');
+db.objects = new Mongo.Collection('objects');
 
-Creator.Collections.objects._simpleSchema = new SimpleSchema
+db.objects._simpleSchema = new SimpleSchema
 	name:
 		type: String
 		max: 50
@@ -39,32 +39,12 @@ Creator.Collections.objects._simpleSchema = new SimpleSchema
 		autoform: 
 			omit: true
 
-Creator.Collections.objects.attachSchema(Creator.Collections.objects._simpleSchema);
+db.objects.attachSchema(db.objects._simpleSchema);
 
 
-if Meteor.isServer
-	Creator.Collections.objects.allow 
-		insert: (userId, doc) ->
-			# if (!Steedos.isSpaceAdmin(doc.space, userId))
-			# 	return false
-			# else
-				return true
-
-		update: (userId, doc) ->
-			# if (!Steedos.isSpaceAdmin(doc.space, userId))
-			# 	return false
-			# else
-				return true
-
-		remove: (userId, doc) ->
-			# if (!Steedos.isSpaceAdmin(doc.space, userId))
-			# 	return false
-			# else
-				return true
-
-Creator.TabularTables["objects"] = new Tabular.Table
+TabularTables["objects"] = new Tabular.Table
 	name: "objects",
-	collection: Creator.Collections.objects,
+	collection: db.objects,
 	columns: [
 		{ data: "name" },
 		{ data: "code" },

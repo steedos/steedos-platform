@@ -24,3 +24,6 @@ Creator.Objects.customers =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
+	related_list:
+		contacts:
+			columns: ["name", "description", "modified"]

@@ -73,6 +73,7 @@ Package.onUse(function(api) {
     
     api.addFiles('models/object.coffee');
     
+    api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/publications/object.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');

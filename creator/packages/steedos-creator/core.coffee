@@ -44,19 +44,39 @@ Meteor.startup ->
 				Creator.Collections[object_name].before.insert (userId, doc)->
 					doc.space = Session.get("spaceId")
 
-		Creator.TabularTables[object_name] = new Tabular.Table
-			name: object_name,
-			collection: Creator.Collections[object_name],
-			columns: Creator.getObjectColumns(obj, "default")
-			dom: "tp"
-			extraFields: ["_id"]
-			lengthChange: false
-			ordering: false
-			pageLength: 10
-			info: false
-			searching: true
-			autoWidth: true
+		if obj.list_views?.default?.columns
+			Creator.TabularTables[object_name] = new Tabular.Table
+				name: object_name,
+				collection: Creator.Collections[object_name],
+				columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
+				dom: "tp"
+				extraFields: ["_id"]
+				lengthChange: false
+				ordering: false
+				pageLength: 10
+				info: false
+				searching: true
+				autoWidth: true
 
+	# 初始化子表
+	_.each Creator.Objects, (obj, object_name)->
+
+		_.each obj.fields, (field, field_name)->
+			if field.type == "master_detail" and field.reference_to
+				tabular_name = field.reference_to + "_related_" + object_name
+				console.log tabular_name
+				Creator.TabularTables[tabular_name] = new Tabular.Table
+					name: tabular_name,
+					collection: Creator.Collections[object_name],
+					columns: Creator.getTabularColumns(object_name, ["name"])
+					dom: "tp"
+					extraFields: ["_id"]
+					lengthChange: false
+					ordering: false
+					pageLength: 10
+					info: false
+					searching: true
+					autoWidth: true
 
 Creator.initApps = ()->
 	if Meteor.isServer
@@ -116,6 +136,14 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = "Date"
 		else if field.type == "datetime"
 			fs.type = "Date"
+		else if field.type == "master_detail"
+			fs.type = "String"
+			if Meteor.isClient
+				fs.autoform.type="universe-select"
+				fs.autoform.optionsMethod="creator.object_options"
+				fs.autoform.optionsMethodParams=
+					reference_to: field.reference_to
+					space: Session.get("spaceId")
 
 		if field.label
 			fs.label = field.label
@@ -131,9 +159,10 @@ Creator.getObjectSchema = (obj) ->
 
 	return schema
 
-Creator.getObjectColumns = (obj, list_view) ->
+Creator.getTabularColumns = (object_name, columns) ->
+	obj = Creator.Objects[object_name]
 	cols = []
-	_.each obj.list_views?[list_view]?.columns, (field_name)->
+	_.each columns, (field_name)->
 		field = obj.fields[field_name]
 		if field?.type
 			col = {}
@@ -178,3 +207,15 @@ Creator.getObjectRecord = (object_name, record_id)->
 	collection = Creator.getCollection(object_name)
 	if collection
 		return collection.findOne(record_id)
+
+
+# 切换工作区时，重置下拉框的选项
+if Meteor.isClient
+	Tracker.autorun ()->
+		if  Session.get("spaceId")
+			_.each Creator.Objects, (obj, object_name)->
+				if Creator.Collections[object_name]
+					_.each obj.fields, (field, field_name)->
+						if field.type == "master_detail"
+							_schema = Creator.Collections[object_name]?._c2?._simpleSchema?._schema
+							_schema?[field_name]?.autoform?.optionsMethodParams?.space = Session.get("spaceId")

@@ -20,6 +20,10 @@
 			{{#if showForm}}
 				{{> quickForm collection=collection doc=record id="viewRecordForm" type="readonly"}}
 			{{/if}}
+
+			{{#each related_list}}
+				{{> tabular table=this.tabular_table selector=this.tabular_selector class="table table-striped table-bordered table-condensed table-creator"}}
+			{{/each}}
 		</div>
 	</div>
 

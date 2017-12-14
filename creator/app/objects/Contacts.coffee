@@ -13,6 +13,10 @@ Creator.Objects.contacts =
 		description: 
 			label: "Description"
 			type: "textarea"
+		customer_id: 
+			label: "Customer"
+			type: "master_detail"
+			reference_to: "customers"
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
