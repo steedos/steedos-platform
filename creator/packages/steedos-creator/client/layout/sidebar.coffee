@@ -17,3 +17,6 @@ Template.creatorSidebar.helpers
 	object_class_name: (obj)->
 		if (obj == FlowRouter.getParam("object_name"))
 			return "active"
+
+	object_url: ()->
+		return Creator.getObjectUrl(this, null, Session.get("app_id"))
