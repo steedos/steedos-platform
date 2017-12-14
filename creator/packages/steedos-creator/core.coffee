@@ -60,13 +60,13 @@ Meteor.startup ->
 
 Creator.initApps = ()->
 	if Meteor.isServer
-		_.each Creator.Apps, (app, app_name)->
-			db_app = db.apps.findOne(app_name) 
+		_.each Creator.Apps, (app, app_id)->
+			db_app = db.apps.findOne(app_id) 
 			if !db_app
-				app._id = app_name
+				app._id = app_id
 				db.apps.insert(app)
 			# else
-			# 	db.apps.update({_id: app_name}, {$set: app})
+			# 	db.apps.update({_id: app_id}, {$set: app})
 
 Creator.getObjectSchema = (obj) ->
 
@@ -151,13 +151,13 @@ Creator.getObjectColumns = (obj, list_view) ->
 			cols.push(col)
 	return cols
 
-Creator.getObjectUrl = (object_name, object_id, app_name) ->
-	if !app_name
-		app_name = Session.get("app_name")
-	if object_id
-		return Steedos.absoluteUrl("/creator/" + app_name + "/" + object_name + "/view/" + object_id)
+Creator.getObjectUrl = (object_name, record_id, app_id) ->
+	if !app_id
+		app_id = Session.get("app_id")
+	if record_id
+		return Steedos.absoluteUrl("/creator/" + app_id + "/" + object_name + "/view/" + record_id)
 	else 
-		return Steedos.absoluteUrl("/creator/" + app_name + "/" + object_name + "/list")
+		return Steedos.absoluteUrl("/creator/" + app_id + "/" + object_name + "/list")
 
 
 Creator.getObject = (object_name)->
@@ -172,9 +172,9 @@ Creator.getCollection = (object_name)->
 	if object_name
 		return Creator.Collections[object_name]
 
-Creator.getObjectRecord = (object_name, object_id)->
-	if !object_id
-		object_id = Session.get("object_id")
+Creator.getObjectRecord = (object_name, record_id)->
+	if !record_id
+		record_id = Session.get("record_id")
 	collection = Creator.getCollection(object_name)
 	if collection
-		return collection.findOne(object_id)
+		return collection.findOne(record_id)

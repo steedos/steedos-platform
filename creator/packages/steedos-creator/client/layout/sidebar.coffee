@@ -1,10 +1,10 @@
 Template.creatorSidebar.helpers
 	
-	app_name: ()->
-		return Session.get("app_name")
+	app_id: ()->
+		return Session.get("app_id")
 
 	app_objects: ()->
-		app = db.apps.findOne(Session.get("app_name"))
+		app = db.apps.findOne(Session.get("app_id"))
 		console.log app
 		return app?.objects
 
