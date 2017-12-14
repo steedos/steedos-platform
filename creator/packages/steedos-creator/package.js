@@ -69,6 +69,9 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
 
+    api.addFiles('lib/server_session.js');
+    api.export('ServerSession');
+
     api.addFiles('core.coffee');
     
     api.addFiles('models/object.coffee');
