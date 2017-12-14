@@ -34,6 +34,7 @@ Package.onUse(function(api) {
     api.use('aldeed:simple-schema@1.3.3');
     api.use('aldeed:collection2@2.5.0');
     api.use('aldeed:tabular@1.6.1');
+	api.use('meteorhacks:unblock@1.1.0');
     api.use('aldeed:autoform@5.8.0');
     api.use('matb33:collection-hooks@0.8.1');
 
@@ -81,6 +82,7 @@ Package.onUse(function(api) {
     
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/publications/object.coffee', 'server');
+	api.addFiles('server/publications/object_tabular.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');

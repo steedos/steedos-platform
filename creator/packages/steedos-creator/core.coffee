@@ -48,6 +48,7 @@ Meteor.startup ->
 			Creator.TabularTables[object_name] = new Tabular.Table
 				name: object_name,
 				collection: Creator.Collections[object_name],
+				pub: "steedos_object_tabular",
 				columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
 				dom: "tp"
 				extraFields: ["_id"]
@@ -67,6 +68,7 @@ Meteor.startup ->
 				Creator.TabularTables[tabular_name] = new Tabular.Table
 					name: tabular_name,
 					collection: Creator.Collections[object_name],
+					pub: "steedos_object_tabular",
 					columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
 					dom: "tp"
 					extraFields: ["_id"]
@@ -175,6 +177,10 @@ Creator.getTabularColumns = (object_name, columns) ->
 			col.title = field?.label
 			col.data = field_name
 			col.render =  (val, type, doc) ->
+
+				if field.reference_to
+					return "<a href='" + Creator.getObjectUrl(field.reference_to, doc[field_name]) + "'>" + (Creator.Collections[field.reference_to].findOne(doc[field_name])?.name || "") + "</a>"
+
 				if field_name == "name"
 					return "<a href='" + Creator.getObjectUrl(obj.name, doc._id) + "'>" + val + "</a>"
 				if (val instanceof Date) 
