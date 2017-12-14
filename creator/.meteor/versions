@@ -3,6 +3,7 @@ accounts-password@1.4.0
 accounts-ui@1.1.9
 accounts-ui-unstyled@1.2.1
 aldeed:autoform@5.8.1
+aldeed:autoform-select2@1.0.5
 aldeed:collection2@2.10.0
 aldeed:collection2-core@1.2.0
 aldeed:schema-deny@1.1.0
@@ -101,6 +102,7 @@ mongo@1.1.19
 mongo-id@1.0.6
 mongo-livedata@1.0.12
 mpowaga:string-template@0.1.0
+natestrauser:select2@4.0.3
 nimble:restivus@0.8.12
 npm-bcrypt@0.9.3
 npm-mongo@2.2.24

@@ -13,6 +13,15 @@ Creator.Objects.customers =
 		description: 
 			label: "Description"
 			type: "textarea"
+		priority:
+			label: "Priority"
+			type: "select"
+			options: [
+				{label: "Hot", value: "high"},
+				{label: "Warm", value: "nomal"},
+				{label: "Cold", value: "low"}
+			]
+
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]

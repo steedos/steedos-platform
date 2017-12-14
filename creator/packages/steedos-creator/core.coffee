@@ -143,6 +143,13 @@ Creator.getObjectSchema = (obj) ->
 				fs.autoform.optionsMethodParams=
 					reference_to: field.reference_to
 					space: Session.get("spaceId")
+		else if field.type == "select"
+			fs.type = "String"
+			fs.autoform.type = "select2"
+			fs.autoform.options = field.options
+			console.log fs
+		else
+			fs.type = "String"
 
 		if field.label
 			fs.label = field.label

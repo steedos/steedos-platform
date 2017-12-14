@@ -58,6 +58,9 @@ Package.onUse(function(api) {
     api.use('steedos:fullcalendar@3.4.0_1');
     api.use('vazco:universe-selectize@0.1.22');
 
+    api.use('natestrauser:select2');
+    api.use('aldeed:autoform-select2')
+
     api.use('steedos:sso@0.0.4')
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.61');
