@@ -70,60 +70,42 @@ Creator.initApps = ()->
 
 Creator.getObjectSchema = (obj) ->
 
-	baseSchema = 
+	baseFields = 
 		owner:
-			type: String,
-			optional: true
-			autoform: 
-				omit: true
+			type: "text",
+			omit: true
 		space:
-			type: String,
-			optional: true
-			autoform: 
-				omit: true
+			type: "text",
+			omit: true
 		created:
-			type: Date,
-			optional: true
-			autoform: 
-				omit: true
+			type: "datetime",
+			omit: true
 		created_by:
-			type: String,
-			optional: true
-			autoform: 
-				omit: true
+			type: "text",
+			omit: true
 		modified:
-			type: "Date",
-			optional: true
-			autoform: 
-				omit: true
+			type: "datetime",
+			omit: true
 		modified_by:
-			type: String,
-			optional: true
-			autoform: 
-				omit: true
-
+			type: "text",
+			omit: true
 		last_activity: 
-			type: Date,
-			optional: true
-			autoform: 
-				omit: true
+			type: "datetime",
+			omit: true
 		last_viewed: 
-			type: Date,
-			optional: true
-			autoform: 
-				omit: true
+			type: "datetime",
+			omit: true
 		last_referenced: 
-			type: Date,
-			optional: true
-			autoform: 
-				omit: true
+			type: "datetime",
+			omit: true
+
+	_.extend(obj.fields, baseFields)
 
 	schema = {}
 	_.each obj.fields, (field, field_name)->
 
 		fs = {}
 		fs.autoform = {}
-		fs.label = field.label
 		if field.type == "text"
 			fs.type = "String"
 		else if field.type == "textarea"
@@ -135,12 +117,17 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "datetime"
 			fs.type = "Date"
 
+		if field.label
+			fs.label = field.label
+			
 		if !field.required
 			fs.optional = true
 
+		if field.omit
+			fs.autoform.omit = true
+
 		schema[field_name] = fs
 
-	_.extend(schema, baseSchema)
 
 	return schema
 
