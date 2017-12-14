@@ -12,7 +12,7 @@ Template.creator_view.helpers
 		return Creator.getObjectRecord()
 
 	backUrl: ()->
-		return Creator.getObjectUrl()
+		return Creator.getObjectUrl(Session.get("object_name"), null)
 
 	showForm: ()->
 		if Creator.getObjectRecord()

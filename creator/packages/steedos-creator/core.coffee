@@ -164,15 +164,13 @@ Creator.getObjectColumns = (obj, list_view) ->
 			cols.push(col)
 	return cols
 
-Creator.getObjectUrl = (object_name, id) ->
-	if !object_name
-		object_name = Session.get("object_name")
-	if !object_id
-		object_id = Session.get("object_id")
-	if id
-		return Steedos.absoluteUrl("/creator/app/" + object_name + "/view/" + id)
+Creator.getObjectUrl = (object_name, object_id, app_name) ->
+	if !app_name
+		app_name = Session.get("app_name")
+	if object_id
+		return Steedos.absoluteUrl("/creator/" + app_name + "/" + object_name + "/view/" + object_id)
 	else 
-		return Steedos.absoluteUrl("/creator/app/" + object_name + "/list")
+		return Steedos.absoluteUrl("/creator/" + app_name + "/" + object_name + "/list")
 
 
 Creator.getObject = (object_name)->
