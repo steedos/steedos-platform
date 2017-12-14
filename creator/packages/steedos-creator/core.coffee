@@ -64,11 +64,10 @@ Meteor.startup ->
 		_.each obj.fields, (field, field_name)->
 			if field.type == "master_detail" and field.reference_to
 				tabular_name = field.reference_to + "_related_" + object_name
-				console.log tabular_name
 				Creator.TabularTables[tabular_name] = new Tabular.Table
 					name: tabular_name,
 					collection: Creator.Collections[object_name],
-					columns: Creator.getTabularColumns(object_name, ["name"])
+					columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
 					dom: "tp"
 					extraFields: ["_id"]
 					lengthChange: false
