@@ -12,9 +12,8 @@ FlowRouter.route '/creator/:app_id',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		Session.set("app_id", FlowRouter.getParam("app_id"))
-		app = db.apps.findOne(Session.get("app_id"))
-		object_name = app.objects?[0]
-		FlowRouter.go "/creator/" + Session.get("app_id") + "/" + object_name + "/list"
+		BlazeLayout.render 'creatorLayout',
+			main: "creator_app_home"
 
 FlowRouter.route '/creator/:app_id/:object_name/list',
 	triggersEnter: [ checkUserSigned ],
