@@ -1,5 +1,5 @@
-Creator.Objects.contacts = 
-	name: "contacts"
+Creator.Objects.crm_contacts = 
+	name: "crm_contacts"
 	label: "Contacts"
 	icon: "ion-ios-people-outline"
 	fields:
@@ -16,7 +16,7 @@ Creator.Objects.contacts =
 		customer_id: 
 			label: "Customer"
 			type: "master_detail"
-			reference_to: "customers"
+			reference_to: "crm_customers"
 	list_views:
 		default:
 			columns: ["name", "customer_id", "modified"]

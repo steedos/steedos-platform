@@ -1,5 +1,5 @@
-Creator.Objects.customers = 
-	name: "customers"
+Creator.Objects.crm_customers = 
+	name: "crm_customers"
 	label: "Customers"
 	icon: "ion-ios-world-outline"
 	fields:
