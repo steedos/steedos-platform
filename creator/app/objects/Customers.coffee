@@ -34,5 +34,5 @@ Creator.Objects.crm_customers =
 			modifyAllRecords: false
 			viewAllRecords: false
 	related_list:
-		contacts:
+		crm_contacts:
 			columns: ["name", "description", "modified"]
