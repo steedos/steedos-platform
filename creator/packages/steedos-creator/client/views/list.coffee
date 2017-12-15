@@ -23,6 +23,8 @@ Template.creator_list.helpers
 				return {space: Session.get("spaceId"), owner: Meteor.userId()}
 		return {_id: "nothing to return"}
 
+	object: ()->
+		return Creator.getObject()
 
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
