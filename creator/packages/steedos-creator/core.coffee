@@ -94,36 +94,7 @@ Creator.initApps = ()->
 
 Creator.getObjectSchema = (obj) ->
 
-	baseFields = 
-		owner:
-			type: "text",
-			omit: true
-		space:
-			type: "text",
-			omit: true
-		created:
-			type: "datetime",
-			omit: true
-		created_by:
-			type: "text",
-			omit: true
-		modified:
-			type: "datetime",
-			omit: true
-		modified_by:
-			type: "text",
-			omit: true
-		last_activity: 
-			type: "datetime",
-			omit: true
-		last_viewed: 
-			type: "datetime",
-			omit: true
-		last_referenced: 
-			type: "datetime",
-			omit: true
-
-	_.extend(obj.fields, baseFields)
+	_.extend(obj.fields, Creator.baseObject.fields)
 
 	schema = {}
 	_.each obj.fields, (field, field_name)->
@@ -140,14 +111,17 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = "Date"
 		else if field.type == "datetime"
 			fs.type = "Date"
-		else if field.type == "master_detail"
+		else if field.type == "lookup" or field.type == "master_detail"
 			fs.type = "String"
 			if Meteor.isClient
-				fs.autoform.type="universe-select"
-				fs.autoform.optionsMethod="creator.object_options"
-				fs.autoform.optionsMethodParams=
-					reference_to: field.reference_to
-					space: Session.get("spaceId")
+				if field.reference_to == "users"
+					fs.autoform.type = "selectuser"
+				else
+					fs.autoform.type="universe-select"
+					fs.autoform.optionsMethod="creator.object_options"
+					fs.autoform.optionsMethodParams=
+						reference_to: field.reference_to
+						space: Session.get("spaceId")
 		else if field.type == "select"
 			fs.type = "String"
 			fs.autoform.type = "select2"
