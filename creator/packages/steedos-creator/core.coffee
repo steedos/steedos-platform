@@ -124,8 +124,9 @@ Creator.getObjectSchema = (obj) ->
 						space: Session.get("spaceId")
 		else if field.type == "select"
 			fs.type = "String"
-			fs.autoform.type = "select2"
+			fs.autoform.type = "select"
 			fs.autoform.options = field.options
+			fs.autoform.firstOption = ""
 		else
 			fs.type = "String"
 
