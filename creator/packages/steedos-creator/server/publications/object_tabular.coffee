@@ -6,9 +6,11 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 	check(ids, Array);
 	check(fields, Match.Optional(Object));
 
-	_fields = Creator.Objects[tableName]?.fields
+	_table = Tabular.tablesByName[tableName];
 
-	if !_fields
+	_fields = Creator.Objects[_table.collection._name]?.fields
+
+	if !_fields || !_table
 		return this.ready()
 
 	reference_fields = _.filter _fields, (f)->
@@ -22,7 +24,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 		data = {
 			find: ()->
 				self.unblock();
-				return Creator.Collections[tableName].find({_id: {$in: ids}}, {fields: fields});
+				return _table.collection.find({_id: {$in: ids}}, {fields: fields});
 		}
 
 		data.children = []
@@ -43,6 +45,6 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 		return {
 			find: ()->
 				self.unblock();
-				return Creator.Collections[tableName].find({_id: {$in: ids}}, {fields: fields})
+				return _table.collection.find({_id: {$in: ids}}, {fields: fields})
 		};
 
