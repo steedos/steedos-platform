@@ -198,8 +198,11 @@ Creator.getObjectRecord = (object_name, record_id)->
 		return collection.findOne(record_id)
 
 
-Creator.getPermissions = ()->
-	if !Session.get("object_name")
+Creator.getPermissions = (object_name)->
+	if !object_name 
+		object_name = Session.get("object_name")
+		
+	if !object_name
 		permissions = 
 			allowCreate: false
 			allowDelete: false
@@ -227,7 +230,7 @@ Creator.getPermissions = ()->
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false 
-			
+
 	return permissions
 
 # 切换工作区时，重置下拉框的选项

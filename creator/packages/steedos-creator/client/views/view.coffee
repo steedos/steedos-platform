@@ -19,7 +19,7 @@ Template.creator_view.helpers
 			return true
 
 	hasPermission: (permissionName)->
-		permissions = Creator.Objects[Session.get("object_name")]?.permissions?.default
+		permissions = Creator.getPermissions()
 		if permissions
 			return permissions[permissionName]
 
@@ -40,7 +40,23 @@ Template.creator_view.helpers
 					columns: list_view.columns
 					tabular_table: Creator.TabularTables[tabular_name]
 					tabular_selector: tabular_selector
+					related_field_name: related_field_name
 				list.push related
 		return list
+
+	related_selector: (object_name, related_field_name)->
+		object_name = this.object_name
+		related_field_name = this.related_field_name
+		if object_name and related_field_name and Session.get("spaceId")
+			selector = {space: Session.get("spaceId")}
+			selector[related_field_name] = Session.get("record_id")
+			permissions = Creator.getPermissions(object_name)
+			if permissions.viewAllRecords 
+				return selector
+			else if permissions.allowRead and Meteor.userId()
+				selecor.owner = Meteor.userId()
+				return selector
+		return {_id: "nothing to return"}
+
 
 Template.creator_view.events
