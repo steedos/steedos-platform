@@ -65,11 +65,14 @@ Meteor.startup ->
 		_.each obj.fields, (field, field_name)->
 			if field.type == "master_detail" and field.reference_to
 				tabular_name = field.reference_to + "_related_" + object_name
+				columns = obj.list_views.default.columns
+				columns = _.without(columns, field_name)
+
 				Creator.TabularTables[tabular_name] = new Tabular.Table
 					name: tabular_name,
 					collection: Creator.Collections[object_name],
 					pub: "steedos_object_tabular",
-					columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
+					columns: Creator.getTabularColumns(object_name, columns)
 					dom: "tp"
 					extraFields: ["_id"]
 					lengthChange: false
@@ -149,7 +152,6 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = "String"
 			fs.autoform.type = "select2"
 			fs.autoform.options = field.options
-			console.log fs
 		else
 			fs.type = "String"
 
