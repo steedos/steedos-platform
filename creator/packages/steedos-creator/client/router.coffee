@@ -5,8 +5,14 @@ checkUserSigned = (context, redirect) ->
 FlowRouter.route '/creator',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		FlowRouter.go "/creator/crm/customers/list"
-
+		app_id = Session.get("app_id")
+		if !app_id
+			app_id = "crm"
+		object_name = Session.get("object_name")
+		if object_name
+			FlowRouter.go "/creator/" + app_id + "/" + object_name + "/list"
+		else
+			FlowRouter.go "/creator/" + app_id
 
 FlowRouter.route '/creator/:app_id',
 	triggersEnter: [ checkUserSigned ],
