@@ -84,9 +84,9 @@ Package.onUse(function(api) {
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
 
-    api.addFiles('models/organization.coffee');
     api.addFiles('models/user.coffee');
-    api.addFiles('models/flow_role.coffee');
+    api.addFiles('models/organization.coffee');
+    api.addFiles('models/space_user.coffee');
     
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/publications/object.coffee', 'server');

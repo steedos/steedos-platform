@@ -1,6 +1,6 @@
-Creator.Objects.flow_roles = 
-	name: "flow_roles"
-	label: "Flow Roles"
+Creator.Objects.space_users = 
+	name: "space_users"
+	label: "Space Users"
 	icon: "ion-ios-people-outline"
 	fields:
 		name: 
@@ -12,7 +12,7 @@ Creator.Objects.flow_roles =
 			required: true
 	list_views:
 		default:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "modified"]
 	permissions:
 		default:
 			allowCreate: false

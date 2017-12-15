@@ -12,9 +12,9 @@ Creator.Objects.organizations =
 			columns: ["name", "modified"]
 	permissions:
 		default:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false 
