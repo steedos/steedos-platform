@@ -46,7 +46,7 @@ Meteor.startup ->
 
 		if obj.list_views?.default?.columns
 			Creator.TabularTables[object_name] = new Tabular.Table
-				name: object_name,
+				name: "creator_" + object_name,
 				collection: Creator.Collections[object_name],
 				pub: "steedos_object_tabular",
 				columns: Creator.getTabularColumns(object_name, obj.list_views.default.columns)
@@ -201,7 +201,7 @@ Creator.getObjectRecord = (object_name, record_id)->
 Creator.getPermissions = (object_name)->
 	if !object_name 
 		object_name = Session.get("object_name")
-		
+
 	if !object_name
 		permissions = 
 			allowCreate: false

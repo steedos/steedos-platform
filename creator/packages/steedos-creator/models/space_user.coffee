@@ -10,9 +10,15 @@ Creator.Objects.space_users =
 			description: ""
 			inlineHelpText: ""
 			required: true
+		position:
+			type: "text"
+		mobile:
+			type: "text"
+		email:
+			type: "text"
 	list_views:
 		default:
-			columns: ["name", "modified"]
+			columns: ["name", "position", "mobile", "email"]
 	permissions:
 		default:
 			allowCreate: false
