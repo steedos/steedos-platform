@@ -154,6 +154,7 @@ steedos:i18n@0.0.11
 steedos:ionicons@0.1.7
 steedos:jstree@3.3.2
 steedos:loaders-css@0.1.2
+steedos:lightning-design-system@0.0.1
 steedos:smsqueue@0.0.1
 steedos:sso@0.0.4
 steedos:theme@0.0.29

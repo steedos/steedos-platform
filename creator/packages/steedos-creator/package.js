@@ -74,6 +74,8 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
 
+    api.use('steedos:lightning-design-system@0.0.1');
+
     api.addFiles('lib/server_session.js');
     api.export('ServerSession');
 
@@ -103,6 +105,7 @@ Package.onUse(function(api) {
 
     api.addFiles('client/views/list.html', 'client');
     api.addFiles('client/views/list.coffee', 'client');
+    api.addFiles('client/views/list.less', 'client');
     api.addFiles('client/views/view.html', 'client');
     api.addFiles('client/views/view.coffee', 'client');
     api.addFiles('client/views/app_home.html', 'client');
