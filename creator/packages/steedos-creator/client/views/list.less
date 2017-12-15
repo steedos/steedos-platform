@@ -1,13 +1,13 @@
 .steedos {
-	.slds-brand-band:before {
-		background-image: url(/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/banner-brand-default.png),linear-gradient(to top, rgba(32, 92, 159, 0), #6eabef);
-	}
-	
-	.slds-brand-band:after {
-		background-image: linear-gradient(to bottom, rgba(199, 210, 222, 0) 60%, #b2cff1);
-	}
 
-	.slds-brand-band {
+	.steedos-brand-band {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		position: relative;
+		height: 100%;
+		width: 100%;
 		.slds-page-header {
 			.navigation-title {
 				overflow: hidden;
@@ -34,5 +34,17 @@
 				}
 			}
 		}
+	}
+
+	.forceEntityIcon {
+		display: block;
+		border-radius: .125rem;
+	}
+	.forceEntityIcon .uiImage {
+		display: inherit;
+	}
+
+	h1.crm-h1 {
+		font-size: 1.125rem;
 	}
 }
