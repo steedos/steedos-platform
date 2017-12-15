@@ -198,6 +198,38 @@ Creator.getObjectRecord = (object_name, record_id)->
 		return collection.findOne(record_id)
 
 
+Creator.getPermissions = ()->
+	if !Session.get("object_name")
+		permissions = 
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+	else	
+		permissions = Creator.Objects[Session.get("object_name")]?.permissions?.default
+
+	if Steedos.isSpaceAdmin()
+		permissions = 
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 
+
+	if !permissions
+		permissions = 
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false 
+			
+	return permissions
+
 # 切换工作区时，重置下拉框的选项
 if Meteor.isClient
 	Tracker.autorun ()->

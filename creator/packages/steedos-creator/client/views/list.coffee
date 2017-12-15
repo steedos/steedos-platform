@@ -10,12 +10,19 @@ Template.creator_list.helpers
 		return Creator.TabularTables[Session.get("object_name")]
 
 	hasPermission: (permissionName)->
-		permissions = Creator.Objects[Session.get("object_name")]?.permissions?.default
+		permissions = Creator.getPermissions()
 		if permissions
 			return permissions[permissionName]
 
 	selector: ()->
-		return {space: Session.get("spaceId")}
+		if Session.get("spaceId")
+			permissions = Creator.getPermissions()
+			if permissions.viewAllRecords 
+				return {space: Session.get("spaceId")}
+			else if permissions.allowRead and Meteor.userId()
+				return {space: Session.get("spaceId"), owner: Meteor.userId()}
+		return {_id: "nothing to return"}
+
 
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
