@@ -91,6 +91,8 @@ Package.onUse(function(api) {
     api.addFiles('models/content_document.coffee');
 
     api.addFiles('server/methods/object_options.coffee', 'server');
+    api.addFiles('server/methods/record_last_viewed.coffee', 'server');
+
     api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
 

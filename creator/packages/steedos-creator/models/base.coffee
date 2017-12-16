@@ -29,3 +29,4 @@ Creator.baseObject =
 			omit: true
 		is_deleted:
 			type: "boolean"
+			omit: true

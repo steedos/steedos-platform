@@ -19,7 +19,7 @@ Creator.Objects.crm_contacts =
 			reference_to: "crm_customers"
 	list_views:
 		default:
-			columns: ["name", "customer_id", "modified"]
+			columns: ["name", "customer_id", "last_viewed"]
 	permissions:
 		default:
 			allowCreate: true
