@@ -12,5 +12,5 @@ Creator.Objects.object_recent_viewed =
 if Meteor.isServer
 	Meteor.publish "object_recent_viewed", (object_name)->
 		collection = Creator.Collections["object_recent_viewed"]
-		return collection.find({object_name: object_name}, {fields: {_id: 1}, limit: 10})
+		return collection.find({object_name: object_name}, {fields: {record_id: 1, object_name: 1}, limit: 10})
 

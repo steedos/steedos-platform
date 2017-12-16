@@ -16,15 +16,21 @@ Template.creator_list.helpers
 
 	selector: ()->
 		list_view = Creator.getListView()
-		if Session.get("spaceId")
+		selector = {}
+		if Session.get("spaceId") and Meteor.userId()
+			selector.space = Session.get("spaceId")
+			if Session.get("list_view_id") == "recent"
+				viewed = Creator.Collections.object_recent_viewed.find().fetch();
+				selector._id = 
+					"$in": _.pluck viewed, "record_id"
 			permissions = Creator.getPermissions()
 			if permissions.viewAllRecords 
-				if list_view.filter_scope == "all"
-					return {space: Session.get("spaceId")}
-				else if list_view.filter_scope == "mine"
-					return {space: Session.get("spaceId"), owner: Meteor.userId()}
-			else if permissions.allowRead and Meteor.userId()
-				return {space: Session.get("spaceId"), owner: Meteor.userId()}
+				if list_view.filter_scope == "mine"
+					selector.owner = Meteor.userId()
+				return selector
+			else if permissions.allowRead
+				selector.owner = Meteor.userId()
+				return selector
 		return {_id: "nothing to return"}
 
 	object: ()->
