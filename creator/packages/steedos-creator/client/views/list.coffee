@@ -36,9 +36,10 @@ Template.creator_list.helpers
 	object: ()->
 		return Creator.getObject()
 
-	itmeCount: ()->
+	itemCount: ()->
 		collection = Session.get("object_name")
-		return Creator.Collections[collection].find().count()
+		info = Tabular.tableRecords.findOne("creator_" + collection)
+		return info?.recordsTotal
 
 	list_view_id: ()->
 		return Session.get("list_view_id")
