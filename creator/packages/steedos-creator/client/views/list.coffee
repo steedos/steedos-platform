@@ -26,6 +26,11 @@ Template.creator_list.helpers
 	object: ()->
 		return Creator.getObject()
 
+	itmeCount: ()->
+		collection = Session.get("object_name")
+		return Creator.Collections[collection].find().count()
+
+
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
 	# 	dataTable = $(event.target).closest('table').DataTable();
@@ -34,3 +39,6 @@ Template.creator_list.events
 	# 		Session.set 'cmDoc', rowData
 	# 		# $('.btn.creator-edit').click();
 	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
+
+	'click .add-creator': (event) ->
+		$(".creator-add").click()
