@@ -26,7 +26,7 @@
 									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
 										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
 											<div class="triggerLinkTextAndIconWrapper slds-p-right--x-large">
-												<span class="triggerLinkText selectedListView uiOutputText">所有</span>
+												<span class="triggerLinkText selectedListView uiOutputText">{{list_view_id}}</span>
 												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
 														<svg class="slds-icon slds-icon-text-default slds-icon--x-small" focusable="false" aria-hidden="true" data-key="down">
@@ -38,16 +38,13 @@
 										</a>
 										<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
 											<ul class="slds-dropdown__list slds-show">
+												{{#each list_views}}
 												<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-													<a role="option" tabindex="-1" href="javascript:void(0);">
-														<span class="">所有</span>
+													<a role="option" tabindex="-1" href="javascript:void(0);" class="list-view-switch">
+														<span class="">{{this}}</span>
 													</a>
 												</li>
-												<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-													<a role="option" tabindex="-1" href="javascript:void(0);">
-														<span class="">最近查看</span>
-													</a>
-												</li>
+												{{/each}}
 											</ul>
 										</div>
 									</h1>

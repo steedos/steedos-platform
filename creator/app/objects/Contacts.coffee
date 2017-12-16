@@ -21,6 +21,8 @@ Creator.Objects.crm_contacts =
 	list_views:
 		default:
 			columns: ["name", "customer_id", "last_viewed"]
+		mine:
+			filter_scope: "mine"
 
 	permissions:
 		default:

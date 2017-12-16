@@ -15,7 +15,7 @@ Template.creator_list.helpers
 			return permissions[permissionName]
 
 	selector: ()->
-		list_view = Creator.getListView()
+		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
 		if Session.get("spaceId")
 			permissions = Creator.getPermissions()
 			if permissions.viewAllRecords 
@@ -34,6 +34,15 @@ Template.creator_list.helpers
 		collection = Session.get("object_name")
 		return Creator.Collections[collection].find().count()
 
+	list_view_id: ()->
+		return Session.get("list_view_id")
+
+	list_views: ()->
+		return Creator.getListViews()
+
+	list_view_item: ()->
+		list_view_id = this
+		return Creator.getListView(Session.get("object_name"), list_view_id)
 
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
@@ -46,3 +55,6 @@ Template.creator_list.events
 
 	'click .add-creator': (event) ->
 		$(".creator-add").click()
+
+	'click .list-view-switch': (event)->
+		Session.set("list_view_id", String(this))

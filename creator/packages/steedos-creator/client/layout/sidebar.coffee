@@ -19,4 +19,4 @@ Template.creatorSidebar.helpers
 			return "active"
 
 	object_url: ()->
-		return Creator.getObjectUrl(this, null, Session.get("app_id"))
+		return Creator.getObjectUrl(this, null)

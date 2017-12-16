@@ -25,6 +25,8 @@ Creator.Objects.crm_customers =
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
+		mine:
+			filter_scope: "mine"
 	permissions:
 		default:
 			allowCreate: true

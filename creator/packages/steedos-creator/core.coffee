@@ -238,8 +238,27 @@ Creator.getPermissions = (object_name)->
 
 	return permissions
 
+
+Creator.getListViews = (object_name)->
+	if !object_name 
+		object_name = Session.get("object_name")
+
+	object = Creator.getObject(object_name)
+	list_views = []
+	if object.list_views
+		list_views = _.keys object.list_views
+	else
+		list_views = _.keys Creator.baseObject.list_views
+
+
 Creator.getListView = (object_name, list_view_id)->
-	object = Creator.getObject()
+	if !object_name 
+		object_name = Session.get("object_name")
+	if !list_view_id
+		list_view_id = Session.get("list_view_id")
+	if !list_view_id
+		list_view_id = "default"
+	object = Creator.getObject(object_name)
 	if object.list_views?[list_view_id]
 		list_view = object.list_views[list_view_id]
 	else if Creator.baseObject.list_views?[list_view_id]
@@ -256,7 +275,7 @@ Creator.getListView = (object_name, list_view_id)->
 			list_view.columns = ["name"]
 
 	if !list_view.filter_scope
-		filter_scope = "all"
+		list_view.filter_scope = "all"
 
 	return list_view
 
