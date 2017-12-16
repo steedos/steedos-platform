@@ -175,6 +175,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 					return ""
 				else
 					return val;
+			col.sTitle = t("" + object_name + "_" + field_name.replace(/\./g,"_"));
 			cols.push(col)
 	return cols
 
