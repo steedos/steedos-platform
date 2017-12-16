@@ -127,6 +127,11 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "select"
 			fs.autoform.options = field.options
 			fs.autoform.firstOption = ""
+		else if field.type == "number"
+			fs.type = "number"
+		else if field.type == "boolean"
+			fs.type = "boolean"
+			fs.autoform.type = "boolean-checkbox"
 		else
 			fs.type = "String"
 
