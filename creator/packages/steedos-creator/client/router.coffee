@@ -26,6 +26,16 @@ FlowRouter.route '/creator/:app_id/:object_name/list',
 	action: (params, queryParams)->
 		Session.set("app_id", FlowRouter.getParam("app_id"))
 		Session.set("object_name", FlowRouter.getParam("object_name"))
+		Session.set("list_view_id", "all")
+		BlazeLayout.render 'creatorLayout',
+			main: "creator_list"
+
+FlowRouter.route '/creator/:app_id/:object_name/list/:list_view_id',
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		Session.set("app_id", FlowRouter.getParam("app_id"))
+		Session.set("object_name", FlowRouter.getParam("object_name"))
+		Session.set("list_view_id", FlowRouter.getParam("list_view_id"))
 		BlazeLayout.render 'creatorLayout',
 			main: "creator_list"
 

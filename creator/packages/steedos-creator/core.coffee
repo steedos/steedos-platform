@@ -238,6 +238,34 @@ Creator.getPermissions = (object_name)->
 
 	return permissions
 
+Creator.getListView = (object_name, list_view_id)->
+	object = Creator.getObject()
+	if object.list_views?[list_view_id]
+		list_view = object.list_views[list_view_id]
+	else if Creator.baseObject.list_views?[list_view_id]
+		list_view = Creator.baseObject.list_views[list_view_id]
+	else
+		list_view = 
+			filter_scope: "all"
+			columns: ["name"]
+
+	if !list_view.columns 
+		if object.list_views?.default?.columns
+			list_view.columns = object.list_views.default.columns
+		else
+			list_view.columns = ["name"]
+
+	if !list_view.filter_scope
+		filter_scope = "all"
+
+	return list_view
+
+
+
+
+
+
+
 # 切换工作区时，重置下拉框的选项
 if Meteor.isClient
 	Tracker.autorun ()->

@@ -30,3 +30,13 @@ Creator.baseObject =
 		is_deleted:
 			type: "boolean"
 			omit: true
+
+	list_views:
+		default:
+			columns: ["name"]
+		all:
+			filter_scope: "all"
+		mine:
+			filter_scope: "mine"
+		recent:
+			filter_scope: "recent"

@@ -15,10 +15,14 @@ Template.creator_list.helpers
 			return permissions[permissionName]
 
 	selector: ()->
+		list_view = Creator.getListView()
 		if Session.get("spaceId")
 			permissions = Creator.getPermissions()
 			if permissions.viewAllRecords 
-				return {space: Session.get("spaceId")}
+				if list_view.filter_scope == "all"
+					return {space: Session.get("spaceId")}
+				else if list_view.filter_scope == "mine"
+					return {space: Session.get("spaceId"), owner: Meteor.userId()}
 			else if permissions.allowRead and Meteor.userId()
 				return {space: Session.get("spaceId"), owner: Meteor.userId()}
 		return {_id: "nothing to return"}
