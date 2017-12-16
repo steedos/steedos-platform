@@ -17,4 +17,4 @@ Creator.Objects.organizations =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: true 

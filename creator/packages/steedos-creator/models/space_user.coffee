@@ -26,4 +26,4 @@ Creator.Objects.space_users =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: true 
