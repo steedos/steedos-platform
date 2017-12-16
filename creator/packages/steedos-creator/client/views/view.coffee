@@ -23,6 +23,9 @@ Template.creator_view.helpers
 		if permissions
 			return permissions[permissionName]
 
+	object: ()->
+		return Creator.getObject()
+		
 	related_list: ()->
 		list = []
 		_.each Creator.getObject()?.related_list, (list_view, related_object_name)->
