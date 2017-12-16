@@ -31,9 +31,9 @@ Creator.baseObject =
 	list_views:
 		default:
 			columns: ["name"]
-		all:
-			filter_scope: "all"
 		recent:
+			filter_scope: "all"
+		all:
 			filter_scope: "all"
 
 	permissions:

@@ -58,6 +58,8 @@ Meteor.startup ->
 				info: false
 				searching: true
 				autoWidth: true
+				changeSelector: Creator.tabularChangeSelector
+
 
 	# 初始化子表
 	_.each Creator.Objects, (obj, object_name)->
@@ -77,10 +79,11 @@ Meteor.startup ->
 					extraFields: ["_id"]
 					lengthChange: false
 					ordering: false
-					pageLength: 10
+					pageLength: 5
 					info: false
 					searching: true
 					autoWidth: true
+					changeSelector: Creator.tabularChangeSelector
 
 Creator.initApps = ()->
 	if Meteor.isServer
@@ -150,6 +153,13 @@ Creator.getObjectSchema = (obj) ->
 
 
 	return schema
+
+
+Creator.tabularChangeSelector =  (selector, userId)-> 
+	if userId and selector?.space
+		return selector
+	else
+		return {_id: "nothing"}
 
 Creator.getTabularColumns = (object_name, columns) ->
 	cols = []
@@ -252,13 +262,13 @@ Creator.getListViews = (object_name)->
 
 	object = Creator.getObject(object_name)
 	list_views = []
+	list_views = _.keys Creator.baseObject.list_views
 	if object.list_views
-		list_views = _.keys object.list_views
-	else
-		list_views = _.keys Creator.baseObject.list_views
+		list_views_object = _.keys object.list_views
+		if list_views_object?.length>1
+			list_views = list_views_object
 
 	list_views = _.without list_views, "default"
-	list_views = _.union list_views, ["all", "recent"]
 	return list_views
 
 
@@ -268,9 +278,9 @@ Creator.getListView = (object_name, list_view_id)->
 	if !list_view_id
 		list_view_id = Session.get("list_view_id")
 	list_views = Creator.getListViews(object_name)
-	if list_views.indexOf(list_view_id) < 0
-		list_view_id = "all"
-		Session.set("list_view_id", "all")
+	if !list_view_id or list_views.indexOf(list_view_id) < 0
+		list_view_id = list_views[0]
+		Session.set("list_view_id", list_view_id)
 	object = Creator.getObject(object_name)
 	if object.list_views?[list_view_id]
 		list_view = object.list_views[list_view_id]

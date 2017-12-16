@@ -31,7 +31,7 @@ Template.creator_list.helpers
 			else if permissions.allowRead
 				selector.owner = Meteor.userId()
 				return selector
-		return {_id: "nothing to return"}
+		return {_id: "nothing"}
 
 	object: ()->
 		return Creator.getObject()

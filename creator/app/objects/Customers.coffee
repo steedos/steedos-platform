@@ -25,6 +25,8 @@ Creator.Objects.crm_customers =
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
+		recent:
+			filter_scope: "all"
 		all:
 			filter_scope: "all"
 			columns: ["name", "description", "modified", "owner"]
