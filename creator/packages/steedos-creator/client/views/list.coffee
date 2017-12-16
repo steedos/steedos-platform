@@ -15,7 +15,7 @@ Template.creator_list.helpers
 			return permissions[permissionName]
 
 	selector: ()->
-		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
+		list_view = Creator.getListView()
 		if Session.get("spaceId")
 			permissions = Creator.getPermissions()
 			if permissions.viewAllRecords 

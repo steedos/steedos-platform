@@ -250,14 +250,20 @@ Creator.getListViews = (object_name)->
 	else
 		list_views = _.keys Creator.baseObject.list_views
 
+	list_views = _.without list_views, "default"
+	list_views = _.union list_views, ["all", "recent"]
+	return list_views
+
 
 Creator.getListView = (object_name, list_view_id)->
 	if !object_name 
 		object_name = Session.get("object_name")
 	if !list_view_id
 		list_view_id = Session.get("list_view_id")
-	if !list_view_id
-		list_view_id = "default"
+	list_views = Creator.getListViews(object_name)
+	if list_views.indexOf(list_view_id) < 0
+		list_view_id = "all"
+		Session.set("list_view_id", "all")
 	object = Creator.getObject(object_name)
 	if object.list_views?[list_view_id]
 		list_view = object.list_views[list_view_id]
