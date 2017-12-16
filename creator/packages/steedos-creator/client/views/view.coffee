@@ -58,5 +58,11 @@ Template.creator_view.helpers
 				return selector
 		return {_id: "nothing to return"}
 
+	appName: ()->
+		app = db.apps.findOne(Session.get("app_id"))
+		return app?.name
+
 
 Template.creator_view.events
+	'click .edit-creator': (event) ->
+		$(".creator-edit").click()

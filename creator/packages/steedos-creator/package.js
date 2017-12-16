@@ -113,5 +113,6 @@ Package.onUse(function(api) {
     api.addFiles('client/views/list.less', 'client');
     api.addFiles('client/views/view.html', 'client');
     api.addFiles('client/views/view.coffee', 'client');
+    api.addFiles('client/views/view.less', 'client');
     api.addFiles('client/views/app_home.html', 'client');
 });

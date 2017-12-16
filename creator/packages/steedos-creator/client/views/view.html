@@ -1,5 +1,83 @@
 <template name="creator_view">
-	<div class="navigation-bar">
+
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="test-listViewManager slds-grid slds-grid--vertical">
+				<div class="slds-page-header">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon" style="background-color: #FCB95B">
+											<span class="uiImage">
+												<img data-aura-rendered-by="6:372;a" src="https://ap5.salesforce.com/img/icon/t4v35/standard/opportunity_120.png" class="icon " alt="业务机会" title="业务机会">
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>{{appName}}</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+											<div class="slds-p-right--x-large">
+												<span class="">{{record.name}}</span>
+											</div>
+										</a>
+									</h1>
+								</div>
+							</div>
+						</div>
+						{{#if hasPermission "allowEdit"}}
+							<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
+								<div class="slds-button-group" role="group">
+									<button class="slds-button slds-button_neutral edit-creator">编辑</button>
+									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+											<svg class="slds-button__icon" aria-hidden="true">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
+											</svg>
+											<span class="slds-assistive-text">Show More</span>
+										</button>
+										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+											<ul class="slds-dropdown__list slds-show">
+												<li class="slds-dropdown__item crm-header-menu-item delete-creator" role="presentation">
+													<a role="option" tabindex="-1" href="javascript:void(0);">
+														<span class="">删除</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+				<div class="slds-grid table-grid-content">
+					<div class="slds-table tale-content" style="padding: 15px;">
+						{{#if showForm}}
+							{{> quickForm collection=collection doc=record id="viewRecordForm" type="disabled"}}
+						{{/if}}
+
+						{{#each related_list}}
+							{{> tabular table=this.tabular_table selector=related_selector class="table table-striped table-bordered table-condensed table-creator"}}
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
+
+	<!-- <div class="navigation-bar">
 
 			<a href="{{backUrl}}"><button type="button" class="btn btn-default" name="navigation-back"><i class="ion ion-android-arrow-back"></i></button></a>
 
@@ -25,7 +103,7 @@
 				{{> tabular table=this.tabular_table selector=related_selector class="table table-striped table-bordered table-condensed table-creator"}}
 			{{/each}}
 		</div>
-	</div>
+	</div> -->
 
 
 </template> 
