@@ -26,6 +26,7 @@ FlowRouter.route '/creator/:app_id/:object_name/list',
 	action: (params, queryParams)->
 		Session.set("app_id", FlowRouter.getParam("app_id"))
 		Session.set("object_name", FlowRouter.getParam("object_name"))
+		Session.set("list_view_visible", true)
 		if !Session.get("list_view_id")
 			Session.set("list_view_id", "recent")
 		BlazeLayout.render 'creatorLayout',

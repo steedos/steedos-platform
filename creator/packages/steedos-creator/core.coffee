@@ -150,13 +150,15 @@ Creator.getObjectSchema = (obj) ->
 	return schema
 
 Creator.getTabularColumns = (object_name, columns) ->
-	obj = Creator.Objects[object_name]
 	cols = []
 	_.each columns, (field_name)->
-		field = obj.fields[field_name]
+		field = Creator.getObjectField(object_name, field_name)
 		if field?.type
 			col = {}
-			col.title = field?.label
+			if field.label
+				col.title = field.label
+			else
+				col.title = field_name
 			col.data = field_name
 			col.render =  (val, type, doc) ->
 
@@ -164,7 +166,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 					return "<a href='" + Creator.getObjectUrl(field.reference_to, doc[field_name]) + "'>" + (Creator.Collections[field.reference_to].findOne(doc[field_name])?.name || "") + "</a>"
 
 				if field_name == "name"
-					return "<a href='" + Creator.getObjectUrl(obj.name, doc._id) + "'>" + val + "</a>"
+					return "<a href='" + Creator.getObjectUrl(object_name, doc._id) + "'>" + val + "</a>"
 				if (val instanceof Date) 
 					return moment(val).format('YYYY-MM-DD H:mm')
 				else if (val == null)
@@ -188,6 +190,14 @@ Creator.getObject = (object_name)->
 		object_name = Session.get("object_name")
 	if object_name
 		return Creator.Objects[object_name]
+
+Creator.getObjectField = (object_name, field_name)->
+	obj = Creator.Objects[object_name]
+	if obj.fields[field_name]
+		return obj.fields[field_name]
+	else 
+		return Creator.baseObject.fields[field_name]	
+
 
 Creator.getCollection = (object_name)->
 	if !object_name

@@ -27,6 +27,7 @@ Creator.Objects.crm_customers =
 			columns: ["name", "description", "modified"]
 		all:
 			filter_scope: "all"
+			columns: ["name", "description", "modified", "owner"]
 		mine:
 			filter_scope: "mine"
 	permissions:

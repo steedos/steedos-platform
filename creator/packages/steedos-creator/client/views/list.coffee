@@ -44,6 +44,9 @@ Template.creator_list.helpers
 		list_view_id = this
 		return Creator.getListView(Session.get("object_name"), list_view_id)
 
+	list_view_visible: ()->
+		return Session.get("list_view_visible")
+
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
 	# 	dataTable = $(event.target).closest('table').DataTable();
@@ -57,4 +60,10 @@ Template.creator_list.events
 		$(".creator-add").click()
 
 	'click .list-view-switch': (event)->
-		Session.set("list_view_id", String(this))
+		Session.set("list_view_visible", false)
+		list_view_id = String(this)
+		Tracker.afterFlush ()->
+			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
+			Creator.TabularTables[Session.get("object_name")].options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
+			Session.set("list_view_id", list_view_id)
+			Session.set("list_view_visible", true)

@@ -118,7 +118,9 @@
 				</div>
 				<div class="slds-grid table-grid-content">
 					<div class="slds-table tale-content">
-						{{> tabular table=tabular_table selector=selector class="table table-striped table-bordered table-condensed table-creator slds-table slds-table--header-fixed slds-table--edit slds-table--bordered slds-table--resizable-cols"}}
+						{{#if list_view_visible}}
+							{{> tabular table=tabular_table selector=selector class="table table-striped table-bordered table-condensed table-creator slds-table slds-table--header-fixed slds-table--edit slds-table--bordered slds-table--resizable-cols"}}
+						{{/if}}
 					</div>
 				</div>
 			</div>
