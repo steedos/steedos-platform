@@ -23,19 +23,33 @@
 											</li>
 										</ol>
 									</nav>
-									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-h1">
-										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);">
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
 											<div class="triggerLinkTextAndIconWrapper slds-p-right--x-large">
 												<span class="triggerLinkText selectedListView uiOutputText">所有</span>
 												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
 														<svg class="slds-icon slds-icon-text-default slds-icon--x-small" focusable="false" aria-hidden="true" data-key="down">
-															<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/_slds/icons/v7.31.0/utility-sprite/svg/symbols.svg#down"></use>
+															<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down"></use>
 														</svg>
 													</span>
 												</span>
 											</div>
 										</a>
+										<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
+											<ul class="slds-dropdown__list slds-show">
+												<li class="slds-dropdown__item" role="presentation">
+													<a role="option" tabindex="-1" href="javascript:void(0);">
+														<span class="">所有</span>
+													</a>
+												</li>
+												<li class="slds-dropdown__item" role="presentation">
+													<a role="option" tabindex="-1" href="javascript:void(0);">
+														<span class="">最近查看</span>
+													</a>
+												</li>
+											</ul>
+										</div>
 									</h1>
 								</div>
 							</div>
@@ -115,5 +129,5 @@
 	</div>
 	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
 
-	{{#afModal class="btn btn-primary creator-add" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}} {{_ "Create"}} {{/afModal}}
+	{{#afModal class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}} {{_ "Create"}} {{/afModal}}
 </template>
