@@ -10,6 +10,8 @@ Creator.Objects.organizations =
 	list_views:
 		default:
 			columns: ["name", "modified"]
+		all:
+			filter_scope: "all"
 	permissions:
 		default:
 			allowCreate: false
