@@ -7,6 +7,6 @@ FlowRouter.route '/',
 
 
 Meteor.startup ->
-	db.apps.INTERNAL_APPS = ["/crm", "/creator"]
-	Session.set("apps", ["crm", "hr"]);
-	Session.set("app_objects", ["customers", "contacts", "flow_roles"]); 
+	db.apps.INTERNAL_APPS = ["/app/crm", "/app/creator"]
+	Session.set("apps", ["crm", "creator"]);
+	Session.set("app_objects", ["customers", "contacts", "flow_roles"]);

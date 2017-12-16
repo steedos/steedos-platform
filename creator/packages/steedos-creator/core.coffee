@@ -93,7 +93,8 @@ Creator.initApps = ()->
 				app._id = app_id
 				db.apps.insert(app)
 			# else
-			# 	db.apps.update({_id: app_id}, {$set: app})
+			# 	app._id = app_id
+			# 	db.apps.update({_id: app_id}, app)
 
 Creator.getObjectSchema = (obj) ->
 
@@ -193,9 +194,9 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
 	if record_id
-		return Steedos.absoluteUrl("/creator/" + app_id + "/" + object_name + "/view/" + record_id)
+		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else 
-		return Steedos.absoluteUrl("/creator/" + app_id + "/" + object_name + "/list")
+		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list")
 
 
 Creator.getObject = (object_name)->
@@ -299,12 +300,6 @@ Creator.getListView = (object_name, list_view_id)->
 
 	if !list_view.filter_scope
 		list_view.filter_scope = "all"
-
-	i18n = "list_view_" + list_view_id
-	if t(i18n) != i18n
-		list_view.label = t(i18n)
-	else
-		list_view.label = list_view_id
 
 	return list_view
 

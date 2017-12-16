@@ -1,6 +1,6 @@
 Template.creator_list.helpers
 
-	collectionName: ()->
+	object_name: ()->
 		return Session.get("object_name")
 
 	collection: ()->
@@ -48,7 +48,7 @@ Template.creator_list.helpers
 		return Creator.getListViews()
 
 	list_view_label: (list_view_id)->
-		return Creator.getListView(Session.get("object_name"), list_view_id)?.label
+		return t("list_view_" + list_view_id)
 
 	list_view: ()->
 		list_view_id = Session.get("list_view_id")
