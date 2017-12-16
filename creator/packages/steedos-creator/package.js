@@ -88,6 +88,8 @@ Package.onUse(function(api) {
     api.addFiles('models/organization.coffee');
     api.addFiles('models/space_user.coffee');
     
+    api.addFiles('models/content_document.coffee');
+
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');

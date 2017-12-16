@@ -27,3 +27,5 @@ Creator.baseObject =
 		last_referenced: 
 			type: "datetime",
 			omit: true
+		is_deleted:
+			type: "boolean"
