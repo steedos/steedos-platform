@@ -21,9 +21,6 @@ Creator.baseObject =
 		last_activity: 
 			type: "datetime",
 			omit: true
-		last_viewed: 
-			type: "datetime",
-			omit: true
 		last_referenced: 
 			type: "datetime",
 			omit: true
@@ -38,3 +35,11 @@ Creator.baseObject =
 			filter_scope: "all"
 		recent:
 			filter_scope: "all"
+
+	permissions:
+		allowCreate: true
+		allowDelete: true
+		allowEdit: true
+		allowRead: true
+		modifyAllRecords: false
+		viewAllRecords: false 

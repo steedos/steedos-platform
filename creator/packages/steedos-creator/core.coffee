@@ -132,6 +132,8 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "boolean"
 			fs.type = "boolean"
 			fs.autoform.type = "boolean-checkbox"
+		else if field.type = "reference"
+			fs.type = "String"
 		else
 			fs.type = "String"
 
@@ -238,13 +240,7 @@ Creator.getPermissions = (object_name)->
 			viewAllRecords: true 
 
 	if !permissions
-		permissions = 
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: false 
+		permissions = Creator.baseObject.permissions
 
 	return permissions
 

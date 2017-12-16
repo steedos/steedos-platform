@@ -83,6 +83,7 @@ Package.onUse(function(api) {
     
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
+    api.addFiles('models/object_recent_viewed.coffee');
 
     api.addFiles('models/user.coffee');
     api.addFiles('models/organization.coffee');
@@ -91,7 +92,7 @@ Package.onUse(function(api) {
     api.addFiles('models/content_document.coffee');
 
     api.addFiles('server/methods/object_options.coffee', 'server');
-    api.addFiles('server/methods/record_last_viewed.coffee', 'server');
+    api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 
     api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
