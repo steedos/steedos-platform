@@ -66,3 +66,14 @@ Template.creator_view.helpers
 Template.creator_view.events
 	'click .edit-creator': (event) ->
 		$(".creator-edit").click()
+
+	'click .creator-view-tabs-link': (event) ->
+		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
+		$(".creator-view-tabs-link").attr("aria-selected", false)
+
+		$(event.currentTarget).closest(".slds-tabs_default__item").addClass("slds-is-active")
+		$(event.currentTarget).attr("aria-selected", true)
+
+		tab = "#" + event.currentTarget.dataset.tab
+		$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
+		$(tab).removeClass("slds-hide").addClass("slds-show")
