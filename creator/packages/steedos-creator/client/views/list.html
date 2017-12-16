@@ -26,7 +26,7 @@
 									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
 										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
 											<div class="triggerLinkTextAndIconWrapper">
-												<span class="triggerLinkText selectedListView uiOutputText">{{list_view_id}}</span>
+												<span class="triggerLinkText selectedListView uiOutputText">{{list_view.label}}</span>
 												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
 														<svg class="slds-icon slds-icon-text-default slds-icon--x-small" focusable="false" aria-hidden="true" data-key="down">
@@ -41,7 +41,7 @@
 												{{#each list_views}}
 												<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
 													<a role="option" tabindex="-1" href="javascript:void(0);" class="list-view-switch">
-														<span class="">{{this}}</span>
+														<span class="">{{list_view_label this}}</span>
 													</a>
 												</li>
 												{{/each}}

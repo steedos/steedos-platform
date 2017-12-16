@@ -1,3 +1,7 @@
 {
-  "Steedos Creator": "Creator"
+  "Steedos Creator": "Creator",
+
+  "list_view_recent": "Recent",  
+  "list_view_all": "All",
+  "list_view_mine": "Mine"
 }

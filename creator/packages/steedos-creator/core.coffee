@@ -289,6 +289,12 @@ Creator.getListView = (object_name, list_view_id)->
 	if !list_view.filter_scope
 		list_view.filter_scope = "all"
 
+	i18n = "list_view_" + list_view_id
+	if t(i18n) != i18n
+		list_view.label = t(i18n)
+	else
+		list_view.label = list_view_id
+
 	return list_view
 
 

@@ -47,8 +47,11 @@ Template.creator_list.helpers
 	list_views: ()->
 		return Creator.getListViews()
 
-	list_view_item: ()->
-		list_view_id = this
+	list_view_label: (list_view_id)->
+		return Creator.getListView(Session.get("object_name"), list_view_id)?.label
+
+	list_view: ()->
+		list_view_id = Session.get("list_view_id")
 		return Creator.getListView(Session.get("object_name"), list_view_id)
 
 	list_view_visible: ()->
