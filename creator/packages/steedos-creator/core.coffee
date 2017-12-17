@@ -200,7 +200,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 	action_col = 
 		title: '<div class="slds-th__action"></div>'
 		data: "_id"
-		width: '40px'
+		width: '20px'
 		createdCell: (node, cellData, rowData) ->
 			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData}, node)
 	cols.push(action_col)
