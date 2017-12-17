@@ -33,9 +33,12 @@ Meteor.startup ->
 					doc.created = new Date();
 					doc.modified_by = userId;
 					doc.modified = new Date();
-					
+
 				Creator.Collections[object_name].after.insert (userId, doc)->
-					Meteor.call "object_recent_viewed", object_name, doc._id
+					if object_name != "object_recent_viewed"
+						Creator.Collections.object_recent_viewed.insert
+							object_name: object_name
+							record_id: doc._id
 
 				Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
 					modifier.$set = modifier.$set || {};
