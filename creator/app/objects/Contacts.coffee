@@ -1,7 +1,7 @@
 Creator.Objects.crm_contacts = 
 	name: "crm_contacts"
 	label: "Contacts"
-	icon: "ion-ios-people-outline"
+	icon: "contact"
 	fields:
 		name: 
 			label: "Name"

@@ -1,7 +1,7 @@
 Creator.Objects.space_users = 
 	name: "space_users"
 	label: "Space Users"
-	icon: "ion-ios-people-outline"
+	icon: "user"
 	fields:
 		name: 
 			label: "Name"
