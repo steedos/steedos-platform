@@ -1,0 +1,143 @@
+<template name="creatorHeader">
+
+<header class="slds-global-header_container oneHeader"><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Main Content</a>
+  <div class="slds-global-header slds-grid slds-grid_align-spread">
+    <div class="slds-global-header__item">
+      <div class="slds-global-header__logo">
+        <img src="/packages/steedos_lightning-design-system/client/images/logo-noname.svg" alt="" />
+      </div>
+    </div>
+    <div class="slds-global-header__item slds-global-header__item_search">
+      <div aria-expanded="false" aria-haspopup="listbox" class="slds-form-element slds-lookup" role="combobox">
+        <label class="slds-assistive-text" for="global-search-01">Search Salesforce</label>
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
+          <svg class="slds-input__icon slds-input__icon_left" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#search" />
+          </svg>
+          <input type="text" aria-activedescendant="" aria-autocomplete="list" aria-controls="global-search-list-01" autocomplete="off" class="slds-input slds-lookup__search-input" id="global-search-01" placeholder="Search Salesforce" role="textbox" />
+        </div>
+        <div class="slds-lookup__menu" role="listbox" id="global-search-list-01">
+          <ul class="slds-lookup__list" role="group" aria-label="Recent Items">
+            <li role="presentation">
+              <h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">Recent Items</h3>
+            </li>
+            <li role="presentation">
+              <span class="slds-lookup__item-action slds-media" id="option-01" role="option">
+                <svg class="slds-icon slds-icon-standard-opportunity slds-icon_small slds-media__figure" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#opportunity" />
+                </svg>
+                <span class="slds-media__body">
+                  <span class="slds-lookup__result-text">Salesforce - 1,000 Licenses</span>
+                  <span class="slds-lookup__result-meta slds-text-body_small">Opportunity • Prospecting</span>
+                </span>
+              </span>
+            </li>
+            <li role="presentation">
+              <span class="slds-lookup__item-action slds-media" id="option-02" role="option">
+                <svg class="slds-icon slds-icon-standard-contact slds-icon_small slds-media__figure" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#contact" />
+                </svg>
+                <span class="slds-media__body">
+                  <span class="slds-lookup__result-text">Art Vandelay</span>
+                  <span class="slds-lookup__result-meta slds-text-body_small">Contact • avandelay@vandelay.com</span>
+                </span>
+              </span>
+            </li>
+            <li role="presentation">
+              <span class="slds-lookup__item-action slds-media" id="option-03" role="option">
+                <svg class="slds-icon slds-icon-standard-account slds-icon_small slds-media__figure" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#account" />
+                </svg>
+                <span class="slds-media__body">
+                  <span class="slds-lookup__result-text">Vandelary Industries</span>
+                  <span class="slds-lookup__result-meta slds-text-body_small">Account • San Francisco</span>
+                </span>
+              </span>
+            </li>
+            <li role="presentation">
+              <span class="slds-lookup__item-action slds-media" id="option-04" role="option">
+                <svg class="slds-icon slds-icon-custom-8 slds-icon_small slds-media__figure" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/custom-sprite/symbols.svg#custom8" />
+                </svg>
+                <span class="slds-media__body">
+                  <span class="slds-lookup__result-text">Salesforce UK 2016 Events</span>
+                  <span class="slds-lookup__result-meta slds-text-body_small">General Ledger • $20,000</span>
+                </span>
+              </span>
+            </li>
+            <li role="presentation">
+              <span class="slds-lookup__item-action slds-media" id="option-05" role="option">
+                <svg class="slds-icon slds-icon-standard-lead slds-icon_small slds-media__figure" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#lead" />
+                </svg>
+                <span class="slds-media__body">
+                  <span class="slds-lookup__result-text">H.E. Pennypacker</span>
+                  <span class="slds-lookup__result-meta slds-text-body_small">Lead • Nursing</span>
+                </span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+      <li class="slds-grid">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites" aria-pressed="false" title="Toggle Favorites">
+          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#favorite" />
+          </svg>
+          <span class="slds-assistive-text">Toggle Favorite</span>
+        </button>
+        <span class="slds-dropdown-trigger slds-dropdown-trigger_click">
+          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none" title="View Favorites">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
+            </svg>
+            <span class="slds-assistive-text">View Favorites</span>
+          </button>
+        </span>
+      </li>
+      <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small" title="Global Actions">
+          <svg class="slds-button__icon" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#add" />
+          </svg>
+          <span class="slds-assistive-text">Global Actions</span>
+        </button>
+      </li>
+      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Help and Training">
+          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#question" />
+          </svg>
+          <span class="slds-assistive-text">Help and Training</span>
+        </button>
+      </li>
+      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Setup">
+          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#setup" />
+          </svg>
+          <span class="slds-assistive-text">Setup</span>
+        </button>
+      </li>
+      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Notifications">
+          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#notification" />
+          </svg>
+          <span class="slds-assistive-text">Notifications</span>
+        </button>
+      </li>
+      <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+        <button class="slds-button" title="person name" aria-haspopup="true">
+          <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+            <img alt="Person name" src="/packages/steedos_lightning-design-system/client/images/avatar2.jpg" title="User avatar" />
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  
+</header>
+</template>
