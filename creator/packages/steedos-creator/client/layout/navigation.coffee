@@ -8,7 +8,7 @@ Template.creatorNavigation.helpers
 		return app?.name
 
 	app_objects: ()->
-		app = db.apps.findOne(Session.get("app_id"))
+		app = Creator.getApp()
 		return app?.objects
 
 	object_i: ()->

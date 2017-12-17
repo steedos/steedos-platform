@@ -319,7 +319,13 @@ Creator.getListView = (object_name, list_view_id)->
 
 	return list_view
 
-
+Creator.getApp = (app_id)->
+	if !app_id
+		app_id = Session.get("app_id")
+	app = db.apps.findOne(app_id)
+	if app and !app.objects
+		app.objects = Creator.Apps[app_id]?.objects
+	return app
 
 
 
