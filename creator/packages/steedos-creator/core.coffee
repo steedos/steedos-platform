@@ -60,7 +60,7 @@ Meteor.startup ->
 				extraFields: ["_id"]
 				lengthChange: false
 				ordering: false
-				pageLength: 10
+				pageLength: 20
 				info: false
 				searching: true
 				autoWidth: true
@@ -180,10 +180,6 @@ Creator.getTabularColumns = (object_name, columns) ->
 		field = Creator.getObjectField(object_name, field_name)
 		if field?.type
 			col = {}
-			if field.label
-				col.title = field.label
-			else
-				col.title = field_name
 			col.data = field_name
 			col.render =  (val, type, doc) ->
 
@@ -198,8 +194,16 @@ Creator.getTabularColumns = (object_name, columns) ->
 					return ""
 				else
 					return val;
-			col.sTitle = t("" + object_name + "_" + field_name.replace(/\./g,"_"));
-			cols.push(col)
+			col.sTitle = '<div class="slds-truncate" title="">' + t("" + object_name + "_" + field_name.replace(/\./g,"_")); + '</div>'
+		cols.push(col)
+
+	action_col = 
+		title: '<div class="slds-th__action"></div>'
+		data: "_id"
+		width: '40px'
+		createdCell: (node, cellData, rowData) ->
+			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData}, node)
+	cols.push(action_col)
 	return cols
 
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
@@ -316,8 +320,8 @@ Creator.getListView = (object_name, list_view_id)->
 
 
 
-# 切换工作区时，重置下拉框的选项
 if Meteor.isClient
+	# 切换工作区时，重置下拉框的选项
 	Tracker.autorun ()->
 		if  Session.get("spaceId")
 			_.each Creator.Objects, (obj, object_name)->
@@ -326,3 +330,4 @@ if Meteor.isClient
 						if field.type == "master_detail"
 							_schema = Creator.Collections[object_name]?._c2?._simpleSchema?._schema
 							_schema?[field_name]?.autoform?.optionsMethodParams?.space = Session.get("spaceId")
+
