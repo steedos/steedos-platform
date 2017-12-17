@@ -71,9 +71,10 @@ Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->
 
 		_.each obj.fields, (field, field_name)->
-			if field.type == "master_detail" and field.reference_to
+			if field.reference_to
 				tabular_name = field.reference_to + "_related_" + object_name
-				columns = obj.list_views.default.columns
+				list_view = Creator.getListView object_name, "all"
+				columns = list_view.columns
 				columns = _.without(columns, field_name)
 
 				Creator.TabularTables[tabular_name] = new Tabular.Table
@@ -297,7 +298,8 @@ Creator.getListView = (object_name, list_view_id)->
 	list_views = Creator.getListViews(object_name)
 	if !list_view_id or list_views.indexOf(list_view_id) < 0
 		list_view_id = list_views[0]
-		Session.set("list_view_id", list_view_id)
+		if Meteor.isClient
+			Session.set("list_view_id", list_view_id)
 	object = Creator.getObject(object_name)
 	if object.list_views?[list_view_id]
 		list_view = object.list_views[list_view_id]

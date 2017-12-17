@@ -33,7 +33,7 @@ Template.creator_view.helpers
 			related_object = Creator.Objects[related_object_name]
 			related_field_name = ""
 			_.each related_object.fields, (field, field_name)->
-				if field.type == "master_detail" and field.reference_to == Session.get("object_name")
+				if field?.reference_to == Session.get("object_name")
 					related_field_name = field_name
 			if related_field_name
 				tabular_selector = {space: Session.get("spaceId")}

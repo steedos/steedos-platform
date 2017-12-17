@@ -42,3 +42,5 @@ Creator.Objects.crm_customers =
 	related_list:
 		crm_contacts:
 			columns: ["name", "description", "modified"]
+		crm_contracts:
+			columns: ["name", "description", "modified"]
