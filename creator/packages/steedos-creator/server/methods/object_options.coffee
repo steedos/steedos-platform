@@ -6,7 +6,7 @@ Meteor.methods
 			if options.params.space
 				query.space = options.params.space
 			if options.searchText 
-				query.name = {name: options.searchText}
+				query.name = {$regex: options.searchText}
 			if collection
 				records = collection.find(query, {limit: 10}).fetch()
 				results = []
