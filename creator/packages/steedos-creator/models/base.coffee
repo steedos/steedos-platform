@@ -12,12 +12,14 @@ Creator.baseObject =
 		created_by:
 			type: "lookup",
 			reference_to: "users"
+			omit: true
 		modified:
 			type: "datetime",
 			omit: true
 		modified_by:
 			type: "lookup",
 			reference_to: "users"
+			omit: true
 		last_activity: 
 			type: "datetime",
 			omit: true

@@ -18,11 +18,12 @@ Creator.Objects.crm_contracts =
 		end_date: 
 			type: "date"
 		company_signed_id:
-			type: "String"
+			type: "lookup"
+			reference_to: "users"
 		company_signed_date: 
 			type: "date"
 		customer_id:
-			type: "master_detail"
+			type: "lookup"
 			reference_to: "crm_customers"
 		customer_signed_date: 
 			type: "date"
@@ -30,7 +31,7 @@ Creator.Objects.crm_contracts =
 
 	list_views:
 		default:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "customer_id", "company_signed_date", "company_signed_id"]
 		recent:
 			filter_scope: "all"
 		all:
