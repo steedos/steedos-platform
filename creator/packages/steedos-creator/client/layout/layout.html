@@ -1,11 +1,13 @@
 <template name="creatorLayout">
 	{{#if subsReady}}
-		<div class="steedos app-wrapper steedos-calendar skin-blue-light">
+		<div class="steedos layout-top-nav skin-blue-light">
 			{{# AdminLTE skin="blue" sidebarMini="true" }}
 				{{> steedosHeader}}
-				{{> creatorSidebar}}
 
 				<div class="content-wrapper">
+
+					{{> creatorNavigation}}
+					
 					{{> Template.dynamic template=main}}
 				</div>
 			{{/ AdminLTE}}

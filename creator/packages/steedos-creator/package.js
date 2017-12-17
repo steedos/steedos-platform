@@ -105,6 +105,8 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
     api.addFiles('client/layout/layout.coffee', 'client');
+    api.addFiles('client/layout/navigation.html', 'client');
+    api.addFiles('client/layout/navigation.coffee', 'client');
     api.addFiles('client/layout/sidebar.html', 'client');
     api.addFiles('client/layout/sidebar.coffee', 'client');
     api.addFiles('client/layout/sidebar.less', 'client');
@@ -120,6 +122,6 @@ Package.onUse(function(api) {
     api.addFiles('client/views/view.coffee', 'client');
     api.addFiles('client/views/view.less', 'client');
     api.addFiles('client/views/app_home.html', 'client');
-    
+
     api.addFiles('client/views/table_actions.html', 'client');
 });
