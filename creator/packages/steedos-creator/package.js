@@ -90,6 +90,7 @@ Package.onUse(function(api) {
     api.addFiles('models/object.coffee');
     api.addFiles('models/object_recent_viewed.coffee');
 
+    api.addFiles('models/app.coffee');
     api.addFiles('models/user.coffee');
     api.addFiles('models/organization.coffee');
     api.addFiles('models/space_user.coffee');
