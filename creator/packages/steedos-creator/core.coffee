@@ -33,6 +33,9 @@ Meteor.startup ->
 					doc.created = new Date();
 					doc.modified_by = userId;
 					doc.modified = new Date();
+					
+				Creator.Collections[object_name].after.insert (userId, doc)->
+					Meteor.call "object_recent_viewed", object_name, doc._id
 
 				Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
 					modifier.$set = modifier.$set || {};
@@ -113,8 +116,14 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.rows = 3
 		else if field.type == "date"
 			fs.type = "Date"
+			fs.autoform.type = "bootstrap-datetimepicker"
+			fs.autoform.dateTimePickerOptions = 
+				format: "YYYY-MM-DD"
 		else if field.type == "datetime"
 			fs.type = "Date"
+			fs.autoform.type = "bootstrap-datetimepicker"
+			fs.autoform.dateTimePickerOptions = 
+				format: "YYYY-MM-DD HH:mm"
 		else if field.type == "lookup" or field.type == "master_detail"
 			fs.type = "String"
 			if Meteor.isClient

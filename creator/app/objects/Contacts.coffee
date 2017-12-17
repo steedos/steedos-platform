@@ -1,23 +1,33 @@
 Creator.Objects.crm_contacts = 
 	name: "crm_contacts"
-	label: "Contacts"
 	icon: "contact"
 	fields:
 		name: 
-			label: "Name"
 			type: "text"
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
 		description: 
-			label: "Description"
 			type: "textarea"
 		customer_id: 
-			label: "Customer"
 			type: "master_detail"
 			reference_to: "crm_customers"
-			
+		birthdate: 
+			type: "date"
+		title:
+			type: "text"
+		department:
+			type: "text"
+		email:
+			type: "text"
+		phone:
+			type: "text"
+		home_phone:
+			type: "text"
+		other_phone:
+			type: "text"
+
 	list_views:
 		default:
 			columns: ["name", "customer_id", "last_viewed"]

@@ -41,7 +41,8 @@ Package.onUse(function(api) {
     api.use('kadira:blaze-layout@2.3.0');
     api.use('kadira:flow-router@2.10.1');
 
-    api.use('steedos:autoform-bs-datetimepicker@1.0.6');
+    api.use('aldeed:autoform-bs-datetimepicker');
+    api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
     api.use('steedos:autoform-bs-minicolors@1.0.0');
 
     api.use('meteorhacks:ssr@2.2.0');
@@ -54,7 +55,6 @@ Package.onUse(function(api) {
 
 
     api.use('es5-shim@4.6.15');
-    // api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
     api.use('simple:json-routes@2.1.0');
     api.use('steedos:fullcalendar@3.4.0_1');
     api.use('vazco:universe-selectize@0.1.23');
@@ -73,6 +73,8 @@ Package.onUse(function(api) {
     api.use('steedos:autoform@0.0.1');
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
+
+    api.use('steedos:autoform-bs-datetimepicker');
 
     api.use('steedos:lightning-design-system@0.0.1');
 

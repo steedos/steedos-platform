@@ -1,7 +1,7 @@
-Creator.Objects.crm_customers = 
-	name: "crm_customers"
-	label: "Customers"
-	icon: "account"
+Creator.Objects.crm_contracts = 
+	name: "crm_contracts"
+	label: "Contracts"
+	icon: "contract"
 	fields:
 		name: 
 			label: "Name"
@@ -13,20 +13,20 @@ Creator.Objects.crm_customers =
 		description: 
 			label: "Description"
 			type: "textarea"
-		priority:
-			label: "Priority"
-			type: "select"
-			options: [
-				{label: "Hot", value: "high"},
-				{label: "Warm", value: "nomal"},
-				{label: "Cold", value: "low"}
-			]
-		phone:
-			type: "text"
-		fax:
-			type: "text"
-		website: 
-			type: "text"
+		start_date:
+			type: "date"
+		end_date: 
+			type: "date"
+		company_signed_id:
+			type: "String"
+		company_signed_date: 
+			type: "date"
+		customer_id:
+			type: "master_detail"
+			reference_to: "crm_customers"
+		customer_signed_date: 
+			type: "date"
+
 
 	list_views:
 		default:
