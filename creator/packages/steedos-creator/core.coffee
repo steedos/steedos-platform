@@ -182,9 +182,14 @@ Creator.getTabularColumns = (object_name, columns) ->
 			col = {}
 			col.data = field_name
 			col.render =  (val, type, doc) ->
-
 				if field.reference_to
-					return "<a href='" + Creator.getObjectUrl(field.reference_to, doc[field_name]) + "'>" + (Creator.Collections[field.reference_to].findOne(doc[field_name])?.name || "") + "</a>"
+					field_value = ""
+					try
+						field_value = (Creator.Collections[field.reference_to].findOne(doc[field_name])?.name || "")
+					catch e
+						return
+					
+					return "<a href='" + Creator.getObjectUrl(field.reference_to, doc[field_name]) + "'>" + field_value + "</a>"
 
 				if field_name == "name"
 					return "<a href='" + Creator.getObjectUrl(object_name, doc._id) + "'>" + val + "</a>"
@@ -195,7 +200,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 				else
 					return val;
 			col.sTitle = '<div class="slds-truncate" title="">' + t("" + object_name + "_" + field_name.replace(/\./g,"_")); + '</div>'
-		cols.push(col)
+			cols.push(col)
 
 	action_col = 
 		title: '<div class="slds-th__action"></div>'

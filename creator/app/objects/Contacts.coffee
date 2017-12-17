@@ -30,11 +30,11 @@ Creator.Objects.crm_contacts =
 
 	list_views:
 		default:
-			columns: ["name", "customer_id", "last_viewed"]
+			columns: ["name", "customer_id", "email", "phone"]
 		recent:
 			filter_scope: "all"
 		all:
 			filter_scope: "all"
-			columns: ["name", "description", "modified", "owner"]
+			columns: ["name", "description", "email", "phone", "owner"]
 		mine:
 			filter_scope: "mine"
