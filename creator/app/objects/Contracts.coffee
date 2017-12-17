@@ -38,14 +38,7 @@ Creator.Objects.crm_contracts =
 			columns: ["name", "description", "modified", "owner"]
 		mine:
 			filter_scope: "mine"
-	permissions:
-		default:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: false
+
 	related_list:
 		crm_contacts:
 			columns: ["name", "description", "modified"]

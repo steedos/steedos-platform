@@ -20,7 +20,14 @@ Creator.Objects.space_users =
 		default:
 			columns: ["name", "position", "mobile", "email"]
 	permissions:
-		default:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
+		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false

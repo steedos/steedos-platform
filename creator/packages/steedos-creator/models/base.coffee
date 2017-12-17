@@ -37,9 +37,17 @@ Creator.baseObject =
 			filter_scope: "all"
 
 	permissions:
-		allowCreate: true
-		allowDelete: true
-		allowEdit: true
-		allowRead: true
-		modifyAllRecords: false
-		viewAllRecords: false 
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 

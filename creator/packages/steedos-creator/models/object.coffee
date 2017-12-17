@@ -13,7 +13,7 @@ Creator.Objects.objects =
 		default:
 			columns: ["name", "description", "modified"]
 	permissions:
-		default:
+		user:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false

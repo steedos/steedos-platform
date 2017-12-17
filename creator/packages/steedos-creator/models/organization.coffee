@@ -13,7 +13,14 @@ Creator.Objects.organizations =
 		all:
 			filter_scope: "all"
 	permissions:
-		default:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
+		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false

@@ -252,19 +252,14 @@ Creator.getPermissions = (object_name)->
 			modifyAllRecords: false
 			viewAllRecords: false 
 	else	
-		permissions = Creator.Objects[Session.get("object_name")]?.permissions?.default
-
-	if Steedos.isSpaceAdmin()
-		permissions = 
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true 
-
-	if !permissions
-		permissions = Creator.baseObject.permissions
+		if Steedos.isSpaceAdmin()
+			permissions = Creator.Objects[Session.get("object_name")]?.permissions?.admin
+			if !permissions
+				permissions = Creator.baseObject.permissions.admin
+		else
+			permissions = Creator.Objects[Session.get("object_name")]?.permissions?.user
+			if !permissions
+				permissions = Creator.baseObject.permissions.user
 
 	return permissions
 
