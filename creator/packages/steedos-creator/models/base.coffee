@@ -10,14 +10,14 @@ Creator.baseObject =
 			type: "datetime",
 			omit: true
 		created_by:
-			type: "text",
-			omit: true
+			type: "lookup",
+			reference_to: "users"
 		modified:
 			type: "datetime",
 			omit: true
 		modified_by:
-			type: "text",
-			omit: true
+			type: "lookup",
+			reference_to: "users"
 		last_activity: 
 			type: "datetime",
 			omit: true
