@@ -15,7 +15,6 @@ Npm.depends({
 Package.onUse(function(api) {
     api.versionsFrom('1.0');
 
-    api.use('ecmascript@0.6.3');
     api.use('reactive-var@1.0.10');
     api.use('reactive-dict@1.1.8');
     api.use('coffeescript@1.11.1_4');
@@ -69,7 +68,6 @@ Package.onUse(function(api) {
     api.use('steedos:accounts@0.0.23');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');
-    api.use('steedos:creator-i18n@0.0.1');
     api.use('steedos:autoform@0.0.1');
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
@@ -78,6 +76,11 @@ Package.onUse(function(api) {
 
     api.use('steedos:lightning-design-system@0.0.1');
 
+    api.use('tap:i18n@1.7.0');
+    
+    tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
+    api.addFiles(tapi18nFiles, ['client', 'server']);
+    
     api.addFiles('lib/server_session.js');
     api.export('ServerSession');
 
