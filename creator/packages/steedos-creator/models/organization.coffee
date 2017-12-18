@@ -11,7 +11,12 @@ Creator.Objects.organizations =
 		default:
 			columns: ["name", "modified"]
 		all:
-			filter_scope: "all"
+			filter_scope: "space"
+
+	related_list:
+		space_users:
+			columns: ["name", "position", "mobile", "email"]
+
 	permissions:
 		user:
 			allowCreate: false

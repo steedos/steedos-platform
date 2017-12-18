@@ -33,15 +33,15 @@ Creator.Objects.crm_contracts =
 
 	list_views:
 		default:
-			columns: ["name", "customer_id", "company_signed_date", "company_signed_id"]
+			columns: ["name", "customer_id", "amount", "company_signed_date", "company_signed_id"]
 		recent:
-			filter_scope: "all"
+			filter_scope: "space"
 		all:
-			filter_scope: "all"
+			filter_scope: "space"
 			columns: ["name", "description", "modified", "owner"]
 		mine:
 			filter_scope: "mine"
 
 	related_list:
 		crm_contacts:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "email", "phone"]

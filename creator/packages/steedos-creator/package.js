@@ -88,6 +88,7 @@ Package.onUse(function(api) {
     
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
+    api.addFiles('models/object_permissions.coffee');
     api.addFiles('models/object_recent_viewed.coffee');
 
     api.addFiles('models/app.coffee');

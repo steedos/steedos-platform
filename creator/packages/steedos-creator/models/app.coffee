@@ -13,6 +13,8 @@ Creator.Objects.apps =
 	list_views:
 		default:
 			columns: ["name"]
+		all:
+			filter_scope: "spacex"
 	permissions:
 		user:
 			allowCreate: false

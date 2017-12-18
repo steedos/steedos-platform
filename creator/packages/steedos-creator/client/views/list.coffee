@@ -18,7 +18,11 @@ Template.creator_list.helpers
 		list_view = Creator.getListView()
 		selector = {}
 		if Session.get("spaceId") and Meteor.userId()
-			selector.space = Session.get("spaceId")
+			if list_view.filter_scope == "spacex"
+				selector.space = 
+					$in: [null,Session.get("spaceId")]
+			else
+				selector.space = Session.get("spaceId")
 			if Session.get("list_view_id") == "recent"
 				viewed = Creator.Collections.object_recent_viewed.find().fetch();
 				selector._id = 

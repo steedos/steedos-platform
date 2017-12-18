@@ -7,11 +7,18 @@ Creator.Objects.objects =
 			label: "Name"
 			type: "text"
 		description: 
-			label: "Name"
+			label: "Description"
 			type: "text"
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
+		all:
+			filter_scope: "spacex"
+
+	related_list:
+		object_permissions:
+			columns: ["name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
+
 	permissions:
 		user:
 			allowCreate: false
@@ -19,7 +26,14 @@ Creator.Objects.objects =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: true 
+		admin:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
 # db.objects._simpleSchema = new SimpleSchema
 # 	name:
 # 		type: String

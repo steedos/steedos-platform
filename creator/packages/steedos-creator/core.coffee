@@ -8,7 +8,6 @@ Creator.TabularTables = {}
 
 
 Meteor.startup ->
-	Creator.initApps()
 	_.each Creator.Objects, (obj, object_name)->
 		if db[object_name]
 			Creator.Collections[object_name] = db[object_name]
@@ -47,6 +46,7 @@ Meteor.startup ->
 				Creator.Collections[object_name].before.insert (userId, doc)->
 					doc.space = Session.get("spaceId")
 
+
 		if obj.list_views?.default?.columns
 			Creator.TabularTables[object_name] = new Tabular.Table
 				name: "creator_" + object_name,
@@ -63,6 +63,10 @@ Meteor.startup ->
 				autoWidth: true
 				changeSelector: Creator.tabularChangeSelector
 
+
+	Creator.initApps()
+	Creator.initObjects()
+	
 
 	# 初始化子表
 	_.each Creator.Objects, (obj, object_name)->
@@ -100,6 +104,16 @@ Creator.initApps = ()->
 			# 	app._id = app_id
 			# 	db.apps.update({_id: app_id}, app)
 
+Creator.initObjects = ()->
+	# if Meteor.isServer
+	# 	_.each Creator.Objects, (object, obj_id)->
+	# 		db_obj = Creator.Collections.objects.findOne(obj_id) 
+	# 		if !db_obj
+	# 			object._id = obj_id
+	# 			Creator.Collections.objects.insert(object)
+	# 		else
+	# 			Creator.Collections.objects.update({_id: obj_id}, {$set: object})
+
 Creator.getObjectSchema = (obj) ->
 
 	_.extend(obj.fields, Creator.baseObject.fields)
@@ -130,6 +144,8 @@ Creator.getObjectSchema = (obj) ->
 			if Meteor.isClient
 				if field.reference_to == "users"
 					fs.autoform.type = "selectuser"
+				else if field.reference_to == "organizations"
+					fs.autoform.type = "selectorg"
 				else
 					fs.autoform.type="universe-select"
 					fs.autoform.optionsMethod="creator.object_options"
@@ -169,10 +185,9 @@ Creator.getObjectSchema = (obj) ->
 
 
 Creator.tabularChangeSelector =  (selector, userId)-> 
-	if userId and selector?.space
+	if userId and selector.space
 		return selector
-	else
-		return {_id: "nothing"}
+	return {_id: "nothing"}
 
 Creator.getTabularColumns = (object_name, columns) ->
 	cols = []
@@ -306,7 +321,7 @@ Creator.getListView = (object_name, list_view_id)->
 		list_view = Creator.baseObject.list_views[list_view_id]
 	else
 		list_view = 
-			filter_scope: "all"
+			filter_scope: "mine"
 			columns: ["name"]
 
 	if !list_view.columns 
@@ -316,7 +331,7 @@ Creator.getListView = (object_name, list_view_id)->
 			list_view.columns = ["name"]
 
 	if !list_view.filter_scope
-		list_view.filter_scope = "all"
+		list_view.filter_scope = "mine"
 
 	return list_view
 
@@ -324,7 +339,7 @@ Creator.getApp = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
 	app = db.apps.findOne(app_id)
-	if app and !app.objects
+	if app 
 		app.objects = Creator.Apps[app_id]?.objects
 	return app
 

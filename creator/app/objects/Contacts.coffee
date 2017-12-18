@@ -32,9 +32,9 @@ Creator.Objects.crm_contacts =
 		default:
 			columns: ["name", "customer_id", "email", "phone"]
 		recent:
-			filter_scope: "all"
+			filter_scope: "space"
 		all:
-			filter_scope: "all"
+			filter_scope: "space"
 			columns: ["name", "description", "email", "phone", "owner"]
 		mine:
 			filter_scope: "mine"

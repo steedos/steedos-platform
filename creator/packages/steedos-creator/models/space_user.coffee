@@ -16,12 +16,17 @@ Creator.Objects.space_users =
 			type: "text"
 		email:
 			type: "text"
-		organization:
+		organizations: 
 			type: "lookup",
-			reference_to: "organization"
+			reference_to: "organizations"
 	list_views:
 		default:
 			columns: ["name", "organization", "position", "mobile", "email"]
+		recent:
+			filter_scope: "space"
+		all:
+			filter_scope: "space"
+
 	permissions:
 		user:
 			allowCreate: false

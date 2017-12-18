@@ -34,9 +34,9 @@ Creator.baseObject =
 		default:
 			columns: ["name"]
 		recent:
-			filter_scope: "all"
+			filter_scope: "space"
 		all:
-			filter_scope: "all"
+			filter_scope: "space"
 
 	permissions:
 		user:

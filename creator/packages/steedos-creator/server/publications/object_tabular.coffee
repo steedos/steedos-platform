@@ -9,7 +9,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 	_table = Tabular.tablesByName[tableName];
 
 	_fields = Creator.Objects[_table.collection._name]?.fields
-
+	
 	if !_fields || !_table
 		return this.ready()
 
@@ -33,7 +33,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 
 			reference_field = _fields[key]
 
-			if !_.isEmpty(reference_field.reference_to)
+			if !_.isEmpty(reference_field.reference_to) and Creator.Collections[reference_field.reference_to]
 				data.children.push {
 					find: (parent) ->
 						self.unblock();
