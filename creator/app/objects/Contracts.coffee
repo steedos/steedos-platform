@@ -13,6 +13,8 @@ Creator.Objects.crm_contracts =
 		description: 
 			label: "Description"
 			type: "textarea"
+		amount:
+			type: "currency"
 		start_date:
 			type: "date"
 		end_date: 

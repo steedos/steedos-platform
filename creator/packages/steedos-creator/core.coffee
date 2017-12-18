@@ -35,10 +35,7 @@ Meteor.startup ->
 					doc.modified = new Date();
 
 				Creator.Collections[object_name].after.insert (userId, doc)->
-					if object_name != "object_recent_viewed"
-						Creator.Collections.object_recent_viewed.insert
-							object_name: object_name
-							record_id: doc._id
+					Meteor.call "object_recent_viewed", object_name, doc._id
 
 				Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
 					modifier.$set = modifier.$set || {};
@@ -144,6 +141,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "select"
 			fs.autoform.options = field.options
 			fs.autoform.firstOption = ""
+		else if field.type == "currency"
+			fs.type = "number"
 		else if field.type == "number"
 			fs.type = "number"
 		else if field.type == "boolean"
