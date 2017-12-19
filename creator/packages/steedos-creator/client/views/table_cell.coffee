@@ -22,3 +22,9 @@ Template.creator_table_cell.helpers
 			href = Creator.getObjectUrl(this.object_name, this._id)
 
 		return href
+
+	editable: ()->
+		if this.field.reference_to or this.field_name == "name" or this.field.omit
+			return false
+		else
+			return true

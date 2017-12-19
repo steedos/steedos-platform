@@ -1,5 +1,4 @@
 <template name="creator_table_cell">
-	{{#if val}}
 	<span class="slds-grid slds-grid_align-spread">
 		<span class="slds-truncate" title="Prospecting">
 			{{#if cellHref}}
@@ -9,11 +8,16 @@
 			{{/if}}
 		</span>
 		<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1" title="Edit Stage: Item 2">
-			<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
-				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#edit"></use>
-			</svg>
+			{{#if editable}}
+				<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#edit"></use>
+				</svg>
+			{{else}}
+				<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#lock"></use>
+				</svg>
+			{{/if}}
 			<span class="slds-assistive-text">Edit Stage: Item 2</span>
 		</button>
 	</span>
-	{{/if}}
 </template>
