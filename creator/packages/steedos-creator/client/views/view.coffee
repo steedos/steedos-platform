@@ -3,6 +3,9 @@ Template.creator_view.helpers
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
 
+	schema: ()->
+		return Creator.Schemas[Session.get("object_name")]
+		
 	hasPermission: (permissionName)->
 		permissions = Creator.getObject()?.permissions?.default
 		if permissions

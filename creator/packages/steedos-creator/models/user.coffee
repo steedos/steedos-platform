@@ -12,6 +12,7 @@ Creator.Objects.users =
 			columns: ["name", "username"]
 		all:
 			filter_scope: "all"
+			filters: "{_id: {{userId}}}"
 	permissions:
 		user:
 			allowCreate: false

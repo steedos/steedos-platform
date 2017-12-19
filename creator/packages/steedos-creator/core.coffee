@@ -2,6 +2,7 @@
 
 Creator.Apps = {}
 Creator.Objects = {}
+Creator.Schemas = {}
 Creator.Collections = {}
 Creator.TabularTables = {}
 
@@ -9,14 +10,17 @@ Creator.TabularTables = {}
 
 Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->
+		
 		if db[object_name]
 			Creator.Collections[object_name] = db[object_name]
 		else if !Creator.Collections[object_name]
 			Creator.Collections[object_name] = new Meteor.Collection(object_name)
+		
 		schema = Creator.getObjectSchema(obj)
-		_simpleSchema = new SimpleSchema(schema)
-		Creator.Collections[object_name].attachSchema(_simpleSchema)
-			
+		Creator.Schemas[object_name] = new SimpleSchema(schema)
+		if object_name != "users"
+			Creator.Collections[object_name].attachSchema(Creator.Schemas[object_name])
+				
 		if Meteor.isServer
 			Creator.Collections[object_name].allow
 				insert: (userId, doc) ->
@@ -126,6 +130,8 @@ Creator.getObjectSchema = (obj) ->
 		fs.autoform = {}
 		if field.type == "text"
 			fs.type = "String"
+		else if field.type == "[text]"
+			fs.type = "[String]"
 		else if field.type == "textarea"
 			fs.type = "String"
 			fs.autoform.type = "textarea"

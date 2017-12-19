@@ -15,12 +15,16 @@ Template.creator_list.helpers
 			return permissions[permissionName]
 
 	selector: ()->
+		object_name = Session.get("object_name")
 		list_view = Creator.getListView()
 		selector = {}
 		if Session.get("spaceId") and Meteor.userId()
 			if list_view.filter_scope == "spacex"
 				selector.space = 
 					$in: [null,Session.get("spaceId")]
+			else if object_name == "users"
+				selector.space = 
+					"$exists": false
 			else
 				selector.space = Session.get("spaceId")
 			if Session.get("list_view_id") == "recent"
