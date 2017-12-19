@@ -24,7 +24,7 @@ Template.creator_table_cell.helpers
 		return href
 
 	editable: ()->
-		if this.field.reference_to or this.field_name == "name" or this.field.omit
+		if this.field.reference_to or this.field.omit
 			return false
 		else
 			return true
