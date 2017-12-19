@@ -34,6 +34,20 @@ Template.creatorNavigation.helpers
 	spacesSwitcherVisible: ->
 		return db.spaces.find().count()>1;
 
+	displayName: ->
+		if Meteor.user()
+			return Meteor.user().displayName()
+		else
+			return " "
+
+	avatar: () ->
+		return Meteor.user()?.avatar
+
+	avatarURL: (avatar,w,h,fs) ->
+		return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?w=#{w}&h=#{h}&fs=#{fs}&avatar=#{avatar}");
+
+	signOutUrl: ()->
+		return Steedos.absoluteUrl("/steedos/logout")
 
 Template.creatorNavigation.events
 

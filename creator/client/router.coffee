@@ -3,7 +3,7 @@ FlowRouter.route '/',
 		if !Meteor.userId()
 			FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
 		else
-			FlowRouter.go '/creator'
+			FlowRouter.go '/app/creator'
 
 
 Meteor.startup ->
