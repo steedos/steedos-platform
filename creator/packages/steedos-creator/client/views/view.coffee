@@ -57,7 +57,7 @@ Template.creator_view.helpers
 			if permissions.viewAllRecords 
 				return selector
 			else if permissions.allowRead and Meteor.userId()
-				selecor.owner = Meteor.userId()
+				selector.owner = Meteor.userId()
 				return selector
 		return {_id: "nothing to return"}
 

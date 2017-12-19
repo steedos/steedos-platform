@@ -56,8 +56,8 @@ Package.onUse(function(api) {
     api.use('es5-shim@4.6.15');
     api.use('simple:json-routes@2.1.0');
     api.use('steedos:fullcalendar@3.4.0_1');
-    api.use('vazco:universe-selectize@0.1.23');
-    api.use('vazco:universe-autoform-select@0.3.10');
+	api.use('steedos:lookup@0.1.23');
+	api.use('steedos:autoform-lookup@0.3.10');
 
     api.use('natestrauser:select2');
     api.use('aldeed:autoform-select2')

@@ -5,8 +5,19 @@ Meteor.methods
 			if options.params.space
 				query.space =
 					$in: [null, options.params.space]
-				if options.searchText 
-					query.name = {$regex: options.searchText}
+
+				selected = options?.selected || []
+
+				if options?.values?.length
+					if options.searchText
+						query.$or = [{_id: {$in: options.values}}, {name:{$regex: options.searchText}}]
+					else
+						query.$or = [{_id: {$in: options.values}}]
+				else
+					if options.searchText
+						query.name = {$regex: options.searchText}
+					query._id = {$nin: selected}
+
 				collection = Creator.Collections[options.params.reference_to]
 				if collection
 					records = collection.find(query, {limit: 10}).fetch()

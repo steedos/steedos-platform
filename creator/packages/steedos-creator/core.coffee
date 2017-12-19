@@ -148,11 +148,16 @@ Creator.getObjectSchema = (obj) ->
 				else if field.reference_to == "organizations"
 					fs.autoform.type = "selectorg"
 				else
-					fs.autoform.type="universe-select"
+					if field.reference_to
+						_link = "/app/#{Session.get('app_id')}/#{field.reference_to}/view/"
+					fs.autoform.type="steedos-lookup"
 					fs.autoform.optionsMethod="creator.object_options"
+					fs.autoform.uniPlaceholder = ()->
+						t("please_select") + field_name
 					fs.autoform.optionsMethodParams=
 						reference_to: field.reference_to
 						space: Session.get("spaceId")
+						link: _link
 		else if field.type == "select"
 			fs.type = "String"
 			fs.autoform.type = "select"

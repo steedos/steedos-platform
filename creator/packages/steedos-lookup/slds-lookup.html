@@ -1,0 +1,156 @@
+<template name="universeSelectize">
+	<div class="slds-form-element steedos-lookups">
+		<div class="slds-form-element__control">
+			{{#if disabled}}
+				<div class="outputLookupContainer forceOutputLookupWithPreview">
+				{{#each _readonlyValues}}
+					<a class="{{#if hasLink}}textUnderline outputLookupLink {{/if}}slds-truncate forceOutputLookup" data-refid="recordId"
+					   data-recordid="{{value}}" data-special-link="true" rel="noreferrer" title="" data-aura-class="forceOutputLookup" href="{{outPutLookupHref value}}">{{label}}</a>{{#unless (isLast @index)}},{{/unless}}
+				{{/each}}
+				</div>
+			{{else}}
+				<div class="slds-combobox_container {{#if
+						isReadOnly}}slds-has-inline-listbox{{else}}slds-has-object-switcher{{/if}}">
+					{{!--
+					<div class="slds-listbox_object-switcher slds-dropdown-trigger slds-dropdown-trigger_click">
+						<button class="slds-button slds-button_icon" aria-haspopup="true"
+								title="Select object to search in">
+							  <span class="slds-icon_container slds-icon-standard-account" title="Accounts">
+								<svg class="slds-icon slds-icon_small" aria-hidden="true">
+								  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+									   xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/svg/symbols.svg#account"/>
+								</svg>
+								<span class="slds-assistive-text">Searching in: Accounts</span>
+							  </span>
+							<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+								<use xmlns:xlink="http://www.w3.org/1999/xlink"
+									 xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down"/>
+							</svg>
+						</button>
+					</div>
+					--}}
+					<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click {{#if
+							open}}slds-is-open{{/if}}" aria-expanded="false"
+						 aria-haspopup="listbox" role="combobox">
+						<select name={{name}} multiple={{multiple}} id={{id}} data-schema-key={{dataSchemaKey}}>
+							<option value=""></option>
+							{{#each getItems}}
+								<option value={{value}} selected={{selected}}>{{label}}</option>
+							{{/each}}
+						</select>
+
+						<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right"
+							 role="none">
+							<span
+									class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon"
+									title="account"><svg class="slds-icon slds-icon_small" aria-hidden="true"><use
+									xmlns:xlink="http://www.w3.org/1999/xlink"
+									xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#account"></use></svg>
+								<span
+										class="slds-assistive-text">account Salesforce.com, Inc.</span>
+							</span>
+							{{#with _value}}
+								<input type="text"
+									   class="slds-input slds-combobox__input steedos-lookups-input {{#if
+											   isReadOnly}}has-value{{/if}}"
+									   id="combobox-unique-id"
+									   aria-autocomplete="list"
+									   aria-controls="listbox-unique-id"
+									   autocomplete="off"
+									   role="textbox"
+									   placeholder="{{getPlaceholder}}"
+									   aria-activedescendant="{{value}}" readonly="{{isReadOnly}}" value="{{label}}">
+								{{#if isReadOnly}}
+									<a class="slds-button slds-button_icon slds-input__icon slds-input__icon_right slds-pill__remove"
+											title="Remove selected option">
+										<svg class="slds-button__icon" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink"
+												 xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close"></use>
+										</svg>
+										<span class="slds-assistive-text">Remove selected option</span>
+									</a>
+								{{else}}
+									<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+										<svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
+											 aria-hidden="true">
+										  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+											   xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#search"/>
+										</svg>
+									</span>
+								{{/if}}
+							{{/with}}
+						</div>
+						{{!--选择项--}}
+						<div id="listbox-unique-id" role="listbox">
+							<ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
+								role="presentation">
+								{{#each getItemsUnselected}}
+									<li role="presentation" data-value={{value}} data-index={{@index}} data-selectable
+										class="listbox__item {{isPlaceholder}}">
+										<span id="{{value}}"
+											  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+											  role="option">
+											{{!----}}
+											<span class="slds-media__figure">
+												<span class="slds-icon_container slds-icon-standard-account"
+													  title="Description of icon when needed">
+													<svg class="slds-icon slds-icon_small" aria-hidden="true">
+														<use
+																xmlns:xlink="http://www.w3.org/1999/xlink"
+																xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#account"></use>
+													</svg>
+													<span class="slds-assistive-text">描述信息</span>
+												</span>
+											</span>
+
+											<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
+												<span class="slds-listbox__option-text slds-listbox__option-text_entity">{{label}}</span>
+												{{!--<span class="slds-listbox__option-meta slds-listbox__option-meta_entity"></span>--}}
+											</span>
+										</span>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+					</div>
+				</div>
+				{{#if isMultiple}}
+				{{!--已选中的(多选)--}}
+					<div id="listbox-selections-unique-id" role="listbox" aria-orientation="horizontal">
+						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small" role="group"
+							aria-label="Selected Options:">
+							{{#each getItemsSelected}}
+								<li role="presentation" class="slds-listbox__item" data-value={{value}}>
+							  <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+								{{!----}}
+								  <span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
+								  <span class="slds-icon_container slds-icon-standard-account"
+										title="Description of icon when needed">
+									<svg class="slds-icon" aria-hidden="true">
+									  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+										   xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#account"/>
+									</svg>
+									<span class="slds-assistive-text">Description of icon</span>
+								  </span>
+								</span>
+								<span class="slds-pill__label" title="Acme">{{label}}</span>
+								<span class="slds-icon_container slds-pill__remove" title="Remove">
+								  <svg class="slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink"
+										 xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close"/>
+								  </svg>
+								  <span class="slds-assistive-text">Press delete or backspace to remove</span>
+								</span>
+							  </span>
+								</li>
+							{{/each}}
+
+						</ul>
+					</div>
+				{{/if}}
+
+
+			{{/if}}
+		</div>
+	</div>
+</template>

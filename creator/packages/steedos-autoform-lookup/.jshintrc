@@ -1,0 +1,33 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "freeze": true,
+    "immed": true,
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "quotmark": true,
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "trailing": true,
+    "maxcomplexity": 12,
+    "maxlen": 120,
+    "globalstrict": true,
+    "devel": true,
+    "node": true,
+    "browser": true,
+    "jquery": true,
+    "esnext": true,
+    "globals": {
+        "ReactiveVar": false,
+        "AutoForm": false,
+        "Meteor": false,
+        "Template": false,
+        "_": false,
+        "Package": false,
+        "getSlug": false
+    }
+}
