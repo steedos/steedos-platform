@@ -6,6 +6,7 @@ Creator.Schemas = {}
 Creator.Collections = {}
 Creator.TabularTables = {}
 
+@PermissionSets = {}
 
 
 Meteor.startup ->
