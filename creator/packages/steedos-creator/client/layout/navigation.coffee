@@ -31,7 +31,10 @@ Template.creatorNavigation.helpers
 				return space.name
 		return t("none_space_selected_title")
 
-		
+	spacesSwitcherVisible: ->
+		return db.spaces.find().count()>1;
+
+
 Template.creatorNavigation.events
 
 	"click .switchSpace": ->

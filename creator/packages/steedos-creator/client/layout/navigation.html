@@ -31,10 +31,23 @@
 					<span class="slds-truncate" title="Home">Home</span>
 				</a>
 			</li> -->
+			
+			{{#each app_objects}}
+				<li class="slds-context-bar__item {{object_class_name this}}">
+					<a href="{{object_url}}" class="slds-context-bar__label-action" title="{{_ object_i.name}}">
+						<span class="slds-truncate" title="{{_ object_i.name}}">{{_ object_i.name}}</span>
+					</a>
+				</li>
+			{{/each}}
+		</ul>
+	</nav>
+	<div class="slds-context-bar__tertiary slds-col--bump-left navRight" data-aura-rendered-by="197:19;a">
+		<ul class="slds-grid">
 			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
 				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
 					<span class="slds-truncate" title="Menu Item">{{spaceName}}</span>
 				</a>
+				{{if spacesSwitcherVisible}}
 				<div class="slds-context-bar__icon-action slds-p-left_none">
 					<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
 						<svg class="slds-button__icon" aria-hidden="true">
@@ -57,16 +70,9 @@
 						{{/each}}
 					</ul>
 				</div>
+				{{/if}}
 			</li>
-			
-			{{#each app_objects}}
-				<li class="slds-context-bar__item {{object_class_name this}}">
-					<a href="{{object_url}}" class="slds-context-bar__label-action" title="{{_ object_i.name}}">
-						<span class="slds-truncate" title="{{_ object_i.name}}">{{_ object_i.name}}</span>
-					</a>
-				</li>
-			{{/each}}
 		</ul>
-	</nav>
+	</div>
 </div>
 </template>
