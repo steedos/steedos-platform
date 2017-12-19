@@ -31,49 +31,33 @@
 					<span class="slds-truncate" title="Home">Home</span>
 				</a>
 			</li> -->
-			<!-- <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
+			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
 				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-					<span class="slds-truncate" title="Menu Item">Menu Item</span>
+					<span class="slds-truncate" title="Menu Item">{{spaceName}}</span>
 				</a>
 				<div class="slds-context-bar__icon-action slds-p-left_none">
 					<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
 						<svg class="slds-button__icon" aria-hidden="true">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
 						</svg>
-						<span class="slds-assistive-text">Open menu item submenu</span>
+						<span class="slds-assistive-text">切换工作区</span>
 					</button>
 				</div>
 				<div class="slds-dropdown slds-dropdown_right">
 					<ul class="slds-dropdown__list" role="menu">
+						<li class="slds-dropdown__header" role="separator">
+							<span class="slds-text-title_caps">切换工作区</span>
+						</li>
+        				{{#each spaces}}
 						<li class="slds-dropdown__item" role="presentation">
-							<a href="javascript:void(0);" role="menuitem" tabindex="-1">
-								<span class="slds-truncate" title="[object Object],Main action">
-									<svg class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#add" />
-									</svg>Main action</span>
+							<a href="javascript:void(0);" class="switchSpace" role="menuitem" tabindex="-1">
+								<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
 							</a>
 						</li>
-						<li class="slds-dropdown__header slds-has-divider_top-space" role="separator">
-							<span class="slds-text-title_caps">Menu header</span>
-						</li>
-						<li class="slds-dropdown__item" role="presentation">
-							<a href="javascript:void(0);" role="menuitem" tabindex="-1">
-								<span class="slds-truncate" title="Menu Item One">Menu Item One</span>
-							</a>
-						</li>
-						<li class="slds-dropdown__item" role="presentation">
-							<a href="javascript:void(0);" role="menuitem" tabindex="-1">
-								<span class="slds-truncate" title="Menu Item Two">Menu Item Two</span>
-							</a>
-						</li>
-						<li class="slds-dropdown__item" role="presentation">
-							<a href="javascript:void(0);" role="menuitem" tabindex="-1">
-								<span class="slds-truncate" title="Menu Item Three">Menu Item Three</span>
-							</a>
-						</li>
+						{{/each}}
 					</ul>
 				</div>
-			</li> -->
+			</li>
 			
 			{{#each app_objects}}
 				<li class="slds-context-bar__item {{object_class_name this}}">
