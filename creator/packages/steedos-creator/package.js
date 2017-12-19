@@ -75,6 +75,7 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-bs-datetimepicker');
 
     api.use('steedos:lightning-design-system@0.0.1');
+    api.use('steedos:datatables-extensions');
 
     api.use('tap:i18n@1.7.0');
     
@@ -126,5 +127,7 @@ Package.onUse(function(api) {
     api.addFiles('client/views/view.less', 'client');
     api.addFiles('client/views/app_home.html', 'client');
 
+    api.addFiles('client/views/table_cell.html', 'client');
+    api.addFiles('client/views/table_cell.coffee', 'client');
     api.addFiles('client/views/table_actions.html', 'client');
 });

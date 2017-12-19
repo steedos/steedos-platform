@@ -62,6 +62,7 @@ Meteor.startup ->
 				searching: true
 				autoWidth: true
 				changeSelector: Creator.tabularChangeSelector
+		
 
 
 	Creator.initApps()
@@ -197,24 +198,22 @@ Creator.getTabularColumns = (object_name, columns) ->
 			col = {}
 			col.data = field_name
 			col.render =  (val, type, doc) ->
-				if field.reference_to
-					field_value = ""
-					try
-						field_value = (Creator.Collections[field.reference_to].findOne(doc[field_name])?.name || "")
-					catch e
-						return
-					
-					return "<a href='" + Creator.getObjectUrl(field.reference_to, doc[field_name]) + "'>" + field_value + "</a>"
-
-				if field_name == "name"
-					return "<a href='" + Creator.getObjectUrl(object_name, doc._id) + "'>" + val + "</a>"
-				if (val instanceof Date) 
-					return moment(val).format('YYYY-MM-DD H:mm')
-				else if (val == null)
-					return ""
-				else
-					return val;
+				
 			col.sTitle = '<div class="slds-truncate" title="">' + t("" + object_name + "_" + field_name.replace(/\./g,"_")); + '</div>'
+			# col.createdCell = (node, cellData, rowData) ->
+			# 	$(node).css()
+			col.className = "slds-cell-edit cellContainer"
+			col.createdCell = (cell, val, doc) ->
+				Blaze.renderWithData(Template.creator_table_cell, {_id: doc._id, val: val, doc: doc, field: field, field_name: field_name, object_name:object_name}, cell);
+
+			# col.tmpl = Meteor.isClient && Template.creator_table_cell
+			# col.tmplContext = (rowData)->
+			# 	return {
+			# 		cell: rowData[field_name],
+			# 		row: rowData
+			# 		field_name: field_name
+			# 	}
+
 			cols.push(col)
 
 	action_col = 
