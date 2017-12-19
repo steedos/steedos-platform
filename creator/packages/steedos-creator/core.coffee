@@ -152,8 +152,6 @@ Creator.getObjectSchema = (obj) ->
 						_link = "/app/#{Session.get('app_id')}/#{field.reference_to}/view/"
 					fs.autoform.type="steedos-lookup"
 					fs.autoform.optionsMethod="creator.object_options"
-					fs.autoform.uniPlaceholder = ()->
-						t("please_select") + field_name
 					fs.autoform.optionsMethodParams=
 						reference_to: field.reference_to
 						space: Session.get("spaceId")

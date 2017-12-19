@@ -605,15 +605,18 @@ Template.universeSelectize.helpers({
 		return false;
 	},
 
-	getPlaceholder: function () {
+	// getPlaceholder: function () {
+	// 	placeholder = Template.instance().data.placeholder || ""
+	//
+	// 	if(_.isFunction(placeholder)){
+	// 		return placeholder()
+	// 	}
+	//
+	// 	return placeholder
+	// },
 
-		placeholder = Template.instance().data.placeholder || ""
-
-		if(_.isFunction(placeholder)){
-			return placeholder()
-		}
-
-		return placeholder
+	getFieldName: function () {
+		return Template.instance().data.name;
 	}
 });
 
