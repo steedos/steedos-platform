@@ -48,7 +48,7 @@
 										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 											<ul class="slds-dropdown__list slds-show">
 												<li class="slds-dropdown__item crm-header-menu-item delete-creator" role="presentation">
-													<a role="option" tabindex="-1" href="javascript:void(0);">
+													<a role="option" tabindex="-1">
 														<span class="">删除</span>
 													</a>
 												</li>
@@ -65,10 +65,10 @@
 					<div class="slds-tabs_card slds-tabs_default creator-view-tabs_default" style="padding: 15px;">
 						<ul class="slds-tabs_default__nav" role="tablist">
 							<li class="slds-tabs_default__item" title="Item Two" role="presentation">
-								<a class="slds-tabs_default__link creator-view-tabs-link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" data-tab="creator-tabular">相关</a>
+								<a class="slds-tabs_default__link creator-view-tabs-link" role="tab" tabindex="-1" aria-selected="false" data-tab="creator-tabular">相关</a>
 							</li>
 							<li class="slds-tabs_default__item slds-is-active" title="Item One" role="presentation">
-								<a class="slds-tabs_default__link creator-view-tabs-link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" data-tab="creator-quick-form">详细信息</a>
+								<a class="slds-tabs_default__link creator-view-tabs-link" role="tab" tabindex="0" aria-selected="true" data-tab="creator-quick-form">详细信息</a>
 							</li>
 						</ul>
 						<div id="creator-tabular" class="slds-tabs_default__content creator-view-tabs-content slds-hide" role="tabpanel">
@@ -98,33 +98,6 @@
 
 	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
 
-	<!-- <div class="navigation-bar">
-
-			<a href="{{backUrl}}"><button type="button" class="btn btn-default" name="navigation-back"><i class="ion ion-android-arrow-back"></i></button></a>
-
-			<span class="navigation-title">
-				{{record.name}}
-			</span>
-
-			<div class="pull-right">
-				{{#if hasPermission "allowEdit"}}
-					{{#afModal class="btn btn-primary creator-edit" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
-						{{_ "Edit"}}
-					{{/afModal}}
-				{{/if}}
-			</div>
-	</div>
-	<div class="admin-content">
-		<div class="box-body" style="display: block;">
-			{{#if showForm}}
-				{{> quickForm collection=collection doc=record id="viewRecordForm" type="disabled"}}
-			{{/if}}
-
-			{{#each related_list}}
-				{{> tabular table=this.tabular_table selector=related_selector class="table table-striped table-bordered table-condensed table-creator"}}
-			{{/each}}
-		</div>
-	</div> -->
-
+	<!-- {{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="remove" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}} -->
 
 </template> 

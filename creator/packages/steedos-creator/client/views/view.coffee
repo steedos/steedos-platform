@@ -70,6 +70,30 @@ Template.creator_view.events
 	'click .edit-creator': (event) ->
 		$(".creator-edit").click()
 
+	'click .delete-creator': (event) ->
+		object_name = Session.get('object_name')
+		record = Creator.getObjectRecord()
+
+		swal
+			title: "删除#{t(object_name)}"
+			text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+			html: true
+			showCancelButton:true
+			confirmButtonText: t('Delete')
+			cancelButtonText: t('Cancel')
+			(option) ->
+				if option
+					Creator.Collections[object_name].remove {_id: record._id}, (error, result) ->
+						if error
+							toastr.error error.reason
+						else
+							info = t(object_name) + '"' + record.name + '"' + "已删除"
+							toastr.success info
+
+							appid = Session.get("app_id")
+							FlowRouter.go "/app/#{appid}/#{object_name}/list"
+
+
 	'click .creator-view-tabs-link': (event) ->
 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
 		$(".creator-view-tabs-link").attr("aria-selected", false)

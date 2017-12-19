@@ -1,5 +1,29 @@
 <template name="creator_table_actions">
-	<span class="slds-grid slds-grid--align-spread" data-aura-rendered-by="15537:0"><div class="forceVirtualActionMarker forceVirtualAction" data-aura-rendered-by="15525:0" data-aura-class="forceVirtualAction"><a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-aura-rendered-by="15526:0"><span class="slds-icon_container slds-icon-utility-down" data-aura-rendered-by="15529:0"><span data-aura-rendered-by="15532:0" class="lightningPrimitiveIcon" data-aura-class="lightningPrimitiveIcon"><svg class="slds-icon slds-icon-text-default slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="down">
-	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down"></use>
-	</svg></span><span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span></span></a></div></span>
+	<span class="slds-grid slds-grid--align-spread creator-table-actions">
+		<div class="forceVirtualActionMarker forceVirtualAction">
+			<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+				<span class="slds-icon_container slds-icon-utility-down">
+					<span class="lightningPrimitiveIcon">
+						<svg class="slds-icon slds-icon-text-default slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="down">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down">
+							</use>
+						</svg>
+					</span>
+					<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
+				</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+				<ul class="slds-dropdown__list slds-show">
+					<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+						<a role="option" tabindex="-1" class="item-edit-action" data-id="{{this._id}}">
+							<span class="">编辑</span>
+						</a>
+						<a role="option" tabindex="-1" class="item-delete-action" data-id="{{this._id}}">
+							<span class="">删除</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</span>
 </template>

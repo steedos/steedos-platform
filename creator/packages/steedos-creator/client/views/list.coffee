@@ -81,3 +81,34 @@ Template.creator_list.events
 			Creator.TabularTables[Session.get("object_name")].options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
 			Session.set("list_view_id", list_view_id)
 			Session.set("list_view_visible", true)
+
+	'click .item-edit-action': (event) ->
+		_id = event.currentTarget.dataset?.id
+		object_name = Session.get("object_name")
+
+		if _id
+			record = Creator.Collections[object_name].findOne _id
+			console.log record
+			Session.set 'cmDoc', record
+			$(".btn.creator-edit").click()
+
+	'click .item-delete-action': (event) ->
+		object_name = Session.get('object_name')
+		_id = event.currentTarget.dataset?.id
+		record = Creator.Collections[object_name].findOne _id
+
+		swal
+			title: "删除#{t(object_name)}"
+			text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+			html: true
+			showCancelButton:true
+			confirmButtonText: t('Delete')
+			cancelButtonText: t('Cancel')
+			(option) ->
+				if option
+					Creator.Collections[object_name].remove {_id: _id}, (error, result) ->
+						if error
+							toastr.error error.reason
+						else
+							info = t(object_name) + '"' + record.name + '"' + "已删除"
+							toastr.success info
