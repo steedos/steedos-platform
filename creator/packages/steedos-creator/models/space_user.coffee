@@ -16,7 +16,7 @@ Creator.Objects.space_users =
 			type: "text"
 		email:
 			type: "text"
-		organizations: 
+		organization: 
 			type: "lookup",
 			reference_to: "organizations"
 	list_views:

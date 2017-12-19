@@ -1,7 +1,7 @@
 Creator.Objects.apps = 
 	name: "apps"
 	label: "Apps"
-	icon: "orders"
+	icon: "apps"
 	fields:
 		name: 
 			label: "Name"

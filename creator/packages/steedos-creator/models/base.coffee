@@ -53,3 +53,13 @@ Creator.baseObject =
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: true 
+
+	object_actions:
+		add: ()->
+			return
+	record_actions:
+		edit: (record_id)->
+			return
+		delete: (record_id)->
+			return
+

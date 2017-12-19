@@ -1,7 +1,7 @@
 Creator.Objects.objects = 
 	name: "objects"
 	label: "Objects"
-	icon: "ion-ios-people-outline"
+	icon: "orders"
 	fields:
 		name: 
 			label: "Name"

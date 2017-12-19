@@ -7,19 +7,19 @@
 
 Template.creator_table_cell.helpers
 	cellData: ()->
-
+		val = this.val
 		if this.field.reference_to
 			try
-				this.val = (Creator.Collections[this.field.reference_to].findOne(this.val)?.name || "")
+				val = (Creator.Collections[this.field.reference_to].findOne(this.val)?.name || "")
 			catch e
 				return
 
-		if (this.val instanceof Date) 
-			this.val =  moment(this.val).format('YYYY-MM-DD H:mm')
+		if (val instanceof Date) 
+			val =  moment(this.val).format('YYYY-MM-DD H:mm')
 		else if (this.val == null)
-			this.val =  ""
+			val =  ""
 
-		return this.val
+		return val
 
 	cellHref: ()->
 
