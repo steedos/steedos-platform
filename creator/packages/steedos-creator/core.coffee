@@ -297,10 +297,10 @@ Creator.getRecordPermissions = (object_name, record, userId)->
 
 	permissions = Creator.getPermissions(object_name)
 
-	if permission.modifyAllRecords and record?.owner? != Meteor.userId()
+	if permissions.modifyAllRecords and record?.owner? != Meteor.userId()
 		permissions.allowEdit = false
 
-	if permission.viewAllRecords and record?.owner? != Meteor.userId()
+	if permissions.viewAllRecords and record?.owner? != Meteor.userId()
 		permissions.allowRead = false
 		
 	return permissions
