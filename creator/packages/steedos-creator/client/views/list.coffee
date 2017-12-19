@@ -27,14 +27,28 @@ Template.creator_list.helpers
 				viewed = Creator.Collections.object_recent_viewed.find().fetch();
 				selector._id = 
 					"$in": _.pluck viewed, "record_id"
-			permissions = Creator.getPermissions()
-			if permissions.viewAllRecords 
-				if list_view.filter_scope == "mine"
+			if list_view.filters
+				try 
+					filters = list_view.filters
+					filters = filters.replace "{{userId}}", '"' + Meteor.userId() + '"'
+					filters = filters.replace "{{spaceId}}", '"' + Session.get("spaceId") + '"'
+					filters = "filters="+filters
+					filters_obj = eval(filters)
+					# selector = ["$and": [selector, filters_obj]]
+					selector = _.extend selector, filters_obj
+					return selector
+				catch e
+					console.log e
+					return
+			else
+				permissions = Creator.getPermissions()
+				if permissions.viewAllRecords 
+					if list_view.filter_scope == "mine"
+						selector.owner = Meteor.userId()
+					return selector
+				else if permissions.allowRead
 					selector.owner = Meteor.userId()
-				return selector
-			else if permissions.allowRead
-				selector.owner = Meteor.userId()
-				return selector
+					return selector
 		return {_id: "nothing"}
 
 	object: ()->

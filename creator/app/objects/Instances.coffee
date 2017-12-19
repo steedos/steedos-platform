@@ -20,9 +20,25 @@ Creator.Objects.instances =
 	list_views:
 		default:
 			columns: ["name", "applicant", "applicant_organization", "modified"]
-		recent:
+		inbox:
 			filter_scope: "space"
-		all:
+			filters: "{inbox_users: {{userId}}}"
+		outbox:
 			filter_scope: "space"
-		mine:
-			filter_scope: "mine"
+			filters: "{outbox_users: {{userId}}}"
+
+	permissions:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
+		admin:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 

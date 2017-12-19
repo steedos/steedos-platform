@@ -10,6 +10,8 @@ Creator.Objects.users =
 	list_views:
 		default:
 			columns: ["name", "username"]
+		all:
+			filter_scope: "all"
 	permissions:
 		user:
 			allowCreate: false
@@ -17,11 +19,11 @@ Creator.Objects.users =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: false 
 		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: false 

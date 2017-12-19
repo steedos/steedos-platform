@@ -12,34 +12,34 @@ Meteor.startup ->
 		if db[object_name]
 			Creator.Collections[object_name] = db[object_name]
 		else if !Creator.Collections[object_name]
-			schema = Creator.getObjectSchema(obj)
-			_simpleSchema = new SimpleSchema(schema)
 			Creator.Collections[object_name] = new Meteor.Collection(object_name)
-			Creator.Collections[object_name].attachSchema(_simpleSchema)
-				
-			if Meteor.isServer
-				Creator.Collections[object_name].allow
-					insert: (userId, doc) ->
-						return true
-					update: (userId, doc) ->
-						return true
-					remove: (userId, doc) ->
-						return true
+		schema = Creator.getObjectSchema(obj)
+		_simpleSchema = new SimpleSchema(schema)
+		Creator.Collections[object_name].attachSchema(_simpleSchema)
+			
+		if Meteor.isServer
+			Creator.Collections[object_name].allow
+				insert: (userId, doc) ->
+					return true
+				update: (userId, doc) ->
+					return true
+				remove: (userId, doc) ->
+					return true
 
-				Creator.Collections[object_name].before.insert (userId, doc)->
-					doc.owner = userId
-					doc.created_by = userId;
-					doc.created = new Date();
-					doc.modified_by = userId;
-					doc.modified = new Date();
+			Creator.Collections[object_name].before.insert (userId, doc)->
+				doc.owner = userId
+				doc.created_by = userId;
+				doc.created = new Date();
+				doc.modified_by = userId;
+				doc.modified = new Date();
 
-				Creator.Collections[object_name].after.insert (userId, doc)->
-					Meteor.call "object_recent_viewed", object_name, doc._id
+			Creator.Collections[object_name].after.insert (userId, doc)->
+				Meteor.call "object_recent_viewed", object_name, doc._id
 
-				Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
-					modifier.$set = modifier.$set || {};
-					modifier.$set.modified_by = userId
-					modifier.$set.modified = new Date();
+			Creator.Collections[object_name].before.update (userId, doc, fieldNames, modifier, options)->
+				modifier.$set = modifier.$set || {};
+				modifier.$set.modified_by = userId
+				modifier.$set.modified = new Date();
 
 
 		if Meteor.isClient

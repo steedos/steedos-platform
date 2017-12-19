@@ -55,11 +55,11 @@ Creator.baseObject =
 			viewAllRecords: true 
 
 	object_actions:
-		add: ()->
+		add: (object_name)->
 			return
 	record_actions:
-		edit: (record_id)->
+		edit: (object_name, record_id)->
 			return
-		delete: (record_id)->
+		delete: (object_name, record_id)->
 			return
 
