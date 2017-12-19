@@ -18,8 +18,8 @@ Meteor.startup ->
 		
 		schema = Creator.getObjectSchema(obj)
 		Creator.Schemas[object_name] = new SimpleSchema(schema)
-		if object_name != "users"
-			Creator.Collections[object_name].attachSchema(Creator.Schemas[object_name])
+		# if object_name != "users"
+			# Creator.Collections[object_name].attachSchema(Creator.Schemas[object_name])
 				
 		if Meteor.isServer
 			Creator.Collections[object_name].allow
@@ -360,8 +360,9 @@ Creator.getListView = (object_name, list_view_id)->
 Creator.getApp = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
-	app = db.apps.findOne(app_id)
-	if app 
-		app.objects = Creator.Apps[app_id]?.objects
+	# app = db.apps.findOne(app_id)
+	# if app 
+	# 	app.objects = Creator.Apps[app_id]?.objects
+	app = Creator.Apps[app_id]
 	return app
 
