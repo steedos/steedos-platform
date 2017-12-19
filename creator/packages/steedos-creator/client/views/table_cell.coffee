@@ -1,3 +1,10 @@
+# Variables
+# - this.object_name
+# - this.field_name
+# - this.field
+# - this.doc
+# - this.id
+
 Template.creator_table_cell.helpers
 	cellData: ()->
 
@@ -15,6 +22,7 @@ Template.creator_table_cell.helpers
 		return this.val
 
 	cellHref: ()->
+
 		if this.field.reference_to
 			href = Creator.getObjectUrl(this.field.reference_to, this.val)
 
@@ -24,7 +32,12 @@ Template.creator_table_cell.helpers
 		return href
 
 	editable: ()->
+
 		if this.field.reference_to or this.field.omit
 			return false
-		else
-			return true
+		
+		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
+		if !permission.allowEdit
+			return false
+
+		return true

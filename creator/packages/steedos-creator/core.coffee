@@ -291,6 +291,20 @@ Creator.getPermissions = (object_name)->
 
 	return permissions
 
+Creator.getRecordPermissions = (object_name, record, userId)->
+	if !object_name 
+		object_name = Session.get("object_name")
+
+	permissions = Creator.getPermissions(object_name)
+
+	if permission.modifyAllRecords and record?.owner? != Meteor.userId()
+		permissions.allowEdit = false
+
+	if permission.viewAllRecords and record?.owner? != Meteor.userId()
+		permissions.allowRead = false
+		
+	return permissions
+
 
 Creator.getListViews = (object_name)->
 	if !object_name 
@@ -346,19 +360,4 @@ Creator.getApp = (app_id)->
 	if app 
 		app.objects = Creator.Apps[app_id]?.objects
 	return app
-
-
-
-
-
-if Meteor.isClient
-	# 切换工作区时，重置下拉框的选项
-	Tracker.autorun ()->
-		if  Session.get("spaceId")
-			_.each Creator.Objects, (obj, object_name)->
-				if Creator.Collections[object_name]
-					_.each obj.fields, (field, field_name)->
-						if field.type == "master_detail" or field.type == "lookup"
-							_schema = Creator.Collections[object_name]?._c2?._simpleSchema?._schema
-							_schema?[field_name]?.autoform?.optionsMethodParams?.space = Session.get("spaceId")
 
