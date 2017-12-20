@@ -73,7 +73,7 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
 
-    api.use('steedos:autoform-bs-datetimepicker');
+    // api.use('steedos:autoform-bs-datetimepicker');
 
     api.use('steedos:lightning-design-system@0.0.1');
     api.use('steedos:datatables-extensions');
