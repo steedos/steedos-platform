@@ -86,6 +86,11 @@ Package.onUse(function(api) {
     api.addFiles('lib/server_session.js');
     api.export('ServerSession');
 
+    api.addFiles('lib/triggers.coffee');
+    api.addFiles('lib/actions.coffee');
+    api.addFiles('lib/permission_sets.coffee');
+    api.addFiles('lib/listviews.coffee');
+
     api.addFiles('core.coffee');
     
     api.addFiles('models/base.coffee');

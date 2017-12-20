@@ -32,7 +32,6 @@ Template.creator_view.helpers
 	related_list: ()->
 		list = []
 		_.each Creator.getObject()?.related_list, (list_view, related_object_name)->
-			tabular_name = Session.get("object_name") + "_related_" + related_object_name
 			related_object = Creator.Objects[related_object_name]
 			related_field_name = ""
 			_.each related_object.fields, (field, field_name)->
@@ -44,7 +43,7 @@ Template.creator_view.helpers
 				related =
 					object_name: related_object_name
 					columns: list_view.columns
-					tabular_table: Creator.TabularTables[tabular_name]
+					tabular_table: Creator.TabularTables[related_object_name]
 					tabular_selector: tabular_selector
 					related_field_name: related_field_name
 				list.push related
