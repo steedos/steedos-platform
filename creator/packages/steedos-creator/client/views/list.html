@@ -10,9 +10,7 @@
 									<span class="slds-icon_container">
 										<div class="slds-icon crm-header-icon" style="background-color: #FCB95B">
 											<span class="uiImage">
-												<svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-													<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/standard-sprite/symbols.svg#{{object.icon}}" />
-												</svg>
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object.icon}}
 											</span>
 										</div>
 									</span>
@@ -31,9 +29,7 @@
 												<span class="triggerLinkText selectedListView uiOutputText">{{list_view_label list_view_id}}</span>
 												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
 													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
-														<svg class="slds-icon slds-icon-text-default slds-icon--x-small" focusable="false" aria-hidden="true" data-key="down">
-															<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down"></use>
-														</svg>
+														{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
 													</span>
 												</span>
 											</div>
@@ -68,51 +64,28 @@
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
 								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls" disabled>
-									<svg class="slds-button__icon" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#settings" />
-									</svg>
-									<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
-									</svg>
-									<span class="slds-assistive-text">List View Controls</span>
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
 							</div>
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
 								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="Change view" disabled>
-									<svg class="slds-button__icon" aria-hidden="true">
-										<!-- /packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#filterList -->
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#table" />
-									</svg>
-									<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
-									</svg>
-									<span class="slds-assistive-text">Change view</span>
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="table"}}
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
 							</div>
 							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Edit List" disabled>
-								<svg class="slds-button__icon" aria-hidden="true">
-									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#edit" />
-								</svg>
-								<span class="slds-assistive-text">Edit List</span>
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
 							</button>
 							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Refresh" disabled>
-								<svg class="slds-button__icon" aria-hidden="true">
-									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#refresh" />
-								</svg>
-								<span class="slds-assistive-text">Refresh</span>
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 							</button>
 							<div class="slds-button-group" role="group">
 								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts" disabled>
-									<svg class="slds-button__icon" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chart" />
-									</svg>
-									<span class="slds-assistive-text">Charts</span>
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 								</button>
 								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters" disabled>
-									<svg class="slds-button__icon" aria-hidden="true">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#filterList" />
-									</svg>
-									<span class="slds-assistive-text">Filters</span>
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 								</button>
 							</div>
 						</div>

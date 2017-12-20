@@ -1,0 +1,8 @@
+<template name="steedos_icon">
+	<svg class="{{class}}" aria-hidden="true">
+		<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{getSvgUrl source name}}" />
+	</svg>
+	{{#if title}}
+		<span class="slds-assistive-text">{{title}}</span>
+	{{/if}}
+</template>
