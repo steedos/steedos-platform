@@ -37,7 +37,8 @@ FlowRouter.route '/app/:app_id/:object_name/view/:record_id',
 		Session.set("app_id", FlowRouter.getParam("app_id"))
 		Session.set("object_name", FlowRouter.getParam("object_name"))
 		Session.set("record_id", FlowRouter.getParam("record_id"))
-		Session.set("cmDoc", Creator.getObjectRecord())
+		Session.set("detail_info_visible", true)
+		# Session.set("cmDoc", Creator.getObjectRecord())
 		Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_view"

@@ -68,6 +68,8 @@ Template.creator_view.helpers
 		app = db.apps.findOne(Session.get("app_id"))
 		return app?.name
 
+	detail_info_visible: ()->
+		return Session.get("detail_info_visible")
 
 Template.creator_view.events
 	'click .edit-creator': (event) ->
@@ -107,3 +109,9 @@ Template.creator_view.events
 		tab = "#" + event.currentTarget.dataset.tab
 		$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
 		$(tab).removeClass("slds-hide").addClass("slds-show")
+
+
+	'click .slds-truncate > a': (event) ->
+		Session.set("detail_info_visible", false)
+		Tracker.afterFlush ()->
+			Session.set("detail_info_visible", true)

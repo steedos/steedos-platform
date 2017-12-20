@@ -77,27 +77,17 @@
 							{{/each}}
 						</div>
 						<div id="creator-quick-form" class="slds-tabs_default__content creator-view-tabs-content slds-show" role="tabpanel">
-							{{#if showForm}}
-								{{> quickForm collection=collection schema=schema doc=record id="viewRecordForm" type="disabled"}}
+							{{#if detail_info_visible}}
+								{{#if showForm}}
+									{{> quickForm collection=collection schema=schema doc=record id="viewRecordForm" type="disabled"}}
+								{{/if}}
 							{{/if}}
 						</div>
 					</div>
-					{{!-- <div class="slds-table tale-content" style="padding: 15px;">
-						{{#if showForm}}
-							{{> quickForm collection=collection doc=record id="viewRecordForm" type="disabled"}}
-						{{/if}}
-
-						{{#each related_list}}
-							{{> tabular table=this.tabular_table selector=related_selector class="table table-striped table-bordered table-condensed table-creator"}}
-						{{/each}}
-					</div> --}}
 				</div>
 			</div>
 		</div>
 	</div>
 
 	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
-	{{!--
-	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="remove" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
-	--}}
 </template> 
