@@ -66,8 +66,8 @@ if Meteor.isClient
 
 		_.each Creator.Objects, (related_object, related_object_name)->
 
-			_.each related_object.fields, (related_, related_field_name)->
-				if related_.reference_to and related_.reference_to == object_name
+			_.each related_object.fields, (related_field, related_field_name)->
+				if related_field.type=="master_detail" and related_field.reference_to and related_field.reference_to == object_name
 					tabular_name = "creator_" + related_object_name
 					if Tabular.tablesByName[tabular_name]
 						tabular_selector = {space: Session.get("spaceId")}

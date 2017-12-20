@@ -25,7 +25,7 @@ Creator.Objects.crm_contracts =
 		company_signed_date: 
 			type: "date"
 		customer_id:
-			type: "lookup"
+			type: "master_detail"
 			reference_to: "crm_customers"
 		customer_signed_date: 
 			type: "date"
