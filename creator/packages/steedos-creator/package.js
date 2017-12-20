@@ -65,7 +65,7 @@ Package.onUse(function(api) {
 
     api.use('steedos:sso@0.0.4')
     api.use('steedos:adminlte@2.3.12_3');
-    api.use('steedos:base@0.0.61');
+    api.use('steedos:base@0.0.70');
     api.use('steedos:accounts@0.0.23');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');
@@ -82,9 +82,6 @@ Package.onUse(function(api) {
     
     tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
     api.addFiles(tapi18nFiles, ['client', 'server']);
-    
-    api.addFiles('lib/server_session.js');
-    api.export('ServerSession');
 
     api.addFiles('lib/triggers.coffee');
     api.addFiles('lib/actions.coffee');
