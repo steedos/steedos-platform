@@ -2,9 +2,7 @@
 
 Creator.Apps = {}
 Creator.Objects = {}
-Creator.Schemas = {}
 Creator.Collections = {}
-Creator.TabularTables = {}
 
 
 Meteor.startup ->
@@ -16,12 +14,12 @@ Meteor.startup ->
 			Creator.Collections[object_name] = new Meteor.Collection(object_name)
 		
 		schema = Creator.getObjectSchema(obj)
-		Creator.Schemas[object_name] = new SimpleSchema(schema)
+		obj.schema = new SimpleSchema(schema)
 		if object_name != "users"
-			Creator.Collections[object_name].attachSchema(Creator.Schemas[object_name])
+			Creator.Collections[object_name].attachSchema(obj.schema)
 		
-		Triggers.init(object_name)	
-		Listviews.init(object_name)
+		Creator.initTriggers(object_name)	
+		Creator.initListViews(object_name)
 
 		if Meteor.isServer
 			Creator.Collections[object_name].allow
@@ -32,37 +30,9 @@ Meteor.startup ->
 				remove: (userId, doc) ->
 					return true
 
-		
-
 
 	Creator.initApps()
-	Creator.initObjects()
 	
-
-	# # 初始化子表
-	# _.each Creator.Objects, (obj, object_name)->
-
-	# 	_.each obj.fields, (field, field_name)->
-	# 		if field.reference_to
-	# 			tabular_name = field.reference_to + "_related_" + object_name
-	# 			list_view = Creator.getListView object_name, "all"
-	# 			columns = list_view.columns
-	# 			columns = _.without(columns, field_name)
-
-	# 			Creator.TabularTables[tabular_name] = new Tabular.Table
-	# 				name: tabular_name,
-	# 				collection: Creator.Collections[object_name],
-	# 				pub: "steedos_object_tabular",
-	# 				columns: Creator.getTabularColumns(object_name, columns)
-	# 				dom: "tp"
-	# 				extraFields: ["_id"]
-	# 				lengthChange: false
-	# 				ordering: false
-	# 				pageLength: 5
-	# 				info: false
-	# 				searching: true
-	# 				autoWidth: true
-	# 				changeSelector: Creator.tabularChangeSelector
 
 Creator.initApps = ()->
 	if Meteor.isServer
@@ -75,15 +45,17 @@ Creator.initApps = ()->
 			# 	app._id = app_id
 			# 	db.apps.update({_id: app_id}, app)
 
-Creator.initObjects = ()->
-	# if Meteor.isServer
-	# 	_.each Creator.Objects, (object, obj_id)->
-	# 		db_obj = Creator.Collections.objects.findOne(obj_id) 
-	# 		if !db_obj
-	# 			object._id = obj_id
-	# 			Creator.Collections.objects.insert(object)
-	# 		else
-	# 			Creator.Collections.objects.update({_id: obj_id}, {$set: object})
+Creator.getObject = (object_name)->
+	if !object_name
+		object_name = Session.get("object_name")
+	if object_name
+		return Creator.Objects[object_name]
+
+Creator.getTable = (object_name)->
+	return Tabular.tablesByName["creator_" + object_name]
+
+Creator.getSchema = (object_name)->
+	return Creator.getObject(object_name)?.schema
 
 Creator.getObjectSchema = (obj) ->
 
@@ -160,11 +132,6 @@ Creator.getObjectSchema = (obj) ->
 	return schema
 
 
-Creator.tabularChangeSelector =  (selector, userId)-> 
-	if userId and selector.space
-		return selector
-	return {_id: "nothing"}
-
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
@@ -173,12 +140,6 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	else 
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list")
 
-
-Creator.getObject = (object_name)->
-	if !object_name
-		object_name = Session.get("object_name")
-	if object_name
-		return Creator.Objects[object_name]
 
 Creator.getObjectField = (object_name, field_name)->
 	obj = Creator.Objects[object_name]
@@ -241,59 +202,9 @@ Creator.getRecordPermissions = (object_name, record, userId)->
 	return permissions
 
 
-Creator.getListViews = (object_name)->
-	if !object_name 
-		object_name = Session.get("object_name")
-
-	object = Creator.getObject(object_name)
-	list_views = []
-	list_views = _.keys Creator.baseObject.list_views
-	if object.list_views
-		list_views_object = _.keys object.list_views
-		if list_views_object?.length>1
-			list_views = list_views_object
-
-	list_views = _.without list_views, "default"
-	return list_views
-
-
-Creator.getListView = (object_name, list_view_id)->
-	if !object_name 
-		object_name = Session.get("object_name")
-	if !list_view_id
-		list_view_id = Session.get("list_view_id")
-	list_views = Creator.getListViews(object_name)
-	if !list_view_id or list_views.indexOf(list_view_id) < 0
-		list_view_id = list_views[0]
-		if Meteor.isClient
-			Session.set("list_view_id", list_view_id)
-	object = Creator.getObject(object_name)
-	if object.list_views?[list_view_id]
-		list_view = object.list_views[list_view_id]
-	else if Creator.baseObject.list_views?[list_view_id]
-		list_view = Creator.baseObject.list_views[list_view_id]
-	else
-		list_view = 
-			filter_scope: "mine"
-			columns: ["name"]
-
-	if !list_view.columns 
-		if object.list_views?.default?.columns
-			list_view.columns = object.list_views.default.columns
-		else
-			list_view.columns = ["name"]
-
-	if !list_view.filter_scope
-		list_view.filter_scope = "mine"
-
-	return list_view
-
 Creator.getApp = (app_id)->
 	if !app_id
 		app_id = Session.get("app_id")
-	# app = db.apps.findOne(app_id)
-	# if app 
-	# 	app.objects = Creator.Apps[app_id]?.objects
 	app = Creator.Apps[app_id]
 	return app
 

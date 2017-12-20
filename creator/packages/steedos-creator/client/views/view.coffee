@@ -4,8 +4,8 @@ Template.creator_view.helpers
 		return "Creator.Collections." + Session.get("object_name")
 
 	schema: ()->
-		return Creator.Schemas[Session.get("object_name")]
-		
+		return Creator.getSchema(Session.get("object_name"))
+	
 	hasPermission: (permissionName)->
 		permissions = Creator.getObject()?.permissions?.default
 		if permissions
@@ -30,7 +30,7 @@ Template.creator_view.helpers
 		return Creator.getObject()
 		
 	related_list: ()->
-		return Listviews.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
 	related_selector: (object_name, related_field_name)->
 		object_name = this.object_name

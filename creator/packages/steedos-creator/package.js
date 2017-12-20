@@ -83,13 +83,13 @@ Package.onUse(function(api) {
     tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
     api.addFiles(tapi18nFiles, ['client', 'server']);
 
+    api.addFiles('core.coffee');
+    
     api.addFiles('lib/triggers.coffee');
     api.addFiles('lib/actions.coffee');
     api.addFiles('lib/permission_sets.coffee');
     api.addFiles('lib/listviews.coffee');
 
-    api.addFiles('core.coffee');
-    
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
     api.addFiles('models/object_permissions.coffee');

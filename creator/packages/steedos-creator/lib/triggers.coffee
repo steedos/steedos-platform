@@ -15,7 +15,7 @@ initTrigger = (collection, trigger_name, trigger)->
 		collection.after.delete(trigger)
 
 
-Triggers.init = (object_name)->
+Creator.initTriggers = (object_name)->
 	collection = Creator.Collections[object_name]
 
 	obj = Creator.getObject(object_name)

@@ -1,7 +1,4 @@
-@Listviews = {}
-
-
-Listviews.getTabularColumns = (object_name, columns) ->
+Creator.getTabularColumns = (object_name, columns) ->
 	cols = []
 	_.each columns, (field_name)->
 		field = Creator.getObjectField(object_name, field_name)
@@ -39,17 +36,17 @@ Listviews.getTabularColumns = (object_name, columns) ->
 	return cols
 
 
-Listviews.init = (object_name)->
+Creator.initListViews = (object_name)->
 	object = Creator.getObject(object_name)
 	columns = ["name"]
 	if object.list_views?.default?.columns
 		columns = object.list_views.default.columns
 
-	Creator.TabularTables[object_name] = new Tabular.Table
+	new Tabular.Table
 		name: "creator_" + object_name,
 		collection: Creator.Collections[object_name],
 		pub: "steedos_object_tabular",
-		columns: Listviews.getTabularColumns(object_name, columns)
+		columns: Creator.getTabularColumns(object_name, columns)
 		dom: "tp"
 		extraFields: ["_id"]
 		lengthChange: false
@@ -61,7 +58,7 @@ Listviews.init = (object_name)->
 		changeSelector: Creator.tabularChangeSelector
 
 if Meteor.isClient
-	Listviews.getRelatedList = (object_name, record_id)->
+	Creator.getRelatedList = (object_name, record_id)->
 		list = []
 
 		_.each Creator.Objects, (related_object, related_object_name)->
@@ -76,7 +73,7 @@ if Meteor.isClient
 						if related_object.list_views?.default?.columns
 							columns = related_object.list_views.default.columns
 						columns = _.without(columns, related_field_name)
-						Tabular.tablesByName[tabular_name].options?.columns = Listviews.getTabularColumns(related_object_name, columns);
+						Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns);
 
 						related =
 							object_name: related_object_name
@@ -88,3 +85,52 @@ if Meteor.isClient
 						list.push related
 
 		return list
+
+
+
+Creator.getListViews = (object_name)->
+	if !object_name 
+		object_name = Session.get("object_name")
+
+	object = Creator.getObject(object_name)
+	list_views = []
+	list_views = _.keys Creator.baseObject.list_views
+	if object.list_views
+		list_views_object = _.keys object.list_views
+		if list_views_object?.length>1
+			list_views = list_views_object
+
+	list_views = _.without list_views, "default"
+	return list_views
+
+
+Creator.getListView = (object_name, list_view_id)->
+	if !object_name 
+		object_name = Session.get("object_name")
+	if !list_view_id
+		list_view_id = Session.get("list_view_id")
+	list_views = Creator.getListViews(object_name)
+	if !list_view_id or list_views.indexOf(list_view_id) < 0
+		list_view_id = list_views[0]
+		if Meteor.isClient
+			Session.set("list_view_id", list_view_id)
+	object = Creator.getObject(object_name)
+	if object.list_views?[list_view_id]
+		list_view = object.list_views[list_view_id]
+	else if Creator.baseObject.list_views?[list_view_id]
+		list_view = Creator.baseObject.list_views[list_view_id]
+	else
+		list_view = 
+			filter_scope: "mine"
+			columns: ["name"]
+
+	if !list_view.columns 
+		if object.list_views?.default?.columns
+			list_view.columns = object.list_views.default.columns
+		else
+			list_view.columns = ["name"]
+
+	if !list_view.filter_scope
+		list_view.filter_scope = "mine"
+
+	return list_view
