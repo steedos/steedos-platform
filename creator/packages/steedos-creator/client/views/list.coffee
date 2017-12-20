@@ -28,9 +28,11 @@ Template.creator_list.helpers
 			else
 				selector.space = Session.get("spaceId")
 			if Session.get("list_view_id") == "recent"
-				viewed = Creator.Collections.object_recent_viewed.find().fetch();
+				record_ids = Creator.Collections.object_recent_viewed.findOne()?.record_ids;
+				if !record_ids
+					record_ids = ["nothing"]
 				selector._id = 
-					"$in": _.pluck viewed, "record_id"
+					"$in": record_ids
 			if list_view.filters
 				try 
 					filters = list_view.filters

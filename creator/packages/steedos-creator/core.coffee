@@ -67,31 +67,31 @@ Creator.getObjectSchema = (obj) ->
 		fs = {}
 		fs.autoform = {}
 		if field.type == "text"
-			fs.type = "String"
+			fs.type = String
 		else if field.type == "[text]"
-			fs.type = "[String]"
+			fs.type = [String]
 		else if field.type == "textarea"
-			fs.type = "String"
+			fs.type = String
 			fs.autoform.type = "textarea"
 			fs.autoform.rows = 3
 		else if field.type == "date"
-			fs.type = "Date"
+			fs.type = Date
 			fs.autoform.type = "bootstrap-datetimepicker"
 			fs.autoform.dateTimePickerOptions = 
 				format: "YYYY-MM-DD"
 		else if field.type == "datetime"
-			fs.type = "Date"
+			fs.type = Date
 			fs.autoform.type = "bootstrap-datetimepicker"
 			fs.autoform.dateTimePickerOptions = 
 				format: "YYYY-MM-DD HH:mm"
 		else if field.type == "lookup" or field.type == "master_detail"
-			fs.type = "String"
+			fs.type = String
 			if Meteor.isClient
-				if field.reference_to == "users"
-					fs.autoform.type = "selectuser"
-				else if field.reference_to == "organizations"
-					fs.autoform.type = "selectorg"
-				else
+				# if field.reference_to == "users"
+				# 	fs.autoform.type = "selectuser"
+				# else if field.reference_to == "organizations"
+				# 	fs.autoform.type = "selectorg"
+				# else
 					if field.reference_to
 						_link = "/app/#{Session.get('app_id')}/#{field.reference_to}/view/"
 					fs.autoform.type="steedos-lookup"
@@ -101,21 +101,21 @@ Creator.getObjectSchema = (obj) ->
 						space: Session.get("spaceId")
 						link: _link
 		else if field.type == "select"
-			fs.type = "String"
+			fs.type = String
 			fs.autoform.type = "select"
 			fs.autoform.options = field.options
 			fs.autoform.firstOption = ""
 		else if field.type == "currency"
-			fs.type = "number"
+			fs.type = Number
 		else if field.type == "number"
-			fs.type = "number"
+			fs.type = Number
 		else if field.type == "boolean"
-			fs.type = "boolean"
+			fs.type = Boolean
 			fs.autoform.type = "boolean-checkbox"
 		else if field.type = "reference"
-			fs.type = "String"
+			fs.type = String
 		else
-			fs.type = "String"
+			fs.type = field.type
 
 		if field.label
 			fs.label = field.label
