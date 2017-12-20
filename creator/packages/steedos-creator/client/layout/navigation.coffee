@@ -57,3 +57,5 @@ Template.creatorNavigation.events
 		rootName = FlowRouter.current().path.split("/")[1]
 		FlowRouter.go("/#{rootName}")
 
+	'click .app-list-btn': (event)->
+		Modal.show("creator_app_list_modal")

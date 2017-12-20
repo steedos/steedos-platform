@@ -1,0 +1,72 @@
+<template name="creator_app_list_modal">
+	<div class="modal fade creator-app-list-modal creator-modal" id="creator_app_list_modal" role="dialog" aria-labelledby="creator_app_list_modal_label" tabindex="-1">
+		<div class="modal-dialog modal-extra" role="document">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="app-sction">
+						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles" data-aura-rendered-by="59:882;a">
+							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small control-uiButton" aria-live="off" type="button">
+								<span class="slds-icon_container slds-icon-utility-chevrondown slds-button__icon slds-button__icon forceIcon">
+									<span class="lightningPrimitiveIcon chevrondown">
+										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
+											</use>
+										</svg>
+									</span>
+									<span class="lightningPrimitiveIcon chevronright">
+										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevronright">
+											</use>
+										</svg>
+									</span>
+								</span>
+							</button>
+							<h3 class="slds-text-heading_small" data-aura-rendered-by="78:882;a">所有应用程序</h3>
+						</div>
+						<div class="slds-card__body card-container">
+							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
+								{{#each arr}}
+								<li class="slds-p-horizontal_small col-md-4 col-sm-6">
+									<article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+										<div class="item-area">
+											<a class="inner-card">
+												<div class="bLeft">
+													<div class="appImage">
+														<img src="https://ap5.salesforce.com/logos/Salesforce/ServiceCloud/logo.png">
+													</div>
+												</div>
+												<div class="bRight">
+													<div class="appTitle">
+														服务
+													</div>
+													<div class="fullDescription">
+														通过客户、联系人、个案等管理客服服务
+													</div>
+												</div>
+											</a>
+										</div>
+									</article>
+								</li>
+								{{/each}}
+							</ul>
+						</div>
+						<footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer>
+					</div>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral">Cancel</button>
+					<button class="slds-button slds-button_brand">Save</button>
+				</footer>
+			</div>
+		</div>
+	</div>
+</template>

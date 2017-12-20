@@ -1,0 +1,164 @@
+.creator-modal {
+	@media (min-width: 767px) {
+		.modal-dialog.modal-extra {
+			width: 90%;
+
+			.slds-modal__container {
+				width: 100%;
+				max-width: 100%;
+			}
+		}
+	}
+
+	.control-uiButton {
+		padding: 0;
+		border: none;
+
+		.control-collapse {
+			fill: rgb(0, 95, 178);
+		}
+	}
+
+	.app-sction {
+		.card-container {
+			display: block;
+		}
+
+		.lightningPrimitiveIcon.chevrondown {
+			display: block;
+		}
+		
+		.lightningPrimitiveIcon.chevronright {
+			display: none;
+		}
+	}
+
+	.app-sction.collapsed {
+		.card-container {
+			display: none;
+		}
+
+		.lightningPrimitiveIcon.chevrondown {
+			display: none;
+		}
+		.lightningPrimitiveIcon.chevronright {
+			display: block;
+		}
+	}
+
+	.card-container {
+
+		@media only screen and (min-width: 1441px) {
+			.slds-p-horizontal_small {
+				width: 25%;
+			}
+		}
+
+		@media only screen and (max-width: 1440px) {
+			.slds-p-horizontal_small {
+				width: 33%;
+			}
+		}
+
+		@media only screen and (max-width: 1024px) {
+			.slds-p-horizontal_small {
+				width: 50%;
+			}
+		}
+
+		.slds-card__body_inner {
+			margin: 0;
+			padding: 0;
+
+			.slds-p-horizontal_small {
+				padding: 0;
+
+				.slds-card__tile {
+					padding: 12px;
+					margin: 0;
+					cursor: pointer;
+
+					.item-area {
+						width: 100%;
+
+						.inner-card {
+							display: inline-block;
+							position: relative;
+							background: rgb(243, 242, 242);
+							cursor: pointer;
+							border: 1px solid rgb(221, 219, 218);
+							border-radius: .25rem;
+							width: 100%;
+							text-decoration: none;
+
+							.bLeft {
+								height: 96px;
+								width: 96px;
+								min-width: 96px;
+								background: white;
+								position: relative;
+								border-radius: .25rem;
+								margin: 0.5px;
+								float: left;
+
+								.appImage {
+									padding: 16px 16px 0 16px;
+									margin-left: auto;
+									margin-right: auto;
+									height: 80px;
+									width: 96px;
+									min-height: 80px;
+									min-width: 96px;
+									max-width: 96px;
+									max-height: 80px;
+									display: block;
+									vertical-align: middle;
+									text-align: center;
+
+									img {
+										max-height: 64px;
+									}
+								}
+							}
+
+							.bRight {
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								padding-right: 1rem;
+								padding-bottom: 1rem;
+								padding-left: 1rem;
+								padding-top: 1rem;
+								text-align: left;
+								height: 96px;
+								-o-text-overflow: ellipsis;
+								position: relative;
+								float: left;
+								width: calc(~"100% - 97px");
+
+								.appTitle {
+									font-size: 18px;
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
+									color: rgb(0, 112, 210);
+								}
+
+								.fullDescription {
+									text-align: left;
+									max-height: inherit;
+									white-space: normal;
+									overflow: hidden;
+									position: relative;
+									color: black;
+									font-size: 15px;
+									font-weight: 400;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

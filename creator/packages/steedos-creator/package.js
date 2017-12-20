@@ -116,6 +116,10 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/sidebar.coffee', 'client');
     api.addFiles('client/layout/sidebar.less', 'client');
 
+    api.addFiles('client/layout/creator_app_list_modal.html', 'client');
+    api.addFiles('client/layout/creator_app_list_modal.coffee', 'client');
+    api.addFiles('client/layout/creator_app_list_modal.less', 'client');
+
     api.addFiles('client/core.coffee', 'client');
     api.addFiles('client/router.coffee', 'client');
     api.addFiles('client/subscribe.coffee', 'client');
