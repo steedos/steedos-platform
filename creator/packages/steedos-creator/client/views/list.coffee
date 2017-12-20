@@ -96,7 +96,7 @@ Template.creator_list.events
 		list_view_id = String(this)
 		Tracker.afterFlush ()->
 			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			Creator.TabularTables[Session.get("object_name")].options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
+			Creator.TabularTables[Session.get("object_name")].options.columns = Listviews.getTabularColumns(Session.get("object_name"), list_view.columns);
 			Session.set("list_view_id", list_view_id)
 			Session.set("list_view_visible", true)
 

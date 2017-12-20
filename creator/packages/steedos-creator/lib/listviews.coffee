@@ -1,7 +1,7 @@
 @Listviews = {}
 
 
-getTabularColumns = (object_name, columns) ->
+Listviews.getTabularColumns = (object_name, columns) ->
 	cols = []
 	_.each columns, (field_name)->
 		field = Creator.getObjectField(object_name, field_name)
@@ -49,7 +49,7 @@ Listviews.init = (object_name)->
 		name: "creator_" + object_name,
 		collection: Creator.Collections[object_name],
 		pub: "steedos_object_tabular",
-		columns: getTabularColumns(object_name, columns)
+		columns: Listviews.getTabularColumns(object_name, columns)
 		dom: "tp"
 		extraFields: ["_id"]
 		lengthChange: false
@@ -76,7 +76,7 @@ if Meteor.isClient
 						if related_object.list_views?.default?.columns
 							columns = related_object.list_views.default.columns
 						columns = _.without(columns, related_field_name)
-						Tabular.tablesByName[tabular_name].options?.columns = getTabularColumns(related_object_name, columns);
+						Tabular.tablesByName[tabular_name].options?.columns = Listviews.getTabularColumns(related_object_name, columns);
 
 						related =
 							object_name: related_object_name
