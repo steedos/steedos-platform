@@ -30,24 +30,7 @@ Template.creator_view.helpers
 		return Creator.getObject()
 		
 	related_list: ()->
-		list = []
-		_.each Creator.getObject()?.related_list, (list_view, related_object_name)->
-			related_object = Creator.Objects[related_object_name]
-			related_field_name = ""
-			_.each related_object.fields, (field, field_name)->
-				if field?.reference_to == Session.get("object_name")
-					related_field_name = field_name
-			if related_field_name
-				tabular_selector = {space: Session.get("spaceId")}
-				tabular_selector[related_field_name] = Session.get("record_id")
-				related =
-					object_name: related_object_name
-					columns: list_view.columns
-					tabular_table: Creator.TabularTables[related_object_name]
-					tabular_selector: tabular_selector
-					related_field_name: related_field_name
-				list.push related
-		return list
+		return Listviews.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
 	related_selector: (object_name, related_field_name)->
 		object_name = this.object_name

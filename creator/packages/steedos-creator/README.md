@@ -1,2 +1,1 @@
-# calendar
-Steedos Calendar App, built with Meteor.
+# Steedos Creator

@@ -59,3 +59,32 @@ Listviews.init = (object_name)->
 		searching: true
 		autoWidth: true
 		changeSelector: Creator.tabularChangeSelector
+
+if Meteor.isClient
+	Listviews.getRelatedList = (object_name, record_id)->
+		list = []
+
+		_.each Creator.Objects, (related_object, related_object_name)->
+
+			_.each related_object.fields, (related_, related_field_name)->
+				if related_.reference_to and related_.reference_to == object_name
+					tabular_name = "creator_" + related_object_name
+					if Tabular.tablesByName[tabular_name]
+						tabular_selector = {space: Session.get("spaceId")}
+						tabular_selector[related_field_name] = record_id
+						columns = ["name"]
+						if related_object.list_views?.default?.columns
+							columns = related_object.list_views.default.columns
+						columns = _.without(columns, related_field_name)
+						Tabular.tablesByName[tabular_name].options?.columns = getTabularColumns(related_object_name, columns);
+
+						related =
+							object_name: related_object_name
+							columns: columns
+							tabular_table: Tabular.tablesByName[tabular_name]
+							tabular_selector: tabular_selector
+							related_field_name: related_field_name
+
+						list.push related
+
+		return list
