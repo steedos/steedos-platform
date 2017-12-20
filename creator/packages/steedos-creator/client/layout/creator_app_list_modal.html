@@ -9,12 +9,18 @@
 						</svg>
 						<span class="slds-assistive-text">Close</span>
 					</button>
-					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>
+					<h2 class="slds-text-heading_medium slds-hyphenate">
+						<div class="appLauncherModalHeader slds-grid slds-grid--align-spread  slds-m-right--small slds-m-left--small slds-grid--vertical-align-center slds-text-body--regular">
+							<div>
+								<h2 class="slds-text-heading--medium">应用程序启动器</h2>
+							</div>
+						</div>
+					</h2>
 				</header>
 				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-					<div class="app-sction">
-						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles" data-aura-rendered-by="59:882;a">
-							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small control-uiButton" aria-live="off" type="button">
+					<div class="app-sction-part-1 slds-section slds-is-open">
+						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles">
+							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small control-app-list control-uiButton" aria-live="off" type="button">
 								<span class="slds-icon_container slds-icon-utility-chevrondown slds-button__icon slds-button__icon forceIcon">
 									<span class="lightningPrimitiveIcon chevrondown">
 										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
@@ -30,12 +36,12 @@
 									</span>
 								</span>
 							</button>
-							<h3 class="slds-text-heading_small" data-aura-rendered-by="78:882;a">所有应用程序</h3>
+							<h3 class="slds-text-heading_small">所有应用程序</h3>
 						</div>
-						<div class="slds-card__body card-container">
+						<div class="slds-card__body card-container slds-section__content">
 							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
 								{{#each arr}}
-								<li class="slds-p-horizontal_small col-md-4 col-sm-6">
+								<li class="slds-p-horizontal_small app-item-container">
 									<article class="slds-tile slds-media slds-card__tile slds-hint-parent">
 										<div class="item-area">
 											<a class="inner-card">
@@ -59,13 +65,46 @@
 								{{/each}}
 							</ul>
 						</div>
-						<footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer>
+					</div>
+					<div class="app-sction-part-2 slds-section slds-is-open">
+						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles">
+							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small  control-project-list control-uiButton" aria-live="off" type="button">
+								<span class="slds-icon_container slds-icon-utility-chevrondown slds-button__icon slds-button__icon forceIcon">
+									<span class="lightningPrimitiveIcon chevrondown">
+										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
+											</use>
+										</svg>
+									</span>
+									<span class="lightningPrimitiveIcon chevronright">
+										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevronright">
+											</use>
+										</svg>
+									</span>
+								</span>
+							</button>
+							<h3 class="slds-text-heading_small">所有项目</h3>
+						</div>
+						<div class="slds-card__body card-container slds-section__content">
+							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
+								{{#each arr}}
+								<li class="slds-p-horizontal_small project-item-container">
+									<a class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate" href="">
+										<span class="slds-truncate slds-text-link">
+											crm_customers
+										</span>
+									</a>
+								</li>
+								{{/each}}
+							</ul>
+						</div>
 					</div>
 				</div>
-				<footer class="slds-modal__footer">
+				<!-- <footer class="slds-modal__footer">
 					<button class="slds-button slds-button_neutral">Cancel</button>
 					<button class="slds-button slds-button_brand">Save</button>
-				</footer>
+				</footer> -->
 			</div>
 		</div>
 	</div>
