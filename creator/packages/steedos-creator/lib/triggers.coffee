@@ -1,57 +1,37 @@
-@Triggers = {}
-
-initTrigger = (collection, trigger_name, trigger)->
-	if trigger_name == "before.insert"
-		collection.before.insert(trigger)
-	else if trigger_name == "before.update"
-		collection.before.update(trigger)
-	else if trigger_name == "before.delete"
-		collection.before.delete(trigger)
-	else if trigger_name == "after.insert"
-		collection.after.insert(trigger)
-	else if trigger_name == "after.update"
-		collection.after.update(trigger)
-	else if trigger_name == "after.delete"
-		collection.after.delete(trigger)
+	initTrigger = (collection, trigger_name, trigger)->
+		if trigger_name == "before.insert"
+			collection.before.insert(trigger)
+		else if trigger_name == "before.update"
+			collection.before.update(trigger)
+		else if trigger_name == "before.delete"
+			collection.before.delete(trigger)
+		else if trigger_name == "after.insert"
+			collection.after.insert(trigger)
+		else if trigger_name == "after.update"
+			collection.after.update(trigger)
+		else if trigger_name == "after.delete"
+			collection.after.delete(trigger)
 
 
-Creator.initTriggers = (object_name)->
-	collection = Creator.Collections[object_name]
+	Creator.initTriggers = (object_name)->
 
-	obj = Creator.getObject(object_name)
-	if Triggers.default
-		_.each Triggers.default, (trigger, trigger_name)->
-			initTrigger collection, trigger_name, trigger
+		collection = Creator.Collections[object_name]
 
-	if obj.triggers
-		_.each obj.triggers, (trigger, trigger_name)->
-			initTrigger collection, trigger_name, trigger
+		# 原则上 triggers 只在服务端执行
+		if Meteor.isServer
 
-	if Meteor.isServer
-		# 需要使用 object_name 变量
-		collection.after.insert (userId, doc)->
-			Meteor.call "object_recent_viewed", object_name, doc._id
+			obj = Creator.getObject(object_name)
+			_.each Creator.baseObject.triggers, (trigger, trigger_name)->
+				initTrigger collection, trigger_name, trigger
 
-if Meteor.isServer
+			_.each obj.triggers, (trigger, trigger_name)->
+				initTrigger collection, trigger_name, trigger
 
-	Triggers.default = 
+			# 特例单独写，因为需要使用 object_name 变量
+			collection.after.insert (userId, doc)->
+				Meteor.call "object_recent_viewed", object_name, doc._id
 
-		"before.insert": (userId, doc)->
-			doc.owner = userId
-			doc.created_by = userId;
-			doc.created = new Date();
-			doc.modified_by = userId;
-			doc.modified = new Date();
-
-		"before.update": (userId, doc, fieldNames, modifier, options)->
-			modifier.$set = modifier.$set || {};
-			modifier.$set.modified_by = userId
-			modifier.$set.modified = new Date();
-
-
-if Meteor.isClient
-
-	Triggers.default = 
-
-		"before.insert": (userId, doc)->
-			doc.space = Session.get("spaceId")
+		if Meteor.isClient
+			# 原则上 triggers 只在服务端执行，这个是特例
+			collection.before.insert (userId, doc)->
+				doc.space = Session.get("spaceId")

@@ -54,12 +54,16 @@ Creator.baseObject =
 			modifyAllRecords: true
 			viewAllRecords: true 
 
-	object_actions:
-		add: (object_name)->
-			return
-	record_actions:
-		edit: (object_name, record_id)->
-			return
-		delete: (object_name, record_id)->
-			return
+	triggers:
+		
+		"before.insert": (userId, doc)->
+			doc.owner = userId
+			doc.created_by = userId;
+			doc.created = new Date();
+			doc.modified_by = userId;
+			doc.modified = new Date();
 
+		"before.update": (userId, doc, fieldNames, modifier, options)->
+			modifier.$set = modifier.$set || {};
+			modifier.$set.modified_by = userId
+			modifier.$set.modified = new Date();
