@@ -40,11 +40,11 @@
 						</div>
 						<div class="slds-card__body card-container slds-section__content">
 							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-								{{#each arr}}
+								{{#each apps}}
 								<li class="slds-p-horizontal_small app-item-container">
 									<article class="slds-tile slds-media slds-card__tile slds-hint-parent">
 										<div class="item-area">
-											<a class="inner-card">
+											<a class="inner-card app-launcher-link" href="{{url}}">
 												<div class="bLeft">
 													<div class="appImage">
 														<img src="https://ap5.salesforce.com/logos/Salesforce/ServiceCloud/logo.png">
@@ -52,7 +52,7 @@
 												</div>
 												<div class="bRight">
 													<div class="appTitle">
-														服务
+														{{_ name}}
 													</div>
 													<div class="fullDescription">
 														通过客户、联系人、个案等管理客服服务
@@ -88,11 +88,11 @@
 						</div>
 						<div class="slds-card__body card-container slds-section__content">
 							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-								{{#each arr}}
+								{{#each app_objects}}
 								<li class="slds-p-horizontal_small project-item-container">
-									<a class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate" href="">
+									<a class="object-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate" href="{{object_url}}">
 										<span class="slds-truncate slds-text-link">
-											crm_customers
+											{{_ object_i.name}}
 										</span>
 									</a>
 								</li>
