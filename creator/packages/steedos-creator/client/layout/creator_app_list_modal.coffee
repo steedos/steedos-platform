@@ -1,16 +1,18 @@
 Template.creator_app_list_modal.helpers
 	apps: ()->
-		return Steedos.getSpaceApps()
+		apps = []
+		_.each Creator.Apps, (v, k)->
+			apps.push v
+		return apps
 
 	app_objects: ()->
-		app = Creator.getApp()
-		return app?.objects
-
-	object_i: ()->
-		return Creator.Objects[this]
+		objects = []
+		_.each Creator.Objects, (v, k)->
+			objects.push v
+		return objects
 
 	object_url: ()->
-		return Creator.getObjectUrl(this, null)
+		return Creator.getObjectUrl(this.name, null)
 
 
 Template.creator_app_list_modal.events
@@ -20,5 +22,5 @@ Template.creator_app_list_modal.events
 	'click .control-project-list': (event) ->
 		$(event.currentTarget).closest(".app-sction-part-2").toggleClass("slds-is-open")
 
-	'click .object-launcher-link, .app-launcher-link': (event, template) ->
+	'click .object-launcher-link,.app-launcher-link': (event, template) ->
 		Modal.hide(template)
