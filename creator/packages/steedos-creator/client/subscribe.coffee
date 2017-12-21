@@ -1,8 +1,6 @@
-Creator.subs["Creator"] = new SubsManager()
-
-
-
 Meteor.startup ->
+	
+	Creator.subs["Creator"] = new SubsManager()
 	Tracker.autorun (c)->
 		if Session.get("object_name")
 			Creator.subs["Creator"].subscribe "object_recent_viewed", Session.get("object_name")
