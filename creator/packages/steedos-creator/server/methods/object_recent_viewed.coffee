@@ -13,7 +13,8 @@ Meteor.methods
 					record_ids = []
 				else
 					record_ids = _.without(record_ids, record_id)
-				record_ids.push(record_id)
+				record_ids = _.union([record_id], record_ids) 
+				record_ids = _.first(record_ids, 10) 
 				Creator.Collections.object_recent_viewed.update({
 					object_name: object_name
 					created_by: this.userId
