@@ -4,19 +4,13 @@ Creator.Apps = {}
 Creator.Objects = {}
 Creator.Collections = {}
 
+Creator.objectsByName = {}
+
 
 Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->
 		
-		if db[object_name]
-			Creator.Collections[object_name] = db[object_name]
-		else if !Creator.Collections[object_name]
-			Creator.Collections[object_name] = new Meteor.Collection(object_name)
-		
-		schema = Creator.getObjectSchema(obj)
-		obj.schema = new SimpleSchema(schema)
-		if object_name != "users"
-			Creator.Collections[object_name].attachSchema(obj.schema)
+		new Creator.Object(obj);
 		
 		Creator.initTriggers(object_name)	
 		Creator.initListViews(object_name)
@@ -29,7 +23,6 @@ Meteor.startup ->
 					return true
 				remove: (userId, doc) ->
 					return true
-
 
 	Creator.initApps()
 	
@@ -49,7 +42,7 @@ Creator.getObject = (object_name)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
-		return Creator.Objects[object_name]
+		return Creator.objectsByName[object_name]
 
 Creator.getTable = (object_name)->
 	return Tabular.tablesByName["creator_" + object_name]
@@ -164,10 +157,11 @@ Creator.getObjectRecord = (object_name, record_id)->
 
 
 Creator.getPermissions = (object_name)->
-	if !object_name 
+	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 
-	if !object_name
+	obj = Creator.getObject(object_name)
+	if !obj
 		permissions = 
 			allowCreate: false
 			allowDelete: false
@@ -176,19 +170,12 @@ Creator.getPermissions = (object_name)->
 			modifyAllRecords: false
 			viewAllRecords: false 
 	else	
-		if Steedos.isSpaceAdmin()
-			permissions = Creator.Objects[Session.get("object_name")]?.permissions?.admin
-			if !permissions
-				permissions = Creator.baseObject.permissions.admin
-		else
-			permissions = Creator.Objects[Session.get("object_name")]?.permissions?.user
-			if !permissions
-				permissions = Creator.baseObject.permissions.user
+		permissions = obj.getPermissions()
 
 	return permissions
 
 Creator.getRecordPermissions = (object_name, record, userId)->
-	if !object_name 
+	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 
 	permissions = Creator.getPermissions(object_name)
