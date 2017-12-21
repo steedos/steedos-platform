@@ -31,7 +31,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 		width: '20px'
 		createdCell: (node, cellData, rowData) ->
 			$(node).attr("data-label", "Actions")
-			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData}, node)
+			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name}, node)
 	cols.push(action_col)
 	return cols
 

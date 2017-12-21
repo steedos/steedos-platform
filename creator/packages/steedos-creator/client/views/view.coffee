@@ -1,6 +1,7 @@
 Template.creator_view.onCreated ->
 	this.edit_fields = new ReactiveVar()
 	this.edit_collection = new ReactiveVar()
+	this.related_collection = new ReactiveVar()
 
 Template.creator_view.helpers
 
@@ -59,6 +60,16 @@ Template.creator_view.helpers
 	appName: ()->
 		app = db.apps.findOne(Session.get("app_id"))
 		return app?.name
+
+	related_object: ()->
+		return Creator.Objects[this.object_name]
+
+	related_collection: ()->
+		return Template.instance()?.related_collection?.get()
+
+	allowCreate: ()->
+		console.log Creator.getPermissions(this.object_name).allowCreate
+		return Creator.getPermissions(this.object_name).allowCreate
 
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
@@ -123,4 +134,26 @@ Template.creator_view.events
 
 			setTimeout ()->
 				$(".related-object-edit").click()
+			, 1
+
+	'click .add-related-object-record': (event, template) ->
+		object_name = event.currentTarget.dataset.objectName
+		collection = "Creator.Collections.#{object_name}"
+		template.related_collection.set(collection)
+		setTimeout ->
+			$(".related-object-new").click()
+		, 1
+
+	'click .item-edit-action': (event, template) ->
+		dataTable = $(event.currentTarget).closest('table').DataTable()
+		tr = $(event.currentTarget).closest("tr")
+		rowData = dataTable.row(tr).data()
+
+		if rowData
+			Session.set 'cmDoc', rowData
+			object_name = event.currentTarget.dataset.objectName
+			collection = "Creator.Collections.#{object_name}"
+			template.edit_collection.set(collection)
+			setTimeout ->
+				$(".related-object-row-edit").click()
 			, 1

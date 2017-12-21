@@ -15,10 +15,10 @@
 			<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 				<ul class="slds-dropdown__list slds-show">
 					<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-						<a role="option" tabindex="-1" class="item-edit-action" data-id="{{this._id}}">
+						<a role="option" tabindex="-1" class="item-edit-action" data-id="{{this._id}}" data-object-name="{{this.object_name}}">
 							<span class="">编辑</span>
 						</a>
-						<a role="option" tabindex="-1" class="item-delete-action" data-id="{{this._id}}">
+						<a role="option" tabindex="-1" class="item-delete-action" data-id="{{this._id}}" data-object-name={{this.object_name}}>
 							<span class="">删除</span>
 						</a>
 					</li>
