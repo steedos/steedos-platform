@@ -1,7 +1,17 @@
+Template.creator_view.onCreated ->
+	this.edit_fields = new ReactiveVar()
+	this.edit_collection = new ReactiveVar()
+
 Template.creator_view.helpers
 
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
+
+	editFields: ()->
+		return Template.instance()?.edit_fields?.get()
+
+	editCollection: ()->
+		return Template.instance()?.edit_collection?.get()
 
 	schema: ()->
 		return Creator.getSchema(Session.get("object_name"))
@@ -55,7 +65,7 @@ Template.creator_view.helpers
 
 Template.creator_view.events
 	'click .edit-creator': (event) ->
-		$(".creator-edit").click()
+		$(".creator-record-edit").click()
 
 	'click .delete-creator': (event) ->
 		object_name = Session.get('object_name')
@@ -97,3 +107,20 @@ Template.creator_view.events
 		Session.set("detail_info_visible", false)
 		Tracker.afterFlush ()->
 			Session.set("detail_info_visible", true)
+
+	'click .table-cell-edit': (event, template) ->
+		field = this.field_name
+		object_name = this.object_name
+
+		dataTable = $(event.currentTarget).closest('table').DataTable()
+		tr = $(event.currentTarget).closest("tr")
+		rowData = dataTable.row(tr).data()
+
+		if rowData
+			template.edit_fields.set(field)
+			template.edit_collection.set("Creator.Collections.#{object_name}" )
+			Session.set 'cmDoc', rowData
+
+			setTimeout ()->
+				$(".related-object-edit").click()
+			, 1

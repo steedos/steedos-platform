@@ -121,7 +121,7 @@ Template.creator_list.events
 			$(".btn.creator-edit").click()
 
 	'click .table-cell-edit': (event, template) ->
-		field = $(event.currentTarget).closest("td").data("label")
+		field = this.field_name
 
 		dataTable = $(event.currentTarget).closest('table').DataTable()
 		tr = $(event.currentTarget).closest("tr")
@@ -130,10 +130,9 @@ Template.creator_list.events
 		if rowData
 			template.edit_fields.set(field)
 			Session.set 'cmDoc', rowData
-			Session.set 'cmFields', field
 
 			setTimeout ()->
-				$(".edit-table-cell").click()
+				$(".edit-list-table-cell").click()
 			, 1
 
 	'click .item-delete-action': (event) ->

@@ -89,5 +89,8 @@
 		</div>
 	</div>
 
-	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
+	{{#afModal class="btn btn-primary related-object-edit hidden" collection=editCollection fields=editFields operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
+
+
+	{{#afModal class="btn btn-primary creator-record-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
 </template> 
