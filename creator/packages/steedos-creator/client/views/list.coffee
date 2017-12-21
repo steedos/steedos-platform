@@ -89,6 +89,9 @@ Template.creator_list.helpers
 	list_view_visible: ()->
 		return Session.get("list_view_visible")
 
+	doc: ()->
+		return Session.get("editing_record_id")
+
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
 	# 	dataTable = $(event.target).closest('table').DataTable();
@@ -111,13 +114,12 @@ Template.creator_list.events
 			Session.set("list_view_visible", true)
 
 	'click .item-edit-action': (event) ->
-		_id = event.currentTarget.dataset?.id
+		record_id = event.currentTarget.dataset?.id
 		object_name = Session.get("object_name")
 
-		if _id
-			record = Creator.Collections[object_name].findOne _id
-			console.log record
-			Session.set 'cmDoc', record
+		if record_id
+			Session.set 'editing_object_name', object_name
+			Session.set 'editing_record_id', record_id
 			$(".btn.creator-edit").click()
 
 	'click .table-cell-edit': (event, template) ->

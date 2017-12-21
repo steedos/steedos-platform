@@ -75,7 +75,7 @@ Template.creator_view.helpers
 		return Session.get("detail_info_visible")
 
 	doc: ()->
-		return Session.get("related_record_id")
+		return Session.get("editing_record_id")
 
 Template.creator_view.events
 	'click .edit-creator': (event) ->
@@ -154,8 +154,8 @@ Template.creator_view.events
 
 		if record_id
 			object_name = event.currentTarget.dataset.objectName
-			Session.set 'related_object_name', object_name
-			Session.set 'related_record_id', record_id
+			Session.set 'editing_object_name', object_name
+			Session.set 'editing_record_id', record_id
 
 			collection = "Creator.Collections.#{object_name}"
 			template.edit_collection.set(collection)
