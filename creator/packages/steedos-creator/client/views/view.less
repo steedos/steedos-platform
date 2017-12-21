@@ -35,3 +35,25 @@ form.two-columns-form{
 		width: 100%;
 	}
 }
+#afModal{
+	.modal-two-columns{
+		.modal-body{
+			form{
+				-webkit-column-count: 2;
+				-moz-column-count: 2;
+				column-count: 2;
+				.form-group{
+					display: inline-block;
+					width: 100%;
+					&>.control-label{
+						margin-bottom: 4px;
+						width: 100%!important;
+						&~div{
+							width: 100%!important;
+						}
+					}
+				}
+			}
+		}
+	}
+}
