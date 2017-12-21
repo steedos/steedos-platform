@@ -1,27 +1,19 @@
 Creator.getTabularColumns = (object_name, columns) ->
+	obj = Creator.getObject(object_name)
 	cols = []
 	_.each columns, (field_name)->
-		field = Creator.getObjectField(object_name, field_name)
+		field = obj.fields[field_name]
 		if field?.type
 			col = {}
 			col.data = field_name
 			col.render =  (val, type, doc) ->
 				
 			col.sTitle = '<div class="slds-truncate" title="">' + t("" + object_name + "_" + field_name.replace(/\./g,"_")); + '</div>'
-			# col.createdCell = (node, cellData, rowData) ->
-			# 	$(node).css()
+
 			col.className = "slds-cell-edit cellContainer"
 			col.createdCell = (cell, val, doc) ->
 				$(cell).attr("data-label", field_name)
 				Blaze.renderWithData(Template.creator_table_cell, {_id: doc._id, val: val, doc: doc, field: field, field_name: field_name, object_name:object_name}, cell);
-
-			# col.tmpl = Meteor.isClient && Template.creator_table_cell
-			# col.tmplContext = (rowData)->
-			# 	return {
-			# 		cell: rowData[field_name],
-			# 		row: rowData
-			# 		field_name: field_name
-			# 	}
 
 			cols.push(col)
 

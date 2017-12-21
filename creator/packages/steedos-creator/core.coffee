@@ -133,15 +133,6 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	else 
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list")
 
-
-Creator.getObjectField = (object_name, field_name)->
-	obj = Creator.Objects[object_name]
-	if obj.fields[field_name]
-		return obj.fields[field_name]
-	else 
-		return Creator.baseObject.fields[field_name]	
-
-
 Creator.getCollection = (object_name)->
 	if !object_name
 		object_name = Session.get("object_name")
