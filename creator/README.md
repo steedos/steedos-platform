@@ -32,12 +32,15 @@ baseObject用于定义所有对象适用的基础fields, triggers, list_views, i
 
 ### permissions 权限
 Object权限分以下类型
-	- allowCreate: 可创建
-	- allowDelete: 可删除
-	- allowEdit: 可编辑
-	- allowRead: 可查看owner=自己的记录
-	- modifyAllRecords: 可修改所有人的记录
-	- viewAllRecords: 可查看所有人的记录
+- allowCreate: 可创建
+- allowDelete: 可删除
+- allowEdit: 可编辑
+- allowRead: 可查看owner=自己的记录
+- modifyAllRecords: 可修改所有人的记录
+- viewAllRecords: 可查看所有人的记录
+API
+- object权限：Creator.getPermissions(object_name)
+- record权限：Creator.getRecordPermissions(object_name, record, userId)
 
 ### list_views 列表
 用于定义Object的列表显示样式
