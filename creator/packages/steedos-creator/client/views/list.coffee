@@ -1,3 +1,6 @@
+Template.creator_list.onCreated ->
+	this.edit_fields = new ReactiveVar()
+
 Template.creator_list.helpers
 
 	object_name: ()->
@@ -13,6 +16,11 @@ Template.creator_list.helpers
 		permissions = Creator.getPermissions()
 		if permissions
 			return permissions[permissionName]
+
+
+	fields: ->
+		return Template.instance()?.edit_fields.get()
+
 
 	selector: ()->
 		object_name = Session.get("object_name")
@@ -111,6 +119,22 @@ Template.creator_list.events
 			console.log record
 			Session.set 'cmDoc', record
 			$(".btn.creator-edit").click()
+
+	'click .table-cell-edit': (event, template) ->
+		field = $(event.currentTarget).closest("td").data("label")
+
+		dataTable = $(event.currentTarget).closest('table').DataTable()
+		tr = $(event.currentTarget).closest("tr")
+		rowData = dataTable.row(tr).data()
+
+		if rowData
+			template.edit_fields.set(field)
+			Session.set 'cmDoc', rowData
+			Session.set 'cmFields', field
+
+			setTimeout ()->
+				$(".edit-table-cell").click()
+			, 1
 
 	'click .item-delete-action': (event) ->
 		object_name = Session.get('object_name')
