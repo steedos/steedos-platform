@@ -3,6 +3,7 @@ Creator.baseObject =
 		owner:
 			type: "lookup",
 			reference_to: "users"
+			omit: true
 		space:
 			type: "text",
 			omit: true
