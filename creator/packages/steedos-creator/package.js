@@ -108,6 +108,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 
     api.addFiles('server/publications/object.coffee', 'server');
+    api.addFiles('server/publications/related_object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');

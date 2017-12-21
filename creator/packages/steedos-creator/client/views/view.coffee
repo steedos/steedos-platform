@@ -74,6 +74,9 @@ Template.creator_view.helpers
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
 
+	doc: ()->
+		return Session.get("related_record_id")
+
 Template.creator_view.events
 	'click .edit-creator': (event) ->
 		$(".creator-record-edit").click()
@@ -147,11 +150,13 @@ Template.creator_view.events
 	'click .item-edit-action': (event, template) ->
 		dataTable = $(event.currentTarget).closest('table').DataTable()
 		tr = $(event.currentTarget).closest("tr")
-		rowData = dataTable.row(tr).data()
+		record_id = dataTable.row(tr).data()._id
 
-		if rowData
-			Session.set 'cmDoc', rowData
+		if record_id
 			object_name = event.currentTarget.dataset.objectName
+			Session.set 'related_object_name', object_name
+			Session.set 'related_record_id', record_id
+
 			collection = "Creator.Collections.#{object_name}"
 			template.edit_collection.set(collection)
 			setTimeout ->

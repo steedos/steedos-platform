@@ -13,5 +13,7 @@ Meteor.startup ->
 
 	Tracker.autorun (c)->
 		if Session.get("related_object_name") and Session.get("related_record_id")
-			Creator.subs["Creator"].subscribe "creator_object_record", Session.get("related_object_name"), Session.get("related_record_id") 
+			Creator.subs["Creator"].subscribe "creator_related_object_record", Session.get("related_object_name"), Session.get("related_record_id"), ()->
+					Session.set 'cmDoc', Creator.Collections[Session.get("related_object_name")].findOne(Session.get("related_record_id"))
+
 
