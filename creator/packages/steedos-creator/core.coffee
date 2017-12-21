@@ -3,6 +3,7 @@
 Creator.Apps = {}
 Creator.Objects = {}
 Creator.Collections = {}
+Creator.Subs = {}
 
 Creator.objectsByName = {}
 
