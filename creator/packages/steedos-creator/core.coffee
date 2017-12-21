@@ -53,8 +53,6 @@ Creator.getSchema = (object_name)->
 
 Creator.getObjectSchema = (obj) ->
 
-	_.extend(obj.fields, Creator.baseObject.fields)
-
 	schema = {}
 	_.each obj.fields, (field, field_name)->
 

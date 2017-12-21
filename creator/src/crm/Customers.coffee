@@ -27,6 +27,8 @@ Creator.Objects.crm_customers =
 			type: "text"
 		website: 
 			type: "text"
+		owner: 
+			omit: false
 
 	list_views:
 		default:
