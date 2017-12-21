@@ -18,7 +18,7 @@ Creator.Objects.crm_customers =
 			type: "select"
 			options: [
 				{label: "Hot", value: "high"},
-				{label: "Warm", value: "nomal"},
+				{label: "Warm", value: "normal"},
 				{label: "Cold", value: "low"}
 			]
 		phone:
