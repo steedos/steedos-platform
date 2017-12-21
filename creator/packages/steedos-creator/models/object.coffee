@@ -9,6 +9,13 @@ Creator.Objects.objects =
 		description: 
 			label: "Description"
 			type: "text"
+		"fields.$.name":
+			type: "text"
+		"fields.$.type":
+			type: "select"
+			allowedValues: ["text", "number", "boolean"]
+
+
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
@@ -21,9 +28,9 @@ Creator.Objects.objects =
 
 	permissions:
 		user:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true 

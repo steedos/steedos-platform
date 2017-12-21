@@ -111,7 +111,10 @@ Creator.getObjectSchema = (obj) ->
 
 		if field.label
 			fs.label = field.label
-			
+
+		if field.allowedValues
+			fs.allowedValues = field.allowedValues
+						
 		if !field.required
 			fs.optional = true
 
