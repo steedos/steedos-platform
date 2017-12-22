@@ -1,42 +1,65 @@
 <template name="autoformModals">
 	<div class="modal fade" id="afModal">
 		<div class="modal-dialog {{cmModalDialogClass}}">
-			<div class="modal-content {{cmModalContentClass}}">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">{{{title}}}</h4>
-				</div>
-				<div class="modal-body">
-					{{#if $and cmCollection cmOperation}}
-						<p>{{{prompt}}}</p>
-						{{#if shouldUpdateQuickForm}}
-							{{#if $neq cmOperation 'remove'}}
-								{{> quickForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc type=cmAutoformType buttonContent=cmButtonContent fields=cmFields omitFields=cmOmitFields template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses afFieldInput-placeholder=cmPlaceholder meteormethod=cmMeteorMethod}}
+			<div class="slds-modal__container {{cmModalContentClass}}">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="title slds-text-heading--medium">
+						<h2 class="slds-text-heading--medium">{{{title}}}</h2>
+					</h2>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+					{{#if $neq cmOperation 'remove'}}
+						{{#if $and cmCollection cmOperation}}
+							<p>{{{prompt}}}</p>
+							{{#if shouldUpdateQuickForm}}
+								{{> quickForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc type=cmAutoformType buttonContent=false fields=cmFields omitFields=cmOmitFields template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses afFieldInput-placeholder=cmPlaceholder meteormethod=cmMeteorMethod}}
 							{{/if}}
 						{{/if}}
 					{{/if}}
+
+					{{#if $eq cmOperation 'remove'}}
+						<div class="remove-prompt slds-text-align--center">是否确定要删除本条数据？</div>
+					{{/if}}
 				</div>
-				{{#if $eq cmOperation 'remove'}}
-					<div class="modal-footer">
-						{{#if closeButtonContent}}
-							<a role="button" href="#" data-dismiss="modal" class="{{cmCloseButtonClasses}}">{{{closeButtonContent}}}</a>
+
+				<footer class="slds-modal__footer">
+					{{#if $eq cmOperation 'insert'}}
+						<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+
+						{{#if cmSaveAndInsert}}
+							<button class="slds-button slds-button_neutral btn-insert-and-create">保存并新建</button>
 						{{/if}}
-						<button class="{{cmButtonClasses}}">{{{buttonContent}}}</button>
-					</div>
-				{{/if}}
-				{{#if cmShowRemoveButton}}
+
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+					{{/if}}
+
 					{{#if $eq cmOperation 'update'}}
-						<div class="modal-footer">
-							{{#if closeButtonContent}}
-								<button class="{{cmCloseButtonClasses}} btn-remove pull-left">{{{closeButtonContent}}}</button>
-							{{else}}
-								<button class="{{cmCloseButtonClasses}} btn-remove pull-left">{{{afModalRemove}}}</button>
-							{{/if}}
-							<a role="button" href="#" data-dismiss="modal" class="btn btn-default pull-right">{{{afModalCancel}}}</a>
-							<button class="{{cmButtonClasses}}" type="submit">{{{afModalUpdate}}}</button>
-						</div>
+
+						{{#if cmShowRemoveButton}}
+							<button class="slds-button slds-button_destructive btn-remove">删除</button>
+						{{/if}}
+
+						<button class="slds-button slds-button_brand btn-update">保存</button>
+
+						{{#if cmSaveAndInsert}}
+							<button class="slds-button slds-button_neutral btn-update-and-create">保存并新建</button>
+						{{/if}}
+
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
 					{{/if}}
-				{{/if}}
+
+					{{#if $eq cmOperation 'remove'}}
+						<button class="slds-button slds-button_brand btn-remove">删除</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+					{{/if}}
+				</footer>
 			</div>
 		</div>
 	</div>

@@ -116,8 +116,8 @@
 
 	{{#afModal class="btn btn-primary edit-list-table-cell hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom modal-two-columns" buttonContent=updateButtonContent fields=fields}} {{_ "Edit"}} {{/afModal}}
 
-	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection operation="update" doc=doc dialogClass="modal-lg modal-body-zoom modal-two-columns" buttonContent=updateButtonContent showRemoveButton=true}} {{_ "Edit"}} {{/afModal}}
+	{{#afModal class="btn btn-primary creator-edit hidden" collection=collection operation="update" doc=doc dialogClass="modal-lg modal-body-zoom modal-two-columns" buttonContent=updateButtonContent}} {{_ "Edit"}} {{/afModal}}
 
-	{{#afModal class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom modal-two-columns" buttonContent=insertButtonContent}} {{_ "Create"}} {{/afModal}}
+	{{#afModal class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom modal-two-columns" saveAndInsert=true buttonContent=insertButtonContent}} {{_ "Create"}} {{/afModal}}
 
 </template>

@@ -1,16 +1,13 @@
-#collectionModal
-{	.modal-body
-	{
+#collectionModal {	
+	.modal-body {
 		#cmForm > div:last-child {
 			padding: 15px;
 			text-align: right;
 			border-top: 1px solid #e5e5e5;
 		}
 	}
-	.modal-footer
-	{
-		form
-		{
+	.modal-footer {
+		form {
 			display: inline-block;
 		}
 	}
@@ -19,5 +16,25 @@
 #cmForm.form-horizontal {
 	.control-label {
 		text-align: left;
+	}
+}
+
+#afModal {
+	.slds-modal__container {
+		width: auto;
+		max-width: 100%;
+	
+		.slds-modal__content {
+			.remove-prompt {
+				font-size: 16px;
+			}
+		}
+		
+		.slds-modal__footer {
+			.slds-button_destructive.btn-remove {
+				float: left;
+			}
+		}
+
 	}
 }
