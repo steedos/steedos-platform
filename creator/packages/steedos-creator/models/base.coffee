@@ -57,8 +57,9 @@ Creator.baseObject =
 
 	triggers:
 		
-		"before.insert": 
+		"before.insert.server.default": 
 			on: "server"
+			when: "before.insert"
 			action: (userId, doc)->
 				doc.owner = userId
 				doc.created_by = userId;
@@ -66,15 +67,17 @@ Creator.baseObject =
 				doc.modified_by = userId;
 				doc.modified = new Date();
 
-		"before.update": 
+		"before.update.server.default": 
 			on: "server"
+			when: "before.update"
 			action: (userId, doc, fieldNames, modifier, options)->
 				modifier.$set = modifier.$set || {};
 				modifier.$set.modified_by = userId
 				modifier.$set.modified = new Date();
 
-		"before.insert": 
+		"before.insert.client.default": 
 			on: "client"
+			when: "before.insert"
 			action: (userId, doc)->
 				doc.space = Session.get("spaceId")
 
