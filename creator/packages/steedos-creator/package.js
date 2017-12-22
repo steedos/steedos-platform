@@ -142,4 +142,7 @@ Package.onUse(function(api) {
     api.addFiles('client/views/table_actions.html', 'client');
     api.addFiles('client/views/table_actions.coffee', 'client');
     api.addFiles('client/views/table_actions.less', 'client');
+    api.addFiles('client/views/table_checkbox.html', 'client');
+    api.addFiles('client/views/table_checkbox.coffee', 'client');
+    api.addFiles('client/views/table_checkbox.less', 'client');
 });

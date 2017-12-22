@@ -25,6 +25,17 @@ Creator.getTabularColumns = (object_name, columns) ->
 			$(node).attr("data-label", "Actions")
 			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name}, node)
 	cols.push(action_col)
+
+	checkbox_col = 
+		title: '<div class="slds-th__action"></div>'
+		data: "_id"
+		width: '20px'
+		className: "slds-cell-edit cellContainer"
+		createdCell: (node, cellData, rowData) ->
+			$(node).attr("data-label", "Checkbox")
+			$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
+	cols.splice(0, 0, checkbox_col);  
+	
 	return cols
 
 
@@ -39,6 +50,9 @@ Creator.initListViews = (object_name)->
 		collection: Creator.Collections[object_name],
 		pub: "steedos_object_tabular",
 		columns: Creator.getTabularColumns(object_name, columns)
+		headerCallback: ( thead, data, start, end, display )->
+			console.log("headerCallback");
+			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
 		dom: "tp"
 		extraFields: ["_id"]
 		lengthChange: false

@@ -1,0 +1,23 @@
+<template name="creator_table_checkbox">
+	{{#if isHeader}}
+		<div class="slds-cell-fixed slds-align_absolute-center slds-th__action">
+			<span class="checkbox-container uiInput forceVirtualCheckbox uiInput--default">
+				<label class="slds-checkbox">
+					<input class="keyboardMode--trigger" type="checkbox">
+					<span class="slds-checkbox--faux"></span>
+					<!-- <span class="slds-assistive-text">选择 3 个项目</span> -->
+				</label>
+			</span>
+		</div>
+	{{else}}
+		<span class="slds-grid slds-grid--align-spread">
+			<span class="slds-grid slds-grid--align-spread slds-align_absolute-center checkbox-container uiInput forceVirtualCheckbox uiInput--default">
+				<label class="slds-checkbox">
+					<input class="keyboardMode--trigger" type="checkbox">
+					<span class="slds-checkbox--faux"></span>
+					<!-- <span class="slds-assistive-text">选择项目 1</span> -->
+				</label>
+			</span>
+		</span>
+	{{/if}}
+</template>
