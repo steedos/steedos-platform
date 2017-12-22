@@ -50,3 +50,9 @@ Creator.Objects.crm_customers =
 	actions: 
 		export:
 			visible: true
+		print:
+			label: "Print"
+			on: "record"
+			visible: true
+			todo: ()->
+				alert("you clicked on print button") 

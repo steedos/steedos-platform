@@ -71,11 +71,13 @@ API
 用于定义界面上的按钮与操作，
 - action.todo 如果是函数，直接执行
 - action.todo 如果是字符串，表示系统内置函数，Creator找到该内置函数并执行
+- action.on: 
+  - "list" 为列表定义action，显示在列表右上角
+  - "record" 为记录定义action，显示在记录查看页右上角
 - action.todo 函数中可以使用以下变量
   - this.object_name
   - this.object
   - this.action
-
 实例
 - actions
   - "export":

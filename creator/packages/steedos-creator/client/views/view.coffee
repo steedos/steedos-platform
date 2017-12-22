@@ -72,7 +72,6 @@ Template.creator_view.helpers
 		return Template.instance()?.related_collection?.get()
 
 	allowCreate: ()->
-		console.log Creator.getPermissions(this.object_name).allowCreate
 		return Creator.getPermissions(this.object_name).allowCreate
 
 	detail_info_visible: ()->
@@ -81,11 +80,21 @@ Template.creator_view.helpers
 	doc: ()->
 		return Session.get("editing_record_id")
 
+	actions: ()->
+		obj = Creator.getObject()
+		actions = _.values(obj.actions) 
+		actions = _.where(actions, {on: "record", visible: true})
+		return actions
+
 Template.creator_view.events
-	'click .edit-creator': (event) ->
+
+	'click .list-action-custom': (event) ->
+		Creator.executeAction Session.get("object_name"), this
+
+	'click .record-action-edit': (event) ->
 		$(".creator-record-edit").click()
 
-	'click .delete-creator': (event) ->
+	'click .record-action-delete': (event) ->
 		object_name = Session.get('object_name')
 		record = Creator.getObjectRecord()
 
