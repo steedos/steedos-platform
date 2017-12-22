@@ -1,0 +1,12 @@
+{
+      "name": "autoform-modals",
+      "description": "Add modals to insert/update/remove for a collection",
+      "homepage": "https://github.com/possibilities/meteor-cool-pkg",
+      "author": "Ben Jones <benjaminpeterjonesesquire@gmail.com> (http://code2create.com)",
+      "version": "0.1.0",
+      "git": "https://github.com/meteor-autoform-modals.git",
+      "packages": {
+        "autoform": {},
+        "handlebar-helpers": {}
+  }
+}
