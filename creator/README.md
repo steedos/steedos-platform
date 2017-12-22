@@ -67,15 +67,16 @@ API
 
 ### triggers 触发器
 - triggers 用于定义在服务端执行的触发器
+- 同一个事件可以定义多个trigger，但不能重名
     - on: ["server", "client"]
+    - when: 可选择以下事件
+		- "before.insert"
+		- "before.update"
+		- "before.delete"
+		- "after.insert"
+		- "after.update"
+		- "after.delete"
     - action: 传入触发的函数
-- 可以定义以下triggers
-	- "before.insert"
-	- "before.update"
-	- "before.delete"
-	- "after.insert"
-	- "after.update"
-	- "after.delete"
 
 
 ### SAAS 多租户
