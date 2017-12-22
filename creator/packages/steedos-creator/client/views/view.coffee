@@ -140,7 +140,7 @@ Template.creator_view.events
 			Session.set 'cmDoc', rowData
 
 			setTimeout ()->
-				$(".related-object-edit").click()
+				$(".related-object-cell-edit").click()
 			, 1
 
 	'click .add-related-object-record': (event, template) ->
