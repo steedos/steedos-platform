@@ -81,6 +81,12 @@ Creator.baseObject =
 			todo: (userId, doc)->
 				doc.space = Session.get("spaceId")
 
+		"after.insert.client.default":
+			on: "client"
+			when: "after.insert"
+			todo: (userId, doc)->
+				Meteor.call "object_recent_viewed", this.object_name, doc._id
+
 	actions:
 
 		"export":

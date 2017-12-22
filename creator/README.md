@@ -95,6 +95,8 @@ triggers 用于定义在服务端执行的触发器
 		- "after.update"
 		- "after.delete"
     - todo: 传入触发的函数
+- trigger.todo 函数中可以使用以下变量
+  - this.object_name
 
 
 ### SAAS 多租户

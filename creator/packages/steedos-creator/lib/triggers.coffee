@@ -1,31 +1,29 @@
-initTrigger = (collection, trigger)->
+initTrigger = (object_name, trigger)->
+	collection = Creator.Collections[object_name]
+	if !trigger.todo 
+		return
+	todoWrapper = ()->
+		this.object_name = object_name
+		return trigger.todo.apply(this,arguments)
 	if trigger.when == "before.insert"
-		collection.before.insert(trigger.todo)
+		collection.before.insert(todoWrapper)
 	else if trigger.when == "before.update"
-		collection.before.update(trigger.todo)
+		collection.before.update(todoWrapper)
 	else if trigger.when == "before.delete"
-		collection.before.delete(trigger.todo)
+		collection.before.delete(todoWrapper)
 	else if trigger.when == "after.insert"
-		collection.after.insert(trigger.todo)
+		collection.after.insert(todoWrapper)
 	else if trigger.when == "after.update"
-		collection.after.update(trigger.todo)
+		collection.after.update(todoWrapper)
 	else if trigger.when == "after.delete"
-		collection.after.delete(trigger.todo)
+		collection.after.delete(todoWrapper)
 
 
 Creator.initTriggers = (object_name)->
 
-	collection = Creator.Collections[object_name]
-
 	obj = Creator.getObject(object_name)
 	_.each obj.triggers, (trigger, trigger_name)->
 		if Meteor.isServer and trigger.on == "server" and trigger.todo and trigger.when
-			initTrigger collection, trigger
+			initTrigger object_name, trigger
 		if Meteor.isClient and trigger.on == "client" and trigger.todo and trigger.when
-			initTrigger collection, trigger
-
-	# 原则上 triggers 只在服务端执行
-	if Meteor.isServer
-		# 特例单独写，因为需要使用 object_name 变量
-		collection.after.insert (userId, doc)->
-			Meteor.call "object_recent_viewed", object_name, doc._id
+			initTrigger object_name, trigger
