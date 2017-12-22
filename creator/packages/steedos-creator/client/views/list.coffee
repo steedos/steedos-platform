@@ -111,7 +111,7 @@ Template.creator_list.events
 		$(".creator-add").click()
 
 	'click .list-action-custom': (event) ->
-		this.todo?();
+		Creator.executeAction Session.get("object_name"), this
 
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)

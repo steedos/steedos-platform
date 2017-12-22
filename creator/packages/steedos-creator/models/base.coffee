@@ -88,7 +88,7 @@ Creator.baseObject =
 			visible: false
 			on: "list"
 			todo: ()->
-				alert("please write code to export data")
+				alert("please write code to export data for " + this.object_name)
 
 
 		
