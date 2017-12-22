@@ -1,16 +1,16 @@
 initTrigger = (collection, trigger)->
 	if trigger.when == "before.insert"
-		collection.before.insert(trigger.action)
+		collection.before.insert(trigger.todo)
 	else if trigger.when == "before.update"
-		collection.before.update(trigger.action)
+		collection.before.update(trigger.todo)
 	else if trigger.when == "before.delete"
-		collection.before.delete(trigger.action)
+		collection.before.delete(trigger.todo)
 	else if trigger.when == "after.insert"
-		collection.after.insert(trigger.action)
+		collection.after.insert(trigger.todo)
 	else if trigger.when == "after.update"
-		collection.after.update(trigger.action)
+		collection.after.update(trigger.todo)
 	else if trigger.when == "after.delete"
-		collection.after.delete(trigger.action)
+		collection.after.delete(trigger.todo)
 
 
 Creator.initTriggers = (object_name)->
@@ -19,9 +19,9 @@ Creator.initTriggers = (object_name)->
 
 	obj = Creator.getObject(object_name)
 	_.each obj.triggers, (trigger, trigger_name)->
-		if Meteor.isServer and trigger.on == "server" and trigger.action and trigger.when
+		if Meteor.isServer and trigger.on == "server" and trigger.todo and trigger.when
 			initTrigger collection, trigger
-		if Meteor.isClient and trigger.on == "client" and trigger.action and trigger.when
+		if Meteor.isClient and trigger.on == "client" and trigger.todo and trigger.when
 			initTrigger collection, trigger
 
 	# 原则上 triggers 只在服务端执行

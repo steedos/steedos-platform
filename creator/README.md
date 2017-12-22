@@ -65,8 +65,17 @@ API
 - list_view_id == "recent"时生效
 - 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
 
+
+### actions 按钮与操作
+用于定义界面上的按钮与操作，例如
+- actions
+  - "export":
+    - visible: true
+    - on: "list"
+    - todo: ()->
+
 ### triggers 触发器
-- triggers 用于定义在服务端执行的触发器
+triggers 用于定义在服务端执行的触发器
 - 同一个事件可以定义多个trigger，但不能重名
     - on: ["server", "client"]
     - when: 可选择以下事件
@@ -76,7 +85,7 @@ API
 		- "after.insert"
 		- "after.update"
 		- "after.delete"
-    - action: 传入触发的函数
+    - todo: 传入触发的函数
 
 
 ### SAAS 多租户

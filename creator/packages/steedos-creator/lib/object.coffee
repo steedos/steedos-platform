@@ -19,13 +19,22 @@ Creator.Object = (options)->
 	_.each options.list_views, (item, item_name)->
 		if !self.list_views[item_name]
 			self.list_views[item_name] = {}
+		self.list_views[item_name].name = item_name
 		self.list_views[item_name] = _.extend(_.clone(self.list_views[item_name]), item)
 
 	self.triggers = _.clone(Creator.baseObject.triggers)
 	_.each options.triggers, (item, item_name)->
 		if !self.triggers[item_name]
 			self.triggers[item_name] = {}
+		self.triggers[item_name].name = item_name
 		self.triggers[item_name] = _.extend(_.clone(self.triggers[item_name]), item)
+
+	self.actions = _.clone(Creator.baseObject.actions)
+	_.each options.actions, (item, item_name)->
+		if !self.actions[item_name]
+			self.actions[item_name] = {}
+		self.actions[item_name].name = item_name
+		self.actions[item_name] = _.extend(_.clone(self.actions[item_name]), item)
 
 	self.permissions = _.clone(Creator.baseObject.permissions)
 	_.each options.permissions, (item, item_name)->

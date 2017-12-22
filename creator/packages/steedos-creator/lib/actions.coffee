@@ -1,12 +1,12 @@
-@Actions = {}
+Creator.standardActions = {}
 
 if Meteor.isClient
 	
-	Actions.new = (object_name, fields)->
+	Creator.standardActions.new = (object_name, fields)->
 		return 
 
-	Actions.edit = (object_name, fields, ids)->
+	Creator.standardActions.edit = (object_name, fields, ids)->
 		return 
 
-	Actions.delete = (object_name, fields, ids)->
+	Creator.standardActions.delete = (object_name, fields, ids)->
 		return 

@@ -92,6 +92,12 @@ Template.creator_list.helpers
 	doc: ()->
 		return Session.get("editing_record_id")
 
+	actions: ()->
+		obj = Creator.getObject()
+		actions = _.values(obj.actions) 
+		actions = _.where(actions, {on: "list", visible: true})
+		return actions
+
 Template.creator_list.events
 	# 'click .table-creator tr': (event) ->
 	# 	dataTable = $(event.target).closest('table').DataTable();
@@ -101,8 +107,11 @@ Template.creator_list.events
 	# 		# $('.btn.creator-edit').click();
 	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
 
-	'click .add-creator': (event) ->
+	'click .list-action-add': (event) ->
 		$(".creator-add").click()
+
+	'click .list-action-custom': (event) ->
+		this.todo?();
 
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)

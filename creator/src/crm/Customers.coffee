@@ -46,3 +46,7 @@ Creator.Objects.crm_customers =
 			columns: ["name", "email", "phone"]
 		crm_contracts:
 			columns: ["name", "amount", "company_signed_date", "company_signed_id"]
+
+	actions: 
+		export:
+			visible: true

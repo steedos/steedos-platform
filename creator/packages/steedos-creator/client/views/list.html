@@ -49,13 +49,25 @@
 								</div>
 							</div>
 						</div>
-						{{#if hasPermission "allowCreate"}}
-							<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-								<div class="slds-button-group" role="group">
-									<button class="slds-button slds-button_neutral add-creator">New</button>
-								</div>
-							</div>
-						{{/if}}
+						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
+								{{#if hasPermission "allowCreate"}}
+									<li class="slds-button slds-button--neutral slds-truncate">
+										<a href="javascript:void(0);" title="新建" class=" list-action-add">
+											<div class="slds-truncate" title="新建">新建</div>
+										</a>
+									</li>
+								{{/if}}
+								{{#each actions}}
+									<li class="slds-button slds-button--neutral slds-truncate">
+										<a href="javascript:void(0);" title="{{this.label}}" class=" list-action-custom">
+											<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+										</a>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+						
 					</div>
 					<div class="slds-grid">
 						<div class="slds-col slds-align-middle">

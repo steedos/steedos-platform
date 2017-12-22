@@ -60,7 +60,7 @@ Creator.baseObject =
 		"before.insert.server.default": 
 			on: "server"
 			when: "before.insert"
-			action: (userId, doc)->
+			todo: (userId, doc)->
 				doc.owner = userId
 				doc.created_by = userId;
 				doc.created = new Date();
@@ -70,7 +70,7 @@ Creator.baseObject =
 		"before.update.server.default": 
 			on: "server"
 			when: "before.update"
-			action: (userId, doc, fieldNames, modifier, options)->
+			todo: (userId, doc, fieldNames, modifier, options)->
 				modifier.$set = modifier.$set || {};
 				modifier.$set.modified_by = userId
 				modifier.$set.modified = new Date();
@@ -78,6 +78,17 @@ Creator.baseObject =
 		"before.insert.client.default": 
 			on: "client"
 			when: "before.insert"
-			action: (userId, doc)->
+			todo: (userId, doc)->
 				doc.space = Session.get("spaceId")
 
+	actions:
+
+		"export":
+			label: "Export"
+			visible: false
+			on: "list"
+			todo: ()->
+				alert("please write code to export data")
+
+
+		
