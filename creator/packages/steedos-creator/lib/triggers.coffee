@@ -17,19 +17,15 @@ Creator.initTriggers = (object_name)->
 
 	collection = Creator.Collections[object_name]
 
+	obj = Creator.getObject(object_name)
+	_.each obj.triggers, (trigger, trigger_name)->
+		if Meteor.isServer and trigger.on == "server" and trigger.action
+			initTrigger collection, trigger_name, trigger.action
+		if Meteor.isClient and trigger.on == "client" and trigger.action
+			initTrigger collection, trigger_name, trigger.action
+
 	# 原则上 triggers 只在服务端执行
 	if Meteor.isServer
-
-		obj = Creator.getObject(object_name)
-		_.each obj.triggers_server, (trigger, trigger_name)->
-			initTrigger collection, trigger_name, trigger
-
 		# 特例单独写，因为需要使用 object_name 变量
 		collection.after.insert (userId, doc)->
 			Meteor.call "object_recent_viewed", object_name, doc._id
-
-	if Meteor.isClient
-		
-		obj = Creator.getObject(object_name)
-		_.each obj.triggers_client, (trigger, trigger_name)->
-			initTrigger collection, trigger_name, trigger

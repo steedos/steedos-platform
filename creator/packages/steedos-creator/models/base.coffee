@@ -55,23 +55,26 @@ Creator.baseObject =
 			modifyAllRecords: true
 			viewAllRecords: true 
 
-	triggers_server:
+	triggers:
 		
-		"before.insert": (userId, doc)->
-			doc.owner = userId
-			doc.created_by = userId;
-			doc.created = new Date();
-			doc.modified_by = userId;
-			doc.modified = new Date();
+		"before_insert": 
+			on: "server"
+			action: (userId, doc)->
+				doc.owner = userId
+				doc.created_by = userId;
+				doc.created = new Date();
+				doc.modified_by = userId;
+				doc.modified = new Date();
 
-		"before.update": (userId, doc, fieldNames, modifier, options)->
-			modifier.$set = modifier.$set || {};
-			modifier.$set.modified_by = userId
-			modifier.$set.modified = new Date();
+		"before.update": 
+			on: "server"
+			action: (userId, doc, fieldNames, modifier, options)->
+				modifier.$set = modifier.$set || {};
+				modifier.$set.modified_by = userId
+				modifier.$set.modified = new Date();
 
-	triggers_client:
+		"before.insert": 
+			on: "client"
+			action: (userId, doc)->
+				doc.space = Session.get("spaceId")
 
-		"before.insert": (userId, doc)->
-			doc.space = Session.get("spaceId")
-		"after.insert": (userId, doc)->
-			alert ("record saved " + doc.name)

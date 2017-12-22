@@ -66,14 +66,10 @@ API
 - 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
 
 ### triggers 触发器
-- triggers_server 用于定义在服务端执行的触发器
-	- "before.insert"
-	- "before.update"
-	- "before.delete"
-	- "after.insert"
-	- "after.update"
-	- "after.delete"
-- triggers_client 用于定义在客户端执行的触发器
+- triggers 用于定义在服务端执行的触发器
+    - on: ["server", "client"]
+    - action: 传入触发的函数
+- 可以定义以下triggers
 	- "before.insert"
 	- "before.update"
 	- "before.delete"
