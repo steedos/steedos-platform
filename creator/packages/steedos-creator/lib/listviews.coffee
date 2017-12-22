@@ -34,7 +34,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 		createdCell: (node, cellData, rowData) ->
 			$(node).attr("data-label", "Checkbox")
 			$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
-	cols.splice(0, 0, checkbox_col);  
+	cols.splice(0, 0, checkbox_col)
 	
 	return cols
 
@@ -45,13 +45,18 @@ Creator.initListViews = (object_name)->
 	if object.list_views?.default?.columns
 		columns = object.list_views.default.columns
 
+	if Meteor.isClient
+		console.log "initListViews:#{object_name}"
+		tabular_selected_ids = Session.get "tabular_selected_ids"
+		if tabular_selected_ids
+			delete tabular_selected_ids[object_name]
+
 	new Tabular.Table
 		name: "creator_" + object_name,
 		collection: Creator.Collections[object_name],
 		pub: "steedos_object_tabular",
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
-			console.log("headerCallback");
 			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
 		dom: "tp"
 		extraFields: ["_id"]

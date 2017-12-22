@@ -166,3 +166,45 @@ Template.creator_list.events
 						else
 							info = t(object_name) + '"' + record.name + '"' + "已删除"
 							toastr.success info
+
+	'change .slds-table .select-one': (event)->
+		currentDataset = event.currentTarget.dataset
+		currentId = currentDataset.id
+		currentObjectName = currentDataset.objectName
+
+		tabular_selected_ids = Session.get "tabular_selected_ids"
+		unless tabular_selected_ids
+			tabular_selected_ids = {}
+		unless tabular_selected_ids[currentObjectName]
+			tabular_selected_ids[currentObjectName] = []
+		
+		currentIndex = tabular_selected_ids[currentObjectName].indexOf currentId
+		if $(event.currentTarget).is(":checked")
+			if currentIndex < 0
+				tabular_selected_ids[currentObjectName].push currentId
+		else
+			unless currentIndex < 0
+				tabular_selected_ids[currentObjectName].splice(currentIndex, 1)
+		Session.set "tabular_selected_ids", tabular_selected_ids
+		
+		checkboxs = $(".slds-table .select-one[data-object-name=#{currentObjectName}]")
+		selectedLength = tabular_selected_ids[currentObjectName].length
+		if selectedLength > 0 and checkboxs.length != selectedLength
+			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",true)
+		else
+			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",false)
+
+	'change .slds-table .select-all': (event)->
+		currentDataset = event.currentTarget.dataset
+		currentObjectName = currentDataset.objectName
+		isSelectedAll = $(event.currentTarget).is(":checked")
+		tabular_selected_ids = Session.get "tabular_selected_ids"
+		unless tabular_selected_ids
+			tabular_selected_ids = {}
+		tabular_selected_ids[currentObjectName] = []
+		checkboxs = $(".slds-table .select-one[data-object-name=#{currentObjectName}]")
+		if isSelectedAll
+			checkboxs.each (i,n)->
+				tabular_selected_ids[currentObjectName].push n.dataset.id
+		Session.set "tabular_selected_ids", tabular_selected_ids
+		checkboxs.prop("checked",isSelectedAll)
