@@ -57,7 +57,7 @@ Creator.baseObject =
 
 	triggers:
 		
-		"before_insert": 
+		"before.insert": 
 			on: "server"
 			action: (userId, doc)->
 				doc.owner = userId
