@@ -65,6 +65,23 @@ API
 - list_view_id == "recent"时生效
 - 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
 
+### triggers 触发器
+- triggers_server 用于定义在服务端执行的触发器
+	- "before.insert"
+	- "before.update"
+	- "before.delete"
+	- "after.insert"
+	- "after.update"
+	- "after.delete"
+- triggers_client 用于定义在客户端执行的触发器
+	- "before.insert"
+	- "before.update"
+	- "before.delete"
+	- "after.insert"
+	- "after.update"
+	- "after.delete"
+
+
 ### SAAS 多租户
 Creator支持多租户的环境，并自动生成多租户相关的代码。
 - 用户必须先选择工作区才能开始操作，也就是Session.get("spaceId")不为空

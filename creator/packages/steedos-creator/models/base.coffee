@@ -55,7 +55,7 @@ Creator.baseObject =
 			modifyAllRecords: true
 			viewAllRecords: true 
 
-	triggers:
+	triggers_server:
 		
 		"before.insert": (userId, doc)->
 			doc.owner = userId
@@ -68,3 +68,10 @@ Creator.baseObject =
 			modifier.$set = modifier.$set || {};
 			modifier.$set.modified_by = userId
 			modifier.$set.modified = new Date();
+
+	triggers_client:
+
+		"before.insert": (userId, doc)->
+			doc.space = Session.get("spaceId")
+		"after.insert": (userId, doc)->
+			alert ("record saved " + doc.name)

@@ -6,6 +6,9 @@ Creator.Objects.objects =
 		name: 
 			label: "Name"
 			type: "text"
+		icon: 
+			label: "Name"
+			type: "text"
 		description: 
 			label: "Description"
 			type: "text"

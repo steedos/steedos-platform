@@ -4,6 +4,7 @@ Creator.Object = (options)->
 	if (!options.name) 
 		throw new Error('Creator.Object options must specify name');
 	self.name = options.name
+	self.icon = options.icon
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	
@@ -19,11 +20,17 @@ Creator.Object = (options)->
 			self.list_views[item_name] = {}
 		self.list_views[item_name] = _.extend(_.clone(self.list_views[item_name]), item)
 
-	self.triggers = _.clone(Creator.baseObject.triggers)
-	_.each options.triggers, (item, item_name)->
-		if !self.triggers[item_name]
-			self.triggers[item_name] = {}
-		self.triggers[item_name] = _.extend(_.clone(self.triggers[item_name]), item)
+	self.triggers_server = _.clone(Creator.baseObject.triggers_server)
+	_.each options.triggers_server, (item, item_name)->
+		if !self.triggers_server[item_name]
+			self.triggers_server[item_name] = {}
+		self.triggers_server[item_name] = _.extend(_.clone(self.triggers_server[item_name]), item)
+
+	self.triggers_client = _.clone(Creator.baseObject.triggers_client)
+	_.each options.triggers_client, (item, item_name)->
+		if !self.triggers_client[item_name]
+			self.triggers_client[item_name] = {}
+		self.triggers_client[item_name] = _.extend(_.clone(self.triggers_client[item_name]), item)
 
 	self.permissions = _.clone(Creator.baseObject.permissions)
 	_.each options.permissions, (item, item_name)->
