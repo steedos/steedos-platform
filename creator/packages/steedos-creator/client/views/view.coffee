@@ -43,6 +43,10 @@ Template.creator_view.helpers
 	related_list: ()->
 		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
+	related_list_count: ()->
+		info = Tabular.tableRecords.findOne("creator_" + this.object_name)
+		return info?.recordsTotal
+		
 	related_selector: (object_name, related_field_name)->
 		object_name = this.object_name
 		related_field_name = this.related_field_name

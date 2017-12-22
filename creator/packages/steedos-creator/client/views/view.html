@@ -83,8 +83,9 @@
 										</div>
 										<div class="slds-media__body">
 											<h2>
-												<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+												<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="{{_ related_object.name}}">
 													<span class="slds-text-heading_small">{{_ related_object.name}}</span>
+													<span class="slds-text-heading--small slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count}})</span>
 												</a>
 											</h2>
 										</div>
@@ -95,7 +96,7 @@
 										{{/if}}
 									</div>
 								</div>
-								<div class="slds-card__body">
+								<div class="slds-card__body" style="{{#if related_list_count}}{{else}}display:none;{{/if}}">
 									{{> tabular table=this.tabular_table selector=related_selector class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked"}}
 								</div>
 								<footer class="slds-card__footer">{{relatedCollection}}</footer>
