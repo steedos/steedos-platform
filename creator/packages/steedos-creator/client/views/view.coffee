@@ -146,6 +146,15 @@ Template.creator_view.events
 	'click .add-related-object-record': (event, template) ->
 		object_name = event.currentTarget.dataset.objectName
 		collection = "Creator.Collections.#{object_name}"
+
+		relatedKey = ""
+		relatedValue = Session.get("record_id")
+		Creator.getRelatedList(Session.get("object_name"), Session.get("record_id")).forEach (related_obj) ->
+			if object_name == related_obj.object_name
+				relatedKey = related_obj.related_field_name
+
+		Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
+
 		template.related_collection.set(collection)
 		setTimeout ->
 			$(".related-object-new").click()
