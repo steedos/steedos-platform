@@ -193,6 +193,10 @@ Template.creator_list.events
 			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",true)
 		else
 			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",false)
+			if selectedLength == 0
+				$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("checked",false)
+			else if selectedLength == checkboxs.length
+				$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("checked",true)
 
 	'change .slds-table .select-all': (event)->
 		currentDataset = event.currentTarget.dataset
