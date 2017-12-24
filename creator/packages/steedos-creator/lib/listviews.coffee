@@ -6,11 +6,34 @@ Creator.getTabularColumns = (object_name, columns) ->
 		if field?.type
 			col = {}
 			col.data = field_name
-			col.render =  (val, type, doc) ->
+			#col.sTitle = null
+			# col.titleFn = ()->
+			# 	return "<a class='slds-th__action slds-text-link_reset' href='javascript:void(0);' role='button' tabindex='-1'>
+			# 				<span class='slds-assistive-text'>Sort by: </span>
+			# 				<span class='slds-truncate' title='Name'>" +  field.label + "</span>
+			# 				<div class='slds-icon_container'>
+			# 					<svg class='slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon' aria-hidden='true'>
+			# 						<use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#arrowdown'>'
+			# 						</use>
+			# 					</svg>
+			# 				</div>
+			# 			</a>"
 				
-			col.sTitle = '<div class="slds-truncate" title="">' + field.label + '</div>'
-
+			col.sTitle = "<a class='slds-th__action slds-text-link_reset' href='javascript:void(0);' role='button' tabindex='-1'>
+							<span class='slds-assistive-text'>Sort by: </span>
+							<span class='slds-truncate' title='Name'>" +  field.label + "</span>
+							<div class='slds-icon_container'>
+								<svg class='slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon' aria-hidden='true'>
+									<use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#arrowdown'>
+									</use>
+								</svg>
+							</div>
+						</a>"
 			col.className = "slds-cell-edit cellContainer"
+			if field.sortable
+				col.className = col.className + " slds-is-sortable"
+			col.render =  (val, type, doc) ->
+				return
 			col.createdCell = (cell, val, doc) ->
 				$(cell).attr("data-label", field_name)
 				Blaze.renderWithData(Template.creator_table_cell, {_id: doc._id, val: val, doc: doc, field: field, field_name: field_name, object_name:object_name}, cell);

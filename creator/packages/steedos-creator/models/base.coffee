@@ -4,12 +4,14 @@ Creator.baseObject =
 			type: "lookup",
 			reference_to: "users"
 			omit: true
+			sortable: true
 		space:
 			type: "text",
 			omit: true
 		created:
 			type: "datetime",
 			omit: true
+			sortable: true
 		created_by:
 			type: "lookup",
 			reference_to: "users"
@@ -17,6 +19,7 @@ Creator.baseObject =
 		modified:
 			type: "datetime",
 			omit: true
+			sortable: true
 		modified_by:
 			type: "lookup",
 			reference_to: "users"
