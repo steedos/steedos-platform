@@ -13,11 +13,12 @@ Creator.Object = (options)->
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	
-	self.fields = _.clone(Creator.baseObject.fields)
-	_.each options.fields, (field, field_name)->
+
+	self.fields = _.clone(options.fields)
+	_.each Creator.baseObject.fields, (field, field_name)->
 		if !self.fields[field_name]
 			self.fields[field_name] = {}
-		self.fields[field_name] = _.extend(_.clone(self.fields[field_name]), field)
+		self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
 
 	self.list_views = {} 
 	_.each options.list_views, (item, item_name)->
