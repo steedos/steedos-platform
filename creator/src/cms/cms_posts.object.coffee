@@ -1,6 +1,7 @@
 Creator.Objects.cms_posts = 
 	name: "cms_posts"
 	icon: "cms"
+	label: "Posts"
 	fields:
 		title: 
 			type: "text"

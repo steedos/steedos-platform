@@ -1,5 +1,6 @@
 Creator.Objects.crm_contacts = 
 	name: "crm_contacts"
+	label: "Contacts"
 	icon: "contact"
 	fields:
 		name: 

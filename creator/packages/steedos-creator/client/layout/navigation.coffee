@@ -12,7 +12,7 @@ Template.creatorNavigation.helpers
 		return app?.objects
 
 	object_i: ()->
-		return Creator.Objects[this]
+		return Creator.getObject(this)
 
 	object_class_name: (obj)->
 		if (obj == FlowRouter.getParam("object_name"))

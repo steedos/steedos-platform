@@ -8,7 +8,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 			col.data = field_name
 			col.render =  (val, type, doc) ->
 				
-			col.sTitle = '<div class="slds-truncate" title="">' + t("" + object_name + "_" + field_name.replace(/\./g,"_")); + '</div>'
+			col.sTitle = '<div class="slds-truncate" title="">' + field.label + '</div>'
 
 			col.className = "slds-cell-edit cellContainer"
 			col.createdCell = (cell, val, doc) ->
@@ -143,5 +143,7 @@ Creator.getListView = (object_name, list_view_id)->
 
 	if !list_view.filter_scope
 		list_view.filter_scope = "mine"
+
+	Creator.getTable(Session.get("object_name"))?.options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
 
 	return list_view

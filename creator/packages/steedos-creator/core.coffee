@@ -5,8 +5,6 @@ Creator.Objects = {}
 Creator.Collections = {}
 Creator.subs = {}
 
-Creator.objectsByName = {}
-
 
 Meteor.startup ->
 	_.each Creator.Objects, (obj, object_name)->

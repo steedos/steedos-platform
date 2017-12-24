@@ -1,5 +1,6 @@
 Creator.Objects.object_recent_viewed = 
 	name: "object_recent_viewed"
+	label: "Object Recent Viewed"
 	fields: 
 		record_ids:
 			type: "[text]"

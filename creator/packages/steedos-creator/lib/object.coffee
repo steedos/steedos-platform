@@ -1,9 +1,13 @@
+
+Creator.objectsByName = {}
+
 Creator.Object = (options)->
 	self = this
 
 	if (!options.name) 
 		throw new Error('Creator.Object options must specify name');
 	self.name = options.name
+	self.label = options.label
 	self.icon = options.icon
 	self.description = options.description
 
@@ -60,3 +64,30 @@ Creator.Object = (options)->
 Creator.Object.prototype.getPermissions = ()->
 	# 下一步需要判断用户是否工作区管理员，是否object管理员
 	return this.permissions.user
+
+Creator.Object.prototype.i18n = ()->
+	# set object label
+	key = this.name
+	if t(key) == key
+		if !this.label
+			this.label = this.name
+	else
+		this.label = t(key)
+
+	# set field labels
+	_.each this.fields, (field, field_name)->
+		fkey = this.name + "_" + field_name
+		if t(fkey) == fkey
+			if !field.label
+				field.label = field_name
+		else
+			field.label = t(fkey)
+
+
+if Meteor.isClient
+
+	Meteor.startup ->
+		Tracker.autorun ->
+			lang = Session.get("steedos-locale")
+			_.each Creator.objectsByName, (object, object_name)->
+				object.i18n()

@@ -7,7 +7,7 @@ Template.creator_app_list_modal.helpers
 
 	app_objects: ()->
 		objects = []
-		_.each Creator.Objects, (v, k)->
+		_.each Creator.objectsByName, (v, k)->
 			objects.push v
 		return objects
 

@@ -116,11 +116,6 @@ Template.creator_list.events
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)
 		list_view_id = String(this)
-		Tracker.afterFlush ()->
-			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			Creator.getTable(Session.get("object_name"))?.options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
-			Session.set("list_view_id", list_view_id)
-			Session.set("list_view_visible", true)
 
 	'click .item-edit-action': (event) ->
 		record_id = event.currentTarget.dataset?.id

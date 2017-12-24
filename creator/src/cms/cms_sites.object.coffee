@@ -1,6 +1,7 @@
 Creator.Objects.cms_sites = 
 	name: "cms_sites"
 	icon: "cms"
+	label: "Sites"
 	fields:
 		name: 
 			type: "text"

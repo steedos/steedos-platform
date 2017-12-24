@@ -1,6 +1,7 @@
 Creator.Objects.instances = 
 	name: "instances"
 	icon: "contact"
+	label: "Instances"
 	fields:
 		name: 
 			type: "text"
