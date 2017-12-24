@@ -73,30 +73,35 @@ Creator.Object.prototype.getPermissions = ()->
 
 Creator.Object.prototype.i18n = ()->
 	# set object label
-	key = this.name
+	self = this
+
+	key = self.name
 	if t(key) == key
-		if !this.label
-			this.label = this.name
+		if !self.label
+			self.label = self.name
 	else
-		this.label = t(key)
+		self.label = t(key)
 
 	# set field labels
-	_.each this.fields, (field, field_name)->
-		fkey = this.name + "_" + field_name
+	_.each self.fields, (field, field_name)->
+		fkey = self.name + "_" + field_name
 		if t(fkey) == fkey
 			if !field.label
 				field.label = field_name
 		else
 			field.label = t(fkey)
+		self.schema?._schema?[field_name]?.label = field.label
+
 
 	# set listview labels
-	_.each this.list_views, (item, item_name)->
-		i18n_key = this.name + "_listview_" + item_name
+	_.each self.list_views, (item, item_name)->
+		i18n_key = self.name + "_listview_" + item_name
 		if t(i18n_key) == i18n_key
 			if !item.label
 				item.label = item_name
 		else
 			item.label = t(i18n_key)
+
 
 if Meteor.isClient
 
