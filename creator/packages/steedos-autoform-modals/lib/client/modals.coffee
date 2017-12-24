@@ -67,7 +67,8 @@ Template.autoformModals.rendered = ->
 			'cmMeteorMethod',
 			'cmCloseButtonContent',
 			'cmCloseButtonClasses',
-			'cmShowRemoveButton'
+			'cmShowRemoveButton',
+			'cmTargetIds'
 		]
 		delete Session.keys[key] for key in sessionKeys
 
@@ -180,6 +181,12 @@ helpers =
 	cmSaveAndInsert: ()->
 		Session.get 'cmSaveAndInsert'
 
+	cmIsMultipleUpdate: ()->
+		Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length
+
+	cmTargetIds: ()->
+		Session.get('cmTargetIds')
+
 Template.autoformModals.helpers helpers
 
 Template.afModal.events
@@ -265,3 +272,4 @@ Template.afModal.events
 Template.autoformModals.onCreated ->
 	self = this;
 	self.shouldUpdateQuickForm = new ReactiveVar(true);
+	Session.set 'cmIsMultipleUpdate', false
