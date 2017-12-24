@@ -30,6 +30,16 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - boolean：Checkbox
 - currency: 金额
 
+### fields 属性
+- name: 字段名
+- label: 字段显示名。如果系统检测到翻译 "objectname_fieldname"，以翻译为准。
+- defaultValue: 默认值，可配置默认值公式 {{userId}}, {{spaceId}} 等，#todo
+- required: 必填
+- inlineHelpText: 表单填写时显示的帮助文本
+- sortable: 可排序
+- readonly: 只读，应该只显示在查看页面或列表页面上，新增和修改页面都不显示 #todo
+- omit: 所有页面都不显示
+
 ### permissions 权限
 Object权限分以下类型
 - allowCreate: 可创建
