@@ -10,9 +10,11 @@ Creator.Objects.crm_customers =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			sortable: true
 		priority:
 			label: "优先级"
 			type: "select"
+			sortable: true
 			options: [
 				{label: "Hot", value: "high"},
 				{label: "Warm", value: "normal"},
