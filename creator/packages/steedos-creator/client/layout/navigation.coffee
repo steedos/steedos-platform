@@ -4,7 +4,7 @@ Template.creatorNavigation.helpers
 		return Session.get("app_id")
 
 	app_name: ()->
-		app = db.apps.findOne(Session.get("app_id"))
+		app = Creator.getApp()
 		return app?.name
 
 	app_objects: ()->

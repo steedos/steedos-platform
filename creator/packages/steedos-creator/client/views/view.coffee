@@ -62,7 +62,7 @@ Template.creator_view.helpers
 		return {_id: "nothing to return"}
 
 	appName: ()->
-		app = db.apps.findOne(Session.get("app_id"))
+		app = Creator.getApp()
 		return app?.name
 
 	related_object: ()->
