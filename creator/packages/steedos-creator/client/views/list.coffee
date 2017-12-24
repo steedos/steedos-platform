@@ -24,7 +24,7 @@ Template.creator_list.helpers
 
 	selector: ()->
 		object_name = Session.get("object_name")
-		list_view = Creator.getListView()
+		list_view = Creator.getListView(object_name, Session.get("list_view_id"))
 		selector = {}
 		if Session.get("spaceId") and Meteor.userId()
 			if list_view.filter_scope == "spacex"
@@ -79,12 +79,8 @@ Template.creator_list.helpers
 	list_views: ()->
 		return Creator.getListViews()
 
-	list_view_label: (list_view_id)->
-		return t("list_view_" + list_view_id)
-
 	list_view: ()->
-		list_view_id = Session.get("list_view_id")
-		return Creator.getListView(Session.get("object_name"), list_view_id)
+		return Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
 
 	list_view_visible: ()->
 		return Session.get("list_view_visible")
@@ -115,7 +111,12 @@ Template.creator_list.events
 
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)
-		list_view_id = String(this)
+		list_view_id = String(this.name)
+		## 强制重新加载Render Tabular，包含columns
+		Tracker.afterFlush ()->
+			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
+			Session.set("list_view_id", list_view_id)
+			Session.set("list_view_visible", true)
 
 	'click .item-edit-action': (event) ->
 		record_id = event.currentTarget.dataset?.id

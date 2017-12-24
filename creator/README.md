@@ -10,7 +10,7 @@ Objects 是Creator的核心，Object对象中可以定义以下内容
 - 系统初始化时自动生成Object对应的Collection，并绑定到Schema。
 
 ### baseObject
-baseObject用于定义所有对象适用的基础fields, triggers, list_views, indexes
+baseObject用于定义所有对象适用的基础fields, triggers, indexes. list_views 只能在对象中定义
 
 ### 自动生成页面
 /app/:app_id/:object_name/
@@ -60,10 +60,10 @@ API
 		- mine:
 			- filter_scope: "mine"
 
-### recent 最近查看视图
-- recent列表视图可查看用户最近点击的记录
-- list_view_id == "recent"时生效
-- 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
+- recent 最近查看视图
+  - recent列表视图可查看用户最近点击的记录
+  - list_view_id == "recent"时生效
+  - 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
 
 
 ### actions 按钮与操作

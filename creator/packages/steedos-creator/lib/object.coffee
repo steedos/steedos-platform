@@ -19,12 +19,18 @@ Creator.Object = (options)->
 			self.fields[field_name] = {}
 		self.fields[field_name] = _.extend(_.clone(self.fields[field_name]), field)
 
-	self.list_views = _.clone(Creator.baseObject.list_views)
+	self.list_views = {} 
 	_.each options.list_views, (item, item_name)->
-		if !self.list_views[item_name]
-			self.list_views[item_name] = {}
-		self.list_views[item_name].name = item_name
-		self.list_views[item_name] = _.extend(_.clone(self.list_views[item_name]), item)
+		oitem = _.clone(item)
+		oitem.name = item_name
+		if !oitem.columns
+			if self.list_views.default?.columns
+				oitem.columns = self.list_views.default.columns
+		if !oitem.columns
+			oitem.columns = ["name"]
+		if !oitem.filter_scope
+			oitem.filter_scope = "mime"
+		self.list_views[item_name] = oitem
 
 	self.triggers = _.clone(Creator.baseObject.triggers)
 	_.each options.triggers, (item, item_name)->
@@ -83,6 +89,14 @@ Creator.Object.prototype.i18n = ()->
 		else
 			field.label = t(fkey)
 
+	# set listview labels
+	_.each this.list_views, (item, item_name)->
+		i18n_key = this.name + "_listview_" + item_name
+		if t(i18n_key) == i18n_key
+			if !item.label
+				item.label = item_name
+		else
+			item.label = t(i18n_key)
 
 if Meteor.isClient
 

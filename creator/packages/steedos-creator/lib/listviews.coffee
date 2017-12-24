@@ -105,45 +105,20 @@ Creator.getListViews = (object_name)->
 
 	object = Creator.getObject(object_name)
 	list_views = []
-	list_views = _.keys Creator.baseObject.list_views
-	if object.list_views
-		list_views_object = _.keys object.list_views
-		if list_views_object?.length>1
-			list_views = list_views_object
-
-	list_views = _.without list_views, "default"
+	_.each object.list_views, (item, item_name)->
+		if item_name != "default"
+			list_views.push item
 	return list_views
 
 
 Creator.getListView = (object_name, list_view_id)->
-	if !object_name 
-		object_name = Session.get("object_name")
-	if !list_view_id
-		list_view_id = Session.get("list_view_id")
-	list_views = Creator.getListViews(object_name)
-	if !list_view_id or list_views.indexOf(list_view_id) < 0
-		list_view_id = list_views[0]
-		if Meteor.isClient
-			Session.set("list_view_id", list_view_id)
+
 	object = Creator.getObject(object_name)
-	if object.list_views?[list_view_id]
+	if object.list_views[list_view_id]
 		list_view = object.list_views[list_view_id]
-	else if Creator.baseObject.list_views?[list_view_id]
-		list_view = Creator.baseObject.list_views[list_view_id]
 	else
-		list_view = 
-			filter_scope: "mine"
-			columns: ["name"]
-
-	if !list_view.columns 
-		if object.list_views?.default?.columns
-			list_view.columns = object.list_views.default.columns
-		else
-			list_view.columns = ["name"]
-
-	if !list_view.filter_scope
-		list_view.filter_scope = "mine"
-
+		list_view = _.values(object.list_views)[1]
+	
 	Creator.getTable(Session.get("object_name"))?.options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
 
 	return list_view

@@ -31,14 +31,6 @@ Creator.baseObject =
 			type: "boolean"
 			omit: true
 
-	list_views:
-		default:
-			columns: ["name"]
-		recent:
-			filter_scope: "space"
-		all:
-			filter_scope: "space"
-
 	permissions:
 		user:
 			allowCreate: true
