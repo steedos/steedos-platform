@@ -1,20 +1,17 @@
 Creator.Objects.crm_customers = 
 	name: "crm_customers"
-	label: "Customers"
+	label: "客户"
 	icon: "account"
 	fields:
 		name: 
-			label: "Name"
+			label: "名称"
 			type: "text"
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
-		description: 
-			label: "Description"
-			type: "textarea"
 		priority:
-			label: "Priority"
+			label: "优先级"
 			type: "select"
 			options: [
 				{label: "Hot", value: "high"},
@@ -23,22 +20,32 @@ Creator.Objects.crm_customers =
 			]
 		phone:
 			type: "text"
+			label: "电话"
 		fax:
 			type: "text"
+			label: "传真"
 		website: 
 			type: "text"
+			label: "网址"
 		owner: 
+			label: "所有者"
 			omit: false
+		description: 
+			label: "描述"
+			type: "textarea"
 
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
 		recent:
+			label: "最近查看"
 			filter_scope: "space"
 		all:
+			label: "所有客户"
 			filter_scope: "space"
 			columns: ["name", "description", "modified", "owner"]
 		mine:
+			label: "我的客户"
 			filter_scope: "mine"
 
 	related_list:
@@ -49,9 +56,10 @@ Creator.Objects.crm_customers =
 
 	actions: 
 		export:
+			label: "导出"
 			visible: true
 		print:
-			label: "Print"
+			label: "打印"
 			on: "record"
 			visible: true
 			todo: ()->

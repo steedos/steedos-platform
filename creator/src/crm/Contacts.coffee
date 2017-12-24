@@ -1,33 +1,43 @@
 Creator.Objects.crm_contacts = 
 	name: "crm_contacts"
-	label: "Contacts"
+	label: "联系人"
 	icon: "contact"
 	fields:
 		name: 
 			type: "text"
+			label: "姓名"
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
-		description: 
-			type: "textarea"
 		customer_id: 
+			label: "客户"
 			type: "master_detail"
 			reference_to: "crm_customers"
 		birthdate: 
+			label: "生日"
 			type: "date"
 		title:
+			label: "职务"
 			type: "text"
 		department:
+			label: "部门"
 			type: "text"
 		email:
+			label: "邮件"
 			type: "text"
 		phone:
+			label: "工作电话"
 			type: "text"
 		home_phone:
+			label: "家庭电话"
 			type: "text"
 		other_phone:
+			label: "其他电话"
 			type: "text"
+		description: 
+			label: "描述"
+			type: "textarea"
 
 	list_views:
 		default:
