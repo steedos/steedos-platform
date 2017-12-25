@@ -1,5 +1,4 @@
 Creator.getTabularColumns = (object_name, columns) ->
-	console.log "Creator.getTabularColumns========"
 	obj = Creator.getObject(object_name)
 	cols = []
 	_.each columns, (field_name)->

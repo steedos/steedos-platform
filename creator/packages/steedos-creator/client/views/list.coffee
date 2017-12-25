@@ -169,7 +169,7 @@ Template.creator_list.events
 							info = t(object_name) + '"' + record.name + '"' + "已删除"
 							toastr.success info
 
-	'change .slds-table .select-one': (event)->
+	'change .slds-table .select-one': (event, template)->
 		currentDataset = event.currentTarget.dataset
 		currentId = currentDataset.id
 		currentObjectName = currentDataset.objectName
@@ -188,9 +188,9 @@ Template.creator_list.events
 			unless currentIndex < 0
 				tabular_selected_ids[currentObjectName].splice(currentIndex, 1)
 		Session.set "tabular_selected_ids", tabular_selected_ids
-		
-		checkboxs = $(".slds-table .select-one[data-object-name=#{currentObjectName}]")
-		checkboxAll = $(".slds-table .select-all[data-object-name=#{currentObjectName}]")
+
+		checkboxs = template.$(".select-one")
+		checkboxAll = template.$(".select-all")
 		selectedLength = tabular_selected_ids[currentObjectName].length
 		if selectedLength > 0 and checkboxs.length != selectedLength
 			checkboxAll.prop("indeterminate",true)
@@ -201,7 +201,7 @@ Template.creator_list.events
 			else if selectedLength == checkboxs.length
 				checkboxAll.prop("checked",true)
 
-	'change .slds-table .select-all': (event)->
+	'change .slds-table .select-all': (event, template)->
 		currentDataset = event.currentTarget.dataset
 		currentObjectName = currentDataset.objectName
 		isSelectedAll = $(event.currentTarget).is(":checked")
@@ -209,13 +209,13 @@ Template.creator_list.events
 		unless tabular_selected_ids
 			tabular_selected_ids = {}
 		tabular_selected_ids[currentObjectName] = []
-		checkboxs = $(".slds-table .select-one[data-object-name=#{currentObjectName}]")
+		checkboxs = template.$(".select-one")
 		if isSelectedAll
 			checkboxs.each (i,n)->
 				tabular_selected_ids[currentObjectName].push n.dataset.id
 		Session.set "tabular_selected_ids", tabular_selected_ids
 		checkboxs.prop("checked",isSelectedAll)
 
-	'click .slds-table td': (event)->
+	'click .slds-table td': (event, template)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
