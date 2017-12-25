@@ -137,11 +137,14 @@ Creator.getListViews = (object_name)->
 Creator.getListView = (object_name, list_view_id)->
 
 	object = Creator.getObject(object_name)
-	if object.list_views[list_view_id]
-		list_view = object.list_views[list_view_id]
-	else
-		list_view = _.values(object.list_views)[1]
-	
-	Creator.getTable(Session.get("object_name"))?.options.columns = Creator.getTabularColumns(Session.get("object_name"), list_view.columns);
+	if object.list_views
+		if object.list_views[list_view_id]
+			list_view = object.list_views[list_view_id]
+		else
+			view_ids = _.keys(object.list_views) 
+			view_ids = _.without(view_ids, "default")
+			list_view = object.list_views[view_ids[0]]
+		
+		Creator.getTable(object_name)?.options.columns = Creator.getTabularColumns(object_name, list_view.columns);
 
 	return list_view
