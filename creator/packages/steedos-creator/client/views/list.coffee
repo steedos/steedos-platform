@@ -129,7 +129,6 @@ Template.creator_list.events
 			$(".btn.creator-edit").click()
 
 	'click .table-cell-edit': (event, template) ->
-		debugger
 		field = this.field_name
 
 		dataTable = $(event.currentTarget).closest('table').DataTable()

@@ -3,6 +3,20 @@ Template.creator_view.onCreated ->
 	this.edit_collection = new ReactiveVar()
 	this.related_collection = new ReactiveVar()
 
+Template.creator_view.onRendered ->
+	this.autorun ->
+		record_id = Session.get("record_id")
+		if record_id
+			$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
+			$(".creator-view-tabs-link").attr("aria-selected", false)
+
+			$(".creator-view-tabs-link[data-tab='creator-quick-form']").closest(".slds-tabs_default__item").addClass("slds-is-active")
+			$(".creator-view-tabs-link[data-tab='creator-quick-form']").attr("aria-selected", false)
+
+			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
+			$("#creator-quick-form").addClass("slds-show")
+
+
 Template.creator_view.helpers
 
 	collection: ()->
