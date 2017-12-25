@@ -190,15 +190,16 @@ Template.creator_list.events
 		Session.set "tabular_selected_ids", tabular_selected_ids
 		
 		checkboxs = $(".slds-table .select-one[data-object-name=#{currentObjectName}]")
+		checkboxAll = $(".slds-table .select-all[data-object-name=#{currentObjectName}]")
 		selectedLength = tabular_selected_ids[currentObjectName].length
 		if selectedLength > 0 and checkboxs.length != selectedLength
-			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",true)
+			checkboxAll.prop("indeterminate",true)
 		else
-			$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("indeterminate",false)
+			checkboxAll.prop("indeterminate",false)
 			if selectedLength == 0
-				$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("checked",false)
+				checkboxAll.prop("checked",false)
 			else if selectedLength == checkboxs.length
-				$(".slds-table .select-all[data-object-name=#{currentObjectName}]").prop("checked",true)
+				checkboxAll.prop("checked",true)
 
 	'change .slds-table .select-all': (event)->
 		currentDataset = event.currentTarget.dataset

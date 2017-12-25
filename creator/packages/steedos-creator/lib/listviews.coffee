@@ -1,4 +1,5 @@
 Creator.getTabularColumns = (object_name, columns) ->
+	console.log "Creator.getTabularColumns========"
 	obj = Creator.getObject(object_name)
 	cols = []
 	_.each columns, (field_name)->
@@ -81,6 +82,36 @@ Creator.initListViews = (object_name)->
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
 			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
+		drawCallback:(settings)->
+			self = this
+			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
+			Tracker.nonreactive ->
+				currentDataset = self.find(".select-all")[0]?.dataset
+				currentObjectName = currentDataset.objectName
+
+				tabular_selected_ids = Session.get "tabular_selected_ids"
+				unless tabular_selected_ids
+					return
+				selectedIds = tabular_selected_ids[currentObjectName]
+				unless selectedIds
+					return
+
+				checkboxs = self.find(".select-one")
+				checkboxs.each (index,item)->
+					checked = selectedIds.indexOf(item.dataset.id) > -1
+					$(item).prop("checked",checked)
+
+				checkboxAll = self.find(".select-all")
+				selectedLength = selectedIds.length
+				if selectedLength > 0 and checkboxs.length != selectedLength
+					checkboxAll.prop("indeterminate",true)
+				else
+					checkboxAll.prop("indeterminate",false)
+					if selectedLength == 0
+						checkboxAll.prop("checked",false)
+					else if selectedLength == checkboxs.length
+						checkboxAll.prop("checked",true)
+
 		dom: "tp"
 		extraFields: ["_id"]
 		lengthChange: false
