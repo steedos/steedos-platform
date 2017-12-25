@@ -36,8 +36,9 @@ Template.creator_list.helpers
 			else
 				selector.space = Session.get("spaceId")
 			if Session.get("list_view_id") == "recent"
-				record_ids = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()[0]?.record_ids;
-				if !record_ids
+				viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
+				record_ids = _.pluck(viewed, "record_id")
+				if record_ids.length == 0
 					record_ids = ["nothing"]
 				selector._id = 
 					"$in": record_ids
