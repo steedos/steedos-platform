@@ -225,6 +225,8 @@ Template.steedosLookups.helpers({
 
 		var link = Template.instance().uniSelectize.selectedReference.get().link
 
+		link = _.isFunction(link) ? link() : link;
+
 		if(link){
 			return link + value
 		}

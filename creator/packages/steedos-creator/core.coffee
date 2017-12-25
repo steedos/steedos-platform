@@ -95,8 +95,8 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.optionsMethod = "creator.object_options"
 					fs.autoform.multiple = field.multiple
 
-					fs.autoform.optionsMethodParams =
-						space: Session.get("spaceId")
+					fs.autoform.optionsMethodParams = ()->
+						return {space: Session.get("spaceId")}
 
 					if _.isArray(field.reference_to)
 
@@ -122,7 +122,8 @@ Creator.getObjectSchema = (obj) ->
 							object: _reference
 							label: _object?.label
 							icon: _object?.icon
-							link: "/app/#{Session.get('app_id')}/#{_reference}/view/"
+							link: ()->
+								return "/app/#{Session.get('app_id')}/#{_reference}/view/"
 						}
 		else if field.type == "select"
 			fs.type = String
