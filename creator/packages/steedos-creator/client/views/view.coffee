@@ -30,6 +30,27 @@ Template.creator_view.helpers
 
 	schema: ()->
 		return Creator.getSchema(Session.get("object_name"))
+
+	schemaFields: ()->
+		schema = Creator.getSchema(Session.get("object_name"))._schema
+		keys = []
+		schemaFields = []
+		i = 0
+		_.each schema, (value, key) ->
+			if !value.autoform?.omit
+				keys.push key
+
+		if keys.length % 2 != 0
+			keys.push(0)
+
+		while i < keys.length
+			schemaFields.push keys.slice(i, i + 2)
+			i += 2
+
+		console.log schemaFields
+		return schemaFields
+
+
 	
 	hasPermission: (permissionName)->
 		permissions = Creator.getObject()?.permissions?.default

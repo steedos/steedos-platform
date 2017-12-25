@@ -118,7 +118,21 @@
 						<div id="creator-quick-form" class="slds-tabs_default__content creator-view-tabs-content slds-show" role="tabpanel">
 							{{#if detail_info_visible}}
 								{{#if showForm}}
-									{{> quickForm collection=collection schema=schema doc=record id="viewRecordForm" type="disabled"}}
+									{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
+										{{#each schemaFields}}
+											<div class="slds-grid view-page-section-row">
+												{{#each this}}
+													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+															{{#if this}}
+																{{> afQuickField name=this}}
+															{{/if}}
+														</div>
+													</div>
+												{{/each}}
+											</div>
+										{{/each}}
+									{{/autoForm}}
 								{{/if}}
 							{{/if}}
 						</div>
