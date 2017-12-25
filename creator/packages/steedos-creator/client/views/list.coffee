@@ -207,3 +207,8 @@ Template.creator_list.events
 	'click .slds-table td': (event, template)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
+
+Template.creator_list.onDestroyed ->
+	object_name = Session.get("object_name")
+	if object_name
+		Creator.TabularSelectedIds[object_name] = []
