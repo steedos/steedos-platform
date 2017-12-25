@@ -1,1 +1,1 @@
-reference https://github.com/vazco/meteor-universe-autoform-select
+reference https://github.com/vazco/meteor-universe-selectize

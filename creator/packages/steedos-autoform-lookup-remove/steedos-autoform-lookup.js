@@ -1,12 +1,31 @@
 'use strict';
 
-AutoForm.addInputType('steedos-lookup', {
-    template: 'afSteedosLookUp',
-    valueIsArray: true,
-    valueOut() {
-        return this.val();
+AutoForm.addInputType('steedosLookups', {
+    template: 'afSteedosLookUps',
+    // valueIsArray: true,
+	valueIn: function(val, atts) {
+    	console.log("steedos-lookup valueIn3", val, atts);
+		val = [val];
+    	return val;
     },
-    contextAdjust(context) {
+	valueOut: function(){
+		console.log("-------------------steedos-lookup valueOut-------------------", this.val());
+		return "2222222222222222222222222222222";
+	},
+	valueConverters: {
+		"string": function (a,b) {
+			console.log("string", a, b)
+		},
+		"stringArray": AutoForm.valueConverters.stringToStringArray,
+		"number": AutoForm.valueConverters.stringToNumber,
+		"numerArray": AutoForm.valueConverters.stringToNumberArray,
+		"boolean": AutoForm.valueConverters.stringToBoolean,
+		"booleanArray": AutoForm.valueConverters.stringToBooleanArray,
+		"date": AutoForm.valueConverters.stringToDate,
+		"dateArray": AutoForm.valueConverters.stringToDateArray
+	},
+    contextAdjust: function(context) {
+    	console.log("valueIn3", context)
 
         context.items = _.map(context.selectOptions, function (opt) {
             return {

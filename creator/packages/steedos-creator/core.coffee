@@ -77,20 +77,53 @@ Creator.getObjectSchema = (obj) ->
 				format: "YYYY-MM-DD HH:mm"
 		else if field.type == "lookup" or field.type == "master_detail"
 			fs.type = String
+
+			if field.multiple
+				fs.type = [String]
+
+			if _.isArray(field.reference_to)
+				fs.type = Object
+				fs.blackbox = true
+
 			if Meteor.isClient
-				# if field.reference_to == "users"
-				# 	fs.autoform.type = "selectuser"
-				# else if field.reference_to == "organizations"
-				# 	fs.autoform.type = "selectorg"
-				# else
-					if field.reference_to
-						_link = "/app/#{Session.get('app_id')}/#{field.reference_to}/view/"
-					fs.autoform.type="steedos-lookup"
-					fs.autoform.optionsMethod="creator.object_options"
-					fs.autoform.optionsMethodParams=
-						reference_to: field.reference_to
+				if field.reference_to == "users"
+					fs.autoform.type = "selectuser"
+				else if field.reference_to == "organizations"
+					fs.autoform.type = "selectorg"
+				else
+					fs.autoform.type = "steedosLookups"
+					fs.autoform.optionsMethod = "creator.object_options"
+					fs.autoform.multiple = field.multiple
+
+					fs.autoform.optionsMethodParams =
 						space: Session.get("spaceId")
-						link: _link
+
+					if _.isArray(field.reference_to)
+
+						fs.autoform.objectSwitche = true
+
+						schema[field_name + ".o"] = {
+							type: String
+						}
+
+						schema[field_name + ".ids"] = {
+							type: [String]
+						}
+
+						_reference_to = field.reference_to
+					else
+						_reference_to = [field.reference_to]
+
+					fs.autoform.references = []
+
+					_reference_to.forEach (_reference)->
+						_object = Creator.Objects[_reference]
+						fs.autoform.references.push {
+							object: _reference
+							label: _object?.label
+							icon: _object?.icon
+							link: "/app/#{Session.get('app_id')}/#{_reference}/view/"
+						}
 		else if field.type == "select"
 			fs.type = String
 			fs.autoform.type = "select"

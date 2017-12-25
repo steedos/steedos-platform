@@ -7,7 +7,7 @@ Package.describe({
     git: ''
 });
 
-Package.onUse(function (api) {
+Package.onUse(function(api) {
     api.versionsFrom('1.2.1');
 
     if (!api.addAssets) {
@@ -16,12 +16,18 @@ Package.onUse(function (api) {
         };
     }
 
-    api.use(['ecmascript', 'templating', 'underscore'], 'client');
-    api.use('aldeed:autoform@5.8.0');
-    api.use('steedos:lookup@0.1.23', 'client');
-
+    api.use(['ecmascript', 'templating', 'underscore', 'less', 'reactive-var'], 'client');
+	api.use('aldeed:autoform@5.8.0');
     api.addFiles([
-        'steedos-autoform-lookup.html',
-        'steedos-autoform-lookup.js'
+		'uni-selectize.js',
+        'slds-lookup.html',
+        'slds-lookup.js',
+        'stylesheets/selectize.default.less',
+        'stylesheets/universe-selectize.less',
+		'stylesheets/steedos-lookups.less'
     ], 'client');
+
+    api.addAssets('img/loading.gif', 'client');
+
+    api.export(['UniSelectize'], 'client');
 });
