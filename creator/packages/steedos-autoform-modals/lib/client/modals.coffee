@@ -85,13 +85,33 @@ Template.autoformModals.rendered = ->
 
 Template.autoformModals.events
 
-	'click button.btn-insert': () ->
+	'click button.btn-insert': (event,template) ->
 		$("#afModal #cmForm").submit()
 
-	'click button.btn-update': ()->
-		$("#afModal #cmForm").submit()
+	'click button.btn-update': (event,template)->
+		isMultipleUpdate = Session.get('cmIsMultipleUpdate')
+		targetIds = Session.get('cmTargetIds')
+		if isMultipleUpdate and targetIds?.length > 1
+			collection = Session.get 'cmCollection'
+			target_ids = targetIds
+			doc = AutoForm.getFormValues(Session.get('cmFormId') or defaultFormId).updateDoc
+			object_name = Session.get("object_name")
+			Meteor.call 'af_modal_multiple_update', { target_ids, doc, object_name}, (e)->
+				if e
+					console.error e
+					if e.reason
+						toastr?.error?(t(e.reason))
+					else if e.message
+						toastr?.error?(t(error.message))
+					else
+						toastr?.error?('Sorry, update failed.')
+				else
+					$('#afModal').modal('hide')
+					cmOnSuccessCallback?()
+		else
+			$("#afModal #cmForm").submit()
 
-	'click button.btn-remove': ()->
+	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
 		operation = Session.get 'cmOperation'
 		_id = Session.get('cmDoc')._id
@@ -109,11 +129,11 @@ Template.autoformModals.events
 				cmOnSuccessCallback?()
 				toastr?.success?(t("afModal_remove_suc"))
 
-	'click button.btn-update-and-create': ()->
+	'click button.btn-update-and-create': (event,template)->
 		$("#afModal #cmForm").submit()
 		Session.set 'cmShowAgain', true
 
-	'click button.btn-insert-and-create': ()->
+	'click button.btn-insert-and-create': (event,template)->
 		$("#afModal #cmForm").submit()
 		Session.set 'cmShowAgain', true
 
@@ -182,7 +202,7 @@ helpers =
 		Session.get 'cmSaveAndInsert'
 
 	cmIsMultipleUpdate: ()->
-		Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length
+		Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length > 1
 
 	cmTargetIds: ()->
 		Session.get('cmTargetIds')
@@ -272,4 +292,7 @@ Template.afModal.events
 Template.autoformModals.onCreated ->
 	self = this;
 	self.shouldUpdateQuickForm = new ReactiveVar(true);
+
+Template.autoformModals.onDestroyed ->
 	Session.set 'cmIsMultipleUpdate', false
+	Session.set 'cmTargetIds', null
