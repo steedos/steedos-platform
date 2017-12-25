@@ -33,12 +33,14 @@ Template.creator_view.helpers
 
 	schemaFields: ()->
 		schema = Creator.getSchema(Session.get("object_name"))._schema
+		firstLevelSchema = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
 		keys = []
 		schemaFields = []
 		i = 0
 		_.each schema, (value, key) ->
-			if !value.autoform?.omit
-				keys.push key
+			if (_.indexOf firstLevelSchema, key) > -1
+				if !value.autoform?.omit
+					keys.push key
 
 		if keys.length % 2 != 0
 			keys.push(0)

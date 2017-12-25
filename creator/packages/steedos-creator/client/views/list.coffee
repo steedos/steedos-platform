@@ -142,7 +142,7 @@ Template.creator_list.events
 			template.edit_fields.set(field)
 			Session.set 'cmDoc', rowData
 			Session.set 'cmIsMultipleUpdate', true
-			Session.set 'cmTargetIds', Session.get("tabular_selected_ids")?[Session.get("object_name")]
+			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[Session.get("object_name")]
 
 			setTimeout ()->
 				$(".edit-list-table-cell").click()
@@ -173,25 +173,18 @@ Template.creator_list.events
 		currentDataset = event.currentTarget.dataset
 		currentId = currentDataset.id
 		currentObjectName = currentDataset.objectName
-
-		tabular_selected_ids = Session.get "tabular_selected_ids"
-		unless tabular_selected_ids
-			tabular_selected_ids = {}
-		unless tabular_selected_ids[currentObjectName]
-			tabular_selected_ids[currentObjectName] = []
 		
-		currentIndex = tabular_selected_ids[currentObjectName].indexOf currentId
+		currentIndex = Creator.TabularSelectedIds[currentObjectName].indexOf currentId
 		if $(event.currentTarget).is(":checked")
 			if currentIndex < 0
-				tabular_selected_ids[currentObjectName].push currentId
+				Creator.TabularSelectedIds[currentObjectName].push currentId
 		else
 			unless currentIndex < 0
-				tabular_selected_ids[currentObjectName].splice(currentIndex, 1)
-		Session.set "tabular_selected_ids", tabular_selected_ids
+				Creator.TabularSelectedIds[currentObjectName].splice(currentIndex, 1)
 
 		checkboxs = template.$(".select-one")
 		checkboxAll = template.$(".select-all")
-		selectedLength = tabular_selected_ids[currentObjectName].length
+		selectedLength = Creator.TabularSelectedIds[currentObjectName].length
 		if selectedLength > 0 and checkboxs.length != selectedLength
 			checkboxAll.prop("indeterminate",true)
 		else
@@ -205,15 +198,10 @@ Template.creator_list.events
 		currentDataset = event.currentTarget.dataset
 		currentObjectName = currentDataset.objectName
 		isSelectedAll = $(event.currentTarget).is(":checked")
-		tabular_selected_ids = Session.get "tabular_selected_ids"
-		unless tabular_selected_ids
-			tabular_selected_ids = {}
-		tabular_selected_ids[currentObjectName] = []
 		checkboxs = template.$(".select-one")
 		if isSelectedAll
 			checkboxs.each (i,n)->
-				tabular_selected_ids[currentObjectName].push n.dataset.id
-		Session.set "tabular_selected_ids", tabular_selected_ids
+				Creator.TabularSelectedIds[currentObjectName].push n.dataset.id
 		checkboxs.prop("checked",isSelectedAll)
 
 	'click .slds-table td': (event, template)->

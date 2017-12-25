@@ -17,7 +17,7 @@
 						<a class="slds-button slds-button_icon" aria-haspopup="true"
 								title="Select object to search in" href="javascript:void(0);" data-toggle="dropdown">
 							{{#with getSelectedReference}}
-							<span class="slds-icon_container slds-icon-standard-account" title="{{object}}">
+							<span class="slds-icon_container slds-icon_object steedos-icon-{{object}}" title="{{object}}">
 							  {{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
 							</span>
 							{{/with}}
@@ -29,7 +29,7 @@
 								{{#each getReferences}}
 								<li class="slds-dropdown__item references-item" role="presentation">
 									<a role="option" tabindex="-1" class="item-edit-action" data-id="{{object}}">
-										<span class="slds-icon_container slds-icon-standard-account reference-icon" style="background-color:#FCB95B">
+										<span class="slds-icon_container reference-icon slds-icon_object steedos-icon-{{object}}">
 											{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
 										</span>
 										<span class="reference-name">{{#if label}}{{label}}{{else}}{{_ object}}{{/if}}</span>
@@ -54,7 +54,7 @@
 						<div class="slds-combobox__form-element slds-input-has-icon{{#if isReadOnly}} slds-input-has-icon_left-right{{else}} slds-input-has-icon_right{{/if}} "
 							 role="none">
 							{{#if isReadOnly}}
-							<span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon">
+							<span class="slds-icon_container slds-combobox__input-entity-icon slds-icon_object steedos-icon-{{selectedReferenceObject}}">
 								{{> steedos_icon class="slds-icon slds-icon_smal" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 							</span>
 							{{/if}}
@@ -93,14 +93,13 @@
 											  role="option">
 											{{!----}}
 											<span class="slds-media__figure">
-												<span class="slds-icon_container slds-icon-standard-account">
+												<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
 													{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 												</span>
 											</span>
 
 											<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
 												<span class="slds-listbox__option-text slds-listbox__option-text_entity">{{label}}</span>
-												{{!--<span class="slds-listbox__option-meta slds-listbox__option-meta_entity"></span>--}}
 											</span>
 										</span>
 									</li>
@@ -119,9 +118,8 @@
 							  <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
 								{{!----}}
 								  <span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
-								  <span class="slds-icon_container slds-icon-standard-account"
-										title="Description of icon when needed">
-									  {{> steedos_icon class="slds-icon" source="standard-sprite" name="account"}}
+								  <span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
+									  {{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 								  </span>
 								</span>
 								<span class="slds-pill__label" title="Acme">{{label}}</span>

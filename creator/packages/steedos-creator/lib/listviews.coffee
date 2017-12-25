@@ -70,9 +70,7 @@ Creator.initListViews = (object_name)->
 
 	if Meteor.isClient
 		console.log "initListViews:#{object_name}"
-		tabular_selected_ids = Session.get "tabular_selected_ids"
-		if tabular_selected_ids
-			delete tabular_selected_ids[object_name]
+		Creator.TabularSelectedIds[object_name] = []
 
 	new Tabular.Table
 		name: "creator_" + object_name,
@@ -88,10 +86,7 @@ Creator.initListViews = (object_name)->
 				currentDataset = self.find(".select-all")[0]?.dataset
 				currentObjectName = currentDataset.objectName
 
-				tabular_selected_ids = Session.get "tabular_selected_ids"
-				unless tabular_selected_ids
-					return
-				selectedIds = tabular_selected_ids[currentObjectName]
+				selectedIds = Creator.TabularSelectedIds[currentObjectName]
 				unless selectedIds
 					return
 
