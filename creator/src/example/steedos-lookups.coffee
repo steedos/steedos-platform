@@ -21,20 +21,20 @@ if Meteor.isDevelopment
 				type: "date"
 			customer_id:
 				label: "客户(单选)"
-				type: "master_detail"
+				type: "lookup"
 				reference_to: "crm_customers"
 			customer_ids:
 				label: "客户(多选)"
-				type: "master_detail"
+				type: "lookup"
 				reference_to: "crm_customers"
 				multiple: true
 			object_switche_id:
 				label: "客户/用户(单选)"
-				type: "master_detail"
+				type: "lookup"
 				reference_to: ["crm_customers", "users"]
 			object_switche_ids:
 				label: "客户/用户(多选)"
-				type: "master_detail"
+				type: "lookup"
 				reference_to: ["crm_customers", "users"]
 				multiple: true
 			customer_signed_date:
