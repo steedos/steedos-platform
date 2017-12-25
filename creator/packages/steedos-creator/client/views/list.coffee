@@ -214,3 +214,7 @@ Template.creator_list.events
 				tabular_selected_ids[currentObjectName].push n.dataset.id
 		Session.set "tabular_selected_ids", tabular_selected_ids
 		checkboxs.prop("checked",isSelectedAll)
+
+	'click .slds-table td': (event)->
+		$(".slds-table td").removeClass("slds-has-focus")
+		$(event.currentTarget).addClass("slds-has-focus")

@@ -198,3 +198,7 @@ Template.creator_view.events
 			setTimeout ->
 				$(".related-object-row-edit").click()
 			, 1
+
+	'click .slds-table td': (event)->
+		$(".slds-table td").removeClass("slds-has-focus")
+		$(event.currentTarget).addClass("slds-has-focus")

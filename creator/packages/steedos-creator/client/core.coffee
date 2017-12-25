@@ -16,3 +16,11 @@ Tracker.autorun ()->
 						_schema = Creator.Collections[object_name]?._c2?._simpleSchema?._schema
 						_schema?[field_name]?.autoform?.optionsMethodParams?.space = Session.get("spaceId")
 
+
+Meteor.startup ->
+	$(document).on "click", (e)->
+		if $(e.target).closest(".slds-table td").length < 1
+			$(".slds-table").addClass("slds-no-cell-focus")
+		else
+			$(".slds-table").removeClass("slds-no-cell-focus")
+
