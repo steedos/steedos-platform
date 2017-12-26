@@ -35,7 +35,10 @@ Creator.Objects.informations =
 			type:"select"
 			label:"是否采用"
 			defaultValue:"否"
-			allowedValues:["是","否"]
+			options: [
+				{label: "是", value: "是"},
+				{label: "否", value: "否"}
+			]
 			required:true
 		score_point:
 			type:"select"
@@ -43,7 +46,12 @@ Creator.Objects.informations =
 			defaultValue: ""
 			description: ""
 			multiple:true
-			allowedValues:["上级采用","领导批示","正常使用","月度好信息"]
+			options: [
+				{label: "上级采用", value: "上级采用"},
+				{label: "领导批示", value: "领导批示"},
+				{label: "正常使用", value: "领导批示"},
+				{label: "月度好信息", value: "月度好信息"}
+			]
 	list_views:
 		default:
 			columns: ["title", "content", "company", "applicant_date","Isuse","score_point"]

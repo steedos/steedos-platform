@@ -127,6 +127,8 @@ Creator.getObjectSchema = (obj) ->
 						}
 		else if field.type == "select"
 			fs.type = String
+			if field.multiple
+				fs.type = [String]
 			fs.autoform.type = "select"
 			fs.autoform.options = field.options
 			fs.autoform.firstOption = ""
