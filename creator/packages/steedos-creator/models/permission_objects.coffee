@@ -8,8 +8,7 @@ Creator.Objects.permission_objects =
 			type: "master_detail"
 			reference_to: "permission_set"
 		object_name: 
-			type: "master_detail"
-			reference_to: "objects"
+			type: "text"
 		allowCreate: 
 			type: "boolean"
 		allowDelete: 
@@ -27,3 +26,19 @@ Creator.Objects.permission_objects =
 			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
 		all:
 			filter_scope: "space"
+
+	permissions:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 

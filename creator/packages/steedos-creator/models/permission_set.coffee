@@ -13,3 +13,19 @@ Creator.Objects.permission_set =
 			columns: ["name", "users"]
 		all:
 			filter_scope: "space"
+
+	permissions:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 

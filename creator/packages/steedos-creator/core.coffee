@@ -221,3 +221,7 @@ Creator.getApp = (app_id)->
 	app = Creator.Apps[app_id]
 	return app
 
+Creator.isSpaceAdmin = (spaceId)->
+	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
+	if space?.admins and Meteor.userId
+		return space.admins.indexOf(Meteor.userId)>=0

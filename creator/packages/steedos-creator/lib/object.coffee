@@ -70,7 +70,10 @@ Creator.Object = (options)->
 
 Creator.Object.prototype.getPermissions = ()->
 	# 下一步需要判断用户是否工作区管理员，是否object管理员
-	return this.permissions.user
+	if Creator.isSpaceAdmin()
+		return this.permissions.admin
+	else
+		return this.permissions.user
 
 Creator.Object.prototype.i18n = ()->
 	# set object label
