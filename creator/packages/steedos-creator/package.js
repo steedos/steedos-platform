@@ -99,6 +99,7 @@ Package.onUse(function(api) {
     api.addFiles('models/permission_fields.coffee');
 
     api.addFiles('models/app.coffee');
+    api.addFiles('models/space.coffee');
     api.addFiles('models/user.coffee');
     api.addFiles('models/organization.coffee');
     api.addFiles('models/space_user.coffee');

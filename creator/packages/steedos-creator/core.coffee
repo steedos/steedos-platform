@@ -57,6 +57,7 @@ Creator.getObjectSchema = (obj) ->
 
 		fs = {}
 		fs.autoform = {}
+		fs.autoform.multiple = field.multiple
 		if field.type == "text"
 			fs.type = String
 		else if field.type == "[text]"
@@ -93,7 +94,6 @@ Creator.getObjectSchema = (obj) ->
 				else
 					fs.autoform.type = "steedosLookups"
 					fs.autoform.optionsMethod = "creator.object_options"
-					fs.autoform.multiple = field.multiple
 
 					fs.autoform.optionsMethodParams = ()->
 						return {space: Session.get("spaceId")}
@@ -204,10 +204,11 @@ Creator.getRecordPermissions = (object_name, record, userId)->
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 
-	permissions = Creator.getPermissions(object_name)
+	permissions = _.clone(Creator.getPermissions(object_name))
 
 	if permissions.modifyAllRecords and record?.owner? != Meteor.userId()
 		permissions.allowEdit = false
+		permissions.allowDelete = false
 
 	if permissions.viewAllRecords and record?.owner? != Meteor.userId()
 		permissions.allowRead = false
@@ -222,6 +223,9 @@ Creator.getApp = (app_id)->
 	return app
 
 Creator.isSpaceAdmin = (spaceId)->
-	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
-	if space?.admins and Meteor.userId
-		return space.admins.indexOf(Meteor.userId)>=0
+	if !spaceId and Meteor.isClient
+		spaceId = Session.get("spaceId")
+	if Meteor.userId()
+		space = Creator.getObject("spaces")?.db?.findOne(spaceId)
+		if space?.admins
+			return space.admins.indexOf(Meteor.userId())>=0
