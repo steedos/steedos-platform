@@ -1,6 +1,6 @@
 Creator.Objects.instances = 
 	name: "instances"
-	icon: "contact"
+	icon: "task"
 	label: "Instances"
 	fields:
 		name: 

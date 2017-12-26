@@ -1,6 +1,7 @@
 Creator.Objects.permission_set = 
 	name: "permission_set"
 	label: "Permission Set"
+	icon: "user"
 	fields: 
 		name:
 			type: "text",
