@@ -45,8 +45,14 @@ Creator.getTabularColumns = (object_name, columns) ->
 		data: "_id"
 		width: '20px'
 		createdCell: (node, cellData, rowData) ->
-			$(node).attr("data-label", "Actions")
-			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name}, node)
+			record = rowData
+			userId = Meteor.userId()
+			record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+			if record_permissions.allowEdit or record_permissions.allowDelete
+				$(node).attr("data-label", "Actions")
+				$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name, record_permissions: record_permissions}, node)
+			else
+				$(node).html("")
 	cols.push(action_col)
 
 	checkbox_col = 

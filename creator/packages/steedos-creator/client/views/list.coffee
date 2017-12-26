@@ -148,6 +148,10 @@ Template.creator_list.events
 				$(".edit-list-table-cell").click()
 			, 1
 
+	'dblclick .slds-table td': (event) ->
+		$(".table-cell-edit", event.currentTarget).click()
+
+
 	'click .item-delete-action': (event) ->
 		object_name = Session.get('object_name')
 		_id = event.currentTarget.dataset?.id
