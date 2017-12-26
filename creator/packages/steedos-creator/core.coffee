@@ -159,6 +159,9 @@ Creator.getObjectSchema = (obj) ->
 		if field.group
 			fs.autoform.group = field.group
 
+		if field.is_wide
+			fs.autoform.is_wide = true
+			
 		schema[field_name] = fs
 
 

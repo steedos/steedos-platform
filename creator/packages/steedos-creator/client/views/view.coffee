@@ -42,13 +42,41 @@ Template.creator_view.helpers
 				if !value.autoform?.omit
 					keys.push key
 
-		if keys.length % 2 != 0
-			keys.push(0)
-
 		while i < keys.length
-			schemaFields.push keys.slice(i, i + 2)
-			i += 2
 
+			sc_1 = _.pick(schema, keys[i])
+			sc_2 = _.pick(schema, keys[i+1])
+
+			is_wide_1 = false
+			is_wide_2 = false
+
+			_.each sc_1, (value) ->
+				if value.autoform?.is_wide
+					is_wide_1 = true
+
+			_.each sc_2, (value) ->
+				if value.autoform?.is_wide
+					is_wide_2 = true
+
+			if is_wide_1
+				schemaFields.push keys.slice(i, i+1)
+				i += 1
+			else if !is_wide_1 and is_wide_2
+				childKeys = keys.slice(i, i+1)
+				childKeys.push undefined
+				schemaFields.push childKeys
+				i += 1
+			else if !is_wide_1 and !is_wide_2
+				childKeys = keys.slice(i, i+1)
+				if keys[i+1]
+					childKeys.push keys[i+1]
+				else
+					childKeys.push undefined
+				schemaFields.push childKeys
+				i += 2
+
+		
+		console.log schemaFields
 		return schemaFields
 
 
