@@ -1,3 +1,3 @@
 Template.creatorLayout.helpers
 	subsReady: ->
-		return Creator.subs["Creator"].ready()
+		return true #Creator.subs["Creator"].ready()
