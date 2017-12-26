@@ -17,83 +17,68 @@
 						</div>
 					</h2>
 				</header>
-				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<div class="slds-modal__content slds-app-launcher__content slds-p-around_medium" id="modal-content-id-1">
 					<div class="app-sction-part-1 slds-section slds-is-open">
-						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles">
-							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small control-app-list control-uiButton" aria-live="off" type="button">
-								<span class="slds-icon_container slds-icon-utility-chevrondown slds-button__icon slds-button__icon forceIcon">
-									<span class="lightningPrimitiveIcon chevrondown">
-										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
-											</use>
-										</svg>
-									</span>
-									<span class="lightningPrimitiveIcon chevronright">
-										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevronright">
-											</use>
-										</svg>
-									</span>
-								</span>
+						<h3 class="slds-section__title">
+							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-app-list">
+								<svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" focusable="false" aria-hidden="true">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
+									</use>
+								</svg>
+								<span class="slds-truncate" title="All Apps">所有应用程序</span>
 							</button>
-							<h3 class="slds-text-heading_small">所有应用程序</h3>
-						</div>
-						<div class="slds-card__body card-container slds-section__content">
-							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
+						</h3>
+
+						<div class="slds-section__content">
+							<ul class="slds-grid slds-grid_pull-padded slds-wrap">
 								{{#each apps}}
-								<li class="slds-p-horizontal_small app-item-container">
-									<article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-										<div class="item-area">
-											<a class="inner-card app-launcher-link" href="{{url}}">
-												<div class="bLeft">
-													<div class="appImage">
-														<img src="https://ap5.salesforce.com/logos/Salesforce/ServiceCloud/logo.png">
-													</div>
-												</div>
-												<div class="bRight">
-													<div class="appTitle">
-														{{_ name}}
-													</div>
-													<!-- <div class="fullDescription">
-														通过客户、联系人、个案等管理客服服务
-													</div> -->
-												</div>
-											</a>
+								<li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-4">
+									<a class="slds-app-launcher__tile slds-text-link_reset slds-is-draggable app-launcher-link" href="{{url}}">
+										<div class="slds-app-launcher__tile-figure">
+											<span class="slds-avatar slds-avatar_large">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
+											</span>
+											<!-- <span class="slds-icon_container">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="rows"}}
+											</span> -->
 										</div>
-									</article>
+										<div class="slds-app-launcher__tile-body">
+											<span class="slds-text-link">
+												{{_ name}}
+											</span>
+											<p>
+												<!-- <span class="slds-text-link">More</span> -->
+											</p>
+										</div>
+									</a>
 								</li>
 								{{/each}}
 							</ul>
 						</div>
 					</div>
 					<div class="app-sction-part-2 slds-section slds-is-open">
-						<div class="slds-section__title slds-p-left--small slds-p-bottom--x-small" aria-expanded="false" aria-controls="appTiles">
-							<button class="slds-button slds-button--neutral slds-button slds-button--icon slds-m-right--small  control-project-list control-uiButton" aria-live="off" type="button">
-								<span class="slds-icon_container slds-icon-utility-chevrondown slds-button__icon slds-button__icon forceIcon">
-									<span class="lightningPrimitiveIcon chevrondown">
-										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
-											</use>
-										</svg>
-									</span>
-									<span class="lightningPrimitiveIcon chevronright">
-										<svg class="slds-icon slds-icon--xx-small control-collapse" focusable="false" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevronright">
-											</use>
-										</svg>
-									</span>
-								</span>
+						<h3 class="slds-section__title">
+							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-object-list">
+								<svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" focusable="false" aria-hidden="true">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
+									</use>
+								</svg>
+								<span class="slds-truncate" title="All Apps">所有项目</span>
 							</button>
-							<h3 class="slds-text-heading_small">所有项目</h3>
-						</div>
-						<div class="slds-card__body card-container slds-section__content">
-							<ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
+						</h3>
+						<div class="slds-section__content">
+							<ul class="slds-grid slds-grid_pull-padded slds-wrap">
 								{{#each app_objects}}
-								<li class="slds-p-horizontal_small project-item-container">
-									<a class="object-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate" href="{{object_url}}">
-										<span class="slds-truncate slds-text-link">
-											{{label}}
-										</span>
+								<li class="slds-p-horizontal_small slds-size_xx-small">
+									<a href="{{object_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-app-launcher__tile_small object-launcher-link">
+										<div class="slds-app-launcher__tile-figure slds-app-launcher__tile-figure_small">
+											{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=icon}}
+										</div>
+										<div class="slds-app-launcher__tile-body slds-app-launcher__tile-body_small">
+											<p class="slds-truncate slds-text-link">
+												{{label}}
+											</p>
+										</div>
 									</a>
 								</li>
 								{{/each}}
@@ -101,10 +86,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <footer class="slds-modal__footer">
-					<button class="slds-button slds-button_neutral">Cancel</button>
-					<button class="slds-button slds-button_brand">Save</button>
-				</footer> -->
 			</div>
 		</div>
 	</div>

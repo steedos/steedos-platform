@@ -13,28 +13,22 @@
 	.slds-modal__header {
 		h2.slds-text-heading--medium {
 			font-weight: 300;
-   			font-size: 22px;
+			font-size: 22px;
 		}
 	}
 
-	.control-uiButton {
-		padding: 0;
-		border: none;
-		padding: 2px;
 
-		.forceIcon {
-			position: relative;
-			top: -1px;
-		}
-
-		.control-collapse {
-			fill: rgb(0, 95, 178);
+	.slds-app-launcher__tile.slds-is-draggable {
+		.slds-app-launcher__tile-figure {
+			padding-bottom: 0.75rem;
+			margin: 0.5px;
 		}
 	}
 
-	.slds-text-heading_small {
-		font-size: 20px;
-		font-weight: normal;
+	.app-sction-part-1, .app-sction-part-2 {
+		.slds-text-link {
+			font-size: 16px;
+		}
 	}
 
 	.app-sction-part-1.slds-section__content, .app-sction-part-2.slds-section__content {
@@ -55,159 +49,6 @@
 		}
 		.lightningPrimitiveIcon.chevronright {
 			display: block;
-		}
-	}
-
-	.app-sction-part-1 {
-		.card-container {
-
-			@media only screen and (min-width: 1441px) {
-				.app-item-container {
-					width: 25%;
-				}
-			}
-
-			@media only screen and (max-width: 1440px) {
-				.app-item-container {
-					width: 33%;
-				}
-			}
-
-			@media only screen and (max-width: 1024px) {
-				.app-item-container {
-					width: 50%;
-				}
-			}
-
-			.slds-card__body_inner {
-				margin: 0;
-				padding: 0;
-
-				.app-item-container {
-					padding: 0;
-
-					.slds-card__tile {
-						padding: 12px;
-						margin: 0;
-						cursor: pointer;
-
-						.item-area {
-							width: 100%;
-
-							.inner-card {
-								display: inline-block;
-								position: relative;
-								background: rgb(243, 242, 242);
-								cursor: pointer;
-								border: 1px solid rgb(221, 219, 218);
-								border-radius: .25rem;
-								width: 100%;
-								text-decoration: none;
-
-								.bLeft {
-									height: 96px;
-									width: 96px;
-									min-width: 96px;
-									background: white;
-									position: relative;
-									border-radius: .25rem;
-									margin: 0.5px;
-									float: left;
-
-									.appImage {
-										padding: 16px 16px 0 16px;
-										margin-left: auto;
-										margin-right: auto;
-										height: 80px;
-										width: 96px;
-										min-height: 80px;
-										min-width: 96px;
-										max-width: 96px;
-										max-height: 80px;
-										display: block;
-										vertical-align: middle;
-										text-align: center;
-
-										img {
-											max-height: 64px;
-										}
-									}
-								}
-
-								.bRight {
-									white-space: nowrap;
-									overflow: hidden;
-									text-overflow: ellipsis;
-									padding-right: 1rem;
-									padding-bottom: 1rem;
-									padding-left: 1rem;
-									padding-top: 1rem;
-									text-align: left;
-									height: 96px;
-									-o-text-overflow: ellipsis;
-									position: relative;
-									float: left;
-									width: calc(~"100% - 97px");
-
-									.appTitle {
-										font-size: 19px;
-										white-space: nowrap;
-										overflow: hidden;
-										text-overflow: ellipsis;
-										color: rgb(0, 112, 210);
-									}
-
-									.fullDescription {
-										text-align: left;
-										max-height: inherit;
-										white-space: normal;
-										overflow: hidden;
-										position: relative;
-										color: black;
-										font-size: 16px;
-										font-weight: 400;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	.app-sction-part-2 {
-		.card-container {
-
-			@media only screen and (min-width: 1441px) {
-				.project-item-container {
-					width: 20%;
-				}
-			}
-
-			@media only screen and (max-width: 1440px) {
-				.project-item-container {
-					width: 25%;
-				}
-			}
-
-			@media only screen and (max-width: 1024px) {
-				.project-item-container {
-					width: 33%;
-				}
-			}
-
-			@media only screen and (max-width: 700px) {
-				.project-item-container {
-					width: 50%;
-				}
-			}
-
-			.object-launcher-link {
-				font-size: 19px;
-				margin: .25rem 0;
-				display: inline-block;
-			}
 		}
 	}
 }

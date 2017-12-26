@@ -19,7 +19,7 @@ Template.creator_app_list_modal.events
 	'click .control-app-list': (event) ->
 		$(event.currentTarget).closest(".app-sction-part-1").toggleClass("slds-is-open")
 
-	'click .control-project-list': (event) ->
+	'click .control-object-list': (event) ->
 		$(event.currentTarget).closest(".app-sction-part-2").toggleClass("slds-is-open")
 
 	'click .object-launcher-link,.app-launcher-link': (event, template) ->
