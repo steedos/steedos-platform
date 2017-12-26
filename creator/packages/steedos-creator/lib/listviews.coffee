@@ -119,7 +119,7 @@ Creator.initListViews = (object_name)->
 		pageLength: 20
 		info: false
 		searching: true
-		autoWidth: true
+		autoWidth: false
 		changeSelector: Creator.tabularChangeSelector
 
 if Meteor.isClient
