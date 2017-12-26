@@ -39,6 +39,8 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - sortable: 可排序
 - readonly: 只读，应该只显示在查看页面或列表页面上，新增和修改页面都不显示 #todo
 - omit: 所有页面都不显示
+- multiple: 表示数组字段，可以多选
+- group：字段分组，在显示表单时自动按分组显示
 
 ### permissions 权限
 Object权限分以下类型

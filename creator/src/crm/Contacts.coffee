@@ -26,15 +26,19 @@ Creator.Objects.crm_contacts =
 		email:
 			label: "邮件"
 			type: "text"
+			group: "联系方式"
 		phone:
 			label: "工作电话"
 			type: "text"
+			group: "联系方式"
 		home_phone:
 			label: "家庭电话"
 			type: "text"
+			group: "联系方式"
 		other_phone:
 			label: "其他电话"
 			type: "text"
+			group: "联系方式"
 		description: 
 			label: "描述"
 			type: "textarea"

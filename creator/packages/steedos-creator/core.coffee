@@ -156,6 +156,9 @@ Creator.getObjectSchema = (obj) ->
 		if field.omit
 			fs.autoform.omit = true
 
+		if field.group
+			fs.autoform.group = field.group
+
 		schema[field_name] = fs
 
 
