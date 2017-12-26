@@ -49,7 +49,6 @@ Template.creator_view.helpers
 			schemaFields.push keys.slice(i, i + 2)
 			i += 2
 
-		console.log schemaFields
 		return schemaFields
 
 
@@ -73,6 +72,16 @@ Template.creator_view.helpers
 		permissions = Creator.getPermissions()
 		if permissions
 			return permissions[permissionName]
+
+	recordPerminssion: (permissionName)->
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		record = Creator.Collections[object_name].findOne record_id
+		recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
+		console.log "recordPerminssion", recordPerminssion
+		if recordPerminssion
+			return recordPerminssion[permissionName]
+
 
 	object: ()->
 		return Creator.getObject()

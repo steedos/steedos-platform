@@ -37,7 +37,7 @@
 						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
 							<div class="slds-button-group" role="group">
 
-								{{#if hasPermission "allowEdit"}}
+								{{#if recordPerminssion "allowEdit"}}
 									<li class="slds-button slds-button--neutral slds-truncate">
 										<a href="javascript:void(0);" title="编辑" class="record-action-edit">
 											<div class="slds-truncate" title="编辑">编辑</div>
@@ -60,11 +60,13 @@
 									</button>
 									<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 										<ul class="slds-dropdown__list slds-show">
-											<li class="slds-dropdown__item crm-header-menu-item record-action-delete" role="presentation">
-												<a role="option" tabindex="-1">
-													<span class="">删除</span>
-												</a>
-											</li>
+											{{#if recordPerminssion "allowDelete"}}
+												<li class="slds-dropdown__item crm-header-menu-item record-action-delete" role="presentation">
+													<a role="option" tabindex="-1">
+														<span class="">删除</span>
+													</a>
+												</li>
+											{{/if}}
 										</ul>
 									</div>
 								</div>
