@@ -172,6 +172,9 @@ Template.creator_view.events
 		Tracker.afterFlush ()->
 			Session.set("detail_info_visible", true)
 
+	'dblclick .slds-table td': (event) ->
+		$(".table-cell-edit", event.currentTarget).click();
+
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
 		object_name = this.object_name
