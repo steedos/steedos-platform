@@ -1,4 +1,5 @@
 <template name="creatorLayout">
+	{{#if subsReady}}
 		<div class="steedos layout-top-nav skin-blue-light">
 			{{# AdminLTE skin="blue" sidebarMini="true" }}
 				{{> creatorNavigation}}
@@ -12,4 +13,5 @@
 		<div class="connection-status">
 			{{> status}}
 		</div>
+	{{/if}}
 </template>

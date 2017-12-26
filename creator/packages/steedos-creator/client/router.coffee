@@ -7,7 +7,7 @@ FlowRouter.route '/app',
 	action: (params, queryParams)->
 		app_id = Session.get("app_id")
 		if !app_id
-			app_id = "creator"
+			app_id = "crm"
 		object_name = Session.get("object_name")
 		if object_name
 			FlowRouter.go "/app/" + app_id + "/" + object_name + "/list"
