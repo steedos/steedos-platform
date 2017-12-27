@@ -428,9 +428,9 @@ var tabularOnRendered = function () {
 
 			// console.log("tableInfo.recordsTotal / tableLength", tableInfo.recordsTotal / tableLength)
 			if ((tableInfo.recordsTotal / tableLength) < 1) {
-				$('div.dataTables_paginate', $(".instance-list")).hide();
+				template.$('div.dataTables_paginate').hide();
 			} else {
-				$('div.dataTables_paginate', $(".instance-list")).show();
+				template.$('div.dataTables_paginate').show();
 				if (table) {
 					table.ajax.reload(null, false);
 				}
