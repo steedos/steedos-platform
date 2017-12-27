@@ -112,7 +112,7 @@ Creator.initListViews = (object_name)->
 						checkboxAll.prop("checked",true)
 
 		dom: "tp"
-		extraFields: ["_id"]
+		extraFields: ["owner"]
 		lengthChange: false
 		ordering: false
 		pageLength: 20
