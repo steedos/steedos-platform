@@ -1,6 +1,6 @@
-Creator.Objects.archives = 
-	name: "archives"
-	icon: "contact"
+Creator.Objects.archives_clericalfiles = 
+	name: "archives_clericalfiles"
+	icon: ""
 	label: "文书档案"
 	fields:
 		YUANWEN: 
@@ -55,11 +55,21 @@ Creator.Objects.archives =
 			type:"date"
 			label:"文件日期"
 		CLASSNO_JH:
-			type:"text",
+			type:"lookup",
 			label:"实体分类号",
 			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+			reference_to: "archives_category"
+		FILESTATUS:
+			type:"select",
+			label:"文件状态",
+			defaultValue: "不归档"
+			options: [
+				{label: "不归档", value: "不归档"},
+				{label: "电子归档", value: "电子归档"},
+				{label: "暂存", value: "暂存"},
+				{label: "待归档", value: "待归档"},
+				{label: "实物归档", value: "实物归档"}
+			]
 		PRODUCECOMPANY:
 			type:"text"
 			label:"责任者"
@@ -71,10 +81,11 @@ Creator.Objects.archives =
 			description: ""
 			inlineHelpText: ""
 		ARCHIVEDEPT:
-			type:"text",
+			type:"lookup",
 			label:"归档部门",
 			defaultValue: ""
 			description: ""
+			reference_to:"archives_archivedept"
 			inlineHelpText: ""
 		DEPT:
 			type:"text",
@@ -82,13 +93,13 @@ Creator.Objects.archives =
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
-		KEYWORDS:
-			type:"textarea",
-			label:"主题词",
-			is_wide:true
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+		# KEYWORDS:
+		# 	type:"textarea",
+		# 	label:"主题词",
+		# 	is_wide:true
+		# 	defaultValue: ""
+		# 	description: ""
+		# 	inlineHelpText: ""
 		SECRETLEVEL:
 			type:"select"
 			label:"密级"
@@ -103,7 +114,7 @@ Creator.Objects.archives =
 			label:"文件页数"
 		COPYCOUNT:
 			type:"number",
-			label:"份数",
+			label:"件数",
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
@@ -137,17 +148,7 @@ Creator.Objects.archives =
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
-		FILESTATUS:
-			type:"select",
-			label:"文件状态",
-			defaultValue: "不归档"
-			options: [
-				{label: "不归档", value: "不归档"},
-				{label: "电子归档", value: "电子归档"},
-				{label: "暂存", value: "暂存"},
-				{label: "待归档", value: "待归档"},
-				{label: "实物归档", value: "实物归档"}
-			]
+		
 		DESCRIPTION:
 			type:"text",
 			label:"备注",
@@ -171,24 +172,14 @@ Creator.Objects.archives =
 		PRODUCER:
 			type:"text"
 			label:"拟稿人"
+		other_receivers:
+			type:"text"
+			label:"抄送"
+			omit:true
 		CANJIAN:
 			type: "text",
 			label:"参见",
 			reference_to: "users"
-			omit:true
-		EMERGENCYLEVEL:
-			type:"text",
-			label:"紧急程度",
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
-			omit:true
-		SUMMARY:
-			type:"text",
-			label:"摘要",
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
 			omit:true
 	list_views:
 		default:
@@ -200,7 +191,7 @@ Creator.Objects.archives =
 			label: "最近查看"
 			filter_scope: "space"
 		all:
-			label: "文件简化"
+			label: "全部档案"
 			filter_scope: "space"
 
 	permissions:
