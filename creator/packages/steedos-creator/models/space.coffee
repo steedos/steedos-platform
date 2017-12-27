@@ -4,12 +4,20 @@ Creator.Objects.spaces =
 	icon: "groups"
 	fields:
 		name: 
-			label: "Name"
 			type: "text"
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
+		owner:
+			type: "lookup"
+			reference_to: "users"
+			disabled: true
+			omit: false
+		admins: 
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
 		apps: 
 			label: "应用"
 			type: "lookup"
