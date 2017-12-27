@@ -207,6 +207,58 @@ helpers =
 	cmTargetIds: ()->
 		Session.get('cmTargetIds')
 
+	schemaFields: ()->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			schema = collectionObj(cmCollection).simpleSchema()._schema
+			firstLevelSchema = collectionObj(cmCollection).simpleSchema()._firstLevelSchemaKeys
+			if Session.get 'cmFields'
+				firstLevelSchema = [Session.get('cmFields')]
+			if Session.get 'cmOmitFields'
+				firstLevelSchema = _.difference firstLevelSchema, [Session.get('cmOmitFields')]
+
+			keys = []
+			schemaFields = []
+			i = 0
+			_.each schema, (value, key) ->
+				if (_.indexOf firstLevelSchema, key) > -1
+					if !value.autoform?.omit
+						keys.push key
+
+			while i < keys.length
+				sc_1 = _.pick(schema, keys[i])
+				sc_2 = _.pick(schema, keys[i+1])
+				is_wide_1 = false
+				is_wide_2 = false
+				_.each sc_1, (value) ->
+					if value.autoform?.is_wide
+						is_wide_1 = true
+
+				_.each sc_2, (value) ->
+					if value.autoform?.is_wide
+						is_wide_2 = true
+
+				if is_wide_1
+					schemaFields.push keys.slice(i, i+1)
+					i += 1
+				else if !is_wide_1 and is_wide_2
+					childKeys = keys.slice(i, i+1)
+					childKeys.push undefined
+					schemaFields.push childKeys
+					i += 1
+				else if !is_wide_1 and !is_wide_2
+					childKeys = keys.slice(i, i+1)
+					if keys[i+1]
+						childKeys.push keys[i+1]
+					else
+						childKeys.push undefined
+					schemaFields.push childKeys
+					i += 2
+					
+			console.log schemaFields
+			return schemaFields
+
+
 Template.autoformModals.helpers helpers
 
 Template.afModal.events

@@ -19,7 +19,23 @@
 						{{#if $and cmCollection cmOperation}}
 							<p>{{{prompt}}}</p>
 							{{#if shouldUpdateQuickForm}}
-								{{> quickForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc type=cmAutoformType buttonContent=false fields=cmFields omitFields=cmOmitFields template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses afFieldInput-placeholder=cmPlaceholder meteormethod=cmMeteorMethod}}
+
+								{{#autoForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
+									{{#each schemaFields}}
+										<div class="slds-grid view-page-section-row">
+											{{#each this}}
+												<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+													<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override-1-slds-form-element uiInput">
+														{{#if this}}
+															{{> afQuickField name=this}}
+														{{/if}}
+													</div>
+												</div>
+											{{/each}}
+										</div>
+									{{/each}}
+								{{/autoForm}}
+					
 							{{/if}}
 						{{/if}}
 					{{/if}}
