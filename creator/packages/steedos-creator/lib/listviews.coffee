@@ -32,6 +32,8 @@ Creator.getTabularColumns = (object_name, columns) ->
 			col.className = "slds-cell-edit cellContainer"
 			if field.sortable
 				col.className = col.className + " slds-is-sortable"
+			else
+				col.orderable = false
 			col.render =  (val, type, doc) ->
 				return
 			col.createdCell = (cell, val, doc) ->
@@ -114,7 +116,7 @@ Creator.initListViews = (object_name)->
 		dom: "tp"
 		extraFields: ["owner"]
 		lengthChange: false
-		ordering: false
+		ordering: true
 		pageLength: 20
 		info: false
 		searching: true
