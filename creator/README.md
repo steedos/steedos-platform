@@ -43,6 +43,8 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - group：字段分组，在显示表单时自动按分组显示
 - is_wide: 宽字段，显示时占满整行
 - is_name: 表示此字段为标题字段，适用于标题字段并不是"name"时，在列表页生成链接
+- readonly: 只读
+- disabled: 禁用
 
 ### permissions 权限
 Object权限分以下类型

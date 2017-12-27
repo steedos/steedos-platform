@@ -136,7 +136,13 @@ Creator.getObjectSchema = (obj) ->
 		if field.defaultValue
 			fs.autoform.defaultValue = ()->
 				return Creator.evaluateFormula(field.defaultValue)
+
+		if field.readonly
+			fs.autoform.readonly = true
 			
+		if field.disabled
+			fs.autoform.disabled = true
+
 		schema[field_name] = fs
 
 	return schema

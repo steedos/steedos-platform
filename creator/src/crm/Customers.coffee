@@ -33,6 +33,7 @@ Creator.Objects.crm_customers =
 		owner: 
 			label: "所有者"
 			omit: false
+			disabled: true
 		description: 
 			label: "描述"
 			type: "textarea"
