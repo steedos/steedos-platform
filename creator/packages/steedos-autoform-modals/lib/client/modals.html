@@ -40,13 +40,13 @@
 						{{/if}}
 					{{/if}}
 					{{#if cmIsMultipleUpdate}}
-						<div class="form-group">
+						<div class="form-group multiple-box">
 							<label class="col-sm-2 control-label"></label>
 							<div class="col-sm-10">
-								<label class="slds-checkbox" style="margin-left: -10px;">
-									<input class="keyboardMode--trigger" type="checkbox">
-									<span class="slds-checkbox--faux" style="margin-top: -3px;"></span>
-									<span style="color: rgb(112, 110, 107);font-size: 14px;font-weight:  400;">更新 {{cmTargetIds.length}} 个选定记录</span>
+								<label class="slds-checkbox">
+									<input class="keyboardMode--trigger ckb-multiple-update" type="checkbox">
+									<span class="slds-checkbox--faux"></span>
+									<span class="label-multiple-update">更新 {{cmTargetIds.length}} 个选定记录</span>
 								</label>
 								<span class="help-block"></span>
 							</div>

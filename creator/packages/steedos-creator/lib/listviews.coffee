@@ -75,7 +75,6 @@ Creator.initListViews = (object_name)->
 		columns = object.list_views.default.columns
 
 	if Meteor.isClient
-		console.log "initListViews:#{object_name}"
 		Creator.TabularSelectedIds[object_name] = []
 
 	new Tabular.Table
@@ -120,7 +119,11 @@ Creator.initListViews = (object_name)->
 		info: false
 		searching: true
 		autoWidth: false
-		changeSelector: Creator.tabularChangeSelector
+		changeSelector: (selector, userId)->
+			if !selector.space
+				selector = 
+					_id: "nothing"
+			return selector
 
 if Meteor.isClient
 	Creator.getRelatedList = (object_name, record_id)->

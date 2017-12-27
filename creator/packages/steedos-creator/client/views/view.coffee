@@ -76,7 +76,6 @@ Template.creator_view.helpers
 				i += 2
 
 		
-		console.log schemaFields
 		return schemaFields
 
 
@@ -106,7 +105,6 @@ Template.creator_view.helpers
 		record_id = Session.get "record_id"
 		record = Creator.Collections[object_name].findOne record_id
 		recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
-		console.log "recordPerminssion", recordPerminssion
 		if recordPerminssion
 			return recordPerminssion[permissionName]
 

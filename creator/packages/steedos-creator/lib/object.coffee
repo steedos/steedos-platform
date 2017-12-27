@@ -47,11 +47,13 @@ Creator.Object = (options)->
 		self.actions[item_name].name = item_name
 		self.actions[item_name] = _.extend(_.clone(self.actions[item_name]), item)
 
-	self.permissions = _.clone(Creator.baseObject.permissions)
-	_.each options.permissions, (item, item_name)->
-		if !self.permissions[item_name]
-			self.permissions[item_name] = {}
-		self.permissions[item_name] = _.extend(_.clone(self.permissions[item_name]), item)
+	self.permission_set = _.clone(Creator.baseObject.permission_set)
+	_.each options.permission_set, (item, item_name)->
+		if !self.permission_set[item_name]
+			self.permission_set[item_name] = {}
+		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
+
+	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 
 	if db[self.name]
 		Creator.Collections[self.name] = db[self.name]
@@ -67,13 +69,6 @@ Creator.Object = (options)->
 	Creator.objectsByName[self.name] = self
 
 	return self
-
-Creator.Object.prototype.getPermissions = ()->
-	# 下一步需要判断用户是否工作区管理员，是否object管理员
-	if Creator.isSpaceAdmin()
-		return this.permissions.admin
-	else
-		return this.permissions.user
 
 Creator.Object.prototype.i18n = ()->
 	# set object label
@@ -111,6 +106,12 @@ if Meteor.isClient
 
 	Meteor.startup ->
 		Tracker.autorun ->
-			lang = Session.get("steedos-locale")
-			_.each Creator.objectsByName, (object, object_name)->
-				object.i18n()
+			if Session.get("steedos-locale")
+				_.each Creator.objectsByName, (object, object_name)->
+					object.i18n()
+
+		Tracker.autorun ->
+			if Session.get("spaceId")
+				Meteor.call "creator.object_permissions", Session.get("spaceId"), (error, result)->
+					_.each result, (permissions, object_name)->
+						Creator.getObject(object_name).permissions.set(permissions)

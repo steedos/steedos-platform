@@ -68,9 +68,12 @@ Template.autoformModals.rendered = ->
 			'cmCloseButtonContent',
 			'cmCloseButtonClasses',
 			'cmShowRemoveButton',
+			'cmIsMultipleUpdate',
 			'cmTargetIds'
 		]
 		delete Session.keys[key] for key in sessionKeys
+
+		Session.set("cmIsMultipleUpdate", false)
 
 		self.shouldUpdateQuickForm.set(false)
 
@@ -91,7 +94,8 @@ Template.autoformModals.events
 	'click button.btn-update': (event,template)->
 		isMultipleUpdate = Session.get('cmIsMultipleUpdate')
 		targetIds = Session.get('cmTargetIds')
-		if isMultipleUpdate and targetIds?.length > 1
+		isMultipleChecked = template.$(".ckb-multiple-update").is(":checked")
+		if isMultipleUpdate and isMultipleChecked and targetIds?.length > 1
 			collection = Session.get 'cmCollection'
 			target_ids = targetIds
 			doc = AutoForm.getFormValues(Session.get('cmFormId') or defaultFormId).updateDoc
@@ -202,7 +206,8 @@ helpers =
 		Session.get 'cmSaveAndInsert'
 
 	cmIsMultipleUpdate: ()->
-		Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length > 1
+		isMultiple = Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length > 1
+		return isMultiple
 
 	cmTargetIds: ()->
 		Session.get('cmTargetIds')

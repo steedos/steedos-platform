@@ -6,8 +6,12 @@ Creator.Objects.cms_posts =
 		title: 
 			type: "text"
 			required: true
+			is_name: true
 		postDate: 
 			type: "datetime"
+		htmlBody:
+			type: "html"
+			is_wide: true
 		site:
 			type: "master_detail"
 			reference_to: "cms_sites"
@@ -17,3 +21,5 @@ Creator.Objects.cms_posts =
 	list_views:
 		default:
 			columns: ["title", "site", "postDate", "author"]
+		all:
+			filter_scope: "space"

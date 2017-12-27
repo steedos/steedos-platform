@@ -4,4 +4,4 @@ if Meteor.isDevelopment
 		name: "example"
 		icon: "ion-ios-people-outline"
 		icon_slds: "custom" 
-		objects: ["steedosLookups"]
+		objects: ["steedosLookups", "steedosUsersOrgs"]

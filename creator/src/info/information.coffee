@@ -21,27 +21,20 @@ Creator.Objects.informations =
 			type: "lookup",
 			label:"提交人",
 			reference_to: "users"
+			omit:true
 		applicant_date:
 			type: "datetime"
 			label:"提交时间"
+			omit:true
 		content:
-			type:"text",
+			type:"textarea",
 			label:"内容",
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
-		Isuse:
-			type:"select"
-			label:"是否采用"
-			defaultValue:"否"
-			options: [
-				{label: "是", value: "是"},
-				{label: "否", value: "否"}
-			]
-			required:true
 		score_point:
-			type:"select"
+			type:"checkbox"
 			label:"打分形式",
 			defaultValue: ""
 			description: ""
@@ -52,9 +45,13 @@ Creator.Objects.informations =
 				{label: "正常使用", value: "领导批示"},
 				{label: "月度好信息", value: "月度好信息"}
 			]
+		isuse:
+			type:"boolean"
+			label:"是否采用"
+			defaultValue:"否"
 	list_views:
 		default:
-			columns: ["title", "content", "company", "applicant_date","Isuse","score_point"]
+			columns: ["title", "content", "company","isuse","score_point"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
@@ -65,7 +62,7 @@ Creator.Objects.informations =
 			label: "我的上报信息"
 			filter_scope: "mine"
 
-	permissions:
+	permission_set:
 		user:
 			allowCreate: true
 			allowDelete: true

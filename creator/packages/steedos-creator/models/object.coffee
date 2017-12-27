@@ -25,11 +25,7 @@ Creator.Objects.objects =
 		all:
 			filter_scope: "spacex"
 
-	related_list:
-		object_permissions:
-			columns: ["name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
-
-	permissions:
+	permission_set:
 		user:
 			allowCreate: true
 			allowDelete: true

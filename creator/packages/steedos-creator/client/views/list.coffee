@@ -44,13 +44,8 @@ Template.creator_list.helpers
 					"$in": record_ids
 			if list_view.filters
 				try 
-					filters = list_view.filters
-					filters = filters.replace "{{userId}}", '"' + Meteor.userId() + '"'
-					filters = filters.replace "{{spaceId}}", '"' + Session.get("spaceId") + '"'
-					filters = "filters="+filters
-					filters_obj = eval(filters)
-					# selector = ["$and": [selector, filters_obj]]
-					selector = _.extend selector, filters_obj
+					filters = Creator.evaluateFilters(list_view.filters)
+					selector = _.extend selector, filters
 					return selector
 				catch e
 					console.log e

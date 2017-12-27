@@ -17,7 +17,7 @@ Creator.Objects.organizations =
 		space_users:
 			columns: ["name", "position", "mobile", "email"]
 
-	permissions:
+	permission_set:
 		user:
 			allowCreate: false
 			allowDelete: false

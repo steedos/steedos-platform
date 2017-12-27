@@ -18,7 +18,7 @@ Creator.Objects.content_documents =
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
-	permissions:
+	permission_set:
 		default:
 			allowCreate: false
 			allowDelete: false

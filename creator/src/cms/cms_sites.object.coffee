@@ -10,3 +10,5 @@ Creator.Objects.cms_sites =
 	list_views:
 		default:
 			columns: ["name"]
+		all:
+			filter_scope: "space"

@@ -21,7 +21,7 @@ Creator.Objects.permission_fields =
 		all:
 			filter_scope: "space"
 
-	permissions:
+	permission_set:
 		user:
 			allowCreate: false
 			allowDelete: false

@@ -17,7 +17,7 @@ Creator.Objects.apps =
 			columns: ["name"]
 		all:
 			filter_scope: "spacex"
-	permissions:
+	permission_set:
 		user:
 			allowCreate: false
 			allowDelete: false

@@ -36,6 +36,7 @@ Creator.Objects.crm_contracts =
 		description: 
 			label: "描述"
 			type: "textarea"
+			is_wide: true
 
 
 	list_views:

@@ -1,0 +1,220 @@
+Creator.Objects.archives = 
+	name: "archives"
+	icon: "contact"
+	label: "文书档案"
+	fields:
+		YUANWEN: 
+			type: "text"
+			label:"原文"
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			omit:true
+		FILENO:
+			type:"text",
+			label:"档号",
+			defaultValue: "1111"
+			is_wide:false
+			description: ""
+			inlineHelpText: ""
+		YEARNO:
+			type: "text",
+			label:"所属年度"
+			defaultValue: "2017"
+			is_wide:false
+			description: ""
+			inlineHelpText: ""
+			required:true
+		KEEPTIME:
+			type:"select",
+			label:"保管期限",
+			defaultValue: "永久"
+			options: [
+				{label: "永久", value: "永久"},
+				{label: "长期", value: "长期"},
+				{label: "短期", value: "短期"},
+				{label: "30年", value: "30年"},
+				{label: "4年", value: "4年"},
+			]
+		JIANHAO:
+			type: "text"
+			label:"件号"
+		FILETITLE:
+			type:"textarea"
+			label:"题名"
+			is_wide:true
+			is_name:true
+			required:true
+		DOCUMETNO:
+			type:"text",
+			label:"文号",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""	
+		FILEDATE:
+			type:"date"
+			label:"文件日期"
+		CLASSNO_JH:
+			type:"text",
+			label:"实体分类号",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		PRODUCECOMPANY:
+			type:"text"
+			label:"责任者"
+			is_wide:true
+		ARCHIVEDATE:
+			type:"date",
+			label:"归档日期",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		ARCHIVEDEPT:
+			type:"text",
+			label:"归档部门",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		DEPT:
+			type:"text",
+			label:"所属部门",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		KEYWORDS:
+			type:"textarea",
+			label:"主题词",
+			is_wide:true
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		SECRETLEVEL:
+			type:"select"
+			label:"密级"
+			options: [
+				{label: "绝密", value: "绝密"},
+				{label: "机密", value: "机密"},
+				{label: "秘密", value: "秘密"},
+				{label: "非密", value: "非密"}
+			]
+		PAGECOUNT:
+			type:"number"
+			label:"文件页数"
+		COPYCOUNT:
+			type:"number",
+			label:"份数",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		PRODUCEFLAG:
+			type:"select",
+			label:"处理标志",
+			defaultValue: "在档"
+			options: [
+				{label: "在档", value: "在档"},
+				{label: "移出", value: "移出"},
+				{label: "销毁", value: "销毁"},
+				{label: "出借", value: "出借"}
+			]	
+		FILECLASS:
+			type:"text",
+			label:"文件类型",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		DRAFTUNIT:
+			type:"text",
+			label:"拟稿单位",
+			is_wide:true
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		MAINDEPT:
+			type:"text",
+			label:"主办部室",
+			is_wide:true
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		FILESTATUS:
+			type:"select",
+			label:"文件状态",
+			defaultValue: "不归档"
+			options: [
+				{label: "不归档", value: "不归档"},
+				{label: "电子归档", value: "电子归档"},
+				{label: "暂存", value: "暂存"},
+				{label: "待归档", value: "待归档"},
+				{label: "实物归档", value: "实物归档"}
+			]
+		DESCRIPTION:
+			type:"text",
+			label:"备注",
+			is_wide:true
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+		TODEPT:
+			type:"text",
+			label:"主送",
+			is_wide:true
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""	
+		STORAGE:
+			type:"text",
+			label:"存放位置",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""	
+		PRODUCER:
+			type:"text"
+			label:"拟稿人"
+		CANJIAN:
+			type: "text",
+			label:"参见",
+			reference_to: "users"
+			omit:true
+		EMERGENCYLEVEL:
+			type:"text",
+			label:"紧急程度",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			omit:true
+		SUMMARY:
+			type:"text",
+			label:"摘要",
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			omit:true
+	list_views:
+		default:
+			columns: ["YUANWEN", "YEARNO", "CANJIAN", "JIANHAO","KEEPTIME","FILETITLE",
+						"DOCUMETNO", "FILEDATE", "CLASSNO_JH", "PRODUCECOMPANY", "ARCHIVEDATE"
+					, "ARCHIVEDATE", "ARCHIVEDEPT", "DEPTNO", "KEYWORDS", "SECRETLEVEL", "FILECLASS"
+				, "STORAGE", "PRODUCER"]
+		recent:
+			label: "最近查看"
+			filter_scope: "space"
+		all:
+			label: "文件简化"
+			filter_scope: "space"
+
+	permissions:
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 

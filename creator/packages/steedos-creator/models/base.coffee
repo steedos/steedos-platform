@@ -34,14 +34,20 @@ Creator.baseObject =
 			type: "boolean"
 			omit: true
 
-	permissions:
+	permission_set:
+		none: 
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
 		user:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: false 
 		admin:
 			allowCreate: true
 			allowDelete: true
