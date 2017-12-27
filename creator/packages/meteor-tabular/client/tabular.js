@@ -404,7 +404,6 @@ var tabularOnRendered = function () {
 
 	// XXX Not working
 	template.autorun(function () {
-		console.log("template.autorun=========");
 		var tableName = template.tabular.tableName.get();
 		var tableLength = template.tabular.limit.get();
 		var tableInfo = Tabular.getRecord(tableName) || {};

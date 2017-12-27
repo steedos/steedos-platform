@@ -46,6 +46,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 		title: '<div class="slds-th__action"></div>'
 		data: "_id"
 		width: '20px'
+		orderable: false
 		createdCell: (node, cellData, rowData) ->
 			record = rowData
 			userId = Meteor.userId()
@@ -62,6 +63,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 		data: "_id"
 		width: '20px'
 		className: "slds-cell-edit cellContainer"
+		orderable: false
 		createdCell: (node, cellData, rowData) ->
 			$(node).attr("data-label", "Checkbox")
 			$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
