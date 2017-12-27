@@ -64,7 +64,10 @@ Creator.Object = (options)->
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
 	if self.name != "users"
-		Creator.Collections[self.name].attachSchema(self.schema)
+		if Meteor.isClient
+			Creator.Collections[self.name].attachSchema(self.schema, {replace: true})
+		else
+			Creator.Collections[self.name].attachSchema(self.schema)
 
 	Creator.objectsByName[self.name] = self
 
