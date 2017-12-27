@@ -1,6 +1,7 @@
 Creator.Objects.object_recent_viewed = 
 	name: "object_recent_viewed"
 	label: "Object Recent Viewed"
+	icon: "forecasts"
 	fields: 
 		record_id:
 			type: "text"

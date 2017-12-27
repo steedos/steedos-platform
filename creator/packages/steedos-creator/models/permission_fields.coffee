@@ -1,6 +1,7 @@
 Creator.Objects.permission_fields = 
 	name: "permission_fields"
 	label: "Field Permissions"
+	icon: "user"
 	fields: 
 		name:
 			type: "text",

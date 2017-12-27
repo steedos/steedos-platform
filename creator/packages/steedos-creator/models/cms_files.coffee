@@ -1,7 +1,7 @@
 Creator.Objects.cms_files = 
 	name: "cms_files"
 	label: "Files"
-	icon: "ion-ios-people-outline"
+	icon: "drafts"
 	fields:
 		name: 
 			label: "Name"
