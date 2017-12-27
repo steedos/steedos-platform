@@ -3,4 +3,4 @@ Creator.Apps.cms =
 	name: "CMS"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "timesheet" 
-	objects: ["cms_sites", "cms_posts"]
+	objects: ["cms_sites", "cms_posts", "cms_files"]

@@ -62,6 +62,12 @@ Package.onUse(function(api) {
     api.use('natestrauser:select2');
     api.use('aldeed:autoform-select2')
 
+    api.use('cfs:standard-packages@0.5.9');
+    api.use('cfs:s3@0.1.3');    
+    api.use('iyyang:cfs-aliyun@0.1.0');
+    api.use('steedos:autoform-file@0.4.2');
+
+
     api.use('steedos:sso@0.0.4')
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.70');
@@ -105,7 +111,8 @@ Package.onUse(function(api) {
     api.addFiles('models/organization.coffee');
     api.addFiles('models/space_user.coffee');
     
-    api.addFiles('models/content_document.coffee');
+    api.addFiles('models/cms_files.coffee');
+    api.addFiles('models/cms_files_cfs.coffee');
 
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/methods/object_permissions.coffee', 'server');
