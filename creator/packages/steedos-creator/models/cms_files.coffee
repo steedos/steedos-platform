@@ -16,8 +16,13 @@ Creator.Objects.cms_files =
 			type: "number"
 		versions:
 			type: "file"
+			collection: "files"
 			multiple: true
-	
+		parent:
+			type: "lookup"
+			reference_to: ()->
+				return _.pluck(Creator.objectsByName, "name")
+
 
 	list_views:
 		default:

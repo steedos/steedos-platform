@@ -65,7 +65,10 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.optionsMethodParams = ()->
 						return {space: Session.get("spaceId")}
 
-					if _.isArray(field.reference_to)
+					if typeof(field.reference_to) == "function"
+						_reference_to = field.reference_to()
+
+					if _.isArray(_reference_to)
 
 						fs.autoform.objectSwitche = true
 
@@ -77,9 +80,9 @@ Creator.getObjectSchema = (obj) ->
 							type: [String]
 						}
 
-						_reference_to = field.reference_to
 					else
-						_reference_to = [field.reference_to]
+
+						_reference_to = [_reference_to]
 
 					fs.autoform.references = []
 
@@ -112,17 +115,17 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = [String]
 			fs.autoform.type = "select-checkbox"
 			fs.autoform.options = field.options
-		else if field.type == "file"
+		else if field.type == "file" and field.collection
 			if field.multiple
 				fs.type = [String]
 				schema[field_name + ".$"] = 
 					autoform:
 						type: 'fileUpload'
-						collection: 'files'
+						collection: field.collection
 			else
 				fs.type = String
 				fs.autoform.type = 'fileUpload'
-				fs.autoform.collection = 'files'
+				fs.autoform.collection = field.collection
 		else
 			fs.type = field.type
 
