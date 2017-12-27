@@ -1,5 +1,4 @@
-Creator.getFieldSchema(field, field_name)->
-
+Creator.getFieldSchema = (field, field_name)->
 	fs = {}
 	fs.autoform = {}
 	fs.autoform.multiple = field.multiple
@@ -67,13 +66,13 @@ Creator.getFieldSchema(field, field_name)->
 
 					fs.autoform.objectSwitche = true
 
-					schema[field_name + ".o"] = {
-						type: String
-					}
+					# schema[field_name + ".o"] = {
+					# 	type: String
+					# }
 
-					schema[field_name + ".ids"] = {
-						type: [String]
-					}
+					# schema[field_name + ".ids"] = {
+					# 	type: [String]
+					# }
 
 					_reference_to = field.reference_to
 				else
@@ -136,3 +135,14 @@ Creator.getFieldSchema(field, field_name)->
 			return Creator.evaluateFormula(field.defaultValue)
 		
 	return fs
+
+
+Creator.getFieldDisplayValue = (object_name, field_name, field_value)->
+	html = field_value
+	object = Creator.getObject(object_name)
+	if object
+		field = object.fields(field_name)
+		if field
+			if field.type == "datetime"
+				html = moment(this.val).format('YYYY-MM-DD H:mm')
+	return html
