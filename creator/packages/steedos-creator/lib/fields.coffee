@@ -145,9 +145,15 @@ Creator.getObjectSchema = (obj) ->
 Creator.getFieldDisplayValue = (object_name, field_name, field_value)->
 	html = field_value
 	object = Creator.getObject(object_name)
-	if object
-		field = object.fields(field_name)
-		if field
-			if field.type == "datetime"
-				html = moment(this.val).format('YYYY-MM-DD H:mm')
+	if !object
+		return ""
+	field = object.fields(field_name)
+	if !field
+		return ""
+
+	if field.type == "datetime"
+		html = moment(this.val).format('YYYY-MM-DD H:mm')
+	else if field.type == "date"
+		html = moment(this.val).format('YYYY-MM-DD')
+	
 	return html
