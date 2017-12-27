@@ -44,6 +44,10 @@ Template.autoformModals.rendered = ->
 		if operation == 'update'
 			AutoForm.resetForm(Session.get('cmFormId') or defaultFormId)
 
+		setTimeout ->
+			$("#afModal .form-control:first").focus()
+		, 100
+
 	$('#afModal').on 'hidden.bs.modal', ->
 		$(window).unbind 'keyup', onEscKey
 
