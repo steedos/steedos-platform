@@ -59,6 +59,8 @@ Creator.getObjectSchema = (obj) ->
 				
 				if typeof(field.reference_to) == "function"
 					_reference_to = field.reference_to()
+				else
+					_reference_to = field.reference_to
 
 				if _.isArray(_reference_to)
 					fs.type = Object
