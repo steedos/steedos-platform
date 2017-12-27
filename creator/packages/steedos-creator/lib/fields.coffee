@@ -49,40 +49,37 @@ Creator.getObjectSchema = (obj) ->
 			if field.multiple
 				fs.type = [String]
 
-			if _.isArray(field.reference_to)
-				fs.type = Object
-				fs.blackbox = true
+			if field.reference_to == "users"
+				fs.autoform.type = "selectuser"
+			else if field.reference_to == "organizations"
+				fs.autoform.type = "selectorg"
+			else
+				fs.autoform.type = "steedosLookups"
+				fs.autoform.optionsMethod = "creator.object_options"
+				
+				if typeof(field.reference_to) == "function"
+					_reference_to = field.reference_to()
 
-			if Meteor.isClient
-				if field.reference_to == "users"
-					fs.autoform.type = "selectuser"
-				else if field.reference_to == "organizations"
-					fs.autoform.type = "selectorg"
+				if _.isArray(_reference_to)
+					fs.type = Object
+					fs.blackbox = true
+					fs.autoform.objectSwitche = true
+
+					schema[field_name + ".o"] = {
+						type: String
+					}
+
+					schema[field_name + ".ids"] = {
+						type: [String]
+					}
+
 				else
-					fs.autoform.type = "steedosLookups"
-					fs.autoform.optionsMethod = "creator.object_options"
+					_reference_to = [_reference_to]
+
+				if Meteor.isClient
 
 					fs.autoform.optionsMethodParams = ()->
 						return {space: Session.get("spaceId")}
-
-					if typeof(field.reference_to) == "function"
-						_reference_to = field.reference_to()
-
-					if _.isArray(_reference_to)
-
-						fs.autoform.objectSwitche = true
-
-						schema[field_name + ".o"] = {
-							type: String
-						}
-
-						schema[field_name + ".ids"] = {
-							type: [String]
-						}
-
-					else
-
-						_reference_to = [_reference_to]
 
 					fs.autoform.references = []
 
