@@ -120,7 +120,7 @@ Creator.initListViews = (object_name)->
 		searching: true
 		autoWidth: false
 		changeSelector: (selector, userId)->
-			if !selector.space
+			if !selector.space and !selector._id
 				selector = 
 					_id: "nothing"
 			return selector

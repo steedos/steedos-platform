@@ -31,8 +31,9 @@ Template.creator_list.helpers
 				selector.space = 
 					$in: [null,Session.get("spaceId")]
 			else if object_name == "users"
-				selector.space = 
-					"$exists": false
+				selector._id = Meteor.userId()
+			else if object_name == "spaces"
+				selector._id = Session.get("spaceId")
 			else
 				selector.space = Session.get("spaceId")
 			if Session.get("list_view_id") == "recent"

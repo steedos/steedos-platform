@@ -10,11 +10,18 @@ Creator.Objects.spaces =
 			description: ""
 			inlineHelpText: ""
 			required: true
+		apps: 
+			label: "应用"
+			type: "lookup"
+			reference_to: "apps"
+			multiple: true
+
 	list_views:
 		default:
 			columns: ["name"]
 		all:
-			filter_scope: "space"
+			filter_scope: "all"
+			filters: ["_id", "eq", "{spaceId}"]
 	permission_set:
 		user:
 			allowCreate: false
