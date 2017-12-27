@@ -6,7 +6,7 @@ Creator.Objects.crm_customers =
 		name: 
 			label: "名称"
 			type: "text"
-			defaultValue: "{userId}"
+			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
 			required: true
@@ -23,7 +23,7 @@ Creator.Objects.crm_customers =
 		phone:
 			type: "text"
 			label: "电话"
-			defaultValue: "{spaceId}"
+			defaultValue: ""
 		fax:
 			type: "text"
 			label: "传真"

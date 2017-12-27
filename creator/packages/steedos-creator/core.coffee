@@ -49,13 +49,6 @@ Creator.getTable = (object_name)->
 Creator.getSchema = (object_name)->
 	return Creator.getObject(object_name)?.schema
 
-Creator.getObjectSchema = (obj) ->
-	schema = {}
-	_.each obj.fields, (field, field_name)->
-		schema[field_name] = Creator.getFieldSchema(field, field_name)
-	return schema
-
-
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
