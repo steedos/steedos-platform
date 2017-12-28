@@ -3,4 +3,4 @@ Creator.Apps.archives =
 	name: "档案管理"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "document" 
-	objects: ["archives_clericalfiles","archives_archivedept","archives_category"]
+	objects: ["archives_files_clerical","archives_dept","archives_category_entity"]

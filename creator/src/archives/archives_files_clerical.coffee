@@ -1,5 +1,5 @@
-Creator.Objects.archives_clericalfiles = 
-	name: "archives_clericalfiles"
+Creator.Objects.archives_files_clerical = 
+	name: "archives_files_clerical"
 	icon: ""
 	label: "文书档案"
 	fields:
@@ -13,7 +13,6 @@ Creator.Objects.archives_clericalfiles =
 		FILENO:
 			type:"text",
 			label:"档号",
-			defaultValue: "1111"
 			is_wide:false
 			description: ""
 			inlineHelpText: ""
@@ -58,7 +57,7 @@ Creator.Objects.archives_clericalfiles =
 			type:"lookup",
 			label:"实体分类号",
 			defaultValue: ""
-			reference_to: "archives_category"
+			reference_to: "archives_category_entity"
 		FILESTATUS:
 			type:"select",
 			label:"文件状态",
@@ -85,7 +84,7 @@ Creator.Objects.archives_clericalfiles =
 			label:"归档部门",
 			defaultValue: ""
 			description: ""
-			reference_to:"archives_archivedept"
+			reference_to:"archives_dept"
 			inlineHelpText: ""
 		DEPT:
 			type:"text",
@@ -183,10 +182,9 @@ Creator.Objects.archives_clericalfiles =
 			omit:true
 	list_views:
 		default:
-			columns: ["YUANWEN", "YEARNO", "CANJIAN", "JIANHAO","KEEPTIME","FILETITLE",
-						"DOCUMETNO", "FILEDATE", "CLASSNO_JH", "PRODUCECOMPANY", "ARCHIVEDATE"
-					, "ARCHIVEDATE", "ARCHIVEDEPT", "DEPTNO", "KEYWORDS", "SECRETLEVEL", "FILECLASS"
-				, "STORAGE", "PRODUCER"]
+			columns: ["YEARNO", "JIANHAO","KEEPTIME","FILETITLE",
+						"DOCUMETNO", "FILEDATE", "CLASSNO_JH", "PRODUCECOMPANY","ARCHIVEDEPT", "DEPTNO", "KEYWORDS", "SECRETLEVEL"
+				]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
