@@ -49,6 +49,10 @@ Creator.getObjectSchema = (obj) ->
 			if field.multiple
 				fs.type = [String]
 
+			fs.autoform.filters = field.filters
+
+			fs.autoform.dependOn = field.depend_on
+
 			if field.reference_to == "users"
 				fs.autoform.type = "selectuser"
 			else if field.reference_to == "organizations"
@@ -69,10 +73,12 @@ Creator.getObjectSchema = (obj) ->
 
 					schema[field_name + ".o"] = {
 						type: String
+						autoform: {omit: true}
 					}
 
 					schema[field_name + ".ids"] = {
 						type: [String]
+						autoform: {omit: true}
 					}
 
 				else

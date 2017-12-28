@@ -12,10 +12,14 @@ Template.creator_table_cell.helpers
 		val = this.val
 		reference_to = this.field.reference_to
 
-		if reference_to
+		if reference_to && !_.isEmpty(val)
 
-			if !_.isArray(this.val)
-				val = [val]
+			if _.isArray(reference_to) && _.isObject(val)
+				reference_to = val.o
+				val = val.ids
+
+			if !_.isArray(val)
+				val = if val then [val] else []
 			try
 				values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: {name: 1, _id: 1}, sort: {name: -1}})
 				values.forEach (v)->

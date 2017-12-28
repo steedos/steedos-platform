@@ -19,6 +19,10 @@ Meteor.methods
 					query._id = {$nin: selected}
 
 				collection = Creator.Collections[options.params.reference_to]
+
+				if options.filterQuery
+					_.extend query, options.filterQuery
+
 				if collection
 					records = collection.find(query, {limit: 10}).fetch()
 					results = []
@@ -27,5 +31,4 @@ Meteor.methods
 							label: record.name
 							value: record._id
 					return results
-
 		return [] 
