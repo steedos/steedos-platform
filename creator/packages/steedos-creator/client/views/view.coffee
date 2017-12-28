@@ -16,6 +16,11 @@ Template.creator_view.onRendered ->
 			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
 			$("#creator-quick-form").addClass("slds-show")
 
+	this.autorun ->
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		if object_name and record_id
+			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
 
 Template.creator_view.helpers
 
@@ -75,11 +80,20 @@ Template.creator_view.helpers
 				schemaFields.push childKeys
 				i += 2
 
-		
+
 		return schemaFields
 
+	keyValue: (key) ->
+		record = Creator.getObjectRecord()
+		return record[key]
 
-	
+	keyField: (key) ->
+		fields = Creator.getObject().fields
+		return fields[key]
+
+	label: (key) ->
+		return AutoForm.getLabelForField(key)
+
 	hasPermission: (permissionName)->
 		permissions = Creator.getObject()?.permissions?.default
 		if permissions
@@ -111,14 +125,17 @@ Template.creator_view.helpers
 
 	object: ()->
 		return Creator.getObject()
-		
+
+	object_name: ()->
+		return Session.get "object_name"
+
 	related_list: ()->
 		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
 	related_list_count: ()->
 		info = Tabular.tableRecords.findOne("creator_" + this.object_name)
 		return info?.recordsTotal
-		
+
 	related_selector: (object_name, related_field_name)->
 		object_name = this.object_name
 		related_field_name = this.related_field_name
@@ -126,7 +143,7 @@ Template.creator_view.helpers
 			selector = {space: Session.get("spaceId")}
 			selector[related_field_name] = Session.get("record_id")
 			permissions = Creator.getPermissions(object_name)
-			if permissions.viewAllRecords 
+			if permissions.viewAllRecords
 				return selector
 			else if permissions.allowRead and Meteor.userId()
 				selector.owner = Meteor.userId()
@@ -154,7 +171,7 @@ Template.creator_view.helpers
 
 	actions: ()->
 		obj = Creator.getObject()
-		actions = _.values(obj.actions) 
+		actions = _.values(obj.actions)
 		actions = _.where(actions, {on: "record", visible: true})
 		return actions
 
@@ -263,3 +280,7 @@ Template.creator_view.events
 	'click .slds-table td': (event)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
+
+	'click #creator-quick-form .table-cell-edit': (event)->
+		$(".creator-record-edit").click()
+

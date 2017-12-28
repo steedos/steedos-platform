@@ -26,7 +26,10 @@ Template.creator_table_cell.helpers
 				return
 		else
 			if (val instanceof Date)
-				val = moment(this.val).format('YYYY-MM-DD H:mm')
+				if this.field.type == "datetime"
+					val = moment(this.val).format('YYYY-MM-DD H:mm')
+				else if this.field.type == "date"
+					val = moment(this.val).format('YYYY-MM-DD')
 			else if (this.val == null)
 				val = ""
 

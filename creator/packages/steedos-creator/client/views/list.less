@@ -1,6 +1,7 @@
 .steedos {
 
 	.steedos-brand-band {
+		background: rgba(130, 130, 130, 0.5);
 		display: -ms-flexbox;
 		display: flex;
 		-ms-flex-direction: column;
@@ -33,8 +34,13 @@
 
 		.test-listViewManager {
 			height: 100%;
+			.forceListViewManagerHeader {
+				.slds-button {
+					cursor: pointer;
+				}
+			}
 			.table-grid-content {
-				height: 100%;
+				margin-bottom: 20px;
 				.tale-content {
 					overflow: auto;
 					width: 100%;

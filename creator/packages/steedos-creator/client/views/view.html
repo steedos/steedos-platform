@@ -36,8 +36,8 @@
 							<div class="slds-button-group" role="group">
 
 								{{#if recordPerminssion "allowEdit"}}
-									<li class="slds-button slds-button--neutral slds-truncate">
-										<a href="javascript:void(0);" title="编辑" class="record-action-edit">
+									<li class="slds-button slds-button--neutral slds-truncate record-action-edit">
+										<a href="javascript:void(0);" title="编辑" class="">
 											<div class="slds-truncate" title="编辑">编辑</div>
 										</a>
 									</li>
@@ -125,7 +125,14 @@
 													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 															{{#if this}}
-																{{> afQuickField name=this}}
+																<div class="test-id__field-label-container">
+																	<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																</div>
+																<div class="slds-form-element__control slds-grid itemBody">
+																	<span class="test-id__field-value slds-form-element__static slds-grow">
+																		{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
+																	</span>
+																</div>
 															{{/if}}
 														</div>
 													</div>
@@ -135,6 +142,43 @@
 									{{/autoForm}}
 								{{/if}}
 							{{/if}}
+						</div>
+					</div>
+				</div>
+
+				<div class="slds-grid table-grid-content">
+					<div class="slds-tabs_card slds-tabs_default creator-view-tabs_default" style="padding:  0px;">
+						<div class="slds-card slds-card_boundary">
+							<div class="slds-card__header slds-grid">
+								<header class="slds-media slds-media--center slds-has-flexi-truncate">
+									<div class="slds-media__figure">
+										<span class="slds-icon_container">
+											<div class="slds-icon crm-header-icon" style="background-color: #FCB95B">
+												<span class="uiImage">
+													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="account"}}
+												</span>
+											</div>
+										</span>
+									</div>
+									<div class="slds-media__body">
+										<h2 id="header">
+											<a class="slds-card__header-link baseCard__header-title-container" href="javascript:void(0);">
+												<span class="slds-text-heading--small slds-truncate slds-m-right--xx-small" title="附件">附件
+												</span>
+											</a>
+										</h2>
+									</div>
+								</header>
+								<div class="slds-no-flex">
+									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="crm_customers">新建</button>
+								</div>
+							</div>
+
+							<div class="slds-card__body">
+								<div class="slds-table tale-content slds-no-cell-focus">
+									<div></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -149,4 +193,4 @@
 	{{#afModal class="btn btn-primary related-object-row-edit hidden" collection=editCollection doc=doc operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent saveAndInsert=true}} {{_ "Edit"}} {{/afModal}}
 
 	{{#afModal class="btn btn-primary creator-record-edit hidden" collection=collection doc=record._id operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent saveAndInsert=true}} {{_ "Edit"}} {{/afModal}}
-</template> 
+</template>

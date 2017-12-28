@@ -19,6 +19,13 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - 记录查看页面，为master_detail类型的字段，自动生成子表
 - 增删改页面，根据Schema，自动生成对象新建、编辑、删除操作界面
 
+### Object 支持的属性
+- name: 唯一的object name
+- label: 显示名
+- enable_files: 启用上传附件功能
+- enable_chatter: 启用讨论功能
+- enable_tasks: 启用任务功能
+
 ### fields支持的字段类型
 - lookup: 相关表，联合reference_to字段，从关联表中选择记录
 - master_detail: 子表，联合reference_to属性，表示当前记录是主表的子记录。系统会自动检测此类型的字段，在主表的记录显示页面中生成子表列表视图。
