@@ -10,21 +10,21 @@ Creator.Objects.archives_files_clerical =
 			description: ""
 			inlineHelpText: ""
 			omit:true
-		FILENO:
+		archival_code:
 			type:"text",
 			label:"档号",
 			is_wide:false
 			description: ""
 			inlineHelpText: ""
-		YEARNO:
+		year:
 			type: "text",
-			label:"所属年度"
+			label:"年度"
 			defaultValue: "2017"
 			is_wide:false
 			description: ""
 			inlineHelpText: ""
 			required:true
-		KEEPTIME:
+		retention_peroid:
 			type:"select",
 			label:"保管期限",
 			defaultValue: "永久"
@@ -38,22 +38,22 @@ Creator.Objects.archives_files_clerical =
 		JIANHAO:
 			type: "text"
 			label:"件号"
-		FILETITLE:
+		title:
 			type:"textarea"
 			label:"题名"
 			is_wide:true
 			is_name:true
 			required:true
-		DOCUMETNO:
+		documnt_number:
 			type:"text",
 			label:"文号",
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""	
-		FILEDATE:
+		date:
 			type:"date"
 			label:"文件日期"
-		CLASSNO_JH:
+		category_code:
 			type:"lookup",
 			label:"实体分类号",
 			defaultValue: ""
@@ -69,7 +69,7 @@ Creator.Objects.archives_files_clerical =
 				{label: "待归档", value: "待归档"},
 				{label: "实物归档", value: "实物归档"}
 			]
-		PRODUCECOMPANY:
+		author:
 			type:"text"
 			label:"责任者"
 			is_wide:true
@@ -99,7 +99,7 @@ Creator.Objects.archives_files_clerical =
 		# 	defaultValue: ""
 		# 	description: ""
 		# 	inlineHelpText: ""
-		SECRETLEVEL:
+		security_classification:
 			type:"select"
 			label:"密级"
 			options: [
@@ -111,7 +111,7 @@ Creator.Objects.archives_files_clerical =
 		PAGECOUNT:
 			type:"number"
 			label:"文件页数"
-		COPYCOUNT:
+		total_number_of_item:
 			type:"number",
 			label:"件数",
 			defaultValue: ""
@@ -127,7 +127,7 @@ Creator.Objects.archives_files_clerical =
 				{label: "销毁", value: "销毁"},
 				{label: "出借", value: "出借"}
 			]	
-		FILECLASS:
+		document_type:
 			type:"text",
 			label:"文件类型",
 			defaultValue: ""
@@ -148,21 +148,21 @@ Creator.Objects.archives_files_clerical =
 			description: ""
 			inlineHelpText: ""
 		
-		DESCRIPTION:
+		annotation:
 			type:"text",
 			label:"备注",
 			is_wide:true
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
-		TODEPT:
+		prinpipal_receiver:
 			type:"text",
 			label:"主送",
 			is_wide:true
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""	
-		STORAGE:
+		storage_location:
 			type:"text",
 			label:"存放位置",
 			defaultValue: ""
