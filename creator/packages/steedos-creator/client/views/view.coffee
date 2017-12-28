@@ -284,3 +284,62 @@ Template.creator_view.events
 	'click #creator-quick-form .table-cell-edit': (event)->
 		$(".creator-record-edit").click()
 
+	# 'click .add-file': (event)->
+	'change #ins_upload_normal_attach': (event, template)->
+		files = event.target.files
+		i = 0
+		while i < files.length
+			file = files[i]
+			if !file.name
+				continue
+			fileName = file.name
+			if [
+					'image.jpg'
+					'image.gif'
+					'image.jpeg'
+					'image.png'
+				].includes(fileName.toLowerCase())
+				fileName = 'image-' + moment(new Date).format('YYYYMMDDHHmmss') + '.' + fileName.split('.').pop()
+			# Session.set 'filename', fileName
+			# $('.loading-text').text TAPi18n.__('workflow_attachment_uploading') + fileName + '...'
+			fd = new FormData
+			fd.append 'Content-Type', cfs.getContentType(fileName)
+			fd.append 'file', file
+			fd.append 'record_id', Session.get("record_id")
+			fd.append 'object_name', Session.get("object_name")
+			fd.append 'space', Session.get('spaceId')
+			fd.append 'owner', Meteor.userId()
+			fd.append 'owner_name', Meteor.user().name
+			# fd.append 'is_private', file.is_private or false
+			# if isAddVersion
+			# 	fd.append 'isAddVersion', isAddVersion
+			# 	fd.append 'parent', Session.get('attach_parent_id')
+			# if isMainAttach
+			# 	fd.append 'main', isMainAttach
+			$(document.body).addClass 'loading'
+			$.ajax
+				url: Steedos.absoluteUrl('s3/')
+				type: 'POST'
+				async: true
+				data: fd
+				dataType: 'json'
+				processData: false
+				contentType: false
+				success: (responseText, status) ->
+					fileObj = undefined
+					$(document.body).removeClass 'loading'
+					# $('.loading-text').text ''
+					if responseText.errors
+						responseText.errors.forEach (e) ->
+							toastr.error e.errorMessage
+							return
+						return
+					toastr.success TAPi18n.__('Attachment was added successfully')
+					return
+				error: (xhr, msg, ex) ->
+					$(document.body).removeClass 'loading'
+					# $('.loading-text').text ''
+					toastr.error msg
+					return
+			i++
+

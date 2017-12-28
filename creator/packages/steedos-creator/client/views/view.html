@@ -170,14 +170,26 @@
 									</div>
 								</header>
 								<div class="slds-no-flex">
-									<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="crm_customers">新建</button>
+									<button class="slds-button slds-button_neutral add-file" data-object-name="crm_customers">
+										新建
+										<input type="file" name="file" class="ins-file-input" id="ins_upload_normal_attach" style="
+											position: absolute;
+											width: 100%;
+											height: 100%;
+											display: inline-block;
+											opacity: 0;
+											top: 0px;
+											left: 0px;
+											z-index: 100;
+											cursor: pointer;
+											overflow: hidden;
+										">
+									</button>
 								</div>
 							</div>
 
-							<div class="slds-card__body">
-								<div class="slds-table tale-content slds-no-cell-focus">
-									<div></div>
-								</div>
+							<div class="slds-card__body"><!-- 
+								{{> tabular table=this.tabular_table selector=related_selector class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked"}} -->
 							</div>
 						</div>
 					</div>

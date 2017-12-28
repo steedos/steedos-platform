@@ -9,8 +9,21 @@ Npm.depends({
     'icalendar': '0.7.1',
     'ical.js': '1.2.2',
     'MD5': '1.3.0',
-    'moment-timezone': '0.5.13'
+    'moment-timezone': '0.5.13',
+    busboy: "0.2.13",
 });
+// Npm.depends({
+//     'aliyun-sdk': '1.9.2',
+//     busboy: "0.2.13",
+//     cookies: "0.6.1",
+//     mime: "1.3.4",
+//     'csv': "1.1.0",
+//     'url': '0.11.0',
+//     'request': '2.40.0',
+//     'xinge': '1.1.3',
+//     'huawei-push': '0.0.6-0',
+//     'xiaomi-push': '0.4.5'
+// });
 
 Package.onUse(function(api) {
     api.versionsFrom('1.0');
@@ -121,6 +134,8 @@ Package.onUse(function(api) {
     api.addFiles('server/publications/object.coffee', 'server');
     api.addFiles('server/publications/related_object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
+
+    api.addFiles('server/routes/s3.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
