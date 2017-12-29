@@ -1,2 +1,15 @@
-node_modules/
+**/bin/**
+**/build/*
+**/node_modules/*
+**/tmp/*
+**/.npm/*
+
+.build
+
+.meteor/local
+.meteor/meteorite
+
+
+settings.json
 .idea/**
+start.bat
