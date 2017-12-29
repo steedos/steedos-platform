@@ -4,22 +4,28 @@ Creator.Objects.cms_files =
 	icon: "drafts"
 	fields:
 		name: 
-			label: "Name"
+			label: "名称"
 			type: "text"
 		description: 
-			label: "Description"
+			label: "描述"
 			type: "textarea"
 			optional: true
 		extention: 
+			label: "文件后缀"
 			type: "text"
+			disabled: true
 		size:
+			label: "文件大小"
 			type: "number"
+			disabled: true
 		versions:
 			type: "file"
 			collection: "files"
 			multiple: true
+			omit: true
 		parent:
 			type: "lookup"
+			omit: true
 			reference_to: ()->
 				return _.pluck(Creator.objectsByName, "name")
 
