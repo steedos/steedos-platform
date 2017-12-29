@@ -182,8 +182,8 @@ Creator.Objects.archives_files_clerical =
 			omit:true
 	list_views:
 		default:
-			columns: ["YEARNO", "JIANHAO","KEEPTIME","FILETITLE",
-						"DOCUMETNO", "FILEDATE", "CLASSNO_JH", "PRODUCECOMPANY","ARCHIVEDEPT", "DEPTNO", "KEYWORDS", "SECRETLEVEL"
+			columns: ["year", "JIANHAO","retention_peroid","title",
+						"documnt_number", "date", "category_code", "author","ARCHIVEDEPT", "DEPT", "security_classification"
 				]
 		recent:
 			label: "最近查看"

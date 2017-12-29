@@ -9,6 +9,8 @@ Creator.Objects.informations =
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
+			is_wide:true
+			is_name:true
 			required: true
 		company:
 			type: "text",
@@ -17,15 +19,7 @@ Creator.Objects.informations =
 			description: ""
 			inlineHelpText: ""
 			required: true
-		applicant:
-			type: "lookup",
-			label:"提交人",
-			reference_to: "users"
-			omit:true
-		applicant_date:
-			type: "datetime"
-			label:"提交时间"
-			omit:true
+			is_wide:true
 		content:
 			type:"textarea",
 			label:"内容",
@@ -33,12 +27,14 @@ Creator.Objects.informations =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			is_wide:true
 		score_point:
 			type:"checkbox"
-			label:"打分形式",
+			label:"得分点",
 			defaultValue: ""
 			description: ""
 			multiple:true
+			is_wide:true
 			options: [
 				{label: "上级采用", value: "上级采用"},
 				{label: "领导批示", value: "领导批示"},
@@ -51,7 +47,7 @@ Creator.Objects.informations =
 			defaultValue:"否"
 	list_views:
 		default:
-			columns: ["title", "content", "company","isuse","score_point"]
+			columns: ["title", "content", "company","isuse","score_point","created","created_by"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
