@@ -45,3 +45,14 @@ Creator.Objects.cms_files =
 			modifyAllRecords: false
 			viewAllRecords: false 
 
+	actions: 
+		new_version:
+			label: "上传新版本"
+			visible: true
+			todo: ()->
+				alert("you clicked on new_version button")
+		download:
+			label: "下载"
+			visible: true
+			todo: ()->
+				alert("you clicked on download button")
