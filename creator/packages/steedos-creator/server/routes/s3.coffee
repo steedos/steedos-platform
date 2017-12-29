@@ -124,17 +124,18 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					size = 1024
 
 				fileCollection.direct.insert {
-					name: filename, 
-					description: '', 
-					extention: extention, 
-					size: size, 
-					versions:[fileObj._id], 
-					parent: {o:object_name,ids:[record_id]}, 
-					owner:owner, 
+					name: filename
+					description: ''
+					extention: extention
+					size: size
+					versions: [fileObj._id]
+					parent: {o:object_name,ids:[record_id]}
+					owner: owner
+					space: space
 					created: (new Date())
-					created_by:owner, 
+					created_by: owner
 					modified: (new Date())
-					modified_by:owner
+					modified_by: owner
 				}
 
 				resp =

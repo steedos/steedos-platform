@@ -175,6 +175,18 @@ Template.creator_view.helpers
 		actions = _.where(actions, {on: "record", visible: true})
 		return actions
 
+	tabular_table_files: ()->
+		return Creator.getTable("cms_files")
+
+	cms_files_selector: ()->
+		selector = {
+			"space": Session.get("spaceId")
+			"parent.o": Session.get("object_name"), 
+			"parent.ids": [Session.get("record_id")]
+		}
+		return selector
+
+
 Template.creator_view.events
 
 	'click .list-action-custom': (event) ->
