@@ -88,4 +88,26 @@
 			height: calc(~"100% - 1px");
 		}
 	}
+
+	.slds-table.dataTable thead {
+		& > tr > th.sorting_asc,
+		& > tr > th.sorting_desc,
+		& > tr > th.sorting,
+		& > tr > td.sorting_asc,
+		& > tr > td.sorting_desc,
+		& > tr > td.sorting {
+			padding-right: 0px;
+			& > a {
+				padding-right: 30px;
+			}
+		}
+
+		.sorting:after,
+		.sorting_asc:after,
+		.sorting_desc:after,
+		.sorting_asc_disabled:after,
+		.sorting_desc_disabled:after {
+			bottom: 4px;
+		}
+	}
 }
