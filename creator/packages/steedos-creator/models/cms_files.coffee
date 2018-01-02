@@ -45,6 +45,14 @@ Creator.Objects.cms_files =
 			modifyAllRecords: false
 			viewAllRecords: false 
 
+	triggers:
+		"before.remove.server.default": 
+			on: "server"
+			when: "before.remove"
+			todo: (userId, doc)->
+				collection = cfs.files
+				collection.remove {"metadata.parent": doc._id}
+
 	actions: 
 		new_version:
 			label: "上传新版本"

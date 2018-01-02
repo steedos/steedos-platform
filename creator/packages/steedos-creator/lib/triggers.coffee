@@ -9,14 +9,14 @@ initTrigger = (object_name, trigger)->
 		collection.before.insert(todoWrapper)
 	else if trigger.when == "before.update"
 		collection.before.update(todoWrapper)
-	else if trigger.when == "before.delete"
-		collection.before.delete(todoWrapper)
+	else if trigger.when == "before.remove"
+		collection.before.remove(todoWrapper)
 	else if trigger.when == "after.insert"
 		collection.after.insert(todoWrapper)
 	else if trigger.when == "after.update"
 		collection.after.update(todoWrapper)
-	else if trigger.when == "after.delete"
-		collection.after.delete(todoWrapper)
+	else if trigger.when == "after.remove"
+		collection.after.remove(todoWrapper)
 
 
 Creator.initTriggers = (object_name)->

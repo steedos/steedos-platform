@@ -75,46 +75,13 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					space = body['space']
 					record_id = body['record_id']
 					object_name = body['object_name']
+					parent = body['parent']
 					metadata = {owner:owner, owner_name:owner_name, space:space, record_id:record_id, object_name: object_name}
-
-					# if body["is_private"] && body["is_private"].toLocaleLowerCase() == "true"
-					# 	metadata.is_private = true
-					# else
-					# 	metadata.is_private = false
-
-					# if body['main'] == "true"
-					# 	metadata.main = true
-
-					# if body['isAddVersion'] && body['parent']
-					# 	parent = body['parent']
-					# # else
-					# #   collection.find({'metadata.instance': body['instance'], 'metadata.current' : true}).forEach (c) ->
-					# #     if c.name() == filename
-					# #       parent = c.metadata.parent
-
-					# if parent
-					# 	r = collection.update({'metadata.parent': parent, 'metadata.current' : true}, {$unset : {'metadata.current' : ''}})
-					# 	if r
-					# 		metadata.parent = parent
-					# 		if body['locked_by'] && body['locked_by_name']
-					# 			metadata.locked_by = body['locked_by']
-					# 			metadata.locked_by_name = body['locked_by_name']
-
-					# 		newFile.metadata = metadata
-					# 		fileObj = collection.insert newFile
-
-					# 		# 删除同一个申请单同一个步骤同一个人上传的重复的文件
-					# 		if body["overwrite"] && body["overwrite"].toLocaleLowerCase() == "true"
-					# 			collection.remove({'metadata.instance': body['instance'], 'metadata.parent': parent, 'metadata.owner': body['owner'], 'metadata.approve': body['approve'], 'metadata.current': {$ne: true}})
-					# else
-					# 	newFile.metadata = metadata
-					# 	fileObj = collection.insert newFile
-					# 	fileObj.update({$set: {'metadata.parent' : fileObj._id}})
-
+					if parent
+						metadata.parent = parent
 					newFile.metadata = metadata
 					fileObj = collection.insert newFile
 
-				# 兼容老版本
 				else
 					fileObj = collection.insert newFile
 
@@ -122,21 +89,31 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 				size = fileObj.original.size
 				if !size
 					size = 1024
-
-				fileCollection.direct.insert {
-					name: filename
-					description: ''
-					extention: extention
-					size: size
-					versions: [fileObj._id]
-					parent: {o:object_name,ids:[record_id]}
-					owner: owner
-					space: space
-					created: (new Date())
-					created_by: owner
-					modified: (new Date())
-					modified_by: owner
-				}
+				if parent
+					fileCollection.update({_id:parent},{
+						$push: {
+							versions: {
+								$each: [fileObj._id]
+								$position: 0
+							}
+						}
+					})
+				else
+					newFileObjId = fileCollection.direct.insert {
+						name: filename
+						description: ''
+						extention: extention
+						size: size
+						versions: [fileObj._id]
+						parent: {o:object_name,ids:[record_id]}
+						owner: owner
+						space: space
+						created: (new Date())
+						created_by: owner
+						modified: (new Date())
+						modified_by: owner
+					}
+					fileObj.update({$set: {'metadata.parent' : newFileObjId}})
 
 				resp =
 					version_id: fileObj._id,

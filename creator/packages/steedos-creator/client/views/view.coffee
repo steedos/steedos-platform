@@ -317,8 +317,7 @@ Template.creator_view.events
 							info = t(object_name) + '"' + record.name + '"' + "已删除"
 							toastr.success info
 
-	# 'click .add-file': (event)->
-	'change #ins_upload_normal_attach': (event, template)->
+	'change .creator-view-tabs_files .btn-upload-file': (event, template)->
 		files = event.target.files
 		i = 0
 		while i < files.length
