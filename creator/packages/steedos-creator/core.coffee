@@ -7,6 +7,9 @@ Creator.subs = {}
 
 
 Meteor.startup ->
+
+	SimpleSchema.extendOptions({filtersMethod: Match.Optional(Function)});
+
 	_.each Creator.Objects, (obj, object_name)->
 		new Creator.Object(obj);
 
@@ -14,7 +17,7 @@ Meteor.startup ->
 		Creator.initListViews(object_name)
 
 		if Meteor.isServer
-# 危险
+# TODO 危险
 			Creator.Collections[object_name].allow
 				insert: (userId, doc) ->
 					return true
@@ -113,8 +116,14 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 			return space.admins.indexOf(userId) >= 0
 
 Creator.evaluateFormula = (formular, context)->
-	formular = formular.replace "{userId}", Meteor.userId()
-	formular = formular.replace "{spaceId}", Session.get("spaceId")
+	formular = formular.replace /{userId}/g, Meteor.userId()
+	formular = formular.replace /{spaceId}/g, Session.get("spaceId")
+
+	if _.isObject(context)
+		_.keys(context).forEach (key)->
+			reg = new RegExp("{" + key + "}", "g");
+			formular = formular.replace(reg, context[key]);
+
 	return formular				
 
 Creator.evaluateFilters = (filters, context)->
@@ -124,7 +133,8 @@ Creator.evaluateFilters = (filters, context)->
 			name = filter[0]
 			action = filter[1]
 			value = Creator.evaluateFormula(filter[2], context)
-			if action == "eq"
-				selector[name] = value
+			selector[name] = {}
+			selector[name][action] = value
+	console.log("evaluateFilters-->selector", selector)
 	return selector
 

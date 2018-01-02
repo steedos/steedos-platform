@@ -296,6 +296,27 @@ Template.creator_view.events
 	'click #creator-quick-form .table-cell-edit': (event)->
 		$(".creator-record-edit").click()
 
+	'click .item-delete-action': (event) ->
+		object_name = event.currentTarget.dataset.objectName
+		_id = event.currentTarget.dataset?.id
+		record = Creator.Collections[object_name].findOne _id
+
+		swal
+			title: "删除#{t(object_name)}"
+			text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+			html: true
+			showCancelButton:true
+			confirmButtonText: t('Delete')
+			cancelButtonText: t('Cancel')
+			(option) ->
+				if option
+					Creator.Collections[object_name].remove {_id: _id}, (error, result) ->
+						if error
+							toastr.error error.reason
+						else
+							info = t(object_name) + '"' + record.name + '"' + "已删除"
+							toastr.success info
+
 	# 'click .add-file': (event)->
 	'change #ins_upload_normal_attach': (event, template)->
 		files = event.target.files

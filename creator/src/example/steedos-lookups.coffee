@@ -11,14 +11,9 @@ if Meteor.isDevelopment
 				description: ""
 				inlineHelpText: ""
 				required: true
-			description:
-				label: "描述"
-				type: "textarea"
 			company_signed_id:
 				type: "lookup"
 				reference_to: "users"
-			company_signed_date:
-				type: "date"
 			customer_id:
 				label: "客户(单选)"
 				type: "lookup"
@@ -32,17 +27,27 @@ if Meteor.isDevelopment
 				label: "客户/用户(单选)"
 				type: "lookup"
 				reference_to: ["crm_customers", "users"]
+				group: "可选择对象"
 			object_switche_ids:
 				label: "客户/用户(多选)"
 				type: "lookup"
 				reference_to: ["crm_customers", "users"]
 				multiple: true
-			customer_signed_date:
-				type: "date"
+				group: "可选择对象"
+			site:
+				type: "lookup"
+				reference_to: "cms_sites"
+				group: "filters"
+			category:
+				type: "lookup"
+				reference_to: "cms_categories"
+				filters: [["site", "$eq", "{site}"]]  # {site} 必须要在depend_on数组中
+				depend_on: ["site"]
+				group: "filters"
 
 		list_views:
 			default:
-				columns: ["name", "customer_id", "amount", "company_signed_date", "company_signed_id"]
+				columns: ["name", "customer_id", "customer_ids", "object_switche_ids"]
 			recent:
 				filter_scope: "space"
 			all:

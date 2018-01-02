@@ -2,7 +2,7 @@
 /* eslint strict: 0 */
 /* jshint strict: false */
 
-UniSelectize = function (options, template) {
+UniSelectize = function (options, template, filtersMethod) {
 	this.items           = new ReactiveVar([]);
 	this.itemsSelected   = new ReactiveVar([]);
 	this.itemsUnselected = new ReactiveVar([]);
@@ -14,6 +14,7 @@ UniSelectize = function (options, template) {
 	this.inputPosition       = new ReactiveVar(-1);
 	this.optionsMethodParams = new ReactiveVar();
 	this.selectedReference   = new ReactiveVar();
+	this.dependValues	     = new ReactiveVar();
 
 	this.references         = options.references
 	this.create             = options.create;
@@ -26,9 +27,41 @@ UniSelectize = function (options, template) {
 	this.createMethod       = options.createMethod;
 	this.optionsMethod      = options.optionsMethod;
 	this.optionsPlaceholder = options.optionsPlaceholder;
+	this.filters            = options.filters;
+	this.dependOn           = options.dependOn;
+	this.filtersMethod      = filtersMethod;
+
+	this.initialized        = new ReactiveVar(0);
+
+	if(!options.optionsMethod){
+		this.initialized.set(1);
+	}
 
 	this.setSelectedReference(options._value)
 };
+
+UniSelectize.prototype.getFiltersSelectors = function () {
+	var filters = this.filters;
+
+	var query = {};
+
+	var dependValues = this.dependValues.get();
+
+	if(dependValues){
+		_.keys(dependValues).forEach(function (key) {
+			filters.forEach(function (filter) {
+				var field_code = filter[0];
+				var query_selectors = filter[1];   //mongodb Query Selectors
+				var selectors_value = filter[2];
+				var reg = new RegExp("{" + key + "}", "g");
+				selectors_value = selectors_value.replace(reg, dependValues[key]);
+				query[field_code] = {}
+				query[field_code][query_selectors] = selectors_value
+			})
+		})
+	}
+	return query;
+}
 
 UniSelectize.prototype.setSelectedReference = function (_value) {
 	if(this.references && this.references.length > 0){
@@ -409,6 +442,10 @@ UniSelectize.prototype.clearItem = function () {
 	this.itemsUnselected.set([]);
 };
 
+UniSelectize.prototype.clearSelected = function () {
+	this.itemsSelected.set([]);
+};
+
 UniSelectize.prototype.getOptionsFromMethod = function (values) {
 
 	var self = this;
@@ -430,11 +467,22 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 
 	var seleted = this.itemsSelected.get() || [];
 
+	var filterQuery = {};
+
+	if(this.dependOn && this.dependValues.get()){
+		if(this.filtersMethod && _.isFunction(this.filtersMethod)){
+			filterQuery = this.filtersMethod(this.filters, this.dependValues.get());
+		}else{
+			filterQuery = this.getFiltersSelectors();
+		}
+	}
+
 	var searchVal = {
 		searchText: searchText,
 		values: values || [],
 		params: params || null,
-		selected: _.pluck(seleted, 'value')
+		selected: _.pluck(seleted, 'value'),
+		filterQuery: filterQuery
 	};
 
 	// self.loading.set(true);
@@ -446,5 +494,9 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 		}
 
 		self.addItems(options, values);
+
+		Meteor.setTimeout(function () {
+			self.initialized.set(1);
+		}, 1)
 	});
 };

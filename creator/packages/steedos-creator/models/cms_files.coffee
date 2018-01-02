@@ -27,7 +27,7 @@ Creator.Objects.cms_files =
 			type: "lookup"
 			omit: true
 			reference_to: ()->
-				return _.pluck(Creator.objectsByName, "name")
+				return _.keys(Creator.Objects)
 
 
 	list_views:

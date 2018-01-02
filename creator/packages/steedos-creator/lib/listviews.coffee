@@ -28,8 +28,11 @@ Creator.getTabularColumns = (object_name, columns) ->
 									</use>
 								</svg>
 							</div>
+							<div class='slds-resizable__handle'>
+								
+							</div>	
 						</a>"
-			col.className = "slds-cell-edit cellContainer"
+			col.className = "slds-cell-edit cellContainer slds-is-resizable"
 			if field.sortable
 				col.className = col.className + " slds-is-sortable"
 			else

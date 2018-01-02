@@ -26,7 +26,7 @@ Template.creator_table_cell.helpers
 					href = Creator.getObjectUrl(reference_to, v._id)
 					data.push {reference_to: reference_to, rid: v._id, value: v.name, href: href}
 			catch e
-				console.error(e)
+				console.error(reference_to, e)
 				return
 		else
 			if (val instanceof Date)

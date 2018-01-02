@@ -1,10 +1,9 @@
 Template.creator_list.onCreated ->
 	this.edit_fields = new ReactiveVar()
 
-Template.creator_list.helpers
+Template.creator_list.helpers Creator.helpers
 
-	object_name: ()->
-		return Session.get("object_name")
+Template.creator_list.helpers
 
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
@@ -62,8 +61,6 @@ Template.creator_list.helpers
 					return selector
 		return {_id: "nothing"}
 
-	object: ()->
-		return Creator.getObject()
 
 	itemCount: ()->
 		collection = Session.get("object_name")
@@ -207,6 +204,15 @@ Template.creator_list.events
 	'click .slds-table td': (event, template)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
+
+	'mouseenter .slds-table': (event, template)->
+		table = $(event.currentTarget).closest("table")
+		table.colResizable({
+			liveDrag: false,
+			gripInnerHtml: "<div class='grip' style='width:  calc(.25rem - 1px);height: 2rem;cursor: col-resize;background:  #0070d2;top: 1px;right: -1px;position:  relative;opacity: 0;'></div>",
+			draggingClass: "dragging",
+			resizeMode: 'fit'
+		});
 
 Template.creator_list.onDestroyed ->
 	object_name = Session.get("object_name")

@@ -29,7 +29,7 @@ Creator.Objects.spaces =
 			columns: ["name"]
 		all:
 			filter_scope: "all"
-			filters: ["_id", "eq", "{spaceId}"]
+			filters: ["_id", "$eq", "{spaceId}"]
 	permission_set:
 		user:
 			allowCreate: false

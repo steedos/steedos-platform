@@ -1,5 +1,5 @@
 
-Creator.objectsByName = {}
+Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完成后调用， 否则获取到的object不全
 
 Creator.Object = (options)->
 	self = this
