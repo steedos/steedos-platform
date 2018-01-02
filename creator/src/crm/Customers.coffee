@@ -54,12 +54,6 @@ Creator.Objects.crm_customers =
 			label: "我的客户"
 			filter_scope: "mine"
 
-	related_list:
-		crm_contacts:
-			columns: ["name", "email", "phone"]
-		crm_contracts:
-			columns: ["name", "amount", "company_signed_date", "company_signed_id"]
-
 	actions: 
 		export:
 			label: "导出"

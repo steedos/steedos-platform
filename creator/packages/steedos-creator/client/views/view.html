@@ -104,7 +104,25 @@
 									</header>
 									<div class="slds-no-flex">
 										{{#if allowCreate}}
-										<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{object_name}}">{{_ "New"}}</button>
+											{{#if this.is_file}}
+												<button class="slds-button slds-button_neutral btn-upload-file">
+													上传
+													<input type="file" name="file" class="ins-file-input upload-file" style="
+																							position: absolute;
+																							width: 100%;
+																							height: 100%;
+																							display: inline-block;
+																							opacity: 0;
+																							top: 0px;
+																							left: 0px;
+																							z-index: 100;
+																							cursor: pointer;
+																							overflow: hidden;
+																						">
+												</button>
+											{{else}}
+												<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{object_name}}">{{_ "New"}}</button>
+											{{/if}}
 										{{/if}}
 									</div>
 								</div>
@@ -142,55 +160,6 @@
 									{{/autoForm}}
 								{{/if}}
 							{{/if}}
-						</div>
-					</div>
-				</div>
-
-				<div class="slds-grid table-grid-content">
-					<div class="slds-tabs_card slds-tabs_default creator-view-tabs_default creator-view-tabs_files" style="padding:  0px;">
-						<div class="slds-card slds-card_boundary">
-							<div class="slds-card__header slds-grid">
-								<header class="slds-media slds-media--center slds-has-flexi-truncate">
-									<div class="slds-media__figure">
-										<span class="slds-icon_container">
-											<div class="slds-icon crm-header-icon" style="background-color: #FCB95B">
-												<span class="uiImage">
-													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="account"}}
-												</span>
-											</div>
-										</span>
-									</div>
-									<div class="slds-media__body">
-										<h2 id="header">
-											<a class="slds-card__header-link baseCard__header-title-container" href="javascript:void(0);">
-												<span class="slds-text-heading--small slds-truncate slds-m-right--xx-small" title="附件">附件
-												</span>
-											</a>
-										</h2>
-									</div>
-								</header>
-								<div class="slds-no-flex">
-									<button class="slds-button slds-button_neutral btn-upload-file" data-object-name="crm_customers">
-										新建
-										<input type="file" name="file" class="ins-file-input upload-file" style="
-											position: absolute;
-											width: 100%;
-											height: 100%;
-											display: inline-block;
-											opacity: 0;
-											top: 0px;
-											left: 0px;
-											z-index: 100;
-											cursor: pointer;
-											overflow: hidden;
-										">
-									</button>
-								</div>
-							</div>
-
-							<div class="slds-card__body">
-								{{> tabular table=tabular_table_files selector=cms_files_selector class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked"}}
-							</div>
 						</div>
 					</div>
 				</div>

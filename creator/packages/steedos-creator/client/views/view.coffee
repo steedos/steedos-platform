@@ -141,7 +141,12 @@ Template.creator_view.helpers
 		related_field_name = this.related_field_name
 		if object_name and related_field_name and Session.get("spaceId")
 			selector = {space: Session.get("spaceId")}
-			selector[related_field_name] = Session.get("record_id")
+			if object_name == "cms_files"
+				# 附件的关联搜索条件是定死的
+				selector["parent.o"] = Session.get "object_name"
+				selector["parent.ids"] = [Session.get("record_id")]
+			else
+				selector[related_field_name] = Session.get("record_id")
 			permissions = Creator.getPermissions(object_name)
 			if permissions.viewAllRecords
 				return selector
@@ -174,17 +179,6 @@ Template.creator_view.helpers
 		actions = _.values(obj.actions)
 		actions = _.where(actions, {on: "record", visible: true})
 		return actions
-
-	tabular_table_files: ()->
-		return Creator.getTable("cms_files")
-
-	cms_files_selector: ()->
-		selector = {
-			"space": Session.get("spaceId")
-			"parent.o": Session.get("object_name"), 
-			"parent.ids": [Session.get("record_id")]
-		}
-		return selector
 
 
 Template.creator_view.events
@@ -317,9 +311,12 @@ Template.creator_view.events
 							info = t(object_name) + '"' + record.name + '"' + "已删除"
 							toastr.success info
 
-	'change .creator-view-tabs_files .btn-upload-file': (event, template)->
+	'change .btn-upload-file': (event, template)->
 		files = event.target.files
 		i = 0
+		record_id = Session.get("record_id")
+		object_name = Session.get("object_name")
+		spaceId = Session.get("spaceId")
 		while i < files.length
 			file = files[i]
 			if !file.name
@@ -337,9 +334,9 @@ Template.creator_view.events
 			fd = new FormData
 			fd.append 'Content-Type', cfs.getContentType(fileName)
 			fd.append 'file', file
-			fd.append 'record_id', Session.get("record_id")
-			fd.append 'object_name', Session.get("object_name")
-			fd.append 'space', Session.get('spaceId')
+			fd.append 'record_id', record_id
+			fd.append 'object_name', object_name
+			fd.append 'space', spaceId
 			fd.append 'owner', Meteor.userId()
 			fd.append 'owner_name', Meteor.user().name
 			# fd.append 'is_private', file.is_private or false

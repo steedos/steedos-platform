@@ -142,8 +142,6 @@ if Meteor.isClient
 				if related_field.type=="master_detail" and related_field.reference_to and related_field.reference_to == object_name
 					tabular_name = "creator_" + related_object_name
 					if Tabular.tablesByName[tabular_name]
-						tabular_selector = {space: Session.get("spaceId")}
-						tabular_selector[related_field_name] = record_id
 						columns = ["name"]
 						if related_object.list_views?.default?.columns
 							columns = related_object.list_views.default.columns
@@ -154,10 +152,19 @@ if Meteor.isClient
 							object_name: related_object_name
 							columns: columns
 							tabular_table: Tabular.tablesByName[tabular_name]
-							tabular_selector: tabular_selector
 							related_field_name: related_field_name
 
 						list.push related
+
+		if Creator.Objects[object_name]?.enable_files
+			file_object_name = "cms_files"
+			file_tabular_name = "creator_" + file_object_name
+			list.push
+				object_name: file_object_name
+				columns: ["name", "size", "owner", "modified"]
+				tabular_table: Tabular.tablesByName[file_tabular_name]
+				related_field_name: "parent"
+				is_file: true
 
 		return list
 
