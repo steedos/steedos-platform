@@ -10,10 +10,12 @@ Creator.baseObject =
 			omit: true
 		created:
 			type: "datetime",
+			label:"提交日期"
 			omit: true
 			sortable: true
 		created_by:
-			type: "lookup",
+			type: "lookup"
+			label:"提交人"
 			reference_to: "users"
 			omit: true
 		modified:

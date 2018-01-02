@@ -13,7 +13,6 @@ Creator.Objects.archives_borrow =
 			defaultValue:"立卷方式(文件级)"
 			omit:true
 		status:
-			type:"number"
 			label:"状态"
 			omit:true
 		UNITINFO:
@@ -31,7 +30,6 @@ Creator.Objects.archives_borrow =
 		STARTDATE:
 			type:"date"
 			label:"借阅日期"
-			#defaultValue:new Date()
 		ENDDATE:
 			type:"date"
 			label:"归还日期"
@@ -61,6 +59,7 @@ Creator.Objects.archives_borrow =
 			type:"textarea"
 			label:"单位审批"
 			is_wide:true
+			readonly:true
 		DESCRIPTION:
 			type:"textarea"
 			label:"备注"
@@ -87,6 +86,7 @@ Creator.Objects.archives_borrow =
 		DETAILSTATUS:
 			type:"select"
 			label:"明细状态"
+			omit:true
 			options:[
 				{label:"申请中",value:"申请中"},
 				{label:"不予批准",value:"不予批准"},
@@ -103,7 +103,7 @@ Creator.Objects.archives_borrow =
 			defaultValue:"立卷方式(文件级)"
 	list_views:
 		default:
-			columns:["BORROWNO","STATUS","created","ENDDATE","created_by","UNITINFO
+			columns:["BORROWNO","created","ENDDATE","created_by","UNITINFO
 			","DEPARMENTSINFO","PHONENUMBER"]
 		all:
 			label:"所有借阅记录"

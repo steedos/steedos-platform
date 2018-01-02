@@ -38,7 +38,7 @@ Creator.Objects.archives_files_clerical =
 		JIANHAO:
 			type: "text"
 			label:"件号"
-		title:
+		name:
 			type:"textarea"
 			label:"题名"
 			is_wide:true
@@ -181,7 +181,7 @@ Creator.Objects.archives_files_clerical =
 			omit:true
 	list_views:
 		default:
-			columns: ["year", "JIANHAO","retention_peroid","title",
+			columns: ["year", "JIANHAO","retention_peroid","name",
 						"documnt_number", "date", "author","ARCHIVEDEPT", "DEPT", "security_classification"
 				]
 		recent:
