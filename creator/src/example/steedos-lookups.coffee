@@ -27,23 +27,28 @@ if Meteor.isDevelopment
 				label: "客户/用户(单选)"
 				type: "lookup"
 				reference_to: ["crm_customers", "users"]
-				group: "可选择对象"
+				group: "可选择对象测试区"
 			object_switche_ids:
 				label: "客户/用户(多选)"
 				type: "lookup"
 				reference_to: ["crm_customers", "users"]
 				multiple: true
-				group: "可选择对象"
+				group: "可选择对象测试区"
 			site:
 				type: "lookup"
 				reference_to: "cms_sites"
-				group: "filters"
+				group: "filters测试区"
 			category:
 				type: "lookup"
 				reference_to: "cms_categories"
 				filters: [["site", "$eq", "{site}"]]  # {site} 必须要在depend_on数组中
 				depend_on: ["site"]
-				group: "filters"
+				group: "filters测试区",
+			archives_files_clerical:
+				type: "lookup"
+				reference_to: "archives_files_clerical"
+				group: "is_name测试区"
+				is_wide: true
 
 		list_views:
 			default:

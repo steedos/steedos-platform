@@ -15,6 +15,11 @@ Creator.Object = (options)->
 		throw new Error('Creator.Object options must specify name');	
 
 	self.fields = _.clone(options.fields)
+
+	_.each self.fields, (field, field_name)->
+		if field_name == 'name' || field.is_name
+			self.NAME_FIELD_KEY = field_name
+
 	_.each Creator.baseObject.fields, (field, field_name)->
 		if !self.fields[field_name]
 			self.fields[field_name] = {}

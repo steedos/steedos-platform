@@ -40,6 +40,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 			if !_.isEmpty(reference_field?.reference_to)  # and Creator.Collections[reference_field.reference_to]
 				data.children.push {
 					find: (parent) ->
+
 						self.unblock();
 
 						query = {}
@@ -60,12 +61,17 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 						else
 							query._id = reference_ids
 
+						reference_to_object = Creator.getObject(reference_to)
+
+						name_field_key = reference_to_object.NAME_FIELD_KEY
+
+						children_fields = {_id: 1, space: 1}
+
+						if name_field_key
+							children_fields[name_field_key] = 1
+
 						return Creator.Collections[reference_to].find(query, {
-							fields: {
-								_id: 1,
-								name: 1,
-								space: 1
-							}
+							fields: children_fields
 						});
 				}
 

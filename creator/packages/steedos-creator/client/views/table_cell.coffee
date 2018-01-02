@@ -10,7 +10,12 @@ Template.creator_table_cell.helpers
 		data = []
 
 		val = this.val
-		reference_to = this.field.reference_to
+
+		this_object = Creator.getObject(this.object_name)
+
+		this_name_field_key = this_object.NAME_FIELD_KEY
+
+		reference_to = this.field?.reference_to
 
 		if reference_to && !_.isEmpty(val)
 
@@ -21,10 +26,22 @@ Template.creator_table_cell.helpers
 			if !_.isArray(val)
 				val = if val then [val] else []
 			try
-				values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: {name: 1, _id: 1}, sort: {name: -1}})
+
+				reference_to_object = Creator.getObject(reference_to)
+
+				reference_to_object_name_field_key = reference_to_object.NAME_FIELD_KEY
+
+				reference_to_fields = {_id: 1}
+				reference_to_fields[reference_to_object_name_field_key] = 1
+
+				reference_to_sort = {}
+				reference_to_sort[reference_to_object_name_field_key] = -1
+
+
+				values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort})
 				values.forEach (v)->
 					href = Creator.getObjectUrl(reference_to, v._id)
-					data.push {reference_to: reference_to, rid: v._id, value: v.name, href: href}
+					data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href}
 			catch e
 				console.error(reference_to, e)
 				return
@@ -37,7 +54,7 @@ Template.creator_table_cell.helpers
 			else if (this.val == null)
 				val = ""
 
-			if this.field_name == "name" || this.field.is_name
+			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
 
 			data.push({value: val, href: href})
