@@ -38,7 +38,7 @@
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
 	
 	//append required CSS rules  
-    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:50; } .JCLRgrip .JColResizer{position:absolute;background-color:#0070d2;filter:alpha(opacity=1);opacity:0;width:1px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;} .JCLRgrip.dragging .grip {cursor: col-resize;opacity: 1!important;} .JCLRgrip .grip:hover {cursor: col-resize;opacity: 1!important;} .JCLRgrip.dragging .JColResizer {opacity: 1;}</style>");
+    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:50; } .JCLRgrip .JColResizer{position:absolute;background-color:#0070d2;filter:alpha(opacity=1);opacity:0;width:1px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;} .JCLRgrip.dragging .grip {cursor: col-resize;opacity: 1!important;} .JCLRgrip .grip:hover {cursor: col-resize;opacity: 1!important;} .JCLRgrip.dragging .JColResizer {opacity: 1;}</style>");
 
 	
 	/**
