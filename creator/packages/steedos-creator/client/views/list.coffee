@@ -205,13 +205,12 @@ Template.creator_list.events
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
-	'mouseenter .slds-table': (event, template)->
-		table = $(event.currentTarget).closest("table")
-		table.colResizable({
+	'mouseenter table.slds-table': (event, template)->
+		$(event.currentTarget).colResizable({
 			liveDrag: false,
 			gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 1px;position:  relative;opacity: 0;'></div>",
 			draggingClass: "dragging",
-			resizeMode: 'fit'
+			resizeMode: 'fit',
 		});
 
 Template.creator_list.onDestroyed ->
