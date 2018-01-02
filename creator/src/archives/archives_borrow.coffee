@@ -79,6 +79,28 @@ Creator.Objects.archives_borrow =
 				]
 			defaultValue:"未审批"
 			omit:true
+		BORROWNO:
+			type:"lookup"
+			label:"题名"
+			reference_to:"archives_files_clerical"
+			is_wide:true
+		DETAILSTATUS:
+			type:"select"
+			label:"明细状态"
+			options:[
+				{label:"申请中",value:"申请中"},
+				{label:"不予批准",value:"不予批准"},
+				{label:"已批准",value:"已批准"},
+				{label:"审批中",value:"审批中"},
+				{label:"续借审批中",value:"续借审批中"},
+				{label:"续借已审批",value:"续借已审批"},
+				{label:"已归还",value:"已归还"},
+				{label:"逾期",value:"逾期"}
+				]
+		FILETYPE:
+			type:"text"
+			label:"类别"
+			defaultValue:"立卷方式(文件级)"
 	list_views:
 		default:
 			columns:["BORROWNO","STATUS","created","ENDDATE","created_by","UNITINFO

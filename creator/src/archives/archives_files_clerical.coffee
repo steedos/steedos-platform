@@ -149,7 +149,7 @@ Creator.Objects.archives_files_clerical =
 			inlineHelpText: ""
 		
 		annotation:
-			type:"text",
+			type:"textarea",
 			label:"备注",
 			is_wide:true
 			defaultValue: ""
@@ -178,12 +178,11 @@ Creator.Objects.archives_files_clerical =
 		CANJIAN:
 			type: "text",
 			label:"参见",
-			reference_to: "users"
 			omit:true
 	list_views:
 		default:
 			columns: ["year", "JIANHAO","retention_peroid","title",
-						"documnt_number", "date", "category_code", "author","ARCHIVEDEPT", "DEPT", "security_classification"
+						"documnt_number", "date", "author","ARCHIVEDEPT", "DEPT", "security_classification"
 				]
 		recent:
 			label: "最近查看"
