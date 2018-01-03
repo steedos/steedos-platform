@@ -51,13 +51,6 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
-								{{#if hasPermission "allowCreate"}}
-									<li class="slds-button slds-button--neutral slds-truncate list-action-add">
-										<a href="javascript:void(0);" title="新建" class="">
-											<div class="slds-truncate" title="新建">新建</div>
-										</a>
-									</li>
-								{{/if}}
 								{{#each actions}}
 									<li class="slds-button slds-button--neutral slds-truncate list-action-custom">
 										<a href="javascript:void(0);" title="{{this.label}}" class="">

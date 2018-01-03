@@ -34,14 +34,6 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
 							<div class="slds-button-group" role="group">
-
-								{{#if recordPerminssion "allowEdit"}}
-									<li class="slds-button slds-button--neutral slds-truncate record-action-edit">
-										<a href="javascript:void(0);" title="编辑" class="">
-											<div class="slds-truncate" title="编辑">编辑</div>
-										</a>
-									</li>
-								{{/if}}
 								{{#each actions}}
 									<li class="slds-button slds-button--neutral slds-truncate">
 										<a href="javascript:void(0);" title="{{this.label}}" class=" list-action-custom">
@@ -49,25 +41,27 @@
 										</a>
 									</li>
 								{{/each}}
-								<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-									<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-										<svg class="slds-button__icon" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
-										</svg>
-										<span class="slds-assistive-text">Show More</span>
-									</button>
-									<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-										<ul class="slds-dropdown__list slds-show">
-											{{#if recordPerminssion "allowDelete"}}
-												<li class="slds-dropdown__item crm-header-menu-item record-action-delete" role="presentation">
-													<a role="option" tabindex="-1">
-														<span class="">删除</span>
-													</a>
-												</li>
-											{{/if}}
-										</ul>
+								{{#if moreActions}}
+									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+											<svg class="slds-button__icon" aria-hidden="true">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
+											</svg>
+											<span class="slds-assistive-text">Show More</span>
+										</button>
+										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+											<ul class="slds-dropdown__list slds-show">
+												 {{#each moreActions}}
+													<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+														<a href="javascript:void(0);" title="{{this.label}}" class=" list-action-custom" role="option" tabindex="-1">
+															<span>{{this.label}}</span>
+														</a>
+													</li>
+												{{/each}}
+											</ul>
+										</div>
 									</div>
-								</div>
+								{{/if}}
 							</div>
 						</div>
 					</div>

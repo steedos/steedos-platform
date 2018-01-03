@@ -88,7 +88,15 @@ Template.creator_list.helpers
 	actions: ()->
 		obj = Creator.getObject()
 		actions = _.values(obj.actions) 
-		actions = _.where(actions, {on: "list", visible: true})
+		# actions = _.where(actions, {on: "list", visible: true})
+		actions = _.filter actions, (action)->
+			if action.on == "list"
+				if typeof action.visible == "function"
+					return action.visible()
+				else
+					return action.visible
+			else
+				return false
 		return actions
 
 Template.creator_list.events
@@ -99,9 +107,6 @@ Template.creator_list.events
 	# 		Session.set 'cmDoc', rowData
 	# 		# $('.btn.creator-edit').click();
 	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
-
-	'click .list-action-add': (event) ->
-		$(".creator-add").click()
 
 	'click .list-action-custom': (event) ->
 		Creator.executeAction Session.get("object_name"), this

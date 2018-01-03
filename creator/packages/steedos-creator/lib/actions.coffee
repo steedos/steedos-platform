@@ -10,7 +10,7 @@ if Meteor.isClient
 	Creator.executeAction = (object_name, action)->
 		obj = Creator.getObject(object_name)
 		if action?.todo
-			if action.todo instanceof String
+			if typeof action.todo == "string"
 				todo = Creator.actionsByName[action.todo]
 			else if typeof action.todo == "function"
 				todo = action.todo	
@@ -22,6 +22,32 @@ if Meteor.isClient
 				
 
 	Creator.actions 
-		# 下一步在此定义全局 actions
+		# 在此定义全局 actions
 		"standard_new": (fields)->
+			$(".creator-add").click()
 			return 
+		"standard_edit": (fields)->
+			$(".creator-record-edit").click()
+			return 
+		"standard_delete": (fields)->
+			object_name = Session.get('object_name')
+			record = Creator.getObjectRecord()
+
+			swal
+				title: "删除#{t(object_name)}"
+				text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+				html: true
+				showCancelButton:true
+				confirmButtonText: t('Delete')
+				cancelButtonText: t('Cancel')
+				(option) ->
+					if option
+						Creator.Collections[object_name].remove {_id: record._id}, (error, result) ->
+							if error
+								toastr.error error.reason
+							else
+								info = t(object_name) + '"' + record.name + '"' + "已删除"
+								toastr.success info
+
+								appid = Session.get("app_id")
+								FlowRouter.go "/app/#{appid}/#{object_name}/list"

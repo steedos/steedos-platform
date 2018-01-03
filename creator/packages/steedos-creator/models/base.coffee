@@ -92,6 +92,39 @@ Creator.baseObject =
 
 	actions:
 
+		new:
+			label: "新建"
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return permissions["allowCreate"]
+			on: "list"
+			todo: "standard_new"
+
+		edit:
+			label: "编辑"
+			visible: ()->
+				object_name = Session.get "object_name"
+				record_id = Session.get "record_id"
+				record = Creator.Collections[object_name].findOne record_id
+				recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
+				if recordPerminssion
+					return recordPerminssion["allowEdit"]
+			on: "record"
+			todo: "standard_edit"
+
+		delete:
+			label: "删除"
+			visible: ()->
+				object_name = Session.get "object_name"
+				record_id = Session.get "record_id"
+				record = Creator.Collections[object_name].findOne record_id
+				recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
+				if recordPerminssion
+					return recordPerminssion["allowDelete"]
+			on: "record_more"
+			todo: "standard_delete"
+
 		"export":
 			label: "Export"
 			visible: false
