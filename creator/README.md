@@ -22,6 +22,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 ### Object 支持的属性
 - name: 唯一的object name
 - label: 显示名
+- icon：图标，参见 https://www.lightningdesignsystem.com/icons ， Standard Icons 部分
 - enable_files: 启用上传附件功能
 - enable_chatter: 启用讨论功能
 - enable_tasks: 启用任务功能
