@@ -40,15 +40,22 @@
 				}
 			}
 			.table-grid-content {
-				margin-bottom: 20px;
+				height: 100%;
 				.tale-content {
-					/*overflow: auto;*/
 					width: 100%;
 					min-height: 200px;
 					padding-bottom: 2px;
 					border-bottom-right-radius: 6px;
 					border-bottom-left-radius: 6px;
+
+					& > div {
+						overflow: auto;
+    					height: 100%;
+					}
+
 					.dataTable {
+						margin-top: 0 !important;
+						border-top: none !important;
 						td:not(:first-child) {
 							padding: 4px 8px;
 						}
@@ -74,40 +81,57 @@
 			}
 		}
 	}
-	.slds-table{
-		position:relative;
-		z-index: 10;
-	}
+	
 	.slds-table+.dataTables_paginate{
-		position:relative;
-		z-index: 1;
-	}
-	.slds-table {
-		.JCLRgrip .JColResizer {
-			top: 1px;
-			height: calc(~"100% - 1px");
-		}
+		float: left;
+    	margin-left: 1.5rem;
 	}
 
-	.slds-table.dataTable thead {
-		& > tr > th.sorting_asc,
-		& > tr > th.sorting_desc,
-		& > tr > th.sorting,
-		& > tr > td.sorting_asc,
-		& > tr > td.sorting_desc,
-		& > tr > td.sorting {
-			padding-right: 0px;
-			& > a {
-				padding-right: 30px;
+	.list-table-container{
+		.dataTables_wrapper {
+			.JCLRgrips {
+				position: static;
+				.JCLRgrip {
+					top: 0;
+					.JColResizer {
+						top: 1px;
+						height: calc(~"100% - 1px + 2rem");
+					}
+				}
+			}
+		}
+		.dataTable thead {
+			& > tr > th.sorting_asc,
+			& > tr > th.sorting_desc,
+			& > tr > th.sorting,
+			& > tr > td.sorting_asc,
+			& > tr > td.sorting_desc,
+			& > tr > td.sorting {
+				padding-right: 0px;
+				& > a {
+					padding-right: 30px;
+				}
+			}
+	
+			.sorting:after,
+			.sorting_asc:after,
+			.sorting_desc:after,
+			.sorting_asc_disabled:after,
+			.sorting_desc_disabled:after {
+				display: none;
+				bottom: 4px;
 			}
 		}
 
-		.sorting:after,
-		.sorting_asc:after,
-		.sorting_desc:after,
-		.sorting_asc_disabled:after,
-		.sorting_desc_disabled:after {
-			bottom: 4px;
-		}
+		.dataTable {
+			thead > tr > th {
+				position: static;
+	
+				& > .slds-th__action {
+					position: absolute;
+					top: 0;
+				}
+			}
+		} 
 	}
 }

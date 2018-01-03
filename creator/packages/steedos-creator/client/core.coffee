@@ -32,3 +32,9 @@ Meteor.startup ->
 			$(".slds-table").addClass("slds-no-cell-focus")
 		else
 			$(".slds-table").removeClass("slds-no-cell-focus")
+
+	$(window).resize ->
+		if $(".list-table-container table.dataTable").length
+			$(".list-table-container table.dataTable thead th").each ->
+				width = $(this).outerWidth()
+				$(".slds-th__action", this).css("width", "#{width}px")

@@ -205,13 +205,23 @@ Template.creator_list.events
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
-	'mouseenter table.slds-table': (event, template)->
-		$(event.currentTarget).colResizable({
-			liveDrag: false,
-			gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 1px;position:  relative;opacity: 0;'></div>",
-			draggingClass: "dragging",
-			resizeMode: 'fit',
-		});
+	'scroll .list-table-container > div': (event, template)->
+		scrollLeft = $(event.currentTarget).scrollLeft()
+		$("table.slds-table thead th", event.currentTarget).each ->
+			$(".slds-th__action", this).css("transform", "translate3d(-#{scrollLeft}px, 0px, 0px)")
+
+	# 'mouseenter .list-table-container': (event, template)->
+	# 	$("table.slds-table", event.currentTarget).colResizable({
+	# 		liveDrag: false,
+	# 		gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 1px;position:  relative;opacity: 0;'></div>",
+	# 		draggingClass: "dragging",
+	# 		resizeMode: 'fit',
+	# 		disabledColumns: [0],
+	# 		onResize: ()->
+	# 			$("table.slds-table thead th", event.currentTarget).each ->
+	# 				width = $(this).outerWidth()
+	# 				$(".slds-th__action", this).css("width", "#{width}px")
+	# 	});
 
 Template.creator_list.onDestroyed ->
 	object_name = Session.get("object_name")

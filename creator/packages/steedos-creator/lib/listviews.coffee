@@ -28,9 +28,6 @@ Creator.getTabularColumns = (object_name, columns) ->
 									</use>
 								</svg>
 							</div>
-							<div class='slds-resizable__handle'>
-								
-							</div>	
 						</a>"
 			col.className = "slds-cell-edit cellContainer slds-is-resizable"
 			if field.sortable
@@ -91,6 +88,10 @@ Creator.initListViews = (object_name)->
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
 			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
+
+			$("th", thead).each ->
+				width = $(this).outerWidth()
+				$(".slds-th__action", this).css("width", "#{width}px")
 		drawCallback:(settings)->
 			self = this
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
