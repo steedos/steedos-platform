@@ -3,7 +3,7 @@ Creator.getTabularColumns = (object_name, columns) ->
 	cols = []
 	_.each columns, (field_name)->
 		field = obj.fields[field_name]
-		if field?.type
+		if field?.type and !field.hidden
 			col = {}
 			col.data = field_name
 			#col.sTitle = null
