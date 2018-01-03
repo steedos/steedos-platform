@@ -89,11 +89,12 @@ Creator.initListViews = (object_name)->
 		headerCallback: ( thead, data, start, end, display )->
 			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
 
-			$("th", thead).each ->
-				width = $(this).outerWidth()
-				$(".slds-th__action", this).css("width", "#{width}px")
 		drawCallback:(settings)->
 			self = this
+			$("th", self).each ->
+				width = $(this).outerWidth()
+				$(".slds-th__action", this).css("width", "#{width}px")
+
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
 			Tracker.nonreactive ->
 				currentDataset = self.find(".select-all")[0]?.dataset
