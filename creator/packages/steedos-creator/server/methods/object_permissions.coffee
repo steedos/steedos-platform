@@ -26,4 +26,14 @@ Meteor.methods
 					if po.viewAllRecords
 						object_permissions[object_name].viewAllRecords = true
 
+			
+				object_permissions[object_name].fields = {}
+				pfs = Creator.getCollection("permission_fields").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
+				_.each pfs, (pf)->
+					object_permissions[object_name].fields[pf.field_name] = {}
+					if !pf.allowRead
+						object_permissions[object_name].fields[pf.field_name].hidden = true
+					if !pf.allowEdit
+						object_permissions[object_name].fields[pf.field_name].readonly = true
+
 		return object_permissions

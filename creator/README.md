@@ -53,6 +53,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - is_name: 表示此字段为标题字段，适用于标题字段并不是"name"时，在列表页生成链接
 - readonly: 只读
 - disabled: 禁用
+- hidden: 隐藏，在列表和表单中都不显示
 
 ### permissions 权限
 Object权限分以下类型

@@ -121,5 +121,18 @@ if Meteor.isClient
 		Tracker.autorun ->
 			if Session.get("spaceId")
 				Meteor.call "creator.object_permissions", Session.get("spaceId"), (error, result)->
-					_.each result, (permissions, object_name)->
-						Creator.getObject(object_name).permissions.set(permissions)
+					if error
+						console.log error
+					else
+						_.each result, (permissions, object_name)->
+							Creator.getObject(object_name).permissions.set(permissions)
+							_.each permissions.fields, (field, field_name)->
+								if Creator.getObject(object_name).fields[field_name]
+									if field.readonly
+										Creator.getObject(object_name).fields[field_name].readonly = true
+										Creator.getObject(object_name).schema._schema[field_name]?.disabled = true
+										Creator.getObject(object_name).schema._schema[field_name]?.readonly = true
+										Creator.getObject(object_name).schema._schema[field_name]?.omit = true
+									if field.hidden
+										Creator.getObject(object_name).fields[field_name].hidden = true
+										Creator.getObject(object_name).schema._schema[field_name]?.omit = true
