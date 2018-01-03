@@ -127,12 +127,16 @@ if Meteor.isClient
 						_.each result, (permissions, object_name)->
 							Creator.getObject(object_name).permissions.set(permissions)
 							_.each permissions.fields, (field, field_name)->
-								if Creator.getObject(object_name).fields[field_name]
+								f = Creator.getObject(object_name).fields[field_name]
+								if f
+									fs = Creator.getObject(object_name).schema._schema[field_name]
+									if !fs.autoform
+										fs.autoform = {}
 									if field.readonly
-										Creator.getObject(object_name).fields[field_name].readonly = true
-										Creator.getObject(object_name).schema._schema[field_name]?.disabled = true
-										Creator.getObject(object_name).schema._schema[field_name]?.readonly = true
-										Creator.getObject(object_name).schema._schema[field_name]?.omit = true
+										f.readonly = true
+										fs.autoform.readonly = true
+										fs.autoform.disabled = true
 									if field.hidden
-										Creator.getObject(object_name).fields[field_name].hidden = true
-										Creator.getObject(object_name).schema._schema[field_name]?.omit = true
+										f.hidden = true
+										f.omit = true
+										fs.autoform.omit = true

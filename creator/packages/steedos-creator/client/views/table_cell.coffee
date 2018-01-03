@@ -62,7 +62,7 @@ Template.creator_table_cell.helpers
 		return data;
 
 	editable: ()->
-		if this.field.reference_to or this.field.omit
+		if this.field.reference_to or this.field.omit or this.field.readonly
 			return false
 
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
