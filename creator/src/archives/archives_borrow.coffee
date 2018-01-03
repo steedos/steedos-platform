@@ -3,39 +3,36 @@ Creator.Objects.archives_borrow =
 	icon: ""
 	label: "借阅管理"
 	fields:
-		BORROWNO:
+		borrow_no:
 			type:"text"
 			label:"借阅单编号"
 			#defaultValue:当前年度的借阅单总数+1
-		FILETYPE:
+		file_type:
 			type:"text"
 			label:"类别"
 			defaultValue:"立卷方式(文件级)"
 			omit:true
-		status:
-			label:"状态"
-			omit:true
-		UNITINFO:
+		unit_info:
 			type:"text"
 			label:"单位"
 			#字段生成，不可修改
-		DEPARMENTSINFO:
+		deparment_info:
 			type:"text"
 			label:"部门"
 			required:true
-		PHONENUMBER:
+		phone_number:
 			type:"text"
 			label:"联系方式"
 			required:true
-		STARTDATE:
+		start_date:
 			type:"date"
 			label:"借阅日期"
-		ENDDATE:
+		end_date:
 			type:"date"
 			label:"归还日期"
 		#	defaultValue:new Date() #应该是当前日期加7天
 			required:true
-		USEWITH:
+		use_with:
 			type:"select"
 			label:"利用目的"
 			defaultValue:"工作考察"
@@ -47,7 +44,7 @@ Creator.Objects.archives_borrow =
 				{label: "宣传教育", value: "宣传教育"},
 				{label: "其他", value: "其他"},
 			]
-		USEFASHIOH:
+		use_fashion:
 			type:"select"
 			label:"利用方式"
 			defaultValue:"实体借阅"
@@ -55,16 +52,16 @@ Creator.Objects.archives_borrow =
 				{label: "实体借阅", value: "实体借阅"},
 				{label: "实体外借", value: "实体外借"},
 			]
-		APPROVE:
+		approve:
 			type:"textarea"
 			label:"单位审批"
 			is_wide:true
 			readonly:true
-		DESCRIPTION:
+		description:
 			type:"textarea"
 			label:"备注"
 			is_wide:true
-		STATUS:
+		status:
 			type:"select"
 			label:"状态"
 			options: [
@@ -78,12 +75,12 @@ Creator.Objects.archives_borrow =
 				]
 			defaultValue:"未审批"
 			omit:true
-		BORROWNO:
+		title:
 			type:"lookup"
 			label:"题名"
-			reference_to:"archives_files_clerical"
+			reference_to:"archives_administrative_records"
 			is_wide:true
-		DETAILSTATUS:
+		detail_status:
 			type:"select"
 			label:"明细状态"
 			omit:true
@@ -97,13 +94,10 @@ Creator.Objects.archives_borrow =
 				{label:"已归还",value:"已归还"},
 				{label:"逾期",value:"逾期"}
 				]
-		FILETYPE:
-			type:"text"
-			label:"类别"
-			defaultValue:"立卷方式(文件级)"
+		
 	list_views:
 		default:
-			columns:["BORROWNO","created","ENDDATE","created_by","UNITINFO
-			","DEPARMENTSINFO","PHONENUMBER"]
+			columns:["borrow_no","created","end_date","created_by","unit_info
+			","deparment_info","phone_number"]
 		all:
 			label:"所有借阅记录"
