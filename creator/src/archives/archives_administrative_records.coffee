@@ -71,7 +71,7 @@ Creator.Objects.archives_administrative_records =
 			type:"lookup"
 			label:"类别号"
 			defaultValue: ""
-			reference_to: "archives_category_entity"
+			reference_to: "archives_classification"
 			required:true
 			group:"档号"
 
@@ -521,7 +521,7 @@ Creator.Objects.archives_administrative_records =
 			filter_scope: "space"
 		receive:
 			label:"待接收档案"
-			
+			filter_scope: "space"
 
 	permissions:
 		user:
