@@ -43,6 +43,10 @@ Creator.Objects.archives_entity_relation =
 			type: "textarea"
 			label:"关系描述"
 			is_wide:true
+		administrative_records_id:
+			label: "文书档案"
+			type: "master_detail"
+			reference_to: "archives_administrative_records"
 	list_views:
 		default:
 			columns:["entity_identifier","relation_type","relation","relation_description"]
