@@ -27,7 +27,6 @@ Creator.Objects.archives_administrative_records =
 			label:"电子文件号"
 			defaultValue: ""
 			omit:true
-			required:true
 
 		archival_code:
 			type:"text"

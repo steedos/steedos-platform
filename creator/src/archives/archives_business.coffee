@@ -25,6 +25,10 @@ Creator.Objects.archives_business =
 			type: "textarea"
 			label:"行为描述"
 			is_wide:true
+		administrative_records_id:
+			label: "文书档案"
+			type: "master_detail"
+			reference_to: "archives_administrative_records"
 	list_views:
 		default:
 			columns: ["business_status", "business_activity","action_time","action_mandate",

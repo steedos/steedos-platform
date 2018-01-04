@@ -230,6 +230,9 @@ Template.creator_view.events
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click();
 
+	'dblclick #creator-quick-form .slds-form-element': (event) ->
+		$(".table-cell-edit", event.currentTarget).click();
+
 	'click #creator-tabular .table-cell-edit': (event, template) ->
 		field = this.field_name
 		object_name = this.object_name
