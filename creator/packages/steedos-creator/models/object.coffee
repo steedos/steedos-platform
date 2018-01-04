@@ -1,6 +1,6 @@
 Creator.Objects.objects = 
 	name: "objects"
-	label: "Objects"
+	label: "对象"
 	icon: "orders"
 	fields:
 		name: 

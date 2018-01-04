@@ -1,6 +1,6 @@
 Creator.Objects.cms_files = 
 	name: "cms_files"
-	label: "Files"
+	label: "文件"
 	icon: "drafts"
 	fields:
 		name: 
