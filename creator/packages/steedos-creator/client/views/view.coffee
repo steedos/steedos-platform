@@ -226,7 +226,7 @@ Template.creator_view.events
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click();
 
-	'click .table-cell-edit': (event, template) ->
+	'click #creator-tabular .table-cell-edit': (event, template) ->
 		field = this.field_name
 		object_name = this.object_name
 
@@ -280,8 +280,20 @@ Template.creator_view.events
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
-	'click #creator-quick-form .table-cell-edit': (event)->
-		$(".creator-record-edit").click()
+	'click #creator-quick-form .table-cell-edit': (event, template)->
+		# $(".creator-record-edit").click()
+		field = this.field_name
+		object_name = this.object_name
+		doc = this.doc
+
+		if doc
+			template.edit_fields.set(field)
+			template.edit_collection.set("Creator.Collections.#{object_name}" )
+			Session.set 'cmDoc', doc
+
+			setTimeout ()->
+				$(".related-object-cell-edit").click()
+			, 1
 
 	'click .item-delete-action': (event) ->
 		object_name = event.currentTarget.dataset.objectName
