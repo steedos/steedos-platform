@@ -46,13 +46,16 @@ if Meteor.isDevelopment
 				group: "filters测试区",
 			archives_files_clerical:
 				type: "lookup"
-				reference_to: "archives_files_clerical"
+				reference_to: "archives_administrative_records"
 				group: "is_name测试区"
 				is_wide: true
+			boolean:
+				label: 'boolean值测试'
+				type: "boolean"
 
 		list_views:
 			default:
-				columns: ["name", "customer_id", "customer_ids", "object_switche_ids"]
+				columns: ["name", "customer_id", "customer_ids", "object_switche_ids", "boolean"]
 			recent:
 				filter_scope: "space"
 			all:

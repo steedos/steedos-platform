@@ -41,38 +41,42 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 				data.children.push {
 					find: (parent) ->
 
-						self.unblock();
+						try
+							self.unblock();
 
-						query = {}
+							query = {}
 
-						reference_ids = parent[key]
+							reference_ids = parent[key]
 
-						reference_to = reference_field.reference_to
+							reference_to = reference_field.reference_to
 
-						if _.isArray(reference_to)
-							if _.isObject(reference_ids) && !_.isArray(reference_ids)
-								reference_to = reference_ids.o
-								reference_ids = reference_ids.ids || []
+							if _.isArray(reference_to)
+								if _.isObject(reference_ids) && !_.isArray(reference_ids)
+									reference_to = reference_ids.o
+									reference_ids = reference_ids.ids || []
+								else
+									return []
+
+							if _.isArray(reference_ids)
+								query._id = {$in: reference_ids}
 							else
-								return []
+								query._id = reference_ids
 
-						if _.isArray(reference_ids)
-							query._id = {$in: reference_ids}
-						else
-							query._id = reference_ids
+							reference_to_object = Creator.getObject(reference_to)
 
-						reference_to_object = Creator.getObject(reference_to)
+							name_field_key = reference_to_object.NAME_FIELD_KEY
 
-						name_field_key = reference_to_object.NAME_FIELD_KEY
+							children_fields = {_id: 1, space: 1}
 
-						children_fields = {_id: 1, space: 1}
+							if name_field_key
+								children_fields[name_field_key] = 1
 
-						if name_field_key
-							children_fields[name_field_key] = 1
-
-						return Creator.Collections[reference_to].find(query, {
-							fields: children_fields
-						});
+							return Creator.Collections[reference_to].find(query, {
+								fields: children_fields
+							});
+						catch e
+							console.log(reference_to, parent, e)
+							return []
 				}
 
 		return data
