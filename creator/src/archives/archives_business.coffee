@@ -1,7 +1,7 @@
 Creator.Objects.archives_business = 
 	name: "archives_business"
 	icon: "campaign"
-	label: "业务行为"
+	label: "审计跟踪"
 	fields:
 		business_status:
 			type: "select"
@@ -21,6 +21,9 @@ Creator.Objects.archives_business =
 			type: "datetime"
 			label:"行为时间"
 			sortable:true
+		action_user:
+			type:"text"
+			label:"行为人员"
 		action_mandate:
 			type: "textarea"
 			label:"行为依据"
@@ -30,19 +33,19 @@ Creator.Objects.archives_business =
 			type: "textarea"
 			label:"行为描述"
 			is_wide:true
-		administrative_records_id:
-			label: "文书档案"
+		action_administrative_records_id:
+			label: "行为对象"
 			type: "master_detail"
 			reference_to: "archives_administrative_records"
 	list_views:
 		default:
 			columns: ["business_status", "business_activity","action_time","action_mandate",
-						"action_description"]
+						"action_description","action_administrative_records_id"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
-			label: "全部业务"
+			label: "全部"
 			filter_scope: "space"
 
 	permissions:
