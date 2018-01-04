@@ -1,6 +1,6 @@
-Creator.Objects.archives_category_entity = 
-	name: "archives_category_entity"
-	icon: ""
+Creator.Objects.archives_classification = 
+	name: "archives_classification"
+	icon: "product_item"
 	label: "实体分类"
 	fields:
 		# id:
@@ -15,7 +15,7 @@ Creator.Objects.archives_category_entity =
 		parentname:
 			type:"lookup"
 			label:"所属分类"
-			reference_to: "archives_category_entity"
+			reference_to: "archives_classification"
 	list_views:
 		default:
 			columns:["name","parentname"]

@@ -1,6 +1,6 @@
 Creator.Objects.archives_dept = 
 	name: "archives_dept"
-	icon: ""
+	icon: "team_member"
 	label: "归档部门"
 	fields:
 		name:
@@ -8,6 +8,7 @@ Creator.Objects.archives_dept =
 			label:"部门名称"
 			is_wide:true
 			required:true
+			sortable:true
 	list_views:
 		default:
 			columns:["name"]

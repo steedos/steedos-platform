@@ -1,11 +1,12 @@
 Creator.Objects.archives_borrow = 
 	name: "archives_borrow"
-	icon: ""
+	icon: "file"
 	label: "借阅管理"
 	fields:
 		borrow_no:
 			type:"text"
 			label:"借阅单编号"
+			sortable:true
 			#defaultValue:当前年度的借阅单总数+1
 		file_type:
 			type:"text"
@@ -27,9 +28,11 @@ Creator.Objects.archives_borrow =
 		start_date:
 			type:"date"
 			label:"借阅日期"
+			sortable:true
 		end_date:
 			type:"date"
 			label:"归还日期"
+			sortable:true
 		#	defaultValue:new Date() #应该是当前日期加7天
 			required:true
 		use_with:
@@ -44,6 +47,7 @@ Creator.Objects.archives_borrow =
 				{label: "宣传教育", value: "宣传教育"},
 				{label: "其他", value: "其他"},
 			]
+			sortable:true
 		use_fashion:
 			type:"select"
 			label:"利用方式"
@@ -52,6 +56,7 @@ Creator.Objects.archives_borrow =
 				{label: "实体借阅", value: "实体借阅"},
 				{label: "实体外借", value: "实体外借"},
 			]
+			sortable:true
 		approve:
 			type:"textarea"
 			label:"单位审批"
@@ -74,12 +79,14 @@ Creator.Objects.archives_borrow =
 				{label: "已结单", value: "已结单"}
 				]
 			defaultValue:"未审批"
+			sortable:true
 			omit:true
 		title:
 			type:"lookup"
 			label:"题名"
 			reference_to:"archives_administrative_records"
 			is_wide:true
+			sortable:true
 		detail_status:
 			type:"select"
 			label:"明细状态"
@@ -94,6 +101,7 @@ Creator.Objects.archives_borrow =
 				{label:"已归还",value:"已归还"},
 				{label:"逾期",value:"逾期"}
 				]
+			sortable:true
 		
 	list_views:
 		default:

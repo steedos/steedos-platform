@@ -1,7 +1,7 @@
 Creator.Objects.archives_fonds_identifier = 
 	name: "archives_fonds_identifier"
-	icon: ""
-	label: "全宗号"
+	icon: "flow"
+	label: "全宗管理"
 	fields:
 		name:
 			type:"text"
