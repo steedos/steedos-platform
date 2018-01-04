@@ -130,6 +130,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/methods/object_permissions.coffee', 'server');
     api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
+	api.addFiles('server/methods/object_recent_record.coffee', 'server');
 
     api.addFiles('server/publications/object.coffee', 'server');
     api.addFiles('server/publications/related_object.coffee', 'server');
@@ -140,6 +141,8 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
     api.addFiles('client/layout/layout.coffee', 'client');
+	api.addFiles('client/layout/header_search.html', 'client');
+	api.addFiles('client/layout/header_search.coffee', 'client');
     api.addFiles('client/layout/header.html', 'client');
     api.addFiles('client/layout/navigation.html', 'client');
     api.addFiles('client/layout/navigation.coffee', 'client');

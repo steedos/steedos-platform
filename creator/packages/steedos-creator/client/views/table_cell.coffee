@@ -62,6 +62,9 @@ Template.creator_table_cell.helpers
 		return data;
 
 	editable: ()->
+		if !this.field
+			return false
+
 		if this.field.reference_to or this.field.omit or this.field.readonly
 			return false
 
