@@ -1,17 +1,19 @@
 Creator.Objects.archives_administrative_records = 
 	name: "archives_administrative_records"
-	icon: ""
+	icon: "orders"
 	label: "文书档案"
 	fields:
 		archival_category_code:
 			type: "text"
 			label:"档案门类代码"
 			defaultValue: "WS"
+			omit:true
 
 		fonds_constituting_unit_name:
 			type: "text"
 			label:"立档单位名称"
 			defaultValue: ""
+			omit:true
 
 		aggregation_level:
 			type: "select"
@@ -20,7 +22,7 @@ Creator.Objects.archives_administrative_records =
 			options:[
 				{label:"案卷",value:"案卷"},
 				{label:"文件",value:"文件"}]
-			required:true
+			omit:true
 
 		electronic_record_code:
 			type: "text"
@@ -31,7 +33,7 @@ Creator.Objects.archives_administrative_records =
 		archival_code:
 			type:"text"
 			label:"档号"
-			required:true
+			omit:true
 
 		fonds_identifier:
 			type:"select"
@@ -40,12 +42,13 @@ Creator.Objects.archives_administrative_records =
 				{label:"集团公司",value:"A001"}
 			]
 			group:"档号"
-		
+			omit:true
 		year:
 			type: "text"
 			label:"年度"
 			defaultValue: "2018" 
 			required:true
+			sortable:true
 			group:"档号"
 
 		retention_peroid:
@@ -61,6 +64,7 @@ Creator.Objects.archives_administrative_records =
 				{label: "4年", value: "4年"}
 			]
 			required:true
+			sortable:true
 			group:"档号"
 
 		category_code:
@@ -79,27 +83,30 @@ Creator.Objects.archives_administrative_records =
 		file_number:
 			type:"text"
 			label:"保管卷号"
-			defaultValue:"文书传统"
 			group:"档号"
+			omit:true
 		
 		classification_number:
 			type:"text"
 			label:"分类卷号"
-			defaultValue:"文书传统"
 			group:"档号"
+			omit:true
 
 		item_number:
 			type: "number"
 			label:"件号"
 			group:"档号"
+			sortable:true
+			omit:true
 
 		document_sequence_number:
-			type: "text"
+			type: "number"
 			label:"文档序号"
 			group:"档号"
+			omit:true
 
 		page_number:
-			type: "text"
+			type: "number"
 			label:"页号"
 			group:"档号"
 		
@@ -109,6 +116,7 @@ Creator.Objects.archives_administrative_records =
 			is_wide:true
 			is_name:true
 			required:true
+			sortable:true
 			group:"内容描述"
 
 		parallel_title:
@@ -138,6 +146,7 @@ Creator.Objects.archives_administrative_records =
 			type:"text"
 			label:"文件编号"
 			group:"内容描述"
+			sortable:true
 		author:
 			type:"text"
 			label:"责任者"
@@ -147,20 +156,22 @@ Creator.Objects.archives_administrative_records =
 			type:"date"
 			label:"文件日期"
 			format:"YYYYMMDD"
-			required:true
 			group:"内容描述"
+			sortable:true
 
 		start_date:
 			type:"date"
 			label:"起始日期"
 			format:"YYYYMMDD"
 			group:"内容描述"
+			omit:true
 
 		closing_date:
 			type:"date"
 			label:"截止日期"
 			format:"YYYYMMDD"
 			group:"内容描述"
+			omit:true
 
 		prinpipal_receiver:
 			type:"text",
@@ -190,17 +201,20 @@ Creator.Objects.archives_administrative_records =
 				
 			]
 			required:true
+			sortable:true
 			group:"内容描述"
 
 		applicant_name:
 			type:"text"
 			label:"拟稿人"
 			group:"内容描述"
+			omit:true
 
 		applicant_organization_name:
 			type:"text"
 			label:"拟稿单位"
 			group:"内容描述"
+			omit:true
 
 		secrecy_period:
 			type:"select"
@@ -226,6 +240,7 @@ Creator.Objects.archives_administrative_records =
 			type: "text"
 			label:"卷内文件数"
 			group:"形式特征"
+			omit:true
 
 		total_number_of_pages:
 			type:"number"
@@ -236,6 +251,7 @@ Creator.Objects.archives_administrative_records =
 			type:"text"
 			label:"文件类型"
 			group:"形式特征"
+			omit:true
 		
 		document_status:
 			type:"select",
@@ -265,6 +281,7 @@ Creator.Objects.archives_administrative_records =
 				{label: "原生", value: "原生"}
 			]
 			group:"形式特征"
+			omit:true
 
 		format_name:
 			type:"text"
@@ -379,22 +396,18 @@ Creator.Objects.archives_administrative_records =
 		offline_medium_identifier:
 			type:"text"
 			label:"脱机载体编号"
-			omit:true
 			group:"存储位置"
 		offline_medium_storage_location:
 			type:"text"
 			label:"脱机载体存址"
-			omit:true
 			group:"存储位置"
 		intelligent_property_statement:
 			type: "text"
 			label:"知识产权说明"
-			omit:true
 			group:"权限管理"
 		authorized_agent:
 			type: "text"
 			label:"授权对象"
-			omit:true
 			group:"权限管理"
 		permission_assignment:
 			type: "select"
@@ -443,9 +456,7 @@ Creator.Objects.archives_administrative_records =
 		archive_date:
 			type:"date"
 			label:"归档日期"
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+			omit:true
 		
 		archive_dept:
 			type:"lookup"
@@ -466,6 +477,7 @@ Creator.Objects.archives_administrative_records =
 				{label: "销毁", value: "销毁"},
 				{label: "出借", value: "出借"}
 			]
+			omit:true
 
 		main_dept:
 			type:"text",
@@ -507,6 +519,9 @@ Creator.Objects.archives_administrative_records =
 		all:
 			label: "全部档案"
 			filter_scope: "space"
+		receive:
+			label:"待接收档案"
+			
 
 	permissions:
 		user:

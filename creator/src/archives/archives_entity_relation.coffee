@@ -1,13 +1,15 @@
 Creator.Objects.archives_entity_relation = 
 	name: "archives_entity_relation"
-	icon: ""
+	icon: "entity"
 	label: "实体关系"
 	fields:
 		entity_identifier:
 			type: "text"
 			label:"实体标识符"
-			require:true
+			required:true
 			is_wide:true
+			is_name:true
+			sortable:true
 		relation_type:
 			type: "select"
 			label:"关系类型"
@@ -41,10 +43,6 @@ Creator.Objects.archives_entity_relation =
 			type: "textarea"
 			label:"关系描述"
 			is_wide:true
-		administrative_records_id:
-			label: "文书档案"
-			type: "master_detail"
-			reference_to: "archives_administrative_records"
 	list_views:
 		default:
 			columns:["entity_identifier","relation_type","relation","relation_description"]
