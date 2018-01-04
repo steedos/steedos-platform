@@ -39,8 +39,8 @@ Creator.Objects.archives_business =
 			reference_to: "archives_administrative_records"
 	list_views:
 		default:
-			columns: ["business_status", "business_activity","action_time","action_mandate",
-						"action_description","action_administrative_records_id"]
+			columns: ["business_status", "business_activity","action_time","action_administrative_records_id","action_mandate",
+						"action_description"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"

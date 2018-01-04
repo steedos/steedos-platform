@@ -505,6 +505,10 @@ Creator.Objects.archives_administrative_records =
 		reference:
 			type: "text"
 			label:"参见"
+		#1表示未接收，2：已接收 3：已出借 4：已归还 5：已销毁 6：已移交
+		status:
+			type:"text"
+			label:""
 
 	list_views:
 		default:
@@ -522,6 +526,7 @@ Creator.Objects.archives_administrative_records =
 		receive:
 			label:"待接收档案"
 			filter_scope: "space"
+			filters: [["status", "$eq", 1]]
 
 	permissions:
 		user:
