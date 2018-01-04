@@ -142,6 +142,7 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/layout.less', 'client');
     api.addFiles('client/layout/layout.coffee', 'client');
 	api.addFiles('client/layout/header_search.html', 'client');
+	api.addFiles('client/layout/header_search.less', 'client');
 	api.addFiles('client/layout/header_search.coffee', 'client');
     api.addFiles('client/layout/header.html', 'client');
     api.addFiles('client/layout/navigation.html', 'client');
