@@ -234,6 +234,10 @@ helpers =
 					if !value.autoform?.omit
 						keys.push key
 
+			if keys.length == 1
+				schemaFields.push keys
+				return schemaFields
+
 			while i < keys.length
 				sc_1 = _.pick(schema, keys[i])
 				sc_2 = _.pick(schema, keys[i+1])
