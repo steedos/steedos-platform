@@ -495,14 +495,12 @@ Creator.Objects.archives_administrative_records =
 			type: "text"
 			label:"参见"
 
-		
-
-
-
 	list_views:
 		default:
-			columns: ["year", "JIANHAO","retention_peroid","name",
-						"documnt_number", "date", "author","ARCHIVEDEPT", "DEPT", "security_classification"
+			columns: [
+				"year", "item_number","retention_peroid",
+				"title","documnt_number", "document_date", "author",
+				"archive_dept", "security_classification"
 				]
 		recent:
 			label: "最近查看"
