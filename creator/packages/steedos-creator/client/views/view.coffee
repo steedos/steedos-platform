@@ -47,6 +47,10 @@ Template.creator_view.helpers
 				if !value.autoform?.omit
 					keys.push key
 
+		if keys.length == 1
+			schemaFields.push keys
+			return schemaFields
+
 		while i < keys.length
 
 			sc_1 = _.pick(schema, keys[i])
@@ -253,7 +257,8 @@ Template.creator_view.events
 			if object_name == related_obj.object_name
 				relatedKey = related_obj.related_field_name
 
-		Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
+		if relatedKey
+			Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
 
 		template.related_collection.set(collection)
 		setTimeout ->
