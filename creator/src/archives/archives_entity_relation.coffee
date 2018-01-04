@@ -41,3 +41,8 @@ Creator.Objects.archives_entity_relation =
 			type: "textarea"
 			label:"关系描述"
 			is_wide:true
+	list_views:
+		default:
+			columns:["entity_identifier","relation_type","relation","relation_description"]
+		all:
+			label:"所有全宗"

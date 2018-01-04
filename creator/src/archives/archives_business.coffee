@@ -25,6 +25,31 @@ Creator.Objects.archives_business =
 			type: "textarea"
 			label:"行为描述"
 			is_wide:true
+	list_views:
+		default:
+			columns: ["business_status", "business_activity","action_time","action_mandate",
+						"action_description"]
+		recent:
+			label: "最近查看"
+			filter_scope: "space"
+		all:
+			label: "全部业务"
+			filter_scope: "space"
 
+	permissions:
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true 
 
 
