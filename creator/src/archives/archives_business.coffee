@@ -4,24 +4,27 @@ Creator.Objects.archives_business =
 	label: "业务行为"
 	fields:
 		business_status:
-			type: "text"
+			type: "select"
 			label:"业务状态"
-			omit:true
+			options:[
+				{label:"历史行为",value:"历史行为"},
+				{label:"计划任务",value:"计划任务"}
+			]
+			is_wide:true
 		business_activity:
 			type: "text"
 			label:"业务行为"
-			omit:true
 		action_time:
-			type: "text"
+			type: "datetime"
 			label:"行为时间"
-			omit:true
 		action_mandate:
-			type: "text"
+			type: "textarea"
 			label:"行为依据"
-			omit:true
+			is_wide:true
 		action_description:
-			type: "text"
+			type: "textarea"
 			label:"行为描述"
-			omit:true
+			is_wide:true
+
 
 
