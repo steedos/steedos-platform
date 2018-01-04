@@ -48,7 +48,11 @@
 				float: left;
 			}
 		}
+	}
 
+	[data-required="true"] label:after {
+		content: ' *';
+    	color: red;
 	}
 
 	.view-page-section-row {
