@@ -125,11 +125,47 @@ Creator.baseObject =
 			on: "record_more"
 			todo: "standard_delete"
 
+		list_item_edit:
+			label: "编辑"
+			visible: (template_data)->
+				recordPerminssion = template_data["record_permissions"]
+				if recordPerminssion
+					return recordPerminssion["allowEdit"]
+			on: "list_item"
+			todo: "standard_list_item_edit"
+
+		list_item_delete:
+			label: "删除"
+			visible: (template_data)->
+				recordPerminssion = template_data["record_permissions"]
+				if recordPerminssion
+					return recordPerminssion["allowDelete"]
+			on: "list_item"
+			todo: "standard_list_item_delete"
+
+		related_list_item_edit:
+			label: "编辑"
+			visible: (template_data)->
+				recordPerminssion = template_data["record_permissions"]
+				if recordPerminssion
+					return recordPerminssion["allowEdit"]
+			on: "related_list_item"
+			todo: "standard_related_list_item_edit"
+
+		related_list_item_delete:
+			label: "删除"
+			visible: (template_data)->
+				recordPerminssion = template_data["record_permissions"]
+				if recordPerminssion
+					return recordPerminssion["allowDelete"]
+			on: "related_list_item"
+			todo: "standard_related_list_item_delete"
+
 		"export":
 			label: "Export"
 			visible: false
 			on: "list"
-			todo: ()->
+			todo: (object_name, ids, fields)->
 				alert("please write code in baseObject to export data for " + this.object_name)
 
 

@@ -120,14 +120,12 @@ Template.creator_list.events
 			Session.set("list_view_id", list_view_id)
 			Session.set("list_view_visible", true)
 
-	'click .item-edit-action': (event) ->
-		record_id = event.currentTarget.dataset?.id
-		object_name = Session.get("object_name")
-
-		if record_id
-			Session.set 'editing_object_name', object_name
-			Session.set 'editing_record_id', record_id
-			$(".btn.creator-edit").click()
+	'click .list-item-action': (event) ->
+		actionKey = event.currentTarget.dataset.actionKey
+		objectName = event.currentTarget.dataset.objectName
+		id = event.currentTarget.dataset.id
+		action = Creator.getObject(objectName).actions[actionKey]
+		Creator.executeAction objectName, action, id
 
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
@@ -148,28 +146,6 @@ Template.creator_list.events
 
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
-
-
-	'click .item-delete-action': (event) ->
-		object_name = Session.get('object_name')
-		_id = event.currentTarget.dataset?.id
-		record = Creator.Collections[object_name].findOne _id
-
-		swal
-			title: "删除#{t(object_name)}"
-			text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
-			html: true
-			showCancelButton:true
-			confirmButtonText: t('Delete')
-			cancelButtonText: t('Cancel')
-			(option) ->
-				if option
-					Creator.Collections[object_name].remove {_id: _id}, (error, result) ->
-						if error
-							toastr.error error.reason
-						else
-							info = t(object_name) + '"' + record.name + '"' + "已删除"
-							toastr.success info
 
 	'change .slds-table .select-one': (event, template)->
 		currentDataset = event.currentTarget.dataset

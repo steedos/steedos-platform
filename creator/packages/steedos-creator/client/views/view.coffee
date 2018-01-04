@@ -31,7 +31,7 @@ Template.creator_view.helpers
 		return Template.instance()?.edit_fields?.get()
 
 	editCollection: ()->
-		return Template.instance()?.edit_collection?.get()
+		return Template.instance()?.edit_collection?.get() || Session.get("action_editing_collection")
 
 	schema: ()->
 		return Creator.getSchema(Session.get("object_name"))
@@ -268,21 +268,12 @@ Template.creator_view.events
 			$(".related-object-new").click()
 		, 1
 
-	'click .item-edit-action': (event, template) ->
-		dataTable = $(event.currentTarget).closest('table').DataTable()
-		tr = $(event.currentTarget).closest("tr")
-		record_id = dataTable.row(tr).data()._id
-
-		if record_id
-			object_name = event.currentTarget.dataset.objectName
-			Session.set 'editing_object_name', object_name
-			Session.set 'editing_record_id', record_id
-
-			collection = "Creator.Collections.#{object_name}"
-			template.edit_collection.set(collection)
-			setTimeout ->
-				$(".related-object-row-edit").click()
-			, 1
+	'click .list-item-action': (event, template) ->
+		actionKey = event.currentTarget.dataset.actionKey
+		objectName = event.currentTarget.dataset.objectName
+		id = event.currentTarget.dataset.id
+		action = Creator.getObject(objectName).actions[actionKey]
+		Creator.executeAction objectName, action, id
 
 	'click .slds-table td': (event)->
 		$(".slds-table td").removeClass("slds-has-focus")
@@ -302,27 +293,6 @@ Template.creator_view.events
 			setTimeout ()->
 				$(".related-object-cell-edit").click()
 			, 1
-
-	'click .item-delete-action': (event) ->
-		object_name = event.currentTarget.dataset.objectName
-		_id = event.currentTarget.dataset?.id
-		record = Creator.Collections[object_name].findOne _id
-
-		swal
-			title: "删除#{t(object_name)}"
-			text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
-			html: true
-			showCancelButton:true
-			confirmButtonText: t('Delete')
-			cancelButtonText: t('Cancel')
-			(option) ->
-				if option
-					Creator.Collections[object_name].remove {_id: _id}, (error, result) ->
-						if error
-							toastr.error error.reason
-						else
-							info = t(object_name) + '"' + record.name + '"' + "已删除"
-							toastr.success info
 
 	'change .btn-upload-file': (event, template)->
 		files = event.target.files

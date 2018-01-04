@@ -1,4 +1,4 @@
-Creator.getTabularColumns = (object_name, columns) ->
+Creator.getTabularColumns = (object_name, columns, is_related) ->
 	obj = Creator.getObject(object_name)
 	cols = []
 	_.each columns, (field_name)->
@@ -51,11 +51,8 @@ Creator.getTabularColumns = (object_name, columns) ->
 			record = rowData
 			userId = Meteor.userId()
 			record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
-			if record_permissions.allowEdit or record_permissions.allowDelete
-				$(node).attr("data-label", "Actions")
-				$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name, record_permissions: record_permissions}, node)
-			else
-				$(node).html("")
+			$(node).attr("data-label", "Actions")
+			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name, record_permissions: record_permissions, is_related: is_related}, node)
 	cols.push(action_col)
 
 	checkbox_col = 
@@ -149,7 +146,7 @@ if Meteor.isClient
 						if related_object.list_views?.default?.columns
 							columns = related_object.list_views.default.columns
 						columns = _.without(columns, related_field_name)
-						Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns);
+						Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
 
 						related =
 							object_name: related_object_name
@@ -162,12 +159,24 @@ if Meteor.isClient
 		if Creator.Objects[object_name]?.enable_files
 			file_object_name = "cms_files"
 			file_tabular_name = "creator_" + file_object_name
-			list.push
-				object_name: file_object_name
-				columns: ["name", "size", "owner", "modified"]
-				tabular_table: Tabular.tablesByName[file_tabular_name]
-				related_field_name: "parent"
-				is_file: true
+			file_related_field_name = "parent"
+			file_related_object = Creator.Objects[file_object_name]
+			
+			if Tabular.tablesByName[file_tabular_name]
+				columns = ["name"]
+				if file_related_object.list_views?.default?.columns
+					columns = file_related_object.list_views.default.columns
+				columns = _.without(columns, file_related_field_name)
+				Tabular.tablesByName[file_tabular_name].options?.columns = Creator.getTabularColumns(file_object_name, columns, true);
+
+				file_related =
+					object_name: file_object_name
+					columns: columns
+					tabular_table: Tabular.tablesByName[file_tabular_name]
+					related_field_name: file_related_field_name
+					is_file: true
+
+				list.push file_related
 
 		return list
 

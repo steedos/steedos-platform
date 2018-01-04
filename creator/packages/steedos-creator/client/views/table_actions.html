@@ -13,19 +13,16 @@
 				</span>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-				<ul class="slds-dropdown__list slds-show">
-					<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-						{{#if this.record_permissions.allowEdit}}
-							<a role="option" tabindex="-1" class="item-edit-action" data-id="{{this._id}}" data-object-name="{{this.object_name}}">
-								<span class="">编辑</span>
+				<ul class="slds-dropdown__list slds-show" data-object-name="{{object_name}}">
+					{{#each actions}}
+						<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+							<a href="javascript:void(0);" title="{{this.label}}" 
+								data-action-key="{{this._ACTION_KEY}}" data-object-name="{{object_name}}" data-id = "{{record_id}}"
+								class="list-item-action">
+								<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
 							</a>
-						{{/if}}
-						{{#if this.record_permissions.allowDelete}}
-							<a role="option" tabindex="-1" class="item-delete-action" data-id="{{this._id}}" data-object-name={{this.object_name}}>
-								<span class="">删除</span>
-							</a>
-						{{/if}}
-					</li>
+						</li>
+					{{/each}}
 				</ul>
 			</div>
 		</div>

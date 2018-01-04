@@ -7,7 +7,7 @@ if Meteor.isClient
 		_.each actions, (todo, action_name)->
 			Creator.actionsByName[action_name] = todo 
 
-	Creator.executeAction = (object_name, action)->
+	Creator.executeAction = (object_name, action, id)->
 		obj = Creator.getObject(object_name)
 		if action?.todo
 			if typeof action.todo == "string"
@@ -17,6 +17,7 @@ if Meteor.isClient
 			if todo
 				todo.apply
 					object_name: object_name
+					record_id: id
 					object: obj
 					action: action
 				
@@ -26,9 +27,11 @@ if Meteor.isClient
 		"standard_new": (fields)->
 			$(".creator-add").click()
 			return 
+
 		"standard_edit": (fields)->
 			$(".creator-record-edit").click()
 			return 
+
 		"standard_delete": (fields)->
 			object_name = Session.get('object_name')
 			record = Creator.getObjectRecord()
@@ -51,3 +54,69 @@ if Meteor.isClient
 
 								appid = Session.get("app_id")
 								FlowRouter.go "/app/#{appid}/#{object_name}/list"
+
+		"standard_list_item_edit": (object_name, id, fields)->
+			record_id = this.record_id
+			object_name = this.object_name
+
+			if record_id
+				Session.set 'editing_object_name', object_name
+				Session.set 'editing_record_id', record_id
+				$(".btn.creator-edit").click()
+		
+		"standard_list_item_delete": (fields)->
+			record_id = this.record_id
+			object_name = this.object_name
+			record = Creator.Collections[object_name].findOne record_id
+
+			swal
+				title: "删除#{t(object_name)}"
+				text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+				html: true
+				showCancelButton:true
+				confirmButtonText: t('Delete')
+				cancelButtonText: t('Cancel')
+				(option) ->
+					if option
+						Creator.Collections[object_name].remove {_id: record_id}, (error, result) ->
+							if error
+								toastr.error error.reason
+							else
+								info = t(object_name) + '"' + record.name + '"' + "已删除"
+								toastr.success info
+
+		"standard_related_list_item_edit": (fields)->
+			record_id = this.record_id
+			object_name = this.object_name
+
+			if record_id
+				Session.set 'editing_object_name', object_name
+				Session.set 'editing_record_id', record_id
+
+				collection = "Creator.Collections.#{object_name}"
+				Session.set "action_editing_collection", collection
+				setTimeout ->
+					$(".related-object-row-edit").click()
+				, 1
+		
+		"standard_related_list_item_delete": (fields)->
+			record_id = this.record_id
+			object_name = this.object_name
+			record = Creator.Collections[object_name].findOne record_id
+
+			swal
+				title: "删除#{t(object_name)}"
+				text: "<div class='delete-creator-warning'>是否确定要删除此#{t(object_name)}？</div>"
+				html: true
+				showCancelButton:true
+				confirmButtonText: t('Delete')
+				cancelButtonText: t('Cancel')
+				(option) ->
+					if option
+						Creator.Collections[object_name].remove {_id: record_id}, (error, result) ->
+							if error
+								toastr.error error.reason
+							else
+								info = t(object_name) + '"' + record.name + '"' + "已删除"
+								toastr.success info
+		
