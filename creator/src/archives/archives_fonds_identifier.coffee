@@ -6,9 +6,10 @@ Creator.Objects.archives_fonds_identifier =
 		name:
 			type:"text"
 			label:"单位名称"
+			is_name:true
 			is_wide:true
 			required:true
-			is_name:true
+
 		code:
 			type:"text"
 			label:"全宗号"
