@@ -116,6 +116,10 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 			return space.admins.indexOf(userId) >= 0
 
 Creator.evaluateFormula = (formular, context)->
+
+	if !_.isString(formular)
+		return formular
+
 	formular = formular.replace /{userId}/g, Meteor.userId()
 	formular = formular.replace /{spaceId}/g, Session.get("spaceId")
 
