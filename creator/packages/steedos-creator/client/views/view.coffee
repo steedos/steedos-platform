@@ -1,3 +1,83 @@
+getFieldsWithNoGroup = (schema)->
+	fields = _.map(schema, (field, fieldName) ->
+  		return (!field.autoform or !field.autoform.group) and fieldName
+	)
+	fields = _.compact(fields)
+	return fields
+
+getSortedFieldGroupNames = (schema)->
+	names = _.map(schema, (field) ->
+ 		return field.autoform and field.autoform.group
+	)
+	names = _.compact(names)
+	names = _.unique(names)
+	return names.sort()
+
+getFieldsForGroup = (schema, groupName) ->
+  	fields = _.map(schema, (field, fieldName) ->
+    	return field.autoform and field.autoform.group == groupName and fieldName
+  	)
+  	fields = _.compact(fields)
+  	return fields
+
+getFieldsWithoutOmit = (schema, keys) ->
+	keys = _.map(keys, (key) ->
+		field = _.pick(schema, key)
+		if field[key].autoform?.omit
+			return false
+		else 
+			return key
+	)
+	keys = _.compact(keys)
+	return keys
+
+getFieldsInFirstLevel = (firstLevelKeys, keys) ->
+	keys = _.map(keys, (key) ->
+		if _.indexOf(firstLevelKeys, key) > -1
+			return key
+		else
+			return false
+	)
+	keys = _.compact(keys)
+	return keys
+
+getFieldsForReorder = (schema, keys) ->
+	fields = []
+	i = 0
+	while i < keys.length
+		sc_1 = _.pick(schema, keys[i])
+		sc_2 = _.pick(schema, keys[i+1])
+
+		is_wide_1 = false
+		is_wide_2 = false
+
+		_.each sc_1, (value) ->
+			if value.autoform?.is_wide
+				is_wide_1 = true
+
+		_.each sc_2, (value) ->
+			if value.autoform?.is_wide
+				is_wide_2 = true
+
+		if is_wide_1
+			fields.push keys.slice(i, i+1)
+			i += 1
+		else if !is_wide_1 and is_wide_2
+			childKeys = keys.slice(i, i+1)
+			childKeys.push undefined
+			fields.push childKeys
+			i += 1
+		else if !is_wide_1 and !is_wide_2
+			childKeys = keys.slice(i, i+1)
+			if keys[i+1]
+				childKeys.push keys[i+1]
+			else
+				childKeys.push undefined
+			fields.push childKeys
+			i += 2
+	
+	return fields
+
 Template.creator_view.onCreated ->
 	this.edit_fields = new ReactiveVar()
 	this.edit_collection = new ReactiveVar()
@@ -38,54 +118,32 @@ Template.creator_view.helpers
 
 	schemaFields: ()->
 		schema = Creator.getSchema(Session.get("object_name"))._schema
-		firstLevelSchema = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
-		keys = []
-		schemaFields = []
-		i = 0
-		_.each schema, (value, key) ->
-			if (_.indexOf firstLevelSchema, key) > -1
-				if !value.autoform?.omit
-					keys.push key
+		firstLevelKeys = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
 
-		if keys.length == 1
-			schemaFields.push keys
-			return schemaFields
+		fieldGroups = []
+		fieldsForGroup = []
 
-		while i < keys.length
+		grouplessFields = []
+		grouplessFields = getFieldsWithNoGroup(schema)
+		grouplessFields = getFieldsInFirstLevel(firstLevelKeys, grouplessFields)
+		grouplessFields = getFieldsWithoutOmit(schema, grouplessFields)
+		grouplessFields = getFieldsForReorder(schema, grouplessFields)
 
-			sc_1 = _.pick(schema, keys[i])
-			sc_2 = _.pick(schema, keys[i+1])
+		fieldGroupNames = getSortedFieldGroupNames(schema)
+		_.each fieldGroupNames, (fieldGroupName) ->
+			fieldsForGroup = getFieldsForGroup(schema, fieldGroupName)
+			fieldsForGroup = getFieldsInFirstLevel(firstLevelKeys, fieldsForGroup)
+			fieldsForGroup = getFieldsWithoutOmit(schema, fieldsForGroup)
+			fieldsForGroup = getFieldsForReorder(schema, fieldsForGroup)
+			fieldGroups.push
+				name: fieldGroupName
+				fields: fieldsForGroup
 
-			is_wide_1 = false
-			is_wide_2 = false
+		finalFields = 
+			grouplessFields: grouplessFields
+			groupFields: fieldGroups
 
-			_.each sc_1, (value) ->
-				if value.autoform?.is_wide
-					is_wide_1 = true
-
-			_.each sc_2, (value) ->
-				if value.autoform?.is_wide
-					is_wide_2 = true
-
-			if is_wide_1
-				schemaFields.push keys.slice(i, i+1)
-				i += 1
-			else if !is_wide_1 and is_wide_2
-				childKeys = keys.slice(i, i+1)
-				childKeys.push undefined
-				schemaFields.push childKeys
-				i += 1
-			else if !is_wide_1 and !is_wide_2
-				childKeys = keys.slice(i, i+1)
-				if keys[i+1]
-					childKeys.push keys[i+1]
-				else
-					childKeys.push undefined
-				schemaFields.push childKeys
-				i += 2
-
-
-		return schemaFields
+		return finalFields
 
 	keyValue: (key) ->
 		record = Creator.getObjectRecord()
@@ -249,6 +307,9 @@ Template.creator_view.events
 			setTimeout ()->
 				$(".related-object-cell-edit").click()
 			, 1
+
+	'click .group-section-control': (event, template) ->
+		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 	'click .add-related-object-record': (event, template) ->
 		object_name = event.currentTarget.dataset.objectName

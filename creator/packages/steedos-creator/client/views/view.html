@@ -131,26 +131,66 @@
 							{{#if detail_info_visible}}
 								{{#if showForm}}
 									{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
-										{{#each schemaFields}}
-											<div class="slds-grid view-page-section-row">
-												{{#each this}}
-													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-															{{#if this}}
-																<div class="test-id__field-label-container">
-																	<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+										{{#if schemaFields.grouplessFields}}
+											{{#each schemaFields.grouplessFields}}
+												<div class="slds-grid view-page-section-row">
+													{{#each this}}
+														<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+															<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+																{{#if this}}
+																	<div class="test-id__field-label-container">
+																		<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																	</div>
+																	<div class="slds-form-element__control slds-grid itemBody">
+																		<span class="test-id__field-value slds-form-element__static slds-grow">
+																			{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
+																		</span>
+																	</div>
+																{{/if}}
+															</div>
+														</div>
+													{{/each}}
+												</div>
+											{{/each}}
+										{{/if}}
+
+										{{#if schemaFields.groupFields}}
+											{{#each schemaFields.groupFields}}
+												{{#if this.fields}}
+													<div class="slds-section slds-is-open group-section">
+														<h3 class="slds-section__title group-section-control">
+															<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+															{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+															<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+															</button>
+														</h3>
+														<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+															{{#each this.fields}}
+																<div class="slds-grid view-page-section-row">
+																	{{#each this}}
+																		<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+																			<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+																				{{#if this}}
+																					<div class="test-id__field-label-container">
+																						<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																					</div>
+																					<div class="slds-form-element__control slds-grid itemBody">
+																						<span class="test-id__field-value slds-form-element__static slds-grow">
+																							{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
+																						</span>
+																					</div>
+																				{{/if}}
+																			</div>
+																		</div>
+																	{{/each}}
 																</div>
-																<div class="slds-form-element__control slds-grid itemBody">
-																	<span class="test-id__field-value slds-form-element__static slds-grow">
-																		{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
-																	</span>
-																</div>
-															{{/if}}
+															{{/each}}
 														</div>
 													</div>
-												{{/each}}
-											</div>
-										{{/each}}
+												{{/if}}
+											{{/each}}
+										{{/if}}
+
 									{{/autoForm}}
 								{{/if}}
 							{{/if}}

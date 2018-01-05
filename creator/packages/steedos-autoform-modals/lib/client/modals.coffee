@@ -21,6 +21,86 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
+getFieldsWithNoGroup = (schema)->
+	fields = _.map(schema, (field, fieldName) ->
+  		return (!field.autoform or !field.autoform.group) and fieldName
+	)
+	fields = _.compact(fields)
+	return fields
+
+getSortedFieldGroupNames = (schema)->
+	names = _.map(schema, (field) ->
+ 		return field.autoform and field.autoform.group
+	)
+	names = _.compact(names)
+	names = _.unique(names)
+	return names.sort()
+
+getFieldsForGroup = (schema, groupName) ->
+  	fields = _.map(schema, (field, fieldName) ->
+    	return field.autoform and field.autoform.group == groupName and fieldName
+  	)
+  	fields = _.compact(fields)
+  	return fields
+
+getFieldsWithoutOmit = (schema, keys) ->
+	keys = _.map(keys, (key) ->
+		field = _.pick(schema, key)
+		if field[key].autoform?.omit
+			return false
+		else 
+			return key
+	)
+	keys = _.compact(keys)
+	return keys
+
+getFieldsInFirstLevel = (firstLevelKeys, keys) ->
+	keys = _.map(keys, (key) ->
+		if _.indexOf(firstLevelKeys, key) > -1
+			return key
+		else
+			return false
+	)
+	keys = _.compact(keys)
+	return keys
+
+getFieldsForReorder = (schema, keys) ->
+	fields = []
+	i = 0
+	while i < keys.length
+		sc_1 = _.pick(schema, keys[i])
+		sc_2 = _.pick(schema, keys[i+1])
+
+		is_wide_1 = false
+		is_wide_2 = false
+
+		_.each sc_1, (value) ->
+			if value.autoform?.is_wide
+				is_wide_1 = true
+
+		_.each sc_2, (value) ->
+			if value.autoform?.is_wide
+				is_wide_2 = true
+
+		if is_wide_1
+			fields.push keys.slice(i, i+1)
+			i += 1
+		else if !is_wide_1 and is_wide_2
+			childKeys = keys.slice(i, i+1)
+			childKeys.push undefined
+			fields.push childKeys
+			i += 1
+		else if !is_wide_1 and !is_wide_2
+			childKeys = keys.slice(i, i+1)
+			if keys[i+1]
+				childKeys.push keys[i+1]
+			else
+				childKeys.push undefined
+			fields.push childKeys
+			i += 2
+	
+	return fields
+
 Template.autoformModals.rendered = ->
 
 	self = this;
@@ -144,6 +224,11 @@ Template.autoformModals.events
 	'click button.btn-insert-and-create': (event,template)->
 		$("#afModal #cmForm").submit()
 		Session.set 'cmShowAgain', true
+	
+	'click .group-section-control': (event, template) ->
+		event.preventDefault()
+		event.stopPropagation()
+		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 
 helpers =
@@ -218,58 +303,53 @@ helpers =
 
 	schemaFields: ()->
 		cmCollection = Session.get 'cmCollection'
+		keys = []
 		if cmCollection
 			schema = collectionObj(cmCollection).simpleSchema()._schema
-			firstLevelSchema = collectionObj(cmCollection).simpleSchema()._firstLevelSchemaKeys
+			firstLevelKeys = collectionObj(cmCollection).simpleSchema()._firstLevelSchemaKeys
 			if Session.get 'cmFields'
-				firstLevelSchema = [Session.get('cmFields')]
+				firstLevelKeys = [Session.get('cmFields')]
 			if Session.get 'cmOmitFields'
-				firstLevelSchema = _.difference firstLevelSchema, [Session.get('cmOmitFields')]
+				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
+			
+			console.log firstLevelKeys
 
-			keys = []
-			schemaFields = []
-			i = 0
 			_.each schema, (value, key) ->
-				if (_.indexOf firstLevelSchema, key) > -1
+				if (_.indexOf firstLevelKeys, key) > -1
 					if !value.autoform?.omit
 						keys.push key
 
 			if keys.length == 1
-				schemaFields.push keys
-				return schemaFields
+				finalFields = 
+					grouplessFields: [keys]
+				return finalFields
 
-			while i < keys.length
-				sc_1 = _.pick(schema, keys[i])
-				sc_2 = _.pick(schema, keys[i+1])
-				is_wide_1 = false
-				is_wide_2 = false
-				_.each sc_1, (value) ->
-					if value.autoform?.is_wide
-						is_wide_1 = true
+			fieldGroups = []
+			fieldsForGroup = []
 
-				_.each sc_2, (value) ->
-					if value.autoform?.is_wide
-						is_wide_2 = true
+			grouplessFields = []
+			grouplessFields = getFieldsWithNoGroup(schema)
+			grouplessFields = getFieldsInFirstLevel(firstLevelKeys, grouplessFields)
+			grouplessFields = getFieldsWithoutOmit(schema, grouplessFields)
+			grouplessFields = getFieldsForReorder(schema, grouplessFields)
 
-				if is_wide_1
-					schemaFields.push keys.slice(i, i+1)
-					i += 1
-				else if !is_wide_1 and is_wide_2
-					childKeys = keys.slice(i, i+1)
-					childKeys.push undefined
-					schemaFields.push childKeys
-					i += 1
-				else if !is_wide_1 and !is_wide_2
-					childKeys = keys.slice(i, i+1)
-					if keys[i+1]
-						childKeys.push keys[i+1]
-					else
-						childKeys.push undefined
-					schemaFields.push childKeys
-					i += 2
-					
-			console.log schemaFields
-			return schemaFields
+			fieldGroupNames = getSortedFieldGroupNames(schema)
+			_.each fieldGroupNames, (fieldGroupName) ->
+				fieldsForGroup = getFieldsForGroup(schema, fieldGroupName)
+				fieldsForGroup = getFieldsInFirstLevel(firstLevelKeys, fieldsForGroup)
+				fieldsForGroup = getFieldsWithoutOmit(schema, fieldsForGroup)
+				fieldsForGroup = getFieldsForReorder(schema, fieldsForGroup)
+				fieldGroups.push
+					name: fieldGroupName
+					fields: fieldsForGroup
+
+			finalFields = 
+				grouplessFields: grouplessFields
+				groupFields: fieldGroups
+
+			console.log finalFields
+
+			return finalFields
 
 
 Template.autoformModals.helpers helpers
