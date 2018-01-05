@@ -462,9 +462,8 @@ Creator.Objects.archives_administrative_records =
 			type:"lookup"
 			label:"归档部门"
 			defaultValue: ""
-			description: ""
 			reference_to:"archives_dept"
-			inlineHelpText: ""
+			group:"内容描述"
 
 		produce_flag:
 			type:"select",
@@ -484,31 +483,29 @@ Creator.Objects.archives_administrative_records =
 			label:"主办部室",
 			is_wide:true
 			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+			group:"内容描述"
 
 		annotation:
 			type:"textarea",
 			label:"备注",
 			is_wide:true
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+			group:"内容描述"
 			
 		storage_location:
 			type:"text"
 			label:"存放位置"
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""	
+			omit:true
 
 		reference:
 			type: "text"
 			label:"参见"
+			omit:true
 		#1表示未接收，2：已接收 3：已出借 4：已归还 5：已销毁 6：已移交
 		status:
-			type:"text"
+			type:"number"
 			label:""
+			defaultValue:1
+			omit:true
 
 	list_views:
 		default:
@@ -523,6 +520,7 @@ Creator.Objects.archives_administrative_records =
 		all:
 			label: "全部档案"
 			filter_scope: "space"
+			filters: [["status", "$eq", 2]]
 		receive:
 			label:"待接收档案"
 			filter_scope: "space"
@@ -530,16 +528,23 @@ Creator.Objects.archives_administrative_records =
 
 	permissions:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: true 
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: true 
+			modifyAllRecords: true
+			viewAllRecords: true
+	actions: 
+		receive:
+			label: "接收"
+			visible: true
+			on: "list"
+			todo:()-> 
+				alert("you clicked on receive button")
