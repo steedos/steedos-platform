@@ -525,17 +525,17 @@ Creator.Objects.archive_records =
 		all:
 			label: "全部档案"
 			filter_scope: "space"
-			filters: [["status", "$eq", 2]]
+			filters: [["is_receive", "$eq", true]]
 		receive:
 			label:"待接收档案"
 			filter_scope: "space"
-			filters: [["status", "$eq", 1]]
+			filters: [["is_receive", "$eq", false]]
 
-	permissions:
+	permission_set:
 		user:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true 
@@ -544,8 +544,8 @@ Creator.Objects.archive_records =
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true
+			modifyAllRecords: false
+			viewAllRecords: true 
 	actions: 
 		receive:
 			label: "接收"
@@ -554,3 +554,10 @@ Creator.Objects.archive_records =
 			todo:()-> 
 				Creator.TabularSelectedIds?["archive_records"]
 				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])
+	triggers:
+		
+		"before.insert.server.default": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.is_receive = false
