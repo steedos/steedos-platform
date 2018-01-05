@@ -1,5 +1,5 @@
-Creator.Objects.informations = 
-	name: "informations"
+Creator.Objects.qhd_informations = 
+	name: "qhd_informations"
 	icon: "contact"
 	label: "信息上报"
 	fields:
@@ -7,32 +7,22 @@ Creator.Objects.informations =
 			type: "text"
 			label:"文件标题"
 			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
 			is_wide:true
 			is_name:true
 			required: true
 		company:
 			type: "text",
 			label:"报送公司"
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
 			required: true
 			is_wide:true
 		content:
 			type:"textarea",
-			label:"内容",
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
+			label:"内容"
 			required: true
 			is_wide:true
 		score_point:
 			type:"checkbox"
 			label:"得分点",
-			defaultValue: ""
-			description: ""
 			multiple:true
 			is_wide:true
 			options: [
@@ -41,13 +31,13 @@ Creator.Objects.informations =
 				{label: "正常使用", value: "领导批示"},
 				{label: "月度好信息", value: "月度好信息"}
 			]
-		isuse:
-			type:"boolean"
-			label:"是否采用"
-			defaultValue:"否"
+		# isuse:
+		# 	type:"boolean"
+		# 	label:"是否采用"
+		# 	defaultValue:"否"
 	list_views:
 		default:
-			columns: ["title", "content", "company","isuse","score_point","created","created_by"]
+			columns: ["title", "content", "company","score_point","created","created_by"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
@@ -71,5 +61,12 @@ Creator.Objects.informations =
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true 
+	# triggers:
+		
+	# 	"before.insert.server.default": 
+	# 		on: "server"
+	# 		when: "before.insert"
+	# 		todo: (userId, doc)->
+			
