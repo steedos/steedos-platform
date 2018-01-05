@@ -312,8 +312,6 @@ helpers =
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
 			
-			console.log firstLevelKeys
-
 			_.each schema, (value, key) ->
 				if (_.indexOf firstLevelKeys, key) > -1
 					if !value.autoform?.omit
