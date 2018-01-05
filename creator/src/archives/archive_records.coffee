@@ -1,5 +1,5 @@
-Creator.Objects.archives_records = 
-	name: "archives_records"
+Creator.Objects.archive_records = 
+	name: "archive_records"
 	icon: "orders"
 	label: "文书档案"
 	fields:
@@ -71,7 +71,7 @@ Creator.Objects.archives_records =
 			type:"lookup"
 			label:"类别号"
 			defaultValue: ""
-			reference_to: "archives_classification"
+			reference_to: "archive_classification"
 			required:true
 			group:"档号"
 
@@ -503,9 +503,11 @@ Creator.Objects.archives_records =
 		is_receive:
 			type:"boolean"
 			omit:true
-		received：
+		
+		received:
 			type:"datetime"
 			omit:true
+		
 		received_by:
 			type:"text"
 			omit:true
@@ -550,13 +552,5 @@ Creator.Objects.archives_records =
 			visible: true
 			on: "list"
 			todo:()-> 
-				Creator.TabularSelectedIds?["archives_administrative_records"]
-				Meteor.call("archives_receive",Creator.TabularSelectedIds?["archives_administrative_records"])
-	triggers:	
-		"before.insert.server.default": 
-			on: "server"
-			when: "before.insert"
-			todo: (userId, doc)->
-				doc.is_receive = false
-				doc.received = new Date()
-				doc.received_by = Meteor.userId()		
+				Creator.TabularSelectedIds?["archive_records"]
+				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])

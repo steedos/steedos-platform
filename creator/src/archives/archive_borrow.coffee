@@ -1,5 +1,5 @@
-Creator.Objects.archives_borrow = 
-	name: "archives_borrow"
+Creator.Objects.archive_borrow = 
+	name: "archive_borrow"
 	icon: "file"
 	label: "借阅管理"
 	fields:
@@ -84,7 +84,7 @@ Creator.Objects.archives_borrow =
 		title:
 			type:"lookup"
 			label:"题名"
-			reference_to:"archives_records"
+			reference_to:"archive_records"
 			is_wide:true
 			sortable:true
 		detail_status:

@@ -1,12 +1,12 @@
-Creator.Objects.archives_classification = 
-	name: "archives_classification"
+Creator.Objects.archive_classification = 
+	name: "archive_classification"
 	icon: "product_item"
 	label: "档案门类"
 	fields:
-		parentname:
+		parent:
 			type:"lookup"
 			label:"所属分类"
-			reference_to: "archives_classification"
+			reference_to: "archive_classification"
 			sortable:true
 
 		name:
@@ -17,6 +17,6 @@ Creator.Objects.archives_classification =
 		
 	list_views:
 		default:
-			columns:["parentname","name"]
+			columns:["parent","name"]
 		all:
 			label:"全部分类"
