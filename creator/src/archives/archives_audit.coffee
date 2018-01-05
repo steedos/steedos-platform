@@ -1,5 +1,5 @@
-Creator.Objects.archives_business = 
-	name: "archives_business"
+Creator.Objects.archives_audit = 
+	name: "archives_audit"
 	icon: "campaign"
 	label: "审计跟踪"
 	fields:
@@ -37,7 +37,7 @@ Creator.Objects.archives_business =
 		action_administrative_records_id:
 			label: "行为对象"
 			type: "master_detail"
-			reference_to: "archives_administrative_records"
+			reference_to: "archives_records"
 	list_views:
 		default:
 			columns: ["business_status", "business_activity","action_time","action_administrative_records_id","action_mandate",

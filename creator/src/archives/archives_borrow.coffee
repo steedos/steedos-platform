@@ -84,7 +84,7 @@ Creator.Objects.archives_borrow =
 		title:
 			type:"lookup"
 			label:"题名"
-			reference_to:"archives_administrative_records"
+			reference_to:"archives_records"
 			is_wide:true
 			sortable:true
 		detail_status:

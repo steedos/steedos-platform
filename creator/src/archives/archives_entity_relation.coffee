@@ -46,7 +46,7 @@ Creator.Objects.archives_entity_relation =
 		administrative_records_id:
 			label: "文书档案"
 			type: "master_detail"
-			reference_to: "archives_administrative_records"
+			reference_to: "archives_records"
 	list_views:
 		default:
 			columns:["entity_identifier","relation_type","relation","relation_description"]

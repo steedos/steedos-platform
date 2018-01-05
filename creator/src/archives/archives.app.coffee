@@ -3,4 +3,4 @@ Creator.Apps.archives =
 	name: "档案管理"
 	icon: "document" 
 	icon_slds: "document" 
-	objects: ["archives_administrative_records","archives_dept","archives_classification","archives_borrow","archives_entity_relation","archives_fonds_identifier","archives_business"]
+	objects: ["archives_records","archives_dept","archives_classification","archives_borrow","archives_entity_relation","archives_fonds","archives_audit"]

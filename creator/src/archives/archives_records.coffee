@@ -1,5 +1,5 @@
-Creator.Objects.archives_administrative_records = 
-	name: "archives_administrative_records"
+Creator.Objects.archives_records = 
+	name: "archives_records"
 	icon: "orders"
 	label: "文书档案"
 	fields:
@@ -459,10 +459,9 @@ Creator.Objects.archives_administrative_records =
 			omit:true
 		
 		archive_dept:
-			type:"lookup"
+			type:"text"
 			label:"归档部门"
 			defaultValue: ""
-			reference_to:"archives_dept"
 			group:"内容描述"
 
 		produce_flag:
@@ -500,11 +499,15 @@ Creator.Objects.archives_administrative_records =
 			type: "text"
 			label:"参见"
 			omit:true
-		#1表示未接收，2：已接收 3：已出借 4：已归还 5：已销毁 6：已移交
-		status:
-			type:"number"
-			label:""
-			defaultValue:1
+		#是否接收，默认是未接收
+		is_receive:
+			type:"boolean"
+			omit:true
+		received：
+			type:"datetime"
+			omit:true
+		received_by:
+			type:"text"
 			omit:true
 
 	list_views:
@@ -547,4 +550,13 @@ Creator.Objects.archives_administrative_records =
 			visible: true
 			on: "list"
 			todo:()-> 
-				alert("you clicked on receive button")
+				Creator.TabularSelectedIds?["archives_administrative_records"]
+				Meteor.call("archives_receive",Creator.TabularSelectedIds?["archives_administrative_records"])
+	triggers:	
+		"before.insert.server.default": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.is_receive = false
+				doc.received = new Date()
+				doc.received_by = Meteor.userId()		
