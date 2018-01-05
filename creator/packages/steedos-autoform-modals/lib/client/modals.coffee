@@ -345,8 +345,6 @@ helpers =
 				grouplessFields: grouplessFields
 				groupFields: fieldGroups
 
-			console.log finalFields
-
 			return finalFields
 
 

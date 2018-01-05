@@ -35,8 +35,8 @@
 						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
 							<div class="slds-button-group" role="group">
 								{{#each actions}}
-									<li class="slds-button slds-button--neutral slds-truncate">
-										<a href="javascript:void(0);" title="{{this.label}}" class=" list-action-custom">
+									<li class="slds-button slds-button--neutral slds-truncate list-action-custom">
+										<a href="javascript:void(0);" title="{{this.label}}" class="">
 											<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
 										</a>
 									</li>
@@ -52,8 +52,8 @@
 										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 											<ul class="slds-dropdown__list slds-show">
 												 {{#each moreActions}}
-													<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-														<a href="javascript:void(0);" title="{{this.label}}" class=" list-action-custom" role="option" tabindex="-1">
+													<li class="slds-dropdown__item crm-header-menu-item list-action-custom" role="presentation">
+														<a href="javascript:void(0);" title="{{this.label}}" class="" role="option" tabindex="-1">
 															<span>{{this.label}}</span>
 														</a>
 													</li>
