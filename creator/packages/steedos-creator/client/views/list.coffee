@@ -8,6 +8,10 @@ Template.creator_list.helpers
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
 
+	collectionName: ()->
+		if Session.get("object_name")
+			return Creator.getObject(Session.get("object_name")).label
+
 	tabular_table: ()->
 		return Creator.getTable(Session.get("object_name"))
 

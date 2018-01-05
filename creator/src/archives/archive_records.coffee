@@ -1,7 +1,8 @@
 Creator.Objects.archive_records = 
 	name: "archive_records"
 	icon: "orders"
-	label: "文书档案"
+	label: "档案"
+	enable_search: true
 	fields:
 		archival_category_code:
 			type: "text"
@@ -68,7 +69,7 @@ Creator.Objects.archive_records =
 			group:"档号"
 
 		category_code:
-			type:"lookup"
+			type:"master_detail"
 			label:"类别号"
 			defaultValue: ""
 			reference_to: "archive_classification"

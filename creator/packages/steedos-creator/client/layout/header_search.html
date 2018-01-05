@@ -8,26 +8,58 @@
 				<input type="text" aria-activedescendant="" aria-autocomplete="list"
 					   aria-controls="global-search-list" autocomplete="off"
 					   class="slds-input slds-lookup__search-input" id="global-search"
-					   placeholder="Search" role="textbox"/>
+					   placeholder="Search in {{object_label}} and more..." role="textbox"/>
 			</div>
 			<div class="slds-lookup__menu" role="listbox" id="global-search-list">
 				<ul class="slds-lookup__list" role="group" aria-label="Recent Items">
-					<li role="presentation">
-						<h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">Recent Items</h3>
-					</li>
-			{{#each items}}
-				{{#with (record_object this._object_name)}}
-					<li role="presentation">
-						<a class="slds-lookup__item-action slds-media" id="option-{{@index}}" role="option" href="{{record_href ../_object_name ../_id}}">
-							{{> steedos_icon class="slds-icon slds-icon_small slds-media__figure" source="standard-sprite" name=icon}}
-							<span class="slds-media__body">
-								<span class="slds-lookup__result-text">{{../name}}</span>
-								<span class="slds-lookup__result-meta slds-text-body_small">{{label}}</span>
-							</span>
-						</a>
-					</li>
-				{{/with}}
-			{{/each}}
+					{{#if is_search}}
+						<li role="presentation">
+							<a class="slds-lookup__item-action slds-media" id="option-00"  role="option" href="javascript:void(0);">
+								<span class="slds-lookup__item-action slds-lookup__item-action_label slds-text-body_small">
+									{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="search"}}
+									<span class="slds-truncate" title="'{{searchText}}'">"{{searchText}}"</span>
+								</span>
+							</a>
+						</li>
+						<li role="presentation">
+							<a class="slds-lookup__item-action slds-media" id="option-01"  role="option" href="javascript:void(0);">
+								<span class="slds-lookup__item-action slds-lookup__item-action_label slds-text-body_small">
+									{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="search"}}
+									<span class="slds-truncate" title="'{{searchText}}' in {{object_label}}">"{{searchText}}" in {{object_label}}</span>
+								</span>
+							</a>
+						</li>
+						{{#each searchItems}}
+							{{#with (record_object this._object_name)}}
+								<li role="presentation">
+									<a class="slds-lookup__item-action slds-media" id="option-{{@index}}" role="option" href="{{record_href ../_object_name ../_id}}">
+										{{> steedos_icon class="slds-icon slds-icon_small slds-media__figure" source="standard-sprite" name=icon}}
+										<span class="slds-media__body">
+											<span class="slds-lookup__result-text">{{../_name}}</span>
+											<span class="slds-lookup__result-meta slds-text-body_small">{{label}}</span>
+										</span>
+									</a>
+								</li>
+							{{/with}}
+						{{/each}}
+					{{else}}
+						<li role="presentation">
+							<h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">Recent Items</h3>
+						</li>
+						{{#each recentItems}}
+							{{#with (record_object this._object_name)}}
+								<li role="presentation">
+									<a class="slds-lookup__item-action slds-media" id="option-{{@index}}" role="option" href="{{record_href ../_object_name ../_id}}">
+										{{> steedos_icon class="slds-icon slds-icon_small slds-media__figure" source="standard-sprite" name=icon}}
+										<span class="slds-media__body">
+											<span class="slds-lookup__result-text">{{../_name}}</span>
+											<span class="slds-lookup__result-meta slds-text-body_small">{{label}}</span>
+										</span>
+									</a>
+								</li>
+							{{/with}}
+						{{/each}}
+					{{/if}}
 				</ul>
 			</div>
 		</div>

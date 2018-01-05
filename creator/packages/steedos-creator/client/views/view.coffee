@@ -82,6 +82,7 @@ Template.creator_view.onCreated ->
 	this.edit_fields = new ReactiveVar()
 	this.edit_collection = new ReactiveVar()
 	this.related_collection = new ReactiveVar()
+	this.collection_name = new ReactiveVar()
 
 Template.creator_view.onRendered ->
 	this.autorun ->
@@ -112,6 +113,9 @@ Template.creator_view.helpers
 
 	editCollection: ()->
 		return Template.instance()?.edit_collection?.get() || Session.get("action_editing_collection")
+
+	collectionName: ()->
+		return Template.instance().collection_name?.get()
 
 	schema: ()->
 		return Creator.getSchema(Session.get("object_name"))
@@ -265,8 +269,14 @@ Template.creator_view.helpers
 
 Template.creator_view.events
 
-	'click .list-action-custom': (event) ->
-		Creator.executeAction Session.get("object_name"), this
+	'click .list-action-custom': (event, template) ->
+		_self = this
+		collection_name = Creator.getObject(Session.get("object_name")).label
+		template.collection_name.set(collection_name)
+
+		setTimeout ()->
+			Creator.executeAction Session.get("object_name"), _self
+		,1 
 
 	'click .creator-view-tabs-link': (event) ->
 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
@@ -294,6 +304,7 @@ Template.creator_view.events
 	'click #creator-tabular .table-cell-edit': (event, template) ->
 		field = this.field_name
 		object_name = this.object_name
+		collection_name = Creator.getObject(object_name).label
 
 		dataTable = $(event.currentTarget).closest('table').DataTable()
 		tr = $(event.currentTarget).closest("tr")
@@ -301,6 +312,7 @@ Template.creator_view.events
 
 		if rowData
 			template.edit_fields.set(field)
+			template.collection_name.set(collection_name)
 			template.edit_collection.set("Creator.Collections.#{object_name}" )
 			Session.set 'cmDoc', rowData
 
@@ -313,6 +325,7 @@ Template.creator_view.events
 
 	'click .add-related-object-record': (event, template) ->
 		object_name = event.currentTarget.dataset.objectName
+		collection_name = Creator.getObject(object_name).label
 		collection = "Creator.Collections.#{object_name}"
 
 		relatedKey = ""
@@ -325,6 +338,7 @@ Template.creator_view.events
 			Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
 
 		template.related_collection.set(collection)
+		template.collection_name.set(collection_name)
 		setTimeout ->
 			$(".related-object-new").click()
 		, 1
@@ -344,10 +358,12 @@ Template.creator_view.events
 		# $(".creator-record-edit").click()
 		field = this.field_name
 		object_name = this.object_name
+		collection_name = Creator.getObject(object_name).label
 		doc = this.doc
 
 		if doc
 			template.edit_fields.set(field)
+			template.collection_name.set(collection_name)
 			template.edit_collection.set("Creator.Collections.#{object_name}" )
 			Session.set 'cmDoc', doc
 

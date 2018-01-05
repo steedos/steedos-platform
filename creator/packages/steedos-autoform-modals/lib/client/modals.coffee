@@ -356,12 +356,22 @@ Template.afModal.events
 
 		html = t.$('*').html()
 
+		if t.data.collectionName
+			if t.data.operation == "update"
+				title = "编辑#{t.data.collectionName}"
+			else if t.data.operation == "insert"
+				title = "新建#{t.data.collectionName}"
+			else if t.data.operation == "remove"
+				title = "删除#{t.data.collectionName}"
+		else
+			title = html
+
 		Session.set 'cmCollection', t.data.collection
 		Session.set 'cmOperation', t.data.operation
 		Session.set 'cmFields', t.data.fields
 		Session.set 'cmOmitFields', t.data.omitFields
 		Session.set 'cmButtonHtml', html
-		Session.set 'cmTitle', t.data.title or html
+		Session.set 'cmTitle', t.data.title or title
 		Session.set 'cmTemplate', t.data.template
 		Session.set 'cmLabelClass', t.data.labelClass or t.data['label-class']
 		Session.set 'cmInputColClass', t.data.inputColClass or t.data['input-col-class']

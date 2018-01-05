@@ -1,7 +1,8 @@
 Creator.Objects.archive_classification = 
 	name: "archive_classification"
 	icon: "product_item"
-	label: "档案门类"
+	label: "门类"
+	enable_search: true
 	fields:
 		parent:
 			type:"lookup"

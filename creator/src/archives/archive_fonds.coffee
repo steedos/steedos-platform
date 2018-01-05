@@ -1,7 +1,8 @@
 Creator.Objects.archive_fonds = 
 	name: "archive_fonds"
 	icon: "flow"
-	label: "全宗管理"
+	label: "全宗"
+	enable_search: true
 	fields:
 		name:
 			type:"text"

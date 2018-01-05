@@ -2,6 +2,7 @@ Creator.Objects.organizations =
 	name: "organizations"
 	label: "Organizations"
 	icon: "groups"
+	enable_search: true
 	fields:
 		name: 
 			label: "Name"

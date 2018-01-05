@@ -37,7 +37,7 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 			col.render =  (val, type, doc) ->
 				return
 			col.createdCell = (cell, val, doc) ->
-				$(cell).attr("data-label", field_name)
+				$(cell).attr("data-label", field.label)
 				Blaze.renderWithData(Template.creator_table_cell, {_id: doc._id, val: val, doc: doc, field: field, field_name: field_name, object_name:object_name}, cell);
 
 			cols.push(col)

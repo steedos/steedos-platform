@@ -10,6 +10,7 @@ Creator.Object = (options)->
 	self.label = options.label
 	self.icon = options.icon
 	self.description = options.description
+	self.enable_search = options.enable_search
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	

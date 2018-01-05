@@ -30,14 +30,44 @@ Meteor.methods
 
 			record_object_collection = Creator.getCollection(item.object_name)
 
-			fields = {_id: 1}
-
-			fields[record_object.NAME_FIELD_KEY] = 1
-
 			if record_object && record_object_collection
+				fields = {_id: 1}
+
+				fields[record_object.NAME_FIELD_KEY] = 1
+
 				record = record_object_collection.findOne(item.record_id, {fields: fields})
 				if record
-					record._object_name = item.object_name
-					data.push record
+					data.push {_id: record._id, _name: record[record_object.NAME_FIELD_KEY], _object_name: item.object_name}
+
+		return data
+
+	'object_record_search': (options)->
+		data = new Array()
+
+		object_name = options.objectName
+
+		searchText = options.searchText
+
+		if searchText
+
+			_object = Creator.getObject(object_name)
+
+			_object_collection = Creator.getCollection(object_name)
+
+			if _object && _object_collection
+
+				_object_name_key = _object.NAME_FIELD_KEY
+
+				query = {}
+				query[_object_name_key] = {$regex: searchText}
+				query.space = {$in: [options.space]}
+
+				fields = {_id: 1}
+				fields[_object_name_key] = 1
+
+				records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
+
+				records.forEach (record)->
+					data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
 
 		return data
