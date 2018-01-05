@@ -22,8 +22,9 @@ Creator.Objects.archives_business =
 			label:"行为时间"
 			sortable:true
 		action_user:
-			type:"text"
+			type:"lookup"
 			label:"行为人员"
+			reference_to:"users"
 		action_mandate:
 			type: "textarea"
 			label:"行为依据"
