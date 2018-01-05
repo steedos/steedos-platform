@@ -34,7 +34,7 @@ getSortedFieldGroupNames = (schema)->
 	)
 	names = _.compact(names)
 	names = _.unique(names)
-	return names.sort()
+	return names
 
 getFieldsForGroup = (schema, groupName) ->
   	fields = _.map(schema, (field, fieldName) ->
