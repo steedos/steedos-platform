@@ -46,12 +46,19 @@ if Meteor.isDevelopment
 				group: "filters测试区",
 			archives_files_clerical:
 				type: "lookup"
-				reference_to: "archives_administrative_records"
+				reference_to: "archive_records"
 				group: "is_name测试区"
 				is_wide: true
 			boolean:
 				label: 'boolean值测试'
 				type: "boolean"
+			company:
+				type: "text",
+				label:"报送公司"
+				defaultValue: "{user.organization.name}"
+				required: true
+				is_wide:true
+				group: "默认值为公式：当前用户主部门"
 
 		list_views:
 			default:
