@@ -155,8 +155,11 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.is_wide = true
 
 		if field.defaultValue
-			fs.autoform.defaultValue = ()->
-				return Creator.evaluateFormula(field.defaultValue)
+			if FormulaEngine.checkFormula(field.defaultValue)
+				fs.autoform.defaultValue = ()->
+					return FormulaEngine.run(field.defaultValue)
+			else
+				fs.autoform.defaultValue = field.defaultValue
 
 		if field.readonly
 			fs.autoform.readonly = true

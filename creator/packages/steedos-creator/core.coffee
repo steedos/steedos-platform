@@ -120,13 +120,8 @@ Creator.evaluateFormula = (formular, context)->
 	if !_.isString(formular)
 		return formular
 
-	formular = formular.replace /{userId}/g, Meteor.userId()
-	formular = formular.replace /{spaceId}/g, Session.get("spaceId")
-
-	if _.isObject(context)
-		_.keys(context).forEach (key)->
-			reg = new RegExp("{" + key + "}", "g");
-			formular = formular.replace(reg, context[key]);
+	if FormulaEngine.checkFormula(formular)
+		return FormulaEngine.run(formular, context)
 
 	return formular				
 

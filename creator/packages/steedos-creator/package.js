@@ -110,6 +110,7 @@ Package.onUse(function(api) {
     api.addFiles('lib/actions.coffee');
     api.addFiles('lib/permission_sets.coffee');
     api.addFiles('lib/listviews.coffee');
+	api.addFiles('lib/formula_engine.coffee');
 
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
