@@ -3,6 +3,7 @@ Creator.Objects.crm_customers =
 	label: "客户"
 	icon: "account"
 	enable_files: true
+	enable_search: true
 	fields:
 		name: 
 			label: "名称"
