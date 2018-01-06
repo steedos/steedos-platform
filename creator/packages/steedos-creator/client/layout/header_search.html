@@ -9,6 +9,11 @@
 					   aria-controls="global-search-list" autocomplete="off"
 					   class="slds-input slds-lookup__search-input" id="global-search"
 					   placeholder="Search in {{object_label}} and more..." role="textbox"/>
+				<div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small {{#unless is_searching}}slds-hide{{/unless}}" style="left: auto;right: 0px">
+					<span class="slds-assistive-text">Loading</span>
+					<div class="slds-spinner__dot-a"></div>
+					<div class="slds-spinner__dot-b"></div>
+				</div>
 			</div>
 			<div class="slds-lookup__menu" role="listbox" id="global-search-list">
 				<ul class="slds-lookup__list" role="group" aria-label="Recent Items">

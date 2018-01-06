@@ -3,6 +3,7 @@ Template.headerSearch.onCreated ()->
 	this.searchText = new ReactiveVar()
 	this.recentItems = new ReactiveVar([])
 	this.searchItems = new ReactiveVar([])
+	this.is_searching = new ReactiveVar(false)
 	self = this;
 	this.inputFocus = ()->
 		Meteor.defer ()->
@@ -13,10 +14,12 @@ Template.headerSearch.onCreated ()->
 #		this.clearSearchItems()
 		searchText =this.searchText.get()
 		if searchText
+			self.is_searching.set(true)
 			Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
 				if error
 					console.error('object_record_search method error:', error);
 				self.searchItems.set(result)
+				self.is_searching.set(false)
 
 	this.clearSearchItems = ()->
 		this.searchItems.set([])
@@ -57,6 +60,10 @@ Template.headerSearch.helpers
 					reg = new RegExp(keyword, "g")
 					label = label.replace(reg, '<mark>' + keyword + '</mark>')
 		return label
+
+	is_searching: ()->
+		return Template.instance().is_searching.get()
+
 Template.headerSearch.events
 	'click #global-search': (e, t)->
 		t.openItem.set(true)
