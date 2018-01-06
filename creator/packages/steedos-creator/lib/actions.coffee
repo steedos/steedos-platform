@@ -25,12 +25,22 @@ if Meteor.isClient
 	Creator.actions 
 		# 在此定义全局 actions
 		"standard_new": (fields)->
-			$(".creator-add").click()
+			Meteor.defer ()->
+				$(".creator-add").click()
 			return 
 
 		"standard_edit": (fields)->
-			$(".creator-record-edit").click()
-			return 
+			console.log 'click .list-action-custom========339922'
+			console.log 'click .list-action-custom========339922', this
+			record_id = this.record_id
+			object_name = this.object_name
+
+			if record_id
+				Session.set 'action_object_name', object_name
+				Session.set 'action_record_id', record_id
+
+				Meteor.defer ()->
+					$(".btn.creator-edit").click()
 
 		"standard_delete": (fields)->
 			object_name = Session.get('object_name')
@@ -60,9 +70,11 @@ if Meteor.isClient
 			object_name = this.object_name
 
 			if record_id
-				Session.set 'editing_object_name', object_name
-				Session.set 'editing_record_id', record_id
-				$(".btn.creator-edit").click()
+				Session.set 'action_object_name', object_name
+				Session.set 'action_record_id', record_id
+
+				Meteor.defer ()->
+					$(".btn.creator-edit").click()
 		
 		"standard_list_item_delete": (fields)->
 			record_id = this.record_id
@@ -90,14 +102,11 @@ if Meteor.isClient
 			object_name = this.object_name
 
 			if record_id
-				Session.set 'editing_object_name', object_name
-				Session.set 'editing_record_id', record_id
+				Session.set 'action_object_name', object_name
+				Session.set 'action_record_id', record_id
 
-				collection = "Creator.Collections.#{object_name}"
-				Session.set "action_editing_collection", collection
-				setTimeout ->
-					$(".related-object-row-edit").click()
-				, 1
+				Meteor.defer ()->
+					$(".btn.creator-edit").click()
 		
 		"standard_related_list_item_delete": (fields)->
 			record_id = this.record_id

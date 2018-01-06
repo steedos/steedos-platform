@@ -79,10 +79,9 @@ getFieldsForReorder = (schema, keys) ->
 	return fields
 
 Template.creator_view.onCreated ->
-	this.edit_fields = new ReactiveVar()
-	this.edit_collection = new ReactiveVar()
-	this.related_collection = new ReactiveVar()
-	this.collection_name = new ReactiveVar()
+	# this.edit_collection = new ReactiveVar()
+	# this.related_collection = new ReactiveVar()
+	# this.collection_name = new ReactiveVar()
 
 Template.creator_view.onRendered ->
 	this.autorun ->
@@ -108,14 +107,14 @@ Template.creator_view.helpers
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
 
-	editFields: ()->
-		return Template.instance()?.edit_fields?.get()
+	# editFields: ()->
+	# 	return Template.instance()?.edit_fields?.get()
 
-	editCollection: ()->
-		return Template.instance()?.edit_collection?.get() || Session.get("action_editing_collection")
+	# editCollection: ()->
+	# 	return Template.instance()?.edit_collection?.get() || Session.get("action_collection")
 
-	collectionName: ()->
-		return Template.instance().collection_name?.get()
+	# collectionName: ()->
+	# 	return Template.instance().collection_name?.get()
 
 	schema: ()->
 		return Creator.getSchema(Session.get("object_name"))
@@ -228,8 +227,8 @@ Template.creator_view.helpers
 	related_object: ()->
 		return Creator.Objects[this.object_name]
 
-	related_collection: ()->
-		return Template.instance()?.related_collection?.get()
+	# related_collection: ()->
+	# 	return Template.instance()?.related_collection?.get()
 
 	allowCreate: ()->
 		return Creator.getPermissions(this.object_name).allowCreate
@@ -237,8 +236,8 @@ Template.creator_view.helpers
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
 
-	doc: ()->
-		return Session.get("editing_record_id")
+	# doc: ()->
+	# 	return Session.get("action_record_id")
 
 	actions: ()->
 		obj = Creator.getObject()
@@ -270,13 +269,16 @@ Template.creator_view.helpers
 Template.creator_view.events
 
 	'click .list-action-custom': (event, template) ->
-		_self = this
-		collection_name = Creator.getObject(Session.get("object_name")).label
-		template.collection_name.set(collection_name)
-
-		setTimeout ()->
-			Creator.executeAction Session.get("object_name"), _self
-		,1 
+		console.log 'click .list-action-custom========33'
+		id = Creator.getObjectRecord()._id
+		objectName = Session.get("object_name")
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Creator.executeAction objectName, this, id
 
 	'click .creator-view-tabs-link': (event) ->
 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")
@@ -302,6 +304,7 @@ Template.creator_view.events
 		$(".table-cell-edit", event.currentTarget).click();
 
 	'click #creator-tabular .table-cell-edit': (event, template) ->
+		console.log 'click .table-cell-edit field:========34=='
 		field = this.field_name
 		object_name = this.object_name
 		collection_name = Creator.getObject(object_name).label
@@ -311,19 +314,21 @@ Template.creator_view.events
 		rowData = dataTable.row(tr).data()
 
 		if rowData
-			template.edit_fields.set(field)
-			template.collection_name.set(collection_name)
-			template.edit_collection.set("Creator.Collections.#{object_name}" )
+			Session.set("action_fields", field)
+			Session.set("action_collection", "Creator.Collections.#{object_name}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", false)
 			Session.set 'cmDoc', rowData
 
-			setTimeout ()->
-				$(".related-object-cell-edit").click()
-			, 1
+			Meteor.defer ()->
+				console.log 'click .table-cell-edit field:==========1155=='
+				$(".btn.creator-edit").click()
 
 	'click .group-section-control': (event, template) ->
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 	'click .add-related-object-record': (event, template) ->
+		console.log 'click .add-related-object-record===11'
 		object_name = event.currentTarget.dataset.objectName
 		collection_name = Creator.getObject(object_name).label
 		collection = "Creator.Collections.#{object_name}"
@@ -337,17 +342,38 @@ Template.creator_view.events
 		if relatedKey
 			Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
 
-		template.related_collection.set(collection)
-		template.collection_name.set(collection_name)
-		setTimeout ->
-			$(".related-object-new").click()
-		, 1
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", collection)
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Meteor.defer ()->
+			$(".creator-add").click()
+		return 
+
+		
+		# actionKey = event.currentTarget.dataset.actionKey
+		# objectName = event.currentTarget.dataset.objectName
+		# id = event.currentTarget.dataset.id
+		# object = Creator.getObject(objectName)
+		# action = object.actions[actionKey]
+		# collection_name = object.label
+		# Session.set("action_fields", undefined)
+		# Session.set("action_collection", "Creator.Collections.#{objectName}")
+		# Session.set("action_collection_name", collection_name)
+		# Session.set("action_save_and_insert", true)
 
 	'click .list-item-action': (event, template) ->
+		console.log 'click .list-item-action'
 		actionKey = event.currentTarget.dataset.actionKey
 		objectName = event.currentTarget.dataset.objectName
 		id = event.currentTarget.dataset.id
-		action = Creator.getObject(objectName).actions[actionKey]
+		object = Creator.getObject(objectName)
+		action = object.actions[actionKey]
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
 		Creator.executeAction objectName, action, id
 
 	'click .slds-table td': (event)->
@@ -362,14 +388,15 @@ Template.creator_view.events
 		doc = this.doc
 
 		if doc
-			template.edit_fields.set(field)
-			template.collection_name.set(collection_name)
-			template.edit_collection.set("Creator.Collections.#{object_name}" )
+			Session.set("action_fields", field)
+			Session.set("action_collection", "Creator.Collections.#{object_name}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", false)
 			Session.set 'cmDoc', doc
 
-			setTimeout ()->
-				$(".related-object-cell-edit").click()
-			, 1
+			Meteor.defer ()->
+				console.log 'click .table-cell-edit field:==========115599'
+				$(".btn.creator-edit").click()
 
 	'change .btn-upload-file': (event, template)->
 		files = event.target.files

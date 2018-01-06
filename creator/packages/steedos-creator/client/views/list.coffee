@@ -1,5 +1,5 @@
 Template.creator_list.onCreated ->
-	this.edit_fields = new ReactiveVar()
+	# this.edit_fields = new ReactiveVar()
 
 Template.creator_list.helpers Creator.helpers
 
@@ -8,9 +8,9 @@ Template.creator_list.helpers
 	collection: ()->
 		return "Creator.Collections." + Session.get("object_name")
 
-	collectionName: ()->
-		if Session.get("object_name")
-			return Creator.getObject(Session.get("object_name")).label
+	# collectionName: ()->
+	# 	if Session.get("object_name")
+	# 		return Creator.getObject(Session.get("object_name")).label
 
 	tabular_table: ()->
 		return Creator.getTable(Session.get("object_name"))
@@ -21,8 +21,8 @@ Template.creator_list.helpers
 			return permissions[permissionName]
 
 
-	fields: ->
-		return Template.instance()?.edit_fields.get()
+	# fields: ->
+	# 	return Template.instance()?.edit_fields.get()
 
 
 	selector: ()->
@@ -87,7 +87,7 @@ Template.creator_list.helpers
 		return Session.get("list_view_visible")
 
 	doc: ()->
-		return Session.get("editing_record_id")
+		return Session.get("action_record_id")
 
 	actions: ()->
 		obj = Creator.getObject()
@@ -113,7 +113,14 @@ Template.creator_list.events
 	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
 
 	'click .list-action-custom': (event) ->
-		Creator.executeAction Session.get("object_name"), this
+		objectName = Session.get("object_name")
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Creator.executeAction objectName, this
 
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)
@@ -128,25 +135,37 @@ Template.creator_list.events
 		actionKey = event.currentTarget.dataset.actionKey
 		objectName = event.currentTarget.dataset.objectName
 		id = event.currentTarget.dataset.id
-		action = Creator.getObject(objectName).actions[actionKey]
+		object = Creator.getObject(objectName)
+		action = object.actions[actionKey]
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
 		Creator.executeAction objectName, action, id
 
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
-
+		objectName = Session.get("object_name")
+		collection_name = Creator.getObject(objectName).label
 		dataTable = $(event.currentTarget).closest('table').DataTable()
 		tr = $(event.currentTarget).closest("tr")
 		rowData = dataTable.row(tr).data()
 
+		console.log 'click .table-cell-edit rowData:', rowData
+		console.log 'click .table-cell-edit field:', field
 		if rowData
-			template.edit_fields.set(field)
+			Session.set("action_fields", field)
+			Session.set("action_collection", "Creator.Collections.#{objectName}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", false)
 			Session.set 'cmDoc', rowData
 			Session.set 'cmIsMultipleUpdate', true
-			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[Session.get("object_name")]
-
-			setTimeout ()->
-				$(".edit-list-table-cell").click()
-			, 1
+			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
+			console.log 'click .table-cell-edit field:=========='
+			Meteor.defer ()->
+				console.log 'click .table-cell-edit field:==========1155'
+				$(".btn.creator-edit").click()
 
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
