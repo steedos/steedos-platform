@@ -146,11 +146,11 @@ steedos:accounts@0.0.27
 steedos:accounts-phone@0.0.3
 steedos:accounts-t9n@1.14.2_6
 steedos:adminlte@2.3.12_3
-steedos:autoform@0.0.8
+steedos:autoform@0.0.9
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2
 steedos:autoform-lookup@0.3.10
-steedos:autoform-modals@0.3.9_9
+steedos:autoform-modals@0.3.9_10
 steedos:base@0.0.71
 steedos:cms@0.0.5
 steedos:creator@0.0.1
