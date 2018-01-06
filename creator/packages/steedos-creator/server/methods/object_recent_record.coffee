@@ -17,6 +17,45 @@ recent_aggregate = (created_by, _records, callback)->
 
 async_recent_aggregate = Meteor.wrapAsync(recent_aggregate)
 
+search_object = (space, object_name, searchText)->
+	data = new Array()
+
+	if searchText
+
+		_object = Creator.getObject(object_name)
+
+		_object_collection = Creator.getCollection(object_name)
+
+		if _object && _object_collection
+
+			_object_name_key = _object.NAME_FIELD_KEY
+
+			query = {}
+
+			reg = new RegExp(" ", "g")
+
+			search_Keywords = searchText.split(" ")
+
+			query_and = []
+
+			search_Keywords.forEach (keyword)->
+				subquery = {}
+				subquery[_object_name_key] = {$regex: keyword.trim()}
+				query_and.push subquery
+
+			query.$and = query_and
+			query.space = {$in: [space]}
+
+			fields = {_id: 1}
+			fields[_object_name_key] = 1
+
+			records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
+
+			records.forEach (record)->
+				data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+
+	return data
+
 Meteor.methods
 	'object_recent_record': ()->
 		data = new Array()
@@ -44,30 +83,12 @@ Meteor.methods
 	'object_record_search': (options)->
 		data = new Array()
 
-		object_name = options.objectName
-
 		searchText = options.searchText
+		space = options.space
 
-		if searchText
-
-			_object = Creator.getObject(object_name)
-
-			_object_collection = Creator.getCollection(object_name)
-
-			if _object && _object_collection
-
-				_object_name_key = _object.NAME_FIELD_KEY
-
-				query = {}
-				query[_object_name_key] = {$regex: searchText}
-				query.space = {$in: [options.space]}
-
-				fields = {_id: 1}
-				fields[_object_name_key] = 1
-
-				records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
-
-				records.forEach (record)->
-					data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+		_.forEach Creator.objectsByName, (_object, name)->
+			if _object.enable_search
+				object_record = search_object(space, _object.name, searchText)
+				data = data.concat(object_record)
 
 		return data

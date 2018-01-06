@@ -10,17 +10,13 @@ Template.headerSearch.onCreated ()->
 			$input.focus();
 
 	this.search = ()->
-		this.clearSearchItems()
+#		this.clearSearchItems()
 		searchText =this.searchText.get()
 		if searchText
-			_.forEach Creator.objectsByName, (_object, name)->
-				if _object.enable_search
-					Meteor.call 'object_record_search', {objectName: _object.name, searchText: searchText, space: Session.get("spaceId")}, (error, result)->
-						if error
-							console.error('object_record_search method error:', error);
-						searchItems = self.searchItems.get()
-						searchItems = searchItems.concat(result)
-						self.searchItems.set(searchItems)
+			Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
+				if error
+					console.error('object_record_search method error:', error);
+				self.searchItems.set(result)
 
 	this.clearSearchItems = ()->
 		this.searchItems.set([])
@@ -51,6 +47,16 @@ Template.headerSearch.helpers
 	searchItems: ()->
 		return Template.instance().searchItems.get()
 
+	highlight: (label)->
+		searchText = Template.instance().searchText.get()
+		if searchText && _.isString(searchText)
+			search_Keywords = searchText.split(" ")
+			search_Keywords.forEach (keyword)->
+				keyword = keyword.trim()
+				if keyword
+					reg = new RegExp(keyword, "g")
+					label = label.replace(reg, '<mark>' + keyword + '</mark>')
+		return label
 Template.headerSearch.events
 	'click #global-search': (e, t)->
 		t.openItem.set(true)
@@ -77,8 +83,18 @@ Template.headerSearch.events
 		, 500
 
 	'keyup input#global-search': (e, t)->
-		t.searchText.set($(e.target).val())
-		t.search()
+
+		searchText = $(e.target).val().trim()
+
+		if searchText == t.searchText.get()
+			return
+
+		Meteor.clearTimeout(t.search_timeoutId);
+
+		t.searchText.set(searchText)
+		t.search_timeoutId = Meteor.setTimeout ()->
+			t.search()
+		, 300
 
 	'click #option-00,#option-01': (e, t)->
 		toastr.info("TODO#68")
