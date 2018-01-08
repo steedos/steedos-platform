@@ -3,7 +3,6 @@ Creator.Objects.archive_records =
 	icon: "orders"
 	label: "档案"
 	enable_search: true
-	enable_files: true
 	fields:
 		archives_name:
 			type:"text"
@@ -541,6 +540,32 @@ Creator.Objects.archive_records =
 		received_by:
 			type:"text"
 			omit:true
+		#是否移交，默认是不存在，在“全部”视图下点击移交，进入“待移交”视图，此时is_transfer=false
+		#审核通过之后，is_transfer = true
+		is_transfer:
+			type:"boolean"
+			defaultValue:false
+			omit:true
+		transfered:
+			type:"datetime"
+			omit:true
+		transfered_by:
+			type:"text"
+			omit:true
+		
+		#是否销毁，默认是不存在，在“全部”视图下点击销毁，进入“待销毁”视图，此时is_destroy=false
+		#审核通过之后，is_transfer = true
+		is_destroy:
+			type:"boolean"
+			defaultValue:false
+			omit:true
+		destroyed:
+			type:"datetime"
+			omit:true
+		
+		destroyed_by:
+			type:"text"
+			omit:true
 		#如果是从OA归档过来的档案，则值为表单Id,否则不存在改字段
 		external_id:
 			type:"text"
@@ -565,7 +590,22 @@ Creator.Objects.archive_records =
 			label:"待接收档案"
 			filter_scope: "space"
 			filters: [["is_receive", "$eq", false]]
-
+		transfer:
+			label:"待移交档案"
+			filter_scope: "space"
+			filters: [["is_transfer", "$eq", false]]
+		destroy:
+			label:"待销毁档案"
+			filter_scope: "space"
+			filters: [["is_destroy", "$eq", false]]
+		transfered:
+			label:"已移交档案"
+			filter_scope: "space"
+			filters: [["is_transfer", "$eq", true]]
+		destroyed:
+			label:"已销毁档案"
+			filter_scope: "space"
+			filters: [["is_destroy", "$eq", true]]
 	permission_set:
 		user:
 			allowCreate: true
@@ -587,14 +627,40 @@ Creator.Objects.archive_records =
 			when: "before.insert"
 			todo: (userId, doc)->
 				doc.is_receive = false
-				return doc
+				return true
 
 	actions: 
 		receive:
 			label: "接收"
 			visible: true
+			# 	()->
+			# 	# object = Creator.getObject(this.object_name)
+			# 	# list_views = object.list_views
+			# 	# list_views = _.filter list_views, (list_view)->
+			# 	# # for i in list_views
+			# 	# # 	console.log list_views[i].name
+			# 	# 	if list_view.name=='receive'
+			# 	# 		return true
+			# 	# 	else
+			# 	# 		false
+			# 	return true	
+			# on: "list"
+			# only_list_item:"receive"
 			on: "list"
 			todo:()-> 
 				Creator.TabularSelectedIds?["archive_records"]
 				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])
-	
+		transfer:
+			label:"移交"
+			visible:true
+			on: "list"
+			todo:()->
+				Creator.TabularSelectedIds?["archive_records"]
+				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"])
+		destroy:
+			label:"销毁"
+			visible:true
+			on: "list"
+			todo:()->
+				Creator.TabularSelectedIds?["archive_records"]
+				Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"])
