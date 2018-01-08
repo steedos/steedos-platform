@@ -91,12 +91,15 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 					size = 1024
 				if parent
 					fileCollection.update({_id:parent},{
-						$push: {
-							versions: {
-								$each: [fileObj._id]
+						$set:
+							extention: extention
+							size: size
+							modified: (new Date())
+							modified_by: owner
+						$push: 
+							versions:
+								$each: [ fileObj._id ]
 								$position: 0
-							}
-						}
 					})
 				else
 					newFileObjId = fileCollection.direct.insert {
