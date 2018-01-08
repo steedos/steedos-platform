@@ -175,12 +175,15 @@
 	 * Function that places each grip in the correct position according to the current table layout	 
 	 * @param {jQuery ref} t - table object
 	 */
-	var syncGrips = function (t){	
+	var syncGrips = function (t){
 		t.gc.width(t.w);			//the grip's container width is updated				
 		for(var i=0; i<t.ln; i++){	//for each column
-			var c = t.c[i]; 			
+			var c = t.c[i];
+			var offsetLeft = t.g[i].data().leftOffset || 0;
+			var left = c.offset().left - t.offset().left + c.outerWidth(false) + t.cs / 2;
+			t.g[i].data("left", left);
 			t.g[i].css({			//height and position of the grip is updated according to the table layout
-				left: c.offset().left - t.offset().left + c.outerWidth(false) + t.cs / 2 + PX,
+				left: left - offsetLeft + PX,
 				height: t.opt.headerOnly? t.c[0].outerHeight(false) : t.outerHeight(false)
 			});			
 		} 	
@@ -251,7 +254,7 @@
 				t.w-l: 
 				t.g[i+1].position().left-t.cs-mw:
 			Infinity; 								//max position according to the contiguous cells 
-		x = M.max(min, M.min(max, x));				//apply bounding		
+		x = M.max(min, M.min(max, x));				//apply bounding	
 		drag.x = x;	 drag.css("left",  x + PX); 	//apply position increment	
         if(last){									//if it is the last grip
             var c = t.c[drag.i];					//width of the last column is obtained

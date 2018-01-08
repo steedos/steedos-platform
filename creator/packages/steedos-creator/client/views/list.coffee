@@ -214,18 +214,22 @@ Template.creator_list.events
 		$("table.slds-table thead th", event.currentTarget).each ->
 			$(".slds-th__action", this).css("transform", "translate3d(-#{scrollLeft}px, 0px, 0px)")
 
-	# 'mouseenter .list-table-container': (event, template)->
-	# 	$("table.slds-table", event.currentTarget).colResizable({
-	# 		liveDrag: false,
-	# 		gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 1px;position:  relative;opacity: 0;'></div>",
-	# 		draggingClass: "dragging",
-	# 		resizeMode: 'fit',
-	# 		disabledColumns: [0],
-	# 		onResize: ()->
-	# 			$("table.slds-table thead th", event.currentTarget).each ->
-	# 				width = $(this).outerWidth()
-	# 				$(".slds-th__action", this).css("width", "#{width}px")
-	# 	});
+		$(".JCLRgrips .JCLRgrip", event.currentTarget).each ->
+			left = parseInt $(this).data().left
+			$(this).data("leftOffset", scrollLeft);
+			$(this).css("left", "#{left - scrollLeft}px")
+
+	'mouseenter .list-table-container': (event, template)->
+		$("table.slds-table", event.currentTarget).colResizable
+			liveDrag: false
+			gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 0px;right: 2px;position:  relative;opacity: 0;'></div>"
+			resizeMode:'overflow'
+			draggingClass: "dragging"
+			disabledColumns: [0]
+			onResize: ()->
+				$("table.slds-table thead th", event.currentTarget).each ->
+					width = $(this).outerWidth()
+					$(".slds-th__action", this).css("width", "#{width}px")
 
 Template.creator_list.onDestroyed ->
 	object_name = Session.get("object_name")

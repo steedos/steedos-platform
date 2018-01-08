@@ -89,13 +89,16 @@
 
 	.list-table-container{
 		.dataTables_wrapper {
+			.dataTable {
+				table-layout: auto;
+			}
 			.JCLRgrips {
 				position: static;
 				.JCLRgrip {
 					top: 0;
 					.JColResizer {
 						top: 1px;
-						height: calc(~"100% - 1px + 2rem");
+						height: 70vh;
 					}
 				}
 			}
