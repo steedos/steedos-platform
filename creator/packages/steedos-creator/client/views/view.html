@@ -37,7 +37,12 @@
 								{{#each actions}}
 									<li class="slds-button slds-button--neutral slds-truncate list-action-custom">
 										<a href="javascript:void(0);" title="{{this.label}}" class="">
-											<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+											{{#if this.is_file}}
+												{{this.label}}
+												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}">
+											{{else}}
+												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+											{{/if}}
 										</a>
 									</li>
 								{{/each}}

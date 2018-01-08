@@ -131,7 +131,7 @@ Creator.baseObject =
 			label: "Export"
 			visible: false
 			on: "list"
-			todo: (object_name, ids, fields)->
+			todo: (object_name, record_id, fields)->
 				alert("please write code in baseObject to export data for " + this.object_name)
 
 
