@@ -18,7 +18,7 @@ Creator.Objects.space_users =
 		email:
 			type: "text"
 		organization: 
-			type: "lookup",
+			type: "master_detail",
 			reference_to: "organizations"
 	list_views:
 		default:
