@@ -15,11 +15,16 @@
 			<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 				<ul class="slds-dropdown__list slds-show" data-object-name="{{object_name}}">
 					{{#each actions}}
-						<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+						<li class="slds-dropdown__item crm-header-menu-item" role="presentation"> 
 							<a href="javascript:void(0);" title="{{this.label}}" 
 								data-action-key="{{this._ACTION_KEY}}" data-object-name="{{object_name}}" data-record-id = "{{record_id}}"
 								class="list-item-action">
-								<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+								{{#if this.is_file}}
+									{{this.label}}
+									<input type="file" name="file" class="input-file-upload" data-parent="{{record_id}}">
+								{{else}}
+									<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+								{{/if}}
 							</a>
 						</li>
 					{{/each}}

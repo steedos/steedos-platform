@@ -57,13 +57,13 @@ Creator.Objects.cms_files =
 		new_version:
 			label: "上传新版本"
 			visible: true
+			is_file: true
 			on: "record"
-			todo: ()->
-				alert("you clicked on new_version button")
+			todo: (object_name, record_id, fields)->
 		download:
 			label: "下载"
 			visible: true
 			on: "record"
-			todo: ()->
-				debugger
-				alert("you clicked on download button")
+			todo: (object_name, record_id, fields)->
+				debugger;
+				# window.location = "/api/files/instances/KWwaCSTDGiJBFeXHW?download=true"

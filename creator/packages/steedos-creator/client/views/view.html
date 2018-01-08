@@ -101,18 +101,7 @@
 											{{#if this.is_file}}
 												<button class="slds-button slds-button_neutral btn-upload-file">
 													上传
-													<input type="file" name="file" class="ins-file-input upload-file" style="
-																							position: absolute;
-																							width: 100%;
-																							height: 100%;
-																							display: inline-block;
-																							opacity: 0;
-																							top: 0px;
-																							left: 0px;
-																							z-index: 100;
-																							cursor: pointer;
-																							overflow: hidden;
-																						">
+													<input type="file" name="file" class="input-file-upload">
 												</button>
 											{{else}}
 												<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>

@@ -372,8 +372,9 @@ Template.creator_view.events
 			Meteor.defer ()->
 				$(".btn.creator-cell-edit").click()
 
-	'change .btn-upload-file': (event, template)->
-		files = event.target.files
+	'change .input-file-upload': (event, template)->
+		parent = event.currentTarget.dataset?.parent
+		files = event.currentTarget.files
 		i = 0
 		record_id = Session.get("record_id")
 		object_name = Session.get("object_name")
@@ -400,12 +401,8 @@ Template.creator_view.events
 			fd.append 'space', spaceId
 			fd.append 'owner', Meteor.userId()
 			fd.append 'owner_name', Meteor.user().name
-			# fd.append 'is_private', file.is_private or false
-			# if isAddVersion
-			# 	fd.append 'isAddVersion', isAddVersion
-			# 	fd.append 'parent', Session.get('attach_parent_id')
-			# if isMainAttach
-			# 	fd.append 'main', isMainAttach
+			if parent
+				fd.append 'parent', parent
 			$(document.body).addClass 'loading'
 			$.ajax
 				url: Steedos.absoluteUrl('s3/')
