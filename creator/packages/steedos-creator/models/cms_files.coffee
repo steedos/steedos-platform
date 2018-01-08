@@ -33,7 +33,7 @@ Creator.Objects.cms_files =
 
 	list_views:
 		default:
-			columns: ["name", "size", "owner", "modified"]
+			columns: ["name", "size", "owner", "modified", "versions"]
 		all:
 			filter_scope: "space"
 
@@ -66,5 +66,7 @@ Creator.Objects.cms_files =
 			visible: true
 			on: "record"
 			todo: (object_name, record_id, fields)->
-				debugger;
-				# window.location = "/api/files/instances/KWwaCSTDGiJBFeXHW?download=true"
+				file = Creator.getObjectRecord(object_name,record_id)
+				fileId = file?.versions?[0]
+				if fileId
+					window.location = "/api/files/files/#{fileId}?download=true"
