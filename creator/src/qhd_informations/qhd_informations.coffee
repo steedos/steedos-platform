@@ -16,6 +16,10 @@ Creator.Objects.qhd_informations =
 			label:"报送公司"
 			required: true
 			is_wide:true
+			defaultValue:()->
+				collection = Creator.Collections["space_users"]
+				company = collection.findOne({user:Meteor.userId(),space:Session.get("spaceId")},{fields:{company:1}}).company
+				return company
 		content:
 			type:"textarea",
 			label:"内容"
