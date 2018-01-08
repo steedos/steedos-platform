@@ -2,6 +2,7 @@ Creator.Objects.cms_files =
 	name: "cms_files"
 	label: "文件"
 	icon: "drafts"
+	enable_search: true
 	fields:
 		name: 
 			label: "名称"
