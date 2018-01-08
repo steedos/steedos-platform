@@ -512,6 +512,11 @@ Creator.Objects.archive_records =
 		received_by:
 			type:"text"
 			omit:true
+		#如果是从OA归档过来的档案，则值为表单Id,否则不存在改字段
+		external_id:
+			type:"text"
+			omit:true
+			group:"内容描述"
 
 	list_views:
 		default:
@@ -556,9 +561,15 @@ Creator.Objects.archive_records =
 				Creator.TabularSelectedIds?["archive_records"]
 				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])
 	triggers:
-		
 		"before.insert.server.default": 
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
+				console.log "before insert"
 				doc.is_receive = false
+		"after.insert.server.default": 
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				console.log "after insert"	
+			
