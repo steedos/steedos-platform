@@ -65,7 +65,7 @@ Template.creator_table_cell.helpers
 		if !this.field
 			return false
 
-		if this.field.reference_to or this.field.omit or this.field.readonly
+		if this.field.omit or this.field.readonly
 			return false
 
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
