@@ -15,16 +15,8 @@ Meteor.startup ->
 
 		Creator.initTriggers(object_name)
 		Creator.initListViews(object_name)
-
 		if Meteor.isServer
-# TODO 危险
-			Creator.Collections[object_name].allow
-				insert: (userId, doc) ->
-					return true
-				update: (userId, doc) ->
-					return true
-				remove: (userId, doc) ->
-					return true
+			Creator.initPermissions(object_name)
 
 	# Creator.initApps()
 

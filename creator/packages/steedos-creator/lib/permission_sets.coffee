@@ -13,48 +13,93 @@ Creator.getPermissionSet = (name)->
 
 if Meteor.isServer
 
+	Creator.getPermissions = (spaceId, userId)->
+		permissions = 
+			objects: {}
+			assigned_apps: []
+		psets = Creator.getCollection("permission_set").find({users: userId}).fetch()
+		permissions.assigned_apps = _.pluck psets, "assigned_apps"
+		_.each Creator.objectsByName, (object, object_name)->
+			permissions.objects[object_name] = Creator.getObjectPermissions(spaceId, userId, object_name)
+		return permissions
+
+	Creator.getObjectPermissions = (spaceId, userId, object_name)->
+		permissions = {}
+		psets = Creator.getCollection("permission_set").find({users: userId}).fetch()
+		object = Creator.getObject(object_name)
+		if Creator.isSpaceAdmin(spaceId, userId)
+			permissions = _.clone(object.permission_set.admin)
+		else
+			permissions = _.clone(object.permission_set.user)
+		if psets.length>=0
+			set_ids = _.pluck psets, "_id"
+			pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
+			_.each pos, (po)->
+				if po.allowRead
+					permissions.allowRead = true
+				if po.allowCreate
+					permissions.allowCreate = true
+				if po.allowEdit
+					permissions.allowEdit = true
+				if po.allowDelete
+					permissions.allowDelete = true
+				if po.modifyAllRecords
+					permissions.modifyAllRecords = true
+					permissions.allowCreate = true
+					permissions.allowEdit = true
+					permissions.allowDelete = true
+				if po.viewAllRecords
+					permissions.viewAllRecords = true
+					permissions.allowRead = true
+		
+			permissions.fields = {}
+			pfs = Creator.getCollection("permission_fields").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
+			_.each pfs, (pf)->
+				permissions.fields[pf.field_name] = {}
+				if !pf.allowRead
+					permissions.fields[pf.field_name].hidden = true
+				if !pf.allowEdit
+					permissions.fields[pf.field_name].readonly = true
+		return permissions
+
+
+	Creator.initPermissions = (object_name)->
+
+		# 应该把计算出来的
+		Creator.Collections[object_name].allow
+			insert: (userId, doc) ->
+				if !userId 
+					return false
+				if !doc.space
+					return false
+				permissions = Creator.getObjectPermissions(doc.space, userId, object_name)
+				if !permissions.allowCreate
+					return false
+
+				return true
+			update: (userId, doc) ->
+				if !userId 
+					return false
+				if !doc.space
+					return false
+				permissions = Creator.getObjectPermissions(doc.space, userId, object_name)
+				if !permissions.allowEdit
+					return false
+				return true
+			remove: (userId, doc) ->
+				if !userId 
+					return false
+				if !doc.space
+					return false
+				permissions = Creator.getObjectPermissions(doc.space, userId, object_name)
+				if !permissions.allowDelete
+					return false
+				return true
+
 	Meteor.methods
 		# Calculate Permissions on Server
 		"creator.object_permissions": (spaceId)->
-			self = this
-			permissions = 
-				objects: {}
-				assigned_apps: []
-			psets = Creator.getCollection("permission_set").find({users: self.userId}).fetch()
-			permissions.assigned_apps = _.pluck psets, "assigned_apps"
-			_.each Creator.objectsByName, (object, object_name)->
-				if Creator.isSpaceAdmin(spaceId, self.userId)
-					permissions.objects[object_name] = _.clone(object.permission_set.admin)
-				else
-					permissions.objects[object_name] = _.clone(object.permission_set.user)
-				if psets.length>=0
-					set_ids = _.pluck psets, "_id"
-					pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
-					_.each pos, (po)->
-						if po.allowRead
-							permissions.objects[object_name].allowRead = true
-						if po.allowCreate
-							permissions.objects[object_name].allowCreate = true
-						if po.allowEdit
-							permissions.objects[object_name].allowEdit = true
-						if po.allowDelete
-							permissions.objects[object_name].allowDelete = true
-						if po.modifyAllRecords
-							permissions.objects[object_name].modifyAllRecords = true
-						if po.viewAllRecords
-							permissions.objects[object_name].viewAllRecords = true
-
-				
-					permissions.objects[object_name].fields = {}
-					pfs = Creator.getCollection("permission_fields").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
-					_.each pfs, (pf)->
-						permissions.objects[object_name].fields[pf.field_name] = {}
-						if !pf.allowRead
-							permissions.objects[object_name].fields[pf.field_name].hidden = true
-						if !pf.allowEdit
-							permissions.objects[object_name].fields[pf.field_name].readonly = true
-
-			return permissions
+			return Creator.getPermissions(spaceId, this.userId)
 
 
 if Meteor.isClient
