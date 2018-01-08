@@ -2,7 +2,7 @@ Creator.Objects.archive_entity_relation =
 	name: "archive_entity_relation"
 	icon: "entity"
 	label: "实体关系"
-	enable_search: true
+	enable_search: false
 	fields:
 		entity_identifier:
 			type: "text"

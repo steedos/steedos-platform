@@ -2,7 +2,7 @@ Creator.Objects.archive_audit =
 	name: "archive_audit"
 	icon: "campaign"
 	label: "审计"
-	enable_search: true
+	enable_search: false
 	fields:
 		business_status:
 			type: "select"

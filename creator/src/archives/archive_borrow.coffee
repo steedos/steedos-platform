@@ -2,7 +2,7 @@ Creator.Objects.archive_borrow =
 	name: "archive_borrow"
 	icon: "file"
 	label: "借阅"
-	enable_search: true
+	enable_search: false
 	fields:
 		borrow_no:
 			type:"text"
