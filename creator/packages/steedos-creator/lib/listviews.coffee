@@ -91,7 +91,12 @@ Creator.initListViews = (object_name)->
 			if self.closest(".list-table-container").length
 				$("th", self).each ->
 					width = $(this).outerWidth()
-					$(".slds-th__action", this).css("width", "#{width}px")
+					$(".slds-th__action", this).css({"width": "#{width}px"})
+
+					$(this).off "resize"
+					$(this).on "resize", (e)->
+						width = $(this).outerWidth()
+						$(".slds-th__action", this).css("width", "#{width}px")
 
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
 			Tracker.nonreactive ->
