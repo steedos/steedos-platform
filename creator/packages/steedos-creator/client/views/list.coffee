@@ -1,16 +1,8 @@
 Template.creator_list.onCreated ->
-	# this.edit_fields = new ReactiveVar()
 
 Template.creator_list.helpers Creator.helpers
 
 Template.creator_list.helpers
-
-	collection: ()->
-		return "Creator.Collections." + Session.get("object_name")
-
-	# collectionName: ()->
-	# 	if Session.get("object_name")
-	# 		return Creator.getObject(Session.get("object_name")).label
 
 	tabular_table: ()->
 		return Creator.getTable(Session.get("object_name"))
@@ -19,11 +11,6 @@ Template.creator_list.helpers
 		permissions = Creator.getPermissions()
 		if permissions
 			return permissions[permissionName]
-
-
-	# fields: ->
-	# 	return Template.instance()?.edit_fields.get()
-
 
 	selector: ()->
 		object_name = Session.get("object_name")
@@ -134,7 +121,7 @@ Template.creator_list.events
 	'click .list-item-action': (event) ->
 		actionKey = event.currentTarget.dataset.actionKey
 		objectName = event.currentTarget.dataset.objectName
-		id = event.currentTarget.dataset.id
+		recordId = event.currentTarget.dataset.recordId
 		object = Creator.getObject(objectName)
 		action = object.actions[actionKey]
 		collection_name = object.label
@@ -142,7 +129,7 @@ Template.creator_list.events
 		Session.set("action_collection", "Creator.Collections.#{objectName}")
 		Session.set("action_collection_name", collection_name)
 		Session.set("action_save_and_insert", true)
-		Creator.executeAction objectName, action, id
+		Creator.executeAction objectName, action, recordId
 
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
@@ -152,8 +139,6 @@ Template.creator_list.events
 		tr = $(event.currentTarget).closest("tr")
 		rowData = dataTable.row(tr).data()
 
-		console.log 'click .table-cell-edit rowData:', rowData
-		console.log 'click .table-cell-edit field:', field
 		if rowData
 			Session.set("action_fields", field)
 			Session.set("action_collection", "Creator.Collections.#{objectName}")
@@ -162,10 +147,8 @@ Template.creator_list.events
 			Session.set 'cmDoc', rowData
 			Session.set 'cmIsMultipleUpdate', true
 			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
-			console.log 'click .table-cell-edit field:=========='
 			Meteor.defer ()->
-				console.log 'click .table-cell-edit field:==========1155'
-				$(".btn.creator-edit").click()
+				$(".btn.creator-cell-edit").click()
 
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()

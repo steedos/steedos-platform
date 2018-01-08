@@ -92,7 +92,7 @@ Creator.baseObject =
 
 	actions:
 
-		new:
+		standard_new:
 			label: "新建"
 			visible: ()->
 				permissions = Creator.getPermissions()
@@ -101,65 +101,31 @@ Creator.baseObject =
 			on: "list"
 			todo: "standard_new"
 
-		edit:
+		standard_edit:
 			label: "编辑"
-			visible: ()->
-				object_name = Session.get "object_name"
-				record_id = Session.get "record_id"
-				record = Creator.Collections[object_name].findOne record_id
-				recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
-				if recordPerminssion
-					return recordPerminssion["allowEdit"]
+			visible: (object_name, record_id, record_permissions)->
+				if record_permissions
+					return record_permissions["allowEdit"]
+				else
+					record = Creator.Collections[object_name].findOne record_id
+					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+					if record_permissions
+						return record_permissions["allowEdit"]
 			on: "record"
 			todo: "standard_edit"
 
-		delete:
+		standard_delete:
 			label: "删除"
-			visible: ()->
-				object_name = Session.get "object_name"
-				record_id = Session.get "record_id"
-				record = Creator.Collections[object_name].findOne record_id
-				recordPerminssion = Creator.getRecordPermissions object_name, record, Meteor.userId()
-				if recordPerminssion
-					return recordPerminssion["allowDelete"]
+			visible: (object_name, record_id, record_permissions)->
+				if record_permissions
+					return record_permissions["allowDelete"]
+				else
+					record = Creator.Collections[object_name].findOne record_id
+					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+					if record_permissions
+						return record_permissions["allowDelete"]
 			on: "record_more"
 			todo: "standard_delete"
-
-		list_item_edit:
-			label: "编辑"
-			visible: (template_data)->
-				recordPerminssion = template_data["record_permissions"]
-				if recordPerminssion
-					return recordPerminssion["allowEdit"]
-			on: "list_item"
-			todo: "standard_list_item_edit"
-
-		list_item_delete:
-			label: "删除"
-			visible: (template_data)->
-				recordPerminssion = template_data["record_permissions"]
-				if recordPerminssion
-					return recordPerminssion["allowDelete"]
-			on: "list_item"
-			todo: "standard_list_item_delete"
-
-		related_list_item_edit:
-			label: "编辑"
-			visible: (template_data)->
-				recordPerminssion = template_data["record_permissions"]
-				if recordPerminssion
-					return recordPerminssion["allowEdit"]
-			on: "related_list_item"
-			todo: "standard_related_list_item_edit"
-
-		related_list_item_delete:
-			label: "删除"
-			visible: (template_data)->
-				recordPerminssion = template_data["record_permissions"]
-				if recordPerminssion
-					return recordPerminssion["allowDelete"]
-			on: "related_list_item"
-			todo: "standard_related_list_item_delete"
 
 		"export":
 			label: "Export"

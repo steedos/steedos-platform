@@ -118,26 +118,3 @@ if Meteor.isClient
 			if Session.get("steedos-locale")
 				_.each Creator.objectsByName, (object, object_name)->
 					object.i18n()
-
-		Tracker.autorun ->
-			if Session.get("spaceId")
-				Meteor.call "creator.object_permissions", Session.get("spaceId"), (error, result)->
-					if error
-						console.log error
-					else
-						_.each result, (permissions, object_name)->
-							Creator.getObject(object_name).permissions.set(permissions)
-							_.each permissions.fields, (field, field_name)->
-								f = Creator.getObject(object_name).fields[field_name]
-								if f
-									fs = Creator.getObject(object_name).schema._schema[field_name]
-									if !fs.autoform
-										fs.autoform = {}
-									if field.readonly
-										f.readonly = true
-										fs.autoform.readonly = true
-										fs.autoform.disabled = true
-									if field.hidden
-										f.hidden = true
-										f.omit = true
-										fs.autoform.omit = true

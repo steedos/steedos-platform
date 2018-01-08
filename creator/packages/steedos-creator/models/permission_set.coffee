@@ -9,6 +9,10 @@ Creator.Objects.permission_set =
 			type: "lookup"
 			reference_to: "users"
 			multiple: true
+		assigned_apps:
+			type: "lookup"
+			reference_to: "apps"
+			multiple: true
 
 	list_views:
 		default:

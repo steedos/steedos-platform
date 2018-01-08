@@ -6,17 +6,20 @@ Template.creator_table_actions.helpers
 		return Template.instance().data._id
 
 	actions: ()->
-		self = this
-		obj = Creator.getObject(self.object_name)
+		object_name = this.object_name
+		record_id = this._id
+		record_permissions = this.record_permissions
+		obj = Creator.getObject(object_name)
 		actions = _.map obj.actions, (val, key) ->
 			val._ACTION_KEY = key
 			return val
 		actions = _.values(actions) 
 		actions = _.filter actions, (action)->
-			actionKey = if self.is_related then "related_list_item" else "list_item"
-			if action.on == actionKey
+			if action.on == "record" or action.on == "record_more"
+				if action.only_detail
+					return false
 				if typeof action.visible == "function"
-					return action.visible(self)
+					return action.visible(object_name, record_id, record_permissions)
 				else
 					return action.visible
 			else

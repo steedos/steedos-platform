@@ -62,6 +62,7 @@ Creator.Objects.crm_customers =
 		print:
 			label: "打印"
 			on: "record"
+			only_detail: true
 			visible: true
 			todo: ()->
 				alert("you clicked on print button") 

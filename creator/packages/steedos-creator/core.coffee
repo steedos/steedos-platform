@@ -26,16 +26,16 @@ Meteor.startup ->
 				remove: (userId, doc) ->
 					return true
 
-	Creator.initApps()
+	# Creator.initApps()
 
 
-Creator.initApps = ()->
-	if Meteor.isServer
-		_.each Creator.Apps, (app, app_id)->
-			db_app = db.apps.findOne(app_id)
-			if !db_app
-				app._id = app_id
-				db.apps.insert(app)
+# Creator.initApps = ()->
+# 	if Meteor.isServer
+# 		_.each Creator.Apps, (app, app_id)->
+# 			db_app = db.apps.findOne(app_id)
+# 			if !db_app
+# 				app._id = app_id
+# 				db.apps.insert(app)
 # else
 # 	app._id = app_id
 # 	db.apps.update({_id: app_id}, app)

@@ -2,14 +2,13 @@ Meteor.methods
 	"creator.object_options": (options)->
 		if options?.params?.reference_to
 
-			reference_to_object = Creator.getObject(options.params.reference_to)
+			object = Creator.getObject(options.params.reference_to)
 
-			name_field_key = reference_to_object.NAME_FIELD_KEY
+			name_field_key = object.NAME_FIELD_KEY
 
 			query = {}
 			if options.params.space
-				query.space =
-					$in: [null, options.params.space]
+				query.space = options.params.space
 
 				selected = options?.selected || []
 
@@ -27,7 +26,7 @@ Meteor.methods
 						_.extend(query, searchTextQuery)
 					query._id = {$nin: selected}
 
-				collection = Creator.Collections[options.params.reference_to]
+				collection = object.db
 
 				if options.filterQuery
 					_.extend query, options.filterQuery

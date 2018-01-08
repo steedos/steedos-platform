@@ -4,6 +4,21 @@ Creator.Objects.archive_records =
 	label: "档案"
 	enable_search: true
 	fields:
+		archives_name:
+			type:"text"
+			label:"档案馆名称"
+			omit:true
+			group:"来源"
+		archives_identifier:
+			type:"text"
+			label:"档案馆代码"
+			omit:true
+			group:"来源"
+		fonds_name:
+			type:"text"
+			label:"全宗名称"
+			omit:true
+			group:"来源"
 		archival_category_code:
 			type: "text"
 			label:"档案门类代码"
@@ -15,6 +30,7 @@ Creator.Objects.archive_records =
 			label:"立档单位名称"
 			defaultValue: ""
 			omit:true
+			group:"来源"
 
 		aggregation_level:
 			type: "select"
@@ -37,13 +53,10 @@ Creator.Objects.archive_records =
 			omit:true
 
 		fonds_identifier:
-			type:"select"
+			type:"master_detail"
 			label:"全宗号"
-			options:[
-				{label:"集团公司",value:"A001"}
-			]
+			reference_to:"archive_fonds"
 			group:"档号"
-			omit:true
 		year:
 			type: "text"
 			label:"年度"
@@ -139,9 +152,19 @@ Creator.Objects.archive_records =
 			label:"主题词"
 			omit:true
 			group:"内容描述"
+		keyword:
+			type:"text"
+			label:"关键词"
+			omit:true
+			group:"内容描述"
 		personal_name:
 			type:"text"
 			label:"人名"
+			group:"内容描述"
+		abstract:
+			type:"text"
+			label:"摘要"
+			omit:true
 			group:"内容描述"
 		documnt_number:
 			type:"text"
@@ -173,7 +196,11 @@ Creator.Objects.archive_records =
 			format:"YYYYMMDD"
 			group:"内容描述"
 			omit:true
-
+		precedence:
+			type:"text"
+			label:"紧急程度"
+			omit:true
+			group:"内容描述"
 		prinpipal_receiver:
 			type:"text",
 			label:"主送",
@@ -503,6 +530,7 @@ Creator.Objects.archive_records =
 		#是否接收，默认是未接收
 		is_receive:
 			type:"boolean"
+			defaultValue:false
 			omit:true
 		
 		received:
@@ -552,6 +580,14 @@ Creator.Objects.archive_records =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true 
+	triggers:
+		"before.insert.server.default": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.is_receive = false
+				return doc
+
 	actions: 
 		receive:
 			label: "接收"
@@ -560,16 +596,4 @@ Creator.Objects.archive_records =
 			todo:()-> 
 				Creator.TabularSelectedIds?["archive_records"]
 				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])
-	triggers:
-		"before.insert.server.default": 
-			on: "server"
-			when: "before.insert"
-			todo: (userId, doc)->
-				console.log "before insert"
-				doc.is_receive = false
-		"after.insert.server.default": 
-			on: "server"
-			when: "after.insert"
-			todo: (userId, doc)->
-				console.log "after insert"	
-			
+	
