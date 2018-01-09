@@ -3,5 +3,7 @@
 	"list_view_recent": "Recent",
 	"list_view_all": "All",
 	"list_view_mine": "Mine",
+	"list_view_no_records": "No items to display.",
 	"please_select": "Please select "
+
 }
