@@ -17,6 +17,9 @@ Template.creator_table_cell.helpers
 
 		reference_to = this.field?.reference_to
 
+		if _.isFunction(reference_to)
+			reference_to = reference_to()
+
 		if reference_to && !_.isEmpty(val)
 
 			if _.isArray(reference_to) && _.isObject(val)

@@ -14,7 +14,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 		return this.ready()
 
 	reference_fields = _.filter _fields, (f)->
-		return !_.isEmpty(f.reference_to)
+		return _.isFunction(f.reference_to) || !_.isEmpty(f.reference_to)
 
 	self = this
 
@@ -37,10 +37,10 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 		keys.forEach (key)->
 			reference_field = _fields[key]
 
-			if !_.isEmpty(reference_field?.reference_to)  # and Creator.Collections[reference_field.reference_to]
+			if _.isFunction(reference_field.reference_to) || !_.isEmpty(reference_field.reference_to)  # and Creator.Collections[reference_field.reference_to]
+
 				data.children.push {
 					find: (parent) ->
-
 						try
 							self.unblock();
 
@@ -49,6 +49,9 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 							reference_ids = parent[key]
 
 							reference_to = reference_field.reference_to
+
+							if _.isFunction(reference_to)
+								reference_to = reference_to()
 
 							if _.isArray(reference_to)
 								if _.isObject(reference_ids) && !_.isArray(reference_ids)
