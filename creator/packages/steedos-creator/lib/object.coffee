@@ -51,7 +51,9 @@ Creator.Object = (options)->
 		if !self.actions[item_name]
 			self.actions[item_name] = {}
 		self.actions[item_name].name = item_name
-		self.actions[item_name] = _.extend(_.clone(self.actions[item_name]), item)
+		copyItem = _.clone(self.actions[item_name])
+		delete self.actions[item_name] #先删除相关属性再重建才能保证后续重复定义的属性顺序生效
+		self.actions[item_name] = _.extend(copyItem, item)
 
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
 	_.each options.permission_set, (item, item_name)->

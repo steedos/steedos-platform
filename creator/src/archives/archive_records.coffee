@@ -1,6 +1,6 @@
 Creator.Objects.archive_records = 
 	name: "archive_records"
-	icon: "orders"
+	icon: "record"
 	label: "档案"
 	enable_search: true
 	fields:
@@ -66,17 +66,9 @@ Creator.Objects.archive_records =
 			group:"档号"
 
 		retention_peroid:
-			type:"select"
+			type:"master_detail"
 			label:"保管期限"
-			defaultValue: "永久"
-			options: [
-				{label: "永久", value: "永久"},
-				{label: "长期", value: "长期"},
-				{label: "短期", value: "短期"},
-				{label: "30年", value: "30年"},
-				{label: "10年", value: "10年"},
-				{label: "4年", value: "4年"}
-			]
+			reference_to:"archive_retention"
 			required:true
 			sortable:true
 			group:"档号"

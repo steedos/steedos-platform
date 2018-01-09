@@ -56,12 +56,6 @@ Creator.Objects.cms_files =
 				collection.remove {"metadata.parent": doc._id}
 
 	actions: 
-		new_version:
-			label: "上传新版本"
-			visible: true
-			is_file: true
-			on: "record"
-			todo: (object_name, record_id, fields)->
 		download:
 			label: "下载"
 			visible: true
@@ -71,3 +65,11 @@ Creator.Objects.cms_files =
 				fileId = file?.versions?[0]
 				if fileId
 					window.location = "/api/files/files/#{fileId}?download=true"
+		new_version:
+			label: "上传新版本"
+			visible: true
+			is_file: true
+			on: "record"
+			todo: (object_name, record_id, fields)->
+		standard_delete:
+			label: "删除"

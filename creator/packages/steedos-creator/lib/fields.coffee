@@ -95,13 +95,18 @@ Creator.getObjectSchema = (obj) ->
 
 					_reference_to.forEach (_reference)->
 						_object = Creator.Objects[_reference]
-						fs.autoform.references.push {
-							object: _reference
-							label: _object?.label
-							icon: _object?.icon
-							link: ()->
-								return "/app/#{Session.get('app_id')}/#{_reference}/view/"
-						}
+
+						if _object
+							fs.autoform.references.push {
+								object: _reference
+								label: _object?.label
+								icon: _object?.icon
+								link: ()->
+									return "/app/#{Session.get('app_id')}/#{_reference}/view/"
+							}
+						else
+							throw new Meteor.Error("Creator.getObjectSchema", "#{obj.name}.#{field_name} reference_to #{_reference} Can not find.")
+
 		else if field.type == "select"
 			fs.type = String
 			if field.multiple

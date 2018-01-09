@@ -1,6 +1,7 @@
 Creator.baseObject = 
 	fields: 
 		owner:
+			label:"作者"
 			type: "lookup",
 			reference_to: "users"
 			omit: true
@@ -19,6 +20,7 @@ Creator.baseObject =
 			reference_to: "users"
 			omit: true
 		modified:
+			label:"最后修改时间"
 			type: "datetime",
 			omit: true
 			sortable: true
