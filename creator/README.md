@@ -55,7 +55,8 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - defaultValue: 默认值，可配置默认值公式 {{userId}}, {{spaceId}} 等，#todo
 - required: 必填
 - inlineHelpText: 表单填写时显示的帮助文本
-- sortable: 可排序
+- sortable: 可排序，可排序字段系统会自动创建索引
+- index: true/false，指定是否为此字段创建索引
 - readonly: 只读，应该只显示在查看页面或列表页面上，新增和修改页面都不显示 #todo
 - omit: 所有页面都不显示
 - multiple: 表示数组字段，可以多选

@@ -167,6 +167,12 @@ Creator.getObjectSchema = (obj) ->
 		if field.disabled
 			fs.autoform.disabled = true
 
+
+		if field.index
+			fs.index = field.index
+		else if field.sortable
+			fs.index = true
+
 		schema[field_name] = fs
 
 	return schema
