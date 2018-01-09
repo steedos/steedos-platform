@@ -131,6 +131,7 @@ Package.onUse(function(api) {
     api.addFiles('models/cms_files.coffee');
     api.addFiles('models/cms_files_cfs.coffee');
 
+    api.addFiles('models/reports.coffee');
     api.addFiles('models/tasks.coffee');
 
     api.addFiles('server/methods/object_options.coffee', 'server');
