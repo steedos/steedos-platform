@@ -3,8 +3,6 @@ Creator.Objects.archive_records =
 	icon: "record"
 	label: "档案"
 	enable_search: true
-	enable_files: true
-	enable_tasks: true
 	fields:
 		archives_name:
 			type:"text"
@@ -560,6 +558,16 @@ Creator.Objects.archive_records =
 		destroyed_by:
 			type:"text"
 			omit:true
+		is_borrowed:
+			type:"boolean"
+			defaultValue:false
+			omit:true
+		borrowed:
+			type:"datetime"
+			omit:true
+		borrowed_by:
+			type:"text"
+			omit:true
 		#如果是从OA归档过来的档案，则值为表单Id,否则不存在改字段
 		external_id:
 			type:"text"
@@ -600,6 +608,10 @@ Creator.Objects.archive_records =
 			label:"已销毁档案"
 			filter_scope: "space"
 			filters: [["is_destroy", "$eq", true]]
+		borrow:
+			label:"可借阅"
+			filter_scope: "space"
+			filters:[["is_borrowed","$eq",false],["is_receive","$eq",true]]
 	permission_set:
 		user:
 			allowCreate: true
@@ -654,9 +666,9 @@ Creator.Objects.archive_records =
 					(error,result) ->
 							console.log error
 							if !error
-								alert("移交成功，等待审核")
+								toastr.success("移交成功，等待审核")
 							else
-								alert("移交失败，请再次操作")
+								toastr.error("移交失败，请再次操作")
 							)
 		destroy:
 			label:"销毁"
@@ -668,7 +680,15 @@ Creator.Objects.archive_records =
 					(error,result) ->
 						console.log error
 						if !error
-							alert("销毁成功，等待审核")
+							toastr.success("销毁成功，等待审核")
 						else
-							alert("销毁失败，请再次操作")
+							toastr.error("销毁失败，请再次操作")
 						)
+		borrow:
+			label:"借阅"
+			visible:true
+			on: "list"
+			todo:()->
+				space = Session.get("spaceId")
+				Creator.TabularSelectedIds?["archive_records"]
+				Meteor.call("archive_borrow",Creator.TabularSelectedIds?["archive_records"],space)

@@ -8,6 +8,7 @@ Creator.Objects.archive_borrow =
 			type:"text"
 			label:"借阅单编号"
 			sortable:true
+			is_name:true
 			#defaultValue:当前年度的借阅单总数+1
 		file_type:
 			type:"text"
@@ -83,10 +84,10 @@ Creator.Objects.archive_borrow =
 			sortable:true
 			omit:true
 		title:
-			type:"lookup"
+			type:"select"
 			label:"题名"
-			reference_to:"archive_records"
 			is_wide:true
+			mutiple:true
 			sortable:true
 		detail_status:
 			type:"select"
@@ -103,10 +104,21 @@ Creator.Objects.archive_borrow =
 				{label:"逾期",value:"逾期"}
 				]
 			sortable:true
-		
 	list_views:
 		default:
 			columns:["borrow_no","created","end_date","created_by","unit_info
 			","deparment_info","phone_number"]
 		all:
 			label:"所有借阅记录"
+		mine:
+			label:"我的借阅记录"
+			filter_scope: "mine"
+	triggers:
+		"before.insert.server.default": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.created_by = userId;
+				doc.created = new Date();
+				doc.owner = userId
+				return true
