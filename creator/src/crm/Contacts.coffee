@@ -2,7 +2,9 @@ Creator.Objects.crm_contacts =
 	name: "crm_contacts"
 	label: "联系人"
 	icon: "contact"
+	enable_files: true
 	enable_search: true
+	enable_tasks: true
 	fields:
 		name: 
 			type: "text"

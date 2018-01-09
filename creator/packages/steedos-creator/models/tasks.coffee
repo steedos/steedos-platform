@@ -23,7 +23,11 @@ Creator.Objects.tasks =
 		related_to:
 			type: "lookup"
 			reference_to: ()->
-				return _.keys(Creator.Objects) 
+				o = []
+				_.each Creator.Objects, (object, object_name)->
+					if object.enable_tasks
+						o.push object_name
+				return o 
 
 	list_views:
 		default:

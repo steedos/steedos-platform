@@ -4,6 +4,7 @@ Creator.Objects.crm_customers =
 	icon: "account"
 	enable_files: true
 	enable_search: true
+	enable_tasks: true
 	fields:
 		name: 
 			label: "名称"

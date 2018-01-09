@@ -11,6 +11,10 @@ Creator.Object = (options)->
 	self.icon = options.icon
 	self.description = options.description
 	self.enable_search = options.enable_search
+	self.enable_files = options.enable_files
+	self.enable_tasks = options.enable_tasks
+	self.enable_chatter = options.enable_chatter
+	self.enable_audit = options.enable_audit
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	

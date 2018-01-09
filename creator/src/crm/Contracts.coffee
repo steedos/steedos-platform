@@ -2,7 +2,9 @@ Creator.Objects.crm_contracts =
 	name: "crm_contracts"
 	label: "合同"
 	icon: "contract"
+	enable_files: true
 	enable_search: true
+	enable_tasks: true
 	fields:
 		name: 
 			label: "名称"
