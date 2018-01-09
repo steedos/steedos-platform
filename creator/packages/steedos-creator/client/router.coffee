@@ -28,7 +28,9 @@ FlowRouter.route '/app/:app_id/:object_name/list',
 			Session.set("list_view_id", null)
 		Session.set("app_id", FlowRouter.getParam("app_id"))
 		Session.set("object_name", FlowRouter.getParam("object_name"))
-		Session.set("list_view_visible", true)
+		Session.set("list_view_visible", false)
+		Tracker.afterFlush ()->
+			Session.set("list_view_visible", true)
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_list"
 
