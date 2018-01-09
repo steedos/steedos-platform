@@ -32,8 +32,6 @@ search_object = (space, object_name, searchText)->
 
 			query = {}
 
-			reg = new RegExp(" ", "g")
-
 			search_Keywords = searchText.split(" ")
 
 			query_and = []
