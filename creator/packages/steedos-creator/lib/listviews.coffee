@@ -188,6 +188,16 @@ if Meteor.isClient
 
 				list.push file_related
 
+		if Creator.Objects[object_name]?.enable_tasks
+			task_related =
+				object_name: "tasks"
+				columns: ["name", "end_date", "assigned_to"]
+				tabular_table: Tabular.tablesByName["creator_tasks"]
+				related_field_name: "related_to"
+
+			list.push task_related
+
+
 		return list
 
 
