@@ -3,6 +3,7 @@ Creator.Objects.archive_records =
 	icon: "record"
 	label: "档案"
 	enable_search: true
+	enable_files: true
 	enable_tasks: true
 	fields:
 		archives_name:
