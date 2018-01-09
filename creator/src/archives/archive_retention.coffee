@@ -1,7 +1,7 @@
 Creator.Objects.archive_retention = 
 	name: "archive_retention"
 	icon: "timeslot"
-	label: "所有"
+	label: "保管期限"
 	enable_search: false
 	fields:
 		name:
@@ -23,4 +23,4 @@ Creator.Objects.archive_retention =
 		default:
 			columns:["name","code","years"]
 		all:
-			label:"保管期限"
+			label:"所有"

@@ -648,11 +648,25 @@ Creator.Objects.archive_records =
 			on: "list"
 			todo:()->
 				Creator.TabularSelectedIds?["archive_records"]
-				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"])
+				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"],
+					(error,result) ->
+							console.log error
+							if !error
+								alert("移交成功，等待审核")
+							else
+								alert("移交失败，请再次操作")
+							)
 		destroy:
 			label:"销毁"
 			visible:true
 			on: "list"
 			todo:()->
 				Creator.TabularSelectedIds?["archive_records"]
-				Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"])
+				Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"],
+					(error,result) ->
+						console.log error
+						if !error
+							alert("销毁成功，等待审核")
+						else
+							alert("销毁失败，请再次操作")
+						)
