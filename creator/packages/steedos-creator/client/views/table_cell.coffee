@@ -53,6 +53,11 @@ Template.creator_table_cell.helpers
 					val = moment(this.val).format('YYYY-MM-DD')
 			else if (this.val == null)
 				val = ""
+			else if this.field.type == "boolean"
+				if this.val
+					val = "是"
+				else
+					val = "否"
 
 			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)

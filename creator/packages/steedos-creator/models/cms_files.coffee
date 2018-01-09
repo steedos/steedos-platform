@@ -33,7 +33,8 @@ Creator.Objects.cms_files =
 
 	list_views:
 		default:
-			columns: ["name", "size", "owner", "modified", "versions"]
+			columns: ["name", "size", "owner", "modified"]
+			extra_columns: ["versions"]
 		all:
 			filter_scope: "space"
 

@@ -74,6 +74,9 @@ Creator.initListViews = (object_name)->
 	columns = ["name"]
 	if object.list_views?.default?.columns
 		columns = object.list_views.default.columns
+	extra_columns = ["owner"]
+	if object.list_views?.default?.extra_columns
+		extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 
 	if Meteor.isClient
 		Creator.TabularSelectedIds[object_name] = []
@@ -124,7 +127,7 @@ Creator.initListViews = (object_name)->
 						checkboxAll.prop("checked",true)
 
 		dom: "tp"
-		extraFields: ["owner"]
+		extraFields: extra_columns
 		lengthChange: false
 		ordering: true
 		pageLength: 20
