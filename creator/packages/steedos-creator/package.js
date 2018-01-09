@@ -116,6 +116,7 @@ Package.onUse(function(api) {
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
     api.addFiles('models/object_recent_viewed.coffee');
+    api.addFiles('models/object_listviews.coffee');
     api.addFiles('models/permission_set.coffee');
     api.addFiles('models/permission_objects.coffee');
     api.addFiles('models/permission_fields.coffee');
