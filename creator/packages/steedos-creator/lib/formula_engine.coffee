@@ -70,7 +70,7 @@ FormulaEngine.run = (formula_str, _CONTEXT, extend)->
 		formula_str = FormulaEngine._prependPrefixForFormula(FormulaEngine.PREFIX, formula_str)
 
 		try
-			data = eval(formula_data_str + formula_str)
+			data = eval(formula_data_str + formula_str)   # 此处不能用window.eval ，会导致变量作用域异常
 			return data
 		catch e
 			console.error("FormulaEngine.run: #{formula_str}", e)

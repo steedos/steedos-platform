@@ -35,9 +35,10 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 			keys = _.keys(_fields)
 
 		keys.forEach (key)->
+
 			reference_field = _fields[key]
 
-			if _.isFunction(reference_field.reference_to) || !_.isEmpty(reference_field.reference_to)  # and Creator.Collections[reference_field.reference_to]
+			if reference_field && (_.isFunction(reference_field.reference_to) || !_.isEmpty(reference_field.reference_to))  # and Creator.Collections[reference_field.reference_to]
 
 				data.children.push {
 					find: (parent) ->
