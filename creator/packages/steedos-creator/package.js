@@ -40,6 +40,7 @@ Package.onUse(function(api) {
     api.use('session@1.1.6');
     api.use('blaze@2.1.9');
     api.use('templating@1.2.15');
+    api.use('modules');
     api.use('flemay:less-autoprefixer@1.2.0');
     api.use('simple:json-routes@2.1.0');
     api.use('nimble:restivus@0.8.7');
@@ -129,6 +130,8 @@ Package.onUse(function(api) {
     
     api.addFiles('models/cms_files.coffee');
     api.addFiles('models/cms_files_cfs.coffee');
+
+    api.addFiles('models/tasks.coffee');
 
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/methods/object_permissions.coffee', 'server');
