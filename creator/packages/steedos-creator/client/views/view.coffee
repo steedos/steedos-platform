@@ -213,7 +213,7 @@ Template.creator_view.helpers
 		return app?.name
 
 	related_object: ()->
-		return Creator.Objects[this.object_name]
+		return Creator.getObject(this.object_name)
 
 	allowCreate: ()->
 		return Creator.getPermissions(this.object_name).allowCreate
