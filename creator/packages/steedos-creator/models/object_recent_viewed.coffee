@@ -10,6 +10,21 @@ Creator.Objects.object_recent_viewed =
 		space:
 			type: "text",
 			omit: true
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
 
 if Meteor.isServer
 	Meteor.publish "object_recent_viewed", (object_name)->
