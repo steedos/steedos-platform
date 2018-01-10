@@ -94,6 +94,8 @@ API
 - 可在objects中定义多个list_view
 - 未来允许用户自己配置list_view，保存在数据库中
 - 系统会自动计算，为master_detail类型的字段，在主表中自动生成子表的list_views, 使用默认列
+- columns 用于定义指定list_view显示的列
+- sort 用于定义指定list_view的排序方式，可以同时定义多种排序方式。sort属性为数组，暂时只支持按照一个字段排序，预留多个字段排序的功能。
 - 实例:
 	- list_views:
 		- default:
@@ -103,6 +105,7 @@ API
 		- all:
 			- filter_scope: "space"
 			- columns: ["name", "description", "modified", "owner"]
+			- sort: [["modified", "desc"]]
 		- mine:
 			- filter_scope: "mine"
 
