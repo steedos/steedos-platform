@@ -42,7 +42,7 @@ Creator.Objects.archive_borrow =
 			label:"利用目的"
 			defaultValue:"工作考察"
 			options:[
-				{label: "工作考察", value: "工作考察"},
+				{label: "工作查考", value: "工作查考"},
 				{label: "遍史修志", value: "遍史修志"},
 				{label: "学术研究", value: "学术研究"},
 				{label: "经济建设", value: "经济建设"},
@@ -84,11 +84,15 @@ Creator.Objects.archive_borrow =
 			sortable:true
 			omit:true
 		title:
-			type:"select"
+			type:"[text]"
 			label:"题名"
 			is_wide:true
 			mutiple:true
 			sortable:true
+		year:
+			type:"text"
+			label:"年度"
+			omit:true
 		detail_status:
 			type:"select"
 			label:"明细状态"
@@ -104,15 +108,24 @@ Creator.Objects.archive_borrow =
 				{label:"逾期",value:"逾期"}
 				]
 			sortable:true
+		is_approved:
+			type:"boolean"
+			defaultValue:false
+			omit:true
 	list_views:
 		default:
 			columns:["borrow_no","created","end_date","created_by","unit_info
-			","deparment_info","phone_number"]
+			","deparment_info","phone_number","title"]
 		all:
 			label:"所有借阅记录"
 		mine:
 			label:"我的借阅记录"
 			filter_scope: "mine"
+			filters: [["is_approved", "$eq", true]]
+		approving:
+			label:"待审批"
+			filter_scope: "mine"
+			filters: [["is_approved", "$eq", false]]
 	triggers:
 		"before.insert.server.default": 
 			on: "server"

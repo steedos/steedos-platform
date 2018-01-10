@@ -520,7 +520,7 @@ Creator.Objects.archive_records =
 			label:"参见"
 			omit:true
 		#是否接收，默认是未接收
-		is_receive:
+		is_received:
 			type:"boolean"
 			defaultValue:false
 			omit:true
@@ -534,9 +534,8 @@ Creator.Objects.archive_records =
 			omit:true
 		#是否移交，默认是不存在，在“全部”视图下点击移交，进入“待移交”视图，此时is_transfer=false
 		#审核通过之后，is_transfer = true
-		is_transfer:
+		is_transfered:
 			type:"boolean"
-			defaultValue:false
 			omit:true
 		transfered:
 			type:"datetime"
@@ -547,9 +546,8 @@ Creator.Objects.archive_records =
 		
 		#是否销毁，默认是不存在，在“全部”视图下点击销毁，进入“待销毁”视图，此时is_destroy=false
 		#审核通过之后，is_transfer = true
-		is_destroy:
+		is_destroyed:
 			type:"boolean"
-			defaultValue:false
 			omit:true
 		destroyed:
 			type:"datetime"
@@ -595,23 +593,23 @@ Creator.Objects.archive_records =
 		transfer:
 			label:"待移交档案"
 			filter_scope: "space"
-			filters: [["is_transfer", "$eq", false]]
+			filters: [["is_transfered", "$eq", false]]
 		destroy:
 			label:"待销毁档案"
 			filter_scope: "space"
-			filters: [["is_destroy", "$eq", false]]
+			filters: [["is_destroyed", "$eq", false]]
 		transfered:
 			label:"已移交档案"
 			filter_scope: "space"
-			filters: [["is_transfer", "$eq", true]]
+			filters: [["is_transfered", "$eq", true]]
 		destroyed:
 			label:"已销毁档案"
 			filter_scope: "space"
-			filters: [["is_destroy", "$eq", true]]
+			filters: [["is_destroyed", "$eq", true]]
 		borrow:
-			label:"可借阅"
+			label:"已借阅"
 			filter_scope: "space"
-			filters:[["is_borrowed","$eq",false],["is_receive","$eq",true]]
+			filters:[["is_borrowed","$eq",true],["is_receive","$eq",true]]
 	permission_set:
 		user:
 			allowCreate: true
@@ -691,4 +689,11 @@ Creator.Objects.archive_records =
 			todo:()->
 				space = Session.get("spaceId")
 				Creator.TabularSelectedIds?["archive_records"]
-				Meteor.call("archive_borrow",Creator.TabularSelectedIds?["archive_records"],space)
+				Meteor.call("archive_borrow",Creator.TabularSelectedIds?["archive_records"],space,
+					(error,result)->
+						console.log error
+						if !error
+							toastr.success("借阅成功，等待审核")
+						else
+							toastr.error("借阅失败，请再次操作")
+						)
