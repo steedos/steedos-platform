@@ -11,15 +11,46 @@ Creator.Objects.space_users =
 			description: ""
 			inlineHelpText: ""
 			required: true
-		position:
-			type: "text"
-		mobile:
-			type: "text"
 		email:
 			type: "text"
+		user:
+			type: "master_detail"
+			reference_to: "users"
+			required: true
+			omit: true
+		position:
+			type: "text"
 		organization: 
-			type: "master_detail",
+			type: "master_detail"
 			reference_to: "organizations"
+			omit: true
+		organizations:
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+			defaultValue: []
+		manager:
+			type: "master_detail"
+			reference_to: "users"
+		sort_no:
+			type: "number"
+		user_accepted:
+			type: "boolean"
+			defaultValue: true
+		invite_state:
+			type: "text"
+			omit: true
+		mobile:
+			type: "text"
+		work_phone:
+			type: "text"
+		position:
+			type: "text"
+		hr:
+			type: "object"
+			omit: true
+		company:
+			type: "text"
 	list_views:
 		default:
 			columns: ["name", "organization", "position", "mobile", "email"]
