@@ -94,4 +94,23 @@ steedos:lightning-design-system
 
 steedos:cms
 
+steedos:cfs-access-point
+iyyang:cfs-aliyun
+steedos:cfs-base-package
+steedos:cfs-collection
+steedos:cfs-collection-filters
+steedos:cfs-data-man
+steedos:cfs-dropbox
+steedos:cfs-file
+steedos:cfs-filesaver
+steedos:cfs-filesystem
+steedos:cfs-gridfs
+steedos:cfs-s3
+steedos:cfs-standard-packages
+steedos:cfs-storage-adapter
+steedos:cfs-tempstore
+steedos:cfs-upload-http
+steedos:cfs-wabs
+steedos:cfs-worker
+
 # steedos:qhd-records

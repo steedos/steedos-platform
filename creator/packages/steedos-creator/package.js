@@ -76,8 +76,8 @@ Package.onUse(function(api) {
     api.use('natestrauser:select2');
     api.use('aldeed:autoform-select2')
 
-    api.use('cfs:standard-packages@0.5.9');
-    api.use('cfs:s3@0.1.3');    
+    api.use('steedos:cfs-standard-packages@0.5.9');
+    api.use('steedos:cfs-s3@0.1.3');    
     api.use('iyyang:cfs-aliyun@0.1.0');
     api.use('steedos:autoform-file@0.4.2');
 
