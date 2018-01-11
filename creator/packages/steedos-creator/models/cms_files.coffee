@@ -10,7 +10,6 @@ Creator.Objects.cms_files =
 		description: 
 			label: "描述"
 			type: "textarea"
-			optional: true
 		extention: 
 			label: "文件后缀"
 			type: "text"

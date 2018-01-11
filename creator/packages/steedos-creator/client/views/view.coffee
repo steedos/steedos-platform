@@ -98,6 +98,10 @@ Template.creator_view.onRendered ->
 		record_id = Session.get "record_id"
 		if object_name and record_id
 			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
+			if object_name == "cms_files"
+				cfsFileIds = Creator.getCollection("cms_files").findOne(record_id)?.versions
+				if cfsFileIds
+					Creator.subs["Creator"].subscribe "creator_cfs_files", cfsFileIds
 
 Template.creator_view.helpers
 
@@ -257,6 +261,23 @@ Template.creator_view.helpers
 			else
 				return false
 		return actions
+	
+	isFileDetail: ()->
+		return "cms_files" == Session.get "object_name"
+
+	related_file_object: ()->
+		return {
+			name: "cfs_files"
+			label: "文件"
+			icon: "drafts"
+		}
+
+	related_file_list: ()->
+		record_id = Session.get "record_id"
+		cfsFileIds = Creator.getCollection("cms_files").findOne(record_id)?.versions
+		if cfsFileIds?.length
+			return cfs.files.find({_id:{$in:cfsFileIds}}).fetch()
+
 
 Template.creator_view.events
 
