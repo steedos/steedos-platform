@@ -60,17 +60,24 @@ FormulaEngine.run = (formula_str, _CONTEXT, extend)->
 		if !_.isBoolean(extend)
 			extend = true
 
-		formula_data_str = "#{FormulaEngine.PREFIX} = FormulaEngine.baseData();";
-
 		if extend
-			formula_data_str = formula_data_str + "_.extend(#{FormulaEngine.PREFIX}, _CONTEXT);"
+			_VALUES = FormulaEngine.baseData();
+			_VALUES = _.extend(_VALUES, _CONTEXT)
 		else
-			formula_data_str =  "#{FormulaEngine.PREFIX} = _CONTEXT;"
+			_VALUES = _CONTEXT
+		formula_str = FormulaEngine._prependPrefixForFormula("this", formula_str)
 
-		formula_str = FormulaEngine._prependPrefixForFormula(FormulaEngine.PREFIX, formula_str)
+		# formula_data_str = "#{FormulaEngine.PREFIX} = FormulaEngine.baseData();";
+
+		# if extend
+		# 	formula_data_str = formula_data_str + "_.extend(#{FormulaEngine.PREFIX}, _CONTEXT);"
+		# else
+		# 	formula_data_str =  "#{FormulaEngine.PREFIX} = _CONTEXT;"
+
+		# formula_str = FormulaEngine._prependPrefixForFormula(FormulaEngine.PREFIX, formula_str)
 
 		try
-			data = eval(formula_data_str + formula_str)   # 此处不能用window.eval ，会导致变量作用域异常
+			data = Creator.evalInContext(formula_str, _VALUES)   # 此处不能用window.eval ，会导致变量作用域异常
 			return data
 		catch e
 			console.error("FormulaEngine.run: #{formula_str}", e)

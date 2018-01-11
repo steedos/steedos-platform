@@ -40,7 +40,7 @@ Package.onUse(function(api) {
     api.use('session@1.1.6');
     api.use('blaze@2.1.9');
     api.use('templating@1.2.15');
-    api.use('modules');  //此package 不能移除，否则会导致eval执行异常
+    // api.use('modules');  //此package 不能移除，否则会导致eval执行异常
     api.use('flemay:less-autoprefixer@1.2.0');
     api.use('simple:json-routes@2.1.0');
     api.use('nimble:restivus@0.8.7');
@@ -112,6 +112,7 @@ Package.onUse(function(api) {
     api.addFiles('lib/permission_sets.coffee');
     api.addFiles('lib/listviews.coffee');
     api.addFiles('lib/apps.coffee');
+    api.addFiles('lib/eval.js');
 	api.addFiles('lib/formula_engine.coffee');
 
     api.addFiles('models/base.coffee');
