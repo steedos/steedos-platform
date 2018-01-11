@@ -172,6 +172,8 @@ Creator.getObjectSchema = (obj) ->
 		if field.disabled
 			fs.autoform.disabled = true
 
+		if field.blackbox
+			fs.blackbox = true
 
 		if field.index
 			fs.index = field.index
