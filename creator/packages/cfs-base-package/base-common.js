@@ -4,19 +4,19 @@ FS = {};
 // namespace for adapters; XXX should this be added by cfs-storage-adapter pkg instead?
 FS.Store = {
   GridFS: function () {
-    throw new Error('To use FS.Store.GridFS, you must add the "cfs:gridfs" package.');
+    throw new Error('To use FS.Store.GridFS, you must add the "steedos:cfs-gridfs" package.');
   },
   FileSystem: function () {
-    throw new Error('To use FS.Store.FileSystem, you must add the "cfs:filesystem" package.');
+    throw new Error('To use FS.Store.FileSystem, you must add the "steedos:cfs-filesystem" package.');
   },
   S3: function () {
-    throw new Error('To use FS.Store.S3, you must add the "cfs:s3" package.');
+    throw new Error('To use FS.Store.S3, you must add the "steedos:cfs-s3" package.');
   },
   WABS: function () {
-    throw new Error('To use FS.Store.WABS, you must add the "cfs:wabs" package.');
+    throw new Error('To use FS.Store.WABS, you must add the "steedos:cfs-wabs" package.');
   },
   Dropbox: function () {
-    throw new Error('To use FS.Store.Dropbox, you must add the "cfs:dropbox" package.');
+    throw new Error('To use FS.Store.Dropbox, you must add the "steedos:cfs-dropbox" package.');
   }
 };
 

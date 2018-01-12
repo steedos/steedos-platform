@@ -56,7 +56,7 @@ is accessble by clients. Note that `Meteor.isServer` is **NOT** secure.
 We would need to define store in two files, located in `client` and `server` 
 directories respectively. And we should not put any options in `client` file.
 
-Example by [cfs:s3][cfs-s3]:
+Example by [steedos:cfs-s3][cfs-s3]:
 
 **Client** *(client/collections_client/avatars.js)*
 ```js
@@ -117,7 +117,7 @@ Avatars = new FS.Collection('avatars', {
 
 ## Contributors
 
-This package is inspired by [cfs:s3][cfs-s3] package, where we have introduced 
+This package is inspired by [steedos:cfs-s3][cfs-s3] package, where we have introduced 
 Aliyun SDK and created our own version for OSS. We have slightly optimized
 stream handling.
 

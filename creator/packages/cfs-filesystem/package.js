@@ -13,7 +13,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
-  api.use(['steedos:cfs-base-package@0.0.30', 'steedos:cfs-storage-adapter@0.2.1']);
+  api.use(['steedos:cfs-base-package', 'steedos:cfs-storage-adapter']);
   api.addFiles('filesystem.server.js', 'server');
   api.addFiles('filesystem.client.js', 'client');
 });

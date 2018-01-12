@@ -10,8 +10,8 @@ Package.onUse(function(api) {
 
   api.use([
     // CFS
-    'steedos:cfs-base-package@0.0.30',
-    'steedos:cfs-tempstore@0.1.4',
+    'steedos:cfs-base-package',
+    'steedos:cfs-tempstore',
     // Core
     'deps',
     'check',
@@ -22,7 +22,7 @@ Package.onUse(function(api) {
   ]);
 
   // Weak dependencies for uploaders
-  api.use(['steedos:cfs-upload-http@0.0.20', 'cfs:upload-ddp@0.0.17'], { weak: true });
+  api.use(['steedos:cfs-upload-http', 'steedos:cfs-upload-ddp'], { weak: true });
 
   api.addFiles([
     'common.js',

@@ -14,18 +14,18 @@ Package.onUse(function(api) {
 
   // This imply is needed for tests, and is technically probably correct anyway.
   api.imply([
-    'steedos:cfs-base-package@0.0.30'
+    'steedos:cfs-base-package'
   ]);
 
   api.use([
-    'steedos:cfs-base-package@0.0.30',
-    'steedos:cfs-storage-adapter@0.2.1',
+    'steedos:cfs-base-package',
+    'steedos:cfs-storage-adapter',
     'tracker',
     'check',
     'ddp',
     'mongo',
     'http',
-    'steedos:cfs-data-man@0.0.6',
+    'steedos:cfs-data-man',
     'raix:eventemitter@0.1.1'
   ]);
 
@@ -41,12 +41,12 @@ Package.onUse(function(api) {
 
 Package.onTest(function (api) {
   api.use([
-    'steedos:cfs-standard-packages@0.0.0',
-    'steedos:cfs-gridfs@0.0.0',
+    'steedos:cfs-standard-packages',
+    'steedos:cfs-gridfs',
     'tinytest@1.0.0',
     'http@1.0.0',
     'test-helpers@1.0.0',
-    'cfs:http-methods@0.0.29'
+    'steedos:cfs-http-methods'
   ]);
 
   api.addFiles([

@@ -28,7 +28,7 @@ Package.onUse(function(api) {
 });
 
 // Package.on_test(function (api) {
-//   api.use(['cfs:base-package', 'cfs-file']);
+//   api.use(['steedos:cfs-base-package', 'cfs-file']);
 //   api.use('test-helpers', 'server');
 //   api.use(['tinytest', 'underscore', 'ejson', 'ordered-dict',
 //            'random', 'deps']);

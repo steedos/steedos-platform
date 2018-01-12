@@ -1,0 +1,10 @@
+<template name="headerWorkflowBadge">
+	{{#if getBadgeForWorkflowApp}}
+		<li class="notifications-menu">
+			<a href="{{urlPrefix}}/workflow/space/{{spaceId}}/inbox/" data-toggle="tooltip" data-placement="bottom" title="{{_ workflowApp.name}}">
+				<i class="ion ion-ios-list-outline"></i>
+				<span class="label label-danger">{{getBadgeForWorkflowApp}}</span>
+			</a>
+		</li>
+	{{/if}}
+</template>

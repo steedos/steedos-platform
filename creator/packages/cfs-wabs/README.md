@@ -1,4 +1,4 @@
-cfs:wabs
+steedos:cfs-wabs
 =========================
 
 NOTE: This package is under active development right now (2016-01-10). It has
@@ -13,7 +13,7 @@ A Meteor package that adds Windows Azure Blob Storage (WABS) for
 Install using Meteor. When in a Meteor app directory, enter:
 
 ```
-$ meteor add cfs:wabs
+$ meteor add steedos:cfs-wabs
 ```
 
 ## Usage

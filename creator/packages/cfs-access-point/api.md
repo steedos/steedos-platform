@@ -1,4 +1,4 @@
-## cfs:access-point Public API ##
+## steedos:cfs-access-point Public API ##
 
 CollectionFS, add ddp and http accesspoint capability
 

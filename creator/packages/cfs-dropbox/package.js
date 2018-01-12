@@ -14,7 +14,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
-  api.use(['steedos:cfs-base-package@0.0.30', 'steedos:cfs-storage-adapter@0.2.1']);
+  api.use(['steedos:cfs-base-package', 'steedos:cfs-storage-adapter']);
   api.addFiles([
     'dropbox.server.js',
     'dropbox.upload.stream.js',
@@ -23,7 +23,7 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use(['cfs:standard-packages', 'cfs:dropbox', 'test-helpers', 'tinytest'], 'server');
+  api.use(['steedos:cfs-standard-packages', 'steedos:cfs-dropbox', 'test-helpers', 'tinytest'], 'server');
   api.addFiles('tests/server-tests.js', 'server');
   api.addFiles('tests/client-tests.js', 'client');
 });

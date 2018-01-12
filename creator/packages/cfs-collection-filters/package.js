@@ -8,7 +8,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
-  api.use(['steedos:cfs-base-package@0.0.30', 'steedos:cfs-collection@0.5.4']);
+  api.use(['steedos:cfs-base-package', 'steedos:cfs-collection']);
 
   api.addFiles([
     'filters.js'

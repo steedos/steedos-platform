@@ -1,0 +1,23 @@
+<template name="space_switcher">
+
+  <div class="space-switcher dropdown {{#if isOnlyOneSpace}}only-one-space{{/if}}">
+    <div class="dropdown-toggle" data-toggle="dropdown">
+      <span class="space-name" data-original-title="{{spaceName}}" data-toggle="tooltip" data-placement="bottom">{{spaceName}}</span>
+      <span class="pull-right-container">{{#if isNeedToShowRedDot}}<i class="ion ion-record text-red"></i>{{/if}}{{#unless isOnlyOneSpace}}<i class="caret"></i>{{/unless}}</span>
+    </div>
+    {{#unless isOnlyOneSpace}}
+      <ul class="nav dropdown-menu dropdown-space">
+        {{#each spaces}}
+          <li class="switchSpace">
+            <a class="space-item-link">
+              <span class="pull-left"><i class="fa fa-globe"></i></span>
+              <span data-original-title="{{name}}" data-toggle="tooltip" data-placement="bottom" class="pull-left space-item-title text-overflow">{{name}}</span>
+              <span class="pull-right-container"><span class="pull-right label bg-red">{{getBadge null _id}}</span></span>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    {{/unless}}
+  </div>
+  
+</template>

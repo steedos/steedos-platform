@@ -12,20 +12,20 @@ or wants to make their own storage adapter.
 
 ## All Packages
 
-* cfs:standard-packages (implies some component packages)
-  * cfs:base-package
-  * cfs:file
-  * cfs:collection
-  * cfs:collection-filters
-  * cfs:access-point
-  * cfs:worker
-  * cfs:upload-http
-* cfs:graphicsmagick
-* cfs:ui
-* cfs:filesystem
-* cfs:gridfs
-* cfs:s3
-* cfs:dropbox
+* steedos:cfs-standard-packages (implies some component packages)
+  * steedos:cfs-base-package
+  * steedos:cfs-file
+  * steedos:cfs-collection
+  * steedos:cfs-collection-filters
+  * steedos:cfs-access-point
+  * steedos:cfs-worker
+  * steedos:cfs-upload-http
+* steedos:cfs-graphicsmagick
+* steedos:cfs-ui
+* steedos:cfs-filesystem
+* steedos:cfs-gridfs
+* steedos:cfs-s3
+* steedos:cfs-dropbox
 
 ## Collections
 

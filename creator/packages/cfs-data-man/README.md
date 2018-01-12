@@ -1,4 +1,4 @@
-cfs:data-man [![Build Status](https://travis-ci.org/CollectionFS/Meteor-data-man.svg?branch=master)](https://travis-ci.org/CollectionFS/Meteor-data-man)
+steedos:cfs-data-man [![Build Status](https://travis-ci.org/CollectionFS/Meteor-data-man.svg?branch=master)](https://travis-ci.org/CollectionFS/Meteor-data-man)
 =========================
 
 Who can handle your arbitrary data? The DataMan can.

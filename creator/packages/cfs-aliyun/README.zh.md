@@ -56,7 +56,7 @@ Images = new FS.Collection("images", {
 
 因此，我们需要在 `client` 与 `server` 文件夹中定义两次 `FS.Store` ，其中 `client` 文件夹中的 `FS.Store` 只需要传入一个名称，不需要传入其他选项。
 
-来自 [cfs:s3][cfs-s3] 的例子:
+来自 [steedos:cfs-s3][cfs-s3] 的例子:
 
 **Client** *(client/collections_client/avatars.js)*
 ```js
@@ -117,7 +117,7 @@ Avatars = new FS.Collection('avatars', {
 
 ## 贡献
 
-该Meteor包受到了 [cfs:s3][cfs-s3] 的启发。我们引入 `aliyun-sdk` 并进行了适应性调整，进行了一些优化。
+该Meteor包受到了 [steedos:cfs-s3][cfs-s3] 的启发。我们引入 `aliyun-sdk` 并进行了适应性调整，进行了一些优化。
 
 贡献者： [@yyang][yyang]
 

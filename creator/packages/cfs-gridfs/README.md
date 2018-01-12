@@ -1,4 +1,4 @@
-cfs:gridfs
+steedos:cfs-gridfs
 =========================
 
 NOTE: This package is under active development right now (2014-3-31). It has
@@ -14,7 +14,7 @@ use this storage adapter, file data is stored in chunks in your MongoDB database
 Install using Meteorite. When in a Meteor app directory, enter:
 
 ```
-$ meteor add cfs:gridfs
+$ meteor add steedos:cfs-gridfs
 ```
 
 ## Usage

@@ -76,15 +76,15 @@ Package.onUse(function(api) {
     api.use('natestrauser:select2');
     api.use('aldeed:autoform-select2')
 
-    api.use('steedos:cfs-standard-packages@0.5.9');
-    api.use('steedos:cfs-s3@0.1.3');    
+    api.use('steedos:cfs-standard-packages');
+    api.use('steedos:cfs-s3');    
     api.use('iyyang:cfs-aliyun@0.1.0');
-    api.use('steedos:autoform-file@0.4.2');
+    api.use('steedos:autoform-file');
 
 
     api.use('steedos:sso@0.0.4')
     api.use('steedos:adminlte@2.3.12_3');
-    api.use('steedos:base@0.0.71');
+    api.use('steedos:base');
     api.use('steedos:accounts@0.0.27');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');

@@ -1,4 +1,4 @@
-cfs:filesystem
+steedos:cfs-filesystem
 =========================
 
 NOTE: This package is under active development right now (2014-3-31). It has
@@ -15,7 +15,7 @@ on the same server on which your Meteor app is running.
 Install using Meteorite. When in a Meteor app directory, enter:
 
 ```
-$ meteor add cfs:filesystem
+$ meteor add steedos:cfs-filesystem
 ```
 
 ## Important Note

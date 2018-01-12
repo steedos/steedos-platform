@@ -15,14 +15,14 @@ Package.onUse(function(api) {
 
   api.use([
     //CFS packages
-    'steedos:cfs-base-package@0.0.30',
-    'steedos:cfs-file@0.1.16',
+    'steedos:cfs-base-package',
+    'steedos:cfs-file',
     //Core packages
     'check',
     'ejson',
     //Other packages
-    'cfs:http-methods@0.0.29',
-    'cfs:http-publish@0.0.13'
+    'steedos:cfs-http-methods',
+    'steedos:cfs-http-publish'
   ]);
 
   api.addFiles([
@@ -43,8 +43,8 @@ Package.onTest(function (api) {
   api.use([
     //CFS packages
     'steedos:cfs-access-point',
-    'steedos:cfs-standard-packages@0.0.2',
-    'steedos:cfs-gridfs@0.0.0',
+    'steedos:cfs-standard-packages',
+    'steedos:cfs-gridfs',
     //Core packages
     'test-helpers',
     'http',

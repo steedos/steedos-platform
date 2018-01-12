@@ -1,4 +1,4 @@
-## cfs:file Public API ##
+## steedos:cfs-file Public API ##
 
 CollectionFS, FS.File object
 

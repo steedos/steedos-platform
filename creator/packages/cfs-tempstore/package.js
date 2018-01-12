@@ -12,10 +12,10 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
-  api.use(['steedos:cfs-base-package@0.0.30', 'steedos:cfs-file@0.1.16']);
+  api.use(['steedos:cfs-base-package', 'steedos:cfs-file']);
 
-  api.use('steedos:cfs-filesystem@0.1.2', { weak: true });
-  api.use('steedos:cfs-gridfs@0.0.30', { weak: true });
+  api.use('steedos:cfs-filesystem', { weak: true });
+  api.use('steedos:cfs-gridfs', { weak: true });
 
   api.use('mongo');
 

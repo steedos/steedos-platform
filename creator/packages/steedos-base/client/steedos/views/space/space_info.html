@@ -1,0 +1,137 @@
+<template name="space_info">
+
+    <div class="navigation-bar">
+      <a class="btn btn-default" href="/admin">
+        <i class="ion ion-android-arrow-back"></i>
+      </a>
+
+      <span class="navigation-title dropdown">
+        {{_ "business_info"}}
+      </span>
+      {{#if isRightDropdownNeeded}}
+        <div class="pull-right">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <span class="fa fa-ellipsis-h fa-1"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                {{#if isSpaceOwner}}
+                  <li>
+                    <a class="btn-edit-space">
+                      <b>{{_ "spaces_edit"}}</b>
+                      <div class="menu-item-help">
+                        {{_ "spaces_edit_help"}}
+                      </div>
+                    </a>
+                  </li>
+                  {{#unless isDisableAddSpace}}
+                    <li role="separator" class="divider"></li>
+                  {{/unless}}
+                {{/if}}
+                {{#unless isDisableAddSpace}}
+                  <li>
+                    <a class="btn-new-space">
+                      <b>{{_ "spaces_new"}}</b>
+                      <div class="menu-item-help">
+                        {{_ "spaces_new_help"}}
+                      </div>
+                    </a>
+                  </li>
+                {{/unless}}
+            </ul>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    
+    <section class="admin-content">
+      <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <span class="weui_label">{{_ "spaces_name"}}</span>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary text-muted">
+            <span class="weui_input">{{space.name}}</span>
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <span class="weui_label">{{_ "spaces_owner"}}</span>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary text-muted">
+            <span class="weui_input">{{spaceOwnerName space.owner}}</span>
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <span class="weui_label">{{_ "spaces_admins"}}</span>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary text-muted">
+            <span class="weui_input">{{adminsNames space.admins}}</span>
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <span class="weui_label">{{_ "billing.total_user_count"}}</span>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary text-muted">
+            <span class="weui_input">{{total_user_count}}</span>
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <span class="weui_label">{{_ "billing.accepted_user_count"}}</span>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary text-muted">
+            <span class="weui_input">{{accepted_user_count}}</span>
+          </div>
+        </div>
+        {{#if isPaidSpace}}
+          <div class="weui_cell">
+            <div class="weui_cell_hd">
+              <span class="weui_label">{{_ "billing.paid_user_count"}}</span>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary text-muted">
+              <span class="weui_input">{{paid_user_count}}</span>
+            </div>
+          </div>
+          <div class="weui_cell">
+            <div class="weui_cell_hd">
+              <span class="weui_label">{{_ "billing.paid_modules"}}</span>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary text-muted">
+              <span class="weui_input">{{paid_modules}}</span>
+            </div>
+          </div>
+          <div class="weui_cell">
+            <div class="weui_cell_hd">
+              <span class="weui_label">{{_ "billing.expire_date"}}</span>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary text-muted">
+              <span class="weui_input">{{end_date}}</span>
+            </div>
+          </div>
+        {{/if}}
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <button type="button" class="btn btn-primary" id="space_recharge">{{_ "billing.upgrade"}}</button>
+          </div>
+          <div class="weui_cell_hd">
+            <a type="button" class="btn btn-primary" id="billing_pay_records" href="/admin/view/billing_pay_records" style="margin-left: 15px;">
+              {{_ "billing_pay_records"}}
+            </a>
+          </div>
+          <!-- {{#if isSpaceOwner}}
+            <div class="weui_cell_hd" style="padding-left: 15px;">
+              <button type="submit" class="btn btn-primary btn-edit-space">
+                {{_ "Edit"}}
+              </button>
+            </div>
+          {{/if}} -->
+        </div>
+      </div>
+      
+    </section>
+
+</template>

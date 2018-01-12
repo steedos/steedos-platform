@@ -20,7 +20,7 @@ Package.onUse(function(api) {
 
   api.use(['ejson']);
 
-  api.use(['steedos:cfs-filesaver@0.0.6'], {weak: true});
+  api.use(['steedos:cfs-filesaver'], {weak: true});
 
   api.export('DataMan');
 
@@ -41,7 +41,7 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function (api) {
-  api.use(['steedos:cfs-data-man', 'http', 'tinytest', 'test-helpers', 'steedos:cfs-http-methods@0.0.29']);
+  api.use(['steedos:cfs-data-man', 'http', 'tinytest', 'test-helpers', 'steedos:cfs-http-methods']);
 
   api.addFiles(['tests/common.js', 'tests/client-tests.js'], 'client');
   api.addFiles(['tests/common.js', 'tests/server-tests.js'], 'server');

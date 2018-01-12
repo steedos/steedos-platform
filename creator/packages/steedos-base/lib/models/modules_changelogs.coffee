@@ -1,0 +1,1 @@
+db.modules_changelogs = new Meteor.Collection('modules_changelogs')

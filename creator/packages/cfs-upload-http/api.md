@@ -1,4 +1,4 @@
-## cfs:upload-http Public API ##
+## steedos:cfs-upload-http Public API ##
 
 CollectionFS, HTTP File Upload
 

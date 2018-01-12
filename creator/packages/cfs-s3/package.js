@@ -16,7 +16,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
-  api.use(['steedos:cfs-base-package@0.0.30', 'steedos:cfs-storage-adapter@0.2.1']);
+  api.use(['steedos:cfs-base-package', 'steedos:cfs-storage-adapter']);
   api.addFiles([
     's3.server.js',
     // 's3.indirect.streaming.js',
@@ -27,7 +27,7 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use(['steedos:cfs-standard-packages', 'cfs:s3', 'test-helpers', 'tinytest'], 'server');
+  api.use(['steedos:cfs-standard-packages', 'steedos:cfs-s3', 'test-helpers', 'tinytest'], 'server');
   api.addFiles('tests/server-tests.js', 'server');
   api.addFiles('tests/client-tests.js', 'client');
 });

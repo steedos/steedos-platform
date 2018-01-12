@@ -1,0 +1,26 @@
+<template name="steedosHeaderAccount">
+	<li class="dropdown user user-menu steedos-base">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<!-- <img src="{{avatarURL avatar 29 25 14}}" class="user-image"> -->
+			<img src="{{avatarURL avatar 29 25 14}}" class="user-image">
+			<span class="hidden-xs user-name text-overflow">{{displayName}}</span>
+			<i class="fa fa-angle-down"></i>
+		</a>
+		<ul class="dropdown-menu">
+			{{#unless isAppsLimited}}
+				<li>
+					<a href="#" class="steedos-download qhd-hidden">{{_ "Client download"}}</a>
+				</li>
+				<li>
+					<a href="/admin/">{{_ "Settings"}}</a>
+				</li>
+				<li>
+					<a href="#" class="steedos-help">{{_ "Help"}}</a>
+				</li>
+			{{/unless}}
+			<li>
+				<a href="{{signOutUrl}}">{{_ "Sign out"}}</a>
+			</li>
+		</ul>
+	</li>
+</template>

@@ -14,7 +14,7 @@ Package.onUse(function(api) {
 
   api.use([
     // CFS
-    'steedos:cfs-base-package@0.0.30',
+    'steedos:cfs-base-package',
     // Core
     'deps',
     'check',
@@ -27,7 +27,7 @@ Package.onUse(function(api) {
 
   // We want to make sure that its added to scope for now if installed.
   // We have set a deprecation warning on the transform scope
-  api.use('steedos:cfs-graphicsmagick@0.0.17', 'server', { weak: true });
+  api.use('steedos:cfs-graphicsmagick', 'server', { weak: true });
 
   api.addFiles([
     'storageAdapter.client.js'

@@ -9,15 +9,15 @@ Package.onUse(function(api) {
   api.versionsFrom('1.0');
 
   api.use([
-    'steedos:cfs-base-package@0.0.30',
-    'steedos:cfs-tempstore@0.1.4',
-    'steedos:cfs-storage-adapter@0.2.1'
+    'steedos:cfs-base-package',
+    'steedos:cfs-tempstore',
+    'steedos:cfs-storage-adapter'
   ]);
 
   api.use([
     'livedata',
     'mongo-livedata',
-    'cfs:power-queue@0.9.11'
+    'steedos:cfs-power-queue'
   ]);
 
   api.addFiles([
@@ -26,7 +26,7 @@ Package.onUse(function(api) {
 });
 
 // Package.on_test(function (api) {
-//   api.use('cfs:standard-packages@0.0.0');
+//   api.use('steedos:cfs-standard-packages@0.0.0');
 
 //   api.use('test-helpers', 'server');
 //   api.use(['tinytest', 'underscore', 'ejson', 'ordered-dict', 'random']);

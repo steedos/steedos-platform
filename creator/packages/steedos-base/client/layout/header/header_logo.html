@@ -1,0 +1,13 @@
+<template name="steedosHeaderLogo">
+	<div class="logo {{#if spaceAvatar}} logo-avatar {{/if}}" style="{{#if spaceAvatar}} background: transparent url({{spaceAvatar}}) no-repeat center;{{/if}}">
+		<span class="logo-mini">
+			<img src="{{logoMiniUrl}}" style="width: 40px;height: 40px;">
+		</span>
+		<span class="logo-lg text-overflow">
+			{{spaceName}}
+		</span>
+		{{#if isSpaceOwner}}
+		<a href="#" class="edit-space btn-primary"><i class="ion ion-gear-b"></i></a>
+		{{/if}}
+	</div>
+</template>

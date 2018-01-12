@@ -1,4 +1,4 @@
-cfs:s3
+steedos:cfs-s3
 =========================
 
 NOTE: This package is under active development right now (2014-5-12). It has
@@ -13,7 +13,7 @@ A Meteor package that adds Amazon S3 storage for
 Install using Meteorite. When in a Meteor app directory, enter:
 
 ```
-$ meteor add cfs:s3
+$ meteor add steedos:cfs-s3
 ```
 
 ## S3 Setup

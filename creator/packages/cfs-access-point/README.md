@@ -1,11 +1,11 @@
-cfs:access-point [![Build Status](https://travis-ci.org/CollectionFS/Meteor-cfs-access-point.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-cfs-access-point)
+steedos:cfs-access-point [![Build Status](https://travis-ci.org/CollectionFS/Meteor-cfs-access-point.png?branch=master)](https://travis-ci.org/CollectionFS/Meteor-cfs-access-point)
 =========================
 
 This is a Meteor package used by
 [CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS).
 
 You don't need to manually add this package to your app. It is added when you
-add the `cfs:standard-packages` package. You could potentially use your own access point
+add the `steedos:cfs-standard-packages` package. You could potentially use your own access point
 package instead.
 
 ## Define a URL for Collection Listing
