@@ -1,0 +1,31 @@
+<template name="_fs_DeleteButton">
+  {{> _fs_DeleteButton2 atts=this fileObj=.. contentBlock=UI.contentBlock}}
+</template>
+
+<template name="_fs_DeleteButton2">
+  <button type="button" {{atts}}>{{#with contentBlock}}{{> this}}{{else}}Delete{{/with}}</button>
+</template>
+
+<template name="_fs_UploadProgressBar">
+  {{#with getAttsAndFileObj this ..}}
+  {{#if this.useBootstrap}}
+  <div class="progress">
+  	<div {{this.atts}}>
+        {{#if this.showPercent}}
+        {{this.progress}}%
+        {{else}}
+	    <span class="sr-only">{{this.progress}}% Complete</span>
+        {{/if}}
+    </div>
+  </div>
+  {{else}}
+  {{#if this.useSemantic}}
+  <div {{this.atts}}>
+    <div class="bar" style="width: {{this.progress}}%"></div>
+  </div>
+  {{else}}
+  <progress value="{{this.progress}}" max="100" {{this.atts}}>{{this.progress}}%</progress>
+  {{/if}}
+  {{/if}}
+  {{/with}}
+</template>
