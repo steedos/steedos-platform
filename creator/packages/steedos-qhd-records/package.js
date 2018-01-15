@@ -50,7 +50,7 @@ Package.onUse(function (api) {
 
 	api.use('momentjs:moment');
 	api.use('mrt:moment-timezone');
-	api.use('steedos:base@0.0.70');
+	api.use('steedos:base');
 	api.use('steedos:accounts@0.0.23');
 	api.use('steedos:theme@0.0.29');
 	api.use('steedos:logger@0.0.2');

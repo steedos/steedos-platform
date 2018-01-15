@@ -63,7 +63,7 @@ Package.onUse(function(api) {
 	api.use('steedos:autoform-lookup@0.3.10');
 
     api.use('natestrauser:select2');
-    api.use('aldeed:autoform-select2')
+    api.use('aldeed:autoform-select2');
 
     api.use('steedos:cfs-standard-packages');
     api.use('steedos:cfs-s3');    
@@ -71,7 +71,7 @@ Package.onUse(function(api) {
     api.use('steedos:autoform-file');
 
 
-    api.use('steedos:sso@0.0.4')
+    api.use('steedos:sso@0.0.4');
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base');
     api.use('steedos:accounts@0.0.27');
