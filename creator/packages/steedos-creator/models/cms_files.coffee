@@ -38,7 +38,14 @@ Creator.Objects.cms_files =
 			filter_scope: "space"
 
 	permission_set:
-		default:
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true

@@ -7,6 +7,7 @@ Creator.Objects.archive_borrow =
 		borrow_no:
 			type:"text"
 			label:"借阅单编号"
+			omit:true
 			sortable:true
 			is_name:true
 			#defaultValue:当前年度的借阅单总数+1
@@ -18,6 +19,8 @@ Creator.Objects.archive_borrow =
 		unit_info:
 			type:"text"
 			label:"单位"
+			defaultValue:()->
+				return  Creator.Collections["space_users"].findOne({user:Meteor.userId(),space:Session.get("spaceId")},{fields:{company:1}}).company
 			#字段生成，不可修改
 		deparment_info:
 			type:"text"
@@ -30,11 +33,16 @@ Creator.Objects.archive_borrow =
 		start_date:
 			type:"date"
 			label:"借阅日期"
+			defaultValue:()->
+				return new Date()
 			sortable:true
 		end_date:
 			type:"date"
 			label:"归还日期"
 			sortable:true
+			defaultValue:()->
+				now = new Date()
+				return new Date(now.getTime()+7*24*3600*1000)
 		#	defaultValue:new Date() #应该是当前日期加7天
 			required:true
 		use_with:
@@ -83,12 +91,12 @@ Creator.Objects.archive_borrow =
 			defaultValue:"未审批"
 			sortable:true
 			omit:true
-		title:
-			type:"[text]"
+		relate_documentIds:
+			type:"lookup"
 			label:"题名"
 			is_wide:true
-			mutiple:true
-			sortable:true
+			reference_to:"archive_records"
+			multiple:true
 		year:
 			type:"text"
 			label:"年度"
@@ -112,16 +120,22 @@ Creator.Objects.archive_borrow =
 			type:"boolean"
 			defaultValue:false
 			omit:true
+		#我的借阅记录是可以被删除的，不过是假删除
+		is_deleted:
+			type:"boolean"
+			defaultValue:false
+			omit:true 
 	list_views:
 		default:
 			columns:["borrow_no","created","end_date","created_by","unit_info
-			","deparment_info","phone_number","title"]
+			","deparment_info","phone_number","relate_documentIds","year"]
 		all:
 			label:"所有借阅记录"
 		mine:
 			label:"我的借阅记录"
+			columns:["borrow_no","end_date","relate_documentIds","year"]
 			filter_scope: "mine"
-			filters: [["is_approved", "$eq", true]]
+			filters: [["is_approved", "$eq", true],["is_deleted", "$eq", false]]
 		approving:
 			label:"待审批"
 			filter_scope: "mine"
@@ -131,7 +145,66 @@ Creator.Objects.archive_borrow =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
+				now = new Date()
 				doc.created_by = userId;
-				doc.created = new Date();
+				doc.created = now
 				doc.owner = userId
+				doc.is_deleted = false
+				doc.is_approved = false
+				count = Creator.Collections["archive_borrow"].find({year:now.getFullYear().toString()}).count()+1
+				strCount = (Array(6).join('0') + count).slice(-6)
+				doc.borrow_no = now.getFullYear().toString()  + strCount
+				doc.year = now.getFullYear().toString()
 				return true
+		"after.insert.server.default": 
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				doc.relate_documentIds.forEach (relate_documentId)->
+					Creator.Collections["archive_records"].update({_id:relate_documentId},{$set:{is_borrowed:true,borrowed:new Date(),borrowed_by:userId}})	
+				return true
+	actions: 
+		restore:
+			label: "归还"
+			visible: true
+			on: "list"
+			todo:()->
+				if Creator.TabularSelectedIds?["archive_borrow"].length ==0
+					alert("请先选择要归还的条目")
+					return
+				if Session.get("list_view_id") =="mine"
+					Creator.TabularSelectedIds?["archive_borrow"].forEach (SelectedId)->
+						Creator.Collections["archive_borrow"].update({_id:SelectedId},{$set:{is_deleted:true}},
+							(error,result)->
+								console.log error
+								if !error
+									recordIds = Creator.Collections["archive_borrow"].findOne({_id:SelectedId}).relate_documentIds
+									recordIds.forEach (recordId)->
+										Creator.Collections["archive_records"].update({_id:recordId},{$set:{is_borrowed:false}})
+									#Creator.Collections["archive_borrow"].update(
+									toastr.success("归还成功，欢迎再次借阅")
+								else
+									toastr.error("归还失败，请再次操作")
+								)
+
+
+		renew:
+			label:"续借"
+			visible:true
+			on: "list"
+			todo:()->
+				if Creator.TabularSelectedIds?["archive_borrow"].length ==0
+					alert("请先选择要续借的条目")
+					return
+				now = new Date()
+				start_date = now
+				end_date =new Date(now.getTime()+7*24*3600*1000)
+				Creator.TabularSelectedIds?["archive_borrow"].forEach (SelectedId)->
+					Creator.Collections["archive_borrow"].update({_id:SelectedId},{$set:{start_date:start_date,end_date:end_date}},
+						(error,result)->
+							console.log error
+							if !error						
+								toastr.success("续借成功，等待审核")
+							else
+								toastr.error("续借失败，请再次操作")
+							)

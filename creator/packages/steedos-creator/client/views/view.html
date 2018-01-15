@@ -83,137 +83,43 @@
 							</li>
 						</ul>
 						<div id="creator-tabular" class="slds-tabs_default__content creator-view-tabs-content slds-hide" role="tabpanel">
-							{{#if isFileDetail}}
+							{{#each related_list}}
 								<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
 									<div class="slds-card__header slds-grid">
 										<header class="slds-media slds-media_center slds-has-flexi-truncate">
 											<div class="slds-media__figure">
 												<span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
-													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=related_file_object.icon}}
+													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=related_object.icon}}
 												</span>
 											</div>
 											<div class="slds-media__body">
 												<h2>
-													<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="{{_ related_file_object.name}}">
-														<span class="slds-text-heading_small">{{ related_file_object.label}}</span>
-														<span class="slds-text-heading--small slds-shrink-none slds-m-right--xx-small" title="{{related_file_list.length}}"> ({{related_file_list.length}})</span>
+													<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="{{_ related_object.name}}">
+														<span class="slds-text-heading_small">{{ related_object.label}}</span>
+														<span class="slds-text-heading--small slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count}})</span>
 													</a>
 												</h2>
 											</div>
 										</header>
-									</div>
-									<div class="slds-card__body" style="{{#if related_file_list.length}}{{else}}display:none;{{/if}}">
-										<div>
-											<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-												<table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked dataTable no-footer slds-no-cell-focus"
-												 id="DataTables_Table_0" role="grid" style="display: table;">
-													<thead>
-														<tr role="row">
-															<th class="slds-cell-edit cellContainer sorting_disabled" rowspan="1" colspan="1" aria-label=" Sort by:  名称       ">
-																<div class="slds-th__action" tabindex="-1">
-																	<span class="slds-assistive-text">Sort by: </span>
-																	<span class="slds-truncate" title="Name">名称</span>
-																</div>
-															</th>
-															<th class="slds-cell-edit cellContainer sorting_disabled" rowspan="1" colspan="1" aria-label=" Sort by:  文件大小       ">
-																<div class="slds-th__action" tabindex="-1">
-																	<span class="slds-assistive-text">Sort by: </span>
-																	<span class="slds-truncate" title="Name">文件大小</span>
-																</div>
-															</th>
-															<th class="slds-cell-edit cellContainer sorting_disabled" rowspan="1" colspan="1" aria-label=" Sort by:  上传者       ">
-																<div class="slds-th__action" tabindex="-1">
-																	<span class="slds-assistive-text">Sort by: </span>
-																	<span class="slds-truncate" title="Name">上传者</span>
-																</div>
-															</th>
-															<th class="slds-cell-edit cellContainer sorting_disabled" rowspan="1" colspan="1" aria-label=" Sort by:  上传时间       ">
-																<div class="slds-th__action" tabindex="-1">
-																	<span class="slds-assistive-text">Sort by: </span>
-																	<span class="slds-truncate" title="Name">上传时间</span>
-																</div>
-															</th>
-														</tr>
-													</thead>
-													<tbody>
-														{{#each related_file_list}}
-															<tr role="row">
-																<td class="slds-cell-edit cellContainer" data-label="名称">
-																	<span class="slds-grid slds-grid_align-spread creator_table_cell">
-																		<span class="slds-truncate">
-																			<a href="/api/files/files/{{this._id}}?download=true" title="{{this.original.name}}">{{this.original.name}}</a>
-																		</span>
-																	</span>
-																</td>
-																<td class="slds-cell-edit cellContainer" data-label="文件大小">
-																	<span class="slds-grid slds-grid_align-spread creator_table_cell">
-																		<span class="slds-truncate">
-																			<span title="{{this.original.size}}">{{this.original.size}}</span>
-																		</span>
-																	</span>
-																</td>
-																<td class="slds-cell-edit cellContainer" data-label="上传者">
-																	<span class="slds-grid slds-grid_align-spread creator_table_cell">
-																		<span class="slds-truncate">
-																			<a href="/app/admin/users/view/{{this.metadata.owner}}" title="{{this.metadata.owner_name}}">{{this.metadata.owner_name}}</a>
-																		</span>
-																	</span>
-																</td>
-																<td class="slds-cell-edit cellContainer" data-label="上传时间">
-																	<span class="slds-grid slds-grid_align-spread creator_table_cell">
-																		<span class="slds-truncate">
-																			<span title="{{this.uploadedAt}}">{{this.uploadedAt}}</span>
-																		</span>
-																	</span>
-																</td>
-															</tr>
-														{{/each}}
-													</tbody>
-												</table>
-											</div>
+										<div class="slds-no-flex">
+											{{#if allowCreate}}
+												{{#if this.is_file}}
+													<button class="slds-button slds-button_neutral btn-upload-file">
+														上传
+														<input type="file" name="file" class="input-file-upload">
+													</button>
+												{{else}}
+													<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
+												{{/if}}
+											{{/if}}
 										</div>
+									</div>
+									<div class="slds-card__body" style="{{#if related_list_count}}{{else}}display:none;{{/if}}">
+										{{> tabular table=this.tabular_table selector=related_selector class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked"}}
 									</div>
 									<footer class="slds-card__footer"></footer>
 								</div>
-							{{else}}
-								{{#each related_list}}
-									<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
-										<div class="slds-card__header slds-grid">
-											<header class="slds-media slds-media_center slds-has-flexi-truncate">
-												<div class="slds-media__figure">
-													<span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
-														{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=related_object.icon}}
-													</span>
-												</div>
-												<div class="slds-media__body">
-													<h2>
-														<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="{{_ related_object.name}}">
-															<span class="slds-text-heading_small">{{ related_object.label}}</span>
-															<span class="slds-text-heading--small slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count}})</span>
-														</a>
-													</h2>
-												</div>
-											</header>
-											<div class="slds-no-flex">
-												{{#if allowCreate}}
-													{{#if this.is_file}}
-														<button class="slds-button slds-button_neutral btn-upload-file">
-															上传
-															<input type="file" name="file" class="input-file-upload">
-														</button>
-													{{else}}
-														<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
-													{{/if}}
-												{{/if}}
-											</div>
-										</div>
-										<div class="slds-card__body" style="{{#if related_list_count}}{{else}}display:none;{{/if}}">
-											{{> tabular table=this.tabular_table selector=related_selector class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_edit slds-hint-parent slds-max-medium-table_stacked"}}
-										</div>
-										<footer class="slds-card__footer">{{relatedCollection}}</footer>
-									</div>
-								{{/each}}
-							{{/if}}
+							{{/each}}
 						</div>
 						<div id="creator-quick-form" class="slds-tabs_default__content creator-view-tabs-content slds-show" role="tabpanel">
 							{{#if detail_info_visible}}

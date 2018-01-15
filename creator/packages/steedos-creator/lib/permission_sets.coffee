@@ -111,11 +111,14 @@ if Meteor.isClient
 					console.log error
 				else
 					_.each result.objects, (permissions, object_name)->
-						Creator.getObject(object_name).permissions.set(permissions)
+						object = Creator.getObject(object_name)
+						unless object
+							return
+						object.permissions.set(permissions)
 						_.each permissions.fields, (field, field_name)->
-							f = Creator.getObject(object_name).fields[field_name]
+							f = object.fields[field_name]
 							if f
-								fs = Creator.getObject(object_name).schema._schema[field_name]
+								fs = object.schema._schema[field_name]
 								if !fs.autoform
 									fs.autoform = {}
 								if field.readonly

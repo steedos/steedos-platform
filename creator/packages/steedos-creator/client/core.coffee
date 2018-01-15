@@ -6,6 +6,27 @@ Creator.getLayout = (app_id)->
 	else
 		return "creatorLayout"
 
+Creator.createObject = (object_name,object_data)->
+	object = Creator.getObject(object_name)
+	collection_name = "Creator.Collections."+object_name
+	Session.set("action_collection",collection_name)
+	Session.set("action_save_and_insert",true)
+	Session.set("action_collection_name",object.label)
+	Session.set('action_object_name',object_name)
+	Session.set("action_fields",undefined)
+	Session.set("cmDoc",object_data)
+	$(".creator-add").click()
+
+Creator.editObject = (object_name,record_id)->
+	object = Creator.getObject(object_name)
+	collection_name = "Creator.Collections."+object_name
+	Session.set("action_collection",collection_name)
+	Session.set("action_save_and_insert",false)
+	Session.set("action_collection_name",object.label)
+	Session.set('action_object_name',object_name)
+	Session.set("action_record_id",record_id)
+	Session.set("action_fields",undefined)
+	$(".creator-edit").click()
 if Meteor.isClient
 	# 定义全局变量以Session.get("object_name")为key记录其选中的记录id集合
 	Creator.TabularSelectedIds = {}

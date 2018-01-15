@@ -7,10 +7,6 @@ Creator.Objects.tasks =
 			type: "text"
 			required: true
 			is_wide: true
-		description: 
-			type: "textarea"
-			required: true
-			is_wide: true
 		assigned_to:
 			type: "lookup"
 			reference_to: "users"
@@ -20,6 +16,9 @@ Creator.Objects.tasks =
 			omit: true
 		end_date: 
 			type: "datetime"
+		contact:
+			type: "lookup"
+			reference_to: "contacts"
 		related_to:
 			type: "lookup"
 			reference_to: ()->
@@ -28,6 +27,11 @@ Creator.Objects.tasks =
 					if object.enable_tasks
 						o.push object_name
 				return o 
+
+		description: 
+			type: "textarea"
+			required: true
+			is_wide: true
 
 	list_views:
 		default:

@@ -1,0 +1,94 @@
+<template name="creator_report">
+
+
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet">
+		<div class="slds-template__container">
+			<div class="reportsReportPage slds-grid slds-grid--vertical">
+				<div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="report"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>Reports</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+											<div class="triggerLinkTextAndIconWrapper">
+												<span class="triggerLinkText selectedListView uiOutputText">Report Name</span>
+											</div>
+										</a>
+									</h1>
+								</div>
+							</div>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+							
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
+							</button>
+
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
+							</button>
+
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Refresh">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
+							</button>
+
+							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
+							</button>
+							<div class="slds-button-group" role="group">
+								<button class="slds-button slds-button_neutral">Edit</button>
+								<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+									<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+										<svg class="slds-button__icon" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
+										</svg>
+										<span class="slds-assistive-text">Show More</span>
+									</button>
+									<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+										<ul class="slds-dropdown__list slds-show">
+												<li class="slds-dropdown__item crm-header-menu-item list-action-custom" role="presentation">
+													<a href="javascript:void(0);" title="" class="" role="option" tabindex="-1">
+														<span>Delete</span>
+													</a>
+												</li>
+										</ul>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="pageBody">
+			        <div class="scrollarea">
+			        	<div class="innerStacking">
+				        	<div class="eclair-container">
+				            	<div id="pivotgrid-chart"></div>
+				            </div>
+				           	<div class="reportsDataGrid">
+				            	<div id="pivotgrid"></div>
+				            </div>
+				        </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>	
+</template>

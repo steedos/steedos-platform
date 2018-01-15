@@ -1,5 +1,5 @@
-Creator.Objects.crm_contracts = 
-	name: "crm_contracts"
+Creator.Objects.contracts = 
+	name: "contracts"
 	label: "合同"
 	icon: "contract"
 	enable_files: true
@@ -32,7 +32,7 @@ Creator.Objects.crm_contracts =
 		customer_id:
 			label: "客户"
 			type: "master_detail"
-			reference_to: "crm_customers"
+			reference_to: "companies"
 		customer_signed_date:
 			label: "客户签字日期" 
 			type: "date"
@@ -52,7 +52,3 @@ Creator.Objects.crm_contracts =
 			columns: ["name", "description", "modified", "owner"]
 		mine:
 			filter_scope: "mine"
-
-	related_list:
-		crm_contacts:
-			columns: ["name", "email", "phone"]

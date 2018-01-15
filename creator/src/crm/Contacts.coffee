@@ -1,10 +1,9 @@
-Creator.Objects.crm_contacts = 
-	name: "crm_contacts"
+Creator.Objects.contacts = 
+	name: "contacts"
 	label: "联系人"
 	icon: "contact"
 	enable_files: true
 	enable_search: true
-	enable_tasks: true
 	fields:
 		name: 
 			type: "text"
@@ -13,10 +12,10 @@ Creator.Objects.crm_contacts =
 			description: ""
 			inlineHelpText: ""
 			required: true
-		customer_id: 
+		account_id: 
 			label: "客户"
 			type: "master_detail"
-			reference_to: "crm_customers"
+			reference_to: "companies"
 		birthdate: 
 			label: "生日"
 			type: "date"
@@ -49,7 +48,7 @@ Creator.Objects.crm_contacts =
 
 	list_views:
 		default:
-			columns: ["name", "customer_id", "email", "phone"]
+			columns: ["name", "account_id", "email", "phone"]
 		recent:
 			filter_scope: "space"
 		all:

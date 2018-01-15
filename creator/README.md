@@ -67,6 +67,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - disabled: 禁用
 - hidden: 隐藏，在列表和表单中都不显示
 - blackbox: 告知schema忽略此字段的类型验证
+- allowedValues: 可选项范围
 
 ### permissions 权限
 Object权限分以下类型

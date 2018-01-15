@@ -53,10 +53,18 @@ Package.onUse(function (api) {
 	api.use('steedos:base@0.0.70');
 	api.use('steedos:accounts@0.0.23');
 	api.use('steedos:theme@0.0.29');
+	api.use('steedos:logger@0.0.2');
 
-	// api.addFiles('lib/models/archives.coffee', 'server');
+	api.addFiles('lib/models/instances.coffee', 'server');
+	api.addFiles('lib/cfs/instances.coffee', 'server');
+
+	api.addFiles('lib/models/archives.coffee', 'server');
+	// api.addFiles('lib/cfs/creator.coffee', 'server');
+
 
 	api.addFiles('server/lib/instances_to_archive.coffee', 'server');
+	api.addFiles('server/lib/attachments_to_archive.coffee', 'server');
+
 
 	api.addFiles('server/lib/records_qhd.coffee', 'server');
 
@@ -65,6 +73,8 @@ Package.onUse(function (api) {
 	api.export('steedosRequest');
 
 	api.export('InstancesToArchive');
+
+	api.export('AttachmentsToArchive');
 
 	api.export('InstancesToContracts');
 

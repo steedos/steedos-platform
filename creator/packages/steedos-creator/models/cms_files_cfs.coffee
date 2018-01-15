@@ -67,3 +67,5 @@ cfs.files.allow
   download: (userId)->
     true
 
+db["cfs.files.filerecord"] = cfs.files.files
+

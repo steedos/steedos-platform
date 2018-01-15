@@ -3,6 +3,7 @@ Creator.Objects.archive_records =
 	icon: "record"
 	label: "档案"
 	enable_search: true
+	enable_files: true
 	fields:
 		archives_name:
 			type:"text"
@@ -585,11 +586,11 @@ Creator.Objects.archive_records =
 		all:
 			label: "全部档案"
 			filter_scope: "space"
-			filters: [["is_receive", "$eq", true]]
+			filters: [["is_received", "$eq", true]]
 		receive:
 			label:"待接收档案"
 			filter_scope: "space"
-			filters: [["is_receive", "$eq", false]]
+			filters: [["is_received", "$eq", false]]
 		transfer:
 			label:"待移交档案"
 			filter_scope: "space"
@@ -652,48 +653,86 @@ Creator.Objects.archive_records =
 			# only_list_item:"receive"
 			on: "list"
 			todo:()-> 
-				Creator.TabularSelectedIds?["archive_records"]
-				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"])
+				if Creator.TabularSelectedIds?["archive_records"].length == 0
+					 alert("请先选择要接收的档案")
+				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"],
+					(error,result) ->
+							console.log error
+							if !error
+								toastr.success("接收成功，等待审核")
+								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"接收档案","成功")
+							else
+								toastr.error("接收失败，请再次操作")
+								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"接收档案","失败")
+							)
 		transfer:
 			label:"移交"
 			visible:true
 			on: "list"
 			todo:()->
-				Creator.TabularSelectedIds?["archive_records"]
+				if Creator.TabularSelectedIds?["archive_records"].length == 0
+					 alert("请先移交要移交的档案")
+					 return
 				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"],
 					(error,result) ->
 							console.log error
 							if !error
 								toastr.success("移交成功，等待审核")
+								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"移交档案","成功")
+
 							else
 								toastr.error("移交失败，请再次操作")
+								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"移交档案","成功")
+
 							)
 		destroy:
 			label:"销毁"
 			visible:true
 			on: "list"
 			todo:()->
-				Creator.TabularSelectedIds?["archive_records"]
+				if Creator.TabularSelectedIds?["archive_records"].length == 0
+					 alert("请先选择要销毁的档案")
+					 return 
 				Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"],
 					(error,result) ->
 						console.log error
 						if !error
 							toastr.success("销毁成功，等待审核")
+							Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"销毁档案","成功")
+
 						else
 							toastr.error("销毁失败，请再次操作")
+							Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"销毁档案","成功")
+
 						)
 		borrow:
 			label:"借阅"
 			visible:true
 			on: "list"
-			todo:()->
+			todo:()->				
 				space = Session.get("spaceId")
-				Creator.TabularSelectedIds?["archive_records"]
-				Meteor.call("archive_borrow",Creator.TabularSelectedIds?["archive_records"],space,
-					(error,result)->
-						console.log error
-						if !error
-							toastr.success("借阅成功，等待审核")
-						else
-							toastr.error("借阅失败，请再次操作")
-						)
+				if Creator.TabularSelectedIds?["archive_records"].length == 0
+					 alert("请先选择要借阅的档案")
+					 return
+				collection_borrow = Creator.Collections["archive_borrow"]
+				doc = {}
+				now = new Date()
+				count = collection_borrow.find({year:now.getFullYear().toString()}).count()+1
+				strCount = (Array(6).join('0') + count).slice(-6)
+				doc.borrow_no = now.getFullYear().toString()  + strCount
+				collection_record = Creator.Collections["archive_records"]
+				#console.log collection_record.find({},{field:{year: 1}}).sort({year:-1}).limit(1)
+				doc.year = now.getFullYear().toString()
+				doc.unit_info = Creator.Collections["space_users"].findOne({user:Meteor.userId(),space:space},{fields:{company:1}}).company
+				doc.start_date = now
+				doc.end_date =new Date(now.getTime()+7*24*3600*1000)
+				doc.use_with = "工作考察"
+				doc.use_fashion = "实体借阅"
+				doc.file_type = "立卷方式(文件级)"
+				doc.space = space
+				doc.is_approved = false 
+				doc.relate_documentIds = []
+				Creator.TabularSelectedIds?["archive_records"].forEach (selectedId)->
+					doc.relate_documentIds.push collection_record.findOne({_id:selectedId})._id
+				Creator.createObject("archive_borrow",doc)
+	

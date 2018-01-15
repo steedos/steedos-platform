@@ -98,10 +98,6 @@ Template.creator_view.onRendered ->
 		record_id = Session.get "record_id"
 		if object_name and record_id
 			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
-			if object_name == "cms_files"
-				cfsFileIds = Creator.getCollection("cms_files").findOne(record_id)?.versions
-				if cfsFileIds
-					Creator.subs["Creator"].subscribe "creator_cfs_files", cfsFileIds
 
 Template.creator_view.helpers
 
@@ -196,14 +192,18 @@ Template.creator_view.helpers
 	related_selector: (object_name, related_field_name)->
 		object_name = this.object_name
 		related_field_name = this.related_field_name
+		record_id = Session.get "record_id"
 		if object_name and related_field_name and Session.get("spaceId")
-			selector = {space: Session.get("spaceId")}
+			if object_name == "cfs.files.filerecord"
+				selector = {"metadata.space": Session.get("spaceId")}
+			else
+				selector = {space: Session.get("spaceId")}
 			if object_name == "cms_files"
 				# 附件的关联搜索条件是定死的
 				selector["parent.o"] = Session.get "object_name"
-				selector["parent.ids"] = [Session.get("record_id")]
+				selector["parent.ids"] = [record_id]
 			else
-				selector[related_field_name] = Session.get("record_id")
+				selector[related_field_name] = record_id
 			permissions = Creator.getPermissions(object_name)
 			if permissions.viewAllRecords
 				return selector
@@ -264,19 +264,6 @@ Template.creator_view.helpers
 	
 	isFileDetail: ()->
 		return "cms_files" == Session.get "object_name"
-
-	related_file_object: ()->
-		return {
-			name: "cfs_files"
-			label: "文件"
-			icon: "drafts"
-		}
-
-	related_file_list: ()->
-		record_id = Session.get "record_id"
-		cfsFileIds = Creator.getCollection("cms_files").findOne(record_id)?.versions
-		if cfsFileIds?.length
-			return cfs.files.find({_id:{$in:cfsFileIds}}).fetch()
 
 
 Template.creator_view.events

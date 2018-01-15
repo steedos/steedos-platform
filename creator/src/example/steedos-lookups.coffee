@@ -17,21 +17,21 @@ if Meteor.isDevelopment
 			customer_id:
 				label: "客户(单选)"
 				type: "lookup"
-				reference_to: "crm_customers"
+				reference_to: "companies"
 			customer_ids:
 				label: "客户(多选)"
 				type: "lookup"
-				reference_to: "crm_customers"
+				reference_to: "companies"
 				multiple: true
 			object_switche_id:
 				label: "客户/用户(单选)"
 				type: "lookup"
-				reference_to: ["crm_customers", "users"]
+				reference_to: ["companies", "users"]
 				group: "可选择对象测试区"
 			object_switche_ids:
 				label: "客户/用户(多选)"
 				type: "lookup"
-				reference_to: ["crm_customers", "users"]
+				reference_to: ["companies", "users"]
 				multiple: true
 				group: "可选择对象测试区"
 			site:
@@ -70,7 +70,3 @@ if Meteor.isDevelopment
 				columns: ["name", "description", "modified", "owner"]
 			mine:
 				filter_scope: "mine"
-
-		related_list:
-			crm_contacts:
-				columns: ["name", "email", "phone"]

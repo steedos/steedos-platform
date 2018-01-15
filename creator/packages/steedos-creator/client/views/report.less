@@ -1,0 +1,61 @@
+.reportsReportPage {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .pageBody {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-flow: row;
+        -ms-flex-flow: row;
+        flex-flow: row;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        -webkit-transition: width .2s ease-out;
+        transition: width .2s ease-out;
+        overflow: hidden;
+
+        .scrollarea {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            background-color: white;
+            overflow: auto;
+        }
+        .innerStacking {
+            position: relative;
+        }
+        .eclair-container {
+            background-color: white;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+            padding: .75rem 1.5rem;
+            border: 0 solid rgb(221, 219, 218);
+            border-bottom-width: 1px;        
+        }
+    }   
+
+}

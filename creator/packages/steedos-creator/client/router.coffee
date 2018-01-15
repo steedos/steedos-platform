@@ -45,3 +45,13 @@ FlowRouter.route '/app/:app_id/:object_name/view/:record_id',
 		Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_view"
+
+
+FlowRouter.route '/app/:app_id/:object_name/report/:report_id',
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		Session.set("app_id", FlowRouter.getParam("app_id"))
+		Session.set("object_name", FlowRouter.getParam("object_name"))
+		Session.set("report_id", FlowRouter.getParam("report_id"))
+		BlazeLayout.render Creator.getLayout(),
+			main: "creator_report"
