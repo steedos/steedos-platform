@@ -38,7 +38,7 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular@1.6.1');
 	api.use('aldeed:autoform@5.8.0');
 	api.use('steedos:cfs-standard-packages');
-	api.use('iyyang:cfs-aliyun@0.1.0');
+	api.use('steedos:cfs-aliyun');
 	api.use('steedos:cfs-s3');
 
 

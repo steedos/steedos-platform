@@ -75,7 +75,7 @@ steedos:datatables-extensions
 
 matb33:collection-hooks
 
-iyyang:cfs-aliyun
+steedos:cfs-aliyun
 steedos:cfs-filesystem
 steedos:cfs-s3
 steedos:cfs-standard-packages

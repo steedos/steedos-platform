@@ -67,7 +67,7 @@ Package.onUse(function(api) {
 
     api.use('steedos:cfs-standard-packages');
     api.use('steedos:cfs-s3');    
-    api.use('iyyang:cfs-aliyun@0.1.0');
+    api.use('steedos:cfs-aliyun');
     api.use('steedos:autoform-file');
 
 

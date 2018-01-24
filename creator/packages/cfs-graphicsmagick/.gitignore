@@ -1,7 +1,0 @@
-/versions.json
-.build*
-.npm*
-/nbproject*
-/smart.lock
-/packages/
-*.DS_Store
