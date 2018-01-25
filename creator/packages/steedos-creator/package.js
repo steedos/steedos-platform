@@ -68,7 +68,7 @@ Package.onUse(function(api) {
     api.use('steedos:cfs-standard-packages');
     api.use('steedos:cfs-s3');    
     api.use('steedos:cfs-aliyun');
-    api.use('steedos:autoform-file');
+    api.use('steedos:autoform-file@0.4.2_1');
 
 
     api.use('steedos:sso@0.0.4');
