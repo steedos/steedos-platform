@@ -25,24 +25,29 @@ Creator.Objects.qhd_informations =
 			label:"内容"
 			required: true
 			is_wide:true
-		score_point:
-			type:"checkbox"
-			label:"得分点",
-			multiple:true
-			is_wide:true
-			options: [
-				{label: "上级采用", value: "上级采用"},
-				{label: "领导批示", value: "领导批示"},
-				{label: "正常使用", value: "领导批示"},
-				{label: "月度好信息", value: "月度好信息"}
-			]
+		score:
+			type:"number"
+			label:"分数"
+		# score_point:
+		# 	type:"checkbox"
+		# 	label:"得分点",
+		# 	multiple:true
+		# 	is_wide:true
+		# 	options: [
+		# 		{label: "上级采用", value: "上级采用"},
+		# 		{label: "领导批示", value: "领导批示"},
+		# 		{label: "正常使用", value: "正常使用"},
+		# 		{label: "月度好信息", value: "月度好信息"},
+		# 		{label:"专报信息",value:"专报信息"}
+		# 	]
+
 		# isuse:
 		# 	type:"boolean"
 		# 	label:"是否采用"
 		# 	defaultValue:"否"
 	list_views:
 		default:
-			columns: ["title", "content", "company","score_point","created","created_by"]
+			columns: ["title", "content", "company","score","created","created_by"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
@@ -55,19 +60,20 @@ Creator.Objects.qhd_informations =
 
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
+			#fields:["score","title"] 
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true  
 	# triggers:
 		
 	# 	"before.insert.server.default": 

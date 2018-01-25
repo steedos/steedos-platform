@@ -11,10 +11,11 @@ Template.creatorNavigation.helpers
 		app = Creator.getApp()
 
 		objects = []
-		_.each app?.objects, (v)->
-			obj = Creator.getObject(v)
-			if obj.permissions.get().allowRead
-				objects.push v
+		if app
+			_.each app.objects, (v)->
+				obj = Creator.getObject(v)
+				if obj.permissions.get().allowRead
+					objects.push v
 		return objects
 
 	object_i: ()->

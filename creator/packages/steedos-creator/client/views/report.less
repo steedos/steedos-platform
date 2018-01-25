@@ -10,7 +10,6 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-
     .pageBody {
         display: -webkit-box;
         display: -webkit-flex;
@@ -27,7 +26,6 @@
         -webkit-transition: width .2s ease-out;
         transition: width .2s ease-out;
         overflow: hidden;
-
         .scrollarea {
             -webkit-box-flex: 1;
             -webkit-flex: 1 1 auto;
@@ -54,8 +52,604 @@
             width: 100%;
             padding: .75rem 1.5rem;
             border: 0 solid rgb(221, 219, 218);
-            border-bottom-width: 1px;        
+            border-bottom-width: 1px;
         }
-    }   
+    }
+}
 
+.reportsFilterPanel {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 1px;
+    font-size: .75rem
+}
+
+.reportsFilterPanel .speedyFilter {
+    padding: .5rem;
+    background: rgb(243, 242, 242);
+    border: solid 1px rgb(221, 219, 218);
+    border-radius: .25rem;
+    font-size: .75rem;
+    margin-bottom: 8px;
+    position: relative
+}
+
+.reportsFilterPanel .removeLink {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    padding: 0 .25rem;
+    background-color: rgb(243, 242, 242)
+}
+
+.reportsFilterPanel .addSpeedyFilter {
+    padding: 0 .75rem
+}
+
+.reportsFilterPanel .addSpeedyFilterItem {
+    margin-bottom: .25rem
+}
+
+.reportsFilterPanel .addFilter {
+    text-align: right;
+    margin-top: .75rem
+}
+
+.reportsFilterPanel .lockedHeader .icon {
+    height: 19px
+}
+
+.reportsFilterPanel .editableFilters,
+.reportsFilterPanel .lockedFilters,
+.reportsFilterPanel .chartFilters,
+.reportsFilterPanel .speedyFilters {
+    padding: 0;
+    margin: 0
+}
+
+.reportsFilterPanel .panelHeader {
+    padding: .5rem .75rem;
+    border-bottom: 1px solid rgb(221, 219, 218);
+    color: rgb(22, 50, 92);
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    min-height: 49px
+}
+
+.reportsFilterPanel .panelHeader.scrolled {
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, .15);
+    margin-bottom: 3px;
+    border-bottom: 0
+}
+
+.reportsFilterPanel .panelTitle {
+    font-weight: 300;
+    font-size: 1rem;
+    white-space: nowrap
+}
+
+.reportsFilterPanel .centered-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column
+}
+
+.reportsFilterPanel .close {
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+    font-size: .8125rem;
+    display: inline-block;
+    color: rgb(176, 173, 171)
+}
+
+.reportsFilterPanel .removeChartFiltersBtn {
+    float: right
+}
+
+.reportsFilterPanel .close:hover {
+    color: rgb(112, 110, 107)
+}
+
+.reportsFilterPanel .booleanLogicFilter {
+    color: rgb(22, 50, 92);
+    padding: 0 .75rem .75rem .75rem
+}
+
+.reportsFilterPanel .buttons {
+    width: 100%;
+    text-align: center
+}
+
+.reportsFilterPanel .vert-scroller {
+    overflow-y: auto;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding-top: .75rem;
+    background-color: rgb(255, 255, 255)
+}
+
+.reportsFilterPanel .lockedHeader,
+.reportsFilterPanel .chartHeader {
+    width: 100%;
+    padding: 1rem .75rem .75rem .75rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.reportsFilterPanel .lockedHeaderTitle,
+.reportsFilterPanel .chartHeaderTitle {
+    color: rgb(112, 110, 107);
+    font-weight: 700;
+    font-size: .8125rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto
+}
+
+.reportsFilterPanel .line {
+    border: 0;
+    border-top: 1px dashed rgb(201, 199, 197)
+}
+
+.reportsFilterPanel .hidden {
+    display: none
+}
+
+.reportsFilterPanel .lockedFilters li,
+.reportsFilterPanel .chartFilters li {
+    display: block
+}
+
+.reportsFilterPanel .reportFilterError {
+    font-size: .75rem;
+    line-height: 1.5;
+    color: rgb(194, 57, 52);
+    padding: .75rem
+}
+
+.reportsReportSidebar {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px
+}
+
+.reportsReportSidebar .stackingPanel {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
+.reportsReportSidebar .fadeIn {
+    z-index: 2;
+    opacity: 1;
+    -webkit-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out
+}
+
+.reportsReportSidebar .fadeOut {
+    opacity: 0;
+    z-index: 1
+}
+
+.reportsReportPage.hideOverflow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+.reportsReportPage .header {
+    position: relative;
+    -webkit-flex: 0 0 auto
+}
+
+.reportsReportPage .pageBody {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    -webkit-transition: width .2s ease-out;
+    transition: width .2s ease-out;
+    overflow: hidden
+}
+
+.reportsReportPage .reportSpinner.hidden {
+    display: none
+}
+
+.reportsReportPage .reportSpinner.hidden,
+.reportsReportPage .eclair-container.hidden,
+.reportsReportPage .pageBody.hidden,
+.reportsReportPage .trendInWaveDashboardContainer.hidden {
+    display: none
+}
+
+.reportsReportPage .scrollarea {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    background-color: rgb(243, 242, 242);
+    overflow: auto
+}
+
+.reportsReportPage .scrollarea:focus {
+    outline: 0
+}
+
+.reportsReportPage .sidebar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    min-width: 1px;
+    background-color: white;
+    border-left: solid 1px #cfd4d9;
+    border-bottom: solid 1px #cfd4d9;
+    -webkit-transition: width .2s ease-out, min-width .2s ease-out;
+    transition: width .2s ease-out, min-width .2s ease-out;
+    overflow: hidden
+}
+
+.reportsReportPage .sidebar.filterOpen {
+    min-width: 275px
+}
+
+.reportsReportPage .sidebar.feedOpen {
+    min-width: 500px
+}
+
+.reportsReportPage .innerStacking {
+    position: relative
+}
+
+.reportsReportPage .reportSpinner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .5)
+}
+
+.reportsReportPage .eclair-container {
+    background-color: white;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    padding: .75rem 1.5rem;
+    border: 0 solid rgb(221, 219, 218);
+    border-bottom-width: 1px
+}
+
+.reportsReportPage .eclair-title-bar {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.reportsReportPage .chart-title {
+    font-size: 1rem;
+    font-weight: 300;
+    margin: .25rem 0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.reportsReportPage .chart-title-bar-spacer {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1
+}
+
+.reportsReportPage .chart-title.read-only {
+    border: none!important
+}
+
+.reportsReportPage .edit-button img {
+    width: 18px;
+    height: 18px;
+    margin-left: -9px;
+    left: 50%;
+    position: relative
+}
+
+.reportsReportPage .eclair-chart-container {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    position: relative
+}
+
+.reportsReportPage .eclair-chart-sizer {
+    position: absolute;
+    width: 100%;
+    height: 100%
+}
+
+.reportsReportPage .apply-config-button,
+.reportsReportPage .cancel-config-button {
+    max-width: 40%;
+    display: inline-block;
+    margin-bottom: 1rem!important;
+    margin-top: 1rem!important;
+    float: right;
+    width: auto!important
+}
+
+.reportsReportPage .apply-config-button {
+    margin-right: 1rem!important;
+    margin-left: .5rem!important;
+    background-color: #036eb3!important
+}
+
+.reportsReportPage .apply-config-button span {
+    color: #fff!important
+}
+
+.reportsReportPage .panel-content {
+    max-height: 700px;
+    width: 298px
+}
+
+.reportsReportPage .edit-button {
+    background-color: rgb(255, 255, 255)
+}
+
+.reportsReportPage .edit-button:focus,
+.reportsReportPage .edit-button:hover {
+    background-color: rgb(0, 95, 178);
+    color: rgb(255, 255, 255)
+}
+
+.reportsReportPage .edit-button:active,
+.reportsReportPage .edit-button.active {
+    padding: 0;
+    background-color: rgb(238, 241, 246);
+    color: rgb(0, 57, 107)
+}
+
+.reportsReportPage .edit-button-disabled {
+    background-color: rgb(255, 255, 255);
+    color: rgb(236, 235, 234)
+}
+
+.reportsReportPage .edit-button-disabled:focus,
+.reportsReportPage .edit-button-disabled:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(236, 235, 234)
+}
+
+.reportsFilterCard {
+    padding: 0 .75rem .5rem .75rem;
+    position: relative
+}
+
+.reportsFilterCard .filterCard {
+    border: solid 1px rgb(221, 219, 218);
+    border-radius: .25rem;
+    font-size: .75rem;
+    padding: .5rem .75rem
+}
+
+.reportsFilterCard.error .filterCard {
+    border: solid 1px rgb(212, 80, 76)
+}
+
+.reportsFilterCard .invalidFilter {
+    font-size: .75rem;
+    line-height: 1.5;
+    color: rgb(194, 57, 52);
+    padding-top: .25rem
+}
+
+.reportsFilterCard.editable .filterCard {
+    background: rgb(255, 255, 255)
+}
+
+.reportsFilterCard.editable .filterCard:hover {
+    background: rgb(243, 242, 242)
+}
+
+.reportsFilterCard.edited .filterCard,
+.reportsFilterCard.edited .filterCard:hover {
+    background: rgb(250, 255, 189)
+}
+
+.reportsFilterCard.locked .filterCard {
+    padding: .5rem;
+    overflow: hidden;
+    background: rgb(243, 242, 242)
+}
+
+.reportsFilterCard.locked .header,
+.reportsFilterCard .operator {
+    float: left;
+    padding: 0
+}
+
+.reportsFilterCard.locked .filterCardBody {
+    color: rgb(22, 50, 92);
+    font-size: .75rem
+}
+
+.reportsFilterCard .booleanLogicIndex {
+    float: left;
+    padding: .75rem .5rem 0 0
+}
+
+.reportsFilterCard .removeFilterCardContainer {
+    border: solid 1px rgb(221, 219, 218);
+    border-radius: .25rem;
+    font-size: .75rem;
+    padding: .5rem .75rem;
+    color: rgb(22, 50, 92);
+    font-size: .75rem;
+    overflow: hidden;
+    background: rgb(250, 255, 189);
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical
+}
+
+.reportsFilterCard .removeFilterCardContainer a {
+    color: rgb(0, 112, 210)
+}
+
+.reportsFilterCard .removeFilter {
+    position: absolute;
+    top: .25rem;
+    right: .85rem;
+    font-size: .75rem;
+    border: 0;
+    background-color: transparent;
+    text-shadow: none;
+    display: block;
+    z-index: 1;
+    color: rgb(176, 173, 171)
+}
+
+.reportsFilterCard .filterCardEditor {
+    display: block
+}
+
+.reportsFilterCard .removeFilter:focus {
+    box-shadow: none
+}
+
+.reportsFilterCard .removeFilter:hover,
+.reportsFilterCard .removeFilter:focus {
+    color: rgb(0, 112, 210);
+    background-color: transparent
+}
+
+.reportsFilterCard .removeFilter:active {
+    color: rgb(94, 180, 255)
+}
+
+.reportsFilterCard.editable:hover .removeFilter {
+    color: rgb(112, 110, 107)
+}
+
+.reportsFilterCard a:hover,
+.reportsFilterCard a:focus {
+    text-decoration: none
+}
+
+.reportsFilterCard .header {
+    font-size: .75rem;
+    color: rgb(112, 110, 107)
+}
+
+.reportsFilterCard .filterCardBody {
+    color: rgb(22, 50, 92);
+    display: -webkit-box;
+    font-size: .8125rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-height: 4rem
+}
+
+.reportsFilterCard .cardValue {
+    display: block
 }

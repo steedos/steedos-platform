@@ -26,7 +26,11 @@ Creator.editObject = (object_name,record_id)->
 	Session.set('action_object_name',object_name)
 	Session.set("action_record_id",record_id)
 	Session.set("action_fields",undefined)
-	$(".creator-edit").click()
+	Meteor.call "object_record", object_name, record_id, (error, result)->
+		if result
+			Session.set 'cmDoc', result
+			$(".btn.creator-edit").click()
+
 if Meteor.isClient
 	# 定义全局变量以Session.get("object_name")为key记录其选中的记录id集合
 	Creator.TabularSelectedIds = {}
@@ -53,6 +57,13 @@ Meteor.startup ->
 			$(".slds-table").addClass("slds-no-cell-focus")
 		else
 			$(".slds-table").removeClass("slds-no-cell-focus")
+
+	# 使用这种绑定方式，可以避免wrapper元素没有生成导致click事件没有绑定上
+	$(document).on "click", ".wrapper", (e)->
+		if $(".filter_option_uiPanel").length and Session.get("show_filter_option")
+			if $(e.target).closest(".filter_option_uiPanel").length < 1
+				$(".filter_option_uiPanel").css({"top": "-1000px", left: "-1000px"})
+
 
 	$(window).resize ->
 		if $(".list-table-container table.dataTable").length

@@ -1,6 +1,7 @@
 Package.describe({
+
     name: 'steedos:creator',
-    version: '0.0.1',
+    version: '0.0.3',
     summary: 'Steedos Creator',
     git: ''
 });
@@ -11,7 +12,9 @@ Npm.depends({
     'MD5': '1.3.0',
     'moment-timezone': '0.5.13',
     busboy: "0.2.13",
-    mkdirp: "0.3.5"
+    mkdirp: "0.3.5",
+    "xml2js": "0.4.19",
+    mongoose: '5.0.1'
 });
 
 Package.onUse(function(api) {
@@ -34,17 +37,17 @@ Package.onUse(function(api) {
     api.use('simple:json-routes@2.1.0');
     api.use('nimble:restivus@0.8.7');
     api.use('aldeed:simple-schema@1.3.3');
-    api.use('aldeed:schema-index@1.1.1');
+    api.use('aldeed:schema-index@1.1.0');
     api.use('aldeed:collection2@2.5.0');
     api.use('aldeed:tabular@1.6.1');
-	api.use('meteorhacks:unblock@1.1.0');
+    api.use('meteorhacks:unblock@1.1.0');
     api.use('aldeed:autoform@5.8.0');
     api.use('matb33:collection-hooks@0.8.1');
 
     api.use('kadira:blaze-layout@2.3.0');
     api.use('kadira:flow-router@2.10.1');
 
-    api.use('aldeed:autoform-bs-datetimepicker');
+    api.use('aldeed:autoform-bs-datetimepicker@1.0.7');
     api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
     api.use('steedos:autoform-bs-minicolors@1.0.0');
 
@@ -60,20 +63,20 @@ Package.onUse(function(api) {
     api.use('es5-shim@4.6.15');
     api.use('simple:json-routes@2.1.0');
     api.use('steedos:fullcalendar@3.4.0_1');
-	api.use('steedos:autoform-lookup@0.3.10');
+    api.use('steedos:autoform-lookup@0.3.10');
 
-    api.use('natestrauser:select2');
-    api.use('aldeed:autoform-select2');
+    // api.use('natestrauser:select2');
+    // api.use('aldeed:autoform-select2');
 
     api.use('steedos:cfs-standard-packages');
     api.use('steedos:cfs-s3');    
     api.use('steedos:cfs-aliyun');
     api.use('steedos:autoform-file@0.4.2_1');
-
+    api.use('natestrauser:select2@4.0.3');
+    api.use('aldeed:autoform-select2@1.0.5');
 
     api.use('steedos:sso@0.0.4');
     api.use('steedos:adminlte@2.3.12_3');
-    api.use('steedos:base');
     api.use('steedos:accounts@0.0.27');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');
@@ -83,11 +86,17 @@ Package.onUse(function(api) {
 
     // api.use('steedos:autoform-bs-datetimepicker');
 
+    api.use('steedos:base');
     api.use('steedos:lightning-design-system@0.0.1');
-    api.use('steedos:datatables-extensions');
+    api.use('steedos:datatables-extensions@0.0.1');
+
+    api.use('steedos:api@0.0.1');
+    api.use('steedos:odata@0.0.1');
+
+    api.use('steedos:logger@0.0.2');
 
     api.use('tap:i18n@1.7.0');
-    
+
     tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
     api.addFiles(tapi18nFiles, ['client', 'server']);
 
@@ -102,7 +111,7 @@ Package.onUse(function(api) {
     api.addFiles('lib/listviews.coffee');
     api.addFiles('lib/apps.coffee');
     api.addFiles('lib/eval.js');
-	api.addFiles('lib/formula_engine.coffee');
+    api.addFiles('lib/formula_engine.coffee');
 
     api.addFiles('models/base.coffee');
     api.addFiles('models/object.coffee');
@@ -110,14 +119,15 @@ Package.onUse(function(api) {
     api.addFiles('models/object_listviews.coffee');
     api.addFiles('models/permission_set.coffee');
     api.addFiles('models/permission_objects.coffee');
-    api.addFiles('models/permission_fields.coffee');
+
+    api.addFiles('models/space_object.coffee');
 
     api.addFiles('models/app.coffee');
     api.addFiles('models/space.coffee');
     api.addFiles('models/user.coffee');
     api.addFiles('models/organization.coffee');
     api.addFiles('models/space_user.coffee');
-    
+
     api.addFiles('models/cms_files.coffee');
     api.addFiles('models/cms_files_cfs.coffee');
     api.addFiles('models/cfs_files.coffee');
@@ -125,24 +135,34 @@ Package.onUse(function(api) {
     api.addFiles('models/reports.coffee');
     api.addFiles('models/tasks.coffee');
 
+    api.addFiles('models/settings.coffee');
+
     api.addFiles('server/methods/object_options.coffee', 'server');
     api.addFiles('server/methods/object_permissions.coffee', 'server');
     api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
     api.addFiles('server/methods/object_recent_record.coffee', 'server');
+    api.addFiles('server/methods/object_listviews_options.coffee', 'server');
     api.addFiles('server/methods/report_data.coffee', 'server');
+    api.addFiles('server/methods/user_tabular_settings.coffee', 'server');
+    api.addFiles('server/methods/object_record.coffee', 'server');
+    api.addFiles('server/methods/object_export2xml.coffee', 'server');
 
     api.addFiles('server/publications/object.coffee', 'server');
     api.addFiles('server/publications/related_object.coffee', 'server');
     api.addFiles('server/publications/object_tabular.coffee', 'server');
+    api.addFiles('server/publications/object_listviews.coffee', 'server');
+    api.addFiles('server/publications/user_tabular_settings.coffee', 'server');
 
     api.addFiles('server/routes/s3.coffee', 'server');
+
+    api.addFiles('server/startup.coffee', 'server');
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
     api.addFiles('client/layout/layout.coffee', 'client');
-	api.addFiles('client/layout/header_search.html', 'client');
-	api.addFiles('client/layout/header_search.less', 'client');
-	api.addFiles('client/layout/header_search.coffee', 'client');
+    api.addFiles('client/layout/header_search.html', 'client');
+    api.addFiles('client/layout/header_search.less', 'client');
+    api.addFiles('client/layout/header_search.coffee', 'client');
     api.addFiles('client/layout/header.html', 'client');
     api.addFiles('client/layout/navigation.html', 'client');
     api.addFiles('client/layout/navigation.coffee', 'client');
@@ -176,11 +196,19 @@ Package.onUse(function(api) {
 
     api.addFiles('client/views/table_cell.html', 'client');
     api.addFiles('client/views/table_cell.coffee', 'client');
-	api.addFiles('client/views/table_cell.less', 'client');
+    api.addFiles('client/views/table_cell.less', 'client');
     api.addFiles('client/views/table_actions.html', 'client');
     api.addFiles('client/views/table_actions.coffee', 'client');
     api.addFiles('client/views/table_actions.less', 'client');
     api.addFiles('client/views/table_checkbox.html', 'client');
     api.addFiles('client/views/table_checkbox.coffee', 'client');
     api.addFiles('client/views/table_checkbox.less', 'client');
+
+    api.addFiles('client/views/filter_option.html', 'client');
+    api.addFiles('client/views/filter_option.coffee', 'client');
+    api.addFiles('client/views/filter_option.less', 'client');
+
+    api.addFiles('client/views/select_fields.html', 'client');
+    api.addFiles('client/views/select_fields.coffee', 'client');
+    api.addFiles('client/views/select_fields.less', 'client');
 });

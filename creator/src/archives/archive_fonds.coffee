@@ -21,3 +21,18 @@ Creator.Objects.archive_fonds =
 			columns:["name","code"]
 		all:
 			label:"所有全宗"
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 

@@ -48,35 +48,6 @@
 		<ul class="slds-grid">
 
 			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
-				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-					<span class="slds-truncate" title="Menu Item">{{spaceName}}</span>
-				</a>
-				{{#if spacesSwitcherVisible}}
-				<div class="slds-context-bar__icon-action slds-p-left_none">
-					<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
-						<svg class="slds-button__icon" aria-hidden="true">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
-						</svg>
-						<span class="slds-assistive-text">切换工作区</span>
-					</button>
-				</div>
-				<div class="slds-dropdown slds-dropdown_right" style="max-height: 450px;overflow-y: auto;">
-					<ul class="slds-dropdown__list" role="menu">
-						<li class="slds-dropdown__header" role="separator">
-							<span class="slds-text-title_caps">切换工作区</span>
-						</li>
-        				{{#each spaces}}
-						<li class="slds-dropdown__item" role="presentation">
-							<a href="javascript:void(0);" class="switchSpace" role="menuitem" tabindex="-1">
-								<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-							</a>
-						</li>
-						{{/each}}
-					</ul>
-				</div>
-				{{/if}}
-			</li>
-			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
 				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item" data-toggle="dropdown">
 					<!-- <img src="{{avatarURL avatar 29 25 14}}" class="user-image"> -->
 					<span class="slds-truncate" title="Menu Item">{{displayName}}</span>

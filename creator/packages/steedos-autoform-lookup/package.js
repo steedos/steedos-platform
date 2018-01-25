@@ -2,7 +2,7 @@
 
 Package.describe({
     name: 'steedos:autoform-lookup',
-    summary: '',
+    summary: 'Steedos Autoform Lookup',
     version: '0.3.10',
     git: ''
 });

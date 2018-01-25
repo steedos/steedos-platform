@@ -4,12 +4,12 @@ Creator.Objects.archive_borrow =
 	label: "借阅"
 	enable_search: false
 	fields:
-		borrow_no:
+		borrow_name:
 			type:"text"
-			label:"借阅单编号"
-			omit:true
+			label:"标题"
 			sortable:true
 			is_name:true
+			required:true
 			#defaultValue:当前年度的借阅单总数+1
 		file_type:
 			type:"text"
@@ -48,7 +48,7 @@ Creator.Objects.archive_borrow =
 		use_with:
 			type:"select"
 			label:"利用目的"
-			defaultValue:"工作考察"
+			defaultValue:"工作查考"
 			options:[
 				{label: "工作查考", value: "工作查考"},
 				{label: "遍史修志", value: "遍史修志"},
@@ -76,27 +76,26 @@ Creator.Objects.archive_borrow =
 			type:"textarea"
 			label:"备注"
 			is_wide:true
-		status:
-			type:"select"
-			label:"状态"
-			options: [
-				{label: "未审批", value: "未审批"},
-				{label: "已审批", value: "已审批"},
-				{label: "续借审批中", value: "续借审批中"},
-				{label: "续借已审批", value: "续借已审批"},
-				{label: "已移交审批", value: "已移交审批"},
-				{label: "移交审批完成", value: "移交审批完成"},
-				{label: "已结单", value: "已结单"}
-				]
-			defaultValue:"未审批"
-			sortable:true
-			omit:true
-		relate_documentIds:
+		# status:
+		# 	type:"select"
+		# 	label:"状态"
+		# 	options: [
+		# 		{label: "未审批", value: "未审批"},
+		# 		{label: "已审批", value: "已审批"},
+		# 		{label: "续借审批中", value: "续借审批中"},
+		# 		{label: "续借已审批", value: "续借已审批"},
+		# 		{label: "已移交审批", value: "已移交审批"},
+		# 		{label: "移交审批完成", value: "移交审批完成"},
+		# 		{label: "已结单", value: "已结单"}
+		# 		]
+		# 	defaultValue:"未审批"
+		# 	sortable:true
+		# 	omit:true
+		relate_record:
 			type:"lookup"
 			label:"题名"
 			is_wide:true
 			reference_to:"archive_records"
-			multiple:true
 		year:
 			type:"text"
 			label:"年度"
@@ -116,9 +115,16 @@ Creator.Objects.archive_borrow =
 				{label:"逾期",value:"逾期"}
 				]
 			sortable:true
-		is_approved:
-			type:"boolean"
-			defaultValue:false
+		state:
+			type:"select"
+			label:"状态"
+			options:[
+				{label:"草稿",value:"draft"},
+				{label:"审批中",value:"pending"},
+				{label:"已核准",value:"approved"},
+				{label:"已驳回",value:"rejected"}
+			]
+			defaultValue:"draft"
 			omit:true
 		#我的借阅记录是可以被删除的，不过是假删除
 		is_deleted:
@@ -127,19 +133,25 @@ Creator.Objects.archive_borrow =
 			omit:true 
 	list_views:
 		default:
-			columns:["borrow_no","created","end_date","created_by","unit_info
-			","deparment_info","phone_number","relate_documentIds","year"]
+			columns:["borrow_name","created","end_date","created_by","unit_info
+			","deparment_info","phone_number","relate_record","year"]
 		all:
 			label:"所有借阅记录"
+			filter_scope: "space"
 		mine:
 			label:"我的借阅记录"
-			columns:["borrow_no","end_date","relate_documentIds","year"]
 			filter_scope: "mine"
-			filters: [["is_approved", "$eq", true],["is_deleted", "$eq", false]]
-		approving:
-			label:"待审批"
+			filters: [["state", "$eq", "approved"],["is_deleted", "$eq", false]]
+			columns:["borrow_name","relate_record","state","end_date"]
+		draft:
+			label:"草稿"
 			filter_scope: "mine"
-			filters: [["is_approved", "$eq", false]]
+			filters: [["state", "$eq", "draft"]]
+			columns:["borrow_name","created","end_date","created_by"]
+		pending:
+			label:"审批中"
+			filters: [["state","$eq","pending"]]
+			columns:["borrow_name","relate_record","created","end_date","created_by"]
 	triggers:
 		"before.insert.server.default": 
 			on: "server"
@@ -150,61 +162,101 @@ Creator.Objects.archive_borrow =
 				doc.created = now
 				doc.owner = userId
 				doc.is_deleted = false
-				doc.is_approved = false
-				count = Creator.Collections["archive_borrow"].find({year:now.getFullYear().toString()}).count()+1
-				strCount = (Array(6).join('0') + count).slice(-6)
-				doc.borrow_no = now.getFullYear().toString()  + strCount
+				doc.state = "draft"
 				doc.year = now.getFullYear().toString()
 				return true
 		"after.insert.server.default": 
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc)->
-				doc.relate_documentIds.forEach (relate_documentId)->
-					Creator.Collections["archive_records"].update({_id:relate_documentId},{$set:{is_borrowed:true,borrowed:new Date(),borrowed_by:userId}})	
+				Creator.Collections["archive_records"].direct.update({_id:doc.relate_record},{$set:{is_borrowed:true,borrowed:new Date(),borrowed_by:userId}})
+				Meteor.call("archive_new_audit",doc.relate_record,"借阅档案","成功",doc.space)
 				return true
+		"after.insert.client.default": 
+			on: "client"
+			when: "after.insert"
+			todo: (userId, doc)->
+				swal("借阅成功")
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: false 
 	actions: 
 		restore:
 			label: "归还"
 			visible: true
-			on: "list"
-			todo:()->
-				if Creator.TabularSelectedIds?["archive_borrow"].length ==0
-					alert("请先选择要归还的条目")
-					return
+			on: "record"
+			todo:(object_name, record_id, fields)->
 				if Session.get("list_view_id") =="mine"
-					Creator.TabularSelectedIds?["archive_borrow"].forEach (SelectedId)->
-						Creator.Collections["archive_borrow"].update({_id:SelectedId},{$set:{is_deleted:true}},
-							(error,result)->
-								console.log error
-								if !error
-									recordIds = Creator.Collections["archive_borrow"].findOne({_id:SelectedId}).relate_documentIds
-									recordIds.forEach (recordId)->
-										Creator.Collections["archive_records"].update({_id:recordId},{$set:{is_borrowed:false}})
-									#Creator.Collections["archive_borrow"].update(
-									toastr.success("归还成功，欢迎再次借阅")
-								else
-									toastr.error("归还失败，请再次操作")
-								)
+					Meteor.call('restore',record_id,Session.get("spaceId"),
+						(error,result)->
+							if !error
+								swal("归还成功")
+							else
+								swal("归还失败")
+							)
+				else
+					swal("请在我的借阅视图下执行操作")
 
 
 		renew:
 			label:"续借"
 			visible:true
-			on: "list"
-			todo:()->
-				if Creator.TabularSelectedIds?["archive_borrow"].length ==0
-					alert("请先选择要续借的条目")
-					return
-				now = new Date()
-				start_date = now
-				end_date =new Date(now.getTime()+7*24*3600*1000)
-				Creator.TabularSelectedIds?["archive_borrow"].forEach (SelectedId)->
-					Creator.Collections["archive_borrow"].update({_id:SelectedId},{$set:{start_date:start_date,end_date:end_date}},
+			on: "record"
+			todo:(object_name, record_id, fields)->
+				if Session.get("list_view_id") =="mine"
+					Meteor.call('renew',record_id,Session.get("spaceId"),
 						(error,result)->
-							console.log error
-							if !error						
-								toastr.success("续借成功，等待审核")
+							if !error
+								swal("续借成功")
 							else
-								toastr.error("续借失败，请再次操作")
+								swal("续借失败")
 							)
+				else
+					swal("请在我的借阅视图下执行操作")
+		view:
+			label:"查看原文"
+			visible:true
+			on: "record"
+			todo:(object_name, record_id, fields)->
+				if Session.get("list_view_id") =="mine"
+					now = new Date()
+					object_borrow = Creator.Collections["archive_borrow"].findOne({_id:record_id},{fields:{state:1,end_date:1,relate_record:1}})
+					if object_borrow.state == "approved"
+						if (object_borrow.end_date - now) >0
+							Meteor.call("view_main_doc",object_borrow.relate_record,
+								(error,result) ->
+									if result
+										window.location = "/api/files/files/#{result}?download=true"
+									else
+										swal("未找到原文")
+							)
+						else
+							swal("已到归还日期，不能查看原文")
+					else
+						swal("审核通过之后才可查看原文")
+				else
+					swal("请在我的借阅视图下执行操作")
+		submit:
+			label:"提交审批"
+			visible:true
+			on:"record"
+			todo:(object_name, record_id, fields)->
+				Meteor.call('submit_borrow',record_id,(error,result)->
+					if !error
+						swal("提交成功，等待审核")
+					else
+						swal("提交失败，请再次提交")
+				)
+

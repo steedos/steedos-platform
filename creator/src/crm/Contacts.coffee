@@ -12,8 +12,8 @@ Creator.Objects.contacts =
 			description: ""
 			inlineHelpText: ""
 			required: true
-		account_id: 
-			label: "客户"
+		company: 
+			label: "单位"
 			type: "master_detail"
 			reference_to: "companies"
 		birthdate: 
@@ -48,7 +48,7 @@ Creator.Objects.contacts =
 
 	list_views:
 		default:
-			columns: ["name", "account_id", "email", "phone"]
+			columns: ["name", "company", "email", "phone"]
 		recent:
 			filter_scope: "space"
 		all:

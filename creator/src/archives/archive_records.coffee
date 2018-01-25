@@ -1,4 +1,4 @@
-Creator.Objects.archive_records = 
+Creator.Objects.archive_records =
 	name: "archive_records"
 	icon: "record"
 	label: "档案"
@@ -8,29 +8,31 @@ Creator.Objects.archive_records =
 		archives_name:
 			type:"text"
 			label:"档案馆名称"
-			omit:true
+			# omit:true
 			group:"来源"
 		archives_identifier:
 			type:"text"
 			label:"档案馆代码"
-			omit:true
+			# omit:true
 			group:"来源"
 		fonds_name:
-			type:"text"
+			type:"master_detail"
 			label:"全宗名称"
-			omit:true
+			reference_to:"archive_fonds"
+			# omit:true
 			group:"来源"
 		archival_category_code:
 			type: "text"
 			label:"档案门类代码"
 			defaultValue: "WS"
-			omit:true
+			group:"内容描述"
+			# omit:true
 
 		fonds_constituting_unit_name:
 			type: "text"
 			label:"立档单位名称"
 			defaultValue: ""
-			omit:true
+			# omit:true
 			group:"来源"
 
 		aggregation_level:
@@ -40,28 +42,32 @@ Creator.Objects.archive_records =
 			options:[
 				{label:"案卷",value:"案卷"},
 				{label:"文件",value:"文件"}]
-			omit:true
+			# omit:true
+			group:"内容描述"
 
 		electronic_record_code:
 			type: "text"
 			label:"电子文件号"
 			defaultValue: ""
-			omit:true
+			group:"电子文件号"
+			# omit:true
 
 		archival_code:
 			type:"text"
 			label:"档号"
-			omit:true
+			group:"档号"
+			# omit:true
 
 		fonds_identifier:
 			type:"master_detail"
 			label:"全宗号"
 			reference_to:"archive_fonds"
 			group:"档号"
+			omit:true
 		year:
 			type: "text"
 			label:"年度"
-			defaultValue: "2018" 
+			defaultValue: "2018"
 			required:true
 			sortable:true
 			group:"档号"
@@ -79,7 +85,7 @@ Creator.Objects.archive_records =
 			label:"类别号"
 			defaultValue: ""
 			reference_to: "archive_classification"
-			required:true
+			#required:true
 			group:"档号"
 
 		organizational_structure:
@@ -91,32 +97,31 @@ Creator.Objects.archive_records =
 			type:"text"
 			label:"保管卷号"
 			group:"档号"
-			omit:true
-		
+			# omit:true
+
 		classification_number:
 			type:"text"
 			label:"分类卷号"
 			group:"档号"
-			omit:true
+			# omit:true
 
 		item_number:
 			type: "number"
 			label:"件号"
 			group:"档号"
 			sortable:true
-			omit:true
+			# omit:true
 
 		document_sequence_number:
 			type: "number"
 			label:"文档序号"
 			group:"档号"
-			omit:true
 
 		page_number:
 			type: "number"
 			label:"页号"
 			group:"档号"
-		
+
 		title:
 			type:"textarea"
 			label:"题名"
@@ -143,12 +148,12 @@ Creator.Objects.archive_records =
 		descriptor:
 			type:"text"
 			label:"主题词"
-			omit:true
+			# omit:true
 			group:"内容描述"
 		keyword:
 			type:"text"
 			label:"关键词"
-			omit:true
+			# omit:true
 			group:"内容描述"
 		personal_name:
 			type:"text"
@@ -157,7 +162,7 @@ Creator.Objects.archive_records =
 		abstract:
 			type:"text"
 			label:"摘要"
-			omit:true
+			# omit:true
 			group:"内容描述"
 		documnt_number:
 			type:"text"
@@ -173,6 +178,7 @@ Creator.Objects.archive_records =
 			type:"date"
 			label:"文件日期"
 			format:"YYYYMMDD"
+			required:true
 			group:"内容描述"
 			sortable:true
 
@@ -181,18 +187,24 @@ Creator.Objects.archive_records =
 			label:"起始日期"
 			format:"YYYYMMDD"
 			group:"内容描述"
-			omit:true
+			# omit:true
 
 		closing_date:
 			type:"date"
 			label:"截止日期"
 			format:"YYYYMMDD"
 			group:"内容描述"
+			# omit:true
+		destroy_date:
+			type:"date"
+			label:"销毁日期"
+			format:"YYYYMMDD"
+			group:"内容描述"
 			omit:true
 		precedence:
 			type:"text"
 			label:"紧急程度"
-			omit:true
+			# omit:true
 			group:"内容描述"
 		prinpipal_receiver:
 			type:"text",
@@ -218,8 +230,8 @@ Creator.Objects.archive_records =
 				{label: "限制", value: "限制"},
 				{label: "秘密", value: "秘密"},
 				{label: "机密", value: "机密"},
-				{label: "绝密", value: "绝密"}				
-				
+				{label: "绝密", value: "绝密"}
+
 			]
 			required:true
 			sortable:true
@@ -229,13 +241,13 @@ Creator.Objects.archive_records =
 			type:"text"
 			label:"拟稿人"
 			group:"内容描述"
-			omit:true
+			# omit:true
 
 		applicant_organization_name:
 			type:"text"
 			label:"拟稿单位"
 			group:"内容描述"
-			omit:true
+			# omit:true
 
 		secrecy_period:
 			type:"select"
@@ -261,19 +273,19 @@ Creator.Objects.archive_records =
 			type: "text"
 			label:"卷内文件数"
 			group:"形式特征"
-			omit:true
+			# omit:true
 
 		total_number_of_pages:
 			type:"number"
 			label:"页数"
 			group:"形式特征"
-		
+
 		document_type:
 			type:"text"
 			label:"文件类型"
 			group:"形式特征"
-			omit:true
-		
+			# omit:true
+
 		document_status:
 			type:"select",
 			label:"文件状态",
@@ -302,117 +314,117 @@ Creator.Objects.archive_records =
 				{label: "原生", value: "原生"}
 			]
 			group:"形式特征"
-			omit:true
+			# omit:true
 
 		format_name:
 			type:"text"
 			label:"格式名称"
-			omit:true
+			# omit:true
 			group:"电子属性"
 		format_version:
 			type:"text"
 			label:"格式版本"
-			omit:true
+			# omit:true
 			group:"电子属性"
 		computer_file_name:
 			type:"text"
 			label:"计算机文件名"
-			omit:true
+			# omit:true
 			group:"电子属性"
 		document_size:
 			type:"text"
 			label:"计算机文件大小"
-			omit:true
+			# omit:true
 			group:"电子属性"
 		physical_record_characteristics:
 			type:"text"
 			label:"数字化对象形态"
-			omit:true
+			# omit:true
 			group:"数字化属性"
 		scanning_resolution:
 			type:"text"
 			label:"扫描分辨率"
-			omit:true
+			# omit:true
 			group:"数字化属性"
 		scanning_color_model:
 			type:"text"
 			label:"扫描色彩模式"
-			omit:true
+			# omit:true
 			group:"数字化属性"
 		image_compression_scheme:
 			type:"text"
 			label:"图像压缩方案"
-			omit:true
+			# omit:true
 			group:"数字化属性"
 		device_type:
 			type:"text"
 			label:"设备类型"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		device_manufacturer:
 			type:"text"
 			label:"设备制造商"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		device_model_number:
 			type:"text"
 			label:"设备型号"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		device_model_serial_number:
 			type:"text"
 			label:"设备序列号"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		software_type:
 			type:"text"
 			label:"软件类型"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		software_name:
 			type:"text"
 			label:"软件名称"
-			omit:true
+			# omit:true
 			group:"数字化设备信息"
 		signature_rules:
 			type:"text"
 			label:"签名规则"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		signature_time:
 			type:"datetime"
 			label:"签名时间"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		signer:
 			type:"text"
 			label:"签名人"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		signature:
 			type:"text"
 			label:"签名结果"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		certificate:
 			type:"text"
 			label:"证书"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		certificate_reference:
 			type:"text"
 			label:"证书引证"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		signature_algorithm_identifier:
 			type:"text"
 			label:"签名算法标识"
-			omit:true
+			# omit:true
 			group:"电子签名"
 		current_location:
 			type:"text"
 			label:"当前位置"
-			omit:true
+			# omit:true
 			group:"存储位置"
 		offline_medium_identifier:
 			type:"text"
@@ -437,10 +449,10 @@ Creator.Objects.archive_records =
 				{label: "公布", value: "公布"},
 				{label: "复制", value: "复制"},
 				{label: "浏览", value: "浏览"},
-				{label: "解密", value: "解密"}	
-				
+				{label: "解密", value: "解密"}
+
 			]
-			omit:true
+			# omit:true
 			group:"权限管理"
 		control_identifier:
 			type: "select"
@@ -449,7 +461,7 @@ Creator.Objects.archive_records =
 				{label: "开放", value: "开放"},
 				{label: "控制", value: "控制"}
 			]
-			omit:true
+			# omit:true
 			group:"权限管理"
 		agent_type:
 			type: "select"
@@ -460,25 +472,30 @@ Creator.Objects.archive_records =
 				{label: "部门", value: "部门"},
 				{label: "个人", value: "个人"}
 			]
-			omit:true
+			group:"机构人员"
+			# omit:true
 		agent_name:
 			type: "text"
 			label:"机构人员名称"
-			omit:true
+			group:"机构人员"
+			# omit:true
 		organization_code:
 			type: "text"
 			label:"组织机构代码"
-			omit:true
+			group:"机构人员"
+			# omit:true
 		agent_belongs_to:
 			type: "text"
 			label:"机构人员隶属"
-			omit:true
+			group:"机构人员"
+			# omit:true
 
 		archive_date:
 			type:"date"
 			label:"归档日期"
-			omit:true
-		
+			group:"内容描述"
+			# omit:true
+
 		archive_dept:
 			type:"text"
 			label:"归档部门"
@@ -496,7 +513,8 @@ Creator.Objects.archive_records =
 				{label: "销毁", value: "销毁"},
 				{label: "出借", value: "出借"}
 			]
-			omit:true
+			group:"内容描述"
+			# omit:true
 
 		main_dept:
 			type:"text",
@@ -510,160 +528,236 @@ Creator.Objects.archive_records =
 			label:"备注",
 			is_wide:true
 			group:"内容描述"
-			
+
 		storage_location:
 			type:"text"
 			label:"存放位置"
-			omit:true
+			group:"内容描述"
+			# omit:true
 
 		reference:
 			type: "text"
 			label:"参见"
-			omit:true
+			group:"内容描述"
+			# omit:true
 		#是否接收，默认是未接收
 		is_received:
 			type:"boolean"
+			label:"是否接收"
 			defaultValue:false
 			omit:true
-		
+
 		received:
 			type:"datetime"
+			label:"接收时间"
 			omit:true
-		
+
 		received_by:
-			type:"text"
-			omit:true
+			type: "lookup"
+			label:"接收人"
+			reference_to: "users"
+			omit: true
 		#是否移交，默认是不存在，在“全部”视图下点击移交，进入“待移交”视图，此时is_transfer=false
 		#审核通过之后，is_transfer = true
 		is_transfered:
 			type:"boolean"
 			omit:true
+			label:"是否移交"
 		transfered:
 			type:"datetime"
+			label:"移交时间"
 			omit:true
 		transfered_by:
-			type:"text"
-			omit:true
-		
+			type: "lookup"
+			label:"移交人"
+			reference_to: "users"
+			omit: true
+
 		#是否销毁，默认是不存在，在“全部”视图下点击销毁，进入“待销毁”视图，此时is_destroy=false
 		#审核通过之后，is_transfer = true
 		is_destroyed:
 			type:"boolean"
+			label:'是否销毁'
 			omit:true
+			group:"销毁"
 		destroyed:
 			type:"datetime"
+			label:'实际销毁时间'
 			omit:true
-		
+			group:"销毁"
 		destroyed_by:
-			type:"text"
-			omit:true
+			type: "lookup"
+			label:"销毁人"
+			reference_to: "users"
+			omit: true
+			group:"销毁"
 		is_borrowed:
 			type:"boolean"
 			defaultValue:false
+			label:'是否借阅'
 			omit:true
 		borrowed:
 			type:"datetime"
+			label:"借阅时间"
 			omit:true
 		borrowed_by:
-			type:"text"
-			omit:true
+			type: "lookup"
+			label:"借阅人"
+			reference_to: "users"
+			omit: true
 		#如果是从OA归档过来的档案，则值为表单Id,否则不存在改字段
 		external_id:
 			type:"text"
+			label:'表单Id'
 			omit:true
 			group:"内容描述"
-
+		archive_destroy_id:
+			type:"master_detail"
+			label:"销毁单"
+			filters:[["destroy_state", "$eq", "未销毁"]]
+			depend_on:["destroy_state"]
+			reference_to:"archive_destroy"
+			group:"销毁"
+		related_modified:
+			type:"datetime"
+			label:"附属更新时间"
+			omit:true
 	list_views:
 		default:
 			columns: [
 				"year", "item_number","retention_peroid",
 				"title","documnt_number", "document_date", "author",
-				"archive_dept", "security_classification"
+				"archive_dept", "security_classification","destroyed"
 				]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
-			label: "全部档案"
+			label: "全部"
 			filter_scope: "space"
 			filters: [["is_received", "$eq", true]]
 		receive:
-			label:"待接收档案"
+			label:"待接收"
 			filter_scope: "space"
 			filters: [["is_received", "$eq", false]]
+		received:
+			label:"已接收" 
+			filter_scope:"space"
+			filters:[["is_received", "$eq", true]]
+			columns:["year","title","received","received_by","borrowed_by"]
 		transfer:
-			label:"待移交档案"
+			label:"待移交"
 			filter_scope: "space"
 			filters: [["is_transfered", "$eq", false]]
 		destroy:
-			label:"待销毁档案"
+			label:"待销毁"
 			filter_scope: "space"
-			filters: [["is_destroyed", "$eq", false]]
+			filters: [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
+			columns:["year","title","document_date","destroy_date","archive_destroy_id"]
 		transfered:
-			label:"已移交档案"
+			label:"已移交"
 			filter_scope: "space"
 			filters: [["is_transfered", "$eq", true]]
 		destroyed:
-			label:"已销毁档案"
+			label:"已销毁"
 			filter_scope: "space"
 			filters: [["is_destroyed", "$eq", true]]
+			columns:["year","title","document_date","destroy_date","destroyed","archive_destroy_id"]
 		borrow:
 			label:"已借阅"
 			filter_scope: "space"
-			filters:[["is_borrowed","$eq",true],["is_receive","$eq",true]]
+			filters:[["is_borrowed","$eq",true],["is_received","$eq",true]]
+			columns:["title","borrowed","borrowed_by"]
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: true
+			actions:["borrow"]
+			list_views:["default","recent","all","borrow"]
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: true 
+			modifyAllRecords: true
+			viewAllRecords: true
 	triggers:
-		"before.insert.server.default": 
+		"before.insert.server.default":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.is_receive = false
-				return true
+				doc.is_received = false
+				doc.is_destroyed = false
+				doc.is_borrowed = false
+				doc.created = new Date()
+				doc.created_by = userId
+				doc.owner = userId
+				duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid}).years
+				year = doc.document_date.getFullYear()+duration
+				month = doc.document_date.getMonth()
+				day = doc.document_date.getDate()
+				destroy_date = new Date(year,month,day)
+				rules = Creator.Collections["archive_rules"].find({},{fields:{keywords:1}}).fetch()
+				rules_keywords = _.pluck rules, "keywords"
+				i = 0
+				while i < rules_keywords.length
+					is_matched = true
+					j = 0
+					arrs = rules_keywords[i]
+					while j < arrs.length
+						if doc.title.indexOf(arrs[j])<0
+							is_matched = false
+							break;
+						j++
+					if is_matched
+						match_rule = rules_keywords[i]
+						rule_id = rules[i]._id
+						break;
+					i++
+				console.log rule_id
+				if rule_id
+					doc.category_code = Creator.Collections["archive_rules"].findOne({_id:rule_id}).classification 
 
-	actions: 
+				return true
+		"after.update.server.default":
+			on: "server"
+			when: "after.update"
+			todo: (userId, doc)->
+				duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid}).years
+				year = doc.document_date.getFullYear()+duration
+				month = doc.document_date.getMonth()
+				day = doc.document_date.getDate()
+				destroy_date = new Date(year,month,day)
+				# if doc.archive_destroy_id
+				# 	state = Creator.Collections["archive_destroy"].findOne({_id:doc.archive_destroy_id}).destroy_state
+				# 	if state=="已销毁"
+				# 		Creator.Collections["archive_destroy"].update({_id:doc.archive_destroy_id},{$set:{destroy_state:"未销毁"}})
+				#console.log doc.archive_destroy_id
+				Creator.Collections["archive_records"].direct.update({_id:doc._id},{$set:{destroy_date:destroy_date}})
+				# destroy_records = Creator.Collections["archive_destroy"].findOne({_id:doc.archive_destroy_id}).
+				# Creator.Collections["archive_destroy"].update ({_id:doc.archive_destroy_id},{$set:{modified:new Date,modified_by:Meteor.userId(),destroy_records:}})
+	actions:
 		receive:
 			label: "接收"
 			visible: true
-			# 	()->
-			# 	# object = Creator.getObject(this.object_name)
-			# 	# list_views = object.list_views
-			# 	# list_views = _.filter list_views, (list_view)->
-			# 	# # for i in list_views
-			# 	# # 	console.log list_views[i].name
-			# 	# 	if list_view.name=='receive'
-			# 	# 		return true
-			# 	# 	else
-			# 	# 		false
-			# 	return true	
-			# on: "list"
-			# only_list_item:"receive"
 			on: "list"
-			todo:()-> 
+			todo:()->
 				if Creator.TabularSelectedIds?["archive_records"].length == 0
-					 alert("请先选择要接收的档案")
-				Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"],
-					(error,result) ->
-							console.log error
-							if !error
-								toastr.success("接收成功，等待审核")
-								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"接收档案","成功")
-							else
-								toastr.error("接收失败，请再次操作")
-								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"接收档案","失败")
+					swal("请先选择要接收的档案")
+					return
+				if Session.get("list_view_id")!= "receive"
+					swal("请在待接收视图下操作")
+					return
+				else
+					space = Session.get("spaceId")
+					Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"],space,
+						(error,result) ->
+							text = "共接收"+result[0]+"条,"+"成功"+result[1]+"条"
+							swal(text)
 							)
 		transfer:
 			label:"移交"
@@ -671,68 +765,71 @@ Creator.Objects.archive_records =
 			on: "list"
 			todo:()->
 				if Creator.TabularSelectedIds?["archive_records"].length == 0
-					 alert("请先移交要移交的档案")
+					 swal("请先移交要移交的档案")
 					 return
+				if Session.get("list_view_id")!= "all"
+					swal("请在全部视图下操作")
+					return
 				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"],
 					(error,result) ->
 							console.log error
+							space = Session.get("spaceId")
 							if !error
 								toastr.success("移交成功，等待审核")
-								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"移交档案","成功")
+								Meteor.call("archive_new_audit",Creator.TabularSelectedIds?["archive_records"],"移交档案","成功",space)
 
 							else
 								toastr.error("移交失败，请再次操作")
-								Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"移交档案","成功")
+								Meteor.call("archive_new_audit",Creator.TabularSelectedIds?["archive_records"],"移交档案","失败",space)
 
 							)
-		destroy:
-			label:"销毁"
-			visible:true
-			on: "list"
-			todo:()->
-				if Creator.TabularSelectedIds?["archive_records"].length == 0
-					 alert("请先选择要销毁的档案")
-					 return 
-				Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"],
-					(error,result) ->
-						console.log error
-						if !error
-							toastr.success("销毁成功，等待审核")
-							Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"销毁档案","成功")
+		# destroy:
+		# 	label:"销毁"
+		# 	visible:true
+		# 	on: "list"
+		# 	todo:()->
+		# 		if Creator.TabularSelectedIds?["archive_records"].length == 0
+		# 			 swal("请先选择要销毁的档案")
+		# 			 return
+		# 		if Session.get("list_view_id")!= "destroy"
+		# 			swal("请在待销毁视图下操作")
+		# 			return
+		# 		else
+		# 			space = Session.get("spaceId")
+		# 			Meteor.call("archive_destroy",Creator.TabularSelectedIds?["archive_records"],space,
+		# 				(error,result) ->
+		# 					text = "共销毁"+Creator.TabularSelectedIds?["archive_records"].length+"条,"+"成功"+result+"条"
+		# 					swal(text)
 
-						else
-							toastr.error("销毁失败，请再次操作")
-							Meteor.call("archive_Newaudit",Creator.TabularSelectedIds?["archive_records"],"销毁档案","成功")
-
-						)
+		# 				)
 		borrow:
 			label:"借阅"
 			visible:true
-			on: "list"
-			todo:()->				
-				space = Session.get("spaceId")
-				if Creator.TabularSelectedIds?["archive_records"].length == 0
-					 alert("请先选择要借阅的档案")
-					 return
-				collection_borrow = Creator.Collections["archive_borrow"]
-				doc = {}
-				now = new Date()
-				count = collection_borrow.find({year:now.getFullYear().toString()}).count()+1
-				strCount = (Array(6).join('0') + count).slice(-6)
-				doc.borrow_no = now.getFullYear().toString()  + strCount
-				collection_record = Creator.Collections["archive_records"]
-				#console.log collection_record.find({},{field:{year: 1}}).sort({year:-1}).limit(1)
-				doc.year = now.getFullYear().toString()
-				doc.unit_info = Creator.Collections["space_users"].findOne({user:Meteor.userId(),space:space},{fields:{company:1}}).company
-				doc.start_date = now
-				doc.end_date =new Date(now.getTime()+7*24*3600*1000)
-				doc.use_with = "工作考察"
-				doc.use_fashion = "实体借阅"
-				doc.file_type = "立卷方式(文件级)"
-				doc.space = space
-				doc.is_approved = false 
-				doc.relate_documentIds = []
-				Creator.TabularSelectedIds?["archive_records"].forEach (selectedId)->
-					doc.relate_documentIds.push collection_record.findOne({_id:selectedId})._id
-				Creator.createObject("archive_borrow",doc)
-	
+			on: "record"
+			todo:(object_name, record_id, fields)->
+				borrower = Creator.Collections["archive_records"].findOne({_id:record_id}).borrowed_by
+				if borrower == Meteor.userId()
+					swal("您已借阅了此档案，归还之前无需重复借阅")
+					return
+				if Session.get("list_view_id") == "all" || Session.get("list_view_id")== "received"
+					space = Session.get("spaceId")
+					doc = {}
+					now = new Date()
+					#collection_record = Creator.Collections["archive_records"]
+					#console.log collection_record.find({},{field:{year: 1}}).sort({year:-1}).limit(1)
+					doc.year = now.getFullYear().toString()
+					doc.unit_info = Creator.Collections["space_users"].findOne({user:Meteor.userId(),space:space},{fields:{company:1}}).company
+					doc.start_date = now
+					doc.end_date =new Date(now.getTime()+7*24*3600*1000)
+					doc.use_with = "工作查考"
+					doc.use_fashion = "实体借阅"
+					doc.file_type = "立卷方式(文件级)"
+					doc.space = space
+					doc.is_approved = false
+					doc.relate_record = record_id
+					# Creator.TabularSelectedIds?["archive_records"].forEach (selectedId)->
+					# 	doc.relate_documentIds.push collection_record.findOne({_id:selectedId})._id
+					Creator.createObject("archive_borrow",doc)
+				else
+					swal("请在全部或已接收视图下执行操作")
+					return

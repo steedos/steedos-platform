@@ -8,7 +8,7 @@
 				<input type="text" aria-activedescendant="" aria-autocomplete="list"
 					   aria-controls="global-search-list" autocomplete="off"
 					   class="slds-input slds-lookup__search-input" id="global-search"
-					   placeholder="Search in {{object_label}} and more..." role="textbox"/>
+					   placeholder="{{_ "creator_header_search" object_label}} " role="textbox"/>
 				<div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small {{#unless is_searching}}slds-hide{{/unless}}" style="left: auto;right: 0px">
 					<span class="slds-assistive-text">Loading</span>
 					<div class="slds-spinner__dot-a"></div>
@@ -49,7 +49,7 @@
 						{{/each}}
 					{{else}}
 						<li role="presentation">
-							<h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">Recent Items</h3>
+							<h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">{{_ "creator_header_search_recent_items"}}</h3>
 						</li>
 
 						{{#each recentItems}}

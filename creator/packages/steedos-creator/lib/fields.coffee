@@ -9,6 +9,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = String
 		else if field.type == "[text]"
 			fs.type = [String]
+			fs.autoform.type = "tags"
 		else if field.type == "textarea"
 			fs.type = String
 			fs.autoform.type = "textarea"
@@ -23,12 +24,14 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "bootstrap-datetimepicker"
 			fs.autoform.dateTimePickerOptions =
 				format: "YYYY-MM-DD HH:mm"
+		else if field.type == "[Object]"
+			fs.type = [Object]
 		else if field.type == "html"
 			fs.type = String
-			fs.autoform.afFieldInput = 
+			fs.autoform.afFieldInput =
 				type: "summernote"
 				class: 'editor'
-				settings: 
+				settings:
 					height: 200
 					dialogsInBody: true
 					toolbar:  [
@@ -62,7 +65,7 @@ Creator.getObjectSchema = (obj) ->
 			else
 				fs.autoform.type = "steedosLookups"
 				fs.autoform.optionsMethod = "creator.object_options"
-				
+
 				if typeof(field.reference_to) == "function"
 					_reference_to = field.reference_to()
 				else
@@ -130,7 +133,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "file" and field.collection
 			if field.multiple
 				fs.type = [String]
-				schema[field_name + ".$"] = 
+				schema[field_name + ".$"] =
 					autoform:
 						type: 'fileUpload'
 						collection: field.collection
@@ -159,6 +162,9 @@ Creator.getObjectSchema = (obj) ->
 		if field.is_wide
 			fs.autoform.is_wide = true
 
+		if field.hidden
+			fs.autoform.type = "hidden"
+
 		if field.defaultValue
 			if FormulaEngine.checkFormula(field.defaultValue)
 				fs.autoform.defaultValue = ()->
@@ -168,7 +174,7 @@ Creator.getObjectSchema = (obj) ->
 
 		if field.readonly
 			fs.autoform.readonly = true
-			
+
 		if field.disabled
 			fs.autoform.disabled = true
 
@@ -198,5 +204,12 @@ Creator.getFieldDisplayValue = (object_name, field_name, field_value)->
 		html = moment(this.val).format('YYYY-MM-DD H:mm')
 	else if field.type == "date"
 		html = moment(this.val).format('YYYY-MM-DD')
-	
+
 	return html
+
+Creator.getObjectOdataSchema = (obj) ->
+	schema = {}
+	_.each Creator.getObjectSchema(obj), (val, key)->
+		schema[key] = _.pick(val, 'type')
+
+	return schema

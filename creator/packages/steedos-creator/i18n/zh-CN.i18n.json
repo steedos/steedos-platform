@@ -5,5 +5,36 @@
 	"list_view_all": "全部",
 	"list_view_mine": "我的",
 	"list_view_no_records": "没有可显示的项目.",
-	"please_select": "请选择"
+	"please_select": "请选择",
+
+	"creator_list_item_counts": "%s个项目",
+	"creator_list_new_list_view": "新建",
+	"creator_list_delete_list_view": "删除",
+	"creator_list_select_fields": "选择要显示的字段",
+	"creator_list_filter": "过滤器",
+	"creator_list_filter_cancel": "取消",
+	"creator_list_filter_save_as": "另存为",
+	"creator_list_filter_save": "保存",
+	"creator_list_new_filter": "新建筛选器",
+	"creator_list_add_filter": "添加筛选器",
+	"creator_list_remove_all_filters": "全部删除",
+	"creator_list_matching_all_filters": "匹配所有筛选器",
+	"creator_list_view_controls": "列表视图控制",
+
+	"creator_filter_option_field": "字段",
+	"creator_filter_option_operation": "运算符",
+	"creator_filter_option_value": "值",
+	"creator_filter_option_done": "完成",
+
+	"creator_app_launcher": "应用程序启动器",
+	"creator_app_launcher_all_apps": "所有应用程序",
+	"creator_app_launcher_all_items": "所有项目",
+
+	"creator_header_search": "搜索 %s 和更多...",
+	"creator_header_search_recent_items": "最近项目",
+
+	"creator_view_related_objects": "相关",
+	"creator_view_details": "详细信息",
+
+	"creator_actions_upload_file": "上传"
 }

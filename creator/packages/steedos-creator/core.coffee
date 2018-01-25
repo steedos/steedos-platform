@@ -67,13 +67,14 @@ Creator.getObjectRecord = (object_name, record_id)->
 		return collection.findOne(record_id)
 
 
-Creator.getPermissions = (object_name)->
-	if !object_name and Meteor.isClient
-		object_name = Session.get("object_name")
-
-	obj = Creator.getObject(object_name)
-	return obj.permissions.get()
-
+Creator.getPermissions = (object_name, spaceId, userId)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		obj = Creator.getObject(object_name)
+		return obj.permissions.get()
+	else if Meteor.isServer
+		Creator.getObjectPermissions(spaceId, userId, object_name)
 Creator.getRecordPermissions = (object_name, record, userId)->
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
@@ -103,10 +104,10 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 			spaceId = Session.get("spaceId")
 		if !userId
 			userId = Meteor.userId()
-	if Meteor.userId()
-		space = Creator.getObject("spaces")?.db?.findOne(spaceId)
-		if space?.admins
-			return space.admins.indexOf(userId) >= 0
+	
+	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
+	if space?.admins
+		return space.admins.indexOf(userId) >= 0
 
 Creator.evaluateFormula = (formular, context)->
 
@@ -130,3 +131,91 @@ Creator.evaluateFilters = (filters, context)->
 	console.log("evaluateFilters-->selector", selector)
 	return selector
 
+Creator.getRelatedObjects = (object_name, spaceId, userId)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !spaceId
+			spaceId = Session.get("spaceId")
+		if !userId
+			userId = Meteor.userId()
+	
+	related_object_names = []
+	permissions = Creator.getPermissions(object_name, spaceId, userId)
+	permission_related_objects = permissions.related_objects
+
+	_.each Creator.Objects, (related_object, related_object_name)->
+			_.each related_object.fields, (related_field, related_field_name)->
+				if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+					if permission_related_objects
+						if _.indexOf(permission_related_objects, related_object_name) > -1
+							related_object_names.push related_object_name
+					else
+						related_object_names.push related_object_name
+	
+	if Creator.getObject(object_name).enable_files
+		if permission_related_objects
+			if _.indexOf(permission_related_objects, "cms_files") > -1
+				related_object_names.push "cms_files"
+		else
+			related_object_names.push "cms_files"
+
+	return related_object_names
+
+Creator.getActions = (object_name)->
+	if !object_name and Meteor.isClient
+		object_name = Session.get("object_name")
+
+	obj = Creator.getObject(object_name)
+	permissions = Creator.getPermissions()
+	permission_actions = permissions.actions
+	actions = _.values(obj.actions) 
+
+	if permission_actions
+		actions = _.filter actions, (action)->
+			return _.indexOf(permission_actions, action.name) > -1
+	
+	return actions
+
+Creator.getListViews = (object_name)->
+	if !object_name and Meteor.isClient
+		object_name = Session.get("object_name")
+
+	permission_list_views = Creator.getPermissions(object_name).list_views
+	object = Creator.getObject(object_name)
+	list_views = []
+
+	_.each object.list_views, (item, item_name)->
+		if item_name != "default"
+			if permission_list_views
+				if _.indexOf(permission_list_views, item_name) > -1
+					list_views.push item
+			else
+				list_views.push item
+	
+	return list_views
+
+Creator.getFields = (object_name)->
+	if !object_name and Meteor.isClient
+		object_name = Session.get("object_name")
+
+	firstLevelKeys = Creator.getSchema(object_name)._firstLevelSchemaKeys
+	permission_fields =  Creator.getPermissions(object_name).fields
+
+	return permission_fields
+
+Creator.isloading = ()->
+	return Creator.isloadingPermissions.get()
+
+if Meteor.isServer
+	Creator.getAllRelatedObjects = (object_name)->
+		related_object_names = []
+		_.each Creator.Objects, (related_object, related_object_name)->
+			_.each related_object.fields, (related_field, related_field_name)->
+				if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+					related_object_names.push related_object_name
+
+		if Creator.getObject(object_name).enable_files
+			related_object_names.push "cms_files"
+		
+		return related_object_names

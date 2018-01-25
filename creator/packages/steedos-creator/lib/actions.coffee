@@ -37,9 +37,11 @@ if Meteor.isClient
 			if record_id
 				Session.set 'action_object_name', object_name
 				Session.set 'action_record_id', record_id
-
-				Meteor.defer ()->
-					$(".btn.creator-edit").click()
+				Meteor.call "object_record", object_name, record_id, (error, result)->
+					if result
+						Session.set 'cmDoc', result
+						Meteor.defer ()->
+							$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, fields)->
 			record = Creator.getObjectRecord(object_name, record_id)

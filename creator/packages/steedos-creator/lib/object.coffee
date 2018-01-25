@@ -40,7 +40,7 @@ Creator.Object = (options)->
 		if !oitem.columns
 			oitem.columns = ["name"]
 		if !oitem.filter_scope
-			oitem.filter_scope = "mime"
+			oitem.filter_scope = "mine"
 		self.list_views[item_name] = oitem
 
 	self.triggers = _.clone(Creator.baseObject.triggers)

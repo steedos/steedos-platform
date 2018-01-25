@@ -1,6 +1,9 @@
 Template.creatorLayout.helpers
 	subsReady: ->
 		return true #Creator.subs["Creator"].ready()
+	
+	isloading: ->
+		return Creator.isloading()
 
 	collection: ()->
 		return Session.get("action_collection")

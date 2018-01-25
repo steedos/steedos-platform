@@ -1,6 +1,4 @@
 <template name="creator_report">
-
-
 	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet">
 		<div class="slds-template__container">
 			<div class="reportsReportPage slds-grid slds-grid--vertical">
@@ -21,14 +19,14 @@
 									<nav>
 										<ol class="slds-breadcrumb slds-line-height_reset">
 											<li class="slds-breadcrumb__item crm-breadcrumb-item">
-												<span>Reports</span>
+												<span>报表</span>
 											</li>
 										</ol>
 									</nav>
 									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
 										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
 											<div class="triggerLinkTextAndIconWrapper">
-												<span class="triggerLinkText selectedListView uiOutputText">Report Name</span>
+												<span class="triggerLinkText selectedListView uiOutputText">{{reportObject.name}}</span>
 											</div>
 										</a>
 									</h1>
@@ -37,46 +35,61 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts">
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart" title="Charts">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters">
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="Filters">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Refresh">
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls">
+							<button class="slds-button slds-button_icon slds-button_icon-more btn-settings" aria-haspopup="true" title="List View Controls">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
 							</button>
 							<div class="slds-button-group" role="group">
-								<button class="slds-button slds-button_neutral">Edit</button>
-								<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-									<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-										<svg class="slds-button__icon" aria-hidden="true">
-											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
-										</svg>
-										<span class="slds-assistive-text">Show More</span>
-									</button>
-									<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-										<ul class="slds-dropdown__list slds-show">
-												<li class="slds-dropdown__item crm-header-menu-item list-action-custom" role="presentation">
-													<a href="javascript:void(0);" title="" class="" role="option" tabindex="-1">
-														<span>Delete</span>
-													</a>
-												</li>
-										</ul>
+								{{#each actions}}
+									<li class="slds-button slds-button--neutral slds-truncate record-action-custom">
+										<a href="javascript:void(0);" title="{{this.label}}" class="">
+											{{#if this.is_file}}
+												{{this.label}}
+												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}">
+											{{else}}
+												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+											{{/if}}
+										</a>
+									</li>
+								{{/each}}
+								{{#if moreActions}}
+									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+											<svg class="slds-button__icon" aria-hidden="true">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
+											</svg>
+											<span class="slds-assistive-text">Show More</span>
+										</button>
+										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+											<ul class="slds-dropdown__list slds-show">
+												 {{#each moreActions}}
+													<li class="slds-dropdown__item crm-header-menu-item record-action-custom" role="presentation">
+														<a href="javascript:void(0);" title="{{this.label}}" class="" role="option" tabindex="-1">
+															<span>{{this.label}}</span>
+														</a>
+													</li>
+												{{/each}}
+											</ul>
+										</div>
 									</div>
-								</div>	
+								{{/if}}
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="pageBody">
+				<div class="pageBody {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}}">
 			        <div class="scrollarea">
 			        	<div class="innerStacking">
 				        	<div class="eclair-container">
@@ -86,9 +99,96 @@
 				            	<div id="pivotgrid"></div>
 				            </div>
 				        </div>
-			        </div>
-			    </div>
+					</div>
+					<div class="sidebar {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}} filter-list-container" data-aura-rendered-by="474:0">
+						<div data-aura-rendered-by="477:0" class="reportsReportSidebar" data-aura-class="reportsReportSidebar">
+							<div class="stackingPanel fadeIn" data-aura-rendered-by="478:0">
+								<div class="filterPanelContainer reportsFilterPanel" data-aura-rendered-by="481:0" data-aura-class="reportsFilterPanel">
+									<div class="panelHeader" data-aura-rendered-by="482:0">
+										<div class="centered-header" data-aura-rendered-by="483:0">
+											<button class="slds-button slds-button_neutral btn-filter-cancel {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to cancel changes">
+												Cancel
+											</button>
+										</div>
+										<h2 class="panelTitle centered-header {{#if isFilterDirty}}hidden{{/if}}">Filters</h2>
+										<div class="centered-header">
+											<button class="slds-button slds-button_brand btn-filter-apply {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to apply changes">
+												Apply
+											</button>
+											<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small btn-toggle-filter {{#if isFilterDirty}}hidden{{/if}}">
+												{{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="forward"}}
+											</button>
+										</div>
+									</div>
+									<div class="vert-scroller" data-aura-rendered-by="515:0">
+										<!--render facet: 516:0-->
+										<!--render facet: 520:0-->
+										<ul class="editableFilters" data-aura-rendered-by="524:0">
+											<!--render facet: 525:0-->
+											<li class="filterCardContainer editable reportsFilterCard" data-filtercmp="filterSingleSelectPicklistWidget" title="All accounts"
+											 data-aura-rendered-by="4:820;a" data-aura-class="reportsFilterCard" id="4:820;a">
+												<div data-aura-rendered-by="5:820;a">
+													<a class="filterCardEditor btn-filter-scope" href="javascript:void(0);" data-aura-rendered-by="7:820;a">
+														<div class="filterCard" data-aura-rendered-by="8:820;a">
+															<div class="header" data-aura-rendered-by="9:820;a">
+																<span class="field" data-aura-rendered-by="10:820;a">Show Me&nbsp;</span>
+															</div>
+															<div class="filterCardBody" data-aura-rendered-by="13:820;a">
+																<span class="uiOutputText" data-aura-rendered-by="21:820;a" data-aura-class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
+															</div>
+														</div>
+													</a>
+												</div>
+											</li>
+											{{#each filterItems}}
+												<li class="filterCardContainer editable reportsFilterCard filter-item">
+													<a class="filterCardEditor filter-option-item" href="javascript:void(0);">
+														<div class="filterCard" data-aura-rendered-by="50:820;a">
+															<div class="header" data-aura-rendered-by="51:820;a">
+																<span class="field" data-aura-rendered-by="52:820;a">{{this.field}}</span>
+															</div>
+															<div class="filterCardBody" data-aura-rendered-by="55:820;a">{{this.operation}}&nbsp;
+																<span class="uiOutputText" data-aura-rendered-by="89:820;a" data-aura-class="uiOutputText">{{this.value}}</span>
+															</div>
+														</div>
+													</a>
+													<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small removeFilter">
+														{{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="close"}}
+													</button>
+												</li>
+											{{/each}}
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="stackingPanel fadeOut" data-aura-rendered-by="604:0">
+								<div data-aura-rendered-by="607:0" class="reportsFeedPanel" data-aura-class="reportsFeedPanel">
+									<div class="panelHeader" data-aura-rendered-by="608:0">
+										<h2 class="panelTitle" data-aura-rendered-by="609:0">Chatter</h2>
+										<a class="close centered-header" href="javascript:void(0);" data-aura-rendered-by="611:0">
+											<span class="slds-icon_container slds-icon-utility-back slds-button__icon forceIcon" data-aura-rendered-by="616:0" data-aura-class="forceIcon">
+												<span data-aura-rendered-by="619:0" class="lightningPrimitiveIcon" data-aura-class="lightningPrimitiveIcon">
+													<svg class="slds-icon slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="back">
+														<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/_slds/icons/v7.31.0/utility-sprite/svg/symbols.svg#back"></use>
+													</svg>
+												</span>
+												<span class="slds-assistive-text" data-aura-rendered-by="621:0">Close</span>
+											</span>
+										</a>
+									</div>
+									<div class="vert-scroller" data-aura-rendered-by="623:0">
+										<!--render facet: 624:0-->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+				
+			{{#if showFilterOption}}
+				{{> filter_option top=filterTop left=filterLeft index=filterIndex filter_item=filterItem is_edit_scope=isEditScope}}
+			{{/if}}
 		</div>
-	</div>	
+	</div>
 </template>

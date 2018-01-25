@@ -114,16 +114,16 @@ Template.autoformModals.rendered = ->
 	$('#afModal').on 'show.bs.modal', ->
 		self.shouldUpdateQuickForm.set(true)
 
+		operation = Session.get 'cmOperation'
+		if operation == 'update'
+			AutoForm.resetForm(Session.get('cmFormId') or defaultFormId)
+
 
 	$('#afModal').on 'shown.bs.modal', ->
 		if Steedos?.setModalMaxHeight
 			Steedos.setModalMaxHeight()
 		$(window).bind 'keyup', onEscKey
 		
-		operation = Session.get 'cmOperation'
-		if operation == 'update'
-			AutoForm.resetForm(Session.get('cmFormId') or defaultFormId)
-
 		setTimeout ->
 			$("#afModal .form-control:first").focus()
 		, 100
@@ -173,16 +173,18 @@ Template.autoformModals.rendered = ->
 Template.autoformModals.events
 
 	'click button.btn-insert': (event,template) ->
-		$("#afModal #cmForm").submit()
+		formId = Session.get('cmFormId') or defaultFormId
+		$("#"+formId, "#afModal").submit()
 
 	'click button.btn-update': (event,template)->
 		isMultipleUpdate = Session.get('cmIsMultipleUpdate')
 		targetIds = Session.get('cmTargetIds')
 		isMultipleChecked = template.$(".ckb-multiple-update").is(":checked")
+		formId = Session.get('cmFormId') or defaultFormId
 		if isMultipleUpdate and isMultipleChecked and targetIds?.length > 1
 			collection = Session.get 'cmCollection'
 			target_ids = targetIds
-			doc = AutoForm.getFormValues(Session.get('cmFormId') or defaultFormId).updateDoc
+			doc = AutoForm.getFormValues(formId).updateDoc
 			object_name = Session.get("object_name")
 			Meteor.call 'af_modal_multiple_update', { target_ids, doc, object_name}, (e)->
 				if e
@@ -197,13 +199,15 @@ Template.autoformModals.events
 					$('#afModal').modal('hide')
 					cmOnSuccessCallback?()
 		else
-			$("#afModal #cmForm").submit()
+			$("#"+formId, "#afModal").submit()
 
 	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
 		operation = Session.get 'cmOperation'
 		_id = Session.get('cmDoc')._id
+		$("body").addClass("loading")
 		collectionObj(collection).remove _id, (e)->
+			$("body").removeClass("loading")
 			if e
 				console.error e
 				if e.reason
@@ -218,11 +222,13 @@ Template.autoformModals.events
 				toastr?.success?(t("afModal_remove_suc"))
 
 	'click button.btn-update-and-create': (event,template)->
-		$("#afModal #cmForm").submit()
+		formId = Session.get('cmFormId') or defaultFormId
+		$("#"+formId, "#afModal").submit()
 		Session.set 'cmShowAgain', true
 
 	'click button.btn-insert-and-create': (event,template)->
-		$("#afModal #cmForm").submit()
+		formId = Session.get('cmFormId') or defaultFormId
+		$("#"+formId, "#afModal").submit()
 		Session.set 'cmShowAgain', true
 	
 	'click .group-section-control': (event, template) ->
@@ -307,6 +313,8 @@ helpers =
 		if cmCollection
 			schema = collectionObj(cmCollection).simpleSchema()._schema
 			firstLevelKeys = collectionObj(cmCollection).simpleSchema()._firstLevelSchemaKeys
+			object_name = cmCollection.replace(/Creator.Collections./, "")
+			permission_fields = Creator.getFields(object_name)
 			if Session.get 'cmFields'
 				firstLevelKeys = [Session.get('cmFields')]
 			if Session.get 'cmOmitFields'
@@ -328,6 +336,8 @@ helpers =
 			grouplessFields = []
 			grouplessFields = getFieldsWithNoGroup(schema)
 			grouplessFields = getFieldsInFirstLevel(firstLevelKeys, grouplessFields)
+			if permission_fields
+				grouplessFields = _.intersection(permission_fields, grouplessFields)
 			grouplessFields = getFieldsWithoutOmit(schema, grouplessFields)
 			grouplessFields = getFieldsForReorder(schema, grouplessFields)
 
@@ -335,6 +345,8 @@ helpers =
 			_.each fieldGroupNames, (fieldGroupName) ->
 				fieldsForGroup = getFieldsForGroup(schema, fieldGroupName)
 				fieldsForGroup = getFieldsInFirstLevel(firstLevelKeys, fieldsForGroup)
+				if permission_fields
+					fieldsForGroup = _.intersection(permission_fields, fieldsForGroup)
 				fieldsForGroup = getFieldsWithoutOmit(schema, fieldsForGroup)
 				fieldsForGroup = getFieldsForReorder(schema, fieldsForGroup)
 				fieldGroups.push

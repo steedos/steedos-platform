@@ -16,10 +16,25 @@ Creator.Objects.archive_classification =
 			is_name:true
 			required:true
 		departments:
-			type:"textarea"
+			type:"[text]"
 			label:"所属部门"
 			multiple:true
 			is_wide:true
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 
 	list_views:
 		default:
 			columns:["parent","name","departments"]

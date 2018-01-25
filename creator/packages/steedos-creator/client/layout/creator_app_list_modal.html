@@ -2,20 +2,48 @@
 	<div class="modal fade creator-app-list-modal creator-modal" id="creator_app_list_modal" role="dialog" aria-labelledby="creator_app_list_modal_label" tabindex="-1">
 		<div class="modal-dialog modal-extra slds-modal slds-fade-in-open" role="document">
 			<div class="slds-modal__container">
-				<header class="slds-modal__header">
+				<header class="slds-modal__header slds-app-launcher__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
 					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
 						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
 						</svg>
 						<span class="slds-assistive-text">Close</span>
 					</button>
-					<h2 class="slds-text-heading_medium slds-hyphenate">
-						<div class="appLauncherModalHeader slds-grid slds-grid--align-spread  slds-m-right--small slds-m-left--small slds-grid--vertical-align-center slds-text-body--regular">
-							<div>
-								<h2 class="slds-text-heading--medium">应用程序启动器</h2>
-							</div>
-						</div>
+					<h2 class="slds-text-heading_medium">
+						<h2 class="slds-text-heading--medium">{{_ "creator_app_launcher"}}</h2>
 					</h2>
+					<!-- <button class="slds-button slds-button_neutral">{{spaceName}}</button> -->
+					<ul class="slds-grid space-trigger">
+						<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
+							<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+								<span class="slds-truncate" title="Menu Item">{{spaceName}}</span>
+							</a>
+							{{#if spacesSwitcherVisible}}
+							<div class="slds-context-bar__icon-action slds-p-left_none">
+								<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
+									<svg class="slds-button__icon" aria-hidden="true">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
+									</svg>
+									<span class="slds-assistive-text">切换工作区</span>
+								</button>
+							</div>
+							<div class="slds-dropdown slds-dropdown_right" style="max-height: 450px;overflow-y: auto;">
+								<ul class="slds-dropdown__list" role="menu">
+									<li class="slds-dropdown__header" role="separator">
+										<span class="slds-text-title_caps">切换工作区</span>
+									</li>
+									{{#each spaces}}
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="javascript:void(0);" class="switchSpace" role="menuitem" tabindex="-1">
+											<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+										</a>
+									</li>
+									{{/each}}
+								</ul>
+							</div>
+							{{/if}}
+						</li>
+					</ul>
 				</header>
 				<div class="slds-modal__content slds-app-launcher__content slds-p-around_medium" id="modal-content-id-1">
 					<div class="app-sction-part-1 slds-section slds-is-open">
@@ -25,7 +53,7 @@
 									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
 									</use>
 								</svg>
-								<span class="slds-truncate" title="All Apps">所有应用程序</span>
+								<span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_apps"}}</span>
 							</button>
 						</h3>
 
@@ -63,7 +91,7 @@
 									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown">
 									</use>
 								</svg>
-								<span class="slds-truncate" title="All Apps">所有项目</span>
+								<span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_items"}}</span>
 							</button>
 						</h3>
 						<div class="slds-section__content">

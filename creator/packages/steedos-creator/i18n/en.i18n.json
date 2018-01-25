@@ -1,9 +1,40 @@
 {
 	"Steedos Creator": "Creator",
+
 	"list_view_recent": "Recent",
 	"list_view_all": "All",
 	"list_view_mine": "Mine",
 	"list_view_no_records": "No items to display.",
-	"please_select": "Please select "
+	"please_select": "Please select ",
 
+	"creator_list_item_counts": "%s items",
+	"creator_list_new_list_view": "New",
+	"creator_list_delete_list_view": "Delete",
+	"creator_list_select_fields": "Select Fields to Display",
+	"creator_list_filter": "Filter",
+	"creator_list_filter_cancel": "Cancel",
+	"creator_list_filter_save_as": "Save as",
+	"creator_list_filter_save": "Save",
+	"creator_list_new_filter": "New Filter",
+	"creator_list_add_filter": "Add Filter",
+	"creator_list_remove_all_filters": "Remove All",
+	"creator_list_matching_all_filters": "Matching all these filters",
+	"creator_list_view_controls": "LIST VIEW CONTROLS",
+
+	"creator_filter_option_field": "field",
+	"creator_filter_option_operation": "operation",
+	"creator_filter_option_value": "value",
+	"creator_filter_option_done": "Done",
+
+	"creator_app_launcher": "App Luncher",
+	"creator_app_launcher_all_apps": "App Apps",
+	"creator_app_launcher_all_items": "All Items",
+
+	"creator_header_search": "Search in %s and more...",
+	"creator_header_search_recent_items": "Recent Items",
+
+	"creator_view_related_objects": "RELATED",
+	"creator_view_details": "DETAILS",
+
+	"creator_actions_upload_file": "Upload"
 }

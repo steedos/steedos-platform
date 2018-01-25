@@ -37,6 +37,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - enable_chatter: 启用讨论功能
 - enable_tasks: 启用任务功能
 - enable_audit: 启用审计跟踪功能
+- enable_api: 启用API接口
 
 ### fields支持的字段类型
 - lookup: 相关表，联合reference_to字段，从关联表中选择记录
@@ -48,6 +49,16 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - select: 下拉框，联合options属性，生成下拉框的内容
 - boolean：Checkbox
 - currency: 金额
+- 实例：
+	- 在archive_records对象里，字段archive_destroy_id类型为master_detail
+		- archive_destroy_id:
+				type:"master_detail"
+				label:"销毁单"
+				filters:[["destroy_state", "$eq", "未销毁"]]
+				depend_on:["destroy_state"]
+				reference_to:"archive_destroy"
+				group:"销毁"
+		- 备注：上述实例中，使用了filters字段级过滤，其中depend_on必须有，最终得到“archive_destroy”表中，destroy_state值为“未销毁”的记录。
 
 ### fields 属性
 - name: 字段名
@@ -77,6 +88,13 @@ Object权限分以下类型
 - allowRead: 可查看owner=自己的记录
 - modifyAllRecords: 可修改所有人的记录
 - viewAllRecords: 可查看所有人的记录
+- actions [text]字段，用来控制显示哪些actions
+- listviews [text]字段，用来控制显示哪些listviews
+- related_objects 字段，用来控制相关列表中显示哪些内容
+- fields [text] ，当前用户的可见字段，数据库中如果没有配置此属性，则表示不限制。
+- readonly_fields [text] ，当前用户不能编辑的字段
+备注：一个人可以属于多个权限集。如果多个权限集中定义了同一个object的权限，大部分属性取最大权限集合。除了以下属性：readonly_fields取最小权限集合。
+
 API
 - object权限：Creator.getPermissions(object_name)
 - record权限：Creator.getRecordPermissions(object_name, record, userId)
@@ -116,13 +134,12 @@ API
   - list_view_id == "recent"时生效
   - 用户每次点击记录，系统都会自动保存点击信息。每个用户对每个对象最多保存10条记录。
 
-
 ### actions 按钮与操作
 
 用于定义界面上的按钮与操作，
 - action.todo 如果是函数，直接执行
 - action.todo 如果是字符串，表示系统内置函数，Creator找到该内置函数并执行
-- action.on: 
+- action.on:
   - "list" 为列表定义action，显示在列表右上角
   - "record" 为记录定义action，显示在记录查看页右上角
 - action.todo 函数中可以使用以下变量

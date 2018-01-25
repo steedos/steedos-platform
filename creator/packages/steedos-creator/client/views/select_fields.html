@@ -1,0 +1,78 @@
+<template name="select_fields">
+	<div class="modal fade select-fields-modal creator-modal" id="creator_app_list_modal">
+		<div class="modal-dialog slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading--medium">
+						Select Fields to Display
+					</h2>
+                </header>
+                
+				<div class="slds-modal__content slds-p-around_medium" id="">
+                    <div class="forceDuelingLists">
+                        <div class="listContainer">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="column-add-select">Available Fields</label>
+                                <div class="slds-form-element__control">
+                                    <select id="column-add-select" class="slds-select column-select" multiple="">
+                                        {{#each available_fields}}
+                                            <option value="{{this.value}}">{{this.label}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actionsContainer">
+                            <button class="slds-button slds-button--neutral add-columns uiButton--icon-container uiButton">
+                                <span class="slds-icon_container slds-icon-utility-chevronright icon addIcon slds-button__icon forceIcon">
+                                    {{> steedos_icon class="slds-icon slds-icon--xx-small" source="utility-sprite" name="chevronright"}}
+                                </span>
+                            </button>
+                            <div class="actionSeparator"></div>
+                            <button class="slds-button slds-button--neutral sub-columns uiButton--icon-container uiButton">
+                                <span class="slds-icon_container slds-icon-utility-chevronleft icon addIcon slds-button__icon forceIcon">
+                                    {{> steedos_icon class="slds-icon slds-icon--xx-small" source="utility-sprite" name="chevronleft"}}
+                                </span>
+                            </button>
+                        </div>
+                        <div class="listContainer">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="column-sub-select">Visible Fields</label>
+                                <div class="slds-form-element__control">
+                                    <select id="column-sub-select" class="slds-select column-select" multiple="">
+                                        {{#each visible_fields}}
+                                            <option value="{{this.value}}">{{this.label}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actionsContainer">
+                            <button class="slds-button slds-button--neutral up-column uiButton--icon-container uiButton">
+                                <span class="slds-icon_container slds-icon-utility-chevronup icon addIcon slds-button__icon forceIcon">
+                                    {{> steedos_icon class="slds-icon slds-icon--xx-small" source="utility-sprite" name="chevronup"}}
+                                </span>
+                            </button>
+                            <div class="actionSeparator"></div>
+                            <button class="slds-button slds-button--neutral down-column uiButton--icon-container uiButton">
+                                <span class="slds-icon_container slds-icon-utility-chevrondown icon addIcon slds-button__icon forceIcon">
+                                    {{> steedos_icon class="slds-icon slds-icon--xx-small" source="utility-sprite" name="chevrondown"}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand btn-save-columns">保存</button>
+                    <button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+			</div>
+		</div>
+	</div>
+</template>

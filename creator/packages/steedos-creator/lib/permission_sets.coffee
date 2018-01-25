@@ -1,19 +1,6 @@
-Creator.permissionSetByName = 
-	admin: 
-		objects: {}
-		fields: {}
-	user: 
-		objects: {}
-		fields: {}
-
-Creator.getPermissionSet = (name)->
-	return Creator.permissionSetByName[name]
-
-
-
 if Meteor.isServer
 
-	Creator.getPermissions = (spaceId, userId)->
+	Creator.getAllPermissions = (spaceId, userId)->
 		permissions = 
 			objects: {}
 			assigned_apps: []
@@ -23,14 +10,25 @@ if Meteor.isServer
 			permissions.objects[object_name] = Creator.getObjectPermissions(spaceId, userId, object_name)
 		return permissions
 
+	unionPlus = (array,other)->
+		if !array
+			array = []
+		if !other
+			other = []
+		return _.union(array,other)
+
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}
-		psets = Creator.getCollection("permission_set").find({users: userId}).fetch()
+		psets = Creator.getCollection("permission_set").find({users: userId, sapce: spaceId}).fetch()
 		object = Creator.getObject(object_name)
-		if Creator.isSpaceAdmin(spaceId, userId)
+		if !userId
 			permissions = _.clone(object.permission_set.admin)
 		else
-			permissions = _.clone(object.permission_set.user)
+			if Creator.isSpaceAdmin(spaceId, userId)
+				permissions = _.clone(object.permission_set.admin)
+			else
+				permissions = _.clone(object.permission_set.user)
+
 		if psets.length>=0
 			set_ids = _.pluck psets, "_id"
 			pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
@@ -51,15 +49,17 @@ if Meteor.isServer
 				if po.viewAllRecords
 					permissions.viewAllRecords = true
 					permissions.allowRead = true
-		
-			permissions.fields = {}
-			pfs = Creator.getCollection("permission_fields").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
-			_.each pfs, (pf)->
-				permissions.fields[pf.field_name] = {}
-				if !pf.allowRead
-					permissions.fields[pf.field_name].hidden = true
-				if !pf.allowEdit
-					permissions.fields[pf.field_name].readonly = true
+
+				permissions.list_views = unionPlus(permissions.list_views, po.list_views)
+				permissions.actions = unionPlus(permissions.actions, po.actions)
+				permissions.fields = unionPlus(permissions.fields,po.fields)
+				permissions.related_objects = unionPlus(permissions.fields, po.related_objects)
+				if po.readonly_fields?.length
+					if permissions.readonly_fields
+						permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
+					else
+						permissions.readonly_fields = po.readonly_fields
+
 		return permissions
 
 
@@ -99,13 +99,14 @@ if Meteor.isServer
 	Meteor.methods
 		# Calculate Permissions on Server
 		"creator.object_permissions": (spaceId)->
-			return Creator.getPermissions(spaceId, this.userId)
+			return Creator.getAllPermissions(spaceId, this.userId)
 
 
 if Meteor.isClient
-
+	Creator.isloadingPermissions = new ReactiveVar(true)
 	Tracker.autorun ->
-		if Session.get("spaceId")
+		if Session.get("spaceId") and Creator.isloadingPermissions
+			Creator.isloadingPermissions.set(true)
 			Meteor.call "creator.object_permissions", Session.get("spaceId"), (error, result)->
 				if error
 					console.log error
@@ -115,19 +116,35 @@ if Meteor.isClient
 						unless object
 							return
 						object.permissions.set(permissions)
-						_.each permissions.fields, (field, field_name)->
+						if permissions.fields?.length
+							_.each object.fields, (field, field_name)->
+								fs = object.schema._schema[field_name]
+								if !fs.autoform
+									fs.autoform = {}
+								if _.indexOf(permissions.fields, field_name)>=0
+									field.hidden = false
+									field.omit = false
+									fs.autoform.omit = false
+								else
+									field.hidden = true
+									field.omit = true
+									fs.autoform.omit = true
+						else
+							permissions.fields = _.keys(object.fields)
+						_.each permissions.readonly_fields, (field_name)->
 							f = object.fields[field_name]
 							if f
 								fs = object.schema._schema[field_name]
 								if !fs.autoform
 									fs.autoform = {}
-								if field.readonly
-									f.readonly = true
-									fs.autoform.readonly = true
-									fs.autoform.disabled = true
-								if field.hidden
-									f.hidden = true
-									f.omit = true
-									fs.autoform.omit = true
+								f.readonly = true
+								fs.autoform.readonly = true
+								fs.autoform.disabled = true
+
+						if object_name == "archive_records"
+							console.log permissions
+
 					_.each result.assigned_apps, (app_name)->
 						Creator.Apps[app_name]?.visible = true
+
+				Creator.isloadingPermissions.set(false)

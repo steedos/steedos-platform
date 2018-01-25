@@ -1,0 +1,74 @@
+.creator-modal {
+    .slds-modal__container {
+        width: auto;
+        max-width: 100%;
+
+        .forceDuelingLists {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            
+            .listContainer {
+                -webkit-flex: 0 0 auto;
+                -ms-flex: 0 0 auto;
+                flex: 0 0 auto;
+                width: 180px;
+
+                .slds-form-element__label {
+                    margin-bottom: .25rem;
+                    padding-bottom: .5rem;
+                    margin-right: 0;
+                }
+
+                .column-select {
+                    height: 200px;
+                    width: 100%;
+                    padding: 0;
+                    overflow: scroll;
+                }
+            }
+
+            .actionsContainer {
+                text-align: center;
+                margin: 0 .5rem 0 .5rem;
+                .uiButton--icon-container {
+                    position: relative;
+                    display: inline-block;
+                    padding: 0;
+                    background: transparent;
+                    background-clip: border-box;
+                    border: 1px solid transparent;
+                    border-radius: .25rem;
+                    font-size: .75rem;
+                    line-height: 1.875rem;
+                    text-decoration: none;
+                    color: rgb(0, 112, 210);
+                    -webkit-appearance: none;
+                    white-space: normal;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    -webkit-transition: color .05s linear,background-color .05s linear;
+                    transition: color .05s linear,background-color .05s linear;
+                    text-align: center;
+                    vertical-align: middle;
+                    
+                    .slds-icon {
+                        fill: rgb(112, 110, 107);
+                    }
+                }
+
+                .actionSeparator {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+    }
+}

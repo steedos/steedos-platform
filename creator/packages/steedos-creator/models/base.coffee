@@ -1,42 +1,44 @@
 Creator.baseObject = 
 	fields: 
 		owner:
-			label:"作者"
+			label:"所有者"
 			type: "lookup"
 			reference_to: "users"
 			omit: true
 			sortable: true
+			index: true
 		space:
 			type: "text"
 			omit: true
+			index: true
+			hidden: true
 		created:
 			type: "datetime"
-			label:"提交日期"
+			label:"创建日期"
 			omit: true
 			sortable: true
 		created_by:
 			type: "lookup"
-			label:"提交人"
+			label:"创建人"
 			reference_to: "users"
 			omit: true
+			index: true
 		modified:
-			label:"最后修改时间"
+			label:"修改时间"
 			type: "datetime"
 			omit: true
 			sortable: true
+			index: true
 		modified_by:
+			label:"修改人"
 			type: "lookup"
 			reference_to: "users"
-			omit: true
-		last_activity: 
-			type: "datetime"
-			omit: true
-		last_referenced: 
-			type: "datetime"
 			omit: true
 		is_deleted:
 			type: "boolean"
 			omit: true
+			index: true
+			hidden: true
 
 	permission_set:
 		none: 
@@ -77,10 +79,10 @@ Creator.baseObject =
 			on: "server"
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
-				modifier.$set.modified = new Date();
+				modifier.$set?.modified = new Date();
 				if userId
 					modifier.$set = modifier.$set || {};
-					modifier.$set.modified_by = userId
+					modifier.$set?.modified_by = userId
 
 		"before.insert.client.default": 
 			on: "client"

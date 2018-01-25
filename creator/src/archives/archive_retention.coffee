@@ -24,3 +24,18 @@ Creator.Objects.archive_retention =
 			columns:["name","code","years"]
 		all:
 			label:"所有"
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true 

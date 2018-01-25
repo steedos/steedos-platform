@@ -61,6 +61,10 @@ Template.creator_table_cell.helpers
 					val = "是"
 				else
 					val = "否"
+			else if this.field.type == "select"
+				val = _.findWhere(this.field.options, {value: this.val})?.label
+				unless val
+					val = this.val
 
 			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)

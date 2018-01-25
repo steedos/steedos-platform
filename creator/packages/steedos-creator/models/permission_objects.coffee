@@ -10,6 +10,7 @@ Creator.Objects.permission_objects =
 			reference_to: "permission_set"
 		object_name: 
 			type: "text"
+
 		allowCreate: 
 			type: "boolean"
 		allowDelete: 
@@ -22,6 +23,18 @@ Creator.Objects.permission_objects =
 			type: "boolean"
 		viewAllRecords: 
 			type: "boolean" 
+
+		list_views:
+			type: "[text]"
+		actions:
+			type: "[text]"
+		fields:
+			type: "[text]"
+		readonly_fields:
+			type: "[text]"
+		related_objects:
+			type: "[text]"
+
 	list_views:
 		default:
 			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]

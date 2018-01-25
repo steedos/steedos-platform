@@ -1,0 +1,62 @@
+<template name="filter_option">
+    <div class="uiPanel--default uiPanel positioned west open active filter_option_uiPanel" style="top: {{top}}; left: {{left}}">
+        <div class="option-container">
+            <div class="panel-content">
+                <div class="forceFilterPanelCallout">
+                    <div>
+                        {{#if this.is_edit_scope}}
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend slds-form-element__label filter-scope-legend">Show me</legend>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-radio">
+                                        <input type="radio" id="space" name="choose-filter-scope" value="space" {{is_scope_selected "space"}}/>
+                                        <label class="slds-radio__label" for="space">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">All {{object_label}}</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="mine" name="choose-filter-scope" value="mine" {{is_scope_selected "mine"}}/>
+                                        <label class="slds-radio__label" for="mine">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">My {{object_label}}</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </fieldset>
+                        {{else}}
+                            {{#autoForm id="filter-option" schema=schema doc=filter_item}}
+                                <div class="forceFilterPanelFieldSelector">
+                                    <div class="forceRecordLayout valueInput">
+                                        {{> afQuickField name="field" label=(_ "creator_filter_option_field")}}
+                                    </div>
+                                </div>
+                                <div class="forceFilterPanelFieldSelector">
+                                    <div class="forceRecordLayout valueInput">
+                                        {{> afQuickField name="operation" label=(_ "creator_filter_option_operation")}}
+                                    </div>
+                                </div>
+                                <div class="forceFilterPanelFieldSelector">
+                                    <div class="forceRecordLayout valueInput">
+                                        {{> afQuickField name="value" label=(_ "creator_filter_option_value")}}
+                                    </div>
+                                </div>
+                            {{/autoForm}}
+                        {{/if}}
+                    </div>
+                    {{#if this.is_edit_scope}}
+                        <button class="slds-button slds-button--neutral uiButton save-scope">
+                            <span class="bBody truncate">{{_ "creator_filter_option_done"}}</span>
+                        </button>
+                    {{else}}
+                        <button class="slds-button slds-button--neutral uiButton save-filter">
+                            <span class="bBody truncate">{{_ "creator_filter_option_done"}}</span>
+                        </button>
+                    {{/if}}
+                </div>
+            </div>
+            <!-- <div class="pointer">
+            </div> -->
+        </div>
+    </div>
+</template>
