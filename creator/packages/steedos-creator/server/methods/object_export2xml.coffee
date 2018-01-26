@@ -38,17 +38,18 @@ _mixFieldsData = (obj,objName) ->
 	# 初始化对象数据
 	jsonObj = {}
 	# 获取fields
-	objSchema = Creator?.getSchema(objName)?._schema
+	objFields = Creator?.getObject(objName)?.fields
 
-	mixStr = (field_name)->
+	mixDefault = (field_name)->
 		jsonObj[field_name] = obj[field_name] || ""
 
-	mixArr = (field_name)->
-		jsonObj[field_name] = obj[field_name] || ""
-
-	mixDate = (field_name,format)->
+	mixDate = (field_name,type)->
 		date = obj[field_name]
-		if date
+		if type == "date"
+			format = "YYYY-MM-DD"
+		else
+			format = "YYYY-MM-DD HH:mm:ss"
+		if date? and format?
 			dateStr = moment(date).format(format)
 		jsonObj[field_name] = dateStr || ""
 
@@ -61,47 +62,56 @@ _mixFieldsData = (obj,objName) ->
 			jsonObj[field_name] = ""
 
 	# 循环每个fields,并判断取值
-	_.each objSchema, (field, field_name)->
-		switch field?.type?.name
-			when "String","Number" then mixStr field_name
-			when "Array" then mixArr field_name
-			when "Date" then mixDate field_name, field?.autoform?.dateTimePickerOptions?.format
-			when "Boolean" then mixBool field_name
-			else mixStr field_name
+	_.each objFields, (field, field_name)->
+		switch field?.type
+			when "date","datetime" then mixDate field_name,field.type
+			when "boolean" then mixBool field_name
+			else mixDefault field_name
+
 	return jsonObj
 
 # 获取子表整理数据
 _mixRelatedData = (obj,objName) ->
 	# 初始化对象数据
-	related_tables = {}
+	related_objects = {}
 
 	# 获取相关表
 	relatedObjNames = Creator?.getAllRelatedObjects objName
-	# relatedObjNames = ["archive_audit","archive_entity_relation"]
 
 	# 循环相关表
 	relatedObjNames.forEach (relatedObjName) ->
-		# 获取fields
-		fields = Creator?.Objects[relatedObjName]?.fields
+		# 每个表定义一个对象数组
+		relatedTableData = []
 
-		# 循环每个field,找出reference_to的关联字段
-		related_field_name = ""
-		_.each fields, (field, field_name)->
-			if field?.reference_to == objName
-				related_field_name = field_name
+		# *设置关联搜索查询的字段
+		# 附件的关联搜索字段是定死的
+		if relatedObjName == "cms_files"
+			related_field_name = "parent.ids"
+		else
+			# 获取fields
+			fields = Creator?.Objects[relatedObjName]?.fields
+			# 循环每个field,找出reference_to的关联字段
+			related_field_name = ""
+			_.each fields, (field, field_name)->
+				if field?.reference_to == objName
+					related_field_name = field_name
 
-		# 根据找出的reference_to关联字段，查子表数据
+		# 根据找出的关联字段，查子表数据
 		if related_field_name
-			related_tables[relatedObjName] = []
-			# 获取到所有的数据
 			relatedCollection = Creator.Collections[relatedObjName]
+			# 获取到所有的数据
+			relatedRecordList = relatedCollection.find({"#{related_field_name}":obj._id}).fetch()
+			# 循环每一条数据
+			relatedRecordList.forEach (relatedObj)->
+				# 整合fields数据
+				fieldsData = _mixFieldsData relatedObj,relatedObjName
+				# 把一条记录插入到对象数组中
+				relatedTableData.push fieldsData
 
-			relatedRecordObjs  = relatedCollection.find({"#{related_field_name}":obj._id}).fetch()
+		# 把一个子表的所有数据插入到related_objects中，再循环下一个
+		related_objects[relatedObjName] = relatedTableData
 
-			related_tables[relatedObjName] = relatedRecordObjs
-
-	return related_tables
-
+	return related_objects
 
 # Creator.Export2xml()
 Creator.Export2xml = (objName) ->
@@ -114,7 +124,7 @@ Creator.Export2xml = (objName) ->
 	# 查找对象数据
 	collection = Creator.Collections[objName]
 # 测试数据
-	recordList = collection.find({_id:"54pvEyFaANHHYb6Tc"}).fetch()
+	recordList = collection.find({}).fetch()
 
 	recordList.forEach (recordObj)->
 		jsonObj = {}
@@ -125,9 +135,9 @@ Creator.Export2xml = (objName) ->
 		jsonObj[objName] = fieldsData
 
 		# 整理相关表数据
-		related_tables = _mixRelatedData recordObj,objName
+		related_objects = _mixRelatedData recordObj,objName
 
-		jsonObj["related_tables"] = related_tables
+		jsonObj["related_objects"] = related_objects
 
 		# 转为xml保存文件
 		_writeXmlFile jsonObj,objName

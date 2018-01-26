@@ -19,7 +19,7 @@ if Meteor.isServer
 
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}
-		psets = Creator.getCollection("permission_set").find({users: userId, sapce: spaceId}).fetch()
+		psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}).fetch()
 		object = Creator.getObject(object_name)
 		if !userId
 			permissions = _.clone(object.permission_set.admin)

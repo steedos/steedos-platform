@@ -76,7 +76,7 @@ Creator.Objects.archive_records =
 			type:"master_detail"
 			label:"保管期限"
 			reference_to:"archive_retention"
-			required:true
+			#required:true
 			sortable:true
 			group:"档号"
 
@@ -164,7 +164,7 @@ Creator.Objects.archive_records =
 			label:"摘要"
 			# omit:true
 			group:"内容描述"
-		documnt_number:
+		document_number:
 			type:"text"
 			label:"文件编号"
 			group:"内容描述"
@@ -696,12 +696,7 @@ Creator.Objects.archive_records =
 				doc.created = new Date()
 				doc.created_by = userId
 				doc.owner = userId
-				duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid}).years
-				year = doc.document_date.getFullYear()+duration
-				month = doc.document_date.getMonth()
-				day = doc.document_date.getDate()
-				destroy_date = new Date(year,month,day)
-				rules = Creator.Collections["archive_rules"].find({},{fields:{keywords:1}}).fetch()
+				rules = Creator.Collections["archive_rules"].find({fieldname:'title'},{fields:{keywords:1}}).fetch()
 				rules_keywords = _.pluck rules, "keywords"
 				i = 0
 				while i < rules_keywords.length
@@ -720,8 +715,14 @@ Creator.Objects.archive_records =
 					i++
 				console.log rule_id
 				if rule_id
-					doc.category_code = Creator.Collections["archive_rules"].findOne({_id:rule_id}).classification 
-
+					category_retention = Creator.Collections["archive_rules"].findOne({_id:rule_id},{fields:{classification:1,retention:1}})
+					doc.category_code = category_retention.classification
+					doc.retention_peroid = category_retention.retention
+					duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid}).years
+					year = doc.document_date.getFullYear()+duration
+					month = doc.document_date.getMonth()
+					day = doc.document_date.getDate()
+					doc.destroy_date = new Date(year,month,day)
 				return true
 		"after.update.server.default":
 			on: "server"

@@ -1,5 +1,8 @@
 Template.filter_option.helpers 
     schema:() -> 
+        object_name = Template.instance().data?.object_name
+        unless object_name
+            object_name = Session.get("object_name")
         schema= 
             field:
                 type: String
@@ -9,8 +12,8 @@ Template.filter_option.helpers
                     defaultValue: ()->
                         return "name"
                     options: ()->
-                        keys = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
-                        schema = Creator.getSchema(Session.get("object_name"))._schema
+                        keys = Creator.getSchema(object_name)._firstLevelSchemaKeys
+                        schema = Creator.getSchema(object_name)._schema
                         keys = _.map keys, (key) ->
                             obj = _.pick(schema, key)
                             label = obj[key].label
@@ -44,7 +47,7 @@ Template.filter_option.helpers
                     options: ()->
                         field = Session.get("schema_field")
                         if field and Session.get("schema_type") == "select"
-                            schema = Creator.getSchema(Session.get("object_name"))._schema
+                            schema = Creator.getSchema(object_name)._schema
                             obj = _.pick(schema, field)
                             options = obj[field].autoform?.options
                             return options
@@ -52,11 +55,14 @@ Template.filter_option.helpers
         new SimpleSchema(schema)
 
     filter_item: ()->
+        object_name = Template.instance().data?.object_name
+        unless object_name
+            object_name = Session.get("object_name")
         filter_item = Template.instance().data?.filter_item
         schema_type = ""
         if filter_item and filter_item.field
             Session.set "schema_field", filter_item.field
-            _schema = Creator.getSchema(Session.get("object_name"))._schema
+            _schema = Creator.getSchema(object_name)._schema
             _.each _schema, (obj, key)->
                 if key == filter_item.field
                     schema_type = obj.autoform.type || "text"
@@ -66,7 +72,10 @@ Template.filter_option.helpers
         return filter_item
 
     object_label: ()->
-        return Creator.getObject(Session.get("object_name")).label
+        object_name = Template.instance().data?.object_name
+        unless object_name
+            object_name = Session.get("object_name")
+        return Creator.getObject(object_name).label
 
     is_scope_selected: (scope)->
         if scope == Session.get("filter_scope")
@@ -89,14 +98,15 @@ Template.filter_option.events
         template.$(".uiPanel--default").css({"top": "-1000px", left: "-1000px"})
 
     'change select[name="field"]': (event, template) ->
+        object_name = template.data?.object_name
+        unless object_name
+            object_name = Session.get("object_name")
         field = $(event.currentTarget).val()
-        _schema = Creator.getSchema(Session.get("object_name"))._schema
+        _schema = Creator.getSchema(object_name)._schema
         type = ""
         _.each _schema, (obj, key)->
             if key == field
                 type = obj.autoform.type || "text"
         Session.set "schema_field", field
         Session.set "schema_type", type
-
-        console.log type
         

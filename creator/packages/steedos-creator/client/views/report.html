@@ -90,22 +90,22 @@
 				</div>
 
 				<div class="pageBody {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}}">
-			        <div class="scrollarea">
-			        	<div class="innerStacking">
-				        	<div class="eclair-container">
-				            	<div id="pivotgrid-chart"></div>
-				            </div>
-				           	<div class="reportsDataGrid">
-				            	<div id="pivotgrid"></div>
-				            </div>
-				        </div>
+					<div class="scrollarea">
+						<div class="innerStacking">
+							<div class="eclair-container">
+								<div id="pivotgrid-chart"></div>
+							</div>
+						   	<div class="reportsDataGrid">
+								<div id="pivotgrid"></div>
+							</div>
+						</div>
 					</div>
-					<div class="sidebar {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}} filter-list-container" data-aura-rendered-by="474:0">
-						<div data-aura-rendered-by="477:0" class="reportsReportSidebar" data-aura-class="reportsReportSidebar">
-							<div class="stackingPanel fadeIn" data-aura-rendered-by="478:0">
-								<div class="filterPanelContainer reportsFilterPanel" data-aura-rendered-by="481:0" data-aura-class="reportsFilterPanel">
-									<div class="panelHeader" data-aura-rendered-by="482:0">
-										<div class="centered-header" data-aura-rendered-by="483:0">
+					<div class="sidebar {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}} filter-list-container">
+						<div class="reportsReportSidebar" data-aura-class="reportsReportSidebar">
+							<div class="stackingPanel fadeIn">
+								<div class="filterPanelContainer reportsFilterPanel" data-aura-class="reportsFilterPanel">
+									<div class="panelHeader">
+										<div class="centered-header">
 											<button class="slds-button slds-button_neutral btn-filter-cancel {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to cancel changes">
 												Cancel
 											</button>
@@ -120,35 +120,40 @@
 											</button>
 										</div>
 									</div>
-									<div class="vert-scroller" data-aura-rendered-by="515:0">
-										<!--render facet: 516:0-->
-										<!--render facet: 520:0-->
-										<ul class="editableFilters" data-aura-rendered-by="524:0">
-											<!--render facet: 525:0-->
+									<div class="vert-scroller">
+										<ul class="editableFilters">
 											<li class="filterCardContainer editable reportsFilterCard" data-filtercmp="filterSingleSelectPicklistWidget" title="All accounts"
-											 data-aura-rendered-by="4:820;a" data-aura-class="reportsFilterCard" id="4:820;a">
-												<div data-aura-rendered-by="5:820;a">
-													<a class="filterCardEditor btn-filter-scope" href="javascript:void(0);" data-aura-rendered-by="7:820;a">
-														<div class="filterCard" data-aura-rendered-by="8:820;a">
-															<div class="header" data-aura-rendered-by="9:820;a">
-																<span class="field" data-aura-rendered-by="10:820;a">Show Me&nbsp;</span>
+											 data-aura-class="reportsFilterCard">
+												<div>
+													<a class="filterCardEditor btn-filter-scope" href="javascript:void(0);">
+														<div class="filterCard">
+															<div class="header">
+																<span class="field">Show Me&nbsp;</span>
 															</div>
-															<div class="filterCardBody" data-aura-rendered-by="13:820;a">
-																<span class="uiOutputText" data-aura-rendered-by="21:820;a" data-aura-class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
+															<div class="filterCardBody">
+																<span class="uiOutputText" data-aura-class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
 															</div>
 														</div>
 													</a>
 												</div>
 											</li>
+										</ul>
+										<ul class="editableFilters">
 											{{#each filterItems}}
 												<li class="filterCardContainer editable reportsFilterCard filter-item">
 													<a class="filterCardEditor filter-option-item" href="javascript:void(0);">
-														<div class="filterCard" data-aura-rendered-by="50:820;a">
-															<div class="header" data-aura-rendered-by="51:820;a">
-																<span class="field" data-aura-rendered-by="52:820;a">{{this.field}}</span>
+														<div class="filterCard">
+															<div class="header">
+																<span class="field">
+																	{{#if this.field}}
+																		{{this.field}}
+																	{{else}}
+																		{{_ "creator_list_new_filter"}}
+																	{{/if}}
+																</span>
 															</div>
-															<div class="filterCardBody" data-aura-rendered-by="55:820;a">{{this.operation}}&nbsp;
-																<span class="uiOutputText" data-aura-rendered-by="89:820;a" data-aura-class="uiOutputText">{{this.value}}</span>
+															<div class="filterCardBody">{{this.operation}}&nbsp;
+																<span class="uiOutputText" data-aura-class="uiOutputText">{{this.value}}</span>
 															</div>
 														</div>
 													</a>
@@ -158,26 +163,10 @@
 												</li>
 											{{/each}}
 										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="stackingPanel fadeOut" data-aura-rendered-by="604:0">
-								<div data-aura-rendered-by="607:0" class="reportsFeedPanel" data-aura-class="reportsFeedPanel">
-									<div class="panelHeader" data-aura-rendered-by="608:0">
-										<h2 class="panelTitle" data-aura-rendered-by="609:0">Chatter</h2>
-										<a class="close centered-header" href="javascript:void(0);" data-aura-rendered-by="611:0">
-											<span class="slds-icon_container slds-icon-utility-back slds-button__icon forceIcon" data-aura-rendered-by="616:0" data-aura-class="forceIcon">
-												<span data-aura-rendered-by="619:0" class="lightningPrimitiveIcon" data-aura-class="lightningPrimitiveIcon">
-													<svg class="slds-icon slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="back">
-														<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/_slds/icons/v7.31.0/utility-sprite/svg/symbols.svg#back"></use>
-													</svg>
-												</span>
-												<span class="slds-assistive-text" data-aura-rendered-by="621:0">Close</span>
-											</span>
-										</a>
-									</div>
-									<div class="vert-scroller" data-aura-rendered-by="623:0">
-										<!--render facet: 624:0-->
+										<div class="slds-filters__footer slds-grid slds-shrink-none">
+											<button class="slds-button_reset slds-text-link add-filter" href="javascript:void(0);">{{_ "creator_list_add_filter"}}</button>
+											<button class="slds-button_reset slds-text-link slds-col_bump-left remove-all-filters" href="javascript:void(0);">{{_ "creator_list_remove_all_filters"}}</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -187,7 +176,7 @@
 			</div>
 				
 			{{#if showFilterOption}}
-				{{> filter_option top=filterTop left=filterLeft index=filterIndex filter_item=filterItem is_edit_scope=isEditScope}}
+				{{> filter_option top=filterTop left=filterLeft index=filterIndex filter_item=filterItem is_edit_scope=isEditScope object_name=reportObject.object_name}}
 			{{/if}}
 		</div>
 	</div>

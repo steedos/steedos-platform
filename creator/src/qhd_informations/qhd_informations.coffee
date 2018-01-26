@@ -28,18 +28,19 @@ Creator.Objects.qhd_informations =
 		score:
 			type:"number"
 			label:"分数"
-		# score_point:
-		# 	type:"checkbox"
-		# 	label:"得分点",
-		# 	multiple:true
-		# 	is_wide:true
-		# 	options: [
-		# 		{label: "上级采用", value: "上级采用"},
-		# 		{label: "领导批示", value: "领导批示"},
-		# 		{label: "正常使用", value: "正常使用"},
-		# 		{label: "月度好信息", value: "月度好信息"},
-		# 		{label:"专报信息",value:"专报信息"}
-		# 	]
+			omit:true
+		score_point:
+			type:"checkbox"
+			label:"得分点",
+			multiple:true
+			is_wide:true
+			options: [
+				{label: "上级采用", value: "上级采用"},
+				{label: "领导批示", value: "领导批示"},
+				{label: "正常使用", value: "正常使用"},
+				{label: "月度好信息", value: "月度好信息"},
+				{label:"专报信息",value:"专报信息"}
+			]
 
 		# isuse:
 		# 	type:"boolean"
@@ -47,7 +48,7 @@ Creator.Objects.qhd_informations =
 		# 	defaultValue:"否"
 	list_views:
 		default:
-			columns: ["title", "content", "company","score","created","created_by"]
+			columns: ["title", "content", "company","score_point","created"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
@@ -68,16 +69,47 @@ Creator.Objects.qhd_informations =
 			viewAllRecords: false
 			#fields:["score","title"] 
 		admin:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true  
-	# triggers:
-		
-	# 	"before.insert.server.default": 
-	# 		on: "server"
-	# 		when: "before.insert"
-	# 		todo: (userId, doc)->
-			
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+	triggers:
+		"before.insert.server.calculateScore": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.score = 0
+				if doc.score_point
+					doc.score_point.forEach (point)->
+						if point == "上级采用"
+							doc.score = doc.score + 10
+						else if point == '领导批示'
+							doc.score = doc.score + 10
+						else if point== '正常使用'
+							doc.score = doc.score + 5
+						else if point == '月度好信息'
+							doc.score = doc.score + 5
+						else if point == '专报信息'
+							doc.score = doc.score + 10
+				#Creator.baseObject.triggers['before.insert.server.default'].todo(userId,doc)			
+					
+		"after.update.server.calculateScore": 
+			on: "server"
+			when: "after.update"
+			todo: (userId, doc)->
+				score = 0
+				if doc.score_point
+					doc.score_point.forEach (point)->
+						if point == "上级采用"
+							score = score + 10
+						else if point == '领导批示'
+							score = score + 10
+						else if point== '正常使用'
+							score = score + 5
+						else if point == '月度好信息'
+							score = score + 5
+						else if point == '专报信息'
+							score = score + 10
+					Creator.Collections['qhd_informations'].direct.update({_id:doc._id},{$set:{score:score}})

@@ -124,7 +124,7 @@ Template.creator_report.events
 	'click .filter-option-item': (event, template)->
 		template.is_edit_scope.set(false)
 
-		index = $(event.currentTarget).closest(".filter-item").index() - 1
+		index = $(event.currentTarget).closest(".filter-item").index()
 		if index < 0
 			index = 0
 
@@ -174,7 +174,7 @@ Template.creator_report.events
 			renderReport()
 
 	'click .removeFilter': (event, template)->
-		index = $(event.currentTarget).closest(".filter-item").index() - 1
+		index = $(event.currentTarget).closest(".filter-item").index()
 		if index < 0
 			index = 0
 		filter_items = Session.get("filter_items")
@@ -184,6 +184,19 @@ Template.creator_report.events
 	'click .btn-toggle-filter': (event, template)->
 		isFilterOpen = template.is_filter_open.get()
 		template.is_filter_open.set(!isFilterOpen)
+
+	'click .btn-settings': (event, template)->
+		Modal.show("report_settings")
+
+	'click .add-filter': (event, template)->
+		filter_items = Session.get("filter_items")
+		filter_items.push({})
+		Session.set("filter_items", filter_items)
+		Meteor.defer ->
+			template.$(".filter-option-item:last").click()
+
+	'click .remove-all-filters': (event, template)->
+		Session.set("filter_items", [])
 
 
 
@@ -295,11 +308,11 @@ renderSummaryReport = (reportObject, spaceId)->
 			if totaling
 				totalSummaryItems.push summaryItem
 		
-		unless _.isEmpty totalSummaryItems
-			reportSummary.totalItems = totalSummaryItems
-		unless _.isEmpty groupSummaryItems
-			reportSummary.groupItems = groupSummaryItems
+		# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
+		reportSummary.totalItems = totalSummaryItems
+		reportSummary.groupItems = groupSummaryItems
 
+		console.log "renderSummaryReport.reportSummary:", reportSummary
 		pivotGrid = $('#pivotgrid').dxDataGrid(
 			dataSource: reportData
 			paging: false
@@ -346,6 +359,19 @@ renderMatrixReport = (reportObject, spaceId)->
 				width: 100
 				dataField: columnFieldKey
 				area: 'column'
+		
+		counting = reportObject.counting
+		if reportObject.counting == undefined
+			counting = true
+
+		if counting
+			defaultCounterSum = 
+				caption: "计数"
+				dataField: "_id"
+				summaryType: "count"
+				area: 'data'
+			reportFields.push defaultCounterSum
+		
 		_.each reportObject.values, (value)->
 			# unless value.field
 			# 	return
@@ -373,18 +399,6 @@ renderMatrixReport = (reportObject, spaceId)->
 				# dataType: valueField.type
 				summaryType: operation
 				area: 'data'
-
-		counting = reportObject.counting
-		if reportObject.counting == undefined
-			counting = true
-
-		if counting
-			defaultCounterSum = 
-				caption: "计数"
-				dataField: "_id"
-				summaryType: "count"
-				area: 'data'
-			reportFields.push defaultCounterSum
 
 		grouping = reportObject.grouping
 		if reportObject.grouping == undefined
@@ -418,6 +432,7 @@ renderMatrixReport = (reportObject, spaceId)->
 		return
 
 renderReport = (reportObject)->
+	console.log "renderReport.reportObject:", reportObject
 	unless reportObject
 		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
 	spaceId = Session.get("spaceId")
@@ -427,6 +442,11 @@ renderReport = (reportObject)->
 		return Session.get("filter_scope")
 	reportObject.filters = filter_items
 	reportObject.filter_scope = filter_scope
+	report_settings = Tracker.nonreactive ()->
+		return Session.get("report_settings")
+	reportObject.grouping = report_settings.grouping
+	reportObject.totaling = report_settings.totaling
+	reportObject.counting = report_settings.counting
 	switch reportObject.report_type
 		when 'tabular'
 			renderTabularReport(reportObject, spaceId)
@@ -434,6 +454,8 @@ renderReport = (reportObject)->
 			renderSummaryReport(reportObject, spaceId)
 		when 'matrix'
 			renderMatrixReport(reportObject, spaceId)
+
+Template.creator_report.renderReport = renderReport
 
 Template.creator_report.onRendered ->
 	DevExpress.localization.locale("zh")
@@ -453,6 +475,7 @@ Template.creator_report.onRendered ->
 			filter_scope = reportObject.filter_scope
 			Session.set("filter_items", filter_items)
 			Session.set("filter_scope", filter_scope)
+			Session.set("report_settings", {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting})
 			renderReport(reportObject) 
 
 	this.autorun (c)->
