@@ -154,7 +154,6 @@ steedos:cfs-tempstore@0.1.6
 steedos:cfs-ui@0.1.4
 steedos:cfs-upload-http@0.0.22
 steedos:cfs-worker@0.1.5
-steedos:cms@0.0.5
 steedos:creator@0.0.3
 steedos:datatables-extensions@0.0.1
 steedos:e164-phones-countries@1.0.3
