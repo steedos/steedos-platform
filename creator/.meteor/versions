@@ -133,7 +133,7 @@ steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_1
 steedos:autoform-lookup@0.3.10
 steedos:autoform-modals@0.3.9_10
-steedos:base@0.0.72
+steedos:base@0.0.73
 steedos:cfs-access-point@0.1.50
 steedos:cfs-aliyun@0.1.0
 steedos:cfs-base-package@0.0.30
