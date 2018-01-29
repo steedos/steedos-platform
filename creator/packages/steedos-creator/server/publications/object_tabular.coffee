@@ -8,7 +8,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 
 	_table = Tabular.tablesByName[tableName];
 
-	_fields = Creator.Objects[_table.collection._name]?.fields
+	_fields = Creator.objectsByName[_table.collection._name]?.fields
 
 	if !_fields || !_table
 		return this.ready()
