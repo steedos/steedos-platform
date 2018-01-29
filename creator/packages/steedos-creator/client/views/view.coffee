@@ -200,7 +200,7 @@ Template.creator_view.helpers
 		info = Tabular.tableRecords.findOne("creator_" + this.object_name)
 		return info?.recordsTotal
 
-	related_selector: (object_name, related_field_name)->
+	related_selector: ()->
 		object_name = this.object_name
 		related_field_name = this.related_field_name
 		record_id = Session.get "record_id"
