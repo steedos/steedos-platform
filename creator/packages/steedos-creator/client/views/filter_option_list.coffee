@@ -104,10 +104,11 @@ Template.filter_option_list.onCreated ->
 		if self.optionbox and !self.optionbox.isDestroyed and $(self.optionbox.firstNode()).find(event.target).length == 0
 			Blaze.remove self.optionbox
 	
-	$("body").on "click", self.destroyOptionbox
+	#绑定事件从document委托到.wrapper中是为了避免过虑器中选人控件会解决该事件
+	$(document).on "click",".wrapper", self.destroyOptionbox
 
 Template.filter_option_list.onRendered ->
 
 Template.filter_option_list.onDestroyed ->
-	$("body").off "click", self.destroyOptionbox
+	$(document).off "click", ".wrapper", self.destroyOptionbox
 	

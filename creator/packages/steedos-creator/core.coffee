@@ -162,12 +162,17 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 
 	return related_object_names
 
-Creator.getActions = (object_name)->
-	if !object_name and Meteor.isClient
-		object_name = Session.get("object_name")
+Creator.getActions = (object_name, spaceId, userId)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !spaceId
+			spaceId = Session.get("spaceId")
+		if !userId
+			userId = Meteor.userId()
 
 	obj = Creator.getObject(object_name)
-	permissions = Creator.getPermissions()
+	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	permission_actions = permissions.actions
 	actions = _.values(obj.actions) 
 
@@ -177,11 +182,16 @@ Creator.getActions = (object_name)->
 	
 	return actions
 
-Creator.getListViews = (object_name)->
-	if !object_name and Meteor.isClient
-		object_name = Session.get("object_name")
+Creator.getListViews = (object_name, spaceId, userId)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !spaceId
+			spaceId = Session.get("spaceId")
+		if !userId
+			userId = Meteor.userId()
 
-	permission_list_views = Creator.getPermissions(object_name).list_views
+	permission_list_views = Creator.getPermissions(object_name, spaceId, userId).list_views
 	object = Creator.getObject(object_name)
 	list_views = []
 
@@ -195,12 +205,17 @@ Creator.getListViews = (object_name)->
 	
 	return list_views
 
-Creator.getFields = (object_name)->
-	if !object_name and Meteor.isClient
-		object_name = Session.get("object_name")
+Creator.getFields = (object_name, spaceId, userId)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !spaceId
+			spaceId = Session.get("spaceId")
+		if !userId
+			userId = Meteor.userId()
 
 	firstLevelKeys = Creator.getSchema(object_name)._firstLevelSchemaKeys
-	permission_fields =  Creator.getPermissions(object_name).fields
+	permission_fields =  Creator.getPermissions(object_name, spaceId, userId).fields
 
 	return permission_fields
 

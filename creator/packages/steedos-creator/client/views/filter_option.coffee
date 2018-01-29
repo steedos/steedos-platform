@@ -3,6 +3,7 @@ Template.filter_option.helpers
 		object_name = Template.instance().data?.object_name
 		unless object_name
 			object_name = Session.get("object_name")
+		template = Template.instance()
 		schema= 
 			field:
 				type: String
@@ -43,10 +44,11 @@ Template.filter_option.helpers
 				label: "value"
 				autoform:
 					type:()->
-						return Session.get("schema_type")
+						return template.schema_type.get()
 					options: ()->
-						field = Session.get("schema_field")
-						if field and Session.get("schema_type") == "select"
+						field = template.schema_field.get()
+						schema_type = template.schema_type.get()
+						if field and schema_type == "select"
 							schema = Creator.getSchema(object_name)._schema
 							obj = _.pick(schema, field)
 							options = obj[field].autoform?.options
@@ -61,14 +63,13 @@ Template.filter_option.helpers
 		filter_item = Template.instance().data?.filter_item
 		schema_type = ""
 		if filter_item and filter_item.field
-			Session.set "schema_field", filter_item.field
+			Template.instance().schema_field.set(filter_item.field)
 			_schema = Creator.getSchema(object_name)._schema
 			_.each _schema, (obj, key)->
 				if key == filter_item.field
 					schema_type = obj.autoform.type || "text"
 		
-		Session.set "schema_type", schema_type
-		
+		Template.instance().schema_type.set(schema_type)
 		return filter_item
 
 	object_label: ()->
@@ -109,5 +110,9 @@ Template.filter_option.events
 		_.each _schema, (obj, key)->
 			if key == field
 				type = obj.autoform.type || "text"
-		Session.set "schema_field", field
-		Session.set "schema_type", type
+		template.schema_field.set(field)
+		template.schema_type.set(type)
+
+Template.filter_option.onCreated ->
+	this.schema_field = new ReactiveVar()
+	this.schema_type = new ReactiveVar()
