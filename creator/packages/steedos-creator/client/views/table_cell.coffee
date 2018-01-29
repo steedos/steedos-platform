@@ -85,7 +85,3 @@ Template.creator_table_cell.helpers
 			return false
 
 		return true
-
-Template.creator_table_cell.events
-	'click .table-cell-edit': (event, template) ->
-		alert(456);
