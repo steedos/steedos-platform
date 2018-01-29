@@ -1,0 +1,44 @@
+<template name="filter_option_list">
+    <ul class="editableFilters">
+        <li class="filterCardContainer editable reportsFilterCard" data-filtercmp="filterSingleSelectPicklistWidget" title="All accounts"
+           >
+            <div>
+                <a class="filterCardEditor btn-filter-scope" href="javascript:void(0);">
+                    <div class="filterCard">
+                        <div class="header">
+                            <span class="field">Show Me&nbsp;</span>
+                        </div>
+                        <div class="filterCardBody">
+                            <span class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </li>
+    </ul>
+    <ul class="editableFilters">
+        {{#each filterItems}}
+        <li class="filterCardContainer editable reportsFilterCard filter-item">
+            <a class="filterCardEditor filter-option-item" href="javascript:void(0);">
+                <div class="filterCard">
+                    <div class="header">
+                        <span class="field">
+                            {{#if this.field}} {{this.field}} {{else}} {{_ "creator_list_new_filter"}} {{/if}}
+                        </span>
+                    </div>
+                    <div class="filterCardBody">{{this.operation}}&nbsp;
+                        <span class="uiOutputText">{{this.value}}</span>
+                    </div>
+                </div>
+            </a>
+            <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small removeFilter">
+                {{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="close"}}
+            </button>
+        </li>
+        {{/each}}
+    </ul>
+    <div class="slds-filters__footer slds-grid slds-shrink-none">
+        <button class="slds-button_reset slds-text-link add-filter" href="javascript:void(0);">{{_ "creator_list_add_filter"}}</button>
+        <button class="slds-button_reset slds-text-link slds-col_bump-left remove-all-filters" href="javascript:void(0);">{{_ "creator_list_remove_all_filters"}}</button>
+    </div>
+</template>

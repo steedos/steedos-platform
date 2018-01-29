@@ -40,45 +40,8 @@ Template.creator_report.helpers
 				return false
 		return actions
 
-	showFilterOption: ()->
-		return Session.get("show_filter_option")
-
-	filterLeft: ()->
-		return Template.instance().filter_PLeft?.get()
-
-	filterTop: ()->
-		return Template.instance().filter_PTop?.get()
-
-	filterIndex: ()->
-		return Template.instance().filter_index?.get()
-	
-	filterItems: ()->
-		return Session.get("filter_items")
-
-	filterItem: ()->
-		index = Template.instance().filter_index?.get()
-		filter_items = Session.get("filter_items")
-		if index > -1 and filter_items
-			return filter_items[index]
-
-	filterScope: ()->
-		scope = Session.get("filter_scope")
-		if scope == "space"
-			return "All"
-		else if scope == "mine"
-			return "My"
-
-	isEditScope: ()->
-		return Template.instance().is_edit_scope?.get()
-
 	isFilterDirty: ()->
 		return Template.instance().filter_dirty_count?.get() > 1
-	
-	relatedObject: ()->
-		record_id = Session.get "record_id"
-		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		objectName = reportObject.object_name
-		return Creator.getObject(objectName)
 	
 	isFilterOpen: ()->
 		return Template.instance().is_filter_open?.get()
@@ -96,65 +59,6 @@ Template.creator_report.events
 		Session.set("action_collection_name", collection_name)
 		Session.set("action_save_and_insert", true)
 		Creator.executeAction objectName, this, id
-
-	'click .btn-filter-scope': (event, template)->
-		template.is_edit_scope.set(true)
-
-		left = $(event.currentTarget).closest(".filter-list-container").offset().left
-		# top = $(event.currentTarget).closest(".slds-item").offset().top
-		top = $(event.currentTarget).closest(".reportsFilterCard").offset().top
-
-		# offsetLeft = $(event.currentTarget).closest(".slds-template__container").offset().left
-		# offsetTop = $(event.currentTarget).closest(".slds-template__container").offset().top
-		# contentHeight = $(event.currentTarget).closest(".slds-item").height()
-		offsetLeft = $(event.currentTarget).closest(".pageBody").offset().left
-		offsetTop = $(event.currentTarget).closest(".pageBody").offset().top
-		contentHeight = $(event.currentTarget).closest(".reportsFilterCard").height()
-
-		# 弹出框的高度和宽度写死
-		left = left - offsetLeft - 400 - 6
-		top = top - offsetTop - 170/2 + contentHeight/2
-
-		Session.set("show_filter_option", false)
-		Tracker.afterFlush ->
-			Session.set("show_filter_option", true)
-			template.filter_PLeft.set("#{left}px")
-			template.filter_PTop.set("#{top}px")
-	
-	'click .filter-option-item': (event, template)->
-		template.is_edit_scope.set(false)
-
-		index = $(event.currentTarget).closest(".filter-item").index()
-		if index < 0
-			index = 0
-
-		left = $(event.currentTarget).closest(".filter-list-container").offset().left
-		top = $(event.currentTarget).closest(".reportsFilterCard").offset().top
-		contentHeight = $(event.currentTarget).closest(".reportsFilterCard").height()
-
-		offsetLeft = $(event.currentTarget).closest(".pageBody").offset().left
-		offsetTop = $(event.currentTarget).closest(".pageBody").offset().top
-
-		# 弹出框的高度和宽度写死
-		left = left - offsetLeft - 400 - 6
-		top = top - offsetTop - 336/2 + contentHeight/2
-
-		# 计算弹出框是否超出屏幕底部，导致出现滚动条，如果超出，调整top位置
-		# 计算方式：屏幕高度 - 弹出框的绝对定位 - 弹出框的高度 - 弹出框父容器position:relative的offsetTop - 弹出框距离屏幕底部10px
-		# 如果计算得出值小于0，则调整top，相应上调超出的高度
-		windowHeight = $(window).height()
-		windowOffset = $(window).height() - top - 336 - offsetTop - 10
-
-		if windowOffset < 0
-			top = top + windowOffset
-
-		Session.set("show_filter_option", false)
-
-		Tracker.afterFlush ->
-			Session.set("show_filter_option", true)
-			template.filter_index.set(index)
-			template.filter_PLeft.set("#{left}px")
-			template.filter_PTop.set("#{top}px")
 	
 	'click .btn-filter-cancel': (event, template)->
 		filter_items = template.filter_items_for_cancel.get()
@@ -173,31 +77,12 @@ Template.creator_report.events
 			template.filter_dirty_count.set(1)
 			renderReport()
 
-	'click .removeFilter': (event, template)->
-		index = $(event.currentTarget).closest(".filter-item").index()
-		if index < 0
-			index = 0
-		filter_items = Session.get("filter_items")
-		filter_items.splice(index, 1)
-		Session.set("filter_items", filter_items)
-
 	'click .btn-toggle-filter': (event, template)->
 		isFilterOpen = template.is_filter_open.get()
 		template.is_filter_open.set(!isFilterOpen)
 
 	'click .btn-settings': (event, template)->
 		Modal.show("report_settings")
-
-	'click .add-filter': (event, template)->
-		filter_items = Session.get("filter_items")
-		filter_items.push({})
-		Session.set("filter_items", filter_items)
-		Meteor.defer ->
-			template.$(".filter-option-item:last").click()
-
-	'click .remove-all-filters': (event, template)->
-		Session.set("filter_items", [])
-
 
 
 renderTabularReport = (reportObject, spaceId)->
@@ -491,12 +376,6 @@ Template.creator_report.onRendered ->
 				Template.instance().filter_dirty_count.set(filter_dirty_count+1)
 
 Template.creator_report.onCreated ->
-	Session.set("show_filter_option", true)
-
-	this.filter_PTop = new ReactiveVar("-1000px")
-	this.filter_PLeft = new ReactiveVar("-1000px")
-	this.filter_index = new ReactiveVar()
-	this.is_edit_scope = new ReactiveVar()
 	this.filter_dirty_count = new ReactiveVar(0)
 	this.filter_items_for_cancel = new ReactiveVar()
 	this.filter_scope_for_cancel = new ReactiveVar()

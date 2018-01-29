@@ -7,14 +7,14 @@ Package.describe({
 });
 
 Npm.depends({
-    'icalendar': '0.7.1',
-    'ical.js': '1.2.2',
-    'MD5': '1.3.0',
-    'moment-timezone': '0.5.13',
-    busboy: "0.2.13",
-    mkdirp: "0.3.5",
-    "xml2js": "0.4.19",
-    mongoose: '5.0.1'
+	'icalendar': '0.7.1',
+	'ical.js': '1.2.2',
+	'MD5': '1.3.0',
+	'moment-timezone': '0.5.13',
+	busboy: "0.2.13",
+	mkdirp: "0.3.5",
+	"xml2js": "0.4.19",
+	'odata-v4-mongodb': '0.1.12'
 });
 
 Package.onUse(function(api) {
@@ -90,7 +90,6 @@ Package.onUse(function(api) {
 	api.use('steedos:datatables-extensions@0.0.1');
 
 	api.use('steedos:api@0.0.1');
-	api.use('steedos:odata@0.0.1');
 
 	api.use('steedos:logger@0.0.2');
 
@@ -207,6 +206,8 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/table_checkbox.coffee', 'client');
 	api.addFiles('client/views/table_checkbox.less', 'client');
 
+	api.addFiles('client/views/filter_option_list.html', 'client');
+	api.addFiles('client/views/filter_option_list.coffee', 'client');
 	api.addFiles('client/views/filter_option.html', 'client');
 	api.addFiles('client/views/filter_option.coffee', 'client');
 	api.addFiles('client/views/filter_option.less', 'client');

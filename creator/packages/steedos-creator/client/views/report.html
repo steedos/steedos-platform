@@ -1,7 +1,7 @@
 <template name="creator_report">
 	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet">
 		<div class="slds-template__container">
-			<div class="reportsReportPage slds-grid slds-grid--vertical">
+			<div class="reportsReportPage slds-grid slds-grid--vertical filter-list-wraper">
 				<div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
 					<div class="slds-grid">
 						<div class="slds-col slds-has-flexi-truncate">
@@ -121,52 +121,7 @@
 										</div>
 									</div>
 									<div class="vert-scroller">
-										<ul class="editableFilters">
-											<li class="filterCardContainer editable reportsFilterCard" data-filtercmp="filterSingleSelectPicklistWidget" title="All accounts"
-											 data-aura-class="reportsFilterCard">
-												<div>
-													<a class="filterCardEditor btn-filter-scope" href="javascript:void(0);">
-														<div class="filterCard">
-															<div class="header">
-																<span class="field">Show Me&nbsp;</span>
-															</div>
-															<div class="filterCardBody">
-																<span class="uiOutputText" data-aura-class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
-															</div>
-														</div>
-													</a>
-												</div>
-											</li>
-										</ul>
-										<ul class="editableFilters">
-											{{#each filterItems}}
-												<li class="filterCardContainer editable reportsFilterCard filter-item">
-													<a class="filterCardEditor filter-option-item" href="javascript:void(0);">
-														<div class="filterCard">
-															<div class="header">
-																<span class="field">
-																	{{#if this.field}}
-																		{{this.field}}
-																	{{else}}
-																		{{_ "creator_list_new_filter"}}
-																	{{/if}}
-																</span>
-															</div>
-															<div class="filterCardBody">{{this.operation}}&nbsp;
-																<span class="uiOutputText" data-aura-class="uiOutputText">{{this.value}}</span>
-															</div>
-														</div>
-													</a>
-													<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small removeFilter">
-														{{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="close"}}
-													</button>
-												</li>
-											{{/each}}
-										</ul>
-										<div class="slds-filters__footer slds-grid slds-shrink-none">
-											<button class="slds-button_reset slds-text-link add-filter" href="javascript:void(0);">{{_ "creator_list_add_filter"}}</button>
-											<button class="slds-button_reset slds-text-link slds-col_bump-left remove-all-filters" href="javascript:void(0);">{{_ "creator_list_remove_all_filters"}}</button>
-										</div>
+										{{> filter_option_list object_name=reportObject.object_name}}
 									</div>
 								</div>
 							</div>
@@ -174,10 +129,8 @@
 					</div>
 				</div>
 			</div>
-				
-			{{#if showFilterOption}}
-				{{> filter_option top=filterTop left=filterLeft index=filterIndex filter_item=filterItem is_edit_scope=isEditScope object_name=reportObject.object_name}}
-			{{/if}}
+			<div class="filter-option-box">
+			</div>
 		</div>
 	</div>
 </template>

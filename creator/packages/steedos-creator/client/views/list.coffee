@@ -1,10 +1,4 @@
 Template.creator_list.onCreated ->
-	Session.set("show_filter_option", true)
-
-	this.filter_PTop = new ReactiveVar("-1000px")
-	this.filter_PLeft = new ReactiveVar("-1000px")
-	this.filter_index = new ReactiveVar()
-	this.is_edit_scope = new ReactiveVar()
 
 Template.creator_list.onRendered ->
 
@@ -153,37 +147,6 @@ Template.creator_list.helpers
 				else
 					return false
 			return actions
-
-	left: ()->
-		return Template.instance().filter_PLeft?.get()
-
-	top: ()->
-		return Template.instance().filter_PTop?.get()
-
-	index: ()->
-		return Template.instance().filter_index?.get()
-	
-	filter_items: ()->
-		return Session.get("filter_items")
-
-	filter_item: ()->
-		index = Template.instance().filter_index?.get()
-		filter_items = Session.get("filter_items")
-		if index > -1 and filter_items
-			return filter_items[index]
-
-	list_view_scope: ()->
-		scope = Session.get("filter_scope")
-		if scope == "space"
-			return "All"
-		else if scope == "mine"
-			return "My"
-
-	is_edit_scope: ()->
-		return Template.instance().is_edit_scope?.get()
-
-	show_filter_option: ()->
-		return Session.get("show_filter_option")
 
 	is_custom_list_view: ()->
 		if Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
@@ -362,79 +325,9 @@ Template.creator_list.events
 	'click .close-filter-panel': (event, template)->
 		$(".btn-filter-list").removeClass("slds-is-selected")
 		$(".filter-list-container").addClass("slds-hide")
-
-	'click .filter-scope': (event, template)->
-		template.is_edit_scope.set(true)
-
-		left = $(event.currentTarget).closest(".filter-list-container").offset().left
-		top = $(event.currentTarget).closest(".slds-item").offset().top
-
-		offsetLeft = $(event.currentTarget).closest(".slds-template__container").offset().left
-		offsetTop = $(event.currentTarget).closest(".slds-template__container").offset().top
-		contentHeight = $(event.currentTarget).closest(".slds-item").height()
-
-		# 弹出框的高度和宽度写死
-		left = left - offsetLeft - 400 - 6
-		top = top - offsetTop - 170/2 + contentHeight/2
-
-		Session.set("show_filter_option", false)
-		Tracker.afterFlush ->
-			Session.set("show_filter_option", true)
-			template.filter_PLeft.set("#{left}px")
-			template.filter_PTop.set("#{top}px")
-
-	'click .filter-option-item': (event, template)->
-		template.is_edit_scope.set(false)
-
-		index = $(event.currentTarget).closest(".filter-item").index()
-
-		left = $(event.currentTarget).closest(".filter-list-container").offset().left
-		top = $(event.currentTarget).closest(".slds-item").offset().top
-		contentHeight = $(event.currentTarget).closest(".slds-item").height()
-
-		offsetLeft = $(event.currentTarget).closest(".slds-template__container").offset().left
-		offsetTop = $(event.currentTarget).closest(".slds-template__container").offset().top
-
-		# 弹出框的高度和宽度写死
-		left = left - offsetLeft - 400 - 6
-		top = top - offsetTop - 336/2 + contentHeight/2
-
-		# 计算弹出框是否超出屏幕底部，导致出现滚动条，如果超出，调整top位置
-		# 计算方式：屏幕高度 - 弹出框的绝对定位 - 弹出框的高度 - 弹出框父容器position:relative的offsetTop - 弹出框距离屏幕底部10px
-		# 如果计算得出值小于0，则调整top，相应上调超出的高度
-		windowHeight = $(window).height()
-		windowOffset = $(window).height() - top - 336 - offsetTop - 10
-
-		if windowOffset < 0
-			top = top + windowOffset
-
-		Session.set("show_filter_option", false)
-
-		Tracker.afterFlush ->
-			Session.set("show_filter_option", true)
-			template.filter_index.set(index)
-			template.filter_PLeft.set("#{left}px")
-			template.filter_PTop.set("#{top}px")
 	
 	'click .add-list-view': (event, template)->
 		$(".btn-add-list-view").click()
-
-	'click .add-filter': (event, template)->
-		filter_items = Session.get("filter_items")
-		filter_items.push({})
-		Session.set("filter_items", filter_items)
-		setTimeout ->
-			template.$(".filter-option-item:last").click()
-		, 1
-
-	'click .remove-all-filters': (event, template)->
-		Session.set("filter_items", [])
-
-	'click .remove-filter': (event, template)->
-		index = $(event.currentTarget).closest(".filter-item").index()
-		filter_items = Session.get("filter_items")
-		filter_items.splice(index, 1)
-		Session.set("filter_items", filter_items)
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")

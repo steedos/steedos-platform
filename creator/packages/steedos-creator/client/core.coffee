@@ -58,12 +58,6 @@ Meteor.startup ->
 		else
 			$(".slds-table").removeClass("slds-no-cell-focus")
 
-	# 使用这种绑定方式，可以避免wrapper元素没有生成导致click事件没有绑定上
-	$(document).on "click", ".wrapper", (e)->
-		if $(".filter_option_uiPanel").length and Session.get("show_filter_option")
-			if $(e.target).closest(".filter_option_uiPanel").length < 1
-				$(".filter_option_uiPanel").css({"top": "-1000px", left: "-1000px"})
-
 
 	$(window).resize ->
 		if $(".list-table-container table.dataTable").length

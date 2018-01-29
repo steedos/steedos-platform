@@ -102,7 +102,6 @@ steedos:lightning-design-system
 # steedos:qhd-records
 
 steedos:api
-steedos:odata
 yogiben:autoform-tags
 
 steedos:logger@0.0.2

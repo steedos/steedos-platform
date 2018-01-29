@@ -142,6 +142,21 @@
       "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
       "from": "ms@2.0.0"
     },
+    "odata-v4-literal": {
+      "version": "0.1.1",
+      "resolved": "https://registry.npmjs.org/odata-v4-literal/-/odata-v4-literal-0.1.1.tgz",
+      "from": "odata-v4-literal@>=0.1.0 <0.2.0"
+    },
+    "odata-v4-mongodb": {
+      "version": "0.1.12",
+      "resolved": "https://registry.npmjs.org/odata-v4-mongodb/-/odata-v4-mongodb-0.1.12.tgz",
+      "from": "odata-v4-mongodb@0.1.12"
+    },
+    "odata-v4-parser": {
+      "version": "0.1.25",
+      "resolved": "https://registry.npmjs.org/odata-v4-parser/-/odata-v4-parser-0.1.25.tgz",
+      "from": "odata-v4-parser@>=0.1.18 <0.2.0"
+    },
     "readable-stream": {
       "version": "1.1.14",
       "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.14.tgz",
