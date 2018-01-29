@@ -87,6 +87,7 @@ mongo@1.2.3
 mongo-dev-server@1.0.1
 mongo-id@1.0.6
 mongo-livedata@1.0.12
+mpowaga:autoform-summernote@0.4.3
 mpowaga:jquery-fileupload@9.11.2
 mpowaga:jquery-ui-widget@1.11.4
 mpowaga:string-template@0.1.0
@@ -97,8 +98,10 @@ npm-mongo@2.2.30
 observe-sequence@1.0.16
 ordered-dict@1.0.9
 peppelg:bootstrap-3-modal@1.0.4
+perak:markdown@1.0.5
 percolate:migrations@0.9.8
 promise@0.9.0
+q42:autoform-markdown@1.0.0
 raix:eventemitter@0.1.3
 raix:eventstate@0.0.4
 raix:handlebar-helpers@0.2.5
@@ -154,6 +157,7 @@ steedos:cfs-tempstore@0.1.6
 steedos:cfs-ui@0.1.4
 steedos:cfs-upload-http@0.0.22
 steedos:cfs-worker@0.1.5
+steedos:cms@0.0.7
 steedos:creator@0.0.3
 steedos:datatables-extensions@0.0.1
 steedos:e164-phones-countries@1.0.3
@@ -173,6 +177,8 @@ steedos:ui@0.0.1
 steedos:useraccounts-bootstrap@1.14.2_5
 steedos:useraccounts-core@1.14.2_4
 steedos:useraccounts-flow-routing@1.14.2_4
+summernote:standalone@0.7.3
+summernote:summernote@0.8.1
 tap:i18n@1.8.2
 templating@1.3.2
 templating-compiler@1.3.2
@@ -185,6 +191,7 @@ ui@1.0.13
 underscore@1.0.10
 underscorestring:underscore.string@3.3.4
 url@1.1.0
+vazco:universe-selectize@0.1.23
 webapp@1.3.19
 webapp-hashing@1.0.9
 yogiben:autoform-tags@0.2.0
