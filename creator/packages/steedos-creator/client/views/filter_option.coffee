@@ -40,14 +40,15 @@ Template.filter_option.helpers
 							{label: "starts with", value: "STARTS_WITH"},
 						]
 			value:
-				type: String
+				type: ->
+					return template.schema_obj.get()?.type || String
 				label: "value"
 				autoform:
 					type:()->
-						return template.schema_type.get()
+						return template.schema_obj.get()?.autoform.type || "text"
 					options: ()->
-						field = template.schema_field.get()
-						schema_type = template.schema_type.get()
+						field = template.schema_key.get()
+						schema_type = template.schema_obj.get()?.autoform.type || "text"
 						if field and schema_type == "select"
 							schema = Creator.getSchema(object_name)._schema
 							obj = _.pick(schema, field)
@@ -61,15 +62,10 @@ Template.filter_option.helpers
 		unless object_name
 			object_name = Session.get("object_name")
 		filter_item = Template.instance().data?.filter_item
-		schema_type = ""
 		if filter_item and filter_item.field
-			Template.instance().schema_field.set(filter_item.field)
+			Template.instance().schema_key.set(filter_item.field)
 			_schema = Creator.getSchema(object_name)._schema
-			_.each _schema, (obj, key)->
-				if key == filter_item.field
-					schema_type = obj.autoform.type || "text"
-		
-		Template.instance().schema_type.set(schema_type)
+		Template.instance().schema_obj.set(_schema?[filter_item.field])
 		return filter_item
 
 	object_label: ()->
@@ -90,7 +86,6 @@ Template.filter_option.events
 		filter_items[index] = filter
 
 		Session.set("filter_items", filter_items)
-		# template.$(".uiPanel--default").remove()
 		Meteor.defer ->
 			Blaze.remove(template.view)
 
@@ -106,13 +101,9 @@ Template.filter_option.events
 			object_name = Session.get("object_name")
 		field = $(event.currentTarget).val()
 		_schema = Creator.getSchema(object_name)._schema
-		type = ""
-		_.each _schema, (obj, key)->
-			if key == field
-				type = obj.autoform.type || "text"
-		template.schema_field.set(field)
-		template.schema_type.set(type)
+		template.schema_key.set(field)
+		template.schema_obj.set(_schema[field])
 
 Template.filter_option.onCreated ->
-	this.schema_field = new ReactiveVar()
-	this.schema_type = new ReactiveVar()
+	this.schema_key = new ReactiveVar()
+	this.schema_obj = new ReactiveVar()

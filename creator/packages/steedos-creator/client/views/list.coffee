@@ -347,6 +347,7 @@ Template.creator_list.events
 				return obj
 		filter_items = _.compact(filter_items)
 		Session.set "list_view_visible", false
+		console.log 'click .save-change,filter_items:', filter_items
 		Meteor.call "update_filters", list_view_id, filter_items, filter_scope, (error, result) ->
 			Session.set "list_view_visible", true
 			if error 

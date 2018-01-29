@@ -24,7 +24,8 @@ Creator.Objects.object_listviews =
 		"filters.$.operation":
         	type: String
 		"filters.$.value":
-        	type: String
+        	# type: String
+			blackbox: true
 		filter_logic:
 			type: String
 			omit: true

@@ -55,7 +55,8 @@ Creator.Objects.reports =
 			]
 		"filters.$.value": 
 			label: "字段值"
-			type: "text"
+			# type: "text"
+			blackbox: true
 		columns:
 			label: "列"
 			type: "[text]"
