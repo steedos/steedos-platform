@@ -11,6 +11,8 @@ if Meteor.isServer
 		return permissions
 
 	unionPlus = (array,other)->
+		if !array and !other
+			return undefined
 		if !array
 			array = []
 		if !other
@@ -53,7 +55,7 @@ if Meteor.isServer
 				permissions.list_views = unionPlus(permissions.list_views, po.list_views)
 				permissions.actions = unionPlus(permissions.actions, po.actions)
 				permissions.fields = unionPlus(permissions.fields,po.fields)
-				permissions.related_objects = unionPlus(permissions.fields, po.related_objects)
+				permissions.related_objects = unionPlus(permissions.related_objects, po.related_objects)
 				if po.readonly_fields?.length
 					if permissions.readonly_fields
 						permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
@@ -140,9 +142,6 @@ if Meteor.isClient
 								f.readonly = true
 								fs.autoform.readonly = true
 								fs.autoform.disabled = true
-
-						if object_name == "archive_records"
-							console.log permissions
 
 					_.each result.assigned_apps, (app_name)->
 						Creator.Apps[app_name]?.visible = true

@@ -109,6 +109,14 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 
 Creator.getTabularOrder = (object_name, list_view_id, columns) ->
 	setting = Creator.Collections?.settings?.findOne({object_name: object_name, record_id: "object_listviews"})
+	obj = Creator.getObject(object_name)
+	columns = _.map columns, (column)->
+		field = obj.fields[column]
+		if field?.type and !field.hidden
+			return column
+		else
+			return undefined
+	columns = _.compact columns
 	if setting and setting.settings
 		sort = setting.settings[list_view_id]?.sort || []
 		sort = _.map sort, (order)->
