@@ -15,6 +15,8 @@ Template.creator_table_cell.helpers
 
 		this_name_field_key = this_object.NAME_FIELD_KEY
 
+		_field = this.field
+
 		reference_to = this.field?.reference_to
 
 		if _.isFunction(reference_to)
@@ -50,21 +52,32 @@ Template.creator_table_cell.helpers
 				return
 		else
 			if (val instanceof Date)
-				if this.field.type == "datetime"
+				if _field.type == "datetime"
 					val = moment(this.val).format('YYYY-MM-DD H:mm')
-				else if this.field.type == "date"
+				else if _field.type == "date"
 					val = moment(this.val).format('YYYY-MM-DD')
 			else if (this.val == null)
 				val = ""
-			else if this.field.type == "boolean"
+			else if _field.type == "boolean"
 				if this.val
 					val = "是"
 				else
 					val = "否"
-			else if this.field.type == "select"
-				val = _.findWhere(this.field.options, {value: this.val})?.label
+			else if _field.type == "select"
+				val = _.findWhere(_field.options, {value: this.val})?.label
 				unless val
 					val = this.val
+			else if _field.type == "lookup"
+				if _.isFunction(_field.optionsFunction)
+					_values = Creator.getObjectRecord()
+					_val = val
+					if _val && !_.isArray(_val)
+						_val = [_val]
+
+					selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
+						return _val.indexOf(_o.value) > -1
+					if selectedOptions
+						val = selectedOptions.getProperty("label")
 
 			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)

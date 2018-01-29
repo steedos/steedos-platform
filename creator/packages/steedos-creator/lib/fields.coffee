@@ -58,57 +58,62 @@ Creator.getObjectSchema = (obj) ->
 
 			fs.filtersMethod = Creator.evaluateFilters
 
-			if field.reference_to == "users"
-				fs.autoform.type = "selectuser"
-			else if field.reference_to == "organizations"
-				fs.autoform.type = "selectorg"
+			if field.reference_to
+
+				if field.reference_to == "users"
+					fs.autoform.type = "selectuser"
+				else if field.reference_to == "organizations"
+					fs.autoform.type = "selectorg"
+				else
+					fs.autoform.type = "steedosLookups"
+					fs.autoform.optionsMethod = "creator.object_options"
+
+					if typeof(field.reference_to) == "function"
+						_reference_to = field.reference_to()
+					else
+						_reference_to = field.reference_to
+
+					if _.isArray(_reference_to)
+						fs.type = Object
+						fs.blackbox = true
+						fs.autoform.objectSwitche = true
+
+						schema[field_name + ".o"] = {
+							type: String
+							autoform: {omit: true}
+						}
+
+						schema[field_name + ".ids"] = {
+							type: [String]
+							autoform: {omit: true}
+						}
+
+					else
+						_reference_to = [_reference_to]
+
+					if Meteor.isClient
+
+						fs.autoform.optionsMethodParams = ()->
+							return {space: Session.get("spaceId")}
+
+						fs.autoform.references = []
+
+						_reference_to.forEach (_reference)->
+							_object = Creator.Objects[_reference]
+
+							if _object
+								fs.autoform.references.push {
+									object: _reference
+									label: _object?.label
+									icon: _object?.icon
+									link: ()->
+										return "/app/#{Session.get('app_id')}/#{_reference}/view/"
+								}
+							else
+								throw new Meteor.Error("Creator.getObjectSchema", "#{obj.name}.#{field_name} reference_to #{_reference} Can not find.")
 			else
 				fs.autoform.type = "steedosLookups"
-				fs.autoform.optionsMethod = "creator.object_options"
-
-				if typeof(field.reference_to) == "function"
-					_reference_to = field.reference_to()
-				else
-					_reference_to = field.reference_to
-
-				if _.isArray(_reference_to)
-					fs.type = Object
-					fs.blackbox = true
-					fs.autoform.objectSwitche = true
-
-					schema[field_name + ".o"] = {
-						type: String
-						autoform: {omit: true}
-					}
-
-					schema[field_name + ".ids"] = {
-						type: [String]
-						autoform: {omit: true}
-					}
-
-				else
-					_reference_to = [_reference_to]
-
-				if Meteor.isClient
-
-					fs.autoform.optionsMethodParams = ()->
-						return {space: Session.get("spaceId")}
-
-					fs.autoform.references = []
-
-					_reference_to.forEach (_reference)->
-						_object = Creator.Objects[_reference]
-
-						if _object
-							fs.autoform.references.push {
-								object: _reference
-								label: _object?.label
-								icon: _object?.icon
-								link: ()->
-									return "/app/#{Session.get('app_id')}/#{_reference}/view/"
-							}
-						else
-							throw new Meteor.Error("Creator.getObjectSchema", "#{obj.name}.#{field_name} reference_to #{_reference} Can not find.")
+				fs.optionsFunction = field.optionsFunction
 
 		else if field.type == "select"
 			fs.type = String

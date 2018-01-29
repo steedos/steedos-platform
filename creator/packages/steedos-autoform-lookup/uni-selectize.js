@@ -2,7 +2,7 @@
 /* eslint strict: 0 */
 /* jshint strict: false */
 
-UniSelectize = function (options, template, filtersMethod) {
+UniSelectize = function (options, template, filtersMethod, optionsFunction) {
 	this.items           = new ReactiveVar([]);
 	this.itemsSelected   = new ReactiveVar([]);
 	this.itemsUnselected = new ReactiveVar([]);
@@ -16,7 +16,8 @@ UniSelectize = function (options, template, filtersMethod) {
 	this.selectedReference   = new ReactiveVar();
 	this.dependValues	     = new ReactiveVar();
 
-	this.references         = options.references
+	this.optionsFunction    = optionsFunction;
+	this.references         = options.references;
 	this.create             = options.create;
 	this.createText         = options.createText;
 	this.template           = template;
@@ -35,6 +36,10 @@ UniSelectize = function (options, template, filtersMethod) {
 
 	if(!options.optionsMethod){
 		this.initialized.set(1);
+	}
+
+	if(options.items && _.isArray(options.items)){
+		this.items.set(options.items)
 	}
 
 	this.setSelectedReference(options._value)
