@@ -106,3 +106,19 @@ Creator.Objects.reports =
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: true 
+	actions: 
+		save:
+			label: "保存"
+			visible: true
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				filters = Session.get("filter_items")
+				filter_scope = Session.get("filter_scope")
+				report_settings = Session.get("report_settings")
+				Creator.getCollection(object_name).update({_id: record_id},{$set:{
+					filters: filters
+					filter_scope: filter_scope
+					grouping: report_settings.grouping
+					totaling: report_settings.totaling
+					counting: report_settings.counting
+				}})
