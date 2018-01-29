@@ -39,7 +39,7 @@ Package.onUse(function(api) {
 	api.use('webapp', 'server');
 	api.use('accounts-password@1.1.4');
 
-	api.use('steedos:cfs-standard-packages');
+	api.use('steedos:cfs-standard-packages@0.5.10');
 	api.use('raix:push');
 	api.use('simple:json-routes@2.1.0');
 	api.use('aldeed:tabular@1.6.1');
