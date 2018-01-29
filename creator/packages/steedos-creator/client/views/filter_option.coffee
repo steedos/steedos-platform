@@ -54,6 +54,15 @@ Template.filter_option.helpers
 							obj = _.pick(schema, field)
 							options = obj[field].autoform?.options
 							return options
+					dateTimePickerOptions:()->
+						if template.schema_obj.get()?.autoform.type == "bootstrap-datetimepicker"
+							return {
+								locale: Session.get("TAPi18n::loaded_lang")
+								format:"YYYY-MM-DD HH:mm"
+								sideBySide:true
+							}
+						else
+							return null
 
 		new SimpleSchema(schema)
 
