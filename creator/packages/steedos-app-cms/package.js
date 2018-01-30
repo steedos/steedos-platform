@@ -10,8 +10,8 @@ Package.onUse(function(api) {
 
 	api.use('steedos:creator@0.0.3');
 	api.use('coffeescript@1.11.1_4');
-	api.addFiles('cms.app.coffee','client');
-	api.addFiles('models/cms_categories.object.coffee','client');
-	api.addFiles('models/cms_posts.object.coffee','client');
-	api.addFiles('models/cms_sites.object.coffee','client');
+	api.addFiles('cms.app.coffee');
+	api.addFiles('models/cms_categories.object.coffee');
+	api.addFiles('models/cms_posts.object.coffee');
+	api.addFiles('models/cms_sites.object.coffee');
 })
