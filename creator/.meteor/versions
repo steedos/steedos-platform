@@ -135,7 +135,7 @@ steedos:app-admin@0.0.1
 steedos:app-archive@0.0.1
 steedos:app-cms@0.0.1
 steedos:app-crm@0.0.1
-steedos:app-informations@0.0.1
+steedos:app-informations@0.0.2
 steedos:app-workflow@0.0.1
 steedos:autoform@0.0.9
 steedos:autoform-bs-minicolors@1.0.0
