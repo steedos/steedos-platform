@@ -16,7 +16,7 @@ Creator.Objects.cms_files =
 			disabled: true
 		size:
 			label: "文件大小"
-			type: "number"
+			type: "filesize"
 			disabled: true
 		versions:
 			type: "file"

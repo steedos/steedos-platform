@@ -100,243 +100,213 @@ Template.creator_report.events
 	'click .btn-settings': (event, template)->
 		Modal.show("report_settings", {report_settings: template.report_settings})
 
+	'click .btn-refresh': (event, template)->
+		renderReport.bind(template)()
 
-renderTabularReport = (reportObject, spaceId)->
+
+renderTabularReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
-	filterFields = reportObject.columns
-	filter_scope = reportObject.filter_scope || "space"
-	filters = reportObject.filters
-	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
-		if error
-			console.error('report_data method error:', error)
-			return
-		
-		reportColumns = reportObject.columns?.map (item, index)->
-			itemFieldKey = item.replace(/\./g,"_")
-			itemField = objectFields[item.split(".")[0]]
-			return {
-				caption: itemField.label
-				dataField: itemFieldKey
-			}
-		unless reportColumns
-			reportColumns = []
-		reportData = result
-		datagrid = $('#datagrid').dxDataGrid(
-			dataSource: reportData
-			paging: false
-			columns: reportColumns).dxDataGrid('instance')
-		return
+	reportColumns = reportObject.columns?.map (item, index)->
+		itemFieldKey = item.replace(/\./g,"_")
+		itemField = objectFields[item.split(".")[0]]
+		return {
+			caption: itemField.label
+			dataField: itemFieldKey
+		}
+	unless reportColumns
+		reportColumns = []
+	datagrid = $('#datagrid').dxDataGrid(
+		dataSource: reportData
+		paging: false
+		columns: reportColumns).dxDataGrid('instance')
 
-renderSummaryReport = (reportObject, spaceId)->
+renderSummaryReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
-	filterValueFields = reportObject.values
-	filterFields = _.union reportObject.columns, reportObject.rows, filterValueFields
-	filterFields = _.without filterFields, null, undefined
-	filter_scope = reportObject.filter_scope || "space"
-	filters = reportObject.filters
-	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
-		if error
-			console.error('report_data method error:', error)
-			return
-		
-		reportColumns = reportObject.columns?.map (item, index)->
-			itemFieldKey = item.replace(/\./g,"_")
-			itemField = objectFields[item.split(".")[0]]
-			return {
-				caption: itemField.label
-				dataField: itemFieldKey
-			}
-		unless reportColumns
-			reportColumns = []
-		reportData = result
-		_.each reportObject.rows, (group, index)->
-			groupFieldKey = group.replace(/\./g,"_")
-			groupField = objectFields[group.split(".")[0]]
-			reportColumns.push 
-				caption: groupField.label
-				dataField: groupFieldKey
-				groupIndex: index
+	reportColumns = reportObject.columns?.map (item, index)->
+		itemFieldKey = item.replace(/\./g,"_")
+		itemField = objectFields[item.split(".")[0]]
+		return {
+			caption: itemField.label
+			dataField: itemFieldKey
+		}
+	unless reportColumns
+		reportColumns = []
+	_.each reportObject.rows, (group, index)->
+		groupFieldKey = group.replace(/\./g,"_")
+		groupField = objectFields[group.split(".")[0]]
+		reportColumns.push 
+			caption: groupField.label
+			dataField: groupFieldKey
+			groupIndex: index
 
-		reportSummary = {}
-		totalSummaryItems = []
-		groupSummaryItems = []
-		
-		counting = reportObject.counting
-		if reportObject.counting == undefined
-			counting = true
+	reportSummary = {}
+	totalSummaryItems = []
+	groupSummaryItems = []
+	
+	counting = reportObject.counting
+	if reportObject.counting == undefined
+		counting = true
 
-		if counting
-			defaultCounterSum = 
-				column: "_id"
-				summaryType: "count"
-			groupSummaryItems.push defaultCounterSum
-			totalSummaryItems.push defaultCounterSum
-		
-		grouping = reportObject.grouping
-		if reportObject.grouping == undefined
-			grouping = true
-		totaling = reportObject.totaling
-		if reportObject.totaling == undefined
-			totaling = true
+	if counting
+		defaultCounterSum = 
+			column: "_id"
+			summaryType: "count"
+		groupSummaryItems.push defaultCounterSum
+		totalSummaryItems.push defaultCounterSum
+	
+	grouping = reportObject.grouping
+	if reportObject.grouping == undefined
+		grouping = true
+	totaling = reportObject.totaling
+	if reportObject.totaling == undefined
+		totaling = true
 
-		grouping = if grouping then reportObject.rows?.length else false
-		_.each reportObject.values, (value)->
-			# unless value.field
-			# 	return
-			# unless value.operation
-			# 	return
-			valueFieldKey = value.replace(/\./g,"_")
-			valueField = objectFields[value.split(".")[0]]
-			operation = "count"
-			# 数值类型就定为sum统计，否则默认为计数统计
-			if valueField.type == "number"
-				operation = "sum"
-			summaryItem = 
-				column: valueFieldKey
-				summaryType: operation
-				# displayFormat: value.label
-			# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
-			if ["sum"].indexOf(operation) > -1
-				summaryItem.alignByColumn = true
-			if grouping
-				groupSummaryItems.push summaryItem
-			if totaling
-				totalSummaryItems.push summaryItem
-		
-		# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
-		reportSummary.totalItems = totalSummaryItems
-		reportSummary.groupItems = groupSummaryItems
+	grouping = if grouping then reportObject.rows?.length else false
+	_.each reportObject.values, (value)->
+		# unless value.field
+		# 	return
+		# unless value.operation
+		# 	return
+		valueFieldKey = value.replace(/\./g,"_")
+		valueField = objectFields[value.split(".")[0]]
+		operation = "count"
+		# 数值类型就定为sum统计，否则默认为计数统计
+		if valueField.type == "number"
+			operation = "sum"
+		summaryItem = 
+			column: valueFieldKey
+			summaryType: operation
+			# displayFormat: value.label
+		# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
+		if ["sum"].indexOf(operation) > -1
+			summaryItem.alignByColumn = true
+		if grouping
+			groupSummaryItems.push summaryItem
+		if totaling
+			totalSummaryItems.push summaryItem
+	
+	# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
+	reportSummary.totalItems = totalSummaryItems
+	reportSummary.groupItems = groupSummaryItems
 
-		console.log "renderSummaryReport.reportSummary:", reportSummary
-		datagrid = $('#datagrid').dxDataGrid(
-			dataSource: reportData
-			paging: false
-			columns: reportColumns
-			summary: reportSummary).dxDataGrid('instance')
-		return
+	console.log "renderSummaryReport.reportSummary:", reportSummary
+	datagrid = $('#datagrid').dxDataGrid(
+		dataSource: reportData
+		paging: false
+		columns: reportColumns
+		summary: reportSummary).dxDataGrid('instance')
 
-renderMatrixReport = (reportObject, spaceId)->
-	self = this
+renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
-	filterValueFields = reportObject.values
-	filterFields = _.union reportObject.columns, reportObject.rows, filterValueFields
-	filterFields = _.without filterFields, null, undefined
-	filter_scope = reportObject.filter_scope || "space"
-	filters = reportObject.filters
-	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
-		if error
-			console.error('report_data method error:', error)
-			return
-		
-		reportFields = []
-		reportData = result
-		_.each reportObject.rows, (row)->
-			rowFieldKey = row.replace(/\./g,"_")
-			rowField = objectFields[row.split(".")[0]]
-			caption = rowField.label
-			unless caption
-				caption = objectName + "_" + rowFieldKey
-			reportFields.push 
-				caption: caption
-				width: 100
-				dataField: rowFieldKey
-				area: 'row'
-		_.each reportObject.columns, (column)->
-			columnFieldKey = column.replace(/\./g,"_")
-			columnField = objectFields[column.split(".")[0]]
-			caption = columnField.label
-			unless caption
-				caption = objectName + "_" + columnFieldKey
-			reportFields.push 
-				caption: caption
-				width: 100
-				dataField: columnFieldKey
-				area: 'column'
-		
-		counting = reportObject.counting
-		if reportObject.counting == undefined
-			counting = true
+	reportFields = []
+	_.each reportObject.rows, (row)->
+		rowFieldKey = row.replace(/\./g,"_")
+		rowField = objectFields[row.split(".")[0]]
+		caption = rowField.label
+		unless caption
+			caption = objectName + "_" + rowFieldKey
+		reportFields.push 
+			caption: caption
+			width: 100
+			dataField: rowFieldKey
+			area: 'row'
+	_.each reportObject.columns, (column)->
+		columnFieldKey = column.replace(/\./g,"_")
+		columnField = objectFields[column.split(".")[0]]
+		caption = columnField.label
+		unless caption
+			caption = objectName + "_" + columnFieldKey
+		reportFields.push 
+			caption: caption
+			width: 100
+			dataField: columnFieldKey
+			area: 'column'
+	
+	counting = reportObject.counting
+	if reportObject.counting == undefined
+		counting = true
 
-		if counting
-			defaultCounterSum = 
-				caption: "计数"
-				dataField: "_id"
-				summaryType: "count"
-				area: 'data'
-			reportFields.push defaultCounterSum
-		
-		_.each reportObject.values, (value)->
-			# unless value.field
-			# 	return
-			# unless value.operation
-			# 	return
-			valueFieldKey = value.replace(/\./g,"_")
-			valueField = objectFields[value.split(".")[0]]
-			operation = "count"
-			# 数值类型就定为sum统计，否则默认为计数统计
-			if valueField.type == "number"
-				operation = "sum"
-			caption = valueField.label
-			unless caption
-				caption = objectName + "_" + valueFieldKey
-			switch operation
-				when "sum"
-					caption = "总和 #{caption}"
-					break
-				when "count"
-					caption = "计数 #{caption}"
-					break
-			reportFields.push 
-				caption: caption
-				dataField: valueFieldKey
-				# dataType: valueField.type
-				summaryType: operation
-				area: 'data'
+	if counting
+		defaultCounterSum = 
+			caption: "计数"
+			dataField: "_id"
+			summaryType: "count"
+			area: 'data'
+		reportFields.push defaultCounterSum
+	
+	_.each reportObject.values, (value)->
+		# unless value.field
+		# 	return
+		# unless value.operation
+		# 	return
+		valueFieldKey = value.replace(/\./g,"_")
+		valueField = objectFields[value.split(".")[0]]
+		operation = "count"
+		# 数值类型就定为sum统计，否则默认为计数统计
+		if valueField.type == "number"
+			operation = "sum"
+		caption = valueField.label
+		unless caption
+			caption = objectName + "_" + valueFieldKey
+		switch operation
+			when "sum"
+				caption = "总和 #{caption}"
+				break
+			when "count"
+				caption = "计数 #{caption}"
+				break
+		reportFields.push 
+			caption: caption
+			dataField: valueFieldKey
+			# dataType: valueField.type
+			summaryType: operation
+			area: 'data'
 
-		grouping = reportObject.grouping
-		if reportObject.grouping == undefined
-			grouping = true
-		totaling = reportObject.totaling
-		if reportObject.totaling == undefined
-			totaling = true
-		
-		pivotGridChart = $('#pivotgrid-chart').dxChart(
-			equalBarWidth: false
-			commonSeriesSettings: 
-				type: 'bar'
-			tooltip:
-				enabled: true
-			size: 
-				height: 300
-			adaptiveLayout: 
-				width: 450
-		).dxChart('instance')
-		pivotGrid = $('#pivotgrid').dxPivotGrid(
-			paging: false
-			allowSortingBySummary: true
-			allowFiltering: true
-			showBorders: true
-			showColumnGrandTotals: totaling
-			showRowGrandTotals: totaling
-			showRowTotals: grouping
-			showColumnTotals: grouping
-			fieldChooser: false
-			dataSource:
-				fields: reportFields
-				store: reportData).dxPivotGrid('instance')
-		pivotGrid.bindChart pivotGridChart,
-			dataFieldsDisplayMode: 'splitPanes'
-			alternateDataFields: false
-		return
+	grouping = reportObject.grouping
+	if reportObject.grouping == undefined
+		grouping = true
+	totaling = reportObject.totaling
+	if reportObject.totaling == undefined
+		totaling = true
+	
+	pivotGridChart = $('#pivotgrid-chart').dxChart(
+		equalBarWidth: false
+		commonSeriesSettings: 
+			type: 'bar'
+		tooltip:
+			enabled: true
+		size: 
+			height: 300
+		adaptiveLayout: 
+			width: 450
+	).dxChart('instance')
+	if isOnlyForChart
+		$('#pivotgrid').hide()
+	pivotGrid = $('#pivotgrid').show().dxPivotGrid(
+		paging: false
+		allowSortingBySummary: true
+		allowFiltering: true
+		showBorders: true
+		showColumnGrandTotals: totaling
+		showRowGrandTotals: totaling
+		showRowTotals: grouping
+		showColumnTotals: grouping
+		fieldChooser: false
+		dataSource:
+			fields: reportFields
+			store: reportData).dxPivotGrid('instance')
+	pivotGrid.bindChart pivotGridChart,
+		dataFieldsDisplayMode: 'splitPanes'
+		alternateDataFields: false
 
 renderReport = (reportObject)->
 	unless reportObject
@@ -354,14 +324,27 @@ renderReport = (reportObject)->
 	reportObject.grouping = report_settings.grouping
 	reportObject.totaling = report_settings.totaling
 	reportObject.counting = report_settings.counting
-	switch reportObject.report_type
-		when 'tabular'
-			renderTabularReport.bind(self)(reportObject, spaceId)
-		when 'summary'
-			renderSummaryReport.bind(self)(reportObject, spaceId)
-			# renderMatrixReport.bind(self)(reportObject, spaceId)
-		when 'matrix'
-			renderMatrixReport.bind(self)(reportObject, spaceId)
+	
+	objectName = reportObject.object_name
+	filterFields = _.union reportObject.columns, reportObject.rows, reportObject.values
+	filterFields = _.without filterFields, null, undefined
+	filter_scope = reportObject.filter_scope || "space"
+	filters = reportObject.filters
+	
+	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
+		if error
+			console.error('report_data method error:', error)
+			return
+		
+		switch reportObject.report_type
+			when 'tabular'
+				renderTabularReport.bind(self)(reportObject, result)
+			when 'summary'
+				renderMatrixReport.bind(self)(reportObject, result, true)
+				renderSummaryReport.bind(self)(reportObject, result)
+			when 'matrix'
+				renderMatrixReport.bind(self)(reportObject, result)
+
 
 Template.creator_report.onRendered ->
 	DevExpress.localization.locale("zh")

@@ -8,6 +8,9 @@ insertRow = (dataRow,objectName)->
 	jsonObj = {}
 	errorInfo = ""
 	
+	# 对象的fields
+	objFields = Creator?.getObject(objectName)?.fields
+
 	# 转换方法
 	converterString = (field_name, dataCell)->
 	jsonObj[field_name] = dataCell
@@ -61,9 +64,6 @@ importObject = (importObj) ->
 
 	# 需要导入的对象名
 	objectName = importObj?.object_name
-
-	# 对象的fields
-	importObjFields = Creator?.getObject(objectName)?.fields
 
 	field_mapping = importObj?.field_mapping
 	dataStr = importObj?.import_file

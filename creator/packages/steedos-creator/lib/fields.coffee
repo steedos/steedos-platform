@@ -147,6 +147,9 @@ Creator.getObjectSchema = (obj) ->
 				fs.type = String
 				fs.autoform.type = 'fileUpload'
 				fs.autoform.collection = field.collection
+		else if  field.type == "filesize"
+			fs.type = Number
+			fs.autoform.type = 'filesize'
 		else
 			fs.type = field.type
 

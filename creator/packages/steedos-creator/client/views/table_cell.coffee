@@ -5,6 +5,21 @@
 # - this.doc
 # - this.id
 
+formatFileSize = (filesize)->
+	rev = filesize / 1024.00
+	unit = 'KB'
+
+	if rev > 1024.00
+		rev = rev / 1024.00
+		unit = 'MB'
+
+
+	if rev > 1024.00
+		rev = rev / 1024.00
+		unit = 'GB'
+
+	return rev.toFixed(2) + unit
+
 Template.creator_table_cell.helpers
 	cellData: ()->
 		data = []
@@ -77,6 +92,8 @@ Template.creator_table_cell.helpers
 							return _val.indexOf(_o.value) > -1
 						if selectedOptions
 							val = selectedOptions.getProperty("label")
+			else if _field.type == "filesize"
+				val = formatFileSize(val)
 
 			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
@@ -90,6 +107,9 @@ Template.creator_table_cell.helpers
 			return false
 
 		if this.field.omit or this.field.readonly
+			return false
+
+		if this.field.type == "filesize"
 			return false
 
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
