@@ -119,7 +119,7 @@ Creator.Objects.reports =
 			todo: (object_name, record_id, fields)->
 				filters = Session.get("filter_items")
 				filter_scope = Session.get("filter_scope")
-				report_settings = Session.get("report_settings")
+				report_settings = Template.creator_report.getReportSettings()
 				Creator.getCollection(object_name).update({_id: record_id},{$set:{
 					filters: filters
 					filter_scope: filter_scope

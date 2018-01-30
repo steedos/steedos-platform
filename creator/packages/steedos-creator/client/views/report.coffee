@@ -75,7 +75,7 @@ Template.creator_report.events
 		template.filter_scope_for_cancel.set(filter_scope)
 		Meteor.defer ->
 			template.filter_dirty_count.set(1)
-			renderReport()
+			renderReport.bind(template)()
 
 	'click .btn-toggle-filter': (event, template)->
 		isFilterOpen = template.is_filter_open.get()
@@ -382,3 +382,7 @@ Template.creator_report.onCreated ->
 	this.report_settings = new ReactiveVar()
 
 	Template.creator_report.renderReport = renderReport.bind(this)
+	
+	Template.creator_report.getReportSettings = (->
+		return this.report_settings.get()
+	).bind(this)
