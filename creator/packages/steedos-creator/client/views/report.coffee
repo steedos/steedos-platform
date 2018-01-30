@@ -124,7 +124,7 @@ renderTabularReport = (reportObject, spaceId)->
 		unless reportColumns
 			reportColumns = []
 		reportData = result
-		pivotGrid = $('#pivotgrid').dxDataGrid(
+		datagrid = $('#datagrid').dxDataGrid(
 			dataSource: reportData
 			paging: false
 			columns: reportColumns).dxDataGrid('instance')
@@ -214,7 +214,7 @@ renderSummaryReport = (reportObject, spaceId)->
 		reportSummary.groupItems = groupSummaryItems
 
 		console.log "renderSummaryReport.reportSummary:", reportSummary
-		pivotGrid = $('#pivotgrid').dxDataGrid(
+		datagrid = $('#datagrid').dxDataGrid(
 			dataSource: reportData
 			paging: false
 			columns: reportColumns
@@ -310,11 +310,16 @@ renderMatrixReport = (reportObject, spaceId)->
 			totaling = true
 		
 		pivotGridChart = $('#pivotgrid-chart').dxChart(
-			commonSeriesSettings: type: 'bar'
+			equalBarWidth: false
+			commonSeriesSettings: 
+				type: 'bar'
 			tooltip:
 				enabled: true
-			size: height: 300
-			adaptiveLayout: width: 450).dxChart('instance')
+			size: 
+				height: 300
+			adaptiveLayout: 
+				width: 450
+		).dxChart('instance')
 		pivotGrid = $('#pivotgrid').dxPivotGrid(
 			paging: false
 			allowSortingBySummary: true
@@ -354,6 +359,7 @@ renderReport = (reportObject)->
 			renderTabularReport.bind(self)(reportObject, spaceId)
 		when 'summary'
 			renderSummaryReport.bind(self)(reportObject, spaceId)
+			# renderMatrixReport.bind(self)(reportObject, spaceId)
 		when 'matrix'
 			renderMatrixReport.bind(self)(reportObject, spaceId)
 
