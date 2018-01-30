@@ -16,9 +16,10 @@ Creator.Objects.tasks =
 			omit: true
 		end_date: 
 			type: "datetime"
-		contact:
-			type: "lookup"
-			reference_to: "contacts"
+		#暂时注释掉的，因为信息上报发包要creator
+		# contact:
+		# 	type: "lookup"
+		# 	reference_to: "contacts"
 		related_to:
 			type: "lookup"
 			reference_to: ()->
