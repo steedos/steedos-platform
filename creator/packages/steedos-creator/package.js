@@ -173,11 +173,23 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/creator_app_list_modal.html', 'client');
 	api.addFiles('client/layout/creator_app_list_modal.coffee', 'client');
 	api.addFiles('client/layout/creator_app_list_modal.less', 'client');
+	api.addFiles('client/mobile/mobile_layout.html', 'client');
+	api.addFiles('client/mobile/mobile_layout.coffee', 'client');
+	api.addFiles('client/mobile/home.html', 'client');
+	api.addFiles('client/mobile/home.coffee', 'client');
+	api.addFiles('client/mobile/home.less', 'client');
+	api.addFiles('client/mobile/object_menu.html', 'client');
+	api.addFiles('client/mobile/object_menu.coffee', 'client');
+	api.addFiles('client/mobile/object_menu.less', 'client');
+	api.addFiles('client/mobile/mobile_template.less', 'client');
+	
 
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
-
+	
+	api.addFiles('client/animate.css', 'client');
+	api.addFiles('client/animate.js', 'client');
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 

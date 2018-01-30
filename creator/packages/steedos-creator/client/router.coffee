@@ -2,24 +2,41 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
 
+initLayout = ()->
+	if !$(".wrapper").length
+		BlazeLayout.render Creator.getLayout()
 FlowRouter.route '/app',
-	triggersEnter: [ checkUserSigned ],
+	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		app_id = Session.get("app_id")
-		if !app_id
-			app_id = "crm"
-		object_name = Session.get("object_name")
-		if object_name
-			FlowRouter.go "/app/" + app_id + "/" + object_name + "/list"
+		if Steedos.isMobile()
+			FlowRouter.go '/app/menu'
 		else
-			FlowRouter.go "/app/" + app_id
+			app_id = Session.get("app_id")
+			if !app_id
+				app_id = "crm"
+			object_name = Session.get("object_name")
+			if object_name
+				FlowRouter.go "/app/" + app_id + "/" + object_name + "/list"
+			else
+				FlowRouter.go "/app/" + app_id
+
+FlowRouter.route '/app/menu',
+	triggersEnter: [ checkUserSigned, initLayout ],
+	action: (params, queryParams)->
+		if $(".content-wrapper .home-menu.mobile-template-container").length == 0
+			Meteor.defer ->
+				Blaze.renderWithData(Template.homeMenu, {}, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned ],
+	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		Session.set("app_id", FlowRouter.getParam("app_id"))
-		BlazeLayout.render Creator.getLayout(),
-			main: "creator_app_home"
+		if Steedos.isMobile() and $(".content-wrapper .object-menu.mobile-template-container").length == 0
+			Meteor.defer ->
+				Blaze.renderWithData(Template.objectMenu, {}, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+		else
+			Session.set("app_id", FlowRouter.getParam("app_id"))
+			BlazeLayout.render Creator.getLayout(),
+				main: "creator_app_home"
 
 FlowRouter.route '/app/:app_id/:object_name/list',
 	triggersEnter: [ checkUserSigned ],

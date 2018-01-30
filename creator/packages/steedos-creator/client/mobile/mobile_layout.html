@@ -1,0 +1,15 @@
+<template name="creatorMobileLayout">
+	{{#if subsReady}}
+		<div class="steedos layout-top-nav skin-blue-light">
+			{{# AdminLTE skin="blue" sidebarMini="true" }}
+            
+			<div class="content-wrapper">
+                <div class="layout-placeholder"></div>
+            </div>
+			{{/ AdminLTE}} {{> autoformModals}}
+		</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
+	{{/if}}
+</template>

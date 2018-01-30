@@ -4,7 +4,10 @@ Creator.getLayout = (app_id)->
 	if app_id == "steedos"
 		return "steedosLayout"
 	else
-		return "creatorLayout"
+		if Steedos.isMobile()
+			return "creatorMobileLayout"
+		else
+			return "creatorLayout"
 
 Creator.createObject = (object_name,object_data)->
 	object = Creator.getObject(object_name)

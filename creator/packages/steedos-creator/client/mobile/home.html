@@ -1,0 +1,25 @@
+<template name="homeMenu">
+    <div class="home-menu mobile-template-container">
+        <header class="mobile-template-header">
+            <div class="forceHeaderLayout">
+                <div class="bLeft">
+                    工作台
+                </div>
+            </div>
+        </header>
+        <div class="home-menu-content mobile-template-content">
+            <div class="weui-grids weui-panel">
+                {{#each apps}}
+                    <a href="{{this.url}}" class="weui-grid app-item">
+                        <div class="weui-grid__icon">
+                            {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
+                        </div>
+                        <p class="weui-grid__label">
+                            {{this.name}}
+                        </p>
+                    </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>
