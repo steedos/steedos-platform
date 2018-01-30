@@ -82,7 +82,7 @@ Template.creator_report.events
 		template.is_filter_open.set(!isFilterOpen)
 
 	'click .btn-settings': (event, template)->
-		Modal.show("report_settings")
+		Modal.show("report_settings", {report_settings: template.report_settings})
 
 
 renderTabularReport = (reportObject, spaceId)->
@@ -317,9 +317,9 @@ renderMatrixReport = (reportObject, spaceId)->
 		return
 
 renderReport = (reportObject)->
-	console.log "renderReport.reportObject:", reportObject
 	unless reportObject
 		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
+	self = this
 	spaceId = Session.get("spaceId")
 	filter_items = Tracker.nonreactive ()->
 		return Session.get("filter_items")
@@ -328,7 +328,7 @@ renderReport = (reportObject)->
 	reportObject.filters = filter_items
 	reportObject.filter_scope = filter_scope
 	report_settings = Tracker.nonreactive ()->
-		return Session.get("report_settings")
+		return self.report_settings.get()
 	reportObject.grouping = report_settings.grouping
 	reportObject.totaling = report_settings.totaling
 	reportObject.counting = report_settings.counting
@@ -340,10 +340,9 @@ renderReport = (reportObject)->
 		when 'matrix'
 			renderMatrixReport(reportObject, spaceId)
 
-Template.creator_report.renderReport = renderReport
-
 Template.creator_report.onRendered ->
 	DevExpress.localization.locale("zh")
+	self = this
 	this.autorun (c)->
 		spaceId = Session.get("spaceId")
 		unless spaceId
@@ -360,8 +359,8 @@ Template.creator_report.onRendered ->
 			filter_scope = reportObject.filter_scope
 			Session.set("filter_items", filter_items)
 			Session.set("filter_scope", filter_scope)
-			Session.set("report_settings", {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting})
-			renderReport(reportObject) 
+			self.report_settings.set {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting}
+			renderReport.bind(self)(reportObject)
 
 	this.autorun (c)->
 		if Creator.subs["CreatorRecord"].ready()
@@ -380,3 +379,6 @@ Template.creator_report.onCreated ->
 	this.filter_items_for_cancel = new ReactiveVar()
 	this.filter_scope_for_cancel = new ReactiveVar()
 	this.is_filter_open = new ReactiveVar(false)
+	this.report_settings = new ReactiveVar()
+
+	Template.creator_report.renderReport = renderReport.bind(this)
