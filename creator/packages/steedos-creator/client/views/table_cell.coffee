@@ -73,11 +73,10 @@ Template.creator_table_cell.helpers
 					_val = val
 					if _val && !_.isArray(_val)
 						_val = [_val]
-
-					selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
-						return _val.indexOf(_o.value) > -1
-					if selectedOptions
-						val = selectedOptions.getProperty("label")
+						selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
+							return _val.indexOf(_o.value) > -1
+						if selectedOptions
+							val = selectedOptions.getProperty("label")
 
 			if this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)

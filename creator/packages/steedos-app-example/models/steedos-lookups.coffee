@@ -65,7 +65,7 @@ if Meteor.isDevelopment
 				optionsFunction: ()->
 					_options = []
 					_.forEach Creator.Objects, (o, k)->
-						_options.push {label: o.label, value: k}
+						_options.push {label: o.label, value: k, icon: o.icon}
 					return _options
 				group: "options function test"
 				defaultIcon: "entity"
@@ -76,9 +76,12 @@ if Meteor.isDevelopment
 				defaultIcon: "service_contract"
 				optionsFunction: (values)->
 					_options = []
-					fields = Creator.getObject(values.CObject).fields
+					_object = Creator.getObject(values.CObject)
+					fields = _object.fields
+					icon = _object.icon
+
 					_.forEach fields, (f, k)->
-						_options.push {label: f.label || k, value: k}
+						_options.push {label: f.label || k, value: k, icon: icon}
 
 					return _options
 				group: "options function test"

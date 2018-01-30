@@ -16,7 +16,7 @@ UniSelectize = function (options, template, filtersMethod, optionsFunction) {
 	this.selectedReference   = new ReactiveVar();
 	this.dependValues	     = new ReactiveVar();
 
-	this.defaultIcon        = options.defaultIcon
+	this.defaultIcon        = new ReactiveVar(options.defaultIcon);
 	this.optionsFunction    = optionsFunction;
 	this.references         = options.references;
 	this.create             = options.create;
@@ -131,9 +131,14 @@ UniSelectize.prototype.setItems = function (items, value) {
 		}
 	});
 
+	var self = this;
+
 	_.each(items, function (item) {
 		if (_.contains(values, item.value)) {
 			item.selected = true;
+			if(item.icon){
+				self.defaultIcon.set(item.icon)
+			}
 		}
 	});
 	this.items.set(items);
@@ -160,6 +165,7 @@ UniSelectize.prototype.addItems = function (newItems, value) {
 			var item = {
 				value: newItem.value,
 				label: newItem.label,
+				icon: newItem.icon,
 				selected: newItem.selected
 			};
 
@@ -247,11 +253,16 @@ UniSelectize.prototype.selectItem = function (value) {
 	var items = this.items.get();
 	var multiple = this.multiple;
 
+	var self = this;
+
 	_.each(items, function (item) {
 		if (value === '') {
 			item.selected = false;
 		} else if (item.value === value) {
 			item.selected = true;
+			if(item.icon){
+				self.defaultIcon.set(item.icon)
+			}
 		} else if (!multiple) {
 			item.selected = false;
 		}
