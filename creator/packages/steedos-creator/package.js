@@ -144,6 +144,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/methods/user_tabular_settings.coffee', 'server');
 	api.addFiles('server/methods/object_record.coffee', 'server');
 	api.addFiles('server/methods/object_export2xml.coffee', 'server');
+	api.addFiles('server/methods/object_import_jobs.coffee', 'server');
 
 	api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/related_object.coffee', 'server');
