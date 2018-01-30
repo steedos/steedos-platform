@@ -61,20 +61,20 @@ Creator.Objects.qhd_informations =
 
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
 			#fields:["score","title"] 
 		admin:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
 	triggers:
 		"before.insert.server.calculateScore": 
 			on: "server"
