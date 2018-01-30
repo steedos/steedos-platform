@@ -624,11 +624,16 @@ Creator.Objects.archive_records =
 			omit:true
 	list_views:
 		default:
-			columns: [
-				"year", "item_number","retention_peroid",
-				"title","documnt_number", "document_date", "author",
-				"archive_dept", "security_classification","destroyed"
-				]
+			# columns: [
+			# 	"year", "item_number","retention_peroid",
+			# 	"title","document_number", "document_date", "author",
+			# 	"archive_dept", "security_classification","destroyed"
+			# 	]
+			# columns: ["year","item_number","retention_peroid","title","document_number","document_date","author",
+			# 			"archive_dept","security_classification","destroyed"]
+			#columns:['retention_peroid','document_date']
+			columns: ["year","item_number","title","retention_peroid","document_number","document_date","author",
+						"archive_dept","security_classification","destroyed"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
@@ -676,15 +681,15 @@ Creator.Objects.archive_records =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
-			actions:["borrow"]
 			list_views:["default","recent","all","borrow"]
 		admin:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
 			allowRead: true
-			modifyAllRecords: true
+			modifyAllRecords: false
 			viewAllRecords: true
+			list_views:["default","recent","all","borrow"]
 	triggers:
 		"before.insert.server.default":
 			on: "server"

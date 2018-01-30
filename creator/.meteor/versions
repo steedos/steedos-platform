@@ -131,6 +131,12 @@ steedos:accounts-phone@0.0.3
 steedos:accounts-t9n@1.14.2_6
 steedos:adminlte@2.3.12_3
 steedos:api@0.0.1
+steedos:app-admin@0.0.1
+steedos:app-archive@0.0.1
+steedos:app-cms@0.0.1
+steedos:app-crm@0.0.1
+steedos:app-informations@0.0.1
+steedos:app-workflow@0.0.1
 steedos:autoform@0.0.9
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_1
@@ -158,7 +164,7 @@ steedos:cfs-ui@0.1.4
 steedos:cfs-upload-http@0.0.22
 steedos:cfs-worker@0.1.5
 steedos:cms@0.0.7
-steedos:creator@0.0.3
+steedos:creator@0.0.4
 steedos:datatables-extensions@0.0.1
 steedos:e164-phones-countries@1.0.3
 steedos:fullcalendar@3.4.0_1

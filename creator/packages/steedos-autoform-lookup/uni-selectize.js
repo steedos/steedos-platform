@@ -16,6 +16,7 @@ UniSelectize = function (options, template, filtersMethod, optionsFunction) {
 	this.selectedReference   = new ReactiveVar();
 	this.dependValues	     = new ReactiveVar();
 
+	this.defaultIcon        = options.defaultIcon
 	this.optionsFunction    = optionsFunction;
 	this.references         = options.references;
 	this.create             = options.create;

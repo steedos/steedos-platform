@@ -113,6 +113,7 @@ Creator.getObjectSchema = (obj) ->
 								throw new Meteor.Error("Creator.getObjectSchema", "#{obj.name}.#{field_name} reference_to #{_reference} Can not find.")
 			else
 				fs.autoform.type = "steedosLookups"
+				fs.autoform.defaultIcon = field.defaultIcon
 				fs.optionsFunction = field.optionsFunction
 
 		else if field.type == "select"

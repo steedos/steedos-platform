@@ -343,7 +343,7 @@ Template.steedosLookups.helpers({
 	},
 
 	getIcon: function (icon) {
-		return icon || 'link'
+		return icon || Template.instance().uniSelectize.defaultIcon || 'link'
 	},
 
 	showObjectSwitche: function () {

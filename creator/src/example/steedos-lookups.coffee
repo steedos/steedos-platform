@@ -68,10 +68,12 @@ if Meteor.isDevelopment
 						_options.push {label: k, value: k}
 					return _options;
 				group: "options function test"
+				defaultIcon: "entity"
 			options_fun:
 				type: "lookup"
 				multiple: true
 				depend_on: ["CObject"]
+				defaultIcon: "service_contract"
 				optionsFunction: (values)->
 					_options = []
 					fields = Creator.getObject(values.CObject).fields
