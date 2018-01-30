@@ -48,7 +48,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - datetime: 日期时间
 - select: 下拉框，联合options属性，生成下拉框的内容
 - boolean：Checkbox
-- currency: 金额
+- number: 数值
 - 实例：
 	- 在archive_records对象里，字段archive_destroy_id类型为master_detail
 		- archive_destroy_id:
