@@ -43,6 +43,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - lookup: 相关表，联合reference_to字段，从关联表中选择记录
 - master_detail: 子表，联合reference_to属性，表示当前记录是主表的子记录。系统会自动检测此类型的字段，在主表的记录显示页面中生成子表列表视图。
 - text: 文本
+- textarea: 文本域
 - "[text]": 文本数组，也可以用来保存id数组
 - date: 日期
 - datetime: 日期时间
