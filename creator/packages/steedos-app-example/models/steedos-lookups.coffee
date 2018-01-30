@@ -64,9 +64,9 @@ if Meteor.isDevelopment
 				type: "lookup"
 				optionsFunction: ()->
 					_options = []
-					_.keys(Creator.Objects).forEach (k)->
-						_options.push {label: k, value: k}
-					return _options;
+					_.forEach Creator.Objects, (o, k)->
+						_options.push {label: o.label, value: k}
+					return _options
 				group: "options function test"
 				defaultIcon: "entity"
 			options_fun:
@@ -85,7 +85,7 @@ if Meteor.isDevelopment
 
 		list_views:
 			default:
-				columns: ["name", "customer_id", "customer_ids", "object_switche_ids", "boolean"]
+				columns: ["name", "customer_id", "customer_ids", "object_switche_ids", "boolean", "CObject", "options_fun"]
 			recent:
 				filter_scope: "space"
 			all:

@@ -45,6 +45,14 @@ Template.creator_report.helpers
 	
 	isFilterOpen: ()->
 		return Template.instance().is_filter_open?.get()
+	
+	isChartOpen: ()->
+		return Template.instance().is_chart_open?.get()
+	
+	isChartDisabled: ->
+		record_id = Session.get "record_id"
+		report = Creator.Reports[record_id] or Creator.getObjectRecord()
+		return report?.report_type == "tabular"
 
 
 Template.creator_report.events
@@ -80,6 +88,14 @@ Template.creator_report.events
 	'click .btn-toggle-filter': (event, template)->
 		isFilterOpen = template.is_filter_open.get()
 		template.is_filter_open.set(!isFilterOpen)
+
+	'click .btn-toggle-chart': (event, template)->
+		isChartOpen = !template.is_chart_open.get()
+		template.is_chart_open.set(isChartOpen)
+		if isChartOpen
+			$('#pivotgrid-chart').show()
+		else
+			$('#pivotgrid-chart').hide()
 
 	'click .btn-settings': (event, template)->
 		Modal.show("report_settings", {report_settings: template.report_settings})
@@ -206,6 +222,7 @@ renderSummaryReport = (reportObject, spaceId)->
 		return
 
 renderMatrixReport = (reportObject, spaceId)->
+	self = this
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -291,7 +308,7 @@ renderMatrixReport = (reportObject, spaceId)->
 		totaling = reportObject.totaling
 		if reportObject.totaling == undefined
 			totaling = true
-
+		
 		pivotGridChart = $('#pivotgrid-chart').dxChart(
 			commonSeriesSettings: type: 'bar'
 			tooltip:
@@ -334,11 +351,11 @@ renderReport = (reportObject)->
 	reportObject.counting = report_settings.counting
 	switch reportObject.report_type
 		when 'tabular'
-			renderTabularReport(reportObject, spaceId)
+			renderTabularReport.bind(self)(reportObject, spaceId)
 		when 'summary'
-			renderSummaryReport(reportObject, spaceId)
+			renderSummaryReport.bind(self)(reportObject, spaceId)
 		when 'matrix'
-			renderMatrixReport(reportObject, spaceId)
+			renderMatrixReport.bind(self)(reportObject, spaceId)
 
 Template.creator_report.onRendered ->
 	DevExpress.localization.locale("zh")
@@ -360,6 +377,8 @@ Template.creator_report.onRendered ->
 			Session.set("filter_items", filter_items)
 			Session.set("filter_scope", filter_scope)
 			self.report_settings.set {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting}
+			if reportObject.report_type == "tabular"
+				self.is_chart_open.set false
 			renderReport.bind(self)(reportObject)
 
 	this.autorun (c)->
@@ -379,6 +398,7 @@ Template.creator_report.onCreated ->
 	this.filter_items_for_cancel = new ReactiveVar()
 	this.filter_scope_for_cancel = new ReactiveVar()
 	this.is_filter_open = new ReactiveVar(false)
+	this.is_chart_open = new ReactiveVar(true)
 	this.report_settings = new ReactiveVar()
 
 	Template.creator_report.renderReport = renderReport.bind(this)

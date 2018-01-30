@@ -35,19 +35,19 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart" title="Charts">
+							<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="切换图表">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="Filters">
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="筛选器">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="刷新">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-more btn-settings" aria-haspopup="true" title="List View Controls">
+							<button class="slds-button slds-button_icon slds-button_icon-more btn-settings" aria-haspopup="true" title="设置">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
 							</button>
 							<div class="slds-button-group" role="group">

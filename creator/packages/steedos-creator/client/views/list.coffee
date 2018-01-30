@@ -226,6 +226,12 @@ Template.creator_list.events
 
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
+
+		if this.field.depend_on && _.isArray(this.field.depend_on)
+			field = _.clone(this.field.depend_on)
+			field.push(this.field_name)
+			field = field.join(",")
+
 		objectName = Session.get("object_name")
 		collection_name = Creator.getObject(objectName).label
 		dataTable = $(event.currentTarget).closest('table').DataTable()

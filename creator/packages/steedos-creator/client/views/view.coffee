@@ -317,6 +317,11 @@ Template.creator_view.events
 
 	'click #creator-tabular .table-cell-edit': (event, template) ->
 		field = this.field_name
+		if this.field.depend_on && _.isArray(this.field.depend_on)
+			field = _.clone(this.field.depend_on)
+			field.push(this.field_name)
+			field = field.join(",")
+
 		object_name = this.object_name
 		collection_name = Creator.getObject(object_name).label
 
@@ -379,6 +384,10 @@ Template.creator_view.events
 	'click #creator-quick-form .table-cell-edit': (event, template)->
 		# $(".creator-record-edit").click()
 		field = this.field_name
+		if this.field.depend_on && _.isArray(this.field.depend_on)
+			field = _.clone(this.field.depend_on)
+			field.push(this.field_name)
+			field = field.join(",")
 		object_name = this.object_name
 		collection_name = Creator.getObject(object_name).label
 		doc = this.doc

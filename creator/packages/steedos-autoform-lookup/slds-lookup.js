@@ -565,8 +565,10 @@ Template.steedosLookups.events({
 
         template.uniSelectize.unselectItem(this.value, false);
 
+		template.uniSelectize.itemsAutorun()
+
         if(!template.uniSelectize.multiple){
-			Meteor.defer(template.uniSelectize.getOptionsFromMethod);
+			template.uniSelectize.getOptionsFromMethod();
 			template.uniSelectize.inputFocus();
 		}
     },

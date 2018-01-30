@@ -316,7 +316,7 @@ helpers =
 			object_name = cmCollection.replace(/Creator.Collections./, "")
 			permission_fields = Creator.getFields(object_name)
 			if Session.get 'cmFields'
-				firstLevelKeys = [Session.get('cmFields')]
+				firstLevelKeys = Session.get('cmFields').split(",")
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
 			

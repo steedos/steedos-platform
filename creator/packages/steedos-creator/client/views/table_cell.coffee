@@ -69,7 +69,7 @@ Template.creator_table_cell.helpers
 					val = this.val
 			else if _field.type == "lookup"
 				if _.isFunction(_field.optionsFunction)
-					_values = Creator.getObjectRecord()
+					_values = this.doc || {}
 					_val = val
 					if _val && !_.isArray(_val)
 						_val = [_val]
