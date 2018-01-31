@@ -1,5 +1,6 @@
 Meteor.startup ->
-	odataV4Mongodb = Npm.require('odata-v4-mongodb')
+
+	odataV4Mongodb = Npm.require 'odata-v4-mongodb'
 
 	optionsParser = (options)->
 		parsedOpt = {}
@@ -9,11 +10,25 @@ Meteor.startup ->
 			_.each options.$select.split(','), (s)->
 				parsedOpt.fields[s] = 1
 
-		if options.$top
+		if options.hasOwnProperty('$top')
 			parsedOpt.limit = parseInt options.$top
 
-		if options.$skip
+		if options.hasOwnProperty('$skip')
 			parsedOpt.skip = parseInt options.$skip
+
+		if options.$orderby
+			sort = []
+			_.each options.$orderby.split(','), (item)->
+				data = item.trim().split(' ')
+				if data.length > 2
+					console.error "odata: Syntax error at #{options.$orderby}"
+					return
+				if data.length == 1
+					data.push 'asc'
+				sort.push(data)
+
+			if sort.length > 0
+				parsedOpt.sort = sort
 
 		parsedOpt
 
@@ -49,12 +64,16 @@ Meteor.startup ->
 											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
 									else
 										console.log @queryParams
-
 										createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
-										entities = collection.find(createFilter,optionsParser(@queryParams)).fetch()
+										# 强制增加過濾掉件space: @spaceId
+										createFilter.space = @spaceId
+										entities = []
+										if @queryParams.$top isnt '0'
+											console.log optionsParser(@queryParams)
+											entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
 										scannedCount = collection.find(createFilter).count()
 										if entities
-											{status: 'success', data: entities, count: scannedCount}
+											{status: 'success', data: entities, '@odata.count': scannedCount}
 										else
 											statusCode: 404
 											body: {status: 'fail', message: 'Unable to retrieve items from collection'}

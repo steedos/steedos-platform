@@ -1,0 +1,42 @@
+<template name="custom_data_source">
+	<div class="modal fade creator-modal" id="custom_data_source_modal">
+		<div class="modal-dialog slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading--medium">
+						Select Fields to Display
+					</h2>
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+					<div class="demo-container">
+						<div id="gridContainer"></div>
+						<div class="options">
+							<div class="caption">Options</div>
+							<div class="option">
+								<span>Apply Filter</span>
+								<div id="useFilterApplyButton"></div>
+							</div>
+							<div class="option">
+								<div id="filterRow"></div>
+							</div>
+							<div class="option">
+								<div id="headerFilter"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slds-modal__footer">
+					<button class="slds-button slds-button_brand btn-save-columns">保存</button>
+					<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
