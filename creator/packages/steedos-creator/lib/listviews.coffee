@@ -137,10 +137,14 @@ Creator.initListViews = (object_name)->
 	if object.list_views?.default?.extra_columns
 		extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 
+	order = []
+	if object.list_views?.default?.order
+		order = object.list_views.default.order
+
 	if Meteor.isClient
 		Creator.TabularSelectedIds[object_name] = []
 
-	new Tabular.Table
+	tabularOptions = {
 		name: "creator_" + object_name
 		collection: Creator.Collections[object_name]
 		pub: "steedos_object_tabular"
@@ -152,13 +156,13 @@ Creator.initListViews = (object_name)->
 			self = this
 
 			Tracker.nonreactive ->
-				# 仅对list视图的tabular进行表格宽度设置
+# 仅对list视图的tabular进行表格宽度设置
 				if $(self).closest(".list-table-container").length
 					object_name = Session.get("object_name")
 					list_view_id = Session.get("list_view_id")
 					setting = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_listviews"})
 					column_width = setting?.settings[list_view_id]?.column_width
-			
+
 					if !column_width
 						$(self).css("width", "100%")
 					else
@@ -169,7 +173,7 @@ Creator.initListViews = (object_name)->
 						_.each column_width, (width, field) ->
 							width = parseInt(width)
 							sum_width += width
-						
+
 						$(self).css({"width": "#{sum_width}px", "min-width": "#{sum_width}px"})
 
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
@@ -208,13 +212,20 @@ Creator.initListViews = (object_name)->
 		changeSelector: (selector, userId)->
 			if object_name == "cfs.files.filerecord"
 				if !selector["metadata.space"] and !selector._id
-					selector = 
+					selector =
 						_id: "nothing"
 			else
 				if !selector.space and !selector._id
-					selector = 
+					selector =
 						_id: "nothing"
 			return selector
+	}
+
+	if order.length > 0
+		tabularOptions.order = order
+
+	new Tabular.Table tabularOptions
+
 
 
 

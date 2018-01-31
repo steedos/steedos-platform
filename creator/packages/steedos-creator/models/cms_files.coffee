@@ -29,11 +29,11 @@ Creator.Objects.cms_files =
 			reference_to: ()->
 				return _.keys(Creator.Objects)
 
-
 	list_views:
 		default:
-			columns: ["name", "size", "owner", "modified"]
+			columns: ["name", "size", "owner", "created", "modified"]
 			extra_columns: ["versions"]
+			order: [[4, "asc"]]
 		all:
 			filter_scope: "space"
 

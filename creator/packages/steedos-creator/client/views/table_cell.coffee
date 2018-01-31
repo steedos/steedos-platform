@@ -32,6 +32,9 @@ Template.creator_table_cell.helpers
 
 		_field = this.field
 
+		if !_field
+			return
+
 		reference_to = this.field?.reference_to
 
 		if _.isFunction(reference_to)
