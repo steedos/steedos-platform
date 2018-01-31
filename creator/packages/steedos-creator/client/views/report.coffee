@@ -316,9 +316,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		adaptiveLayout: 
 			width: 450
 	).dxChart('instance')
-	if isOnlyForChart
-		$('#pivotgrid').hide()
-	pivotGrid = $('#pivotgrid').show().dxPivotGrid(
+	pivotGrid = $('#pivotgrid').hide().dxPivotGrid(
 		paging: false
 		allowSortingBySummary: true
 		allowFiltering: true
@@ -334,6 +332,9 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	pivotGrid.bindChart pivotGridChart,
 		dataFieldsDisplayMode: 'splitPanes'
 		alternateDataFields: false
+
+	unless isOnlyForChart
+		$('#pivotgrid').show()
 
 renderReport = (reportObject)->
 	unless reportObject
