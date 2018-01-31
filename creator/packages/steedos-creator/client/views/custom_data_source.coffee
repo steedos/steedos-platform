@@ -10,7 +10,6 @@ Template.custom_data_source.onRendered ()->
 
 	orders = new (DevExpress.data.CustomStore)(
 		load: (loadOptions) ->
-			debugger
 			deferred = $.Deferred()
 			args = {}
 			if loadOptions.sort
@@ -23,7 +22,7 @@ Template.custom_data_source.onRendered ()->
 			if loadOptions.filter
 				filter = '&$filter=' + DevExpress.data.queryAdapters.odata.compileCriteria(loadOptions.filter,4,[])
 			$.ajax
-				url: 'http://127.0.0.1:5000/api/v2/archive_records?'+filter
+				url: 'http://127.0.0.1:5000/api/odata/v4/'+Steedos.spaceId()+'/archive_records?'+filter
 				data: args
 				beforeSend: (request) ->
 					request.setRequestHeader 'X-User-Id', 'JkXLBmvpAzwxvWjJT'

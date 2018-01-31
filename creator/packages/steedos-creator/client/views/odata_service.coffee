@@ -10,7 +10,7 @@ Template.odata_service.onRendered ()->
 			store: {
 				type: "odata",
 				version: 4,
-				url: "http://127.0.0.1:5000/api/v2/archive_records",
+				url: 'http://127.0.0.1:5000/api/odata/v4/'+Steedos.spaceId()+'/archive_records',
 				withCredentials: false,
 				beforeSend: (request) ->
 					request.headers['X-User-Id'] = 'JkXLBmvpAzwxvWjJT';
