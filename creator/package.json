@@ -8,7 +8,7 @@
     "@salesforce-ux/design-system": "^2.5.0-alpha.11",
     "admin-lte": "^2.3.11",
     "babel-runtime": "^6.26.0",
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.3",
     "bootstrap": "^3.3.7",
     "datatables": "^1.10.13",
     "jquery": "^2.2.4",

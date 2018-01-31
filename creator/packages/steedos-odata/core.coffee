@@ -1,5 +1,5 @@
 if Meteor.isServer
-    @API = new Restivus
+    @SteedosOdataAPI = new OdataRestivus
         apiPath: '/api/odata/v4/:spaceId',
         useDefaultAuth: true
         prettyJson: true

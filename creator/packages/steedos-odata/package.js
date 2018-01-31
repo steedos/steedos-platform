@@ -33,7 +33,8 @@ Package.onUse(function(api) {
 
 	api.use('simple:json-routes@2.1.0');
 	api.use('aldeed:tabular@1.6.1');
-	api.use('steedos:base');
+
+	api.use('steedos:creator');
 
 	api.addFiles('lib/restivus/auth.coffee', 'server');
 	api.addFiles('lib/restivus/iron-router-error-to-response.js', 'server');

@@ -1,4 +1,4 @@
-class @Restivus
+class @OdataRestivus
 
   constructor: (options) ->
     @_routes = []
@@ -361,4 +361,4 @@ class @Restivus
         return logout.call(this)
       post: logout
 
-Restivus = @Restivus
+OdataRestivus = @OdataRestivus

@@ -36,10 +36,10 @@ Meteor.startup ->
 		if not Creator.Objects[key]?.enable_api
 			return
 
-		if API
+		if SteedosOdataAPI
 			console.log key
 
-			API.addCollection Creator.Collections[key],
+			SteedosOdataAPI.addCollection Creator.Collections[key],
 				excludedEndpoints: []
 				routeOptions:
 					authRequired: true
@@ -63,7 +63,8 @@ Meteor.startup ->
 											statusCode: 404
 											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
 									else
-										console.log @queryParams
+										console.log 'queryParams: ', @queryParams
+										console.log 'urlParams: ', @urlParams
 										createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
 										# 强制增加過濾掉件space: @spaceId
 										createFilter.space = @spaceId
