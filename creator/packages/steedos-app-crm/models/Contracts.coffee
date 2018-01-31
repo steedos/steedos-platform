@@ -5,6 +5,7 @@ Creator.Objects.contracts =
 	enable_files: true
 	enable_search: true
 	enable_tasks: true
+	enable_api: true
 	fields:
 		name: 
 			label: "名称"

@@ -1,5 +1,5 @@
 Template.homeMenu.onRendered ->
-    this.$(".home-menu").animateCss("fadeIn")
+
 
 Template.homeMenu.helpers
     apps: ()->
@@ -8,5 +8,4 @@ Template.homeMenu.helpers
             if v.visible != false
                 apps.push v
         
-        console.log apps
         return apps

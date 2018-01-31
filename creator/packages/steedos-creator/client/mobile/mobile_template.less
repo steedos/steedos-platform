@@ -1,4 +1,7 @@
 .content-wrapper {
+    .hidden {
+        opacity: 0;
+    }
     .mobile-template-container {
         position: absolute;
         top: 0;
@@ -24,15 +27,24 @@
                 .bLeft {
                     float: left;
                     padding-left: 15px;
-                    width: 44px;
+                    min-width: 44px;
+                    width: auto;
                     line-height: 44px;
                     color: #fff;
                     height: 100%;
                 }
+                .bBody {
+                    height: 100%;
+                    line-height: 44px;
+                    overflow: hidden;
+                    text-align: center;
+                    color: #fff;
+                }
                 .bRight {
                     float: right;
                     padding-right: 15px;
-                    width: 44px;
+                    min-width: 44px;
+                    width: auto;
                     line-height: 44px;
                     color: #fff;
                     height: 100%;
@@ -45,7 +57,7 @@
             top: 44px;
             bottom: 0;
             width: 100%;
-            overflow: hidden;
+            overflow: auto;
             background-color: rgb(243, 242, 242);
         }
     } 

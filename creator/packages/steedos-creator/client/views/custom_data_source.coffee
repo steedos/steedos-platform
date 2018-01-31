@@ -25,9 +25,9 @@ Template.custom_data_source.onRendered ()->
 				url: 'http://127.0.0.1:5000/api/odata/v4/'+Steedos.spaceId()+'/archive_records?'+filter
 				data: args
 				beforeSend: (request) ->
-					request.setRequestHeader 'X-User-Id', 'JkXLBmvpAzwxvWjJT'
-					request.setRequestHeader 'X-Space-Id', 'n9eLY4aFpnvGroHy6'
-					request.setRequestHeader 'X-Auth-Token', 's2c3DVHBDS6vjaxDsd9MFZD7LbJW1UQSN00qw_oqZSf'
+					request.setRequestHeader 'X-User-Id', '5194c66ef4a563537a000003'
+					request.setRequestHeader 'X-Space-Id', '51ae9b1a8e296a29c9000001'
+					request.setRequestHeader 'X-Auth-Token', 'orHOAa1lK7RcM-vtcwSp28w67wAi6LZpsMBEM2DX4AY'
 					return
 				success: (result) ->
 					deferred.resolve result.data, totalCount: result.count

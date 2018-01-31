@@ -177,6 +177,12 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/object_menu.coffee', 'client');
 	api.addFiles('client/mobile/object_menu.less', 'client');
 	api.addFiles('client/mobile/mobile_template.less', 'client');
+	api.addFiles('client/mobile/mobile_list.html', 'client');
+	api.addFiles('client/mobile/mobile_list.less', 'client');
+	api.addFiles('client/mobile/mobile_list.coffee', 'client');
+	api.addFiles('client/mobile/list_switch.html', 'client');
+	api.addFiles('client/mobile/list_switch.less', 'client');
+	api.addFiles('client/mobile/list_switch.coffee', 'client');
 
 
 	api.addFiles('client/core.coffee', 'client');
