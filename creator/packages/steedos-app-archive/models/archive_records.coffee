@@ -4,6 +4,7 @@ Creator.Objects.archive_records =
 	label: "档案"
 	enable_search: true
 	enable_files: true
+	enable_api: true
 	fields:
 		archives_name:
 			type:"text"
@@ -646,7 +647,7 @@ Creator.Objects.archive_records =
 			filter_scope: "space"
 			filters: [["is_received", "$eq", false]]
 		received:
-			label:"已接收" 
+			label:"已接收"
 			filter_scope:"space"
 			filters:[["is_received", "$eq", true]]
 			columns:["year","title","received","received_by","borrowed_by"]

@@ -65,21 +65,6 @@
       "resolved": "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.13.tgz",
       "from": "moment-timezone@0.5.13"
     },
-    "odata-v4-literal": {
-      "version": "0.1.1",
-      "resolved": "https://registry.npmjs.org/odata-v4-literal/-/odata-v4-literal-0.1.1.tgz",
-      "from": "odata-v4-literal@>=0.1.0 <0.2.0"
-    },
-    "odata-v4-mongodb": {
-      "version": "0.1.12",
-      "resolved": "git+https://github.com/steedos/odata-v4-mongodb.git#037d6d5ed9cb598a9a45eb99247371fa87f9cc35",
-      "from": "git+https://github.com/steedos/odata-v4-mongodb.git#master"
-    },
-    "odata-v4-parser": {
-      "version": "0.1.25",
-      "resolved": "git+https://github.com/steedos/odata-v4-parser.git#4b0fca7c0d3a8335a1e2b710d201a3107a767067",
-      "from": "git+https://github.com/steedos/odata-v4-parser.git#master"
-    },
     "readable-stream": {
       "version": "1.1.14",
       "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.14.tgz",
