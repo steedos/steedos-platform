@@ -151,7 +151,7 @@ renderTabularReport = (reportObject, reportData)->
 		allowColumnResizing: true
 		columnAutoWidth: true
 		"export":
-			enabled: true,
+			enabled: true
 			fileName: "Employees"
 		dataSource: reportData
 		paging: false
@@ -236,7 +236,7 @@ renderSummaryReport = (reportObject, reportData)->
 		allowColumnResizing: true
 		columnAutoWidth: true
 		"export":
-			enabled: true,
+			enabled: true
 			fileName: "Employees"
 		dataSource: reportData
 		paging: false
@@ -340,6 +340,9 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		showRowTotals: grouping
 		showColumnTotals: grouping
 		fieldChooser: false
+		"export":
+			enabled: true
+			fileName: "Employees"
 		dataSource:
 			fields: reportFields
 			store: reportData).dxPivotGrid('instance')
