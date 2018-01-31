@@ -18,6 +18,7 @@
                         <label>
                             <span>显示</span>
                         </label>
+                        {{#if showGroupingMenu}}
                         <div>
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-grouping">
@@ -25,6 +26,8 @@
                                  小计
                             </label>
                         </div>
+                        {{/if}}
+                        {{#if showTotalingMenu}}
                         <div>
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-totaling">
@@ -32,6 +35,8 @@
                                  总计
                             </label>
                         </div>
+                        {{/if}}
+                        {{#if showCountingMenu}}
                         <div>
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-counting">
@@ -39,6 +44,7 @@
                                 记录计数
                             </label>
                         </div>
+                        {{/if}}
                     </div>
                 </div>
                 <div class="slds-modal__footer">

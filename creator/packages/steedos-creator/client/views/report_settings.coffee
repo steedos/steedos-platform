@@ -9,6 +9,23 @@ Template.report_settings.onRendered ->
 
 
 Template.report_settings.helpers
+	showGroupingMenu: ->
+		options = Template.instance().data.options
+		if _.isEmpty options
+			return true
+		return options.indexOf("grouping") > -1
+	
+	showTotalingMenu: ->
+		options = Template.instance().data.options
+		if _.isEmpty options
+			return true
+		return options.indexOf("totaling") > -1
+	
+	showCountingMenu: ->
+		options = Template.instance().data.options
+		if _.isEmpty options
+			return true
+		return options.indexOf("counting") > -1
 
 		 
 

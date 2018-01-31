@@ -98,7 +98,13 @@ Template.creator_report.events
 			$('#pivotgrid-chart').hide()
 
 	'click .btn-settings': (event, template)->
-		Modal.show("report_settings", {report_settings: template.report_settings})
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		data = {report_settings: template.report_settings}
+		if reportObject.report_type == "tabular"
+			# 表格模式时只显示总计选项
+			data.options = ["totaling"]
+		Modal.show("report_settings", data)
 
 	'click .btn-refresh': (event, template)->
 		renderReport.bind(template)()
@@ -118,10 +124,31 @@ renderTabularReport = (reportObject, reportData)->
 		}
 	unless reportColumns
 		reportColumns = []
+	
+	reportSummary = {}
+	totalSummaryItems = []
+
+	totaling = reportObject.totaling
+	if reportObject.totaling == undefined
+		totaling = true
+
+	if totaling and reportColumns.length
+
+		defaultCounterSum = 
+			column: reportColumns[0].dataField #这时不可以用_id，因为_id是不显示的列，只有显示的列才会出现在总计计数中
+			summaryType: "count"
+			displayFormat: "总计 ({0}条记录)",
+		totalSummaryItems.push defaultCounterSum
+	
+	# 注意这里如果totalItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
+	reportSummary.totalItems = totalSummaryItems
+	
+	console.log "renderTabularReport.reportSummary:", reportSummary
 	datagrid = $('#datagrid').dxDataGrid(
 		dataSource: reportData
 		paging: false
-		columns: reportColumns).dxDataGrid('instance')
+		columns: reportColumns
+		summary: reportSummary).dxDataGrid('instance')
 
 renderSummaryReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
