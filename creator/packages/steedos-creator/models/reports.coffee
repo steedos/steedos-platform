@@ -16,8 +16,8 @@ Creator.Objects.reports =
 			type: "select"
 			defaultValue: "tabular"
 			options: [
-				{label: "列表", value: "tabular"},
-				{label: "汇总", value: "summary"},
+				{label: "表格", value: "tabular"},
+				{label: "摘要", value: "summary"},
 				{label: "矩阵", value: "matrix"}
 			]
 		object_name: 
