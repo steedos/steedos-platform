@@ -143,8 +143,13 @@ renderTabularReport = (reportObject, reportData)->
 	# 注意这里如果totalItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	
-	console.log "renderTabularReport.reportSummary:", reportSummary
+	console.log "renderTabularReport.reportSummary:", JSON.stringify(reportSummary)
+	console.log "renderTabularReport.reportColumns:", JSON.stringify(reportColumns)
+	console.log "renderTabularReport.reportData:", JSON.stringify(reportData)
 	datagrid = $('#datagrid').dxDataGrid(
+		allowColumnReordering: true
+		allowColumnResizing: true
+		columnAutoWidth: true
 		dataSource: reportData
 		paging: false
 		columns: reportColumns
@@ -224,6 +229,9 @@ renderSummaryReport = (reportObject, reportData)->
 
 	console.log "renderSummaryReport.reportSummary:", reportSummary
 	datagrid = $('#datagrid').dxDataGrid(
+		allowColumnReordering: true
+		allowColumnResizing: true
+		columnAutoWidth: true
 		dataSource: reportData
 		paging: false
 		columns: reportColumns
