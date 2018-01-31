@@ -4,7 +4,6 @@ Creator.Objects.archive_records =
 	label: "档案"
 	enable_search: true
 	enable_files: true
-	enable_api: true
 	fields:
 		archives_name:
 			type:"text"
