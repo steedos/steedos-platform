@@ -235,6 +235,8 @@ renderSummaryReport = (reportObject, reportData)->
 		allowColumnReordering: true
 		allowColumnResizing: true
 		columnAutoWidth: true
+		groupPanel:
+			visible: true
 		"export":
 			enabled: true
 			fileName: reportObject.name
