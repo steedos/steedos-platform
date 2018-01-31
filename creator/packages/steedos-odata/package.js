@@ -7,7 +7,8 @@ Package.describe({
 
 Npm.depends({
 	'odata-v4-parser': "git+https://github.com/steedos/odata-v4-parser#master",
-	'odata-v4-mongodb': "git+https://github.com/steedos/odata-v4-mongodb#master"
+	'odata-v4-mongodb': "git+https://github.com/steedos/odata-v4-mongodb#master",
+	'basic-auth': '2.0.0'
 });
 
 

@@ -58,13 +58,14 @@ Meteor.startup ->
 										selector = {space: @spaceId}
 										entities = collection.find(selector).fetch()
 										if entities
-											{status: 'success', data: entities}
+											{status: 'success', value: entities}
 										else
 											statusCode: 404
 											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
 									else
 										console.log 'queryParams: ', @queryParams
 										console.log 'urlParams: ', @urlParams
+										console.log 'bodyParams: ', @bodyParams
 										createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
 										# 强制增加過濾掉件space: @spaceId
 										createFilter.space = @spaceId
@@ -74,7 +75,7 @@ Meteor.startup ->
 											entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
 										scannedCount = collection.find(createFilter).count()
 										if entities
-											{status: 'success', data: entities, '@odata.count': scannedCount}
+											{status: 'success', value: entities, '@odata.count': scannedCount}
 										else
 											statusCode: 404
 											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
@@ -95,7 +96,7 @@ Meteor.startup ->
 									entity = collection.findOne entityId
 									if entity
 										statusCode: 201
-										{status: 'success', data: entity}
+										{status: 'success', value: entity}
 									else
 										statusCode: 404
 										body: {status: 'fail', message: 'No item added'}
@@ -114,7 +115,7 @@ Meteor.startup ->
 									selector = {_id: @urlParams.id, space: @spaceId}
 									entity = collection.findOne selector
 									if entity
-										{status: 'success', data: entity}
+										{status: 'success', value: entity}
 									else
 										statusCode: 404
 										body: {status: 'fail', message: 'Item not found'}
@@ -134,7 +135,7 @@ Meteor.startup ->
 									entityIsUpdated = collection.update selector, $set: @bodyParams
 									if entityIsUpdated
 										entity = collection.findOne @urlParams.id
-										{status: 'success', data: entity}
+										{status: 'success', value: entity}
 									else
 										statusCode: 404
 										body: {status: 'fail', message: 'Item not found'}
@@ -152,7 +153,7 @@ Meteor.startup ->
 							if permissions.allowDelete
 									selector = {_id: @urlParams.id, space: @spaceId}
 									if collection.remove selector
-										{status: 'success', data: message: 'Item removed'}
+										{status: 'success', message: 'Item removed'}
 									else
 										statusCode: 404
 										body: {status: 'fail', message: 'Item not found'}
