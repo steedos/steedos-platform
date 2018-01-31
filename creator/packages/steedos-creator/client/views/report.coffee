@@ -150,6 +150,9 @@ renderTabularReport = (reportObject, reportData)->
 		allowColumnReordering: true
 		allowColumnResizing: true
 		columnAutoWidth: true
+		"export":
+			enabled: true,
+			fileName: "Employees"
 		dataSource: reportData
 		paging: false
 		columns: reportColumns
@@ -232,6 +235,9 @@ renderSummaryReport = (reportObject, reportData)->
 		allowColumnReordering: true
 		allowColumnResizing: true
 		columnAutoWidth: true
+		"export":
+			enabled: true,
+			fileName: "Employees"
 		dataSource: reportData
 		paging: false
 		columns: reportColumns

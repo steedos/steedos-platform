@@ -111,7 +111,7 @@ Creator.Objects.reports =
 			label: "保存"
 			visible: (object_name, record_id, record_permissions)->
 				report = Creator.Collections[object_name].findOne record_id
-				if report.owner == Meteor.userId()
+				if report?.owner == Meteor.userId()
 					return true
 				else
 					return Creator.isSpaceAdmin()

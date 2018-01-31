@@ -166,6 +166,7 @@ steedos:cfs-worker@0.1.5
 steedos:cms@0.0.7
 steedos:creator@0.0.5
 steedos:datatables-extensions@0.0.1
+steedos:devexpress@0.0.1
 steedos:e164-phones-countries@1.0.3
 steedos:filesize@0.0.1
 steedos:fullcalendar@3.4.0_1
