@@ -94,16 +94,17 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 			$(node).html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: cellData, object_name: object_name, record_permissions: record_permissions, is_related: is_related}, node)
 	cols.push(action_col)
 
-	checkbox_col = 
-		title: '<div class="slds-th__action"></div>'
-		data: "_id"
-		width: '20px'
-		className: "slds-cell-edit cellContainer tabular-col-checkbox #{objectColName}"
-		orderable: false
-		createdCell: (node, cellData, rowData) ->
-			$(node).attr("data-label", "Checkbox")
-			$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
-	cols.splice(0, 0, checkbox_col)
+	unless is_related
+		checkbox_col = 
+			title: '<div class="slds-th__action"></div>'
+			data: "_id"
+			width: '20px'
+			className: "slds-cell-edit cellContainer tabular-col-checkbox #{objectColName}"
+			orderable: false
+			createdCell: (node, cellData, rowData) ->
+				$(node).attr("data-label", "Checkbox")
+				$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
+		cols.splice(0, 0, checkbox_col)
 	
 	return cols
 
@@ -150,13 +151,15 @@ Creator.initListViews = (object_name)->
 		pub: "steedos_object_tabular"
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
-			$(thead).find('th').eq(0).css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
+			firstTh = $(thead).find('th').eq(0)
+			if firstTh.hasClass("tabular-col-checkbox")
+				firstTh.css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
 
 		drawCallback:(settings)->
 			self = this
 
 			Tracker.nonreactive ->
-# 仅对list视图的tabular进行表格宽度设置
+				# 仅对list视图的tabular进行表格宽度设置
 				if $(self).closest(".list-table-container").length
 					object_name = Session.get("object_name")
 					list_view_id = Session.get("list_view_id")
@@ -178,7 +181,10 @@ Creator.initListViews = (object_name)->
 
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
 			Tracker.nonreactive ->
-				currentDataset = self.find(".select-all")[0]?.dataset
+				checkboxAll = self.find(".select-all")
+				unless checkboxAll.length
+					return
+				currentDataset = checkboxAll[0]?.dataset
 				currentObjectName = currentDataset.objectName
 
 				selectedIds = Creator.TabularSelectedIds[currentObjectName]
@@ -190,7 +196,6 @@ Creator.initListViews = (object_name)->
 					checked = selectedIds.indexOf(item.dataset.id) > -1
 					$(item).prop("checked",checked)
 
-				checkboxAll = self.find(".select-all")
 				selectedLength = selectedIds.length
 				if selectedLength > 0 and checkboxs.length != selectedLength
 					checkboxAll.prop("indeterminate",true)
