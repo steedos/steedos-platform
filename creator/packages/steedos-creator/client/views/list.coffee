@@ -285,6 +285,8 @@ Template.creator_list.events
 		if isSelectedAll
 			checkboxs.each (i,n)->
 				Creator.TabularSelectedIds[currentObjectName].push n.dataset.id
+		else
+			Creator.TabularSelectedIds[currentObjectName] = []
 		checkboxs.prop("checked",isSelectedAll)
 
 	'click .slds-table td': (event, template)->
