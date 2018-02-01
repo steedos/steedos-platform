@@ -15,11 +15,12 @@ Template.objectMenu.helpers
 
     object_url: (object_name)->
         app_id = Template.instance().data.app_id
-        return Creator.getObjectUrl(object_name, null, app_id)
+        return Creator.getSwitchListUrl(object_name, app_id)
         
 
 Template.objectMenu.events
     'click .object-menu-back': (event, template)->
         template.$(".object-menu").animateCss "fadeOutRight", ->
             Blaze.remove(template.view)
+            urlQuery.pop()
             FlowRouter.go '/app/menu'

@@ -40,10 +40,11 @@ Template.mobileList.helpers
 
 Template.mobileList.events
 	'click .mobile-list-back': (event, template)->
-		app_id = this.app_id
+		lastUrl = urlQuery[urlQuery.length - 2]
 		template.$(".mobile-list").animateCss "fadeOutRight", ->
-			Blaze.remove(template.view)                
-			if $(this).prev(".object-menu").length
-				FlowRouter.go 'app/#{app_id}'
+			Blaze.remove(template.view)         
+			if lastUrl
+				urlQuery.pop()
+				FlowRouter.go lastUrl
 			else
 				FlowRouter.go '/app/menu'
