@@ -9,7 +9,8 @@ checkUserSigned = (context, redirect) ->
 			urlQuery.push currentPath
 
 initLayout = ()->
-	if Steedos.isMobile() and (!$(".wrapper").length or !$(".object-menu").length)
+	if Steedos.isMobile() and (!$(".wrapper").length or !$("#home_menu").length)
+		console.log "initLayout-----"
 		BlazeLayout.render Creator.getLayout(),
 			main: "homeMenu"
 
@@ -36,11 +37,12 @@ FlowRouter.route '/app/menu',
 FlowRouter.route '/app/:app_id',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		if Steedos.isMobile() and $(".content-wrapper #object_menu").length == 0
-			app_id = FlowRouter.getParam("app_id")
-			data = {app_id: app_id}
-			Meteor.defer ->
-				Blaze.renderWithData(Template.objectMenu, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+		if Steedos.isMobile() 
+			if $(".content-wrapper #object_menu").length == 0
+				app_id = FlowRouter.getParam("app_id")
+				data = {app_id: app_id}
+				Meteor.defer ->
+					Blaze.renderWithData(Template.objectMenu, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 		else
 			Session.set("app_id", FlowRouter.getParam("app_id"))
 			BlazeLayout.render Creator.getLayout(),

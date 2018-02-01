@@ -28,8 +28,8 @@ Template.listSwitch.events
 		lastUrl = urlQuery[urlQuery.length - 2]
 		template.$("#list_switch").animateCss "fadeOutRight", ->
 			Blaze.remove(template.view)
+			urlQuery.pop()
 			if lastUrl
-				urlQuery.pop()
 				FlowRouter.go lastUrl
 			else
 				FlowRouter.go '/app/menu'
