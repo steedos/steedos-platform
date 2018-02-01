@@ -74,15 +74,17 @@
 						{{/if}}
 					{{/if}}
 					{{#if cmIsMultipleUpdate}}
-						<div class="form-group multiple-box">
-							<label class="col-sm-2 control-label"></label>
-							<div class="col-sm-10">
-								<label class="slds-checkbox">
-									<input class="keyboardMode--trigger ckb-multiple-update" type="checkbox">
-									<span class="slds-checkbox--faux"></span>
-									<span class="label-multiple-update">更新 {{cmTargetIds.length}} 个选定记录</span>
-								</label>
-								<span class="help-block"></span>
+						<div class="slds-grid view-page-section-row">
+							<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+								<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+									<div class="form-group multiple-box">
+										<label class="slds-checkbox">
+											<input class="keyboardMode--trigger ckb-multiple-update" type="checkbox">
+											<span class="slds-checkbox--faux"></span>
+											<span class="label-multiple-update">更新 {{cmTargetIds.length}} 个选定记录</span>
+										</label>
+									</div>
+								</div>
 							</div>
 						</div>
 					{{/if}}
