@@ -1,41 +1,45 @@
 Template.mobileList.onRendered ->
 	this.$(".mobile-list").removeClass "hidden"
 	this.$(".mobile-list").animateCss "fadeInRight"
-	DevExpress.ui.setTemplateEngine("underscore");
 
 	object_name = Template.instance().data.object_name
 	app_id = Template.instance().data.app_id
 	list_view_id = Template.instance().data.list_view_id
 	url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 	name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+	
+	this.autorun (c)->
+		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready()
+			c.stop()
+			console.log "DevExpress"
+			DevExpress.ui.setTemplateEngine("underscore");
+			$("#gridContainer").dxList({
+				dataSource: {
+					store: {
+						type: "odata",
+						version: 4,
+						url: Steedos.absoluteUrl(url)
+						withCredentials: false,
+						beforeSend: (request) ->
+							request.headers['X-User-Id'] = Meteor.userId()
+							request.headers['X-Space-Id'] = Steedos.spaceId()
+							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+						onLoading: (loadOptions)->
+							console.log loadOptions
+							return
 
-	$("#gridContainer").dxList({
-		dataSource: {
-			store: {
-				type: "odata",
-				version: 4,
-				url: Steedos.absoluteUrl(url)
-				withCredentials: false,
-				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
-					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				onLoading: (loadOptions)->
-					console.log loadOptions
-					return
-
-			},
-			select: [
-				name_field_key
-			]
-		},
-		height: "100%"
-		searchEnabled: true
-		searchExpr: name_field_key,
-		pageLoadMode: "scrollBottom"
-		pullRefreshEnabled: true
-		itemTemplate: $("#item-template")
-	});
+					},
+					select: [
+						name_field_key
+					]
+				},
+				height: "100%"
+				searchEnabled: true
+				searchExpr: name_field_key,
+				pageLoadMode: "scrollBottom"
+				pullRefreshEnabled: true
+				itemTemplate: $("#item-template")
+			});
 
 Template.mobileList.helpers
 	icon: ()->

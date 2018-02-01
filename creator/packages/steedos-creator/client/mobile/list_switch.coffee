@@ -1,12 +1,6 @@
 Template.listSwitch.onRendered ->
-	self = this
-	self.autorun ->
-		object_name = Template.instance().data.object_name
-		if object_name
-			Creator.subs["Creator"].subscribe "object_listviews", object_name
-
-	self.$("#list_switch").removeClass "hidden"	
-	self.$("#list_switch").animateCss "fadeInRight"
+	this.$("#list_switch").removeClass "hidden"	
+	this.$("#list_switch").animateCss "fadeInRight"
 
 
 Template.listSwitch.helpers

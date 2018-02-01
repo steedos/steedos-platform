@@ -8,9 +8,16 @@ checkUserSigned = (context, redirect) ->
 		if currentPath != urlQuery[urlQuery.length - 1]
 			urlQuery.push currentPath
 
+subscribe_object_listviews = (context, redirect)->
+	Tracker.autorun ()->
+		Creator.subs["Creator"]?.subscribe "object_listviews", context.params.object_name
+
+set_sessions = (context, redirect)->
+	Session.set("app_id", context.params.app_id)
+	Session.set("object_name", context.params.object_name)
+
 initLayout = ()->
 	if Steedos.isMobile() and (!$(".wrapper").length or !$("#home_menu").length)
-		console.log "initLayout-----"
 		BlazeLayout.render Creator.getLayout(),
 			main: "homeMenu"
 
@@ -48,8 +55,12 @@ FlowRouter.route '/app/:app_id',
 			BlazeLayout.render Creator.getLayout(),
 				main: "creator_app_home"
 
-FlowRouter.route '/app/:app_id/:object_name/list/switch',
-	triggersEnter: [ checkUserSigned, initLayout ],
+objectRoutes = FlowRouter.group
+	prefix: '/app/:app_id/:object_name',
+	name: 'objectRoutes',
+	triggersEnter: [checkUserSigned, set_sessions, initLayout]
+
+objectRoutes.route '/list/switch',
 	action: (params, queryParams)->
 		if Steedos.isMobile() and $(".content-wrapper #list_switch").length == 0
 			app_id = FlowRouter.getParam("app_id")
@@ -58,8 +69,7 @@ FlowRouter.route '/app/:app_id/:object_name/list/switch',
 			Meteor.defer ->
 				Blaze.renderWithData(Template.listSwitch, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 
-FlowRouter.route '/app/:app_id/:object_name/:list_view_id/list',
-	triggersEnter: [ checkUserSigned, initLayout ],
+objectRoutes.route '/:list_view_id/list',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		object_name = FlowRouter.getParam("object_name")
