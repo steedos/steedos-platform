@@ -63,6 +63,10 @@ Creator.Objects.queue_import =
 			label:"状态"
 			#allowvalue: 待导入、导入中、导入成功、导入失败
 			omit:true
+		error:
+			label:"错误信息"
+			type:["text"]
+			omit:true
 	list_views:
 		default:
 			columns: ["import_file", "encoding", "object_name","field_mapping"]
