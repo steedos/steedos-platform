@@ -3,8 +3,12 @@ fs = Npm.require 'fs'
 logger = new Logger 'QUEUE_IMPORT'
 
 converterString = (field_name, dataCell,jsonObj)->
-	jsonObj[field_name] = dataCell
-
+	text_error = ""
+	if dataCell
+		jsonObj[field_name] = dataCell
+	else
+		text_error = "#{field_name}不能为空"
+	return text_error
 converterDate = (field_name, dataCell,jsonObj)->
 	date_error = ""
 	date = new Date(dataCell)
@@ -61,8 +65,8 @@ converterBool = (field_name, dataCell,jsonObj)->
 	return bool_error
 insertRow = (dataRow,objectName,field_mapping)->
 	jsonObj = {}
+	insertInfo = {}
 	errorInfo = ""
-	
 	# 对象的fields
 	objFields = Creator?.getObject(objectName)?.fields
 
@@ -86,16 +90,25 @@ insertRow = (dataRow,objectName,field_mapping)->
 					when "boolean" then error = converterBool field_name,dataCell,jsonObj
 					when "select" then error = converterSelect objectName,field_name,dataCell,jsonObj
 					when "lookup" then error = converterLookup objectName,field_name,dataCell,jsonObj
-					when "text" then converterString field_name,dataCell,jsonObj
+					when "text" then error = converterString field_name,dataCell,jsonObj
 		if noField
 			error ="#{fieldLable}不是对象的属性"
 		if error
 			console.log "error=====",error
 			errorInfo = errorInfo + "," + error
-	#errorInfo = date_error + number_error + bool_error + select_error + lookup_error + text_error
+	insertInfo["insertState"] = true
 	console.log "errorInfo===",errorInfo
-	Creator.Collections[objectName].insert(jsonObj)
-	return errorInfo
+	if jsonObj
+		Creator.Collections[objectName].insert(jsonObj,(error,result)->
+			if error
+				insertInfo["insertState"] = false
+				)
+	else
+		insertInfo["insertState"] = false
+	insertInfo["errorInfo"] = errorInfo
+	
+	console.log  insertInfo
+	return insertInfo
 
 importObject = (importObj) ->
 	# 错误的数据
@@ -113,13 +126,27 @@ importObject = (importObj) ->
 	# 将字符串根据换行符分割为数组
 	dataTable = dataStr.split("\n")
 	# 循环每一行，读取数据的每一列
+	total_count = dataTable.length
+	success_count = 0
+	failure_count = 0
 	dataTable.forEach (dataRow)->
 		# 插入一行数据
-		errorInfo = insertRow dataRow,objectName,field_mapping
-		if errorInfo
+		insertInfo = insertRow dataRow,objectName,field_mapping
+		if insertInfo
 			# 存到数据库 error字段
-			errorList.push dataRow+errorInfo
-	Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{error:errorList}})
+			errorList.push dataRow+insertInfo.errorInfo			
+			if insertInfo.insertState
+				success_count = success_count + 1
+			else
+				failure_count = failure_count + 1
+	console.log total_count,success_count,failure_count
+	Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
+		error:errorList
+		total_count:total_count
+		success_count:success_count
+		failure_count:failure_count
+		status:"finished"
+		}})
 
 Creator.selectImportJobs = () ->
 	waittingimportjobs = Creator.Collections["queue_import"].find({status:"waiting"},{fields:{created:1}}).fetch()
