@@ -118,13 +118,21 @@ importObject = (importObj) ->
 	objectName = importObj?.object_name
 
 	field_mapping = importObj?.field_mapping
-	dataStr = importObj?.import_file
 
-	# fieldMapping = [ "单位名称", "全宗号" ]
-	# dataStream = "单位名称A,全宗号A\n单位名称B,全宗号B\n单位名称C,全宗号C"
+	# 读取文件
+	filePath = filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
+
+	fileName = importObj?._id + "-no.csv"
+
+	fileAddress = path.join filePath, fileName
+
+	readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
 
 	# 将字符串根据换行符分割为数组
-	dataTable = dataStr.split("\n")
+	dataTable = readStream.split("\r\n")
+
+	console.log dataTable
+
 	# 循环每一行，读取数据的每一列
 	total_count = dataTable.length
 	success_count = 0
@@ -172,3 +180,23 @@ Creator.startImportJobs = () ->
 		importObject importObj
 		endtime = new Date()
 		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})
+
+
+
+# Creator.readCSV()
+Creator.readCSV = ()->
+	# 读取文件流
+	filePath = filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
+
+	fileName = "zSrsKtKh3aMmrS4ts-no.csv"
+
+	fileAddress = path.join filePath, fileName
+
+	readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
+
+	dataTable = readStream.split("\n")
+
+	for dataRow in dataTable
+		console.log "================"
+		if dataRow
+			console.log dataRow
