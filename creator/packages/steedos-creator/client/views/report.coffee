@@ -49,10 +49,17 @@ Template.creator_report.helpers
 	isChartOpen: ()->
 		return Template.instance().is_chart_open?.get()
 	
-	isChartDisabled: ->
-		record_id = Session.get "record_id"
-		report = Creator.Reports[record_id] or Creator.getObjectRecord()
-		return report?.report_type == "tabular"
+	isChartDisabled: ()->
+		return Template.instance().is_chart_disabled?.get()
+	
+	isSavable: ->
+		report = Creator.getObjectRecord()
+		unless report
+			return false
+		if report?.owner == Meteor.userId()
+			return true
+		else
+			return Creator.isSpaceAdmin()
 
 
 Template.creator_report.events
@@ -86,6 +93,7 @@ Template.creator_report.events
 			renderReport.bind(template)()
 
 	'click .btn-toggle-filter': (event, template)->
+		debugger
 		isFilterOpen = template.is_filter_open.get()
 		template.is_filter_open.set(!isFilterOpen)
 
@@ -108,6 +116,43 @@ Template.creator_report.events
 
 	'click .btn-refresh': (event, template)->
 		renderReport.bind(template)()
+
+	'click .record-action-save': (event, template)->
+		record_id = Session.get "record_id"
+		objectName = Session.get("object_name")
+		filters = Session.get("filter_items")
+		filter_scope = Session.get("filter_scope")
+		report_settings = template.report_settings.get()
+		report = Creator.getObjectRecord()
+		if report.report_type = "matrix"
+			fields = template.pivotGridInstance.getDataSource()._fields
+			debugger
+			# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
+			# 比如时间类型的字段会额外自动增加三个子字段，分别按年、季、月分组
+			columns = _.where(fields,{area:"column","groupInterval":undefined})
+			columns = _.sortBy(columns, 'areaIndex')
+			columns = _.pluck(columns,"dataField")
+			rows = _.where(fields,{area:"row","groupInterval":undefined})
+			rows = _.sortBy(rows, 'areaIndex')
+			rows = _.pluck(rows,"dataField")
+			values = _.where(fields,{area:"data"})
+			values = _.sortBy(values, 'areaIndex')
+			values = _.pluck(values,"dataField")
+		else
+			columns = report.columns
+			rows = report.rows
+			values = report.values
+
+		Creator.getCollection(objectName).update({_id: record_id},{$set:{
+			filters: filters
+			filter_scope: filter_scope
+			columns: columns
+			rows: rows
+			values: values
+			grouping: report_settings.grouping
+			totaling: report_settings.totaling
+			counting: report_settings.counting
+		}})
 
 
 renderTabularReport = (reportObject, reportData)->
@@ -158,6 +203,8 @@ renderTabularReport = (reportObject, reportData)->
 		columns: reportColumns
 		summary: reportSummary).dxDataGrid('instance')
 
+	this.dataGridInstance = datagrid
+
 renderSummaryReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
@@ -192,8 +239,9 @@ renderSummaryReport = (reportObject, reportData)->
 		defaultCounterSum = 
 			column: "_id"
 			summaryType: "count"
-		groupSummaryItems.push defaultCounterSum
-		totalSummaryItems.push defaultCounterSum
+		if !reportObject.values or reportObject.values.indexOf("_id") < 0
+			groupSummaryItems.push defaultCounterSum
+			totalSummaryItems.push defaultCounterSum
 	
 	grouping = reportObject.grouping
 	if reportObject.grouping == undefined
@@ -204,27 +252,28 @@ renderSummaryReport = (reportObject, reportData)->
 
 	grouping = if grouping then reportObject.rows?.length else false
 	_.each reportObject.values, (value)->
-		# unless value.field
-		# 	return
-		# unless value.operation
-		# 	return
-		valueFieldKey = value.replace(/\./g,"_")
-		valueField = objectFields[value.split(".")[0]]
-		operation = "count"
-		# 数值类型就定为sum统计，否则默认为计数统计
-		if valueField.type == "number"
-			operation = "sum"
-		summaryItem = 
-			column: valueFieldKey
-			summaryType: operation
-			# displayFormat: value.label
-		# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
-		if ["sum"].indexOf(operation) > -1
-			summaryItem.alignByColumn = true
-		if grouping
-			groupSummaryItems.push summaryItem
-		if totaling
-			totalSummaryItems.push summaryItem
+		if value == "_id"
+			if counting
+				groupSummaryItems.push defaultCounterSum
+				totalSummaryItems.push defaultCounterSum
+		else
+			valueFieldKey = value.replace(/\./g,"_")
+			valueField = objectFields[value.split(".")[0]]
+			operation = "count"
+			# 数值类型就定为sum统计，否则默认为计数统计
+			if valueField.type == "number"
+				operation = "sum"
+			summaryItem = 
+				column: valueFieldKey
+				summaryType: operation
+				# displayFormat: value.label
+			# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
+			if ["sum"].indexOf(operation) > -1
+				summaryItem.alignByColumn = true
+			if grouping
+				groupSummaryItems.push summaryItem
+			if totaling
+				totalSummaryItems.push summaryItem
 	
 	# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
@@ -245,7 +294,10 @@ renderSummaryReport = (reportObject, reportData)->
 		columns: reportColumns
 		summary: reportSummary).dxDataGrid('instance')
 
+	this.dataGridInstance = datagrid
+
 renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
+	self = this
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -284,35 +336,36 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			dataField: "_id"
 			summaryType: "count"
 			area: 'data'
-		reportFields.push defaultCounterSum
+		if !reportObject.values or reportObject.values.indexOf("_id") < 0
+			reportFields.push defaultCounterSum
 	
 	_.each reportObject.values, (value)->
-		# unless value.field
-		# 	return
-		# unless value.operation
-		# 	return
-		valueFieldKey = value.replace(/\./g,"_")
-		valueField = objectFields[value.split(".")[0]]
-		operation = "count"
-		# 数值类型就定为sum统计，否则默认为计数统计
-		if valueField.type == "number"
-			operation = "sum"
-		caption = valueField.label
-		unless caption
-			caption = objectName + "_" + valueFieldKey
-		switch operation
-			when "sum"
-				caption = "总和 #{caption}"
-				break
-			when "count"
-				caption = "计数 #{caption}"
-				break
-		reportFields.push 
-			caption: caption
-			dataField: valueFieldKey
-			# dataType: valueField.type
-			summaryType: operation
-			area: 'data'
+		if value == "_id"
+			if counting
+				reportFields.push defaultCounterSum
+		else
+			valueFieldKey = value.replace(/\./g,"_")
+			valueField = objectFields[value.split(".")[0]]
+			operation = "count"
+			# 数值类型就定为sum统计，否则默认为计数统计
+			if valueField.type == "number"
+				operation = "sum"
+			caption = valueField.label
+			unless caption
+				caption = objectName + "_" + valueFieldKey
+			switch operation
+				when "sum"
+					caption = "总和 #{caption}"
+					break
+				when "count"
+					caption = "计数 #{caption}"
+					break
+			reportFields.push 
+				caption: caption
+				dataField: valueFieldKey
+				# dataType: valueField.type
+				summaryType: operation
+				area: 'data'
 
 	grouping = reportObject.grouping
 	if reportObject.grouping == undefined
@@ -321,7 +374,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	if reportObject.totaling == undefined
 		totaling = true
 	
-	pivotGridChart = $('#pivotgrid-chart').dxChart(
+	pivotGridChart = $('#pivotgrid-chart').show().dxChart(
 		equalBarWidth: false
 		commonSeriesSettings: 
 			type: 'bar'
@@ -332,16 +385,24 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		adaptiveLayout: 
 			width: 450
 	).dxChart('instance')
-	pivotGrid = $('#pivotgrid').hide().dxPivotGrid(
+	pivotGrid = $('#pivotgrid').show().dxPivotGrid(
+		fieldPanel:
+			showColumnFields: true
+			showDataFields: true
+			showFilterFields:false
+			showRowFields: true
+			allowFieldDragging: true
+			visible: true
 		paging: false
 		allowSortingBySummary: true
-		allowFiltering: true
-		showBorders: true
+		allowSorting: true
+		allowFiltering: false
 		showColumnGrandTotals: totaling
 		showRowGrandTotals: totaling
 		showRowTotals: grouping
 		showColumnTotals: grouping
-		fieldChooser: false
+		# fieldChooser: 
+		# 	enabled: true
 		"export":
 			enabled: true
 			fileName: reportObject.name
@@ -352,8 +413,19 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		dataFieldsDisplayMode: 'splitPanes'
 		alternateDataFields: false
 
-	unless isOnlyForChart
-		$('#pivotgrid').show()
+	if isOnlyForChart
+		$('#pivotgrid').hide()
+	
+	
+	if _.where(reportFields,{area:"data"}).length
+		self.is_chart_open.set(true)
+		self.is_chart_disabled.set(false)
+	else
+		self.is_chart_open.set(false)
+		self.is_chart_disabled.set(true)
+		$('#pivotgrid-chart').hide()
+
+	this.pivotGridInstance = pivotGrid
 
 renderReport = (reportObject)->
 	unless reportObject
@@ -415,6 +487,7 @@ Template.creator_report.onRendered ->
 			self.report_settings.set {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting}
 			if reportObject.report_type == "tabular"
 				self.is_chart_open.set false
+				self.is_chart_disabled.set true
 			renderReport.bind(self)(reportObject)
 
 	this.autorun (c)->
@@ -435,10 +508,9 @@ Template.creator_report.onCreated ->
 	this.filter_scope_for_cancel = new ReactiveVar()
 	this.is_filter_open = new ReactiveVar(false)
 	this.is_chart_open = new ReactiveVar(true)
+	this.is_chart_disabled = new ReactiveVar(false)
 	this.report_settings = new ReactiveVar()
+	this.dataGridInstance = null
+	this.pivotGridInstance = null
 
 	Template.creator_report.renderReport = renderReport.bind(this)
-	
-	Template.creator_report.getReportSettings = (->
-		return this.report_settings.get()
-	).bind(this)

@@ -63,6 +63,13 @@
 										</a>
 									</li>
 								{{/each}}
+								{{#if isSavable}}
+									<li class="slds-button slds-button--neutral slds-truncate record-action-save">
+										<a href="javascript:void(0);" title="保存" class="">
+											<div class="slds-truncate" title="保存">保存</div>
+										</a>
+									</li>
+								{{/if}}
 								{{#if moreActions}}
 									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
 										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
