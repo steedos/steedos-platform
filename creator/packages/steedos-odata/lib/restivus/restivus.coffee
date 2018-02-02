@@ -21,13 +21,6 @@ class @OdataRestivus
 						userId: @request.headers['x-user-id']
 						spaceId: @request.headers['x-space-id'] || @urlParams['spaceId']
 						token: token
-					else if @request.headers['authorization']
-							console.log 'basicAuth: ', basicAuth(@request.headers['authorization'])
-							auth = basicAuth(@request.headers['authorization'])
-							user = Meteor.users.findOne({username: auth.name})
-							userId: user._id
-							spaceId: @request.headers['x-space-id'] || @urlParams['spaceId']
-							token: token
 					else
 						userId: @request.headers['x-user-id']
 						spaceId: @request.headers['x-space-id'] || @urlParams['spaceId']
