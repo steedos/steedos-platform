@@ -121,20 +121,22 @@ importObject = (importObj) ->
 
 	field_mapping = importObj?.field_mapping
 
-	# 读取文件
-	filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
+	#########读取文件，暂时未开放########
+	# filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
 
-	fileName = importObj?._id + "-no.csv"
+	# fileName = importObj?._id + "-no.csv"
 
-	fileAddress = path.join filePath, fileName
+	# fileAddress = path.join filePath, fileName
 
-	readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
+	# readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
+
+	readStream = importObj.import_file
 
 	# 将字符串根据换行符分割为数组
-	dataTable = readStream.split("\r\n")
+	dataTable = readStream.split("\n")
 
 	# 循环每一行，读取数据的每一列
-	total_count = dataTable.length - 1
+	total_count = dataTable.length
 	success_count = 0
 	failure_count = 0
 	dataTable.forEach (dataRow)->
