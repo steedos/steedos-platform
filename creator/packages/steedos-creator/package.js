@@ -194,6 +194,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/animate.css', 'client');
 	api.addFiles('client/animate.js', 'client');
+	api.addFiles('client/common_style.less', 'client');
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 
