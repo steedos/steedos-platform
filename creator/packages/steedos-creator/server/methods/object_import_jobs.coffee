@@ -12,20 +12,15 @@ converterString = (field_name, dataCell,jsonObj)->
 converterDate = (field_name, dataCell,jsonObj)->
 	date_error = ""
 	date = new Date(dataCell)
-	console.log "date====",date
 	if date.getFullYear() and Object.prototype.toString.call(date)== '[object Date]'
 		jsonObj[field_name] = date
-		console.log date
 	else
-		console.log "555"
 		date_error = "#{dataCell}不是日期类型数据"
-		console.log "date_error=====",date_error
 	return date_error
 converteInt = (field_name, dataCell,jsonObj)->
 	number_error = ""
 	number = parseInt(dataCell)
 	if !isNaN(number)
-		console.log "dataCell===",dataCell
 		jsonObj[field_name] = number
 	else
 		number_error =  "#{dataCell}不是数值类型数据"
@@ -43,11 +38,9 @@ converterLookup = (objectName,field_name, dataCell,jsonObj)->
 	lookup_error = ""
 	fields = Creator.getObject(objectName).fields
 	reference_to_object = fields[field_name]?.reference_to
-	console.log reference_to_object
 	selectfield = Creator.getObject(reference_to_object).NAME_FIELD_KEY
 	lookup = Creator.Collections[reference_to_object].findOne({"#{selectfield}":dataCell})
 	if lookup
-		console.log lookup._id
 		jsonObj[field_name] =lookup._id
 	else
 		lookup_error = "#{dataCell}不是Lookup类型数据"
@@ -55,7 +48,6 @@ converterLookup = (objectName,field_name, dataCell,jsonObj)->
 converterBool = (field_name, dataCell,jsonObj)->
 	bool_error = ""
 	flag = dataCell.toString().toLowerCase()
-	console.log "flag=====",flag
 	if flag== "是" || flag== "1" || flag == "yes" || flag == "true"
 		jsonObj[field_name] = true
 	else if	flag =="否" || flag=="0"|| flag=="no"|| flag=="false"
@@ -69,10 +61,7 @@ insertRow = (dataRow,objectName,field_mapping)->
 	errorInfo = ""
 	# 对象的fields
 	objFields = Creator?.getObject(objectName)?.fields
-
 	# 转换方法
-	
-
 	# 每行数据根据分隔符再次分割,dataRow代表一行数据
 	dataCellList = dataRow.split(",")
 	# 读取每个单元格的数据
@@ -96,10 +85,8 @@ insertRow = (dataRow,objectName,field_mapping)->
 		if noField
 			error ="#{fieldLable}不是对象的属性"
 		if error
-			console.log "error=====",error
 			errorInfo = errorInfo + "," + error
 	insertInfo["insertState"] = true
-	console.log "errorInfo===",errorInfo
 	if jsonObj
 		Creator.Collections[objectName].insert(jsonObj,(error,result)->
 			if error
@@ -108,8 +95,6 @@ insertRow = (dataRow,objectName,field_mapping)->
 	else
 		insertInfo["insertState"] = false
 	insertInfo["errorInfo"] = errorInfo
-	
-	console.log  insertInfo
 	return insertInfo
 
 importObject = (importObj) ->
@@ -120,8 +105,10 @@ importObject = (importObj) ->
 	objectName = importObj?.object_name
 
 	field_mapping = importObj?.field_mapping
-
-	#########读取文件，暂时未开放########
+	dataStr = importObj?.import_file
+	console.log dataStr
+	dataTable = dataStr.split("\n")
+	# # 读取文件
 	# filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
 
 	# fileName = importObj?._id + "-no.csv"
@@ -130,10 +117,8 @@ importObject = (importObj) ->
 
 	# readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
 
-	readStream = importObj.import_file
-
-	# 将字符串根据换行符分割为数组
-	dataTable = readStream.split("\n")
+	# # 将字符串根据换行符分割为数组
+	# dataTable = readStream.split("\r\n")
 
 	# 循环每一行，读取数据的每一列
 	total_count = dataTable.length
@@ -151,39 +136,14 @@ importObject = (importObj) ->
 					success_count = success_count + 1
 				else
 					failure_count = failure_count + 1
-	console.log total_count,success_count,failure_count
 	Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
 		error:errorList
 		total_count:total_count
 		success_count:success_count
 		failure_count:failure_count
-		#status:"finished"
+		state:"finished"
 		}})
-
-Creator.selectImportJobs = () ->
-	waittingimportjobs = Creator.Collections["queue_import"].find({status:"waiting"},{fields:{created:1}}).fetch()
-	waittingimportjobs_created = _.pluck(waittingimportjobs,'created')
-	selectImportJob = _min(waittingimportjobs_created)
-	return selectImportJob
-
-
-# 启动导入Jobs
-# Creator.startImportJobs()
-Creator.startImportJobs = () ->
-	logger.info "Run Creator.startImportJobs"
-
-	#console.time "Creator.startImportJobs"
-	#开始导入时间
 	
-	collection = Creator.Collections["queue_import"]
-
-	importList = collection.find({"status":"waitting"}).fetch()
-	importList.forEach (importObj)->
-		# 根据recordObj提供的对象名，逐个文件导入
-		starttime = new Date()
-		importObject importObj
-		endtime = new Date()
-		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})
 
 # Creator.readCSV()
 Creator.readCSV = ()->
@@ -197,8 +157,15 @@ Creator.readCSV = ()->
 	readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
 
 	dataTable = readStream.split("\n")
-
-	for dataRow in dataTable
-		console.log "================"
-		if dataRow
-			console.log dataRow
+# 启动导入Jobs
+# Creator.startImportJobs()
+Meteor.methods
+	startImportJobs:(importObj) ->
+		# collection = Creator.Collections["queue_import"]
+		# importList = collection.find({"status":"waitting"}).fetch()
+		# importList.forEach (importObj)->
+		# 	# 根据recordObj提供的对象名，逐个文件导入
+		starttime = new Date()
+		importObject importObj
+		endtime = new Date()
+		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})

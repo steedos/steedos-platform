@@ -39,6 +39,16 @@ Creator.Objects.queue_import =
 			label: "映射关系"
 			type: ["text"]
 			required:true
+		# import_action:
+		# 	label:"导入目的"
+		# 	type:"select"
+		# 	options:[
+		# 		{label:"新增",value:"new"},
+		# 		{label:"更新",value:"update"},
+		# 		{label:"新增并修改",value:"upsert"}]
+		# match_field:
+		# 	label:"匹配方式"
+		# 	type:"text"
 		success_count:
 			label:"成功个数"
 			type:"number"
@@ -59,7 +69,7 @@ Creator.Objects.queue_import =
 			label:'end_time'
 			type:"datetime"
 			omit:true
-		status:
+		state:
 			label:"状态"
 			#allowvalue: 待导入、导入中、导入成功、导入失败
 			omit:true
@@ -69,22 +79,25 @@ Creator.Objects.queue_import =
 			omit:true
 	list_views:
 		default:
-			columns: ["import_file", "encoding", "object_name","field_mapping"]
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
+			columns: ["object_name","encoding","field_mapping"]
 		all:
 			label: "所有导入队列"
 			filter_scope: "space"
-		mine:
-			label: "我的导入队列"
-			filter_scope: "mine"
+		waitting:
+			label: "待执行"
+			filter_scope: "space"
+			filters: [["state", "$eq", "waitting"]]
+		finished:
+			label: "已完成"
+			columns: ["object_name","encoding","field_mapping","start_time","success_count","failure_count","error"]
+			filter_scope: "space"
+			filters: [["state", "$eq", "finished"]]
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: false 
 		admin:
@@ -102,3 +115,17 @@ Creator.Objects.queue_import =
 				obj = Creator.getObject()
 				doc.status = "waitting"
 				doc.object_name = obj.name
+	actions:
+		import:
+			label: "执行导入"
+			visible: true
+			on: "record"
+			todo:(object_name, record_id, fields)->
+				if Session.get("list_view_id") == "waitting"
+					importObj = Creator.Collections["queue_import"].findOne({_id:record_id})
+					Meteor.call 'startImportJobs',importObj
+					importInfo = Creator.Collections["queue_import"].findOne({_id:record_id},{fields:{total_count:1,success_count:1}})
+					console.log 
+					swal(text)
+				else
+					swal("请在待执行视图下执行导入")
