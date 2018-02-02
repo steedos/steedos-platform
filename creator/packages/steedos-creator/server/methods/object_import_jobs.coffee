@@ -78,6 +78,8 @@ insertRow = (dataRow,objectName,field_mapping)->
 	# 读取每个单元格的数据
 	dataCellList.forEach (dataCell,i) ->
 		fieldLable = field_mapping[i]
+		if !field_mapping[i]
+			return
 		noField = true
 		error = null
 		# 找到需要插入的数据
@@ -120,7 +122,7 @@ importObject = (importObj) ->
 	field_mapping = importObj?.field_mapping
 
 	# 读取文件
-	filePath = filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
+	filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
 
 	fileName = importObj?._id + "-no.csv"
 
@@ -132,7 +134,7 @@ importObject = (importObj) ->
 	dataTable = readStream.split("\r\n")
 
 	# 循环每一行，读取数据的每一列
-	total_count = dataTable.length
+	total_count = dataTable.length - 1
 	success_count = 0
 	failure_count = 0
 	dataTable.forEach (dataRow)->
@@ -141,8 +143,9 @@ importObject = (importObj) ->
 			insertInfo = insertRow dataRow,objectName,field_mapping
 			if insertInfo
 				# 存到数据库 error字段
-				errorList.push dataRow+insertInfo.errorInfo			
-				if insertInfo.insertState
+				if insertInfo?.errorInfo
+					errorList.push dataRow+insertInfo.errorInfo			
+				if insertInfo?.insertState
 					success_count = success_count + 1
 				else
 					failure_count = failure_count + 1
@@ -152,7 +155,7 @@ importObject = (importObj) ->
 		total_count:total_count
 		success_count:success_count
 		failure_count:failure_count
-		status:"finished"
+		#status:"finished"
 		}})
 
 Creator.selectImportJobs = () ->
