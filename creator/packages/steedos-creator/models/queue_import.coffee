@@ -5,7 +5,7 @@ Creator.Objects.queue_import =
 
 	fields:
 		import_file: 
-			label: "导入文件"
+			label: "导入数据内容"
 			type: "textarea"
 			is_wide:true
 			required:true
@@ -85,6 +85,7 @@ Creator.Objects.queue_import =
 			filter_scope: "space"
 		waitting:
 			label: "待执行"
+			columns: ["import_file","object_name","encoding","field_mapping","created"]
 			filter_scope: "space"
 			filters: [["state", "$eq", "waitting"]]
 		finished:
@@ -126,6 +127,7 @@ Creator.Objects.queue_import =
 					Meteor.call 'startImportJobs',importObj
 					importInfo = Creator.Collections["queue_import"].findOne({_id:record_id},{fields:{total_count:1,success_count:1}})
 					console.log 
+					text = "导入完成详细信息请在已完成视图下查看。"
 					swal(text)
 				else
 					swal("请在待执行视图下执行导入")
