@@ -131,22 +131,21 @@ importObject = (importObj) ->
 	# 将字符串根据换行符分割为数组
 	dataTable = readStream.split("\r\n")
 
-	console.log dataTable
-
 	# 循环每一行，读取数据的每一列
 	total_count = dataTable.length
 	success_count = 0
 	failure_count = 0
 	dataTable.forEach (dataRow)->
-		# 插入一行数据
-		insertInfo = insertRow dataRow,objectName,field_mapping
-		if insertInfo
-			# 存到数据库 error字段
-			errorList.push dataRow+insertInfo.errorInfo			
-			if insertInfo.insertState
-				success_count = success_count + 1
-			else
-				failure_count = failure_count + 1
+		if dataRow
+			# 插入一行数据
+			insertInfo = insertRow dataRow,objectName,field_mapping
+			if insertInfo
+				# 存到数据库 error字段
+				errorList.push dataRow+insertInfo.errorInfo			
+				if insertInfo.insertState
+					success_count = success_count + 1
+				else
+					failure_count = failure_count + 1
 	console.log total_count,success_count,failure_count
 	Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
 		error:errorList
@@ -180,8 +179,6 @@ Creator.startImportJobs = () ->
 		importObject importObj
 		endtime = new Date()
 		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})
-
-
 
 # Creator.readCSV()
 Creator.readCSV = ()->
