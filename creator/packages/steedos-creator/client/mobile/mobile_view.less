@@ -1,0 +1,151 @@
+.mobile-view {
+	.mobile-template-content {
+		.highlights {
+			-webkit-transform: translate3d(0,0,0);
+			-ms-transform: translate3d(0,0,0);
+			transform: translate3d(0,0,0);
+			width: 100%;
+
+			.header.dark {
+				background: rgb(243, 242, 242);
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				text-align: left;
+				padding: 10px;
+
+				.profilePicWrapper {
+					margin: 0 14px 0 0;
+					position: relative;
+					width: 40px;
+					height: 40px;
+
+					.slds-icon {
+						width: 40px;
+						height: 40px;
+					}
+				}
+			}
+
+			.fieldWrapper {
+				height: 40px;
+				max-width: calc(~"100% - 40px - 10px");
+
+				.highlightsH1.dark {
+					color: rgb(22, 50, 92);
+					margin: 0 0 7px 0;
+					font-size: 20px;
+					font-weight: 300;
+					word-wrap: break-word;
+				}
+				
+				.secondaryFields {
+					font-size: 12px;
+					color: rgb(112, 110, 107);
+					font-weight: 400;
+				}
+			}
+		}
+
+		.record-container {
+			position: absolute;
+			top: 60px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			
+			.forceAsyncCarouselIndicator {
+				position: relative;
+				height: 40px;
+				width: 100%;
+				background: rgb(243, 242, 242);
+
+				.nav-container {
+					border-bottom: 1px solid rgb(221, 219, 218);
+					height: 100%;
+					padding: 0;
+					margin: 0;
+					list-style: none;
+					text-align: center;
+					display: -webkit-flexbox;
+					display: -webkit-flex;
+					display: -webkit-box;
+					display: -ms-flexbox;
+					display: flex;
+					display: box;
+					-webkit-box-orient: horizontal;
+					-ms-box-orient: horizontal;
+					box-orient: horizontal;
+					-webkit-box-align: center;
+					-webkit-box-pack: center;
+					-webkit-flex-align: center;
+					-webkit-align-items: center;
+					-ms-flex-align: center;
+					align-items: center;
+
+					.item {
+						box-sizing: border-box;
+						font-size: 12px;
+						margin: 0;
+						padding: 0;
+						cursor: pointer;
+						white-space: nowrap;
+						line-height: 1.25;
+						-webkit-flex: 1;
+						-webkit-box-flex: 1;
+						-ms-flex: 1;
+						-ms-box-flex: 1;
+						flex: 1;
+
+						a {
+							border-radius: 0;
+							border-bottom: 2px solid transparent;
+							color: rgb(112, 110, 107);
+							text-decoration: none;
+							text-transform: uppercase;
+							display: block;
+							line-height: 40px;
+
+							span {
+								overflow: hidden;
+								text-overflow: ellipsis;
+								display: block;
+							}
+
+							&.selected {
+								color: rgb(22, 50, 92);
+							}
+						}
+					}
+				}
+
+				.indicator-state {
+					width: 100%;
+					position: absolute;
+					bottom: 0;
+					height: 2px;
+
+					.indicator-bar {
+						width: 50%;
+						height: 2px;
+						background: rgb(0, 112, 210);
+						transition-duration: 300ms;
+						transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+					}
+				}
+			}
+
+			.info-card-container {
+				position: absolute;
+				top: 40px;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: #fff;
+				transition-duration: 300ms;
+				transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+			}
+		}
+	}
+}

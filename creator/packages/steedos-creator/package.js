@@ -183,6 +183,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/list_switch.html', 'client');
 	api.addFiles('client/mobile/list_switch.less', 'client');
 	api.addFiles('client/mobile/list_switch.coffee', 'client');
+	api.addFiles('client/mobile/mobile_view.html', 'client');
+	api.addFiles('client/mobile/mobile_view.less', 'client');
+	api.addFiles('client/mobile/mobile_view.coffee', 'client');
 
 
 	api.addFiles('client/core.coffee', 'client');

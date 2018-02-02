@@ -49,6 +49,8 @@ Creator.getSchema = (object_name)->
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")
+	if !object_name
+		object_name = Session.get("object_name")
 	if record_id
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else
