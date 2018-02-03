@@ -124,24 +124,51 @@ Template.creator_report.events
 		filter_scope = Session.get("filter_scope")
 		report_settings = template.report_settings.get()
 		report = Creator.getObjectRecord()
-		if report.report_type = "matrix"
-			fields = template.pivotGridInstance.getDataSource()._fields
-			debugger
-			# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
-			# 比如时间类型的字段会额外自动增加三个子字段，分别按年、季、月分组
-			columns = _.where(fields,{area:"column","groupInterval":undefined})
-			columns = _.sortBy(columns, 'areaIndex')
-			columns = _.pluck(columns,"dataField")
-			rows = _.where(fields,{area:"row","groupInterval":undefined})
-			rows = _.sortBy(rows, 'areaIndex')
-			rows = _.pluck(rows,"dataField")
-			values = _.where(fields,{area:"data"})
-			values = _.sortBy(values, 'areaIndex')
-			values = _.pluck(values,"dataField")
-		else
-			columns = report.columns
-			rows = report.rows
-			values = report.values
+		debugger
+		switch report.report_type
+			when 'tabular'
+				fields = template.dataGridInstance.getVisibleColumns()
+				columns = _.where(fields,{"groupIndex":undefined})
+				columns = _.sortBy(columns, 'visibleIndex')
+				columns = _.pluck(columns,"dataField")
+				# 这里rows/values在设计模式下不会有变更，所以直接取原值保存即可
+				rows = report.rows
+				values = report.values
+			when 'summary'
+				fields = template.dataGridInstance.getVisibleColumns()
+				columns = _.where(fields,{"groupIndex":undefined})
+				columns = _.sortBy(columns, 'visibleIndex')
+				columns = _.pluck(columns,"dataField")
+				rows = fields.filter (n)-> return n.groupIndex > -1
+				rows = _.sortBy(rows, 'groupIndex')
+				rows = _.pluck(rows,"dataField")
+				# 这里values在设计模式下不会有变更，所以直接取原值保存即可
+				values = report.values
+				# summary = template.dataGridInstance.option().summary
+				# groupItems = _.pluck(summary.groupItems,"column")
+				# totalItems = _.pluck(summary.totalItems,"column")
+				# values = _.union(groupItems,totalItems)
+				# # _id字段是自动生成的，用户在这时也不可能会对_id进行顺序变更，所以这里去除_id
+				# values = _.without(values,"_id")
+			when 'matrix'
+				fields = template.pivotGridInstance.getDataSource()._fields
+				# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
+				# 比如时间类型的字段会额外自动增加三个子字段，分别按年、季、月分组
+				columns = _.where(fields,{area:"column","groupInterval":undefined})
+				columns = _.sortBy(columns, 'areaIndex')
+				columns = _.pluck(columns,"dataField")
+				rows = _.where(fields,{area:"row","groupInterval":undefined})
+				rows = _.sortBy(rows, 'areaIndex')
+				rows = _.pluck(rows,"dataField")
+				# _id字段虽然也是自动生成的，但是用户可能会对_id进行顺序变更，所以这里不可以去除_id
+				values = _.where(fields,{area:"data"})
+				values = _.sortBy(values, 'areaIndex')
+				values = _.pluck(values,"dataField")
+			else
+				columns = report.columns
+				rows = report.rows
+				values = report.values
+
 
 		Creator.getCollection(objectName).update({_id: record_id},{$set:{
 			filters: filters
