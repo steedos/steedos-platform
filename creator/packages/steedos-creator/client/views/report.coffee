@@ -60,6 +60,9 @@ Template.creator_report.helpers
 			return true
 		else
 			return Creator.isSpaceAdmin()
+	
+	isDesignerOpen: ()->
+		return Template.instance().is_designer_open?.get()
 
 
 Template.creator_report.events
@@ -116,6 +119,12 @@ Template.creator_report.events
 
 	'click .btn-refresh': (event, template)->
 		renderReport.bind(template)()
+
+	'click .btn-toggle-designer': (event, template)->
+		isOpen = !template.is_designer_open.get()
+		template.is_designer_open.set(isOpen)
+		Meteor.defer ->
+			renderReport.bind(template)()
 
 	'click .record-action-save': (event, template)->
 		record_id = Session.get "record_id"
@@ -189,6 +198,7 @@ Template.creator_report.events
 
 
 renderTabularReport = (reportObject, reportData)->
+	self = this
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -222,9 +232,8 @@ renderTabularReport = (reportObject, reportData)->
 	reportSummary.totalItems = totalSummaryItems
 	
 	console.log "renderTabularReport.reportSummary:", reportSummary
-	datagrid = $('#datagrid').dxDataGrid(
-		allowColumnReordering: true
-		allowColumnResizing: true
+
+	dxOptions = 
 		columnAutoWidth: true
 		"export":
 			enabled: true
@@ -232,11 +241,24 @@ renderTabularReport = (reportObject, reportData)->
 		dataSource: reportData
 		paging: false
 		columns: reportColumns
-		summary: reportSummary).dxDataGrid('instance')
+		summary: reportSummary
+	isDesignerOpen = self.is_designer_open.get()
+	if isDesignerOpen
+		_.extend dxOptions,
+			allowColumnReordering: true
+			allowColumnResizing: true
+	else
+		# 这里要重写为false，且不能省略，原因是设置为true后切换isDesignerOpen时需要重置为false
+		_.extend dxOptions,
+			allowColumnReordering: false
+			allowColumnResizing: false
+	
+	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
 	this.dataGridInstance = datagrid
 
 renderSummaryReport = (reportObject, reportData)->
+	self = this
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -311,19 +333,30 @@ renderSummaryReport = (reportObject, reportData)->
 	reportSummary.groupItems = groupSummaryItems
 
 	console.log "renderSummaryReport.reportSummary:", reportSummary
-	datagrid = $('#datagrid').dxDataGrid(
-		allowColumnReordering: true
-		allowColumnResizing: true
+	dxOptions = 
 		columnAutoWidth: true
-		groupPanel:
-			visible: true
 		"export":
 			enabled: true
 			fileName: reportObject.name
 		dataSource: reportData
 		paging: false
 		columns: reportColumns
-		summary: reportSummary).dxDataGrid('instance')
+		summary: reportSummary
+	isDesignerOpen = self.is_designer_open.get()
+	if isDesignerOpen
+		_.extend dxOptions,
+			allowColumnReordering: true
+			allowColumnResizing: true
+			groupPanel:
+				visible: true
+	else
+		# 这里要重写为false，且不能省略，原因是设置为true后切换isDesignerOpen时需要重置为false
+		_.extend dxOptions,
+			allowColumnReordering: false
+			allowColumnResizing: false
+			groupPanel:false
+
+	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
 	this.dataGridInstance = datagrid
 
@@ -416,14 +449,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		adaptiveLayout: 
 			width: 450
 	).dxChart('instance')
-	pivotGrid = $('#pivotgrid').show().dxPivotGrid(
-		fieldPanel:
-			showColumnFields: true
-			showDataFields: true
-			showFilterFields:false
-			showRowFields: true
-			allowFieldDragging: true
-			visible: true
+	dxOptions= 
 		paging: false
 		allowSortingBySummary: true
 		allowSorting: true
@@ -432,14 +458,28 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		showRowGrandTotals: totaling
 		showRowTotals: grouping
 		showColumnTotals: grouping
-		# fieldChooser: 
-		# 	enabled: true
+		fieldChooser: false
 		"export":
 			enabled: true
 			fileName: reportObject.name
 		dataSource:
 			fields: reportFields
-			store: reportData).dxPivotGrid('instance')
+			store: reportData
+	isDesignerOpen = self.is_designer_open.get()
+	if isDesignerOpen
+		_.extend dxOptions,
+			fieldPanel:
+				showColumnFields: true
+				showDataFields: true
+				showFilterFields:false
+				showRowFields: true
+				allowFieldDragging: true
+				visible: true
+	else
+		# 这里要重写为false，且不能省略，原因是设置为true后切换isDesignerOpen时需要重置为false
+		_.extend dxOptions,
+			fieldPanel: false
+	pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
 	pivotGrid.bindChart pivotGridChart,
 		dataFieldsDisplayMode: 'splitPanes'
 		alternateDataFields: false
@@ -540,6 +580,7 @@ Template.creator_report.onCreated ->
 	this.is_filter_open = new ReactiveVar(false)
 	this.is_chart_open = new ReactiveVar(true)
 	this.is_chart_disabled = new ReactiveVar(false)
+	this.is_designer_open = new ReactiveVar(false)
 	this.report_settings = new ReactiveVar()
 	this.dataGridInstance = null
 	this.pivotGridInstance = null
