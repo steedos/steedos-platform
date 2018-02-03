@@ -32,6 +32,7 @@ Creator.Objects.queue_import =
 				{label: "KS C 5601 韩语", value: "KS C 5601"},
 				{label: "ISO-8859-1（通用美语和西欧语言，ISO-LATIN-1）", value: "ISO"}
 			]
+			omit:true
 		value_separator: 
 			label: "值分隔符"
 			type: "select"
@@ -39,6 +40,7 @@ Creator.Objects.queue_import =
 				{label:'逗号',value:','}
 			]
 			required: true
+			omit:true
 		field_mapping: 
 			label: "映射关系"
 			type: ["text"]
