@@ -131,6 +131,8 @@ Template.creator_report.events
 				columns = _.where(fields,{"groupIndex":undefined})
 				columns = _.sortBy(columns, 'visibleIndex')
 				columns = _.pluck(columns,"dataField")
+				# 要把*%*换回成符号.保存
+				columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
 				# 这里rows/values在设计模式下不会有变更，所以直接取原值保存即可
 				rows = report.rows
 				values = report.values
@@ -139,17 +141,15 @@ Template.creator_report.events
 				columns = _.where(fields,{"groupIndex":undefined})
 				columns = _.sortBy(columns, 'visibleIndex')
 				columns = _.pluck(columns,"dataField")
+				# 要把*%*换回成符号.保存
+				columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
 				rows = fields.filter (n)-> return n.groupIndex > -1
 				rows = _.sortBy(rows, 'groupIndex')
 				rows = _.pluck(rows,"dataField")
+				# 要把*%*换回成符号.保存
+				rows = rows.map (n)-> return n.replace(/\*%\*/g,".")
 				# 这里values在设计模式下不会有变更，所以直接取原值保存即可
 				values = report.values
-				# summary = template.dataGridInstance.option().summary
-				# groupItems = _.pluck(summary.groupItems,"column")
-				# totalItems = _.pluck(summary.totalItems,"column")
-				# values = _.union(groupItems,totalItems)
-				# # _id字段是自动生成的，用户在这时也不可能会对_id进行顺序变更，所以这里去除_id
-				# values = _.without(values,"_id")
 			when 'matrix'
 				fields = template.pivotGridInstance.getDataSource()._fields
 				# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
@@ -157,13 +157,19 @@ Template.creator_report.events
 				columns = _.where(fields,{area:"column","groupInterval":undefined})
 				columns = _.sortBy(columns, 'areaIndex')
 				columns = _.pluck(columns,"dataField")
+				# 要把*%*换回成符号.保存
+				columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
 				rows = _.where(fields,{area:"row","groupInterval":undefined})
 				rows = _.sortBy(rows, 'areaIndex')
 				rows = _.pluck(rows,"dataField")
+				# 要把*%*换回成符号.保存
+				rows = rows.map (n)-> return n.replace(/\*%\*/g,".")
 				# _id字段虽然也是自动生成的，但是用户可能会对_id进行顺序变更，所以这里不可以去除_id
 				values = _.where(fields,{area:"data"})
 				values = _.sortBy(values, 'areaIndex')
 				values = _.pluck(values,"dataField")
+				# 要把*%*换回成符号.保存
+				values = values.map (n)-> return n.replace(/\*%\*/g,".")
 			else
 				columns = report.columns
 				rows = report.rows
@@ -188,7 +194,7 @@ renderTabularReport = (reportObject, reportData)->
 	if _.isEmpty objectFields
 		return
 	reportColumns = reportObject.columns?.map (item, index)->
-		itemFieldKey = item.replace(/\./g,"_")
+		itemFieldKey = item.replace(/\./g,"*%*")
 		itemField = objectFields[item.split(".")[0]]
 		return {
 			caption: itemField.label
@@ -215,9 +221,7 @@ renderTabularReport = (reportObject, reportData)->
 	# 注意这里如果totalItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	
-	console.log "renderTabularReport.reportSummary:", JSON.stringify(reportSummary)
-	console.log "renderTabularReport.reportColumns:", JSON.stringify(reportColumns)
-	console.log "renderTabularReport.reportData:", JSON.stringify(reportData)
+	console.log "renderTabularReport.reportSummary:", reportSummary
 	datagrid = $('#datagrid').dxDataGrid(
 		allowColumnReordering: true
 		allowColumnResizing: true
@@ -238,7 +242,7 @@ renderSummaryReport = (reportObject, reportData)->
 	if _.isEmpty objectFields
 		return
 	reportColumns = reportObject.columns?.map (item, index)->
-		itemFieldKey = item.replace(/\./g,"_")
+		itemFieldKey = item.replace(/\./g,"*%*")
 		itemField = objectFields[item.split(".")[0]]
 		return {
 			caption: itemField.label
@@ -247,7 +251,7 @@ renderSummaryReport = (reportObject, reportData)->
 	unless reportColumns
 		reportColumns = []
 	_.each reportObject.rows, (group, index)->
-		groupFieldKey = group.replace(/\./g,"_")
+		groupFieldKey = group.replace(/\./g,"*%*")
 		groupField = objectFields[group.split(".")[0]]
 		reportColumns.push 
 			caption: groupField.label
@@ -284,7 +288,7 @@ renderSummaryReport = (reportObject, reportData)->
 				groupSummaryItems.push defaultCounterSum
 				totalSummaryItems.push defaultCounterSum
 		else
-			valueFieldKey = value.replace(/\./g,"_")
+			valueFieldKey = value.replace(/\./g,"*%*")
 			valueField = objectFields[value.split(".")[0]]
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
@@ -331,7 +335,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		return
 	reportFields = []
 	_.each reportObject.rows, (row)->
-		rowFieldKey = row.replace(/\./g,"_")
+		rowFieldKey = row.replace(/\./g,"*%*")
 		rowField = objectFields[row.split(".")[0]]
 		caption = rowField.label
 		unless caption
@@ -342,7 +346,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			dataField: rowFieldKey
 			area: 'row'
 	_.each reportObject.columns, (column)->
-		columnFieldKey = column.replace(/\./g,"_")
+		columnFieldKey = column.replace(/\./g,"*%*")
 		columnField = objectFields[column.split(".")[0]]
 		caption = columnField.label
 		unless caption
@@ -371,7 +375,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			if counting
 				reportFields.push defaultCounterSum
 		else
-			valueFieldKey = value.replace(/\./g,"_")
+			valueFieldKey = value.replace(/\./g,"*%*")
 			valueField = objectFields[value.split(".")[0]]
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
