@@ -50,10 +50,11 @@
 							<button class="slds-button slds-button_icon slds-button_icon-more btn-settings" aria-haspopup="true" title="设置">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
 							</button>
-
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="设计模式">
-								{{> steedos_icon class="slds-button__icon" source="action-sprite" name="canvas"}}
-							</button>
+							{{#if isSavable}}
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="设计模式">
+									{{> steedos_icon class="slds-button__icon" source="action-sprite" name="canvas"}}
+								</button>
+							{{/if}}
 							<div class="slds-button-group" role="group">
 								{{#each actions}}
 									<li class="slds-button slds-button--neutral slds-truncate record-action-custom">
