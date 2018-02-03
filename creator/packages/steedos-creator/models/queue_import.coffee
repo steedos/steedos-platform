@@ -9,6 +9,14 @@ Creator.Objects.queue_import =
 			type: "textarea"
 			is_wide:true
 			required:true
+		object_name:
+			label: "导入对象"
+			type: "lookup"
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.Objects, (o, k)->
+					_options.push {label: o.label, value: k, icon: o.icon}
+				return _options
 		encoding:
 			label: "字符代码"
 			type: "select"
@@ -31,10 +39,6 @@ Creator.Objects.queue_import =
 				{label:'逗号',value:','}
 			]
 			required: true
-		object_name:
-			label: "导入对象"
-			type: "text"
-			omit:true
 		field_mapping: 
 			label: "映射关系"
 			type: ["text"]
@@ -62,11 +66,11 @@ Creator.Objects.queue_import =
 			type:"number"
 			omit:true
 		start_time:
-			label:'开始导入时间'
+			label:'开始时间'
 			type:"datetime"
 			omit:true
 		end_time:
-			label:'end_time'
+			label:'结束时间'
 			type:"datetime"
 			omit:true
 		state:
@@ -114,8 +118,7 @@ Creator.Objects.queue_import =
 			when: "before.insert"
 			todo: (userId, doc)->
 				obj = Creator.getObject()
-				doc.status = "waitting"
-				doc.object_name = obj.name
+				doc.state = "waitting"
 	actions:
 		import:
 			label: "执行导入"
