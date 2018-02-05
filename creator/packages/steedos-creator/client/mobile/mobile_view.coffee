@@ -1,8 +1,14 @@
 Template.mobileView.onRendered ->
-	this.$(".mobile-view").removeClass "hidden"
-	this.$(".mobile-view").animateCss "fadeInRight"
+	self = this
 
-	this.autorun ->
+	self.$(".mobile-view").removeClass "hidden"
+	self.$(".mobile-view").animateCss "fadeInRight"
+
+	width = $("body").width()
+	self.$(".info-card-container").css("width", "#{width}px")
+	self.$(".scroller").css("width", "#{2*width}px")
+
+	self.autorun ->
 		object_name = Template.instance().data.object_name
 		record_id = Template.instance().data.record_id
 		if object_name and record_id
@@ -82,6 +88,22 @@ Template.mobileView.helpers
 
 	object_name: ()->
 		return Template.instance().data.object_name
+	
+	object_icon: (object_name)->
+		unless object_name
+			object_name = Template.instance().data.object_name
+		
+		return Creator.getObject(object_name).icon
+
+	object_label: (object_name)->
+		unless object_name
+			object_name = Template.instance().data.object_name
+
+		return Creator.getObject(object_name).label
+
+	related_objects: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getRelatedObjects(object_name)
 
 Template.mobileView.events
 	'click .mobile-view-back': (event, template)->
@@ -98,11 +120,11 @@ Template.mobileView.events
 		template.$(".select-related").removeClass("selected")
 		$(event.currentTarget).addClass("selected")
 		template.$(".indicator-bar").css({"transform": "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)"})
-		template.$(".record-detail-card").css({"transform": "translate3d(0px, 0px, 0px)"})
+		template.$(".scroller").css({"transform": "translate3d(0px, 0px, 0px)"})
 
 	'click .select-related': (event, template)->
 		template.$(".select-detail").removeClass("selected")
 		$(event.currentTarget).addClass("selected")
 		width = template.$(".indicator-bar").width()
 		template.$(".indicator-bar").css({"transform": "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, #{width}, 0, 0, 1)"})
-		template.$(".record-detail-card").css({"transform": "translate3d(-100%, 0px, 0px)"})
+		template.$(".scroller").css({"transform": "translate3d(-50%, 0px, 0px)"})

@@ -16,7 +16,7 @@
 				<div class="dark forceHighlightsStencil forceRecordLayout">
 					<div class="header dark">
 						<div class="profilePicWrapper">
-							{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="cms"}}
+							{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon)}}
 						</div>
 						<div class="fieldWrapper">
 							<h1 class="primaryField highlightsH1 dark">
@@ -47,90 +47,94 @@
 						<div class="indicator-bar"></div>
 					</div>
 				</div>
-				<div class="record-detail-card info-card-container" style="z-index: 2;">
-					{{#if showForm}}
-						{{#autoForm collection=collection type="disabled" id="record_detail_card_form" schema=schema doc=record}}
-							{{#if schemaFields.grouplessFields}}
-								{{#each schemaFields.grouplessFields}}
-									<div class="slds-grid view-page-section-row">
-										{{#each this}}
-											{{#if this}}
-												<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-													<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-														<div class="test-id__field-label-container">
-															<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
-														</div>
-														<div class="slds-form-element__control slds-grid itemBody">
-															<span class="test-id__field-value slds-form-element__static slds-grow">
-																{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details'}}
-															</span>
+				<div class="scroller">
+					<div class="record-detail-card info-card-container">
+						{{#if showForm}}
+							{{#autoForm collection=collection type="disabled" id="record_detail_card_form" schema=schema doc=record}}
+								{{#if schemaFields.grouplessFields}}
+									{{#each schemaFields.grouplessFields}}
+										<div class="slds-grid view-page-section-row">
+											{{#each this}}
+												{{#if this}}
+													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+															<div class="test-id__field-label-container">
+																<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+															</div>
+															<div class="slds-form-element__control slds-grid itemBody">
+																<span class="test-id__field-value slds-form-element__static slds-grow">
+																	{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details'}}
+																</span>
+															</div>
 														</div>
 													</div>
-												</div>
-											{{/if}}
-										{{/each}}
-									</div>
-								{{/each}}
-							{{/if}}
+												{{/if}}
+											{{/each}}
+										</div>
+									{{/each}}
+								{{/if}}
 
-							{{#if schemaFields.groupFields}}
-								{{#each schemaFields.groupFields}}
-									{{#if this.fields}}
-										<div class="slds-section slds-is-open group-section">
-											<h3 class="slds-section__title group-section-control">
-												<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-												{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-												<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-												</button>
-											</h3>
-											<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
-												{{#each this.fields}}
-													<div class="slds-grid view-page-section-row">
-														{{#each this}}
-															{{#if this}}
-																<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-																	<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-																		<div class="test-id__field-label-container">
-																			<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
-																		</div>
-																		<div class="slds-form-element__control slds-grid itemBody">
-																			<span class="test-id__field-value slds-form-element__static slds-grow">
-																				{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
-																			</span>
+								{{#if schemaFields.groupFields}}
+									{{#each schemaFields.groupFields}}
+										{{#if this.fields}}
+											<div class="slds-section slds-is-open group-section">
+												<h3 class="slds-section__title group-section-control">
+													<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+													{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+													<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+													</button>
+												</h3>
+												<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+													{{#each this.fields}}
+														<div class="slds-grid view-page-section-row">
+															{{#each this}}
+																{{#if this}}
+																	<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+																		<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+																			<div class="test-id__field-label-container">
+																				<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																			</div>
+																			<div class="slds-form-element__control slds-grid itemBody">
+																				<span class="test-id__field-value slds-form-element__static slds-grow">
+																					{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
+																				</span>
+																			</div>
 																		</div>
 																	</div>
-																</div>
-															{{/if}}
-														{{/each}}
-													</div>
-												{{/each}}
+																{{/if}}
+															{{/each}}
+														</div>
+													{{/each}}
+												</div>
+											</div>
+										{{/if}}
+									{{/each}}
+								{{/if}}
+
+							{{/autoForm}}
+						{{/if}}
+					</div>
+					<div class="related-object-card info-card-container">
+						{{#each related_objects}}
+							<div class="slds-card slds-card_boundary forceBaseCard forceCard forceRelatedListCard">
+								<div class="slds-card__header slds-grid">
+									<header class="slds-media slds-media--center slds-has-flexi-truncate">
+										<div class="slds-media__figure">
+											<div class="small forceEntityIcon">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
 											</div>
 										</div>
-									{{/if}}
-								{{/each}}
-							{{/if}}
-
-						{{/autoForm}}
-					{{/if}}
-				</div>
-				<div class="related-object-card info-card-container" style="z-index: 1;">
-					<div class="slds-card slds-card_boundary forceBaseCard forceCard forceRelatedListCard">
-						<div class="slds-card__header slds-grid">
-							<header class="slds-media slds-media--center slds-has-flexi-truncate">
-								<div class="slds-media__figure">
-									<div class="small forceEntityIcon">
-										{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="cms"}}
-									</div>
+										<div class="slds-media__body">
+											<h2 class="header-title-container">
+												<span class="slds-text-heading--small slds-truncate">
+													{{object_label this}}(0)
+												</span>
+											</h2>
+										</div>
+									</header>
 								</div>
-								<div class="slds-media__body">
-									<h2 class="header-title-container">
-										<span class="slds-text-heading--small slds-truncate">
-											文件(0)
-										</span>
-									</h2>
-								</div>
-							</header>
-						</div>
+							</div>
+						{{/each}}
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,7 @@
 .mobile-view {
 	.mobile-template-content {
+		overflow: hidden !important;
+
 		.highlights {
 			-webkit-transform: translate3d(0,0,0);
 			-ms-transform: translate3d(0,0,0);
@@ -136,16 +138,20 @@
 				}
 			}
 
-			.info-card-container {
+			.scroller {
 				position: absolute;
 				top: 40px;
 				bottom: 0;
-				left: 0;
-				right: 0;
 				background: rgb(243, 242, 242);
 				transition-duration: 300ms;
 				transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+			}
+
+			.info-card-container {
+				position: relative;
 				overflow: auto;
+				height: 100%;
+				float: left;
 
 				&.record-detail-card {
 					#record_detail_card_form {
