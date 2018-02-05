@@ -25,6 +25,14 @@ Template.mobileView.helpers
 	record_id: ()->
 		return Template.instance().data.record_id
 
+	record_name: ()->
+		object_name = Template.instance().data.object_name
+		record_id = Template.instance().data.record_id
+		record = Creator.getObjectRecord(object_name, record_id)
+		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+		if record and name_field_key
+			return record[name_field_key]
+
 	showForm: ()->
 		object_name = Template.instance().data.object_name
 		record_id = Template.instance().data.record_id
