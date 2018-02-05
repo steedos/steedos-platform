@@ -35,7 +35,7 @@ class @OdataRestivus
 		if @_config.enableCors
 			corsHeaders =
 				'Access-Control-Allow-Origin': '*'
-				'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+				'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, OData-Version'
 
 			if @_config.useDefaultAuth
 				corsHeaders['Access-Control-Allow-Headers'] += ', X-User-Id, X-Auth-Token, X-Space-Id'

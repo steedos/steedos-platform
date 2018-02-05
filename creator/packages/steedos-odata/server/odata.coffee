@@ -54,31 +54,29 @@ Meteor.startup ->
 
 							permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
 							if permissions.viewAllRecords
-									if _.isEmpty @queryParams
-										selector = {space: @spaceId}
-										entities = collection.find(selector).fetch()
-										if entities
-											{status: 'success', value: entities}
-										else
-											statusCode: 404
-											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
+									console.log 'queryParams: ', @queryParams
+									console.log 'urlParams: ', @urlParams
+									console.log 'bodyParams: ', @bodyParams
+									createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
+									# 强制增加過濾掉件space: @spaceId
+									createFilter.space = @spaceId
+									entities = []
+									if @queryParams.$top isnt '0'
+										console.log optionsParser(@queryParams)
+										entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
+									scannedCount = collection.find(createFilter).count()
+									if entities
+										body = {}
+										headers = {}
+										body['@odata.context'] = 'http://127.0.0.1:5000/odata/v4/$metadata#Products'
+										body['@odata.count'] = scannedCount
+										body['value'] = entities
+										headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+										headers['OData-Version'] = '4.0'
+										{body: body, headers: headers}
 									else
-										console.log 'queryParams: ', @queryParams
-										console.log 'urlParams: ', @urlParams
-										console.log 'bodyParams: ', @bodyParams
-										createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
-										# 强制增加過濾掉件space: @spaceId
-										createFilter.space = @spaceId
-										entities = []
-										if @queryParams.$top isnt '0'
-											console.log optionsParser(@queryParams)
-											entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
-										scannedCount = collection.find(createFilter).count()
-										if entities
-											{status: 'success', value: entities, '@odata.count': scannedCount}
-										else
-											statusCode: 404
-											body: {status: 'fail', message: 'Unable to retrieve items from collection'}
+										statusCode: 404
+										body: {status: 'fail', message: 'Unable to retrieve items from collection'}
 							else
 								statusCode: 400
 								body: {status: 'fail', message: 'Action not permitted'}
