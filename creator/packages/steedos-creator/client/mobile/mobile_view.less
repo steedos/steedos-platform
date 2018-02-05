@@ -142,9 +142,46 @@
 				bottom: 0;
 				left: 0;
 				right: 0;
-				background: #fff;
+				background: rgb(243, 242, 242);
 				transition-duration: 300ms;
 				transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+				overflow: auto;
+
+				&.record-detail-card {
+					#record_detail_card_form {
+						background: #fff;
+						padding-bottom: 60px;
+					}
+					.view-page-block-item {
+						border-bottom: 1px solid rgb(221, 219, 218);
+						
+						.table-cell-edit {
+							display: none;
+						}
+					}
+				}
+
+				&.related-object-card {
+					.slds-card {
+						margin: 16px 10px 0;
+						box-shadow: none;
+						
+						.forceEntityIcon.small {
+							width: 2rem;
+							height: 2rem;
+						}
+						
+						.header-title-container {
+							display: -webkit-inline-box;
+							display: -webkit-inline-flex;
+							display: -ms-inline-flexbox;
+							display: inline-flex;
+							max-width: 100%;
+							font-weight: 400;
+							color: #000;
+						}
+					}
+				}
 			}
 		}
 	}
