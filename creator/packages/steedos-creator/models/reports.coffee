@@ -66,6 +66,11 @@ Creator.Objects.reports =
 		values: 
 			label: "统计"
 			type: "[text]"
+		options:
+			blackbox: true
+		# column_width: 
+		# 	label: "排序"
+		# 	type: "object"
 		grouping:
 			label: "显示小计"
 			type: "boolean"

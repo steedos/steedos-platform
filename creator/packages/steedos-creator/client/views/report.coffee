@@ -131,6 +131,10 @@ Template.creator_report.events
 		objectName = Session.get("object_name")
 		filters = Session.get("filter_items")
 		filter_scope = Session.get("filter_scope")
+		columns = []
+		rows = []
+		values = []
+		sort = []
 		report_settings = template.report_settings.get()
 		report = Creator.getObjectRecord()
 		debugger
@@ -145,6 +149,10 @@ Template.creator_report.events
 				# 这里rows/values在设计模式下不会有变更，所以直接取原值保存即可
 				rows = report.rows
 				values = report.values
+				fields = _.sortBy(fields,"sortIndex")
+				_.each fields, (n,i)->
+					if n.sortOrder
+						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
 			when 'summary'
 				fields = template.dataGridInstance.getVisibleColumns()
 				columns = _.where(fields,{"groupIndex":undefined})
@@ -159,6 +167,10 @@ Template.creator_report.events
 				rows = rows.map (n)-> return n.replace(/\*%\*/g,".")
 				# 这里values在设计模式下不会有变更，所以直接取原值保存即可
 				values = report.values
+				fields = _.sortBy(fields,"sortIndex")
+				_.each fields, (n,i)->
+					if n.sortOrder
+						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
 			when 'matrix'
 				fields = template.pivotGridInstance.getDataSource()._fields
 				# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
@@ -179,12 +191,21 @@ Template.creator_report.events
 				values = _.pluck(values,"dataField")
 				# 要把*%*换回成符号.保存
 				values = values.map (n)-> return n.replace(/\*%\*/g,".")
+				fields = _.sortBy(fields,"sortIndex")
+				_.each fields, (n,i)->
+					if n.sortOrder
+						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
 			else
 				columns = report.columns
 				rows = report.rows
 				values = report.values
 
 
+				
+		console.log "sort:", sort
+		console.log "sort.json.stringify:", JSON.stringify(sort)
+		options = {}
+		options.sort = sort
 		Creator.getCollection(objectName).update({_id: record_id},{$set:{
 			filters: filters
 			filter_scope: filter_scope
@@ -194,6 +215,7 @@ Template.creator_report.events
 			grouping: report_settings.grouping
 			totaling: report_settings.totaling
 			counting: report_settings.counting
+			options: options
 		}})
 
 
@@ -203,13 +225,18 @@ renderTabularReport = (reportObject, reportData)->
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
+	sorts = _.object(reportObject.options?.sort)
 	reportColumns = reportObject.columns?.map (item, index)->
 		itemFieldKey = item.replace(/\./g,"*%*")
-		itemField = objectFields[item.split(".")[0]]
-		return {
+		fieldFirstKey = item.split(".")[0]
+		itemField = objectFields[fieldFirstKey]
+		field = {
 			caption: itemField.label
 			dataField: itemFieldKey
 		}
+		if sorts[fieldFirstKey]
+			field.sortOrder = sorts[fieldFirstKey]
+		return field
 	unless reportColumns
 		reportColumns = []
 	
@@ -263,22 +290,32 @@ renderSummaryReport = (reportObject, reportData)->
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
+	sorts = _.object(reportObject.options?.sort)
 	reportColumns = reportObject.columns?.map (item, index)->
 		itemFieldKey = item.replace(/\./g,"*%*")
-		itemField = objectFields[item.split(".")[0]]
-		return {
+		fieldFirstKey = item.split(".")[0]
+		itemField = objectFields[fieldFirstKey]
+		field = {
 			caption: itemField.label
 			dataField: itemFieldKey
 		}
+		if sorts[fieldFirstKey]
+			field.sortOrder = sorts[fieldFirstKey]
+		return field
 	unless reportColumns
 		reportColumns = []
 	_.each reportObject.rows, (group, index)->
 		groupFieldKey = group.replace(/\./g,"*%*")
-		groupField = objectFields[group.split(".")[0]]
-		reportColumns.push 
+		fieldFirstKey = group.split(".")[0]
+		groupField = objectFields[fieldFirstKey]
+		field = {
 			caption: groupField.label
 			dataField: groupFieldKey
 			groupIndex: index
+		}
+		if sorts[fieldFirstKey]
+			field.sortOrder = sorts[fieldFirstKey]
+		reportColumns.push field
 
 	reportSummary = {}
 	totalSummaryItems = []
@@ -366,29 +403,40 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		return
+	sorts = _.object(reportObject.options?.sort)
 	reportFields = []
 	_.each reportObject.rows, (row)->
 		rowFieldKey = row.replace(/\./g,"*%*")
-		rowField = objectFields[row.split(".")[0]]
+		fieldFirstKey = row.split(".")[0]
+		rowField = objectFields[fieldFirstKey]
 		caption = rowField.label
 		unless caption
 			caption = objectName + "_" + rowFieldKey
-		reportFields.push 
+		field = {
 			caption: caption
 			width: 100
 			dataField: rowFieldKey
 			area: 'row'
+		}
+		if sorts[fieldFirstKey]
+			field.sortOrder = sorts[fieldFirstKey]
+		reportFields.push field
 	_.each reportObject.columns, (column)->
 		columnFieldKey = column.replace(/\./g,"*%*")
-		columnField = objectFields[column.split(".")[0]]
+		fieldFirstKey = column.split(".")[0]
+		columnField = objectFields[fieldFirstKey]
 		caption = columnField.label
 		unless caption
 			caption = objectName + "_" + columnFieldKey
-		reportFields.push 
+		field = {
 			caption: caption
 			width: 100
 			dataField: columnFieldKey
 			area: 'column'
+		}
+		if sorts[fieldFirstKey]
+			field.sortOrder = sorts[fieldFirstKey]
+		reportFields.push field
 	
 	counting = reportObject.counting
 	if reportObject.counting == undefined
