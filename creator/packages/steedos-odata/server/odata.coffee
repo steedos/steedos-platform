@@ -42,8 +42,8 @@ Meteor.startup ->
 			SteedosOdataAPI.addCollection Creator.Collections[key],
 				excludedEndpoints: []
 				routeOptions:
-					authRequired: true
-					spaceRequired: true
+					authRequired: SteedosOData.AUTHREQUIRED
+					spaceRequired: false
 				endpoints:
 					getAll:
 						action: ->
@@ -59,7 +59,11 @@ Meteor.startup ->
 									console.log 'bodyParams: ', @bodyParams
 									createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
 									# 强制增加過濾掉件space: @spaceId
-									createFilter.space = @spaceId
+
+									console.log("@spaceId", @spaceId)
+
+									createFilter.space = @urlParams.spaceId #@spaceId
+
 									entities = []
 									if @queryParams.$top isnt '0'
 										console.log optionsParser(@queryParams)
@@ -68,11 +72,11 @@ Meteor.startup ->
 									if entities
 										body = {}
 										headers = {}
-										body['@odata.context'] = 'http://127.0.0.1:5000/odata/v4/$metadata#Products'
+										body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
 										body['@odata.count'] = scannedCount
 										body['value'] = entities
 										headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-										headers['OData-Version'] = '4.0'
+										headers['OData-Version'] = SteedosOData.VERSION
 										{body: body, headers: headers}
 									else
 										statusCode: 404

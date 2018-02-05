@@ -3,6 +3,7 @@ if Meteor.isDevelopment
 		name: "steedosUsersOrgs"
 		label: "选人选组"
 		icon: "forecasts"
+		enable_api: false
 		fields:
 			name:
 				label: "名称"

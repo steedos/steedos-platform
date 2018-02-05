@@ -4,6 +4,7 @@ if Meteor.isDevelopment
 		label: "steedosLookups"
 		icon: "forecasts"
 		enable_files: true
+		enable_api: true
 		fields:
 			name:
 				label: "名称"
@@ -12,9 +13,9 @@ if Meteor.isDevelopment
 				description: ""
 				inlineHelpText: ""
 				required: true
-			company_signed_id:
-				type: "lookup"
-				reference_to: "users"
+#			company_signed_id:
+#				type: "lookup"
+#				reference_to: "users"
 			customer_id:
 				label: "客户(单选)"
 				type: "lookup"
@@ -24,32 +25,32 @@ if Meteor.isDevelopment
 				type: "lookup"
 				reference_to: "companies"
 				multiple: true
-			object_switche_id:
-				label: "客户/用户(单选)"
-				type: "lookup"
-				reference_to: ["companies", "users"]
-				group: "可选择对象测试区"
-			object_switche_ids:
-				label: "客户/用户(多选)"
-				type: "lookup"
-				reference_to: ["companies", "users"]
-				multiple: true
-				group: "可选择对象测试区"
-			site:
-				type: "lookup"
-				reference_to: "cms_sites"
-				group: "filters测试区"
-			category:
-				type: "lookup"
-				reference_to: "cms_categories"
-				filters: [["site", "$eq", "{site}"]]  # {site} 必须要在depend_on数组中
-				depend_on: ["site"]
-				group: "filters测试区",
-			archives_files_clerical:
-				type: "lookup"
-				reference_to: "archive_records"
-				group: "is_name测试区"
-				is_wide: true
+#			object_switche_id:
+#				label: "客户/用户(单选)"
+#				type: "lookup"
+#				reference_to: ["companies", "users"]
+#				group: "可选择对象测试区"
+#			object_switche_ids:
+#				label: "客户/用户(多选)"
+#				type: "lookup"
+#				reference_to: ["companies", "users"]
+#				multiple: true
+#				group: "可选择对象测试区"
+#			site:
+#				type: "lookup"
+#				reference_to: "cms_sites"
+#				group: "filters测试区"
+#			category:
+#				type: "lookup"
+#				reference_to: "cms_categories"
+#				filters: [["site", "$eq", "{site}"]]  # {site} 必须要在depend_on数组中
+#				depend_on: ["site"]
+#				group: "filters测试区",
+#			archives_files_clerical:
+#				type: "lookup"
+#				reference_to: "archive_records"
+#				group: "is_name测试区"
+#				is_wide: true
 			boolean:
 				label: 'boolean值测试'
 				type: "boolean"
