@@ -4,15 +4,22 @@ Template.mobileView.onRendered ->
 	self.$(".mobile-view").removeClass "hidden"
 	self.$(".mobile-view").animateCss "fadeInRight"
 
-	width = $("body").width()
-	self.$(".info-card-container").css("width", "#{width}px")
-	self.$(".scroller").css("width", "#{2*width}px")
-
 	self.autorun ->
 		object_name = Template.instance().data.object_name
 		record_id = Template.instance().data.record_id
 		if object_name and record_id
 			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
+
+
+	# 此处不使用method而是使用订阅去获取相关object的record，避免添加数据之后，前台获取的数据条数没有发生变化
+	self.autorun ->
+		object_name = Template.instance().data.object_name
+		record_id = Template.instance().data.record_id
+		spaceId = Steedos.spaceId()
+		if object_name and record_id and spaceId
+			related_objects = Creator.getRelatedList(object_name, record_id)
+			_.each related_objects, (obj) ->
+				Creator.subs["Creator"].subscribe "related_objects_records", obj.object_name, obj.related_field_name, record_id, spaceId
 
 Template.mobileView.helpers
 	record_id: ()->
@@ -103,7 +110,30 @@ Template.mobileView.helpers
 
 	related_objects: ()->
 		object_name = Template.instance().data.object_name
-		return Creator.getRelatedObjects(object_name)
+		record_id = Template.instance().data.record_id
+		return Creator.getRelatedList(object_name, record_id)
+
+	related_records_counts: (object_name, related_field_name)->
+		record_id = Template.instance().data.record_id
+		spaceId = Steedos.spaceId()
+		userId = Meteor.userId()
+		if object_name == "cfs.files.filerecord"
+			selector = {"metadata.space": spaceId}
+		else
+			selector = {space: spaceId}
+		
+		if object_name == "cms_files"
+			# 附件的关联搜索条件是定死的
+			selector["parent.o"] = object_name
+			selector["parent.ids"] = [record_id]
+		else
+			selector[related_field_name] = record_id
+
+		permissions = Creator.getPermissions(object_name, spaceId, userId)
+		if !permissions.viewAllRecords and permissions.allowRead
+			selector.owner = userId
+
+		return Creator.Collections[object_name].find().count()
 
 Template.mobileView.events
 	'click .mobile-view-back': (event, template)->

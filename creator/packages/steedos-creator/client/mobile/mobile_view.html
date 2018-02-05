@@ -121,13 +121,13 @@
 									<header class="slds-media slds-media--center slds-has-flexi-truncate">
 										<div class="slds-media__figure">
 											<div class="small forceEntityIcon">
-												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this.object_name)}}
 											</div>
 										</div>
 										<div class="slds-media__body">
 											<h2 class="header-title-container">
 												<span class="slds-text-heading--small slds-truncate">
-													{{object_label this}}(0)
+													{{object_label this.object_name}}({{related_records_counts this.object_name this.related_field_name}})
 												</span>
 											</h2>
 										</div>
