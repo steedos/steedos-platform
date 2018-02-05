@@ -24,7 +24,7 @@ var meteorModel = new MeteorModel(
 oAuth2Server.oauthserver = oauthserver({
     model: meteorModel,
     grants: ['authorization_code'],
-    debug: true
+    debug: false
 });
 
 oAuth2Server.collections.accessToken = accessTokenCollection;

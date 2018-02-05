@@ -23,17 +23,23 @@ Package.onUse(function(api) {
 	api.use('meteorhacks:async@1.0.0', 'server');
 	api.use('simple:json-routes@2.1.0', 'server');
 
-	api.addFiles('client/oauth2authorize.html', 'client');
-	api.addFiles('client/getAuthorizeCode.coffee', 'client');
-	api.addFiles('client/getAccessToken.coffee', 'client');
+	api.use('http');
 
-	api.addFiles('client/router.coffee', 'client');
-
+	api.use('steedos:creator');
 
 	api.addFiles('lib/common.js', ['client', 'server']);
 	api.addFiles('lib/meteor-model.js', 'server');
 	api.addFiles('lib/server.js', 'server');
 	api.addFiles('lib/client.js', 'client');
+
+	api.addFiles('client/oauth2authorize.html', 'client');
+	api.addFiles('client/oauth2authorize.coffee', 'client');
+
+	api.addFiles('client/router.coffee', 'client');
+
+	api.addFiles('server/rest.coffee', 'server');
+	// api.addFiles('server/getAuthCode.coffee', 'server');
+	// api.addFiles('server/getAccessToken.coffee', 'server');
 
 	api.export('oAuth2Server', ['client', 'server']);
 });
