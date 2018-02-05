@@ -1,5 +1,6 @@
 Meteor.methods
 	'report_data': (options)->
+		console.log "report_data,options:", options
 		check(options, Object)
 		space = options.space
 		fields = options.fields
@@ -65,9 +66,9 @@ Meteor.methods
 
 		result = Creator.getCollection(object_name).find(selector, fields: filterFields).fetch()
 		if compoundFields.length
-			return result.map (item,index)->
+			result = result.map (item,index)->
 				_.each compoundFields, (compoundFieldItem, index)->
-					itemKey = compoundFieldItem.name + "_" + compoundFieldItem.childKey.replace(/\./g, "_")
+					itemKey = compoundFieldItem.name + "*%*" + compoundFieldItem.childKey.replace(/\./g, "*%*")
 					itemValue = item[compoundFieldItem.name]
 					type = compoundFieldItem.field.type
 					if ["lookup", "master_detail"].indexOf(type) > -1
@@ -83,6 +84,8 @@ Meteor.methods
 					else
 						item[itemKey] = itemValue
 				return item
+			console.log "result:", result
+			return result
 		else
 			return result
 
