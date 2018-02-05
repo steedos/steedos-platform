@@ -152,7 +152,7 @@ Template.creator_report.events
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
 					if n.sortOrder
-						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
+						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
 			when 'summary'
 				fields = template.dataGridInstance.getVisibleColumns()
 				columns = _.where(fields,{"groupIndex":undefined})
@@ -170,7 +170,7 @@ Template.creator_report.events
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
 					if n.sortOrder
-						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
+						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
 			when 'matrix'
 				fields = template.pivotGridInstance.getDataSource()._fields
 				# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
@@ -194,7 +194,7 @@ Template.creator_report.events
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
 					if n.sortOrder
-						sort.push [n.dataField.split(/\*%\*/)[0],n.sortOrder]
+						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
 			else
 				columns = report.columns
 				rows = report.rows
@@ -234,8 +234,8 @@ renderTabularReport = (reportObject, reportData)->
 			caption: itemField.label
 			dataField: itemFieldKey
 		}
-		if sorts[fieldFirstKey]
-			field.sortOrder = sorts[fieldFirstKey]
+		if sorts[item]
+			field.sortOrder = sorts[item]
 		return field
 	unless reportColumns
 		reportColumns = []
@@ -299,8 +299,8 @@ renderSummaryReport = (reportObject, reportData)->
 			caption: itemField.label
 			dataField: itemFieldKey
 		}
-		if sorts[fieldFirstKey]
-			field.sortOrder = sorts[fieldFirstKey]
+		if sorts[item]
+			field.sortOrder = sorts[item]
 		return field
 	unless reportColumns
 		reportColumns = []
@@ -313,8 +313,8 @@ renderSummaryReport = (reportObject, reportData)->
 			dataField: groupFieldKey
 			groupIndex: index
 		}
-		if sorts[fieldFirstKey]
-			field.sortOrder = sorts[fieldFirstKey]
+		if sorts[group]
+			field.sortOrder = sorts[group]
 		reportColumns.push field
 
 	reportSummary = {}
@@ -369,7 +369,7 @@ renderSummaryReport = (reportObject, reportData)->
 	reportSummary.totalItems = totalSummaryItems
 	reportSummary.groupItems = groupSummaryItems
 
-	console.log "renderSummaryReport.reportSummary:", reportSummary
+	console.log "renderSummaryReport.reportColumns:", reportColumns
 	dxOptions = 
 		columnAutoWidth: true
 		"export":
@@ -418,8 +418,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			dataField: rowFieldKey
 			area: 'row'
 		}
-		if sorts[fieldFirstKey]
-			field.sortOrder = sorts[fieldFirstKey]
+		if sorts[row]
+			field.sortOrder = sorts[row]
 		reportFields.push field
 	_.each reportObject.columns, (column)->
 		columnFieldKey = column.replace(/\./g,"*%*")
@@ -434,8 +434,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			dataField: columnFieldKey
 			area: 'column'
 		}
-		if sorts[fieldFirstKey]
-			field.sortOrder = sorts[fieldFirstKey]
+		if sorts[column]
+			field.sortOrder = sorts[column]
 		reportFields.push field
 	
 	counting = reportObject.counting
