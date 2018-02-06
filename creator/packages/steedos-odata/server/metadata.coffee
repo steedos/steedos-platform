@@ -1,9 +1,11 @@
 Meteor.startup ->
 	ServiceMetadata = Npm.require('odata-v4-service-metadata').ServiceMetadata;
 	ServiceDocument = Npm.require('odata-v4-service-document').ServiceDocument;
-	_NUMBERTYPES = ["number", "currency"]
+	_NUMBER_TYPES = ["number", "currency"]
 
-	_BOOLEANTYPES = ["boolean"]
+	_BOOLEAN_TYPES = ["boolean"]
+
+	_DATETIME_OFFSET_TYPES = ['datetime']
 
 	_NAMESPACE = "CreatorEntities"
 
@@ -49,14 +51,20 @@ Meteor.startup ->
 
 			_.forEach _object.fields, (field, field_name)->
 
-				_type = "Edm.String"
+				_property = {name: field_name, type: "Edm.String"}
 
-				if _.contains _NUMBERTYPES, field.type
-					_type = "Edm.Int32"
-				if _.contains _BOOLEANTYPES, field.type
-					_type = "Edm.Boolean"
+				if _.contains _NUMBER_TYPES, field.type
+					_property.type = "Edm.Double"
+				else if _.contains _BOOLEAN_TYPES, field.type
+					_property.type = "Edm.Boolean"
+				else if _.contains _DATETIME_OFFSET_TYPES, field.type
+					_property.type = "Edm.DateTimeOffset"
+					_property.precision = "8"
 
-				property.push {name: field_name, type: _type, nullable: !field.required}
+				if field.required
+					_property.nullable = false
+
+				property.push _property
 
 				reference_to = field.reference_to
 
