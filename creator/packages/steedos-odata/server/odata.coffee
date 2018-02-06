@@ -59,11 +59,13 @@ Meteor.startup ->
 									console.log 'urlParams: ', @urlParams
 									console.log 'bodyParams: ', @bodyParams
 									createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
-									# 强制增加過濾掉件space: @spaceId
 
-									console.log("@spaceId", @spaceId)
+									if key is 'cfs.files.filerecord'
+										createFilter['metadata.space'] = @urlParams.spaceId
+									else
+										createFilter.space = @urlParams.spaceId
 
-									createFilter.space = @urlParams.spaceId #@spaceId
+									console.log 'createFilter: ', createFilter
 
 									entities = []
 									if @queryParams.$top isnt '0'
