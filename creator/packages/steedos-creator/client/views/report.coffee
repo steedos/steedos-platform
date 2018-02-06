@@ -261,6 +261,8 @@ renderTabularReport = (reportObject, reportData)->
 	console.log "renderTabularReport.reportSummary:", reportSummary
 
 	dxOptions = 
+		sorting: 
+			mode: "multiple"
 		columnAutoWidth: true
 		"export":
 			enabled: true
@@ -371,6 +373,8 @@ renderSummaryReport = (reportObject, reportData)->
 
 	console.log "renderSummaryReport.reportColumns:", reportColumns
 	dxOptions = 
+		sorting: 
+			mode: "multiple"
 		columnAutoWidth: true
 		"export":
 			enabled: true
@@ -497,7 +501,9 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		adaptiveLayout: 
 			width: 450
 	).dxChart('instance')
-	dxOptions= 
+	dxOptions = 
+		sorting: 
+			mode: "multiple"
 		paging: false
 		allowSortingBySummary: true
 		allowSorting: true
@@ -573,7 +579,7 @@ renderReport = (reportObject)->
 		if error
 			console.error('report_data method error:', error)
 			return
-		
+		console.log "report_data:", result
 		switch reportObject.report_type
 			when 'tabular'
 				renderTabularReport.bind(self)(reportObject, result)
