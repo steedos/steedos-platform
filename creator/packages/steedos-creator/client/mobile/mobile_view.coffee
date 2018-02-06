@@ -121,27 +121,28 @@ Template.mobileView.helpers
 		record_id = Template.instance().data.record_id
 		return Creator.getRelatedList(object_name, record_id)
 
-	related_records_counts: (object_name, related_field_name)->
+	related_records_counts: (related_object_name, related_field_name)->
+		object_name = Template.instance().data.object_name
 		record_id = Template.instance().data.record_id
 		spaceId = Steedos.spaceId()
 		userId = Meteor.userId()
-		if object_name == "cfs.files.filerecord"
+		if related_object_name == "cfs.files.filerecord"
 			selector = {"metadata.space": spaceId}
 		else
 			selector = {space: spaceId}
 		
-		if object_name == "cms_files"
+		if related_object_name == "cms_files"
 			# 附件的关联搜索条件是定死的
 			selector["parent.o"] = object_name
 			selector["parent.ids"] = [record_id]
 		else
 			selector[related_field_name] = record_id
 
-		permissions = Creator.getPermissions(object_name, spaceId, userId)
+		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
 		if !permissions.viewAllRecords and permissions.allowRead
 			selector.owner = userId
 
-		return Creator.Collections[object_name].find().count()
+		return Creator.Collections[related_object_name].find(selector).count()
 
 	related_object_url: (related_object_name)->
 		app_id = Template.instance().data.app_id

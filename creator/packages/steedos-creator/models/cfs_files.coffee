@@ -3,6 +3,7 @@ Creator.Objects["cfs.files.filerecord"] =
 	label: "文件版本"
 	icon: "drafts"
 	enable_search: true
+	enable_api: true
 	fields:
 		"original.$.name":
 			label:"名称"

@@ -8,6 +8,8 @@ initFilter = (object_name, related_object_name, record_id) ->
 		if obj.object_name == related_object_name
 			related_field_name = obj.related_field_name
 	
+	related_field_name = related_field_name.replace(/\./g, "/")
+
 	if related_object_name == "cfs.files.filerecord"
 		selector.push(["metadata/space", "=", spaceId])
 	else
