@@ -13,16 +13,6 @@
         </header>
         <div class="mobile-template-content">
             <div id="gridContainer"></div>
-            <script type="text/html" id="item-template">
-                <a href="<%= Creator.getObjectUrl('', _id, '') %>" class="weui-cell weui-cell_access weui-cell-profile record-item">
-                    <div class="weui-cell__hd">
-                        {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=icon}}
-                    </div>
-                    <div class="weui-cell__bd weui-cell_primary">
-                        <p><%= {{name_field_key}} %></p>
-                    </div>
-                </a>
-            </script>
         </div>
     </div>
 </template>

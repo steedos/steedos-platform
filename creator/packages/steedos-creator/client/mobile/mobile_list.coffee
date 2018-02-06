@@ -65,6 +65,7 @@ Template.mobileList.onRendered ->
 	app_id = Template.instance().data.app_id
 	list_view_id = Template.instance().data.list_view_id
 	name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+	icon = Creator.getObject(object_name).icon
 	
 	this.autorun (c)->
 		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready()
@@ -99,7 +100,12 @@ Template.mobileList.onRendered ->
 				searchExpr: name_field_key,
 				pageLoadMode: "scrollBottom"
 				pullRefreshEnabled: true
-				itemTemplate: $("#item-template")
+				itemTemplate: (data, index)->
+					record_url = Creator.getObjectUrl(object_name, data._id, app_id)
+					result = $("<a>").addClass("weui-cell weui-cell_access weui-cell-profile record-item").attr("href", record_url)
+					$("<div>").html(Blaze.toHTMLWithData Template.steedos_icon, {class: "slds-icon slds-page-header__icon", source: "standard-sprite", name: icon}).addClass("weui-cell__hd").appendTo(result)
+					$("<div>").html("<p>#{data[name_field_key]}</p>").addClass("weui-cell__bd weui-cell_primary").appendTo(result)
+					return result
 			});
 
 Template.mobileList.helpers
