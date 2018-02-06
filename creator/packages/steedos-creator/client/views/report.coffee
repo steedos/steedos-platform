@@ -135,6 +135,7 @@ Template.creator_report.events
 		rows = []
 		values = []
 		sort = []
+		column_width = []
 		report_settings = template.report_settings.get()
 		report = Creator.getObjectRecord()
 		debugger
@@ -151,8 +152,11 @@ Template.creator_report.events
 				values = report.values
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
+					fieldKey = n.dataField.replace(/\*%\*/g,".")
 					if n.sortOrder
-						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
+						sort.push [fieldKey,n.sortOrder]
+					if n.width
+						column_width.push [fieldKey,n.width]
 			when 'summary'
 				fields = template.dataGridInstance.getVisibleColumns()
 				columns = _.where(fields,{"groupIndex":undefined})
@@ -169,8 +173,11 @@ Template.creator_report.events
 				values = report.values
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
+					fieldKey = n.dataField.replace(/\*%\*/g,".")
 					if n.sortOrder
-						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
+						sort.push [fieldKey,n.sortOrder]
+					if n.width
+						column_width.push [fieldKey,n.width]
 			when 'matrix'
 				fields = template.pivotGridInstance.getDataSource()._fields
 				# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
@@ -193,8 +200,11 @@ Template.creator_report.events
 				values = values.map (n)-> return n.replace(/\*%\*/g,".")
 				fields = _.sortBy(fields,"sortIndex")
 				_.each fields, (n,i)->
+					fieldKey = n.dataField.replace(/\*%\*/g,".")
 					if n.sortOrder
-						sort.push [n.dataField.replace(/\*%\*/g,"."),n.sortOrder]
+						sort.push [fieldKey,n.sortOrder]
+					if n.width
+						column_width.push [fieldKey,n.width]
 			else
 				columns = report.columns
 				rows = report.rows
@@ -202,10 +212,11 @@ Template.creator_report.events
 
 
 				
-		console.log "sort:", sort
-		console.log "sort.json.stringify:", JSON.stringify(sort)
 		options = {}
 		options.sort = sort
+		options.column_width = column_width
+		console.log "options:", options
+		console.log "options.json.stringify:", JSON.stringify(options)
 		Creator.getCollection(objectName).update({_id: record_id},{$set:{
 			filters: filters
 			filter_scope: filter_scope
@@ -226,6 +237,7 @@ renderTabularReport = (reportObject, reportData)->
 	if _.isEmpty objectFields
 		return
 	sorts = _.object(reportObject.options?.sort)
+	columnWidths = _.object(reportObject.options?.column_width)
 	reportColumns = reportObject.columns?.map (item, index)->
 		itemFieldKey = item.replace(/\./g,"*%*")
 		fieldFirstKey = item.split(".")[0]
@@ -236,6 +248,8 @@ renderTabularReport = (reportObject, reportData)->
 		}
 		if sorts[item]
 			field.sortOrder = sorts[item]
+		if columnWidths[item]
+			field.width = columnWidths[item]
 		return field
 	unless reportColumns
 		reportColumns = []
@@ -293,6 +307,7 @@ renderSummaryReport = (reportObject, reportData)->
 	if _.isEmpty objectFields
 		return
 	sorts = _.object(reportObject.options?.sort)
+	columnWidths = _.object(reportObject.options?.column_width)
 	reportColumns = reportObject.columns?.map (item, index)->
 		itemFieldKey = item.replace(/\./g,"*%*")
 		fieldFirstKey = item.split(".")[0]
@@ -303,6 +318,8 @@ renderSummaryReport = (reportObject, reportData)->
 		}
 		if sorts[item]
 			field.sortOrder = sorts[item]
+		if columnWidths[item]
+			field.width = columnWidths[item]
 		return field
 	unless reportColumns
 		reportColumns = []
@@ -317,6 +334,8 @@ renderSummaryReport = (reportObject, reportData)->
 		}
 		if sorts[group]
 			field.sortOrder = sorts[group]
+		if columnWidths[group]
+			field.width = columnWidths[group]
 		reportColumns.push field
 
 	reportSummary = {}
@@ -408,6 +427,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	if _.isEmpty objectFields
 		return
 	sorts = _.object(reportObject.options?.sort)
+	columnWidths = _.object(reportObject.options?.column_width)
 	reportFields = []
 	_.each reportObject.rows, (row)->
 		rowFieldKey = row.replace(/\./g,"*%*")
@@ -424,6 +444,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		}
 		if sorts[row]
 			field.sortOrder = sorts[row]
+		if columnWidths[row]
+			field.width = columnWidths[row]
 		reportFields.push field
 	_.each reportObject.columns, (column)->
 		columnFieldKey = column.replace(/\./g,"*%*")
@@ -440,6 +462,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		}
 		if sorts[column]
 			field.sortOrder = sorts[column]
+		if columnWidths[column]
+			field.width = columnWidths[column]
 		reportFields.push field
 	
 	counting = reportObject.counting
