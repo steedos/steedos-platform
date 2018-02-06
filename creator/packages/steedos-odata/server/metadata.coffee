@@ -5,7 +5,7 @@ Meteor.startup ->
 
 	_BOOLEANTYPES = ["boolean"]
 
-	_NAMESPACE = "Steedos.Creator.System.Entities"
+	_NAMESPACE = "CreatorEntities"
 
 	getObjectsOdataSchema = ()->
 		schema = {version: "4.0", dataServices: {schema: []}}
@@ -67,14 +67,21 @@ Meteor.startup ->
 					reference_to.forEach (r)->
 						reference_obj = Creator.objectsByName[r]
 						navigationProperty.push {
-							name: field_name,
-							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
+							name: field_name.toUpperCase(),
+#							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
+							type: _NAMESPACE + "." + reference_obj.name
 							partner: _object.name #TODO
 							_re_name: reference_obj.name
+							referentialConstraint: [
+								{
+									property: field_name,
+									referencedProperty: "_id"
+								}
+							]
 						}
 
 			entitie.property = property
-#			entitie.navigationProperty = navigationProperty
+			entitie.navigationProperty = navigationProperty
 
 			entities_schema.entityType.push entitie
 

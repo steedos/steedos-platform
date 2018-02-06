@@ -47,6 +47,7 @@ Meteor.startup ->
 				endpoints:
 					getAll:
 						action: ->
+							console.log "getAll ------ #{key}"
 							collection = Creator.Collections[key]
 							if not collection
 								statusCode: 404
