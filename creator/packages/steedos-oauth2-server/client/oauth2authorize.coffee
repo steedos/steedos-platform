@@ -30,14 +30,10 @@ Template.loginAuthorize.events
 	'click button.testLocalTokens':()->
 		result = Session.get "authcode"
 
-		console.log "session.get",Session.get "authcode"
-
 		urlParams = getUrlParams()
 
-		console.log urlParams
-
 		HTTP.post(
-			Meteor.absoluteUrl('/oauth/token'),
+			Meteor.absoluteUrl('steedos/oauth2/token'),
 			{
 				headers: {
 					'Content-type': 'application/x-www-form-urlencoded'
@@ -55,9 +51,6 @@ Template.loginAuthorize.events
 				console.log "============="
 				console.log result
 			)
-
-
-
 
 getUrlParams = ()->
 	decode = (s)->

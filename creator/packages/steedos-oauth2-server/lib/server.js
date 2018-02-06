@@ -10,6 +10,16 @@ var accessTokenCollection = new Meteor.Collection('OAuth2AccessTokens');
 var clientsCollection = new Meteor.Collection('OAuth2Clients');
 
 
+if(Meteor.isServer){
+    accessTokenCollection.before.insert(function(userId, doc){
+        console.log(doc);
+        console.log(userId);
+        
+        spaceId = db.space_users.findOne({user: doc.userId}).space;
+        doc.spaceId = spaceId;
+    });
+}
+
 // setup the node oauth2 model.
 var meteorModel = new MeteorModel(
     accessTokenCollection,
@@ -30,12 +40,12 @@ oAuth2Server.oauthserver = oauthserver({
 oAuth2Server.collections.accessToken = accessTokenCollection;
 oAuth2Server.collections.client = clientsCollection;
 
-// configure a url handler for the /oauth/token path.
+// configure a url handler for the /steedos/oauth2/token path.
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.all('/oauth/token', oAuth2Server.oauthserver.grant());
+app.all('/steedos/oauth2/token', oAuth2Server.oauthserver.grant());
 
 WebApp.rawConnectHandlers.use(app);
 
@@ -44,13 +54,11 @@ WebApp.rawConnectHandlers.use(app);
 // Configure really basic identity service
 ////////////////////
 JsonRoutes.Middleware.use(
-    '/oauth/getIdentity',
+    '/steedos/oauth2/getIdentity',
     oAuth2Server.oauthserver.authorise()
 );
 
-JsonRoutes.add('get', '/oauth/getIdentity', function(req, res, next) {
-    console.log('GET /oauth/getIdentity');
-
+JsonRoutes.add('get', '/steedos/oauth2/getIdentity', function(req, res, next) {
     var accessTokenStr = (req.params && req.params.access_token) || (req.query && req.query.access_token);
     var accessToken = oAuth2Server.collections.accessToken.findOne({accessToken: accessTokenStr});
     var user = Meteor.users.findOne(accessToken.userId);

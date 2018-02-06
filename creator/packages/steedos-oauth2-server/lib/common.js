@@ -24,6 +24,14 @@ authCodesCollection.allow({
     }
 });
 
+if(Meteor.isServer){
+    authCodesCollection.before.insert(function(userId, doc){
+        spaceId = db.space_users.findOne({user: doc.userId}).space;
+        doc.spaceId = spaceId;
+    });
+}
+
+
 oAuth2Server = {
     pubSubNames: {
         authCodes: 'oauth2/authCodes',
