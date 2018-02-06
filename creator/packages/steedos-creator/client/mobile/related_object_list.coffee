@@ -13,7 +13,7 @@ initFilter = (object_name, related_object_name, record_id) ->
 	else
 		selector.push(["space", "=", spaceId])
 
-	if object_name == "cms_files"
+	if related_object_name == "cms_files"
 		selector.push("and", ["parent.o", "=", object_name])
 		selector.push("and", ["parent.ids", "=", [record_id]])
 	else
