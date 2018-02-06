@@ -95,7 +95,7 @@ Template.mobileList.onRendered ->
 					],
 					filter: filter
 				},
-				height: "100%"
+				height: "auto"
 				searchEnabled: true
 				searchExpr: name_field_key,
 				pageLoadMode: "scrollBottom"

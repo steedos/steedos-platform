@@ -19,7 +19,7 @@ Template.mobileView.onRendered ->
 		if object_name and record_id and spaceId
 			related_objects = Creator.getRelatedList(object_name, record_id)
 			_.each related_objects, (obj) ->
-				Creator.subs["Creator"].subscribe "related_objects_records", obj.object_name, obj.related_field_name, record_id, spaceId
+				Creator.subs["Creator"].subscribe "related_objects_records", object_name, obj.object_name, obj.related_field_name, record_id, spaceId
 
 Template.mobileView.helpers
 	record_id: ()->
@@ -142,6 +142,12 @@ Template.mobileView.helpers
 			selector.owner = userId
 
 		return Creator.Collections[object_name].find().count()
+
+	related_object_url: (related_object_name)->
+		app_id = Template.instance().data.app_id
+		object_name = Template.instance().data.object_name
+		record_id = Template.instance().data.record_id
+		Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
 
 Template.mobileView.events
 	'click .mobile-view-back': (event, template)->

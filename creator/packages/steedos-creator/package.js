@@ -188,6 +188,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/mobile_view.html', 'client');
 	api.addFiles('client/mobile/mobile_view.less', 'client');
 	api.addFiles('client/mobile/mobile_view.coffee', 'client');
+	api.addFiles('client/mobile/related_object_list.html', 'client');
+	api.addFiles('client/mobile/related_object_list.less', 'client');
+	api.addFiles('client/mobile/related_object_list.coffee', 'client');
 
 
 	api.addFiles('client/core.coffee', 'client');

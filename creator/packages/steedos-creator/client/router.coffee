@@ -92,6 +92,17 @@ objectRoutes.route '/:list_view_id/list',
 			Meteor.defer ->
 				Blaze.renderWithData(Template.mobileList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 
+objectRoutes.route '/:record_id/:related_object_name/list',
+	action: (params, queryParams)->
+		app_id = FlowRouter.getParam("app_id")
+		object_name = FlowRouter.getParam("object_name")
+		record_id = FlowRouter.getParam("record_id")
+		related_object_name = FlowRouter.getParam("related_object_name")
+		data = {app_id: app_id, object_name: object_name, record_id: record_id, related_object_name: related_object_name}
+		if Steedos.isMobile() and $("#related_object_list_#{related_object_name}").length == 0
+			Meteor.defer ->
+				Blaze.renderWithData(Template.relatedObjectList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
@@ -99,8 +110,9 @@ objectRoutes.route '/view/:record_id',
 		record_id = FlowRouter.getParam("record_id")
 		data = {app_id: app_id, object_name: object_name, record_id: record_id}
 		if Steedos.isMobile()
-			Meteor.defer ->
-				Blaze.renderWithData(Template.mobileView, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+			if $("#mobile_view_#{record_id}").length == 0
+				Meteor.defer ->
+					Blaze.renderWithData(Template.mobileView, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 		else
 			Session.set("detail_info_visible", true)
 			Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
