@@ -8,7 +8,7 @@ Meteor.startup ->
 	_NAMESPACE = "CreatorEntities"
 
 	getObjectsOdataSchema = ()->
-		schema = {version: "4.0", dataServices: {schema: []}}
+		schema = {version: SteedosOData.VERSION, dataServices: {schema: []}}
 
 		entities_schema = {}
 

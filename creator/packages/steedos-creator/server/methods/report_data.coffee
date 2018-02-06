@@ -83,6 +83,8 @@ Meteor.methods
 						item[itemKey] = _.findWhere(options, {value: itemValue})?.label or itemValue
 					else
 						item[itemKey] = itemValue
+					unless item[itemKey]
+						item[itemKey] = "--"
 				return item
 			console.log "result:", result
 			return result

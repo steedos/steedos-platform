@@ -452,41 +452,43 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	columnWidths = _.object(reportObject.options?.column_width)
 	reportFields = []
 	_.each reportObject.rows, (row)->
-		rowFieldKey = row.replace(/\./g,"*%*")
-		fieldFirstKey = row.split(".")[0]
-		rowField = objectFields[fieldFirstKey]
-		caption = rowField.label
-		unless caption
-			caption = objectName + "_" + rowFieldKey
-		field = {
-			caption: caption
-			width: 100
-			dataField: rowFieldKey
-			area: 'row'
-		}
-		if sorts[row]
-			field.sortOrder = sorts[row]
-		if columnWidths[row]
-			field.width = columnWidths[row]
-		reportFields.push field
+		if row != "_id"
+			rowFieldKey = row.replace(/\./g,"*%*")
+			fieldFirstKey = row.split(".")[0]
+			rowField = objectFields[fieldFirstKey]
+			caption = rowField.label
+			unless caption
+				caption = objectName + "_" + rowFieldKey
+			field = {
+				caption: caption
+				width: 100
+				dataField: rowFieldKey
+				area: 'row'
+			}
+			if sorts[row]
+				field.sortOrder = sorts[row]
+			if columnWidths[row]
+				field.width = columnWidths[row]
+			reportFields.push field
 	_.each reportObject.columns, (column)->
-		columnFieldKey = column.replace(/\./g,"*%*")
-		fieldFirstKey = column.split(".")[0]
-		columnField = objectFields[fieldFirstKey]
-		caption = columnField.label
-		unless caption
-			caption = objectName + "_" + columnFieldKey
-		field = {
-			caption: caption
-			width: 100
-			dataField: columnFieldKey
-			area: 'column'
-		}
-		if sorts[column]
-			field.sortOrder = sorts[column]
-		if columnWidths[column]
-			field.width = columnWidths[column]
-		reportFields.push field
+		if column != "_id"
+			columnFieldKey = column.replace(/\./g,"*%*")
+			fieldFirstKey = column.split(".")[0]
+			columnField = objectFields[fieldFirstKey]
+			caption = columnField.label
+			unless caption
+				caption = objectName + "_" + columnFieldKey
+			field = {
+				caption: caption
+				width: 100
+				dataField: columnFieldKey
+				area: 'column'
+			}
+			if sorts[column]
+				field.sortOrder = sorts[column]
+			if columnWidths[column]
+				field.width = columnWidths[column]
+			reportFields.push field
 	
 	counting = reportObject.counting
 	if reportObject.counting == undefined
