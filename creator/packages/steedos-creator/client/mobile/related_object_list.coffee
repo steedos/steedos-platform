@@ -9,13 +9,13 @@ initFilter = (object_name, related_object_name, record_id) ->
 			related_field_name = obj.related_field_name
 	
 	if related_object_name == "cfs.files.filerecord"
-		selector.push(["metadata.space", "=", spaceId])
+		selector.push(["metadata/space", "=", spaceId])
 	else
 		selector.push(["space", "=", spaceId])
 
 	if related_object_name == "cms_files"
-		selector.push("and", ["parent.o", "=", object_name])
-		selector.push("and", ["parent.ids", "=", [record_id]])
+		selector.push("and", ["parent/o", "=", object_name])
+		selector.push("and", ["parent/ids", "=", record_id])
 	else
 		selector.push("and", [related_field_name, "=", record_id])
 	
