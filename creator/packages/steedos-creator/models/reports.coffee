@@ -28,6 +28,7 @@ Creator.Objects.reports =
 			label: "过虑范围"
 			type: "select"
 			defaultValue: "space"
+			omit: true
 			options: [
 				{label: "所有", value: "space"},
 				{label: "与我相关", value: "mine"}
@@ -35,6 +36,7 @@ Creator.Objects.reports =
 		filters: 
 			label: "过虑条件"
 			type: [Object]
+			omit: true
 		"filters.$.field": 
 			label: "字段名"
 			type: "text"
@@ -67,6 +69,7 @@ Creator.Objects.reports =
 			label: "统计"
 			type: "[text]"
 		options:
+			omit: true
 			blackbox: true
 		# column_width: 
 		# 	label: "排序"
