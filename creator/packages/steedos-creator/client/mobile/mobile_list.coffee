@@ -58,8 +58,10 @@ initFilter = (list_view_id, object_name)->
 	return selector
 
 Template.mobileList.onRendered ->
-	this.$(".mobile-list").removeClass "hidden"
-	this.$(".mobile-list").animateCss "fadeInRight"
+	self = this
+
+	self.$(".mobile-list").removeClass "hidden"
+	self.$(".mobile-list").animateCss "fadeInRight"
 
 	object_name = Template.instance().data.object_name
 	app_id = Template.instance().data.app_id
@@ -67,14 +69,14 @@ Template.mobileList.onRendered ->
 	name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 	icon = Creator.getObject(object_name).icon
 	
-	this.autorun (c)->
+	self.autorun (c)->
 		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready()
 			c.stop()
 			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 			filter = initFilter(list_view_id, object_name)
 			console.log filter
 			DevExpress.ui.setTemplateEngine("underscore");
-			$("#gridContainer").dxList({
+			self.$("#gridContainer").dxList({
 				dataSource: {
 					store: {
 						type: "odata",

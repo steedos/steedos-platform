@@ -48,7 +48,7 @@ Template.relatedObjectList.onRendered ->
 			url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 			filter = initFilter(object_name, related_object_name, record_id)
 			console.log filter
-			$("#relatedObjectRecords").dxList({
+			self.$("#relatedObjectRecords").dxList({
 				dataSource: {
 					store: {
 						type: "odata",
