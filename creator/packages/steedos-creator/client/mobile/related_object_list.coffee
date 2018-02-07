@@ -83,6 +83,8 @@ Template.relatedObjectList.onRendered ->
 			});
 	
 
+Template.relatedObjectList.helpers Creator.helpers
+
 Template.relatedObjectList.helpers
 	related_object_name: ()->
 		return Template.instance().data.related_object_name

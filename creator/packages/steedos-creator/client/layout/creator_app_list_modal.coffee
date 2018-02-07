@@ -1,3 +1,5 @@
+Template.creator_app_list_modal.helpers Creator.helpers
+
 Template.creator_app_list_modal.helpers
 	apps: ()->
 		apps = []

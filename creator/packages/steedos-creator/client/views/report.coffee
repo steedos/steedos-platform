@@ -1,3 +1,5 @@
+Template.creator_report.helpers Creator.helpers
+
 Template.creator_report.helpers
 	reportObject: ->
 		record_id = Session.get "record_id"

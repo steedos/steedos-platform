@@ -122,6 +122,8 @@ Template.mobileList.onRendered ->
 					return result
 			});
 
+Template.mobileList.helpers Creator.helpers
+
 Template.mobileList.helpers
 	icon: ()->
 		object_name = Template.instance().data.object_name

@@ -21,6 +21,8 @@ Template.mobileView.onRendered ->
 			_.each related_objects, (obj) ->
 				Creator.subs["Creator"].subscribe "related_objects_records", object_name, obj.object_name, obj.related_field_name, record_id, spaceId
 
+Template.mobileView.helpers Creator.helpers
+
 Template.mobileView.helpers
 	record_id: ()->
 		return Template.instance().data.record_id

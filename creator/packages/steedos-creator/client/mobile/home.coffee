@@ -1,5 +1,6 @@
 Template.homeMenu.onRendered ->
 
+Template.homeMenu.helpers Creator.helpers
 
 Template.homeMenu.helpers
     apps: ()->

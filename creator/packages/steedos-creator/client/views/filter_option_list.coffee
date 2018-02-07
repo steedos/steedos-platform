@@ -1,3 +1,5 @@
+Template.filter_option_list.helpers Creator.helpers
+
 Template.filter_option_list.helpers 
 	filterItems: ()->
 		return Session.get("filter_items")

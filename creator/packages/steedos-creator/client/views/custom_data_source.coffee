@@ -1,3 +1,5 @@
+Template.custom_data_source.helpers Creator.helpers
+
 Template.custom_data_source.helpers
 
 

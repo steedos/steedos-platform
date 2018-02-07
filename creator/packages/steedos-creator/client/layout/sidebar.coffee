@@ -1,3 +1,5 @@
+Template.creatorSidebar.helpers Creator.helpers
+
 Template.creatorSidebar.helpers
 	
 	app_id: ()->

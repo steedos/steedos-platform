@@ -21,6 +21,8 @@ Template.select_fields.onCreated ->
             _self.available_fields = new ReactiveVar(available_fields)
             _self.visible_fields = new ReactiveVar(visible_fields)
 
+Template.select_fields.helpers Creator.helpers
+
 Template.select_fields.helpers
     available_fields: ()->
         available_fields = Template.instance().available_fields?.get()

@@ -1,3 +1,5 @@
+Template.creator_table_actions.helpers Creator.helpers
+
 Template.creator_table_actions.helpers
 	object_name: ()->
 		return Template.instance().data.object_name

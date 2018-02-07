@@ -1,3 +1,5 @@
+Template.filter_option.helpers Creator.helpers
+
 Template.filter_option.helpers 
 	schema:() -> 
 		object_name = Template.instance().data?.object_name

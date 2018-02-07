@@ -20,6 +20,8 @@ formatFileSize = (filesize)->
 
 	return rev.toFixed(2) + unit
 
+Template.creator_table_cell.helpers Creator.helpers
+
 Template.creator_table_cell.helpers
 	cellData: ()->
 		data = []

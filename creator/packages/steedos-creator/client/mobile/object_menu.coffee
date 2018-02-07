@@ -2,6 +2,8 @@ Template.objectMenu.onRendered ->
     this.$(".object-menu").removeClass "hidden"
     this.$(".object-menu").animateCss "fadeInRight"
 
+Template.objectMenu.helpers Creator.helpers
+
 Template.objectMenu.helpers
     app: ()->
         app_id = Template.instance().data.app_id

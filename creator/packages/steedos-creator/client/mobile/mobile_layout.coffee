@@ -1,3 +1,5 @@
+Template.creatorMobileLayout.helpers Creator.helpers
+
 Template.creatorMobileLayout.helpers
 	subsReady: ->
 		return true #Creator.subs["Creator"].ready()

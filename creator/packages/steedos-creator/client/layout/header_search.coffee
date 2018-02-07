@@ -24,6 +24,7 @@ Template.headerSearch.onCreated ()->
 	this.clearSearchItems = ()->
 		this.searchItems.set([])
 
+Template.headerSearch.helpers Creator.helpers
 
 Template.headerSearch.helpers
 	open_item: ()->

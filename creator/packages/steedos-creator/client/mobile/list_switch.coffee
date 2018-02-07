@@ -2,6 +2,7 @@ Template.listSwitch.onRendered ->
 	this.$("#list_switch").removeClass "hidden"	
 	this.$("#list_switch").animateCss "fadeInRight"
 
+Template.listSwitch.helpers Creator.helpers
 
 Template.listSwitch.helpers
 	list_views: ()->

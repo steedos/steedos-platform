@@ -195,7 +195,13 @@
 				overflow-wrap: break-word;
 				word-wrap: break-word;
 				word-break: break-all;
-				white-space: normal;
+				white-space: normal; 
+
+				& > span {
+					display: -webkit-box;
+					-webkit-line-clamp: 4;
+					-webkit-box-orient: vertical;
+				}
 			}
 		}
 	}

@@ -8,6 +8,8 @@ Template.report_settings.onRendered ->
 		this.$(".cbx-counting").prop("checked",true)
 
 
+Template.report_settings.helpers Creator.helpers
+
 Template.report_settings.helpers
 	showGroupingMenu: ->
 		options = Template.instance().data.options

@@ -1,3 +1,5 @@
+Template.creatorNavigation.helpers Creator.helpers
+
 Template.creatorNavigation.helpers
 	
 	app_id: ()->

@@ -19,6 +19,8 @@ Template.creator_view.onRendered ->
 		if object_name and record_id
 			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
 
+Template.creator_view.helpers Creator.helpers
+
 Template.creator_view.helpers
 
 	collection: ()->
