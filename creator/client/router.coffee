@@ -1,7 +1,7 @@
 FlowRouter.route '/',
 	action: (params, queryParams)->
 		if !Meteor.userId()
-			FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
+			FlowRouter.go '/steedos/sign-in';
 		else
 			FlowRouter.go '/app/admin'
 
