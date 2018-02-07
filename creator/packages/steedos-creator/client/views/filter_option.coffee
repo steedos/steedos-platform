@@ -51,7 +51,7 @@ Template.filter_option.helpers
 					options: ()->
 						field = template.schema_key.get()
 						schema_type = template.schema_obj.get()?.autoform.type || "text"
-						if field and schema_type == "select"
+						if field and (schema_type == "select" or schema_type == "select-checkbox")
 							schema = Creator.getSchema(object_name)._schema
 							obj = _.pick(schema, field)
 							options = obj[field].autoform?.options

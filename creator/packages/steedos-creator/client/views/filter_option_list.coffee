@@ -1,9 +1,6 @@
 Template.filter_option_list.helpers Creator.helpers
 
 Template.filter_option_list.helpers 
-	filterItems: ()->
-		return Session.get("filter_items")
-
 	filterScope: ()->
 		scope = Session.get("filter_scope")
 		if scope == "space"
