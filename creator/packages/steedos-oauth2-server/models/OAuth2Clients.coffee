@@ -35,15 +35,21 @@ Creator.Objects.OAuth2Clients =
 			columns:["clientName","active","redirectUri"]
 		all:
 			label:"所有"
-
+	
+	# triggers:
+	# 	"before.insert.server.default":
+	# 		on: "server"
+	# 		when: "before.insert"
+	# 		todo: (userId, doc)-> return true
+					
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
-			modifyAllRecords: true
-			viewAllRecords: true 
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
 		admin:
 			allowCreate: true
 			allowDelete: true

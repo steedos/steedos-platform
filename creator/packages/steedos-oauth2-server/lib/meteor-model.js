@@ -13,12 +13,10 @@
 MeteorModel = (function() {
     function MeteorModel(accessTokenCollection,
                          refreshTokenCollection,
-                         clientCollection,
                          authCodeCollection,
                          debug) {
         this.accessTokenCollection = accessTokenCollection;
         this.refreshTokenCollection = refreshTokenCollection;
-        this.clientCollection = clientCollection;
         this.authCodeCollection = authCodeCollection;
         this.debug = debug;
 
@@ -55,21 +53,21 @@ MeteorModel = (function() {
 
                 try {
                     var client;
+                    var collection = Creator.Collections['OAuth2Clients'];
+
                     if (clientSecret == null) {
-                        client = this.clientCollection.findOne({
+                        client = collection.findOne({
                             active: true,
                             clientId: clientId
                         });
                     } else {
-                        client = this.clientCollection.findOne({
+                        client = collection.findOne({
                             active: true,
                             clientId: clientId,
                             clientSecret: clientSecret
                         });
                     }
-
                     callback(null, client);
-
                 } catch (e) {
                     callback(e);
                 }

@@ -22,9 +22,8 @@ if(Meteor.isServer){
 var meteorModel = new MeteorModel(
     accessTokenCollection,
     refreshTokensCollection,
-    clientsCollection,
     authCodesCollection,
-    false
+    true
 );
 
 
@@ -32,7 +31,7 @@ var meteorModel = new MeteorModel(
 oAuth2Server.oauthserver = oauthserver({
     model: meteorModel,
     grants: ['authorization_code'],
-    debug: false
+    debug: true
 });
 
 oAuth2Server.collections.accessToken = accessTokenCollection;
