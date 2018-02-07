@@ -23,6 +23,15 @@
 
 	"creator_filter_option_field": "字段",
 	"creator_filter_option_operation": "运算符",
+	"creator_filter_operation_equal":"等于",
+	"creator_filter_operation_unequal":"不等于",
+	"creator_filter_operation_less_than":"小于",
+	"creator_filter_operation_greater_than":"大于",
+	"creator_filter_operation_less_or_equal":"小于或等于",
+	"creator_filter_operation_greater_or_equal":"大于或等于",
+	"creator_filter_operation_contains":"包含",
+	"creator_filter_operation_does_not_contain":"不包含",
+	"creator_filter_operation_starts_with":"起始字符",
 	"creator_filter_option_value": "值",
 	"creator_filter_option_done": "完成",
 

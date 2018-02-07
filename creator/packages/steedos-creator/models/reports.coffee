@@ -44,17 +44,18 @@ Creator.Objects.reports =
 			label: "操作符"
 			type: "select"
 			defaultValue: "EQUALS"
-			options: [
-				{label: "equals", value: "EQUALS"},
-				{label: "not equal to", value: "NOT_EQUAL"},
-				{label: "less than", value: "LESS_THAN"},
-				{label: "greater than", value: "GREATER_THAN"},
-				{label: "less or equal", value: "LESS_OR_EQUAL"},
-				{label: "greater or equal", value: "GREATER_OR_EQUAL"},
-				{label: "contains", value: "CONTAINS"},
-				{label: "does not contain", value: "NOT_CONTAIN"},
-				{label: "starts with", value: "STARTS_WITH"},
-			]
+			options: ()->
+				options = [
+					{label: t("creator_filter_operation_equal"), value: "="},
+					{label: t("creator_filter_operation_unequal"), value: "<>"},
+					{label: t("creator_filter_operation_less_than"), value: "<"},
+					{label: t("creator_filter_operation_greater_than"), value: ">"},
+					{label: t("creator_filter_operation_less_or_equal"), value: "<="},
+					{label: t("creator_filter_operation_greater_or_equal"), value: ">="},
+					{label: t("creator_filter_operation_contains"), value: "contains"},
+					{label: t("creator_filter_operation_does_not_contain"), value: "notcontains"},
+					{label: t("creator_filter_operation_starts_with"), value: "startswith"},
+				]
 		"filters.$.value": 
 			label: "字段值"
 			# type: "text"

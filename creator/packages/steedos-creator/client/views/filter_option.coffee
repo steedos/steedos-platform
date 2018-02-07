@@ -29,15 +29,15 @@ Template.filter_option.helpers
 						return "EQUALS"
 					options: ()->
 						options = [
-							{label: "equals", value: "EQUALS"},
-							{label: "not equal to", value: "NOT_EQUAL"},
-							{label: "less than", value: "LESS_THAN"},
-							{label: "greater than", value: "GREATER_THAN"},
-							{label: "less or equal", value: "LESS_OR_EQUAL"},
-							{label: "greater or equal", value: "GREATER_OR_EQUAL"},
-							{label: "contains", value: "CONTAINS"},
-							{label: "does not contain", value: "NOT_CONTAIN"},
-							{label: "starts with", value: "STARTS_WITH"},
+							{label: t("creator_filter_operation_equal"), value: "="},
+							{label: t("creator_filter_operation_unequal"), value: "<>"},
+							{label: t("creator_filter_operation_less_than"), value: "<"},
+							{label: t("creator_filter_operation_greater_than"), value: ">"},
+							{label: t("creator_filter_operation_less_or_equal"), value: "<="},
+							{label: t("creator_filter_operation_greater_or_equal"), value: ">="},
+							{label: t("creator_filter_operation_contains"), value: "contains"},
+							{label: t("creator_filter_operation_does_not_contain"), value: "notcontains"},
+							{label: t("creator_filter_operation_starts_with"), value: "startswith"},
 						]
 			value:
 				type: ->
@@ -90,6 +90,7 @@ Template.filter_option.helpers
 Template.filter_option.events 
 	'click .save-filter': (event, template) ->
 		filter = AutoForm.getFormValues("filter-option").insertDoc
+		console.log filter
 		index = this.index
 		filter_items = Session.get("filter_items")
 		filter_items[index] = filter
