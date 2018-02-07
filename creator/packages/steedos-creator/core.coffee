@@ -145,6 +145,8 @@ Creator.evaluateFilters = (filters, context)->
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
 Creator.formatFiltersToMongo = (filters)->
+	unless filters.length
+		return
 	selector = []
 	_.each filters, (filter)->
 		field = filter[0]
@@ -177,6 +179,8 @@ Creator.formatFiltersToMongo = (filters)->
 	return selector
 
 Creator.formatFiltersToDev = (filters)->
+	unless filters.length
+		return
 	selector = []
 	_.each filters, (filter)->
 		field = filter[0]

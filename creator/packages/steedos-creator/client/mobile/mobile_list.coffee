@@ -17,27 +17,13 @@ initFilter = (list_view_id, object_name)->
 			selector.push ["space", "=", Steedos.spaceId()]
 
 		if filters and filters.length > 0
+			selector.push "and"
 			filters = _.map filters, (obj)->
-				if obj.operation == "EQUALS"
-					query = [obj.field, "=", obj.value]
-				else if obj.operation == "NOT_EQUAL"
-					query = ["!", [obj.field, "=", obj.value]]
-				else if obj.operation == "LESS_THAN"
-					query = [obj.field, "<", obj.value]
-				else if obj.operation == "GREATER_THAN"
-					query = [obj.field, ">", obj.value]
-				else if obj.operation == "LESS_OR_EQUAL"
-					query = [obj.field, "<=", obj.value]
-				else if obj.operation == "GREATER_OR_EQUAL"
-					query = [obj.field, ">=", obj.value]
-				else if obj.operation == "CONTAINS"
-					query = [obj.field, "contains", obj.value]
-				else if obj.operation == "NOT_CONTAIN"
-					query = [obj.field, "notcontains", obj.value]
-				else if obj.operation == "STARTS_WITH"
-					query = [obj.field, "startswith", obj.value]
-				
-				selector.push "and", query
+				return [obj.field, obj.operation, obj.value]
+			
+			filters = Creator.formatFiltersToDev(filters)
+			_.each filters, (filter)->
+				selector.push filter
 	else
 		# TODO
 		if spaceId and userId
@@ -66,20 +52,12 @@ initFilter = (list_view_id, object_name)->
 			# $eq, $ne, $lt, $gt, $lte, $gte
 			# [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
 			if list_view.filters
-				_.each list_view.filters, (filter)->
-					if filter[1] == "$eq"
-						selector.push "and", [filter[0], "=", filter[2]]
-					if filter[1] == "$ne"
-						selector.push "and", ["!", [filter[0], "=", filter[2]]]
-					if filter[1] == "$lt"
-						selector.push "and", [filter[0], "<", filter[2]]
-					if filter[1] == "$gt"
-						selector.push "and", [filter[0], ">", filter[2]]
-					if filter[1] == "$lte"
-						selector.push "and", [filter[0], "<=", filter[2]]
-					if filter[1] == "$gte"
-						selector.push "and", [filter[0], ">=", filter[2]]
-				
+				filters = Creator.formatFiltersToDev(list_view.filters)
+				if filters and filters.length > 0
+					selector.push "and"
+					_.each filters, (filter)->
+						selector.push filter
+
 				if list_view.filter_scope == "mine"
 					selector.push "and", ["owner", "=", userId]
 			else
