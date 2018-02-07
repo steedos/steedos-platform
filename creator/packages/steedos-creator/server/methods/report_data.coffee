@@ -1,6 +1,5 @@
 Meteor.methods
 	'report_data': (options)->
-		console.log "report_data,options:", options
 		check(options, Object)
 		space = options.space
 		fields = options.fields
@@ -35,7 +34,10 @@ Meteor.methods
 			filters = Creator.formatFiltersToMongo(filters)
 			selector["$and"] = filters
 
-		result = Creator.getCollection(object_name).find(selector, fields: filterFields).fetch()
+		cursor = Creator.getCollection(object_name).find(selector, fields: filterFields)
+		if cursor.count() > 1000
+			return []
+		result = cursor.fetch()
 		if compoundFields.length
 			result = result.map (item,index)->
 				_.each compoundFields, (compoundFieldItem, index)->
