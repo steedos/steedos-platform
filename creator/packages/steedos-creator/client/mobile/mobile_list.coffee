@@ -1,8 +1,11 @@
 ### TO DO LIST
 	1.支持$in操作符，实现recent视图
+	$eq, $ne, $lt, $gt, $lte, $gte
 ###
 
 initFilter = (list_view_id, object_name)->
+	userId = Meteor.userId()
+	spaceId = Session.get("spaceId")
 	custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
 	selector = []
 	if custom_list_view
@@ -37,24 +40,55 @@ initFilter = (list_view_id, object_name)->
 				selector.push "and", query
 	else
 		# TODO
-		if Session.get("spaceId") and Meteor.userId()
-			list_view = Creator.getListView(object_name, Session.get("list_view_id"))
+		if spaceId and userId
+			list_view = Creator.getListView(object_name, list_view_id)
 			if list_view.filter_scope == "spacex"
 				selector.push ["space", "=", null], "or", ["space", "=", space]
 			else if object_name == "users"
-				selector.push ["_id", "=", Meteor.userId()]
+				selector.push ["_id", "=", userId]
 			else if object_name == "spaces"
-				selector.push ["_id", "=", Session.get("spaceId")]
+				selector.push ["_id", "=", spaceId]
 			else
-				selector.push ["space", "=", Session.get("spaceId")]
+				selector.push ["space", "=", spaceId]
 
-			if Session.get("list_view_id") == "recent"
-				# TODO，目前不支持$in转换
-				return selector
-			
+			if list_view_id == "recent"
+				viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
+				record_ids = _.pluck(viewed, "record_id")
+				record_ids = _.uniq(record_ids)
+				record_ids = record_ids.join(",or,").split(",")
+				id_selector = _.map record_ids, (_id)->
+					if _id != "or"
+						return ["_id", "=", _id]
+					else
+						return _id
+				selector.push "and", id_selector
+
+			# $eq, $ne, $lt, $gt, $lte, $gte
+			# [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
 			if list_view.filters
-				# TODO
-				return selector
+				_.each list_view.filters, (filter)->
+					if filter[1] == "$eq"
+						selector.push "and", [filter[0], "=", filter[2]]
+					if filter[1] == "$ne"
+						selector.push "and", ["!", [filter[0], "=", filter[2]]]
+					if filter[1] == "$lt"
+						selector.push "and", [filter[0], "<", filter[2]]
+					if filter[1] == "$gt"
+						selector.push "and", [filter[0], ">", filter[2]]
+					if filter[1] == "$lte"
+						selector.push "and", [filter[0], "<=", filter[2]]
+					if filter[1] == "$gte"
+						selector.push "and", [filter[0], ">=", filter[2]]
+				
+				if list_view.filter_scope == "mine"
+					selector.push "and", ["owner", "=", userId]
+			else
+				permissions = Creator.getPermissions(object_name)
+				if permissions.viewAllRecords
+					if list_view.filter_scope == "mine"
+						selector.push "and", ["owner", "=", userId]
+				else if permissions.allowRead
+					selector.push "and", ["owner", "=", userId]
 	return selector
 
 Template.mobileList.onRendered ->
