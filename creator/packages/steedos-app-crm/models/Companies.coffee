@@ -60,11 +60,11 @@ Creator.Objects.companies =
 	actions: 
 		export:
 			label: "导出"
-			visible: true
+			visible: false
 		print:
 			label: "打印"
 			on: "record"
 			only_detail: true
-			visible: true
+			visible: false
 			todo: ()->
 				alert("you clicked on print button") 
