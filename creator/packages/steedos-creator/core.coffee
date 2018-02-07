@@ -145,34 +145,35 @@ Creator.evaluateFilters = (filters, context)->
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
 Creator.formatFiltersToMongo = (filters)->
-	selector = {}
+	selector = []
 	_.each filters, (filter)->
 		field = filter[0]
 		option = filter[1]
 		value = filter[2]
-		selector[field] = {}
+		sub_selector = {}
+		sub_selector[field] = {}
 		if option == "="
-			selector[field]["$eq"] = value
+			sub_selector[field]["$eq"] = value
 		else if option == "<>"
-			selector[field]["$ne"] = value
+			sub_selector[field]["$ne"] = value
 		else if option == ">"
-			selector[field]["$gt"] = value
+			sub_selector[field]["$gt"] = value
 		else if option == ">="
-			selector[field]["$gte"] = value
+			sub_selector[field]["$gte"] = value
 		else if option == "<"
-			selector[field]["$lt"] = value
+			sub_selector[field]["$lt"] = value
 		else if option == "<="
-			selector[field]["$lte"] = value
+			sub_selector[field]["$lte"] = value
 		else if option == "startswith"
 			reg = new RegExp("^" + value, "i")
-			selector[field]["$regex"] = reg
+			sub_selector[field]["$regex"] = reg
 		else if option == "contains"
 			reg = new RegExp(value, "i")
-			selector[field]["$regex"] = reg
+			sub_selector[field]["$regex"] = reg
 		else if option == "notcontains"
 			reg = new RegExp("^((?!" + value + ").)*$", "i")
-			selector[field]["$regex"] = reg
-	
+			sub_selector[field]["$regex"] = reg
+		selector.push sub_selector
 	return selector
 
 Creator.formatFiltersToDev = (filters)->

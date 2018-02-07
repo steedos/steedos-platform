@@ -33,7 +33,7 @@ Template.creator_list.helpers
 					return [obj.field, obj.operation, obj.value]
 				
 				filters = Creator.formatFiltersToMongo(filters)
-				selector["$and"] = [filters]
+				selector["$and"] = filters
 			console.log selector
 			return selector
 		if Session.get("spaceId") and Meteor.userId()
