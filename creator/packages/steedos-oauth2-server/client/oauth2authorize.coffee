@@ -24,7 +24,6 @@ Template.loginAuthorize.events
 					###
 					console.log result
 					Session.set "authcode",result
-					console.log "===================="
 		)
 
 	'click button.testLocalTokens':()->
@@ -46,9 +45,9 @@ Template.loginAuthorize.events
 				}
 			},
 			(err, result)->
-				console.log "============="
+				console.log "=======err======"
 				console.log err
-				console.log "============="
+				console.log "=======result======"
 				console.log result
 			)
 

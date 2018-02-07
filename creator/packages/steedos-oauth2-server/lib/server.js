@@ -7,14 +7,12 @@ var express = Npm.require('express'),
 // configure the server-side collections. The rest of the collections
 // exist in common.js and are for both client and server.
 var accessTokenCollection = new Meteor.Collection('OAuth2AccessTokens');
-var clientsCollection = new Meteor.Collection('OAuth2Clients');
+// var clientsCollection = new Meteor.Collection('OAuth2Clients');
 
+var clientsCollection = Creator.Collections['OAuth2Clients'];
 
 if(Meteor.isServer){
     accessTokenCollection.before.insert(function(userId, doc){
-        console.log(doc);
-        console.log(userId);
-        
         spaceId = db.space_users.findOne({user: doc.userId}).space;
         doc.spaceId = spaceId;
     });

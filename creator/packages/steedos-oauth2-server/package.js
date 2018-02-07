@@ -37,11 +37,12 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/router.coffee', 'client');
 
+	api.addFiles('models/OAuth2Clients.coffee');
+	
 	api.addFiles('server/rest.coffee', 'server');
-	// api.addFiles('server/getAuthCode.coffee', 'server');
-	// api.addFiles('server/getAccessToken.coffee', 'server');
 
 	api.export('oAuth2Server', ['client', 'server']);
+	
 });
 
 Package.onTest(function(api) {
