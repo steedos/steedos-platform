@@ -23,6 +23,10 @@ Package.onUse(function(api) {
 	api.use('meteorhacks:async@1.0.0', 'server');
 	api.use('simple:json-routes@2.1.0', 'server');
 
+	api.use('steedos:useraccounts-bootstrap@1.14.2_5', 'client');
+	
+
+
 	api.use('http');
 
 	api.use('steedos:creator');
