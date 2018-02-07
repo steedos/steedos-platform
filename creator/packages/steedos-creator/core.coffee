@@ -143,6 +143,60 @@ Creator.evaluateFilters = (filters, context)->
 	console.log("evaluateFilters-->selector", selector)
 	return selector
 
+# "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
+Creator.formatFiltersToMongo = (filters)->
+	selector = {}
+	_.each filters, (filter)->
+		field = filter[0]
+		option = filter[1]
+		value = filter[2]
+		selector[field] = {}
+		if option == "="
+			selector[field]["$eq"] = value
+		else if option == "<>"
+			selector[field]["$ne"] = value
+		else if option == ">"
+			selector[field]["$gt"] = value
+		else if option == ">="
+			selector[field]["$gte"] = value
+		else if option == "<"
+			selector[field]["$lt"] = value
+		else if option == "<="
+			selector[field]["$lte"] = value
+		else if option == "startswith"
+			reg = new RegExp("^" + value, "i")
+			selector[field]["$regex"] = reg
+		else if option == "contains"
+			reg = new RegExp(value, "i")
+			selector[field]["$regex"] = reg
+		else if option == "notcontains"
+			reg = new RegExp("^((?!" + value + ").)*$", "i")
+			selector[field]["$regex"] = reg
+	
+	return selector
+
+Creator.formatFiltersToDev = (filters)->
+	selector = []
+	_.each filters, (filter)->
+		field = filter[0]
+		option = filter[1]
+		value = filter[2]
+		sub_selector = []
+		if _.isArray(value) == true and option == "="
+			_.each value, (v)->
+				sub_selector.push [field, "=", v], "and"
+
+			if sub_selector[sub_selector.length - 1] == "and"
+				sub_selector.pop()
+			selector.push sub_selector
+		else
+			selector.push filter, "and"
+	
+	if selector[selector.length - 1] == "and"
+		selector.pop()
+
+	return selector
+
 Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name

@@ -30,40 +30,11 @@ Template.creator_list.helpers
 
 			if filters and filters.length > 0
 				filters = _.map filters, (obj)->
-					query = {}
-					if obj.operation == "EQUALS"
-						query[obj.field] = 
-							$eq: obj.value
-					else if obj.operation == "NOT_EQUAL"
-						query[obj.field] = 
-							$ne: obj.value
-					else if obj.operation == "LESS_THAN"
-						query[obj.field] = 
-							$lt: obj.value
-					else if obj.operation == "GREATER_THAN"
-						query[obj.field] = 
-							$gt: obj.value
-					else if obj.operation == "LESS_OR_EQUAL"
-						query[obj.field] = 
-							$lte: obj.value
-					else if obj.operation == "GREATER_OR_EQUAL"
-						query[obj.field] = 
-							$gte: obj.value
-					else if obj.operation == "CONTAINS"
-						reg = new RegExp(obj.value, "i")
-						query[obj.field] = 
-							$regex: reg
-					else if obj.operation == "NOT_CONTAIN"
-						reg = new RegExp("^((?!" + obj.value + ").)*$", "i")
-						query[obj.field] = 
-							$regex: reg
-					else if obj.operation == "STARTS_WITH"
-						reg = new RegExp("^" + obj.value, "i")
-						query[obj.field] = 
-							$regex: reg
-					return query
-				selector["$and"] = filters
-			
+					return [obj.field, obj.operation, obj.value]
+				
+				filters = Creator.formatFiltersToMongo(filters)
+				selector["$and"] = [filters]
+			console.log selector
 			return selector
 		if Session.get("spaceId") and Meteor.userId()
 			if list_view.filter_scope == "spacex"
