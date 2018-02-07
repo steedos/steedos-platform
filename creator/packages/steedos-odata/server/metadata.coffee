@@ -74,19 +74,22 @@ Meteor.startup ->
 
 					reference_to.forEach (r)->
 						reference_obj = Creator.objectsByName[r]
-						navigationProperty.push {
-							name: field_name.toUpperCase(),
-#							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
-							type: _NAMESPACE + "." + reference_obj.name
-							partner: _object.name #TODO
-							_re_name: reference_obj.name
-							referentialConstraint: [
-								{
-									property: field_name,
-									referencedProperty: "_id"
-								}
-							]
-						}
+						if reference_obj
+							navigationProperty.push {
+								name: field_name.toUpperCase(),
+	#							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
+								type: _NAMESPACE + "." + reference_obj.name
+								partner: _object.name #TODO
+								_re_name: reference_obj.name
+								referentialConstraint: [
+									{
+										property: field_name,
+										referencedProperty: "_id"
+									}
+								]
+							}
+						else
+							console.error "reference to '#{r}' invalid."
 
 			entitie.property = property
 			entitie.navigationProperty = navigationProperty
