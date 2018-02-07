@@ -55,8 +55,11 @@ Template.creator_list.helpers
 					"$in": record_ids
 			if list_view.filters
 				try 
-					filters = Creator.evaluateFilters(list_view.filters)
-					selector = _.extend selector, filters
+					filters = Creator.formatFiltersToMongo(list_view.filters)
+					_.each filters, (filter)->
+						selector = _.extend selector, filter
+					
+					console.log "filters", selector
 					if list_view.filter_scope == "mine"
 						selector.owner = Meteor.userId()
 					return selector
