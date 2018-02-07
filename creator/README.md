@@ -32,7 +32,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - name: 唯一的object name
 - label: 显示名
 - icon：图标，参见 https://www.lightningdesignsystem.com/icons ， Standard Icons 部分
-- enable_search: 启用全局搜索，只搜索name字段
+- enable_search: 启用全局搜索，只搜索searchable的字段
 - enable_files: 启用上传附件功能
 - enable_chatter: 启用讨论功能
 - enable_tasks: 启用任务功能
@@ -80,6 +80,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - hidden: 隐藏，在列表和表单中都不显示
 - blackbox: 告知schema忽略此字段的类型验证
 - allowedValues: 可选项范围
+- seachable: 可搜索
 
 ### permissions 权限
 Object权限分以下类型
