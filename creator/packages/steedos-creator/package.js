@@ -245,4 +245,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/custom_data_source.coffee', 'client');
 	api.addFiles('client/views/odata_service.html', 'client');
 	api.addFiles('client/views/odata_service.coffee', 'client');
+
+
+	api.addFiles('client/theme.less', 'client');
 });
