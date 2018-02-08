@@ -11,6 +11,8 @@ Creator.Objects.space_users =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			searchable:true
+			index:true
 		email:
 			type: "text"
 		user:

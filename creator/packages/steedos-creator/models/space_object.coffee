@@ -6,6 +6,8 @@ Creator.Objects.space_objects =
 		name: 
 			label: "Name"
 			type: "text"
+			searchable:true
+			index:true
 		icon: 
 			label: "Name"
 			type: "text"

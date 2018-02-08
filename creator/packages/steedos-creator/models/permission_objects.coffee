@@ -5,6 +5,8 @@ Creator.Objects.permission_objects =
 	fields: 
 		name:
 			type: "text",
+			searchable:true
+			index:true
 		permission_set_id: 
 			type: "master_detail"
 			reference_to: "permission_set"

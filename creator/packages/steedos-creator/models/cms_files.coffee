@@ -8,6 +8,8 @@ Creator.Objects.cms_files =
 		name: 
 			label: "名称"
 			type: "text"
+			searchable:true
+			index:true
 		description: 
 			label: "描述"
 			type: "textarea"

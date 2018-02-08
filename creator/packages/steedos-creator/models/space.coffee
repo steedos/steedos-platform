@@ -9,6 +9,8 @@ Creator.Objects.spaces =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			searchable:true
+			index:true
 		owner:
 			type: "lookup"
 			reference_to: "users"

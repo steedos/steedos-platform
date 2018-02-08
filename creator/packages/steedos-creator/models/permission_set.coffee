@@ -5,6 +5,8 @@ Creator.Objects.permission_set =
 	fields: 
 		name:
 			type: "text",
+			searchable:true
+			index:true
 		users:
 			type: "lookup"
 			reference_to: "users"

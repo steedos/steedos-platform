@@ -130,6 +130,7 @@ Creator.Objects.archive_records =
 			is_name:true
 			required:true
 			sortable:true
+			searchable:true
 			group:"内容描述"
 
 		parallel_title:

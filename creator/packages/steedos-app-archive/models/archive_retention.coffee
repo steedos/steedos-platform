@@ -10,7 +10,8 @@ Creator.Objects.archive_retention =
 			is_name:true
 			is_wide:true
 			required:true
-
+			searchable:true
+			index:true
 		code:
 			type:"text"
 			label:"编码"

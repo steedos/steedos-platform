@@ -8,6 +8,8 @@ Creator.Objects.users =
 			label: "Name"
 			type: "text"
 			required: true
+			searchable:true
+			index:true
 	list_views:
 		default:
 			columns: ["name", "username"]

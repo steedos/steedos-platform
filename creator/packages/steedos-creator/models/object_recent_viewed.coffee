@@ -7,6 +7,8 @@ Creator.Objects.object_recent_viewed =
 			type: "text"
 		object_name: 
 			type: "text"
+			searchable:true
+			index:true
 		space:
 			type: "text",
 			omit: true

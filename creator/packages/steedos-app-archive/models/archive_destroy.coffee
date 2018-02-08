@@ -10,6 +10,8 @@ Creator.Objects.archive_destroy =
 			is_name:true
 			is_wide:true
 			required:true
+			searchable:true
+			index:true
 		destroy_reason:
 			label:"销毁原因"
 			type:"textarea"

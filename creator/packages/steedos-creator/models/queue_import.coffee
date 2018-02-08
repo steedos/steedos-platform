@@ -28,7 +28,7 @@ Creator.Objects.queue_import =
 				{label: "Big5 繁体中文", value: "Big5"},
 				{label: "Big5 繁体中文 (HKSCS)", value: "HKSCS"},
 				{label: "Windows 日语", value: "Windows 日语"},
-				{label: "日文 (Shift_JIS-2004)", value: "Shift_JIS-2004"},
+		 		{label: "日文 (Shift_JIS-2004)", value: "Shift_JIS-2004"},
 				{label: "KS C 5601 韩语", value: "KS C 5601"},
 				{label: "ISO-8859-1（通用美语和西欧语言，ISO-LATIN-1）", value: "ISO"}
 			]

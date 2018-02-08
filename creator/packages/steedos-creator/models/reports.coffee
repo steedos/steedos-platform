@@ -7,6 +7,8 @@ Creator.Objects.reports =
 			label: "名称"
 			type: "text"
 			required: true
+			searchable:true
+			index:true
 		description: 
 			label: "描述"
 			type: "textarea"
@@ -43,7 +45,7 @@ Creator.Objects.reports =
 		"filters.$.operation": 
 			label: "操作符"
 			type: "select"
-			defaultValue: "EQUALS"
+			defaultValue: "="
 			options: ()->
 				options = [
 					{label: t("creator_filter_operation_equal"), value: "="},

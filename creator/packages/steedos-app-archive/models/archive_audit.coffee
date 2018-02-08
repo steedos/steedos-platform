@@ -34,6 +34,8 @@ Creator.Objects.archive_audit =
 		action_description:
 			type: "textarea"
 			label:"行为描述"
+			searchable:true
+			index:true
 			is_wide:true
 		action_administrative_records_id:
 			label: "行为对象"

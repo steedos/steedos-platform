@@ -5,6 +5,8 @@ Creator.Objects.object_listviews =
 	fields: 
 		name:
 			type: "text"
+			searchable:true
+			index:true
 		object_name: 
 			type: "text"
 			omit: true

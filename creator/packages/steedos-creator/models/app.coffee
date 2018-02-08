@@ -10,6 +10,8 @@ Creator.Objects.apps =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			searchable:true
+			index:true
 		objects:
 			type: "[text]"
 	list_views:

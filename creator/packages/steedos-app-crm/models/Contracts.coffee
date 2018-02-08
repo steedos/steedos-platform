@@ -14,6 +14,8 @@ Creator.Objects.contracts =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			searchable:true
+			index:true
 		amount:
 			label: "金额"
 			type: "currency"

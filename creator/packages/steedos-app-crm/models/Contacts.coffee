@@ -13,6 +13,8 @@ Creator.Objects.contacts =
 			description: ""
 			inlineHelpText: ""
 			required: true
+			searchable:true
+			index:true
 		company: 
 			label: "单位"
 			type: "master_detail"

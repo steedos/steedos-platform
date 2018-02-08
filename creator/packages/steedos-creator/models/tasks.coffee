@@ -7,6 +7,8 @@ Creator.Objects.tasks =
 			type: "text"
 			required: true
 			is_wide: true
+			searchable:true
+			index:true
 		assigned_to:
 			type: "lookup"
 			reference_to: "users"

@@ -11,6 +11,7 @@ Creator.Objects.archive_entity_relation =
 			is_wide:true
 			is_name:true
 			sortable:true
+			searchable:true
 		relation_type:
 			type: "select"
 			label:"关系类型"

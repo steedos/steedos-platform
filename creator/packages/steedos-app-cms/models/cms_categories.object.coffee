@@ -6,6 +6,8 @@ Creator.Objects.cms_categories =
 		name: 
 			type: "text"
 			required: true
+			searchable:true
+			index:true
 		site:
 			type: "lookup"
 			reference_to: "cms_sites"

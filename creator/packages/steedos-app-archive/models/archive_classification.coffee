@@ -15,6 +15,8 @@ Creator.Objects.archive_classification =
 			label:"分类名"
 			is_name:true
 			required:true
+			searchable:true
+			index:true
 		departments:
 			type:"[text]"
 			label:"所属部门"

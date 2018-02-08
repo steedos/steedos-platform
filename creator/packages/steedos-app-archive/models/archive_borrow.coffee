@@ -10,6 +10,7 @@ Creator.Objects.archive_borrow =
 			sortable:true
 			is_name:true
 			required:true
+			searchable:true
 			#defaultValue:当前年度的借阅单总数+1
 		file_type:
 			type:"text"

@@ -7,6 +7,8 @@ Creator.Objects.cms_posts =
 			type: "text"
 			required: true
 			is_name: true
+			searchable:true
+			index:true
 		postDate: 
 			type: "datetime"
 		htmlBody:
