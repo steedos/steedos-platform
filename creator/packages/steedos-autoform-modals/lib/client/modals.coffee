@@ -279,7 +279,12 @@ helpers =
 
 			return finalFields
 
-
+	isMobile: ()->
+		if $(window).width() < 767
+			return true
+		else
+			return false
+	
 Template.autoformModals.helpers helpers
 
 Template.afModal.events

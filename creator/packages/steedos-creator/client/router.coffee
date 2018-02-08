@@ -88,6 +88,7 @@ objectRoutes.route '/:list_view_id/list',
 		object_name = FlowRouter.getParam("object_name")
 		list_view_id = FlowRouter.getParam("list_view_id")
 		data = {app_id: app_id, object_name: object_name, list_view_id: list_view_id}
+		Session.set("reload_dxlist", false)
 		if Steedos.isMobile() and $("#mobile_list_#{object_name}").length == 0
 			Meteor.defer ->
 				Blaze.renderWithData(Template.mobileList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
