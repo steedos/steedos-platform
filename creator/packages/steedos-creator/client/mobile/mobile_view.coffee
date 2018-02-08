@@ -152,6 +152,28 @@ Template.mobileView.helpers
 		record_id = Template.instance().data.record_id
 		Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
 
+	collection: ()->
+		object_name = Template.instance().data.object_name
+		return "Creator.Collections." + object_name
+
+	actions: ()->
+		record_id = Template.instance().data.record_id
+		object_name = Template.instance().data.object_name
+		actions = Creator.getActions(object_name)
+		permissions = Creator.getPermissions(object_name)
+
+		actions = _.filter actions, (action)->
+			if action.on == "record" or action.on == "record_more"
+				if action.only_list_item
+					return false
+				if typeof action.visible == "function"
+					return action.visible(object_name, record_id, permissions)
+				else
+					return action.visible
+			else
+				return false
+		return actions
+
 Template.mobileView.events
 	'click .mobile-view-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]
@@ -175,3 +197,21 @@ Template.mobileView.events
 		width = template.$(".indicator-bar").width()
 		template.$(".indicator-bar").css({"transform": "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, #{width}, 0, 0, 1)"})
 		template.$(".scroller").css({"transform": "translate3d(-50%, 0px, 0px)"})
+
+	'click .action-manage': (event, template)->
+		$(".view-action-mask").css({"opacity": "1", "display": "block"})
+		$(".view-action-actionsheet").addClass("weui-actionsheet_toggle")
+
+	'click .weui-actionsheet__cell': (event, template)->
+		$(".view-action-mask").css({"opacity": "0", "display": "none"})
+		$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
+
+	'click .view-action': (event, template)->
+		record_id = Template.instance().data.record_id
+		object_name = Template.instance().data.object_name
+		Creator.executeAction object_name, this, record_id
+
+AutoForm.hooks editRecord:
+	onSuccess: (formType, result)->
+		console.log "editRecord onsuccess"
+		Session.set("reload_dxlist", true)

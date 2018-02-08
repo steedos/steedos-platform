@@ -154,6 +154,10 @@ Template.mobileList.helpers
 		object_name = Template.instance().data.object_name
 		return Creator.getObject(object_name).label
 
+	allowCreate: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getPermissions(object_name).allowCreate
+	
 Template.mobileList.events
 	'click .mobile-list-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]

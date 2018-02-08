@@ -35,13 +35,20 @@ if Meteor.isClient
 
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
-				Session.set 'action_object_name', object_name
-				Session.set 'action_record_id', record_id
-				Meteor.call "object_record", object_name, record_id, (error, result)->
-					if result
-						Session.set 'cmDoc', result
-						Meteor.defer ()->
-							$(".btn.creator-edit").click()
+				if Steedos.isMobile()
+					record = Creator.getObjectRecord(object_name, record_id)
+					Session.set 'cmDoc', record
+					Session.set 'reload_dxlist', false
+					Meteor.defer ()->
+						$(".btn-edit-record").click()
+				else
+					Session.set 'action_object_name', object_name
+					Session.set 'action_record_id', record_id
+					Meteor.call "object_record", object_name, record_id, (error, result)->
+						if result
+							Session.set 'cmDoc', result
+							Meteor.defer ()->
+								$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, fields)->
 			record = Creator.getObjectRecord(object_name, record_id)
