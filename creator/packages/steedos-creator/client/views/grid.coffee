@@ -72,8 +72,6 @@ initFilter = (list_view_id, object_name)->
 
 Template.creator_grid.onRendered ->
 	self = this
-	# app_id = Session.get("app_id")
-	# icon = Creator.getObject(object_name).icon
 	self.autorun (c)->
 		object_name = Session.get("object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
@@ -81,8 +79,6 @@ Template.creator_grid.onRendered ->
 		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready()
 			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 			filter = initFilter(list_view_id, object_name)
-			console.log filter
-			console.log "Steedos.absoluteUrl(url):", Steedos.absoluteUrl(url)
 			
 			object = Creator.getObject(object_name)
 			objectFields = object?.fields
@@ -105,14 +101,19 @@ Template.creator_grid.onRendered ->
 				}
 				if n == name_field_key
 					columnItem.cellTemplate = (container, options) ->
-						debugger
 						url = Creator.getObjectUrl(object_name, options.data._id)
 						$('<a>', 'href': url, 'text': options.value).appendTo container
 				else if itemField.type == "datetime"
 					columnItem.format = "yyyy-MM-dd HH:mm"
 				return columnItem
-			console.log "selectColumns:", selectColumns
-			console.log "showColumns:", showColumns
+			showColumns.push
+				caption: ""
+				dataField: "_id"
+				width: 80
+				cellTemplate: (container, options) ->
+					container.css("overflow", "visible")
+					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
+					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
 
 			self.$(".gridContainer").dxDataGrid
 				dataSource: 
