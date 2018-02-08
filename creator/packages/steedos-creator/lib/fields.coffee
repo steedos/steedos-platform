@@ -194,6 +194,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.index = field.index
 		else if field.sortable
 			fs.index = true
+		else if field.searchable
+			fs.index = true
 
 		schema[field_name] = fs
 
