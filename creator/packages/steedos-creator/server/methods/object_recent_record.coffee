@@ -23,34 +23,29 @@ search_object = (space, object_name, searchText)->
 	if searchText
 
 		_object = Creator.getObject(object_name)
-
+		objFields = Creator.getObject(object_name).fields
 		_object_collection = Creator.getCollection(object_name)
-
 		if _object && _object_collection
+			_.each objFields, (field,field_name)->
+				if field.searchable
+					_object_name_key = field_name
+					query = {}
+					search_Keywords = searchText.split(" ")
+					query_and = []
 
-			_object_name_key = _object.NAME_FIELD_KEY
+					search_Keywords.forEach (keyword)->
+						subquery = {}
+						subquery[_object_name_key] = {$regex: keyword.trim()}
+						query_and.push subquery
 
-			query = {}
+					query.$and = query_and
+					query.space = {$in: [space]}
 
-			search_Keywords = searchText.split(" ")
-
-			query_and = []
-
-			search_Keywords.forEach (keyword)->
-				subquery = {}
-				subquery[_object_name_key] = {$regex: keyword.trim()}
-				query_and.push subquery
-
-			query.$and = query_and
-			query.space = {$in: [space]}
-
-			fields = {_id: 1}
-			fields[_object_name_key] = 1
-
-			records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
-
-			records.forEach (record)->
-				data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+					fields = {_id: 1}
+					fields[_object_name_key] = 1
+					records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
+					records.forEach (record)->
+						data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
 
 	return data
 

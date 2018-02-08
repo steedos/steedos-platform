@@ -11,11 +11,13 @@ Creator.Objects.qhd_informations =
 			is_wide:true
 			is_name:true
 			required: true
+			searchable:true
 		company:
 			type: "text",
 			label:"报送公司"
 			required: true
 			is_wide:true
+			searchable:true
 			defaultValue:()->
 				collection = Creator.Collections["space_users"]
 				company = collection.findOne({user:Meteor.userId(),space:Session.get("spaceId")},{fields:{company:1}}).company
@@ -23,6 +25,7 @@ Creator.Objects.qhd_informations =
 		content:
 			type:"textarea",
 			label:"内容"
+			searchable:true
 			required: true
 			is_wide:true
 		score:
