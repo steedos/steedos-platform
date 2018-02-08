@@ -10,7 +10,7 @@ Creator.Objects.instances =
 			inlineHelpText: ""
 			required: true
 			searchable:true
-			index:true
+			#index:true
 		applicant:
 			type: "lookup",
 			reference_to: "users"

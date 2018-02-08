@@ -98,7 +98,6 @@ Template.creator_report.events
 			renderReport.bind(template)()
 
 	'click .btn-toggle-filter': (event, template)->
-		debugger
 		isFilterOpen = template.is_filter_open.get()
 		template.is_filter_open.set(!isFilterOpen)
 

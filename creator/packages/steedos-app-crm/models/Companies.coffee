@@ -15,7 +15,6 @@ Creator.Objects.companies =
 			inlineHelpText: ""
 			required: true
 			sortable: true
-			index:true
 		priority:
 			label: "优先级"
 			type: "select"
