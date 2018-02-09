@@ -60,22 +60,15 @@
 						<div class="slds-section__content">
 							<ul class="slds-grid slds-grid_pull-padded slds-wrap">
 								{{#each apps}}
-								<li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-4">
-									<a class="slds-app-launcher__tile slds-text-link_reset slds-is-draggable app-launcher-link" href="{{url}}">
-										<div class="slds-app-launcher__tile-figure">
-											<span class="slds-avatar slds-avatar_large">
-												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
-											</span>
-											<!-- <span class="slds-icon_container">
-												{{> steedos_icon class="slds-icon slds-page-header__icon" class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="rows"}}
-											</span> -->
+								
+								<li class="slds-p-horizontal_small slds-size_xx-small">
+									<a href="{{url}}" class="slds-app-launcher__tile slds-text-link_reset slds-app-launcher__tile_small object-launcher-link">
+										<div class="slds-app-launcher__tile-figure slds-app-launcher__tile-figure_small">
+											{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=this.icon_slds}}
 										</div>
-										<div class="slds-app-launcher__tile-body">
-											<span class="slds-text-link">
+										<div class="slds-app-launcher__tile-body slds-app-launcher__tile-body_small">
+											<p class="slds-truncate slds-text-link">
 												{{_ name}}
-											</span>
-											<p>
-												<!-- <span class="slds-text-link">More</span> -->
 											</p>
 										</div>
 									</a>
@@ -99,9 +92,6 @@
 								{{#each app_objects}}
 								<li class="slds-p-horizontal_small slds-size_xx-small">
 									<a href="{{object_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-app-launcher__tile_small object-launcher-link">
-										<div class="slds-app-launcher__tile-figure slds-app-launcher__tile-figure_small">
-											{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=icon}}
-										</div>
 										<div class="slds-app-launcher__tile-body slds-app-launcher__tile-body_small">
 											<p class="slds-truncate slds-text-link">
 												{{label}}
