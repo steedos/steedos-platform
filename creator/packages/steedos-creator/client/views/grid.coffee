@@ -1,4 +1,5 @@
-Template.creator_grid.onCreated ->
+dxDataGridInstance = null
+
 ### TO DO LIST
 	1.支持$in操作符，实现recent视图
 	$eq, $ne, $lt, $gt, $lte, $gte
@@ -73,6 +74,7 @@ initFilter = (list_view_id, object_name)->
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
+		console.log "Template.creator_grid.onRendered=========autorun"
 		object_name = Session.get("object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 		list_view_id = Session.get("list_view_id")
@@ -115,7 +117,7 @@ Template.creator_grid.onRendered ->
 					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
 					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
 
-			self.$(".gridContainer").dxDataGrid
+			dxOptions = 
 				dataSource: 
 					store: 
 						type: "odata"
@@ -132,6 +134,8 @@ Template.creator_grid.onRendered ->
 					select: selectColumns
 					filter: filter
 				columns: showColumns
+
+			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 
 Template.creator_grid.helpers Creator.helpers
 
@@ -508,17 +512,33 @@ Template.creator_grid.events
 			if result
 				return
 
+Template.creator_grid.onCreated ->
+	AutoForm.hooks creatorAddForm:
+		onSuccess: (formType,result)->
+			dxDataGridInstance.refresh()
+	,true
+	AutoForm.hooks creatorEditForm:
+		onSuccess: (formType,result)->
+			dxDataGridInstance.refresh()
+	,true
+	AutoForm.hooks creatorDeleteForm:
+		onSuccess: (formType,result)->
+			dxDataGridInstance.refresh()
+	,true
+
 Template.creator_grid.onDestroyed ->
 	object_name = Session.get("object_name")
 	if object_name
 		Creator.TabularSelectedIds[object_name] = []
-
-
-AutoForm.hooks addListView:
-	onSuccess: (formType,result)->
-		list_view_id = result
-		Session.set("list_view_visible", false)
-		Tracker.afterFlush ()->
-			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			Session.set("list_view_id", list_view_id)
-			Session.set("list_view_visible", true)
+	
+	#离开界面时，清除hooks为空函数
+	AutoForm.hooks creatorAddForm:
+		onSuccess: undefined
+			
+	,true
+	AutoForm.hooks creatorEditForm:
+		onSuccess: undefined
+	,true
+	AutoForm.hooks creatorDeleteForm:
+		onSuccess: undefined
+	,true
