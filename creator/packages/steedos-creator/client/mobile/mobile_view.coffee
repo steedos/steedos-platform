@@ -199,12 +199,16 @@ Template.mobileView.events
 		template.$(".scroller").css({"transform": "translate3d(-50%, 0px, 0px)"})
 
 	'click .action-manage': (event, template)->
-		$(".view-action-mask").css({"opacity": "1", "display": "block"})
-		$(".view-action-actionsheet").addClass("weui-actionsheet_toggle")
+		template.$(".view-action-mask").css({"opacity": "1", "display": "block"})
+		template.$(".view-action-actionsheet").addClass("weui-actionsheet_toggle")
 
 	'click .weui-actionsheet__cell': (event, template)->
-		$(".view-action-mask").css({"opacity": "0", "display": "none"})
-		$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
+		template.$(".view-action-mask").css({"opacity": "0", "display": "none"})
+		template.$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
+
+	'click .view-action-mask': (event, template)->
+		template.$(".view-action-mask").css({"opacity": "0", "display": "none"})
+		template.$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
 
 	'click .view-action': (event, template)->
 		record_id = Template.instance().data.record_id

@@ -23,10 +23,10 @@
                 <div class="filterCard">
                     <div class="header">
                         <span class="field">
-                            {{#if this.field}} {{this.field}} {{else}} {{_ "creator_list_new_filter"}} {{/if}}
+                            {{#if this.field}} {{this.fieldlabel}} {{else}} {{_ "creator_list_new_filter"}} {{/if}}
                         </span>
                     </div>
-                    <div class="filterCardBody">{{this.operation}}&nbsp;
+                    <div class="filterCardBody">{{getOperationLabel(this.operation)}}&nbsp;
                         <span class="uiOutputText">{{this.value}}</span>
                     </div>
                 </div>

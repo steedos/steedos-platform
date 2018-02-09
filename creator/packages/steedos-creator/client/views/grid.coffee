@@ -74,7 +74,6 @@ initFilter = (list_view_id, object_name)->
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
-		console.log "Template.creator_grid.onRendered=========autorun"
 		object_name = Session.get("object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 		list_view_id = Session.get("list_view_id")
@@ -104,18 +103,28 @@ Template.creator_grid.onRendered ->
 				if n == name_field_key
 					columnItem.cellTemplate = (container, options) ->
 						url = Creator.getObjectUrl(object_name, options.data._id)
-						$('<a>', 'href': url, 'text': options.value).appendTo container
+						$('<a>', 'href': url, 'text': options.value, 'class': 'grid-item-link-' + options.data._id, 'title': options.data[n]).appendTo container
 				else if itemField.type == "datetime"
 					columnItem.format = "yyyy-MM-dd HH:mm"
 				return columnItem
 			showColumns.push
 				caption: ""
 				dataField: "_id"
-				width: 80
+				width: 60
+				allowSorting: false
 				cellTemplate: (container, options) ->
 					container.css("overflow", "visible")
 					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
 					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
+			showColumns.splice 0, 0, 
+				caption: ""
+				dataField: "_id"
+				width: 80
+				allowSorting: false
+				headerCellTemplate: (container) ->
+					container.html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, container)
+				cellTemplate: (container, options) ->
+					container.html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: object_name}, container)
 
 			dxOptions = 
 				dataSource: 
@@ -128,9 +137,6 @@ Template.creator_grid.onRendered ->
 							request.headers['X-User-Id'] = Meteor.userId()
 							request.headers['X-Space-Id'] = Steedos.spaceId()
 							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-						onLoading: (loadOptions)->
-							console.log loadOptions
-							return
 					select: selectColumns
 					filter: filter
 				columns: showColumns
@@ -169,7 +175,6 @@ Template.creator_grid.helpers
 				
 				filters = Creator.formatFiltersToMongo(filters)
 				selector["$and"] = filters
-			console.log selector
 			return selector
 		if Session.get("spaceId") and Meteor.userId()
 			if list_view.filter_scope == "spacex"
@@ -194,7 +199,6 @@ Template.creator_grid.helpers
 					_.each filters, (filter)->
 						selector = _.extend selector, filter
 					
-					console.log "filters", selector
 					if list_view.filter_scope == "mine"
 						selector.owner = Meteor.userId()
 					return selector
@@ -320,18 +324,37 @@ Template.creator_grid.events
 			Session.set("list_view_id", list_view_id)
 			Session.set("list_view_visible", true)
 			
-	'click .list-item-action': (event) ->
+	'click .list-item-action': (event, template) ->
 		actionKey = event.currentTarget.dataset.actionKey
 		objectName = event.currentTarget.dataset.objectName
 		recordId = event.currentTarget.dataset.recordId
 		object = Creator.getObject(objectName)
 		action = object.actions[actionKey]
 		collection_name = object.label
-		Session.set("action_fields", undefined)
-		Session.set("action_collection", "Creator.Collections.#{objectName}")
-		Session.set("action_collection_name", collection_name)
-		Session.set("action_save_and_insert", true)
-		Creator.executeAction objectName, action, recordId
+		if action.todo == "standard_delete"
+			action_record_title = template.$(".grid-item-link-"+ recordId).attr("title")
+			swal
+				title: "删除#{object.label}"
+				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
+				html: true
+				showCancelButton:true
+				confirmButtonText: t('Delete')
+				cancelButtonText: t('Cancel')
+				(option) ->
+					if option
+						Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
+							if error
+								toastr.error error.reason
+							else
+								info = object.label + "\"#{action_record_title}\"" + "已删除"
+								toastr.success info
+								dxDataGridInstance.refresh()
+		else
+			Session.set("action_fields", undefined)
+			Session.set("action_collection", "Creator.Collections.#{objectName}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", true)
+			Creator.executeAction objectName, action, recordId
 
 	'click .table-cell-edit': (event, template) ->
 		field = this.field_name
@@ -464,7 +487,6 @@ Template.creator_grid.events
 				return obj
 		filter_items = _.compact(filter_items)
 		Session.set "list_view_visible", false
-		console.log 'click .save-change,filter_items:', filter_items
 		Meteor.call "update_filters", list_view_id, filter_items, filter_scope, (error, result) ->
 			Session.set "list_view_visible", true
 			if error 
@@ -480,7 +502,6 @@ Template.creator_grid.events
 			else
 				return obj
 		filter_items = _.compact(filter_items)
-		console.log filter_items
 		Session.set "cmDoc", {filters: filter_items}
 		$(".btn-add-list-view").click()
 
@@ -523,10 +544,6 @@ Template.creator_grid.onCreated ->
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh()
 	,true
-	AutoForm.hooks creatorDeleteForm:
-		onSuccess: (formType,result)->
-			dxDataGridInstance.refresh()
-	,true
 
 Template.creator_grid.onDestroyed ->
 	object_name = Session.get("object_name")
@@ -539,8 +556,5 @@ Template.creator_grid.onDestroyed ->
 			
 	,true
 	AutoForm.hooks creatorEditForm:
-		onSuccess: undefined
-	,true
-	AutoForm.hooks creatorDeleteForm:
 		onSuccess: undefined
 	,true

@@ -51,8 +51,12 @@ if Meteor.isClient
 								$(".btn.creator-edit").click()
 
 		"standard_delete": (object_name, record_id, fields)->
-			record = Creator.getObjectRecord(object_name, record_id)
 			object = Creator.getObject(object_name)
+			action_record_title = Session.get("action_record_title")
+			unless action_record_title
+				name_field_key = object.NAME_FIELD_KEY
+				record = Creator.getObjectRecord(object_name, record_id)
+				action_record_title = record[name_field_key]
 			swal
 				title: "删除#{object.label}"
 				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
@@ -62,11 +66,14 @@ if Meteor.isClient
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
-						Creator.Collections[object_name].remove {_id: record._id}, (error, result) ->
+						Creator.Collections[object_name].remove {_id: record_id}, (error, result) ->
 							if error
 								toastr.error error.reason
 							else
-								info = object.label + '"' + record.name + '"' + "已删除"
+								if action_record_title
+									info = object.label + "\"#{action_record_title}\"" + "已删除"
+								else
+									info = "删除成功"
 								toastr.success info
 								if record_id == Session.get("record_id")
 									appid = Session.get("app_id")

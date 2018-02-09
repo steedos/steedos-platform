@@ -1,6 +1,15 @@
 Template.filter_option_list.helpers Creator.helpers
 
 Template.filter_option_list.helpers 
+	filterItems: ()->
+		filters = Session.get("filter_items")
+		object_name = Template.instance().data?.object_name
+		fields = Creator.getObject(object_name).fields
+		filters?.forEach (filter) ->
+			filter.fieldlabel = fields[filter.field]?.label
+		Session.set("filter_items",filters)
+		return Session.get("filter_items")
+	
 	filterScope: ()->
 		scope = Session.get("filter_scope")
 		if scope == "space"
