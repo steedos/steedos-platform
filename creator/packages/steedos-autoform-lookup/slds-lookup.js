@@ -101,7 +101,7 @@ Template.steedosLookups.onRendered(function () {
 
 	template.autorun(function () {
 		var data = Template.currentData();
-
+		var formId = AutoForm.getFormId();
 		var value = data.value;
 
 		if (template.uniSelectize.optionsMethod) {
@@ -114,7 +114,7 @@ Template.steedosLookups.onRendered(function () {
 		} else {
 			var optionsFunction = template.uniSelectize.optionsFunction;
 
-			var _values = AutoForm.getFormValues("cmForm").insertDoc
+			var _values = AutoForm.getFormValues(formId).insertDoc
 
 			if(_.isFunction(optionsFunction)){
 				options = optionsFunction(_values)
@@ -372,9 +372,10 @@ Template.steedosLookups.events({
 			return
 		}
 
-        template.uniSelectize.inputFocus(template);
-
-		var _values = AutoForm.getFormValues("cmForm").insertDoc
+		template.uniSelectize.inputFocus(template);
+		
+		var formId = AutoForm.getFormId();
+		var _values = AutoForm.getFormValues(formId).insertDoc;
 
 		if(template.uniSelectize.optionsFunction){
 			template.uniSelectize.addItems(template.uniSelectize.optionsFunction(_values))

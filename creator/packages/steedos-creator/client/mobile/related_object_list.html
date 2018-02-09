@@ -5,7 +5,13 @@
 				<div class="bLeft related-object-list-back">
 					<i class="ion ion-android-arrow-back"></i>
 				</div>
-				<div class="bRight"></div>
+				{{#if isMobile}}
+					<div class="bRight add-related-item">
+						<i class="ion ion-plus"></i>
+					</div>
+				{{else}}
+					<div class="bRight"></div>
+				{{/if}}
 				<div class="bBody">
 					RelatedObjectList
 				</div>
@@ -15,4 +21,5 @@
 			<div id="relatedObjectRecords"></div>
 		</div>
 	</div>
+	{{#afModal formId="addRelatedItem" class="btn btn-primary btn-add-related-item hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName}} {{_ "Create"}} {{/afModal}}
 </template>

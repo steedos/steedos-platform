@@ -21,3 +21,5 @@ Creator.helpers =
 				when "startswith" then filter.operationlabel = t("creator_filter_operation_starts_with")	
 		Session.set("filter_items",filters)
 		return Session.get("filter_items")
+	isMobile: ()->
+		return Steedos.isMobile()
