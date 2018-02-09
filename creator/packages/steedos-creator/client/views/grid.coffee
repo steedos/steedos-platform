@@ -515,7 +515,9 @@ Template.creator_grid.events
 Template.creator_grid.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
-			dxDataGridInstance.refresh()
+			# 在最近查看列表中添加记录会重新执行onRendered中的autorun，所以不需要再次刷新数据
+			if Session.get("list_view_id") != "recent"
+				dxDataGridInstance.refresh()
 	,true
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
