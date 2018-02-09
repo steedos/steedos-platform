@@ -127,3 +127,8 @@ Template.relatedObjectList.events
 AutoForm.hooks addRelatedItem:
 	onSuccess: (formType, result)->
 		Session.set("reload_dxlist", true)
+		record_id = result
+		app_id = FlowRouter._current.params.app_id
+		related_object_name = FlowRouter._current.params.related_object_name
+		record_url = Creator.getObjectUrl(related_object_name, record_id, app_id)
+		FlowRouter.go record_url

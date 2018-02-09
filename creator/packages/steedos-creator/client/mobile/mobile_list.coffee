@@ -176,4 +176,8 @@ Template.mobileList.events
 AutoForm.hooks addListItem:
 	onSuccess: (formType, result)->
 		Session.set("reload_dxlist", true)
-		console.log "onSuccess:----------------", result
+		record_id = result
+		app_id = FlowRouter._current.params.app_id
+		object_name = FlowRouter._current.params.object_name
+		record_url = Creator.getObjectUrl(object_name, record_id, app_id)
+		FlowRouter.go record_url

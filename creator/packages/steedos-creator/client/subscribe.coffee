@@ -3,12 +3,13 @@ Creator.subs["CreatorListViews"] = new SubsManager()
 Creator.subs["TabularSetting"] = new SubsManager()
 Creator.subs["CreatorRecord"] = new SubsManager()
 Creator.subs["CreatorActionRecord"] = new SubsManager()
+Creator.subs["objectRecentViewed"] = new SubsManager()
 
 Meteor.startup ->
 	
 	Tracker.autorun (c)->
 		if Session.get("object_name")
-			Creator.subs["Creator"].subscribe "object_recent_viewed", Session.get("object_name")
+			Creator.subs["objectRecentViewed"].subscribe "object_recent_viewed", Session.get("object_name")
 
 	Tracker.autorun (c)->
 		if Session.get("object_name")
