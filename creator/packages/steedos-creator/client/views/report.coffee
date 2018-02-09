@@ -184,7 +184,6 @@ Template.creator_report.events
 		column_width = []
 		report_settings = template.report_settings.get()
 		report = Creator.getObjectRecord()
-		debugger
 		switch report.report_type
 			when 'tabular'
 				fields = template.dataGridInstance.getVisibleColumns()
@@ -274,7 +273,8 @@ Template.creator_report.events
 			counting: report_settings.counting
 			options: options
 		}})
-
+		if template.is_filter_open.get()
+			template.is_filter_open.set(false)
 
 renderTabularReport = (reportObject, reportData)->
 	self = this
