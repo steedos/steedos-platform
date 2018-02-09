@@ -34,7 +34,6 @@ Template.creator_list.helpers
 				
 				filters = Creator.formatFiltersToMongo(filters)
 				selector["$and"] = filters
-			console.log selector
 			return selector
 		if Session.get("spaceId") and Meteor.userId()
 			if list_view.filter_scope == "spacex"
@@ -329,14 +328,14 @@ Template.creator_list.events
 				return obj
 		filter_items = _.compact(filter_items)
 		Session.set "list_view_visible", false
-		console.log 'click .save-change,filter_items:', filter_items
 		Meteor.call "update_filters", list_view_id, filter_items, filter_scope, (error, result) ->
 			Session.set "list_view_visible", true
 			if error 
 				console.log "error", error 
 			else if result
 				Session.set("filter_items", filter_items)
-
+		#$(event.currentTarget).toggleClass("slds-is-selected")
+		$(".filter-list-container").toggleClass("slds-hide")
 	'click .filters-save-as': (event, template)->
 		filter_items = Session.get("filter_items")
 		filter_items = _.map filter_items, (obj) ->
@@ -348,7 +347,7 @@ Template.creator_list.events
 		console.log filter_items
 		Session.set "cmDoc", {filters: filter_items}
 		$(".btn-add-list-view").click()
-
+		$(".filter-list-container").toggleClass("slds-hide")
 	'click .select-fields-to-display': (event, template)->
 		Modal.show("select_fields")
 
