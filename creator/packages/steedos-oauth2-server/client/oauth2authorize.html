@@ -1,6 +1,26 @@
 <template name="loginAuthorize">
-	<div class="at-form text-center">
-
-		<button class="authorize">{{_ "authorize"}} </button>
+	<div class="authorize-form text-center">
+		<div class="logo-form">
+			<img src="/packages/steedos_theme/client/images/logo.png" class="img-circle logo" alt="logo">
+		</div>
+		<div class="authorize-info-form">
+			<div class="app_info">
+				<div class="app_intro">
+					<h3>人人网页版</h3>
+				</div>
+			</div>
+			<div class="oa_list">
+				<div class="list_title">
+					<span>人人网页版</span>&nbsp;将获得以下权限：
+				</div>
+				<div class="oa_ul">
+					<div class="oa_li">
+						<i class="fa fa-fw fa-user"></i>
+						获得您的个人信息
+					</div>
+				</div>
+			</div>
+		</div>
+		<button id="oauth2login" class="btn btn-lg btn-block btn-primary">{{_ "authorize"}}</button>
 	</div>
 </template>

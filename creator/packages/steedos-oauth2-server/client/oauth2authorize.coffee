@@ -1,7 +1,7 @@
 @OAuth2 = {}
 
 Template.loginAuthorize.events
-	'click button.authorize':()->
+	'click button#oauth2login':()->
 		OAuth2.getOAuth2Code()
 
 getUrlParams = ()->
