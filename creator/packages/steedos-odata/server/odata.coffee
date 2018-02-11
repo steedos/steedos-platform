@@ -2,47 +2,35 @@ Meteor.startup ->
 
 	odataV4Mongodb = Npm.require 'odata-v4-mongodb'
 
-	visitorParser = (visitor)->
+	optionsParser = (options)->
 		parsedOpt = {}
 
-		if visitor.projection
-			parsedOpt.fields = visitor.projection
+		if options.$select
+			parsedOpt.fields = {}
+			_.each options.$select.split(','), (s)->
+				parsedOpt.fields[s] = 1
 
-		if visitor.hasOwnProperty('limit')
-			parsedOpt.limit = visitor.limit
+		if options.hasOwnProperty('$top')
+			parsedOpt.limit = parseInt options.$top
 
-		if visitor.hasOwnProperty('skip')
-			parsedOpt.skip = visitor.skip
+		if options.hasOwnProperty('$skip')
+			parsedOpt.skip = parseInt options.$skip
 
-		if visitor.sort
-			parsedOpt.sort = visitor.sort
+		if options.$orderby
+			sort = []
+			_.each options.$orderby.split(','), (item)->
+				data = item.trim().split(' ')
+				if data.length > 2
+					console.error "odata: Syntax error at #{options.$orderby}"
+					return
+				if data.length == 1
+					data.push 'asc'
+				sort.push(data)
+
+			if sort.length > 0
+				parsedOpt.sort = sort
 
 		parsedOpt
-
-	dealWithExpand = (createQuery, entities, key)->
-		if _.isEmpty createQuery.includes
-			return
-
-		obj = Creator.Objects[key]
-		_.each createQuery.includes, (include)->
-			console.log 'include: ', include
-			navigationProperty = include.navigationProperty
-			console.log 'navigationProperty: ', navigationProperty
-			field = obj.fields[navigationProperty]
-			if field and field.type is 'lookup'
-				lookupCollection = Creator.Collections[field.reference_to]
-				queryOptions = visitorParser(include)
-
-				_.each entities, (entity, idx)->
-					if entity[navigationProperty]
-						if field.multiple
-							multiQuery = _.extend {_id: {$in: entity[navigationProperty]}}, include.query
-							entities[idx][navigationProperty] = lookupCollection.find(multiQuery, queryOptions).fetch()
-						else
-							singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
-							entities[idx][navigationProperty] = lookupCollection.findOne(singleQuery, queryOptions)
-
-		return
 
 	_.each Creator.Collections, (value, key, list)->
 		if not Creator.Objects[key]?.enable_api
@@ -70,25 +58,21 @@ Meteor.startup ->
 									console.log 'queryParams: ', @queryParams
 									console.log 'urlParams: ', @urlParams
 									console.log 'bodyParams: ', @bodyParams
-									console.log '@request._parsedUrl.query: ', @request._parsedUrl.query
-									createQuery = odataV4Mongodb.createQuery(@request._parsedUrl.query)
+									createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
 
 									if key is 'cfs.files.filerecord'
-										createQuery.query['metadata.space'] = @urlParams.spaceId
+										createFilter['metadata.space'] = @urlParams.spaceId
 									else
-										createQuery.query.space = @urlParams.spaceId
+										createFilter.space = @urlParams.spaceId
 
-									console.log 'createQuery: ', createQuery
+									console.log 'createFilter: ', createFilter
 
 									entities = []
 									if @queryParams.$top isnt '0'
-										console.log visitorParser(createQuery)
-										entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
-									scannedCount = collection.find(createQuery.query).count()
-									
+										console.log optionsParser(@queryParams)
+										entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
+									scannedCount = collection.find(createFilter).count()
 									if entities
-										dealWithExpand(createQuery, entities, key)
-
 										body = {}
 										headers = {}
 										body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
