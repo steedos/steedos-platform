@@ -77,7 +77,7 @@ Package.onUse(function(api) {
 	api.use('steedos:sso@0.0.4')
 	api.use('steedos:adminlte@2.3.12_3');
 	api.use('steedos:base@0.0.73');
-	api.use('steedos:accounts@0.0.30');
+	api.use('steedos:accounts@0.0.31');
 	api.use('steedos:theme@0.0.29');
 	api.use('steedos:i18n@0.0.11');
 	api.use('steedos:autoform@0.0.1');

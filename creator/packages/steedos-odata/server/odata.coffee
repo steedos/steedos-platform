@@ -60,6 +60,10 @@ Meteor.startup ->
 									console.log 'bodyParams: ', @bodyParams
 									createFilter = odataV4Mongodb.createFilter(@queryParams.$filter)
 
+									console.log '@request._parsedUrl.query: ', @request._parsedUrl.query
+									createQuery = odataV4Mongodb.createQuery(@request._parsedUrl.query)
+									console.log 'createQuery: ', createQuery
+
 									if key is 'cfs.files.filerecord'
 										createFilter['metadata.space'] = @urlParams.spaceId
 									else
@@ -73,6 +77,29 @@ Meteor.startup ->
 										entities = collection.find(createFilter, optionsParser(@queryParams)).fetch()
 									scannedCount = collection.find(createFilter).count()
 									if entities
+										if createQuery.includes
+											obj = Creator.Objects[key]
+											_.each createQuery.includes, (include)->
+												console.log 'include: ', include
+												navigationProperty = include.navigationProperty
+												console.log 'navigationProperty: ', navigationProperty
+												field = obj.fields[navigationProperty]
+												if field and field.type is 'lookup'
+													lookupCollection = Creator.Collections[field.reference_to]
+													queryOptions = {}
+													if include.projection
+														queryOptions.fields = include.projection
+
+													_.each entities, (entity, idx)->
+														if entity[navigationProperty]
+															if field.multiple
+																multiQuery = _.extend {_id: {$in: entity[navigationProperty]}}, include.query
+																entities[idx][navigationProperty] = lookupCollection.find(multiQuery, queryOptions).fetch()
+															else
+																singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
+																entities[idx][navigationProperty] = lookupCollection.findOne(singleQuery, queryOptions)
+
+
 										body = {}
 										headers = {}
 										body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
