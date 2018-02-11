@@ -642,38 +642,38 @@ Creator.Objects.archive_records =
 		all:
 			label: "全部"
 			filter_scope: "space"
-			filters: [["is_received", "$eq", true]]
+			filters: [["is_received", "=", true]]
 		receive:
 			label:"待接收"
 			filter_scope: "space"
-			filters: [["is_received", "$eq", false]]
+			filters: [["is_received", "=", false]]
 		received:
 			label:"已接收"
 			filter_scope:"space"
-			filters:[["is_received", "$eq", true]]
+			filters:[["is_received", "=", true]]
 			columns:["year","title","received","received_by","borrowed_by"]
 		transfer:
 			label:"待移交"
 			filter_scope: "space"
-			filters: [["is_transfered", "$eq", false]]
+			filters: [["is_transfered", "", false]]
 		destroy:
 			label:"待销毁"
 			filter_scope: "space"
-			filters: [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
+			filters: [["is_received", "=", true],["destroy_date","<=",new Date()],["is_destroyed", "=", false]]
 			columns:["year","title","document_date","destroy_date","archive_destroy_id"]
 		transfered:
 			label:"已移交"
 			filter_scope: "space"
-			filters: [["is_transfered", "$eq", true]]
+			filters: [["is_transfered", "=", true]]
 		destroyed:
 			label:"已销毁"
 			filter_scope: "space"
-			filters: [["is_destroyed", "$eq", true]]
+			filters: [["is_destroyed", "=", true]]
 			columns:["year","title","document_date","destroy_date","destroyed","archive_destroy_id"]
 		borrow:
 			label:"已借阅"
 			filter_scope: "space"
-			filters:[["is_borrowed","$eq",true],["is_received","$eq",true]]
+			filters:[["is_borrowed","=",true],["is_received","=",true]]
 			columns:["title","borrowed","borrowed_by"]
 	permission_set:
 		user:

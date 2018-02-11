@@ -1,3 +1,5 @@
+# import { Random } from 'meteor/random'
+
 Creator.Objects.OAuth2Clients = 
 	name: "OAuth2Clients"
 	icon: "entity"
@@ -40,7 +42,9 @@ Creator.Objects.OAuth2Clients =
 	# 	"before.insert.server.default":
 	# 		on: "server"
 	# 		when: "before.insert"
-	# 		todo: (userId, doc)-> return true
+	# 		todo: (userId, doc)->
+				
+	# 		return true
 					
 	permission_set:
 		user:

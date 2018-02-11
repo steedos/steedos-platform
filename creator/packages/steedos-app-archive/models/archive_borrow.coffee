@@ -142,16 +142,16 @@ Creator.Objects.archive_borrow =
 		mine:
 			label:"我的借阅记录"
 			filter_scope: "mine"
-			filters: [["state", "$eq", "approved"],["is_deleted", "$eq", false]]
+			filters: [["state", "=", "approved"],["is_deleted", "=", false]]
 			columns:["borrow_name","relate_record","state","end_date"]
 		draft:
 			label:"草稿"
 			filter_scope: "mine"
-			filters: [["state", "$eq", "draft"]]
+			filters: [["state", "=", "draft"]]
 			columns:["borrow_name","created","end_date","created_by"]
 		pending:
 			label:"审批中"
-			filters: [["state","$eq","pending"]]
+			filters: [["state","=","pending"]]
 			columns:["borrow_name","relate_record","created","end_date","created_by"]
 	triggers:
 		"before.insert.server.default": 

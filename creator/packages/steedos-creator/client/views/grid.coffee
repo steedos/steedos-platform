@@ -89,26 +89,24 @@ Template.creator_grid.onRendered ->
 			# 暂时不支持子字段，后续odata支持后要去掉并单独处理子字段相关问题
 			columns = columns.map (n,i)->
 				return n.split(".")[0]
-			extra_columns = []
+			extra_columns = ["owner"]
 			if object.list_views?.default?.extra_columns
 				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 			
 			selectColumns = _.union ["_id"], columns, extra_columns
 			showColumns = columns.map (n,i)->
-				itemField = objectFields[n]
-				columnItem = {
-					caption: itemField.label
+				columnItem = 
 					dataField: n
-				}
-				if n == name_field_key
-					columnItem.cellTemplate = (container, options) ->
-						url = Creator.getObjectUrl(object_name, options.data._id)
-						$('<a>', 'href': url, 'text': options.value, 'class': 'grid-item-link-' + options.data._id, 'title': options.data[n]).appendTo container
-				else if itemField.type == "datetime"
-					columnItem.format = "yyyy-MM-dd HH:mm"
+					cellTemplate: (container, options) ->
+						field = object.fields[n]
+						field_name = n
+						if /\w+\.\$\.\w+/g.test(field_name)
+							# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+							field_name = n.replace(/\$\./,"")
+						cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
+						Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 				return columnItem
 			showColumns.push
-				caption: ""
 				dataField: "_id"
 				width: 60
 				allowSorting: false
@@ -117,7 +115,6 @@ Template.creator_grid.onRendered ->
 					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
 					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
 			showColumns.splice 0, 0, 
-				caption: ""
 				dataField: "_id"
 				width: 80
 				allowSorting: false
@@ -366,9 +363,7 @@ Template.creator_grid.events
 
 		objectName = Session.get("object_name")
 		collection_name = Creator.getObject(objectName).label
-		dataTable = $(event.currentTarget).closest('table').DataTable()
-		tr = $(event.currentTarget).closest("tr")
-		rowData = dataTable.row(tr).data()
+		rowData = this.doc
 
 		if rowData
 			Session.set("action_fields", field)
@@ -544,6 +539,10 @@ Template.creator_grid.onCreated ->
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh()
 	,true
+	AutoForm.hooks creatorCellEditForm:
+		onSuccess: (formType,result)->
+			dxDataGridInstance.refresh()
+	,true
 
 Template.creator_grid.onDestroyed ->
 	object_name = Session.get("object_name")
@@ -553,8 +552,10 @@ Template.creator_grid.onDestroyed ->
 	#离开界面时，清除hooks为空函数
 	AutoForm.hooks creatorAddForm:
 		onSuccess: undefined
-			
 	,true
 	AutoForm.hooks creatorEditForm:
+		onSuccess: undefined
+	,true
+	AutoForm.hooks creatorCellEditForm:
 		onSuccess: undefined
 	,true

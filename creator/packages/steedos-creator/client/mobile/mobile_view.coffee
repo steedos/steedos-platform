@@ -177,9 +177,9 @@ Template.mobileView.helpers
 Template.mobileView.events
 	'click .mobile-view-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]
+		urlQuery.pop()
 		template.$(".mobile-view").animateCss "fadeOutRight", ->
 			Blaze.remove(template.view)         
-			urlQuery.pop()
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
@@ -234,6 +234,9 @@ Template.mobileView.events
 								template.$(".mobile-view-back").click()
 		else
 			Creator.executeAction object_name, this, record_id
+
+	'click .group-section-control': (event, template)->
+		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
 AutoForm.hooks editRecord:
 	onSuccess: (formType, result)->

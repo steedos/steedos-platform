@@ -70,6 +70,7 @@ matb33:collection-hooks@0.8.4
 mdg:validation-error@0.2.0
 meteor@1.7.2
 meteor-base@1.1.0
+meteorhacks:async@1.0.0
 meteorhacks:meteorx@1.0.2
 meteorhacks:ssr@2.2.0
 meteorhacks:subs-manager@1.6.4
@@ -126,7 +127,7 @@ spacebars-compiler@1.1.2
 srp@1.0.10
 standard-minifier-css@1.3.5
 standard-minifier-js@2.1.2
-steedos:accounts@0.0.27
+steedos:accounts@0.0.30
 steedos:accounts-phone@0.0.3
 steedos:accounts-t9n@1.14.2_6
 steedos:adminlte@2.3.12_3
@@ -137,7 +138,7 @@ steedos:app-crm@0.0.1
 steedos:app-example@0.0.1
 steedos:app-informations@0.0.2
 steedos:app-workflow@0.0.1
-steedos:autoform@0.0.9
+steedos:autoform@0.0.10
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_1
 steedos:autoform-lookup@0.3.10
@@ -164,6 +165,7 @@ steedos:cfs-ui@0.1.4
 steedos:cfs-upload-http@0.0.22
 steedos:cfs-worker@0.1.5
 steedos:cms@0.0.7
+steedos:cors@0.0.1
 steedos:creator@0.0.5
 steedos:datatables-extensions@0.0.1
 steedos:devexpress@0.0.1
@@ -177,14 +179,15 @@ steedos:jstree@3.3.2
 steedos:lightning-design-system@0.0.1
 steedos:loaders-css@0.1.2
 steedos:logger@0.0.2
+steedos:oauth2-server@0.0.1
 steedos:odata@0.0.1
 steedos:smsqueue@0.0.1
 steedos:sso@0.0.4
 steedos:theme@0.0.30
 steedos:toastr@2.1.3
 steedos:ui@0.0.1
-steedos:useraccounts-bootstrap@1.14.2_5
-steedos:useraccounts-core@1.14.2_4
+steedos:useraccounts-bootstrap@1.14.2_7
+steedos:useraccounts-core@1.14.2_6
 steedos:useraccounts-flow-routing@1.14.2_4
 summernote:standalone@0.7.3
 summernote:summernote@0.8.1

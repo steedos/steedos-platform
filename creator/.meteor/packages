@@ -30,7 +30,7 @@ fortawesome:fontawesome
 tap:i18n
 
 raix:push
-
+steedos:cors
 aldeed:tabular
 aldeed:collection2
 aldeed:simple-schema
@@ -112,3 +112,6 @@ steedos:odata
 yogiben:autoform-tags
 
 steedos:logger@0.0.2
+
+steedos:oauth2-server@0.0.1
+

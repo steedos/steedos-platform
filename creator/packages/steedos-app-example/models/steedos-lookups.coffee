@@ -87,9 +87,15 @@ if Meteor.isDevelopment
 					return _options
 				group: "options function test"
 
+			number_test:
+				type: 'number'
+				precision: 11
+				scale: 2
+			currency_test:
+				type: 'currency'
 		list_views:
 			default:
-				columns: ["name", "customer_id", "customer_ids", "object_switche_ids", "boolean", "CObject", "options_fun"]
+				columns: ["name", "number_test", "customer_id", "customer_ids", "object_switche_ids", "boolean", "CObject", "options_fun"]
 			recent:
 				filter_scope: "space"
 			all:

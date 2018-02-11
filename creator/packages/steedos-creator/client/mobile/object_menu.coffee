@@ -22,7 +22,7 @@ Template.objectMenu.helpers
 
 Template.objectMenu.events
     'click .object-menu-back': (event, template)->
+        urlQuery.pop()
         template.$(".object-menu").animateCss "fadeOutRight", ->
             Blaze.remove(template.view)
-            urlQuery.pop()
             FlowRouter.go '/app/menu'

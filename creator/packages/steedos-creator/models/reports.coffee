@@ -24,7 +24,12 @@ Creator.Objects.reports =
 			]
 		object_name: 
 			label: "对象名"
-			type: "text"
+			type: "lookup"
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.Objects, (o, k)->
+					_options.push {label: o.label, value: k, icon: o.icon}
+				return _options
 			required: true
 		filter_scope:
 			label: "过虑范围"
@@ -64,10 +69,36 @@ Creator.Objects.reports =
 			blackbox: true
 		columns:
 			label: "列"
-			type: "[text]"
+			type: "lookup"
+			multiple: true
+			depend_on: ["object_name"]
+			defaultIcon: "service_contract"
+			optionsFunction: (values)->
+				_options = []
+				_object = Creator.getObject(values.object_name)
+				fields = _object.fields
+				icon = _object.icon
+
+				_.forEach fields, (f, k)->
+					_options.push {label: f.label || k, value: k, icon: icon}
+
+				return _options
 		rows: 
 			label: "行"
-			type: "[text]"
+			type: "lookup"
+			multiple: true
+			depend_on: ["object_name"]
+			defaultIcon: "service_contract"
+			optionsFunction: (values)->
+				_options = []
+				_object = Creator.getObject(values.object_name)
+				fields = _object.fields
+				icon = _object.icon
+
+				_.forEach fields, (f, k)->
+					_options.push {label: f.label || k, value: k, icon: icon}
+
+				return _options
 		values: 
 			label: "统计"
 			type: "[text]"

@@ -161,9 +161,9 @@ Template.mobileList.helpers
 Template.mobileList.events
 	'click .mobile-list-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]
+		urlQuery.pop()
 		template.$(".mobile-list").animateCss "fadeOutRight", ->
 			Blaze.remove(template.view)         
-			urlQuery.pop()
 			if lastUrl
 				FlowRouter.go lastUrl
 			else

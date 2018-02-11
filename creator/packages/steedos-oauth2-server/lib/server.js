@@ -42,7 +42,7 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.all('/steedos/oauth2/token', oAuth2Server.oauthserver.grant());
+app.all('/oauth2/token', oAuth2Server.oauthserver.grant());
 
 WebApp.rawConnectHandlers.use(app);
 
@@ -51,13 +51,16 @@ WebApp.rawConnectHandlers.use(app);
 // Configure really basic identity service
 ////////////////////
 JsonRoutes.Middleware.use(
-    '/steedos/oauth2/getIdentity',
+    '/oauth2/getIdentity',
     oAuth2Server.oauthserver.authorise()
 );
 
-JsonRoutes.add('get', '/steedos/oauth2/getIdentity', function(req, res, next) {
+JsonRoutes.add('get', '/oauth2/getIdentity', function(req, res, next) {
     var accessTokenStr = (req.params && req.params.access_token) || (req.query && req.query.access_token);
+    console.log("=================accessTokenStr");
+    console.log(accessTokenStr);
     var accessToken = oAuth2Server.collections.accessToken.findOne({accessToken: accessTokenStr});
+
     var user = Meteor.users.findOne(accessToken.userId);
 
     JsonRoutes.sendResult(
@@ -65,7 +68,8 @@ JsonRoutes.add('get', '/steedos/oauth2/getIdentity', function(req, res, next) {
         {
             data: {
                 id: user._id,
-                email: user.emails[0].address
+                name: user.name,
+                username: user.username
             }
         }
     );

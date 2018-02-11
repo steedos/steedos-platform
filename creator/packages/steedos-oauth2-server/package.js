@@ -13,6 +13,7 @@ Npm.depends({
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
 	api.use('coffeescript@1.11.1_4');
+	api.use('random');
 	api.use('blaze@2.1.9');
 	api.use('templating@1.2.15');
 	api.use('kadira:blaze-layout@2.3.0');
@@ -23,7 +24,7 @@ Package.onUse(function(api) {
 	api.use('meteorhacks:async@1.0.0', 'server');
 	api.use('simple:json-routes@2.1.0', 'server');
 
-	api.use('steedos:useraccounts-bootstrap@1.14.2_5', 'client');
+	// api.use('steedos:useraccounts-bootstrap@1.14.2_6', 'client');
 	
 
 

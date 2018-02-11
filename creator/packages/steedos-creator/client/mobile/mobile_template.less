@@ -68,9 +68,62 @@
 
             .dx-list {
                 background: #fff;
+                
+                .dx-list-search {
+                    border: none;
+                    border-radius: 0;
+                    .dx-texteditor-container {
+                        padding: 8px 10px;
+                        background: #EFEFF4;
+                    }
+                    .dx-icon-search {
+                        display: none;
+                        font: normal normal normal 14px/1 "weui";
+                        line-height: 18px !important;
+                        &:before {
+                            content: "\EA0E";
+                        }
+                    }
+                    &.dx-state-focused {
+                        .dx-icon-search {
+                            display: block;
+                        }
+                        .dx-placeholder {
+                            display: none;
+                        }
+                    }
+                    &:not(.dx-texteditor-empty) {
+                        .dx-icon-search {
+                            display: block;
+                        }
+                    }
+                    .dx-placeholder {
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        right: 0;
+                        bottom: 0;
+                        text-align: center;
+                    }
+                    .dx-placeholder:before {
+                        padding: 15px 9px 8px 34px;
+                    }
+                    .dx-placeholder:after {
+                        position: absolute;
+                        left: calc(~ "50% - 50px");
+                        width: 50px;
+                        height: auto;
+                        font: normal normal normal 14px/1 "weui";
+                        content: "\EA0E";
+                        top: 18px;
+                    }
+                    .dx-texteditor-buttons-container {
+                        right: 10px;
+                    }
+                }
                 .dx-list-item {
                     &.dx-state-active {
-                        background: transparent;
+                        background: #e6e6e6;
                     }
                     .dx-item-content.dx-list-item-content {
                         padding: 0;
@@ -81,6 +134,18 @@
                             }
                         }
                     }
+                }
+            }
+            .view-page-section-row {
+                .slds-form-element__label {
+                    font-size: 13px;
+                }
+            }
+            .group-section.slds-section {
+                margin: 0;
+                font-size: 12px;
+                .slds-section__title-action {
+                    margin-right: 0;
                 }
             }
         }

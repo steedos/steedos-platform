@@ -25,10 +25,10 @@ Creator.Objects.instances =
 			columns: ["name", "applicant", "applicant_organization", "modified"]
 		inbox:
 			filter_scope: "space"
-			filters: [["inbox_users", "$eq", "{userId}"]]
+			filters: [["inbox_users", "=", "{userId}"]]
 		outbox:
 			filter_scope: "space"
-			filters: [["outbox_users", "$eq", "{userId}"]]
+			filters: [["outbox_users", "=", "{userId}"]]
 
 	permission_set:
 		user:

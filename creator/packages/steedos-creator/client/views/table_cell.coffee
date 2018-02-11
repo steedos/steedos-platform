@@ -99,6 +99,8 @@ Template.creator_table_cell.helpers
 							val = selectedOptions.getProperty("label")
 			else if _field.type == "filesize"
 				val = formatFileSize(val)
+			else if _field.type == "number" && val
+				val = Number(val).toFixed(_field.scale)
 
 			if this.parent_view != 'record_details' && this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)

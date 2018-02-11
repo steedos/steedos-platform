@@ -104,9 +104,9 @@ Template.relatedObjectList.helpers
 Template.relatedObjectList.events
 	'click .related-object-list-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]
+		urlQuery.pop()
 		template.$(".related-object-list").animateCss "fadeOutRight", ->
 			Blaze.remove(template.view)         
-			urlQuery.pop()
 			if lastUrl
 				FlowRouter.go lastUrl
 			else

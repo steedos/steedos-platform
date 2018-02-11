@@ -54,7 +54,6 @@ MeteorModel = (function() {
                 try {
                     var client;
                     var collection = Creator.Collections['OAuth2Clients'];
-
                     if (clientSecret == null) {
                         client = collection.findOne({
                             active: true,

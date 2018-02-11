@@ -21,9 +21,9 @@ Template.listSwitch.helpers
 Template.listSwitch.events
 	'click .list-switch-back': (event, template)->
 		lastUrl = urlQuery[urlQuery.length - 2]
+		urlQuery.pop()
 		template.$("#list_switch").animateCss "fadeOutRight", ->
 			Blaze.remove(template.view)
-			urlQuery.pop()
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
