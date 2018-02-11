@@ -57,8 +57,7 @@ JsonRoutes.Middleware.use(
 
 JsonRoutes.add('get', '/oauth2/getIdentity', function(req, res, next) {
     var accessTokenStr = (req.params && req.params.access_token) || (req.query && req.query.access_token);
-    console.log("=================accessTokenStr");
-    console.log(accessTokenStr);
+    
     var accessToken = oAuth2Server.collections.accessToken.findOne({accessToken: accessTokenStr});
 
     var user = Meteor.users.findOne(accessToken.userId);

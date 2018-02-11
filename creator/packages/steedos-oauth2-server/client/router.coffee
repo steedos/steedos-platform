@@ -9,5 +9,5 @@ FlowRouter.route '/oauth2',
 			BlazeLayout.render 'loginLayout',
 				main: "atForm"
 		else
-			BlazeLayout.render 'loginAuthorize',
+			BlazeLayout.render 'loginLayout',
 				main: "loginAuthorize"
