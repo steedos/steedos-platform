@@ -1,3 +1,7 @@
+Template.mobileView.onCreated ->
+	this.action_collection = new ReactiveVar()
+	this.action_collection_name = new ReactiveVar()
+
 Template.mobileView.onRendered ->
 	self = this
 
@@ -40,10 +44,6 @@ Template.mobileView.helpers
 		record_id = Template.instance().data.record_id
 		if Creator.getObjectRecord(object_name, record_id)
 			return true
-
-	collection: ()->
-		object_name = Template.instance().data.object_name
-		return "Creator.Collections." + object_name
 
 	record: ()->
 		object_name = Template.instance().data.object_name
@@ -112,13 +112,21 @@ Template.mobileView.helpers
 		
 		return Creator.getObject(object_name).icon
 
+	allowCreate: (object_name)->
+		unless object_name
+			object_name = Template.instance().data.object_name
+
+		if object_name == "cms_files"
+			return false
+		return Creator.getPermissions(object_name).allowCreate
+
 	object_label: (object_name)->
 		unless object_name
 			object_name = Template.instance().data.object_name
 
 		return Creator.getObject(object_name).label
 
-	related_objects: ()->
+	related_lists: ()->
 		object_name = Template.instance().data.object_name
 		record_id = Template.instance().data.record_id
 		return Creator.getRelatedList(object_name, record_id)
@@ -153,8 +161,12 @@ Template.mobileView.helpers
 		Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
 
 	collection: ()->
-		object_name = Template.instance().data.object_name
-		return "Creator.Collections." + object_name
+		return Template.instance()?.action_collection.get()
+		# object_name = Template.instance().data.object_name
+		# return "Creator.Collections." + object_name
+
+	collectionName: ()->
+		return Template.instance()?.action_collection_name.get()
 
 	actions: ()->
 		record_id = Template.instance().data.record_id
@@ -210,10 +222,25 @@ Template.mobileView.events
 		template.$(".view-action-mask").css({"opacity": "0", "display": "none"})
 		template.$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
 
+	'click .add-related-record': (event, template)->
+		record_id = Template.instance().data.record_id
+		object_name = Template.instance().data.object_name
+		related_object_name = this.object_name
+		related_object_label = Creator.getObject(related_object_name).label
+		related_lists = Creator.getRelatedList(object_name, record_id)
+		related_field_name = _.findWhere(related_lists, {object_name: related_object_name}).related_field_name
+		template.action_collection.set("Creator.Collections." + related_object_name)
+		template.action_collection_name.set(related_object_label)
+		Session.set 'cmDoc', {"#{related_field_name}": record_id}
+		Meteor.defer ->
+			$(".btn-add-related-record").click()
+
 	'click .view-action': (event, template)->
 		record_id = Template.instance().data.record_id
 		object_name = Template.instance().data.object_name
 		object = Creator.getObject(object_name)
+		template.action_collection.set("Creator.Collections." + object_name)
+		template.action_collection_name.set(object.label)
 		if this.name == "standard_delete"
 			Session.set "reload_dxlist", false
 			swal
@@ -238,7 +265,10 @@ Template.mobileView.events
 	'click .group-section-control': (event, template)->
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
+AutoForm.hooks addRelatedRecord:
+	onSuccess: (formType, result)->
+		Session.set("reload_dxlist", true)
+
 AutoForm.hooks editRecord:
 	onSuccess: (formType, result)->
-		console.log "editRecord onsuccess"
 		Session.set("reload_dxlist", true)
