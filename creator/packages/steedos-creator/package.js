@@ -133,8 +133,9 @@ Package.onUse(function(api) {
 	api.addFiles('models/queue_import.coffee');
 	api.addFiles('models/settings.coffee');
 
+	api.addFiles('server/methods/bootstrap.coffee', 'server');
+
 	api.addFiles('server/methods/object_options.coffee', 'server');
-	api.addFiles('server/methods/object_permissions.coffee', 'server');
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 	api.addFiles('server/methods/object_recent_record.coffee', 'server');
 	api.addFiles('server/methods/object_listviews_options.coffee', 'server');
@@ -198,6 +199,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
+	api.addFiles('client/bootstrap.coffee', 'client');
 
 	api.addFiles('client/animate.css', 'client');
 	api.addFiles('client/animate.js', 'client');

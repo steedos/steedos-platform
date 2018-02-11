@@ -291,7 +291,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 	return permission_fields
 
 Creator.isloading = ()->
-	return Creator.isloadingPermissions.get()
+	return Creator.isLoadingSpace.get()
 
 # 计算fields相关函数
 # START
