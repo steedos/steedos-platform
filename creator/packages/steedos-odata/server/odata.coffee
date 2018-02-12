@@ -71,8 +71,9 @@ Meteor.startup ->
 									console.log 'queryParams: ', @queryParams
 									console.log 'urlParams: ', @urlParams
 									console.log 'bodyParams: ', @bodyParams
-									console.log 'querystring: ', querystring.unescape(querystring.stringify(@queryParams))
-									createQuery = odataV4Mongodb.createQuery(querystring.unescape(querystring.stringify(@queryParams)))
+									qs = querystring.unescape(querystring.stringify(@queryParams))
+									console.log 'querystring: ', qs
+									createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 
 									if key is 'cfs.files.filerecord'
 										createQuery.query['metadata.space'] = @urlParams.spaceId
