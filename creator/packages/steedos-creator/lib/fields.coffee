@@ -13,7 +13,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "textarea"
 			fs.type = String
 			fs.autoform.type = "textarea"
-			fs.autoform.rows = 3
+			fs.autoform.rows = field.rows || 3
 		else if field.type == "date"
 			fs.type = Date
 			fs.autoform.type = "bootstrap-datetimepicker"
