@@ -35,8 +35,7 @@
 							<p>{{{prompt}}}</p>
 							{{#if shouldUpdateQuickForm}}
 
-								{{#autoForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-									
+								{{#autoForm title=cmTitle id=cmFormId collection=cmCollection schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
 									{{#if schemaFields.grouplessFields}}
 										{{#each schemaFields.grouplessFields}}
 											<div class="slds-grid view-page-section-row">

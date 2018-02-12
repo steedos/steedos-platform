@@ -26,9 +26,9 @@ Meteor.startup ->
 
 		obj = Creator.Objects[key]
 		_.each createQuery.includes, (include)->
-			console.log 'include: ', include
+			# console.log 'include: ', include
 			navigationProperty = include.navigationProperty
-			console.log 'navigationProperty: ', navigationProperty
+			# console.log 'navigationProperty: ', navigationProperty
 			field = obj.fields[navigationProperty]
 			if field and field.type is 'lookup'
 				lookupCollection = Creator.Collections[field.reference_to]
@@ -50,7 +50,7 @@ Meteor.startup ->
 			return
 
 		if SteedosOdataAPI
-			console.log key
+			# console.log key
 
 			SteedosOdataAPI.addCollection Creator.Collections[key],
 				excludedEndpoints: []
@@ -60,7 +60,7 @@ Meteor.startup ->
 				endpoints:
 					getAll:
 						action: ->
-							console.log "getAll ------ #{key}"
+							# console.log "getAll ------ #{key}"
 							collection = Creator.Collections[key]
 							if not collection
 								statusCode: 404
@@ -68,11 +68,11 @@ Meteor.startup ->
 
 							permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
 							if permissions.viewAllRecords
-									console.log 'queryParams: ', @queryParams
-									console.log 'urlParams: ', @urlParams
-									console.log 'bodyParams: ', @bodyParams
+									# console.log 'queryParams: ', @queryParams
+									# console.log 'urlParams: ', @urlParams
+									# console.log 'bodyParams: ', @bodyParams
 									qs = querystring.unescape(querystring.stringify(@queryParams))
-									console.log 'querystring: ', qs
+									# console.log 'querystring: ', qs
 									createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 
 									if key is 'cfs.files.filerecord'
@@ -80,11 +80,11 @@ Meteor.startup ->
 									else
 										createQuery.query.space = @urlParams.spaceId
 
-									console.log 'createQuery: ', createQuery
+									# console.log 'createQuery: ', createQuery
 
 									entities = []
 									if @queryParams.$top isnt '0'
-										console.log visitorParser(createQuery)
+										# console.log visitorParser(createQuery)
 										entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 									scannedCount = collection.find(createQuery.query).count()
 

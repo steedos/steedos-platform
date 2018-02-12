@@ -21,6 +21,29 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
+getObjectName = (collectionName)->
+	return collectionName.replace(/Creator.Collections./, "")
+
+getSimpleSchema = (collectionName)->
+	if collectionName
+		schema = collectionObj(collectionName).simpleSchema()._schema
+		#新增_ids虚拟字段，以实现条记录同时更新
+		schema._ids = 
+			type: String
+			optional: true
+			autoform:
+				type: "hidden"
+		#新增_object_name虚拟字段，以让后台method知道更新哪个表
+		schema._object_name = 
+			type: String
+			optional: true
+			autoform:
+				type: "hidden"
+				defaultValue: ->
+					return getObjectName collectionName
+	return new SimpleSchema(schema)
+
+
 Template.autoformModals.rendered = ->
 
 	self = this;
@@ -102,24 +125,10 @@ Template.autoformModals.events
 		isMultipleChecked = template.$(".ckb-multiple-update").is(":checked")
 		formId = Session.get('cmFormId') or defaultFormId
 		if isMultipleUpdate and isMultipleChecked and targetIds?.length > 1
-			collection = Session.get 'cmCollection'
-			target_ids = targetIds
-			doc = AutoForm.getFormValues(formId).updateDoc
-			object_name = Session.get("object_name")
-			Meteor.call 'af_modal_multiple_update', { target_ids, doc, object_name}, (e)->
-				if e
-					console.error e
-					if e.reason
-						toastr?.error?(t(e.reason))
-					else if e.message
-						toastr?.error?(t(error.message))
-					else
-						toastr?.error?('Sorry, update failed.')
-				else
-					$('#afModal').modal('hide')
-					cmOnSuccessCallback?()
+			template.$("[name=_ids]").val(targetIds.join(","))
 		else
-			$("#"+formId, "#afModal").submit()
+			template.$("[name=_ids]").val(Session.get("cmDoc")._id)
+		template.$("##{formId}").submit()
 
 	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
@@ -226,17 +235,28 @@ helpers =
 
 	cmTargetIds: ()->
 		Session.get('cmTargetIds')
+	
+	schema: ()->
+		cmCollection = Session.get 'cmCollection'
+		return getSimpleSchema cmCollection
 
 	schemaFields: ()->
 		cmCollection = Session.get 'cmCollection'
 		keys = []
 		if cmCollection
-			schema = collectionObj(cmCollection).simpleSchema()._schema
-			firstLevelKeys = collectionObj(cmCollection).simpleSchema()._firstLevelSchemaKeys
-			object_name = cmCollection.replace(/Creator.Collections./, "")
+			schemaInstance = getSimpleSchema(cmCollection)
+			schema = schemaInstance._schema
+			
+			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
+			object_name = getObjectName cmCollection
 			permission_fields = Creator.getFields(object_name)
+			
+			permission_fields.push "_ids"
+			permission_fields.push "_object_name"
+
 			if Session.get 'cmFields'
-				firstLevelKeys = Session.get('cmFields').split(",")
+				firstLevelKeys = Session.get('cmFields').replace(/ /, "")
+				firstLevelKeys = firstLevelKeys.split(",")
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
 			
@@ -303,9 +323,14 @@ Template.afModal.events
 		else
 			title = html
 
+		#新增_ids虚拟字段，以实现条记录同时更新
+		fields = t.data.fields
+		if fields and fields.length
+			fields = _.union(fields.split(","),"_ids","_object_name").join(",")
+
 		Session.set 'cmCollection', t.data.collection
 		Session.set 'cmOperation', t.data.operation
-		Session.set 'cmFields', t.data.fields
+		Session.set 'cmFields', fields
 		Session.set 'cmOmitFields', t.data.omitFields
 		Session.set 'cmButtonHtml', html
 		Session.set 'cmTitle', t.data.title or title
