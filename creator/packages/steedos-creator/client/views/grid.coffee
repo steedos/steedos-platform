@@ -110,6 +110,8 @@ Template.creator_grid.onRendered ->
 				dataField: "_id"
 				width: 60
 				allowSorting: false
+				headerCellTemplate: (container) ->
+					return ""
 				cellTemplate: (container, options) ->
 					container.css("overflow", "visible")
 					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
@@ -541,6 +543,7 @@ Template.creator_grid.onCreated ->
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
+			console.log "creatorCellEditForm==================="
 			dxDataGridInstance.refresh()
 	,true
 
