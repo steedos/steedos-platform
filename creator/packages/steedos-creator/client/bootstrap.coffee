@@ -8,7 +8,7 @@ Meteor.startup ->
 				console.log error
 			else
 				if result.space._id != Session.get("spaceId")
-					Session.set("spaceId", result.space._id)
+					Steedos.setSpaceId(result.space._id)
 				_.each result.objects, (permissions, object_name)->
 					object = Creator.getObject(object_name)
 					unless object
