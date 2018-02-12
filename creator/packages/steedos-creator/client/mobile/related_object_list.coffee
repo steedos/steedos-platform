@@ -92,6 +92,10 @@ Template.relatedObjectList.helpers Creator.helpers
 Template.relatedObjectList.helpers
 	related_object_name: ()->
 		return Template.instance().data.related_object_name
+
+	related_object_label: ()->
+		related_object_name = Template.instance().data.related_object_name
+		return Creator.getObject(related_object_name).label
 	
 	collectionName: ()->
 		related_object_name = Template.instance().data.related_object_name

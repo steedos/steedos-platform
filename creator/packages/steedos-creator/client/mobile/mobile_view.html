@@ -36,12 +36,12 @@
 					<ul class="nav-container">
 						<li class="item" data-index="0">
 							<a role="tab" class="select-detail selected" aria-selected="true" tabindex="0">
-								<span class="">详细信息</span>
+								<span class="">{{_ "creator_detail_info"}}</span>
 							</a>
 						</li>
 						<li class="item" data-index="1">
 							<a role="tab" class="select-related" aria-selected="false" tabindex="-1">
-								<span class="">相关</span>
+								<span class="">{{_ "creator_detail_related"}}</span>
 							</a>
 						</li>
 					</ul>
@@ -151,7 +151,7 @@
 				{{/each}}
 				{{#each related_lists}}
 					{{#if allowCreate this.object_name}}
-						<div class="weui-actionsheet__cell add-related-record">新建{{object_label this.object_name}}</div>
+						<div class="weui-actionsheet__cell add-related-record">{{_ "creator_new"}}{{object_label this.object_name}}</div>
 					{{/if}}
 				{{/each}}
 			</div>

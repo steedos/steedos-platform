@@ -6,11 +6,15 @@ Template.listSwitch.helpers Creator.helpers
 
 Template.listSwitch.helpers
 	list_views: ()->
-		object_name = this.object_name
+		object_name = Template.instance().data.object_name
 		return Creator.getListViews(object_name)
 
+	object_label: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getObject(object_name).label
+
 	custom_list_views: ()->
-		object_name = this.object_name
+		object_name = Template.instance().data.object_name
 		return Creator.Collections.object_listviews.find({object_name: object_name}).fetch()
 
 	getListViewUrl: (list_view_id)->

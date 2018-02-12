@@ -157,6 +157,9 @@ Template.mobileList.helpers
 	allowCreate: ()->
 		object_name = Template.instance().data.object_name
 		return Creator.getPermissions(object_name).allowCreate
+
+	listName: ()->
+		return Template.instance().data.list_view_id
 	
 Template.mobileList.events
 	'click .mobile-list-back': (event, template)->
