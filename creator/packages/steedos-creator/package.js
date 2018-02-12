@@ -46,7 +46,7 @@ Package.onUse(function(api) {
 	api.use('kadira:blaze-layout@2.3.0');
 	api.use('kadira:flow-router@2.10.1');
 
-	api.use('aldeed:autoform-bs-datetimepicker@1.0.7');
+	api.use('steedos:autoform-bs-datetimepicker@1.0.6');
 	api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
 	api.use('steedos:autoform-bs-minicolors@1.0.0');
 
