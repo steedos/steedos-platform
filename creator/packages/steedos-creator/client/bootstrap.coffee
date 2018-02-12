@@ -3,11 +3,14 @@ Creator.isLoadingSpace = new ReactiveVar(true)
 Meteor.startup ->
 	Tracker.autorun ->
 		Creator.isLoadingSpace.set(true)
-		Meteor.call "creator.bootstrap", Session.get("spaceId"), (error, result)->
+		spaceId = Steedos.getSpaceId()
+		unless spaceId
+			return
+		Meteor.call "creator.bootstrap", spaceId, (error, result)->
 			if error or !result
 				console.log error
 			else
-				if result.space._id != Session.get("spaceId")
+				if result.space._id != spaceId
 					Steedos.setSpaceId(result.space._id)
 				_.each result.objects, (permissions, object_name)->
 					object = Creator.getObject(object_name)
