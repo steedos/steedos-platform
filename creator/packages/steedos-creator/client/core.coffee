@@ -42,6 +42,34 @@ if Meteor.isClient
 		object_name = Session.get("object_name")
 		if object_name
 			Creator.TabularSelectedIds[object_name] = []
+	
+	Creator.remainCheckboxState = (container)->
+		# 当Creator.TabularSelectedIds值，把container内的勾选框状态保持住
+		checkboxAll = container.find(".select-all")
+		unless checkboxAll.length
+			return
+		currentDataset = checkboxAll[0]?.dataset
+		currentObjectName = currentDataset.objectName
+
+		selectedIds = Creator.TabularSelectedIds[currentObjectName]
+		unless selectedIds
+			return
+
+		checkboxs = container.find(".select-one")
+		checkboxs.each (index,item)->
+			checked = selectedIds.indexOf(item.dataset.id) > -1
+			$(item).prop("checked",checked)
+
+		selectedLength = selectedIds.length
+		if selectedLength > 0 and checkboxs.length != selectedLength
+			checkboxAll.prop("indeterminate",true)
+		else
+			checkboxAll.prop("indeterminate",false)
+			if selectedLength == 0
+				checkboxAll.prop("checked",false)
+			else if selectedLength == checkboxs.length
+				checkboxAll.prop("checked",true)
+
 
 # 切换工作区时，重置下拉框的选项
 Tracker.autorun ()->

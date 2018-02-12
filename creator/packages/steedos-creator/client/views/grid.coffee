@@ -530,52 +530,23 @@ Template.creator_grid.events
 			if result
 				return
 
-
-remainCheckboxState = ()->
-	self = dxDataGridInstance.$element()
-	# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
-	checkboxAll = self.find(".select-all")
-	unless checkboxAll.length
-		return
-	currentDataset = checkboxAll[0]?.dataset
-	currentObjectName = currentDataset.objectName
-
-	selectedIds = Creator.TabularSelectedIds[currentObjectName]
-	unless selectedIds
-		return
-
-	checkboxs = self.find(".select-one")
-	checkboxs.each (index,item)->
-		checked = selectedIds.indexOf(item.dataset.id) > -1
-		$(item).prop("checked",checked)
-
-	selectedLength = selectedIds.length
-	if selectedLength > 0 and checkboxs.length != selectedLength
-		checkboxAll.prop("indeterminate",true)
-	else
-		checkboxAll.prop("indeterminate",false)
-		if selectedLength == 0
-			checkboxAll.prop("checked",false)
-		else if selectedLength == checkboxs.length
-			checkboxAll.prop("checked",true)
-
 Template.creator_grid.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
 			# 在最近查看列表中添加记录会重新执行onRendered中的autorun，所以不需要再次刷新数据
 			if Session.get("list_view_id") != "recent"
 				dxDataGridInstance.refresh().done (result)->
-					remainCheckboxState()
+					Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh().done (result)->
-				remainCheckboxState()
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh().done (result)->
-				remainCheckboxState()
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 
 Template.creator_grid.onDestroyed ->

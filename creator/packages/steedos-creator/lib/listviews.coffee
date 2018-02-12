@@ -181,30 +181,7 @@ Creator.initListViews = (object_name)->
 
 			# 当数据库数据变化时会重新生成datatable，需要重新把勾选框状态保持住
 			Tracker.nonreactive ->
-				checkboxAll = self.find(".select-all")
-				unless checkboxAll.length
-					return
-				currentDataset = checkboxAll[0]?.dataset
-				currentObjectName = currentDataset.objectName
-
-				selectedIds = Creator.TabularSelectedIds[currentObjectName]
-				unless selectedIds
-					return
-
-				checkboxs = self.find(".select-one")
-				checkboxs.each (index,item)->
-					checked = selectedIds.indexOf(item.dataset.id) > -1
-					$(item).prop("checked",checked)
-
-				selectedLength = selectedIds.length
-				if selectedLength > 0 and checkboxs.length != selectedLength
-					checkboxAll.prop("indeterminate",true)
-				else
-					checkboxAll.prop("indeterminate",false)
-					if selectedLength == 0
-						checkboxAll.prop("checked",false)
-					else if selectedLength == checkboxs.length
-						checkboxAll.prop("checked",true)
+				Creator.remainCheckboxState(self)
 
 		dom: "tp"
 		extraFields: extra_columns
