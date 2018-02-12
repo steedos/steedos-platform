@@ -113,7 +113,7 @@ API
 - 可以为具体字段指定权限。
 
 ### list_views 列表
-用于定义Object的列表显示样式
+用于定义Object的列表显示样式，至少包含一个除default之外的视图
 - list_views.default.columns用于定义各列表中默认显示的列
 - 可在objects中定义多个list_view
 - 未来允许用户自己配置list_view，保存在数据库中
@@ -150,6 +150,7 @@ API
   - this.object_name
   - this.object
   - this.action
+- action.sort 排序号，显示时，按照从小到达顺序排列。编辑action的sort默认为0
 实例
 - actions
   - "export":

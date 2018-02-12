@@ -245,7 +245,7 @@ Creator.getActions = (object_name, spaceId, userId)->
 	obj = Creator.getObject(object_name)
 	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	permission_actions = permissions.actions
-	actions = _.values(obj.actions) 
+	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
 	if permission_actions
 		actions = _.filter actions, (action)->

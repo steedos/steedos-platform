@@ -109,6 +109,7 @@ Creator.baseObject =
 
 		standard_edit:
 			label: "编辑"
+			sort: 0
 			visible: (object_name, record_id, record_permissions)->
 				if record_permissions
 					return record_permissions["allowEdit"]
