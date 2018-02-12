@@ -100,9 +100,14 @@ objectRoutes.route '/:record_id/:related_object_name/list',
 		record_id = FlowRouter.getParam("record_id")
 		related_object_name = FlowRouter.getParam("related_object_name")
 		data = {app_id: app_id, object_name: object_name, record_id: record_id, related_object_name: related_object_name}
-		if Steedos.isMobile() and $("#related_object_list_#{related_object_name}").length == 0
-			Meteor.defer ->
-				Blaze.renderWithData(Template.relatedObjectList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+		if Steedos.isMobile()
+			if $("#related_object_list_#{related_object_name}").length == 0
+				Meteor.defer ->
+					Blaze.renderWithData(Template.relatedObjectList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+		else
+			Session.set 'related_object_name', related_object_name
+			BlazeLayout.render Creator.getLayout(),
+				main: "related_object_list"
 
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->

@@ -1,0 +1,49 @@
+<template name="related_object_list">
+
+	<div class="steedos-brand-band slds-brand-band_medium related_object_list">
+		<div class="slds-template__container">
+			<div class="test-listViewManager slds-grid slds-grid--vertical">
+				<div class="slds-page-header">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="account"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span></span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">{{related_object_label}}</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="slds-grid table-grid-content">
+					<div class="slds-tabs_default creator-view-tabs_default" style="padding: 15px;">
+						<div id="gridContainer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

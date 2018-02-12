@@ -242,6 +242,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/filter_option.coffee', 'client');
 	api.addFiles('client/views/filter_option.less', 'client');
 
+	api.addFiles('client/views/related_object_list.html', 'client');
+	api.addFiles('client/views/related_object_list.coffee', 'client');
+	api.addFiles('client/views/related_object_list.less', 'client');
+
 	api.addFiles('client/views/select_fields.html', 'client');
 	api.addFiles('client/views/select_fields.coffee', 'client');
 	api.addFiles('client/views/select_fields.less', 'client');
