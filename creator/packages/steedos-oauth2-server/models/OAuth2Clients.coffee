@@ -1,5 +1,3 @@
-# import { Random } from 'meteor/random'
-
 Creator.Objects.OAuth2Clients = 
 	name: "OAuth2Clients"
 	icon: "entity"
@@ -20,17 +18,22 @@ Creator.Objects.OAuth2Clients =
 			label:"回调URL"
 			is_wide:true
 			required:true
+		clientId:
+			type:"text"
+			label:"客户端ID"
+			is_wide:true
+			required:true
+			readonly:true
+			defaultValue: ()->
+				return Random.id()
 		clientSecret:
 			type:"text"
 			label:"Secret"
 			is_wide:true
 			required:true
-		spaceId:
-			type:"lookup"
-			label:"工作区"
-			reference_to: "spaces"
-			is_wide:true
-			required:true
+			readonly:true
+			defaultValue: ()->
+				return Random.secret()
 		
 	list_views:
 		default:

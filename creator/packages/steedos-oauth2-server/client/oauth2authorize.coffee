@@ -1,5 +1,8 @@
 @OAuth2 = {}
 
+Template.loginAuthorize.onRendered ->
+	$("body").removeClass("loading");
+
 Template.loginAuthorize.events
 	'click button#oauth2login':()->
 		OAuth2.getOAuth2Code()
@@ -35,5 +38,6 @@ OAuth2.getOAuth2Code = ()->
 			if result
 				# 获取到授权码，跳转链接：redirect_uri + code=授权码参数
 				# 第三方应用根据code，再调用接口获取token
+				# console.log result
 				window.location = result?.redirectToUri
 	)

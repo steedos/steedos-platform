@@ -36,6 +36,8 @@ Package.onUse(function(api) {
 
 	api.addFiles('models/OAuth2Clients.coffee');
 
+	// api.addFiles('lib/random.coffee', ['client', 'server']);
+
 	api.addFiles('lib/common.js', ['client', 'server']);
 	api.addFiles('lib/meteor-model.js', 'server');
 	api.addFiles('lib/server.js', 'server');
@@ -52,8 +54,11 @@ Package.onUse(function(api) {
 	api.addFiles('client/router.coffee', 'client');
 	
 	api.addFiles('server/rest.coffee', 'server');
-
+	api.addFiles('server/rest.coffee', 'server');
+	
 	api.export('oAuth2Server', ['client', 'server']);
+
+	api.export('Random', ['client', 'server']);
 	
 });
 
