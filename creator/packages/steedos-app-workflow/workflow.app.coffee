@@ -3,5 +3,5 @@ Creator.Apps.workflow =
 	name: "Workflow"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "task" 
-	visible: false
-	objects: ["instances"]
+	visible: true
+	objects: ["flows", "instances"]
