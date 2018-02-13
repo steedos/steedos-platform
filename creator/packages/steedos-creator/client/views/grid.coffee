@@ -140,6 +140,8 @@ Template.creator_grid.onRendered ->
 					select: selectColumns
 					filter: filter
 				columns: showColumns
+				onContentReady: (e)->
+					self.recordsTotal.set dxDataGridInstance.totalCount()
 
 			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 
@@ -147,80 +149,8 @@ Template.creator_grid.helpers Creator.helpers
 
 Template.creator_grid.helpers
 
-	tabular_table: ()->
-		return Creator.getTable(Session.get("object_name"))
-
-	hasPermission: (permissionName)->
-		permissions = Creator.getPermissions()
-		if permissions
-			return permissions[permissionName]
-
-	selector: ()->
-		object_name = Session.get("object_name")
-		list_view = Creator.getListView(object_name, Session.get("list_view_id"))
-		selector = {}
-		custom_list_view = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
-		if custom_list_view
-			filters = custom_list_view.filters
-			filter_scope = custom_list_view.filter_scope
-			if filter_scope == "space"
-				selector.space = Session.get("spaceId")
-			else if filter_scope == "mine"
-				selector.space = Session.get("spaceId")
-				selector.owner = Meteor.userId()
-
-			if filters and filters.length > 0
-				filters = _.map filters, (obj)->
-					return [obj.field, obj.operation, obj.value]
-				
-				filters = Creator.formatFiltersToMongo(filters)
-				selector["$and"] = filters
-			return selector
-		if Session.get("spaceId") and Meteor.userId()
-			if list_view.filter_scope == "spacex"
-				selector.space = 
-					$in: [null,Session.get("spaceId")]
-			else if object_name == "users"
-				selector._id = Meteor.userId()
-			else if object_name == "spaces"
-				selector._id = Session.get("spaceId")
-			else
-				selector.space = Session.get("spaceId")
-			if Session.get("list_view_id") == "recent"
-				viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
-				record_ids = _.pluck(viewed, "record_id")
-				if record_ids.length == 0
-					record_ids = ["nothing"]
-				selector._id = 
-					"$in": record_ids
-			if list_view.filters
-				try 
-					filters = Creator.formatFiltersToMongo(list_view.filters)
-					_.each filters, (filter)->
-						selector = _.extend selector, filter
-					
-					if list_view.filter_scope == "mine"
-						selector.owner = Meteor.userId()
-					return selector
-				catch e
-					console.log e
-					return
-			else
-				permissions = Creator.getPermissions()
-				if permissions.viewAllRecords 
-					if list_view.filter_scope == "mine"
-						selector.owner = Meteor.userId()
-					return selector
-				else if permissions.allowRead
-					selector.owner = Meteor.userId()
-					return selector
-		return {_id: "nothing"}
-
-
-	itemCount: ()->
-		collection = Session.get("object_name")
-		info = Tabular.tableRecords.findOne("creator_" + collection)
-		return info?.recordsTotal
+	recordsTotal: ()->
+		return Template.instance().recordsTotal.get()
 
 	list_view_id: ()->
 		return Session.get("list_view_id")
@@ -455,6 +385,7 @@ Template.creator_grid.events
 				return
 
 Template.creator_grid.onCreated ->
+	this.recordsTotal = new ReactiveVar(0)
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
 			# 在最近查看列表中添加记录会重新执行onRendered中的autorun，所以不需要再次刷新数据
