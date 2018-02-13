@@ -4,6 +4,7 @@ accounts-ui@1.1.9
 accounts-ui-unstyled@1.2.1
 ajduke:bootstrap-tagsinput@0.7.1
 aldeed:autoform@5.8.1
+aldeed:autoform-bs-datetimepicker@1.0.7
 aldeed:autoform-select2@1.0.5
 aldeed:collection2@2.10.0
 aldeed:collection2-core@1.2.0
