@@ -144,13 +144,6 @@ Template.creator_list.helpers
 				return true
 
 Template.creator_list.events
-	# 'click .table-creator tr': (event) ->
-	# 	dataTable = $(event.target).closest('table').DataTable();
-	# 	rowData = dataTable.row(event.currentTarget).data()
-	# 	if rowData
-	# 		Session.set 'cmDoc', rowData
-	# 		# $('.btn.creator-edit').click();
-	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
 
 	'click .list-action-custom': (event) ->
 		objectName = Session.get("object_name")

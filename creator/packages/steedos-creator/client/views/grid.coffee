@@ -115,7 +115,8 @@ Template.creator_grid.onRendered ->
 				cellTemplate: (container, options) ->
 					container.css("overflow", "visible")
 					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
-					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
+					actionsOption = {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}
+					Blaze.renderWithData Template.creator_table_actions, actionsOption, container[0]
 			showColumns.splice 0, 0, 
 				dataField: "_id"
 				width: 80
@@ -324,7 +325,7 @@ Template.creator_grid.events
 		action = object.actions[actionKey]
 		collection_name = object.label
 		if action.todo == "standard_delete"
-			action_record_title = template.$(".grid-item-link-"+ recordId).attr("title")
+			action_record_title = template.$(".list-item-link-"+ recordId).attr("title")
 			swal
 				title: "删除#{object.label}"
 				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"

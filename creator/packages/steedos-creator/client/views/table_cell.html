@@ -3,7 +3,7 @@
 		<span class="slds-truncate fulltext" >
 		{{#each cellData}}
 			{{#if href}}
-				<a href="{{href}}" title="{{value}}">{{value}}</a>
+				<a href="{{href}}" title="{{value}}" class = "list-item-link-{{id}}">{{value}}</a>
 			{{else}}
 				<span title="{{value}}">{{{value}}}</span>
 			{{/if}}

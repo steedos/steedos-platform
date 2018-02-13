@@ -66,7 +66,7 @@ Template.creator_table_cell.helpers
 				values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort})
 				values.forEach (v)->
 					href = Creator.getObjectUrl(reference_to, v._id)
-					data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href}
+					data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
 			catch e
 				console.error(reference_to, e)
 				return
@@ -105,7 +105,7 @@ Template.creator_table_cell.helpers
 			if this.parent_view != 'record_details' && this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
 
-			data.push({value: val, href: href})
+			data.push({value: val, href: href, id: this._id})
 
 		return data;
 
