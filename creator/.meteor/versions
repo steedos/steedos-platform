@@ -4,7 +4,6 @@ accounts-ui@1.1.9
 accounts-ui-unstyled@1.2.1
 ajduke:bootstrap-tagsinput@0.7.1
 aldeed:autoform@5.8.1
-aldeed:autoform-bs-datetimepicker@1.0.7
 aldeed:autoform-select2@1.0.5
 aldeed:collection2@2.10.0
 aldeed:collection2-core@1.2.0
@@ -139,6 +138,7 @@ steedos:app-example@0.0.1
 steedos:app-informations@0.0.2
 steedos:app-workflow@0.0.1
 steedos:autoform@0.0.10
+steedos:autoform-bs-datetimepicker@1.0.6
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_1
 steedos:autoform-lookup@0.3.10

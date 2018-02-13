@@ -200,6 +200,13 @@ Template.creator_view.helpers
 	isFileDetail: ()->
 		return "cms_files" == Session.get "object_name"
 
+	related_object_url: ()->
+		object_name = Session.get "object_name"
+		record_id = Session.get "record_id"
+		app_id = Session.get "app_id"
+		related_object_name = this.object_name
+		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
+
 
 Template.creator_view.events
 
