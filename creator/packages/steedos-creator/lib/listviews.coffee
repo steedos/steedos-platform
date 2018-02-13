@@ -102,8 +102,8 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 			className: "slds-cell-edit cellContainer tabular-col-checkbox #{objectColName}"
 			orderable: false
 			createdCell: (node, cellData, rowData) ->
-				$(node).attr("data-label", "Checkbox")
-				$(node).html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node)
+				$(node).attr("data-label", "Checkbox").empty()
+				Blaze.renderWithData Template.creator_table_checkbox, {_id: cellData, object_name: object_name}, node
 		cols.splice(0, 0, checkbox_col)
 	
 	return cols
@@ -153,7 +153,8 @@ Creator.initListViews = (object_name)->
 		headerCallback: ( thead, data, start, end, display )->
 			firstTh = $(thead).find('th').eq(0)
 			if firstTh.hasClass("tabular-col-checkbox")
-				firstTh.css("width","32px").html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name})
+				firstTh.css("width","32px")
+				Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, firstTh[0]
 
 		drawCallback:(settings)->
 			self = this

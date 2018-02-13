@@ -225,43 +225,6 @@ Template.creator_list.events
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
 
-	'change .slds-table .select-one': (event, template)->
-		currentDataset = event.currentTarget.dataset
-		currentId = currentDataset.id
-		currentObjectName = currentDataset.objectName
-		
-		currentIndex = Creator.TabularSelectedIds[currentObjectName].indexOf currentId
-		if $(event.currentTarget).is(":checked")
-			if currentIndex < 0
-				Creator.TabularSelectedIds[currentObjectName].push currentId
-		else
-			unless currentIndex < 0
-				Creator.TabularSelectedIds[currentObjectName].splice(currentIndex, 1)
-
-		checkboxs = template.$(".select-one")
-		checkboxAll = template.$(".select-all")
-		selectedLength = Creator.TabularSelectedIds[currentObjectName].length
-		if selectedLength > 0 and checkboxs.length != selectedLength
-			checkboxAll.prop("indeterminate",true)
-		else
-			checkboxAll.prop("indeterminate",false)
-			if selectedLength == 0
-				checkboxAll.prop("checked",false)
-			else if selectedLength == checkboxs.length
-				checkboxAll.prop("checked",true)
-
-	'change .slds-table .select-all': (event, template)->
-		currentDataset = event.currentTarget.dataset
-		currentObjectName = currentDataset.objectName
-		isSelectedAll = $(event.currentTarget).is(":checked")
-		checkboxs = template.$(".select-one")
-		if isSelectedAll
-			checkboxs.each (i,n)->
-				Creator.TabularSelectedIds[currentObjectName].push n.dataset.id
-		else
-			Creator.TabularSelectedIds[currentObjectName] = []
-		checkboxs.prop("checked",isSelectedAll)
-
 	'click .slds-table td': (event, template)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")

@@ -121,9 +121,9 @@ Template.creator_grid.onRendered ->
 				width: 80
 				allowSorting: false
 				headerCellTemplate: (container) ->
-					container.html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, container)
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, container[0]
 				cellTemplate: (container, options) ->
-					container.html(Blaze.toHTMLWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: object_name}, container)
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: object_name}, container[0]
 
 			dxOptions = 
 				dataSource: 
@@ -283,13 +283,6 @@ Template.creator_grid.helpers
 				return true
 
 Template.creator_grid.events
-	# 'click .table-creator tr': (event) ->
-	# 	dataTable = $(event.target).closest('table').DataTable();
-	# 	rowData = dataTable.row(event.currentTarget).data()
-	# 	if rowData
-	# 		Session.set 'cmDoc', rowData
-	# 		# $('.btn.creator-edit').click();
-	# 		FlowRouter.go "/creator/app/" + FlowRouter.getParam("object_name") + "/view/" + rowData._id
 
 	'click .list-action-custom': (event) ->
 		objectName = Session.get("object_name")
@@ -381,79 +374,9 @@ Template.creator_grid.events
 	'dblclick .slds-table td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
 
-	'change .slds-table .select-one': (event, template)->
-		currentDataset = event.currentTarget.dataset
-		currentId = currentDataset.id
-		currentObjectName = currentDataset.objectName
-		
-		currentIndex = Creator.TabularSelectedIds[currentObjectName].indexOf currentId
-		if $(event.currentTarget).is(":checked")
-			if currentIndex < 0
-				Creator.TabularSelectedIds[currentObjectName].push currentId
-		else
-			unless currentIndex < 0
-				Creator.TabularSelectedIds[currentObjectName].splice(currentIndex, 1)
-
-		checkboxs = template.$(".select-one")
-		checkboxAll = template.$(".select-all")
-		selectedLength = Creator.TabularSelectedIds[currentObjectName].length
-		if selectedLength > 0 and checkboxs.length != selectedLength
-			checkboxAll.prop("indeterminate",true)
-		else
-			checkboxAll.prop("indeterminate",false)
-			if selectedLength == 0
-				checkboxAll.prop("checked",false)
-			else if selectedLength == checkboxs.length
-				checkboxAll.prop("checked",true)
-
-	'change .slds-table .select-all': (event, template)->
-		currentDataset = event.currentTarget.dataset
-		currentObjectName = currentDataset.objectName
-		isSelectedAll = $(event.currentTarget).is(":checked")
-		checkboxs = template.$(".select-one")
-		if isSelectedAll
-			checkboxs.each (i,n)->
-				Creator.TabularSelectedIds[currentObjectName].push n.dataset.id
-		else
-			Creator.TabularSelectedIds[currentObjectName] = []
-		checkboxs.prop("checked",isSelectedAll)
-
 	'click .slds-table td': (event, template)->
 		$(".slds-table td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
-
-	# 'scroll .list-table-container > div': (event, template)->
-	# 	scrollLeft = $(event.currentTarget).scrollLeft()
-	# 	$("table.slds-table thead th", event.currentTarget).each ->
-	# 		$(".slds-th__action", this).css("transform", "translate3d(-#{scrollLeft}px, 0px, 0px)")
-
-	# 	$(".JCLRgrips .JCLRgrip", event.currentTarget).each ->
-	# 		left = parseInt $(this).data().left
-	# 		$(this).data("leftOffset", scrollLeft);
-	# 		$(this).css("left", "#{left - scrollLeft}px")
-
-	'mouseenter .list-table-container': (event, template)->
-		$("table.slds-table", event.currentTarget).colResizable
-			liveDrag: false
-			gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 0px;right: 2px;position:  relative;opacity: 0;'></div>"
-			resizeMode:'overflow'
-			draggingClass: "dragging"
-			disabledColumns: [0]
-			onResize: ()->
-				column_width = {}
-				$(".list-table-container table.slds-table thead th").each ->
-					field = $("> a", $(this)).attr("aria-label");
-					width = $(this).css("width")
-					if field
-						column_width[field] = width
-				object_name = Session.get("object_name")
-				list_view_id = Session.get("list_view_id")
-
-				Meteor.call "tabular_column_width_settings", object_name, list_view_id, column_width, (error, result) -> 
-					if error 
-						console.log "error", error 
-					if result
-						return
 
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")
