@@ -36,7 +36,7 @@ aldeed:collection2
 aldeed:simple-schema
 aldeed:autoform
 steedos:autoform-bs-datetimepicker
-tsega:bootstrap3-datetimepicker@=3.1.3_3
+tsega:bootstrap3-datetimepicker@4.17.37
 steedos:autoform-modals
 steedos:autoform-bs-minicolors
 steedos:autoform-file

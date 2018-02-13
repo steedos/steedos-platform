@@ -47,7 +47,7 @@ Package.onUse(function(api) {
 	api.use('kadira:flow-router@2.10.1');
 
 	api.use('steedos:autoform-bs-datetimepicker@1.0.6');
-	api.use('tsega:bootstrap3-datetimepicker@=4.17.37');
+	api.use('tsega:bootstrap3-datetimepicker@4.17.37');
 	api.use('steedos:autoform-bs-minicolors@1.0.0');
 
 	api.use('meteorhacks:ssr@2.2.0');
