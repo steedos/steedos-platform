@@ -7,20 +7,14 @@
 					<div class="slds-grid">
 						<div class="slds-col slds-has-flexi-truncate">
 							<div class="slds-media slds-no-space slds-grow">
-								<div class="slds-media__figure">
-									<span class="slds-icon_container">
-										<div class="slds-icon crm-header-icon">
-											<span class="uiImage">
-												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="account"}}
-											</span>
-										</div>
-									</span>
-								</div>
 								<div class="slds-media__body">
-									<nav>
-										<ol class="slds-breadcrumb slds-line-height_reset">
-											<li class="slds-breadcrumb__item crm-breadcrumb-item">
-												<span></span>
+									<nav role="navigation" aria-label="Breadcrumbs">
+										<ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+											<li class="slds-breadcrumb__item slds-text-title_caps">
+												<a href="{{record_url}}">{{object_label}}</a>
+											</li>
+											<li class="slds-breadcrumb__item slds-text-title_caps">
+												<a href="{{record_url}}">{{record_name}}</a>
 											</li>
 										</ol>
 									</nav>
@@ -32,8 +26,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
-							
+						<div class="slds-col slds-no-flex slds-grid slds-align-middle">
+							{{#if allow_create}}
+								<div class="slds-button slds-button--neutral slds-truncate add-related-record">
+									<a title="新建" class="">
+										<div class="slds-truncate" title="新建">新建</div>
+									</a>
+								</div>
+							{{/if}}
 						</div>
 					</div>
 				</div>
