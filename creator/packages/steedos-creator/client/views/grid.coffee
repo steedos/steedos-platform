@@ -152,9 +152,6 @@ Template.creator_grid.helpers
 	recordsTotal: ()->
 		return Template.instance().recordsTotal.get()
 
-	list_view_id: ()->
-		return Session.get("list_view_id")
-
 	list_views: ()->
 		return Creator.getListViews()
 
@@ -166,12 +163,6 @@ Template.creator_grid.helpers
 		if list_view?.name != Session.get("list_view_id") and !list_view?._id
 			Session.set("list_view_id", list_view.name)
 		return list_view
-
-	list_view_visible: ()->
-		return Session.get("list_view_visible") and Creator.subs["TabularSetting"].ready()
-
-	doc: ()->
-		return Session.get("action_record_id")
 
 	actions: ()->
 		actions = Creator.getActions()
