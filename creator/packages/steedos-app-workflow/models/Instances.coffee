@@ -11,6 +11,10 @@ Creator.Objects.instances =
 			required: true
 			searchable:true
 			#index:true
+		flow:
+			type: "master_detail"
+			reference_to: "flows"
+			readonly: true
 		applicant:
 			type: "lookup",
 			reference_to: "users"

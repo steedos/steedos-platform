@@ -12,5 +12,6 @@ Package.onUse(function(api) {
 	api.use('coffeescript@1.11.1_4');
 	api.addFiles('workflow.app.coffee');
 	api.addFiles('models/Instances.coffee');
+	api.addFiles('models/forms.coffee');
 	api.addFiles('models/flows.coffee');
 })
