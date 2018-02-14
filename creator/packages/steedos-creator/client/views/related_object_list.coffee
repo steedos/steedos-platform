@@ -40,8 +40,19 @@ _fields = (related_object_name)->
 
 _columns = (related_object_name)->
 	columns = _fields(related_object_name)
-	return columns.map (column)->
-		return {dataField: column, caption: column}
+	object = Creator.getObject(related_object_name)
+	return columns.map (n,i)->
+		columnItem = 
+			dataField: n
+			cellTemplate: (container, options) ->
+				field = object.fields[n]
+				field_name = n
+				if /\w+\.\$\.\w+/g.test(field_name)
+					# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+					field_name = n.replace(/\$\./,"")
+				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:related_object_name}
+				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+		return columnItem
 
 Template.related_object_list.onRendered ->
 	self = this
@@ -62,8 +73,8 @@ Template.related_object_list.onRendered ->
 					return ""
 				cellTemplate: (container, options) ->
 					container.css("overflow", "visible")
-					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
-					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}, container)
+					record_permissions = Creator.getRecordPermissions related_object_name, options.data, Meteor.userId()
+					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: related_object_name, record_permissions: record_permissions, is_related: false}, container)
 			self.$("#gridContainer").dxDataGrid({
 				dataSource: {
 					store: {
@@ -112,7 +123,7 @@ Template.related_object_list.helpers
 		return Creator.getPermissions(related_object_name).allowCreate
 
 Template.related_object_list.events
-	"click .add-related-record": (event)->
+	"click .add-related-record": (event, template)->
 		related_object_name = Session.get "related_object_name"
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
@@ -125,6 +136,38 @@ Template.related_object_list.events
 		Session.set "action_collection_name", action_collection_name
 		Meteor.defer ->
 			$(".creator-add").click()
+
+	"click .list-item-action": (event, template)->
+		actionKey = event.currentTarget.dataset.actionKey
+		objectName = event.currentTarget.dataset.objectName
+		recordId = event.currentTarget.dataset.recordId
+		object = Creator.getObject(objectName)
+		action = object.actions[actionKey]
+		collection_name = object.label
+		if action.todo == "standard_delete"
+			action_record_title = template.$(".list-item-link-"+ recordId).attr("title")
+			swal
+				title: "删除#{object.label}"
+				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
+				html: true
+				showCancelButton:true
+				confirmButtonText: t('Delete')
+				cancelButtonText: t('Cancel')
+				(option) ->
+					if option
+						Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
+							if error
+								toastr.error error.reason
+							else
+								info = object.label + "\"#{action_record_title}\"" + "已删除"
+								toastr.success info
+								dxDataGridInstance.refresh()
+		else
+			Session.set("action_fields", undefined)
+			Session.set("action_collection", "Creator.Collections.#{objectName}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", true)
+			Creator.executeAction objectName, action, recordId
 
 
 Template.related_object_list.onCreated ->
