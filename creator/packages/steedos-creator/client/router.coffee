@@ -138,7 +138,7 @@ FlowRouter.route '/app/:app_id/:object_name/list',
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_list"
 
-FlowRouter.route '/app/:app_id/:object_name/grid',
+FlowRouter.route '/app/:app_id/:object_name/:template/',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
 		if Session.get("object_name") != FlowRouter.getParam("object_name")
@@ -148,5 +148,6 @@ FlowRouter.route '/app/:app_id/:object_name/grid',
 		Session.set("list_view_visible", false)
 		Tracker.afterFlush ()->
 			Session.set("list_view_visible", true)
+		
 		BlazeLayout.render Creator.getLayout(),
-			main: "creator_grid"
+			main: "creator_list_wrap"

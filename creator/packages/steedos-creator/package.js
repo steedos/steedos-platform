@@ -207,6 +207,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 
+	api.addFiles('client/views/list_wrapper.html', 'client');
+	api.addFiles('client/views/list_wrapper.coffee', 'client');
+	api.addFiles('client/views/list_wrapper.less', 'client');
 	api.addFiles('client/views/grid.html', 'client');
 	api.addFiles('client/views/grid.coffee', 'client');
 	api.addFiles('client/views/grid.less', 'client');
