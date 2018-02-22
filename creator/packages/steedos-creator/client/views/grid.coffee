@@ -204,11 +204,11 @@ Template.creator_grid.events
 			Meteor.defer ()->
 				$(".btn.creator-cell-edit").click()
 
-	'dblclick .slds-table td': (event) ->
+	'dblclick td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
 
-	'click .slds-table td': (event, template)->
-		$(".slds-table td").removeClass("slds-has-focus")
+	'click td': (event, template)->
+		template.$("td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
 Template.creator_grid.onCreated ->

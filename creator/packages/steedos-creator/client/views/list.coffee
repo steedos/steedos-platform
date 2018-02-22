@@ -120,11 +120,11 @@ Template.creator_list.events
 			Meteor.defer ()->
 				$(".btn.creator-cell-edit").click()
 
-	'dblclick .slds-table td': (event) ->
+	'dblclick td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
 
-	'click .slds-table td': (event, template)->
-		$(".slds-table td").removeClass("slds-has-focus")
+	'click td': (event, template)->
+		template.$("td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
 	# 'scroll .list-table-container > div': (event, template)->
@@ -146,7 +146,7 @@ Template.creator_list.events
 			disabledColumns: [0]
 			onResize: ()->
 				column_width = {}
-				$(".list-table-container table.slds-table thead th").each ->
+				template.$("table.slds-table thead th").each ->
 					field = $("> a", $(this)).attr("aria-label");
 					width = $(this).css("width")
 					if field
