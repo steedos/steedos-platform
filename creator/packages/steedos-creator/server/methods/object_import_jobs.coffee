@@ -28,7 +28,7 @@ converteInt = (field_name, dataCell,jsonObj)->
 converterSelect = (objectName,field_name, dataCell,jsonObj)->
 	select_error = ""
 	fields = Creator.getObject(objectName).fields
-	allowedValues = fields[field_name]?.allowedValues
+	allowedValues = fields[field_name]?.allowedValues || []
 	if allowedValues.indexOf(dataCell) >= 0
 		jsonObj[field_name] = dataCell
 	else
@@ -55,7 +55,7 @@ converterBool = (field_name, dataCell,jsonObj)->
 	else 
 		bool_error = "#{dataCell}不是bool类型数据"
 	return bool_error
-insertRow = (dataRow,objectName,field_mapping)->
+insertRow = (dataRow,objectName,field_mapping,space)->
 	jsonObj = {}
 	insertInfo = {}
 	errorInfo = ""
@@ -88,8 +88,10 @@ insertRow = (dataRow,objectName,field_mapping)->
 			errorInfo = errorInfo + "," + error
 	insertInfo["insertState"] = true
 	if jsonObj
+		jsonObj.space = space
 		Creator.Collections[objectName].insert(jsonObj,(error,result)->
 			if error
+				console.log error
 				insertInfo["insertState"] = false
 				)
 	else
@@ -97,21 +99,19 @@ insertRow = (dataRow,objectName,field_mapping)->
 	insertInfo["errorInfo"] = errorInfo
 	return insertInfo
 
-importObject = (importObj) ->
+importObject = (importObj,space) ->
 	# 错误的数据
 	errorList = []
 
 	# 需要导入的对象名
 	objectName = importObj?.object_name
-
 	field_mapping = importObj?.field_mapping
 	dataStr = importObj?.import_file
-	console.log dataStr
 	dataTable = dataStr.split("\n")
 	# # 读取文件
 	# filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
 
-	# fileName = importObj?._id + "-no.csv"
+	  # fileName = importObj?._id + "-no.csv"
 
 	# fileAddress = path.join filePath, fileName
 
@@ -127,7 +127,7 @@ importObject = (importObj) ->
 	dataTable.forEach (dataRow)->
 		if dataRow
 			# 插入一行数据
-			insertInfo = insertRow dataRow,objectName,field_mapping
+			insertInfo = insertRow dataRow,objectName,field_mapping,space
 			if insertInfo
 				# 存到数据库 error字段
 				if insertInfo?.errorInfo
@@ -160,12 +160,12 @@ Creator.readCSV = ()->
 # 启动导入Jobs
 # Creator.startImportJobs()
 Meteor.methods
-	startImportJobs:(importObj) ->
+	startImportJobs:(importObj,space) ->
 		# collection = Creator.Collections["queue_import"]
 		# importList = collection.find({"status":"waitting"}).fetch()
 		# importList.forEach (importObj)->
 		# 	# 根据recordObj提供的对象名，逐个文件导入
 		starttime = new Date()
-		importObject importObj
+		importObject importObj,space
 		endtime = new Date()
 		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})

@@ -39,7 +39,6 @@ Creator.Objects.queue_import =
 			options:[
 				{label:'逗号',value:','}
 			]
-			required: true
 			omit:true
 		field_mapping: 
 			label: "映射关系"
@@ -93,12 +92,12 @@ Creator.Objects.queue_import =
 			label: "待执行"
 			columns: ["import_file","object_name","encoding","field_mapping","created"]
 			filter_scope: "space"
-			filters: [["state", "$eq", "waitting"]]
+			filters: [["state", "=", "waitting"]]
 		finished:
 			label: "已完成"
 			columns: ["object_name","encoding","field_mapping","start_time","success_count","failure_count","error"]
 			filter_scope: "space"
-			filters: [["state", "$eq", "finished"]]
+			filters: [["state", "=", "finished"]]
 	permission_set:
 		user:
 			allowCreate: false
@@ -119,8 +118,9 @@ Creator.Objects.queue_import =
 			on: "client"
 			when: "before.insert"
 			todo: (userId, doc)->
-				obj = Creator.getObject()
+				#obj = Creator.getObject()
 				doc.state = "waitting"
+				console.log doc
 	actions:
 		import:
 			label: "执行导入"
@@ -129,9 +129,9 @@ Creator.Objects.queue_import =
 			todo:(object_name, record_id, fields)->
 				if Session.get("list_view_id") == "waitting"
 					importObj = Creator.Collections["queue_import"].findOne({_id:record_id})
-					Meteor.call 'startImportJobs',importObj
+					space = Session.get("spaceId")
+					Meteor.call 'startImportJobs',importObj,space
 					importInfo = Creator.Collections["queue_import"].findOne({_id:record_id},{fields:{total_count:1,success_count:1}})
-					console.log 
 					text = "导入完成详细信息请在已完成视图下查看。"
 					swal(text)
 				else
