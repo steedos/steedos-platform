@@ -1,40 +1,79 @@
 dxDataGridInstance = null
 
+_fields = (related_object_name)->
+	related_object = Creator.getObject(related_object)
+	name_field_key = related_object.NAME_FIELD_KEY
+	fields = [name_field_key]
+	if related_object.list_views?.default?.columns
+		fields = related_object.list_views.default.columns
+
+	return fields
+
+_columns = (related_object_name)->
+	columns = _fields(related_object_name)
+	object = Creator.getObject(related_object_name)
+	return columns.map (n,i)->
+		columnItem = 
+			dataField: n
+			cellTemplate: (container, options) ->
+				field = object.fields[n]
+				field_name = n
+				if /\w+\.\$\.\w+/g.test(field_name)
+					# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+					field_name = n.replace(/\$\./,"")
+				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:related_object_name}
+				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+		return columnItem
+
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
+		is_related = self.data.is_related
+		console.log "is_related=========1:", is_related
 		object_name = Session.get("object_name")
+		related_object_name = Session.get("related_object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 		list_view_id = Session.get("list_view_id")
-		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready()
-			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
-			filter = Creator.getODataFilter(list_view_id, object_name)
+		record_id = Session.get("record_id")
+		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready())
+			if is_related
+				url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
+				filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
+			else
+				url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+				filter = Creator.getODataFilter(list_view_id, object_name)
 			
-			object = Creator.getObject(object_name)
-			objectFields = object?.fields
-			columns = [name_field_key]
-			if object.list_views?.default?.columns
-				columns = object.list_views.default.columns
-			# 暂时不支持子字段，后续odata支持后要去掉并单独处理子字段相关问题
-			columns = columns.map (n,i)->
-				return n.split(".")[0]
-			extra_columns = ["owner"]
-			if object.list_views?.default?.extra_columns
-				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
+			if is_related
+				selectColumns = _fields(related_object_name)
+				showColumns = _columns(related_object_name)
+			else
+				object = Creator.getObject(object_name)
+				objectFields = object?.fields
+				columns = [name_field_key]
+				if object.list_views?.default?.columns
+					columns = object.list_views.default.columns
+				# 暂时不支持子字段，后续odata支持后要去掉并单独处理子字段相关问题
+				columns = columns.map (n,i)->
+					return n.split(".")[0]
+				extra_columns = ["owner"]
+				if object.list_views?.default?.extra_columns
+					extra_columns = _.union extra_columns, object.list_views.default.extra_columns
+				
+				selectColumns = _.union ["_id"], columns, extra_columns
+				showColumns = columns.map (n,i)->
+					columnItem = 
+						dataField: n
+						cellTemplate: (container, options) ->
+							field = object.fields[n]
+							field_name = n
+							if /\w+\.\$\.\w+/g.test(field_name)
+								# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+								field_name = n.replace(/\$\./,"")
+							cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
+							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+					return columnItem
 			
-			selectColumns = _.union ["_id"], columns, extra_columns
-			showColumns = columns.map (n,i)->
-				columnItem = 
-					dataField: n
-					cellTemplate: (container, options) ->
-						field = object.fields[n]
-						field_name = n
-						if /\w+\.\$\.\w+/g.test(field_name)
-							# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
-							field_name = n.replace(/\$\./,"")
-						cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
-						Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
-				return columnItem
+			object_name = related_object_name
 			showColumns.push
 				dataField: "_id"
 				width: 60
@@ -111,6 +150,8 @@ Template.creator_grid.events
 			Creator.executeAction objectName, action, recordId
 
 	'click .table-cell-edit': (event, template) ->
+		console.log "is_related=========2:", is_related
+		is_related = template.data.is_related
 		field = this.field_name
 
 		if this.field.depend_on && _.isArray(this.field.depend_on)
@@ -118,7 +159,7 @@ Template.creator_grid.events
 			field.push(this.field_name)
 			field = field.join(",")
 
-		objectName = Session.get("object_name")
+		objectName = if is_related then Session.get("related_object_name") else Session.get("object_name")
 		collection_name = Creator.getObject(objectName).label
 		rowData = this.doc
 
