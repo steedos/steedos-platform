@@ -4,4 +4,4 @@ Creator.Apps.qhd_informations =
 	icon: "ion-ios-people-outline" 
 	icon_slds: "document" 
 	visible:false 
-	objects: ["qhd_informations"]
+	objects: ["qhd_informations","reports"]
