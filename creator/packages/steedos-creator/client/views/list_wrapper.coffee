@@ -99,68 +99,6 @@ Template.creator_list_wrapper.events
 			Session.set("filter_scope", filter_scope)
 			Session.set("list_view_id", list_view_id)
 			Session.set("list_view_visible", true)
-			
-	# 'click .list-item-action': (event, template) ->
-	# 	actionKey = event.currentTarget.dataset.actionKey
-	# 	objectName = event.currentTarget.dataset.objectName
-	# 	recordId = event.currentTarget.dataset.recordId
-	# 	object = Creator.getObject(objectName)
-	# 	action = object.actions[actionKey]
-	# 	collection_name = object.label
-	# 	if action.todo == "standard_delete"
-	# 		action_record_title = template.$(".list-item-link-"+ recordId).attr("title")
-	# 		swal
-	# 			title: "删除#{object.label}"
-	# 			text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
-	# 			html: true
-	# 			showCancelButton:true
-	# 			confirmButtonText: t('Delete')
-	# 			cancelButtonText: t('Cancel')
-	# 			(option) ->
-	# 				if option
-	# 					Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
-	# 						if error
-	# 							toastr.error error.reason
-	# 						else
-	# 							info = object.label + "\"#{action_record_title}\"" + "已删除"
-	# 							toastr.success info
-	# 							dxDataGridInstance.refresh()
-	# 	else
-	# 		Session.set("action_fields", undefined)
-	# 		Session.set("action_collection", "Creator.Collections.#{objectName}")
-	# 		Session.set("action_collection_name", collection_name)
-	# 		Session.set("action_save_and_insert", true)
-	# 		Creator.executeAction objectName, action, recordId
-
-	# 'click .table-cell-edit': (event, template) ->
-	# 	field = this.field_name
-
-	# 	if this.field.depend_on && _.isArray(this.field.depend_on)
-	# 		field = _.clone(this.field.depend_on)
-	# 		field.push(this.field_name)
-	# 		field = field.join(",")
-
-	# 	objectName = Session.get("object_name")
-	# 	collection_name = Creator.getObject(objectName).label
-	# 	rowData = this.doc
-
-	# 	if rowData
-	# 		Session.set("action_fields", field)
-	# 		Session.set("action_collection", "Creator.Collections.#{objectName}")
-	# 		Session.set("action_collection_name", collection_name)
-	# 		Session.set("action_save_and_insert", false)
-	# 		Session.set 'cmDoc', rowData
-	# 		Session.set 'cmIsMultipleUpdate', true
-	# 		Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
-	# 		Meteor.defer ()->
-	# 			$(".btn.creator-cell-edit").click()
-
-	# 'dblclick .slds-table td': (event) ->
-	# 	$(".table-cell-edit", event.currentTarget).click()
-
-	# 'click .slds-table td': (event, template)->
-	# 	$(".slds-table td").removeClass("slds-has-focus")
-	# 	$(event.currentTarget).addClass("slds-has-focus")
 
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")

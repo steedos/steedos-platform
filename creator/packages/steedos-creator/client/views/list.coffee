@@ -137,8 +137,8 @@ Template.creator_list.events
 	# 		$(this).data("leftOffset", scrollLeft);
 	# 		$(this).css("left", "#{left - scrollLeft}px")
 
-	'mouseenter .list-table-container': (event, template)->
-		$("table.slds-table", event.currentTarget).colResizable
+	'mouseenter table.slds-table_resizable-cols': (event, template)->
+		template.$("table.slds-table").colResizable
 			liveDrag: false
 			gripInnerHtml: "<div class='grip' style='width: .25rem;height: 2rem;cursor: col-resize;background: #0070d2;top: 0px;right: 2px;position:  relative;opacity: 0;'></div>"
 			resizeMode:'overflow'
