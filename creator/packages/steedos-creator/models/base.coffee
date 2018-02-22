@@ -7,6 +7,7 @@ Creator.baseObject =
 			omit: true
 			sortable: true
 			index: true
+			defaultValue: "{{userId}}"
 		space:
 			type: "text"
 			omit: true
