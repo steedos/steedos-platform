@@ -69,7 +69,105 @@ if Meteor.isClient
 				checkboxAll.prop("checked",false)
 			else if selectedLength == checkboxs.length
 				checkboxAll.prop("checked",true)
+	
+	### TO DO LIST
+		1.支持$in操作符，实现recent视图
+		$eq, $ne, $lt, $gt, $lte, $gte
+	###
+	Creator.getODataFilter = (list_view_id, object_name)->
+		userId = Meteor.userId()
+		spaceId = Session.get("spaceId")
+		custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
+		selector = []
+		if custom_list_view
+			filter_scope = custom_list_view.filter_scope
+			filters = custom_list_view.filters
+			if filter_scope == "mine"
+				selector.push ["owner", "=", Meteor.userId()]
+			else if filter_scope == "space"
+				selector.push ["space", "=", Steedos.spaceId()]
 
+			if filters and filters.length > 0
+				selector.push "and"
+				filters = _.map filters, (obj)->
+					return [obj.field, obj.operation, obj.value]
+				
+				filters = Creator.formatFiltersToDev(filters)
+				_.each filters, (filter)->
+					selector.push filter
+		else
+			# TODO
+			if spaceId and userId
+				list_view = Creator.getListView(object_name, list_view_id)
+				if list_view.filter_scope == "spacex"
+					selector.push ["space", "=", null], "or", ["space", "=", space]
+				else if object_name == "users"
+					selector.push ["_id", "=", userId]
+				else if object_name == "spaces"
+					selector.push ["_id", "=", spaceId]
+				else
+					selector.push ["space", "=", spaceId]
+
+				if list_view_id == "recent"
+					viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
+					record_ids = _.pluck(viewed, "record_id")
+					record_ids = _.uniq(record_ids)
+					record_ids = record_ids.join(",or,").split(",")
+					id_selector = _.map record_ids, (_id)->
+						if _id != "or"
+							return ["_id", "=", _id]
+						else
+							return _id
+					selector.push "and", id_selector
+
+				# $eq, $ne, $lt, $gt, $lte, $gte
+				# [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
+				if list_view.filters
+					filters = Creator.formatFiltersToDev(list_view.filters)
+					if filters and filters.length > 0
+						selector.push "and"
+						_.each filters, (filter)->
+							selector.push filter
+
+					if list_view.filter_scope == "mine"
+						selector.push "and", ["owner", "=", userId]
+				else
+					permissions = Creator.getPermissions(object_name)
+					if permissions.viewAllRecords
+						if list_view.filter_scope == "mine"
+							selector.push "and", ["owner", "=", userId]
+					else if permissions.allowRead
+						selector.push "and", ["owner", "=", userId]
+		return selector
+
+	Creator.getODataRelatedFilter = (object_name, related_object_name, record_id)->
+		spaceId = Steedos.spaceId()
+		userId = Meteor.userId()
+		related_lists = Creator.getRelatedList(object_name, record_id)
+		related_field_name = ""
+		selector = []
+		_.each related_lists, (obj)->
+			if obj.object_name == related_object_name
+				related_field_name = obj.related_field_name
+		
+		related_field_name = related_field_name.replace(/\./g, "/")
+
+		if related_object_name == "cfs.files.filerecord"
+			selector.push(["metadata/space", "=", spaceId])
+		else
+			selector.push(["space", "=", spaceId])
+
+		if related_object_name == "cms_files"
+			selector.push("and", ["parent/o", "=", object_name])
+			selector.push("and", ["parent/ids", "=", record_id])
+		else
+			selector.push("and", [related_field_name, "=", record_id])
+		
+		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
+		if !permissions.viewAllRecords and permissions.allowRead
+			selector.push("and", ["owner", "and", userId])
+
+		return selector
 
 # 切换工作区时，重置下拉框的选项
 Tracker.autorun ()->
