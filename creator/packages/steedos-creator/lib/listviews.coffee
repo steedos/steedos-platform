@@ -96,7 +96,7 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 
 	unless is_related
 		checkbox_col = 
-			title: '<div class="slds-th__action"></div>'
+			title: ''
 			data: "_id"
 			width: '20px'
 			className: "slds-cell-edit cellContainer tabular-col-checkbox #{objectColName}"
@@ -151,9 +151,10 @@ Creator.initListViews = (object_name)->
 		pub: "steedos_object_tabular"
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
+			console.log(data, "headerCallback")
 			firstTh = $(thead).find('th').eq(0)
 			if firstTh.hasClass("tabular-col-checkbox")
-				firstTh.css("width","32px")
+				firstTh.css("width","32px").empty()
 				Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, firstTh[0]
 
 		drawCallback:(settings)->
