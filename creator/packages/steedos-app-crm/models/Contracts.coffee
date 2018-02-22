@@ -35,7 +35,7 @@ Creator.Objects.contracts =
 		customer_id:
 			label: "客户"
 			type: "master_detail"
-			reference_to: "companies"
+			reference_to: "accounts"
 		customer_signed_date:
 			label: "客户签字日期" 
 			type: "date"

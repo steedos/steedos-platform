@@ -15,6 +15,7 @@ Creator.Object = (options)->
 	self.enable_tasks = options.enable_tasks
 	self.enable_chatter = options.enable_chatter
 	self.enable_audit = options.enable_audit
+	self.enable_api = options.enable_api
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	

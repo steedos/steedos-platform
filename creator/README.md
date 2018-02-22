@@ -12,10 +12,9 @@ Apps 表示功能模块，Apps下包含Objects
 
 ### Objects
 Objects 是Creator的核心，Object对象中可以定义以下内容
-- fields，Creatror根据object.fields生成schema
+- fields，Creator根据object.fields生成schema
 - list_views，列表视图，列表视图中可定义显示的列和列表过滤条件
 - triggers，创建对象操作触发器，在服务端执行。例如"before.insert"
-- indexes（计划中），创建数据库索引
 - 系统初始化时自动生成Object对应的Collection，并绑定到Schema。
 
 ### baseObject

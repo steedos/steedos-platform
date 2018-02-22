@@ -1,20 +1,14 @@
-Creator.Objects.companies = 
-	name: "companies"
-	label: "单位"
+Creator.Objects.accounts = 
+	name: "accounts"
+	label: "客户"
 	icon: "account"
 	enable_files: true
 	enable_search: true
 	enable_tasks: true
 	enable_api: true
 	fields:
-		name: 
-			label: "名称"
-			type: "text"
-			defaultValue: ""
-			description: ""
-			inlineHelpText: ""
-			required: true
-			sortable: true
+		owner:
+			label: "所有人"
 		priority:
 			label: "优先级"
 			type: "select"
@@ -24,6 +18,14 @@ Creator.Objects.companies =
 				{label: "Warm", value: "normal"},
 				{label: "Cold", value: "low"}
 			]
+		name: 
+			label: "名称"
+			type: "text"
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			required: true
+			sortable: true
 		phone:
 			type: "text"
 			label: "电话"

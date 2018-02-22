@@ -19,11 +19,11 @@ if Meteor.isDevelopment
 			customer_id:
 				label: "客户(单选)"
 				type: "lookup"
-				reference_to: "companies"
+				reference_to: "accounts"
 			customer_ids:
 				label: "客户(多选)"
 				type: "lookup"
-				reference_to: "companies"
+				reference_to: "accounts"
 				multiple: true
 #			object_switche_id:
 #				label: "客户/用户(单选)"

@@ -18,7 +18,7 @@ Creator.Objects.contacts =
 		company: 
 			label: "单位"
 			type: "master_detail"
-			reference_to: "companies"
+			reference_to: "accounts"
 		birthdate: 
 			label: "生日"
 			type: "date"

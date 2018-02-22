@@ -1,6 +1,6 @@
 Creator.Reports.company_matrix =
 	name: "Customer List"
-	object_name: "companies"
+	object_name: "accounts"
 	report_type: "matrix"
 	filter_scope: "space"
 	filters: []
@@ -15,7 +15,7 @@ Creator.Reports.company_matrix =
 
 Creator.Reports.company_summary =
 	name: "Customer List"
-	object_name: "companies"
+	object_name: "accounts"
 	report_type: "summary"
 	filter_scope: "space"
 	filters: []
@@ -39,7 +39,7 @@ Creator.Reports.company_summary =
 
 Creator.Reports.company_tabular =
 	name: "Customer List"
-	object_name: "companies"
+	object_name: "accounts"
 	report_type: "tabular"
 	filter_scope: "space"
 	filters: []
