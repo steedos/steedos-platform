@@ -15,7 +15,7 @@ Creator.Objects.contacts =
 			required: true
 			searchable:true
 			index:true
-		account_id: 
+		account: 
 			label: "客户"
 			type: "master_detail"
 			reference_to: "accounts"

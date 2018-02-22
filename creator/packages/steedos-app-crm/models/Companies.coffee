@@ -8,7 +8,7 @@ Creator.Objects.accounts =
 	enable_api: true
 	fields:
 		owner:
-			label: "所有人"
+			label: "客户所有人"
 		priority:
 			label: "优先级"
 			type: "select"
@@ -19,7 +19,7 @@ Creator.Objects.accounts =
 				{label: "Cold", value: "low"}
 			]
 		name: 
-			label: "名称"
+			label: "客户名"
 			type: "text"
 			defaultValue: ""
 			description: ""
