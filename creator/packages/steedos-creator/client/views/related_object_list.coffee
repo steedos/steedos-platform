@@ -75,6 +75,15 @@ Template.related_object_list.onRendered ->
 					container.css("overflow", "visible")
 					record_permissions = Creator.getRecordPermissions related_object_name, options.data, Meteor.userId()
 					container.html(Blaze.toHTMLWithData Template.creator_table_actions, {_id: options.data._id, object_name: related_object_name, record_permissions: record_permissions, is_related: false}, container)
+
+			columns.splice 0, 0, 
+				dataField: "_id"
+				width: 80
+				allowSorting: false
+				headerCellTemplate: (container) ->
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: related_object_name}, container[0]
+				cellTemplate: (container, options) ->
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: related_object_name}, container[0]
 			self.$("#gridContainer").dxDataGrid({
 				dataSource: {
 					store: {
@@ -169,19 +178,51 @@ Template.related_object_list.events
 			Session.set("action_save_and_insert", true)
 			Creator.executeAction objectName, action, recordId
 
+	'click .table-cell-edit': (event, template) ->
+		field = this.field_name
+
+		if this.field.depend_on && _.isArray(this.field.depend_on)
+			field = _.clone(this.field.depend_on)
+			field.push(this.field_name)
+			field = field.join(",")
+
+		objectName = Session.get("related_object_name")
+		collection_name = Creator.getObject(objectName).label
+		rowData = this.doc
+
+		if rowData
+			Session.set("action_fields", field)
+			Session.set("action_collection", "Creator.Collections.#{objectName}")
+			Session.set("action_collection_name", collection_name)
+			Session.set("action_save_and_insert", false)
+			Session.set 'cmDoc', rowData
+			Session.set 'cmIsMultipleUpdate', true
+			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
+			Meteor.defer ()->
+				$(".btn.creator-cell-edit").click()
+
+	'dblclick #gridContainer td': (event) ->
+		$(".table-cell-edit", event.currentTarget).click()
+
 
 Template.related_object_list.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh()
+			dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh()
+			dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh()
+			dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 
 Template.creator_grid.onDestroyed ->
