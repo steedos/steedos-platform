@@ -197,6 +197,8 @@ Template.creator_list_wrapper.events
 				console.log "error", error 
 			else if result
 				Session.set("filter_items", filter_items)
+		#$(event.currentTarget).toggleClass("slds-is-selected")
+		$(".filter-list-container").toggleClass("slds-hide")
 
 	'click .filters-save-as': (event, template)->
 		filter_items = Session.get("filter_items")
@@ -208,6 +210,7 @@ Template.creator_list_wrapper.events
 		filter_items = _.compact(filter_items)
 		Session.set "cmDoc", {filters: filter_items}
 		$(".btn-add-list-view").click()
+		$(".filter-list-container").toggleClass("slds-hide")
 
 	'click .select-fields-to-display': (event, template)->
 		Modal.show("select_fields")
