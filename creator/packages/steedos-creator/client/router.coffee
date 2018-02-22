@@ -150,4 +150,4 @@ FlowRouter.route '/app/:app_id/:object_name/:template/',
 			Session.set("list_view_visible", true)
 		
 		BlazeLayout.render Creator.getLayout(),
-			main: "creator_list_wrap"
+			main: "creator_list_wrapper"
