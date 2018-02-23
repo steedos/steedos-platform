@@ -176,6 +176,9 @@ Template.creator_grid.events
 		$(".table-cell-edit", event.currentTarget).click()
 
 	'click td': (event, template)->
+		if $(event.currentTarget).find(".slds-checkbox input").length
+			# 左侧勾选框不要focus样式功能
+			return
 		template.$("td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
