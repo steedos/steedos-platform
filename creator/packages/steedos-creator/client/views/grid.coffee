@@ -72,7 +72,7 @@ Template.creator_grid.onRendered ->
 							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 					return columnItem
 			
-			object_name = related_object_name
+			curObjectName = if is_related then related_object_name else object_name
 			showColumns.push
 				dataField: "_id"
 				width: 60
@@ -81,17 +81,17 @@ Template.creator_grid.onRendered ->
 					return ""
 				cellTemplate: (container, options) ->
 					container.css("overflow", "visible")
-					record_permissions = Creator.getRecordPermissions object_name, options.data, Meteor.userId()
-					actionsOption = {_id: options.data._id, object_name: object_name, record_permissions: record_permissions, is_related: false}
+					record_permissions = Creator.getRecordPermissions curObjectName, options.data, Meteor.userId()
+					actionsOption = {_id: options.data._id, object_name: curObjectName, record_permissions: record_permissions, is_related: false}
 					Blaze.renderWithData Template.creator_table_actions, actionsOption, container[0]
 			showColumns.splice 0, 0, 
 				dataField: "_id"
 				width: 80
 				allowSorting: false
 				headerCellTemplate: (container) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: object_name}, container[0]
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
 				cellTemplate: (container, options) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: object_name}, container[0]
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 
 			dxOptions = 
 				dataSource: 
