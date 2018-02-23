@@ -9,7 +9,7 @@ Creator.Objects.objects =
 			searchable:true
 			index:true
 		icon: 
-			label: "Name"
+			label: "Icon"
 			type: "text"
 		description: 
 			label: "Description"
@@ -25,22 +25,22 @@ Creator.Objects.objects =
 		default:
 			columns: ["name", "description", "modified"]
 		all:
-			filter_scope: "spacex"
+			filter_scope: "space"
 
 	permission_set:
 		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false 
+		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: true 
-		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
-			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true 
 # db.objects._simpleSchema = new SimpleSchema
 # 	name:

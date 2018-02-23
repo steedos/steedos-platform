@@ -1,40 +1,35 @@
-Creator.Objects.space_objects = 
-	name: "space_objects"
-	label: "自定义对象"
+Creator.Objects.object_fields = 
+	name: "object_fields"
+	label: "字段"
 	icon: "orders"
+	enable_api: true
 	fields:
+		object:
+			type: "master_detail"
+			reference_to: "objects"
 		name: 
-			label: "Name"
 			type: "text"
 			searchable:true
 			index:true
-		icon: 
-			label: "Name"
-			type: "text"
 		description: 
 			label: "Description"
 			type: "text"
-		"fields.$.name":
-			type: "text"
-		"fields.$.type":
+		type: 
 			type: "select"
 			allowedValues: ["text", "number", "boolean"]
-
 
 	list_views:
 		default:
 			columns: ["name", "description", "modified"]
-		all:
-			filter_scope: "space"
 
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: false 
 		admin:
 			allowCreate: true
 			allowDelete: true

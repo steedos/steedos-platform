@@ -46,7 +46,7 @@ Meteor.startup ->
 		return
 
 	_.each Creator.Collections, (value, key, list)->
-		if not Creator.Objects[key]?.enable_api
+		if not Creator.objectsByName[key]?.enable_api
 			return
 
 		if SteedosOdataAPI
