@@ -24,7 +24,7 @@ Meteor.startup ->
 		if _.isEmpty createQuery.includes
 			return
 
-		obj = Creator.Objects[key]
+		obj = Creator.objectsByName[key]
 		_.each createQuery.includes, (include)->
 			# console.log 'include: ', include
 			navigationProperty = include.navigationProperty
