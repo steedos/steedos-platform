@@ -26,7 +26,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="slds-col slds-no-flex slds-grid slds-align-middle">
+						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							{{#if allow_create}}
 								<div class="slds-button slds-button--neutral slds-truncate add-related-record">
 									<a title="新建" class="">
@@ -37,8 +37,13 @@
 						</div>
 					</div>
 					<div class="slds-grid">
-						<div class="slds-col slds-align-bottom">
+						<div class="slds-col slds-align-middle">
 							<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{/if}}</p>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
+							</button>
 						</div>
 					</div>
 				</div>

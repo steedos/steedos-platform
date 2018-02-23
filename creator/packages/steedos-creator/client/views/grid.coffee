@@ -209,3 +209,8 @@ Template.creator_grid.onDestroyed ->
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: undefined
 	,true
+
+
+Template.creator_grid.refresh = ->
+	dxDataGridInstance.refresh().done (result)->
+		Creator.remainCheckboxState(dxDataGridInstance.$element())

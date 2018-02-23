@@ -158,6 +158,9 @@ Template.creator_list_wrapper.events
 		Session.set "cmDoc", {_id: list_view_id}
 		$(".btn-delete-list-view").click()
 
+	'click .btn-refresh': (event, template)->
+		Template.creator_grid.refresh()
+
 
 Template.creator_list_wrapper.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)

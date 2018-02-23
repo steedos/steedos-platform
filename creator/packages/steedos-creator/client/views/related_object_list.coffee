@@ -44,6 +44,9 @@ Template.related_object_list.events
 		Meteor.defer ->
 			$(".creator-add").click()
 
+	'click .btn-refresh': (event, template)->
+		Template.creator_grid.refresh()
+
 
 Template.related_object_list.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
