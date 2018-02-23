@@ -62,6 +62,7 @@ steedos:smsqueue@0.0.1
 steedos:useraccounts-core
 steedos:useraccounts-bootstrap
 steedos:useraccounts-flow-routing
+steedos:accounts-t9n
 
 steedos:ui
 
