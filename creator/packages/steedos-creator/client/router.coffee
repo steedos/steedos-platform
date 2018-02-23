@@ -93,7 +93,7 @@ objectRoutes.route '/:list_view_id/list',
 			Meteor.defer ->
 				Blaze.renderWithData(Template.mobileList, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 
-objectRoutes.route '/:record_id/:related_object_name/list',
+objectRoutes.route '/:record_id/:related_object_name/grid',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		object_name = FlowRouter.getParam("object_name")

@@ -63,7 +63,7 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list/switch")
 
 Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
-	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/list")
+	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
 Creator.getCollection = (object_name)->
 	if !object_name
