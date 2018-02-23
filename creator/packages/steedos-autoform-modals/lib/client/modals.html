@@ -34,55 +34,15 @@
 						{{#if $and cmCollection cmOperation}}
 							<p>{{{prompt}}}</p>
 							{{#if shouldUpdateQuickForm}}
-
-								{{#autoForm title=cmTitle id=cmFormId collection=cmCollection schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-									{{#if schemaFields.grouplessFields}}
-										{{#each schemaFields.grouplessFields}}
-											<div class="slds-grid view-page-section-row">
-												{{#each this}}
-													<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-														<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-															{{#if this}}
-																{{> afQuickField name=this}}
-															{{/if}}
-														</div>
-													</div>
-												{{/each}}
-											</div>
-										{{/each}}
-									{{/if}}
-
-									{{#if schemaFields.groupFields}}
-										{{#each schemaFields.groupFields}}
-											{{#if this.fields}}
-												<div class="slds-section slds-is-open group-section">
-													<h3 class="slds-section__title group-section-control">
-														<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-														{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-														<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-														</button>
-													</h3>
-													<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
-														{{#each this.fields}}
-															<div class="slds-grid view-page-section-row">
-																{{#each this}}
-																	<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-																		<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-																			{{#if this}}
-																				{{> afQuickField name=this}}
-																			{{/if}}
-																		</div>
-																	</div>
-																{{/each}}
-															</div>
-														{{/each}}
-													</div>
-												</div>
-											{{/if}}
-										{{/each}}
-									{{/if}}
-
-								{{/autoForm}}
+								{{#if isUseMethod}}
+									{{#autoForm title=cmTitle id=cmFormId schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
+										{{>formField schemaFields=schemaFields}}
+									{{/autoForm}}
+								{{else}}
+									{{#autoForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
+										{{>formField schemaFields=schemaFields}}
+									{{/autoForm}}
+								{{/if}}
 					
 							{{/if}}
 						{{/if}}
@@ -149,3 +109,51 @@
 		{{> UI.contentBlock}}
 	</a>
 </template>
+
+<template name="formField">
+	{{#if schemaFields.grouplessFields}}
+		{{#each schemaFields.grouplessFields}}
+			<div class="slds-grid view-page-section-row">
+				{{#each this}}
+					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+							{{#if this}}
+								{{> afQuickField name=this}}
+							{{/if}}
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		{{/each}}
+	{{/if}}
+
+	{{#if schemaFields.groupFields}}
+		{{#each schemaFields.groupFields}}
+			{{#if this.fields}}
+				<div class="slds-section slds-is-open group-section">
+					<h3 class="slds-section__title group-section-control">
+						<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+						{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+						<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+						</button>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+						{{#each this.fields}}
+							<div class="slds-grid view-page-section-row">
+								{{#each this}}
+									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+											{{#if this}}
+												{{> afQuickField name=this}}
+											{{/if}}
+										</div>
+									</div>
+								{{/each}}
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			{{/if}}
+		{{/each}}
+	{{/if}}
+</template>	

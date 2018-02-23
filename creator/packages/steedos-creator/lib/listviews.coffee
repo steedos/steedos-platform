@@ -151,7 +151,6 @@ Creator.initListViews = (object_name)->
 		pub: "steedos_object_tabular"
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->
-			console.log(data, "headerCallback")
 			firstTh = $(thead).find('th').eq(0)
 			if firstTh.hasClass("tabular-col-checkbox")
 				firstTh.css("width","32px").empty()

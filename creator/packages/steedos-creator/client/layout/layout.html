@@ -14,7 +14,7 @@
 		</div>
 		{{/unless}}
 	{{/if}}
-	{{#afModal formId="creatorAddForm" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName}} {{_ "Create"}} {{/afModal}}
+	{{#afModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName}} {{_ "Create"}} {{/afModal}}
 	{{#afModal formId="creatorEditForm" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName}} {{_ "Edit"}} {{/afModal}}
-	{{#afModal formId="creatorCellEditForm" meteormethod="af_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName}} {{_ "Edit"}} {{/afModal}}
+	{{#afModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName}} {{_ "Edit"}} {{/afModal}}
 </template>

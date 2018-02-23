@@ -27,21 +27,32 @@ getObjectName = (collectionName)->
 getSimpleSchema = (collectionName)->
 	if collectionName
 		schema = collectionObj(collectionName).simpleSchema()._schema
+		fields = Session.get("cmFields")
+
+		final_schema = {}
+		if fields
+			fields = fields.replace(/ /, "").split(",")
+			_.each fields, (field)->
+				obj = _.pick(schema, field)
+				_.extend(final_schema, obj)
+		else
+			final_schema = schema
+
 		#新增_ids虚拟字段，以实现条记录同时更新
-		schema._ids = 
+		final_schema._ids = 
 			type: String
 			optional: true
 			autoform:
 				type: "hidden"
 		#新增_object_name虚拟字段，以让后台method知道更新哪个表
-		schema._object_name = 
+		final_schema._object_name = 
 			type: String
 			optional: true
 			autoform:
 				type: "hidden"
 				defaultValue: ->
 					return getObjectName collectionName
-	return new SimpleSchema(schema)
+	return new SimpleSchema(final_schema)
 
 
 Template.autoformModals.rendered = ->
@@ -203,7 +214,12 @@ helpers =
 		Session.get('cmFormId') or defaultFormId
 	cmAutoformType: () ->
 		if Session.get 'cmMeteorMethod'
-			'method'
+			if Session.get("cmOperation") == "insert"
+				return 'method'
+			if Session.get('cmIsMultipleUpdate')
+				return 'method'
+			else
+				return 'method-update'
 		else
 			Session.get 'cmOperation'
 	cmModalDialogClass: () ->
@@ -233,6 +249,12 @@ helpers =
 		isMultiple = Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length > 1
 		return isMultiple
 
+	isUseMethod: ()->
+		if Session.get 'cmMeteorMethod'
+			return true
+		else
+			return false
+
 	cmTargetIds: ()->
 		Session.get('cmTargetIds')
 	
@@ -251,8 +273,9 @@ helpers =
 			object_name = getObjectName cmCollection
 			permission_fields = Creator.getFields(object_name)
 			
-			permission_fields.push "_ids"
-			permission_fields.push "_object_name"
+			if Session.get 'cmMeteorMethod'
+				permission_fields.push "_ids"
+				permission_fields.push "_object_name"
 
 			if Session.get 'cmFields'
 				firstLevelKeys = Session.get('cmFields').replace(/ /, "")
@@ -307,6 +330,8 @@ helpers =
 	
 Template.autoformModals.helpers helpers
 
+Template.formField.helpers helpers
+
 Template.afModal.events
 	'click *': (e, t) ->
 		e.preventDefault()
@@ -347,7 +372,42 @@ Template.afModal.events
 		cmOnSuccessCallback = t.data.onSuccess
 
 		if not _.contains registeredAutoFormHooks, t.data.formId
+			userId = Meteor.userId()
+			cmCollection = Session.get 'cmCollection'
+			object_name = getObjectName(cmCollection)
+			triggers = Creator.getObject(object_name).triggers
 			AutoForm.addHooks t.data.formId,
+				before:
+					method: (doc)->
+						if triggers
+							if Session.get("cmOperation") == "insert"
+								_.each triggers, (trigger, key)->
+									if trigger.on == "client" and trigger.when == "before.insert"
+										trigger.todo.apply({object_name: object_name},[userId, doc])
+							else if Session.get("cmOperation") == "update"
+								_.each triggers, (trigger, key)->
+									if trigger.on == "client" and trigger.when == "before.update"
+										trigger.todo.apply({object_name: object_name},[userId, doc])
+						return doc
+				after:
+					method: (error, result)->
+						if triggers
+							if Session.get("cmOperation") == "insert"
+								_.each triggers, (trigger, key)->
+									if trigger.on == "client" and trigger.when == "after.insert"
+										trigger.todo.apply({object_name: object_name},[userId, result])
+							else if Session.get("cmOperation") == "update"
+								_.each triggers, (trigger, key)->
+									if trigger.on == "client" and trigger.when == "after.update"
+										trigger.todo.apply({object_name: object_name},[userId, result])
+						return result
+				# onSubmit: (insertDoc, updateDoc, currentDoc)->
+				# 	console.log 'insertDoc', insertDoc
+				# 	console.log 'updateDoc', updateDoc
+				# 	console.log 'currentDoc', currentDoc
+				# 	console.log 'onSubmit.....'
+				# 	this.done();
+				# 	return false
 				onSuccess: ->
 					$('#afModal').modal 'hide'
 			registeredAutoFormHooks.push t.data.formId
@@ -409,3 +469,4 @@ Template.autoformModals.onCreated ->
 Template.autoformModals.onDestroyed ->
 	Session.set 'cmIsMultipleUpdate', false
 	Session.set 'cmTargetIds', null
+
