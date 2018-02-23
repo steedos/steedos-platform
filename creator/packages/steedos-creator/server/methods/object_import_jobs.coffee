@@ -29,7 +29,8 @@ converterSelect = (objectName,field_name, dataCell,jsonObj)->
 	select_error = ""
 	fields = Creator.getObject(objectName).fields
 	allowedValues = fields[field_name]?.allowedValues || []
-	if allowedValues.indexOf(dataCell) >= 0
+	values = _.pluck(allowedValues,"value")
+	if values.indexOf(dataCell) >= 0
 		jsonObj[field_name] = dataCell
 	else
 		select_error = "#{dataCell}不属于#{field_name}的可选范围"
@@ -91,7 +92,6 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 		jsonObj.space = space
 		Creator.Collections[objectName].insert(jsonObj,(error,result)->
 			if error
-				console.log error
 				insertInfo["insertState"] = false
 				)
 	else
