@@ -29,7 +29,6 @@ Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
 		is_related = self.data.is_related
-		console.log "is_related=========1:", is_related
 		object_name = Session.get("object_name")
 		related_object_name = Session.get("related_object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
@@ -150,7 +149,6 @@ Template.creator_grid.events
 			Creator.executeAction objectName, action, recordId
 
 	'click .table-cell-edit': (event, template) ->
-		console.log "is_related=========2:", is_related
 		is_related = template.data.is_related
 		field = this.field_name
 
