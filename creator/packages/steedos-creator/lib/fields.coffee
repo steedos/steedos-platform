@@ -7,6 +7,9 @@ Creator.getObjectSchema = (obj) ->
 		fs.autoform.multiple = field.multiple
 		if field.type == "text"
 			fs.type = String
+			if field.multiple
+				fs.type = [String]
+				fs.autoform.type = "tags"
 		else if field.type == "[text]"
 			fs.type = [String]
 			fs.autoform.type = "tags"

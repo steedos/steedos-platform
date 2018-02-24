@@ -14,6 +14,7 @@ _columns = (related_object_name)->
 	object = Creator.getObject(related_object_name)
 	return columns.map (n,i)->
 		columnItem = 
+			cssClass: "slds-cell-edit"
 			dataField: n
 			cellTemplate: (container, options) ->
 				field = object.fields[n]
@@ -61,6 +62,7 @@ Template.creator_grid.onRendered ->
 				selectColumns = _.union ["_id"], columns, extra_columns
 				showColumns = columns.map (n,i)->
 					columnItem = 
+						cssClass: "slds-cell-edit"
 						dataField: n
 						cellTemplate: (container, options) ->
 							field = object.fields[n]
