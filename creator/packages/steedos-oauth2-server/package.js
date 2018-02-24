@@ -56,7 +56,7 @@ Package.onUse(function(api) {
 	
 	api.addFiles('server/rest.coffee', 'server');
 	api.addFiles('server/publications/oauth2clients.coffee', 'server');
-	
+	api.addFiles('server/methods/oauth2authcodes.coffee', 'server');
 	
 	api.export('oAuth2Server', ['client', 'server']);
 

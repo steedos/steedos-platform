@@ -11,8 +11,10 @@ getUrlParams = ()->
 	urlParams[decode(match[1])] = decode(match[2]) while match=search.exec(query)
 	return urlParams
 
+OAuth2.urlParams = getUrlParams()
+
 OAuth2.getOAuth2Code = ()->
-	urlParams = getUrlParams()
+	urlParams = OAuth2.urlParams
 	oAuth2Server.callMethod.authCodeGrant(
 		urlParams?.client_id,
 		urlParams?.redirect_uri,
@@ -43,8 +45,4 @@ Template.loginAuthorize.onRendered ->
 
 Template.loginAuthorize.events
 	'click button#oauth2login':()->
-		authorizedClients = Session.get("authorizedClients") || []
-		urlParams = getUrlParams()
-		clientId = urlParams?.client_id
-		authoricedClients.push clientId
 		OAuth2.getOAuth2Code()
