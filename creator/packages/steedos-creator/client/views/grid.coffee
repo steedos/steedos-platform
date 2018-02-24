@@ -35,7 +35,12 @@ Template.creator_grid.onRendered ->
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 		list_view_id = Session.get("list_view_id")
 		record_id = Session.get("record_id")
-		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready())
+		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
+			c.stop()
+			grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
+			if grid_settings and grid_settings.settings
+				column_width_settings = grid_settings.settings[list_view_id]?.column_width
+				column_sort_settings = grid_settings.settings[list_view_id]?.sort
 			if is_related
 				url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 				filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
@@ -72,6 +77,16 @@ Template.creator_grid.onRendered ->
 								field_name = n.replace(/\$\./,"")
 							cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
 							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+					
+					if column_width_settings
+						width = column_width_settings[n]
+						if width
+							columnItem.width = width
+
+					if column_sort_settings and column_sort_settings.length > 0
+						_.each column_sort_settings, (sort)->
+							if sort[0] == n
+								columnItem.sortOrder = sort[1]
 					return columnItem
 			
 			curObjectName = if is_related then related_object_name else object_name
@@ -100,6 +115,7 @@ Template.creator_grid.onRendered ->
 				allowColumnResizing: true
 				columnResizingMode: "widget"
 				showRowLines: true
+				savingTimeout: 1000
 				stateStoring:{
 		   			type: "custom"
 					enabled: true
@@ -213,10 +229,8 @@ Template.creator_grid.events
 Template.creator_grid.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
-			# 在最近查看列表中添加记录会重新执行onRendered中的autorun，所以不需要再次刷新数据
-			if Session.get("list_view_id") != "recent"
-				dxDataGridInstance.refresh().done (result)->
-					Creator.remainCheckboxState(dxDataGridInstance.$element())
+			dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
