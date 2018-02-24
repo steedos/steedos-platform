@@ -75,7 +75,7 @@ Template.creator_grid.onRendered ->
 			curObjectName = if is_related then related_object_name else object_name
 			showColumns.push
 				dataField: "_id"
-				width: 60
+				width: 46
 				allowSorting: false
 				headerCellTemplate: (container) ->
 					return ""
@@ -86,7 +86,7 @@ Template.creator_grid.onRendered ->
 					Blaze.renderWithData Template.creator_table_actions, actionsOption, container[0]
 			showColumns.splice 0, 0, 
 				dataField: "_id"
-				width: 80
+				width: 60
 				allowSorting: false
 				headerCellTemplate: (container) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]

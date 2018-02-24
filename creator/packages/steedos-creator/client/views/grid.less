@@ -1,10 +1,48 @@
-.dx-datagrid-content .dx-datagrid-table .dx-row>td {
-    padding: 4px 8px 4px 8px;
-    vertical-align: middle;
+.dx-datagrid-content .dx-datagrid-table {
+	.dx-row {
+		&>td {
+			padding: 3px 8px;
+			vertical-align: middle;
+			&:first-child {
+				padding-left: 1.5rem;
+			}
+			&:hover {
+				outline: 0;
+				background-color: white!important;
+			}
+		}
+		&.dx-freespace-row {
+			&>td {
+				background-color: #fafaf9!important;
+				&:hover {
+					outline: 0;
+					background-color: #fafaf9!important;
+				}
+			}
+		}
+	}
 }
 
 .dx-datagrid-headers .dx-datagrid-table .dx-row>td {
-    padding: 7px;
-    background-color: #fafaf9;
-    color: #514f4d;
+	padding: 7px;
+	background-color: #fafaf9;
+	color: #514f4d;
+}
+
+.dx-datagrid-headers [role="columnheader"].slds-has-focus {
+	background-color: white!important;
+	box-shadow: #0070d2 0 0 0 1px inset;
+}
+
+.dx-datagrid-headers [role="columnheader"] {
+	&:hover {
+		box-shadow: #dddbda -0.25rem 0 0 inset;
+		outline: 0;
+		background-color: white!important;
+	}
+	&:first-child {
+		&:hover {
+			box-shadow:none;
+		}
+	}
 }
