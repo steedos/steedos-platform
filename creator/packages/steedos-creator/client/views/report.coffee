@@ -281,6 +281,7 @@ renderTabularReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
+		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
 	sorts = _.object(reportObject.options?.sort)
 	columnWidths = _.object(reportObject.options?.column_width)
@@ -341,6 +342,7 @@ renderSummaryReport = (reportObject, reportData)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
+		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
 	sorts = _.object(reportObject.options?.sort)
 	columnWidths = _.object(reportObject.options?.column_width)
@@ -448,6 +450,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
+		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
 	sorts = _.object(reportObject.options?.sort)
 	columnWidths = _.object(reportObject.options?.column_width)
@@ -609,6 +612,10 @@ renderReport = (reportObject)->
 	filterFields = _.without filterFields, null, undefined
 	filter_scope = reportObject.filter_scope || "space"
 	filters = reportObject.filters
+	object = Creator.getObject(objectName)
+	unless object
+		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
+		return
 	
 	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
 		if error
