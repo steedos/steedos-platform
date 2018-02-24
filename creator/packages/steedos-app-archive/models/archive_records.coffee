@@ -6,6 +6,10 @@ Creator.Objects.archive_records =
 	enable_files: true
 	enable_api: true
 	fields:
+		old_id:
+			type:"text"
+			label:"编号"
+			omit:true
 		archives_name:
 			type:"text"
 			label:"档案馆名称"
@@ -649,11 +653,11 @@ Creator.Objects.archive_records =
 			label:"待接收"
 			filter_scope: "space"
 			filters: [["is_received", "=", false]]
-		received:
-			label:"已接收"
-			filter_scope:"space"
-			filters:[["is_received", "=", true]]
-			columns:["year","title","received","received_by","borrowed_by"]
+		# received:
+		# 	label:"已接收"
+		# 	filter_scope:"space"
+		# 	filters:[["is_received", "=", true]]
+		# 	columns:["year","title","received","received_by","borrowed_by"]
 		transfer:
 			label:"待移交"
 			filter_scope: "space"
@@ -663,20 +667,20 @@ Creator.Objects.archive_records =
 			filter_scope: "space"
 			filters: [["is_received", "=", true],["destroy_date","<=",new Date()],["is_destroyed", "=", false]]
 			columns:["year","title","document_date","destroy_date","archive_destroy_id"]
-		transfered:
-			label:"已移交"
-			filter_scope: "space"
-			filters: [["is_transfered", "=", true]]
-		destroyed:
-			label:"已销毁"
-			filter_scope: "space"
-			filters: [["is_destroyed", "=", true]]
-			columns:["year","title","document_date","destroy_date","destroyed","archive_destroy_id"]
-		borrow:
-			label:"已借阅"
-			filter_scope: "space"
-			filters:[["is_borrowed","=",true],["is_received","=",true]]
-			columns:["title","borrowed","borrowed_by"]
+		# transfered:
+		# 	label:"已移交"
+		# 	filter_scope: "space"
+		# 	filters: [["is_transfered", "=", true]]
+		# destroyed:
+		# 	label:"已销毁"
+		# 	filter_scope: "space"
+		# 	filters: [["is_destroyed", "=", true]]
+		# 	columns:["year","title","document_date","destroy_date","destroyed","archive_destroy_id"]
+		# borrow:
+		# 	label:"已借阅"
+		# 	filter_scope: "space"
+		# 	filters:[["is_borrowed","=",true],["is_received","=",true]]
+		# 	columns:["title","borrowed","borrowed_by"]
 	permission_set:
 		user:
 			allowCreate: false
@@ -756,13 +760,10 @@ Creator.Objects.archive_records =
 			visible: true
 			on: "list"
 			todo:()->
-				if Creator.TabularSelectedIds?["archive_records"].length == 0
-					swal("请先选择要接收的档案")
-					return
-				if Session.get("list_view_id")!= "receive"
-					swal("请在待接收视图下操作")
-					return
-				else
+				if Session.get("list_view_id")== "receive"
+					if Creator.TabularSelectedIds?["archive_records"].length == 0
+						swal("请先选择要接收的档案")
+						return
 					space = Session.get("spaceId")
 					Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"],space,
 						(error,result) ->
@@ -778,9 +779,9 @@ Creator.Objects.archive_records =
 				if Creator.TabularSelectedIds?["archive_records"].length == 0
 					 swal("请先移交要移交的档案")
 					 return
-				if Session.get("list_view_id")!= "all"
-					swal("请在全部视图下操作")
-					return
+				# if Session.get("list_view_id")!= "all"
+				# 	swal("请在全部视图下操作")
+				# 	return
 				Meteor.call("archive_transfer",Creator.TabularSelectedIds?["archive_records"],
 					(error,result) ->
 							console.log error
@@ -842,5 +843,5 @@ Creator.Objects.archive_records =
 					# 	doc.relate_documentIds.push collection_record.findOne({_id:selectedId})._id
 					Creator.createObject("archive_borrow",doc)
 				else
-					swal("请在全部或已接收视图下执行操作")
+					#swal("请在全部或已接收视图下执行操作")
 					return
