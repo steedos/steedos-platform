@@ -1,3 +1,5 @@
 {
-	"authorize":"Authorize"
+	"authorize":"Authorize",
+	"get_user_info":"Get your infomation",
+	"get_follow_permission":"get the follow permission"
 }

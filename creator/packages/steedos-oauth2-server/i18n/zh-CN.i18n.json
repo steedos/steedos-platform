@@ -1,3 +1,5 @@
 {
-	"authorize":"授权"
+	"authorize":"授权",
+	"get_user_info":"获取您的个人信息",
+	"get_follow_permission":"获得以下权限"
 }

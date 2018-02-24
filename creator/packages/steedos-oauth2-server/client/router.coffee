@@ -1,7 +1,11 @@
 FlowRouter.route '/oauth2',
 	triggersEnter: [ ()->
-		falg = false
-		if falg && Meteor.userId()
+		# 用户之前在session里面授权过
+		isAuthorized = false
+		authorizedClients = Session.get("authorizedClients")
+		if authorizedClients
+			isAuthorized = true
+		if isAuthorized && Meteor.userId()
 			OAuth2.getOAuth2Code()
 	],
 	action: (params, queryParams)->

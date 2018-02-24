@@ -26,10 +26,9 @@ Package.onUse(function(api) {
 	api.use('meteorhacks:async@1.0.0', 'server');
 	api.use('simple:json-routes@2.1.0', 'server');
 
-	// api.use('steedos:useraccounts-bootstrap@1.14.2_6', 'client');
+	api.use('meteorhacks:subs-manager@1.6.4');
+
 	
-
-
 	api.use('http');
 
 	api.use('steedos:creator');
@@ -52,9 +51,12 @@ Package.onUse(function(api) {
 	api.addFiles('client/oauth2authorize.coffee', 'client');
 	
 	api.addFiles('client/router.coffee', 'client');
+
+	api.addFiles('client/subscribe.coffee', 'client');
 	
 	api.addFiles('server/rest.coffee', 'server');
-	api.addFiles('server/rest.coffee', 'server');
+	api.addFiles('server/publications/oauth2clients.coffee', 'server');
+	
 	
 	api.export('oAuth2Server', ['client', 'server']);
 
