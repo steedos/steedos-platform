@@ -69,7 +69,7 @@ Creator.Objects.archive_records =
 			type: "text"
 			label:"年度"
 			defaultValue: "2018"
-			required:true
+			#required:true
 			sortable:true
 			group:"档号"
 
@@ -128,7 +128,7 @@ Creator.Objects.archive_records =
 			label:"题名"
 			is_wide:true
 			is_name:true
-			required:true
+			#required:true
 			sortable:true
 			searchable:true
 			group:"内容描述"
@@ -174,13 +174,13 @@ Creator.Objects.archive_records =
 		author:
 			type:"text"
 			label:"责任者"
-			required:true
+			#required:true
 			group:"内容描述"
 		document_date:
 			type:"date"
 			label:"文件日期"
 			format:"YYYYMMDD"
-			required:true
+			#required:true
 			group:"内容描述"
 			sortable:true
 
@@ -232,10 +232,11 @@ Creator.Objects.archive_records =
 				{label: "限制", value: "限制"},
 				{label: "秘密", value: "秘密"},
 				{label: "机密", value: "机密"},
-				{label: "绝密", value: "绝密"}
-
+				{label: "绝密", value: "绝密"},
+				{label: "非密", value: "非密"}
 			]
-			required:true
+			allowedValues:["公开","限制","秘密","机密","绝密","非密","普通"]
+			#required:true
 			sortable:true
 			group:"内容描述"
 
@@ -299,6 +300,7 @@ Creator.Objects.archive_records =
 				{label: "待归档", value: "待归档"},
 				{label: "实物归档", value: "实物归档"}
 			]
+			allowedValues:["不归档","电子归档","待归档","暂存","实物归档"]
 			group:"形式特征"
 
 		language:
@@ -655,7 +657,7 @@ Creator.Objects.archive_records =
 		transfer:
 			label:"待移交"
 			filter_scope: "space"
-			filters: [["is_transfered", "", false]]
+			filters: [["is_transfered", "=", false]]
 		destroy:
 			label:"待销毁"
 			filter_scope: "space"
@@ -685,9 +687,9 @@ Creator.Objects.archive_records =
 			viewAllRecords: true
 			list_views:["default","recent","all","borrow"]
 		admin:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
@@ -697,8 +699,8 @@ Creator.Objects.archive_records =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.is_received = false
-				doc.is_destroyed = false
+				#doc.is_received = false
+				#doc.is_destroyed = false
 				doc.is_borrowed = false
 				doc.created = new Date()
 				doc.created_by = userId
@@ -720,7 +722,6 @@ Creator.Objects.archive_records =
 						rule_id = rules[i]._id
 						break;
 					i++
-				console.log rule_id
 				if rule_id
 					category_retention = Creator.Collections["archive_rules"].findOne({_id:rule_id},{fields:{classification:1,retention:1}})
 					doc.category_code = category_retention.classification
@@ -735,17 +736,18 @@ Creator.Objects.archive_records =
 			on: "server"
 			when: "after.update"
 			todo: (userId, doc)->
-				duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid}).years
-				year = doc.document_date.getFullYear()+duration
-				month = doc.document_date.getMonth()
-				day = doc.document_date.getDate()
-				destroy_date = new Date(year,month,day)
+				duration = Creator.Collections["archive_retention"].findOne({_id:doc.retention_peroid})?.years
+				if duration
+					year = doc.document_date.getFullYear()+duration
+					month = doc.document_date.getMonth()
+					day = doc.document_date.getDate()
+					destroy_date = new Date(year,month,day)
 				# if doc.archive_destroy_id
 				# 	state = Creator.Collections["archive_destroy"].findOne({_id:doc.archive_destroy_id}).destroy_state
 				# 	if state=="已销毁"
 				# 		Creator.Collections["archive_destroy"].update({_id:doc.archive_destroy_id},{$set:{destroy_state:"未销毁"}})
 				#console.log doc.archive_destroy_id
-				Creator.Collections["archive_records"].direct.update({_id:doc._id},{$set:{destroy_date:destroy_date}})
+					Creator.Collections["archive_records"].direct.update({_id:doc._id},{$set:{destroy_date:destroy_date}})
 				# destroy_records = Creator.Collections["archive_destroy"].findOne({_id:doc.archive_destroy_id}).
 				# Creator.Collections["archive_destroy"].update ({_id:doc.archive_destroy_id},{$set:{modified:new Date,modified_by:Meteor.userId(),destroy_records:}})
 	actions:
@@ -764,8 +766,9 @@ Creator.Objects.archive_records =
 					space = Session.get("spaceId")
 					Meteor.call("archive_receive",Creator.TabularSelectedIds?["archive_records"],space,
 						(error,result) ->
-							text = "共接收"+result[0]+"条,"+"成功"+result[1]+"条"
-							swal(text)
+							if result
+								text = "共接收"+result[0]+"条,"+"成功"+result[1]+"条"
+								swal(text)
 							)
 		transfer:
 			label:"移交"
