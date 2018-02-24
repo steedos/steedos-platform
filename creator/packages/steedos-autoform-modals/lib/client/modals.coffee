@@ -33,7 +33,7 @@ getSimpleSchema = (collectionName)->
 		if fields
 			fields = fields.replace(/ /, "").split(",")
 			_.each fields, (field)->
-				obj = _.pick(schema, field)
+				obj = _.pick(schema, field, field + ".$")
 				_.extend(final_schema, obj)
 		else
 			final_schema = schema
