@@ -95,7 +95,15 @@ Template.creator_grid.onRendered ->
 
 			dxOptions = 
 				showColumnLines: false
+				allowColumnResizing: true
+				columnResizingMode: "widget"
 				showRowLines: true
+				stateStoring:{
+		   			type: "custom"
+					enabled: true
+					customSave: (gridState)->
+						console.log gridState
+				}
 				dataSource: 
 					store: 
 						type: "odata"
