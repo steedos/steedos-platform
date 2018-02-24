@@ -41,7 +41,7 @@ Template.loginAuthorize.helpers
 			return clientObj?.clientName
 
 Template.loginAuthorize.onRendered ->
-	$("body").removeClass("loading");
+	$("body").removeClass("loading")
 
 Template.loginAuthorize.events
 	'click button#oauth2login':()->
