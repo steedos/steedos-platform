@@ -94,6 +94,8 @@ Template.creator_grid.onRendered ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 
 			dxOptions = 
+				showColumnLines: false
+				showRowLines: true
 				dataSource: 
 					store: 
 						type: "odata"
@@ -178,6 +180,9 @@ Template.creator_grid.events
 	'click td': (event, template)->
 		if $(event.currentTarget).find(".slds-checkbox input").length
 			# 左侧勾选框不要focus样式功能
+			return
+		if $(event.currentTarget).parent().hasClass("dx-freespace-row")
+			# 最底下的空白td不要focus样式功能
 			return
 		template.$("td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
