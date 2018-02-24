@@ -74,7 +74,7 @@ Template.creator_grid.onRendered ->
 			
 			curObjectName = if is_related then related_object_name else object_name
 			showColumns.push
-				dataField: "_id"
+				dataField: "_id_actions"
 				width: 46
 				allowSorting: false
 				headerCellTemplate: (container) ->
@@ -85,7 +85,7 @@ Template.creator_grid.onRendered ->
 					actionsOption = {_id: options.data._id, object_name: curObjectName, record_permissions: record_permissions, is_related: false}
 					Blaze.renderWithData Template.creator_table_actions, actionsOption, container[0]
 			showColumns.splice 0, 0, 
-				dataField: "_id"
+				dataField: "_id_checkbox"
 				width: 60
 				allowSorting: false
 				headerCellTemplate: (container) ->
@@ -102,7 +102,20 @@ Template.creator_grid.onRendered ->
 		   			type: "custom"
 					enabled: true
 					customSave: (gridState)->
-						console.log gridState
+						columns = gridState.columns
+						column_width = {}
+						sort = []
+						_.each columns, (column_obj)->
+							if column_obj.width
+								column_width[column_obj.dataField] = column_obj.width
+							if column_obj.sortOrder
+								sort.push [column_obj.dataField, column_obj.sortOrder]
+						Meteor.call 'grid_settings', object_name, list_view_id, column_width, sort,
+							(error, result)->
+								if error
+									console.log error
+								else
+									console.log "success"
 				}
 				dataSource: 
 					store: 
@@ -210,6 +223,7 @@ Template.creator_grid.onCreated ->
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
+			console.log "creatorCellEditForm"
 			dxDataGridInstance.refresh().done (result)->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
