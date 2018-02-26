@@ -1,5 +1,3 @@
-@Creator = {}
-
 Creator.Apps = {}
 Creator.Objects = {}
 Creator.Collections = {}

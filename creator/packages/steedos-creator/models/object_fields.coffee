@@ -66,9 +66,9 @@ Creator.Objects.object_fields =
 
 		precision:
 			type: "number"
+
 		scale:
 			type: "number"
-
 
 		reference_to:
 			type: "select"

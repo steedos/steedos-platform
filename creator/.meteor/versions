@@ -180,6 +180,7 @@ steedos:lightning-design-system@0.0.1
 steedos:loaders-css@0.1.2
 steedos:logger@0.0.2
 steedos:oauth2-server@0.0.1
+steedos:objects@0.0.1
 steedos:odata@0.0.1
 steedos:smsqueue@0.0.1
 steedos:sso@0.0.4
