@@ -101,19 +101,12 @@ Package.onUse(function(api) {
 
 	api.addFiles('core.coffee');
 
-	// api.addFiles('lib/object.coffee');
-	// api.addFiles('lib/fields.coffee');
-	// api.addFiles('lib/triggers.coffee');
-	// api.addFiles('lib/actions.coffee');
-	// api.addFiles('lib/permission_sets.coffee');
-	// api.addFiles('lib/listviews.coffee');
-	// api.addFiles('lib/apps.coffee');
-	// api.addFiles('lib/eval.js');
-	// api.addFiles('lib/formula_engine.coffee');
+	api.addFiles('lib/actions.coffee');
+	api.addFiles('lib/listviews.coffee');
+	api.addFiles('lib/apps.coffee');
+	api.addFiles('lib/eval.js');
+	api.addFiles('lib/formula_engine.coffee');
 
-	api.addFiles('models/base.coffee');
-	api.addFiles('models/object.coffee');
-	api.addFiles('models/object_fields.coffee');
 	api.addFiles('models/object_recent_viewed.coffee');
 	api.addFiles('models/object_listviews.coffee');
 	api.addFiles('models/permission_set.coffee');

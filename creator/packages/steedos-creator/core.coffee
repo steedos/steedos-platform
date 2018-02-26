@@ -1,6 +1,4 @@
 Creator.Apps = {}
-Creator.Objects = {}
-Creator.Collections = {}
 Creator.Reports = {}
 Creator.subs = {}
 
@@ -31,12 +29,6 @@ Meteor.startup ->
 # else
 # 	app._id = app_id
 # 	db.apps.update({_id: app_id}, app)
-
-Creator.getObject = (object_name)->
-	if !object_name
-		object_name = Session.get("object_name")
-	if object_name
-		return Creator.objectsByName[object_name]
 
 Creator.getTable = (object_name)->
 	return Tabular.tablesByName["creator_" + object_name]
