@@ -19,7 +19,7 @@ Package.onUse(function(api) {
 	api.addFiles(tapi18nFiles);
 
 
-	api.addFiles('models/Companies.coffee');
+	api.addFiles('models/Accounts.coffee');
 	api.addFiles('models/Contacts.coffee');
 	api.addFiles('models/Contracts.coffee');
 	api.addFiles('crm.coffee','client');
