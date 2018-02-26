@@ -36,6 +36,7 @@ Template.creator_grid.onRendered ->
 	self.autorun (c)->
 		is_related = self.data.is_related
 		object_name = Session.get("object_name")
+		creator_obj = Creator.getObject(object_name)
 		related_object_name = Session.get("related_object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
 		list_view_id = Session.get("list_view_id")
@@ -72,30 +73,33 @@ Template.creator_grid.onRendered ->
 				selectColumns = _.union ["_id"], columns, extra_columns
 				defaultWidth = _defaultWidth(columns)
 				showColumns = columns.map (n,i)->
-					columnItem = 
-						cssClass: "slds-cell-edit"
-						dataField: n
-						cellTemplate: (container, options) ->
-							field = object.fields[n]
-							field_name = n
-							if /\w+\.\$\.\w+/g.test(field_name)
-								# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
-								field_name = n.replace(/\$\./,"")
-							cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
-							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
-					
-					if column_width_settings
-						width = column_width_settings[n]
-						if width
-							columnItem.width = width
-					else
-						columnItem.width = defaultWidth
+					if creator_obj.fields[n]?.type and !creator_obj.fields[n].hidden
+						columnItem = 
+							cssClass: "slds-cell-edit"
+							dataField: n
+							cellTemplate: (container, options) ->
+								field = object.fields[n]
+								field_name = n
+								if /\w+\.\$\.\w+/g.test(field_name)
+									# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+									field_name = n.replace(/\$\./,"")
+								cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
+								Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+						
+						if column_width_settings
+							width = column_width_settings[n]
+							if width
+								columnItem.width = width
+						else
+							columnItem.width = defaultWidth
 
-					if column_sort_settings and column_sort_settings.length > 0
-						_.each column_sort_settings, (sort)->
-							if sort[0] == n
-								columnItem.sortOrder = sort[1]
-					return columnItem
+						if column_sort_settings and column_sort_settings.length > 0
+							_.each column_sort_settings, (sort)->
+								if sort[0] == n
+									columnItem.sortOrder = sort[1]
+						return columnItem
+					else
+						return undefined
 			
 			curObjectName = if is_related then related_object_name else object_name
 			showColumns.push
@@ -117,7 +121,8 @@ Template.creator_grid.onRendered ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
 				cellTemplate: (container, options) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
-
+			
+			showColumns = _.compact(showColumns)
 
 			dxOptions = 
 				showColumnLines: false
