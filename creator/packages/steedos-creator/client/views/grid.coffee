@@ -26,6 +26,11 @@ _columns = (related_object_name)->
 				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 		return columnItem
 
+_defaultWidth = (columns)->
+	column_counts = columns.length
+	content_width = $(".gridContainer").width() - 46 - 60
+	return content_width/column_counts
+
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -65,6 +70,7 @@ Template.creator_grid.onRendered ->
 					extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 				
 				selectColumns = _.union ["_id"], columns, extra_columns
+				defaultWidth = _defaultWidth(columns)
 				showColumns = columns.map (n,i)->
 					columnItem = 
 						cssClass: "slds-cell-edit"
@@ -82,6 +88,8 @@ Template.creator_grid.onRendered ->
 						width = column_width_settings[n]
 						if width
 							columnItem.width = width
+					else
+						columnItem.width = defaultWidth
 
 					if column_sort_settings and column_sort_settings.length > 0
 						_.each column_sort_settings, (sort)->
@@ -110,6 +118,7 @@ Template.creator_grid.onRendered ->
 				cellTemplate: (container, options) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 
+
 			dxOptions = 
 				showColumnLines: false
 				allowColumnResizing: true
@@ -133,7 +142,7 @@ Template.creator_grid.onRendered ->
 								if error
 									console.log error
 								else
-									console.log "success"
+									console.log "grid_settings success"
 				}
 				dataSource: 
 					store: 
@@ -239,7 +248,6 @@ Template.creator_grid.onCreated ->
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
-			console.log "creatorCellEditForm"
 			dxDataGridInstance.refresh().done (result)->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,true
