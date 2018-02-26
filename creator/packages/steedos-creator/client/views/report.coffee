@@ -322,6 +322,9 @@ renderTabularReport = (reportObject, reportData)->
 	console.log "renderTabularReport.reportSummary:", reportSummary
 
 	dxOptions = 
+		showColumnLines: false
+		columnResizingMode: "widget"
+		showRowLines: true
 		sorting: 
 			mode: "multiple"
 		columnAutoWidth: true
@@ -430,6 +433,7 @@ renderSummaryReport = (reportObject, reportData)->
 
 	console.log "renderSummaryReport.reportColumns:", reportColumns
 	dxOptions = 
+		columnResizingMode: "widget"
 		sorting: 
 			mode: "multiple"
 		columnAutoWidth: true
@@ -554,6 +558,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			width: 450
 	).dxChart('instance')
 	dxOptions = 
+		columnResizingMode: "widget"
 		sorting: 
 			mode: "multiple"
 		paging: false
