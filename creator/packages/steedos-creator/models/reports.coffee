@@ -76,8 +76,8 @@ Creator.Objects.reports =
 			optionsFunction: (values)->
 				_options = []
 				_object = Creator.getObject(values.object_name)
-				fields = _object.fields
-				icon = _object.icon
+				fields = _object?.fields
+				icon = _object?.icon
 
 				_.forEach fields, (f, k)->
 					_options.push {label: f.label || k, value: k, icon: icon}
@@ -92,8 +92,8 @@ Creator.Objects.reports =
 			optionsFunction: (values)->
 				_options = []
 				_object = Creator.getObject(values.object_name)
-				fields = _object.fields
-				icon = _object.icon
+				fields = _object?.fields
+				icon = _object?.icon
 
 				_.forEach fields, (f, k)->
 					_options.push {label: f.label || k, value: k, icon: icon}
