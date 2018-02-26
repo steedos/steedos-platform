@@ -72,7 +72,10 @@ Creator.Object = (options)->
 
 	if db[self.name]
 		Creator.Collections[self.name] = db[self.name]
-	else if !Creator.Collections[self.name]
+	else if options.db
+		Creator.Collections[self.name] = options.db
+	
+	if !Creator.Collections[self.name]
 		Creator.Collections[self.name] = new Meteor.Collection(self.name)
 	self.db = Creator.Collections[self.name]
 
