@@ -622,11 +622,10 @@ renderReport = (reportObject)->
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
 	if filters and filters.length > 0
-			filters = _.map filters, (obj)->
-				return [obj.field, obj.operation, obj.value]
-			
-			filters = Creator.formatFiltersToMongo(filters)
-			# if filters.field
+		filters = _.map filters, (obj)->
+			return [obj.field, obj.operation, obj.value]
+		
+		filters = Creator.formatFiltersToMongo(filters)
 	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
 		if error
 			console.error('report_data method error:', error)

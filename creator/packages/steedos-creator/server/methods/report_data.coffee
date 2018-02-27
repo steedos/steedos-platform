@@ -27,13 +27,8 @@ Meteor.methods
 		else if filter_scope == "mine"
 			selector.owner = userId
 
-		# if filters and filters.length > 0
-		# 	filters = _.map filters, (obj)->
-		# 		return [obj.field, obj.operation, obj.value]
-			
-		# 	filters = Creator.formatFiltersToMongo(filters)
-		# 	# if filters.field
-		selector["$and"] = filters
+		if filters and filters.length > 0
+			selector["$and"] = filters
 		cursor = Creator.getCollection(object_name).find(selector, fields: filterFields)
 		if cursor.count() > 10000
 			return []
