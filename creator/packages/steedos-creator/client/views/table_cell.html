@@ -1,14 +1,12 @@
 <template name="creator_table_cell">
 	<span class="slds-grid slds-grid_align-spread creator_table_cell">
-		<span class="slds-truncate fulltext" >
 		{{#each cellData}}
 			{{#if href}}
-				<a href="{{href}}" title="{{value}}" class = "list-item-link-{{id}}">{{value}}</a>
+				<a href="{{href}}" title="{{value}}" class = "slds-truncate fulltex list-item-link-{{id}}">{{value}}</a>
 			{{else}}
-				<span title="{{value}}">{{{value}}}</span>
+				<span title="{{value}}" class="slds-truncate fulltex">{{{value}}}</span>
 			{{/if}}
 		{{/each}}
-		</span>
 		<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">
 			{{#if editable}}
 				<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
