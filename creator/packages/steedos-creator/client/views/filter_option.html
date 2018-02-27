@@ -25,23 +25,27 @@
                                 </div>
                             </fieldset>
                         {{else}}
-                            {{#autoForm id="filter-option" schema=schema doc=filter_item}}
-                                <div class="forceFilterPanelFieldSelector">
-                                    <div class="forceRecordLayout valueInput">
-                                        {{> afQuickField name="field" label=(_ "creator_filter_option_field")}}
+                            {{#if is_show_form}}
+                                {{#autoForm id="filter-option" schema=schema doc=filter_item}}
+                                    <div class="forceFilterPanelFieldSelector">
+                                        <div class="forceRecordLayout valueInput">
+                                            {{> afQuickField name="field" label=(_ "creator_filter_option_field")}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="forceFilterPanelFieldSelector">
-                                    <div class="forceRecordLayout valueInput">
-                                        {{> afQuickField name="operation" label=(_ "creator_filter_option_operation")}}
+                                    <div class="forceFilterPanelFieldSelector">
+                                        <div class="forceRecordLayout valueInput">
+                                            {{> afQuickField name="operation" label=(_ "creator_filter_option_operation")}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="forceFilterPanelFieldSelector">
-                                    <div class="forceRecordLayout valueInput">
-                                        {{> afQuickField name="value" label=(_ "creator_filter_option_value")}}
+                                    <div class="forceFilterPanelFieldSelector">
+                                        <div class="forceRecordLayout valueInput" style="min-height: 70px;">
+                                            {{#if show_form}}
+                                                {{> afQuickField name="value" label=(_ "creator_filter_option_value")}}
+                                            {{/if}}
+                                        </div>
                                     </div>
-                                </div>
-                            {{/autoForm}}
+                                {{/autoForm}}
+                            {{/if}}
                         {{/if}}
                     </div>
                     {{#if this.is_edit_scope}}

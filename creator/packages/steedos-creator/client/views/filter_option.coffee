@@ -28,7 +28,7 @@ Template.filter_option.helpers
 				autoform:
 					type: "select"
 					defaultValue: ()->
-						return "EQUALS"
+						return "="
 					options: ()->
 						options = [
 							{label: t("creator_filter_operation_equal"), value: "="},
@@ -46,38 +46,55 @@ Template.filter_option.helpers
 					return template.schema_obj.get()?.type || String
 				label: "value"
 				autoform:
-					type:()->
-						return template.schema_obj.get()?.autoform.type || "text"
-					options: ()->
-						field = template.schema_key.get()
-						schema_type = template.schema_obj.get()?.autoform.type || "text"
-						if field and (schema_type == "select" or schema_type == "select-checkbox")
-							schema = Creator.getSchema(object_name)._schema
-							obj = _.pick(schema, field)
-							options = obj[field].autoform?.options
-							return options
-					dateTimePickerOptions:()->
-						if template.schema_obj.get()?.autoform.type == "bootstrap-datetimepicker"
-							return {
-								locale: Session.get("TAPi18n::loaded_lang")
-								format:"YYYY-MM-DD HH:mm"
-								sideBySide:true
-							}
-						else
-							return null
+					type: "text"
+					# type:()->
+					# 	return template.schema_obj.get()?.autoform.type || "text"
+					# options: ()->
+					# 	field = template.schema_key.get()
+					# 	schema_type = template.schema_obj.get()?.autoform.type || "text"
+					# 	if field and (schema_type == "select" or schema_type == "select-checkbox")
+					# 		schema = Creator.getSchema(object_name)._schema
+					# 		obj = _.pick(schema, field)
+					# 		options = obj[field].autoform?.options
+					# 		return options
+					# dateTimePickerOptions:()->
+					# 	if template.schema_obj.get()?.autoform.type == "bootstrap-datetimepicker"
+					# 		return {
+					# 			locale: Session.get("TAPi18n::loaded_lang")
+					# 			format:"YYYY-MM-DD HH:mm"
+					# 			sideBySide:true
+					# 		}
+					# 	else
+					# 		return null
 
+		schema_key = template.schema_key.get()
+		if schema_key
+			obj_schema = Creator.getSchema(object_name)._schema
+			schema.value = obj_schema[schema_key]
+		
+		# console.log "schema..................", schema
 		new SimpleSchema(schema)
 
 	filter_item: ()->
-		object_name = Template.instance().data?.object_name
-		unless object_name
-			object_name = Session.get("object_name")
-		filter_item = Template.instance().data?.filter_item
-		if filter_item and filter_item.field
-			Template.instance().schema_key.set(filter_item.field)
-			_schema = Creator.getSchema(object_name)._schema
-		Template.instance().schema_obj.set(_schema?[filter_item.field])
+		# filter_item = Template.instance().data?.filter_item
+		filter_item = Template.instance().filter_item?.get()
+		console.log filter_item
 		return filter_item
+
+	is_show_form: ()->
+		filter_item = Template.instance().filter_item?.get()
+		schema_key = Template.instance().schema_key?.get()
+		# console.log "filter_item", filter_item
+		if !filter_item.field
+			return true
+		else
+			if schema_key
+				return true
+			else
+				return false
+
+	show_form: ()->
+		return Template.instance().show_form.get()
 
 	object_label: ()->
 		object_name = Template.instance().data?.object_name
@@ -92,7 +109,7 @@ Template.filter_option.helpers
 Template.filter_option.events 
 	'click .save-filter': (event, template) ->
 		filter = AutoForm.getFormValues("filter-option").insertDoc
-		console.log filter
+		# console.log filter
 		index = this.index
 		filter_items = Session.get("filter_items")
 		filter_items[index] = filter
@@ -109,13 +126,33 @@ Template.filter_option.events
 
 	'change select[name="field"]': (event, template) ->
 		object_name = template.data?.object_name
+		filter_item = template.filter_item.get()
 		unless object_name
 			object_name = Session.get("object_name")
 		field = $(event.currentTarget).val()
+		if field != filter_item?.field
+			filter_item.value = ""
+			template.filter_item.set(filter_item)
 		_schema = Creator.getSchema(object_name)._schema
+		template.show_form.set(false)
 		template.schema_key.set(field)
 		template.schema_obj.set(_schema[field])
+		Meteor.defer ->
+			template.show_form.set(true)
 
 Template.filter_option.onCreated ->
-	this.schema_key = new ReactiveVar()
-	this.schema_obj = new ReactiveVar()
+	is_edit_scope = this.data.is_edit_scope
+	unless is_edit_scope
+		filter_item = this.data.filter_item
+		object_name = this.data.object_name
+		unless object_name
+			object_name = Session.get("object_name")
+
+		key = filter_item.field
+		key_obj = Creator.getSchema(object_name)._schema[key]
+
+		this.schema_key = new ReactiveVar(key)
+		this.schema_obj = new ReactiveVar(key_obj)
+		this.filter_item = new ReactiveVar(filter_item)
+
+		this.show_form = new ReactiveVar(true)
