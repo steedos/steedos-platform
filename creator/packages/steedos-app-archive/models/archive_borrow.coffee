@@ -50,7 +50,7 @@ Creator.Objects.archive_borrow =
 			type:"select"
 			label:"利用目的"
 			defaultValue:"工作查考"
-			options:[
+			allowedValues:[
 				{label: "工作查考", value: "工作查考"},
 				{label: "遍史修志", value: "遍史修志"},
 				{label: "学术研究", value: "学术研究"},
@@ -63,7 +63,7 @@ Creator.Objects.archive_borrow =
 			type:"select"
 			label:"利用方式"
 			defaultValue:"实体借阅"
-			options:[
+			allowedValues:[
 				{label: "实体借阅", value: "实体借阅"},
 				{label: "实体外借", value: "实体外借"},
 			]
@@ -105,7 +105,7 @@ Creator.Objects.archive_borrow =
 			type:"select"
 			label:"明细状态"
 			omit:true
-			options:[
+			allowedValues:[
 				{label:"申请中",value:"申请中"},
 				{label:"不予批准",value:"不予批准"},
 				{label:"已批准",value:"已批准"},
@@ -119,7 +119,7 @@ Creator.Objects.archive_borrow =
 		state:
 			type:"select"
 			label:"状态"
-			options:[
+			allowedValues:[
 				{label:"草稿",value:"draft"},
 				{label:"审批中",value:"pending"},
 				{label:"已核准",value:"approved"},
@@ -130,6 +130,7 @@ Creator.Objects.archive_borrow =
 		#我的借阅记录是可以被删除的，不过是假删除
 		is_deleted:
 			type:"boolean"
+			label:"已删除"
 			defaultValue:false
 			omit:true 
 	list_views:
@@ -154,24 +155,29 @@ Creator.Objects.archive_borrow =
 			filters: [["state","=","pending"]]
 			columns:["borrow_name","relate_record","created","end_date","created_by"]
 	triggers:
-		"before.insert.server.default": 
+		"before.insert.server.borrow": 
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
 				now = new Date()
-				doc.created_by = userId;
-				doc.created = now
-				doc.owner = userId
+				# doc.created_by = userId;
+				# doc.created = now
+				# doc.owner = userId
 				doc.is_deleted = false
 				doc.state = "draft"
 				doc.year = now.getFullYear().toString()
 				return true
+		"before.insert.client.default": 
+			on: "client"
+			when: "before.insert"
+			todo: (userId, doc)->
+				doc.space = Session.get("spaceId")
 		"after.insert.server.default": 
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc)->
 				Creator.Collections["archive_records"].direct.update({_id:doc.relate_record},{$set:{is_borrowed:true,borrowed:new Date(),borrowed_by:userId}})
-				Meteor.call("archive_new_audit",doc.relate_record,"借阅档案","成功",doc.space)
+				#Meteor.call("archive_new_audit",doc.relate_record,"借阅档案","成功",doc.space)
 				return true
 		"after.insert.client.default": 
 			on: "client"
@@ -189,7 +195,7 @@ Creator.Objects.archive_borrow =
 		admin:
 			allowCreate: true
 			allowDelete: true
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: false 

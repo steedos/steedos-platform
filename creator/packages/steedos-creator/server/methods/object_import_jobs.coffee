@@ -1,5 +1,5 @@
 fs = Npm.require 'fs'
-
+path = Npm.require('path')
 logger = new Logger 'QUEUE_IMPORT'
 
 converterString = (field_name, dataCell,jsonObj)->
@@ -29,8 +29,7 @@ converterSelect = (objectName,field_name, dataCell,jsonObj)->
 	select_error = ""
 	fields = Creator.getObject(objectName).fields
 	allowedValues = fields[field_name]?.allowedValues || []
-	values = _.pluck(allowedValues,"value")
-	if values.indexOf(dataCell) >= 0
+	if allowedValues.indexOf(dataCell) >= 0
 		jsonObj[field_name] = dataCell
 	else
 		select_error = "#{dataCell}不属于#{field_name}的可选范围"
@@ -82,7 +81,9 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 					when "boolean" then error = converterBool field_name,dataCell,jsonObj
 					when "select" then error = converterSelect objectName,field_name,dataCell,jsonObj
 					when "lookup" then error = converterLookup objectName,field_name,dataCell,jsonObj
-					when "text" then error = converterString field_name,dataCell,jsonObj
+					when "text"  then error = converterString field_name,dataCell,jsonObj
+					when  "textarea" then error = converterString field_name,dataCell,jsonObj
+					when "master_detail" then error = converterLookup objectName,field_name,dataCell,jsonObj			
 		if noField
 			error ="#{fieldLable}不是对象的属性"
 		if error
@@ -111,13 +112,13 @@ importObject = (importObj,space) ->
 	# # 读取文件
 	# filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
 
-	  # fileName = importObj?._id + "-no.csv"
+	# fileName = importObj?._id + "-no.csv"
 
 	# fileAddress = path.join filePath, fileName
 
 	# readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
 
-	# # 将字符串根据换行符分割为数组
+	# # # 将字符串根据换行符分割为数组
 	# dataTable = readStream.split("\r\n")
 
 	# 循环每一行，读取数据的每一列
