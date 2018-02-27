@@ -52,11 +52,11 @@ Creator.Objects.accounts =
 			label: "最近查看"
 			filter_scope: "space"
 		all:
-			label: "所有单位"
+			label: "所有客户"
 			filter_scope: "space"
 			columns: ["name", "description", "modified", "owner"]
 		mine:
-			label: "我的单位"
+			label: "我的客户"
 			filter_scope: "mine"
 
 	actions: 

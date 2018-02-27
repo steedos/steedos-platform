@@ -51,14 +51,14 @@ Creator.Objects.contacts =
 
 	list_views:
 		default:
-			columns: ["name", "company", "email", "phone"]
+			columns: ["name", "account", "email", "phone"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
 			label: "所有联系人"
 			filter_scope: "space"
-			columns: ["name", "description", "email", "phone", "owner"]
+			columns: ["name", "account", "email", "phone", "owner"]
 		mine:
 			label: "我的联系人"
 			filter_scope: "mine"
