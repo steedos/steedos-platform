@@ -55,12 +55,6 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
 	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
-Creator.getCollection = (object_name)->
-	if !object_name
-		object_name = Session.get("object_name")
-	if object_name
-		return Creator.Collections[object_name]
-
 Creator.getObjectRecord = (object_name, record_id)->
 	if !record_id
 		record_id = Session.get("record_id")
@@ -99,17 +93,6 @@ Creator.getApp = (app_id)->
 		app_id = Session.get("app_id")
 	app = Creator.Apps[app_id]
 	return app
-
-Creator.isSpaceAdmin = (spaceId, userId)->
-	if Meteor.isClient
-		if !spaceId 
-			spaceId = Session.get("spaceId")
-		if !userId
-			userId = Meteor.userId()
-	
-	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
-	if space?.admins
-		return space.admins.indexOf(userId) >= 0
 
 Creator.evaluateFormula = (formular, context)->
 

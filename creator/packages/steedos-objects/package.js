@@ -54,4 +54,5 @@ Package.onUse(function(api) {
 	api.addFiles('models/base.coffee');
 	api.addFiles('models/object.coffee');
 	api.addFiles('models/object_fields.coffee');
+
 });
