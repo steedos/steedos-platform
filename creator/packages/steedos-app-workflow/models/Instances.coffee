@@ -77,9 +77,11 @@ Creator.Objects.instances =
 		default:
 			columns: ["name", "applicant", "applicant_organization", "modified"]
 		inbox:
+			label: "待办文件"
 			filter_scope: "space"
 			filters: [["inbox_users", "=", "{userId}"]]
 		outbox:
+			label: "已办文件"
 			filter_scope: "space"
 			filters: [["outbox_users", "=", "{userId}"]]
 
