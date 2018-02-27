@@ -34,9 +34,12 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 		if field?.type and !field.hidden
 			col = {}
 			col.data = field_name
+
+			title = field.label || TAPi18n.__(object_name + "_" + field_name)
+
 			col.sTitle = "<a class='slds-th__action slds-text-link_reset' href='javascript:void(0);' role='button' tabindex='-1' aria-label='#{field_name}'>
 							<span class='slds-assistive-text'>Sort by: </span>
-							<span class='slds-truncate' title='Name'>" +  field.label + "</span>
+							<span class='slds-truncate' title='" + title + "'>" +  title + "</span>
 							<div class='slds-icon_container'>
 								<svg class='slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon' aria-hidden='true'>
 									<use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#arrowdown'>
