@@ -5,7 +5,7 @@ Creator.subs = {}
 
 Meteor.startup ->
 
-	SimpleSchema.extendOptions({filtersMethod: Match.Optional(Function)})
+	SimpleSchema.extendOptions({filtersFunction: Match.Optional(Function)})
 	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Function)})
 
 	_.each Creator.Objects, (obj, object_name)->

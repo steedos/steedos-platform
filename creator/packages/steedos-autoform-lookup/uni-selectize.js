@@ -2,7 +2,7 @@
 /* eslint strict: 0 */
 /* jshint strict: false */
 
-UniSelectize = function (options, template, filtersMethod, optionsFunction) {
+UniSelectize = function (options, template, filtersFunction, optionsFunction) {
 	this.items           = new ReactiveVar([]);
 	this.itemsSelected   = new ReactiveVar([]);
 	this.itemsUnselected = new ReactiveVar([]);
@@ -31,7 +31,7 @@ UniSelectize = function (options, template, filtersMethod, optionsFunction) {
 	this.optionsPlaceholder = options.optionsPlaceholder;
 	this.filters            = options.filters;
 	this.dependOn           = options.dependOn;
-	this.filtersMethod      = filtersMethod;
+	this.filtersFunction      = filtersFunction;
 
 	this.initialized        = new ReactiveVar(0);
 
@@ -487,8 +487,8 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	var filterQuery = {};
 
 	if(this.dependOn && this.dependValues.get()){
-		if(this.filtersMethod && _.isFunction(this.filtersMethod)){
-			filterQuery = this.filtersMethod(this.filters, this.dependValues.get());
+		if(this.filtersFunction && _.isFunction(this.filtersFunction)){
+			filterQuery = this.filtersFunction(this.filters, this.dependValues.get());
 		}else{
 			filterQuery = this.getFiltersSelectors();
 		}

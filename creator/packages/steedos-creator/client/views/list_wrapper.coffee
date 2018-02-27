@@ -5,6 +5,9 @@ Template.creator_list_wrapper.helpers Creator.helpers
 
 Template.creator_list_wrapper.helpers
 
+	isRefreshable: ()->
+		return Template["creator_#{FlowRouter.getParam('template')}"].refresh
+
 	list_template: ()->
 		return "creator_#{FlowRouter.getParam('template')}"
 
@@ -159,7 +162,7 @@ Template.creator_list_wrapper.events
 		$(".btn-delete-list-view").click()
 
 	'click .btn-refresh': (event, template)->
-		Template.creator_grid.refresh()
+		Template["creator_#{FlowRouter.getParam('template')}"]?.refresh()
 
 
 Template.creator_list_wrapper.onCreated ->

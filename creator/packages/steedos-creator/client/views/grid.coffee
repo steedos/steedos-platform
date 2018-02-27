@@ -1,29 +1,56 @@
 dxDataGridInstance = null
 
-_fields = (related_object_name)->
-	related_object = Creator.getObject(related_object)
-	name_field_key = related_object.NAME_FIELD_KEY
+_fields = (object_name)->
+	object = Creator.getObject(object_name)
+	name_field_key = object.NAME_FIELD_KEY
 	fields = [name_field_key]
-	if related_object.list_views?.default?.columns
-		fields = related_object.list_views.default.columns
-
+	if object.list_views?.default?.columns
+		fields = object.list_views.default.columns
+	fields = fields.map (n,i)->
+		if object.fields[n]?.type and !object.fields[n].hidden
+			return n.split(".")[0]
+		else
+			return undefined
+	
+	fields = _.compact(fields)
 	return fields
 
-_columns = (related_object_name)->
-	columns = _fields(related_object_name)
-	object = Creator.getObject(related_object_name)
+_columns = (object_name, columns, list_view_id, is_related)->
+	object = Creator.getObject(object_name)
+	grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
+	defaultWidth = _defaultWidth(columns)
 	return columns.map (n,i)->
+		field = object.fields[n]
 		columnItem = 
 			cssClass: "slds-cell-edit"
+			caption: field.label || n
 			dataField: n
 			cellTemplate: (container, options) ->
-				field = object.fields[n]
 				field_name = n
 				if /\w+\.\$\.\w+/g.test(field_name)
 					# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
 					field_name = n.replace(/\$\./,"")
-				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:related_object_name}
+				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
 				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+		
+		if grid_settings and grid_settings.settings
+			column_width_settings = grid_settings.settings[list_view_id]?.column_width
+			column_sort_settings = grid_settings.settings[list_view_id]?.sort
+		
+		if column_width_settings
+			width = column_width_settings[n]
+			if width
+				columnItem.width = width
+		else
+			columnItem.width = defaultWidth
+
+		if column_sort_settings and column_sort_settings.length > 0
+			_.each column_sort_settings, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
+		
+		unless field.sortable
+			columnItem.allowSorting = false
 		return columnItem
 
 _defaultWidth = (columns)->
@@ -39,14 +66,14 @@ Template.creator_grid.onRendered ->
 		creator_obj = Creator.getObject(object_name)
 		related_object_name = Session.get("related_object_name")
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-		list_view_id = Session.get("list_view_id")
 		record_id = Session.get("record_id")
+		if is_related
+			list_view_id = "recent"
+		else
+			list_view_id = Session.get("list_view_id")
+
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
 			c.stop()
-			grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
-			if grid_settings and grid_settings.settings
-				column_width_settings = grid_settings.settings[list_view_id]?.column_width
-				column_sort_settings = grid_settings.settings[list_view_id]?.sort
 			if is_related
 				url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 				filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
@@ -54,54 +81,14 @@ Template.creator_grid.onRendered ->
 				url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 				filter = Creator.getODataFilter(list_view_id, object_name)
 			
-			if is_related
-				selectColumns = _fields(related_object_name)
-				showColumns = _columns(related_object_name)
-			else
-				object = Creator.getObject(object_name)
-				objectFields = object?.fields
-				columns = [name_field_key]
-				if object.list_views?.default?.columns
-					columns = object.list_views.default.columns
-				# 暂时不支持子字段，后续odata支持后要去掉并单独处理子字段相关问题
-				columns = columns.map (n,i)->
-					return n.split(".")[0]
-				extra_columns = ["owner"]
-				if object.list_views?.default?.extra_columns
-					extra_columns = _.union extra_columns, object.list_views.default.extra_columns
-				
-				selectColumns = _.union ["_id"], columns, extra_columns
-				defaultWidth = _defaultWidth(columns)
-				showColumns = columns.map (n,i)->
-					if creator_obj.fields[n]?.type and !creator_obj.fields[n].hidden
-						columnItem = 
-							cssClass: "slds-cell-edit"
-							dataField: n
-							cellTemplate: (container, options) ->
-								field = object.fields[n]
-								field_name = n
-								if /\w+\.\$\.\w+/g.test(field_name)
-									# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
-									field_name = n.replace(/\$\./,"")
-								cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
-								Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
-						
-						if column_width_settings
-							width = column_width_settings[n]
-							if width
-								columnItem.width = width
-						else
-							columnItem.width = defaultWidth
-
-						if column_sort_settings and column_sort_settings.length > 0
-							_.each column_sort_settings, (sort)->
-								if sort[0] == n
-									columnItem.sortOrder = sort[1]
-						return columnItem
-					else
-						return undefined
-			
 			curObjectName = if is_related then related_object_name else object_name
+			object = Creator.getObject(curObjectName)
+			selectColumns = _fields(curObjectName)
+			extra_columns = ["owner"]
+			if object.list_views?.default?.extra_columns
+				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
+			
+			showColumns = _columns(curObjectName, selectColumns, list_view_id, is_related)
 			showColumns.push
 				dataField: "_id_actions"
 				width: 46
@@ -122,8 +109,6 @@ Template.creator_grid.onRendered ->
 				cellTemplate: (container, options) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
-			showColumns = _.compact(showColumns)
-
 			dxOptions = 
 				showColumnLines: false
 				allowColumnResizing: true
@@ -142,7 +127,7 @@ Template.creator_grid.onRendered ->
 								column_width[column_obj.dataField] = column_obj.width
 							if column_obj.sortOrder
 								sort.push [column_obj.dataField, column_obj.sortOrder]
-						Meteor.call 'grid_settings', object_name, list_view_id, column_width, sort,
+						Meteor.call 'grid_settings', curObjectName, list_view_id, column_width, sort,
 							(error, result)->
 								if error
 									console.log error

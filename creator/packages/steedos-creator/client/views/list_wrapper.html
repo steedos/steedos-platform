@@ -113,9 +113,11 @@
 							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Edit List" disabled>
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
 							</button>
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
-							</button>
+							{{#if isRefreshable}}
+								<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
+								</button>
+							{{/if}}
 							<div class="slds-button-group" role="group">
 								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}

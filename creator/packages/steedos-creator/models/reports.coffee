@@ -1,3 +1,21 @@
+getObjectLookupFieldOptions = (object_name, is_deep)->
+	_options = []
+	_object = Creator.getObject(object_name)
+	fields = _object?.fields
+	icon = _object?.icon
+	_.forEach fields, (f, k)->
+		if f.type == "select"
+			_options.push {label: "#{f.label || k}", value: "#{k}.label", icon: icon}
+		else
+			_options.push {label: f.label || k, value: k, icon: icon}
+			if is_deep
+				if (f.type == "lookup" || f.type == "master_detail") && f.reference_to
+					r_object = Creator.getObject(f.reference_to)
+					if r_object
+						_.forEach r_object.fields, (f2, k2)->
+							_options.push {label: "#{f.label || k}=>#{f2.label || k2}", value: "#{k}.#{k2}", icon: r_object?.icon}
+	return _options
+
 Creator.Objects.reports = 
 	name: "reports"
 	label: "报表"
@@ -74,15 +92,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				_options = []
-				_object = Creator.getObject(values.object_name)
-				fields = _object?.fields
-				icon = _object?.icon
-
-				_.forEach fields, (f, k)->
-					_options.push {label: f.label || k, value: k, icon: icon}
-
-				return _options
+				return getObjectLookupFieldOptions values.object_name, true
 		rows: 
 			label: "行"
 			type: "lookup"
@@ -90,15 +100,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				_options = []
-				_object = Creator.getObject(values.object_name)
-				fields = _object?.fields
-				icon = _object?.icon
-
-				_.forEach fields, (f, k)->
-					_options.push {label: f.label || k, value: k, icon: icon}
-
-				return _options
+				return getObjectLookupFieldOptions values.object_name, true
 		values: 
 			label: "统计"
 			type: "[text]"

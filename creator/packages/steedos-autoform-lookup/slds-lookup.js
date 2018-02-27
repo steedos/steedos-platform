@@ -63,15 +63,15 @@ Template.steedosLookups.onCreated(function () {
 
 	var fieldSchema = AutoForm.getSchemaForField(template.data.name);
 
-	var filtersMethod = null;
+	var filtersFunction = null;
 	var optionsFunction = null;
 
 	if(fieldSchema){
-		filtersMethod = fieldSchema.filtersMethod;
+		filtersFunction = fieldSchema.filtersFunction;
 		optionsFunction = fieldSchema.optionsFunction
 	}
 
-    template.uniSelectize = new UniSelectize(template.data, template, filtersMethod, optionsFunction);
+    template.uniSelectize = new UniSelectize(template.data, template, filtersFunction, optionsFunction);
 });
 
 Template.steedosLookups.onRendered(function () {

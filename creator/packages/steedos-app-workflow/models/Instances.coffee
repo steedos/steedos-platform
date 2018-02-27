@@ -15,12 +15,61 @@ Creator.Objects.instances =
 			type: "master_detail"
 			reference_to: "flows"
 			readonly: true
+		flow_version:
+			type: "string"
+		form:
+			type: "master_detail"
+			reference_to: "forms"
+			readonly: true
+		form_version:
+			type: "string"
+		submitter:
+			type: "master_detail"
+			reference_to: "users"
+			readonly: true
+		submitter_name:
+			type: "string"
 		applicant:
 			type: "lookup",
 			reference_to: "users"
+		applicant_name:
+			type: "string"
 		applicant_organization:
 			type: "lookup",
 			reference_to: "organizations"
+		applicant_organization_name:
+			type: "string"
+		applicant_organization_fullname:
+			type: "string"
+		submit_date:
+			type: "datetime"
+		code:
+			type: "string"
+		is_archived:
+			type: "boolean"
+		is_deleted:
+			type: "boolean"
+		values:
+			blackbox: true
+			omit: true
+		inbox_users:
+			type: [String]
+		outbox_users:
+			type: [String]
+		traces:
+			type: [Object]
+			blackbox: true
+			omit: true
+		attachments:
+			type: [Object]
+			blackbox: true
+			omit: true
+		flow_name:
+			type: "string"
+		category_name:
+			type: "string"
+		related_instances:
+			type: [String]
 		state:
 			type: "string"
 

@@ -59,7 +59,7 @@ Creator.getObjectSchema = (obj) ->
 
 			fs.autoform.dependOn = field.depend_on
 
-			fs.filtersMethod = Creator.evaluateFilters
+			fs.filtersFunction = Creator.evaluateFilters
 
 			if field.reference_to
 
