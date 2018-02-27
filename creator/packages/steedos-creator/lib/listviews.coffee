@@ -191,7 +191,7 @@ Creator.initListViews = (object_name)->
 		extraFields: extra_columns
 		lengthChange: false
 		ordering: true
-		pageLength: 20
+		pageLength: 50
 		info: false
 		searching: true
 		autoWidth: false
