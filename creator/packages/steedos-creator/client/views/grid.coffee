@@ -73,7 +73,6 @@ Template.creator_grid.onRendered ->
 			list_view_id = Session.get("list_view_id")
 
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
-			c.stop()
 			if is_related
 				url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 				filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
@@ -88,7 +87,8 @@ Template.creator_grid.onRendered ->
 			if object.list_views?.default?.extra_columns
 				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 			
-			showColumns = _columns(curObjectName, selectColumns, list_view_id, is_related)
+			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
+			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
 			showColumns.push
 				dataField: "_id_actions"
 				width: 46
@@ -110,6 +110,13 @@ Template.creator_grid.onRendered ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
 			dxOptions = 
+				paging: 
+					pageSize: 20
+				pager: 
+					showPageSizeSelector: true,
+					allowedPageSizes: [20, 40, 60],
+					showInfo: false,
+					showNavigationButtons: true
 				showColumnLines: false
 				allowColumnResizing: true
 				columnResizingMode: "widget"
