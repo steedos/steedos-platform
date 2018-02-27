@@ -45,6 +45,9 @@
 			}
 			.table-grid-content {
 				height: 100%;
+				&>.slds-col{
+					background-color: #fafaf9;
+				}
 				.tale-content {
 					width: 100%;
 					height: 100%;
@@ -53,11 +56,12 @@
 					padding-bottom: 2px;
 					border-bottom-right-radius: 6px;
 					border-bottom-left-radius: 6px;
+					overflow: auto;
 				
-					& > div {
-						overflow: auto;
-    					height: 100%;
-					}
+					// & > div {
+					// 	overflow: auto;
+					// 	height: 100%;
+					// }
 
 					.dataTable {
 						width: auto;
@@ -136,7 +140,7 @@
 	
 	.slds-table+.dataTables_paginate{
 		float: left;
-    	margin-left: 1.5rem;
+		margin-left: 1.5rem;
 	}
 
 	.list-table-container{
