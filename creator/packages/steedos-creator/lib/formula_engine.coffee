@@ -2,44 +2,40 @@
 
 FormulaEngine.PREFIX = "_VALUES"
 
-FormulaEngine.baseData = ()->
+FormulaEngine.context = ()->
 
 	space = Session.get("spaceId")
 
 	userId = Meteor.userId()
 
-	baseData = {}
+	context = {}
 
 	if userId
 
-		baseData.userId = Meteor.userId()
-		baseData.spaceId = Session.get("spaceId")
+		context.userId = Meteor.userId()
+		context.spaceId = Session.get("spaceId")
 
-		user = db.users.findOne(userId)
+		space_user = db.space_users.findOne({space: space, user: userId})
+		context.user = {
+			_id: userId
+			name: space_user.name,
+			mobile: space_user.mobile,
+			position: space_user.position,
+			email: space_user.email
+		}
 
-		if user
-			baseData.user = {
-				_id: user._id
-				name: user.name,
-				mobile: user.mobile,
-				position: user.position,
-				email: user.email
-			}
+		if space_user
+			space_user_org = db.organizations.findOne(space_user.organization)
 
-			space_user = db.space_users.findOne({space: space, user: user._id})
+			if space_user_org
+				context.user.organization = {
+					_id: space_user_org._id,
+					name: space_user_org.name,
+					fullname: space_user_org.fullname,
+					is_company: space_user_org.is_company
+				}
 
-			if space_user
-				space_user_org = db.organizations.findOne(space_user.organization)
-
-				if space_user_org
-					baseData.user.organization = {
-						_id: space_user_org._id,
-						name: space_user_org.name,
-						fullname: space_user_org.fullname,
-						is_company: space_user_org.is_company
-					}
-
-	return baseData;
+	return context;
 
 FormulaEngine._prependPrefixForFormula = (prefix,fieldVariable)->
 	reg = /(\{[^{}]*\})/g;
@@ -61,13 +57,13 @@ FormulaEngine.run = (formula_str, _CONTEXT, extend)->
 			extend = true
 
 		if extend
-			_VALUES = FormulaEngine.baseData();
+			_VALUES = FormulaEngine.context();
 			_VALUES = _.extend(_VALUES, _CONTEXT)
 		else
 			_VALUES = _CONTEXT
 		formula_str = FormulaEngine._prependPrefixForFormula("this", formula_str)
 
-		# formula_data_str = "#{FormulaEngine.PREFIX} = FormulaEngine.baseData();";
+		# formula_data_str = "#{FormulaEngine.PREFIX} = FormulaEngine.context();";
 
 		# if extend
 		# 	formula_data_str = formula_data_str + "_.extend(#{FormulaEngine.PREFIX}, _CONTEXT);"
