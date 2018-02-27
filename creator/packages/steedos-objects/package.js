@@ -46,10 +46,14 @@ Package.onUse(function(api) {
 
 	api.addFiles('core.coffee');
 
+	api.addFiles('lib/eval.js', "client");
+	api.addFiles('lib/formular.coffee', "client");
+	
 	api.addFiles('lib/object.coffee');
 	api.addFiles('lib/fields.coffee');
 	api.addFiles('lib/triggers.coffee');
 	api.addFiles('lib/permission_sets.coffee');
+
 
 	api.addFiles('models/base.coffee');
 	api.addFiles('models/object.coffee');

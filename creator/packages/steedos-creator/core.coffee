@@ -94,27 +94,6 @@ Creator.getApp = (app_id)->
 	app = Creator.Apps[app_id]
 	return app
 
-Creator.evaluateFormula = (formular, context)->
-
-	if !_.isString(formular)
-		return formular
-
-	if FormulaEngine.checkFormula(formular)
-		return FormulaEngine.run(formular, context)
-
-	return formular				
-
-Creator.evaluateFilters = (filters, context)->
-	selector = {}
-	_.each filters, (filter)->
-		if filter?.length == 3
-			name = filter[0]
-			action = filter[1]
-			value = Creator.evaluateFormula(filter[2], context)
-			selector[name] = {}
-			selector[name][action] = value
-	console.log("evaluateFilters-->selector", selector)
-	return selector
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
 Creator.formatFiltersToMongo = (filters)->

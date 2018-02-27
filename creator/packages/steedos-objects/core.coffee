@@ -26,3 +26,26 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
 	if space?.admins
 		return space.admins.indexOf(userId) >= 0
+
+
+Creator.evaluateFormula = (formular, context)->
+
+	if !_.isString(formular)
+		return formular
+
+	if Creator.Formular.checkFormula(formular)
+		return Creator.Formular.run(formular, context)
+
+	return formular				
+
+Creator.evaluateFilters = (filters, context)->
+	selector = {}
+	_.each filters, (filter)->
+		if filter?.length == 3
+			name = filter[0]
+			action = filter[1]
+			value = Creator.evaluateFormula(filter[2], context)
+			selector[name] = {}
+			selector[name][action] = value
+	console.log("evaluateFilters-->selector", selector)
+	return selector

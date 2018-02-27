@@ -181,9 +181,9 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "hidden"
 
 		if field.defaultValue
-			if FormulaEngine.checkFormula(field.defaultValue)
+			if Meteor.isClient and Creator.Formular.checkFormula(field.defaultValue)
 				fs.autoform.defaultValue = ()->
-					return FormulaEngine.run(field.defaultValue)
+					return Creator.Formular.run(field.defaultValue)
 			else
 				fs.autoform.defaultValue = field.defaultValue
 
