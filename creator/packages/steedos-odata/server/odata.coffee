@@ -30,7 +30,7 @@ Meteor.startup ->
 			navigationProperty = include.navigationProperty
 			# console.log 'navigationProperty: ', navigationProperty
 			field = obj.fields[navigationProperty]
-			if field and field.type is 'lookup'
+			if field and (field.type is 'lookup' or field.type is 'master_detail')
 				lookupCollection = Creator.Collections[field.reference_to]
 				queryOptions = visitorParser(include)
 
