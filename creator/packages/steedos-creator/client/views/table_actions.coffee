@@ -12,7 +12,7 @@ Template.creator_table_actions.helpers
 		record_id = this._id
 		record_permissions = this.record_permissions
 		obj = Creator.getObject(object_name)
-		actions = Creator.getActions()
+		actions = Creator.getActions(object_name)
 		actions = _.filter actions, (action)->
 			if action.on == "record" or action.on == "record_more"
 				if action.only_detail
