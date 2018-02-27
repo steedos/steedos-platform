@@ -1,5 +1,5 @@
 Creator.Formular = {}
-Creator.Formular.CONTEXT = {}
+Creator.Formular.USER_CONTEXT = {}
 
 Creator.Formular.PREFIX = "_VALUES"
 
@@ -11,23 +11,23 @@ Meteor.startup ->
 
 		if space and userId
 
-			Creator.Formular.CONTEXT.userId = Meteor.userId()
-			Creator.Formular.CONTEXT.spaceId = Session.get("spaceId")
+			Creator.Formular.USER_CONTEXT.userId = Meteor.userId()
+			Creator.Formular.USER_CONTEXT.spaceId = Session.get("spaceId")
 
-			space_user = db.space_users.findOne({space: space, user: userId})
+			space_user = Creator.getCollection("space_users")?.findOne({space: space, user: userId})
 
 			if space_user
-				Creator.Formular.CONTEXT.user = {
+				Creator.Formular.USER_CONTEXT.user = {
 					_id: userId
 					name: space_user.name,
 					mobile: space_user.mobile,
 					position: space_user.position,
 					email: space_user.email
 				}
-				space_user_org = db.organizations.findOne(space_user.organization)
+				space_user_org = Creator.getCollection("organizations")?.findOne(space_user.organization)
 
 				if space_user_org
-					Creator.Formular.CONTEXT.user.organization = {
+					Creator.Formular.USER_CONTEXT.user.organization = {
 						_id: space_user_org._id,
 						name: space_user_org.name,
 						fullname: space_user_org.fullname,
@@ -57,7 +57,7 @@ Creator.Formular.run = (formula_str, _CONTEXT, extend)->
 		_VALUES = {}
 		_VALUES = _.extend(_VALUES, _CONTEXT)
 		if extend
-			_VALUES = _.extend(_VALUES, Creator.Formular.CONTEXT)
+			_VALUES = _.extend(_VALUES, Creator.Formular.USER_CONTEXT)
 		formula_str = Creator.Formular._prependPrefixForFormula("this", formula_str)
 
 		try
