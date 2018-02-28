@@ -75,8 +75,11 @@ Meteor.startup ->
 					reference_to.forEach (r)->
 						reference_obj = Creator.objectsByName[r]
 						if reference_obj
+							_name = field_name.toUpperCase()
+							if _.isArray(field.reference_to)
+								_name = field_name.toUpperCase() + "." + reference_obj.name.toUpperCase()
 							navigationProperty.push {
-								name: field_name.toUpperCase(),
+								name: _name,
 	#							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
 								type: _NAMESPACE + "." + reference_obj.name
 								partner: _object.name #TODO

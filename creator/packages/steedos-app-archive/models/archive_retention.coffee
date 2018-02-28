@@ -3,6 +3,7 @@ Creator.Objects.archive_retention =
 	icon: "timeslot"
 	label: "保管期限"
 	enable_search: false
+	enable_api: true
 	fields:
 		name:
 			type:"text"
