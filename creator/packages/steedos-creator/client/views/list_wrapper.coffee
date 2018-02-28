@@ -6,7 +6,7 @@ Template.creator_list_wrapper.helpers Creator.helpers
 Template.creator_list_wrapper.helpers
 
 	isRefreshable: ()->
-		return Template["creator_#{FlowRouter.getParam('template')}"].refresh
+		return Template["creator_#{FlowRouter.getParam('template')}"]?.refresh
 
 	list_template: ()->
 		return "creator_#{FlowRouter.getParam('template')}"
