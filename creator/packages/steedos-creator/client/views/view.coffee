@@ -131,10 +131,10 @@ Template.creator_view.helpers
 				selector = {"metadata.space": Session.get("spaceId")}
 			else
 				selector = {space: Session.get("spaceId")}
-			if object_name == "cms_files"
+			if object_name == "cms_files" || object_name == "tasks"
 				# 附件的关联搜索条件是定死的
-				selector["parent.o"] = Session.get "object_name"
-				selector["parent.ids"] = [record_id]
+				selector["#{related_field_name}.o"] = Session.get "object_name"
+				selector["#{related_field_name}.ids"] = [record_id]
 			else
 				selector[related_field_name] = record_id
 			permissions = Creator.getPermissions(object_name)
