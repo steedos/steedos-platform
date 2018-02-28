@@ -35,7 +35,7 @@ Creator.getTabularColumns = (object_name, columns, is_related) ->
 			col = {}
 			col.data = field_name
 
-			title = field.label || TAPi18n.__(object_name + "_" + field_name)
+			title = field.label || TAPi18n.__(obj.schema.label(field_name))
 
 			col.sTitle = "<a class='slds-th__action slds-text-link_reset' href='javascript:void(0);' role='button' tabindex='-1' aria-label='#{field_name}'>
 							<span class='slds-assistive-text'>Sort by: </span>

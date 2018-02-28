@@ -2,15 +2,7 @@ Template.filter_option_list.helpers Creator.helpers
 
 Template.filter_option_list.helpers 
 	filterItems: ()->
-		filters = Session.get("filter_items")
-		object_name = Template.instance().data?.object_name
-		fields = Creator.getObject(object_name)?.fields
-		unless fields
-			return
-		filters?.forEach (filter) ->
-			filter.fieldlabel = fields[filter.field]?.label
-		Session.set("filter_items",filters)
-		return Session.get("filter_items")
+		return Template.instance()?.filterItems.get()
 	
 	filterScope: ()->
 		scope = Session.get("filter_scope")
@@ -117,6 +109,35 @@ Template.filter_option_list.onCreated ->
 	#绑定事件从document委托到.wrapper中是为了避免过虑器中选人控件会解决该事件
 	$(document).on "click",".wrapper", self.destroyOptionbox
 
+	self.filterItems = new ReactiveVar()
+
+	self.autorun ->
+		if Session.get("filter_items")
+			filters = Session.get("filter_items")
+			object_name = Template.instance().data?.object_name
+			fields = Creator.getObject(object_name)?.fields
+			unless fields
+				return
+			filters?.forEach (filter) ->
+				filter.fieldlabel = fields[filter.field]?.label
+				filter.valuelabel = filter.value
+				if fields[filter.field]?.reference_to
+					reference_to_objects = []
+					if fields[filter.field].reference_to.constructor == Array
+						reference_to_objects = fields[filter.field].reference_to
+					else
+						reference_to_objects.push fields[filter.field].reference_to
+					
+					reference_to_objects.forEach (reference_to_object)->
+						reference_to_object = fields[filter.field].reference_to
+						name_field = Creator.getObject(reference_to_object).NAME_FIELD_KEY
+						Meteor.call 'getValueLable',reference_to_object,name_field,filter.value,
+							(error,result)->
+								if result
+									filter.valuelabel = result[name_field]
+									self.filterItems.set(filters)		
+				else
+					self.filterItems.set(filters)	
 Template.filter_option_list.onRendered ->
 
 Template.filter_option_list.onDestroyed ->

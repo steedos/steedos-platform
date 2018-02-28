@@ -40,7 +40,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 		field = object.fields[n]
 		columnItem = 
 			cssClass: "slds-cell-edit"
-			caption: field.label || n
+			caption: field.label || TAPi18n.__(object.schema.label(field_name))
 			dataField: n
 			cellTemplate: (container, options) ->
 				field_name = n

@@ -170,3 +170,8 @@ Meteor.methods
 		importObject importObj,space
 		endtime = new Date()
 		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})
+	getValueLable:(reference_to_object,name_field,value)->
+		fields = {_id: 1}
+		fields[name_field] = 1
+		result =  Creator.Collections[reference_to_object].findOne(value,{fields: fields})
+		return result	
