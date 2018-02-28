@@ -111,10 +111,10 @@ Template.creator_grid.onRendered ->
 			
 			dxOptions = 
 				paging: 
-					pageSize: 20
+					pageSize: 50
 				pager: 
 					showPageSizeSelector: true,
-					allowedPageSizes: [20, 40, 60],
+					allowedPageSizes: [25, 50, 100],
 					showInfo: false,
 					showNavigationButtons: true
 				showColumnLines: false
