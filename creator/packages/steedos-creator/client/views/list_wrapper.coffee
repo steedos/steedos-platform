@@ -28,6 +28,9 @@ Template.creator_list_wrapper.helpers
 		if list_view?.name != Session.get("list_view_id") and !list_view?._id
 			Session.set("list_view_id", list_view.name)
 		return list_view
+	
+	list_view_label: (item)->
+		return item.label || item.label 
 
 	actions: ()->
 		actions = Creator.getActions()
