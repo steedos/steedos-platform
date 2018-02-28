@@ -1,12 +1,13 @@
-Meteor OAuth2 Server
-===
-Use your meteor application as an oauth2 server. This package will give the
-developer the tools necessary to get oauth2 running easily. Look at the
-resourceServer example for a detailed demonstration on how to get things
-working.
+## Steedos OAuth2
 
-## Installation
-`meteor add prime8consulting:meteor-oauth2-server`
+Steedos OAuth2包
+
+=========================================
+#### OAuth Flow - Diagram
+
+![OAuthWebSequenceWithConfig](https://github.com/prime-8-consulting/meteor-oauth2/blob/master/documentation/OAuthWebSequenceWithConfig.png)
+
+=========================================
 
 
 ## API
