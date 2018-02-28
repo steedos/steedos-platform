@@ -137,7 +137,7 @@ Creator.formatFiltersToDev = (filters)->
 	_.each filters, (filter)->
 		field = filter[0]
 		option = filter[1]
-		value = filter[2]
+		value = Creator.evaluateFormula(filter[2])
 		sub_selector = []
 		if _.isArray(value) == true and option == "="
 			_.each value, (v)->
