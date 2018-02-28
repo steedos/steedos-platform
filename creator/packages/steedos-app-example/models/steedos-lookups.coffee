@@ -25,17 +25,17 @@ if Meteor.isDevelopment
 				type: "lookup"
 				reference_to: "accounts"
 				multiple: true
-#			object_switche_id:
-#				label: "客户/用户(单选)"
-#				type: "lookup"
-#				reference_to: ["companies", "users"]
-#				group: "可选择对象测试区"
-#			object_switche_ids:
-#				label: "客户/用户(多选)"
-#				type: "lookup"
-#				reference_to: ["companies", "users"]
-#				multiple: true
-#				group: "可选择对象测试区"
+			object_switche_id:
+				label: "客户/用户(单选)"
+				type: "lookup"
+				reference_to: ["archive_records", "archive_retention"]
+				group: "可选择对象测试区"
+			object_switche_ids:
+				label: "客户/用户(多选)"
+				type: "lookup"
+				reference_to: ["archive_records", "archive_retention"]
+				multiple: true
+				group: "可选择对象测试区"
 #			site:
 #				type: "lookup"
 #				reference_to: "cms_sites"
@@ -95,7 +95,7 @@ if Meteor.isDevelopment
 				type: 'currency'
 		list_views:
 			default:
-				columns: ["name", "number_test", "customer_id", "customer_ids", "object_switche_ids", "boolean", "CObject", "options_fun"]
+				columns: ["name", "number_test", "customer_id", "customer_ids","object_switche_id" ,"object_switche_ids", "boolean", "CObject", "options_fun"]
 			recent:
 				filter_scope: "space"
 			all:
