@@ -31,17 +31,33 @@ Meteor.startup ->
 			# console.log 'navigationProperty: ', navigationProperty
 			field = obj.fields[navigationProperty]
 			if field and (field.type is 'lookup' or field.type is 'master_detail')
-				lookupCollection = Creator.Collections[field.reference_to]
-				queryOptions = visitorParser(include)
+				if field.reference_to
+					queryOptions = visitorParser(include)
+					if _.isString field.reference_to
+						referenceToCollection = Creator.Collections[field.reference_to]
+						_.each entities, (entity, idx)->
+							if entity[navigationProperty]
+								if field.multiple
+									multiQuery = _.extend {_id: {$in: entity[navigationProperty]}}, include.query
+									entities[idx][navigationProperty] = referenceToCollection.find(multiQuery, queryOptions).fetch()
+								else
+									singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
+									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
 
-				_.each entities, (entity, idx)->
-					if entity[navigationProperty]
-						if field.multiple
-							multiQuery = _.extend {_id: {$in: entity[navigationProperty]}}, include.query
-							entities[idx][navigationProperty] = lookupCollection.find(multiQuery, queryOptions).fetch()
-						else
-							singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
-							entities[idx][navigationProperty] = lookupCollection.findOne(singleQuery, queryOptions)
+					if _.isArray field.reference_to
+						_.each entities, (entity, idx)->
+							if entity[navigationProperty]
+								referenceToCollection = Creator.Collections[entity[navigationProperty].o]
+								if field.multiple
+									multiQuery = _.extend {_id: {$in: entity[navigationProperty].ids}}, include.query
+									entities[idx][navigationProperty] = referenceToCollection.find(multiQuery, queryOptions).fetch()
+								else
+									singleQuery = _.extend {_id: entity[navigationProperty].ids[0]}, include.query
+									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
+
+				else
+				# TODO
+
 
 		return
 
