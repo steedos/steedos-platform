@@ -46,11 +46,17 @@ Creator.Objects.tasks =
 	list_views:
 		default:
 			columns: ["name", "assigned_to", "end_date"]
+		recent:
+			label: "最近查看"
+			filter_scope: "space"
 		my_tasks:
+			label: "我的任务"
 			filter_scope: "space"
-			filters: [["assigned_to", "$eq", "{userId}"]]
+			filters: [["assigned_to", "=", "{userId}"]]
 		all:
+			label: "所有任务"
 			filter_scope: "space"
+
 	permission_set:
 		user:
 			allowCreate: true

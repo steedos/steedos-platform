@@ -30,7 +30,7 @@ Template.creator_list_wrapper.helpers
 		return list_view
 	
 	list_view_label: (item)->
-		return item.label || item.label 
+		return item.label || item.name 
 
 	actions: ()->
 		actions = Creator.getActions()
