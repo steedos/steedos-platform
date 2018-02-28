@@ -15,6 +15,23 @@ _fields = (object_name)->
 	fields = _.compact(fields)
 	return fields
 
+_expandFields = (object_name, columns)->
+	expand_fields = []
+	fields = Creator.getObject(object_name).fields
+	_.each columns, (n)->
+		if fields[n].type == "master_detail" || fields[n].type == "lookup"
+			ref = fields[n].reference_to
+			if !_.isArray(ref)
+				ref = [ref]
+				
+			ref = _.map ref, (o)->
+				return Creator.getObject(o).NAME_FIELD_KEY
+			
+			ref = ref.join(",")
+			expand_fields.push(n + "($select=" + ref + ")")
+			# expand_fields.push n + "($select=name)"
+	return expand_fields
+
 _columns = (object_name, columns, list_view_id, is_related)->
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
@@ -30,7 +47,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 				if /\w+\.\$\.\w+/g.test(field_name)
 					# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
 					field_name = n.replace(/\$\./,"")
-				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name}
+				cellOption = {_id: options.data._id, val: options.data[n], doc: options.data, field: field, field_name: field_name, object_name:object_name, agreement: "odata"}
 				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 		
 		if grid_settings and grid_settings.settings
@@ -89,6 +106,7 @@ Template.creator_grid.onRendered ->
 			
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
 			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
+			expand_fields = _expandFields(curObjectName, selectColumns)
 			showColumns.push
 				dataField: "_id_actions"
 				width: 46
@@ -153,6 +171,7 @@ Template.creator_grid.onRendered ->
 							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 					select: selectColumns
 					filter: filter
+					expand: expand_fields
 				columns: showColumns
 				onContentReady: (e)->
 					self.data.total.set dxDataGridInstance.totalCount()

@@ -132,7 +132,7 @@ Creator.Objects.archive_records =
 			label:"题名"
 			is_wide:true
 			is_name:true
-			#required:true
+			required:true
 			sortable:true
 			searchable:true
 			group:"内容描述"
@@ -699,7 +699,7 @@ Creator.Objects.archive_records =
 			viewAllRecords: true
 			list_views:["default","recent","all","borrow"]
 	triggers:
-		"before.insert.server.default":
+		"before.insert.server.archive_records":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
@@ -736,7 +736,7 @@ Creator.Objects.archive_records =
 					day = doc.document_date.getDate()
 					doc.destroy_date = new Date(year,month,day)
 				return true
-		"after.update.server.default":
+		"after.update.server.archive_records":
 			on: "server"
 			when: "after.update"
 			todo: (userId, doc)->

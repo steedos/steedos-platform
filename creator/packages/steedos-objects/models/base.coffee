@@ -69,12 +69,17 @@ Creator.baseObject =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
+				console.log "before.insert.server.default", this.object_name
 				doc.created = new Date();
 				doc.modified = new Date();
 				if userId
 					doc.owner = userId
 					doc.created_by = userId;
 					doc.modified_by = userId;
+				if !doc.name
+					object_name = this.object_name
+					name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+					doc.name = doc[name_field_key]
 
 		"before.update.server.default": 
 			on: "server"
