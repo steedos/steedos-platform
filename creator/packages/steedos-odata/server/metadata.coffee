@@ -89,7 +89,7 @@ Meteor.startup ->
 								]
 							}
 						else
-							console.error "reference to '#{r}' invalid."
+							console.warn "reference to '#{r}' invalid."
 
 			entitie.property = property
 			entitie.navigationProperty = navigationProperty
@@ -127,12 +127,9 @@ Meteor.startup ->
 
 	SteedosOdataAPI.addRoute('', {authRequired: SteedosOData.AUTHREQUIRED}, {
 		get: ()->
-			console.log("****************************///////atomPub.svc///////********************")
-			console.log @request.headers
 			context = SteedosOData.getMetaDataPath(@urlParams?.spaceId)
 			serviceDocument  = ServiceDocument.processMetadataJson(getObjectsOdataSchema(), {context: context});
 			body = serviceDocument.document()
-			console.log(body)
 			return {
 				headers: {
 					'Content-Type': 'application/json; charset=utf-8',
@@ -144,7 +141,6 @@ Meteor.startup ->
 
 	SteedosOdataAPI.addRoute(SteedosOData.METADATA_PATH, {authRequired: SteedosOData.AUTHREQUIRED}, {
 		get: ()->
-			console.log("****************************//////atomPub.svc/$metadata////////********************")
 			serviceMetadata = ServiceMetadata.processMetadataJson(getObjectsOdataSchema())
 			body = serviceMetadata.document()
 			return {
