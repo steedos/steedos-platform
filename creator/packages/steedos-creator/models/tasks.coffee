@@ -1,7 +1,6 @@
 Creator.Objects.tasks = 
-	label: "任务"
 	name: "tasks"
-	label: "Tasks"
+	label: "任务"
 	icon: "task"
 	fields:
 		name: 
