@@ -50,10 +50,13 @@ Meteor.startup ->
 								referenceToCollection = Creator.Collections[entity[navigationProperty].o]
 								if field.multiple
 									multiQuery = _.extend {_id: {$in: entity[navigationProperty].ids}}, include.query
-									entities[idx][navigationProperty] = referenceToCollection.find(multiQuery, queryOptions).fetch()
+									entities[idx][navigationProperty] = _.map referenceToCollection.find(multiQuery, queryOptions).fetch(), (o)->
+										o['reference_to.o'] = referenceToCollection._name
+										return o
 								else
 									singleQuery = _.extend {_id: entity[navigationProperty].ids[0]}, include.query
 									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
+									entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
 
 				else
 				# TODO
