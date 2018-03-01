@@ -69,7 +69,6 @@ Creator.baseObject =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				console.log "before.insert.server.default", this.object_name
 				doc.created = new Date();
 				doc.modified = new Date();
 				if userId

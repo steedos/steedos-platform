@@ -46,20 +46,26 @@
 		{{> headerSearch}}
 
 		<ul class="slds-grid">
-
-			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
+			{{#if isNode}}
+				<li class="slds-context-bar__item">
+					<a href="javascript:void(0);" class="slds-context-bar__label-action header-refresh">
+						刷新
+					</a>
+				</li>
+			{{/if}}
+			<li class="slds-context-bar__item slds-context-bar__dropdown-trigger">
 				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item" data-toggle="dropdown">
 					<!-- <img src="{{avatarURL avatar 29 25 14}}" class="user-image"> -->
 					<span class="slds-truncate" title="Menu Item">{{displayName}}</span>
 				</a>
-				<div class="slds-context-bar__icon-action slds-p-left_none">
+				<div class="slds-context-bar__icon-action slds-p-left_none" data-toggle="dropdown">
 					<button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
 						<svg class="slds-button__icon" aria-hidden="true">
 							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
 						</svg>
 					</button>
 				</div>
-				<div class="slds-dropdown slds-dropdown_right">
+				<div class="slds-dropdown slds-dropdown_right dropdown-menu" style="right: 8px">
 					<ul class="slds-dropdown__list" role="menu">
 						<li class="slds-dropdown__item" role="presentation">
 							<a href="{{signOutUrl}}" role="menuitem" tabindex="-1">

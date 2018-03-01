@@ -58,6 +58,9 @@ Template.creatorNavigation.helpers
 	signOutUrl: ()->
 		return Steedos.absoluteUrl("/steedos/logout")
 
+	isNode: ()->
+		return Steedos.isNode()
+
 Template.creatorNavigation.events
 
 	"click .switchSpace": ->
@@ -68,3 +71,6 @@ Template.creatorNavigation.events
 
 	'click .app-list-btn': (event)->
 		Modal.show("creator_app_list_modal")
+	
+	'click .header-refresh': (event)->
+		window.location.reload(true)
