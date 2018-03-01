@@ -53,15 +53,15 @@ Meteor.startup ->
 	})
 
 	# TODO 暂时未用到
-	SteedosOdataAPI.addRoute(':collectionInfo', {authRequired: SteedosOData.AUTHREQUIRED}, {
-		get: ()->
-			console.log '===:collectionInfo'
+	# SteedosOdataAPI.addRoute(':collectionInfo', {authRequired: SteedosOData.AUTHREQUIRED}, {
+	# 	get: ()->
+	# 		console.log '===:collectionInfo'
 
-			body = {}
-			headers = {}
-			body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
-			body['value'] = entities
-			headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-			headers['OData-Version'] = SteedosOData.VERSION
-			{body: body, headers: headers}
-	})
+	# 		body = {}
+	# 		headers = {}
+	# 		body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
+	# 		body['value'] = entities
+	# 		headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+	# 		headers['OData-Version'] = SteedosOData.VERSION
+	# 		{body: body, headers: headers}
+	# })

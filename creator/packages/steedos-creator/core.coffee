@@ -44,7 +44,7 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if record_id
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list")
+		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid")
 
 Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 	if list_view_id
