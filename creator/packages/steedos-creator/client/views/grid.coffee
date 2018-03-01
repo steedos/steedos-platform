@@ -40,7 +40,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 		field = object.fields[n]
 		columnItem = 
 			cssClass: "slds-cell-edit"
-			caption: field.label || TAPi18n.__(object.schema.label(field_name))
+			caption: field.label || TAPi18n.__(object.schema.label(n))
 			dataField: n
 			cellTemplate: (container, options) ->
 				field_name = n
@@ -225,18 +225,19 @@ Template.creator_grid.events
 
 		objectName = if is_related then Session.get("related_object_name") else Session.get("object_name")
 		collection_name = Creator.getObject(objectName).label
-		rowData = this.doc
+		# rowData = this.doc
 
-		if rowData
-			Session.set("action_fields", field)
-			Session.set("action_collection", "Creator.Collections.#{objectName}")
-			Session.set("action_collection_name", collection_name)
-			Session.set("action_save_and_insert", false)
-			Session.set 'cmDoc', rowData
-			Session.set 'cmIsMultipleUpdate', true
-			Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
-			Meteor.defer ()->
-				$(".btn.creator-cell-edit").click()
+		Meteor.call "object_record", objectName, this._id, (error, result)->
+			if result
+				Session.set 'cmDoc', result
+				Session.set("action_fields", field)
+				Session.set("action_collection", "Creator.Collections.#{objectName}")
+				Session.set("action_collection_name", collection_name)
+				Session.set("action_save_and_insert", false)
+				Session.set 'cmIsMultipleUpdate', true
+				Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
+				Meteor.defer ()->
+					$(".btn.creator-cell-edit").click()
 
 	'dblclick td': (event) ->
 		$(".table-cell-edit", event.currentTarget).click()
