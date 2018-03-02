@@ -46,7 +46,7 @@ Meteor.startup ->
 
 					if _.isArray field.reference_to
 						_.each entities, (entity, idx)->
-							if entity[navigationProperty]
+							if entity[navigationProperty]?.ids
 								referenceToCollection = Creator.Collections[entity[navigationProperty].o]
 								if field.multiple
 									multiQuery = _.extend {_id: {$in: entity[navigationProperty].ids}}, include.query
@@ -74,7 +74,7 @@ Meteor.startup ->
 			SteedosOdataAPI.addCollection Creator.Collections[key],
 				excludedEndpoints: []
 				routeOptions:
-					authRequired: SteedosOData.AUTHREQUIRED
+					authRequired: true
 					spaceRequired: false
 				endpoints:
 					getAll:
@@ -85,8 +85,10 @@ Meteor.startup ->
 								statusCode: 404
 								body: {status: 'fail', message: 'Collection not found'}
 
-							permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
-							if permissions.viewAllRecords
+							console.log '@spaceId, @userId, key: ', @urlParams.spaceId, @userId, key
+							permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+							console.log 'permissions: ', permissions
+							if permissions.viewAllRecords or (permissions.allowRead and @userId)
 									# console.log 'queryParams: ', @queryParams
 									# console.log 'urlParams: ', @urlParams
 									# console.log 'bodyParams: ', @bodyParams
@@ -100,6 +102,9 @@ Meteor.startup ->
 										createQuery.query.space = @urlParams.spaceId
 
 									# console.log 'createQuery: ', createQuery
+
+									if not permissions.viewAllRecords
+										createQuery.query.owner = @userId
 
 									entities = []
 									if @queryParams.$top isnt '0'
