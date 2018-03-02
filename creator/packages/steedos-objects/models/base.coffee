@@ -75,10 +75,6 @@ Creator.baseObject =
 					doc.owner = userId
 					doc.created_by = userId;
 					doc.modified_by = userId;
-				if !doc.name
-					object_name = this.object_name
-					name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-					doc.name = doc[name_field_key]
 
 		"before.update.server.default": 
 			on: "server"

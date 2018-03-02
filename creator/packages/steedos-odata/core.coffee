@@ -2,7 +2,7 @@ if Meteor.isServer
 
 	@SteedosOData = {}
 	SteedosOData.VERSION = '4.0'
-	SteedosOData.AUTHREQUIRED = false
+	SteedosOData.AUTHREQUIRED = true
 	SteedosOData.API_PATH = '/api/odata/v4/:spaceId'
 	SteedosOData.METADATA_PATH = '$metadata'
 	SteedosOData.getRootPath = (spaceId)->
