@@ -1,7 +1,17 @@
 .creator_table_cell{
+	flex-wrap: wrap;
 	.slds-truncate{
 		& > a:not(:last-of-type):after {
 			content: ",";
 		}
+	}
+	.cell-container {
+		display: flex;
+		flex-wrap: wrap;
+		width: calc(~ "100% - 1.75rem");
+		justify-content: space-between;
+	}
+	.table-cell-edit {
+		margin-right: 0;
 	}
 }
