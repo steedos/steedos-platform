@@ -114,6 +114,7 @@ Template.filter_option_list.onCreated ->
 	self.autorun ->
 		if Session.get("filter_items")
 			filters = Session.get("filter_items")
+			self.filterItems.set(filters)
 			object_name = Template.instance().data?.object_name
 			fields = Creator.getObject(object_name)?.fields
 			unless fields
