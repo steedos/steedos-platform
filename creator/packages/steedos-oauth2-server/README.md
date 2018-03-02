@@ -56,13 +56,13 @@ https://cn.xxx.com/?code=WTReatHCQ5Y6ujnGh&state=123456
 
 获取token接口URL：https://cn.steedos.com/oauth2/token/
 
-参数：
-{
-  grant_type: 'authorization_code',
-  client_id: '第三方应用的客户端ID',
-  client_secret: '第三方应用的Secret',
-  code: '获取的授权码'
-}
+参数： 
+{ 
+  grant_type: 'authorization_code', 
+  client_id: '第三方应用的客户端ID', 
+  client_secret: '第三方应用的Secret', 
+  code: '获取的授权码' 
+} 
 
 #### 4.根据access_token获取当前用户
 Creator校验code通过后，将返回access_token。开发人员根据返回的access_token，并使用get调用getIdentity接口，并传入相应参数。相应信息如下：
