@@ -18,7 +18,8 @@ Creator.createObject = (object_name,object_data)->
 	Session.set('action_object_name',object_name)
 	Session.set("action_fields",undefined)
 	Session.set("cmDoc",object_data)
-	$(".creator-add").click()
+	Meteor.defer ->
+		$(".creator-add").click()
 
 Creator.editObject = (object_name,record_id)->
 	object = Creator.getObject(object_name)
