@@ -99,19 +99,37 @@ Template.creator_grid.onRendered ->
 				filter = Creator.getODataFilter(list_view_id, object_name)
 			
 			curObjectName = if is_related then related_object_name else object_name
-			object = Creator.getObject(curObjectName)
-			selectColumns = _fields(curObjectName)
+
+			selectColumns = Tracker.nonreactive ()->
+				grid_settings = Creator.Collections.settings.findOne({object_name: curObjectName, record_id: "object_gridviews"})
+				if grid_settings and grid_settings.settings and grid_settings.settings[list_view_id] and grid_settings.settings[list_view_id].column_width
+					settingColumns = _.keys(grid_settings.settings[list_view_id].column_width)
+
+				if settingColumns
+					defaultColumns = _fields(curObjectName)
+					selectColumns = _.intersection(settingColumns, defaultColumns)
+					selectColumns = _.union(selectColumns, defaultColumns)
+				else
+					selectColumns = _fields(curObjectName)
+				return selectColumns
+
 			extra_columns = ["owner"]
+			object = Creator.getObject(curObjectName)
 			if object.list_views?.default?.extra_columns
 				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
 			
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
 			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
+
+			# extra_columns不需要显示在表格上，因此不做_columns函数处理
+			selectColumns = _.union(selectColumns, extra_columns)
+			
 			expand_fields = _expandFields(curObjectName, selectColumns)
 			showColumns.push
 				dataField: "_id_actions"
 				width: 46
 				allowSorting: false
+				allowReordering: false
 				headerCellTemplate: (container) ->
 					return ""
 				cellTemplate: (container, options) ->
@@ -123,6 +141,7 @@ Template.creator_grid.onRendered ->
 				dataField: "_id_checkbox"
 				width: 60
 				allowSorting: false
+				allowReordering: false
 				headerCellTemplate: (container) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
 				cellTemplate: (container, options) ->
@@ -137,6 +156,7 @@ Template.creator_grid.onRendered ->
 					showInfo: false,
 					showNavigationButtons: true
 				showColumnLines: false
+				allowColumnReordering: true
 				allowColumnResizing: true
 				columnResizingMode: "widget"
 				showRowLines: true
@@ -148,11 +168,13 @@ Template.creator_grid.onRendered ->
 						columns = gridState.columns
 						column_width = {}
 						sort = []
+						columns = _.sortBy(_.values(columns), "visibleIndex")
 						_.each columns, (column_obj)->
 							if column_obj.width
 								column_width[column_obj.dataField] = column_obj.width
 							if column_obj.sortOrder
 								sort.push [column_obj.dataField, column_obj.sortOrder]
+						
 						Meteor.call 'grid_settings', curObjectName, list_view_id, column_width, sort,
 							(error, result)->
 								if error
