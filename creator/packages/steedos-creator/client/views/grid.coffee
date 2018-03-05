@@ -42,6 +42,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 			cssClass: "slds-cell-edit"
 			caption: field.label || TAPi18n.__(object.schema.label(n))
 			dataField: n
+			alignment: "left"
 			cellTemplate: (container, options) ->
 				field_name = n
 				if /\w+\.\$\.\w+/g.test(field_name)
