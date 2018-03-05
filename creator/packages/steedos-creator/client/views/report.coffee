@@ -260,8 +260,6 @@ Template.creator_report.events
 		options = {}
 		options.sort = sort
 		options.column_width = column_width
-		console.log "options:", options
-		console.log "options.json.stringify:", JSON.stringify(options)
 		Creator.getCollection(objectName).update({_id: record_id},{$set:{
 			filters: filters
 			filter_scope: filter_scope
@@ -319,7 +317,6 @@ renderTabularReport = (reportObject, reportData)->
 	# 注意这里如果totalItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	
-	console.log "renderTabularReport.reportSummary:", reportSummary
 
 	dxOptions = 
 		showColumnLines: false
@@ -431,7 +428,6 @@ renderSummaryReport = (reportObject, reportData)->
 	reportSummary.totalItems = totalSummaryItems
 	reportSummary.groupItems = groupSummaryItems
 
-	console.log "renderSummaryReport.reportColumns:", reportColumns
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -630,7 +626,6 @@ renderReport = (reportObject)->
 		if error
 			console.error('report_data method error:', error)
 			return
-		console.log "report_data:", result
 		switch reportObject.report_type
 			when 'tabular'
 				renderTabularReport.bind(self)(reportObject, result)
@@ -639,6 +634,8 @@ renderReport = (reportObject)->
 				renderSummaryReport.bind(self)(reportObject, result)
 			when 'matrix'
 				renderMatrixReport.bind(self)(reportObject, result)
+				# 报表类型从summary转变成matrix时，需要把原来summary报表清除
+				self.dataGridInstance?.dispose()
 
 
 Template.creator_report.onRendered ->
