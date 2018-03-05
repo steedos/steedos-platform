@@ -25,7 +25,7 @@ Package.onUse(function(api) {
 	api.use('ddp-common');
 	api.use(['webapp'], 'server');
 
-	api.use('steedos:creator');
+	api.use('steedos:objects');
 
 	api.addFiles('lib/restivus/auth.coffee', 'server');
 	api.addFiles('lib/restivus/iron-router-error-to-response.js', 'server');
