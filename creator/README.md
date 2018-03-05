@@ -24,6 +24,10 @@
 - 系统自动生成基于ODATA协议的API，方便与第三方系统集成；
 - 我们的团队还在持续开发许多创新的新功能，敬请期待。
 
+如果您的业务部门还提出了更多细节的功能要求，我们还提供进一步的脚本配置功能
+- triggers，定义当数据增、删、改时自动触发执行对应的脚本；
+- actions，定义用户界面上显示的操作按钮以及触发的脚本。
+
 ### Objects
 用于定义Steedos中的对象。 点击了解更多 [Steedos Object](/packages/steedos-objects/README.md)
 
