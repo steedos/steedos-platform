@@ -43,7 +43,7 @@ if Meteor.isDevelopment
 #			category:
 #				type: "lookup"
 #				reference_to: "cms_categories"
-#				filters: [["site", "$eq", "{site}"]]  # {site} 必须要在depend_on数组中
+#				filters: [["site", "=", "{site}"]]  # {site} 必须要在depend_on数组中
 #				depend_on: ["site"]
 #				group: "filters测试区",
 #			archives_files_clerical:

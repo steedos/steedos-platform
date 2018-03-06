@@ -41,7 +41,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 		- archive_destroy_id:
 				type:"master_detail"
 				label:"销毁单"
-				filters:[["destroy_state", "$eq", "未销毁"]]
+				filters:[["destroy_state", "=", "未销毁"]]
 				depend_on:["destroy_state"]
 				reference_to:"archive_destroy"
 				group:"销毁"

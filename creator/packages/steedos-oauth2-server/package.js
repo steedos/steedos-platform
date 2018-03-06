@@ -31,7 +31,7 @@ Package.onUse(function(api) {
 	
 	api.use('http');
 
-	api.use('steedos:creator');
+	api.use('steedos:objects');
 
 	api.addFiles('models/OAuth2Clients.coffee');
 

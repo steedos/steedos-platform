@@ -52,5 +52,7 @@
 	"creator_home_apps": "工作台",
 	"creator_detail_info": "详细信息",
 	"creator_detail_related": "相关",
-	"creator_new": "新建"
+	"creator_new": "新建",
+
+	"creator_odata_api_not_found": "很抱歉，您要访问的资源不存在或者您没有权限访问该资源！"
 }
