@@ -151,8 +151,12 @@ Template.creator_grid.onRendered ->
 		is_related = self.data.is_related
 		object_name = Session.get("object_name")
 		creator_obj = Creator.getObject(object_name)
+
+		if !creator_obj
+			return
+
 		related_object_name = Session.get("related_object_name")
-		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+		name_field_key = creator_obj.NAME_FIELD_KEY
 		record_id = Session.get("record_id")
 		if is_related
 			list_view_id = "recent"
@@ -368,28 +372,31 @@ Template.creator_grid.onCreated ->
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh().done (result)->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
-	,true
+	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh().done (result)->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
-	,true
+	,false
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
 			dxDataGridInstance.refresh().done (result)->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
-	,true
+	,false
 
 Template.creator_grid.onDestroyed ->
 	#离开界面时，清除hooks为空函数
 	AutoForm.hooks creatorAddForm:
-		onSuccess: undefined
+		onSuccess: ()->
+			$('#afModal').modal 'hide'
 	,true
 	AutoForm.hooks creatorEditForm:
-		onSuccess: undefined
+		onSuccess: ()->
+			$('#afModal').modal 'hide'
 	,true
 	AutoForm.hooks creatorCellEditForm:
-		onSuccess: undefined
+		onSuccess: ()->
+			$('#afModal').modal 'hide'
 	,true
 
 
