@@ -9,12 +9,7 @@ Meteor.startup ->
 	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Function)})
 
 	_.each Creator.Objects, (obj, object_name)->
-		new Creator.Object(obj);
-
-		Creator.initTriggers(object_name)
-		Creator.initListViews(object_name)
-		if Meteor.isServer
-			Creator.initPermissions(object_name)
+		Creator.loadObjects obj, object_name
 
 	# Creator.initApps()
 
@@ -29,6 +24,17 @@ Meteor.startup ->
 # else
 # 	app._id = app_id
 # 	db.apps.update({_id: app_id}, app)
+
+Creator.loadObjects = (obj, object_name)->
+	if !object_name
+		object_name = obj.name
+	new Creator.Object(obj);
+
+	Creator.initTriggers(object_name)
+	Creator.initListViews(object_name)
+	if Meteor.isServer
+		Creator.initPermissions(object_name)
+
 
 Creator.getTable = (object_name)->
 	return Tabular.tablesByName["creator_" + object_name]
@@ -68,6 +74,8 @@ Creator.getPermissions = (object_name, spaceId, userId)->
 		if !object_name
 			object_name = Session.get("object_name")
 		obj = Creator.getObject(object_name)
+		if !obj
+			return
 		return obj.permissions.get()
 	else if Meteor.isServer
 		Creator.getObjectPermissions(spaceId, userId, object_name)
@@ -165,6 +173,12 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	
 	related_object_names = []
 	permissions = Creator.getPermissions(object_name, spaceId, userId)
+
+	_object = Creator.getObject(object_name)
+
+	if !_object
+		return related_object_names
+
 	permission_related_objects = permissions.related_objects
 
 	_.each Creator.Objects, (related_object, related_object_name)->
@@ -176,7 +190,7 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 					else
 						related_object_names.push related_object_name
 	
-	if Creator.getObject(object_name).enable_files
+	if _object.enable_files
 		if permission_related_objects
 			if _.indexOf(permission_related_objects, "cms_files") > -1
 				related_object_names.push "cms_files"
@@ -195,6 +209,10 @@ Creator.getActions = (object_name, spaceId, userId)->
 			userId = Meteor.userId()
 
 	obj = Creator.getObject(object_name)
+
+	if !obj
+		return
+
 	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	permission_actions = permissions.actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
@@ -214,8 +232,13 @@ Creator.getListViews = (object_name, spaceId, userId)->
 		if !userId
 			userId = Meteor.userId()
 
-	permission_list_views = Creator.getPermissions(object_name, spaceId, userId).list_views
 	object = Creator.getObject(object_name)
+
+	if !object
+		return
+
+	permission_list_views = Creator.getPermissions(object_name, spaceId, userId).list_views
+
 	list_views = []
 
 	_.each object.list_views, (item, item_name)->

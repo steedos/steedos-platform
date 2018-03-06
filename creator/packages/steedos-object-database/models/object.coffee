@@ -8,17 +8,26 @@ Creator.Objects.objects =
 			type: "text"
 			searchable:true
 			index:true
+		label:
+			type: "text"
 		icon: 
 			label: "Icon"
 			type: "text"
 		description: 
 			label: "Description"
 			type: "text"
-		"fields.$.name":
-			type: "text"
-		"fields.$.type":
-			type: "select"
-			allowedValues: ["text", "number", "boolean"]
+		fields:
+			blackbox: true
+			omit: true
+		list_views:
+			blackbox: true
+			omit: true
+		actions:
+			blackbox: true
+			omit: true
+		permission_set:
+			blackbox: true
+			omit: true
 
 
 	list_views:

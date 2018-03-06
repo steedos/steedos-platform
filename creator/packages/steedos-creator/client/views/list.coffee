@@ -18,6 +18,8 @@ Template.creator_list.helpers
 	selector: ()->
 		object_name = Session.get("object_name")
 		list_view = Creator.getListView(object_name, Session.get("list_view_id"))
+		if !list_view
+			return {_id: "nothing"}
 		selector = {}
 		custom_list_view = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
 		if custom_list_view

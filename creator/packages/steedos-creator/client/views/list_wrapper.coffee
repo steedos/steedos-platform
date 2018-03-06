@@ -25,6 +25,10 @@ Template.creator_list_wrapper.helpers
 
 	list_view: ()->
 		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
+
+		if !list_view
+			return
+
 		if list_view?.name != Session.get("list_view_id") and !list_view?._id
 			Session.set("list_view_id", list_view.name)
 		return list_view
@@ -37,7 +41,7 @@ Template.creator_list_wrapper.helpers
 		permissions = Creator.getPermissions()
 
 		# 如果是在权限中设置了action，就不需要判断action的visible属性
-		if permissions.actions
+		if permissions?.actions
 			return actions
 		else
 			actions = _.filter actions, (action)->

@@ -292,6 +292,8 @@ if Meteor.isClient
 
 Creator.getListView = (object_name, list_view_id)->
 	object = Creator.getObject(object_name)
+	if !object
+		return
 	custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
 	if object.list_views
 		if object.list_views[list_view_id]
@@ -308,6 +310,6 @@ Creator.getListView = (object_name, list_view_id)->
 			view_ids = _.without(view_ids, "default")
 			list_view = object.list_views[view_ids[0]]
 		Creator.getTable(object_name)?.options.columns = Creator.getTabularColumns(object_name, list_view.columns);
-		Creator.getTable(object_name)?.options.language.zeroRecords = t("list_view_no_records")
+		Creator.getTable(object_name)?.options.language?.zeroRecords = t("list_view_no_records")
 		Creator.getTable(object_name)?.options.order = Creator.getTabularOrder(object_name, list_view_id, list_view.columns)
 	return list_view

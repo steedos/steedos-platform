@@ -1,4 +1,25 @@
-Creator.Objects.object_fields = 
+_syncToObject = (doc) ->
+	object_fields = Creator.getCollection("object_fields").find({object: doc.object}, {
+		fields: {
+			created: 0,
+			modified: 0,
+			owner: 0,
+			created_by: 0,
+			modified_by: 0
+		}
+	}).fetch()
+
+	fields = {}
+
+	_.forEach object_fields, (f)->
+		fields[f.name] = f
+
+	Creator.getCollection("objects").update({_id: doc.object}, {
+		$set:
+			fields: fields
+	})
+
+Creator.Objects.object_fields =
 	name: "object_fields"
 	label: "字段"
 	icon: "orders"
@@ -7,18 +28,18 @@ Creator.Objects.object_fields =
 		object:
 			type: "master_detail"
 			reference_to: "objects"
-		name: 
+		name:
 			type: "text"
-			searchable:true
-			index:true
+			searchable: true
+			index: true
 		label:
 			type: "text"
-		description: 
+		description:
 			label: "Description"
 			type: "text"
-		type: 
+		type:
 			type: "select"
-			options: 
+			options:
 				text: "文本",
 				textarea: "长文本"
 				html: "Html文本",
@@ -30,7 +51,7 @@ Creator.Objects.object_fields =
 				currency: "金额"
 				lookup: "相关表"
 				master_detail: "主表/子表"
-		multiple: 
+		multiple:
 			type: "boolean"
 
 		required:
@@ -70,8 +91,14 @@ Creator.Objects.object_fields =
 		scale:
 			type: "number"
 
-		reference_to:
-			type: "select"
+		reference_to: #在服务端处理此字段值，如果小于2个，则存储为字符串，否则存储为数组
+			type: "lookup"
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.Objects, (o, k)->
+					_options.push {label: o.label, value: k, icon: o.icon}
+				return _options
+			multiple: true
 
 	list_views:
 		default:
@@ -86,11 +113,28 @@ Creator.Objects.object_fields =
 			allowEdit: false
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true
+
+	triggers:
+		"after.insert.server.object_fields":
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				_syncToObject(doc)
+		"after.update.server.object_fields":
+			on: "server"
+			when: "after.update"
+			todo: (userId, doc)->
+				_syncToObject(doc)
+		"after.delete.server.object_fields":
+			on: "server"
+			when: "after.remove"
+			todo: (userId, doc)->
+				_syncToObject(doc)

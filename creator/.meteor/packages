@@ -116,3 +116,4 @@ steedos:logger@0.0.2
 
 steedos:oauth2-server@0.0.1
 
+steedos:object-database

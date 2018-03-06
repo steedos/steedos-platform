@@ -84,7 +84,7 @@ Template.creator_view.helpers
 
 	record_name: ()->
 		record = Creator.getObjectRecord()
-		name_field_key = Creator.getObject().NAME_FIELD_KEY
+		name_field_key = Creator.getObject()?.NAME_FIELD_KEY
 		if record and name_field_key
 			return record[name_field_key]
 
@@ -163,6 +163,9 @@ Template.creator_view.helpers
 		permissions = Creator.getPermissions()
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
+
+		if !actions
+			return
 
 		if permissions.actions
 			return actions

@@ -64,7 +64,98 @@ Meteor.startup ->
 
 		return
 
-	_.each Creator.Collections, (value, key, list)->
+	SteedosOdataAPI.addRoute(':object_name', {authRequired: true, spaceRequired: false}, {
+		get: ()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
+
+			console.log '@spaceId, @userId, key: ', @urlParams.spaceId, @userId, key
+			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+			console.log 'permissions: ', permissions
+			if permissions.viewAllRecords or (permissions.allowRead and @userId)
+				# console.log 'queryParams: ', @queryParams
+				# console.log 'urlParams: ', @urlParams
+				# console.log 'bodyParams: ', @bodyParams
+				qs = querystring.unescape(querystring.stringify(@queryParams))
+				# console.log 'querystring: ', qs
+				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+
+				if key is 'cfs.files.filerecord'
+					createQuery.query['metadata.space'] = @urlParams.spaceId
+				else
+					createQuery.query.space = @urlParams.spaceId
+
+				# console.log 'createQuery: ', createQuery
+
+				if not permissions.viewAllRecords
+					createQuery.query.owner = @userId
+
+				entities = []
+				if @queryParams.$top isnt '0'
+					# console.log visitorParser(createQuery)
+					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
+				scannedCount = collection.find(createQuery.query).count()
+
+				if entities
+					dealWithExpand(createQuery, entities, key)
+
+					body = {}
+					headers = {}
+					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
+					body['@odata.count'] = scannedCount
+					body['value'] = entities
+					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+					headers['OData-Version'] = SteedosOData.VERSION
+					{body: body, headers: headers}
+				else
+					statusCode: 404
+					body: {status: 'fail', message: 'Unable to retrieve items from collection'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
+
+		post: ()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
+
+			permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
+			if permissions.allowCreate
+				@bodyParams.space = @spaceId
+				entityId = collection.insert @bodyParams
+				entity = collection.findOne entityId
+				if entity
+					statusCode: 201
+					{status: 'success', value: entity}
+				else
+					statusCode: 404
+					body: {status: 'fail', message: 'No item added'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
+	})
+
+	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
+
+	})
+
+	_.each [], (value, key, list)-> #Creator.Collections
 		if not Creator.objectsByName[key]?.enable_api
 			return
 

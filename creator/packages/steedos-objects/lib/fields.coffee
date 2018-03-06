@@ -3,6 +3,8 @@ Creator.getObjectSchema = (obj) ->
 	_.each obj.fields, (field, field_name)->
 
 		fs = {}
+		if field.regEx
+			fs.regEx = field.regEx
 		fs.autoform = {}
 		fs.autoform.multiple = field.multiple
 		if field.type == "text"

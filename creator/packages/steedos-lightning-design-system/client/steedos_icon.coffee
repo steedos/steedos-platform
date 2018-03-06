@@ -6,4 +6,4 @@ Template.steedos_icon.helpers
 		return Steedos.absoluteUrl(url)
 	
 	formatName: (name) ->
-		return name.replace(/_/ig, "-")
+		return name?.replace(/_/ig, "-")
