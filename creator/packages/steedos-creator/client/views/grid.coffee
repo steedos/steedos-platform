@@ -6,7 +6,7 @@ _itemClick = (e, curObjectName)->
 	actions = _actionItems(curObjectName, record._id, record_permissions)
 
 	actionSheetItems = _.map actions, (action)->
-		return {text: action.label, record_id: record._id, action: action, object_name: curObjectName}
+		return {text: action.label, record: record, action: action, object_name: curObjectName}
 
 	actionSheet = $(".action-sheet").dxActionSheet({
 		dataSource: actionSheetItems
@@ -14,12 +14,14 @@ _itemClick = (e, curObjectName)->
 		usePopover: true
 		onItemClick: (value)->
 			action = value.itemData.action
-			recordId = value.itemData.record_id
+			recordId = value.itemData.record._id
 			objectName = value.itemData.object_name
 			object = Creator.getObject(objectName)
 			collectionName = object.label
+			name_field_key = object.NAME_FIELD_KEY
 			if action.todo == "standard_delete"
-				action_record_title = template.$(".list-item-link-"+ recordId).attr("title")
+				console.log value.itemData
+				action_record_title = value.itemData.record[name_field_key]
 				swal
 					title: "删除#{object.label}"
 					text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
