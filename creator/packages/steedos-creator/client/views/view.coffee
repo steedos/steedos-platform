@@ -329,7 +329,7 @@ Template.creator_view.events
 			Session.set 'cmDoc', doc
 
 			Meteor.defer ()->
-				$(".btn.creator-cell-edit").click()
+				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
 		parent = event.currentTarget.dataset?.parent
