@@ -1,5 +1,72 @@
 dxDataGridInstance = null
 
+_itemClick = (e, curObjectName)->
+	record = e.data
+	record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
+	actions = _actionItems(curObjectName, record._id, record_permissions)
+
+	actionSheetItems = _.map actions, (action)->
+		return {text: action.label, record_id: record._id, action: action, object_name: curObjectName}
+
+	actionSheet = $(".action-sheet").dxActionSheet({
+		dataSource: actionSheetItems
+		title: "Choose action"
+		usePopover: true
+		onItemClick: (value)->
+			action = value.itemData.action
+			recordId = value.itemData.record_id
+			objectName = value.itemData.object_name
+			object = Creator.getObject(objectName)
+			collectionName = object.label
+			if action.todo == "standard_delete"
+				action_record_title = template.$(".list-item-link-"+ recordId).attr("title")
+				swal
+					title: "删除#{object.label}"
+					text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
+					html: true
+					showCancelButton:true
+					confirmButtonText: t('Delete')
+					cancelButtonText: t('Cancel')
+					(option) ->
+						if option
+							Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
+								if error
+									toastr.error error.reason
+								else
+									info = object.label + "\"#{action_record_title}\"" + "已删除"
+									toastr.success info
+									dxDataGridInstance.refresh()
+			else
+				Session.set("action_fields", undefined)
+				Session.set("action_collection", "Creator.Collections.#{objectName}")
+				Session.set("action_collection_name", collectionName)
+				Session.set("action_save_and_insert", true)
+				Creator.executeAction objectName, action, recordId
+				console.log("actionSheet.onItemClick", value)
+	}).dxActionSheet("instance");
+	
+	actionSheet.option("target", e.event.target);
+	actionSheet.option("visible", true);
+
+_actionItems = (object_name, record_id, record_permissions)->
+	obj = Creator.getObject(object_name)
+	actions = Creator.getActions(object_name)
+	actions = _.filter actions, (action)->
+		if action.on == "record" or action.on == "record_more"
+			if action.only_detail
+				return false
+			if typeof action.visible == "function"
+				return action.visible(object_name, record_id, record_permissions)
+			else
+				return action.visible
+		else
+			return false
+	# if _.isEmpty(actions)
+	# 	Meteor.defer ()->
+	# 		objectColName = "tabular-col-#{object_name.replace(/\./g,'_')}"
+	# 		$(".tabular-col-actions.#{objectColName}").hide()
+	return actions
+
 _fields = (object_name)->
 	object = Creator.getObject(object_name)
 	name_field_key = object.NAME_FIELD_KEY
@@ -133,10 +200,24 @@ Template.creator_grid.onRendered ->
 				headerCellTemplate: (container) ->
 					return ""
 				cellTemplate: (container, options) ->
-					container.css("overflow", "visible")
-					record_permissions = Creator.getRecordPermissions curObjectName, options.data, Meteor.userId()
-					actionsOption = {_id: options.data._id, object_name: curObjectName, record_permissions: record_permissions, is_related: false}
-					Blaze.renderWithData Template.creator_table_actions, actionsOption, container[0]
+					htmlText = """
+						<span class="slds-grid slds-grid--align-spread creator-table-actions">
+							<div class="forceVirtualActionMarker forceVirtualAction">
+								<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+									<span class="slds-icon_container slds-icon-utility-down">
+										<span class="lightningPrimitiveIcon">
+											<svg class="slds-icon slds-icon-text-default slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="down">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down">
+												</use>
+											</svg>
+										</span>
+										<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
+									</span>
+								</a>
+							</div>
+						</span>
+					"""
+					$("<div>").append(htmlText).appendTo(container);
 			showColumns.splice 0, 0, 
 				dataField: "_id_checkbox"
 				width: 60
@@ -196,6 +277,11 @@ Template.creator_grid.onRendered ->
 					filter: filter
 					expand: expand_fields
 				columns: showColumns
+				onCellClick: (e)->
+					console.log "curObjectName", curObjectName
+					if e.column?.dataField ==  "_id_actions"
+						_itemClick(e, curObjectName)
+
 				onContentReady: (e)->
 					self.data.total.set dxDataGridInstance.totalCount()
 
