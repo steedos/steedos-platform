@@ -31,7 +31,7 @@ getSimpleSchema = (collectionName)->
 
 		final_schema = {}
 		if fields
-			fields = fields.replace(/ /, "").split(",")
+			fields = fields.replace(/\ /g, "").split(",")
 			_.each fields, (field)->
 				obj = _.pick(schema, field, field + ".$")
 				_.extend(final_schema, obj)
@@ -278,7 +278,7 @@ helpers =
 				permission_fields.push "_object_name"
 
 			if Session.get 'cmFields'
-				firstLevelKeys = Session.get('cmFields').replace(/ /, "")
+				firstLevelKeys = Session.get('cmFields').replace(/\ /g, "")
 				firstLevelKeys = firstLevelKeys.split(",")
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
