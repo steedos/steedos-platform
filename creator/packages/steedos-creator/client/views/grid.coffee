@@ -69,13 +69,19 @@ _actionItems = (object_name, record_id, record_permissions)->
 	# 		$(".tabular-col-actions.#{objectColName}").hide()
 	return actions
 
-_fields = (object_name)->
+_fields = (object_name, list_view_id)->
 	object = Creator.getObject(object_name)
 	name_field_key = object.NAME_FIELD_KEY
 	fields = [name_field_key]
-	if object.list_views?.default?.columns
-		fields = object.list_views.default.columns
-	fields = fields.map (n,i)->
+	if object.list_views
+		if object.list_views[list_view_id]?.columns
+			fields = object.list_views[list_view_id].columns
+		else
+			if object.list_views?.default?.columns
+				fields = object.list_views.default.columns
+
+	console.log list_view_id, fields
+	fields = fields.map (n)->
 		if object.fields[n]?.type and !object.fields[n].hidden
 			return n.split(".")[0]
 		else
@@ -179,7 +185,7 @@ Template.creator_grid.onRendered ->
 					settingColumns = _.keys(grid_settings.settings[list_view_id].column_width)
 
 				if settingColumns
-					defaultColumns = _fields(curObjectName)
+					defaultColumns = _fields(curObjectName, list_view_id)
 					selectColumns = _.intersection(settingColumns, defaultColumns)
 					selectColumns = _.union(selectColumns, defaultColumns)
 				else
