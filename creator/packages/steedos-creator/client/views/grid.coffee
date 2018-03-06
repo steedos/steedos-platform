@@ -80,7 +80,6 @@ _fields = (object_name, list_view_id)->
 			if object.list_views?.default?.columns
 				fields = object.list_views.default.columns
 
-	console.log list_view_id, fields
 	fields = fields.map (n)->
 		if object.fields[n]?.type and !object.fields[n].hidden
 			return n.split(".")[0]
