@@ -1,5 +1,5 @@
-<template name="autoformModals">
-	<div class="modal fade creator-modal" id="afModal">
+<template name="CreatorAutoformModals">
+	<div class="modal fade creator-modal creator-auotform-modals" id="afModal">
 		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open">
 			<div class="slds-modal__container {{cmModalContentClass}}">
 				<header class="slds-modal__header">
@@ -36,11 +36,11 @@
 							{{#if shouldUpdateQuickForm}}
 								{{#if isUseMethod}}
 									{{#autoForm title=cmTitle id=cmFormId schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-										{{>formField schemaFields=schemaFields}}
+										{{>CreatorFormField schemaFields=schemaFields}}
 									{{/autoForm}}
 								{{else}}
 									{{#autoForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-										{{>formField schemaFields=schemaFields}}
+										{{>CreatorFormField schemaFields=schemaFields}}
 									{{/autoForm}}
 								{{/if}}
 					
@@ -104,13 +104,13 @@
 	</div>
 </template>
 
-<template name="afModal">
+<template name="CreatorAfModal">
 	<a href="#afModal" class="{{class}}" collection="{{collection}}" operation="{{operation}}">
 		{{> UI.contentBlock}}
 	</a>
 </template>
 
-<template name="formField">
+<template name="CreatorFormField">
 	{{#if schemaFields.grouplessFields}}
 		{{#each schemaFields.grouplessFields}}
 			<div class="slds-grid view-page-section-row">

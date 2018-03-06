@@ -55,7 +55,7 @@ getSimpleSchema = (collectionName)->
 	return new SimpleSchema(final_schema)
 
 
-Template.autoformModals.rendered = ->
+Template.CreatorAutoformModals.rendered = ->
 
 	self = this;
 
@@ -124,7 +124,7 @@ Template.autoformModals.rendered = ->
 			$(keyPress).click()
 
 
-Template.autoformModals.events
+Template.CreatorAutoformModals.events
 
 	'click button.btn-insert': (event,template) ->
 		formId = Session.get('cmFormId') or defaultFormId
@@ -328,11 +328,11 @@ helpers =
 		else
 			return false
 	
-Template.autoformModals.helpers helpers
+Template.CreatorAutoformModals.helpers helpers
 
-Template.formField.helpers helpers
+Template.CreatorFormField.helpers helpers
 
-Template.afModal.events
+Template.CreatorAfModal.events
 	'click *': (e, t) ->
 		e.preventDefault()
 
@@ -410,6 +410,10 @@ Template.afModal.events
 				# 	return false
 				onSuccess: ->
 					$('#afModal').modal 'hide'
+				
+				onError: (formType, error)->
+					return
+
 			registeredAutoFormHooks.push t.data.formId
 
 		if t.data.doc
@@ -462,11 +466,11 @@ Template.afModal.events
 		$('#afModal').data('bs.modal').options.backdrop = t.data.backdrop or true
 		$('#afModal').modal 'show'
 
-Template.autoformModals.onCreated ->
+Template.CreatorAutoformModals.onCreated ->
 	self = this;
 	self.shouldUpdateQuickForm = new ReactiveVar(true);
 
-Template.autoformModals.onDestroyed ->
+Template.CreatorAutoformModals.onDestroyed ->
 	Session.set 'cmIsMultipleUpdate', false
 	Session.set 'cmTargetIds', null
 

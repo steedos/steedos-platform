@@ -10,7 +10,7 @@ _itemClick = (e, curObjectName)->
 
 	actionSheet = $(".action-sheet").dxActionSheet({
 		dataSource: actionSheetItems
-		title: "Choose action"
+		showTitle: false
 		usePopover: true
 		onItemClick: (value)->
 			action = value.itemData.action
