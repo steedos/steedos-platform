@@ -99,10 +99,10 @@ triggers 用于定义在服务端执行的触发器
     - when: 可选择以下事件
 		- "before.insert"
 		- "before.update"
-		- "before.delete"
+		- "before.remove"
 		- "after.insert"
 		- "after.update"
-		- "after.delete"
+		- "after.remove"
     - todo: 传入触发的函数
 - trigger.todo 函数中可以使用以下变量
   - this.object_name
