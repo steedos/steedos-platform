@@ -134,6 +134,8 @@ _columns = (object_name, columns, list_view_id, is_related)->
 			width = column_width_settings[n]
 			if width
 				columnItem.width = width
+			else
+				columnItem.width = defaultWidth
 		else
 			columnItem.width = defaultWidth
 
