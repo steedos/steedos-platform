@@ -135,12 +135,12 @@ Creator.baseObject =
 			on: "record_more"
 			todo: "standard_delete"
 
-		"export":
-			label: "Export"
-			visible: false
-			on: "list"
-			todo: (object_name, record_id, fields)->
-				alert("please write code in baseObject to export data for " + this.object_name)
+		# "export":
+		# 	label: "Export"
+		# 	visible: false
+		# 	on: "list"
+		# 	todo: (object_name, record_id, fields)->
+		# 		alert("please write code in baseObject to export data for " + this.object_name)
 
 
 		

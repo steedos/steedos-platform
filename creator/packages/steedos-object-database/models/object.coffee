@@ -50,4 +50,20 @@ Creator.Objects.objects =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true
+
+
+	triggers:
+		"before.update.server.objects":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if modifier?.$set?.name && doc.name != modifier.$set.name
+					console.log "不能修改name"
+					throw new Meteor.Error "不能修改name"
+
+		"after.insert.server.objects":
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				Creator.getCollection("object_fields").insert({object: doc._id, name: "name", space: doc.space, type: "text", required: true, index: true})

@@ -32,6 +32,7 @@ Creator.Objects.object_fields =
 			type: "text"
 			searchable: true
 			index: true
+			required: true
 		label:
 			type: "text"
 		description:
@@ -39,6 +40,7 @@ Creator.Objects.object_fields =
 			type: "text"
 		type:
 			type: "select"
+			required: true
 			options:
 				text: "文本",
 				textarea: "长文本"
@@ -102,7 +104,7 @@ Creator.Objects.object_fields =
 
 	list_views:
 		default:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "object", "label", "type", "multiple", "required", "omit", "group", "description", "modified"]
 		all:
 			filter_scope: "space"
 
