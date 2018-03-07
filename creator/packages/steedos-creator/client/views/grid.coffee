@@ -287,7 +287,7 @@ Template.creator_grid.onRendered ->
 							request.headers['X-Space-Id'] = Steedos.spaceId()
 							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 						errorHandler: (error) ->
-							if error.httpStatus == 404
+							if error.httpStatus == 404 || error.httpStatus == 400
 								error.message = t "creator_odata_api_not_found"
 					select: selectColumns
 					filter: filter
