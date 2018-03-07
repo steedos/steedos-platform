@@ -23,6 +23,7 @@ Meteor.startup ->
 					mobile: space_user.mobile,
 					position: space_user.position,
 					email: space_user.email
+					company: space_user.company
 				}
 				space_user_org = Creator.getCollection("organizations")?.findOne(space_user.organization)
 
