@@ -23,7 +23,7 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon)->
 			],
 			filter: filter
 		},
-		height: "auto"
+		height: "100%"
 		searchEnabled: true
 		searchExpr: name_field_key,
 		pageLoadMode: "scrollBottom"
