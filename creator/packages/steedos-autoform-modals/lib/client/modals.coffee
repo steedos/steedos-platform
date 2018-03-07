@@ -10,9 +10,9 @@ AutoForm.addHooks 'cmForm',
 	onError: (operation,error) ->
 		console.error error
 		if error.reason
-			toastr?.error?(t(error.reason))
+			toastr?.error?(TAPi18n.__(error.reason))
 		else if error.message
-			toastr?.error?(t(error.message))
+			toastr?.error?(TAPi18n.__(error.message))
 		else
 			toastr?.error?(error)
 
@@ -411,8 +411,14 @@ Template.CreatorAfModal.events
 				onSuccess: ->
 					$('#afModal').modal 'hide'
 				
-				onError: (formType, error)->
-					return
+				onError: (operation,error) ->
+					console.error error
+					if error.reason
+						toastr?.error?(TAPi18n.__(error.reason))
+					else if error.message
+						toastr?.error?(TAPi18n.__(error.message))
+					else
+						toastr?.error?(error)
 
 			registeredAutoFormHooks.push t.data.formId
 
