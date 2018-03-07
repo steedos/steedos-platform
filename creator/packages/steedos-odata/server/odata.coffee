@@ -152,9 +152,110 @@ Meteor.startup ->
 	})
 
 	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
+		post: ()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
 
+			permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
+			if permissions.allowCreate
+					@bodyParams.space = @spaceId
+					entityId = collection.insert @bodyParams
+					entity = collection.findOne entityId
+					if entity
+						statusCode: 201
+						{status: 'success', value: entity}
+					else
+						statusCode: 404
+						body: {status: 'fail', message: 'No item added'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
+		get:()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
+
+			permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
+			if permissions.allowRead
+					selector = {_id: @urlParams.id, space: @spaceId}
+					entity = collection.findOne selector
+					if entity
+						{status: 'success', value: entity}
+					else
+						statusCode: 404
+						body: {status: 'fail', message: 'Item not found'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
+		put:()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
+
+			permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
+			if permissions.allowEdit
+					selector = {_id: @urlParams.id, space: @spaceId}
+					entityIsUpdated = collection.update selector, $set: @bodyParams
+					if entityIsUpdated
+						entity = collection.findOne @urlParams.id
+						{status: 'success', value: entity}
+					else
+						statusCode: 404
+						body: {status: 'fail', message: 'Item not found'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
+		delete:()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				return {
+					statusCode: 404
+					body: {status: 'fail', message: 'Collection not found'}
+				}
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body: {status: 'fail', message: 'Collection not found'}
+
+			permissions = Creator.getObjectPermissions(@spaceId, @userId, key)
+			if permissions.allowDelete
+					selector = {_id: @urlParams.id, space: @spaceId}
+					if collection.remove selector
+						{status: 'success', message: 'Item removed'}
+					else
+						statusCode: 404
+						body: {status: 'fail', message: 'Item not found'}
+			else
+				statusCode: 400
+				body: {status: 'fail', message: 'Action not permitted'}
 	})
 
+
+	#TODO remove
 	_.each [], (value, key, list)-> #Creator.Collections
 		if not Creator.objectsByName[key]?.enable_api
 			return
