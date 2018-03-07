@@ -60,10 +60,14 @@ Creator.Objects.qhd_informations =
 		all:
 			label: "所有上报信息"
 			filter_scope: "space"
+
 		mine:
 			label: "我的上报信息"
 			filter_scope: "mine"
-
+		company:
+			label:"本公司上报信息"
+			filter_scope: "space"
+			filters: [["company", "=", "{user.company}"]]
 	permission_set:
 		user:
 			allowCreate: false
