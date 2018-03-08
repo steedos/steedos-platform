@@ -46,7 +46,8 @@ Package.onUse(function(api) {
 
 	api.addFiles('core.coffee');
 
-	api.addFiles('lib/eval.js', "client");
+	api.addFiles('lib/eval.js');
+
 	api.addFiles('lib/formular.coffee', "client");
 	
 	api.addFiles('lib/object.coffee');
