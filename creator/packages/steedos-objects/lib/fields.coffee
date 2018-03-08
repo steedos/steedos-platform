@@ -63,6 +63,9 @@ Creator.getObjectSchema = (obj) ->
 
 			fs.filtersFunction = Creator.evaluateFilters
 
+			if field.optionsFunction
+				fs.optionsFunction = field.optionsFunction
+
 			if field.reference_to
 
 				if field.reference_to == "users"
@@ -119,7 +122,6 @@ Creator.getObjectSchema = (obj) ->
 			else
 				fs.autoform.type = "steedosLookups"
 				fs.autoform.defaultIcon = field.defaultIcon
-				fs.optionsFunction = field.optionsFunction
 
 		else if field.type == "select"
 			fs.type = String
