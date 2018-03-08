@@ -1,5 +1,10 @@
 
 Template.creator_list_wrapper.onRendered ->
+	self = this
+	self.autorun ->
+		if Session.get("list_view_id")
+			self.$(".btn-filter-list").removeClass("slds-is-selected")
+			self.$(".filter-list-container").addClass("slds-hide")
 
 Template.creator_list_wrapper.helpers Creator.helpers
 
@@ -146,7 +151,7 @@ Template.creator_list_wrapper.events
 			else if result
 				Session.set("filter_items", filter_items)
 		#$(event.currentTarget).toggleClass("slds-is-selected")
-		$(".filter-list-container").toggleClass("slds-hide")
+		# $(".filter-list-container").toggleClass("slds-hide")
 
 	'click .filters-save-as': (event, template)->
 		filter_items = Session.get("filter_items")

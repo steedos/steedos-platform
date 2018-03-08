@@ -16,11 +16,14 @@ Template.filter_option.helpers
 						return "name"
 					options: ()->
 						keys = Creator.getSchema(object_name)._firstLevelSchemaKeys
+						permission_fields = Creator.getFields(object_name)
 						schema = Creator.getSchema(object_name)._schema
 						keys = _.map keys, (key) ->
-							obj = _.pick(schema, key)
-							label = obj[key].label
-							return {label: label, value: key}
+							if _.indexOf(permission_fields, key) > -1
+								obj = _.pick(schema, key)
+								label = obj[key].label || TAPi18n.__(Creator.getObject(object_name).schema.label(key))
+								return {label: label, value: key}
+						keys = _.compact(keys)
 						return keys
 			operation:
 				type: String
