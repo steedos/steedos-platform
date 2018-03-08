@@ -37,3 +37,23 @@ Creator.Objects.permission_set =
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: true 
+
+	triggers:
+		"before.insert.server.check": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				newName = doc?.name
+				if newName and Creator.getCollection("permission_set").findOne({name:newName},{fields:{name:1}})
+					throw new Meteor.Error 500, "对象名称不能重复"
+				
+		"before.update.server.check": 
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				newName = modifier.$set?.name
+				if newName and Creator.getCollection("permission_set").findOne({name:newName,_id:{$ne:doc._id}},{fields:{name:1}})
+					throw new Meteor.Error 500, "对象名称不能重复"
+
+					
+
