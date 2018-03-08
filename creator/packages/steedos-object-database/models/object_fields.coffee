@@ -19,6 +19,12 @@ _syncToObject = (doc) ->
 			fields: fields
 	})
 
+isRepeatedName = (doc, name)->
+	other = Creator.getCollection("object_fields").find({object: doc.object, _id: {$ne: doc._id}, name: name || doc.name})
+	if other.count() > 0
+		return true
+	return false
+
 Creator.Objects.object_fields =
 	name: "object_fields"
 	label: "字段"
@@ -33,6 +39,7 @@ Creator.Objects.object_fields =
 			searchable: true
 			index: true
 			required: true
+			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
 		description:
@@ -135,8 +142,33 @@ Creator.Objects.object_fields =
 			when: "after.update"
 			todo: (userId, doc)->
 				_syncToObject(doc)
-		"after.delete.server.object_fields":
+		"after.remove.server.object_fields":
 			on: "server"
 			when: "after.remove"
 			todo: (userId, doc)->
 				_syncToObject(doc)
+
+		"before.update.server.object_fields":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if doc.name == 'name' && modifier?.$set?.name && doc.name != modifier.$set.name
+					throw new Meteor.Error 500, "不能修改此纪录的name属性"
+				if modifier?.$set?.name && isRepeatedName(doc, modifier.$set.name)
+					throw new Meteor.Error 500, "对象名称不能重复"
+
+		"before.insert.server.object_fields":
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				if isRepeatedName(doc)
+					throw new Meteor.Error 500, "对象名称不能重复"
+
+		"before.remove.server.object_fields":
+			on: "server"
+			when: "before.remove"
+			todo: (userId, doc)->
+				if doc.name == "name"
+					throw new Meteor.Error 500, "不能删除此纪录"
+
+
