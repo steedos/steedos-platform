@@ -25,14 +25,17 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular@1.6.1');
 	api.use('matb33:collection-hooks@0.8.1');
 	api.use('meteorhacks:subs-manager@1.6.4');
+	api.use('gwendall:simple-schema-i18n');
 	api.use('steedos:objects');
 
 	api.use('tap:i18n@1.7.0');
-	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
+	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 
 	api.addFiles('models/object.coffee');
 	api.addFiles('models/object_fields.coffee');
+	api.addFiles('models/object_triggers.coffee');
+	api.addFiles('models/object_actions.coffee');
 
 	api.addFiles('server/objects_observe.coffee', 'server');
 	api.addFiles('server/publications/objects.coffee', 'server');
