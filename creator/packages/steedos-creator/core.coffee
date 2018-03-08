@@ -263,7 +263,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 	firstLevelKeys = Creator.getSchema(object_name)._firstLevelSchemaKeys
 	permission_fields =  Creator.getPermissions(object_name, spaceId, userId).fields
 
-	return permission_fields
+	return permission_fields || []
 
 Creator.isloading = ()->
 	return Creator.isLoadingSpace.get()
