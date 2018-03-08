@@ -1,0 +1,69 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "必须填写[label]",
+      "minString": "[label]最短[min]字符长",
+      "maxString": "[label]不能超过[max]字符",
+      "minNumber": "[label]至少是[min]",
+      "maxNumber": "[label]不能超过[max]",
+      "minNumberExclusive": "[label]必须大于[min]",
+      "maxNumberExclusive": "[label]必须小于[max]",
+      "minDate": "[label]必须在[min]时或之后",
+      "maxDate": "[label]不能在[max]之后",
+      "badDate": "[label]不是一个正确的日期",
+      "minCount": "至少包含[minCount]项",
+      "maxCount": "不能超过[maxCount]项",
+      "noDecimal": "[label]必须是整数",
+      "notAllowed": "[value]填写不正确",
+      "expectedString": "[label]必须是字符串",
+      "expectedNumber": "[label]必须是数字",
+      "expectedBoolean": "[label]必须是是/否类型",
+      "expectedArray": "[label]必须是一组值",
+      "expectedObject": "[label]必须是一个对象",
+      "expectedConstructor": "[label]必须是[type]",
+      "keyNotInSchema": "[key]不符合结构规则",
+      "notUnique": "[label]必须是唯一的",
+      "regEx": {
+        "0": {
+          "msg": "[label]正则校验失败"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label]必须是合法的电邮地址"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label]必须是合法的电邮地址"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label]必须是合法的域名"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label]必须是合法的域名"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label]必须是一个合法的 IPv4 或 IPv6 地址"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label]必须是一个合法的 IPv4地址"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label]必须是一个合法的 IPv6 地址"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label]必须是一个合法的 URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label]必须是一个数字序号"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "必須填寫[label]",
+      "minString": "[label]最短為[min]個字符",
+      "maxString": "[label]不能超過[max]個字符",
+      "minNumber": "[label]至少是[min]",
+      "maxNumber": "[label]不能超過[max]",
+      "minNumberExclusive": "[label]必須大於[min]",
+      "maxNumberExclusive": "[label]必須小於[max]",
+      "minDate": "[label]必須在[min]時或之後",
+      "maxDate": "[label]不能在[max]之後",
+      "badDate": "[label]是無效日期",
+      "minCount": "至少包含[minCount]項",
+      "maxCount": "不能超過[maxCount]項",
+      "noDecimal": "[label]必須是整數",
+      "notAllowed": "[value]填寫不正確",
+      "expectedString": "[label]必須是字符串",
+      "expectedNumber": "[label]必須是數字",
+      "expectedBoolean": "[label]必須為（是/否）類型",
+      "expectedArray": "[label]必須是一組值",
+      "expectedObject": "[label]必須是一個物件 (Object)",
+      "expectedConstructor": "[label]必須是[type]",
+      "keyNotInSchema": "[key]不符合結構規則",
+      "regEx": {
+        "0": {
+          "msg": "[label] 正則校驗失敗"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] 電郵地址格式錯誤"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] 電郵地址格式錯誤"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] 域名格式錯誤"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] 域名格式錯誤"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] IPv4 或 IPv6 地址格式錯誤"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] IPv4 地址格式錯誤"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] IPv6 地址格式錯誤"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] URL 格式錯誤"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] 必須是一個數字序號"
+        }
+      }
+    }
+  }
+}

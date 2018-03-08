@@ -49,7 +49,7 @@ flemay:less-autoprefixer@1.2.0
 fortawesome:fontawesome@4.7.0
 francocatena:status@1.5.3
 geojson-utils@1.0.10
-gwendall:simple-schema-i18n@0.2.3
+gwendall:simple-schema-i18n@0.3.0
 hot-code-push@1.0.4
 html-tools@1.0.11
 htmljs@1.0.11

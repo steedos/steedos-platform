@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] kreves",
+      "minString": "[label] må ha mist [min] tegn",
+      "maxString": "[label] kan ikke ha flere enn [max] tegn",
+      "minNumber": "[label] må være minst [min]",
+      "maxNumber": "[label] kan ikke være større enn [max]",
+      "minNumberExclusive": "[label] må være større enn [min]",
+      "maxNumberExclusive": "[label] må være mindre enn [max]",
+      "minDate": "[label] må være på eller etter [min]",
+      "maxDate": "[label] kan ikke være etter [max]",
+      "badDate": "[label] er ikke en gyldig dato",
+      "minCount": "Du må spesifisere minst [minCount] verdier",
+      "maxCount": "Du kan ikke spesifisere mer enn [maxCount] verdier",
+      "noDecimal": "[label] må være ett heltall",
+      "notAllowed": "[value] er ikke en tillatt verdi",
+      "expectedString": "[label] må være en streng",
+      "expectedNumber": "[label] må være et tall",
+      "expectedBoolean": "[label] må ha en boolsk verdi",
+      "expectedArray": "[label] må være en matrise",
+      "expectedObject": "[label] må være et objekt",
+      "expectedConstructor": "[label] må være en [type]",
+      "keyNotInSchema": "[key] er ikke tillatt etter skjemaet",
+      "regEx": {
+        "0": {
+          "msg": "[label] validering av det regulære utrykket feilet"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] må være en gyldig epostadresse"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] må være en gyldig epostadresse"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] må være et gyldig domene"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] må være et gyldig domene"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] må være en gyldig IPv4 eller IPv6 adresse"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] må være en gyldig IPv4 adresse"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] må være en gyldig IPv6 adresse"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] må være en gyldig URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] må være en gyldig alphanumerisk ID"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] е задължително",
+      "minString": "[label] трябва да е минимум [min] знака",
+      "maxString": "[label] не може да е повече от [max] знака",
+      "minNumber": "[label] трябва да е минимум [min]",
+      "maxNumber": "[label] не може да е повече от [max]",
+      "minNumberExclusive": "[label] трябва да е повече от [min]",
+      "maxNumberExclusive": "[label] трябва да е по малко от[max]",
+      "minDate": "[label] трябва да е на или след [min]",
+      "maxDate": "[label] не може да е по късно от [max]",
+      "badDate": "[label] е невалидна дата",
+      "minCount": "Трябва да изберете минимум [minCount] стойности",
+      "maxCount": "Трябва да са не повече от [maxCount] стойности",
+      "noDecimal": "[label] трябва да е цяло число",
+      "notAllowed": "[value] не е позволена стойност",
+      "expectedString": "[label] трябва да е  низ",
+      "expectedNumber": "[label] трябва да е число",
+      "expectedBoolean": "[label] трябва да е булева стойност",
+      "expectedArray": "[label] трябва да е масив",
+      "expectedObject": "[label] трябва да е обект",
+      "expectedConstructor": "[label] трябва да е [type]",
+      "keyNotInSchema": "[key] е непозволен в тази схема",
+      "regEx": {
+        "0": {
+          "msg": "[label] нвалиден регулярен израз"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] трябва да е валиден e-mail адрес"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] трябва да е валиден e-mail адрес"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] трябва да е валиден домейн"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] трябва да е валиден домейн"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] трябва да е валиден IPv4 или IPv6 адрес"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] трябва да е валиден IPv4 адрес"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] трябва да е валиден IPv6 адрес"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] трябва да е валиден URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] трябва да е валиден низ от букви и числа"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] krävs",
+      "minString": "[label] måste vara minst [min] bokstäver",
+      "maxString": "[label] får inte överskrida [max] bokstäver",
+      "minNumber": "[label] måste vara minst [min]",
+      "maxNumber": "[label] får inte överskrida [max]",
+      "minNumberExclusive": "[label] måste vara större  än [min]",
+      "maxNumberExclusive": "[label] måste vara mindre än [max]",
+      "minDate": "[label] måste vara den [min] eller senare",
+      "maxDate": "[label] får inte vara senare än [max]",
+      "badDate": "[label] är inte ett godkänt datum",
+      "minCount": "Du måste åtminstone ange [minCount] värden",
+      "maxCount": "Du får inte ange fler än [maxCount] värden",
+      "noDecimal": "[label] måste vara ett nummer",
+      "notAllowed": "[value] är inte ett godkänt nummer",
+      "expectedString": "[label] måste vara en sträng",
+      "expectedNumber": "[label] måste vara ett nummer",
+      "expectedBoolean": "[label] måste vara en boolean",
+      "expectedArray": "[label] måste vara en lista",
+      "expectedObject": "[label] måste vara ett objekt",
+      "expectedConstructor": "[label] måste vara av typen [type]",
+      "keyNotInSchema": "[key] är inte godkänt av schemat",
+      "notUnique": "[label] måste vara unik",
+      "regEx": {
+        "0": {
+          "msg": "[label] misslyckades med det reguljära uttrycket vid validering"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] måste vara en godkänd e-postadress"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] måste vara en godkänd e-postadress"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] måste vara en godkänt domän"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] måste vara en godkänt domän"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] måste vara i ett godkänt IPv4 eller IPv6 format"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] måste vara i ett godkänt IPv4 format"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] måste vara i ett godkänt IPv6 format"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] måste vara en godkänd URL."
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] måste vara ett godkänt alfanumerisk ID"
+        }
+      }
+    }
+  }
+}

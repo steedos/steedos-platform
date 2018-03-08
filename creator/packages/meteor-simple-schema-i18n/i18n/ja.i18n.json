@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] を入力してください",
+      "minString": "[label] は[min]文字以上で入力してください",
+      "maxString": "[label] は[max]文字以内で入力してください",
+      "minNumber": "[label] は[min]またそれ以上の値にしてください",
+      "maxNumber": "[label] は[max]またそれ以下の値にしてください",
+      "minNumberExclusive": "[label] は[min]以上の値にしてください",
+      "maxNumberExclusive": "[label] は[max]以下の値にしてください",
+      "minDate": "[label] は[min]以降で入力してください",
+      "maxDate": "[label] は[max]以前で入力してください",
+      "badDate": "[label] は日付で入力してください",
+      "minCount": "[label] は[minCount]項目以上で指定してください",
+      "maxCount": "[label] は[maxCount]項目以内で指定してください",
+      "noDecimal": "[label] は整数で入力してください",
+      "notAllowed": "[value] は有効ではない",
+      "expectedString": "[label] は文字列で入力してください",
+      "expectedNumber": "[label] は数値で入力してください",
+      "expectedBoolean": "[label] は真偽で入力してください",
+      "expectedArray": "[label] は配列で入力してください",
+      "expectedObject": "[label] はオブジェクトで入力してください",
+      "expectedConstructor": "[label] は[type]で入力してください",
+      "keyNotInSchema": "[key] は無効なスキーマです",
+      "regEx": {
+        "0": {
+          "msg": "[label] は正規表現で失敗しました"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] はメールアドレスで入力してください"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] はメールアドレスで入力してください"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] はドメインで入力してください"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] はドメインで入力してください"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] はIPv4またはIPv6アドレスで入力してください"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] はIPv4アドレスで入力してください"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] はIPv6アドレスで入力してください"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] はURLで入力してください"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] は英数字で入力してください"
+        }
+      }
+    }
+  }
+}

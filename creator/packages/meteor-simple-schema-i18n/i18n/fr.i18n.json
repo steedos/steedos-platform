@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "Veuillez saisir quelque chose",
+      "minString": "Veuillez saisir au moins [min] caractères",
+      "maxString": "Veuillez saisir moins de [max] caractères",
+      "minNumber": "Ce champ doit être superieur ou égal à [min]",
+      "maxNumber": "Ce champ doit être inferieur ou égal à [max]",
+      "minNumberExclusive": "Ce champ doit être superieur à [min]",
+      "maxNumberExclusive": "Ce champ doit être inferieur à [max]",
+      "minDate": "La date doit est posterieure au [min]",
+      "maxDate": "La date doit est anterieure au [max]",
+      "badDate": "Cette date est invalide",
+      "minCount": "Vous devez saisir plus de [minCount] valeurs",
+      "maxCount": "Vous devez saisir moins de [maxCount] valeurs",
+      "noDecimal": "Ce champ doit être un entier",
+      "notAllowed": "[value] n'est pas une valeur acceptée",
+      "expectedString": "Ce champ doit être une chaine de caractères",
+      "expectedNumber": "Ce champ doit être un nombre",
+      "expectedBoolean": "Ce champ doit être un booléen",
+      "expectedArray": "Ce champ doit être un tableau",
+      "expectedObject": "Ce champ doit être une objet",
+      "expectedConstructor": "Ce champ doit être du type [type]",
+      "keyNotInSchema": "Le champ [key] n'est pas permis par le schéma",
+      "regEx": {
+        "0": {
+          "msg": "Ce champ a échoué la validation par Regex"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "Cette adresse e-mail est incorrecte"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "Cette adresse e-mail est incorrecte"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "Ce champ doit être un domaine valide"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "Ce champ doit être un domaine valide"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "Cette adresse IP est invalide"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "Cette adresse IPv4 est invalide"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "Cette adresse IPv6 est invalide"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "Cette URL is invalide"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "Cet identifiant alphanumérique est invalide"
+        }
+      }
+    }
+  }
+}

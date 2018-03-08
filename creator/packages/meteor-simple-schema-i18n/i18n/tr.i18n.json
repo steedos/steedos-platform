@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] girmek zorunludur",
+      "minString": "[label] en az [min] karakter olmalı",
+      "maxString": "[label] [max] karakteri geçemez",
+      "minNumber": "[label] en az [min] olabilir",
+      "maxNumber": "[label] en fazla [max] olabilir",
+      "minNumberExclusive": "[label] [min] üzeri olmalı",
+      "maxNumberExclusive": "[label] [max] altı olmalı",
+      "minDate": "[label] [min] veya daha ileri olmalı",
+      "maxDate": "[label] [max] tarihinden sonra olamaz",
+      "badDate": "[label] geçerli bir tarih değil",
+      "minCount": "En az [minCount] tane değer olmalı",
+      "maxCount": "[maxCount] üstü sayıda değer olamaz",
+      "noDecimal": "[label] bir tamsayı olmalı",
+      "notAllowed": "[value] izin verilen bir değer değil",
+      "expectedString": "[label] bir metin olmalı",
+      "expectedNumber": "[label] bir rakam olmalı",
+      "expectedBoolean": "[label] bir mantıksal değer olmalı",
+      "expectedArray": "[label] bir dizi olmalı",
+      "expectedObject": "[label] bir nesne olmalı",
+      "expectedConstructor": "[label] bir [type] olmalı",
+      "keyNotInSchema": "[key] şemada izin verilen bir anahtar değil",
+      "regEx": {
+        "0": {
+          "msg": "[label] kurallı ifade testini geçemedi"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] geçerli bir eposta adresi olmalı"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] geçerli bir eposta adresi olmalı"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] geçerli bir alan adı olmalı"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] geçerli bir alan adı olmalı"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] geçerli bir IPv4 veya IPv6 adresi olmalı"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] geçerli bir IPv4 adresi olmalı"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] geçerli bir IPv6 adresi olmalı"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] geçerli bir URL olmalı"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] geçerli bir alfasayısal ID olmalı"
+        }
+      }
+    }
+  }
+}

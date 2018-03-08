@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] נדרש",
+      "minString": "[label] חייב להיות לפחות [min] תווים",
+      "maxString": "[label] מקסימום [max] תווים",
+      "minNumber": "[label] חייב להיות לפחות [min]",
+      "maxNumber": "[label] לא יותר מ [max]",
+      "minNumberExclusive": "[label] חייב להיות יותר מ[min]",
+      "maxNumberExclusive": "[label] חייב להיות פחות מ[max]",
+      "minDate": "[label] חייב להיות אחרי [min]",
+      "maxDate": "[label] לא יכול להיות אחרי [max]",
+      "badDate": "[label] התאריך אינו חוקי",
+      "minCount": "חייבים להיות לפחות [minCount] ערכים",
+      "maxCount": "אין אפשרות לבחור יותר מ[maxCount] ערכים",
+      "noDecimal": "[label] חייב להיות מספר",
+      "notAllowed": "[value] ערך זה אינו מאופשר",
+      "expectedString": "[label] חייב להיות מחרוזת תוים",
+      "expectedNumber": "[label] חייב להיות מספר",
+      "expectedBoolean": "[label] חייב להיות כן או לא",
+      "expectedArray": "[label] חייב להיות מערך",
+      "expectedObject": "[label] חייב להיות אובייקט",
+      "expectedConstructor": "[label] חייב להיות מסוג [type]",
+      "keyNotInSchema": "[key] המפתח אינו מאופשר על ידי הסכימה",
+      "regEx": {
+        "0": {
+          "msg": "[label] נכשל באימות תבנית הטקסט"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] חייב להיות אימייל חוקי"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] חייב להיות אימייל חוקי"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] חייב להיות דומיין חוקי"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] חייב להיות דומיין חוקי"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] חייב להיות כתובת IPv4 או IPv6 חוקית"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] חייב להיות כתובת IPv4 חוקית"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] חייב להיות כתובת IPv6 חוקית"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] חייב להיות כתובת URL חוקית"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] חייב להיות מזהה אלפאנומרי חוקי"
+        }
+      }
+    }
+  }
+}

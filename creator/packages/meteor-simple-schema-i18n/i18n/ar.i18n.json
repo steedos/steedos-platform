@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] مطلوب",
+      "minString": "[label] يجب أن يكون علي الأقل [min] حروف",
+      "maxString": "[label] لا يجب أن يتعدي [max] حروف",
+      "minNumber": "[label] يجب أن يكون علي الأقل [min]",
+      "maxNumber": "[label] لا يجب أن يتعدي [max]",
+      "minNumberExclusive": "[label] يجب أن يكون أكبر من [min]",
+      "maxNumberExclusive": "[label] يجب أن يكون أقل من [max]",
+      "minDate": "[label] يجب أن يكون في أو بعد [min]",
+      "maxDate": "[label] لا يمكن أن يكون بعد [max]",
+      "badDate": "[label] تاريخ غير صحيح",
+      "minCount": "يجب أن تحدد علي الأقل [minCount] قيم",
+      "maxCount": "لا يمكنك تحديد أكثر من [maxCount] قيم",
+      "noDecimal": "[label] يجب أن يكون رقم صحيح",
+      "notAllowed": "[value] قيمة غير مسموح بها",
+      "expectedString": "[label] يجب أن يكون حروف",
+      "expectedNumber": "[label] يجب أن يكون رقم",
+      "expectedBoolean": "[label] يجب أن تكون قيمة بولينية",
+      "expectedArray": "[label] يجب أن تكون مصفوفة",
+      "expectedObject": "[label] يجب أن يكون نموذج",
+      "expectedConstructor": "[label] يجب أن يكون [type]",
+      "keyNotInSchema": "[key] غير مسموح به بواسطة المخطط",
+      "regEx": {
+        "0": {
+          "msg": "[label] خطأ في تقييم الريجلر إيكسبريشن"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] يجب أن يكون بريد إلكتروني صحيح"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] يجب أن يكون بريد إلكتروني صحيح"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] يجب أن يكون موقع صحيح"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] يجب أن يكون موفع صحيح"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] يجب أن يكون عنوان بروتوكول الجيل الرابع أو السادس صحيح"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] يجب أن يكون عنوان بروتوكول الجيل الرابع صحيح"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] يجب أن يكون بروتوكول الجيل السادس صحيح"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] يجب أن يمثل عنوان موقع صحيح"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] يجب أن يكون الرقم التحقيقي مكون من حروف وأرقام"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] megadása kötelező",
+      "minString": "[label] legalább [min] karakter hosszú legyen",
+      "maxString": "[label] nem lehet [max] karakternél hosszabb",
+      "minNumber": "[label] minimum [min] legyen",
+      "maxNumber": "[label] maximum [max] lehet",
+      "minNumberExclusive": "[label] nagyobbnak kell lennie mint [min]",
+      "maxNumberExclusive": "[label] kisebbnek kell lennie mint [max]",
+      "minDate": "[label] később vagy aznap kell lennie mint [min]",
+      "maxDate": "[label] nem lehet [max] után",
+      "badDate": "[label] nem megfelelő formátumú dátum",
+      "minCount": "Legalább [minCount] értéket meg kell adnod",
+      "maxCount": "Nem adhatsz meg [maxCount] értéknél többet",
+      "noDecimal": "[label] egész számnak kell lennie",
+      "notAllowed": "[value] nem megengedett érték",
+      "expectedString": "[label] szövegnek kell lennie",
+      "expectedNumber": "[label] számnak kell lennie",
+      "expectedBoolean": "[label] logikai értéknek kell lennie",
+      "expectedArray": "[label] tömbnek kell lennie",
+      "expectedObject": "[label] objektum tipusúnak kell lennie",
+      "expectedConstructor": "[label] [type] típusúnak kell lennie",
+      "keyNotInSchema": "[key] érték a séma miatt nem engedélyezett",
+      "regEx": {
+        "0": {
+          "msg": "[label] sikertelen ellenőrzés a reguláris kifejezésre"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] érvényes e-mail címnek kell lennie"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] érvényes e-mail címnek kell lennie"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] érvényes tartománynak kell lennie"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] érvényes tartománynak kell lennie"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] érvényes IPv4 vagy IPv6 címnek kell lennie"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] érvényes IPv4 címnek kell lennie"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] érvényes IPv6 címnek kell lennie"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] érvényes URL címnek kell lennie"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] érvényes alfanumerikus azonosítónak kell lennie"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] обязательно",
+      "minString": "[label] должно содержать минимум [min] букв",
+      "maxString": "[label] не может превышать [max] букв",
+      "minNumber": "[label] должно быть не меньше [min]",
+      "maxNumber": "[label] не может превышать [max]",
+      "minNumberExclusive": "[label] должно быть больше [min]",
+      "maxNumberExclusive": "[label] должно быть меньше [max]",
+      "minDate": "[label] должно быть не раньше чем [min]",
+      "maxDate": "[label] не может быть позже чем [max]",
+      "badDate": "[label] не является корректной датой",
+      "minCount": "Вы должны указать минимум [minCount] значений",
+      "maxCount": "Вы не можете указать больше чем [maxCount] значений",
+      "noDecimal": "[label] должно быть числом",
+      "notAllowed": "[value] является недопустимым значением",
+      "expectedString": "[label] должно быть строкой",
+      "expectedNumber": "[label] должно быть числом",
+      "expectedBoolean": "[label] должно быть булевым значением",
+      "expectedArray": "[label] должно быть массивом",
+      "expectedObject": "[label] должно быть объектом",
+      "expectedConstructor": "[label] должно быть типа [type]",
+      "keyNotInSchema": "[key] недопустимо схемой",
+      "regEx": {
+        "0": {
+          "msg": "[label] не прошло валидацию"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] должно быть корректным e-mail адресом"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] должно быть корректным e-mail адресом"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] должно быть корректным доменом"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] должно быть корректным доменом"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] должно быть коррктным IPv4 или IPv6 адресом"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] должно быть корректным IPv4 адресом"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] должно быть корректным IPv6 адресом"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] должно быть корректным URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] должно быть корректным ID"
+        }
+      }
+    }
+  }
+}

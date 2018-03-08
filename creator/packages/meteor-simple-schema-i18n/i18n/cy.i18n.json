@@ -1,0 +1,69 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "Mae [label] yn ofynnol",
+      "minString": "Rhaid i [label] fod yn oleiaf [min] nod o hyd",
+      "maxString": "Ni all [label] fod yn fwy na [max] nod o hyd",
+      "minNumber": "Rhaid i [label] fod yn oleiaf [min]",
+      "maxNumber": "Ni all [label] fod yn fwy na [max]",
+      "minNumberExclusive": "Rhaid i [label] fod yn fwy na [min]",
+      "maxNumberExclusive": "Rhaid i [label] fod yn llai na [max]",
+      "minDate": "Rhaid i [label] for ar neu ar ôl [min]",
+      "maxDate": "Ni all [label] for ar ôl [max]",
+      "badDate": "Nid yw [label] yn ddyddiad dilys",
+      "minCount": "Rhaid dewis oleiaf [minCount] gwerth",
+      "maxCount": "Ni ellir dewis mwy na [maxCount] gwerth",
+      "noDecimal": "Rhaid i [label] fod yn gyfanrif",
+      "notAllowed": "Ni ganiateir gwerth [value]",
+      "expectedString": "Rhaid i [label] fod yn linyn",
+      "expectedNumber": "Rhaid i [label] fod yn rif",
+      "expectedBoolean": "Rhaid i [label] fod yn fath Boole",
+      "expectedArray": "Rhaid i [label] fod yn arae",
+      "expectedObject": "Rhaid i [label] fod yn wrthrych",
+      "expectedConstructor": "Rhaid i [label] fod yn [type]",
+      "keyNotInSchema": "Ni ganiateir [key] gan y sgema",
+      "notUnique": "Rhaid i [label] fod yn unigryw",
+      "regEx": {
+        "0": {
+          "msg": "Methodd [label] ddilysiad mynegiad rheolaidd"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "Rhaid i [label] fod yn gyfeiriad ebost dilys"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "Rhaid i [label] fod yn gyfeiriad ebost dilys"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[Rhaid i [label] fod yn barth dilys"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "Rhaid i [label] fod yn barth dilys"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[Rhaid i [label] fod yn gyfeiriad IPv4 neu IPv6 dilys"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "Rhaid i [label] fod yn gyfeiriad IPv4 dilys"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "Rhaid i [label] fod yn gyfeiriad IPv6 dilys"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[Rhaid i [label] fod yn URL dilys"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "Rhaid i [label] fod yn ddynodiad alffaniwmerig dilys"
+        }
+      }
+    }
+  }
+}

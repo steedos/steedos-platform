@@ -1,0 +1,69 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] je povinné pole",
+      "minString": "[label] musí být alespoň [min] písmen",
+      "maxString": "[label] nesmí být vice jak [max] písmen",
+      "minNumber": "[label] musí být alespoň [min]",
+      "maxNumber": "[label] nesmí být vice jak [max]",
+      "minNumberExclusive": "[label] musí být více než [min]",
+      "maxNumberExclusive": "[label] musí být méně než [max]",
+      "minDate": "[label] musí být [min] nebo později",
+      "maxDate": "[label] nemůže být po [max]",
+      "badDate": "[label] není validní datum",
+      "minCount": "Musíte vybrat alespoň [minCount] hodnot",
+      "maxCount": "Nemůžete vybrat více jak [maxCount] hodnot",
+      "noDecimal": "[label] musí být celé číslo",
+      "notAllowed": "[value] není povolená hodnota",
+      "expectedString": "[label] musí být text",
+      "expectedNumber": "[label] musí být číslo",
+      "expectedBoolean": "[label] musí být boolean",
+      "expectedArray": "[label] musí být seznam",
+      "expectedObject": "[label] musí být objekt",
+      "expectedConstructor": "[label] musí být [type]",
+      "keyNotInSchema": "[key] není povoleno schématem",
+      "notUnique": "[label] musí být unikátní",
+      "regEx": {
+        "0": {
+          "msg": "[label] neprošlo kontrolou regularního výrazu"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] musí být validní e-mailová adresa"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] musí být validní e-mailová adresa"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] musí být validní doména"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] musí být validní doména"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] musí být validní IPv4 nebo IPv6 adresa"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] musí být validní IPv4 adresa"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] musí být validní IPv6 adresa"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] musí být validní URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] musí být validní alphanumerické ID"
+        }
+      }
+    }
+  }
+}

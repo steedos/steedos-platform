@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] ist erforderlich",
+      "minString": "[label] muss mindestens [min] Buchstaben enthalten",
+      "maxString": "[label] kann nicht mehr als [max] Buchstaben haben",
+      "minNumber": "[label] muss mindestens [min] sein",
+      "maxNumber": "[label] darf nicht mehr als [max] sein",
+      "minNumberExclusive": "[label] muss grösser als [min] sein",
+      "maxNumberExclusive": "[label] muss kleiner als [max] sein",
+      "minDate": "[label] muss am oder nach dem [min] sein",
+      "maxDate": "[label] darf nicht nach dem [max] sein",
+      "badDate": "[label] ist kein valides Datum",
+      "minCount": "Sie müssen mindestens [minCount] Werte angeben",
+      "maxCount": "Sie können nicht mehr als [maxCount] Werte angeben",
+      "noDecimal": "[label] muss eine Ganzzahl sein",
+      "notAllowed": "[value] ist ein nicht erlaubter Wert",
+      "expectedString": "[label] muss eine Buchstabenkette sein",
+      "expectedNumber": "[label] muss eine Nummer sein",
+      "expectedBoolean": "[label] muss ein Wahrheitswert sein",
+      "expectedArray": "[label] muss ein Array sein",
+      "expectedObject": "[label] muss ein Objekt sein",
+      "expectedConstructor": "[label] muss von Type [type] sein",
+      "keyNotInSchema": "[key] ist vom Schema nicht erlaubt",
+      "regEx": {
+        "0": {
+          "msg": "[label] entspricht nicht dem regulären Ausdruck"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] muss eine valide Email Adresse sein"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] muss eine valide Email Adresse sein"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] muss eine valide Domain sein"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] muss eine valide Domain sein"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] muss eine IPv4 oder IPv6 Adresse sein"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] muss eine valide IPv4 Adresse sein"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] muss eine valide IPv6 Adresse sein"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] muss eine valide URL sein"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] muss eine valide alphanumerische ID sein"
+        }
+      }
+    }
+  }
+}

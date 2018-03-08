@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] є обов'язковим",
+      "minString": "[label] має містити щонайменше [min] символів",
+      "maxString": "[label] не може перевищувати [max] символів",
+      "minNumber": "[label] має бути не меншим, ніж [min]",
+      "maxNumber": "[label] має бути не більшим, ніж [max]",
+      "minNumberExclusive": "[label] має бути більшим, ніж [min]",
+      "maxNumberExclusive": "[label] має бути меншим, ніж [max]",
+      "minDate": "[label] має бути не раніше, ніж [min]",
+      "maxDate": "[label] не може бути пізніше, ніж [max]",
+      "badDate": "[label] не є коректною датою",
+      "minCount": "Ви повинні задати хоча б [minCount] значень",
+      "maxCount": "Ви не можете задати більше, ніж [maxCount] значень",
+      "noDecimal": "[label] має бути цілим числом",
+      "notAllowed": "[value] не є допустимим значенням",
+      "expectedString": "[label] має бути стрічкою",
+      "expectedNumber": "[label] має бути числом",
+      "expectedBoolean": "[label] має бути булевим значенням",
+      "expectedArray": "[label] має бути масивом",
+      "expectedObject": "[label] має бути об'єктом",
+      "expectedConstructor": "[label] має відповідати типу [type]",
+      "keyNotInSchema": "[key] не дозволено схемою",
+      "regEx": {
+        "0": {
+          "msg": "[label] не відповідає заданим критеріям"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] має бути коректною e-mail адресою"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] має бути коректною e-mail адресою"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] має бути коректним доменом"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] має бути коректним доменом"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] має бути коректною IPv4 або IPv6 адресою"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] має бути коректною IPv4 адресою"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] має бути коректною IPv6 адресою"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] має бути коректним URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] має бути коректним ідентифікатором"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] on kohustuslik",
+      "minString": "[label] peab olema vähemalt [min] tähemärki",
+      "maxString": "[label] ei tohi ületada [max] tähemärki",
+      "minNumber": "[label] peab olema vähemalt [min]",
+      "maxNumber": "[label] ei tohi ületada [max]",
+      "minNumberExclusive": "[label] peab olema enam kui [min]",
+      "maxNumberExclusive": "[label] peab olema vähem kui [max]",
+      "minDate": "[label] varaseim lubatud kuupäev on [min]",
+      "maxDate": "[label] hiliseim lubatud kuupäev on [max]",
+      "badDate": "[label] ei ole korrektne kuupäev",
+      "minCount": "Pead valima vähemalt [minCount] väärtust",
+      "maxCount": "Ei saa valida enam kui [maxCount] väärtust",
+      "noDecimal": "[label] peab olema arv",
+      "notAllowed": "[value] ei ole lubatud väärtus",
+      "expectedString": "[label] peab olema sõne",
+      "expectedNumber": "[label] peab olema number",
+      "expectedBoolean": "[label] peab olema boolean",
+      "expectedArray": "[label] peab olema massiiv",
+      "expectedObject": "[label] peab olema objekt",
+      "expectedConstructor": "[label] peab olema tüüpi [type]",
+      "keyNotInSchema": "[key] ei ole lubatud skeemas",
+      "regEx": {
+        "0": {
+          "msg": "[label] ei läbinud regulaaravaldise kontrolli"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] ei ole korrektne e-posti aadress"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] ei ole korrektne e-posti aadress"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] ei ole korrektne domeen"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] ei ole korrektne domeen"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] ei ole korrektne IPv4 või IPv6 aadress"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] ei ole korrektne IPv4 aadress"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] ei ole korrektne IPv6 aadress"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] ei ole korrektne URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] peab koosnema tähtedest ja numbritest"
+        }
+      }
+    }
+  }
+}

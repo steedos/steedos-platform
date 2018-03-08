@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "[label] harus diisi",
+      "minString": "[label] harus diisi dengan minimal [min] karakter",
+      "maxString": "[label] tidak bisa melebihi [max] karakter",
+      "minNumber": "[label] harus lebih besar atau sama dengan [min]",
+      "maxNumber": "[label] tidak boleh lebih besar dari [max]",
+      "minNumberExclusive": "[label] harus lebih besar dari [min]",
+      "maxNumberExclusive": "[label] harus kurang dari [max]",
+      "minDate": "[label] harus diisi dengan tanggal [min] atau setelahnya",
+      "maxDate": "[label] tidak bisa diisi dengan tanggal yang lebih dari [max]",
+      "badDate": "[label] tidak sesuai dengan format tanggal yang valid",
+      "minCount": "Anda harus mengisi dengan nilai setidaknya [minCount]",
+      "maxCount": "Anda tidak dapat mengisi dengan nilai lebih dari [maxCount]",
+      "noDecimal": "[label] harus integer",
+      "notAllowed": "[value] tidak boleh diisi",
+      "expectedString": "[label] harus diisi dengan aksara",
+      "expectedNumber": "[label] harus diisi dengan angkat",
+      "expectedBoolean": "[label] harus diisi dengan boolean",
+      "expectedArray": "[label] harus diisi dengan array",
+      "expectedObject": "[label] harus diisi dengan objek",
+      "expectedConstructor": "[label] harus berupa tipe [type]",
+      "keyNotInSchema": "[key] tidak diperbolehkan oleh skema",
+      "regEx": {
+        "0": {
+          "msg": "[label] tidak lolos validasi expresi reguler"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "[label] harus diisi dengan format email yang valid"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "[label] harus diisi dengan email yang valid"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "[label] harus diisi dengan format domain yang valid"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "[label] harus diisi dengan domain yang valid"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "[label] harus diisi dengan format IPv4 atau IPv6 yang valid"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "[label] harus diisi dengan format IPv4 yang valid"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "[label] harus diisi dengan format IPv6 yang valid"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "[label] harus diisi dengan format URL yang valid"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "[label] harus diisi dengan format alphanumerik yang valid"
+        }
+      }
+    }
+  }
+}

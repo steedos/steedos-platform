@@ -1,0 +1,68 @@
+{
+  "simpleschema": {
+    "messages": {
+      "required": "Το πεδίο [label] είναι απαραίτητο",
+      "minString": "To πεδίο [label] πρέπει να είναι τουλάχιστον [min] χαρακτήρες",
+      "maxString": "To πεδίο [label] δεν μπορεί να υπερβαίνει τους [max] χαρακτήρες",
+      "minNumber": "To πεδίο [label] πρέπει να είναι τουλάχιστον [min]",
+      "maxNumber": "To πεδίο [label] δεν μπορεί να είναι μεγαλύτερο από [max]",
+      "minNumberExclusive": "To πεδίο [label] πρέπει να είναι μεγαλύτερο από [min]",
+      "maxNumberExclusive": "To πεδίο [label] πρέπει να είναι μικρότερο από [max]",
+      "minDate": "Το πεδίο [label] πρέπει να είναι μία ημερομηνία μετά από [min]",
+      "maxDate": "Το πεδίο [label] πρέπει να είναι μία ημερομηνία πρίν από [max]",
+      "badDate": "Το πεδίο [label] δεν είναι έγκυρη ημερομηνία",
+      "minCount": "Πρέπει να επιλέξετε τουλάχιστον [minCount] τιμές",
+      "maxCount": "Δεν μπορείτε να επιλέξετε περισσότερες από [maxCount] τιμές",
+      "noDecimal": "Το πεδίο [label] πρέπει να είναι ακέραιος αριθμός",
+      "notAllowed": "To [value] δεν είναι αποδεκτή τιμή",
+      "expectedString": "Το πεδίο [label] πρέπει να είναι μια σειρά χαρακτήρων",
+      "expectedNumber": "Το πεδίο [label] πρέπει να είναι ένας αριθμός",
+      "expectedBoolean": "Το πεδίο [label] πρέπει να είναι true ή false",
+      "expectedArray": "Το πεδίο [label] πρέπει να είναι ένας πίνακας",
+      "expectedObject": "Το πεδίο [label] πρέπει να είναι ένα αντικείμενο",
+      "expectedConstructor": "Το πεδίο [label] πρέπει να είναι ένα [τύπος]",
+      "keyNotInSchema": "Το πεδίο [key] δεν είναι επιτρεπτό",
+      "regex": {
+        "0": {
+          "msg": "Η μορφή του πεδίου [label] δεν είναι αποδεκτή"
+        },
+        "1": {
+          "exp": "SimpleSchema.RegEx.Email",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση e-mail"
+        },
+        "2": {
+          "exp": "SimpleSchema.RegEx.WeakEmail",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση e-mail"
+        },
+        "3": {
+          "exp": "SimpleSchema.RegEx.Domain",
+          "msg": "Το πεδίο [label] πρέπει να είναι ένα έγκυρο domain"
+        },
+        "4": {
+          "exp": "SimpleSchema.RegEx.WeakDomain",
+          "msg": "Το πεδίο [label] πρέπει να είναι ένα έγκυρο domain"
+        },
+        "5": {
+          "exp": "SimpleSchema.RegEx.IP",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση IPv4 ή IPv6"
+        },
+        "6": {
+          "exp": "SimpleSchema.RegEx.IPv4",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση IPv4"
+        },
+        "7": {
+          "exp": "SimpleSchema.RegEx.IPv6",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση IPv6"
+        },
+        "8": {
+          "exp": "SimpleSchema.RegEx.Url",
+          "msg": "Το πεδίο [label] πρέπει να είναι μια έγκυρη διεύθυνση URL"
+        },
+        "9": {
+          "exp": "SimpleSchema.RegEx.Id",
+          "msg": "Το πεδίο [label] πρέπει να είναι ένα έγκυρο ID"
+        }
+      }
+    }
+  }
+}
