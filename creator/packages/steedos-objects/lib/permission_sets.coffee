@@ -21,20 +21,69 @@ if Meteor.isServer
 
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}
-		psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}).fetch()
 		object = Creator.getObject(object_name)
+		psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1}})
+		psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1}})
+		opsetAdmin = _.clone(object.permission_set.admin)
+		opsetUser = _.clone(object.permission_set.user)
+
+		# 数据库中如果配置了默认的admin/user权限集设置，应该覆盖代码中admin/user的权限集设置
+		if psetsAdmin
+			posAdmin = Creator.getCollection("permission_objects").findOne({object_name: object_name, permission_set_id: psetsAdmin._id})
+			if posAdmin
+				opsetAdmin.allowCreate = posAdmin.allowCreate
+				opsetAdmin.allowDelete = posAdmin.allowDelete
+				opsetAdmin.allowEdit = posAdmin.allowEdit
+				opsetAdmin.allowRead = posAdmin.allowRead
+				opsetAdmin.modifyAllRecords = posAdmin.modifyAllRecords
+				opsetAdmin.viewAllRecords = posAdmin.viewAllRecords
+				if posAdmin.list_views?.length
+					opsetAdmin.list_views = posAdmin.list_views
+				if posAdmin.actions?.length
+					opsetAdmin.actions = posAdmin.actions
+				if posAdmin.fields?.length
+					opsetAdmin.fields = posAdmin.fields
+				if posAdmin.related_objects?.length
+					opsetAdmin.related_objects = posAdmin.related_objects
+				if posAdmin.readonly_fields?.length
+					opsetAdmin.readonly_fields = posAdmin.readonly_fields
+		if psetsUser
+			posUser = Creator.getCollection("permission_objects").findOne({object_name: object_name, permission_set_id: psetsUser._id})
+			if posUser
+				opsetUser.allowCreate = posUser.allowCreate
+				opsetUser.allowDelete = posUser.allowDelete
+				opsetUser.allowEdit = posUser.allowEdit
+				opsetUser.allowRead = posUser.allowRead
+				opsetUser.modifyAllRecords = posUser.modifyAllRecords
+				opsetUser.viewAllRecords = posUser.viewAllRecords
+				if posUser.list_views?.length
+					opsetUser.list_views = posUser.list_views
+				if posUser.actions?.length
+					opsetUser.actions = posUser.actions
+				if posUser.fields?.length
+					opsetUser.fields = posUser.fields
+				if posUser.related_objects?.length
+					opsetUser.related_objects = posUser.related_objects
+				if posUser.readonly_fields?.length
+					opsetUser.readonly_fields = posUser.readonly_fields
+
 		if !userId
-			permissions = _.clone(object.permission_set.admin)
+			permissions = opsetAdmin
 		else
 			if Creator.isSpaceAdmin(spaceId, userId)
-				permissions = _.clone(object.permission_set.admin)
+				permissions = opsetAdmin
 			else
-				permissions = _.clone(object.permission_set.user)
-
-		if psets.length>=0
+				permissions = opsetUser
+		
+		psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1}}).fetch()
+		
+		if psets.length > 0
 			set_ids = _.pluck psets, "_id"
 			pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
 			_.each pos, (po)->
+				if po.permission_set_id == psetsAdmin?._id or po.permission_set_id == psetsUser?._id
+					# 默认的admin/user权限值只实行上面的默认值覆盖，不做算法判断
+					return
 				if po.allowRead
 					permissions.allowRead = true
 				if po.allowCreate
