@@ -11,7 +11,8 @@ Creator.Objects.permission_objects =
 			type: "master_detail"
 			reference_to: "permission_set"
 		object_name:
-			type: "lookup"
+			type: "master_detail"
+			reference_to: "objects"
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.Objects, (o, k)->
