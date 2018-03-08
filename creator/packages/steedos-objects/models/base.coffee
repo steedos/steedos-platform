@@ -95,7 +95,8 @@ Creator.baseObject =
 			on: "client"
 			when: "after.insert"
 			todo: (userId, doc)->
-				Meteor.call "object_recent_viewed", this.object_name, doc._id
+				if doc
+					Meteor.call "object_recent_viewed", this.object_name, doc._id
 
 	actions:
 
