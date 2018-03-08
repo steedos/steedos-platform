@@ -7,11 +7,15 @@ Template.select_fields.onCreated ->
             visible_fields = list_view_obj.columns
             available_fields = _.difference(all_fields, visible_fields)
             schema = Creator.getSchema(Session.get("object_name"))._schema
+            permission_fields = Creator.getFields(Session.get("object_name"))
 
             available_fields = _.map available_fields, (field) ->
                 obj = _.pick(schema, field)
-                label = obj[field].label
-                return {label: label, value: field}
+                if _.indexOf(permission_fields, field) > -1
+                    label = obj[field].label || TAPi18n.__(Creator.getObject(object_name).schema.label(field))
+                    return {label: label, value: field}
+            
+            available_fields = _.compact available_fields
 
             visible_fields = _.map visible_fields, (field) ->
                 obj = _.pick(schema, field)
@@ -34,7 +38,7 @@ Template.select_fields.helpers
         visible_fields = Template.instance().visible_fields?.get()
         return visible_fields
 
-         
+
 
 Template.select_fields.events 
     'click .add-columns': (event, template) ->
@@ -109,8 +113,11 @@ Template.select_fields.events
                 toastr.error(error.reason)
             if result
                 toastr.success("List view updated.")
-
+                
             Modal.hide(template)
+
+            if FlowRouter.getParam('template') == "grid"
+                Template["creator_#{FlowRouter.getParam('template')}"]?.refresh()
 
     'click .up-column': (event, template)->
         visible_fields = template.visible_fields.get()

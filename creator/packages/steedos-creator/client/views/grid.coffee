@@ -73,7 +73,9 @@ _fields = (object_name, list_view_id)->
 	object = Creator.getObject(object_name)
 	name_field_key = object.NAME_FIELD_KEY
 	fields = [name_field_key]
-	if object.list_views
+	if Creator.getCollection("object_listviews").findOne(list_view_id)
+		fields = Creator.getCollection("object_listviews").findOne(list_view_id).columns
+	else if object.list_views
 		if object.list_views[list_view_id]?.columns
 			fields = object.list_views[list_view_id].columns
 		else
