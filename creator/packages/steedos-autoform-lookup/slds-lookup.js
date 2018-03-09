@@ -579,7 +579,6 @@ Template.steedosLookups.events({
 		var $input = $(template.find('input'));
 		var itemsUnselected = template.uniSelectize.getItemsUnselectedFiltered();
 		var itemsUnselectedLength = itemsUnselected && itemsUnselected.length;
-		debugger;
 		template.uniSelectize.selectItem(this.value);
 		template.uniSelectize.searchText.set('');
 		$input.val('');

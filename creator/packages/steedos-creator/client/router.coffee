@@ -33,7 +33,7 @@ FlowRouter.route '/app',
 				app_id = "crm"
 			object_name = Session.get("object_name")
 			if object_name
-				FlowRouter.go "/app/" + app_id + "/" + object_name + "/list"
+				FlowRouter.go "/app/" + app_id + "/" + object_name + "/grid"
 			else
 				FlowRouter.go "/app/" + app_id
 
