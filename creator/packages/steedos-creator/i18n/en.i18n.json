@@ -53,5 +53,7 @@
 	"creator_detail_related": "RELATED",
 	"creator_new": "New",
 
-	"creator_odata_api_not_found": "Sorry, the resource you are trying to access does not exist or you do not have permission to access it!"
+	"creator_odata_api_not_found": "Sorry, the resource you are trying to access does not exist or you do not have permission to access it!",
+
+	"creator_list_no_actions_tip": "no operation"
 }

@@ -22,6 +22,7 @@ Package.onUse(function(api) {
 	api.addFiles('models/Accounts.coffee');
 	api.addFiles('models/Contacts.coffee');
 	api.addFiles('models/Contracts.coffee');
+	api.addFiles('models/Receipts.coffee');
 	api.addFiles('crm.coffee','client');
 	api.addFiles('reports/company.coffee');
 	api.addFiles('reports/contact.coffee');

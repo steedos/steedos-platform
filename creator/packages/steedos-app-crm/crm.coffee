@@ -3,4 +3,4 @@ Creator.Apps.crm =
 	name: "CRM"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "account" 
-	objects: ["accounts", "contacts", "contracts", "tasks"]
+	objects: ["accounts", "contacts", "contracts", "contract_receipts", "tasks"]

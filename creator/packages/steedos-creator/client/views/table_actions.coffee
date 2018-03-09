@@ -23,8 +23,4 @@ Template.creator_table_actions.helpers
 					return action.visible
 			else
 				return false
-		if _.isEmpty(actions)
-			Meteor.defer ()->
-				objectColName = "tabular-col-#{object_name.replace(/\./g,'_')}"
-				$(".tabular-col-actions.#{objectColName}").hide()
 		return actions

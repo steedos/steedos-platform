@@ -5,10 +5,13 @@ _itemClick = (e, curObjectName)->
 	record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
 	actions = _actionItems(curObjectName, record._id, record_permissions)
 
-	actionSheetItems = _.map actions, (action)->
-		return {text: action.label, record: record, action: action, object_name: curObjectName}
-
-	actionSheet = $(".action-sheet").dxActionSheet({
+	if actions.length
+		actionSheetItems = _.map actions, (action)->
+			return {text: action.label, record: record, action: action, object_name: curObjectName}
+	else
+		actionSheetItems = [{text: t("creator_list_no_actions_tip")}]
+	
+	actionSheetOption = 
 		dataSource: actionSheetItems
 		showTitle: false
 		usePopover: true
@@ -45,7 +48,12 @@ _itemClick = (e, curObjectName)->
 				Session.set("action_save_and_insert", true)
 				Creator.executeAction objectName, action, recordId
 				console.log("actionSheet.onItemClick", value)
-	}).dxActionSheet("instance");
+
+	unless actions.length
+		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
+			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
+
+	actionSheet = $(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 	
 	actionSheet.option("target", e.event.target);
 	actionSheet.option("visible", true);

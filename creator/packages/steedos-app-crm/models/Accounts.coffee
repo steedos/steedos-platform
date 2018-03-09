@@ -9,6 +9,8 @@ Creator.Objects.accounts =
 	fields:
 		owner:
 			label: "客户所有人"
+			omit: false
+			disabled: true
 		priority:
 			label: "优先级"
 			type: "select"
@@ -26,6 +28,9 @@ Creator.Objects.accounts =
 			inlineHelpText: ""
 			required: true
 			sortable: true
+		website: 
+			type: "text"
+			label: "网址"
 		phone:
 			type: "text"
 			label: "电话"
@@ -33,13 +38,6 @@ Creator.Objects.accounts =
 		fax:
 			type: "text"
 			label: "传真"
-		website: 
-			type: "text"
-			label: "网址"
-		owner: 
-			label: "所有者"
-			omit: false
-			disabled: true
 		description: 
 			label: "描述"
 			type: "textarea"
