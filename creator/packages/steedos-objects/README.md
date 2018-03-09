@@ -17,7 +17,7 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - db：对应的Meteor Collection，如果未定义此属性，Steedos 会自动生成。
 - enable_search: 启用全局搜索，只搜索searchable的字段
 - enable_files: 启用上传附件功能
-- enable_chatter: 启用讨论功能
+- enable_notes: 启用备注功能
 - enable_tasks: 启用任务功能
 - enable_audit: 启用审计跟踪功能
 - enable_api: 启用API接口

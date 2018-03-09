@@ -124,6 +124,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('models/reports.coffee');
 	api.addFiles('models/tasks.coffee');
+	api.addFiles('models/notes.coffee');
 	api.addFiles('models/queue_import.coffee');
 	api.addFiles('models/settings.coffee');
 

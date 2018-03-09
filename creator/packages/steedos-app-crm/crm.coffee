@@ -1,6 +1,6 @@
 Creator.Apps.crm = 
 	url: "/app/crm"
-	name: "CRM"
+	name: "合同"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "account" 
-	objects: ["accounts", "contacts", "contracts", "contract_receipts", "tasks"]
+	objects: ["accounts", "contacts", "contracts", "contract_receipts", "tasks", "notes"]
