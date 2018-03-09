@@ -265,27 +265,33 @@ if Meteor.isClient
 
 				list.push file_related
 
+		extra_related_objects = []
 		if Creator.Objects[object_name]?.enable_tasks
-			task_object_name = "tasks"
-			task_tabular_name = "creator_" + task_object_name
-			task_related_field_name = "related_to"
-			task_related_object = Creator.Objects[task_object_name]
-			
-			if Tabular.tablesByName[task_tabular_name]
-				columns = ["name"]
-				if task_related_object.list_views?.default?.columns
-					columns = task_related_object.list_views.default.columns
-				columns = _.without(columns, task_related_field_name)
-				Tabular.tablesByName[task_tabular_name].options?.columns = Creator.getTabularColumns(task_object_name, columns, true);
+			extra_related_objects.push "tasks"
+		if Creator.Objects[object_name]?.enable_notes
+			extra_related_objects.push "notes"
 
-				task_related =
-					object_name: task_object_name
-					columns: columns
-					tabular_table: Tabular.tablesByName[task_tabular_name]
-					related_field_name: task_related_field_name
+		if extra_related_objects.length > 0
+			_.each extra_related_objects, (obj)->
+				extra_object_name = obj
+				extra_tabular_name = "creator_" + extra_object_name
+				extra_related_field_name = "related_to"
+				extra_related_object = Creator.Objects[extra_object_name]
 
-				list.push task_related
+				if Tabular.tablesByName[extra_tabular_name]
+					columns = ["name"]
+					if extra_related_object.list_views?.default?.columns
+						columns = extra_related_object.list_views.default.columns
+					columns = _.without(columns, extra_related_field_name)
+					Tabular.tablesByName[extra_tabular_name].options?.columns = Creator.getTabularColumns(extra_object_name, columns, true);
 
+					extra_related =
+						object_name: extra_object_name
+						columns: columns
+						tabular_table: Tabular.tablesByName[extra_tabular_name]
+						related_field_name: extra_related_field_name
+
+				list.push extra_related
 
 		return list
 

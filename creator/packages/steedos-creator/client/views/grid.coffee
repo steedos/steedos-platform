@@ -105,6 +105,9 @@ _expandFields = (object_name, columns)->
 	_.each columns, (n)->
 		if fields[n].type == "master_detail" || fields[n].type == "lookup"
 			ref = fields[n].reference_to
+			if _.isFunction(ref)
+				ref = ref()
+
 			if !_.isArray(ref)
 				ref = [ref]
 				

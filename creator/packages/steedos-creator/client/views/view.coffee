@@ -131,7 +131,7 @@ Template.creator_view.helpers
 				selector = {"metadata.space": Session.get("spaceId")}
 			else
 				selector = {space: Session.get("spaceId")}
-			if object_name == "cms_files" || object_name == "tasks"
+			if object_name == "cms_files" || object_name == "tasks" || object_name == "notes"
 				# 附件的关联搜索条件是定死的
 				selector["#{related_field_name}.o"] = Session.get "object_name"
 				selector["#{related_field_name}.ids"] = [record_id]
@@ -286,7 +286,7 @@ Template.creator_view.events
 				relatedKey = related_obj.related_field_name
 
 		if relatedKey
-			Session.set 'cmDoc', {"#{relatedKey}": relatedValue}
+			Session.set 'cmDoc', {"#{relatedKey}": {o: Session.get("object_name"), ids: [relatedValue]}}
 
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)

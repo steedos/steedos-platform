@@ -31,6 +31,8 @@ Meteor.startup ->
 			# console.log 'navigationProperty: ', navigationProperty
 			field = obj.fields[navigationProperty]
 			if field and (field.type is 'lookup' or field.type is 'master_detail')
+				if _.isFunction(field.reference_to)
+					field.reference_to = field.reference_to()
 				if field.reference_to
 					queryOptions = visitorParser(include)
 					if _.isString field.reference_to
