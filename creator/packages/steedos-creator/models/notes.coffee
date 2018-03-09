@@ -1,6 +1,6 @@
 Creator.Objects.notes = 
 	name: "notes"
-	label: "备注"
+	label: "备忘"
 	icon: "messaging_conversation"
 	fields:
 		name: 
