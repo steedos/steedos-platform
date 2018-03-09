@@ -42,19 +42,25 @@ Template.creator_table_cell.helpers
 		if _.isFunction(reference_to)
 			reference_to = reference_to()
 
-		if (_field.type == "lookup" || _field.type == "master_detail") && reference_to && !_.isEmpty(val)
+		if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
 
+			# 有optionsFunction的情况下，reference_to不考虑数组
 			if _.isFunction(_field.optionsFunction)
-					_values = this.doc || {}
-					_val = val
-					if _val
-						if !_.isArray(_val)
-							_val = [_val]
-						selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
-							return _val.indexOf(_o.value) > -1
-						if selectedOptions
-							val = selectedOptions.getProperty("label")
+				_values = this.doc || {}
+				_val = val
+				if _val
+					if !_.isArray(_val)
+						_val = [_val]
+					selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
+						return _val.indexOf(_o.value) > -1
+					if selectedOptions
+						val = selectedOptions.getProperty("label")
 
+				if reference_to
+					_.each val, (v)->
+						href = Creator.getObjectUrl(reference_to, v)
+						data.push {reference_to: reference_to,  rid: v, value: v, id: this._id, href: href}
+				else
 					data.push {value: val, id: this._id}
 
 			else
