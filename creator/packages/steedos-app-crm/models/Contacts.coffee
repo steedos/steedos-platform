@@ -4,6 +4,7 @@ Creator.Objects.contacts =
 	icon: "contact"
 	enable_files: true
 	enable_search: true
+	enable_notes: true
 	enable_api: true
 	fields:
 		name: 

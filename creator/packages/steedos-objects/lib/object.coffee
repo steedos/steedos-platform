@@ -13,7 +13,7 @@ Creator.Object = (options)->
 	self.enable_search = options.enable_search
 	self.enable_files = options.enable_files
 	self.enable_tasks = options.enable_tasks
-	self.enable_chatter = options.enable_chatter
+	self.enable_notes = options.enable_notes
 	self.enable_audit = options.enable_audit
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
 

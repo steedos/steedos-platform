@@ -5,6 +5,7 @@ Creator.Objects.accounts =
 	enable_files: true
 	enable_search: true
 	enable_tasks: true
+	enable_notes: true
 	enable_api: true
 	fields:
 		owner:
