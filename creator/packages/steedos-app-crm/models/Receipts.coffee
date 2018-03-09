@@ -1,7 +1,7 @@
 Creator.Objects.contract_receipts = 
 	name: "contract_receipts"
 	label: "收款"
-	icon: "partner_marketing_budget"
+	icon: "orders"
 	fields:
 		contract:
 			label: "合同"

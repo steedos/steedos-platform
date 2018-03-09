@@ -44,7 +44,7 @@ Creator.Objects.tasks =
 
 	list_views:
 		default:
-			columns: ["name", "assigned_to", "end_date"]
+			columns: ["name", "end_date", "assigned_to"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
