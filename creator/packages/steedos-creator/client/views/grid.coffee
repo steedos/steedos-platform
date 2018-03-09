@@ -154,6 +154,14 @@ _defaultWidth = (columns)->
 	content_width = $(".gridContainer").width() - 46 - 60
 	return content_width/column_counts
 
+_depandOnFields = (object_name, columns)->
+	fields = Creator.getObject(object_name).fields
+	depandOnFields = []
+	_.each columns, (column)->
+		if fields[column].depend_on
+			depandOnFields = _.union(fields[column].depend_on)
+	return depandOnFields
+
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -205,7 +213,8 @@ Template.creator_grid.onRendered ->
 
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
 			selectColumns = _.union(selectColumns, extra_columns)
-			
+			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
+
 			expand_fields = _expandFields(curObjectName, selectColumns)
 			showColumns.push
 				dataField: "_id_actions"

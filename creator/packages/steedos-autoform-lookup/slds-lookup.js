@@ -104,7 +104,7 @@ Template.steedosLookups.onRendered(function () {
 		var formId = AutoForm.getFormId();
 		var value = data.value;
 
-		if (template.uniSelectize.optionsMethod) {
+		if (template.uniSelectize.optionsMethod && !template.uniSelectize.optionsFunction) {
 
 			_getOptions = function () {
 				template.uniSelectize.getOptionsFromMethod(value);
@@ -579,7 +579,7 @@ Template.steedosLookups.events({
 		var $input = $(template.find('input'));
 		var itemsUnselected = template.uniSelectize.getItemsUnselectedFiltered();
 		var itemsUnselectedLength = itemsUnselected && itemsUnselected.length;
-
+		debugger;
 		template.uniSelectize.selectItem(this.value);
 		template.uniSelectize.searchText.set('');
 		$input.val('');

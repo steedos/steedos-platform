@@ -51,6 +51,15 @@ if Meteor.isDevelopment
 #				reference_to: "archive_records"
 #				group: "is_name测试区"
 #				is_wide: true
+			object_name:
+				type: "master_detail"
+				reference_to: "objects"
+				multiple: true
+				optionsFunction: ()->
+					_options = []
+					_.forEach Creator.Objects, (o, k)->
+						_options.push {label: o.label, value: k, icon: o.icon}
+					return _options
 			boolean:
 				label: 'boolean值测试'
 				type: "boolean"
@@ -98,6 +107,7 @@ if Meteor.isDevelopment
 				columns: ["name", "number_test", "customer_id", "customer_ids","object_switche_id" ,"object_switche_ids", "boolean", "CObject", "options_fun"]
 			recent:
 				filter_scope: "space"
+				columns: ["name", "object_name"]
 			all:
 				filter_scope: "space"
 				columns: ["name", "description", "modified", "owner"]

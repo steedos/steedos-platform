@@ -42,45 +42,60 @@ Template.creator_table_cell.helpers
 		if _.isFunction(reference_to)
 			reference_to = reference_to()
 
-		if reference_to && !_.isEmpty(val)
+		if (_field.type == "lookup" || _field.type == "master_detail") && reference_to && !_.isEmpty(val)
 
-			if this.agreement == "odata"
-				if !_.isArray(val)
-					val = if val then [val] else []
-				
-				_.each val, (v)->
-					reference_to = v["reference_to.o"] || reference_to
-					reference_to_object_name_field_key = Creator.getObject(reference_to).NAME_FIELD_KEY
-					href = Creator.getObjectUrl(reference_to, v._id)
-					data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
-				
+			if _.isFunction(_field.optionsFunction)
+					_values = this.doc || {}
+					_val = val
+					if _val
+						if !_.isArray(_val)
+							_val = [_val]
+						selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
+							return _val.indexOf(_o.value) > -1
+						if selectedOptions
+							val = selectedOptions.getProperty("label")
+
+					data.push {value: val, id: this._id}
+
 			else
-				if _.isArray(reference_to) && _.isObject(val)
-					reference_to = val.o
-					val = val.ids
 
-				if !_.isArray(val)
-					val = if val then [val] else []
-				try
-
-					reference_to_object = Creator.getObject(reference_to)
-
-					reference_to_object_name_field_key = reference_to_object.NAME_FIELD_KEY
-
-					reference_to_fields = {_id: 1}
-					reference_to_fields[reference_to_object_name_field_key] = 1
-
-					reference_to_sort = {}
-					reference_to_sort[reference_to_object_name_field_key] = -1
-
-
-					values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort})
-					values.forEach (v)->
+				if this.agreement == "odata"
+					if !_.isArray(val)
+						val = if val then [val] else []
+					
+					_.each val, (v)->
+						reference_to = v["reference_to.o"] || reference_to
+						reference_to_object_name_field_key = Creator.getObject(reference_to).NAME_FIELD_KEY
 						href = Creator.getObjectUrl(reference_to, v._id)
 						data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
-				catch e
-					console.error(reference_to, e)
-					return
+					
+				else
+					if _.isArray(reference_to) && _.isObject(val)
+						reference_to = val.o
+						val = val.ids
+
+					if !_.isArray(val)
+						val = if val then [val] else []
+					try
+
+						reference_to_object = Creator.getObject(reference_to)
+
+						reference_to_object_name_field_key = reference_to_object.NAME_FIELD_KEY
+
+						reference_to_fields = {_id: 1}
+						reference_to_fields[reference_to_object_name_field_key] = 1
+
+						reference_to_sort = {}
+						reference_to_sort[reference_to_object_name_field_key] = -1
+
+
+						values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort})
+						values.forEach (v)->
+							href = Creator.getObjectUrl(reference_to, v._id)
+							data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
+					catch e
+						console.error(reference_to, e)
+						return
 		else
 			if (val instanceof Date)
 				if this.agreement == "odata"
@@ -109,8 +124,9 @@ Template.creator_table_cell.helpers
 				if _.isFunction(_field.optionsFunction)
 					_values = this.doc || {}
 					_val = val
-					if _val && !_.isArray(_val)
-						_val = [_val]
+					if _val
+						if !_.isArray(_val)
+							_val = [_val]
 						selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
 							return _val.indexOf(_o.value) > -1
 						if selectedOptions

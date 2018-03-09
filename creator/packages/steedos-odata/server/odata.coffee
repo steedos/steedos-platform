@@ -38,11 +38,16 @@ Meteor.startup ->
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]
 								if field.multiple
+									originalData = _.clone(entity[navigationProperty])
 									multiQuery = _.extend {_id: {$in: entity[navigationProperty]}}, include.query
 									entities[idx][navigationProperty] = referenceToCollection.find(multiQuery, queryOptions).fetch()
+									if !entities[idx][navigationProperty].length
+										entities[idx][navigationProperty] = originalData
 								else
 									singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
-									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
+								
+									# 特殊处理在相关表中没有找到数据的情况，返回原数据
+									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions) || entities[idx][navigationProperty]
 
 					if _.isArray field.reference_to
 						_.each entities, (entity, idx)->
@@ -78,9 +83,9 @@ Meteor.startup ->
 				statusCode: 404
 				body: {status: 'fail', message: 'Collection not found'}
 
-			console.log '@spaceId, @userId, key: ', @urlParams.spaceId, @userId, key
+			# console.log '@spaceId, @userId, key: ', @urlParams.spaceId, @userId, key
 			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			console.log 'permissions: ', permissions
+			# console.log 'permissions: ', permissions
 			if permissions.viewAllRecords or (permissions.allowRead and @userId)
 				# console.log 'queryParams: ', @queryParams
 				# console.log 'urlParams: ', @urlParams
@@ -99,6 +104,8 @@ Meteor.startup ->
 				if not permissions.viewAllRecords
 					createQuery.query.owner = @userId
 
+				# console.log "createQuery.query:", createQuery.query
+
 				entities = []
 				if @queryParams.$top isnt '0'
 					# console.log visitorParser(createQuery)
@@ -106,6 +113,11 @@ Meteor.startup ->
 				scannedCount = collection.find(createQuery.query).count()
 
 				if entities
+
+					# console.log "createQuery", createQuery
+					# console.log "entities", entities
+					# console.log "key", key
+
 					dealWithExpand(createQuery, entities, key)
 
 					body = {}
@@ -293,7 +305,7 @@ Meteor.startup ->
 									else
 										createQuery.query.space = @urlParams.spaceId
 
-									# console.log 'createQuery: ', createQuery
+									console.log 'createQuery.query: ', createQuery.query
 
 									if not permissions.viewAllRecords
 										createQuery.query.owner = @userId

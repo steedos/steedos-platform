@@ -35,7 +35,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction) {
 
 	this.initialized        = new ReactiveVar(0);
 
-	if(!options.optionsMethod){
+	if(optionsFunction || !options.optionsMethod){
 		this.initialized.set(1);
 	}
 
@@ -469,6 +469,11 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	var methodName = this.optionsMethod;
 	var searchText = this.searchText.get();
 	var params = this.optionsMethodParams.get();
+	var optionsFunction = this.optionsFunction;
+
+	if(optionsFunction){
+		return false;
+	}
 
 	if(this.selectedReference.get()){
 		if(_.isObject(params)){
