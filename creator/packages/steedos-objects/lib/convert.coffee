@@ -76,4 +76,13 @@ Meteor.startup ()->
 				if reference_to && _.isString(reference_to)
 					field.reference_to = Creator.eval("(#{reference_to})")
 
+			if Meteor.isServer
+				defaultValue = field.defaultValue
+				if defaultValue && _.isFunction(defaultValue)
+					field._defaultValue = field.defaultValue.toString()
+			else
+				defaultValue = field._defaultValue
+				if defaultValue && _.isString(defaultValue)
+					field.defaultValue = Creator.eval("(#{defaultValue})")
+
 
