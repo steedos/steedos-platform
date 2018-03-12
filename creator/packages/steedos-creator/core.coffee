@@ -5,11 +5,12 @@ Creator.subs = {}
 
 Meteor.startup ->
 
-	SimpleSchema.extendOptions({filtersFunction: Match.Optional(Function)})
-	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Function)})
+	SimpleSchema.extendOptions({filtersFunction: Match.Optional(Match.OneOf(Function, String))})
+	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Match.OneOf(Function, String))})
 
-	_.each Creator.Objects, (obj, object_name)->
-		Creator.loadObjects obj, object_name
+	if Meteor.isServer
+		_.each Creator.Objects, (obj, object_name)->
+			Creator.loadObjects obj, object_name
 
 	# Creator.initApps()
 
@@ -28,6 +29,21 @@ Meteor.startup ->
 Creator.loadObjects = (obj, object_name)->
 	if !object_name
 		object_name = obj.name
+
+	if !obj.list_views
+		obj.list_views = {}
+
+	if !obj.list_views.default
+		obj.list_views.default = {
+			columns: ["name"]
+		}
+
+	if !obj.list_views.all
+		obj.list_views.all = {
+			filter_scope: "space"
+		}
+
+	Creator.convertObject(obj)
 	new Creator.Object(obj);
 
 	Creator.initTriggers(object_name)
@@ -86,11 +102,12 @@ Creator.getRecordPermissions = (object_name, record, userId)->
 	permissions = _.clone(Creator.getPermissions(object_name))
 
 	if record
-		if !permissions.modifyAllRecords and (record.owner != userId)
+		isOwner = record.owner == userId || record.owner?._id == userId
+		if !permissions.modifyAllRecords and !isOwner
 			permissions.allowEdit = false
 			permissions.allowDelete = false
 
-		if !permissions.viewAllRecords and (record.owner != userId)
+		if !permissions.viewAllRecords and !isOwner
 			permissions.allowRead = false
 
 	return permissions
@@ -217,9 +234,9 @@ Creator.getActions = (object_name, spaceId, userId)->
 	permission_actions = permissions.actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
-	if permission_actions
-		actions = _.filter actions, (action)->
-			return _.indexOf(permission_actions, action.name) > -1
+	# if permission_actions
+	actions = _.filter actions, (action)->
+		return _.indexOf(permission_actions, action.name) > -1
 	
 	return actions
 
@@ -263,7 +280,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 	firstLevelKeys = Creator.getSchema(object_name)._firstLevelSchemaKeys
 	permission_fields =  Creator.getPermissions(object_name, spaceId, userId).fields
 
-	return permission_fields || []
+	return permission_fields
 
 Creator.isloading = ()->
 	return Creator.isLoadingSpace.get()

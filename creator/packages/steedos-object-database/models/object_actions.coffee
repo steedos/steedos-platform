@@ -1,5 +1,5 @@
 _syncToObject = (doc) ->
-	object_actions = Creator.getCollection("object_actions").find({object: doc.object}, {
+	object_actions = Creator.getCollection("object_actions").find({object: doc.object, is_enable: true}, {
 		fields: {
 			created: 0,
 			modified: 0,
@@ -19,7 +19,7 @@ _syncToObject = (doc) ->
 			actions: actions
 	})
 isRepeatedName = (doc, name)->
-	other = Creator.getCollection("object_actions").find({object: doc.object, _id: {$ne: doc._id}, name: name || doc.name})
+	other = Creator.getCollection("object_actions").find({object: doc.object, _id: {$ne: doc._id}, name: name || doc.name}, {fields:{_id: 1}})
 	if other.count() > 0
 		return true
 	return false
@@ -39,6 +39,8 @@ Creator.Objects.object_actions =
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
+		is_enable:
+			type: "boolean"
 		visible:
 			type: "boolean"
 		on:
@@ -58,7 +60,7 @@ Creator.Objects.object_actions =
 
 	list_views:
 		default:
-			columns: ["name", "label", "object", "on", "visible", "modified"]
+			columns: ["name", "label", "object", "on", "visible", "is_enable", "modified"]
 		all:
 			filter_scope: "space"
 

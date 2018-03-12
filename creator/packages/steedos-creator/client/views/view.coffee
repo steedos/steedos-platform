@@ -160,40 +160,36 @@ Template.creator_view.helpers
 
 	actions: ()->
 		actions = Creator.getActions()
-		permissions = Creator.getPermissions()
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
-
-		if !actions
-			return
-
-		if permissions.actions
-			return actions
-		else	
-			actions = _.filter actions, (action)->
-				if action.on == "record"
-					if action.only_list_item
-						return false
-					if typeof action.visible == "function"
-						return action.visible(object_name, record_id, permissions)
-					else
-						return action.visible
-				else
+		record = Creator.getCollection(object_name).findOne(record_id)
+		userId = Meteor.userId()
+		record_permissions = Creator.getRecordPermissions object_name, record, userId
+		actions = _.filter actions, (action)->
+			if action.on == "record"
+				if action.only_list_item
 					return false
-			return actions
+				if typeof action.visible == "function"
+					return action.visible(object_name, record_id, record_permissions)
+				else
+					return action.visible
+			else
+				return false
+		return actions
 
 	moreActions: ()->
 		actions = Creator.getActions()
-		permissions = Creator.getPermissions()
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
-
+		record = Creator.getCollection(object_name).findOne(record_id)
+		userId = Meteor.userId()
+		record_permissions = Creator.getRecordPermissions object_name, record, userId
 		actions = _.filter actions, (action)->
 			if action.on == "record_more"
 				if action.only_list_item
 					return false
 				if typeof action.visible == "function"
-					return action.visible(object_name, record_id, permissions)
+					return action.visible(object_name, record_id, record_permissions)
 				else
 					return action.visible
 			else

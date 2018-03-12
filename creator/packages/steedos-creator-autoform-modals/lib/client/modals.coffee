@@ -272,6 +272,8 @@ helpers =
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 			object_name = getObjectName cmCollection
 			permission_fields = _.clone(Creator.getFields(object_name))
+			unless permission_fields
+				permission_fields = []
 			
 			if Session.get 'cmMeteorMethod'
 				permission_fields.push "_ids"

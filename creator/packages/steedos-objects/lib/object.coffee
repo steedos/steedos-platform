@@ -63,10 +63,21 @@ Creator.Object = (options)->
 		item.name = item_name
 
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
+	_.each self.permission_set, (item, item_name)->
+		if self.list_views
+			self.permission_set[item_name].list_views = _.keys(self.list_views)
+		if self.actions
+			self.permission_set[item_name].actions = _.keys(self.actions)
+		if self.related_objects
+			self.permission_set[item_name].related_objects = _.keys(self.related_objects)
+		# if self.fields
+		# 	self.permission_set[item_name].fields = _.keys(self.fields)
+
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
+		
 
 	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 

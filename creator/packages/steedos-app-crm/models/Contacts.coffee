@@ -63,3 +63,20 @@ Creator.Objects.contacts =
 		mine:
 			label: "我的联系人"
 			filter_scope: "mine"
+
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+			# actions:["standard_edit"] 
+		admin:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false

@@ -38,7 +38,7 @@ Package.onUse(function(api) {
 	api.addFiles('models/object_actions.coffee');
 
 	api.addFiles('server/objects_observe.coffee', 'server');
-	api.addFiles('server/publications/objects.coffee', 'server');
-	api.addFiles('client/subscribe.coffee', 'client');
+	// api.addFiles('server/publications/objects.coffee', 'server');
+	// api.addFiles('client/subscribe.coffee', 'client');
 
 });

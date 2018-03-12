@@ -1,24 +1,18 @@
 Meteor.startup ()->
 
-	convertTriggersTODOToFunction = (object)->
-		_.forEach object.triggers, (trigger, k)->
-			_todo = trigger.todo
-			if _todo
-				#只有update时， fieldNames, modifier, options 才有值
-				trigger.todo = (userId, doc, fieldNames, modifier, options)->
-					#TODO 控制可使用的变量，尤其是Collection
-					Creator.evalInContext(_todo)
+	_changeServerObjects = (document)->
+		if _.size(document.fields) > 0
+			Creator.Objects[document.name] = document
+			Creator.loadObjects document
 
-	Creator.getCollection("objects").find().observe {
+	_removeServerObjects = (document)->
+		Creator.removeObject(document.name)
+
+	Creator.getCollection("objects").find({is_enable: true}).observe {
 		added: (newDocument)->
-			if _.size(newDocument.fields) > 0
-				convertTriggersTODOToFunction(newDocument)
-				Creator.loadObjects newDocument
+			_changeServerObjects newDocument
 		changed: (newDocument, oldDocument)->
-			if _.size(newDocument.fields) > 0
-				convertTriggersTODOToFunction(newDocument)
-				Creator.loadObjects newDocument
+			_changeServerObjects newDocument
 		removed: (oldDocument)->
-			if _.size(oldDocument.fields) > 0
-				Creator.loadObjects oldDocument #TODO removeObject
+			_removeServerObjects oldDocument
 	}

@@ -1,6 +1,6 @@
 #TODO object的name不能重复，需要考虑到系统表
 isRepeatedName = (doc)->
-	other = Creator.getCollection("objects").find({_id: {$ne: doc._id}, name: doc.name})
+	other = Creator.getCollection("objects").find({_id: {$ne: doc._id}, name: doc.name}, {fields:{_id: 1}})
 	if other.count() > 0
 		return true
 	return false
@@ -21,6 +21,8 @@ Creator.Objects.objects =
 		icon: 
 			label: "Icon"
 			type: "text"
+		is_enable:
+			type: "boolean"
 		description: 
 			label: "Description"
 			type: "text"
@@ -43,7 +45,7 @@ Creator.Objects.objects =
 
 	list_views:
 		default:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "label", "icon", "is_enable", "description", "modified"]
 		all:
 			filter_scope: "space"
 
@@ -93,3 +95,32 @@ Creator.Objects.objects =
 			todo: (userId, doc)->
 				#新增object时，默认新建一个name字段
 				Creator.getCollection("object_fields").insert({object: doc._id, name: "name", space: doc.space, type: "text", required: true, index: true})
+
+		"before.remove.server.objects":
+			on: "server"
+			when: "before.remove"
+			todo: (userId, doc)->
+				object_collections = Creator.getCollection(doc.name)
+
+				documents = object_collections.find({},{fields: {_id: 1}})
+
+				if documents.count() > 0
+					throw new Meteor.Error 500, "对象中已经有记录，请先删除记录后， 再删除此对象"
+
+		"after.remove.server.objects":
+			on: "server"
+			when: "after.remove"
+			todo: (userId, doc)->
+				#删除object 后，自动删除fields、actions、triggers、permission_objects
+				Creator.getCollection("object_fields").direct.remove({object: doc._id})
+
+				Creator.getCollection("object_actions").direct.remove({object: doc._id})
+
+				Creator.getCollection("object_triggers").direct.remove({object: doc._id})
+
+				Creator.getCollection("permission_objects").direct.remove({object_name: doc.name})
+
+				#drop collection
+				console.log "drop collection", doc.name
+				Creator.getCollection(doc.name).rawCollection().drop (err, client)->
+					Creator.removeCollection(doc.name)

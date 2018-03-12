@@ -43,21 +43,15 @@ Template.creator_list_wrapper.helpers
 
 	actions: ()->
 		actions = Creator.getActions()
-		permissions = Creator.getPermissions()
-
-		# 如果是在权限中设置了action，就不需要判断action的visible属性
-		if permissions?.actions
-			return actions
-		else
-			actions = _.filter actions, (action)->
-				if action.on == "list"
-					if typeof action.visible == "function"
-						return action.visible()
-					else
-						return action.visible
+		actions = _.filter actions, (action)->
+			if action.on == "list"
+				if typeof action.visible == "function"
+					return action.visible()
 				else
-					return false
-			return actions
+					return action.visible
+			else
+				return false
+		return actions
 
 	is_custom_list_view: ()->
 		if Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))

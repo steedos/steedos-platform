@@ -10,11 +10,18 @@ Creator.getObject = (object_name)->
 	if object_name
 		return Creator.objectsByName[object_name]
 
+Creator.removeObject = (object_name)->
+	delete Creator.Objects[object_name]
+	delete Creator.objectsByName[object_name]
+
 Creator.getCollection = (object_name)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
 		return Creator.Collections[object_name]
+
+Creator.removeCollection = (object_name)->
+	delete Creator.Collections[object_name]
 
 Creator.isSpaceAdmin = (spaceId, userId)->
 	if Meteor.isClient

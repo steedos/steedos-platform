@@ -7,7 +7,8 @@ if Meteor.isServer
 		psets = Creator.getCollection("permission_set").find({users: userId}).fetch()
 		permissions.assigned_apps = _.pluck psets, "assigned_apps"
 		_.each Creator.objectsByName, (object, object_name)->
-			permissions.objects[object_name] = Creator.getObjectPermissions(spaceId, userId, object_name)
+			permissions.objects[object_name] = Creator.Objects[object_name]
+			permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions(spaceId, userId, object_name)
 		return permissions
 
 	unionPlus = (array,other)->
@@ -80,6 +81,8 @@ if Meteor.isServer
 		if psets.length > 0
 			set_ids = _.pluck psets, "_id"
 			pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
+			if object_name == "contacts"
+				console.log "pos:", pos
 			_.each pos, (po)->
 				if po.permission_set_id == psetsAdmin?._id or po.permission_set_id == psetsUser?._id
 					# 默认的admin/user权限值只实行上面的默认值覆盖，不做算法判断
@@ -111,6 +114,8 @@ if Meteor.isServer
 					else
 						permissions.readonly_fields = po.readonly_fields
 
+		if object_name == "contacts"
+			console.log "permissions:", permissions
 		return permissions
 
 

@@ -29,7 +29,7 @@ Package.onUse(function(api) {
 	api.use('aldeed:schema-index@1.1.0');
 	api.use('aldeed:collection2@2.5.0');
 	api.use('aldeed:tabular@1.6.1');
-	api.use('matb33:collection-hooks@0.8.1');
+	api.use('matb33:collection-hooks@0.8.4');
 
 
 	api.use(['webapp@1.3.11'], 'server');
@@ -49,6 +49,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/add_simple_schema_validation_error.coffee');
 
 	api.addFiles('lib/eval.js');
+	api.addFiles('lib/convert.coffee');
 
 	api.addFiles('lib/formular.coffee', "client");
 	

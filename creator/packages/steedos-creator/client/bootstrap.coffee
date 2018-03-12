@@ -11,8 +11,15 @@ Creator.bootstrap = ()->
 		else
 			if result.space._id != spaceId
 				Steedos.setSpaceId(result.space._id)
-			_.each result.objects, (permissions, object_name)->
+
+			Creator.Objects = result.objects
+
+			_.each Creator.Objects, (object, object_name)->
+				Creator.loadObjects object, object_name
+
+			_.each result.objects, (res_object, object_name)->
 				object = Creator.getObject(object_name)
+				permissions = res_object.permissions
 				unless object
 					return
 				object.permissions.set(permissions)

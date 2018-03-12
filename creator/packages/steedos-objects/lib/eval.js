@@ -5,3 +5,8 @@ Creator.evalInContext = function(js, context) {
     	return eval(js); 
 	}.call(context);
 }
+
+
+Creator.eval = function(js){
+	return eval(js)
+}

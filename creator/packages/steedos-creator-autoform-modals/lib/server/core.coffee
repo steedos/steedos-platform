@@ -1,6 +1,5 @@
 Meteor.methods
 	"af_multiple_update": (options)->
-		console.log "af_multiple_update", options
 		check options, Object
 		{ _ids, _object_name} = options
 		check _ids, String
@@ -20,9 +19,6 @@ Meteor.methods
 		return true
 
 	"af_update": (options, id)->
-		console.log "af_update============="
-		console.log "options", options
-		console.log "id", id
 		_object_name = options["$set"]._object_name
 
 		check options, Object
@@ -38,8 +34,6 @@ Meteor.methods
 		return true
 
 	"af_insert": (options)->
-		console.log "af_insert============="
-		console.log "options", options
 		{_object_name} = options
 		check options, Object
 		check _object_name, String

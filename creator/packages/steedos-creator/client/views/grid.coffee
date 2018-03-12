@@ -61,20 +61,19 @@ _itemClick = (e, curObjectName)->
 _actionItems = (object_name, record_id, record_permissions)->
 	obj = Creator.getObject(object_name)
 	actions = Creator.getActions(object_name)
+	console.log "_actionItem,actions1:", actions
 	actions = _.filter actions, (action)->
 		if action.on == "record" or action.on == "record_more"
 			if action.only_detail
 				return false
 			if typeof action.visible == "function"
+				console.log "action.visible,function:", object_name, record_id, record_permissions
 				return action.visible(object_name, record_id, record_permissions)
 			else
 				return action.visible
 		else
 			return false
-	# if _.isEmpty(actions)
-	# 	Meteor.defer ()->
-	# 		objectColName = "tabular-col-#{object_name.replace(/\./g,'_')}"
-	# 		$(".tabular-col-actions.#{objectColName}").hide()
+	console.log "_actionItem,actions2:", actions
 	return actions
 
 _fields = (object_name, list_view_id)->
@@ -263,12 +262,16 @@ Template.creator_grid.onRendered ->
 				cellTemplate: (container, options) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
+			if localStorage.getItem("creator_pageSize:"+Meteor.userId())
+				pageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
+			else
+				pageSize = 10
 			dxOptions = 
 				paging: 
-					pageSize: 50
+					pageSize: pageSize
 				pager: 
 					showPageSizeSelector: true,
-					allowedPageSizes: [25, 50, 100],
+					allowedPageSizes: [10,25, 50, 100],
 					showInfo: false,
 					showNavigationButtons: true
 				showColumnLines: false
@@ -322,7 +325,8 @@ Template.creator_grid.onRendered ->
 
 				onContentReady: (e)->
 					self.data.total.set dxDataGridInstance.totalCount()
-
+					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
+					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
 			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 
 Template.creator_grid.helpers Creator.helpers
