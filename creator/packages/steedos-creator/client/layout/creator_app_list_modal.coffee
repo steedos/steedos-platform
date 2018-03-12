@@ -16,6 +16,10 @@ Template.creator_app_list_modal.helpers
 		console.log "objects", objects
 		return objects
 
+
+	app_url: ()->
+		return Steedos.absoluteUrl(this.url + "/")
+
 	object_url: ()->
 		return Creator.getObjectUrl(this.name, null)
 
