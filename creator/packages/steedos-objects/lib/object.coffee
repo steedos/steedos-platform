@@ -61,6 +61,10 @@ Creator.Object = (options)->
 
 	_.each self.actions, (item, item_name)->
 		item.name = item_name
+
+	# if self.name == "contacts"
+	# 	console.log "self.fields===fff:", self.fields
+	# 	console.log "self.fields===mmm:", _.keys(self.fields)
 		
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
 	_.each self.permission_set, (item, item_name)->
@@ -70,13 +74,25 @@ Creator.Object = (options)->
 			self.permission_set[item_name].actions = _.keys(self.actions)
 		if self.related_objects
 			self.permission_set[item_name].related_objects = _.keys(self.related_objects)
-		if self.fields
-			self.permission_set[item_name].fields = _.keys(self.fields)
+		# if self.fields
+		# 	self.permission_set[item_name].fields = _.keys(self.fields)
+		# if self.name == "contacts"
+		# 	console.log "self.permission_set===1_0", _.keys(self.fields)
+		# 	console.log "self.permission_set===xxx_#{item_name}", self.permission_set[item_name].fields
+		# 	console.log "self.permission_set===1", self.permission_set
+		# 	console.log "self.permission_set===1string", JSON.stringify self.permission_set
 
+	# if self.name == "contacts"
+	# 	console.log "options.permission_set===2", options.permission_set
+	# 	console.log "options.permission_set===2string", JSON.stringify options.permission_set
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
+	# if self.name == "contacts"
+	# 	console.log "self.permission_set===3", self.permission_set
+	# 	console.log "self.permission_set===3string", JSON.stringify self.permission_set
+		
 
 	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 
