@@ -74,21 +74,21 @@ Creator.Objects.object_triggers =
 		all:
 			filter_scope: "space"
 
-		permission_set:
-			user:
-				allowCreate: false
-				allowDelete: false
-				allowEdit: false
-				allowRead: false
-				modifyAllRecords: false
-				viewAllRecords: false
-			admin:
-				allowCreate: true
-				allowDelete: true
-				allowEdit: true
-				allowRead: true
-				modifyAllRecords: true
-				viewAllRecords: true
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true
 
 	triggers:
 		"after.insert.server.object_triggers":

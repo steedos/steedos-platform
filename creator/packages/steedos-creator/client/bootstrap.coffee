@@ -36,8 +36,8 @@ Creator.bootstrap = ()->
 							field.hidden = true
 							field.omit = true
 							fs.autoform.omit = true
-				else
-					permissions.fields = _.keys(object.fields)
+				# else
+				# 	permissions.fields = _.keys(object.fields)
 				_.each permissions.readonly_fields, (field_name)->
 					f = object.fields[field_name]
 					if f
