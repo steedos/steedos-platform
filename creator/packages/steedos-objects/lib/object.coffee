@@ -68,8 +68,8 @@ Creator.Object = (options)->
 		
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
 	_.each self.permission_set, (item, item_name)->
-		if self.list_views
-			self.permission_set[item_name].list_views = _.keys(self.list_views)
+		# if self.list_views
+		# 	self.permission_set[item_name].list_views = _.keys(self.list_views)
 		if self.actions
 			self.permission_set[item_name].actions = _.keys(self.actions)
 		if self.related_objects
