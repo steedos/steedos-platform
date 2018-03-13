@@ -6,6 +6,13 @@ Creator.Object = (options)->
 
 	if (!options.name) 
 		throw new Error('Creator.Object options must specify name');
+	unless options.permission_set
+		options.permission_set = {}
+	if !(options.permission_set?.admin)
+		options.permission_set.admin = {}
+	if !(options.permission_set?.user)
+		options.permission_set.user = {}
+
 	self.name = options.name
 	self.label = options.label
 	self.icon = options.icon
@@ -16,6 +23,11 @@ Creator.Object = (options)->
 	self.enable_notes = options.enable_notes
 	self.enable_audit = options.enable_audit
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
+
+	baseFields = _.keys(Creator.baseObject.fields)
+	
+	if self.name == "contacts"
+		console.log "Creator.Object'options=", options
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	
@@ -62,36 +74,40 @@ Creator.Object = (options)->
 	_.each self.actions, (item, item_name)->
 		item.name = item_name
 
-	# if self.name == "contacts"
-	# 	console.log "self.fields===fff:", self.fields
-	# 	console.log "self.fields===mmm:", _.keys(self.fields)
-		
+	self.related_objects = Creator.getObjectRelateds(self.name)
+
+	if self.name == "contacts"
+		console.log "self.fields===fff:", self.fields
+		console.log "self.fields===mmm:", _.keys(self.fields)
+	
+	# 让所有object有所有list_views/actions/related_objects/fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
 	_.each self.permission_set, (item, item_name)->
-		# if self.list_views
-		# 	self.permission_set[item_name].list_views = _.keys(self.list_views)
+		if self.list_views
+			self.permission_set[item_name].list_views = _.keys(self.list_views)
 		if self.actions
 			self.permission_set[item_name].actions = _.keys(self.actions)
 		if self.related_objects
-			self.permission_set[item_name].related_objects = _.keys(self.related_objects)
-		# if self.fields
-		# 	self.permission_set[item_name].fields = _.keys(self.fields)
+			self.permission_set[item_name].related_objects = _.clone(self.related_objects)
+		if self.fields
+			self.permission_set[item_name].fields = _.keys(self.fields)
 		# if self.name == "contacts"
 		# 	console.log "self.permission_set===1_0", _.keys(self.fields)
 		# 	console.log "self.permission_set===xxx_#{item_name}", self.permission_set[item_name].fields
 		# 	console.log "self.permission_set===1", self.permission_set
 		# 	console.log "self.permission_set===1string", JSON.stringify self.permission_set
 
-	# if self.name == "contacts"
-	# 	console.log "options.permission_set===2", options.permission_set
-	# 	console.log "options.permission_set===2string", JSON.stringify options.permission_set
+	if self.name == "contacts"
+		console.log "options.permission_set===2", options.permission_set
+		console.log "options.permission_set===2string", JSON.stringify options.permission_set
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
-	# if self.name == "contacts"
-	# 	console.log "self.permission_set===3", self.permission_set
-	# 	console.log "self.permission_set===3string", JSON.stringify self.permission_set
+		self.permission_set[item_name].fields = _.difference self.permission_set[item_name].fields, baseFields
+	if self.name == "contacts"
+		console.log "self.permission_set===3", self.permission_set
+		console.log "self.permission_set===3string", JSON.stringify self.permission_set
 		
 
 	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)

@@ -84,6 +84,31 @@ Creator.getObjectRecord = (object_name, record_id)->
 	if collection
 		return collection.findOne(record_id)
 
+Creator.getObjectRelateds = (object_name)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+	
+	related_object_names = []
+	# _object = Creator.getObject(object_name)
+	# 因Creator.getObject函数内部要调用该函数，所以这里不可以调用Creator.getObject取对象，只能调用Creator.Objects来取对象
+	_object = Creator.Objects[object_name]
+	if !_object
+		return related_object_names
+
+	_.each Creator.Objects, (related_object, related_object_name)->
+			_.each related_object.fields, (related_field, related_field_name)->
+				if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+					related_object_names.push related_object_name
+	
+	if _object.enable_files
+		related_object_names.push "cms_files"
+	if _object.enable_tasks
+		related_object_names.push "tasks"
+	if _object.enable_notes
+		related_object_names.push "notes"
+
+	return related_object_names
 
 Creator.getPermissions = (object_name, spaceId, userId)->
 	if Meteor.isClient
@@ -95,6 +120,7 @@ Creator.getPermissions = (object_name, spaceId, userId)->
 		return obj.permissions.get()
 	else if Meteor.isServer
 		Creator.getObjectPermissions(spaceId, userId, object_name)
+
 Creator.getRecordPermissions = (object_name, record, userId)->
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
@@ -187,34 +213,21 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 			spaceId = Session.get("spaceId")
 		if !userId
 			userId = Meteor.userId()
-	
-	related_object_names = []
-	permissions = Creator.getPermissions(object_name, spaceId, userId)
 
+	related_object_names = []
 	_object = Creator.getObject(object_name)
 
 	if !_object
 		return related_object_names
 
+	related_object_names = _object.related_objects
+	if related_object_names?.length == 0
+		return related_object_names
+
+	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	permission_related_objects = permissions.related_objects
 
-	_.each Creator.Objects, (related_object, related_object_name)->
-			_.each related_object.fields, (related_field, related_field_name)->
-				if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
-					if permission_related_objects
-						if _.indexOf(permission_related_objects, related_object_name) > -1
-							related_object_names.push related_object_name
-					else
-						related_object_names.push related_object_name
-	
-	if _object.enable_files
-		if permission_related_objects
-			if _.indexOf(permission_related_objects, "cms_files") > -1
-				related_object_names.push "cms_files"
-		else
-			related_object_names.push "cms_files"
-
-	return related_object_names
+	return _.intersection related_object_names, permission_related_objects
 
 Creator.getActions = (object_name, spaceId, userId)->
 	if Meteor.isClient
@@ -263,8 +276,6 @@ Creator.getListViews = (object_name, spaceId, userId)->
 			if permission_list_views
 				if _.indexOf(permission_list_views, item_name) > -1
 					list_views.push item
-			else
-				list_views.push item
 	
 	return list_views
 

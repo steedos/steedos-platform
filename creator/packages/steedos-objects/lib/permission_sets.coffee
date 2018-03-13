@@ -38,16 +38,11 @@ if Meteor.isServer
 				opsetAdmin.allowRead = posAdmin.allowRead
 				opsetAdmin.modifyAllRecords = posAdmin.modifyAllRecords
 				opsetAdmin.viewAllRecords = posAdmin.viewAllRecords
-				if posAdmin.list_views?.length
-					opsetAdmin.list_views = posAdmin.list_views
-				if posAdmin.actions?.length
-					opsetAdmin.actions = posAdmin.actions
-				if posAdmin.fields?.length
-					opsetAdmin.fields = posAdmin.fields
-				if posAdmin.related_objects?.length
-					opsetAdmin.related_objects = posAdmin.related_objects
-				if posAdmin.readonly_fields?.length
-					opsetAdmin.readonly_fields = posAdmin.readonly_fields
+				opsetAdmin.list_views = posAdmin.list_views
+				opsetAdmin.actions = posAdmin.actions
+				opsetAdmin.fields = posAdmin.fields
+				opsetAdmin.related_objects = posAdmin.related_objects
+				opsetAdmin.readonly_fields = posAdmin.readonly_fields
 		if psetsUser
 			posUser = Creator.getCollection("permission_objects").findOne({object_name: object_name, permission_set_id: psetsUser._id})
 			if posUser
@@ -57,16 +52,14 @@ if Meteor.isServer
 				opsetUser.allowRead = posUser.allowRead
 				opsetUser.modifyAllRecords = posUser.modifyAllRecords
 				opsetUser.viewAllRecords = posUser.viewAllRecords
-				if posUser.list_views?.length
-					opsetUser.list_views = posUser.list_views
-				if posUser.actions?.length
-					opsetUser.actions = posUser.actions
-				if posUser.fields?.length
-					opsetUser.fields = posUser.fields
-				if posUser.related_objects?.length
-					opsetUser.related_objects = posUser.related_objects
-				if posUser.readonly_fields?.length
-					opsetUser.readonly_fields = posUser.readonly_fields
+				opsetUser.list_views = posUser.list_views
+				opsetUser.actions = posUser.actions
+				opsetUser.fields = posUser.fields
+				opsetUser.related_objects = posUser.related_objects
+				opsetUser.readonly_fields = posUser.readonly_fields
+		
+		if object_name == "contacts"
+				console.log "opsetAdmin:", opsetAdmin
 
 		if !userId
 			permissions = opsetAdmin
@@ -113,6 +106,9 @@ if Meteor.isServer
 						permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
 					else
 						permissions.readonly_fields = po.readonly_fields
+
+		baseFields = _.keys(Creator.baseObject.fields)
+		permissions.fields = _.difference permissions.fields, baseFields
 
 		if object_name == "contacts"
 			console.log "permissions:", permissions

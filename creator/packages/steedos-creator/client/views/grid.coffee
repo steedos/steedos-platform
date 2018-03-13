@@ -220,7 +220,7 @@ Template.creator_grid.onRendered ->
 			
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
 			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
-
+			console.log "Template.creator_grid.onRendered=======,showColumns:", showColumns
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
 			selectColumns = _.union(selectColumns, extra_columns)
 			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
