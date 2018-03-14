@@ -30,10 +30,12 @@ Creator.Objects.object_actions =
 		object:
 			type: "master_detail"
 			reference_to: "objects"
+			required: true
 		name:
 			type: "text"
 			searchable:true
 			index:true
+			required: true
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
@@ -45,6 +47,7 @@ Creator.Objects.object_actions =
 		on:
 			type: "lookup"
 			is_wide:true
+			required: true
 			optionsFunction: ()->
 				[
 					{label: "显示在列表右上角", value: "list", icon: "contact_list"}

@@ -13,6 +13,7 @@ Creator.Objects.objects =
 			type: "text"
 			searchable:true
 			index:true
+			required: true
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"

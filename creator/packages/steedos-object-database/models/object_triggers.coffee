@@ -33,12 +33,14 @@ Creator.Objects.object_triggers =
 			type: "text"
 			searchable: true
 			index: true
+			required: true
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
 		object:
 			type: "master_detail"
 			reference_to: "objects"
+			required: true
 		on:
 			type: "lookup"
 			required: true

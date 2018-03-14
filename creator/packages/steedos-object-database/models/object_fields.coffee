@@ -41,6 +41,7 @@ Creator.Objects.object_fields =
 		object:
 			type: "master_detail"
 			reference_to: "objects"
+			required: true
 		type:
 			type: "select"
 			required: true
