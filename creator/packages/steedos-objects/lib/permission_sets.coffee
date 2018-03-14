@@ -97,11 +97,6 @@ if Meteor.isServer
 				permissions.readable_fields = unionPlus(permissions.readable_fields,po.readable_fields)
 				permissions.editable_fields = unionPlus(permissions.editable_fields,po.editable_fields)
 				permissions.related_objects = unionPlus(permissions.related_objects, po.related_objects)
-				# if po.readonly_fields?.length
-				# 	if permissions.readonly_fields
-				# 		permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
-				# 	else
-				# 		permissions.readonly_fields = po.readonly_fields
 
 		if object.is_view
 			permissions.allowCreate = false

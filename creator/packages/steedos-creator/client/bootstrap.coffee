@@ -43,15 +43,6 @@ Creator.bootstrap = (callback)->
 							field.hidden = true
 							field.omit = true
 							fs.autoform.omit = true
-				# _.each permissions.readonly_fields, (field_name)->
-				# 	f = object.fields[field_name]
-				# 	if f
-				# 		fs = object.schema._schema[field_name]
-				# 		if !fs.autoform
-				# 			fs.autoform = {}
-				# 		f.readonly = true
-				# 		fs.autoform.readonly = true
-				# 		fs.autoform.disabled = true
 
 			_.each result.assigned_apps, (app_name)->
 				Creator.Apps[app_name]?.visible = true

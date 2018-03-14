@@ -78,25 +78,34 @@ Creator.Object = (options)->
 
 	self.related_objects = Creator.getObjectRelateds(self.name)
 	
-	# 让所有object有所有list_views/actions/related_objects/fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
+	# 让所有object默认有所有list_views/actions/related_objects/readable_fields/editable_fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
+	defaultListViews = _.keys(self.list_views)
+	defaultActions = _.keys(self.actions)
+	defaultRelatedObjects = _.pluck(self.related_objects,"object_name")
+	defaultReadableFields = []
+	defaultEditableFields = []
+	_.each self.fields, (field, field_name)->
+		if !(field.omit || field.hidden)
+			defaultReadableFields.push field_name
+			if !field.readonly
+				defaultEditableFields.push field_name
+		
 	_.each self.permission_set, (item, item_name)->
 		if self.list_views
-			self.permission_set[item_name].list_views = _.keys(self.list_views)
+			self.permission_set[item_name].list_views = defaultListViews
 		if self.actions
-			self.permission_set[item_name].actions = _.keys(self.actions)
+			self.permission_set[item_name].actions = defaultActions
 		if self.related_objects
-			self.permission_set[item_name].related_objects = _.pluck(self.related_objects,"object_name")
+			self.permission_set[item_name].related_objects = defaultRelatedObjects
 		if self.fields
-			self.permission_set[item_name].readable_fields = _.keys(self.fields)
-			self.permission_set[item_name].editable_fields = _.keys(self.fields)
+			self.permission_set[item_name].readable_fields = defaultReadableFields
+			self.permission_set[item_name].editable_fields = defaultEditableFields
 
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
-		# self.permission_set[item_name].fields = _.difference self.permission_set[item_name].fields, baseFields
-		
 
 	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 
