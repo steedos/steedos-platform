@@ -9,6 +9,8 @@
 	"list_view_no_records": "No items to display.",
 	"please_select": "Please select ",
 
+	"list_view": "List View",
+
 	"creator_list_item_counts": "%s items",
 	"creator_list_new_list_view": "New",
 	"creator_list_delete_list_view": "Delete",

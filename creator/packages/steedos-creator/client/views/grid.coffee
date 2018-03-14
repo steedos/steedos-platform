@@ -2,6 +2,8 @@ dxDataGridInstance = null
 
 _itemClick = (e, curObjectName)->
 	record = e.data
+	if !record
+		return
 	record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
 	actions = _actionItems(curObjectName, record._id, record_permissions)
 

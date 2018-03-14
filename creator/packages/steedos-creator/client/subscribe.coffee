@@ -12,8 +12,8 @@ Meteor.startup ->
 			Creator.subs["objectRecentViewed"].subscribe "object_recent_viewed", Session.get("object_name")
 
 	Tracker.autorun (c)->
-		if Session.get("object_name")
-			Creator.subs["CreatorListViews"].subscribe "object_listviews", Session.get("object_name")
+		if Session.get("object_name") and Session.get("spaceId")
+			Creator.subs["CreatorListViews"].subscribe "object_listviews", Session.get("object_name"), Session.get("spaceId")
 
 
 Meteor.startup ->

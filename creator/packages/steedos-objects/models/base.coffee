@@ -21,7 +21,7 @@ Creator.baseObject =
 			type: "lookup"
 			label:"创建人"
 			reference_to: "users"
-			readonly: true
+			disabled: true
 			index: true
 		modified:
 			label:"修改时间"
@@ -33,7 +33,7 @@ Creator.baseObject =
 			label:"修改人"
 			type: "lookup"
 			reference_to: "users"
-			readonly: true
+			disabled: true
 		is_deleted:
 			type: "boolean"
 			omit: true

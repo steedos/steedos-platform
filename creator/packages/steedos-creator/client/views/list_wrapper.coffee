@@ -67,9 +67,16 @@ Template.creator_list_wrapper.helpers
 			return true
 		else
 			return false
+	
+	is_view_owner: ()->
+		list_view = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+		if list_view and list_view.owner == Meteor.userId()
+			return true
+		return false
 
 	is_filter_list_disabled: ()->
-		unless Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+		list_view = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+		if !list_view or list_view.owner != Meteor.userId()
 			return "disabled"
 
 	is_filter_changed: ()->

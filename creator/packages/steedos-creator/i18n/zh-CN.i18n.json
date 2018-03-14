@@ -9,6 +9,8 @@
 	"list_view_no_records": "没有可显示的项目.",
 	"please_select": "请选择",
 
+	"list_view": "列表视图",
+
 	"creator_list_item_counts": "%s个项目",
 	"creator_list_new_list_view": "新建",
 	"creator_list_delete_list_view": "删除",
