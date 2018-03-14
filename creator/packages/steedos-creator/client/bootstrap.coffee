@@ -39,6 +39,10 @@ Creator.bootstrap = (callback)->
 								f.readonly = true
 								fs.autoform.readonly = true
 								fs.autoform.disabled = true
+							else
+								f.readonly = false
+								fs.autoform.readonly = false
+								fs.autoform.disabled = false
 						else
 							field.hidden = true
 							field.omit = true
