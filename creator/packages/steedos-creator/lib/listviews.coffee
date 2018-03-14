@@ -218,104 +218,33 @@ Creator.initListViews = (object_name)->
 if Meteor.isClient
 	Creator.getRelatedList = (object_name)->
 		list = []
-		related_object_names = Creator.getRelatedObjects(object_name)
+		related_objects = Creator.getRelatedObjects(object_name)
 
-		# _.each related_object_names, (related_object_name) ->
-		# 	related_object = Creator.getObject(related_object_name)
-		# 	unless related_object
-		# 		return
-		# 	tabular_name = "creator_" + related_object_name
-		# 	if Tabular.tablesByName[tabular_name]
-		# 		columns = ["name"]
-		# 		if related_object.list_views?.default?.columns
-		# 			columns = related_object.list_views.default.columns
-		# 		columns = _.without(columns, related_field_name)
-		# 		Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
-
-		# 		if /\w+\.\$\.\w+/g.test(related_field_name)
-		# 			# object类型带子属性的related_field_name要去掉中间的美元符号，否则显示不出字段值
-		# 			related_field_name = related_field_name.replace(/\$\./,"")
-		# 		related =
-		# 			object_name: related_object_name
-		# 			columns: columns
-		# 			tabular_table: Tabular.tablesByName[tabular_name]
-		# 			related_field_name: related_field_name
-
-		# 		list.push related
-			
-
-		_.each Creator.Objects, (related_object, related_object_name)->
-			if _.indexOf(related_object_names, related_object_name) > -1
-				_.each related_object.fields, (related_field, related_field_name)->
-					if related_field.type=="master_detail" and related_field.reference_to and related_field.reference_to == object_name
-						tabular_name = "creator_" + related_object_name
-						if Tabular.tablesByName[tabular_name]
-							columns = ["name"]
-							if related_object.list_views?.default?.columns
-								columns = related_object.list_views.default.columns
-							columns = _.without(columns, related_field_name)
-							Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
-
-							if /\w+\.\$\.\w+/g.test(related_field_name)
-								# object类型带子属性的related_field_name要去掉中间的美元符号，否则显示不出字段值
-								related_field_name = related_field_name.replace(/\$\./,"")
-							related =
-								object_name: related_object_name
-								columns: columns
-								tabular_table: Tabular.tablesByName[tabular_name]
-								related_field_name: related_field_name
-
-							list.push related
-
-		if Creator.Objects[object_name]?.enable_files and _.indexOf(related_object_names, "cms_files") > -1
-			file_object_name = "cms_files"
-			file_tabular_name = "creator_" + file_object_name
-			file_related_field_name = "parent"
-			file_related_object = Creator.Objects[file_object_name]
-			
-			if Tabular.tablesByName[file_tabular_name]
+		_.each related_objects, (related_object_item) ->
+			related_object_name = related_object_item.object_name
+			related_field_name = related_object_item.foreign_key
+			related_object = Creator.getObject(related_object_name)
+			unless related_object
+				return
+			tabular_name = "creator_" + related_object_name
+			if Tabular.tablesByName[tabular_name]
 				columns = ["name"]
-				if file_related_object.list_views?.default?.columns
-					columns = file_related_object.list_views.default.columns
-				columns = _.without(columns, file_related_field_name)
-				Tabular.tablesByName[file_tabular_name].options?.columns = Creator.getTabularColumns(file_object_name, columns, true);
+				if related_object.list_views?.default?.columns
+					columns = related_object.list_views.default.columns
+				columns = _.without(columns, related_field_name)
+				Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
 
-				file_related =
-					object_name: file_object_name
+				if /\w+\.\$\.\w+/g.test(related_field_name)
+					# object类型带子属性的related_field_name要去掉中间的美元符号，否则显示不出字段值
+					related_field_name = related_field_name.replace(/\$\./,"")
+				related =
+					object_name: related_object_name
 					columns: columns
-					tabular_table: Tabular.tablesByName[file_tabular_name]
-					related_field_name: file_related_field_name
-					is_file: true
+					tabular_table: Tabular.tablesByName[tabular_name]
+					related_field_name: related_field_name
+					is_file: related_object_name == "cms_files"
 
-				list.push file_related
-
-		extra_related_objects = []
-		if Creator.Objects[object_name]?.enable_tasks
-			extra_related_objects.push "tasks"
-		if Creator.Objects[object_name]?.enable_notes
-			extra_related_objects.push "notes"
-
-		if extra_related_objects.length > 0
-			_.each extra_related_objects, (obj)->
-				extra_object_name = obj
-				extra_tabular_name = "creator_" + extra_object_name
-				extra_related_field_name = "related_to"
-				extra_related_object = Creator.Objects[extra_object_name]
-
-				if Tabular.tablesByName[extra_tabular_name]
-					columns = ["name"]
-					if extra_related_object.list_views?.default?.columns
-						columns = extra_related_object.list_views.default.columns
-					columns = _.without(columns, extra_related_field_name)
-					Tabular.tablesByName[extra_tabular_name].options?.columns = Creator.getTabularColumns(extra_object_name, columns, true);
-
-					extra_related =
-						object_name: extra_object_name
-						columns: columns
-						tabular_table: Tabular.tablesByName[extra_tabular_name]
-						related_field_name: extra_related_field_name
-
-				list.push extra_related
+				list.push related
 
 		return list
 

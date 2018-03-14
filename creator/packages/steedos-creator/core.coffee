@@ -89,26 +89,26 @@ Creator.getObjectRelateds = (object_name)->
 		if !object_name
 			object_name = Session.get("object_name")
 	
-	related_object_names = []
+	related_objects = []
 	# _object = Creator.getObject(object_name)
 	# 因Creator.getObject函数内部要调用该函数，所以这里不可以调用Creator.getObject取对象，只能调用Creator.Objects来取对象
 	_object = Creator.Objects[object_name]
 	if !_object
-		return related_object_names
+		return related_objects
 
 	_.each Creator.Objects, (related_object, related_object_name)->
-			_.each related_object.fields, (related_field, related_field_name)->
-				if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
-					related_object_names.push related_object_name
+		_.each related_object.fields, (related_field, related_field_name)->
+			if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+				related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
 	
 	if _object.enable_files
-		related_object_names.push "cms_files"
+		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
 	if _object.enable_tasks
-		related_object_names.push "tasks"
+		related_objects.push {object_name:"tasks", foreign_key: "related_to"}
 	if _object.enable_notes
-		related_object_names.push "notes"
+		related_objects.push {object_name:"notes", foreign_key: "related_to"}
 
-	return related_object_names
+	return related_objects
 
 Creator.getPermissions = (object_name, spaceId, userId)->
 	if Meteor.isClient
@@ -220,14 +220,20 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	if !_object
 		return related_object_names
 
-	related_object_names = _object.related_objects
+	related_object_names = _.pluck(_object.related_objects,"object_name")
 	if related_object_names?.length == 0
 		return related_object_names
 
 	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	permission_related_objects = permissions.related_objects
 
-	return _.intersection related_object_names, permission_related_objects
+	related_object_names = _.intersection related_object_names, permission_related_objects
+	return _.filter _object.related_objects, (related_object)->
+		return related_object_names.indexOf(related_object.object_name) > -1
+
+Creator.getRelatedObjectNames = (object_name, spaceId, userId)->
+	related_objects = Creator.getRelatedObjects(object_name, spaceId, userId)
+	return _.pluck(related_objects,"object_name")
 
 Creator.getActions = (object_name, spaceId, userId)->
 	if Meteor.isClient

@@ -88,7 +88,7 @@ Creator.Object = (options)->
 		if self.actions
 			self.permission_set[item_name].actions = _.keys(self.actions)
 		if self.related_objects
-			self.permission_set[item_name].related_objects = _.clone(self.related_objects)
+			self.permission_set[item_name].related_objects = _.pluck(self.related_objects,"object_name")
 		if self.fields
 			self.permission_set[item_name].fields = _.keys(self.fields)
 		# if self.name == "contacts"

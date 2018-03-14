@@ -84,7 +84,7 @@ Creator.Objects.permission_objects =
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
 				_options = []
-				related_object_names = Creator.getRelatedObjects(values.object_name)
+				related_object_names = Creator.getRelatedObjectNames(values.object_name)
 				_.forEach related_object_names, (i)->
 					_object = Creator.getObject(i)
 					_options.push {label: _object.label || i, value: i, icon: _object.icon}
