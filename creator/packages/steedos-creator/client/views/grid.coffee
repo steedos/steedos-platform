@@ -61,7 +61,6 @@ _itemClick = (e, curObjectName)->
 _actionItems = (object_name, record_id, record_permissions)->
 	obj = Creator.getObject(object_name)
 	actions = Creator.getActions(object_name)
-	console.log "_actionItem,actions1:", actions
 	actions = _.filter actions, (action)->
 		if action.on == "record" or action.on == "record_more"
 			if action.only_detail
@@ -73,7 +72,6 @@ _actionItems = (object_name, record_id, record_permissions)->
 				return action.visible
 		else
 			return false
-	console.log "_actionItem,actions2:", actions
 	return actions
 
 _fields = (object_name, list_view_id)->

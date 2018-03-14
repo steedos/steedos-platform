@@ -6,7 +6,6 @@ Creator.bootstrap = ()->
 	unless spaceId
 		return
 	Meteor.call "creator.bootstrap", spaceId, (error, result)->
-		console.log "creator.bootstrap=======:", result.objects.contacts
 		if error or !result
 			console.log error
 		else
@@ -25,13 +24,7 @@ Creator.bootstrap = ()->
 				unless object
 					return
 				object.permissions.set(permissions)
-				# if permissions.fields?.length
 				_.each object.fields, (field, field_name)->
-					if (object_name == "contacts")
-						console.log "object.fields-item====#{permissions.fields}:", permissions.fields
-					
-					unless baseFields.indexOf(field_name) < 0
-						return
 					fs = object.schema._schema[field_name]
 					if !fs.autoform
 						fs.autoform = {}
@@ -43,8 +36,6 @@ Creator.bootstrap = ()->
 						field.hidden = true
 						field.omit = true
 						fs.autoform.omit = true
-				# else
-				# 	permissions.fields = _.keys(object.fields)
 				_.each permissions.readonly_fields, (field_name)->
 					f = object.fields[field_name]
 					if f
