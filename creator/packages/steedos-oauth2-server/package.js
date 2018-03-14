@@ -31,7 +31,7 @@ Package.onUse(function(api) {
 	
 	api.use('http');
 
-	api.use('steedos:base');
+	api.use('steedos:base@0.0.73');
 	// api.addFiles('lib/random.coffee', ['client', 'server']);
 
 	api.addFiles('lib/common.js', ['client', 'server']);
