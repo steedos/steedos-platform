@@ -80,9 +80,9 @@ Creator.Objects.object_fields =
 		readonly:
 			type: "boolean"
 
-		disabled:
-			type: "boolean"
-
+#		disabled:
+#			type: "boolean"
+		#TODO 将此功能开放给用户时，需要关闭此属性
 		omit:
 			type: "boolean"
 
@@ -94,9 +94,6 @@ Creator.Objects.object_fields =
 
 		sortable:
 			type: "boolean"
-
-		rows:
-			type: "currency"
 
 		precision:
 			type: "currency"
@@ -114,7 +111,9 @@ Creator.Objects.object_fields =
 					_options.push {label: o.label, value: k, icon: o.icon}
 				return _options
 			multiple: true
-			is_wide: true
+
+		rows:
+			type: "currency"
 
 		options:
 			type: "textarea"
