@@ -4,7 +4,6 @@ Creator.baseObject =
 			label:"所有者"
 			type: "lookup"
 			reference_to: "users"
-			hidden: true
 			sortable: true
 			index: true
 			defaultValue: "{{userId}}"
@@ -16,25 +15,25 @@ Creator.baseObject =
 		created:
 			type: "datetime"
 			label:"创建日期"
-			omit: true
+			readonly: true
 			sortable: true
 		created_by:
 			type: "lookup"
 			label:"创建人"
 			reference_to: "users"
-			omit: true
+			readonly: true
 			index: true
 		modified:
 			label:"修改时间"
 			type: "datetime"
-			omit: true
+			readonly: true
 			sortable: true
 			index: true
 		modified_by:
 			label:"修改人"
 			type: "lookup"
 			reference_to: "users"
-			omit: true
+			readonly: true
 		is_deleted:
 			type: "boolean"
 			omit: true
