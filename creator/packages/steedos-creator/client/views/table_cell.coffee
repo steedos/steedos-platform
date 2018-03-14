@@ -71,7 +71,7 @@ Template.creator_table_cell.helpers
 					
 					_.each val, (v)->
 						reference_to = v["reference_to.o"] || reference_to
-						reference_to_object_name_field_key = Creator.getObject(reference_to).NAME_FIELD_KEY
+						reference_to_object_name_field_key = Creator.getObject(reference_to)?.NAME_FIELD_KEY
 						href = Creator.getObjectUrl(reference_to, v._id)
 						data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
 					
