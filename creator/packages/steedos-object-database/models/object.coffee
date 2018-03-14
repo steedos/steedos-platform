@@ -7,20 +7,19 @@ isRepeatedName = (doc)->
 
 Creator.Objects.objects =
 	name: "objects"
-	label: "对象"
 	icon: "orders"
 	fields:
-		name: 
-			label: "Name"
+		name:
 			type: "text"
 			searchable:true
 			index:true
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
-		icon: 
-			label: "Icon"
+		icon:
 			type: "text"
+		is_view:
+			type: 'boolean'
 		is_enable:
 			type: "boolean"
 		description: 
@@ -41,7 +40,6 @@ Creator.Objects.objects =
 		triggers:
 			blackbox: true
 			omit: true
-
 
 	list_views:
 		default:
@@ -122,5 +120,7 @@ Creator.Objects.objects =
 
 				#drop collection
 				console.log "drop collection", doc.name
-				Creator.getCollection(doc.name).rawCollection().drop (err, client)->
-					Creator.removeCollection(doc.name)
+				Creator.getCollection(doc.name)._collection.dropCollection()
+#
+#				Creator.getCollection(doc.name).rawCollection().drop (err, client)->
+#					Creator.removeCollection(doc.name)

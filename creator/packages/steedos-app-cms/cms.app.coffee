@@ -1,6 +1,6 @@
 Creator.Apps.cms = 
 	url: "/app/cms"
-	name: "CMS"
+	name: "信息"
 	icon: "ion-ios-people-outline" 
 	icon_slds: "timesheet" 
 	visible: true

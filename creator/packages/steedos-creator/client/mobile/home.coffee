@@ -7,6 +7,7 @@ Template.homeMenu.helpers
         apps = []
         _.each Creator.Apps, (v, k)->
             if v.visible != false
+                v.url = Steedos.absoluteUrl(v.url)
                 apps.push v
         
         return apps

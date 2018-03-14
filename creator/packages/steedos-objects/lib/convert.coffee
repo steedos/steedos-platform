@@ -34,12 +34,24 @@ Meteor.startup ()->
 						action.todo = Creator.eval("(function(){#{_todo_from_db}})")
 					catch error
 						console.error "todo_from_db", _todo_from_db
+
+				_visible = action?._visible
+				if _visible
+					try
+						action.visible = Creator.eval("(#{_visible})")
+					catch error
+						console.error "action.visible to function error: ", error, _visible
 		else
 			_.forEach object.actions, (action, key)->
 				_todo = action?.todo
 				if _todo && _.isFunction(_todo)
 					#TODO 控制可使用的变量
 					action._todo = _todo.toString()
+
+				_visible = action?.visible
+
+				if _visible && _.isFunction(_visible)
+					action._visible = _visible.toString()
 
 		_.forEach object.fields, (field, key)->
 			if field.options && _.isString(field.options)
@@ -54,6 +66,22 @@ Meteor.startup ()->
 					field.options = _options
 				catch error
 					console.error "Creator.convertFieldsOptions", field.options, error
+
+			
+			
+			if Meteor.isServer
+				if field.autoform
+					_type = field.autoform.type
+					if _type && _.isFunction(_type) && _type != Object && _type != String && _type != Number && _type != Boolean && !_.isArray(_type) 
+						field.autoform._type = _type.toString()
+			else
+				if field.autoform
+					_type = field.autoform._type
+					if _type && _.isString(_type)
+						try
+							field.autoform.type = Creator.eval("(#{_type})")
+						catch error
+							console.error "convert field -> type error", field, error
 
 			if Meteor.isServer
 
@@ -83,6 +111,9 @@ Meteor.startup ()->
 			else
 				defaultValue = field._defaultValue
 				if defaultValue && _.isString(defaultValue)
-					field.defaultValue = Creator.eval("(#{defaultValue})")
+					try
+						field.defaultValue = Creator.eval("(#{defaultValue})")
+					catch error
+						console.error "convert error #{object.name} -> #{field.name}", error
 
 

@@ -102,8 +102,13 @@ if Meteor.isServer
 					else
 						permissions.readonly_fields = po.readonly_fields
 
-		baseFields = _.keys(Creator.baseObject.fields)
-		permissions.fields = _.difference permissions.fields, baseFields
+		if object.is_view
+			permissions.allowCreate = false
+			permissions.allowEdit = false
+			permissions.allowDelete = false
+			permissions.modifyAllRecords = false
+			permissions.actions = []
+
 		return permissions
 
 

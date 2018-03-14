@@ -31,9 +31,9 @@ Package.onUse(function(api) {
 	
 	api.use('http');
 
-	api.use('steedos:objects');
+	api.use('steedos:base');	
 
-	api.addFiles('models/OAuth2Clients.coffee');
+	api.use('steedos:objects');
 
 	// api.addFiles('lib/random.coffee', ['client', 'server']);
 
@@ -52,7 +52,7 @@ Package.onUse(function(api) {
 	
 	api.addFiles('client/router.coffee', 'client');
 
-	api.addFiles('client/subscribe.coffee', 'client');
+	api.addFiles('client/subscribe.coffee');
 	
 	api.addFiles('server/rest.coffee', 'server');
 	api.addFiles('server/publications/oauth2clients.coffee', 'server');

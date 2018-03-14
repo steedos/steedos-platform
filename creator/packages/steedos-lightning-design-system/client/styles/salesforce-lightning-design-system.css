@@ -19738,7 +19738,8 @@ a.slds-button--inverse:focus {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; }
+  white-space: nowrap;
+}
 
 /**
  * @summary Truncates text at 25% of its parent container

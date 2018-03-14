@@ -1,7 +1,7 @@
 Creator.Objects.flows =
 	name: "flows"
 	icon: "timesheet"
-	label: "flows"
+	label: "流程"
 	fields:
 		name:
 			type: "text"

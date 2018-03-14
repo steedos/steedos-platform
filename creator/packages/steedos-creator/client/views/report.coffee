@@ -516,8 +516,14 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			valueField = objectFields[value.split(".")[0]]
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
-			if valueField.type == "number"
+			if valueField.type == "number" or valueField.type == "currency"
 				operation = "sum"
+			if valueField.type == "lookup" or valueField.type == "master_detail"
+				if valueField?.reference_to
+					relate_object_Fields = Creator.getObject(valueField?.reference_to)?.fields
+					relate_valueField = relate_object_Fields[value.split(".")[1]]
+					if relate_valueField?.type == "number" or relate_valueField?.type == "currency"
+						operation = "sum"	
 			caption = valueField.label
 			unless caption
 				caption = objectName + "_" + valueFieldKey

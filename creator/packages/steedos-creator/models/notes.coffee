@@ -28,16 +28,16 @@ Creator.Objects.notes =
 
 	list_views:
 		default:
-			columns: ["name", "owner", "created"]
+			columns: ["name", "created_by", "created"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		mine:
-			label: "我的备注"
+			label: "我的备忘"
 			filter_scope: "space"
 			filters: [["owner", "=", "{userId}"]]
 		all:
-			label: "所有备注"
+			label: "所有备忘"
 			filter_scope: "space"
 
 	permission_set:

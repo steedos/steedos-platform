@@ -4,7 +4,7 @@ Creator.baseObject =
 			label:"所有者"
 			type: "lookup"
 			reference_to: "users"
-			omit: true
+			hidden: true
 			sortable: true
 			index: true
 			defaultValue: "{{userId}}"
@@ -72,7 +72,7 @@ Creator.baseObject =
 				doc.created = new Date();
 				doc.modified = new Date();
 				if userId
-					doc.owner = userId
+					# doc.owner = userId
 					doc.created_by = userId;
 					doc.modified_by = userId;
 

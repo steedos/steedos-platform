@@ -1,9 +1,10 @@
 Creator.Objects.spaces = 
 	name: "spaces"
-	label: "Spaces"
+	label: "工作区"
 	icon: "groups"
 	fields:
 		name: 
+			label: "名称"
 			type: "text"
 			defaultValue: ""
 			description: ""
@@ -12,11 +13,13 @@ Creator.Objects.spaces =
 			searchable:true
 			index:true
 		owner:
+			label: "所有者"
 			type: "lookup"
 			reference_to: "users"
 			disabled: true
 			omit: false
 		admins: 
+			label: "管理员"
 			type: "lookup"
 			reference_to: "users"
 			multiple: true

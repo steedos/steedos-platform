@@ -11,50 +11,32 @@
     <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
       <li class="slds-grid">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites" aria-pressed="false" title="Toggle Favorites">
-          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#favorite" />
-          </svg>
-          <span class="slds-assistive-text">Toggle Favorite</span>
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="favorite" title="Toggle Favorite"}}
         </button>
         <span class="slds-dropdown-trigger slds-dropdown-trigger_click">
           <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none" title="View Favorites">
-            <svg class="slds-button__icon" aria-hidden="true">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#chevrondown" />
-            </svg>
-            <span class="slds-assistive-text">View Favorites</span>
+            {{> steedos_button_icon class="slds-button__icon" name="chevrondown" title="View Favorites"}}
           </button>
         </span>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small" title="Global Actions">
-          <svg class="slds-button__icon" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#add" />
-          </svg>
-          <span class="slds-assistive-text">Global Actions</span>
+          {{> steedos_button_icon class="slds-button__icon" name="add" title="Global Actions"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Help and Training">
-          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#question" />
-          </svg>
-          <span class="slds-assistive-text">Help and Training</span>
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="question" title="Help and Training"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Setup">
-          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#setup" />
-          </svg>
-          <span class="slds-assistive-text">Setup</span>
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="setup" title="Setup"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Notifications">
-          <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#notification" />
-          </svg>
-          <span class="slds-assistive-text">Notifications</span>
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="notification" title="Notifications"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">

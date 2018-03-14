@@ -8,14 +8,12 @@ Meteor.startup ->
 	Tracker.autorun ->
 		space = Session.get("spaceId")
 		userId = Meteor.userId()
-
-		if space and userId
+		if space and userId and Steedos.subsSpaceBase.ready() 
 
 			Creator.Formular.USER_CONTEXT.userId = Meteor.userId()
 			Creator.Formular.USER_CONTEXT.spaceId = Session.get("spaceId")
 
 			space_user = Creator.getCollection("space_users")?.findOne({space: space, user: userId})
-
 			if space_user
 				Creator.Formular.USER_CONTEXT.user = {
 					_id: userId

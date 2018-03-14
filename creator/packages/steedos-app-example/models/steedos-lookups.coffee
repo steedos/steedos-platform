@@ -52,7 +52,7 @@ if Meteor.isDevelopment
 #				group: "is_name测试区"
 #				is_wide: true
 			object_name:
-				type: "master_detail"
+				type: "lookup"
 				reference_to: "objects"
 				multiple: true
 				optionsFunction: ()->

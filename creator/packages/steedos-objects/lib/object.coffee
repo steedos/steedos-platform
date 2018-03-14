@@ -1,5 +1,7 @@
 
 Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完成后调用， 否则获取到的object不全
+if Meteor.isClient
+	Creator.objects_initialized = new ReactiveVar(false)
 
 Creator.Object = (options)->
 	self = this
@@ -17,6 +19,11 @@ Creator.Object = (options)->
 	self.label = options.label
 	self.icon = options.icon
 	self.description = options.description
+	self.is_view = options.is_view
+	if !_.isBoolean(options.is_enable)  || options.is_enable == true
+		self.is_enable = true
+	else
+		self.is_enable = false
 	self.enable_search = options.enable_search
 	self.enable_files = options.enable_files
 	self.enable_tasks = options.enable_tasks
@@ -105,7 +112,7 @@ Creator.Object = (options)->
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
-	if self.name != "users" and self.name != "cfs.files.filerecord"
+	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view
 		if Meteor.isClient
 			Creator.Collections[self.name].attachSchema(self.schema, {replace: true})
 		else
@@ -151,6 +158,6 @@ if Meteor.isClient
 
 	Meteor.startup ->
 		Tracker.autorun ->
-			if Session.get("steedos-locale")
+			if Session.get("steedos-locale") && Creator.objects_initialized.get()
 				_.each Creator.objectsByName, (object, object_name)->
 					object.i18n()

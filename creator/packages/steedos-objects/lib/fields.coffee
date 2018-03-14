@@ -7,6 +7,9 @@ Creator.getObjectSchema = (obj) ->
 			fs.regEx = field.regEx
 		fs.autoform = {}
 		fs.autoform.multiple = field.multiple
+
+		autoform_type = field.autoform?.type
+
 		if field.type == "text"
 			fs.type = String
 			if field.multiple
@@ -183,6 +186,9 @@ Creator.getObjectSchema = (obj) ->
 
 		if field.hidden
 			fs.autoform.type = "hidden"
+
+		if autoform_type
+			fs.autoform.type = autoform_type
 
 		if field.defaultValue
 			if Meteor.isClient and Creator.Formular.checkFormula(field.defaultValue)

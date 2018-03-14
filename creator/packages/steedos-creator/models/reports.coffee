@@ -1,4 +1,4 @@
-getObjectLookupFieldOptions = (object_name, is_deep)->
+Creator.getObjectLookupFieldOptions = (object_name, is_deep)->
 	_options = []
 	_object = Creator.getObject(object_name)
 	fields = _object?.fields
@@ -27,10 +27,6 @@ Creator.Objects.reports =
 			required: true
 			searchable:true
 			index:true
-		description: 
-			label: "描述"
-			type: "textarea"
-			is_wide: true
 		report_type:
 			label: "报表类型"
 			type: "select"
@@ -59,7 +55,7 @@ Creator.Objects.reports =
 				{label: "与我相关", value: "mine"}
 			]
 		filters: 
-			label: "过虑条件"
+			label: "过滤条件"
 			type: [Object]
 			omit: true
 		"filters.$.field": 
@@ -85,14 +81,14 @@ Creator.Objects.reports =
 			label: "字段值"
 			# type: "text"
 			blackbox: true
-		columns:
-			label: "列"
+		values: 
+			label: "统计"
 			type: "lookup"
 			multiple: true
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return getObjectLookupFieldOptions values.object_name, true
+				return Creator.getObjectLookupFieldOptions values.object_name, true
 		rows: 
 			label: "行"
 			type: "lookup"
@@ -100,16 +96,25 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return getObjectLookupFieldOptions values.object_name, true
-		values: 
-			label: "统计"
-			type: "[text]"
+				return Creator.getObjectLookupFieldOptions values.object_name, true
+		columns:
+			label: "列"
+			type: "lookup"
+			multiple: true
+			depend_on: ["object_name"]
+			defaultIcon: "service_contract"
+			optionsFunction: (values)->
+				return Creator.getObjectLookupFieldOptions values.object_name, true
 		options:
 			omit: true
 			blackbox: true
 		# column_width: 
 		# 	label: "排序"
 		# 	type: "object"
+		description: 
+			label: "描述"
+			type: "textarea"
+			is_wide: true
 		grouping:
 			label: "显示小计"
 			type: "boolean"
@@ -122,13 +127,9 @@ Creator.Objects.reports =
 			label: "显示记录计数"
 			type: "boolean"
 			defaultValue: true
-
 	list_views:
 		default:
 			columns: ["name", "report_type", "object_name"]
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
 		all:
 			label: "所有报表"
 			filter_scope: "space"

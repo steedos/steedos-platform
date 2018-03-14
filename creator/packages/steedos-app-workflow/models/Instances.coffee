@@ -1,7 +1,7 @@
 Creator.Objects.instances = 
 	name: "instances"
 	icon: "task"
-	label: "Instances"
+	label: "申请单"
 	fields:
 		name: 
 			type: "text"

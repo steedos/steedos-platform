@@ -1,11 +1,11 @@
 Creator.Objects.space_users = 
 	name: "space_users"
-	label: "Space Users"
+	label: "人员"
 	icon: "user"
 	enable_search: true
 	fields:
 		name: 
-			label: "Name"
+			label: "名称"
 			type: "text"
 			defaultValue: ""
 			description: ""
@@ -32,7 +32,7 @@ Creator.Objects.space_users =
 			multiple: true
 			defaultValue: []
 		manager:
-			type: "master_detail"
+			type: "lookup"
 			reference_to: "users"
 		sort_no:
 			type: "number"

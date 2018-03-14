@@ -1,6 +1,15 @@
 # http://127.0.0.1:3008/oauth2/?response_type=code&client_id=hP9ZbuFJajynA847n&redirect_uri=http://127.0.0.1:3099/api/steedos_oauth2&scope=email&state=123456
 @OAuth2 = {}
 
+subClients = new SubsManager()
+
+Meteor.startup ->
+	Tracker.autorun (c)->
+		if subClients.ready()
+			client_id = "hP9ZbuFJajynA847n"
+			subClients.subscribe "OAuth2Clients",client_id
+
+
 getUrlParams = ()->
 	decode = (s)->
 		decodeURIComponent s.replace(pl, " ")
@@ -32,13 +41,13 @@ OAuth2.getOAuth2Code = ()->
 				window.location = result?.redirectToUri
 	)
 
-Template.loginAuthorize.helpers Creator.helpers
-
-Template.loginAuthorize.helpers
-	clientName: ()->
-		clientObj = Creator.Collections["OAuth2Clients"].findOne({})
-		if clientObj
-			return clientObj?.clientName
+# Template.loginAuthorize.helpers
+# 	clientName: ()->
+		# subClients.subscribe "OAuth2Clients",client_id
+		# return "静态Demo名"
+		# clientObj = oAuth2Server.collections.client.findOne({})
+		# if clientObj
+		# 	return clientObj?.clientName
 
 Template.loginAuthorize.onRendered ->
 	$("body").removeClass("loading")

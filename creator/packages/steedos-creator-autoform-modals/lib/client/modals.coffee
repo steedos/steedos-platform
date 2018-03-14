@@ -213,12 +213,11 @@ helpers =
 	cmFormId: () ->
 		Session.get('cmFormId') or defaultFormId
 	cmAutoformType: () ->
+		# cmAutoformType会影响传递给method的参数
 		if Session.get 'cmMeteorMethod'
 			if Session.get("cmOperation") == "insert"
 				return 'method'
-			if Session.get('cmIsMultipleUpdate')
-				return 'method'
-			else
+			if Session.get('cmOperation') == "update"
 				return 'method-update'
 		else
 			Session.get 'cmOperation'

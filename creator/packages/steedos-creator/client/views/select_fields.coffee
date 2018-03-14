@@ -12,7 +12,7 @@ Template.select_fields.onCreated ->
             available_fields = _.map available_fields, (field) ->
                 obj = _.pick(schema, field)
                 if _.indexOf(permission_fields, field) > -1
-                    label = obj[field].label || TAPi18n.__(Creator.getObject(object_name).schema.label(field))
+                    label = obj[field].label || TAPi18n.__(Creator.getObject(Session.get("object_name")).schema.label(field))
                     return {label: label, value: field}
             
             available_fields = _.compact available_fields

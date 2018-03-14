@@ -11,7 +11,7 @@ Creator.Objects.tasks =
 			searchable:true
 			index:true
 		assigned_to:
-			label: "被分配人"
+			label: "责任人"
 			type: "lookup"
 			reference_to: "users"
 			multiple: true
@@ -22,10 +22,6 @@ Creator.Objects.tasks =
 		end_date: 
 			label: "到期时间"
 			type: "datetime"
-		#暂时注释掉的，因为信息上报发包要creator
-		# contact:
-		# 	type: "lookup"
-		# 	reference_to: "contacts"
 		related_to:
 			label: "相关项"
 			type: "lookup"
@@ -39,7 +35,6 @@ Creator.Objects.tasks =
 		description: 
 			label: "描述"
 			type: "textarea"
-			required: true
 			is_wide: true
 
 	list_views:

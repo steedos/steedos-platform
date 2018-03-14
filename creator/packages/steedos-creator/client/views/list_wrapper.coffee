@@ -6,6 +6,15 @@ Template.creator_list_wrapper.onRendered ->
 			self.$(".btn-filter-list").removeClass("slds-is-selected")
 			self.$(".filter-list-container").addClass("slds-hide")
 
+	self.autorun ->
+		if Session.get("list_view_id")
+			list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+			if list_view_obj
+				if list_view_obj.filter_scope
+					Session.set("filter_scope", list_view_obj.filter_scope)
+				if list_view_obj.filters
+					Session.set("filter_items", list_view_obj.filters)
+
 Template.creator_list_wrapper.helpers Creator.helpers
 
 Template.creator_list_wrapper.helpers

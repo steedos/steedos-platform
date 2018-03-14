@@ -11,9 +11,8 @@ Template.creator_app_list_modal.helpers
 	app_objects: ()->
 		objects = []
 		_.each Creator.objectsByName, (v, k)->
-			if v.permissions.get().allowRead
+			if v.permissions.get().allowRead && v.is_enable
 				objects.push v
-		console.log "objects", objects
 		return objects
 
 

@@ -4,13 +4,16 @@ Creator.Objects.permission_objects =
 	icon: "user"
 	fields: 
 		name:
+			label: "名称",
 			type: "text",
 			searchable:true
 			index:true
 		permission_set_id: 
+			label: "权限组",
 			type: "master_detail"
 			reference_to: "permission_set"
 		object_name:
+			label: "对象",
 			type: "lookup"
 			optionsFunction: ()->
 				_options = []
@@ -18,18 +21,24 @@ Creator.Objects.permission_objects =
 					_options.push {label: o.label, value: k, icon: o.icon}
 				return _options
 
-		allowCreate: 
-			type: "boolean"
-		allowDelete: 
-			type: "boolean"
-		allowEdit: 
-			type: "boolean"
 		allowRead: 
 			type: "boolean"
-		modifyAllRecords: 
+			label: "查看我的记录",
+		allowCreate: 
+			label: "允许创建",
+			type: "boolean"
+		allowEdit: 
+			label: "允许编辑",
+			type: "boolean"
+		allowDelete: 
+			label: "允许删除",
 			type: "boolean"
 		viewAllRecords: 
 			type: "boolean"
+			label: "查看所有记录",
+		modifyAllRecords: 
+			type: "boolean"
+			label: "修改所有记录",
 		list_views:
 			type: "lookup"
 			multiple: true

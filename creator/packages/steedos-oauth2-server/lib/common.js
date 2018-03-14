@@ -1,3 +1,16 @@
+db.OAuth2Clients = new Meteor.Collection('OAuth2Clients');
+db.OAuth2Clients.allow({
+    insert: function(userId, doc) {
+        return true;
+    },
+    update: function(userId, doc, fieldNames, modifier) {
+        return true;
+    },
+    remove: function(userId, doc) {
+        return true;
+    }
+});
+
 refreshTokensCollection = new Meteor.Collection('OAuth2RefreshTokens');
 refreshTokensCollection.allow({
     insert: function(userId, doc) {
@@ -42,6 +55,7 @@ oAuth2Server = {
     },
     collections: {
         refreshToken: refreshTokensCollection,
-        authCode: authCodesCollection
+        authCode: authCodesCollection,
+        clients: db.OAuth2Clients
     }
 };

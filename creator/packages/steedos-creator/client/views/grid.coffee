@@ -47,7 +47,6 @@ _itemClick = (e, curObjectName)->
 				Session.set("action_collection_name", collectionName)
 				Session.set("action_save_and_insert", true)
 				Creator.executeAction objectName, action, recordId
-				console.log("actionSheet.onItemClick", value)
 
 	unless actions.length
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
@@ -238,10 +237,7 @@ Template.creator_grid.onRendered ->
 								<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
 									<span class="slds-icon_container slds-icon-utility-down">
 										<span class="lightningPrimitiveIcon">
-											<svg class="slds-icon slds-icon-text-default slds-icon--xx-small" focusable="false" aria-hidden="true" data-key="down">
-												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down">
-												</use>
-											</svg>
+											#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
 										</span>
 										<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
 									</span>
@@ -264,6 +260,7 @@ Template.creator_grid.onRendered ->
 				pageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
 			else
 				pageSize = 10
+				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
 			dxOptions = 
 				paging: 
 					pageSize: pageSize
@@ -325,8 +322,11 @@ Template.creator_grid.onRendered ->
 					self.data.total.set dxDataGridInstance.totalCount()
 					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
+					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
 			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
-
+			dxDataGridInstance.pageSize(pageSize)
+			window.dxDataGridInstance = dxDataGridInstance
+			
 Template.creator_grid.helpers Creator.helpers
 
 Template.creator_grid.events

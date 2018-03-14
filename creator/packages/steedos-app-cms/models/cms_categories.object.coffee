@@ -1,7 +1,7 @@
 Creator.Objects.cms_categories =
 	name: "cms_categories"
 	icon: "cms"
-	label: "categories"
+	label: "文章分类"
 	fields:
 		name: 
 			type: "text"

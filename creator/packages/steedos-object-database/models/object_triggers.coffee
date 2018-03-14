@@ -27,11 +27,9 @@ isRepeatedName = (doc, name)->
 
 Creator.Objects.object_triggers =
 	name: "object_triggers"
-	label: "Triggers"
 	icon: "asset_relationship"
 	fields:
 		name:
-			label: "Name"
 			type: "text"
 			searchable: true
 			index: true
@@ -42,13 +40,11 @@ Creator.Objects.object_triggers =
 			type: "master_detail"
 			reference_to: "objects"
 		on:
-			label: "运行于"
 			type: "lookup"
 			required: true
 			optionsFunction: ()->
 				return [{label: "客户端", value: "client", icon: "address"}, {label: "服务端", value: "server", icon: "address"}]
 		when:
-			label: "运行时"
 			type: "lookup"
 			required: true
 			optionsFunction: ()->
@@ -63,7 +59,6 @@ Creator.Objects.object_triggers =
 		is_enable:
 			type: "boolean"
 		todo:
-			label: "执行的脚本"
 			type: "textarea"
 			required: true
 			is_wide:true

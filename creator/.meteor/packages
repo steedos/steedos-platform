@@ -83,6 +83,8 @@ steedos:cfs-s3
 steedos:cfs-standard-packages
 steedos:cfs-ui
 
+steedos:oauth2-server
+
 smoral:sweetalert@1.1.1
 
 peppelg:bootstrap-3-modal@1.0.4
@@ -98,7 +100,7 @@ steedos:app-informations
 steedos:app-admin
 steedos:app-cms
 steedos:app-workflow
-steedos:app-example
+#steedos:app-example
 steedos:creator
 natestrauser:select2
 meteorhacks:unblock@1.1.0
@@ -113,7 +115,5 @@ steedos:odata
 yogiben:autoform-tags
 
 steedos:logger@0.0.2
-
-steedos:oauth2-server@0.0.1
 
 steedos:object-database

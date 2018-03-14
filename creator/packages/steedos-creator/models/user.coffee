@@ -1,11 +1,11 @@
 Creator.Objects.users = 
 	name: "users"
-	label: "Users"
+	label: "用户"
 	icon: "user"
 	enable_api: true
 	fields:
 		name: 
-			label: "Name"
+			label: "名称"
 			type: "text"
 			required: true
 			searchable:true

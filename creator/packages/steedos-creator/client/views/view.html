@@ -49,9 +49,7 @@
 								{{#if moreActions}}
 									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
 										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-											<svg class="slds-button__icon" aria-hidden="true">
-												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#down" />
-											</svg>
+											{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 											<span class="slds-assistive-text">Show More</span>
 										</button>
 										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">

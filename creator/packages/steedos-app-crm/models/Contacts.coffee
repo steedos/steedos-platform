@@ -66,17 +66,16 @@ Creator.Objects.contacts =
 
 	permission_set:
 		user:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
-			allowRead: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
-			# actions:["standard_edit"] 
+			viewAllRecords: true
 		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
-			allowRead: false
-			modifyAllRecords: false
-			viewAllRecords: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true

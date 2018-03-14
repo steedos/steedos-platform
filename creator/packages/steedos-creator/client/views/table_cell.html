@@ -5,19 +5,15 @@
 				{{#if href}}
 					<a href="{{href}}" title="{{value}}" class = "slds-truncate fulltex list-item-link-{{id}}">{{value}}</a>
 				{{else}}
-					<span title="{{value}}" class="slds-truncate fulltex">{{{value}}}</span>
+					<span title="{{value}}" class="fulltex">{{{value}}}</span>
 				{{/if}}
 			{{/each}}
 		</div>
 		<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">
 			{{#if editable}}
-				<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" aria-hidden="true">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#edit"></use>
-				</svg>
+				{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
 			{{else}}
-				<svg class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" aria-hidden="true">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#lock"></use>
-				</svg>
+				{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
 			{{/if}}
 			<span class="slds-assistive-text">Edit</span>
 		</button>

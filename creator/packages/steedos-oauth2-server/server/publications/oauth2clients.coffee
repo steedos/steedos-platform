@@ -1,3 +1,3 @@
 Meteor.publish "OAuth2Clients", (clientId)->
-	collection = Creator.Collections["OAuth2Clients"]
+	collection = oAuth2Server.collections.client
 	return collection.find({'clientId': clientId}, {fields:{clientName:1}})
