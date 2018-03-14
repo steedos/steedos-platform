@@ -31,8 +31,6 @@ Creator.Object = (options)->
 	self.enable_audit = options.enable_audit
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
 
-	baseFields = _.keys(Creator.baseObject.fields)
-
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	
 
@@ -90,13 +88,14 @@ Creator.Object = (options)->
 		if self.related_objects
 			self.permission_set[item_name].related_objects = _.pluck(self.related_objects,"object_name")
 		if self.fields
-			self.permission_set[item_name].fields = _.keys(self.fields)
+			self.permission_set[item_name].readable_fields = _.keys(self.fields)
+			self.permission_set[item_name].editable_fields = _.keys(self.fields)
 
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
-		self.permission_set[item_name].fields = _.difference self.permission_set[item_name].fields, baseFields
+		# self.permission_set[item_name].fields = _.difference self.permission_set[item_name].fields, baseFields
 		
 
 	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)

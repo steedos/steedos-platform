@@ -40,9 +40,9 @@ if Meteor.isServer
 				opsetAdmin.viewAllRecords = posAdmin.viewAllRecords
 				opsetAdmin.list_views = posAdmin.list_views
 				opsetAdmin.actions = posAdmin.actions
-				opsetAdmin.fields = posAdmin.fields
+				opsetAdmin.readable_fields = posAdmin.readable_fields
+				opsetAdmin.editable_fields = posAdmin.editable_fields
 				opsetAdmin.related_objects = posAdmin.related_objects
-				opsetAdmin.readonly_fields = posAdmin.readonly_fields
 		if psetsUser
 			posUser = Creator.getCollection("permission_objects").findOne({object_name: object_name, permission_set_id: psetsUser._id})
 			if posUser
@@ -54,9 +54,9 @@ if Meteor.isServer
 				opsetUser.viewAllRecords = posUser.viewAllRecords
 				opsetUser.list_views = posUser.list_views
 				opsetUser.actions = posUser.actions
-				opsetUser.fields = posUser.fields
+				opsetUser.readable_fields = posUser.readable_fields
+				opsetUser.editable_fields = posUser.editable_fields
 				opsetUser.related_objects = posUser.related_objects
-				opsetUser.readonly_fields = posUser.readonly_fields
 
 		if !userId
 			permissions = opsetAdmin
@@ -94,13 +94,14 @@ if Meteor.isServer
 
 				permissions.list_views = unionPlus(permissions.list_views, po.list_views)
 				permissions.actions = unionPlus(permissions.actions, po.actions)
-				permissions.fields = unionPlus(permissions.fields,po.fields)
+				permissions.readable_fields = unionPlus(permissions.readable_fields,po.readable_fields)
+				permissions.editable_fields = unionPlus(permissions.editable_fields,po.editable_fields)
 				permissions.related_objects = unionPlus(permissions.related_objects, po.related_objects)
-				if po.readonly_fields?.length
-					if permissions.readonly_fields
-						permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
-					else
-						permissions.readonly_fields = po.readonly_fields
+				# if po.readonly_fields?.length
+				# 	if permissions.readonly_fields
+				# 		permissions.readonly_fields = _.intersection(permissions.readonly_fields, po.readonly_fields)
+				# 	else
+				# 		permissions.readonly_fields = po.readonly_fields
 
 		if object.is_view
 			permissions.allowCreate = false

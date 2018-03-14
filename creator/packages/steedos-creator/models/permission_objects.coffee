@@ -63,7 +63,7 @@ Creator.Objects.permission_objects =
 				_.forEach actions, (f, k)->
 					_options.push {label: f.label || k, value: k}
 				return _options
-		fields:
+		readable_fields:
 			type: "lookup"
 			multiple: true
 			depend_on: ["object_name"]
@@ -75,7 +75,7 @@ Creator.Objects.permission_objects =
 				_.forEach fields, (f, k)->
 					_options.push {label: f.label || k, value: k, icon: icon}
 				return _options
-		readonly_fields:
+		editable_fields:
 			type: "lookup"
 			multiple: true
 			depend_on: ["object_name"]

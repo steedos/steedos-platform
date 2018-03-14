@@ -295,7 +295,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 			userId = Meteor.userId()
 
 	firstLevelKeys = Creator.getSchema(object_name)._firstLevelSchemaKeys
-	permission_fields =  Creator.getPermissions(object_name, spaceId, userId).fields
+	permission_fields =  Creator.getPermissions(object_name, spaceId, userId).readable_fields
 
 	return permission_fields
 
