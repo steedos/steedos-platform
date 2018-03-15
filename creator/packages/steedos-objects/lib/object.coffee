@@ -92,6 +92,8 @@ Creator.Object = (options)->
 				defaultEditableFields.push field_name
 		
 	_.each self.permission_set, (item, item_name)->
+		if item_name == "none"
+			return
 		if self.list_views
 			self.permission_set[item_name].list_views = defaultListViews
 		if self.actions
