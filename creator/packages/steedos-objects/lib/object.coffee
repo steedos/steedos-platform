@@ -47,15 +47,7 @@ Creator.Object = (options)->
 
 	self.list_views = {} 
 	_.each options.list_views, (item, item_name)->
-		oitem = _.clone(item)
-		oitem.name = item_name
-		if !oitem.columns
-			if self.list_views.default?.columns
-				oitem.columns = self.list_views.default.columns
-		if !oitem.columns
-			oitem.columns = ["name"]
-		if !oitem.filter_scope
-			oitem.filter_scope = "mine"
+		oitem = Creator.convertListView(self.list_views.default?.columns, item, item_name)
 		self.list_views[item_name] = oitem
 
 	self.triggers = _.clone(Creator.baseObject.triggers)

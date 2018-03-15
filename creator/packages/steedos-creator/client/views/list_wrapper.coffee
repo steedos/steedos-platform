@@ -32,10 +32,11 @@ Template.creator_list_wrapper.helpers
 		return {total: Template.instance().recordsTotal}
 
 	list_views: ()->
+		Session.get("change_list_views")
 		return Creator.getListViews()
 
 	custom_view: ()->
-		return Creator.Collections.object_listviews.find({object_name: Session.get("object_name")})
+		return Creator.Collections.object_listviews.find({object_name: Session.get("object_name"), is_default: {$ne: true}})
 
 	list_view: ()->
 		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
@@ -43,8 +44,11 @@ Template.creator_list_wrapper.helpers
 		if !list_view
 			return
 
-		if list_view?.name != Session.get("list_view_id") and !list_view?._id
-			Session.set("list_view_id", list_view.name)
+		if list_view?.name != Session.get("list_view_id")
+			if list_view?._id
+				Session.set("list_view_id", list_view._id)
+			else
+				Session.set("list_view_id", list_view.name)
 		return list_view
 	
 	list_view_label: (item)->
@@ -105,7 +109,11 @@ Template.creator_list_wrapper.events
 
 	'click .list-view-switch': (event)->
 		Session.set("list_view_visible", false)
-		list_view_id = String(this.name)
+
+		if this._id
+			list_view_id = String(this._id)
+		else
+			list_view_id = String(this.name)
 		## 强制重新加载Render Tabular，包含columns
 		Tracker.afterFlush ()->
 			list_view = Creator.getListView(Session.get("object_name"), list_view_id)

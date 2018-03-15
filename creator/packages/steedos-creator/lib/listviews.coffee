@@ -214,6 +214,25 @@ Creator.initListViews = (object_name)->
 
 
 
+Creator.convertListView = (default_columens, list_view, list_view_name)->
+	oitem = _.clone(list_view)
+	if !_.has(oitem, "name")
+		oitem.name = list_view_name
+	if !oitem.columns
+		if default_columens
+			oitem.columns = default_columens
+	if !oitem.columns
+		oitem.columns = ["name"]
+	if !oitem.filter_scope
+		oitem.filter_scope = "mine"
+
+	if !_.has(oitem, "_id")
+		oitem._id = list_view_name
+	else
+		oitem.label = list_view.name
+
+	return oitem
+
 
 if Meteor.isClient
 	Creator.getRelatedList = (object_name)->

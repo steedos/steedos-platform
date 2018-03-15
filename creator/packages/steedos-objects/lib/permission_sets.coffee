@@ -28,6 +28,17 @@ if Meteor.isServer
 		opsetAdmin = _.clone(object.permission_set.admin)
 		opsetUser = _.clone(object.permission_set.user)
 
+		sharedListViews = Creator.getCollection('object_listviews').find({space: spaceId, object_name: object_name, shared: true}, {fields:{_id:1}}).fetch()
+		sharedListViews = _.pluck(sharedListViews,"_id")
+		if sharedListViews.length
+			unless opsetAdmin.list_views
+				opsetAdmin.list_views = []
+			opsetAdmin.list_views = _.union opsetAdmin.list_views, sharedListViews
+			unless opsetUser.list_views
+				opsetUser.list_views = []
+			opsetUser.list_views = _.union opsetUser.list_views, sharedListViews
+
+
 		# 数据库中如果配置了默认的admin/user权限集设置，应该覆盖代码中admin/user的权限集设置
 		if psetsAdmin
 			posAdmin = Creator.getCollection("permission_objects").findOne({object_name: object_name, permission_set_id: psetsAdmin._id})

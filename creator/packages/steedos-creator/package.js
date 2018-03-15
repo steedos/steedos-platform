@@ -104,6 +104,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/actions.coffee');
 	api.addFiles('lib/listviews.coffee');
 	api.addFiles('lib/apps.coffee');
+	api.addFiles('lib/user_object_view.coffee', 'server');
 	// api.addFiles('lib/eval.js');
 	// api.addFiles('lib/formula_engine.coffee');
 

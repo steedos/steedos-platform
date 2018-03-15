@@ -93,7 +93,8 @@ Creator.Objects.objects =
 			when: "after.insert"
 			todo: (userId, doc)->
 				#新增object时，默认新建一个name字段
-				Creator.getCollection("object_fields").insert({object: doc._id, name: "name", space: doc.space, type: "text", required: true, index: true})
+				Creator.getCollection("object_fields").insert({object: doc._id, owner: userId, name: "name", space: doc.space, type: "text", required: true, index: true})
+				Creator.getCollection("object_listviews").insert({name: "all", space: doc.space, owner: userId, object_name: doc.name, shared: true, filter_scope: "space", columns: ["name"], is_default: true})
 
 		"before.remove.server.objects":
 			on: "server"
@@ -118,6 +119,8 @@ Creator.Objects.objects =
 				Creator.getCollection("object_triggers").direct.remove({object: doc._id})
 
 				Creator.getCollection("permission_objects").direct.remove({object_name: doc.name})
+
+				Creator.getCollection("object_listviews").direct.remove({space: doc.space, object_name: doc.name, name: "all", is_default: true, owner: userId, shared: true, filter_scope: "space"})
 
 				#drop collection
 				console.log "drop collection", doc.name

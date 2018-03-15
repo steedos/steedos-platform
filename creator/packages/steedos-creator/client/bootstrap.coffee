@@ -13,8 +13,10 @@ Creator.bootstrap = (callback)->
 				Steedos.setSpaceId(result.space._id)
 
 			Creator.Objects = result.objects
+			object_listviews = result.object_listviews
 
 			_.each Creator.Objects, (object, object_name)->
+				_.extend object.list_views, object_listviews[object_name]
 				Creator.loadObjects object, object_name
 
 			_.each result.assigned_apps, (app_name)->

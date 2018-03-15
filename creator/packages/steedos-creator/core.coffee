@@ -280,7 +280,7 @@ Creator.getListViews = (object_name, spaceId, userId)->
 	_.each object.list_views, (item, item_name)->
 		if item_name != "default"
 			if permission_list_views
-				if _.indexOf(permission_list_views, item_name) > -1
+				if _.indexOf(permission_list_views, item_name) > -1 || item.owner == userId
 					list_views.push item
 	
 	return list_views

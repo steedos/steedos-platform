@@ -13,7 +13,8 @@ if Meteor.isServer
 
 	SteedosOData.getODataContextPath = (spaceId, object_name)->
 		return SteedosOData.getMetaDataPath(spaceId) + "##{object_name}"
-
+	SteedosOData.getODataNextLinkPath = (spaceId,object_name)->
+		return SteedosOData.getRootPath(spaceId) + "/#{object_name}"
 
 
 	@SteedosOdataAPI = new OdataRestivus
