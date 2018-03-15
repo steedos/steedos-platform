@@ -107,7 +107,24 @@ Creator.Object = (options)->
 			self.permission_set[item_name] = {}
 		self.permission_set[item_name] = _.extend(_.clone(self.permission_set[item_name]), item)
 
-	self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
+	# 前端根据permissions改写field相关属性，后端只要走默认属性就行，不需要改写
+	if Meteor.isClient
+		permissions = options.permissions
+		self.permissions = new ReactiveVar(permissions)
+		_.each self.fields, (field, field_name)->
+			if field and !field.omit
+				if _.indexOf(permissions.readable_fields, field_name) > -1
+					field.hidden = false
+					if _.indexOf(permissions.editable_fields, field_name) < 0
+						field.readonly = true
+						field.disabled = true
+					else
+						field.readonly = false
+						field.disabled = false
+				else
+					field.hidden = true
+	else
+		self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 
 	if db[self.name]
 		Creator.Collections[self.name] = db[self.name]
