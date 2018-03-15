@@ -39,7 +39,7 @@ Creator.Objects.object_listviews =
 				return _options
 		shared:
 			label: "共享视图到工作区"
-			type: Boolean
+			type: "boolean"
 			hidden: true
 		filters:
 			type: "[Object]"
@@ -95,3 +95,21 @@ Creator.Objects.object_listviews =
 			columns: ["name", "shared", "modified"]
 		all:
 			filter_scope: "space"
+
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+			readable_fields: ["name", "filter_scope", "columns", "shared"]
+			editable_fields: ["name", "filter_scope", "columns", "shared"]
