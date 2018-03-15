@@ -1,6 +1,6 @@
 Creator.Objects.accounts = 
 	name: "accounts"
-	label: "客户"
+	label: "单位"
 	icon: "account"
 	enable_files: true
 	enable_search: true
@@ -9,7 +9,7 @@ Creator.Objects.accounts =
 	enable_api: true
 	fields:
 		owner:
-			label: "客户所有人"
+			label: "所有人"
 			omit: false
 			disabled: true
 		priority:
@@ -22,7 +22,7 @@ Creator.Objects.accounts =
 				{label: "Cold", value: "low"}
 			]
 		name: 
-			label: "客户名"
+			label: "名称"
 			type: "text"
 			defaultValue: ""
 			description: ""

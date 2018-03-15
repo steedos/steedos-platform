@@ -24,12 +24,12 @@ Creator.Objects.contracts =
 		owner:
 			label: "责任人"
 			omit: false
-		customer:
-			label: "客户"
+		account:
+			label: "对方单位"
 			type: "master_detail"
 			reference_to: "accounts"
 		customer_contact:
-			label: "客户联系人"
+			label: "联系人"
 			type: "master_detail"
 			reference_to: "contacts"
 		start_date:
@@ -46,7 +46,7 @@ Creator.Objects.contracts =
 
 	list_views:
 		default:
-			columns: ["name", "amount", "signed_date", "customer", "owner"]
+			columns: ["name", "amount", "signed_date", "account", "owner"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
