@@ -12,35 +12,24 @@
             </div>
         </header>
         <div class="mobile-template-content">
-            <div class="weui-panel">
-                <div class="weui-panel__bd">
-                    <div class="weui-media-box weui-media-box_small-appmsg">
-                        <div class="weui-cells">
-                            {{#each list_views}}
-                            <a href="{{getListViewUrl name}}" class="weui-cell weui-cell_access weui-cell-profile">
-                                <div class="weui-cell__hd">
-                                    {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="contact"}}
-                                </div>
-                                <div class="weui-cell__bd weui-cell_primary">
-                                    <p>{{this.label}}</p>
-                                </div>
-                                <span class="weui-cell__ft"></span>
-                            </a>
-                            {{/each}}
-                            {{#each custom_list_views}}
-                            <a href="{{getListViewUrl _id}}" class="weui-cell weui-cell_access weui-cell-profile">
-                                <div class="weui-cell__hd">
-                                    {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="contact"}}
-                                </div>
-                                <div class="weui-cell__bd weui-cell_primary">
-                                    <p>{{this.name}}</p>
-                                </div>
-                                <span class="weui-cell__ft"></span>
-                            </a>
-                            {{/each}}
-                        </div>
-                    </div>
+            <div class="list-title-container">
+                <div class="bLeft">
+                    {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object_icon}}
+                </div> 
+                <div class="bBody">
+                    <h2 class="list-name truncate">
+                        <span class="title">
+                            {{list_view_label}}
+                        </span>
+                        <span class="slds-icon_container slds-icon-utility-switch slds-button__icon">
+                            {{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
+                        </span>
+                    </h2>
+                    <div id="action-sheet"></div>
                 </div>
+            </div>
+            <div class="mobile-template-content" style="top: 52px">
+                <div id="gridContainer" style="overflow: hidden"></div>
             </div>
         </div>
     </div>

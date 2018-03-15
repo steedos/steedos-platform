@@ -24,6 +24,7 @@
 	"creator_list_remove_all_filters": "Remove All",
 	"creator_list_matching_all_filters": "Matching all these filters",
 	"creator_list_view_controls": "LIST VIEW CONTROLS",
+	"reset_column_width": "Reset column width",
 
 	"creator_filter_option_field": "field",
 	"creator_filter_option_operation": "operation",

@@ -49,7 +49,10 @@ Meteor.methods
         userId = this.userId
         setting = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews", owner: userId})
         if setting
-            Creator.Collections.settings.update({_id: setting._id}, {$set: {"settings.#{list_view_id}.sort": sort, "settings.#{list_view_id}.column_width": column_width}})
+            if sort
+                Creator.Collections.settings.update({_id: setting._id}, {$set: {"settings.#{list_view_id}.sort": sort, "settings.#{list_view_id}.column_width": column_width}})
+            else
+                Creator.Collections.settings.update({_id: setting._id}, {$set: {"settings.#{list_view_id}.column_width": column_width}})
         else
             doc =
                 type: "user"
