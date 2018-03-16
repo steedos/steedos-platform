@@ -13,3 +13,6 @@ Template.creatorHeader.helpers
 			return Meteor.user().displayName()
 		else
 			return " "
+
+	signOutUrl: ()->
+		return Steedos.absoluteUrl("/steedos/logout")
