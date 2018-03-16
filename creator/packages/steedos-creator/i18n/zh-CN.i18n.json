@@ -25,6 +25,7 @@
 	"creator_list_matching_all_filters": "匹配所有筛选器",
 	"creator_list_view_controls": "列表视图控制",
 	"reset_column_width": "重置列宽",
+	"creator_list_edit": "编辑视图",
 
 	"creator_filter_option_field": "字段",
 	"creator_filter_option_operation": "运算符",

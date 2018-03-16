@@ -17,7 +17,7 @@ Creator.Objects.contacts =
 			searchable:true
 			index:true
 		account: 
-			label: "客户"
+			label: "单位"
 			type: "master_detail"
 			reference_to: "accounts"
 		title:

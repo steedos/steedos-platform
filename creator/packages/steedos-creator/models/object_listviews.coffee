@@ -8,7 +8,7 @@ Creator.Objects.object_listviews =
 			type: "text"
 			searchable:true
 			index:true
-			# required: true
+			required: true
 		object_name: 
 			label: "对象名称"
 			type: "text"
@@ -54,6 +54,11 @@ Creator.Objects.object_listviews =
 		filter_logic:
 			type: String
 			omit: true
+
+		is_default:
+			type: "boolean"
+			omit: true
+			defaultValue: false
 	
 	triggers:
 		"before.insert.cilent.object_listviews": 

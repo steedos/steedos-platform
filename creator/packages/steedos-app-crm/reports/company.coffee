@@ -7,7 +7,7 @@ Creator.Reports.company_matrix =
 	columns: ["created"]
 	rows: ["priority.label"]
 	values: [{
-		label: '客户数量'
+		label: '单位数量'
 		field: "name"
 		operation: "count"
 	}]

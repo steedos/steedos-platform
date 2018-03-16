@@ -82,13 +82,13 @@
 												<span>{{_ "creator_list_new_list_view"}}</span>
 											</a>
 										</li>
-										<li class="slds-dropdown__item reset-column-width" role="presentation">
-											<a href="javascript:void(0);" title="reset column width" class="" role="option" tabindex="-1">
-												<span>{{_ "reset_column_width"}}</span>
-											</a>
-										</li>
 										{{#if is_custom_list_view}}
 											{{#if is_view_owner}}
+												<li class="slds-dropdown__item edit-list-view" role="presentation">
+													<a href="javascript:void(0);" title="edit list view" class="" role="option" tabindex="-1">
+														<span>{{_ "creator_list_edit"}}</span>
+													</a>
+												</li>
 												<li class="slds-dropdown__item select-fields-to-display" role="presentation">
 													<a href="javascript:void(0);" title="select fields to display" class="" role="option" tabindex="-1">
 														<span>{{_ "creator_list_select_fields"}}</span>
@@ -101,6 +101,11 @@
 												</li>
 											{{/if}}
 										{{/if}}
+										<li class="slds-dropdown__item reset-column-width" role="presentation">
+											<a href="javascript:void(0);" title="reset column width" class="" role="option" tabindex="-1">
+												<span>{{_ "reset_column_width"}}</span>
+											</a>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -167,5 +172,6 @@
 		</div>
 	</div>
 	{{#CreatorAfModal formId="addListView" class="btn btn-primary btn-add-list-view hidden" collection="Creator.Collections.object_listviews" operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="List View"}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="editListView" class="btn btn-primary btn-edit-list-view hidden" collection="Creator.Collections.object_listviews" doc=current_list_view operation="update" fields="name,shared" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent collectionName="List View"}} {{_ "Create"}} {{/CreatorAfModal}}	
 	{{#CreatorAfModal class="btn btn-primary btn-delete-list-view hidden" collection="Creator.Collections.object_listviews" operation="remove" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="List View"}} {{_ "Delete"}} {{/CreatorAfModal}}
 </template>

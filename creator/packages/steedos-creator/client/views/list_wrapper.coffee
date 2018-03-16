@@ -100,6 +100,11 @@ Template.creator_list_wrapper.helpers
 	
 	list_view_visible: ()->
 		return Session.get("list_view_visible")
+	
+	current_list_view: ()->
+		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+		console.log "current_list_view", list_view_obj
+		return list_view_obj?._id
 
 Template.creator_list_wrapper.events
 
@@ -160,6 +165,9 @@ Template.creator_list_wrapper.events
 				console.log e
 			else
 				Session.set "list_view_visible", true
+
+	'click .edit-list-view': (event, template)->
+		$(".btn-edit-list-view").click()
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")
