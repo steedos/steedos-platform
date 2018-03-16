@@ -27,10 +27,32 @@ body {
 		box-shadow: none;
 	}
 
+	.slds-table {
+		background: transparent;
+	}
+
 	.dx-datagrid {
 		background: transparent;
+		.dx-datagrid-headers {
+			border-bottom: 0;
+		}
 		.dx-row {
 			background-color: white;
+		}
+		.dx-datagrid-pager.dx-widget {
+			padding: 3px;
+    		border-top: 1px solid #ddd;
+			.dx-page-sizes .dx-page-size {
+				padding: 3px 8px 3px 8px;
+			}
+			.dx-pages .dx-page {
+				padding: 3px 8px 3px 8px;			
+			}
+			.dx-pages .dx-prev-button, .dx-pages .dx-next-button {
+				padding: 3px 8px 3px 8px;	
+				line-height: 25px;
+			}
+
 		}
 	}
 

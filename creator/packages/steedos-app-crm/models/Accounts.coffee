@@ -46,14 +46,13 @@ Creator.Objects.accounts =
 
 	list_views:
 		default:
-			columns: ["name", "description", "modified"]
+			columns: ["name", "priority", "owner", "modified"]
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
 			label: "所有单位"
 			filter_scope: "space"
-			columns: ["name", "description", "modified", "owner"]
 		mine:
 			label: "我的单位"
 			filter_scope: "mine"
