@@ -21,7 +21,9 @@ Package.onUse(function(api) {
 	api.addAssets('client/icons/doctype-sprite/symbols.svg', 'client');
 	api.addAssets('client/icons/standard-sprite/symbols.svg', 'client');
 	api.addAssets('client/icons/utility-sprite/symbols.svg', 'client');
+
 	api.addAssets('client/images/themes/oneSalesforce/banner-brand-default.png', 'client');
+	api.addAssets('client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png', 'client')
 });
 
 Package.onTest(function(api) {

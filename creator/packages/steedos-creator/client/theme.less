@@ -6,7 +6,7 @@ body {
 	}
 }
 
-.steedos.fixed.skin-blue-light {
+.steedos.fixed {
 	.content-wrapper {
 		background: transparent;
 		top: 90px;
@@ -21,13 +21,20 @@ body {
 	    background-repeat: no-repeat;
 	    background-position: left center;
 	}
-	
+
 	.slds-page-header {
 		border-radius: 0.25rem 0.25rem 0 0;
 		box-shadow: none;
 	}
 
 	
+}
+
+@media (max-width: 767px) {
+	.steedos.fixed .content-wrapper {
+	    padding-top: 0px;
+	    top: 0px;
+	}
 }
 
 .steedos.fixed.skin-blue-light-disabled {
