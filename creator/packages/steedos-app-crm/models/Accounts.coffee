@@ -17,9 +17,9 @@ Creator.Objects.accounts =
 			type: "select"
 			sortable: true
 			options: [
-				{label: "Hot", value: "high"},
-				{label: "Warm", value: "normal"},
-				{label: "Cold", value: "low"}
+				{label: "高", value: "high"},
+				{label: "中", value: "normal"},
+				{label: "低", value: "low"}
 			]
 		name: 
 			label: "名称"

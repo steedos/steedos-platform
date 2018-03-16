@@ -1,6 +1,6 @@
 <template name="creatorNavigation">
 
-	<div class="slds-context-bar">
+	<div class="slds-context-bar slds-context-bar_tabs">
 	<div class="slds-context-bar__primary">
 		<div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
 			<div class="slds-context-bar__icon-action">
@@ -43,7 +43,6 @@
 	</nav>
 	<div class="slds-context-bar__tertiary slds-col--bump-left navRight" data-aura-rendered-by="197:19;a">
 
-		{{> headerSearch}}
 
 		<ul class="slds-grid">
 			{{#if isNode}}
@@ -53,9 +52,9 @@
 					</a>
 				</li>
 			{{/if}}
+			<!-- 
 			<li class="slds-grid slds-context-bar__dropdown-trigger">
 				<a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item" data-toggle="dropdown">
-					<!-- <img src="{{avatarURL avatar 29 25 14}}" class="user-image"> -->
 					<span class="slds-truncate" title="Menu Item">{{displayName}}</span>
 				</a>
 				<div class="slds-context-bar__icon-action slds-p-left_none" data-toggle="dropdown">
@@ -72,7 +71,7 @@
 						</li>
 					</ul>
 				</div>
-			</li>
+			</li> -->
 		</ul>
 	</div>
 </div>

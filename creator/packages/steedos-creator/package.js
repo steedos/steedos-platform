@@ -159,6 +159,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/header_search.less', 'client');
 	api.addFiles('client/layout/header_search.coffee', 'client');
 	api.addFiles('client/layout/header.html', 'client');
+	api.addFiles('client/layout/header.coffee', 'client');
 	api.addFiles('client/layout/navigation.html', 'client');
 	api.addFiles('client/layout/navigation.coffee', 'client');
 	api.addFiles('client/layout/sidebar.html', 'client');
@@ -255,4 +256,7 @@ Package.onUse(function(api) {
 
 
 	api.addFiles('client/theme.less', 'client');
+
+	api.addAssets('assets/logo.png', 'client');
+
 });

@@ -4,47 +4,56 @@
   <div class="slds-global-header slds-grid slds-grid_align-spread">
     <div class="slds-global-header__item">
       <div class="slds-global-header__logo">
-        <img src="/packages/steedos_lightning-design-system/client/images/logo-noname.svg" alt="" />
+        <img src="{{logo}}" alt="" />
       </div>
     </div>
     {{> headerSearch}}
     <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
       <li class="slds-grid">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites" aria-pressed="false" title="Toggle Favorites">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="favorite" title="Toggle Favorite"}}
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites slds-is-disabled" aria-pressed="false" title="Toggle Favorites">
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="favorite"}}
         </button>
         <span class="slds-dropdown-trigger slds-dropdown-trigger_click">
-          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none" title="View Favorites">
-            {{> steedos_button_icon class="slds-button__icon" name="chevrondown" title="View Favorites"}}
+          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none slds-is-disabled" title="View Favorites">
+          {{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevrondown"}}
           </button>
         </span>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small" title="Global Actions">
-          {{> steedos_button_icon class="slds-button__icon" name="add" title="Global Actions"}}
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled" title="Global Actions">
+          {{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="add"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Help and Training">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="question" title="Help and Training"}}
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Setup">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="setup" title="Setup"}}
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup" title="Setup"}}
         </button>
       </li>
       <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Notifications">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" name="notification" title="Notifications"}}
+        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-is-disabled" title="Notifications">
+          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="notification" title="Notifications"}}
         </button>
       </li>
-      <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
-        <button class="slds-button" title="person name" aria-haspopup="true">
+      <li class="slds-dropdown-trigger slds-m-left_x-small">
+        <button class="slds-button" title="person name" aria-haspopup="true" data-toggle="dropdown">
           <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
-            <img alt="Person name" src="/packages/steedos_lightning-design-system/client/images/avatar2.jpg" title="User avatar" />
+            <img src="{{avatarURL}}" title="{{displayName}}" />
           </span>
         </button>
+        <div class="slds-dropdown slds-dropdown_right" style="right: 8px">
+          <ul class="slds-dropdown__list" role="menu">
+            <li class="slds-dropdown__item" role="presentation">
+              <a href="{{signOutUrl}}" role="menuitem" tabindex="-1">
+                <span class="slds-truncate">{{_ "Sign out"}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

@@ -2,12 +2,11 @@
 	{{#if subsReady}}
 		{{#unless isloading}}
 		<div class="steedos layout-top-nav skin-blue-light">
-			{{# AdminLTE skin="blue" sidebarMini="true" }} {{> creatorNavigation}}
+			{{> creatorHeader}}
 
 			<div class="content-wrapper">
 				{{> Template.dynamic template=main}}
 			</div>
-			{{/ AdminLTE}}
 		</div>
 		<div class="connection-status">
 			{{> status}}

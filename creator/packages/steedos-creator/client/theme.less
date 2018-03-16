@@ -7,6 +7,33 @@ body {
 }
 
 .steedos.fixed.skin-blue-light {
+	.content-wrapper {
+		background: transparent;
+		top: 90px;
+	}
+	.slds-global-header_container {
+		z-index: 1000;
+	}
+	.slds-global-header__logo {
+	    width: 12.5rem;
+	    height: 2.5rem;
+	    background-size: contain;
+	    background-repeat: no-repeat;
+	    background-position: left center;
+	}
+	
+	.slds-page-header {
+		border-radius: 0.25rem 0.25rem 0 0;
+		box-shadow: none;
+	}
+
+	
+}
+
+.steedos.fixed.skin-blue-light-disabled {
+	.content-wrapper {
+		background: transparent
+	}
 	.slds-context-bar {
 		z-index: 1000;
 	    height: 50px;
@@ -43,17 +70,15 @@ body {
 		text-decoration: none;
 	}
 
+	.slds-icon-waffle [class*="slds-r"] {
+		background-color: white;
+	}
+
+	@keyframes bkAnim {
+	  50% {
+	    background-color: rgba(33, 146, 190, 0.3); }
+	  100% {
+	    background-color: rgba(33, 146, 190, 0.1); } 
+	}
 }
 
-
-.slds-icon-waffle [class*="slds-r"] {
-	background-color: white;
-}
-
-
-@keyframes bkAnim {
-  50% {
-    background-color: rgba(33, 146, 190, 0.3); }
-  100% {
-    background-color: rgba(33, 146, 190, 0.1); } 
-}
