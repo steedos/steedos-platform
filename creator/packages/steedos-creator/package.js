@@ -256,6 +256,7 @@ Package.onUse(function(api) {
 
 
 	api.addFiles('client/theme.less', 'client');
+	api.addFiles('client/i18n.coffee', 'client');
 
 	api.addAssets('assets/logo.png', 'client');
 

@@ -108,7 +108,7 @@
         'dxDataGrid-editingConfirmDeleteMessage': '你确定要删除这条记录？',
         'dxDataGrid-validationCancelChanges': '取消更改',
         'dxDataGrid-groupPanelEmptyText': '拖动列标题至此进行列分组',
-        'dxDataGrid-noDataText': '无数据',
+        'dxDataGrid-noDataText': '没有可显示的项目。',
         'dxDataGrid-searchPanelPlaceholder': '搜索...',
         'dxDataGrid-filterRowShowAllText': '(全部)',
         'dxDataGrid-filterRowResetOperationText': '重置',
