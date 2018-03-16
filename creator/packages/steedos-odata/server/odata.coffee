@@ -77,7 +77,7 @@ Meteor.startup ->
 		_.each entities, (entity, idx)->
 			entity_OdataProperties = {}
 			id = entities[idx]["_id"]
-			entity_OdataProperties['@odata.id'] = SteedosOData.getODataNextLinkPath(space,key)+"/#{id}"
+			entity_OdataProperties['@odata.id'] = SteedosOData.getODataNextLinkPath(space,key)+ '(\'' + "#{id}" + '\')'
 			entity_OdataProperties['@odata.etag'] = "W/\"08D589720BBB3DB1\""
 			entity_OdataProperties['@odata.editLink'] = entity_OdataProperties['@odata.id']
 			_.extend entity_OdataProperties,entity
@@ -159,10 +159,10 @@ Meteor.startup ->
 					body = {}
 					headers = {}
 					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
-#					body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skiptoken="+scannedCount
+				#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
 					body['@odata.count'] = scannedCount
 					entities_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-					body['value'] = entities #entities_OdataProperties
+					body['value'] = entities_OdataProperties
 					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
 					headers['OData-Version'] = SteedosOData.VERSION
 					{body: body, headers: headers}
@@ -271,7 +271,7 @@ Meteor.startup ->
 				obj = Creator.objectsByName[collectionName]
 				field = obj.fields[fieldName]
 
-				if field and field.type is 'lookup' and fieldValue
+				if field  and fieldValue and (field.type is 'lookup' or field.type is 'master_detail')
 					lookupCollection = Creator.Collections[field.reference_to]
 					lookupObj = Creator.objectsByName[field.reference_to]
 					queryOptions = {fields: {}}
