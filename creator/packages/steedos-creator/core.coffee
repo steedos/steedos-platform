@@ -259,6 +259,10 @@ Creator.getActions = (object_name, spaceId, userId)->
 	
 	return actions
 
+///
+	返回当前用户有权限访问的所有list_view，包括分享的，用户自定义非分享的（除非owner变了），以及默认的其他视图
+	注意Creator.getPermissions函数中是不会有用户自定义非分享的视图的，所以Creator.getPermissions函数中拿到的结果不全，并不是当前用户能看到所有视图
+///
 Creator.getListViews = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name
