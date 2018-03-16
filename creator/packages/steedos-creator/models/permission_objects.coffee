@@ -8,13 +8,16 @@ Creator.Objects.permission_objects =
 			type: "text",
 			searchable:true
 			index:true
+			required: true
 		permission_set_id: 
 			label: "权限组",
 			type: "master_detail"
+			required: true
 			reference_to: "permission_set"
 		object_name:
 			label: "对象",
 			type: "lookup"
+			required: true
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.Objects, (o, k)->
