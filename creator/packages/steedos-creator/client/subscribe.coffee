@@ -30,6 +30,17 @@ Meteor.startup ->
 
 			Session.set("change_list_views", Random.id())
 
+			Creator.getCollection("object_listviews").find().observe {
+				removed: (oldDocument) ->
+					# if oldDocument.name == "recent"
+					# 	key = oldDocument.name
+					# else
+					# 	key = oldDocument._id
+					key = oldDocument._id
+					delete Creator.Objects[Session.get("object_name")].list_views[key]
+					delete Creator.getObject(Session.get("object_name")).list_views[key]
+			}
+
 
 Meteor.startup ->
 	Tracker.autorun (c)->

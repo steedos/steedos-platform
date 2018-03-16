@@ -106,6 +106,12 @@ Template.creator_list_wrapper.helpers
 		console.log "current_list_view", list_view_obj
 		return list_view_obj?._id
 
+	delete_on_success: ()->
+		return ->
+			console.log "onsuccess callback.........."
+			list_views = Creator.getListViews()
+			Session.set("list_view_id", list_views[0]._id)
+
 Template.creator_list_wrapper.events
 
 	'click .list-action-custom': (event) ->
@@ -227,4 +233,3 @@ Template.creator_list_wrapper.onDestroyed ->
 	object_name = Session.get("object_name")
 	if object_name
 		Creator.TabularSelectedIds[object_name] = []
-	

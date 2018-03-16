@@ -5,6 +5,7 @@ if Meteor.isServer
 	SteedosOData.AUTHREQUIRED = true
 	SteedosOData.API_PATH = '/api/odata/v4/:spaceId'
 	SteedosOData.METADATA_PATH = '$metadata'
+	SteedosOData.EXPAND_FIELD_SUFFIX = "_expand"
 	SteedosOData.getRootPath = (spaceId)->
 		return Meteor.absoluteUrl('api/odata/v4/' + spaceId)
 

@@ -121,7 +121,7 @@ Creator.Objects.objects =
 
 				Creator.getCollection("permission_objects").direct.remove({object_name: doc.name})
 
-				Creator.getCollection("object_listviews").direct.remove({space: doc.space, object_name: doc.name, name: "all", is_default: true, owner: userId, shared: true, filter_scope: "space"})
+				Creator.getCollection("object_listviews").direct.remove({space: doc.space, object_name: doc.name, is_default: true, owner: userId, shared: true, filter_scope: "space"})
 
 				#drop collection
 				console.log "drop collection", doc.name
