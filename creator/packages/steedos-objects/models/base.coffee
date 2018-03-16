@@ -18,8 +18,9 @@ Creator.baseObject =
 			readonly: true
 			sortable: true
 		created_by:
-			type: "lookup"
 			label:"创建人"
+			type: "lookup"
+			readonly: true
 			reference_to: "users"
 			disabled: true
 			index: true
@@ -32,6 +33,7 @@ Creator.baseObject =
 		modified_by:
 			label:"修改人"
 			type: "lookup"
+			readonly: true
 			reference_to: "users"
 			disabled: true
 		is_deleted:

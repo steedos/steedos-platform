@@ -270,7 +270,8 @@ if Meteor.isClient
 
 Creator.getListView = (object_name, list_view_id)->
 	object = Creator.getObject(object_name)
-	if !object
+	permission_list_views = Creator.getPermissions(object_name).list_views
+	if !object or !permission_list_views?.length
 		return
 	custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
 	if object.list_views

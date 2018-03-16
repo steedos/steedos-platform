@@ -4,8 +4,8 @@ Template.select_fields.onCreated ->
         list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
         if list_view_obj and Session.get("object_name")
             all_fields = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
-            visible_fields = list_view_obj.columns
-            available_fields = _.difference(all_fields, visible_fields)
+            visible_columns = list_view_obj.columns
+            available_fields = _.difference(all_fields, visible_columns)
             schema = Creator.getSchema(Session.get("object_name"))._schema
             permission_fields = Creator.getFields(Session.get("object_name"))
 
@@ -17,10 +17,11 @@ Template.select_fields.onCreated ->
             
             available_fields = _.compact available_fields
 
-            visible_fields = _.map visible_fields, (field) ->
-                obj = _.pick(schema, field)
-                label = obj[field].label
-                return {label: label, value: field}
+            visible_fields = []
+            _.each visible_columns, (column)->
+                obj = schema[column]
+                if obj
+                    visible_fields.push {label: obj.label, value: column}
 
             _self.available_fields = new ReactiveVar(available_fields)
             _self.visible_fields = new ReactiveVar(visible_fields)

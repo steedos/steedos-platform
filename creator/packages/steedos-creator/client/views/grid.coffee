@@ -175,6 +175,14 @@ Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
 		is_related = self.data.is_related
+		if is_related
+			list_view_id = "recent"
+		else
+			list_view_id = Session.get("list_view_id")
+		unless list_view_id
+			toastr.error t("creator_list_view_permissions_lost")
+			return
+
 		object_name = Session.get("object_name")
 		creator_obj = Creator.getObject(object_name)
 
@@ -184,10 +192,6 @@ Template.creator_grid.onRendered ->
 		related_object_name = Session.get("related_object_name")
 		name_field_key = creator_obj.NAME_FIELD_KEY
 		record_id = Session.get("record_id")
-		if is_related
-			list_view_id = "recent"
-		else
-			list_view_id = Session.get("list_view_id")
 
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
 			if is_related

@@ -159,10 +159,10 @@ Meteor.startup ->
 					body = {}
 					headers = {}
 					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
-					body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skiptoken="+scannedCount
+#					body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skiptoken="+scannedCount
 					body['@odata.count'] = scannedCount
 					entities_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-					body['value'] = entities_OdataProperties
+					body['value'] = entities #entities_OdataProperties
 					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
 					headers['OData-Version'] = SteedosOData.VERSION
 					{body: body, headers: headers}
@@ -245,39 +245,88 @@ Meteor.startup ->
 				statusCode: 403
 				body  = setErrorMessage(403,collection,key,post)
 		get:()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				statusCode: 401
-				body = setErrorMessage(401)
-				return body
-				
-			collection = Creator.Collections[key]
-			if not collection
-				statusCode: 404
-				body = setErrorMessage(404,collection,key)
-				return body
 
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowRead
-					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
-					entity = collection.findOne selector
-					entities = []
-					if entity
-						body = {}
-						headers = {}
-						entities.push entity
-						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-						entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-						_.extend body,entity_OdataProperties[0]
-						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-						headers['OData-Version'] = SteedosOData.VERSION
-						{body: body, headers: headers}
+			console.log "@urlParams", @urlParams
+
+			key = @urlParams.object_name
+
+			if key.indexOf("(") > -1
+				body = {}
+				headers = {}
+				collectionInfo = key
+				fieldName = @urlParams._id.toLowerCase()
+				collectionInfoSplit = collectionInfo.split('(')
+				collectionName = collectionInfoSplit[0]
+				id = collectionInfoSplit[1].split('\'')[1]
+
+				collection = Creator.Collections[collectionName]
+				fieldsOptions = {}
+				fieldsOptions[fieldName] = 1
+				entity = collection.findOne({_id: id}, {fields: fieldsOptions})
+
+				fieldValue = null
+				if entity
+					fieldValue = entity[fieldName]
+
+				obj = Creator.objectsByName[collectionName]
+				field = obj.fields[fieldName]
+
+				if field and field.type is 'lookup' and fieldValue
+					lookupCollection = Creator.Collections[field.reference_to]
+					lookupObj = Creator.objectsByName[field.reference_to]
+					queryOptions = {fields: {}}
+					_.each lookupObj.fields, (v, k)->
+						queryOptions.fields[k] = 1
+
+					if field.multiple
+						body['value'] = lookupCollection.find({_id: {$in: fieldValue}}, queryOptions).fetch()
+						body['@odata.context'] = SteedosOData.getMetaDataPath(@urlParams.spaceId) + "##{collectionInfo}/#{@urlParams._id}"
 					else
-						statusCode: 404
-						body  = setErrorMessage(404,collection,key,'get')
+						body = lookupCollection.findOne({_id: fieldValue}, queryOptions) || {}
+						body['@odata.context'] = SteedosOData.getMetaDataPath(@urlParams.spaceId) + "##{field.reference_to}/$entity"
+
+				else
+					body['@odata.context'] = SteedosOData.getMetaDataPath(@urlParams.spaceId) + "##{collectionInfo}/#{@urlParams._id}"
+					body['value'] = fieldValue
+
+				headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+				headers['OData-Version'] = SteedosOData.VERSION
+
+				{body: body, headers: headers}
 			else
-				statusCode: 403
-				body  = setErrorMessage(403,collection,key,'get')
+
+				if not Creator.objectsByName[key]?.enable_api
+					statusCode: 401
+					body = setErrorMessage(401)
+					return body
+
+				collection = Creator.Collections[key]
+				if not collection
+					statusCode: 404
+					body = setErrorMessage(404,collection,key)
+					return body
+
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.allowRead
+						selector = {_id: @urlParams._id, space: @urlParams.spaceId}
+						entity = collection.findOne selector
+						entities = []
+						if entity
+							body = {}
+							headers = {}
+							entities.push entity
+							body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+							entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+							_.extend body,entity_OdataProperties[0]
+							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+							headers['OData-Version'] = SteedosOData.VERSION
+							{body: body, headers: headers}
+						else
+							statusCode: 404
+							body  = setErrorMessage(404,collection,key,'get')
+				else
+					statusCode: 403
+					body  = setErrorMessage(403,collection,key,'get')
 		put:()->
 			key = @urlParams.object_name
 			if not Creator.objectsByName[key]?.enable_api

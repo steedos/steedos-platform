@@ -100,6 +100,8 @@ if Meteor.isClient
 			# TODO
 			if spaceId and userId
 				list_view = Creator.getListView(object_name, list_view_id)
+				unless list_view
+					return ["_id", "=", -1]
 				if list_view.filter_scope == "spacex"
 					selector.push ["space", "=", null], "or", ["space", "=", spaceId]
 				else if object_name == "users"

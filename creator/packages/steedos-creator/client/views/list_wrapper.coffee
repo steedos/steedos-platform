@@ -52,7 +52,10 @@ Template.creator_list_wrapper.helpers
 		return list_view
 	
 	list_view_label: (item)->
-		return item.label || item.name 
+		if item
+			return item.label || item.name 
+		else
+			return ""
 
 	actions: ()->
 		actions = Creator.getActions()
@@ -94,6 +97,9 @@ Template.creator_list_wrapper.helpers
 				return false
 			else
 				return true
+	
+	list_view_visible: ()->
+		return Session.get("list_view_visible")
 
 Template.creator_list_wrapper.events
 
@@ -148,11 +154,12 @@ Template.creator_list_wrapper.events
 		list_view_id = Session.get("list_view_id")
 		object_name = Session.get("object_name")
 		grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
+		Session.set "list_view_visible", false
 		Meteor.call 'grid_settings', object_name, list_view_id, {}, (e, r)->
 			if e
 				console.log e
 			else
-				window.dxDataGridInstance.refresh()
+				Session.set "list_view_visible", true
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")
