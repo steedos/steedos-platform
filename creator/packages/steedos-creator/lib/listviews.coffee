@@ -272,6 +272,11 @@ if Meteor.isClient
 	取出list_view_id对应的视图，如果不存在或者没有权限，就返回第一个视图
 ///
 Creator.getListView = (object_name, list_view_id)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !list_view_id
+			list_view_id = Session.get("list_view_id")
 	object = Creator.getObject(object_name)
 	if !object
 		return
@@ -285,3 +290,19 @@ Creator.getListView = (object_name, list_view_id)->
 	Creator.getTable(object_name)?.options.language?.zeroRecords = t("list_view_no_records")
 	Creator.getTable(object_name)?.options.order = Creator.getTabularOrder(object_name, list_view_id, list_view.columns)
 	return list_view
+
+#获取list_view_id对应的视图是否是最近查看视图
+Creator.getListViewIsRecent = (object_name, list_view_id)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+		if !list_view_id
+			list_view_id = Session.get("list_view_id")
+	if typeof(list_view_id) == "string"
+		object = Creator.getObject(object_name)
+		if !object
+			return
+		listView = _.findWhere(object.list_views,{_id: list_view_id})
+	else
+		listView = list_view_id
+	return listView?.name == "recent"

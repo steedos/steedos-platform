@@ -48,7 +48,7 @@ Template.creator_list.helpers
 				selector._id = Session.get("spaceId")
 			else
 				selector.space = Session.get("spaceId")
-			if Session.get("list_view_id") == "recent"
+			if Creator.getListViewIsRecent(object_name, list_view)
 				viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
 				record_ids = _.pluck(viewed, "record_id")
 				if record_ids.length == 0

@@ -111,7 +111,7 @@ if Meteor.isClient
 				else
 					selector.push ["space", "=", spaceId]
 
-				if list_view_id == "recent"
+				if Creator.getListViewIsRecent(object_name, list_view)
 					viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
 					record_ids = _.pluck(viewed, "record_id")
 					record_ids = _.uniq(record_ids)
