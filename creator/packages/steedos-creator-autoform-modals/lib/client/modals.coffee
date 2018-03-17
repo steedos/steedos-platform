@@ -121,7 +121,8 @@ Template.CreatorAutoformModals.rendered = ->
 		if Session.get 'cmShowAgain'
 			keyPress = Session.get 'cmPressKey'
 			keyPress = '.' + keyPress.replace(/\s+/ig, '.')
-			$(keyPress).click()
+			Meteor.defer ()->
+				$(keyPress).click()
 
 
 Template.CreatorAutoformModals.events
