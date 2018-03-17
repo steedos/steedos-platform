@@ -75,9 +75,9 @@ Meteor.startup ->
 					reference_to.forEach (r)->
 						reference_obj = Creator.objectsByName[r]
 						if reference_obj
-							_name = field_name.toUpperCase()
+							_name = field_name + SteedosOData.EXPAND_FIELD_SUFFIX
 							if _.isArray(field.reference_to)
-								_name = field_name.toUpperCase() + "." + reference_obj.name.toUpperCase()
+								_name = field_name + SteedosOData.EXPAND_FIELD_SUFFIX + "." + reference_obj.name
 							navigationProperty.push {
 								name: _name,
 	#							type: "Collection(" + _NAMESPACE + "." + reference_obj.name + ")",
