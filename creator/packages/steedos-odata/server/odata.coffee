@@ -47,7 +47,7 @@ Meteor.startup ->
 										entities[idx][navigationProperty] = originalData
 								else
 									singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
-								
+
 									# 特殊处理在相关表中没有找到数据的情况，返回原数据
 									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions) || entities[idx][navigationProperty]
 
@@ -83,7 +83,7 @@ Meteor.startup ->
 			_.extend entity_OdataProperties,entity
 			entities_OdataProperties.push entity_OdataProperties
 		return entities_OdataProperties
-	
+
 	setErrorMessage = (statusCode,collection,key,action)->
 		body = {}
 		error = {}
@@ -105,7 +105,7 @@ Meteor.startup ->
 				innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 				error['code'] = 'Collection Not Found'
 				error['message'] = 'Collection not found for the segment '+ key
-		if  statusCode == 401 
+		if  statusCode == 401
 			innererror['message'] = 'Authentication is required and has not been provided.'
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 			error['code'] = 'Unauthorized'
@@ -130,7 +130,7 @@ Meteor.startup ->
 				statusCode: 401
 				body = setErrorMessage(401)
 				return body
-				
+
 			collection = Creator.Collections[key]
 			if not collection
 				statusCode: 404
@@ -178,7 +178,7 @@ Meteor.startup ->
 				statusCode: 401
 				body = setErrorMessage(401)
 				return body
-				
+
 			collection = Creator.Collections[key]
 			if not collection
 				statusCode: 404
@@ -254,7 +254,7 @@ Meteor.startup ->
 				body = {}
 				headers = {}
 				collectionInfo = key
-				fieldName = @urlParams._id.toLowerCase()
+				fieldName = @urlParams._id.split('_expand')[0]
 				collectionInfoSplit = collectionInfo.split('(')
 				collectionName = collectionInfoSplit[0]
 				id = collectionInfoSplit[1].split('\'')[1]
@@ -333,7 +333,7 @@ Meteor.startup ->
 				statusCode: 401
 				body = setErrorMessage(401)
 				return body
-				
+
 			collection = Creator.Collections[key]
 			if not collection
 				statusCode: 404
@@ -367,7 +367,7 @@ Meteor.startup ->
 				statusCode: 401
 				body = setErrorMessage(401)
 				return body
-				
+
 			collection = Creator.Collections[key]
 			if not collection
 				statusCode: 404
