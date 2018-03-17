@@ -45,6 +45,8 @@ Meteor.startup ->
 									entities[idx][navigationProperty] = referenceToCollection.find(multiQuery, queryOptions).fetch()
 									if !entities[idx][navigationProperty].length
 										entities[idx][navigationProperty] = originalData
+									#排序
+									entities[idx][navigationProperty] = Creator.getOrderlySetByIds(entities[idx][navigationProperty], originalData)
 								else
 									singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
 
@@ -57,10 +59,13 @@ Meteor.startup ->
 								referenceToCollection = Creator.Collections[entity[navigationProperty].o]
 								if referenceToCollection
 									if field.multiple
+										_ids = _.clone(entity[navigationProperty].ids)
 										multiQuery = _.extend {_id: {$in: entity[navigationProperty].ids}}, include.query
 										entities[idx][navigationProperty] = _.map referenceToCollection.find(multiQuery, queryOptions).fetch(), (o)->
 											o['reference_to.o'] = referenceToCollection._name
 											return o
+										#排序
+										entities[idx][navigationProperty] = Creator.getOrderlySetByIds(entities[idx][navigationProperty], _ids)
 									else
 										singleQuery = _.extend {_id: entity[navigationProperty].ids[0]}, include.query
 										entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)

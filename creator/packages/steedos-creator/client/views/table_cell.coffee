@@ -54,6 +54,8 @@ Template.creator_table_cell.helpers
 					selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
 						return _val.indexOf(_o.value) > -1
 					if selectedOptions
+						if val && _.isArray(val) && _.isArray(selectedOptions)
+							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
 						val = selectedOptions.getProperty("label")
 
 				if reference_to
@@ -64,11 +66,9 @@ Template.creator_table_cell.helpers
 					data.push {value: val, id: this._id}
 
 			else
-
 				if this.agreement == "odata"
 					if !_.isArray(val)
 						val = if val then [val] else []
-					
 					_.each val, (v)->
 						reference_to = v["reference_to.o"] || reference_to
 						reference_to_object_name_field_key = Creator.getObject(reference_to)?.NAME_FIELD_KEY
@@ -95,7 +95,10 @@ Template.creator_table_cell.helpers
 						reference_to_sort[reference_to_object_name_field_key] = -1
 
 
-						values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort})
+						values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort}).fetch()
+
+						values = Creator.getOrderlySetByIds(values, val)
+
 						values.forEach (v)->
 							href = Creator.getObjectUrl(reference_to, v._id)
 							data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}

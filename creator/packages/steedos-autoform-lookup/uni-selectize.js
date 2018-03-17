@@ -3,43 +3,43 @@
 /* jshint strict: false */
 
 UniSelectize = function (options, template, filtersFunction, optionsFunction) {
-	this.items           = new ReactiveVar([]);
-	this.itemsSelected   = new ReactiveVar([]);
+	this.items = new ReactiveVar([]);
+	this.itemsSelected = new ReactiveVar([]);
 	this.itemsUnselected = new ReactiveVar([]);
 
-	this.open                = new ReactiveVar(false);
-	this.loading             = new ReactiveVar(false);
-	this.searchText          = new ReactiveVar();
-	this.activeOption        = new ReactiveVar(-1);
-	this.inputPosition       = new ReactiveVar(-1);
+	this.open = new ReactiveVar(false);
+	this.loading = new ReactiveVar(false);
+	this.searchText = new ReactiveVar();
+	this.activeOption = new ReactiveVar(-1);
+	this.inputPosition = new ReactiveVar(-1);
 	this.optionsMethodParams = new ReactiveVar();
-	this.selectedReference   = new ReactiveVar();
-	this.dependValues	     = new ReactiveVar();
+	this.selectedReference = new ReactiveVar();
+	this.dependValues = new ReactiveVar();
 
-	this.defaultIcon        = new ReactiveVar(options.defaultIcon);
-	this.optionsFunction    = optionsFunction;
-	this.references         = options.references;
-	this.create             = options.create;
-	this.createText         = options.createText;
-	this.template           = template;
-	this.multiple           = options.multiple;
-	this.sortMethod         = _.isUndefined(options.sortMethod) ? '' : options.sortMethod; //label，只有配置了排序方式才排序，移除默认排序规则
-	this.placeholder        = options.placeholder;
-	this.removeButton       = options.removeButton !== false;
-	this.createMethod       = options.createMethod;
-	this.optionsMethod      = options.optionsMethod;
+	this.defaultIcon = new ReactiveVar(options.defaultIcon);
+	this.optionsFunction = optionsFunction;
+	this.references = options.references;
+	this.create = options.create;
+	this.createText = options.createText;
+	this.template = template;
+	this.multiple = options.multiple;
+	this.sortMethod = _.isUndefined(options.sortMethod) ? '' : options.sortMethod; //label，只有配置了排序方式才排序，移除默认排序规则
+	this.placeholder = options.placeholder;
+	this.removeButton = options.removeButton !== false;
+	this.createMethod = options.createMethod;
+	this.optionsMethod = options.optionsMethod;
 	this.optionsPlaceholder = options.optionsPlaceholder;
-	this.filters            = options.filters;
-	this.dependOn           = options.dependOn;
-	this.filtersFunction      = filtersFunction;
+	this.filters = options.filters;
+	this.dependOn = options.dependOn;
+	this.filtersFunction = filtersFunction;
 
-	this.initialized        = new ReactiveVar(0);
+	this.initialized = new ReactiveVar(0);
 
-	if(optionsFunction || !options.optionsMethod){
+	if (optionsFunction || !options.optionsMethod) {
 		this.initialized.set(1);
 	}
 
-	if(options.items && _.isArray(options.items)){
+	if (options.items && _.isArray(options.items)) {
 		this.items.set(options.items)
 	}
 
@@ -53,7 +53,7 @@ UniSelectize.prototype.getFiltersSelectors = function () {
 
 	var dependValues = this.dependValues.get();
 
-	if(dependValues){
+	if (dependValues) {
 		_.keys(dependValues).forEach(function (key) {
 			filters.forEach(function (filter) {
 				var field_code = filter[0];
@@ -70,32 +70,32 @@ UniSelectize.prototype.getFiltersSelectors = function () {
 }
 
 UniSelectize.prototype.setSelectedReference = function (_value) {
-	if(this.references && this.references.length > 0){
+	if (this.references && this.references.length > 0) {
 
 		var _object = "";
 
-		if(_.isObject(_value)){
+		if (_.isObject(_value)) {
 			_object = _value.o
 		}
 
-		if(_object){
+		if (_object) {
 			var _reference = _.find(this.references, function (_item) {
 				return _item.object === _object
 			})
 
-			if(_reference){
+			if (_reference) {
 				this.selectedReference.set(_reference)
-			}else{
+			} else {
 				this.selectedReference.set(this.references[0])
 			}
 
-		}else{
+		} else {
 			this.selectedReference.set(this.references[0])
 		}
 	}
 }
 
-UniSelectize.prototype.triggerChangeEvent = function() {
+UniSelectize.prototype.triggerChangeEvent = function () {
 	var self = this;
 	Meteor.defer(function () {
 		$(self.template.find('select')).change();
@@ -136,15 +136,17 @@ UniSelectize.prototype.setItems = function (items, value) {
 	_.each(items, function (item) {
 		if (_.contains(values, item.value)) {
 			item.selected = true;
-			if(item.icon){
+			if (item.icon) {
 				self.defaultIcon.set(item.icon)
 			}
 		}
 	});
 
-	if(values){
+	if (values) {
 		//按照值排序
-		items = _.sortBy(items, function(doc){ return values.indexOf(doc.value)});
+		items = _.sortBy(items, function (doc) {
+			return values.indexOf(doc.value)
+		});
 	}
 
 	this.items.set(items);
@@ -188,9 +190,11 @@ UniSelectize.prototype.addItems = function (newItems, value) {
 		}
 	});
 
-	if(values){
+	if (values) {
 		//按照值排序
-		items = _.sortBy(items, function(doc){ return values.indexOf(doc.value)});
+		items = _.sortBy(items, function (doc) {
+			return values.indexOf(doc.value)
+		});
 	}
 
 	this.items.set(items);
@@ -215,8 +219,8 @@ UniSelectize.prototype.removeUnusedItems = function (newItems) {
 };
 
 UniSelectize.prototype.itemsAutorun = function () {
-	var items           = this.items.get();
-	var itemsSelected   = [];
+	var items = this.items.get();
+	var itemsSelected = [];
 	var itemsUnselected = [];
 
 	_.each(items, function (item) {
@@ -240,7 +244,7 @@ UniSelectize.prototype.itemsAutorun = function () {
 	if (this.placeholder && this.optionsPlaceholder) {
 		itemsUnselected.unshift({
 			value: '',
-			label: _.isString(this.optionsPlaceholder) ? this.optionsPlaceholder: this.placeholder
+			label: _.isString(this.optionsPlaceholder) ? this.optionsPlaceholder : this.placeholder
 		});
 	}
 
@@ -271,11 +275,21 @@ UniSelectize.prototype.selectItem = function (value) {
 			item.selected = false;
 		} else if (item.value === value) {
 			item.selected = true;
-			if(item.icon){
+			if (item.icon) {
 				self.defaultIcon.set(item.icon)
 			}
 		} else if (!multiple) {
 			item.selected = false;
+		}
+	});
+
+	values = items.getProperty("value");
+
+	items = _.sortBy(items, function (doc) {
+		if(value === doc.value){
+			return items.length + 1
+		}else{
+			return _.indexOf(values, doc.value)
 		}
 	});
 
@@ -482,15 +496,15 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	var params = this.optionsMethodParams.get();
 	var optionsFunction = this.optionsFunction;
 
-	if(optionsFunction){
+	if (optionsFunction) {
 		return false;
 	}
 
-	if(this.selectedReference.get()){
-		if(_.isObject(params)){
+	if (this.selectedReference.get()) {
+		if (_.isObject(params)) {
 			params.reference_to = this.selectedReference.get().object;
-		}else{
-			params = {reference_to : this.selectedReference.get().object}
+		} else {
+			params = {reference_to: this.selectedReference.get().object}
 		}
 	}
 
@@ -502,10 +516,10 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 
 	var filterQuery = {};
 
-	if(this.dependOn && this.dependValues.get()){
-		if(this.filtersFunction && _.isFunction(this.filtersFunction)){
+	if (this.dependOn && this.dependValues.get()) {
+		if (this.filtersFunction && _.isFunction(this.filtersFunction)) {
 			filterQuery = this.filtersFunction(this.filters, this.dependValues.get());
-		}else{
+		} else {
 			filterQuery = this.getFiltersSelectors();
 		}
 	}

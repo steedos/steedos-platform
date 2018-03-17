@@ -60,18 +60,25 @@ Creator.evaluateFilters = (filters, context)->
 ###
     docs：待排序的文档数组
     ids：_id集合
+    id_key: 默认为_id
     return 按照ids的顺序返回新的文档集合
 ###
-Creator.getOrderlySetByIds = (docs, ids, hit_first)->
+Creator.getOrderlySetByIds = (docs, ids, id_key, hit_first)->
+
+	if !id_key
+		id_key = "_id"
+
 	if hit_first
+
+		#由于不能使用_.findIndex函数，因此此处先将对象数组转为普通数组类型，在获取其index
+		values = docs.getProperty(id_key)
+
 		return	_.sortBy docs, (doc)->
-					_index = ids.indexOf(doc._id)
+					_index = ids.indexOf(doc[id_key])
 					if _index > -1
 						return _index
 					else
-						return ids.length + _.find(docs, (doc_f)->
-							return doc_f._id == doc._id
-						)
+						return ids.length + _.indexOf(values, doc[id_key])
 	else
 		return	_.sortBy docs, (doc)->
-			return ids.indexOf(doc._id)
+			return ids.indexOf(doc[id_key])
