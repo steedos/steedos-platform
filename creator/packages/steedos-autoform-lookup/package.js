@@ -18,6 +18,7 @@ Package.onUse(function(api) {
 
     api.use(['ecmascript', 'templating', 'underscore', 'less', 'reactive-var'], 'client');
 	api.use('aldeed:autoform@5.8.0');
+	api.use('rubaxa:sortable@1.3.0', 'client');
     api.addFiles([
 		'uni-selectize.js',
         'slds-lookup.html',

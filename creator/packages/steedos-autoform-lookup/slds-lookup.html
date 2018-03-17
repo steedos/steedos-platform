@@ -3,60 +3,69 @@
 		<div class="slds-form-element__control">
 			{{#if isDisabled}}
 				<div class="outputLookupContainer forceOutputLookupWithPreview">
-				{{#each _readonlyValues}}
-					<a class="{{#if hasLink}}textUnderline outputLookupLink {{/if}}slds-truncate forceOutputLookup" data-refid="recordId"
-					   data-recordid="{{value}}" data-special-link="true" rel="noreferrer" title="" data-aura-class="forceOutputLookup" href="{{outPutLookupHref value}}">{{label}}</a>{{#unless (isLast @index)}},{{/unless}}
-				{{/each}}
+					{{#each _readonlyValues}}
+						<a class="{{#if hasLink}}textUnderline outputLookupLink {{/if}}slds-truncate forceOutputLookup"
+						   data-refid="recordId"
+						   data-recordid="{{value}}" data-special-link="true" rel="noreferrer" title=""
+						   data-aura-class="forceOutputLookup" href="{{outPutLookupHref value}}">{{label}}</a>{{#unless
+							(isLast @index)}},{{/unless}}
+					{{/each}}
 				</div>
 			{{else}}
 				<div class="slds-combobox_container {{#if
 						isReadOnly}}slds-has-inline-listbox{{else}}slds-has-object-switcher{{/if}}">
 					{{!----}}
 					{{#if showObjectSwitche}}
-					<div class="slds-listbox_object-switcher slds-dropdown-trigger slds-dropdown-trigger_click steedos-lookups-object-switche">
-						<a class="slds-button slds-button_icon" aria-haspopup="true"
-								title="Select object to search in" href="javascript:void(0);" data-toggle="dropdown">
-							{{#with getSelectedReference}}
-							<span class="slds-icon_container slds-icon_object steedos-icon-{{object}}" title="{{object}}">
-							  {{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
-							</span>
-							{{/with}}
-							{{> steedos_icon class="slds-button__icon slds-button__icon_x-small" source="utility-sprite" name="down"}}
-						</a>
+						<div class="slds-listbox_object-switcher slds-dropdown-trigger slds-dropdown-trigger_click steedos-lookups-object-switche">
+							<a class="slds-button slds-button_icon" aria-haspopup="true"
+							   title="Select object to search in" href="javascript:void(0);" data-toggle="dropdown">
+								{{#with getSelectedReference}}
+									<span class="slds-icon_container slds-icon_object steedos-icon-{{object}}"
+										  title="{{object}}">
+										{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
+									</span>
+								{{/with}}
+								{{> steedos_icon class="slds-button__icon slds-button__icon_x-small" source="utility-sprite" name="down"}}
+							</a>
 
-						<div class="dropdown-menu dropdown-menu-left dropdown-references" role="menu">
-							<ul class="slds-dropdown__list slds-show">
-								{{#each getReferences}}
-								<li class="slds-dropdown__item references-item" role="presentation">
-									<a role="option" tabindex="-1" class="item-edit-action" data-id="{{object}}">
+							<div class="dropdown-menu dropdown-menu-left dropdown-references" role="menu">
+								<ul class="slds-dropdown__list slds-show">
+									{{#each getReferences}}
+										<li class="slds-dropdown__item references-item" role="presentation">
+											<a role="option" tabindex="-1" class="item-edit-action"
+											   data-id="{{object}}">
 										<span class="slds-icon_container reference-icon slds-icon_object steedos-icon-{{object}}">
 											{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
 										</span>
-										<span class="reference-name">{{#if label}}{{label}}{{else}}{{_ object}}{{/if}}</span>
-									</a>
-								</li>
-								{{/each}}
-							</ul>
-						</div>
+												<span class="reference-name">{{#if label}}{{label}}{{else}}{{_
+														object}}{{/if}}</span>
+											</a>
+										</li>
+									{{/each}}
+								</ul>
+							</div>
 
-					</div>
+						</div>
 					{{/if}}
 					<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click {{#if
 							open}}slds-is-open{{/if}}" aria-expanded="false"
 						 aria-haspopup="listbox" role="combobox">
-						<select name={{name}} multiple={{multiple}} id={{id}} data-schema-key={{dataSchemaKey}} data-reference="{{selectedReferenceObject}}" data-init="{{lookupInit}}" data-old-value="{{value}}">
+						<select name={{name}} multiple={{multiple}} id={{id}} data-schema-key={{dataSchemaKey}}
+								data-reference="{{selectedReferenceObject}}" data-init="{{lookupInit}}"
+								data-old-value="{{value}}">
 							<option value=""></option>
 							{{#each getItems}}
 								<option value={{value}} selected={{selected}}>{{label}}</option>
 							{{/each}}
 						</select>
 
-						<div class="slds-combobox__form-element slds-input-has-icon{{#if isReadOnly}} slds-input-has-icon_left-right{{else}} slds-input-has-icon_right{{/if}} "
+						<div class="slds-combobox__form-element slds-input-has-icon{{#if
+								isReadOnly}} slds-input-has-icon_left-right{{else}} slds-input-has-icon_right{{/if}} "
 							 role="none">
 							{{#if isReadOnly}}
-							<span class="slds-icon_container slds-combobox__input-entity-icon slds-icon_object steedos-icon-{{selectedReferenceObject}}">
-								{{> steedos_icon class="slds-icon slds-icon_smal" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
-							</span>
+								<span class="slds-icon_container slds-combobox__input-entity-icon slds-icon_object steedos-icon-{{selectedReferenceObject}}">
+									{{> steedos_icon class="slds-icon slds-icon_smal" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
+								</span>
 							{{/if}}
 							{{#with _value}}
 								<input type="text"
@@ -71,7 +80,7 @@
 									   aria-activedescendant="{{value}}" readonly="{{isReadOnly}}" value="{{label}}">
 								{{#if isReadOnly}}
 									<a class="slds-button slds-button_icon slds-input__icon slds-input__icon_right slds-pill__remove"
-											title="Remove selected option">
+									   title="Remove selected option">
 										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="close"}}
 									</a>
 								{{else}}
@@ -111,30 +120,27 @@
 				{{#if isMultiple}}
 				{{!--已选中的(多选)--}}
 					<div id="listbox-selections-unique-id" role="listbox" aria-orientation="horizontal">
-						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small" role="group"
+						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small slds-selected-items-{{id}}" role="group"
 							aria-label="Selected Options:">
 							{{#each getItemsSelected}}
 								<li role="presentation" class="slds-listbox__item" data-value={{value}}>
-							  <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
-								{{!----}}
-								  <span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
-								  <span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
-									  {{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
-								  </span>
-								</span>
-								<span class="slds-pill__label" title="Acme">{{label}}</span>
-								<span class="slds-icon_container slds-pill__remove" title="Remove">
-									{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="close"}}
-								</span>
-							  </span>
+									<span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+										{{!----}}
+										<span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
+											<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
+												{{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
+											</span>
+										</span>
+										<span class="slds-pill__label" title="Acme">{{label}}</span>
+										<span class="slds-icon_container slds-pill__remove" title="Remove">
+											{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="close"}}
+										</span>
+									</span>
 								</li>
 							{{/each}}
-
 						</ul>
 					</div>
 				{{/if}}
-
-
 			{{/if}}
 		</div>
 	</div>

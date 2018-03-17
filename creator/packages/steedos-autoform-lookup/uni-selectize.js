@@ -23,7 +23,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction) {
 	this.createText         = options.createText;
 	this.template           = template;
 	this.multiple           = options.multiple;
-	this.sortMethod         = _.isUndefined(options.sortMethod) ? 'label' : options.sortMethod;
+	this.sortMethod         = _.isUndefined(options.sortMethod) ? '' : options.sortMethod; //label，只有配置了排序方式才排序，移除默认排序规则
 	this.placeholder        = options.placeholder;
 	this.removeButton       = options.removeButton !== false;
 	this.createMethod       = options.createMethod;
@@ -141,6 +141,12 @@ UniSelectize.prototype.setItems = function (items, value) {
 			}
 		}
 	});
+
+	if(values){
+		//按照值排序
+		items = _.sortBy(items, function(doc){ return values.indexOf(doc.value)});
+	}
+
 	this.items.set(items);
 };
 
@@ -181,6 +187,11 @@ UniSelectize.prototype.addItems = function (newItems, value) {
 			item.selected = newItem.selected;
 		}
 	});
+
+	if(values){
+		//按照值排序
+		items = _.sortBy(items, function(doc){ return values.indexOf(doc.value)});
+	}
 
 	this.items.set(items);
 };

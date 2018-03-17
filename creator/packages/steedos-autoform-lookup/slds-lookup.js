@@ -21,6 +21,15 @@ AutoForm.addInputType('steedosLookups', {
 			val = this[0].dataset.oldValue
 		}
 
+		ordered_val = [];
+
+		if(this.context.multiple){
+			$("li", $(".slds-selected-items-" + this.context.id)).each(function(e){
+				ordered_val.push($(this)[0].dataset.value)
+			});
+			val = ordered_val;
+		}
+
 		if(this.context.dataset.reference){
 			return {o:this.context.dataset.reference, ids: AutoForm.valueConverters.stringToStringArray(val)}
 		}else{
@@ -157,6 +166,19 @@ Template.steedosLookups.onRendered(function () {
     this.form.bind('reset', function () {
         template.uniSelectize.unselectItem(null, true);
     });
+
+	Sortable.create($(".slds-selected-items-" + this.data.id)[0], {
+		group: 'words',
+		animation: 150,
+		filter: '.js-remove',
+		onFilter: function (evt) {
+			var el = selectUsersList.closest(evt.item)
+			console.log("onFilter-->", el)
+		},
+		onEnd: function (event) {
+			console.log("onEnd-->", event)
+		}
+	})
 });
 
 Template.steedosLookups.onDestroyed(function () {
@@ -373,7 +395,7 @@ Template.steedosLookups.events({
 		}
 
 		template.uniSelectize.inputFocus(template);
-		
+
 		var formId = AutoForm.getFormId();
 		var _values = AutoForm.getFormValues(formId).insertDoc;
 
@@ -594,7 +616,7 @@ Template.steedosLookups.events({
 		template.uniSelectize.clearItem()
 		template.uniSelectize.selectedReference.set(this)
 	},
-	
+
 	'click .steedos-lookups-object-switche': function (e, template) {
 		template.uniSelectize.open.set(false);
 	}
