@@ -148,6 +148,11 @@ Meteor.startup ->
 
 				if not createQuery.sort
 					createQuery.sort = { modified: -1 }
+				if not createQuery.limit
+					if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
+						createQuery.limit = 10000
+					else
+						createQuery.limit = 1000
 				if not permissions.viewAllRecords
 					createQuery.query.owner = @userId
 
@@ -209,6 +214,66 @@ Meteor.startup ->
 				statusCode: 403
 				body  = setErrorMessage(403,collection,key,post)
 	})
+	SteedosOdataAPI.addRoute(':object_name/recent', {authRequired: true, spaceRequired: false}, {
+		get:()->
+			key = @urlParams.object_name
+			if not Creator.objectsByName[key]?.enable_api
+				statusCode: 401
+				body = setErrorMessage(401)
+				return body
+			collection = Creator.Collections[key]
+			if not collection
+				statusCode: 404
+				body = setErrorMessage(404,collection,key)
+				return body
+			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+			if permissions.allowRead
+				recent_view_collection = Creator.Collections["object_recent_viewed"]
+				recent_view_selector = {object_name:key,created_by:@userId}
+				recent_view_options = {}
+				recent_view_options.sort = {created: -1}
+				recent_view_options.fields = {record_id:1}
+				recent_view_records = recent_view_collection.find(recent_view_selector,recent_view_options).fetch()
+				recent_view_records_ids = _.pluck(recent_view_records,'record_id')
+				recent_view_records_ids = _.uniq(recent_view_records_ids)
+				qs = querystring.unescape(querystring.stringify(@queryParams))
+				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+				createQuery.query._id = {$in:recent_view_records_ids}
+				if key is 'cfs.files.filerecord'
+					createQuery.query['metadata.space'] = @urlParams.spaceId
+				else
+					createQuery.query.space = @urlParams.spaceId
+				if not createQuery.limit
+					createQuery.limit = 100
+				if @queryParams.$top isnt '0'
+					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
+				entities_index = []
+				entities_ids = _.pluck(entities,'_id')
+				sort_entities = []
+				_.each recent_view_records_ids ,(recent_view_records_id)->
+					index = _.indexOf(entities_ids,recent_view_records_id)
+					if index>-1
+						sort_entities.push entities[index]
+				#console.log "sort_entities=====",sort_entities
+				if sort_entities
+					dealWithExpand(createQuery, sort_entities, key)
+					body = {}
+					headers = {}
+					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
+				#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
+					body['@odata.count'] = sort_entities.length
+					entities_OdataProperties = setOdataProperty(sort_entities,@urlParams.spaceId, key)
+					body['value'] = entities_OdataProperties
+					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+					headers['OData-Version'] = SteedosOData.VERSION
+					{body: body, headers: headers}
+				else
+					statusCode: 404
+					body  = setErrorMessage(404,collection,key,'get')
+			else
+				statusCode: 403
+				body  = setErrorMessage(403,collection,key,'get')
+	})
 
 	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
 		post: ()->
@@ -246,7 +311,6 @@ Meteor.startup ->
 				statusCode: 403
 				body  = setErrorMessage(403,collection,key,post)
 		get:()->
-
 			console.log "@urlParams", @urlParams
 
 			key = @urlParams.object_name
@@ -386,8 +450,7 @@ Meteor.startup ->
 				statusCode: 400
 				body: {status: 'fail', message: 'Action not permitted'}
 	})
-
-
+	
 	#TODO remove
 	_.each [], (value, key, list)-> #Creator.Collections
 		if not Creator.objectsByName[key]?.enable_api
