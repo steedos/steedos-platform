@@ -56,3 +56,22 @@ Creator.evaluateFilters = (filters, context)->
 			selector[name][action] = value
 	console.log("evaluateFilters-->selector", selector)
 	return selector
+
+###
+    docs：待排序的文档数组
+    ids：_id集合
+    return 按照ids的顺序返回新的文档集合
+###
+Creator.getOrderlySetByIds = (docs, ids, hit_first)->
+	if hit_first
+		return	_.sortBy docs, (doc)->
+					_index = ids.indexOf(doc._id)
+					if _index > -1
+						return _index
+					else
+						return ids.length + _.find(docs, (doc_f)->
+							return doc_f._id == doc._id
+						)
+	else
+		return	_.sortBy docs, (doc)->
+			return ids.indexOf(doc._id)
