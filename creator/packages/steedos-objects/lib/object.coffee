@@ -78,7 +78,7 @@ Creator.Object = (options)->
 	defaultReadableFields = []
 	defaultEditableFields = []
 	_.each self.fields, (field, field_name)->
-		if !(field.omit || field.hidden)
+		if !(field.hidden)    #231 omit字段支持在非编辑页面查看, 因此删除了此处对omit的判断
 			defaultReadableFields.push field_name
 			if !field.readonly
 				defaultEditableFields.push field_name

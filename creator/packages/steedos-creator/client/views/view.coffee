@@ -27,7 +27,12 @@ Template.creator_view.helpers
 		return "Creator.Collections." + Session.get("object_name")
 
 	schema: ()->
-		return Creator.getSchema(Session.get("object_name"))
+		schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
+		#在只读页面将omit字段设置为false
+		_.forEach schema._schema, (f, key)->
+			if f.autoform?.omit
+				f.autoform.omit = false
+		return schema
 
 	schemaFields: ()->
 		schema = Creator.getSchema(Session.get("object_name"))._schema
@@ -42,7 +47,7 @@ Template.creator_view.helpers
 		grouplessFields = Creator.getFieldsInFirstLevel(firstLevelKeys, grouplessFields)
 		if permission_fields
 			grouplessFields = _.intersection(permission_fields, grouplessFields)
-		grouplessFields = Creator.getFieldsWithoutOmit(schema, grouplessFields)
+#		grouplessFields = Creator.getFieldsWithoutOmit(schema, grouplessFields)
 		grouplessFields = Creator.getFieldsForReorder(schema, grouplessFields)
 
 		fieldGroupNames = Creator.getSortedFieldGroupNames(schema)
@@ -51,7 +56,7 @@ Template.creator_view.helpers
 			fieldsForGroup = Creator.getFieldsInFirstLevel(firstLevelKeys, fieldsForGroup)
 			if permission_fields
 				fieldsForGroup = _.intersection(permission_fields, fieldsForGroup)
-			fieldsForGroup = Creator.getFieldsWithoutOmit(schema, fieldsForGroup)
+#			fieldsForGroup = Creator.getFieldsWithoutOmit(schema, fieldsForGroup)
 			fieldsForGroup = Creator.getFieldsForReorder(schema, fieldsForGroup)
 			fieldGroups.push
 				name: fieldGroupName

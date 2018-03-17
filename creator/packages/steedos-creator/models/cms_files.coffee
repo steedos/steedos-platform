@@ -3,7 +3,7 @@ Creator.Objects.cms_files =
 	label: "文件"
 	icon: "drafts"
 	enable_search: true
-	enable_api: true
+	enable_api: false
 	fields:
 		name: 
 			label: "名称"

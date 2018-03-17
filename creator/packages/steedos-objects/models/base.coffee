@@ -17,6 +17,7 @@ Creator.baseObject =
 			label:"创建日期"
 			readonly: true
 			sortable: true
+			omit: true
 		created_by:
 			label:"创建人"
 			type: "lookup"
@@ -24,18 +25,21 @@ Creator.baseObject =
 			reference_to: "users"
 			disabled: true
 			index: true
+			omit: true
 		modified:
 			label:"修改时间"
 			type: "datetime"
 			readonly: true
 			sortable: true
 			index: true
+			omit: true
 		modified_by:
 			label:"修改人"
 			type: "lookup"
 			readonly: true
 			reference_to: "users"
 			disabled: true
+			omit: true
 		is_deleted:
 			type: "boolean"
 			omit: true

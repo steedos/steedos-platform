@@ -146,9 +146,10 @@ Meteor.startup ->
 				else
 					createQuery.query.space = @urlParams.spaceId
 
+				if not createQuery.sort
+					createQuery.sort = { modified: -1 }
 				if not permissions.viewAllRecords
 					createQuery.query.owner = @userId
-
 
 				entities = []
 				if @queryParams.$top isnt '0'
