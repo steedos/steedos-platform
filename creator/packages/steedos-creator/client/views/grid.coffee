@@ -223,35 +223,35 @@ Template.creator_grid.onRendered ->
 			
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
 			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
-			console.log "Template.creator_grid.onRendered=======,showColumns:", showColumns
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
 			selectColumns = _.union(selectColumns, extra_columns)
 			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
-
 			expand_fields = _expandFields(curObjectName, selectColumns)
-			showColumns.push
-				dataField: "_id_actions"
-				width: 46
-				allowSorting: false
-				allowReordering: false
-				headerCellTemplate: (container) ->
-					return ""
-				cellTemplate: (container, options) ->
-					htmlText = """
-						<span class="slds-grid slds-grid--align-spread creator-table-actions">
-							<div class="forceVirtualActionMarker forceVirtualAction">
-								<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
-									<span class="slds-icon_container slds-icon-utility-down">
-										<span class="lightningPrimitiveIcon">
-											#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
+			actions = Creator.getActions(curObjectName)
+			if actions.length
+				showColumns.push
+					dataField: "_id_actions"
+					width: 46
+					allowSorting: false
+					allowReordering: false
+					headerCellTemplate: (container) ->
+						return ""
+					cellTemplate: (container, options) ->
+						htmlText = """
+							<span class="slds-grid slds-grid--align-spread creator-table-actions">
+								<div class="forceVirtualActionMarker forceVirtualAction">
+									<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+										<span class="slds-icon_container slds-icon-utility-down">
+											<span class="lightningPrimitiveIcon">
+												#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
+											</span>
+											<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
 										</span>
-										<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
-									</span>
-								</a>
-							</div>
-						</span>
-					"""
-					$("<div>").append(htmlText).appendTo(container);
+									</a>
+								</div>
+							</span>
+						"""
+						$("<div>").append(htmlText).appendTo(container);
 			showColumns.splice 0, 0, 
 				dataField: "_id_checkbox"
 				width: 60
