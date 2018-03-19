@@ -84,6 +84,7 @@ Creator.getObjectRecord = (object_name, record_id)->
 	if collection
 		return collection.findOne(record_id)
 
+# 该函数只在初始化Object时，把相关对象的计算结果保存到Object的related_objects属性中，后续可以直接从related_objects属性中取得计算结果而不用再次调用该函数来计算
 Creator.getObjectRelateds = (object_name)->
 	if Meteor.isClient
 		if !object_name
