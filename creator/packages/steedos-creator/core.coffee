@@ -332,7 +332,7 @@ Creator.getHiddenFields = (schema)->
 
 Creator.getFieldsWithNoGroup = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
-  		return (!field.autoform or !field.autoform.group or field.autoform.type != "hidden") and fieldName
+  		return (!field.autoform or !field.autoform.group) and (!field.autoform or field.autoform.type != "hidden") and fieldName
 	)
 	fields = _.compact(fields)
 	return fields
