@@ -151,13 +151,16 @@ Meteor.startup ->
 				else
 					createQuery.query.space = @urlParams.spaceId
 
-				if not createQuery.sort
+				if not createQuery.sort or !_.size(createQuery.sort)
 					createQuery.sort = { modified: -1 }
 				if not createQuery.limit
 					if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
 						createQuery.limit = 10000
 					else
 						createQuery.limit = 1000
+				if not createQuery.projection or !_.size(createQuery.projection)
+					_.each permissions.readable_fields,(field)->
+						createQuery.projection[field] = 1
 				if not permissions.viewAllRecords
 					createQuery.query.owner = @userId
 
