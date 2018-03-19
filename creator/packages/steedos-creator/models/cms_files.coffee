@@ -73,7 +73,7 @@ Creator.Objects.cms_files =
 				file = Creator.getObjectRecord(object_name,record_id)
 				fileId = file?.versions?[0]
 				if fileId
-					window.location = "/api/files/files/#{fileId}?download=true"
+					window.location = Steedos.absoluteUrl("/api/files/files/#{fileId}?download=true")
 		new_version:
 			label: "上传新版本"
 			visible: true
