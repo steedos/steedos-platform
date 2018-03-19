@@ -109,6 +109,19 @@ Creator.Objects.permission_objects =
 		all:
 			filter_scope: "space"
 
+	triggers:
+		"before.insert.server.process": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				Creator.processPermissions doc
+				
+		"before.update.server.process": 
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				Creator.processPermissions modifier.$set
+
 	permission_set:
 		user:
 			allowCreate: false

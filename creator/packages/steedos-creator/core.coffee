@@ -138,6 +138,21 @@ Creator.getRecordPermissions = (object_name, record, userId)->
 
 	return permissions
 
+Creator.processPermissions = (po)->
+	if po.allowCreate
+		po.allowRead = true
+	if po.allowEdit
+		po.allowRead = true
+	if po.allowDelete
+		po.allowEdit = true
+		po.allowRead = true
+	if po.viewAllRecords
+		po.allowRead = true
+	if po.modifyAllRecords
+		po.allowRead = true
+		po.allowEdit = true
+		po.allowDelete = true
+		po.viewAllRecords = true
 
 Creator.getApp = (app_id)->
 	if !app_id

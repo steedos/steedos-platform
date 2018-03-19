@@ -96,12 +96,8 @@ if Meteor.isServer
 					permissions.allowDelete = true
 				if po.modifyAllRecords
 					permissions.modifyAllRecords = true
-					permissions.allowCreate = true
-					permissions.allowEdit = true
-					permissions.allowDelete = true
 				if po.viewAllRecords
 					permissions.viewAllRecords = true
-					permissions.allowRead = true
 
 				permissions.list_views = unionPlus(permissions.list_views, po.list_views)
 				permissions.actions = unionPlus(permissions.actions, po.actions)
@@ -115,6 +111,8 @@ if Meteor.isServer
 			permissions.allowDelete = false
 			permissions.modifyAllRecords = false
 			permissions.actions = []
+
+		Creator.processPermissions permissions
 
 		return permissions
 
