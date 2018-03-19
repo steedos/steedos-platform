@@ -108,7 +108,8 @@ Template.CreatorAutoformModals.rendered = ->
 			'cmCloseButtonClasses',
 			'cmShowRemoveButton',
 			'cmIsMultipleUpdate',
-			'cmTargetIds'
+			'cmTargetIds',
+			"cmEditSingleField"
 		]
 		delete Session.keys[key] for key in sessionKeys
 
@@ -300,6 +301,7 @@ helpers =
 			
 			fieldGroups = []
 			fieldsForGroup = []
+			isSingle = Session.get "cmEditSingleField"
 
 			grouplessFields = []
 			grouplessFields = Creator.getFieldsWithNoGroup(schema)
@@ -307,7 +309,7 @@ helpers =
 			if permission_fields
 				grouplessFields = _.intersection(permission_fields, grouplessFields)
 			grouplessFields = Creator.getFieldsWithoutOmit(schema, grouplessFields)
-			grouplessFields = Creator.getFieldsForReorder(schema, grouplessFields)
+			grouplessFields = Creator.getFieldsForReorder(schema, grouplessFields, isSingle)
 
 			fieldGroupNames = Creator.getSortedFieldGroupNames(schema)
 			_.each fieldGroupNames, (fieldGroupName) ->
@@ -316,7 +318,7 @@ helpers =
 				if permission_fields
 					fieldsForGroup = _.intersection(permission_fields, fieldsForGroup)
 				fieldsForGroup = Creator.getFieldsWithoutOmit(schema, fieldsForGroup)
-				fieldsForGroup = Creator.getFieldsForReorder(schema, fieldsForGroup)
+				fieldsForGroup = Creator.getFieldsForReorder(schema, fieldsForGroup, isSingle)
 				fieldGroups.push
 					name: fieldGroupName
 					fields: fieldsForGroup
@@ -326,7 +328,6 @@ helpers =
 				groupFields: fieldGroups
 				hiddenFields: hiddenFields
 
-			console.log finalFields
 			return finalFields
 
 	isMobile: ()->
@@ -334,6 +335,9 @@ helpers =
 			return true
 		else
 			return false
+
+	isSingle: ()->
+		return Session.get("cmEditSingleField")
 	
 Template.CreatorAutoformModals.helpers helpers
 
@@ -358,7 +362,11 @@ Template.CreatorAfModal.events
 		#新增_ids虚拟字段，以实现条记录同时更新
 		fields = t.data.fields
 		if fields and fields.length
+			if fields.split(",").length == 1
+				Session.set "cmEditSingleField", true
 			fields = _.union(fields.split(","),"_ids","_object_name").join(",")
+		else
+			Session.set "cmEditSingleField", false
 
 		Session.set 'cmCollection', t.data.collection
 		Session.set 'cmOperation', t.data.operation

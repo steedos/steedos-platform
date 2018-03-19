@@ -332,7 +332,7 @@ Creator.getHiddenFields = (schema)->
 
 Creator.getFieldsWithNoGroup = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
-  		return (!field.autoform or !field.autoform.group) and field.autoform.type != "hidden" and fieldName
+  		return (!field.autoform or !field.autoform.group or field.autoform.type != "hidden") and fieldName
 	)
 	fields = _.compact(fields)
 	return fields
@@ -373,7 +373,7 @@ Creator.getFieldsInFirstLevel = (firstLevelKeys, keys) ->
 	keys = _.compact(keys)
 	return keys
 
-Creator.getFieldsForReorder = (schema, keys) ->
+Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 	fields = []
 	i = 0
 	while i < keys.length
@@ -391,22 +391,26 @@ Creator.getFieldsForReorder = (schema, keys) ->
 			if value.autoform?.is_wide
 				is_wide_2 = true
 
-		if is_wide_1
+		if isSingle
 			fields.push keys.slice(i, i+1)
 			i += 1
-		else if !is_wide_1 and is_wide_2
-			childKeys = keys.slice(i, i+1)
-			childKeys.push undefined
-			fields.push childKeys
-			i += 1
-		else if !is_wide_1 and !is_wide_2
-			childKeys = keys.slice(i, i+1)
-			if keys[i+1]
-				childKeys.push keys[i+1]
-			else
+		else
+			if is_wide_1
+				fields.push keys.slice(i, i+1)
+				i += 1
+			else if !is_wide_1 and is_wide_2
+				childKeys = keys.slice(i, i+1)
 				childKeys.push undefined
-			fields.push childKeys
-			i += 2
+				fields.push childKeys
+				i += 1
+			else if !is_wide_1 and !is_wide_2
+				childKeys = keys.slice(i, i+1)
+				if keys[i+1]
+					childKeys.push keys[i+1]
+				else
+					childKeys.push undefined
+				fields.push childKeys
+				i += 2
 	
 	return fields
 

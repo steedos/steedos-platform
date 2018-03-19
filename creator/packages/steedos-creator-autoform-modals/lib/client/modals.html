@@ -1,6 +1,6 @@
 <template name="CreatorAutoformModals">
 	<div class="modal fade creator-modal creator-auotform-modals" id="afModal">
-		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open">
+		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open {{#if isSingle}}normal-large{{/if}}">
 			<div class="slds-modal__container {{cmModalContentClass}}">
 				<header class="slds-modal__header">
 					{{#if isMobile}}
@@ -157,9 +157,8 @@
 		{{/each}}
 	{{/if}}
 
-
 	{{#if schemaFields.hiddenFields}}
-		<div class="slds-grid view-page-section-row" style="display: none">
+		<div class="slds-grid view-page-section-row hidden-fields" style="display: none">
 			<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 				{{#each schemaFields.hiddenFields}}
 					<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
