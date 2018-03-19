@@ -308,9 +308,16 @@ Creator.isloading = ()->
 
 # 计算fields相关函数
 # START
+Creator.getHiddenFields = (schema)->
+	fields = _.map(schema, (field, fieldName) ->
+		return field.autoform and field.autoform.type == "hidden" and fieldName
+	)
+	fields = _.compact(fields)
+	return fields
+
 Creator.getFieldsWithNoGroup = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
-  		return (!field.autoform or !field.autoform.group) and fieldName
+  		return (!field.autoform or !field.autoform.group) and field.autoform.type != "hidden" and fieldName
 	)
 	fields = _.compact(fields)
 	return fields
@@ -325,7 +332,7 @@ Creator.getSortedFieldGroupNames = (schema)->
 
 Creator.getFieldsForGroup = (schema, groupName) ->
   	fields = _.map(schema, (field, fieldName) ->
-    	return field.autoform and field.autoform.group == groupName and fieldName
+    	return field.autoform and field.autoform.group == groupName and field.autoform.type != "hidden" and fieldName
   	)
   	fields = _.compact(fields)
   	return fields

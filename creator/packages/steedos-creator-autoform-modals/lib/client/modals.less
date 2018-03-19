@@ -58,6 +58,16 @@
 				}
 			}
 			.form-group {
+				margin-bottom: 0;
+				.help-block {
+					margin-top: 0;
+					margin-bottom: 0;
+				}
+				&.has-error {
+					.help-block {
+						margin-top: 5px;
+					}
+				}
 				> div {
 					> .checkbox {
 						margin-top: -18px;
@@ -102,6 +112,10 @@
 				height: .8rem;
 			}
 		}	
+	}
+	
+	.hidden-fields {
+		display: none;
 	}
 
 	@media (max-width: 599px) {

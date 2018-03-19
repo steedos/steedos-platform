@@ -52,6 +52,7 @@ getSimpleSchema = (collectionName)->
 				type: "hidden"
 				defaultValue: ->
 					return getObjectName collectionName
+		
 	return new SimpleSchema(final_schema)
 
 
@@ -295,6 +296,8 @@ helpers =
 					grouplessFields: [keys]
 				return finalFields
 
+			hiddenFields = Creator.getHiddenFields(schema)
+			
 			fieldGroups = []
 			fieldsForGroup = []
 
@@ -321,7 +324,9 @@ helpers =
 			finalFields = 
 				grouplessFields: grouplessFields
 				groupFields: fieldGroups
+				hiddenFields: hiddenFields
 
+			console.log finalFields
 			return finalFields
 
 	isMobile: ()->
