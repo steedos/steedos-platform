@@ -464,6 +464,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			unless caption
 				caption = objectName + "_" + rowFieldKey
 			field = {
+				expanded: isOnlyForChart
 				caption: caption
 				width: 100
 				dataField: rowFieldKey
@@ -474,7 +475,9 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			if columnWidths[row]
 				field.width = columnWidths[row]
 			reportFields.push field
-	_.each reportObject.columns, (column)->
+	# 如果是为摘要等其他类型报表加载Chart，则统计是以行为准，列只用来显示
+	columns = if isOnlyForChart then reportObject.rows else reportObject.columns
+	_.each columns, (column)->
 		if column != "_id"
 			columnFieldKey = column.replace(/\./g,"*%*")
 			fieldFirstKey = column.split(".")[0]
