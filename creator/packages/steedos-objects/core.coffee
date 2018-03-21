@@ -57,6 +57,9 @@ Creator.evaluateFilters = (filters, context)->
 	console.log("evaluateFilters-->selector", selector)
 	return selector
 
+Creator.isCommonSpace = (spaceId) ->
+	return spaceId == 'common'
+
 ###
     docs：待排序的文档数组
     ids：_id集合

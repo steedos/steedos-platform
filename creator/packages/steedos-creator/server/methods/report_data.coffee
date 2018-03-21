@@ -27,11 +27,15 @@ Meteor.methods
 		else if filter_scope == "mine"
 			selector.owner = userId
 
+		if Creator.isCommonSpace(space) && Steedos.isSpaceAdmin(space, @userId)
+			delete selector.space
+
 		if filters and filters.length > 0
 			selector["$and"] = filters
-		cursor = Creator.getCollection(object_name).find(selector, fields: filterFields)
-		if cursor.count() > 10000
-			return []
+
+		cursor = Creator.getCollection(object_name).find(selector, {fields: filterFields, skip: 0, limit: 10000})
+#		if cursor.count() > 10000
+#			return []
 		result = cursor.fetch()
 		if compoundFields.length
 			result = result.map (item,index)->
