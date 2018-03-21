@@ -100,17 +100,7 @@
 				</div>
 
 				<div class="pageBody {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}}">
-					<div class="scrollarea">
-						<div class="innerStacking">
-							<div class="eclair-container">
-								<div id="pivotgrid-chart"></div>
-							</div>
-						   	<div class="reportsDataGrid">
-								<div id="pivotgrid"></div>
-								<div id="datagrid"></div>
-							</div>
-						</div>
-					</div>
+					{{> Template.dynamic template="creator_report_content" data=report_content_params}}
 					<div class="sidebar {{#if isFilterOpen}}filterOpen{{else}}filterClosed{{/if}} filter-list-container">
 						<div class="reportsReportSidebar" data-aura-class="reportsReportSidebar">
 							<div class="stackingPanel fadeIn">

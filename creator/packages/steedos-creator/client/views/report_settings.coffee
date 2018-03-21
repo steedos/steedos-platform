@@ -42,4 +42,4 @@ Template.report_settings.events
 		}
 		Modal.hide(template)
 		Meteor.defer ->
-			Template.creator_report.renderReport()
+			Template.creator_report_content.renderReport()
