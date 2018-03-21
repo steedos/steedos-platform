@@ -29,6 +29,7 @@ Creator.Object = (options)->
 	self.enable_tasks = options.enable_tasks
 	self.enable_notes = options.enable_notes
 	self.enable_audit = options.enable_audit
+	self.hidden = options.hidden
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
 
 	if (!options.fields) 

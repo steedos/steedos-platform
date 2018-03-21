@@ -4,6 +4,7 @@ Creator.Objects["cfs.files.filerecord"] =
 	icon: "drafts"
 	enable_search: true
 	enable_api: false
+	hidden: true
 	fields:
 		"original.$.name":
 			label:"名称"

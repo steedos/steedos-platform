@@ -16,7 +16,7 @@ Template.creatorNavigation.helpers
 		if app
 			_.each app.objects, (v)->
 				obj = Creator.getObject(v)
-				if obj.permissions.get().allowRead
+				if obj.permissions.get().allowRead and !obj.hidden
 					objects.push v
 		return objects
 
