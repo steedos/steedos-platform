@@ -1,5 +1,18 @@
 Template.creator_report_content.helpers Creator.helpers
 
+getFieldLabel = (field, key)->
+	fieldLabel = field.label
+	unless fieldLabel
+		fieldLabel = key.split(".")[0]
+	if field.type == "lookup" or field.type == "master_detail"
+		if field?.reference_to
+			relate_object_Fields = Creator.getObject(field?.reference_to)?.fields
+			relate_field = relate_object_Fields[key.split(".")[1]]
+			if relate_field?.label
+				fieldLabel += " " + relate_field.label
+	return fieldLabel
+
+
 renderTabularReport = (reportObject, reportData)->
 	self = this
 	objectName = reportObject.object_name
@@ -13,8 +26,9 @@ renderTabularReport = (reportObject, reportData)->
 		itemFieldKey = item.replace(/\./g,"*%*")
 		fieldFirstKey = item.split(".")[0]
 		itemField = objectFields[fieldFirstKey]
+		caption = getFieldLabel itemField, item
 		field = {
-			caption: itemField.label
+			caption: caption
 			dataField: itemFieldKey
 		}
 		if sorts[item]
@@ -76,8 +90,9 @@ renderSummaryReport = (reportObject, reportData)->
 		itemFieldKey = item.replace(/\./g,"*%*")
 		fieldFirstKey = item.split(".")[0]
 		itemField = objectFields[fieldFirstKey]
+		itemLabel = getFieldLabel itemField, item
 		field = {
-			caption: itemField.label
+			caption: itemLabel
 			dataField: itemFieldKey
 		}
 		if sorts[item]
@@ -91,8 +106,9 @@ renderSummaryReport = (reportObject, reportData)->
 		groupFieldKey = group.replace(/\./g,"*%*")
 		fieldFirstKey = group.split(".")[0]
 		groupField = objectFields[fieldFirstKey]
+		groupLabel = getFieldLabel groupField, group
 		field = {
-			caption: groupField.label
+			caption: groupLabel
 			dataField: groupFieldKey
 			groupIndex: index
 		}
@@ -200,9 +216,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			rowFieldKey = row.replace(/\./g,"*%*")
 			fieldFirstKey = row.split(".")[0]
 			rowField = objectFields[fieldFirstKey]
-			caption = rowField.label
-			unless caption
-				caption = objectName + "_" + rowFieldKey
+			caption = getFieldLabel rowField, row
 			field = {
 				expanded: isOnlyForChart
 				caption: caption
@@ -222,9 +236,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			columnFieldKey = column.replace(/\./g,"*%*")
 			fieldFirstKey = column.split(".")[0]
 			columnField = objectFields[fieldFirstKey]
-			caption = columnField.label
-			unless caption
-				caption = objectName + "_" + columnFieldKey
+			caption = getFieldLabel columnField, column
 			field = {
 				caption: caption
 				width: 100
