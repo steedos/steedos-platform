@@ -288,8 +288,8 @@ Template.creator_grid.onRendered ->
 						columns = gridState.columns
 						column_width = {}
 						sort = []
-						columns = _.sortBy(_.values(columns), "visibleIndex")
 						if columns and columns.length
+							columns = _.sortBy(_.values(columns), "visibleIndex")
 							_.each columns, (column_obj)->
 								if column_obj.width
 									column_width[column_obj.dataField] = column_obj.width
