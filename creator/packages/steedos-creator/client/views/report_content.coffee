@@ -87,6 +87,8 @@ renderTabularReport = (reportObject, reportData)->
 			fileName: reportObject.name
 		dataSource: reportData
 		paging: false
+		scrolling: 
+			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
 	
@@ -200,7 +202,6 @@ renderSummaryReport = (reportObject, reportData)->
 	# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	reportSummary.groupItems = groupSummaryItems
-
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -211,6 +212,8 @@ renderSummaryReport = (reportObject, reportData)->
 			fileName: reportObject.name
 		dataSource: reportData
 		paging: false
+		scrolling: 
+			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
 
@@ -325,6 +328,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		sorting: 
 			mode: "multiple"
 		paging: false
+		scrolling: 
+			mode: "virtual"
 		allowSortingBySummary: true
 		allowSorting: true
 		allowFiltering: false
