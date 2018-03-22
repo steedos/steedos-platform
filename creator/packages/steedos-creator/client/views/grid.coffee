@@ -93,7 +93,10 @@ _fields = (object_name, list_view_id)->
 			return n.split(".")[0]
 		else
 			return undefined
-	
+
+	if Creator.isCommonSpace(Session.get("spaceId")) && fields.indexOf("space") < 0
+		fields.push('space')
+
 	fields = _.compact(fields)
 	return fields
 
