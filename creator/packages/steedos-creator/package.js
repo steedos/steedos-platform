@@ -250,6 +250,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/views/search_result_list.html', 'client');
 	api.addFiles('client/views/search_result_list.coffee', 'client');
+	api.addFiles('client/views/search_result_list.less', 'client');
 
 	api.addFiles('client/views/related_object_list.html', 'client');
 	api.addFiles('client/views/related_object_list.coffee', 'client');

@@ -59,7 +59,7 @@ Template.headerSearch.helpers
 				keyword = keyword.trim()
 				if keyword
 					reg = new RegExp(keyword, "g")
-					label = label.replace(reg, '<mark>' + keyword + '</mark>')
+					label = label?.replace(reg, '<mark>' + keyword + '</mark>')
 		return label
 
 	is_searching: ()->

@@ -4,15 +4,13 @@
 			<header class="slds-media slds-media_center slds-has-flexi-truncate">
 				<div class="slds-media__figure">
 					<span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
-						<svg class="slds-icon slds-icon_small" aria-hidden="true">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact" />
-						</svg>
+						{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object_icon}}
 					</span>
 				</div>
 				<div class="slds-media__body">
 					<h2>
 						<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
-							<span class="slds-text-heading_small">Contacts (1)</span>
+							<span class="slds-text-heading_small">{{object_label}}</span>
 						</a>
 					</h2>
 				</div>

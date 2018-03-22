@@ -82,8 +82,16 @@ Template.search_result_list.onRendered ->
 	self.$(".search-gridContainer-#{object_name}").dxDataGrid(dxOptions)
 
 Template.search_result_list.helpers 
-	object_name: ->
+	object_name: ()->
 		return Template.instance().data.object_name
+
+	object_label: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getObject(object_name).label || Creator.getObject(object_name).name
+
+	object_icon: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getObject(object_name).icon
 		 
 	rendered: -> 
 		 

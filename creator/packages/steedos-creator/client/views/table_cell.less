@@ -1,20 +1,28 @@
 .creator_table_cell{
 	flex-wrap: wrap;
+	flex-direction: row;
+
 	.slds-truncate{
 		& > a:not(:last-of-type):after {
 			content: ",";
 		}
 	}
 	.cell-container {
-		display: flex;
-		flex-wrap: wrap;
 		width: calc(~ "100% - 1.75rem");
 		.fulltex {
+			flex: 1;
 			margin-right: 10px;
+			display: -webkit-box;
+			-webkit-line-clamp: 4;
+			-webkit-box-orient: vertical;
+			word-wrap: break-word;
+			white-space: normal;
+			overflow: hidden;
 		}
 	}
 	.slds-button {
 		margin-right: 0;
+		flex: 0;
 	}
 }
 
