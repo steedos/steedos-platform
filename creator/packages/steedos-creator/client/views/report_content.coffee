@@ -14,7 +14,20 @@ getFieldLabel = (field, key)->
 
 pivotGridChart = null
 
-renderChart = (grid)->
+renderChart = (grid, self)->
+	unless grid
+		record_id = Session.get("record_id")
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		unless reportObject
+			return
+		if reportObject?.report_type == "summary"
+			gridData = self.dataGridInstance.get().getDataSource().store()._array
+			if gridData
+				renderMatrixReport.bind(self)(reportObject, gridData, true)
+				grid = self.pivotGridInstance.get()
+	unless grid
+		return
+
 	pivotGridChart = $('#pivotgrid-chart').show().dxChart(
 		equalBarWidth: false
 		commonSeriesSettings: 
@@ -350,7 +363,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		$('#pivotgrid').hide()
 	
 	if _.where(reportFields,{area:"data"}).length
-		self.is_chart_open.set(reportObject.charting)
+		if reportObject.charting
+			self.is_chart_open.set(true)
 		self.is_chart_disabled.set(false)
 	else
 		self.is_chart_open.set(false)
@@ -398,7 +412,7 @@ renderReport = (reportObject)->
 			when 'tabular'
 				renderTabularReport.bind(self)(reportObject, result)
 			when 'summary'
-				renderMatrixReport.bind(self)(reportObject, result, true)
+				# renderMatrixReport.bind(self)(reportObject, result, true)
 				renderSummaryReport.bind(self)(reportObject, result)
 			when 'matrix'
 				renderMatrixReport.bind(self)(reportObject, result)
@@ -429,14 +443,17 @@ Template.creator_report_content.onRendered ->
 			if reportObject.report_type == "tabular"
 				self.is_chart_open.set false
 				self.is_chart_disabled.set true
+			else
+				self.is_chart_open.set reportObject.charting
 			renderReport.bind(self)(reportObject)
 	
 	this.autorun (c)->
 		is_chart_open = self.is_chart_open.get()
 		grid = Tracker.nonreactive ()->
 			return self.pivotGridInstance.get()
-		if grid and is_chart_open
-			renderChart grid
+		if is_chart_open
+			Tracker.nonreactive ()->
+				renderChart grid, self
 		else
 			pivotGridChart?.dispose()
 			$('#pivotgrid-chart').hide()
