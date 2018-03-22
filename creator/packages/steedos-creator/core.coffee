@@ -326,7 +326,7 @@ Creator.isloading = ()->
 # START
 Creator.getHiddenFields = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
-		return field.autoform and field.autoform.type == "hidden" and fieldName
+		return field.autoform and field.autoform.type == "hidden" and !field.autoform.omit and fieldName
 	)
 	fields = _.compact(fields)
 	return fields
