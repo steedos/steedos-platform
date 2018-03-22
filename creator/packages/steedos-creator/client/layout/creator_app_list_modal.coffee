@@ -2,17 +2,15 @@ Template.creator_app_list_modal.helpers Creator.helpers
 
 Template.creator_app_list_modal.helpers
 	apps: ()->
-		apps = []
-		_.each Creator.Apps, (v, k)->
-			if v.visible != false
-				apps.push v
-		return apps
+		return Creator.getVisibleApps()
 
 	app_objects: ()->
 		objects = []
-		_.each Creator.objectsByName, (v, k)->
-			if v.permissions.get().allowRead && v.is_enable && !v.hidden
-				objects.push v
+		_.each Creator.getVisibleApps(), (app)->
+			_.each app.objects, (object_name)->
+				app_obj = Creator.getObject(object_name)
+				if app_obj.permissions.get().allowRead && app_obj.is_enable && !app_obj.hidden
+					objects.push app_obj
 		return objects
 
 

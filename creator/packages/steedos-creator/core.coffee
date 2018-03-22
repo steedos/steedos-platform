@@ -161,6 +161,13 @@ Creator.getApp = (app_id)->
 	app = Creator.Apps[app_id]
 	return app
 
+Creator.getVisibleApps = ()->
+	apps = []
+	_.each Creator.Apps, (v, k)->
+		if v.visible != false
+			apps.push v
+	return apps
+
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
 Creator.formatFiltersToMongo = (filters)->
