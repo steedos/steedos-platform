@@ -93,7 +93,7 @@ Creator.Objects.objects =
 			when: "after.insert"
 			todo: (userId, doc)->
 				#新增object时，默认新建一个name字段
-				Creator.getCollection("object_fields").insert({object: doc._id, owner: userId, name: "name", space: doc.space, type: "text", required: true, index: true})
+				Creator.getCollection("object_fields").insert({object: doc._id, owner: userId, name: "name", space: doc.space, type: "text", required: true, index: true, searchable: true})
 				Creator.getCollection("object_listviews").insert({name: "all", space: doc.space, owner: userId, object_name: doc.name, shared: true, filter_scope: "space", columns: ["name"], is_default: true})
 				Creator.getCollection("object_listviews").insert({name: "recent", space: doc.space, owner: userId, object_name: doc.name, shared: true, filter_scope: "space", columns: ["name"]})
 
