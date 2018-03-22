@@ -1,0 +1,38 @@
+.record-search-template {
+	.record-search-container {
+		height: 100%;
+		width: 100%;
+		.navContainer {
+			border-right: 1px solid rgb(221, 219, 218);
+			background-color: rgb(250, 250, 249);
+			width: 15rem;
+			min-width: 15rem;
+			.search-title {
+				font-size: 13px;
+			}
+			.slds-is-active {
+				.object-item {
+					border-left-color: rgb(253, 202, 61);
+				}
+			}
+			.object-item {
+				font-size: 14px;
+				padding: 8px 12px 8px 24px;
+				line-height: 19px;
+				color: #000;
+				&:focus {
+					border-left-color: rgb(253, 202, 61);
+					color: #000;
+				}
+			}
+		}
+		.result-wrapper {
+			position: relative;
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			z-index: 0;
+			background: rgb(250, 250, 249);
+		}
+	}
+}

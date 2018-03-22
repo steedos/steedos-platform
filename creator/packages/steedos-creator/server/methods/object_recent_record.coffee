@@ -21,31 +21,30 @@ search_object = (space, object_name, searchText)->
 	data = new Array()
 
 	if searchText
-
 		_object = Creator.getObject(object_name)
 		objFields = Creator.getObject(object_name).fields
 		_object_collection = Creator.getCollection(object_name)
 		if _object && _object_collection
+			query = {}
+			query_or = []
+			_object_name_key = ''
+			fields = {_id: 1}
 			_.each objFields, (field,field_name)->
 				if field.searchable
-					_object_name_key = field_name
-					query = {}
+					subquery = {}
+					fields[field_name] = 1
+					if field.is_name
+						_object_name_key = field_name
 					search_Keywords = searchText.split(" ")
-					query_and = []
-
-					search_Keywords.forEach (keyword)->
-						subquery = {}
-						subquery[_object_name_key] = {$regex: keyword.trim()}
-						query_and.push subquery
-
-					query.$and = query_and
-					query.space = {$in: [space]}
-
-					fields = {_id: 1}
-					fields[_object_name_key] = 1
-					records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5})
-					records.forEach (record)->
-						data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+					search_Keywords.forEach (keyword)->	
+						subquery[field_name] = {$regex: keyword.trim()}
+						query_or.push subquery
+			if query_or.length>0
+				query.$or = query_or
+			query.space = {$in: [space]}
+			records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5}).fetch()
+			records.forEach (record)->
+				data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
 
 	return data
 
@@ -57,8 +56,11 @@ Meteor.methods
 		async_recent_aggregate(this.userId, records)
 
 		records.forEach (item)->
-
+			console.log item
 			record_object = Creator.getObject(item.object_name)
+
+			if !record_object
+				return
 
 			record_object_collection = Creator.getCollection(item.object_name)
 

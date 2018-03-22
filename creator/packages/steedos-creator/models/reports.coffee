@@ -115,6 +115,10 @@ Creator.Objects.reports =
 			label: "描述"
 			type: "textarea"
 			is_wide: true
+		charting:
+			label: "显示图表"
+			type: "boolean"
+			defaultValue: true
 		grouping:
 			label: "显示小计"
 			type: "boolean"

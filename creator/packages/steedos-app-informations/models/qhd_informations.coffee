@@ -76,7 +76,16 @@ Creator.Objects.qhd_informations =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: false
-			#fields:["score","title"] 
+			editable_fields:["title","company","content"]
+			list_views:['recent',"mine","company"] 
+			readable_fields:["title","company","content",
+				'owner',
+				'created',
+				'created_by',
+				'modified',
+				'modified_by',
+				'space',
+				'is_deleted' ]
 		admin:
 			allowCreate: false
 			allowDelete: false

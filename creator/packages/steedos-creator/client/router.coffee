@@ -56,6 +56,14 @@ FlowRouter.route '/app/:app_id',
 			BlazeLayout.render Creator.getLayout(),
 				main: "creator_app_home"
 
+FlowRouter.route '/app/:app_id/search/:search_text',
+	triggersEnter: [ checkUserSigned, initLayout ],
+	action: (params, queryParams)->
+		Session.set("app_id", FlowRouter.getParam("app_id"))
+		Session.set("search_text", FlowRouter.getParam("search_text"))
+		BlazeLayout.render Creator.getLayout(),
+			main: "record_search_list"
+
 FlowRouter.route '/app/:app_id/reports/view/:record_id',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->

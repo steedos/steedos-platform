@@ -1,0 +1,42 @@
+<template name="record_search_list">
+	<div class="slds-brand-band record-search-template">
+		<div class="slds-grid record-search-container">
+			<div class="navContainer slds-scrollable--y slds-p-vertical--x-small">
+				<div class="scrollerWrapper slds-navigation-list--vertical slds-navigation-list--vertical-inverse forceSearchScopesList">
+					<h1 class="slds-text-title--caps slds-text-color--weak slds-p-left--medium slds-p-vertical--medium search-title">
+						搜索结果
+					</h1>
+					<div>
+						<ul class="scopesListSection slds-has-block-links--space">
+							<li class="all {{#if is_selected}}slds-is-active selected{{/if}}">
+								<a href="" class="slds-navigation-list--vertical__action slds-text-link--reset object-item">
+									热门结果
+								</a>
+							</li>
+							{{#each sidebar_list}}
+							<li class="{{#if is_selected this}}slds-is-active selected{{/if}} object-li">
+								<a href="" class="slds-navigation-list--vertical__action slds-text-link--reset object-item">
+									{{label this}}
+								</a>
+							</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="result-wrapper slds-template__content">
+				<div class="slds-grid slds-grid--vertical slds-m-bottom_small">
+					{{#if show_grid}}
+						{{#if select_object}}
+							{{> search_result_list object_name=(select_object) record_ids=(calc_result_ids select_object)}}
+						{{else}}
+							{{#each sidebar_list}}
+								{{> search_result_list object_name=this record_ids=(calc_result_ids this)}}
+							{{/each}}	
+						{{/if}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

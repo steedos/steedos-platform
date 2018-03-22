@@ -25,7 +25,6 @@ _itemClick = (e, curObjectName)->
 			collectionName = object.label
 			name_field_key = object.NAME_FIELD_KEY
 			if action.todo == "standard_delete"
-				console.log value.itemData
 				action_record_title = value.itemData.record[name_field_key]
 				swal
 					title: "删除#{object.label}"
@@ -104,7 +103,7 @@ _expandFields = (object_name, columns)->
 	expand_fields = []
 	fields = Creator.getObject(object_name).fields
 	_.each columns, (n)->
-		if fields[n].type == "master_detail" || fields[n].type == "lookup"
+		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
 			ref = fields[n].reference_to
 			if _.isFunction(ref)
 				ref = ref()

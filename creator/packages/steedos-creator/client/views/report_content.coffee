@@ -12,6 +12,23 @@ getFieldLabel = (field, key)->
 				fieldLabel += " " + relate_field.label
 	return fieldLabel
 
+pivotGridChart = null
+
+renderChart = (grid)->
+	pivotGridChart = $('#pivotgrid-chart').show().dxChart(
+		equalBarWidth: false
+		commonSeriesSettings: 
+			type: 'bar'
+		tooltip:
+			enabled: true
+		size: 
+			height: 300
+		adaptiveLayout: 
+			width: 450
+	).dxChart('instance')
+	grid.bindChart pivotGridChart,
+		dataFieldsDisplayMode: 'splitPanes'
+		alternateDataFields: false
 
 renderTabularReport = (reportObject, reportData)->
 	self = this
@@ -303,17 +320,6 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	if reportObject.totaling == undefined
 		totaling = true
 	
-	pivotGridChart = $('#pivotgrid-chart').show().dxChart(
-		equalBarWidth: false
-		commonSeriesSettings: 
-			type: 'bar'
-		tooltip:
-			enabled: true
-		size: 
-			height: 300
-		adaptiveLayout: 
-			width: 450
-	).dxChart('instance')
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -334,16 +340,12 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			fields: reportFields
 			store: reportData
 	pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
-	pivotGrid.bindChart pivotGridChart,
-		dataFieldsDisplayMode: 'splitPanes'
-		alternateDataFields: false
-
+	
 	if isOnlyForChart
 		$('#pivotgrid').hide()
 	
-	
 	if _.where(reportFields,{area:"data"}).length
-		self.is_chart_open.set(true)
+		self.is_chart_open.set(reportObject.charting)
 		self.is_chart_disabled.set(false)
 	else
 		self.is_chart_open.set(false)
@@ -423,6 +425,17 @@ Template.creator_report_content.onRendered ->
 				self.is_chart_open.set false
 				self.is_chart_disabled.set true
 			renderReport.bind(self)(reportObject)
+	
+	this.autorun (c)->
+		is_chart_open = self.is_chart_open.get()
+		grid = Tracker.nonreactive ()->
+			return self.pivotGridInstance.get()
+		if grid and is_chart_open
+			renderChart grid
+		else
+			pivotGridChart?.dispose()
+			$('#pivotgrid-chart').hide()
+
 
 Template.creator_report_content.onCreated ->
 	Template.creator_report_content.renderReport = renderReport.bind(this.data)

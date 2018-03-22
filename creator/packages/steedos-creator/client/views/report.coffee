@@ -112,10 +112,6 @@ Template.creator_report.events
 	'click .btn-toggle-chart': (event, template)->
 		isChartOpen = !template.is_chart_open.get()
 		template.is_chart_open.set(isChartOpen)
-		if isChartOpen
-			$('#pivotgrid-chart').show()
-		else
-			$('#pivotgrid-chart').hide()
 
 	'click .btn-settings': (event, template)->
 		record_id = Session.get "record_id"
@@ -274,6 +270,7 @@ Template.creator_report.events
 			columns: columns
 			rows: rows
 			values: values
+			charting: template.is_chart_open.get()
 			grouping: report_settings.grouping
 			totaling: report_settings.totaling
 			counting: report_settings.counting
@@ -302,7 +299,7 @@ Template.creator_report.onCreated ->
 	this.is_filter_open = new ReactiveVar(false)
 	this.is_designer_open = new ReactiveVar(false)
 
-	this.is_chart_open = new ReactiveVar(true)
+	this.is_chart_open = new ReactiveVar(false)
 	this.is_chart_disabled = new ReactiveVar(false)
 	this.report_settings = new ReactiveVar()
 	this.dataGridInstance = new ReactiveVar()

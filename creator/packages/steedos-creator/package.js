@@ -244,6 +244,13 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/filter_option.coffee', 'client');
 	api.addFiles('client/views/filter_option.less', 'client');
 
+	api.addFiles('client/views/record_search_list.html', 'client');
+	api.addFiles('client/views/record_search_list.coffee', 'client');
+	api.addFiles('client/views/record_search_list.less', 'client');
+
+	api.addFiles('client/views/search_result_list.html', 'client');
+	api.addFiles('client/views/search_result_list.coffee', 'client');
+
 	api.addFiles('client/views/related_object_list.html', 'client');
 	api.addFiles('client/views/related_object_list.coffee', 'client');
 	api.addFiles('client/views/related_object_list.less', 'client');
