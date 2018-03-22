@@ -86,6 +86,7 @@ Creator.Objects.object_listviews =
 			todo: (userId, doc)->
 				if !Steedos.isSpaceAdmin(doc.space, userId)
 					doc.shared = false
+				return
 
 		"before.remove.server.object_listviews":
 			on: "server"
