@@ -27,7 +27,7 @@ Meteor.methods
 		else if filter_scope == "mine"
 			selector.owner = userId
 
-		if Creator.isCommonSpace(space) && Steedos.isSpaceAdmin(space, @userId)
+		if Creator.isCommonSpace(space) && Creator.isSpaceAdmin(space, @userId)
 			delete selector.space
 
 		if filters and filters.length > 0
