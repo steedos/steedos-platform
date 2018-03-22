@@ -85,11 +85,12 @@ if Meteor.isClient
 			filters = custom_list_view.filters
 			if filter_scope == "mine"
 				selector.push ["owner", "=", Meteor.userId()]
-			else if filter_scope == "space"
-				selector.push ["space", "=", Steedos.spaceId()]
+#			else if filter_scope == "space"
+#				selector.push ["space", "=", Steedos.spaceId()]
 
 			if filters and filters.length > 0
-				selector.push "and"
+				if selector.length > 0
+					selector.push "and"
 				filters = _.map filters, (obj)->
 					return [obj.field, obj.operation, obj.value]
 				
@@ -102,14 +103,14 @@ if Meteor.isClient
 				list_view = Creator.getListView(object_name, list_view_id)
 				unless list_view
 					return ["_id", "=", -1]
-				if list_view.filter_scope == "spacex"
-					selector.push ["space", "=", null], "or", ["space", "=", spaceId]
-				else if object_name == "users"
+#				if list_view.filter_scope == "spacex"
+#					selector.push ["space", "=", null], "or", ["space", "=", spaceId]
+				if object_name == "users"
 					selector.push ["_id", "=", userId]
-				else if object_name == "spaces"
-					selector.push ["_id", "=", spaceId]
-				else
-					selector.push ["space", "=", spaceId]
+#				else if object_name == "spaces"
+#					selector.push ["_id", "=", spaceId]
+#				else
+#					selector.push ["space", "=", spaceId]
 
 				if Creator.getListViewIsRecent(object_name, list_view)
 					viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
@@ -121,26 +122,39 @@ if Meteor.isClient
 							return ["_id", "=", _id]
 						else
 							return _id
-					selector.push "and", id_selector
+					if selector.length > 0
+						selector.push "and"
+					selector.push id_selector
 
 				# $eq, $ne, $lt, $gt, $lte, $gte
 				# [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
 				if list_view.filters
 					filters = Creator.formatFiltersToDev(list_view.filters)
 					if filters and filters.length > 0
-						selector.push "and"
+						if selector.length > 0
+							selector.push "and"
 						_.each filters, (filter)->
-							selector.push filter
+							if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
+								selector.push filter
 
 					if list_view.filter_scope == "mine"
-						selector.push "and", ["owner", "=", userId]
+						if selector.length > 0
+							selector.push "and"
+						selector.push ["owner", "=", userId]
 				else
 					permissions = Creator.getPermissions(object_name)
 					if permissions.viewAllRecords
 						if list_view.filter_scope == "mine"
-							selector.push "and", ["owner", "=", userId]
+							if selector.length > 0
+								selector.push "and"
+							selector.push ["owner", "=", userId]
 					else if permissions.allowRead
-						selector.push "and", ["owner", "=", userId]
+						if selector.length > 0
+							selector.push "and"
+						selector.push ["owner", "=", userId]
+
+		if selector.length == 0
+			return undefined
 		return selector
 
 	Creator.getODataRelatedFilter = (object_name, related_object_name, record_id)->
