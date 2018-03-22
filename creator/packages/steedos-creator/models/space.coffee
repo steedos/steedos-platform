@@ -44,9 +44,9 @@ Creator.Objects.spaces =
 			modifyAllRecords: false
 			viewAllRecords: false 
 		admin:
-			allowCreate: true
+			allowCreate: false
 			allowDelete: false
-			allowEdit: true
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false 

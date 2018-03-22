@@ -8,7 +8,8 @@ Creator.baseObject =
 			index: true
 			defaultValue: "{{userId}}"
 		space:
-			type: "text"
+			type: "lookup"
+			reference_to: "spaces"
 			omit: true
 			index: true
 			hidden: true
