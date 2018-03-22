@@ -148,8 +148,13 @@ Meteor.startup ->
 
 				if key is 'cfs.files.filerecord'
 					createQuery.query['metadata.space'] = @urlParams.spaceId
+				else if key is 'spaces'
+					createQuery.query._id = @urlParams.spaceId
 				else
 					createQuery.query.space = @urlParams.spaceId
+
+				if Creator.isCommonSpace(@urlParams.spaceId) && Creator.isSpaceAdmin(@urlParams.spaceId, @userId)
+					delete createQuery.query.space
 
 				if not createQuery.sort or !_.size(createQuery.sort)
 					createQuery.sort = { modified: -1 }
