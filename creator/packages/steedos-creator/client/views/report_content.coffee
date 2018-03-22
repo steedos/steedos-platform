@@ -400,7 +400,6 @@ renderReport = (reportObject)->
 
 
 Template.creator_report_content.onRendered ->
-	debugger
 	DevExpress.localization.locale("zh")
 	self = this.data
 	this.autorun (c)->
