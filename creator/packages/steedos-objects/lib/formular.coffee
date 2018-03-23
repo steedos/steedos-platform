@@ -8,12 +8,12 @@ Meteor.startup ->
 	Tracker.autorun ->
 		space = Session.get("spaceId")
 		userId = Meteor.userId()
-		if space and userId and Steedos.subsSpaceBase.ready() 
+		if space and userId and Steedos.subsSpaceBase.ready() && Creator.objects_initialized.get()
 
 			Creator.Formular.USER_CONTEXT.userId = Meteor.userId()
 			Creator.Formular.USER_CONTEXT.spaceId = Session.get("spaceId")
 
-			space_user = Creator.getCollection("space_users")?.findOne({space: space, user: userId})
+			space_user = Creator.getCollection("space_users").findOne({space: space, user: userId})
 			if space_user
 				Creator.Formular.USER_CONTEXT.user = {
 					_id: userId
@@ -32,6 +32,11 @@ Meteor.startup ->
 						fullname: space_user_org.fullname,
 						is_company: space_user_org.is_company
 					}
+
+			else
+			    #初始化USER_CONTEXT
+				Creator.Formular.USER_CONTEXT.user = {}
+				Creator.Formular.USER_CONTEXT.organization = {}
 
 
 Creator.Formular._prependPrefixForFormula = (prefix,fieldVariable)->
