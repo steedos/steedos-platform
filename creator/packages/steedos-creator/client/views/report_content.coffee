@@ -404,7 +404,9 @@ renderReport = (reportObject)->
 			return [obj.field, obj.operation, obj.value]
 		
 		filters = Creator.formatFiltersToMongo(filters)
+	$("body").addClass("loading")
 	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
+		$("body").removeClass("loading")
 		if error
 			console.error('report_data method error:', error)
 			return
