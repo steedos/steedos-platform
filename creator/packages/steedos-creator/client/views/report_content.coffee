@@ -357,6 +357,28 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		dataSource:
 			fields: reportFields
 			store: reportData
+	unless isOnlyForChart
+		drillDownDataSource = {}
+		salesPopup = $('#drill-down-popup').dxPopup(
+			width: 600
+			height: 400
+			contentTemplate: (contentElement) ->
+				$('<div />').addClass('drill-down').dxDataGrid(
+					width: 560
+					height: 300
+					columns: ["space*%*name","created","name","email"]).appendTo contentElement
+			onShowing: ->
+				$('.drill-down').dxDataGrid('instance').option 'dataSource', drillDownDataSource
+		).dxPopup('instance')
+		dxOptions.onCellClick = (e)->
+			# if e.area == 'data'
+			# 	pivotGridDataSource = e.component.getDataSource()
+			# 	rowPathLength = e.cell.rowPath.length
+			# 	rowPathName = e.cell.rowPath[rowPathLength - 1]
+			# 	popupTitle = (if rowPathName then rowPathName else 'Total') + ' Drill Down Data'
+			# 	drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
+			# 	salesPopup.option 'title', popupTitle
+			# 	salesPopup.show()
 	pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
 	
 	if isOnlyForChart
