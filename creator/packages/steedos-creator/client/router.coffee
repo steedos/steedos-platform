@@ -135,7 +135,8 @@ objectRoutes.route '/view/:record_id',
 					Blaze.renderWithData(Template.mobileView, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 		else
 			Session.set("detail_info_visible", true)
-			Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
+			ObjectRecent.insert(object_name, record_id, Session.get("spaceId"))
+#			Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
 			BlazeLayout.render Creator.getLayout(),
 				main: "creator_view"
 

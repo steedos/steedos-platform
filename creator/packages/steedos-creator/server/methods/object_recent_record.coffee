@@ -1,7 +1,7 @@
 recent_aggregate = (created_by, _records, callback)->
 	Creator.Collections.object_recent_viewed.rawCollection().aggregate [
 		{$match: {created_by: created_by}},
-		{$group: {_id: {object_name: "$object_name", record_id: "$record_id"}, maxCreated: {$max: "$created"}}},
+		{$group: {_id: {object_name: "$record.o", record_id: "$record.ids"}, maxCreated: {$max: "$created"}}},
 		{$sort: {maxCreated: -1}},
 		{$limit: 10}
 	], (err, data)->
@@ -9,6 +9,7 @@ recent_aggregate = (created_by, _records, callback)->
 			throw new Error(err)
 
 		data.forEach (doc) ->
+			console.log "doc", doc
 			_records.push doc._id
 
 		if callback && _.isFunction(callback)
@@ -69,7 +70,7 @@ Meteor.methods
 
 				fields[record_object.NAME_FIELD_KEY] = 1
 
-				record = record_object_collection.findOne(item.record_id, {fields: fields})
+				record = record_object_collection.findOne(item.record_id[0], {fields: fields})
 				if record
 					data.push {_id: record._id, _name: record[record_object.NAME_FIELD_KEY], _object_name: item.object_name}
 

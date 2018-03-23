@@ -3,12 +3,18 @@ Creator.Objects.object_recent_viewed =
 	label: "最近查看"
 	icon: "forecasts"
 	fields: 
-		record_id:
-			type: "text"
-		object_name: 
-			type: "text"
-			searchable:true
-			index:true
+#		record_id:
+#			type: "text"
+#		object_name:
+#			type: "text"
+#			searchable:true
+#			index:true
+		record:
+			type: "lookup"
+			omit: true
+			is_name: true
+			reference_to: ()->
+				return _.keys(Creator.Objects)
 		space:
 			type: "text",
 			omit: true
@@ -17,16 +23,20 @@ Creator.Objects.object_recent_viewed =
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false 
 		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: true
+
+	list_views:
+		default:
+			columns: ["record", "space", "modified"]
 
 if Meteor.isServer
 	Meteor.publish "object_recent_viewed", (object_name)->

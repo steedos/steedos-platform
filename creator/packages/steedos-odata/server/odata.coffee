@@ -190,7 +190,7 @@ Meteor.startup ->
 					body  = setErrorMessage(404,collection,key)
 			else
 				statusCode: 403
-				body  = setErrorMessage(403,collection,key,get)
+				body  = setErrorMessage(403,collection,key,"get")
 		post: ()->
 			key = @urlParams.object_name
 			if not Creator.objectsByName[key]?.enable_api
@@ -222,10 +222,10 @@ Meteor.startup ->
 					{body: body, headers: headers}
 				else
 					statusCode: 404
-					body = setErrorMessage(404,collection,key,post)
+					body = setErrorMessage(404,collection,key,'post')
 			else
 				statusCode: 403
-				body  = setErrorMessage(403,collection,key,post)
+				body  = setErrorMessage(403,collection,key,'post')
 	})
 	SteedosOdataAPI.addRoute(':object_name/recent', {authRequired: true, spaceRequired: false}, {
 		get:()->
@@ -242,12 +242,14 @@ Meteor.startup ->
 			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 			if permissions.allowRead
 				recent_view_collection = Creator.Collections["object_recent_viewed"]
-				recent_view_selector = {object_name:key,created_by:@userId}
+				recent_view_selector = {"record.o":key,created_by:@userId}
 				recent_view_options = {}
 				recent_view_options.sort = {created: -1}
-				recent_view_options.fields = {record_id:1}
+				recent_view_options.fields = {record:1}
 				recent_view_records = recent_view_collection.find(recent_view_selector,recent_view_options).fetch()
-				recent_view_records_ids = _.pluck(recent_view_records,'record_id')
+				recent_view_records_ids = _.pluck(recent_view_records,'record')
+				recent_view_records_ids = recent_view_records_ids.getProperty("ids")
+				recent_view_records_ids = _.flatten(recent_view_records_ids)
 				recent_view_records_ids = _.uniq(recent_view_records_ids)
 				qs = querystring.unescape(querystring.stringify(@queryParams))
 				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
@@ -319,10 +321,10 @@ Meteor.startup ->
 					{body: body, headers: headers}
 				else
 					statusCode: 404
-					body = setErrorMessage(404,collection,key,post)
+					body = setErrorMessage(404,collection,key,'post')
 			else
 				statusCode: 403
-				body  = setErrorMessage(403,collection,key,post)
+				body  = setErrorMessage(403,collection,key,'post')
 		get:()->
 			console.log "@urlParams", @urlParams
 
@@ -420,7 +422,7 @@ Meteor.startup ->
 			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 			if permissions.allowEdit
 					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
-					entityIsUpdated = collection.update selector, $set: @bodyParams
+					entityIsUpdated = collection.update selector, @bodyParams
 					if entityIsUpdated
 						entity = collection.findOne @urlParams._id
 						entities = []
@@ -438,7 +440,7 @@ Meteor.startup ->
 						body  = setErrorMessage(404,collection,key)
 			else
 				statusCode: 403
-				body  = setErrorMessage(403,collection,key,put)
+				body  = setErrorMessage(403,collection,key,'put')
 		delete:()->
 			key = @urlParams.object_name
 			if not Creator.objectsByName[key]?.enable_api

@@ -1,5 +1,103 @@
 Template.creator_report_content.helpers Creator.helpers
 
+getReportContent = ()->
+	self = this
+	filters = Session.get("filter_items")
+	filter_scope = Session.get("filter_scope")
+	columns = []
+	rows = []
+	values = []
+	sort = []
+	column_width = []
+	report_settings = self.report_settings.get()
+	report = Creator.getObjectRecord()
+	switch report.report_type
+		when 'tabular'
+			fields = self.dataGridInstance.get()?.getVisibleColumns()
+			columns = _.where(fields,{"groupIndex":undefined})
+			columns = _.sortBy(columns, 'visibleIndex')
+			columns = _.pluck(columns,"dataField")
+			# 要把*%*换回成符号.保存
+			columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
+			# 这里rows/values在设计模式下不会有变更，所以直接取原值保存即可
+			rows = report.rows
+			values = report.values
+			fields = _.sortBy(fields,"sortIndex")
+			_.each fields, (n,i)->
+				fieldKey = n.dataField.replace(/\*%\*/g,".")
+				if n.sortOrder
+					sort.push [fieldKey,n.sortOrder]
+				if n.width
+					column_width.push [fieldKey,n.width]
+		when 'summary'
+			fields = self.dataGridInstance.get()?.getVisibleColumns()
+			columns = _.where(fields,{"groupIndex":undefined})
+			columns = _.sortBy(columns, 'visibleIndex')
+			columns = _.pluck(columns,"dataField")
+			# 要把*%*换回成符号.保存
+			columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
+			rows = fields.filter (n)-> return n.groupIndex > -1
+			rows = _.sortBy(rows, 'groupIndex')
+			rows = _.pluck(rows,"dataField")
+			# 要把*%*换回成符号.保存
+			rows = rows.map (n)-> return n.replace(/\*%\*/g,".")
+			# 这里values在设计模式下不会有变更，所以直接取原值保存即可
+			values = report.values
+			fields = _.sortBy(fields,"sortIndex")
+			_.each fields, (n,i)->
+				fieldKey = n.dataField.replace(/\*%\*/g,".")
+				if n.sortOrder
+					sort.push [fieldKey,n.sortOrder]
+				if n.width
+					column_width.push [fieldKey,n.width]
+		when 'matrix'
+			fields = self.pivotGridInstance.get()?.getDataSource()._fields
+			# 这里之所以要去掉带groupInterval属性的字段，是因为带这个属性的字段都是自动生成的子字段
+			# 比如时间类型的字段会额外自动增加三个子字段，分别按年、季、月分组
+			columns = _.where(fields,{area:"column","groupInterval":undefined})
+			columns = _.sortBy(columns, 'areaIndex')
+			columns = _.pluck(columns,"dataField")
+			# 要把*%*换回成符号.保存
+			columns = columns.map (n)-> return n.replace(/\*%\*/g,".")
+			rows = _.where(fields,{area:"row","groupInterval":undefined})
+			rows = _.sortBy(rows, 'areaIndex')
+			rows = _.pluck(rows,"dataField")
+			# 要把*%*换回成符号.保存
+			rows = rows.map (n)-> return n.replace(/\*%\*/g,".")
+			# _id字段虽然也是自动生成的，但是用户可能会对_id进行顺序变更，所以这里不可以去除_id
+			values = _.where(fields,{area:"data"})
+			values = _.sortBy(values, 'areaIndex')
+			values = _.pluck(values,"dataField")
+			# 要把*%*换回成符号.保存
+			values = values.map (n)-> return n.replace(/\*%\*/g,".")
+			fields = _.sortBy(fields,"sortIndex")
+			_.each fields, (n,i)->
+				fieldKey = n.dataField.replace(/\*%\*/g,".")
+				if n.sortOrder
+					sort.push [fieldKey,n.sortOrder]
+				if n.width
+					column_width.push [fieldKey,n.width]
+		else
+			columns = report.columns
+			rows = report.rows
+			values = report.values
+
+	options = {}
+	options.sort = sort
+	options.column_width = column_width
+	return {
+		filters: filters
+		filter_scope: filter_scope
+		columns: columns
+		rows: rows
+		values: values
+		charting: self.is_chart_open.get()
+		grouping: report_settings.grouping
+		totaling: report_settings.totaling
+		counting: report_settings.counting
+		options: options
+	}
+
 getFieldLabel = (field, key)->
 	fieldLabel = field.label
 	unless fieldLabel
@@ -15,16 +113,18 @@ getFieldLabel = (field, key)->
 pivotGridChart = null
 
 renderChart = (grid, self)->
-	unless grid
-		record_id = Session.get("record_id")
-		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		unless reportObject
-			return
-		if reportObject?.report_type == "summary"
-			gridData = self.dataGridInstance.get().getDataSource().store()._array
-			if gridData
-				renderMatrixReport.bind(self)(reportObject, gridData, true)
-				grid = self.pivotGridInstance.get()
+	record_id = Session.get("record_id")
+	reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+	unless reportObject
+		return
+	if reportObject?.report_type == "summary"
+		# 因摘要类型可能在设计模式下改了报表属性，这里chart没办法自动同步，所以只能重新根据报表属性生成chart
+		gridData = self.dataGridInstance.get()?.getDataSource().store()._array
+		if gridData
+			reportContent = getReportContent.bind(self)()
+			_.extend(reportObject,reportContent)
+			renderMatrixReport.bind(self)(reportObject, gridData, true)
+			grid = self.pivotGridInstance.get()
 	unless grid
 		return
 
@@ -232,6 +332,17 @@ renderSummaryReport = (reportObject, reportData)->
 
 	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
+	if groupSummaryItems.length || totalSummaryItems.length
+		if reportObject.charting
+			self.is_chart_open.set(true)
+		else
+			self.is_chart_open.set(false)
+		self.is_chart_disabled.set(false)
+	else
+		self.is_chart_open.set(false)
+		self.is_chart_disabled.set(true)
+		$('#pivotgrid-chart').hide()
+
 	this.dataGridInstance?.set datagrid
 
 renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
@@ -385,8 +496,11 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		$('#pivotgrid').hide()
 	
 	if _.where(reportFields,{area:"data"}).length
-		if reportObject.charting
-			self.is_chart_open.set(true)
+		unless isOnlyForChart
+			if reportObject.charting
+				self.is_chart_open.set(true)
+			else
+				self.is_chart_open.set(false)
 		self.is_chart_disabled.set(false)
 	else
 		self.is_chart_open.set(false)
@@ -436,7 +550,6 @@ renderReport = (reportObject)->
 			when 'tabular'
 				renderTabularReport.bind(self)(reportObject, result)
 			when 'summary'
-				# renderMatrixReport.bind(self)(reportObject, result, true)
 				renderSummaryReport.bind(self)(reportObject, result)
 			when 'matrix'
 				renderMatrixReport.bind(self)(reportObject, result)
@@ -467,8 +580,10 @@ Template.creator_report_content.onRendered ->
 			if reportObject.report_type == "tabular"
 				self.is_chart_open.set false
 				self.is_chart_disabled.set true
-			else
-				self.is_chart_open.set reportObject.charting
+			# else if reportObject.report_type == "summary" and pivotGridChart
+			# 	pivotGridChart.dispose()
+			# 	self.pivotGridInstance.get()?.dispose()
+			# 	self.pivotGridInstance.set(null)
 			renderReport.bind(self)(reportObject)
 	
 	this.autorun (c)->
@@ -484,4 +599,5 @@ Template.creator_report_content.onRendered ->
 
 
 Template.creator_report_content.onCreated ->
+	Template.creator_report_content.getReportContent = getReportContent.bind(this.data)
 	Template.creator_report_content.renderReport = renderReport.bind(this.data)
