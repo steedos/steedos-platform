@@ -190,7 +190,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/related_object_list.html', 'client');
 	api.addFiles('client/mobile/related_object_list.less', 'client');
 	api.addFiles('client/mobile/related_object_list.coffee', 'client');
-
+	api.addFiles('client/mobile/mobile_report.html', 'client');
+	api.addFiles('client/mobile/mobile_report.less', 'client');
+	api.addFiles('client/mobile/mobile_report.coffee', 'client');
+	
 
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');

@@ -65,16 +65,22 @@ FlowRouter.route '/app/:app_id/search/:search_text',
 			main: "record_search_list"
 
 FlowRouter.route '/app/:app_id/reports/view/:record_id',
-	triggersEnter: [ checkUserSigned ],
+	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		record_id = FlowRouter.getParam("record_id")
 		object_name = FlowRouter.getParam("object_name")
+		data = {app_id: app_id, record_id: record_id, object_name: object_name}
 		Session.set("app_id", app_id)
 		Session.set("object_name", "reports")
 		Session.set("record_id", record_id)
-		BlazeLayout.render Creator.getLayout(),
-			main: "creator_report"
+		if Steedos.isMobile()
+			if $("#report_view_id").length == 0
+				Meteor.defer ->
+					Blaze.renderWithData(Template.reportView, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+		else
+			BlazeLayout.render Creator.getLayout(),
+				main: "creator_report"
 
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',

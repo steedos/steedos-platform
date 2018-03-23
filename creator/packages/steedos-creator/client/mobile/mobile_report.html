@@ -1,0 +1,18 @@
+<template name="reportView">
+    <div class="report-view mobile-template-container hidden" id="report_view_id">
+        <header class="mobile-template-header">
+            <div class="forceHeaderLayout">
+                <div class="bLeft report-view-back">
+                    <i class="ion ion-android-arrow-back"></i>
+                </div>
+                <div class="bRight"></div>
+                <div class="bBody">
+					报表
+                </div>
+            </div>
+        </header>
+        <div class="mobile-template-content">
+			{{> Template.dynamic template="creator_report_content" data=report_content_params}}
+        </div>
+    </div> 
+</template>
