@@ -81,8 +81,8 @@ Creator.Objects.reports =
 			label: "字段值"
 			# type: "text"
 			blackbox: true
-		values: 
-			label: "统计"
+		fields: 
+			label: "字段"
 			type: "lookup"
 			multiple: true
 			depend_on: ["object_name"]
@@ -99,6 +99,14 @@ Creator.Objects.reports =
 				return Creator.getObjectLookupFieldOptions values.object_name, true
 		columns:
 			label: "列"
+			type: "lookup"
+			multiple: true
+			depend_on: ["object_name"]
+			defaultIcon: "service_contract"
+			optionsFunction: (values)->
+				return Creator.getObjectLookupFieldOptions values.object_name, true
+		values: 
+			label: "统计"
 			type: "lookup"
 			multiple: true
 			depend_on: ["object_name"]

@@ -61,5 +61,8 @@
 	"creator_odata_api_not_found": "很抱歉，您要访问的资源不存在或者您没有权限访问该资源！",
 
 	"creator_list_no_actions_tip": "没有可做的操作",
-	"creator_list_view_permissions_lost": "您没有权限访问该视图"
+	"creator_list_view_permissions_lost": "您没有权限访问该视图",
+
+	"creator_report_drill_down_label": "下钻数据",
+	"creator_report_drill_down_total_label": "总"
 }
