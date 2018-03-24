@@ -12,9 +12,29 @@ Creator.Objects.apps =
 			required: true
 			searchable:true
 			index:true
+		icon:
+			type: "text"
+		icon_slds:
+			type: "text"
 		objects:
 			label: "对象"
-			type: "[text]"
+			type: "lookup"
+			required: true
+			multiple: true
+			optionsFunction: ()->
+				appsObjects = Creator.getAppsObjects()
+				allObjects = _.keys(Creator.objectsByName)
+				unusedObjects = _.difference allObjects, appsObjects
+				_options = []
+				_.forEach unusedObjects, (object_name)->
+					o = Creator.getObject(object_name)
+					if o.space == Session.get("spaceId")
+						_options.push {label: o.label, value: o.name, icon: o.icon}
+				return _options
+		visible:
+			type: "boolean"
+		sort:
+			type: "number"
 	list_views:
 		default:
 			columns: ["name"]
@@ -29,9 +49,9 @@ Creator.Objects.apps =
 			modifyAllRecords: false
 			viewAllRecords: true 
 		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true 

@@ -15,6 +15,8 @@ Creator.Object = (options)->
 	if !(options.permission_set?.user)
 		options.permission_set.user = {}
 
+	self._id = options._id || options.name
+	self.space = options.space
 	self.name = options.name
 	self.label = options.label
 	self.icon = options.icon

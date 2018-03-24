@@ -166,7 +166,20 @@ Creator.getVisibleApps = ()->
 	_.each Creator.Apps, (v, k)->
 		if v.visible != false
 			apps.push v
-	return _.uniq(apps);
+	return apps;
+
+Creator.getVisibleAppsObjects = ()->
+	apps = Creator.getVisibleApps()
+	objects = []
+	_.forEach apps, (app)->
+		objects = objects.concat(app.objects)
+	return _.uniq objects
+
+Creator.getAppsObjects = ()->
+	objects = []
+	_.forEach Creator.Apps, (app)->
+		objects = objects.concat(app.objects)
+	return _.uniq objects
 
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".

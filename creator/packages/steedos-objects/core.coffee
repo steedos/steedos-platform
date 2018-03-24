@@ -87,6 +87,9 @@ Creator.getOrderlySetByIds = (docs, ids, id_key, hit_first)->
 			return ids.indexOf(doc[id_key])
 
 Creator.sortingMethod = (value1, value2) ->
+	if this.key
+		value1 = value1[this.key]
+		value2 = value2[this.key]
 	# Handling null values
 	if !value1 and value2
 		return -1
@@ -95,4 +98,4 @@ Creator.sortingMethod = (value1, value2) ->
 	if value1 and !value2
 		return 1
 	locale = Steedos.locale()
-	return value1.localeCompare value2, locale
+	return value1.localeCompare? value2, locale

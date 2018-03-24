@@ -187,6 +187,8 @@ renderTabularReport = (reportObject, reportData)->
 	# 注意这里如果totalItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	
+	_.every reportColumns, (n)->
+		n.sortingMethod = Creator.sortingMethod
 
 	dxOptions = 
 		showColumnLines: false
@@ -315,6 +317,10 @@ renderSummaryReport = (reportObject, reportData)->
 	# 注意这里如果totalItems/groupItems为空时要赋给空数组，否则第二次执行dxDataGrid函数时，原来不为空的值会保留下来
 	reportSummary.totalItems = totalSummaryItems
 	reportSummary.groupItems = groupSummaryItems
+
+	_.every reportColumns, (n)->
+		n.sortingMethod = Creator.sortingMethod
+
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -458,6 +464,9 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	if reportObject.totaling == undefined
 		totaling = true
 	
+	_.every reportFields, (n)->
+		n.sortingMethod = Creator.sortingMethod.bind({key:"value"})
+
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -479,6 +488,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		dataSource:
 			fields: reportFields
 			store: reportData
+
 	unless isOnlyForChart
 		drillDownDataSource = {}
 		salesPopup = $('#drill-down-popup').dxPopup(
@@ -486,6 +496,7 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			height: 400
 			contentTemplate: (contentElement) ->
 				drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
+				drillDownFields = _.without drillDownFields, null, undefined
 				drillDownColumns = []
 				gridFields = self.pivotGridInstance.get().getDataSource()._fields
 				drillDownFields.forEach (n)->
@@ -573,11 +584,13 @@ renderReport = (reportObject)->
 			when 'tabular'
 				renderTabularReport.bind(self)(reportObject, result)
 			when 'summary'
+				# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
+				self.pivotGridInstance?.get()?.dispose()
 				renderSummaryReport.bind(self)(reportObject, result)
 			when 'matrix'
-				renderMatrixReport.bind(self)(reportObject, result)
 				# 报表类型从summary转变成matrix时，需要把原来summary报表清除
 				self.dataGridInstance?.get()?.dispose()
+				renderMatrixReport.bind(self)(reportObject, result)
 
 
 Template.creator_report_content.onRendered ->
