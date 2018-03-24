@@ -166,7 +166,7 @@ Creator.getVisibleApps = ()->
 	_.each Creator.Apps, (v, k)->
 		if v.visible != false
 			apps.push v
-	return apps
+	return _.uniq(apps);
 
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
