@@ -18,34 +18,41 @@ recent_aggregate = (created_by, _records, callback)->
 
 async_recent_aggregate = Meteor.wrapAsync(recent_aggregate)
 
-search_object = (space, object_name, searchText)->
+search_object = (space, object_name,userId, searchText)->
 	data = new Array()
 
 	if searchText
-		_object = Creator.getObject(object_name)
-		objFields = Creator.getObject(object_name).fields
+		_object = Creator.getObject(object_name)	 	
+		permissions = Creator.getObjectPermissions(space, userId,object_name)
 		_object_collection = Creator.getCollection(object_name)
-		if _object && _object_collection
-			query = {}
-			query_or = []
-			_object_name_key = ''
-			fields = {_id: 1}
-			_.each objFields, (field,field_name)->
-				if field.searchable
-					subquery = {}
-					fields[field_name] = 1
-					if field.is_name
-						_object_name_key = field_name
-					search_Keywords = searchText.split(" ")
-					search_Keywords.forEach (keyword)->	
-						subquery[field_name] = {$regex: keyword.trim()}
-						query_or.push subquery
-			if query_or.length>0
-				query.$or = query_or
-			query.space = {$in: [space]}
-			records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5}).fetch()
-			records.forEach (record)->
-				data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+		if permissions.allowRead or permissions.viewAllRecords
+			if _object && _object_collection
+				query = {}
+				query_or = []
+				_object_name_key = ''
+				objFields = Creator.getObject(object_name).fields
+				read_fields = permissions.readable_fields
+				fields = {_id: 1}
+				_.each objFields, (field,field_name)->
+					if field.searchable
+						subquery = {}
+						if read_fields.indexOf(field_name)> -1
+							fields[field_name] = 1
+							if field.is_name
+								_object_name_key = field_name
+						search_Keywords = searchText.split(" ")
+						search_Keywords.forEach (keyword)->	
+							subquery[field_name] = {$regex: keyword.trim()}
+							query_or.push subquery
+				if query_or.length>0
+					query.$or = query_or
+					query.space = {$in: [space]}
+					if not permissions.viewAllRecords
+						if permissions.allowRead
+							query.owner = userId
+					records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5}).fetch()
+					records.forEach (record)->
+						data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
 
 	return data
 
@@ -77,6 +84,8 @@ Meteor.methods
 		return data
 
 	'object_record_search': (options)->
+		self = this
+
 		data = new Array()
 
 		searchText = options.searchText
@@ -84,7 +93,7 @@ Meteor.methods
 
 		_.forEach Creator.objectsByName, (_object, name)->
 			if _object.enable_search
-				object_record = search_object(space, _object.name, searchText)
+				object_record = search_object(space, _object.name, self.userId, searchText)
 				data = data.concat(object_record)
 
 		return data

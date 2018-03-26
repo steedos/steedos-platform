@@ -448,8 +448,10 @@ Template.CreatorAfModal.events
 					$.ajax
 						type: type
 						url: url
-						data: data
+						data: JSON.stringify(data)
 						dataType: 'json'
+						contentType: "application/json"
+						processData: false
 						beforeSend: (request) ->
 							request.setRequestHeader 'X-User-Id', Meteor.userId()
 							request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
