@@ -265,11 +265,13 @@ Meteor.startup ->
 				entities_index = []
 				entities_ids = _.pluck(entities,'_id')
 				sort_entities = []
-				_.each recent_view_records_ids ,(recent_view_records_id)->
-					index = _.indexOf(entities_ids,recent_view_records_id)
-					if index>-1
-						sort_entities.push entities[index]
-				#console.log "sort_entities=====",sort_entities
+				if not createQuery.sort or !_.size(createQuery.sort)
+					_.each recent_view_records_ids ,(recent_view_records_id)->
+						index = _.indexOf(entities_ids,recent_view_records_id)
+						if index>-1
+							sort_entities.push entities[index]
+				else
+					sort_entities = entities
 				if sort_entities
 					dealWithExpand(createQuery, sort_entities, key)
 					body = {}
