@@ -15,6 +15,7 @@ Creator.Objects.apps =
 		url:
 			type: "url"
 			required: false
+			hidden: true
 		icon:
 			type: "text"
 		icon_slds:

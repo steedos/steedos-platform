@@ -438,6 +438,21 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 	
 	return fields
 
+
+Creator.getDBApps = (space_id)->
+	dbApps = {}
+	Creator.Collections["apps"].find({space: space_id}, {
+		fields: {
+			created: 0,
+			created_by: 0,
+			modified: 0,
+			modified_by: 0
+		}
+	}).forEach (app)->
+		dbApps[app._id] = app
+
+	return dbApps
+
 # END
 
 if Meteor.isServer
