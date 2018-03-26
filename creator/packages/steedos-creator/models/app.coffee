@@ -43,7 +43,7 @@ Creator.Objects.apps =
 		default:
 			columns: ["name"]
 		all:
-			filter_scope: "spacex"
+			filter_scope: "space"
 	permission_set:
 		user:
 			allowCreate: false
