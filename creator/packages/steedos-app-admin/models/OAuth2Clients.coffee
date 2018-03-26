@@ -23,14 +23,12 @@ Creator.Objects.OAuth2Clients =
 			type:"text"
 			label:"客户端ID"
 			is_wide:true
-			readonly:true
 			defaultValue: ()->
 				return Random.id()
 		clientSecret:
 			type:"text"
 			label:"Secret"
 			is_wide:true
-			readonly:true
 			defaultValue: ()->
 				return Random.secret()
 		
