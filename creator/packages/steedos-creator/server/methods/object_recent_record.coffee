@@ -29,7 +29,7 @@ search_object = (space, object_name,userId, searchText)->
 			if _object && _object_collection
 				query = {}
 				query_or = []
-				_object_name_key = ''
+				_object_name_key = _object.NAME_FIELD_KEY
 				objFields = Creator.getObject(object_name).fields
 				read_fields = permissions.readable_fields
 				fields = {_id: 1}
@@ -54,7 +54,7 @@ search_object = (space, object_name,userId, searchText)->
 					records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5}).fetch()
 					records.forEach (record)->
 						data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
-
+	
 	return data
 
 Meteor.methods
