@@ -61,10 +61,10 @@ Creator.isCommonSpace = (spaceId) ->
 	return spaceId == 'common'
 
 ###
-    docs：待排序的文档数组
-    ids：_id集合
-    id_key: 默认为_id
-    return 按照ids的顺序返回新的文档集合
+	docs：待排序的文档数组
+	ids：_id集合
+	id_key: 默认为_id
+	return 按照ids的顺序返回新的文档集合
 ###
 Creator.getOrderlySetByIds = (docs, ids, id_key, hit_first)->
 
@@ -86,10 +86,18 @@ Creator.getOrderlySetByIds = (docs, ids, id_key, hit_first)->
 		return	_.sortBy docs, (doc)->
 			return ids.indexOf(doc[id_key])
 
+###
+	按用户所属本地化语言进行排序，支持中文、数值、日期等字段排序
+	对于Object类型，如果提供作用域中key属性，则取值为value[key]进行排序比较，反之整个Object.toString()后排序比较
+###
 Creator.sortingMethod = (value1, value2) ->
 	if this.key
 		value1 = value1[this.key]
 		value2 = value2[this.key]
+	if value1 instanceof Date
+		value1 = value1.getTime()
+	if value2 instanceof Date
+		value2 = value2.getTime()
 	# Handling null values
 	if !value1 and value2
 		return -1
@@ -98,4 +106,4 @@ Creator.sortingMethod = (value1, value2) ->
 	if value1 and !value2
 		return 1
 	locale = Steedos.locale()
-	return value1.localeCompare? value2, locale
+	return value1.toString().localeCompare value2.toString(), locale
