@@ -19,8 +19,13 @@ Creator.bootstrap = (callback)->
 				_.extend object.list_views, object_listviews[object_name]
 				Creator.loadObjects object, object_name
 
-			_.each result.assigned_apps, (app_name)->
-				Creator.Apps[app_name]?.visible = true
+			apps = result.assigned_apps
+			if apps.length
+				_.each Creator.Apps, (app, key)->
+					if apps.indexOf(key) > -1
+						app.visible = true
+					else
+						app.visible = false
 
 		if _.isFunction(callback)
 			callback()

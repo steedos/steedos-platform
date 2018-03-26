@@ -18,6 +18,11 @@ Creator.Objects.permission_set =
 			type: "lookup"
 			reference_to: "apps"
 			multiple: true
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.Apps, (o, k)->
+					_options.push {label: o.name, value: k, icon: o.icon}
+				return _options
 
 	list_views:
 		default:

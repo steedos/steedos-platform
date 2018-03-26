@@ -1,30 +1,49 @@
 if Meteor.isServer
 
-	Creator.getAllPermissions = (spaceId, userId)->
-		permissions = 
+	Creator.getAllPermissions = (spaceId, userId) ->
+		permissions =
 			objects: {}
 			assigned_apps: []
-		psets = Creator.getCollection("permission_set").find({users: userId}).fetch()
-		permissions.assigned_apps = _.pluck psets, "assigned_apps"
+		psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1, assigned_apps:1}})
+		psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1, assigned_apps:1}})
+		psetsCurrent = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1}}).fetch()
+		psets = { psetsAdmin, psetsUser, psetsCurrent }
+		permissions.assigned_apps = Creator.getAssignedApps.bind(psets)(spaceId, userId)
 		_.each Creator.objectsByName, (object, object_name)->
 			permissions.objects[object_name] = Creator.Objects[object_name]
-			permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions(spaceId, userId, object_name)
+			permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 		return permissions
 
-	unionPlus = (array,other)->
+	unionPlus = (array, other) ->
 		if !array and !other
 			return undefined
 		if !array
 			array = []
 		if !other
 			other = []
-		return _.union(array,other)
+		return _.union(array, other)
+
+	Creator.getAssignedApps = (spaceId, userId)->
+		psetsAdmin = this.psetsAdmin || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1, assigned_apps:1}})
+		psetsUser = this.psetsUser || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1, assigned_apps:1}})
+		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1}}).fetch()
+
+		apps = _.flatten(_.pluck(psets, "assigned_apps"))
+		if Creator.isSpaceAdmin(spaceId, userId)
+			psetBase = psetsAdmin
+		else
+			psetBase = psetsUser
+		if psetBase?.assigned_apps
+			apps = _.union apps, psetBase.assigned_apps
+		return _.without(_.uniq(apps),undefined,null)
 
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}
 		object = Creator.getObject(object_name)
-		psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1}})
-		psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1}})
+		psetsAdmin = this.psetsAdmin || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1}})
+		psetsUser = this.psetsUser || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1}})
+		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1}}).fetch()
+
 		opsetAdmin = _.clone(object.permission_set.admin)
 		opsetUser = _.clone(object.permission_set.user)
 
@@ -77,8 +96,6 @@ if Meteor.isServer
 			else
 				permissions = opsetUser
 		
-		psets = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1}}).fetch()
-		
 		if psets.length > 0
 			set_ids = _.pluck psets, "_id"
 			pos = Creator.getCollection("permission_objects").find({object_name: object_name, permission_set_id: {$in: set_ids}}).fetch()
@@ -101,8 +118,8 @@ if Meteor.isServer
 
 				permissions.list_views = unionPlus(permissions.list_views, po.list_views)
 				permissions.actions = unionPlus(permissions.actions, po.actions)
-				permissions.readable_fields = unionPlus(permissions.readable_fields,po.readable_fields)
-				permissions.editable_fields = unionPlus(permissions.editable_fields,po.editable_fields)
+				permissions.readable_fields = unionPlus(permissions.readable_fields, po.readable_fields)
+				permissions.editable_fields = unionPlus(permissions.editable_fields, po.editable_fields)
 				permissions.related_objects = unionPlus(permissions.related_objects, po.related_objects)
 
 		if object.is_view
@@ -117,7 +134,7 @@ if Meteor.isServer
 		return permissions
 
 
-	Creator.initPermissions = (object_name)->
+	Creator.initPermissions = (object_name) ->
 
 		# 应该把计算出来的
 		Creator.Collections[object_name].allow
