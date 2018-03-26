@@ -54,8 +54,9 @@ Template.headerSearch.helpers
 	highlight: (label)->
 		searchText = Template.instance().searchText.get()
 		if searchText && _.isString(searchText)
-			search_Keywords = searchText.split(" ")
+			search_Keywords = searchText.trim().split(" ")
 			search_Keywords.forEach (keyword)->
+				keyword = Creator.convertSpecialCharacter(keyword)
 				keyword = keyword.trim()
 				if keyword
 					reg = new RegExp(keyword, "g")

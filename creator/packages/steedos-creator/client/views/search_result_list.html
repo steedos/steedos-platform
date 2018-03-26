@@ -18,6 +18,11 @@
 		</div>
 		<div class="slds-card__body">
 			<div class="search-gridContainer-{{object_name}} slds-table_edit slds-hint-parent"></div>
+			{{#if show_more_records}}
+				<div class="more-records">
+					<button class="slds-button slds-button_neutral btn-more-records">更多</button>
+				</div>
+			{{/if}}
 			<div class="action-sheet"></div>
 		</div>
 	</div>

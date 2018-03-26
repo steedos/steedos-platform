@@ -40,8 +40,9 @@ search_object = (space, object_name,userId, searchText)->
 							fields[field_name] = 1
 							if field.is_name
 								_object_name_key = field_name
-						search_Keywords = searchText.split(" ")
-						search_Keywords.forEach (keyword)->	
+						search_Keywords = searchText.trim().split(" ")
+						search_Keywords.forEach (keyword)->
+							keyword = Creator.convertSpecialCharacter(keyword)
 							subquery[field_name] = {$regex: keyword.trim()}
 							query_or.push subquery
 				if query_or.length>0

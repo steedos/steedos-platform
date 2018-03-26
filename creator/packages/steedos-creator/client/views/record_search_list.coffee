@@ -8,16 +8,17 @@ Template.record_search_list.onRendered ->
 	self = this
 	this.autorun ->
 		searchText = Session.get("search_text")
+		self.showGrid.set(false)
+		self.selectObject.set(null)
 		Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
 			if error
 				console.error('object_record_search method error:', error);
-
-			if result and result.length > 0
+			if result
 				searchResult = _.groupBy(result, "_object_name")
 				sidebarList = _.keys(searchResult)
 				self.searchResult.set(searchResult)			
 				self.sidebarList.set(sidebarList)
-			# console.log "record_search_list",JSON.stringify(result)
+			self.showGrid.set(true)
 
 
 Template.record_search_list.helpers 
@@ -46,7 +47,10 @@ Template.record_search_list.helpers
 	calc_result_ids: (object_name)->
 		search_result = Template.instance().searchResult.get()
 		obj = _.pick(search_result, object_name)
-		ids = obj[object_name].getProperty("_id")
+		if obj[object_name]
+			ids = obj[object_name].getProperty("_id")
+		else
+			ids = []
 		return ids
 
 	search_result: ()->

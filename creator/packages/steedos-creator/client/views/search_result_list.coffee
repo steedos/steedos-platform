@@ -115,74 +115,75 @@ _columns = (object_name, columns)->
 
 Template.search_result_list.onRendered -> 
 	self = this
-	object_name = Template.instance().data.object_name
-	record_ids = Template.instance().data.record_ids
+	self.autorun ->
+		object_name = Template.instance().data.object_name
+		record_ids = Template.instance().data.record_ids
 
-	url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
-	filter = _filter(record_ids)
-	select = _select(object_name)
-	columns = _columns(object_name, select)
+		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+		filter = _filter(record_ids)
+		select = _select(object_name)
+		columns = _columns(object_name, select)
 
-	actions = Creator.getActions(object_name)
-	if actions.length
-		columns.push
-			dataField: "_id_actions"
-			width: 46
-			allowSorting: false
-			allowReordering: false
-			headerCellTemplate: (container) ->
-				return ""
-			cellTemplate: (container, options) ->
-				htmlText = """
-					<span class="slds-grid slds-grid--align-spread creator-table-actions">
-						<div class="forceVirtualActionMarker forceVirtualAction">
-							<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
-								<span class="slds-icon_container slds-icon-utility-down">
-									<span class="lightningPrimitiveIcon">
-										#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
+		actions = Creator.getActions(object_name)
+		if actions.length
+			columns.push
+				dataField: "_id_actions"
+				width: 46
+				allowSorting: false
+				allowReordering: false
+				headerCellTemplate: (container) ->
+					return ""
+				cellTemplate: (container, options) ->
+					htmlText = """
+						<span class="slds-grid slds-grid--align-spread creator-table-actions">
+							<div class="forceVirtualActionMarker forceVirtualAction">
+								<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+									<span class="slds-icon_container slds-icon-utility-down">
+										<span class="lightningPrimitiveIcon">
+											#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
+										</span>
+										<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
 									</span>
-									<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
-								</span>
-							</a>
-						</div>
-					</span>
-				"""
-				$("<div>").append(htmlText).appendTo(container);
+								</a>
+							</div>
+						</span>
+					"""
+					$("<div>").append(htmlText).appendTo(container);
 
-	dxOptions = 
-		paging: 
-			pageSize: 10
-		pager: 
-			showPageSizeSelector: true,
-			allowedPageSizes: [10,25, 50, 100],
-			showInfo: false,
-			showNavigationButtons: true
-		showColumnLines: false
-		allowColumnReordering: true
-		allowColumnResizing: true
-		columnResizingMode: "widget"
-		showRowLines: true
-		dataSource: 
-			store: 
-				type: "odata"
-				version: 4
-				url: Steedos.absoluteUrl(url)
-				withCredentials: false
-				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
-					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				errorHandler: (error) ->
-					if error.httpStatus == 404 || error.httpStatus == 400
-						error.message = t "creator_odata_api_not_found"
-			select: select
-			filter: filter
-		columns: columns
-		onCellClick: (e)->
-			if e.column?.dataField ==  "_id_actions"
-				_itemClick(e, object_name, self.dxSearchGridInstance)
+		dxOptions = 
+			paging: 
+				pageSize: 10
+			pager: 
+				showPageSizeSelector: true,
+				allowedPageSizes: [10,25, 50, 100],
+				showInfo: false,
+				showNavigationButtons: true
+			showColumnLines: false
+			allowColumnReordering: true
+			allowColumnResizing: true
+			columnResizingMode: "widget"
+			showRowLines: true
+			dataSource: 
+				store: 
+					type: "odata"
+					version: 4
+					url: Steedos.absoluteUrl(url)
+					withCredentials: false
+					beforeSend: (request) ->
+						request.headers['X-User-Id'] = Meteor.userId()
+						request.headers['X-Space-Id'] = Steedos.spaceId()
+						request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+					errorHandler: (error) ->
+						if error.httpStatus == 404 || error.httpStatus == 400
+							error.message = t "creator_odata_api_not_found"
+				select: select
+				filter: filter
+			columns: columns
+			onCellClick: (e)->
+				if e.column?.dataField ==  "_id_actions"
+					_itemClick(e, object_name, self.dxSearchGridInstance)
 
-	this.dxSearchGridInstance = this.$(".search-gridContainer-#{object_name}").dxDataGrid(dxOptions).dxDataGrid('instance')
+		self.dxSearchGridInstance = self.$(".search-gridContainer-#{object_name}").dxDataGrid(dxOptions).dxDataGrid('instance')
 
 Template.search_result_list.helpers 
 	object_name: ()->
@@ -196,10 +197,8 @@ Template.search_result_list.helpers
 		object_name = Template.instance().data.object_name
 		return Creator.getObject(object_name).icon
 		 
-	rendered: -> 
-		 
-	destroyed: -> 
-		 
+	show_more_records: ()->
+		return Template.instance().showMoreRecords.get()
 
 Template.search_result_list.events 
 	"dbclick .results-item": (event, template) ->
@@ -229,10 +228,31 @@ Template.search_result_list.events
 				Session.set 'cmTargetIds', Creator.TabularSelectedIds?[objectName]
 				Meteor.defer ()->
 					$(".btn.creator-cell-edit").click()
-		 
+	
+	"click .btn-more-records": (event, template) ->
+		object_name = Template.instance().data.object_name
+		search_text = Session.get("search_text")
+		obj_fields = Creator.getObject(object_name).fields
+		filter = []
+		_.each obj_fields, (field,field_name)->
+			if field.searchable
+				search_Keywords = search_text.trim().split(" ")
+				search_Keywords.forEach (keyword)->
+					keyword = Creator.convertSpecialCharacter(keyword)
+					if filter.length > 0
+						filter.push "or"
+					filter.push [field_name, "contains", keyword.trim()]
+
+		Template.instance().dxSearchGridInstance.filter(filter)
+		
+		template.showMoreRecords.set(false)
 
 Template.search_result_list.onCreated ->
 	self = this
+	self.showMoreRecords = new ReactiveVar(false)
+	if Template.instance().data.record_ids and Template.instance().data.record_ids.length == 5
+		self.showMoreRecords.set(true)
+		
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
 			self.dxSearchGridInstance.refresh()

@@ -342,6 +342,9 @@ Creator.getFields = (object_name, spaceId, userId)->
 Creator.isloading = ()->
 	return Creator.isLoadingSpace.get()
 
+Creator.convertSpecialCharacter = (str)->
+	return str.replace(/([\^\$\(\)\*\+\?\.\\\|\[\]\{\}])/g, "\\$1")
+
 # 计算fields相关函数
 # START
 Creator.getHiddenFields = (schema)->
