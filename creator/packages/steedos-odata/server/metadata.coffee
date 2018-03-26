@@ -21,10 +21,9 @@ Meteor.startup ->
 		entities_schema.annotations = []
 
 		_.each Creator.Collections, (value, key, list)->
-			if not Creator.Objects[key]?.enable_api
+			_object = Creator.getObject(key)
+			if not _object?.enable_api
 				return
-
-			_object = Creator.objectsByName[key]
 
 			# 主键
 			keys = [{propertyRef: {name: "_id", computedKey: true}}]
