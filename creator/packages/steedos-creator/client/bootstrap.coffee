@@ -19,6 +19,10 @@ Creator.bootstrap = (callback)->
 				_.extend object.list_views, object_listviews[object_name]
 				Creator.loadObjects object, object_name
 
+			apps = result.apps
+			_.each apps, (app)->
+				Creator.Apps[app._id] = app
+
 			apps = result.assigned_apps
 			if apps.length
 				_.each Creator.Apps, (app, key)->

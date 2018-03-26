@@ -14,7 +14,10 @@ Template.creator_app_list_modal.helpers
 
 
 	app_url: ()->
-		return Steedos.absoluteUrl(this.url + "/")
+		if this.url
+			return Steedos.absoluteUrl(this.url + "/")
+		else if this._id
+			return Steedos.absoluteUrl("/app/#{this._id}/");
 
 	object_url: ()->
 		return Creator.getObjectUrl(this.name, null)

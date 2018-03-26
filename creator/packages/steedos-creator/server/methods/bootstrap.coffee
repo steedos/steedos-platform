@@ -20,8 +20,7 @@ Meteor.methods
 
 		result = Creator.getAllPermissions(space_id, this.userId)
 		result.space = space
-		result.apps = Creator.Collections["apps"].find({space: space_id}, {fields: {name:1}}).fetch()
-		#result.objects = Creator.Collections["space_objects"].find({space: space_id}).fetch()
+		result.apps = Creator.Collections["apps"].find({space: space_id}, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}}).fetch()
 		result.object_listviews = Creator.getUserObjectsListViews(this.userId, space_id, result.objects)
 
 		return result;
