@@ -631,5 +631,8 @@ Template.creator_report_content.onRendered ->
 
 
 Template.creator_report_content.onCreated ->
+	self = this.data
+	Tracker.nonreactive ()->
+		self.is_chart_open.set(false)
 	Template.creator_report_content.getReportContent = getReportContent.bind(this.data)
 	Template.creator_report_content.renderReport = renderReport.bind(this.data)
