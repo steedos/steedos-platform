@@ -1,5 +1,5 @@
 Template.reportView.onCreated ->
-	this.is_chart_open = new ReactiveVar(true)
+	this.is_chart_open = new ReactiveVar()
 	this.is_chart_disabled = new ReactiveVar(false)
 	this.report_settings = new ReactiveVar()
 	this.dataGridInstance = new ReactiveVar()
