@@ -19,12 +19,12 @@ Package.onUse(function(api) {
 	api.addFiles(tapi18nFiles);
 
 
-	api.addFiles('models/Accounts.coffee');
-	api.addFiles('models/Contacts.coffee');
-	api.addFiles('models/Contracts.coffee');
-	api.addFiles('models/Payments.coffee');
-	api.addFiles('models/Receipts.coffee');
-	api.addFiles('crm.coffee','client');
-	api.addFiles('reports/company.coffee');
-	api.addFiles('reports/contact.coffee');
+	api.addFiles('models/Accounts.coffee','server');
+	api.addFiles('models/Contacts.coffee','server');
+	api.addFiles('models/Contracts.coffee','server');
+	api.addFiles('models/Payments.coffee','server');
+	api.addFiles('models/Receipts.coffee','server');
+	api.addFiles('crm.coffee','server');
+	api.addFiles('reports/company.coffee','server');
+	api.addFiles('reports/contact.coffee','server');
 })
