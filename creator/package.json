@@ -10,6 +10,7 @@
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "bootstrap": "^3.3.7",
+    "core-js": "^2.5.3",
     "datatables": "^1.10.13",
     "jquery": "^2.2.4",
     "md5": "^2.2.1",
