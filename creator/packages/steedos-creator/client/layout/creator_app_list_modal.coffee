@@ -8,7 +8,7 @@ Template.creator_app_list_modal.helpers
 		objects = []
 		_.each Creator.getVisibleAppsObjects(), (object_name)->
 			app_obj = Creator.getObject(object_name)
-			if app_obj.permissions.get().allowRead && app_obj.is_enable && !app_obj.hidden
+			if app_obj?.is_enable && !app_obj.hidden && app_obj.permissions.get().allowRead
 				objects.push app_obj
 		return objects
 
