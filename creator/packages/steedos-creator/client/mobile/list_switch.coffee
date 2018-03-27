@@ -1,8 +1,15 @@
-displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon)->
-	url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self)->
+	if self.dxListInstance
+		self.dxListInstance.dispose()
+
+	if list_view_id == "recent"
+		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/recent"
+	else
+		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 	filter = Creator.getODataFilter(list_view_id, object_name)
+	console.log list_view_id, object_name, JSON.stringify(filter)
 	DevExpress.ui.setTemplateEngine("underscore");
-	self.$("#gridContainer").dxList({
+	list_options = 
 		dataSource: {
 			store: {
 				type: "odata",
@@ -16,7 +23,6 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon)->
 				onLoading: (loadOptions)->
 					console.log loadOptions
 					return
-
 			},
 			select: [
 				name_field_key, "_id"
@@ -34,7 +40,8 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon)->
 			$("<div>").html(Blaze.toHTMLWithData Template.steedos_icon, {class: "slds-icon slds-page-header__icon", source: "standard-sprite", name: icon}).addClass("weui-cell__hd").appendTo(result)
 			$("<div>").html("<p>#{data[name_field_key]}</p>").addClass("weui-cell__bd weui-cell_primary").appendTo(result)
 			return result
-	});
+
+	self.dxListInstance = self.$("#gridContainer").dxList(list_options).dxList('instance')
 
 Template.listSwitch.onRendered ->
 	self = this
@@ -50,7 +57,7 @@ Template.listSwitch.onRendered ->
 	self.autorun (c)->
 		list_view_id = Template.instance().list_view_id.get()
 		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready() and !Creator.isloading() and list_view_id
-			displayListGrid(object_name, app_id, list_view_id, name_field_key, icon)
+			displayListGrid(object_name, app_id, list_view_id, name_field_key, icon, self)
 	
 	self.autorun (c)->
 		if Session.get("reload_dxlist")
@@ -99,10 +106,7 @@ Template.listSwitch.events
 		app_id = Template.instance().data.app_id
 		object_name = Template.instance().data.object_name
 		list_views = Creator.getListViews(object_name)
-		custom_list_views = Creator.Collections.object_listviews.find({object_name: object_name}).fetch()
 		_.each list_views, (view)->
-			actionSheetItems.push {text: view.label, list_view_id: view.name}
-		_.each custom_list_views, (view)->
 			actionSheetItems.push {text: view.name, list_view_id: view._id}
 
 		actionSheetOption = 

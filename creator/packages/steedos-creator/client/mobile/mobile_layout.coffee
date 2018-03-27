@@ -2,7 +2,7 @@ Template.creatorMobileLayout.helpers Creator.helpers
 
 Template.creatorMobileLayout.helpers
 	subsReady: ->
-		return true #Creator.subs["Creator"].ready()
+		return Creator.objects_initialized.get()
 	
 	isloading: ->
 		return Creator.isloading()
