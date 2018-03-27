@@ -238,10 +238,12 @@ Template.search_result_list.events
 			if field.searchable
 				search_Keywords = search_text.trim().split(" ")
 				search_Keywords.forEach (keyword)->
-					keyword = Creator.convertSpecialCharacter(keyword)
+					# 特殊字符编码
+					keyword = escape(Creator.convertSpecialCharacter(keyword))
+					console.log "keyword", keyword
 					if filter.length > 0
 						filter.push "or"
-					filter.push [field_name, "contains", keyword.trim()]
+					filter.push [field_name, "contains", keyword]
 
 		Template.instance().dxSearchGridInstance.filter(filter)
 		
