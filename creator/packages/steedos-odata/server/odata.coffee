@@ -158,11 +158,21 @@ Meteor.startup ->
 
 				if not createQuery.sort or !_.size(createQuery.sort)
 					createQuery.sort = { modified: -1 }
-				if not createQuery.limit
-					if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
+				if createQuery.limit
+					limit = createQuery.limit
+					if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise") and limit>100000
+						createQuery.limit = 100000
+					else if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional") and limit>10000 and !Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise")
 						createQuery.limit = 10000
-					else
-						createQuery.limit = 1000
+					else if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.standard") and limit>1000 and !Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise") and !Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
+							createQuery.limit = 1000
+				else
+					createQuery.limit = 10
+				if createQuery.projection
+					projection = {}
+					_.keys(createQuery.projection).forEach (key)->
+						if _.indexOf(permissions.readable_fields,key)>-1
+							projection[key] = 1
 				if not createQuery.projection or !_.size(createQuery.projection)
 					_.each permissions.readable_fields,(field)->
 						createQuery.projection[field] = 1
