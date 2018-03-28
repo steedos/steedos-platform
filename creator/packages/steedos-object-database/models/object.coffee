@@ -29,18 +29,26 @@ Creator.Objects.objects =
 		fields:
 			blackbox: true
 			omit: true
+			hidden: true
 		list_views:
 			blackbox: true
 			omit: true
+			hidden: true
 		actions:
 			blackbox: true
 			omit: true
+			hidden: true
 		permission_set:
 			blackbox: true
 			omit: true
+			hidden: true
 		triggers:
 			blackbox: true
 			omit: true
+			hidden: true
+		custom:
+			type: "boolean"
+			hidden: true
 
 	list_views:
 		default:
@@ -72,6 +80,7 @@ Creator.Objects.objects =
 			todo: (userId, doc)->
 				if isRepeatedName(doc)
 					throw new Meteor.Error 500, "对象名称不能重复"
+				doc.custom = true
 
 		"before.update.server.objects":
 			on: "server"

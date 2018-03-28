@@ -33,6 +33,7 @@ Creator.Object = (options)->
 	self.enable_audit = options.enable_audit
 	self.hidden = options.hidden
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
+	self.custom = options.custom
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	
@@ -123,13 +124,7 @@ Creator.Object = (options)->
 	else
 		self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
 
-	if db[self.name]
-		Creator.Collections[self.name] = db[self.name]
-	else if options.db
-		Creator.Collections[self.name] = options.db
-	
-	if !Creator.Collections[self.name]
-		Creator.Collections[self.name] = new Meteor.Collection(self.name)
+	Creator.Collections[self.name] = Creator.createCollection(options)
 	self.db = Creator.Collections[self.name]
 
 	schema = Creator.getObjectSchema(self)
