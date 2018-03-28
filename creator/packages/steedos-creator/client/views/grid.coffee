@@ -35,13 +35,11 @@ _itemClick = (e, curObjectName)->
 					cancelButtonText: t('Cancel')
 					(option) ->
 						if option
-							Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
-								if error
-									toastr.error error.reason
-								else
-									info = object.label + "\"#{action_record_title}\"" + "已删除"
-									toastr.success info
-									dxDataGridInstance.refresh()
+							Creator.removeRecord(objectName, recordId, ->
+								info = object.label + "\"#{action_record_title}\"" + "已删除"
+								toastr.success info
+								dxDataGridInstance.refresh()
+							)
 			else
 				Session.set("action_fields", undefined)
 				Session.set("action_collection", "Creator.Collections.#{objectName}")
@@ -371,13 +369,11 @@ Template.creator_grid.events
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
-						Creator.Collections[objectName].remove {_id: recordId}, (error, result) ->
-							if error
-								toastr.error error.reason
-							else
-								info = object.label + "\"#{action_record_title}\"" + "已删除"
-								toastr.success info
-								dxDataGridInstance.refresh()
+						Creator.removeRecord(objectName, recordId, ->
+							info = object.label + "\"#{action_record_title}\"" + "已删除"
+							toastr.success info
+							dxDataGridInstance.refresh()
+						)
 		else
 			Session.set("action_fields", undefined)
 			Session.set("action_collection", "Creator.Collections.#{objectName}")

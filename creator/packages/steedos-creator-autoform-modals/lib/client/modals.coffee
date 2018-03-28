@@ -146,23 +146,27 @@ Template.CreatorAutoformModals.events
 
 	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
-		operation = Session.get 'cmOperation'
+		object_name = getObjectName(cmCollection)
+		url = Meteor.absoluteUrl()
 		_id = Session.get('cmDoc')._id
-		$("body").addClass("loading")
-		collectionObj(collection).remove _id, (e)->
-			$("body").removeClass("loading")
-			if e
-				console.error e
-				if e.reason
-					toastr?.error?(t(e.reason))
-				else if e.message
-					toastr?.error?(t(error.message))
-				else
-					toastr?.error?('Sorry, this could not be deleted.')
-			else
-				$('#afModal').modal('hide')
+		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{_id}"
+		
+		$.ajax
+			type: "delete"
+			url: url
+			dataType: "json"
+			contentType: "application/json"
+			beforeSend: (request) ->
+				request.setRequestHeader('X-User-Id', Meteor.userId())
+				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+
+			success: (data) ->
 				cmOnSuccessCallback?()
 				toastr?.success?(t("afModal_remove_suc"))
+
+			error: (jqXHR, textStatus, errorThrown) ->
+				console.log(errorThrown)
+
 
 	'click button.btn-update-and-create': (event,template)->
 		formId = Session.get('cmFormId') or defaultFormId

@@ -35,6 +35,26 @@ Creator.editObject = (object_name,record_id)->
 			Session.set 'cmDoc', result
 			$(".btn.creator-edit").click()
 
+Creator.removeRecord = (object_name,record_id,callback)->
+	url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{record_id}"
+	$.ajax
+		type: "delete"
+		url: url
+		dataType: "json"
+		contentType: "application/json"
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+
+		success: (data) ->
+			if callback and typeof callback == "function"
+				callback()
+			else
+				toastr?.success?(t("afModal_remove_suc"))
+
+		error: (jqXHR, textStatus, errorThrown) ->
+			console.log(errorThrown)
+
 if Meteor.isClient
 	# 定义全局变量以Session.get("object_name")为key记录其选中的记录id集合
 	Creator.TabularSelectedIds = {}
