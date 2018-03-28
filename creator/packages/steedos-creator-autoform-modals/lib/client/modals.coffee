@@ -21,6 +21,29 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
+oDataOperation = (type, url, data)->
+	self = this
+	$.ajax
+		type: type
+		url: url
+		data: JSON.stringify(data)
+		dataType: 'json'
+		contentType: "application/json"
+		processData: false
+		beforeSend: (request) ->
+			request.setRequestHeader 'X-User-Id', Meteor.userId()
+			request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
+		success: (data) ->
+			if Session.get("cmOperation") == "insert"
+				_id = data.value[0]._id
+			else if Session.get("cmOperation") == "update"
+				_id = data._id
+			# console.log _id
+			self.done(null, {_id: _id})
+		error: (jqXHR, textStatus, errorThrown) ->
+			# console.log(errorThrown);
+			self.done(new Error(errorThrown))
+
 getObjectName = (collectionName)->
 	return collectionName.replace(/Creator.Collections./, "")
 
@@ -425,15 +448,24 @@ Template.CreatorAfModal.events
 						return result
 				onSubmit: (insertDoc, updateDoc, currentDoc)->
 					self = this
-				
+					urls = []
+
 					if Session.get("cmOperation") == "insert"
-						url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 						data = insertDoc
 						type = "post"
+						urls.push Steedos.absoluteUrl("/api/odata/v4/#{Steedos.spaceId()}/#{object_name}")
 						delete data._object_name
 					if Session.get("cmOperation") == "update"
-						_id = Session.get("cmDoc")._id
-						url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{_id}"
+						if Session.get("cmMeteorMethod") == "af_multiple_update"
+							_id = updateDoc["$set"]._ids
+							delete updateDoc["$set"]._ids
+							delete updateDoc["$set"]._object_name
+						else
+							_id = Session.get("cmDoc")._id
+
+						_ids = _id.split(",")
+						_.each _ids, (id)->
+							urls.push Steedos.absoluteUrl("/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{id}")
 						data = updateDoc
 						type = "put"
 
@@ -447,29 +479,11 @@ Template.CreatorAfModal.events
 							_.each triggers, (trigger, key)->
 								if trigger.on == "client" and (trigger.when == "before.update" or trigger.when == "after.update")
 									trigger.todo.apply({object_name: object_name},[userId, data])
-					# console.log "end......", data
-
-					$.ajax
-						type: type
-						url: url
-						data: JSON.stringify(data)
-						dataType: 'json'
-						contentType: "application/json"
-						processData: false
-						beforeSend: (request) ->
-							request.setRequestHeader 'X-User-Id', Meteor.userId()
-							request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
-						success: (data) ->
-							if Session.get("cmOperation") == "insert"
-								_id = data.value[0]._id
-							else if Session.get("cmOperation") == "update"
-								_id = data._id
-							# console.log _id
-							self.done(null, {_id: _id})
-						error: (jqXHR, textStatus, errorThrown) ->
-							# console.log(errorThrown);
-							self.done(new Error(errorThrown))
 					
+
+					_.each urls, (url)->
+						oDataOperation.call(self, type, url, data)
+
 					return false
 
 				onSuccess: ->
