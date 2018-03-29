@@ -178,7 +178,7 @@ Template.creator_grid.onRendered ->
 	self.autorun (c)->
 		is_related = self.data.is_related
 		if is_related
-			list_view_id = "recent"
+			list_view_id = "all"
 		else
 			list_view_id = Session.get("list_view_id")
 		unless list_view_id
