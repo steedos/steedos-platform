@@ -169,26 +169,42 @@ Template.CreatorAutoformModals.events
 
 	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
-		object_name = getObjectName(cmCollection)
+		object_name = getObjectName(collection)
 		url = Meteor.absoluteUrl()
 		_id = Session.get('cmDoc')._id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{_id}"
-		
-		$.ajax
-			type: "delete"
-			url: url
-			dataType: "json"
-			contentType: "application/json"
-			beforeSend: (request) ->
-				request.setRequestHeader('X-User-Id', Meteor.userId())
-				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 
-			success: (data) ->
+		$("body").addClass("loading")
+		collectionObj(collection).remove _id, (e)->
+			$("body").removeClass("loading")
+			if e
+				console.error e
+				if e.reason
+					toastr?.error?(t(e.reason))
+				else if e.message
+					toastr?.error?(t(error.message))
+				else
+					toastr?.error?('Sorry, this could not be deleted.')
+			else
 				cmOnSuccessCallback?()
+				$('#afModal').modal('hide')
 				toastr?.success?(t("afModal_remove_suc"))
+		
+		# $.ajax
+		# 	type: "delete"
+		# 	url: url
+		# 	dataType: "json"
+		# 	contentType: "application/json"
+		# 	beforeSend: (request) ->
+		# 		request.setRequestHeader('X-User-Id', Meteor.userId())
+		# 		request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 
-			error: (jqXHR, textStatus, errorThrown) ->
-				console.log(errorThrown)
+		# 	success: (data) ->
+		# 		cmOnSuccessCallback?()
+		# 		toastr?.success?(t("afModal_remove_suc"))
+
+		# 	error: (jqXHR, textStatus, errorThrown) ->
+		# 		console.log(errorThrown)
 
 
 	'click button.btn-update-and-create': (event,template)->
