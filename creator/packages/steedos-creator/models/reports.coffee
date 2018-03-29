@@ -5,7 +5,7 @@ Creator.getObjectLookupFieldOptions = (object_name, is_deep)->
 	icon = _object?.icon
 	_.forEach fields, (f, k)->
 		if f.type == "select"
-			_options.push {label: "#{f.label || k}", value: "#{k}.label", icon: icon}
+			_options.push {label: "#{f.label || k}", value: "#{k}", icon: icon}
 		else
 			_options.push {label: f.label || k, value: k, icon: icon}
 			if is_deep

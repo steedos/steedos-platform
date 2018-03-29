@@ -1,5 +1,45 @@
 Template.creator_report_content.helpers Creator.helpers
 
+Creator.getODataFilterForReport = (reportObject)->
+	object_name = reportObject.object_name
+	userId = Meteor.userId()
+	spaceId = Session.get("spaceId")
+	selector = []
+	if spaceId and userId
+		unless reportObject
+			return ["_id", "=", -1]
+		if object_name == "users"
+			selector.push ["_id", "=", userId]
+
+		if reportObject.filters
+			filters = Creator.formatFiltersToDev(reportObject.filters)
+			if filters and filters.length > 0
+				if selector.length > 0
+					selector.push "and"
+				_.each filters, (filter)->
+					if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
+						selector.push filter
+
+			if reportObject.filter_scope == "mine"
+				if selector.length > 0
+					selector.push "and"
+				selector.push ["owner", "=", userId]
+		else
+			permissions = Creator.getPermissions(object_name)
+			if permissions.viewAllRecords
+				if reportObject.filter_scope == "mine"
+					if selector.length > 0
+						selector.push "and"
+					selector.push ["owner", "=", userId]
+			else if permissions.allowRead
+				if selector.length > 0
+					selector.push "and"
+				selector.push ["owner", "=", userId]
+
+	if selector.length == 0
+		return undefined
+	return selector
+
 getReportContent = ()->
 	self = this
 	filters = Session.get("filter_items")
@@ -123,7 +163,7 @@ renderChart = (grid, self)->
 		if gridData
 			reportContent = getReportContent.bind(self)()
 			_.extend(reportObject,reportContent)
-			renderMatrixReport.bind(self)(reportObject, gridData, true)
+			renderMatrixReport.bind(self)(reportObject, true)
 			grid = self.pivotGridInstance.get()
 	unless grid
 		return
@@ -143,8 +183,10 @@ renderChart = (grid, self)->
 		dataFieldsDisplayMode: 'splitPanes'
 		alternateDataFields: false
 
-renderTabularReport = (reportObject, reportData)->
+renderTabularReport = (reportObject)->
 	self = this
+	selectColumns = []
+	expandFields = []
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -153,13 +195,16 @@ renderTabularReport = (reportObject, reportData)->
 	sorts = _.object(reportObject.options?.sort)
 	columnWidths = _.object(reportObject.options?.column_width)
 	reportColumns = reportObject.columns?.map (item, index)->
-		itemFieldKey = item.replace(/\./g,"*%*")
-		fieldFirstKey = item.split(".")[0]
-		itemField = objectFields[fieldFirstKey]
+		# itemFieldKey = item.replace(/\./g,"*%*")
+		fieldKeys = item.split(".")
+		selectColumns.push(fieldKeys[0])
+		if fieldKeys.length > 1
+			expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+		itemField = objectFields[fieldKeys[0]]
 		caption = getFieldLabel itemField, item
 		field = {
 			caption: caption
-			dataField: itemFieldKey
+			dataField: item
 		}
 		if sorts[item]
 			field.sortOrder = sorts[item]
@@ -190,6 +235,9 @@ renderTabularReport = (reportObject, reportData)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
+	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	selectColumns = _.uniq selectColumns
+	expandFields = _.uniq expandFields
 	dxOptions = 
 		showColumnLines: false
 		columnResizingMode: "widget"
@@ -200,7 +248,26 @@ renderTabularReport = (reportObject, reportData)->
 		"export":
 			enabled: true
 			fileName: reportObject.name
-		dataSource: reportData
+		# dataSource: reportData
+		dataSource: 
+			select: selectColumns
+			expand: expandFields
+			store: 
+				type: "odata",
+				version: 4,
+				url: Steedos.absoluteUrl(url)
+				withCredentials: false,
+				beforeSend: (request) ->
+					request.headers['X-User-Id'] = Meteor.userId()
+					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+				onLoading: (loadOptions)->
+					console.log loadOptions
+					return
+				errorHandler: (error) ->
+					if error.httpStatus == 404 || error.httpStatus == 400
+						error.message = t "creator_odata_api_not_found"
+			# filter: filter
 		paging: false
 		scrolling: 
 			mode: "virtual"
@@ -211,8 +278,10 @@ renderTabularReport = (reportObject, reportData)->
 
 	this.dataGridInstance?.set datagrid
 
-renderSummaryReport = (reportObject, reportData)->
+renderSummaryReport = (reportObject)->
 	self = this
+	selectColumns = []
+	expandFields = []
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -221,13 +290,16 @@ renderSummaryReport = (reportObject, reportData)->
 	sorts = _.object(reportObject.options?.sort)
 	columnWidths = _.object(reportObject.options?.column_width)
 	reportColumns = reportObject.columns?.map (item, index)->
-		itemFieldKey = item.replace(/\./g,"*%*")
-		fieldFirstKey = item.split(".")[0]
-		itemField = objectFields[fieldFirstKey]
+		# itemFieldKey = item.replace(/\./g,"*%*")
+		fieldKeys = item.split(".")
+		selectColumns.push(fieldKeys[0])
+		if fieldKeys.length > 1
+			expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+		itemField = objectFields[fieldKeys[0]]
 		itemLabel = getFieldLabel itemField, item
 		field = {
 			caption: itemLabel
-			dataField: itemFieldKey
+			dataField: item
 		}
 		if sorts[item]
 			field.sortOrder = sorts[item]
@@ -237,13 +309,16 @@ renderSummaryReport = (reportObject, reportData)->
 	unless reportColumns
 		reportColumns = []
 	_.each reportObject.rows, (group, index)->
-		groupFieldKey = group.replace(/\./g,"*%*")
-		fieldFirstKey = group.split(".")[0]
-		groupField = objectFields[fieldFirstKey]
+		# groupFieldKey = group.replace(/\./g,"*%*")
+		fieldKeys = group.split(".")
+		selectColumns.push(fieldKeys[0])
+		if fieldKeys.length > 1
+			expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+		groupField = objectFields[fieldKeys[0]]
 		groupLabel = getFieldLabel groupField, group
 		field = {
 			caption: groupLabel
-			dataField: groupFieldKey
+			dataField: group
 			groupIndex: index
 		}
 		if sorts[group]
@@ -282,8 +357,12 @@ renderSummaryReport = (reportObject, reportData)->
 				groupSummaryItems.push defaultCounterSum
 				totalSummaryItems.push defaultCounterSum
 		else
-			valueFieldKey = value.replace(/\./g,"*%*")
-			valueField = objectFields[value.split(".")[0]]
+			# valueFieldKey = value.replace(/\./g,"*%*")
+			fieldKeys = value.split(".")
+			selectColumns.push(fieldKeys[0])
+			if fieldKeys.length > 1
+				expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+			valueField = objectFields[fieldKeys[0]]
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
 			if valueField.type == "number" or valueField.type == "currency"
@@ -303,9 +382,8 @@ renderSummaryReport = (reportObject, reportData)->
 					break
 			summaryItem = 
 				displayFormat: caption
-				column: valueFieldKey
+				column: value
 				summaryType: operation
-				# displayFormat: value.label
 			# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
 			if ["sum"].indexOf(operation) > -1
 				summaryItem.alignByColumn = true
@@ -321,6 +399,9 @@ renderSummaryReport = (reportObject, reportData)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
+	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	selectColumns = _.uniq selectColumns
+	expandFields = _.uniq expandFields
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -329,7 +410,26 @@ renderSummaryReport = (reportObject, reportData)->
 		"export":
 			enabled: true
 			fileName: reportObject.name
-		dataSource: reportData
+		# dataSource: reportData
+		dataSource: 
+			select: selectColumns
+			expand: expandFields
+			store: 
+				type: "odata",
+				version: 4,
+				url: Steedos.absoluteUrl(url)
+				withCredentials: false,
+				beforeSend: (request) ->
+					request.headers['X-User-Id'] = Meteor.userId()
+					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+				onLoading: (loadOptions)->
+					console.log loadOptions
+					return
+				errorHandler: (error) ->
+					if error.httpStatus == 404 || error.httpStatus == 400
+						error.message = t "creator_odata_api_not_found"
+			# filter: filter
 		paging: false
 		scrolling: 
 			mode: "virtual"
@@ -351,8 +451,11 @@ renderSummaryReport = (reportObject, reportData)->
 
 	this.dataGridInstance?.set datagrid
 
-renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
+renderMatrixReport = (reportObject, isOnlyForChart)->
+	console.log "renderMatrixReport,reportObject:", reportObject
 	self = this
+	selectColumns = []
+	expandFields = []
 	objectName = reportObject.object_name
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
@@ -363,15 +466,18 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	reportFields = []
 	_.each reportObject.rows, (row)->
 		if row != "_id"
-			rowFieldKey = row.replace(/\./g,"*%*")
-			fieldFirstKey = row.split(".")[0]
-			rowField = objectFields[fieldFirstKey]
+			# rowFieldKey = row.replace(/\./g,"*%*")
+			fieldKeys = row.split(".")
+			selectColumns.push(fieldKeys[0])
+			if fieldKeys.length > 1
+				expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+			rowField = objectFields[fieldKeys[0]]
 			caption = getFieldLabel rowField, row
 			field = {
 				expanded: isOnlyForChart
 				caption: caption
 				width: 100
-				dataField: rowFieldKey
+				dataField: row
 				area: 'row'
 			}
 			if sorts[row]
@@ -383,15 +489,27 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	columns = if isOnlyForChart then reportObject.rows else reportObject.columns
 	_.each columns, (column)->
 		if column != "_id"
-			columnFieldKey = column.replace(/\./g,"*%*")
-			fieldFirstKey = column.split(".")[0]
-			columnField = objectFields[fieldFirstKey]
+			# columnFieldKey = column.replace(/\./g,"*%*")
+			fieldKeys = column.split(".")
+			selectColumns.push(fieldKeys[0])
+			if fieldKeys.length > 1
+				expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+			columnField = objectFields[fieldKeys[0]]
 			caption = getFieldLabel columnField, column
 			field = {
 				caption: caption
 				width: 100
-				dataField: columnFieldKey
+				dataField: column
 				area: 'column'
+				customizeText: (data)->
+					if columnField.type == "select"
+						valueOption = _.findWhere(columnField.options,{value:data.value})
+						if valueOption
+							return valueOption.label
+						else
+							return data.value
+					else
+						return data.value
 			}
 			if sorts[column]
 				field.sortOrder = sorts[column]
@@ -417,8 +535,12 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			if counting
 				reportFields.push defaultCounterSum
 		else
-			valueFieldKey = value.replace(/\./g,"*%*")
-			valueField = objectFields[value.split(".")[0]]
+			# valueFieldKey = value.replace(/\./g,"*%*")
+			fieldKeys = value.split(".")
+			selectColumns.push(fieldKeys[0])
+			if fieldKeys.length > 1
+				expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+			valueField = objectFields[fieldKeys[0]]
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
 			if valueField.type == "number" or valueField.type == "currency"
@@ -426,12 +548,12 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 			if valueField.type == "lookup" or valueField.type == "master_detail"
 				if valueField?.reference_to
 					relate_object_Fields = Creator.getObject(valueField?.reference_to)?.fields
-					relate_valueField = relate_object_Fields[value.split(".")[1]]
+					relate_valueField = relate_object_Fields[fieldKeys[1]]
 					if relate_valueField?.type == "number" or relate_valueField?.type == "currency"
 						operation = "sum"	
 			caption = valueField.label
 			unless caption
-				caption = objectName + "_" + valueFieldKey
+				caption = objectName + "_" + value
 			switch operation
 				when "sum"
 					caption = "总和 #{caption}"
@@ -441,19 +563,22 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 					break
 			reportFields.push 
 				caption: caption
-				dataField: valueFieldKey
+				dataField: value
 				# dataType: valueField.type
 				summaryType: operation
 				area: 'data'
 	_.each reportObject.fields, (item)->
-		itemFieldKey = item.replace(/\./g,"*%*")
-		if item != "_id" and !_.findWhere(reportFields,{dataField: itemFieldKey})
-			fieldFirstKey = item.split(".")[0]
-			itemField = objectFields[fieldFirstKey]
+		# itemFieldKey = item.replace(/\./g,"*%*")
+		if item != "_id" and !_.findWhere(reportFields,{dataField: item})
+			fieldKeys = item.split(".")
+			selectColumns.push(fieldKeys[0])
+			if fieldKeys.length > 1
+				expandFields.push("#{fieldKeys[0]}($select=#{fieldKeys[1]})")
+			itemField = objectFields[fieldKeys[0]]
 			caption = getFieldLabel itemField, item
 			field = {
 				caption: caption
-				dataField: itemFieldKey
+				dataField: item
 			}
 			reportFields.push field
 
@@ -466,7 +591,10 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 	
 	_.every reportFields, (n)->
 		n.sortingMethod = Creator.sortingMethod.bind({key:"value"})
-
+	
+	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	selectColumns = _.uniq selectColumns
+	expandFields = _.uniq expandFields
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -485,9 +613,26 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 		"export":
 			enabled: true
 			fileName: reportObject.name
-		dataSource:
+		dataSource: 
 			fields: reportFields
-			store: reportData
+			select: selectColumns
+			expand: expandFields
+			store: 
+				type: "odata",
+				version: 4,
+				url: Steedos.absoluteUrl(url)
+				withCredentials: false,
+				beforeSend: (request) ->
+					request.headers['X-User-Id'] = Meteor.userId()
+					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+				onLoading: (loadOptions)->
+					console.log loadOptions
+					return
+				errorHandler: (error) ->
+					if error.httpStatus == 404 || error.httpStatus == 400
+						error.message = t "creator_odata_api_not_found"
+			# filter: filter
 
 	unless isOnlyForChart
 		drillDownDataSource = {}
@@ -502,7 +647,8 @@ renderMatrixReport = (reportObject, reportData, isOnlyForChart)->
 				drillDownFields.forEach (n)->
 					if n == "_id"
 						return
-					gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
+					# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
+					gridFieldItem = _.findWhere(gridFields,{dataField:n})
 					drillDownColumns.push {
 						dataField: gridFieldItem.dataField
 						caption: gridFieldItem.caption
@@ -574,23 +720,23 @@ renderReport = (reportObject)->
 			return [obj.field, obj.operation, obj.value]
 		
 		filters = Creator.formatFiltersToMongo(filters)
-	$("body").addClass("loading")
-	Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
-		$("body").removeClass("loading")
-		if error
-			console.error('report_data method error:', error)
-			return
-		switch reportObject.report_type
-			when 'tabular'
-				renderTabularReport.bind(self)(reportObject, result)
-			when 'summary'
-				# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
-				self.pivotGridInstance?.get()?.dispose()
-				renderSummaryReport.bind(self)(reportObject, result)
-			when 'matrix'
-				# 报表类型从summary转变成matrix时，需要把原来summary报表清除
-				self.dataGridInstance?.get()?.dispose()
-				renderMatrixReport.bind(self)(reportObject, result)
+	# $("body").addClass("loading")
+	# Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
+		# $("body").removeClass("loading")
+		# if error
+		# 	console.error('report_data method error:', error)
+		# 	return
+	switch reportObject.report_type
+		when 'tabular'
+			renderTabularReport.bind(self)(reportObject)
+		when 'summary'
+			# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
+			self.pivotGridInstance?.get()?.dispose()
+			renderSummaryReport.bind(self)(reportObject)
+		when 'matrix'
+			# 报表类型从summary转变成matrix时，需要把原来summary报表清除
+			self.dataGridInstance?.get()?.dispose()
+			renderMatrixReport.bind(self)(reportObject)
 
 
 Template.creator_report_content.onRendered ->
