@@ -152,36 +152,86 @@ getFieldLabel = (field, key)->
 
 pivotGridChart = null
 
-renderChart = (grid, self)->
+renderChart = (self)->
 	record_id = Session.get("record_id")
 	reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
 	unless reportObject
 		return
 	if reportObject?.report_type == "summary"
-		# 因摘要类型可能在设计模式下改了报表属性，这里chart没办法自动同步，所以只能重新根据报表属性生成chart
-		gridData = self.dataGridInstance.get()?.getDataSource().store()._array
-		if gridData
-			reportContent = getReportContent.bind(self)()
-			_.extend(reportObject,reportContent)
-			renderMatrixReport.bind(self)(reportObject, true)
-			grid = self.pivotGridInstance.get()
-	unless grid
-		return
+		grid = Tracker.nonreactive ()->
+			return self.dataGridInstance.get()
+		unless grid
+			return
+		objectName = reportObject.object_name
+		objectFields = Creator.getObject(objectName)?.fields
+		unless objectFields
+			return
+		groupSums = grid._options.summary.groupItems
+		dataSourceItems = grid.getDataSource().items()
+		chartData = []
+		chartPanes = []
+		chartSeries = []
+		chartValueAxis = []
+		keyOption = ""
+		chartItem = {}
+		serie = {}
+		tempPaneName = ""
+		tempSummaryType = ""
+		tempKey = ""
+		tempAxisText = ""
+		_.each groupSums, (gs, index1)->
+			tempSummaryType = gs.summaryType
+			tempPaneName = "#{gs.column}_#{tempSummaryType}"
+			chartPanes.push name: tempPaneName
+			tempAxisText = if tempSummaryType == "count" then "计数" else "总和"
+			unless gs.column == "_id"
+				fieldName = objectFields[gs.column]?.label
+				unless fieldName
+					fieldName = gs.column
+				tempAxisText += " #{fieldName}"
+			chartValueAxis.push pane: tempPaneName, title: { text: tempAxisText }
+			_.each dataSourceItems, (dsi, index2)->
+				tempKey = "key#{index2 + 1}"
+				chartItem = {}
+				chartItem[tempKey] = dsi.key
+				chartItem[tempSummaryType] = dsi.aggregates[index1]
+				chartData.push chartItem
+				chartSeries.push pane: tempPaneName, valueField: tempSummaryType, name: "#{dsi.key} #{tempSummaryType}", argumentField: tempKey
 
-	pivotGridChart = $('#pivotgrid-chart').show().dxChart(
-		equalBarWidth: false
-		commonSeriesSettings: 
-			type: 'bar'
-		tooltip:
-			enabled: true
-		size: 
-			height: 300
-		adaptiveLayout: 
-			width: 450
-	).dxChart('instance')
-	grid.bindChart pivotGridChart,
-		dataFieldsDisplayMode: 'splitPanes'
-		alternateDataFields: false
+
+		pivotGridChart = $("#pivotgrid-chart").show().dxChart({
+			dataSource: chartData, 
+			commonSeriesSettings: {
+				type: "bar"
+			},
+			equalBarWidth: false,
+			panes: chartPanes,
+			series: chartSeries,
+			valueAxis: chartValueAxis
+		});
+		console.log "chartData======:", chartData
+		console.log "chartSeries======:", chartSeries
+		console.log "chartPanes======:", chartPanes
+		console.log "chartValueAxis======:", chartValueAxis
+	else
+		grid = Tracker.nonreactive ()->
+			return self.pivotGridInstance.get()
+		unless grid
+			return
+		pivotGridChart = $('#pivotgrid-chart').show().dxChart(
+			equalBarWidth: false
+			commonSeriesSettings: 
+				type: 'bar'
+			tooltip:
+				enabled: true
+			size: 
+				height: 300
+			adaptiveLayout: 
+				width: 450
+		).dxChart('instance')
+		grid.bindChart pivotGridChart,
+			dataFieldsDisplayMode: 'splitPanes'
+			alternateDataFields: false
 
 renderTabularReport = (reportObject)->
 	self = this
@@ -426,6 +476,20 @@ renderSummaryReport = (reportObject)->
 				onLoading: (loadOptions)->
 					console.log loadOptions
 					return
+				onLoaded: (loadOptions)->
+					console.log "loadOptions========1"
+					console.log loadOptions
+					if groupSummaryItems.length
+						if reportObject.charting
+							self.is_chart_open.set(true)
+						else
+							self.is_chart_open.set(false)
+						self.is_chart_disabled.set(false)
+					else
+						self.is_chart_open.set(false)
+						self.is_chart_disabled.set(true)
+						$('#pivotgrid-chart').hide()
+					return
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
@@ -438,16 +502,16 @@ renderSummaryReport = (reportObject)->
 
 	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
-	if groupSummaryItems.length || totalSummaryItems.length
-		if reportObject.charting
-			self.is_chart_open.set(true)
-		else
-			self.is_chart_open.set(false)
-		self.is_chart_disabled.set(false)
-	else
-		self.is_chart_open.set(false)
-		self.is_chart_disabled.set(true)
-		$('#pivotgrid-chart').hide()
+	# if groupSummaryItems.length
+	# 	if reportObject.charting
+	# 		self.is_chart_open.set(true)
+	# 	else
+	# 		self.is_chart_open.set(false)
+	# 	self.is_chart_disabled.set(false)
+	# else
+	# 	self.is_chart_open.set(false)
+	# 	self.is_chart_disabled.set(true)
+	# 	$('#pivotgrid-chart').hide()
 
 	this.dataGridInstance?.set datagrid
 
@@ -766,11 +830,11 @@ Template.creator_report_content.onRendered ->
 	
 	this.autorun (c)->
 		is_chart_open = self.is_chart_open.get()
-		grid = Tracker.nonreactive ()->
-			return self.pivotGridInstance.get()
+		# grid = Tracker.nonreactive ()->
+		# 	return self.pivotGridInstance.get()
 		if is_chart_open
 			Tracker.nonreactive ()->
-				renderChart grid, self
+				renderChart self
 		else
 			pivotGridChart?.dispose()
 			$('#pivotgrid-chart').hide()
