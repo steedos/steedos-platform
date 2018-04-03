@@ -15,6 +15,8 @@
 	"creator_list_new_list_view": "New",
 	"creator_list_delete_list_view": "Delete",
 	"creator_list_select_fields": "Select Fields to Display",
+	"creator_available_fields" :"Available Fields",
+	"creator_visible_fields":"Visible Fields",
 	"creator_list_filter": "Filter",
 	"creator_list_filter_cancel": "Cancel",
 	"creator_list_filter_save_as": "Save as",

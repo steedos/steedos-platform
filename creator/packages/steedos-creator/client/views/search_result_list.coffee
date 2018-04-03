@@ -111,6 +111,28 @@ _columns = (object_name, columns)->
 				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 		return columnItem
 
+_expandFields = (object_name, columns)->
+	expand_fields = []
+	fields = Creator.getObject(object_name).fields
+	_.each columns, (n)->
+		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
+			ref = fields[n].reference_to
+			if _.isFunction(ref)
+				ref = ref()
+
+			if !_.isArray(ref)
+				ref = [ref]
+				
+			ref = _.map ref, (o)->
+				return Creator.getObject(o).NAME_FIELD_KEY
+
+			ref = _.compact(ref)
+			
+			ref = ref.join(",")
+			expand_fields.push(n + "($select=" + ref + ")")
+			# expand_fields.push n + "($select=name)"
+	return expand_fields
+
 Template.search_result_list.onRendered -> 
 	self = this
 	self.autorun ->
@@ -121,6 +143,7 @@ Template.search_result_list.onRendered ->
 		filter = _filter(record_ids)
 		select = _select(object_name)
 		columns = _columns(object_name, select)
+		expand_fields = _expandFields(object_name, select)
 
 		actions = Creator.getActions(object_name)
 		if actions.length
@@ -176,6 +199,7 @@ Template.search_result_list.onRendered ->
 							error.message = t "creator_odata_api_not_found"
 				select: select
 				filter: filter
+				expand: expand_fields
 			columns: columns
 			onCellClick: (e)->
 				if e.column?.dataField ==  "_id_actions"
@@ -237,7 +261,7 @@ Template.search_result_list.events
 				search_Keywords = search_text.trim().split(" ")
 				search_Keywords.forEach (keyword)->
 					# 特殊字符编码
-					keyword = escape(Creator.convertSpecialCharacter(keyword))
+					keyword = encodeURIComponent(Creator.convertSpecialCharacter(keyword))
 					console.log "keyword", keyword
 					if filter.length > 0
 						filter.push "or"

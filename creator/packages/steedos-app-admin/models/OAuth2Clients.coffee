@@ -14,6 +14,10 @@ Creator.Objects.OAuth2Clients =
 			type:"boolean"
 			label:"是否激活"
 			defaultValue:true
+		expires:
+			type: "number"
+			label:"有效期（小时）"
+			defaultValue:"1"
 		redirectUri:
 			type:"text"
 			label:"回调URL"

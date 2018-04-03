@@ -197,14 +197,14 @@ Template.creator_grid.onRendered ->
 
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
 			if is_related
-				if list_view_id == "recent"
+				if Creator.getListViewIsRecent(object_name, list_view_id)
 					url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}/recent"
 					filter = undefined
 				else
 					url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 					filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
 			else
-				if list_view_id == "recent"
+				if Creator.getListViewIsRecent(object_name, list_view_id)
 					url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/recent"
 					filter = undefined
 				else
@@ -422,13 +422,8 @@ Template.creator_grid.events
 Template.creator_grid.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
-			# dxDataGridInstance.refresh().done (result)->
-			# 	Creator.remainCheckboxState(dxDataGridInstance.$element())
-			app_id = Session.get "app_id"
-			object_name = Session.get "object_name"
-			record_id = result._id
-			url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
-			FlowRouter.go url
+			dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
@@ -444,12 +439,24 @@ Template.creator_grid.onCreated ->
 Template.creator_grid.onDestroyed ->
 	#离开界面时，清除hooks为空函数
 	AutoForm.hooks creatorAddForm:
-		onSuccess: ()->
+		onSuccess: (formType, result)->
 			$('#afModal').modal 'hide'
+			if result.type == "post"
+				app_id = Session.get("app_id")
+				object_name = result.object_name
+				record_id = result._id
+				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+				FlowRouter.go url
 	,true
 	AutoForm.hooks creatorEditForm:
-		onSuccess: ()->
+		onSuccess: (formType, result)->
 			$('#afModal').modal 'hide'
+			if result.type == "post"
+				app_id = Session.get("app_id")
+				object_name = result.object_name
+				record_id = result._id
+				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+				FlowRouter.go url
 	,true
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: ()->

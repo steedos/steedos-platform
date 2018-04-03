@@ -44,6 +44,7 @@ Creator.Objects.permission_objects =
 			label: "修改所有记录",
 		list_views:
 			type: "lookup"
+			label:'列表视图'
 			multiple: true
 			depend_on: ["object_name"]
 			defaultIcon: "lead_list"
@@ -57,6 +58,7 @@ Creator.Objects.permission_objects =
 				return _options
 		actions:
 			type: "lookup"
+			label:'操作'
 			multiple: true
 			depend_on: ["object_name"]
 			defaultIcon: "marketing_actions"
@@ -69,6 +71,7 @@ Creator.Objects.permission_objects =
 				return _options
 		readable_fields:
 			type: "lookup"
+			label:'只读字段'
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
@@ -81,6 +84,7 @@ Creator.Objects.permission_objects =
 				return _options
 		editable_fields:
 			type: "lookup"
+			label:'可编辑字段'
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
@@ -93,6 +97,7 @@ Creator.Objects.permission_objects =
 				return _options
 		related_objects:
 			type: "lookup"
+			label:'关联对象'
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
@@ -108,6 +113,7 @@ Creator.Objects.permission_objects =
 		default:
 			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
 		all:
+			label:"所有对象权限"
 			filter_scope: "space"
 
 	triggers:

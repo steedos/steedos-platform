@@ -14,7 +14,7 @@
 		{{/unless}}
 	{{/if}}
 	{{> CreatorAutoformModals}}
-	{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName}} {{_ "Create"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal formId="creatorEditForm" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName}} {{_ "Edit"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName}} {{_ "Edit"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
 </template>

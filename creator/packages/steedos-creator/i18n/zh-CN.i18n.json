@@ -15,6 +15,8 @@
 	"creator_list_new_list_view": "新建",
 	"creator_list_delete_list_view": "删除",
 	"creator_list_select_fields": "选择要显示的字段",
+	"creator_available_fields" :"可利用字段",
+	"creator_visible_fields":"已显示字段",
 	"creator_list_filter": "过滤器",
 	"creator_list_filter_cancel": "取消",
 	"creator_list_filter_save_as": "另存为",

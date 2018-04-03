@@ -21,7 +21,7 @@ collectionObj = (name) ->
 		o[x]
 	, window
 
-oDataOperation = (type, url, data)->
+oDataOperation = (type, url, data, object_name)->
 	self = this
 	$.ajax
 		type: type
@@ -39,7 +39,10 @@ oDataOperation = (type, url, data)->
 			else if Session.get("cmOperation") == "update"
 				_id = data._id
 			# console.log _id
-			self.done(null, {_id: _id})
+			data = {_id: _id}
+			data.type = type
+			data.object_name = object_name
+			self.done(null, data)
 		error: (jqXHR, textStatus, errorThrown) ->
 			# console.log(errorThrown);
 			self.done(new Error(errorThrown))
@@ -61,20 +64,21 @@ getSimpleSchema = (collectionName)->
 		else
 			final_schema = schema
 
-		#新增_ids虚拟字段，以实现条记录同时更新
-		final_schema._ids = 
-			type: String
-			optional: true
-			autoform:
-				type: "hidden"
-		#新增_object_name虚拟字段，以让后台method知道更新哪个表
-		final_schema._object_name = 
-			type: String
-			optional: true
-			autoform:
-				type: "hidden"
-				defaultValue: ->
-					return getObjectName collectionName
+		if Session.get 'cmMeteorMethod'
+			#新增_ids虚拟字段，以实现条记录同时更新
+			final_schema._ids = 
+				type: String
+				optional: true
+				autoform:
+					type: "hidden"
+			#新增_object_name虚拟字段，以让后台method知道更新哪个表
+			final_schema._object_name = 
+				type: String
+				optional: true
+				autoform:
+					type: "hidden"
+					defaultValue: ->
+						return getObjectName collectionName
 		
 	return new SimpleSchema(final_schema)
 
@@ -173,39 +177,23 @@ Template.CreatorAutoformModals.events
 		url = Meteor.absoluteUrl()
 		_id = Session.get('cmDoc')._id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{_id}"
-
-		$("body").addClass("loading")
-		collectionObj(collection).remove _id, (e)->
-			$("body").removeClass("loading")
-			if e
-				console.error e
-				if e.reason
-					toastr?.error?(t(e.reason))
-				else if e.message
-					toastr?.error?(t(error.message))
-				else
-					toastr?.error?('Sorry, this could not be deleted.')
-			else
-				cmOnSuccessCallback?()
-				$('#afModal').modal('hide')
-				toastr?.success?(t("afModal_remove_suc"))
 		
-		# $.ajax
-		# 	type: "delete"
-		# 	url: url
-		# 	dataType: "json"
-		# 	contentType: "application/json"
-		# 	beforeSend: (request) ->
-		# 		request.setRequestHeader('X-User-Id', Meteor.userId())
-		# 		request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+		$.ajax
+			type: "delete"
+			url: url
+			dataType: "json"
+			contentType: "application/json"
+			beforeSend: (request) ->
+				request.setRequestHeader('X-User-Id', Meteor.userId())
+				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 
-		# 	success: (data) ->
-		# 		cmOnSuccessCallback?()
-		# 		toastr?.success?(t("afModal_remove_suc"))
+			success: (data) ->
+				$('#afModal').modal 'hide'
+				cmOnSuccessCallback?()
+				toastr?.success?(t("afModal_remove_suc"))
 
-		# 	error: (jqXHR, textStatus, errorThrown) ->
-		# 		console.log(errorThrown)
-
+			error: (jqXHR, textStatus, errorThrown) ->
+				console.log(errorThrown)
 
 	'click button.btn-update-and-create': (event,template)->
 		formId = Session.get('cmFormId') or defaultFormId
@@ -307,7 +295,7 @@ helpers =
 	
 	schema: ()->
 		cmCollection = Session.get 'cmCollection'
-		return getSimpleSchema cmCollection
+		return getSimpleSchema(cmCollection)
 
 	schemaFields: ()->
 		cmCollection = Session.get 'cmCollection'
@@ -315,7 +303,7 @@ helpers =
 		if cmCollection
 			schemaInstance = getSimpleSchema(cmCollection)
 			schema = schemaInstance._schema
-			
+
 			firstLevelKeys = schemaInstance._firstLevelSchemaKeys
 			object_name = getObjectName cmCollection
 			permission_fields = _.clone(Creator.getFields(object_name))
@@ -343,7 +331,7 @@ helpers =
 				return finalFields
 
 			hiddenFields = Creator.getHiddenFields(schema)
-			
+
 			fieldGroups = []
 			fieldsForGroup = []
 			isSingle = Session.get "cmEditSingleField"
@@ -391,7 +379,6 @@ Template.CreatorFormField.helpers helpers
 Template.CreatorAfModal.events
 	'click *': (e, t) ->
 		e.preventDefault()
-
 		html = t.$('*').html()
 
 		if t.data.collectionName
@@ -433,13 +420,18 @@ Template.CreatorAfModal.events
 		cmOnSuccessCallback = t.data.onSuccess
 
 		if not _.contains registeredAutoFormHooks, t.data.formId
-			userId = Meteor.userId()
-			cmCollection = Session.get 'cmCollection'
-			object_name = getObjectName(cmCollection)
-			triggers = Creator.getObject(object_name).triggers
+			# userId = Meteor.userId()
+			# cmCollection = Session.get 'cmCollection'
+			# object_name = getObjectName(cmCollection)
+			# console.log "afModal-object_name", object_name
+			# triggers = Creator.getObject(object_name).triggers
 			AutoForm.addHooks t.data.formId,
 				before:
 					method: (doc)->
+						userId = Meteor.userId()
+						cmCollection = Session.get 'cmCollection'
+						object_name = getObjectName(cmCollection)
+						triggers = Creator.getObject(object_name).triggers
 						if triggers
 							if Session.get("cmOperation") == "insert"
 								_.each triggers, (trigger, key)->
@@ -452,6 +444,10 @@ Template.CreatorAfModal.events
 						return doc
 				after:
 					method: (error, result)->
+						userId = Meteor.userId()
+						cmCollection = Session.get 'cmCollection'
+						object_name = getObjectName(cmCollection)
+						triggers = Creator.getObject(object_name).triggers
 						if triggers
 							if Session.get("cmOperation") == "insert"
 								_.each triggers, (trigger, key)->
@@ -463,6 +459,11 @@ Template.CreatorAfModal.events
 										trigger.todo.apply({object_name: object_name},[userId, result])
 						return result
 				onSubmit: (insertDoc, updateDoc, currentDoc)->
+					userId = Meteor.userId()
+					cmCollection = Session.get 'cmCollection'
+					object_name = getObjectName(cmCollection)
+					triggers = Creator.getObject(object_name).triggers
+
 					self = this
 					urls = []
 
@@ -472,12 +473,22 @@ Template.CreatorAfModal.events
 						urls.push Steedos.absoluteUrl("/api/odata/v4/#{Steedos.spaceId()}/#{object_name}")
 						delete data._object_name
 					if Session.get("cmOperation") == "update"
-						if Session.get("cmMeteorMethod") == "af_multiple_update"
-							_id = updateDoc["$set"]._ids
-							delete updateDoc["$set"]._ids
-							delete updateDoc["$set"]._object_name
+						if Session.get("cmMeteorMethod")
+							if updateDoc["$set"]
+								_id = updateDoc["$set"]._ids || Session.get("cmDoc")._id
+							else
+								_id = Session.get("cmDoc")._id
+							
 						else
 							_id = Session.get("cmDoc")._id
+
+						if updateDoc["$set"]
+							delete updateDoc["$set"]._ids
+							delete updateDoc["$set"]._object_name
+
+						if updateDoc["$unset"]
+							delete updateDoc["$unset"]._ids
+							delete updateDoc["$unset"]._object_name
 
 						_ids = _id.split(",")
 						_.each _ids, (id)->
@@ -498,12 +509,18 @@ Template.CreatorAfModal.events
 					
 
 					_.each urls, (url)->
-						oDataOperation.call(self, type, url, data)
+						oDataOperation.call(self, type, url, data, object_name)
 
 					return false
 
-				onSuccess: ->
+				onSuccess: (operation,result)->
 					$('#afModal').modal 'hide'
+					if result.type == "post"
+						app_id = Session.get("app_id")
+						object_name = result.object_name
+						record_id = result._id
+						url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+						FlowRouter.go url
 				
 				onError: (operation,error) ->
 					console.error error

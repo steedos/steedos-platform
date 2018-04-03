@@ -27,6 +27,7 @@ Creator.Objects.accounts =
 			defaultValue: ""
 			description: ""
 			inlineHelpText: ""
+			searchable:true
 			required: true
 			sortable: true
 		website: 

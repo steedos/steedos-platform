@@ -105,8 +105,6 @@ if Meteor.isClient
 			filters = custom_list_view.filters
 			if filter_scope == "mine"
 				selector.push ["owner", "=", Meteor.userId()]
-#			else if filter_scope == "space"
-#				selector.push ["space", "=", Steedos.spaceId()]
 
 			if filters and filters.length > 0
 				if selector.length > 0
@@ -122,31 +120,10 @@ if Meteor.isClient
 				list_view = Creator.getListView(object_name, list_view_id)
 				unless list_view
 					return ["_id", "=", -1]
-#				if list_view.filter_scope == "spacex"
-#					selector.push ["space", "=", null], "or", ["space", "=", spaceId]
+
 				if object_name == "users"
 					selector.push ["_id", "=", userId]
-#				else if object_name == "spaces"
-#					selector.push ["_id", "=", spaceId]
-#				else
-#					selector.push ["space", "=", spaceId]
 
-				# if Creator.getListViewIsRecent(object_name, list_view)
-				# 	viewed = Creator.Collections.object_recent_viewed.find({object_name: object_name}).fetch()
-				# 	record_ids = _.pluck(viewed, "record_id")
-				# 	record_ids = _.uniq(record_ids)
-				# 	record_ids = record_ids.join(",or,").split(",")
-				# 	id_selector = _.map record_ids, (_id)->
-				# 		if _id != "or"
-				# 			return ["_id", "=", _id]
-				# 		else
-				# 			return _id
-				# 	if selector.length > 0
-				# 		selector.push "and"
-				# 	selector.push id_selector
-
-				# $eq, $ne, $lt, $gt, $lte, $gte
-				# [["is_received", "$eq", true],["destroy_date","$lte",new Date()],["is_destroyed", "$eq", false]]
 				if list_view.filters
 					filters = Creator.formatFiltersToDev(list_view.filters)
 					if filters and filters.length > 0

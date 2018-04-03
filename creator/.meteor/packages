@@ -117,3 +117,5 @@ yogiben:autoform-tags
 steedos:logger@0.0.2
 
 steedos:object-database
+
+steedos:app-archive

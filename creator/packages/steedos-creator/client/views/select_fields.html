@@ -8,7 +8,7 @@
 						<span class="slds-assistive-text">Close</span>
 					</button>
 					<h2 class="slds-text-heading--medium">
-						Select Fields to Display
+						{{_ "creator_list_select_fields"}} 
 					</h2>
                 </header>
                 
@@ -16,7 +16,7 @@
                     <div class="forceDuelingLists">
                         <div class="listContainer">
                             <div class="slds-form-element">
-                                <label class="slds-form-element__label" for="column-add-select">Available Fields</label>
+                                <label class="slds-form-element__label" for="column-add-select">{{_"creator_available_fields"}}</label>
                                 <div class="slds-form-element__control">
                                     <select id="column-add-select" class="slds-select column-select" multiple="">
                                         {{#each available_fields}}
@@ -41,7 +41,7 @@
                         </div>
                         <div class="listContainer">
                             <div class="slds-form-element">
-                                <label class="slds-form-element__label" for="column-sub-select">Visible Fields</label>
+                                <label class="slds-form-element__label" for="column-sub-select">{{_"creator_visible_fields"}}</label>
                                 <div class="slds-form-element__control">
                                     <select id="column-sub-select" class="slds-select column-select" multiple="">
                                         {{#each visible_fields}}

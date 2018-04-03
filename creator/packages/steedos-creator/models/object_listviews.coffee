@@ -103,6 +103,7 @@ Creator.Objects.object_listviews =
 		default:
 			columns: ["name", "shared", "modified"]
 		all:
+			label:'全部列表视图'
 			filter_scope: "space"
 
 	permission_set:

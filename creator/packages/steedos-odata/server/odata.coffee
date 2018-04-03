@@ -69,7 +69,8 @@ Meteor.startup ->
 									else
 										singleQuery = _.extend {_id: entity[navigationProperty].ids[0]}, include.query
 										entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
-										entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
+										if entities[idx][navigationProperty]
+											entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
 
 				else
 				# TODO
@@ -143,7 +144,7 @@ Meteor.startup ->
 				return body
 			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 			if permissions.viewAllRecords or (permissions.allowRead and @userId)
-				qs = querystring.unescape(querystring.stringify(@queryParams))
+				qs = decodeURIComponent(querystring.stringify(@queryParams))
 				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 
 				if key is 'cfs.files.filerecord'
@@ -202,40 +203,44 @@ Meteor.startup ->
 				statusCode: 403
 				body  = setErrorMessage(403,collection,key,"get")
 		post: ()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				statusCode: 401
-				body = setErrorMessage(401)
-				return body
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
+					statusCode: 401
+					body = setErrorMessage(401)
+					return body
 
-			collection = Creator.Collections[key]
-			if not collection
-				statusCode: 404
-				body = setErrorMessage(404,collection,key)
-				return body
-
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowCreate
-				@bodyParams.space = @urlParams.spaceId
-				entityId = collection.insert @bodyParams
-				entity = collection.findOne entityId
-				entities = []
-				if entity
-					body = {}
-					headers = {}
-					entities.push entity
-					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-					entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-					body['value'] = entity_OdataProperties
-					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-					headers['OData-Version'] = SteedosOData.VERSION
-					{body: body, headers: headers}
-				else
+				collection = Creator.Collections[key]
+				if not collection
 					statusCode: 404
-					body = setErrorMessage(404,collection,key,'post')
-			else
-				statusCode: 403
-				body  = setErrorMessage(403,collection,key,'post')
+					body = setErrorMessage(404,collection,key)
+					return body
+
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.allowCreate
+					@bodyParams.space = @urlParams.spaceId
+					entityId = collection.insert @bodyParams
+					entity = collection.findOne entityId
+					entities = []
+					if entity
+						body = {}
+						headers = {}
+						entities.push entity
+						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+						entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+						body['value'] = entity_OdataProperties
+						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+						headers['OData-Version'] = SteedosOData.VERSION
+						{body: body, headers: headers}
+					else
+						statusCode: 404
+						body = setErrorMessage(404,collection,key,'post')
+				else
+					statusCode: 403
+					body  = setErrorMessage(403,collection,key,'post')
+			catch e
+				console.log e
+
 	})
 	SteedosOdataAPI.addRoute(':object_name/recent', {authRequired: true, spaceRequired: false}, {
 		get:()->
@@ -261,7 +266,7 @@ Meteor.startup ->
 				recent_view_records_ids = recent_view_records_ids.getProperty("ids")
 				recent_view_records_ids = _.flatten(recent_view_records_ids)
 				recent_view_records_ids = _.uniq(recent_view_records_ids)
-				qs = querystring.unescape(querystring.stringify(@queryParams))
+				qs = decodeURIComponent(querystring.stringify(@queryParams))
 				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 				createQuery.query._id = {$in:recent_view_records_ids}
 				if key is 'cfs.files.filerecord'
@@ -304,41 +309,43 @@ Meteor.startup ->
 
 	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
 		post: ()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				statusCode: 401
-				body = setErrorMessage(401)
-				return body
-			collection = Creator.Collections[key]
-			if not collection
-				statusCode: 404
-				body = setErrorMessage(404,collection,key)
-				return body
-
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowCreate
-				@bodyParams.space = @urlParams.spaceId
-				entityId = collection.insert @bodyParams
-				entity = collection.findOne entityId
-				entities = []
-				if entity
-					body = {}
-					headers = {}
-					entities.push entity
-					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-					entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-					body['value'] = entity_OdataProperties
-					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-					headers['OData-Version'] = SteedosOData.VERSION
-					{body: body, headers: headers}
-				else
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
+					statusCode: 401
+					body = setErrorMessage(401)
+					return body
+				collection = Creator.Collections[key]
+				if not collection
 					statusCode: 404
-					body = setErrorMessage(404,collection,key,'post')
-			else
-				statusCode: 403
-				body  = setErrorMessage(403,collection,key,'post')
+					body = setErrorMessage(404,collection,key)
+					return body
+
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.allowCreate
+					@bodyParams.space = @urlParams.spaceId
+					entityId = collection.insert @bodyParams
+					entity = collection.findOne entityId
+					entities = []
+					if entity
+						body = {}
+						headers = {}
+						entities.push entity
+						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+						entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+						body['value'] = entity_OdataProperties
+						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+						headers['OData-Version'] = SteedosOData.VERSION
+						{body: body, headers: headers}
+					else
+						statusCode: 404
+						body = setErrorMessage(404,collection,key,'post')
+				else
+					statusCode: 403
+					body  = setErrorMessage(403,collection,key,'post')
+			catch e
+				console.log e
 		get:()->
-			console.log "@urlParams", @urlParams
 
 			key = @urlParams.object_name
 
@@ -400,10 +407,70 @@ Meteor.startup ->
 
 				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 				if permissions.allowRead
-						selector = {_id: @urlParams._id, space: @urlParams.spaceId}
-						entity = collection.findOne selector
-						entities = []
-						if entity
+					qs = decodeURIComponent(querystring.stringify(@queryParams))
+					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+					createQuery.query._id =  @urlParams._id
+					if key is 'cfs.files.filerecord'
+						createQuery.query['metadata.space'] = @urlParams.spaceId
+					else
+						createQuery.query.space =  @urlParams.spaceId
+					if createQuery.projection
+						projection = {}
+						_.keys(createQuery.projection).forEach (key)->
+							if _.indexOf(permissions.readable_fields,key)>-1
+								projection[key] = 1
+					if not createQuery.projection or !_.size(createQuery.projection)
+						_.each permissions.readable_fields,(field)->
+							createQuery.projection[field] = 1
+					entity = collection.findOne(createQuery.query,visitorParser(createQuery))
+					entities = []
+					if entity
+						if entity.owner == @userId
+							body = {}
+							headers = {}
+							entities.push entity
+							dealWithExpand(createQuery, entities, key)
+							body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+							entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+							_.extend body,entity_OdataProperties[0]
+							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+							headers['OData-Version'] = SteedosOData.VERSION
+							{body: body, headers: headers}
+						else
+							statusCode: 403
+							body  = setErrorMessage(403,collection,key,'get')
+					else
+						statusCode: 404
+						body  = setErrorMessage(404,collection,key,'get')
+				else
+					statusCode: 403
+					body  = setErrorMessage(403,collection,key,'get')
+		put:()->
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
+					statusCode: 401
+					body = setErrorMessage(401)
+					return body
+
+				collection = Creator.Collections[key]
+				if not collection
+					statusCode: 404
+					body = setErrorMessage(404,collection,key)
+					return body
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				record_owner = collection.findOne({_id: @urlParams._id, space: @urlParams.spaceId})?.owner
+				if permissions.modifyAllRecords or (permissions.allowEdit and record_owner==@userId )
+					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
+					fields_editable = true
+					_.keys(@bodyParams.$set).forEach (key)->
+						if _.indexOf(permissions.editable_fields,key)<0
+							fields_editable = false
+					if fields_editable
+						entityIsUpdated = collection.update selector, @bodyParams
+						if entityIsUpdated
+							entity = collection.findOne @urlParams._id
+							entities = []
 							body = {}
 							headers = {}
 							entities.push entity
@@ -415,67 +482,47 @@ Meteor.startup ->
 							{body: body, headers: headers}
 						else
 							statusCode: 404
-							body  = setErrorMessage(404,collection,key,'get')
+							body  = setErrorMessage(404,collection,key)
+							return body
+					else
+						statusCode: 403
+						body  = setErrorMessage(403,collection,key,'put')
+						return body
 				else
 					statusCode: 403
-					body  = setErrorMessage(403,collection,key,'get')
-		put:()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				statusCode: 401
-				body = setErrorMessage(401)
-				return body
-
-			collection = Creator.Collections[key]
-			if not collection
-				statusCode: 404
-				body = setErrorMessage(404,collection,key)
-				return body
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowEdit
-					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
-					entityIsUpdated = collection.update selector, @bodyParams
-					if entityIsUpdated
-						entity = collection.findOne @urlParams._id
-						entities = []
-						body = {}
-						headers = {}
-						entities.push entity
-						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-						entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-						_.extend body,entity_OdataProperties[0]
-						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-						headers['OData-Version'] = SteedosOData.VERSION
-						{body: body, headers: headers}
-					else
-						statusCode: 404
-						body  = setErrorMessage(404,collection,key)
-			else
-				statusCode: 403
-				body  = setErrorMessage(403,collection,key,'put')
+					body  = setErrorMessage(403,collection,key,'put')
+					return body
+			catch e
+				console.log e
 		delete:()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				statusCode: 401
-				body = setErrorMessage(401)
-				return body
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
+					statusCode: 401
+					body = setErrorMessage(401)
+					return body
 
-			collection = Creator.Collections[key]
-			if not collection
-				statusCode: 404
-				body = setErrorMessage(404,collection,key)
-				return body
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowDelete
+				collection = Creator.Collections[key]
+				if not collection
+					statusCode: 404
+					body = setErrorMessage(404,collection,key)
+					return body
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				record_owner = collection.findOne({_id: @urlParams._id, space: @urlParams.spaceId})?.owner
+				if permissions.modifyAllRecords or (permissions.allowDelete and record_owner==@userId )
 					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
 					if collection.remove selector
 						{status: 'success', message: 'Item removed'}
 					else
 						statusCode: 404
-						body: {status: 'fail', message: 'Item not found'}
-			else
-				statusCode: 400
-				body: {status: 'fail', message: 'Action not permitted'}
+						body  = setErrorMessage(404,collection,key)
+						return body
+				else
+					statusCode: 403
+					body  = setErrorMessage(403,collection,key)
+					return body
+			catch e
+				console.log e
 	})
 	
 	#TODO remove
@@ -500,7 +547,7 @@ Meteor.startup ->
 
 							permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 							if permissions.viewAllRecords or (permissions.allowRead and @userId)
-									qs = querystring.unescape(querystring.stringify(@queryParams))
+									qs = decodeURIComponent(querystring.stringify(@queryParams))
 									createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 
 									if key is 'cfs.files.filerecord'

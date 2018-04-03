@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:oauth2-server',
-	version: '0.0.1',
+	version: '0.0.4',
 	summary: 'Add oauth2 server support to your application.'
 });
 
