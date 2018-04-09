@@ -1,10 +1,11 @@
 Package.describe({
 	name: 'steedos:oauth2-server',
-	version: '0.0.4',
+	version: '0.0.6',
 	summary: 'Add oauth2 server support to your application.'
 });
 
 Npm.depends({
+	'cookies': "0.6.1",
 	"express": "4.13.4",
 	"body-parser": "1.14.2",
 	"oauth2-server": "2.4.1"
@@ -12,7 +13,7 @@ Npm.depends({
 
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
-	api.use('coffeescript@1.11.1_4');
+	api.use('coffeescript');
 	api.use('random');
 	api.use('blaze@2.1.9');
 	api.use('templating@1.2.15');
@@ -31,7 +32,7 @@ Package.onUse(function(api) {
 	
 	api.use('http');
 
-	api.use('steedos:base@0.0.73');
+	api.use('steedos:base@0.0.72');
 	// api.addFiles('lib/random.coffee', ['client', 'server']);
 
 	api.addFiles('lib/common.js', ['client', 'server']);

@@ -178,7 +178,7 @@ steedos:jstree@3.3.2
 steedos:lightning-design-system@0.0.1
 steedos:loaders-css@0.1.2
 steedos:logger@0.0.2
-steedos:oauth2-server@0.0.4
+steedos:oauth2-server@0.0.6
 steedos:object-database@0.0.1
 steedos:objects@0.0.1
 steedos:odata@0.0.1
