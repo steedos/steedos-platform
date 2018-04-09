@@ -21,6 +21,10 @@ Creator.bootstrap = (callback)->
 
 			Creator.Apps = result.apps
 
+			_.each Creator.Apps, (app, key) ->
+				if !app._id
+					app._id = key
+
 			apps = result.assigned_apps
 			if apps.length
 				_.each Creator.Apps, (app, key)->
