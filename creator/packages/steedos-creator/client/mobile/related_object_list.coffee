@@ -39,9 +39,6 @@ displayListGrid = (app_id, object_name, related_object_name, record_id, icon, na
 Template.relatedObjectList.onRendered ->
 	self = this
 
-	self.$(".related-object-list").removeClass "hidden"
-	self.$(".related-object-list").animateCss "fadeInRight"
-
 	app_id = Template.instance().data.app_id
 	object_name = Template.instance().data.object_name
 	related_object_name = Template.instance().data.related_object_name
@@ -49,14 +46,17 @@ Template.relatedObjectList.onRendered ->
 	icon = Creator.getObject(related_object_name).icon
 	name_field_key = Creator.getObject(related_object_name).NAME_FIELD_KEY
 
-	self.autorun (c)->
-		if Steedos.spaceId()
-			c.stop()
-			displayListGrid(app_id, object_name, related_object_name, record_id, icon, name_field_key)
+	self.$(".related-object-list").removeClass "hidden"
+	self.$(".related-object-list").animateCss "fadeInRight", ->
 
-	self.autorun (c)->
-		if Session.get("reload_dxlist")
-			self.$("#relatedObjectRecords").dxList("reload")
+		self.autorun (c)->
+			if Steedos.spaceId()
+				c.stop()
+				displayListGrid(app_id, object_name, related_object_name, record_id, icon, name_field_key)
+
+		self.autorun (c)->
+			if Session.get("reload_dxlist")
+				self.$("#relatedObjectRecords").dxList("reload")
 
 Template.relatedObjectList.helpers Creator.helpers
 

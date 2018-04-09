@@ -9,21 +9,19 @@
         left: 0;
         right: 0;
         background: rgb(243, 242, 242);
-        animation-duration: 0.5s;
-        -webkit-animation-duration: 0.5s;
-        transition-timing-function: cubic-bezier(0.36, 0.66, 0.04, 1);
-        -webkit-transition-timing-function: cubic-bezier(0.36, 0.66, 0.04, 1);
+        transform: translate3d(0, 0, 0);
+        animation-duration: 0.4s;
+        -webkit-animation-duration: 0.4s;
+        transition-timing-function: ease;
+        -webkit-transition-timing-function: ease;
         will-change: transfrom, -webkit-transform, opacity;
-    
         .mobile-template-header {
             position: relative;
             background-color: rgb(0, 112, 210);
-    
             .forceHeaderLayout {
                 position: relative;
                 width: 100%;
                 height: 44px;
-    
                 .bLeft {
                     float: left;
                     padding-left: 15px;
@@ -40,6 +38,8 @@
                     overflow: hidden;
                     text-align: center;
                     color: #fff;
+                    font-size: 16px;
+                    font-weight: 700;
                 }
                 .bRight {
                     float: right;
@@ -53,7 +53,6 @@
                 }
             }
         }
-    
         .mobile-template-content {
             position: absolute;
             top: 44px;
@@ -61,14 +60,12 @@
             width: 100%;
             overflow: auto;
             background-color: rgb(243, 242, 242);
-
-            a:hover, a:focus {
+            a:hover,
+            a:focus {
                 text-decoration: none !important;
             }
-
             .dx-list {
                 background: #fff;
-                
                 .dx-list-search {
                     border: none;
                     border-radius: 0;
@@ -107,12 +104,12 @@
                         text-align: center;
                     }
                     .dx-placeholder:before {
-                        padding: 15px 9px 8px 34px;
+                        padding: 17px 9px 8px 34px;
                     }
                     .dx-placeholder:after {
                         position: absolute;
                         left: calc(~ "50% - 50px");
-                        width: 50px;
+                        width: 70px;
                         height: auto;
                         font: normal normal normal 14px/1 "weui";
                         content: "\EA0E";
@@ -153,13 +150,13 @@
                 }
             }
         }
-    } 
+    }
 }
 
 @media screen and (max-width: 767px) {
     .sweet-alert h2 {
         font-weight: normal;
         font-size: 22px;
-        margin: 0px; 
+        margin: 0px;
     }
 }

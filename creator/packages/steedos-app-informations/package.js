@@ -10,6 +10,6 @@ Package.onUse(function(api) {
 
 	api.use('coffeescript@1.11.1_4');
 	api.use('steedos:creator@0.0.4');
-	api.addFiles('qhd_information_app.coffee','client');
+	api.addFiles('qhd_information_app.coffee');
 	api.addFiles('models/qhd_informations.coffee');
 })

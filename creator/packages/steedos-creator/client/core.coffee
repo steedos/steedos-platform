@@ -53,7 +53,14 @@ Creator.removeRecord = (object_name,record_id,callback)->
 				toastr?.success?(t("afModal_remove_suc"))
 
 		error: (jqXHR, textStatus, errorThrown) ->
-			console.log(errorThrown)
+			error = jqXHR.responseJSON
+			console.error error
+			if error.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
 
 if Meteor.isClient
 	# 定义全局变量以Session.get("object_name")为key记录其选中的记录id集合
@@ -206,3 +213,11 @@ Meteor.startup ->
 			$(".list-table-container table.dataTable thead th").each ->
 				width = $(this).outerWidth()
 				$(".slds-th__action", this).css("width", "#{width}px")
+
+	$(document).keydown (e) ->
+		if e.keyCode == "13" or e.key == "Enter"
+			if e.target.tagName != "TEXTAREA"
+				if Session.get("cmOperation") == "update"
+					$(".creator-auotform-modals .btn-update").click()
+				else if Session.get("cmOperation") == "insert"
+					$(".creator-auotform-modals .btn-insert").click()

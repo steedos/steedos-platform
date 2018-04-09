@@ -56,14 +56,14 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 - sortable: 可排序，可排序字段系统会自动创建索引
 - index: true/false，指定是否为此字段创建索引
 - readonly: 只读，应该只显示在查看页面或列表页面上，新增和修改页面都不显示 #todo
-- omit: 所有页面都不显示
+- omit: 只是编辑界面不显示，列表、表单详细界面等都可能显示。
 - multiple: 表示数组字段，可以多选
 - group：字段分组，在显示表单时自动按分组显示
 - is_wide: 宽字段，显示时占满整行
 - is_name: 表示此字段为标题字段，适用于标题字段并不是"name"时，在列表页生成链接
 - readonly: 只读
 - disabled: 禁用
-- hidden: 隐藏，在列表和表单中都不显示
+- hidden: 隐藏，包括列表、表单、编辑界面在内的所有界面都不显示
 - blackbox: 告知schema忽略此字段的类型验证
 - allowedValues: 可选项范围
 - seachable: 可搜索

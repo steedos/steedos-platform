@@ -106,3 +106,9 @@ flters 用于配置视图的默认过滤条件
 
 - 实例
 	[["is_received", "=", true],["destroy_date","<=",new Date()],["is_destroyed", "=", false]]
+
+
+Creator自定义object独立数据库
+配置环境变量：
+- MONGO_URL_CREATOR：数据库地址
+- MONGO_OPLOG_URL_CREATOR：oplog地址

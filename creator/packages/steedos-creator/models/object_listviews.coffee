@@ -121,5 +121,5 @@ Creator.Objects.object_listviews =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: false
-			readable_fields: ["name", "filter_scope", "columns", "shared", "owner"]
-			editable_fields: ["name", "filter_scope", "columns", "shared", "owner"]
+			# readable_fields: ["name", "filter_scope", "columns", "shared", "owner"]
+			# editable_fields: ["name", "filter_scope", "columns", "shared", "owner"]

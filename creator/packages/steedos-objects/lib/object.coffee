@@ -76,29 +76,29 @@ Creator.Object = (options)->
 	
 	# 让所有object默认有所有list_views/actions/related_objects/readable_fields/editable_fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
-	defaultListViews = _.keys(self.list_views)
-	defaultActions = _.keys(self.actions)
-	defaultRelatedObjects = _.pluck(self.related_objects,"object_name")
-	defaultReadableFields = []
-	defaultEditableFields = []
-	_.each self.fields, (field, field_name)->
-		if !(field.hidden)    #231 omit字段支持在非编辑页面查看, 因此删除了此处对omit的判断
-			defaultReadableFields.push field_name
-			if !field.readonly
-				defaultEditableFields.push field_name
+	# defaultListViews = _.keys(self.list_views)
+	# defaultActions = _.keys(self.actions)
+	# defaultRelatedObjects = _.pluck(self.related_objects,"object_name")
+	# defaultReadableFields = []
+	# defaultEditableFields = []
+	# _.each self.fields, (field, field_name)->
+	# 	if !(field.hidden)    #231 omit字段支持在非编辑页面查看, 因此删除了此处对omit的判断
+	# 		defaultReadableFields.push field_name
+	# 		if !field.readonly
+	# 			defaultEditableFields.push field_name
 		
-	_.each self.permission_set, (item, item_name)->
-		if item_name == "none"
-			return
-		if self.list_views
-			self.permission_set[item_name].list_views = defaultListViews
-		if self.actions
-			self.permission_set[item_name].actions = defaultActions
-		if self.related_objects
-			self.permission_set[item_name].related_objects = defaultRelatedObjects
-		if self.fields
-			self.permission_set[item_name].readable_fields = defaultReadableFields
-			self.permission_set[item_name].editable_fields = defaultEditableFields
+	# _.each self.permission_set, (item, item_name)->
+	# 	if item_name == "none"
+	# 		return
+	# 	if self.list_views
+	# 		self.permission_set[item_name].list_views = defaultListViews
+	# 	if self.actions
+	# 		self.permission_set[item_name].actions = defaultActions
+	# 	if self.related_objects
+	# 		self.permission_set[item_name].related_objects = defaultRelatedObjects
+	# 	if self.fields
+	# 		self.permission_set[item_name].readable_fields = defaultReadableFields
+	# 		self.permission_set[item_name].editable_fields = defaultEditableFields
 
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
@@ -108,14 +108,24 @@ Creator.Object = (options)->
 	# 前端根据permissions改写field相关属性，后端只要走默认属性就行，不需要改写
 	if Meteor.isClient
 		permissions = options.permissions
+		disabled_list_views = permissions.disabled_list_views
+		if disabled_list_views?.length
+			defaultListViewId = options.list_views?.all?._id
+			if defaultListViewId
+				# 把视图权限配置中默认的all视图id转换成all关键字
+				permissions.disabled_list_views = _.map disabled_list_views, (list_view_item) ->
+					return if defaultListViewId == list_view_item then "all" else list_view_item
 		self.permissions = new ReactiveVar(permissions)
 		_.each self.fields, (field, field_name)->
 			if field and !field.omit
-				if _.indexOf(permissions.readable_fields, field_name) > -1
-					field.hidden = false
-					if _.indexOf(permissions.editable_fields, field_name) < 0
+				if _.indexOf(permissions.unreadable_fields, field_name) < 0
+					if field.hidden
+						return
+					if _.indexOf(permissions.uneditable_fields, field_name) > -1
 						field.readonly = true
 						field.disabled = true
+						# 当只读时，如果不去掉必填字段，autoform是会报错的
+						field.required = false
 					else
 						field.readonly = false
 						field.disabled = false

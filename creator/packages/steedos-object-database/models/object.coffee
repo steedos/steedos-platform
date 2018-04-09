@@ -20,10 +20,8 @@ Creator.Objects.objects =
 		icon:
 			type: "lookup"
 			optionsFunction: ()->
-				# 将svg文件打开后，把xml内容转换为json格式(https://www.bejson.com/xml2json/)，然后执行此脚本获取icon标识：_.pluck(json.svg.symbol, "-id").join(",")
-				standard_svgs = "account,address,announcement,answer_best,answer_private,answer_public,approval,apps,apps_admin,article,asset_relationship,assigned_resource,avatar,avatar_loading,bot,business_hours,calibration,call,call_history,campaign,campaign_members,canvas,carousel,case,case_change_status,case_comment,case_email,case_log_a_call,case_milestone,case_transcript,client,cms,coaching,connected_apps,contact,contact_list,contract,contract_line_item,custom,custom_notification,dashboard,datadotcom,default,document,drafts,email,email_chatter,empty,endorsement,entitlement,entitlement_process,entitlement_template,entity,entity_milestone,environment_hub,event,feed,feedback,file,flow,folder,forecasts,generic_loading,goals,group_loading,groups,hierarchy,home,household,insights,investment_account,lead,lead_insights,lead_list,link,list_email,live_chat,location,log_a_call,macros,maintenance_asset,maintenance_plan,marketing_actions,merge,metrics,news,note,omni_supervisor,operating_hours,opportunity,opportunity_splits,orders,people,performance,person_account,photo,poll,portal,post,pricebook,process,product,product_consumed,product_item,product_item_transaction,product_request,product_request_line_item,product_required,product_transfer,question_best,question_feed,quick_text,quip,quip_sheet,quotes,recent,record,related_list,relationship,report,resource_absence,resource_capacity,resource_preference,resource_skill,reward,rtc_presence,sales_path,scan_card,service_appointment,service_contract,service_crew,service_crew_member,service_report,service_resource,service_territory,service_territory_location,service_territory_member,shipment,skill,skill_entity,skill_requirement,social,solution,sossession,task,task2,team_member,template,thanks,thanks_loading,timesheet,timesheet_entry,timeslot,today,topic,topic2,unmatched,user,work_order,work_order_item,work_type".split(",")
 				options = []
-				_.forEach standard_svgs, (svg)->
+				_.forEach Creator.resources.sldsIcons.standard, (svg)->
 					options.push {value: svg, label: svg, icon: svg}
 				return options
 		is_enable:
@@ -44,7 +42,7 @@ Creator.Objects.objects =
 		is_view:
 			type: 'boolean'
 			defaultValue: false
-			hidden: true
+			omit: true
 		description: 
 			label: "Description"
 			type: "textarea"
@@ -71,7 +69,7 @@ Creator.Objects.objects =
 			hidden: true
 		custom:
 			type: "boolean"
-			hidden: true
+			omit: true
 		owner: 
 			hidden: true
 
@@ -122,6 +120,12 @@ Creator.Objects.objects =
 				if modifier?.$set?.name && doc.name != modifier.$set.name
 					console.log "不能修改name"
 					throw new Meteor.Error 500, "不能修改name"
+				if modifier.$set
+					modifier.$set.custom = true
+
+				if modifier.$unset && modifier.$unset.custom
+					delete modifier.$unset.custom
+
 
 		"after.insert.server.objects":
 			on: "server"
@@ -141,7 +145,7 @@ Creator.Objects.objects =
 				documents = object_collections.find({},{fields: {_id: 1}})
 
 				if documents.count() > 0
-					throw new Meteor.Error 500, "对象中已经有记录，请先删除记录后， 再删除此对象"
+					throw new Meteor.Error 500, "对象(#{doc.name})中已经有记录，请先删除记录后， 再删除此对象"
 
 		"after.remove.server.objects":
 			on: "server"
@@ -160,7 +164,8 @@ Creator.Objects.objects =
 
 				#drop collection
 				console.log "drop collection", doc.name
-				Creator.getCollection(doc.name)._collection.dropCollection()
-#
-#				Creator.getCollection(doc.name).rawCollection().drop (err, client)->
-#					Creator.removeCollection(doc.name)
+				try
+					Creator.getCollection(doc.name)._collection.dropCollection()
+				catch e
+					console.error("#{e.stack}")
+					throw new Meteor.Error 500, "对象(#{doc.name})不存在或已被删除"

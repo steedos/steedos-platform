@@ -20,13 +20,12 @@ Creator.Objects.permission_objects =
 			required: true
 			optionsFunction: ()->
 				_options = []
-				_.forEach Creator.Objects, (o, k)->
+				_.forEach Creator.objectsByName, (o, k)->
 					_options.push {label: o.label, value: k, icon: o.icon}
 				return _options
-
 		allowRead: 
 			type: "boolean"
-			label: "查看我的记录",
+			label: "允许查看",
 		allowCreate: 
 			label: "允许创建",
 			type: "boolean"
@@ -42,9 +41,9 @@ Creator.Objects.permission_objects =
 		modifyAllRecords: 
 			type: "boolean"
 			label: "修改所有记录",
-		list_views:
+		disabled_list_views:
 			type: "lookup"
-			label:'列表视图'
+			label:'禁用列表视图'
 			multiple: true
 			depend_on: ["object_name"]
 			defaultIcon: "lead_list"
@@ -56,9 +55,9 @@ Creator.Objects.permission_objects =
 					if k != "default" and (!_.has(f, "shared") || f.shared)
 						_options.push {label: f.label || f.name || k, value: f._id}
 				return _options
-		actions:
+		disabled_actions:
 			type: "lookup"
-			label:'操作'
+			label:'禁用操作'
 			multiple: true
 			depend_on: ["object_name"]
 			defaultIcon: "marketing_actions"
@@ -67,37 +66,47 @@ Creator.Objects.permission_objects =
 				_object = Creator.getObject(values.object_name)
 				actions = _object.actions
 				_.forEach actions, (f, k)->
-					_options.push {label: f.label || k, value: k}
+					if ["standard_new", "standard_edit", "standard_delete"].indexOf(k) < 0
+						_options.push {label: f.label || k, value: k}
 				return _options
-		readable_fields:
+		unreadable_fields:
 			type: "lookup"
-			label:'只读字段'
+			label:'不可见字段'
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
+				object_name = values.object_name
+				unless object_name
+					return []
 				_options = []
-				_object = Creator.getObject(values.object_name)
+				_object = Creator.getObject(object_name)
 				fields = _object.fields
 				icon = _object.icon
 				_.forEach fields, (f, k)->
-					_options.push {label: f.label || k, value: k, icon: icon}
+					unless f.omit
+						_options.push {label: f.label || k, value: k, icon: icon}
 				return _options
-		editable_fields:
+		uneditable_fields:
 			type: "lookup"
-			label:'可编辑字段'
+			label:'不可编辑字段'
 			multiple: true
-			depend_on: ["object_name"]
+			depend_on: ["object_name", "unreadable_fields"]
 			optionsFunction: (values)->
+				object_name = values.object_name
+				unless object_name
+					return []
 				_options = []
-				_object = Creator.getObject(values.object_name)
+				_object = Creator.getObject(object_name)
 				fields = _object.fields
 				icon = _object.icon
 				_.forEach fields, (f, k)->
-					_options.push {label: f.label || k, value: k, icon: icon}
+					unless f.omit
+						if _.indexOf(values.unreadable_fields, k) < 0 
+							_options.push {label: f.label || k, value: k, icon: icon}
 				return _options
-		related_objects:
+		unrelated_objects:
 			type: "lookup"
-			label:'关联对象'
+			label:'禁用关联对象'
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->

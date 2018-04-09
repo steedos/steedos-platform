@@ -58,6 +58,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/triggers.coffee');
 	api.addFiles('lib/permission_sets.coffee');
 	api.addFiles('lib/collections.coffee');
+	api.addFiles('lib/resources.coffee',  "client");
 
 
 	api.addFiles('models/base.coffee');

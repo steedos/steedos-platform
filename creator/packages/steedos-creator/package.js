@@ -178,7 +178,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/object_menu.html', 'client');
 	api.addFiles('client/mobile/object_menu.coffee', 'client');
 	api.addFiles('client/mobile/object_menu.less', 'client');
-	api.addFiles('client/mobile/mobile_template.less', 'client');
+	api.addFiles('client/mobile/common.less', 'client');
 	api.addFiles('client/mobile/mobile_list.html', 'client');
 	api.addFiles('client/mobile/mobile_list.less', 'client');
 	api.addFiles('client/mobile/mobile_list.coffee', 'client');

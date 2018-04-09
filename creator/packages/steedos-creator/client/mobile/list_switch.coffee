@@ -52,16 +52,16 @@ Template.listSwitch.onRendered ->
 	icon = Creator.getObject(object_name).icon
 
 	this.$("#list_switch").removeClass "hidden"	
-	this.$("#list_switch").animateCss "fadeInRight"
+	this.$("#list_switch").animateCss "fadeInRight", ->
 
-	self.autorun (c)->
-		list_view_id = Template.instance().list_view_id.get()
-		if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready() and !Creator.isloading() and list_view_id
-			displayListGrid(object_name, app_id, list_view_id, name_field_key, icon, self)
-	
-	self.autorun (c)->
-		if Session.get("reload_dxlist")
-			self.$("#gridContainer").dxList("reload")
+		self.autorun (c)->
+			list_view_id = self.list_view_id.get()
+			if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready() and !Creator.isloading() and list_view_id
+				displayListGrid(object_name, app_id, list_view_id, name_field_key, icon, self)
+		
+		self.autorun (c)->
+			if Session.get("reload_dxlist")
+				self.$("#gridContainer").dxList("reload")
 
 Template.listSwitch.helpers Creator.helpers
 
@@ -72,6 +72,18 @@ Template.listSwitch.helpers
 	list_views: ()->
 		object_name = Template.instance().data.object_name
 		return Creator.getListViews(object_name)
+
+	allowCreate: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getPermissions(object_name).allowCreate
+
+	collection: ()->
+		object_name = Template.instance().data.object_name
+		return "Creator.Collections." + object_name
+
+	collectionName: ()->
+		object_name = Template.instance().data.object_name
+		return Creator.getObject(object_name).label
 
 	object_label: ()->
 		object_name = Template.instance().data.object_name
@@ -101,13 +113,17 @@ Template.listSwitch.events
 			else
 				FlowRouter.go '/app/menu'
 
+	'click .add-list-item': (event, template)->
+		Session.set("reload_dxlist", false)
+		template.$(".btn-add-list-item").click()
+
 	'click .list-name': (event, template)->
 		actionSheetItems = []
 		app_id = Template.instance().data.app_id
 		object_name = Template.instance().data.object_name
 		list_views = Creator.getListViews(object_name)
 		_.each list_views, (view)->
-			actionSheetItems.push {text: view.name, list_view_id: view._id}
+			actionSheetItems.push {text: view.label, list_view_id: view._id}
 
 		actionSheetOption = 
 			dataSource: actionSheetItems
@@ -144,3 +160,12 @@ Template.listSwitch.onCreated ->
 					console.log "custom_list_views",self.list_view_id.get()
 			c.stop()
 	
+AutoForm.hooks addListItem:
+	onSuccess: (formType, result)->
+		Session.set("reload_dxlist", true)
+		if result.type == "post"
+			app_id = FlowRouter._current.params.app_id
+			object_name = result.object_name
+			record_id = result._id
+			record_url = Steedos.absoluteUrl("/app/#{app_id}/#{object_name}/view/#{record_id}")
+			FlowRouter.go record_url

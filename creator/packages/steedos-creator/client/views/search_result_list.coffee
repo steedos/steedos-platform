@@ -24,27 +24,16 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 			object = Creator.getObject(objectName)
 			collectionName = object.label
 			name_field_key = object.NAME_FIELD_KEY
+
+			Session.set("action_fields", undefined)
+			Session.set("action_collection", "Creator.Collections.#{objectName}")
+			Session.set("action_collection_name", collectionName)
+			Session.set("action_save_and_insert", true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
-				swal
-					title: "删除#{object.label}"
-					text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
-					html: true
-					showCancelButton:true
-					confirmButtonText: t('Delete')
-					cancelButtonText: t('Cancel')
-					(option) ->
-						if option
-							Creator.removeRecord(objectName, recordId, ->
-								info = object.label + "\"#{action_record_title}\"" + "已删除"
-								toastr.success info
-								dxSearchGridInstance.refresh()
-							)
+				Creator.executeAction objectName, action, recordId, action_record_title, ()->
+					dxSearchGridInstance.refresh()
 			else
-				Session.set("action_fields", undefined)
-				Session.set("action_collection", "Creator.Collections.#{objectName}")
-				Session.set("action_collection_name", collectionName)
-				Session.set("action_save_and_insert", true)
 				Creator.executeAction objectName, action, recordId
 
 	unless actions.length

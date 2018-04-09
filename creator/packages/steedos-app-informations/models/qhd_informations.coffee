@@ -26,6 +26,7 @@ Creator.Objects.qhd_informations =
 				return company
 		content:
 			type:"textarea",
+			rows: 8
 			label:"内容"
 			searchable:true
 			required: true
@@ -76,16 +77,16 @@ Creator.Objects.qhd_informations =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: false
-			editable_fields:["title","company","content"]
-			list_views:["mine","company"] 
-			readable_fields:["title","company","content",
-				'owner',
-				'created',
-				'created_by',
-				'modified',
-				'modified_by',
-				'space',
-				'is_deleted' ]
+			# editable_fields:["title","company","content"]
+			# list_views:["mine","company"] 
+			# readable_fields:["title","company","content",
+			# 	'owner',
+			# 	'created',
+			# 	'created_by',
+			# 	'modified',
+			# 	'modified_by',
+			# 	'space',
+			# 	'is_deleted' ]
 		admin:
 			allowCreate: false
 			allowDelete: false
@@ -93,7 +94,7 @@ Creator.Objects.qhd_informations =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: false
-			list_views:["mine","company"] 
+			# list_views:["mine","company"] 
 	triggers:
 		"before.insert.server.calculateScore": 
 			on: "server"
@@ -131,4 +132,4 @@ Creator.Objects.qhd_informations =
 							score = score + 5
 						else if point == '专报信息'
 							score = score + 10
-					Creator.Collections['qhd_informations'].direct.update({_id:doc._id},{$set:{score:score}})
+				Creator.Collections['qhd_informations'].direct.update({_id:doc._id},{$set:{score:score}})

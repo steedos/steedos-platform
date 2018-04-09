@@ -15,15 +15,14 @@ if Meteor.isClient
 			else if typeof action.todo == "function"
 				todo = action.todo	
 			if todo
+				moreArgs = Array.prototype.slice.call(arguments, 3)
+				todoArgs = _.union [object_name, record_id], moreArgs
 				todo.apply {
 					object_name: object_name
 					record_id: record_id
 					object: obj
 					action: action
-				}, [
-					object_name
-					record_id
-				]
+				}, todoArgs
 				
 
 	Creator.actions 
@@ -50,31 +49,29 @@ if Meteor.isClient
 							Meteor.defer ()->
 								$(".btn.creator-edit").click()
 
-		"standard_delete": (object_name, record_id, fields)->
+		"standard_delete": (object_name, record_id, record_title, call_back)->
 			object = Creator.getObject(object_name)
-			action_record_title = Session.get("action_record_title")
-			unless action_record_title
-				name_field_key = object.NAME_FIELD_KEY
-				record = Creator.getObjectRecord(object_name, record_id)
-				action_record_title = record[name_field_key]
+			if record_title
+				text = "是否确定要删除此#{object.label} [#{record_title}]"
+			else
+				text = "是否确定要删除此#{object.label}"
 			swal
 				title: "删除#{object.label}"
-				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
+				text: "<div class='delete-creator-warning'>#{text}？</div>"
 				html: true
 				showCancelButton:true
 				confirmButtonText: t('Delete')
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
-						Creator.Collections[object_name].remove {_id: record_id}, (error, result) ->
-							if error
-								toastr.error error.reason
+						Creator.removeRecord object_name, record_id, ()->
+							if record_title
+								info = object.label + "\"#{record_title}\"" + "已删除"
 							else
-								if action_record_title
-									info = object.label + "\"#{action_record_title}\"" + "已删除"
-								else
-									info = "删除成功"
-								toastr.success info
-								if record_id == Session.get("record_id")
-									appid = Session.get("app_id")
-									FlowRouter.go "/app/#{appid}/#{object_name}/list"
+								info = "删除成功"
+							toastr.success info
+							if record_id == Session.get("record_id") and !Steedos.isMobile()
+								appid = Session.get("app_id")
+								FlowRouter.go "/app/#{appid}/#{object_name}/grid"
+							if call_back and typeof call_back == "function"
+								call_back()

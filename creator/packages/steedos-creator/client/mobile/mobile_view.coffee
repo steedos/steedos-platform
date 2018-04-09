@@ -6,13 +6,13 @@ Template.mobileView.onRendered ->
 	self = this
 
 	self.$(".mobile-view").removeClass "hidden"
-	self.$(".mobile-view").animateCss "fadeInRight"
+	self.$(".mobile-view").animateCss "fadeInRight", ->
 
-	self.autorun ->
-		object_name = Template.instance().data.object_name
-		record_id = Template.instance().data.record_id
-		if object_name and record_id
-			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
+		self.autorun ->
+			object_name = self.data.object_name
+			record_id = self.data.record_id
+			if object_name and record_id
+				Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
 
 
 	# 此处不使用method而是使用订阅去获取相关object的record，避免添加数据之后，前台获取的数据条数没有发生变化
@@ -243,22 +243,9 @@ Template.mobileView.events
 		template.action_collection_name.set(object.label)
 		if this.name == "standard_delete"
 			Session.set "reload_dxlist", false
-			swal
-				title: "删除#{object.label}"
-				text: "<div class='delete-creator-warning'>是否确定要删除此#{object.label}？</div>"
-				html: true
-				showCancelButton:true
-				confirmButtonText: t('Delete')
-				cancelButtonText: t('Cancel')
-				(option) ->
-					if option
-						Creator.Collections[object_name].remove {_id: record_id}, (error, result) ->
-							if error
-								toastr.error error.reason
-							else
-								Session.set "reload_dxlist", true
-								toastr.success "删除成功"
-								template.$(".mobile-view-back").click()
+			Creator.executeAction object_name, this, record_id, null, ()->
+				Session.set "reload_dxlist", true
+				template.$(".mobile-view-back").click()
 		else
 			Creator.executeAction object_name, this, record_id
 
