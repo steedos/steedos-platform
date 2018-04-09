@@ -830,13 +830,10 @@ Template.creator_report_content.onRendered ->
 	
 	this.autorun (c)->
 		is_chart_open = self.is_chart_open.get()
-		# grid = Tracker.nonreactive ()->
-		# 	return self.pivotGridInstance.get()
 		if is_chart_open
 			Tracker.nonreactive ()->
 				renderChart self
 		else
-			pivotGridChart?.dispose()
 			$('#pivotgrid-chart').hide()
 
 
