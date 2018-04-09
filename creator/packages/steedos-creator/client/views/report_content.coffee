@@ -482,6 +482,7 @@ renderSummaryReport = (reportObject)->
 					if groupSummaryItems.length
 						if reportObject.charting
 							self.is_chart_open.set(true)
+							self.is_chart_open.dep.changed()
 						else
 							self.is_chart_open.set(false)
 						self.is_chart_disabled.set(false)
