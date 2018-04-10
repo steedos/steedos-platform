@@ -210,7 +210,7 @@ renderChart = (self)->
 			panes: chartPanes,
 			series: chartSeries,
 			valueAxis: chartValueAxis
-		});
+		}).dxChart('instance')
 	else
 		grid = Tracker.nonreactive ()->
 			return self.pivotGridInstance.get()
@@ -495,7 +495,7 @@ renderSummaryReport = (reportObject)->
 
 	this.dataGridInstance?.set datagrid
 
-renderMatrixReport = (reportObject, isOnlyForChart)->
+renderMatrixReport = (reportObject)->
 	self = this
 	selectColumns = []
 	expandFields = []
@@ -517,7 +517,6 @@ renderMatrixReport = (reportObject, isOnlyForChart)->
 			rowField = objectFields[fieldKeys[0]]
 			caption = getFieldLabel rowField, row
 			field = {
-				expanded: isOnlyForChart
 				caption: caption
 				width: 100
 				dataField: row
@@ -528,9 +527,7 @@ renderMatrixReport = (reportObject, isOnlyForChart)->
 			if columnWidths[row]
 				field.width = columnWidths[row]
 			reportFields.push field
-	# 如果是为摘要等其他类型报表加载Chart，则统计是以行为准，列只用来显示
-	columns = if isOnlyForChart then reportObject.rows else reportObject.columns
-	_.each columns, (column)->
+	_.each reportObject.columns, (column)->
 		if column != "_id"
 			# columnFieldKey = column.replace(/\./g,"*%*")
 			fieldKeys = column.split(".")
@@ -670,63 +667,60 @@ renderMatrixReport = (reportObject, isOnlyForChart)->
 					request.headers['X-User-Id'] = Meteor.userId()
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+				onLoaded: (loadOptions)->
+					if _.where(reportFields,{area:"data"}).length
+						if reportObject.charting
+							self.is_chart_open.set(true)
+							self.is_chart_open.dep.changed()
+						else
+							self.is_chart_open.set(false)
+						self.is_chart_disabled.set(false)
+					else
+						self.is_chart_open.set(false)
+						self.is_chart_disabled.set(true)
+						$('#pivotgrid-chart').hide()
+					return
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
 			filter: filter
 
-	unless isOnlyForChart
-		drillDownDataSource = {}
-		salesPopup = $('#drill-down-popup').dxPopup(
-			width: 600
-			height: 400
-			contentTemplate: (contentElement) ->
-				drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
-				drillDownFields = _.without drillDownFields, null, undefined
-				drillDownColumns = []
-				gridFields = self.pivotGridInstance.get().getDataSource()._fields
-				drillDownFields.forEach (n)->
-					if n == "_id"
-						return
-					# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
-					gridFieldItem = _.findWhere(gridFields,{dataField:n})
-					drillDownColumns.push {
-						dataField: gridFieldItem.dataField
-						caption: gridFieldItem.caption
-						sortingMethod: Creator.sortingMethod
-					}
-				$('<div />').addClass('drill-down-content').dxDataGrid(
-					width: 560
-					height: 300
-					columns: drillDownColumns).appendTo contentElement
-			onShowing: ->
-				$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
-		).dxPopup('instance')
-		dxOptions.onCellClick = (e)->
-			if e.area == 'data'
-				pivotGridDataSource = e.component.getDataSource()
-				rowPathLength = e.cell.rowPath.length
-				rowPathName = e.cell.rowPath[rowPathLength - 1]
-				popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
-				drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
-				salesPopup.option 'title', popupTitle
-				salesPopup.show()
+	drillDownDataSource = {}
+	salesPopup = $('#drill-down-popup').dxPopup(
+		width: 600
+		height: 400
+		contentTemplate: (contentElement) ->
+			drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
+			drillDownFields = _.without drillDownFields, null, undefined
+			drillDownColumns = []
+			gridFields = self.pivotGridInstance.get().getDataSource()._fields
+			drillDownFields.forEach (n)->
+				if n == "_id"
+					return
+				# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
+				gridFieldItem = _.findWhere(gridFields,{dataField:n})
+				drillDownColumns.push {
+					dataField: gridFieldItem.dataField
+					caption: gridFieldItem.caption
+					sortingMethod: Creator.sortingMethod
+				}
+			$('<div />').addClass('drill-down-content').dxDataGrid(
+				width: 560
+				height: 300
+				columns: drillDownColumns).appendTo contentElement
+		onShowing: ->
+			$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
+	).dxPopup('instance')
+	dxOptions.onCellClick = (e)->
+		if e.area == 'data'
+			pivotGridDataSource = e.component.getDataSource()
+			rowPathLength = e.cell.rowPath.length
+			rowPathName = e.cell.rowPath[rowPathLength - 1]
+			popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
+			drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
+			salesPopup.option 'title', popupTitle
+			salesPopup.show()
 	pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
-	
-	if isOnlyForChart
-		$('#pivotgrid').hide()
-	
-	if _.where(reportFields,{area:"data"}).length
-		unless isOnlyForChart
-			if reportObject.charting
-				self.is_chart_open.set(true)
-			else
-				self.is_chart_open.set(false)
-		self.is_chart_disabled.set(false)
-	else
-		self.is_chart_open.set(false)
-		self.is_chart_disabled.set(true)
-		$('#pivotgrid-chart').hide()
 
 	this.pivotGridInstance?.set pivotGrid
 
@@ -752,6 +746,8 @@ renderReport = (reportObject)->
 	unless object
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
+	if pivotGridChart
+		pivotGridChart.dispose()
 	switch reportObject.report_type
 		when 'tabular'
 			renderTabularReport.bind(self)(reportObject)
