@@ -155,6 +155,3 @@ Creator.Objects.flows =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
-
-console.log "Creator.Apps.admin", Creator.Apps.admin
-Creator.Apps.admin?.objects.push "flows"

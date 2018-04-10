@@ -294,7 +294,7 @@ Template.creator_view.events
 		Session.set("action_collection_name", collection_name)
 		Session.set("action_save_and_insert", true)
 		Meteor.defer ()->
-			$(".creator-add").click()
+			$(".creator-add-related").click()
 		return 
 
 	'click .list-item-action': (event, template) ->

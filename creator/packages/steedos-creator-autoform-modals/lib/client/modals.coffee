@@ -113,6 +113,8 @@ Template.CreatorAutoformModals.rendered = ->
 	$('#afModal').on 'hidden.bs.modal', ->
 		$(window).unbind 'keyup', onEscKey
 
+		doc = Session.get 'cmDoc'
+
 		sessionKeys = [
 			'cmCollection',
 			'cmOperation',
@@ -151,6 +153,7 @@ Template.CreatorAutoformModals.rendered = ->
 			keyPress = Session.get 'cmPressKey'
 			keyPress = '.' + keyPress.replace(/\s+/ig, '.')
 			Meteor.defer ()->
+				Session.set 'cmDoc', doc
 				$(keyPress).click()
 
 
@@ -573,7 +576,9 @@ Template.CreatorAfModal.events
 		# 上次的操作是保存并新建，清空 cmDoc，并设置 cmOperation为 insert
 
 		if Session.get 'cmShowAgain'
-			Session.set 'cmDoc', undefined
+			console.log "t.data.operation", t.data.operation
+			if t.data.operation == 'update'
+				Session.set 'cmDoc', undefined
 			Session.set 'cmOperation', 'insert'
 
 		# 重置 cmShowAgain

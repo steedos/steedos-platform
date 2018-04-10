@@ -48,9 +48,6 @@ Creator.Objects.space_users =
 			type: "text"
 		position:
 			type: "text"
-		hr:
-			type: "object"
-			omit: true
 		company:
 			type: "text"
 	list_views:

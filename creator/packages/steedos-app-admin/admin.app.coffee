@@ -4,4 +4,4 @@ Creator.Apps.admin =
 	icon: "ion-ios-people-outline" 
 	icon_slds: "custom" 
 	is_creator:true
-	objects: ["apps", "organizations", "space_users", "permission_set", "permission_objects", "OAuth2Clients", "objects"]
+	objects: ["organizations", "space_users", "apps", "objects", "permission_set", "OAuth2Clients"]

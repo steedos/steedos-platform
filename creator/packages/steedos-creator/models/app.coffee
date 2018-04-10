@@ -40,11 +40,6 @@ Creator.Objects.apps =
 		sort:
 			type: "number"
 			defaultValue: 9100
-		secret:
-			type: String
-			max: 16
-			min: 16
-			#optional: true
 		is_creator:
 			type:"boolean"
 
