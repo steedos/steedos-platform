@@ -71,6 +71,9 @@ Creator.getObjectSchema = (obj) ->
 
 			if field.reference_to
 
+				if field.reference_sort
+					fs.autoform.optionsSort = field.reference_sort
+
 				if field.reference_to == "users"
 					fs.autoform.type = "selectuser"
 				else if field.reference_to == "organizations"

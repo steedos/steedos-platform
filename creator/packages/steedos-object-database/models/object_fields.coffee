@@ -183,6 +183,13 @@ Creator.Objects.object_fields =
 					if modifier?.$set?.reference_to && doc.reference_to != _reference_to && object_documents.count() > 0
 						throw new Meteor.Error 500, "对象#{object.label}中已经有记录，不能修改reference_to字段"
 
+					if modifier?.$unset?.reference_to && doc.reference_to != _reference_to && object_documents.count() > 0
+						throw new Meteor.Error 500, "对象#{object.label}中已经有记录，不能修改reference_to字段"
+
+					if modifier?.$set?.reference_to
+						if modifier.$set.reference_to.length == 1
+							modifier.$set.reference_to = modifier.$set.reference_to[0]
+
 		"before.insert.server.object_fields":
 			on: "server"
 			when: "before.insert"

@@ -56,6 +56,14 @@ FlowRouter.route '/app/:app_id',
 			BlazeLayout.render Creator.getLayout(),
 				main: "creator_app_home"
 
+FlowRouter.route '/admin',
+	triggersEnter: [ checkUserSigned, initLayout ],
+	action: (params, queryParams)->
+		if Steedos.isMobile()
+			if $(".content-wrapper #admin_menu").length == 0
+				Meteor.defer ->
+					Blaze.renderWithData(Template.adminMenu, {}, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+
 FlowRouter.route '/app/:app_id/search/:search_text',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->

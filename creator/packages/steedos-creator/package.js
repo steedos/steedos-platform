@@ -167,6 +167,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/sidebar.coffee', 'client');
 	api.addFiles('client/layout/sidebar.less', 'client');
 
+	api.addFiles('client/mobile/admin.html', 'client');
+	api.addFiles('client/mobile/admin.coffee', 'client');
+	api.addFiles('client/mobile/admin.less', 'client');
 	api.addFiles('client/layout/creator_app_list_modal.html', 'client');
 	api.addFiles('client/layout/creator_app_list_modal.coffee', 'client');
 	api.addFiles('client/layout/creator_app_list_modal.less', 'client');

@@ -31,9 +31,16 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction) {
 	this.optionsPlaceholder = options.optionsPlaceholder;
 	this.filters = options.filters;
 	this.dependOn = options.dependOn;
+	this.optionsSort = options.optionsSort
 	this.filtersFunction = filtersFunction;
 
 	this.initialized = new ReactiveVar(0);
+
+	if(this.optionsSort){
+		if(!_.isObject(this.optionsSort)){
+			console.error("无效的sort属性值", this.optionsSort)
+		}
+	}
 
 	if (optionsFunction || !options.optionsMethod) {
 		this.initialized.set(1);
@@ -516,12 +523,10 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 
 	var filterQuery = {};
 
-	if (this.dependOn && this.dependValues.get()) {
-		if (this.filtersFunction && _.isFunction(this.filtersFunction)) {
-			filterQuery = this.filtersFunction(this.filters, this.dependValues.get());
-		} else {
-			filterQuery = this.getFiltersSelectors();
-		}
+	if (this.filtersFunction && _.isFunction(this.filtersFunction)) {
+		filterQuery = this.filtersFunction(this.filters, this.dependValues.get());
+	} else {
+		filterQuery = this.getFiltersSelectors();
 	}
 
 	var searchVal = {
@@ -532,10 +537,18 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 		filterQuery: filterQuery
 	};
 
+	if(this.optionsSort){
+		searchVal.sort = this.optionsSort
+	}
+
 	// self.loading.set(true);
 
 	Meteor.call(methodName, searchVal, function (err, options) {
 		// self.loading.set(false);
+		if(err){
+			console.error(err)
+		}
+
 		if (params) {
 			self.removeUnusedItems(options);
 		}

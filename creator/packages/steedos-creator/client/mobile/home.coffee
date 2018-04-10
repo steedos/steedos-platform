@@ -13,3 +13,7 @@ Template.homeMenu.helpers
 				apps.push v
 		
 		return apps
+
+Template.homeMenu.events
+	'click .go-admin-menu': (event, template)->
+		FlowRouter.go(Steedos.absoluteUrl '/admin')

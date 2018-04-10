@@ -180,7 +180,8 @@ Template.creator_report.events
 		record_id = Session.get "record_id"
 		objectName = Session.get("object_name")
 		reportContent = Template.creator_report_content.getReportContent()
-		Creator.getCollection(objectName).update({_id: record_id},{$set:reportContent})
+		Creator.updateRecord "reports", record_id,reportContent
+		#Creator.getCollection(objectName).update({_id: record_id},{$set:reportContent})
 		if template.is_filter_open.get()
 			template.is_filter_open.set(false)
 
