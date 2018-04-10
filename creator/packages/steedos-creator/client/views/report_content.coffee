@@ -1,18 +1,19 @@
 Template.creator_report_content.helpers Creator.helpers
 
-Creator.getODataFilterForReport = (reportObject)->
-	object_name = reportObject.object_name
+getODataFilterForReport = (object_name, filter_scope, filters)->
+	unless object_name
+		return ["_id", "=", -1]
 	userId = Meteor.userId()
 	spaceId = Session.get("spaceId")
 	selector = []
 	if spaceId and userId
-		unless reportObject
-			return ["_id", "=", -1]
 		if object_name == "users"
 			selector.push ["_id", "=", userId]
 
-		if reportObject.filters
-			filters = Creator.formatFiltersToDev(reportObject.filters)
+		if filters and filters.length > 0
+			filters = _.map filters, (obj)->
+				return [obj.field, obj.operation, obj.value]
+			filters = Creator.formatFiltersToDev(filters)
 			if filters and filters.length > 0
 				if selector.length > 0
 					selector.push "and"
@@ -20,14 +21,14 @@ Creator.getODataFilterForReport = (reportObject)->
 					if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
 						selector.push filter
 
-			if reportObject.filter_scope == "mine"
+			if filter_scope == "mine"
 				if selector.length > 0
 					selector.push "and"
 				selector.push ["owner", "=", userId]
 		else
 			permissions = Creator.getPermissions(object_name)
 			if permissions.viewAllRecords
-				if reportObject.filter_scope == "mine"
+				if filter_scope == "mine"
 					if selector.length > 0
 						selector.push "and"
 					selector.push ["owner", "=", userId]
@@ -37,7 +38,8 @@ Creator.getODataFilterForReport = (reportObject)->
 				selector.push ["owner", "=", userId]
 
 	if selector.length == 0
-		return undefined
+		# 不可以返回undefined，因为它不能实现清除过虑条件
+		return null
 	return selector
 
 getReportContent = ()->
@@ -209,10 +211,6 @@ renderChart = (self)->
 			series: chartSeries,
 			valueAxis: chartValueAxis
 		});
-		console.log "chartData======:", chartData
-		console.log "chartSeries======:", chartSeries
-		console.log "chartPanes======:", chartPanes
-		console.log "chartValueAxis======:", chartValueAxis
 	else
 		grid = Tracker.nonreactive ()->
 			return self.pivotGridInstance.get()
@@ -288,6 +286,7 @@ renderTabularReport = (reportObject)->
 	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
 	dxOptions = 
 		showColumnLines: false
 		columnResizingMode: "widget"
@@ -298,7 +297,6 @@ renderTabularReport = (reportObject)->
 		"export":
 			enabled: true
 			fileName: reportObject.name
-		# dataSource: reportData
 		dataSource: 
 			select: selectColumns
 			expand: expandFields
@@ -311,13 +309,10 @@ renderTabularReport = (reportObject)->
 					request.headers['X-User-Id'] = Meteor.userId()
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				onLoading: (loadOptions)->
-					console.log loadOptions
-					return
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			# filter: filter
+			filter: filter
 		paging: false
 		scrolling: 
 			mode: "virtual"
@@ -452,6 +447,7 @@ renderSummaryReport = (reportObject)->
 	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -460,7 +456,6 @@ renderSummaryReport = (reportObject)->
 		"export":
 			enabled: true
 			fileName: reportObject.name
-		# dataSource: reportData
 		dataSource: 
 			select: selectColumns
 			expand: expandFields
@@ -473,12 +468,7 @@ renderSummaryReport = (reportObject)->
 					request.headers['X-User-Id'] = Meteor.userId()
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				onLoading: (loadOptions)->
-					console.log loadOptions
-					return
 				onLoaded: (loadOptions)->
-					console.log "loadOptions========1"
-					console.log loadOptions
 					if groupSummaryItems.length
 						if reportObject.charting
 							self.is_chart_open.set(true)
@@ -494,7 +484,7 @@ renderSummaryReport = (reportObject)->
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			# filter: filter
+			filter: filter
 		paging: false
 		scrolling: 
 			mode: "virtual"
@@ -503,21 +493,9 @@ renderSummaryReport = (reportObject)->
 
 	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
-	# if groupSummaryItems.length
-	# 	if reportObject.charting
-	# 		self.is_chart_open.set(true)
-	# 	else
-	# 		self.is_chart_open.set(false)
-	# 	self.is_chart_disabled.set(false)
-	# else
-	# 	self.is_chart_open.set(false)
-	# 	self.is_chart_disabled.set(true)
-	# 	$('#pivotgrid-chart').hide()
-
 	this.dataGridInstance?.set datagrid
 
 renderMatrixReport = (reportObject, isOnlyForChart)->
-	console.log "renderMatrixReport,reportObject:", reportObject
 	self = this
 	selectColumns = []
 	expandFields = []
@@ -660,6 +638,7 @@ renderMatrixReport = (reportObject, isOnlyForChart)->
 	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -691,13 +670,10 @@ renderMatrixReport = (reportObject, isOnlyForChart)->
 					request.headers['X-User-Id'] = Meteor.userId()
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				onLoading: (loadOptions)->
-					console.log loadOptions
-					return
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			# filter: filter
+			filter: filter
 
 	unless isOnlyForChart
 		drillDownDataSource = {}
@@ -772,25 +748,10 @@ renderReport = (reportObject)->
 	reportObject.counting = report_settings.counting
 	
 	objectName = reportObject.object_name
-	filterFields = _.union reportObject.columns, reportObject.rows, reportObject.values, reportObject.fields
-	filterFields = _.without filterFields, null, undefined
-	filter_scope = reportObject.filter_scope || "space"
-	filters = reportObject.filters
 	object = Creator.getObject(objectName)
 	unless object
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
-	if filters and filters.length > 0
-		filters = _.map filters, (obj)->
-			return [obj.field, obj.operation, obj.value]
-		
-		filters = Creator.formatFiltersToMongo(filters)
-	# $("body").addClass("loading")
-	# Meteor.call "report_data",{object_name: objectName, space: spaceId, filter_scope: filter_scope, filters: filters, fields: filterFields}, (error, result)->
-		# $("body").removeClass("loading")
-		# if error
-		# 	console.error('report_data method error:', error)
-		# 	return
 	switch reportObject.report_type
 		when 'tabular'
 			renderTabularReport.bind(self)(reportObject)
