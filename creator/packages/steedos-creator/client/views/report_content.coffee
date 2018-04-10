@@ -309,6 +309,11 @@ renderTabularReport = (reportObject)->
 					request.headers['X-User-Id'] = Meteor.userId()
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+				onLoaded: (loadOptions)->
+					self.is_chart_open.set(false)
+					self.is_chart_disabled.set(true)
+					$('#pivotgrid-chart').hide()
+					return
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
@@ -319,9 +324,10 @@ renderTabularReport = (reportObject)->
 		columns: reportColumns
 		summary: reportSummary
 	
+	
 	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
-	this.dataGridInstance?.set datagrid
+	self.dataGridInstance?.set datagrid
 
 renderSummaryReport = (reportObject)->
 	self = this
@@ -750,6 +756,8 @@ renderReport = (reportObject)->
 		pivotGridChart.dispose()
 	switch reportObject.report_type
 		when 'tabular'
+			# 报表类型从matrix转变成tabular时，需要把原来matrix报表清除
+			self.pivotGridInstance?.get()?.dispose()
 			renderTabularReport.bind(self)(reportObject)
 		when 'summary'
 			# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
