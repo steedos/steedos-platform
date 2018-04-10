@@ -18,7 +18,7 @@ Creator.Objects.space_users =
 		user:
 			type: "master_detail"
 			reference_to: "users"
-			required: true
+			# required: true
 			omit: true
 		position:
 			type: "text"
