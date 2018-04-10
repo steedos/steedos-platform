@@ -42,6 +42,9 @@ Template.creator_list_wrapper.helpers
 		Session.get("change_list_views")
 		list_view = Creator.getListView(Session.get("object_name"), Session.get("list_view_id"))
 
+		if Session.get("list_view_id") and Session.get("list_view_id") != list_view?._id
+			return
+
 		if !list_view
 			return
 
@@ -234,3 +237,10 @@ Template.creator_list_wrapper.onDestroyed ->
 	object_name = Session.get("object_name")
 	if object_name
 		Creator.TabularSelectedIds[object_name] = []
+
+
+AutoForm.hooks addListView:
+	onSuccess: (formType,result)->
+		list_view_id = result._id
+		Session.set("list_view_id", list_view_id)
+			

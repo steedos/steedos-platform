@@ -44,11 +44,15 @@ Creator.Objects.apps =
 			type: String
 			max: 16
 			min: 16
-			optional: true
+			#optional: true
+		is_creator:
+			type:"boolean"
+
 	list_views:
 		default:
-			columns: ["name"]
+			columns: ["name", "objects", "visible", "sort"]
 		all:
+			label: "所有应用"
 			filter_scope: "space"
 	permission_set:
 		user:

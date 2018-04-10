@@ -55,10 +55,9 @@ Creator.Objects.space_users =
 			type: "text"
 	list_views:
 		default:
-			columns: ["name", "organization", "position", "mobile", "email"]
-		recent:
-			filter_scope: "space"
+			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]
 		all:
+			label: "所有人员"
 			filter_scope: "space"
 
 	permission_set:
@@ -70,9 +69,9 @@ Creator.Objects.space_users =
 			modifyAllRecords: false
 			viewAllRecords: true 
 		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true 

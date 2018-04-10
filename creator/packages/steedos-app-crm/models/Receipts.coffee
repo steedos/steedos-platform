@@ -13,27 +13,33 @@ Creator.Objects.contract_receipts =
 			label: "金额"
 			type: "currency"
 			required: true
+			sortable: true
 		due_date:
 			label: "计划收款日期"
 			type: "date"
+			sortable: true
 		contract:
 			label: "合同"
 			type: "master_detail"
 			reference_to: "contracts"
 			required: true
+			sortable: true
 		account:
 			label: "单位"
 			type: "master_detail"
 			reference_to: "accounts"
+			sortable: true
 		is_closed:
 			label: "已收款"
 			type: "boolean"
 		close_date:
 			label: "实际收款日期"
 			type: "date"
+			sortable: true
 		billing_date:
 			label: "开票日期"
 			type: "date"
+			sortable: true
 		billing_no:
 			label: "发票号"
 			type: "text"

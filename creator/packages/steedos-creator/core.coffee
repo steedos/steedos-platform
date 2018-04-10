@@ -439,7 +439,7 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 
 Creator.getDBApps = (space_id)->
 	dbApps = {}
-	Creator.Collections["apps"].find({space: space_id}, {
+	Creator.Collections["apps"].find({space: space_id,is_creator:true,visible:true}, {
 		fields: {
 			created: 0,
 			created_by: 0,

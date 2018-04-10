@@ -181,12 +181,3 @@ Template.creator_list.events
 				console.log "error", error 
 			if result
 				return
-
-AutoForm.hooks addListView:
-	onSuccess: (formType,result)->
-		list_view_id = result
-		Session.set("list_view_visible", false)
-		Tracker.afterFlush ()->
-			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			Session.set("list_view_id", list_view_id)
-			Session.set("list_view_visible", true)

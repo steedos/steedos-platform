@@ -20,12 +20,15 @@ Creator.Objects.contacts =
 			label: "单位"
 			type: "master_detail"
 			reference_to: "accounts"
+			sortable: true
 		title:
 			label: "职务"
 			type: "text"
+			sortable: true
 		department:
 			label: "部门"
 			type: "text"
+			sortable: true
 		email:
 			label: "邮件"
 			type: "text"
@@ -45,6 +48,7 @@ Creator.Objects.contacts =
 		birthdate: 
 			label: "生日"
 			type: "date"
+			sortable: true
 		description: 
 			label: "描述"
 			type: "textarea"

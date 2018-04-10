@@ -20,6 +20,7 @@ Creator.Objects.tasks =
 		due_date: 
 			label: "截止时间"
 			type: "datetime"
+			sortable: true
 
 		# start_date:
 		# 	label: "开始时间"
@@ -40,6 +41,7 @@ Creator.Objects.tasks =
 				{label: "已完成", value:"completed"}
 				{label:"暂停", value:"paused"}, 
 			]
+			sortable: true
 
 		related_to:
 			label: "相关项"
@@ -55,6 +57,11 @@ Creator.Objects.tasks =
 			label: "描述"
 			type: "textarea"
 			is_wide: true
+
+		tags:
+			label: "标签"
+			type: "text"
+			multiple: true
 
 		# is_closed:
 		# 	label: "已完成"

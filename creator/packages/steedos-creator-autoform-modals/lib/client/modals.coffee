@@ -515,12 +515,12 @@ Template.CreatorAfModal.events
 
 				onSuccess: (operation,result)->
 					$('#afModal').modal 'hide'
-					if result.type == "post"
-						app_id = Session.get("app_id")
-						object_name = result.object_name
-						record_id = result._id
-						url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
-						FlowRouter.go url
+					# if result.type == "post"
+					# 	app_id = Session.get("app_id")
+					# 	object_name = result.object_name
+					# 	record_id = result._id
+					# 	url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+					# 	FlowRouter.go url
 				
 				onError: (operation,error) ->
 					console.error error

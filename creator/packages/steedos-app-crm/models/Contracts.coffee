@@ -18,12 +18,15 @@ Creator.Objects.contracts =
 			label: "金额"
 			type: "currency"
 			required: true
+			sortable: true
 		signed_date:
 			label: "签订日期" 
 			type: "date"
+			sortable: true
 		owner:
 			label: "责任人"
 			omit: false
+			sortable: true
 		account:
 			label: "对方单位"
 			type: "master_detail"
@@ -35,9 +38,11 @@ Creator.Objects.contracts =
 		start_date:
 			label: "开始日期"
 			type: "date"
+			sortable: true
 		end_date: 
 			label: "结束日期"
 			type: "date"
+			sortable: true
 		description: 
 			label: "备注"
 			type: "textarea"

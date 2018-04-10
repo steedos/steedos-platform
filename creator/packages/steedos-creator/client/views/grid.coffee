@@ -265,9 +265,9 @@ Template.creator_grid.onRendered ->
 				cellTemplate: (container, options) ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
-			console.log "selectColumns", selectColumns
-			console.log "filter", filter
-			console.log "expand_fields", expand_fields
+			# console.log "selectColumns", selectColumns
+			# console.log "filter", filter
+			# console.log "expand_fields", expand_fields
 			if localStorage.getItem("creator_pageSize:"+Meteor.userId())
 				pageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
 			else
@@ -336,6 +336,10 @@ Template.creator_grid.onRendered ->
 					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
 					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
+					if Session.get("page_index")
+						if Session.get("page_index").object_name == curObjectName
+							self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageIndex(Session.get("page_index").page_index)
+						delete Session.keys["page_index"]
 			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 			dxDataGridInstance.pageSize(pageSize)
 			window.dxDataGridInstance = dxDataGridInstance
@@ -382,6 +386,11 @@ Template.creator_grid.events
 		template.$("td").removeClass("slds-has-focus")
 		$(event.currentTarget).addClass("slds-has-focus")
 
+	'click .link-detail': (event, template)->
+		page_index = window.dxDataGridInstance.pageIndex()
+		object_name = Session.get("object_name")
+		Session.set 'page_index', {object_name: object_name, page_index: page_index}
+
 Template.creator_grid.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
@@ -399,32 +408,32 @@ Template.creator_grid.onCreated ->
 				Creator.remainCheckboxState(dxDataGridInstance.$element())
 	,false
 
-Template.creator_grid.onDestroyed ->
-	#离开界面时，清除hooks为空函数
-	AutoForm.hooks creatorAddForm:
-		onSuccess: (formType, result)->
-			$('#afModal').modal 'hide'
-			if result.type == "post"
-				app_id = Session.get("app_id")
-				object_name = result.object_name
-				record_id = result._id
-				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
-				FlowRouter.go url
-	,true
-	AutoForm.hooks creatorEditForm:
-		onSuccess: (formType, result)->
-			$('#afModal').modal 'hide'
-			if result.type == "post"
-				app_id = Session.get("app_id")
-				object_name = result.object_name
-				record_id = result._id
-				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
-				FlowRouter.go url
-	,true
-	AutoForm.hooks creatorCellEditForm:
-		onSuccess: ()->
-			$('#afModal').modal 'hide'
-	,true
+# Template.creator_grid.onDestroyed ->
+# 	#离开界面时，清除hooks为空函数
+# 	AutoForm.hooks creatorAddForm:
+# 		onSuccess: (formType, result)->
+# 			$('#afModal').modal 'hide'
+# 			if result.type == "post"
+# 				app_id = Session.get("app_id")
+# 				object_name = result.object_name
+# 				record_id = result._id
+# 				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+# 				FlowRouter.go url
+# 	,true
+# 	AutoForm.hooks creatorEditForm:
+# 		onSuccess: (formType, result)->
+# 			$('#afModal').modal 'hide'
+# 			if result.type == "post"
+# 				app_id = Session.get("app_id")
+# 				object_name = result.object_name
+# 				record_id = result._id
+# 				url = "/app/#{app_id}/#{object_name}/view/#{record_id}"
+# 				FlowRouter.go url
+# 	,true
+# 	AutoForm.hooks creatorCellEditForm:
+# 		onSuccess: ()->
+# 			$('#afModal').modal 'hide'
+# 	,true
 
 
 Template.creator_grid.refresh = ->

@@ -10,15 +10,66 @@ Creator.Objects.organizations =
 			required: true
 			searchable:true
 			index:true
+			sortable: true
+
+		fullname: 
+			label: "全路径"
+			type: "text"
+			omit: true
+
+		parent:
+			label: "上级组织"
+			type: "lookup"
+			reference_to: "organizations"
+			sortable: true
+
+		parents:
+			label: "上级组织"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+			omit: true
+
+		children:
+			label: "下级组织"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+			omit: true
+
+		sort_no:
+			label: "排序号"
+			type: "text"
+			defaultValue: 100
+			sortable: true
+
+		users:
+			label: "成员"
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
+
+		admins:
+			label: "组织管理员"
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
+
+		hidden:
+			label: "隐藏"
+			type: "boolean"
+
+		is_company:
+			label: "隐藏"
+			type: "boolean"
+			omit: true
+
 	list_views:
 		default:
-			columns: ["name", "modified"]
+			columns: ["name", "parent", "sort_no", "modified"]
 		all:
+			label: "所有部门"
 			filter_scope: "space"
-
-	related_list:
-		space_users:
-			columns: ["name", "position", "mobile", "email"]
 
 	permission_set:
 		user:
@@ -29,9 +80,9 @@ Creator.Objects.organizations =
 			modifyAllRecords: false
 			viewAllRecords: true 
 		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true 
