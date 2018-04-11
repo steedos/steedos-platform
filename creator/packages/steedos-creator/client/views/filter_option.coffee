@@ -6,6 +6,10 @@ Template.filter_option.helpers
 		unless object_name
 			object_name = Session.get("object_name")
 		template = Template.instance()
+
+		schema_key = template.schema_key.get()
+		object_fields = Creator.getObject(object_name).fields
+
 		schema= 
 			field:
 				type: String
@@ -33,49 +37,24 @@ Template.filter_option.helpers
 					defaultValue: ()->
 						return "="
 					options: ()->
-						options = [
-							{label: t("creator_filter_operation_equal"), value: "="},
-							{label: t("creator_filter_operation_unequal"), value: "<>"},
-							{label: t("creator_filter_operation_less_than"), value: "<"},
-							{label: t("creator_filter_operation_greater_than"), value: ">"},
-							{label: t("creator_filter_operation_less_or_equal"), value: "<="},
-							{label: t("creator_filter_operation_greater_or_equal"), value: ">="},
-							{label: t("creator_filter_operation_contains"), value: "contains"},
-							{label: t("creator_filter_operation_does_not_contain"), value: "notcontains"},
-							{label: t("creator_filter_operation_starts_with"), value: "startswith"},
-						]
+						if object_fields[schema_key]
+							console.log "schema_key is:", schema_key
+							return Creator.getFieldOperation(object_fields[schema_key].type)
 			value:
 				type: ->
 					return template.schema_obj.get()?.type || String
 				label: "value"
 				autoform:
 					type: "text"
-					# type:()->
-					# 	return template.schema_obj.get()?.autoform.type || "text"
-					# options: ()->
-					# 	field = template.schema_key.get()
-					# 	schema_type = template.schema_obj.get()?.autoform.type || "text"
-					# 	if field and (schema_type == "select" or schema_type == "select-checkbox")
-					# 		schema = Creator.getSchema(object_name)._schema
-					# 		obj = _.pick(schema, field)
-					# 		options = obj[field].autoform?.options
-					# 		return options
-					# dateTimePickerOptions:()->
-					# 	if template.schema_obj.get()?.autoform.type == "bootstrap-datetimepicker"
-					# 		return {
-					# 			locale: Session.get("TAPi18n::loaded_lang")
-					# 			format:"YYYY-MM-DD HH:mm"
-					# 			sideBySide:true
-					# 		}
-					# 	else
-					# 		return null
 
-		schema_key = template.schema_key.get()
 		if schema_key
-			obj_schema = Creator.getSchema(object_name)._schema
+			new_schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(object_name)))
+			obj_schema = new_schema._schema
 			schema.value = obj_schema[schema_key]
-		
-		# console.log "schema..................", schema
+			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[schema_key].type)
+				schema.value.autoform.multiple = true
+				schema.value.type = [String]
+
 		new SimpleSchema(schema)
 
 	filter_item: ()->

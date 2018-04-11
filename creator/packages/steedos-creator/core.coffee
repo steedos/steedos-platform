@@ -226,11 +226,19 @@ Creator.formatFiltersToDev = (filters)->
 		option = filter[1]
 		value = Creator.evaluateFormula(filter[2])
 		sub_selector = []
-		if _.isArray(value) == true and option == "="
-			_.each value, (v)->
-				sub_selector.push [field, "=", v], "and"
+		if _.isArray(value) == true
+			v_selector = []
+			if option == "="
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "or"
+			else if option == "<>"
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "and"
+			else
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "or"
 
-			if sub_selector[sub_selector.length - 1] == "and"
+			if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
 				sub_selector.pop()
 			selector.push sub_selector
 		else

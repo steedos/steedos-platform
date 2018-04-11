@@ -233,3 +233,45 @@ Creator.getFieldDisplayValue = (object_name, field_name, field_value)->
 		html = moment(this.val).format('YYYY-MM-DD')
 
 	return html
+
+
+Creator.getFieldOperation = (field_type) ->
+	# 日期类型: date, datetime  支持操作符: "=", "<>", "<", ">", "<=", ">="
+	# 文本类型: text, textarea, html  支持操作符: "=", "<>", "contains", "notcontains", "startswith"
+	# 选择类型: lookup, master_detail, select 支持操作符: "=", "<>"
+	# 数值类型: currency, number  支持操作符: "=", "<>", "<", ">", "<=", ">="
+	# 布尔类型: boolean  支持操作符: "=", "<>"
+	# 数组类型: checkbox, [text]  支持操作符: "=", "<>"
+
+	optionals = {
+		equal: {label: t("creator_filter_operation_equal"), value: "="},
+		unequal: {label: t("creator_filter_operation_unequal"), value: "<>"},
+		less_than: {label: t("creator_filter_operation_less_than"), value: "<"},
+		greater_than: {label: t("creator_filter_operation_greater_than"), value: ">"},
+		less_or_equal: {label: t("creator_filter_operation_less_or_equal"), value: "<="},
+		greater_or_equal: {label: t("creator_filter_operation_greater_or_equal"), value: ">="},
+		contains: {label: t("creator_filter_operation_contains"), value: "contains"},
+		not_contain: {label: t("creator_filter_operation_does_not_contain"), value: "notcontains"},
+		starts_with: {label: t("creator_filter_operation_starts_with"), value: "startswith"},
+	}
+
+	operations = []
+
+	if field_type == "date" or field_type == "datetime"
+		operations.push(optionals.equal, optionals.unequal, optionals.less_than, optionals.greater_than, optionals.less_or_equal, optionals.greater_or_equal)
+	else if field_type == "text" or field_type == "textarea" or field_type == "html"
+		operations.push(optionals.equal, optionals.unequal, optionals.contains, optionals.not_contain, optionals.starts_with)
+	else if field_type == "lookup" or field_type == "master_detail" or field_type == "select"
+		operations.push(optionals.equal, optionals.unequal)
+	else if field_type == "currency" or field_type == "number"
+		operations.push(optionals.equal, optionals.unequal, optionals.less_than, optionals.greater_than, optionals.less_or_equal, optionals.greater_or_equal)
+	else if field_type == "boolean"
+		operations.push(optionals.equal, optionals.unequal)
+	else if field_type == "checkbox"
+		operations.push(optionals.equal, optionals.unequal)
+	else if field_type == "[text]"
+		operations.push(optionals.equal, optionals.unequal)
+	else
+		operations.push(optionals.equal, optionals.unequal)
+
+	return operations

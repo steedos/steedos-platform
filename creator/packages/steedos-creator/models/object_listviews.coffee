@@ -44,12 +44,7 @@ Creator.Objects.object_listviews =
 		filters:
 			type: "[Object]"
 			omit: true
-		"filters.$.field":
-        	type: String
-		"filters.$.operation":
-        	type: String
-		"filters.$.value":
-        	# type: String
+		"filters.$":
 			blackbox: true
 		filter_logic:
 			type: String
