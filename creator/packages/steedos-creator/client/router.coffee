@@ -31,6 +31,7 @@ FlowRouter.route '/app',
 			app_id = Session.get("app_id")
 			if !app_id
 				app_id = "crm"
+
 			object_name = Session.get("object_name")
 			if object_name
 				FlowRouter.go "/app/" + app_id + "/" + object_name + "/grid"
@@ -63,6 +64,14 @@ FlowRouter.route '/admin',
 			if $(".content-wrapper #admin_menu").length == 0
 				Meteor.defer ->
 					Blaze.renderWithData(Template.adminMenu, {}, $(".content-wrapper")[0], $(".layout-placeholder")[0])
+
+FlowRouter.route '/admin/switchspace',
+	triggersEnter: [ checkUserSigned, initLayout ],
+	action: (params, queryParams)->
+		if Steedos.isMobile()
+			if $(".content-wrapper #switch_space").length == 0
+				Meteor.defer ->
+					Blaze.renderWithData(Template.switchSpace, {}, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 
 FlowRouter.route '/app/:app_id/search/:search_text',
 	triggersEnter: [ checkUserSigned, initLayout ],

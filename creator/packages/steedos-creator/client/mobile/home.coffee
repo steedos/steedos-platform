@@ -16,4 +16,4 @@ Template.homeMenu.helpers
 
 Template.homeMenu.events
 	'click .go-admin-menu': (event, template)->
-		FlowRouter.go(Steedos.absoluteUrl '/admin')
+		FlowRouter.go '/admin'

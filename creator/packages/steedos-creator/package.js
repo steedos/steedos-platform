@@ -197,6 +197,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/mobile/mobile_report.html', 'client');
 	api.addFiles('client/mobile/mobile_report.less', 'client');
 	api.addFiles('client/mobile/mobile_report.coffee', 'client');
+	api.addFiles('client/mobile/switch_space.html', 'client');
+	api.addFiles('client/mobile/switch_space.coffee', 'client');
+	
 	
 
 	api.addFiles('client/core.coffee', 'client');

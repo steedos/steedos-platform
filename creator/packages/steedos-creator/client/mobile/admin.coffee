@@ -9,6 +9,13 @@ Template.adminMenu.helpers
 
 	name: ()->
 		return Creator.getCollection("users").findOne()?.name
+
+	spaceName: ->
+		if Session.get("spaceId")
+			space = db.spaces.findOne(Session.get("spaceId"))
+			if space
+				return space.name
+		return t("none_space_selected_title")
 		 
 
 Template.adminMenu.events 
@@ -21,4 +28,7 @@ Template.adminMenu.events
 				FlowRouter.go lastUrl
 			else
 				FlowRouter.go '/app/menu'
+	
+	'click .btn-switch-space': (event, template)->
+		FlowRouter.go '/admin/switchspace'
 		 

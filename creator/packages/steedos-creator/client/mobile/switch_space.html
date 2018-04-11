@@ -1,0 +1,35 @@
+<template name="switchSpace">
+	<div class="switch-space mobile-template-container hidden" id="switch_space">
+		<header class="mobile-template-header">
+			<div class="forceHeaderLayout">
+				<div class="bLeft switch-space-back">
+					<i class="ion ion-android-arrow-back"></i>
+				</div>
+				<div class="bRight"></div>
+				<div class="bBody">
+					我的工作区
+				</div>
+			</div>
+		</header>
+		<div class="switch-space-content mobile-template-content">
+			<div class="weui-panel" style="margin-top: 10px;">
+				<div class="weui-panel__bd">
+					<div class="weui-media-box weui-media-box_small-appmsg">
+						<div class="weui-cells">
+							{{#each spaces}}
+							<a class="weui-cell weui-cell_access switchSpace">
+								<div class="weui-cell__bd weui-cell_primary">
+									<p>{{name}}</p>
+								</div>
+								{{#if current_space _id}}
+									<span class="weui-icon-success-no-circle"></span>
+								{{/if}}
+							</a>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
