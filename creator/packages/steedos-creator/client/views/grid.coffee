@@ -219,6 +219,15 @@ Template.creator_grid.onRendered ->
 					selectColumns = _fields(curObjectName)
 				return selectColumns
 
+			pageIndex = Tracker.nonreactive ()->
+				if Session.get("page_index")
+					if Session.get("page_index").object_name == curObjectName
+						page_index = Session.get("page_index").page_index
+						delete Session.keys["page_index"]
+						return page_index
+				else
+					return 0
+
 			extra_columns = ["owner"]
 			object = Creator.getObject(curObjectName)
 			if object.list_views?.default?.extra_columns
@@ -308,6 +317,8 @@ Template.creator_grid.onRendered ->
 										console.log error
 									else
 										console.log "grid_settings success"
+					customLoad: ->
+						return {pageIndex: pageIndex}
 				}
 				dataSource: 
 					store: 
@@ -336,10 +347,6 @@ Template.creator_grid.onRendered ->
 					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
 					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
-					if Session.get("page_index")
-						if Session.get("page_index").object_name == curObjectName
-							self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageIndex(Session.get("page_index").page_index)
-						delete Session.keys["page_index"]
 			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 			dxDataGridInstance.pageSize(pageSize)
 			window.dxDataGridInstance = dxDataGridInstance
