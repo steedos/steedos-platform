@@ -117,7 +117,7 @@ Creator.Object = (options)->
 					return if defaultListViewId == list_view_item then "all" else list_view_item
 		self.permissions = new ReactiveVar(permissions)
 		_.each self.fields, (field, field_name)->
-			if field and !field.omit
+			if field
 				if _.indexOf(permissions.unreadable_fields, field_name) < 0
 					if field.hidden
 						return

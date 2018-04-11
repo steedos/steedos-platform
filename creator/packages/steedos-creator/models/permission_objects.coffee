@@ -83,8 +83,7 @@ Creator.Objects.permission_objects =
 				fields = _object.fields
 				icon = _object.icon
 				_.forEach fields, (f, k)->
-					unless f.omit
-						_options.push {label: f.label || k, value: k, icon: icon}
+					_options.push {label: f.label || k, value: k, icon: icon}
 				return _options
 		uneditable_fields:
 			type: "lookup"
