@@ -254,6 +254,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
+				console.error e
 				return {
 					statusCode: 500
 					body:e
@@ -325,6 +326,7 @@ Meteor.startup ->
 						body: setErrorMessage(404,collection,key,'get')
 					}
 			else
+				console.error e
 				return{
 					statusCode: 403
 					body: setErrorMessage(403,collection,key,'get')
@@ -373,6 +375,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
+				console.error e
 				body = e
 				return{
 					statusCode:500
@@ -540,6 +543,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'put')
 					}
 			catch e
+				console.error e
 				body = e
 				return{
 					statusCode:500
@@ -577,6 +581,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key)
 					}
 			catch e
+				console.error e
 				return{
 					statusCode: 404
 					body:e }
