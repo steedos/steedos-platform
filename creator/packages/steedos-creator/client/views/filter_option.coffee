@@ -23,6 +23,9 @@ Template.filter_option.helpers
 						permission_fields = Creator.getFields(object_name)
 						schema = Creator.getSchema(object_name)._schema
 						keys = _.map keys, (key) ->
+							# hidden 类型的字段，不需要过滤
+							if object_fields[key].hidden
+								return undefined
 							if _.indexOf(permission_fields, key) > -1
 								obj = _.pick(schema, key)
 								label = obj[key].label || TAPi18n.__(Creator.getObject(object_name).schema.label(key))
@@ -56,6 +59,11 @@ Template.filter_option.helpers
 			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[schema_key].type)
 				schema.value.autoform.multiple = true
 				schema.value.type = [String]
+
+			if schema.value.autoform
+				schema.value.autoform.readonly = false
+				schema.value.autoform.disabled = false
+				schema.value.autoform.omit = false
 
 		new SimpleSchema(schema)
 
