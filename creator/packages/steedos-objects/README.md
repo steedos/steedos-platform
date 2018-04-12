@@ -5,53 +5,6 @@ Steedos Objects 用于定义Steedos中的对象。
 
 [关于对象的详细说明，请参考此文档。](https://github.com/steedos/help/blob/master/zh-cn/creator/object.md)
 
-Object对象中可以定义以下内容
-- fields，Creator根据object.fields生成schema
-- list_views，列表视图，列表视图中可定义显示的列和列表过滤条件
-- triggers，创建对象操作触发器，在服务端执行。例如"before.insert"
-- 系统初始化时自动生成Object对应的Collection，并绑定到Schema。
-
-### baseObject
-baseObject用于定义所有对象适用的基础fields, triggers, indexes. list_views 只能在对象中定义
-
-### Object 支持的属性
-- name: 唯一的object name
-- label: 显示名
-- icon：图标，参见 https://www.lightningdesignsystem.com/icons ， Standard Icons 部分
-- db：对应的Meteor Collection，如果未定义此属性，Steedos 会自动生成。
-- enable_search: 启用全局搜索，只搜索searchable的字段
-- enable_files: 启用上传附件功能
-- enable_notes: 启用备注功能
-- enable_tasks: 启用任务功能
-- enable_audit: 启用审计跟踪功能
-- enable_api: 启用API接口
-- enable_schema: 是否自动Attach Schema到Collection上。默认开启。
-
-### fields支持的字段类型
-- [lookup](https://github.com/steedos/creator/tree/master/packages/steedos-autoform-lookup): 相关表，联合reference_to字段，从关联表中选择记录
-- master_detail: 子表，联合reference_to属性，表示当前记录是主表的子记录。系统会自动检测此类型的字段，在主表的记录显示页面中生成子表列表视图。
-- text: 文本
-- textarea: 文本域
-- "[text]": 文本数组，也可以用来保存id数组
-- date: 日期
-- datetime: 日期时间
-- select: 下拉框，联合options属性，生成下拉框的内容
-- boolean：Checkbox
-- number: 数值
-	- scale: 小数位数，默认值0
-	- precision: 数值最大长度，默认值18
-- 实例：
-	- 在archive_records对象里，字段archive_destroy_id类型为master_detail
-		- archive_destroy_id:
-				type:"master_detail"
-				label:"销毁单"
-				filters:[["destroy_state", "=", "未销毁"]]
-				depend_on:["destroy_state"]
-				reference_to:"archive_destroy"
-				group:"销毁"
-		- 备注：上述实例中，使用了filters字段级过滤，其中depend_on必须有，最终得到“archive_destroy”表中，destroy_state值为“未销毁”的记录。
-
-
 ### permissions 权限
 Object权限分以下类型
 - allowCreate: 可创建
