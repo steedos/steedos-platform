@@ -4,7 +4,7 @@ Creator是企业级的应用软件开发平台，帮助客户快速开发功能�
 [点击这里查看Steedos Creator功能介绍](https://github.com/steedos/help/tree/master/zh-cn/creator)
 
 ### Objects
-用于定义Steedos中的对象。 点击了解更多 [Steedos Object](/packages/steedos-objects/README.md)
+用于定义Steedos中的对象。 [关于对象的详细说明，请参考此文档。](https://github.com/steedos/help/blob/master/zh-cn/creator/object.md)
 
 ### Apps
 Apps 表示功能模块，Apps下包含Objects

@@ -1,7 +1,11 @@
 Steedos Objects 
 ===
 
-Steedos Objects 用于定义Steedos中的对象。Object对象中可以定义以下内容
+Steedos Objects 用于定义Steedos中的对象。
+
+[关于对象的详细说明，请参考此文档。](https://github.com/steedos/help/blob/master/zh-cn/creator/object.md)
+
+Object对象中可以定义以下内容
 - fields，Creator根据object.fields生成schema
 - list_views，列表视图，列表视图中可定义显示的列和列表过滤条件
 - triggers，创建对象操作触发器，在服务端执行。例如"before.insert"
@@ -47,26 +51,6 @@ baseObject用于定义所有对象适用的基础fields, triggers, indexes. list
 				group:"销毁"
 		- 备注：上述实例中，使用了filters字段级过滤，其中depend_on必须有，最终得到“archive_destroy”表中，destroy_state值为“未销毁”的记录。
 
-### fields 属性
-- name: 字段名
-- label: 字段显示名。如果系统检测到翻译 "objectname_fieldname"，以翻译为准。
-- defaultValue: 默认值，可配置默认值公式 {{userId}}, {{spaceId}} 等，#todo
-- required: 必填
-- inlineHelpText: 表单填写时显示的帮助文本
-- sortable: 可排序，可排序字段系统会自动创建索引
-- index: true/false，指定是否为此字段创建索引
-- readonly: 只读，应该只显示在查看页面或列表页面上，新增和修改页面都不显示 #todo
-- omit: 只是编辑界面不显示，列表、表单详细界面等都可能显示。
-- multiple: 表示数组字段，可以多选
-- group：字段分组，在显示表单时自动按分组显示
-- is_wide: 宽字段，显示时占满整行
-- is_name: 表示此字段为标题字段，适用于标题字段并不是"name"时，在列表页生成链接
-- readonly: 只读
-- disabled: 禁用
-- hidden: 隐藏，包括列表、表单、编辑界面在内的所有界面都不显示
-- blackbox: 告知schema忽略此字段的类型验证
-- allowedValues: 可选项范围
-- seachable: 可搜索
 
 ### permissions 权限
 Object权限分以下类型
