@@ -135,16 +135,18 @@ Creator.getTabularOrder = (object_name, list_view_id, columns) ->
 Creator.initListViews = (object_name)->
 	object = Creator.getObject(object_name)
 	columns = ["name"]
-	if object.list_views?.default?.columns
-		columns = object.list_views.default.columns
+	defaultListView = _.findWhere(_.values(object.list_views),{is_default:true})
+	unless defaultListView
+		defaultListView = object.list_views?.default
+	if defaultListView?.columns
+		columns = defaultListView.columns
 	extra_columns = ["owner"]
-	if object.list_views?.default?.extra_columns
-		extra_columns = _.union extra_columns, object.list_views.default.extra_columns
+	if defaultListView?.extra_columns
+		extra_columns = _.union extra_columns, defaultListView.extra_columns
 
 	order = []
-	if object.list_views?.default?.order
-		order = object.list_views.default.order
-
+	if defaultListView?.order
+		order = defaultListView.order
 	if Meteor.isClient
 		Creator.TabularSelectedIds[object_name] = []
 
@@ -248,8 +250,11 @@ if Meteor.isClient
 			tabular_name = "creator_" + related_object_name
 			if Tabular.tablesByName[tabular_name]
 				columns = ["name"]
-				if related_object.list_views?.default?.columns
-					columns = related_object.list_views.default.columns
+				defaultListView = _.findWhere(_.values(related_object.list_views),{is_default:true})
+				unless defaultListView
+					defaultListView = related_object.list_views?.default
+				if defaultListView?.columns
+					columns = defaultListView.columns
 				columns = _.without(columns, related_field_name)
 				Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
 
