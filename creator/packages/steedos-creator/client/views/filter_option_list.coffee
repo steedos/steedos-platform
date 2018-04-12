@@ -135,7 +135,7 @@ Template.filter_option_list.onCreated ->
 						Meteor.call 'getValueLable',reference_to_object,name_field,filter.value,
 							(error,result)->
 								if result
-									filter.valuelabel = result[name_field]
+									filter.valuelabel = result
 									self.filterItems.set(filters)		
 				else
 					self.filterItems.set(filters)	
