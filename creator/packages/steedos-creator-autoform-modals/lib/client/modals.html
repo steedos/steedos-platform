@@ -118,7 +118,20 @@
 					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 							{{#if this}}
-								{{> afQuickField name=this}}
+								{{#if isDisabled this}}
+									<div class="form-group">
+										<label class="control-label">{{getLabel this}}</label>
+										<span class="test-id__field-value slds-form-element__static slds-grow">
+											<span class="slds-grid slds-grid_align-spread creator_table_cell">
+												<div class="cell-container">
+													<span class="fulltex">{{disabledFieldsValue this}}</span>
+												</div>
+											</span>
+										</span>
+									</div>
+								{{else}}
+									{{> afQuickField name=this}}
+								{{/if}}
 							{{/if}}
 						</div>
 					</div>
@@ -144,7 +157,20 @@
 									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 											{{#if this}}
-												{{> afQuickField name=this}}
+												{{#if isDisabled this}}
+													<div class="form-group">
+														<label class="control-label">{{getLabel this}}</label>
+														<span class="test-id__field-value slds-form-element__static slds-grow">
+															<span class="slds-grid slds-grid_align-spread creator_table_cell">
+																<div class="cell-container">
+																	<span class="fulltex">{{disabledFieldsValue this}}</span>
+																</div>
+															</span>
+														</span>
+													</div>
+												{{else}}
+													{{> afQuickField name=this}}
+												{{/if}}
 											{{/if}}
 										</div>
 									</div>
@@ -158,12 +184,26 @@
 	{{/if}}
 
 	{{#if schemaFields.hiddenFields}}
-		<div class="slds-grid view-page-section-row hidden-fields" style="display: none">
+		<div class="slds-grid view-page-section-row hidden-fields">
 			<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 				{{#each schemaFields.hiddenFields}}
 					<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 						{{#if this}}
 							{{> afQuickField name=this}}
+						{{/if}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	{{/if}}
+
+	{{#if schemaFields.disabledFields}}
+		<div class="slds-grid view-page-section-row disabled-fields">
+			<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+				{{#each schemaFields.disabledFields}}
+					<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+						{{#if this}}
+							{{> afQuickField name=this disabled=false readonly=true}}
 						{{/if}}
 					</div>
 				{{/each}}

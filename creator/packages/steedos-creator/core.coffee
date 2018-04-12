@@ -353,6 +353,13 @@ Creator.convertSpecialCharacter = (str)->
 
 # 计算fields相关函数
 # START
+Creator.getDisabledFields = (schema)->
+	fields = _.map(schema, (field, fieldName) ->
+		return field.autoform and field.autoform.disabled and !field.autoform.omit and fieldName
+	)
+	fields = _.compact(fields)
+	return fields
+
 Creator.getHiddenFields = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
 		return field.autoform and field.autoform.type == "hidden" and !field.autoform.omit and fieldName

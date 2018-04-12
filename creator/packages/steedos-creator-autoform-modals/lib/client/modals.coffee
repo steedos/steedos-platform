@@ -334,6 +334,7 @@ helpers =
 				return finalFields
 
 			hiddenFields = Creator.getHiddenFields(schema)
+			disabledFields = Creator.getDisabledFields(schema)
 
 			fieldGroups = []
 			fieldsForGroup = []
@@ -363,6 +364,7 @@ helpers =
 				grouplessFields: grouplessFields
 				groupFields: fieldGroups
 				hiddenFields: hiddenFields
+				disabledFields: disabledFields
 
 			return finalFields
 
@@ -371,6 +373,26 @@ helpers =
 			return true
 		else
 			return false
+
+	isDisabled: (key)->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			object_name = getObjectName(cmCollection)
+			fields = Creator.getObject(object_name).fields
+			return fields[key].disabled
+
+	disabledFieldsValue: (key)->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			object_name = getObjectName(cmCollection)
+			fields = Creator.getObject(object_name).fields
+			defaultValue = fields[key].defaultValue
+			if _.isFunction(defaultValue)
+				defaultValue = defaultValue()
+			return defaultValue
+
+	getLabel: (key)->
+		return AutoForm.getLabelForField(key)
 
 	isSingle: ()->
 		return Session.get("cmEditSingleField")
