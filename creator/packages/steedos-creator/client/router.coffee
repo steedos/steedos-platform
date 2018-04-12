@@ -22,6 +22,12 @@ initLayout = ()->
 		BlazeLayout.render Creator.getLayout(),
 			main: "homeMenu"
 
+FlowRouter.route '/home',
+	triggersEnter: [ checkUserSigned, initLayout ],
+	action: (params, queryParams)->
+		BlazeLayout.render Creator.getLayout(),
+			main: "creator_home"
+
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->

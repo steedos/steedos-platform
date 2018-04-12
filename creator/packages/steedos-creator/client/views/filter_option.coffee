@@ -40,6 +40,8 @@ Template.filter_option.helpers
 						if object_fields[schema_key]
 							console.log "schema_key is:", schema_key
 							return Creator.getFieldOperation(object_fields[schema_key].type)
+						else
+							return Creator.getFieldOperation("text")
 			value:
 				type: ->
 					return template.schema_obj.get()?.type || String

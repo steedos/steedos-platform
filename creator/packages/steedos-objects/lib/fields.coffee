@@ -24,14 +24,22 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.rows = field.rows || 3
 		else if field.type == "date"
 			fs.type = Date
-			fs.autoform.type = "bootstrap-datetimepicker"
-			fs.autoform.dateTimePickerOptions =
-				format: "YYYY-MM-DD"
+			fs.autoform.afFieldInput = 
+				type: "bootstrap-datetimepicker"
+				dateTimePickerOptions:
+					format: "YYYY-MM-DD"
+			# fs.autoform.afFieldInput.type = "bootstrap-datetimepicker"
+			# fs.autoform.afFieldInput.dateTimePickerOptions =
+			# 	format: "YYYY-MM-DD"
 		else if field.type == "datetime"
 			fs.type = Date
-			fs.autoform.type = "bootstrap-datetimepicker"
-			fs.autoform.dateTimePickerOptions =
-				format: "YYYY-MM-DD HH:mm"
+			fs.autoform.afFieldInput = 
+				type: "bootstrap-datetimepicker"
+				dateTimePickerOptions:
+					format: "YYYY-MM-DD HH:mm"
+			# fs.autoform.afFieldInput.type = "bootstrap-datetimepicker"
+			# fs.autoform.afFieldInput.dateTimePickerOptions =
+			# 	format: "YYYY-MM-DD HH:mm"
 		else if field.type == "[Object]"
 			fs.type = [Object]
 		else if field.type == "html"
