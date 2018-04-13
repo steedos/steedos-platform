@@ -90,24 +90,6 @@ Creator支持多租户的环境，并自动生成多租户相关的代码。
 - 新增记录时，自动加上space字段
 - 查询列表时，自动加上space字段
 
-
-### filters 过滤器
-flters 用于配置视图的默认过滤条件
-- 支持的操作符
-	- "=": 等于
-	- "<>": 不等于
-	- ">": 大于
-	- ">=": 大于等于
-	- "<": 小于
-	- "<=": 小于等于
-	- "startswith": 以...开始
-	- "contains": 包含...
-	- "notcontains": 不包含...
-
-- 实例
-	[["is_received", "=", true],["destroy_date","<=",new Date()],["is_destroyed", "=", false]]
-
-
 Creator自定义object独立数据库
 配置环境变量：
 - MONGO_URL_CREATOR：数据库地址
