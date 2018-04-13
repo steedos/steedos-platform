@@ -14,7 +14,7 @@ _syncToObject = (doc) ->
 	_.forEach object_fields, (f)->
 		fields[f.name] = f
 
-	Creator.getCollection("objects").update({_id: doc.object}, {
+	Creator.getCollection("objects").update({name: doc.object}, {
 		$set:
 			fields: fields
 	})

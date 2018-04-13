@@ -132,7 +132,7 @@ Creator.Objects.objects =
 			when: "after.insert"
 			todo: (userId, doc)->
 				#新增object时，默认新建一个name字段
-				Creator.getCollection("object_fields").insert({object: doc._id, owner: userId, name: "name", space: doc.space, type: "text", required: true, index: true, searchable: true})
+				Creator.getCollection("object_fields").insert({object: doc.name, owner: userId, name: "name", space: doc.space, type: "text", required: true, index: true, searchable: true})
 				Creator.getCollection("object_listviews").insert({name: "all", space: doc.space, owner: userId, object_name: doc.name, shared: true, filter_scope: "space", columns: ["name"], is_default: true})
 				Creator.getCollection("object_listviews").insert({name: "recent", space: doc.space, owner: userId, object_name: doc.name, shared: true, filter_scope: "space", columns: ["name"]})
 
@@ -152,11 +152,11 @@ Creator.Objects.objects =
 			when: "after.remove"
 			todo: (userId, doc)->
 				#删除object 后，自动删除fields、actions、triggers、permission_objects
-				Creator.getCollection("object_fields").direct.remove({object: doc._id})
+				Creator.getCollection("object_fields").direct.remove({object: doc.name})
 
-				Creator.getCollection("object_actions").direct.remove({object: doc._id})
+				Creator.getCollection("object_actions").direct.remove({object: doc.name})
 
-				Creator.getCollection("object_triggers").direct.remove({object: doc._id})
+				Creator.getCollection("object_triggers").direct.remove({object: doc.name})
 
 				Creator.getCollection("permission_objects").direct.remove({object_name: doc.name})
 
