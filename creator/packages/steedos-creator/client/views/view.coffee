@@ -130,7 +130,6 @@ Template.creator_view.helpers
 	related_selector: ()->
 		object_name = this.object_name
 		related_field_name = this.related_field_name
-		console.log("this", this)
 		record_id = Session.get "record_id"
 		if object_name and related_field_name and Session.get("spaceId")
 			if object_name == "cfs.files.filerecord"
@@ -148,11 +147,9 @@ Template.creator_view.helpers
 				selector[related_field_name] = record_id
 			permissions = Creator.getPermissions(object_name)
 			if permissions.viewAllRecords
-				console.log "related_selector", JSON.stringify(selector)
 				return selector
 			else if permissions.allowRead and Meteor.userId()
 				selector.owner = Meteor.userId()
-				console.log "related_selector", JSON.stringify(selector)
 				return selector
 		return {_id: "nothing to return"}
 
