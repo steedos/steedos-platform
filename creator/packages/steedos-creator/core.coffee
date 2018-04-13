@@ -100,7 +100,10 @@ Creator.getObjectRelateds = (object_name)->
 	_.each Creator.Objects, (related_object, related_object_name)->
 		_.each related_object.fields, (related_field, related_field_name)->
 			if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
-				related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
+				if related_object_name == "object_fields"
+					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
+				else
+					related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
 	
 	if _object.enable_files
 		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
