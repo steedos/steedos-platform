@@ -497,6 +497,7 @@ renderSummaryReport = (reportObject)->
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
+		paging: false
 		scrolling: 
 			mode: "virtual"
 		columns: reportColumns
