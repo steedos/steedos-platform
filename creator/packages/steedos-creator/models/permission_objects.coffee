@@ -16,7 +16,8 @@ Creator.Objects.permission_objects =
 			reference_to: "permission_set"
 		object_name:
 			label: "对象",
-			type: "lookup"
+			type: "master_detail"
+			reference_to: "objects"
 			required: true
 			optionsFunction: ()->
 				_options = []

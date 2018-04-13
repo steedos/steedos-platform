@@ -42,6 +42,11 @@ Creator.Objects.object_fields =
 			type: "master_detail"
 			reference_to: "objects"
 			required: true
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.objectsByName, (o, k)->
+					_options.push {label: o.label, value: k, icon: o.icon}
+				return _options
 		type:
 			type: "select"
 			required: true

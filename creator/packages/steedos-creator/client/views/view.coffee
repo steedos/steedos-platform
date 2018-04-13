@@ -91,7 +91,7 @@ Template.creator_view.helpers
 		record = Creator.getObjectRecord()
 		name_field_key = Creator.getObject()?.NAME_FIELD_KEY
 		if record and name_field_key
-			return record[name_field_key]
+			return record.label || record[name_field_key]
 
 	backUrl: ()->
 		return Creator.getObjectUrl(Session.get("object_name"), null)
@@ -130,6 +130,7 @@ Template.creator_view.helpers
 	related_selector: ()->
 		object_name = this.object_name
 		related_field_name = this.related_field_name
+		console.log("this", this)
 		record_id = Session.get "record_id"
 		if object_name and related_field_name and Session.get("spaceId")
 			if object_name == "cfs.files.filerecord"
@@ -140,13 +141,18 @@ Template.creator_view.helpers
 				# 附件的关联搜索条件是定死的
 				selector["#{related_field_name}.o"] = Session.get "object_name"
 				selector["#{related_field_name}.ids"] = [record_id]
+			else if Session.get("object_name") == "objects"
+				recordObjectName = Creator.getObjectRecord().name
+				selector[related_field_name] = recordObjectName
 			else
 				selector[related_field_name] = record_id
 			permissions = Creator.getPermissions(object_name)
 			if permissions.viewAllRecords
+				console.log "related_selector", JSON.stringify(selector)
 				return selector
 			else if permissions.allowRead and Meteor.userId()
 				selector.owner = Meteor.userId()
+				console.log "related_selector", JSON.stringify(selector)
 				return selector
 		return {_id: "nothing to return"}
 
@@ -286,7 +292,10 @@ Template.creator_view.events
 			if object_name == related_obj.object_name
 				relatedKey = related_obj.related_field_name
 
-		if relatedKey
+		if  Session.get("object_name") == "objects"
+			recordObjectName = Creator.getObjectRecord().name
+			Session.set 'cmDoc', {"#{relatedKey}": recordObjectName}
+		else if relatedKey
 			Session.set 'cmDoc', {"#{relatedKey}": {o: Session.get("object_name"), ids: [relatedValue]}}
 
 		Session.set("action_fields", undefined)
