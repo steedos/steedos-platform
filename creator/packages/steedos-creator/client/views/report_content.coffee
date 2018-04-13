@@ -233,6 +233,8 @@ renderChart = (self)->
 
 renderTabularReport = (reportObject)->
 	self = this
+	userId = Meteor.userId()
+	spaceId = Session.get("spaceId")
 	selectColumns = []
 	expandFields = []
 	objectName = reportObject.object_name
@@ -283,7 +285,8 @@ renderTabularReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	pageSize = 10000
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
 	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
@@ -299,6 +302,7 @@ renderTabularReport = (reportObject)->
 			fileName: reportObject.name
 		dataSource: 
 			select: selectColumns
+			filter: filter
 			expand: expandFields
 			store: 
 				type: "odata",
@@ -306,8 +310,8 @@ renderTabularReport = (reportObject)->
 				url: Steedos.absoluteUrl(url)
 				withCredentials: false,
 				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-User-Id'] = userId
+					request.headers['X-Space-Id'] = spaceId
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoaded: (loadOptions)->
 					self.is_chart_open.set(false)
@@ -317,7 +321,6 @@ renderTabularReport = (reportObject)->
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			filter: filter
 		paging: false
 		scrolling: 
 			mode: "virtual"
@@ -331,6 +334,8 @@ renderTabularReport = (reportObject)->
 
 renderSummaryReport = (reportObject)->
 	self = this
+	userId = Meteor.userId()
+	spaceId = Session.get("spaceId")
 	selectColumns = []
 	expandFields = []
 	objectName = reportObject.object_name
@@ -450,7 +455,8 @@ renderSummaryReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	pageSize = 10000
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
 	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
@@ -464,6 +470,7 @@ renderSummaryReport = (reportObject)->
 			fileName: reportObject.name
 		dataSource: 
 			select: selectColumns
+			filter: filter
 			expand: expandFields
 			store: 
 				type: "odata",
@@ -471,8 +478,8 @@ renderSummaryReport = (reportObject)->
 				url: Steedos.absoluteUrl(url)
 				withCredentials: false,
 				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-User-Id'] = userId
+					request.headers['X-Space-Id'] = spaceId
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoaded: (loadOptions)->
 					if groupSummaryItems.length
@@ -490,19 +497,18 @@ renderSummaryReport = (reportObject)->
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			filter: filter
-		paging: false
 		scrolling: 
 			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
-
 	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
 	this.dataGridInstance?.set datagrid
 
 renderMatrixReport = (reportObject)->
 	self = this
+	userId = Meteor.userId()
+	spaceId = Session.get("spaceId")
 	selectColumns = []
 	expandFields = []
 	objectName = reportObject.object_name
@@ -638,7 +644,8 @@ renderMatrixReport = (reportObject)->
 	_.every reportFields, (n)->
 		n.sortingMethod = Creator.sortingMethod.bind({key:"value"})
 	
-	url = "/api/odata/v4/#{reportObject.space}/#{objectName}"
+	pageSize = 10000
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expandFields = _.uniq expandFields
 	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
@@ -663,6 +670,7 @@ renderMatrixReport = (reportObject)->
 		dataSource: 
 			fields: reportFields
 			select: selectColumns
+			filter: filter
 			expand: expandFields
 			store: 
 				type: "odata",
@@ -670,8 +678,8 @@ renderMatrixReport = (reportObject)->
 				url: Steedos.absoluteUrl(url)
 				withCredentials: false,
 				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-User-Id'] = userId
+					request.headers['X-Space-Id'] = spaceId
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoaded: (loadOptions)->
 					if _.where(reportFields,{area:"data"}).length
@@ -689,7 +697,6 @@ renderMatrixReport = (reportObject)->
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
-			filter: filter
 
 	drillDownDataSource = {}
 	salesPopup = $('#drill-down-popup').dxPopup(
