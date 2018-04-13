@@ -171,7 +171,7 @@
 			</div>
 		</div>
 	</div>
-	{{#CreatorAfModal formId="addListView" class="btn btn-primary btn-add-list-view hidden" collection="Creator.Collections.object_listviews" operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="列表视图" useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="addListView" class="btn btn-primary btn-add-list-view hidden" collection="Creator.Collections.object_listviews" meteormethod="af_insert" fields=object_listviews_fields operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="列表视图" useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
 	{{#CreatorAfModal formId="editListView" class="btn btn-primary btn-edit-list-view hidden" collection="Creator.Collections.object_listviews" doc=current_list_view operation="update" meteormethod="af_update" fields="name,shared" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent collectionName="列表视图" useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}	
 	{{#CreatorAfModal class="btn btn-primary btn-delete-list-view hidden" collection="Creator.Collections.object_listviews" operation="remove" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="列表视图" onSuccess=delete_on_success useOdataApi=true}} {{_ "Delete"}} {{/CreatorAfModal}}
 </template>

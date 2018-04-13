@@ -9,10 +9,16 @@ Creator.Objects.object_listviews =
 			searchable:true
 			index:true
 			required: true
-		object_name: 
-			label: "对象名称"
-			type: "text"
-			omit: true
+		object_name:
+			label: "对象",
+			type: "master_detail"
+			reference_to: "objects"
+			required: true
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.objectsByName, (o, k)->
+					_options.push {label: o.label, value: k, icon: o.icon}
+				return _options
 		filter_scope:
 			label: "过滤条件"
 			type: "lookup"
@@ -46,6 +52,7 @@ Creator.Objects.object_listviews =
 			omit: true
 		"filters.$":
 			blackbox: true
+			omit: true
 		filter_logic:
 			type: String
 			omit: true
@@ -66,8 +73,8 @@ Creator.Objects.object_listviews =
 				columns = list_view.columns
 				if filter_scope == "spacex"
 					filter_scope = "space"
-
-				doc.object_name = object_name
+				if !doc.object_name
+					doc.object_name = object_name
 				doc.filter_scope = filter_scope
 				if !doc.columns
 					doc.columns = columns

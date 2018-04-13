@@ -19,6 +19,12 @@ Template.creator_list_wrapper.helpers Creator.helpers
 
 Template.creator_list_wrapper.helpers
 
+	object_listviews_fields: ()->
+		listview_fields = Creator.getObject("object_listviews").fields
+		field_keys = _.keys(listview_fields)
+		field_keys.remove(field_keys.indexOf("object_name"))
+		return field_keys.join(",")
+
 	isRefreshable: ()->
 		return Template["creator_#{FlowRouter.getParam('template')}"]?.refresh
 
