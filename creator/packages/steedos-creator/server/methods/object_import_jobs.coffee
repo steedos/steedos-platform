@@ -179,7 +179,7 @@ Meteor.methods
 		fields = {_id: 1}
 		fields[name_field] = 1
 		results =  Creator.Collections[reference_to_object].find({_id:{$in:value}},{fields: fields}).fetch()
-		data = ''
+		data = []
 		_.each results ,(result)->
-			data = data + result[name_field]+' '
+			data.push result[name_field]
 		return data	

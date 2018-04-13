@@ -121,22 +121,33 @@ Template.filter_option_list.onCreated ->
 				return
 			filters?.forEach (filter) ->
 				filter.fieldlabel = fields[filter.field]?.label
-				filter.valuelabel = filter.value
-				if fields[filter.field]?.reference_to
+				filter.valuelabel = filter?.value
+				field = fields[filter.field]
+				if field?.type == 'lookup' or field?.type =='master_detail' or field?.type=='select'
 					reference_to_objects = []
-					if fields[filter.field].reference_to.constructor == Array
-						reference_to_objects = fields[filter.field].reference_to
-					else
-						reference_to_objects.push fields[filter.field].reference_to
-					
-					reference_to_objects.forEach (reference_to_object)->
-						reference_to_object = fields[filter.field].reference_to
-						name_field = Creator.getObject(reference_to_object).NAME_FIELD_KEY
-						Meteor.call 'getValueLable',reference_to_object,name_field,filter.value,
-							(error,result)->
-								if result
-									filter.valuelabel = result
-									self.filterItems.set(filters)		
+					if field?.reference_to
+						if field.reference_to.constructor == Array
+							reference_to_objects = field.reference_to
+						else
+							reference_to_objects.push field.reference_to
+						reference_to_objects.forEach (reference_to_object)->
+							name_field = Creator.getObject(reference_to_object).NAME_FIELD_KEY
+							Meteor.call 'getValueLable',reference_to_object,name_field,filter.value,
+								(error,result)->
+									if result
+										filter.valuelabel = result
+										self.filterItems.set(filters)
+					if field?.optionsFunction or field?.options
+						if field.optionsFunction
+							options = field?.optionsFunction()
+						else
+							options = field.options
+						options_labels = []
+						_.each options,(option)->
+							if filter?.value
+								if _.indexOf(filter.value,option.value)>-1
+									options_labels.push option.label
+						filter.valuelabel = options_labels
 				else
 					self.filterItems.set(filters)	
 Template.filter_option_list.onRendered ->
