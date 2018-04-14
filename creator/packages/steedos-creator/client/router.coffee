@@ -25,8 +25,10 @@ initLayout = ()->
 FlowRouter.route '/home',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		BlazeLayout.render Creator.getLayout(),
-			main: "creator_home"
+		Tracker.autorun ->
+			if Creator.bootstrapLoaded.get()
+				firstApp = _.keys(Creator.Apps)[0]
+				FlowRouter.go '/app/' + firstApp
 
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],

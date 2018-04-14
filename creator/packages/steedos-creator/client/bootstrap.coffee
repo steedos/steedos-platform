@@ -1,8 +1,7 @@
-Creator.isLoadingSpace = new ReactiveVar(true)
+Creator.bootstrapLoaded = new ReactiveVar(false)
 
-Creator.bootstrap = (callback)->
-	Creator.isLoadingSpace.set(true)
-	spaceId = Session.get("spaceId")
+Creator.bootstrap = (spaceId, callback)->
+	Creator.bootstrapLoaded.set(false)
 	unless spaceId
 		return
 	Meteor.call "creator.bootstrap", spaceId, (error, result)->
@@ -36,10 +35,10 @@ Creator.bootstrap = (callback)->
 		if _.isFunction(callback)
 			callback()
 
-		Creator.isLoadingSpace.set(false)
+		Creator.bootstrapLoaded.set(true)
 
 Meteor.startup ->
 	Tracker.autorun ->
-		Creator.objects_initialized.set(false)
-		Creator.bootstrap ()->
-			Creator.objects_initialized.set(true)
+		spaceId = Session.get("spaceId")
+		Creator.bootstrap spaceId, ()->
+			return

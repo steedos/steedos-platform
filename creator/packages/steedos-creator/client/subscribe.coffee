@@ -16,7 +16,7 @@ Meteor.startup ->
 			Creator.subs["CreatorListViews"].subscribe "object_listviews", Session.get("object_name"), Session.get("spaceId")
 
 	Tracker.autorun (c)->
-		if Creator.subs["CreatorListViews"].ready() && Creator.objects_initialized.get()
+		if Creator.subs["CreatorListViews"].ready() && Creator.bootstrapLoaded.get()
 			object_listViews = Creator.getCollection("object_listviews").find({space: Session.get("spaceId"), object_name: Session.get("object_name")})
 			list_views = Creator.Objects[Session.get("object_name")].list_views
 			list_views_byname = Creator.getObject(Session.get("object_name")).list_views

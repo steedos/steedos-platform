@@ -350,7 +350,7 @@ Creator.getFields = (object_name, spaceId, userId)->
 	return _.difference(_.keys(fields), unreadable_fields)
 
 Creator.isloading = ()->
-	return Creator.isLoadingSpace.get()
+	return !Creator.bootstrapLoaded.get()
 
 Creator.convertSpecialCharacter = (str)->
 	return str.replace(/([\^\$\(\)\*\+\?\.\\\|\[\]\{\}])/g, "\\$1")

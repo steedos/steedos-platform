@@ -145,7 +145,7 @@ Template.listSwitch.onCreated ->
 	self.list_view_id = new ReactiveVar()
 	self.list_view_label = new ReactiveVar()
 	self.autorun (c)->
-		if Creator.objects_initialized.get() and Creator.subs["CreatorListViews"].ready()
+		if Creator.bootstrapLoaded.get() and Creator.subs["CreatorListViews"].ready()
 			object_name = Template.instance().data.object_name
 			list_views = Creator.getListViews(object_name)
 			if list_views.length
