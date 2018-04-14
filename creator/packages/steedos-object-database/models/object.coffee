@@ -8,6 +8,7 @@ isRepeatedName = (doc)->
 Creator.Objects.objects =
 	name: "objects"
 	icon: "orders"
+	label: "对象"
 	fields:
 		name:
 			type: "text"
