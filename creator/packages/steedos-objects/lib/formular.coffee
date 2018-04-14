@@ -8,7 +8,7 @@ Meteor.startup ->
 	Tracker.autorun ->
 		space = Session.get("spaceId")
 		userId = Meteor.userId()
-		if space and userId and Steedos.subsSpaceBase.ready() && Creator.objects_initialized.get()
+		if space and userId and Steedos.subsSpaceBase.ready() && Creator.bootstrapLoaded.get()
 
 			Creator.Formular.USER_CONTEXT.userId = Meteor.userId()
 			Creator.Formular.USER_CONTEXT.spaceId = Session.get("spaceId")
