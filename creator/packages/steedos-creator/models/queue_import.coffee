@@ -1,6 +1,6 @@
 Creator.Objects.queue_import = 
 	name: "queue_import"
-	label: "导入队列"
+	label: "数据导入"
 	icon: "report"
 
 	fields:

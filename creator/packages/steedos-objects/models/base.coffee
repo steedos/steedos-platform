@@ -6,7 +6,7 @@ Creator.baseObject =
 			reference_to: "users"
 			sortable: true
 			index: true
-			defaultValue: "{{userId}}"
+			defaultValue: "{userId}"
 		space:
 			type: "lookup"
 			reference_to: "spaces"
