@@ -141,7 +141,7 @@ Template.creator_view.helpers
 				selector["#{related_field_name}.o"] = Session.get "object_name"
 				selector["#{related_field_name}.ids"] = [record_id]
 			else if Session.get("object_name") == "objects"
-				recordObjectName = Creator.getObjectRecord().name
+				recordObjectName = Creator.getObjectRecord()?.name
 				selector[related_field_name] = recordObjectName
 			else
 				selector[related_field_name] = record_id

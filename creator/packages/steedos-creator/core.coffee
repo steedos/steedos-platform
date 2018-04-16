@@ -345,9 +345,9 @@ Creator.getFields = (object_name, spaceId, userId)->
 		if !userId
 			userId = Meteor.userId()
 
-	fields = Creator.getObject(object_name).fields
+	fieldsName = Creator.getObjectFieldsName(object_name)
 	unreadable_fields =  Creator.getPermissions(object_name, spaceId, userId).unreadable_fields
-	return _.difference(_.keys(fields), unreadable_fields)
+	return _.difference(fieldsName, unreadable_fields)
 
 Creator.isloading = ()->
 	return !Creator.bootstrapLoaded.get()

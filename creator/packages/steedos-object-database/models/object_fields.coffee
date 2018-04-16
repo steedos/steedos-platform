@@ -62,6 +62,12 @@ Creator.Objects.object_fields =
 				currency: "金额"
 				lookup: "相关表"
 				master_detail: "主表/子表"
+		sort_no:
+			label: "排序号"
+			type: "number"
+			defaultValue: 100
+			scale: 0
+			sortable: true
 
 		group:
 			type: "text"
@@ -131,7 +137,7 @@ Creator.Objects.object_fields =
 
 	list_views:
 		default:
-			columns: ["name", "label", "type", "object", "modified"]
+			columns: ["name", "label", "type", "object", "sort_no", "modified"]
 		all:
 			filter_scope: "space"
 

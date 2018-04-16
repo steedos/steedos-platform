@@ -82,7 +82,8 @@ _fields = (object_name, list_view_id)->
 		fields.push('space')
 
 	fields = _.compact(fields)
-	return fields
+	fieldsName = Creator.getObjectFieldsName(object_name)
+	return _.intersection(fieldsName, fields)
 
 _expandFields = (object_name, columns)->
 	expand_fields = []
