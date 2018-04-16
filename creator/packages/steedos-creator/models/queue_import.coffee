@@ -42,7 +42,12 @@ Creator.Objects.queue_import =
 			omit:true
 		field_mapping: 
 			label: "映射关系"
-			type: ["text"]
+			type: "lookup"
+			multiple: true
+			depend_on: ["object_name"]
+			defaultIcon: "service_contract"
+			optionsFunction: (values)->
+				return Creator.getObjectLookupFieldOptions values?.object_name, true
 			required:true
 		# import_action:
 		# 	label:"导入目的"
