@@ -226,8 +226,7 @@ renderChart = (self)->
 				chartData.push chartItem
 				chartSeries.push pane: tempPaneName, valueField: tempSummaryType, name: "#{dsi.key} #{tempSummaryType}", argumentField: tempKey
 
-
-		pivotGridChart = $("#pivotgrid-chart").show().dxChart({
+		dxOptions = 
 			dataSource: chartData, 
 			commonSeriesSettings: {
 				type: "bar"
@@ -236,7 +235,15 @@ renderChart = (self)->
 			panes: chartPanes,
 			series: chartSeries,
 			valueAxis: chartValueAxis
-		}).dxChart('instance')
+		objectGroupField = objectFields[firstRowField.dataField]
+		if objectGroupField?.type == "select"
+			dxOptions.argumentAxis =  
+				label:
+					customizeText: (data)->
+						tFieldValue = data.value
+						tFieldLabel = _.findWhere(objectGroupField.options,{value:tFieldValue})?.label
+						return if tFieldLabel then tFieldLabel else tFieldValue
+		pivotGridChart = $("#pivotgrid-chart").show().dxChart(dxOptions).dxChart('instance')
 	else
 		grid = Tracker.nonreactive ()->
 			return self.pivotGridInstance.get()
