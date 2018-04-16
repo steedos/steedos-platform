@@ -176,7 +176,8 @@ renderChart = (self)->
 		firstRowField = _.findWhere(grid._options.columns, {groupIndex:0})
 		unless firstRowField
 			return
-		dataSourceItems = DevExpress.data.query(gridLoadedArray).groupBy(firstRowField.dataField).toArray()
+		window.loadArray = gridLoadedArray
+		dataSourceItems = DevExpress.data.query(gridLoadedArray).groupBy(firstRowField.dataField).toArray().sort(Creator.sortingMethod.bind({key:"key"}))
 		aggregateSeeds = []
 		aggregateKeys = []
 		_.each groupSums, (gs, index)->
