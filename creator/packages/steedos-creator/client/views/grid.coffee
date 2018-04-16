@@ -92,7 +92,7 @@ _expandFields = (object_name, columns)->
 		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
 			if fields[n].optionsFunction
 				ref = fields[n].optionsFunction().getProperty("value")
-			else
+			else  
 				ref = fields[n].reference_to
 				if _.isFunction(ref)
 					ref = ref()
@@ -101,7 +101,7 @@ _expandFields = (object_name, columns)->
 				ref = [ref]
 				
 			ref = _.map ref, (o)->
-				key = Creator.getObject(o).NAME_FIELD_KEY || "name"
+				key = Creator.getObject(o)?.NAME_FIELD_KEY || "name"
 				return key
 
 			ref = _.compact(ref)

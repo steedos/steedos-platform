@@ -88,7 +88,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return Creator.getObjectLookupFieldOptions values.object_name, true
+				return Creator.getObjectLookupFieldOptions values?.object_name, true
 		rows: 
 			label: "行"
 			type: "lookup"
@@ -96,7 +96,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return Creator.getObjectLookupFieldOptions values.object_name, true
+				return Creator.getObjectLookupFieldOptions values?.object_name, true
 		columns:
 			label: "列"
 			type: "lookup"
@@ -104,7 +104,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return Creator.getObjectLookupFieldOptions values.object_name, true
+				return Creator.getObjectLookupFieldOptions values?.object_name, true
 		values: 
 			label: "统计"
 			type: "lookup"
@@ -112,7 +112,7 @@ Creator.Objects.reports =
 			depend_on: ["object_name"]
 			defaultIcon: "service_contract"
 			optionsFunction: (values)->
-				return Creator.getObjectLookupFieldOptions values.object_name, true
+				return Creator.getObjectLookupFieldOptions values?.object_name, true
 		options:
 			omit: true
 			blackbox: true
