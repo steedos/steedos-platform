@@ -153,6 +153,7 @@ getFieldLabel = (field, key)->
 	return fieldLabel
 
 pivotGridChart = null
+gridLoadedArray = null
 
 renderChart = (self)->
 	record_id = Session.get("record_id")
@@ -168,8 +169,32 @@ renderChart = (self)->
 		objectFields = Creator.getObject(objectName)?.fields
 		unless objectFields
 			return
+		unless gridLoadedArray
+			return
 		groupSums = grid._options.summary.groupItems
-		dataSourceItems = grid.getDataSource().items()
+		# dataSourceItems = grid.getDataSource().items()
+		firstRowField = _.findWhere(grid._options.columns, {groupIndex:0})
+		unless firstRowField
+			return
+		dataSourceItems = DevExpress.data.query(gridLoadedArray).groupBy(firstRowField.dataField).toArray()
+		aggregateSeeds = []
+		aggregateKeys = []
+		_.each groupSums, (gs, index)->
+			aggregateSeeds.push(0)
+			aggregateKeys.push({type:gs.summaryType, column:gs.column ,value:0})
+		_.each dataSourceItems, (dsi) ->
+			_.each aggregateKeys, (ak)->
+				ak.value = 0
+			DevExpress.data.query(dsi.items).aggregate(aggregateSeeds, (total, itemData) ->
+				_.each aggregateKeys, (ak)->
+					if ak.type == "count"
+						ak.value++
+					else if ak.type == "sum"
+						ak.value += itemData[ak.column]
+				return _.map aggregateKeys, (ak)->
+					return ak.value
+			).done (result) ->
+				dsi.aggregates = result
 		chartData = []
 		chartPanes = []
 		chartSeries = []
@@ -482,6 +507,7 @@ renderSummaryReport = (reportObject)->
 					request.headers['X-Space-Id'] = spaceId
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoaded: (loadOptions)->
+					gridLoadedArray = loadOptions
 					if groupSummaryItems.length
 						if reportObject.charting
 							self.is_chart_open.set(true)
@@ -765,6 +791,7 @@ renderReport = (reportObject)->
 	switch reportObject.report_type
 		when 'tabular'
 			# 报表类型从matrix转变成tabular时，需要把原来matrix报表清除
+			gridLoadedArray = null
 			self.pivotGridInstance?.get()?.dispose()
 			renderTabularReport.bind(self)(reportObject)
 		when 'summary'
@@ -773,6 +800,7 @@ renderReport = (reportObject)->
 			renderSummaryReport.bind(self)(reportObject)
 		when 'matrix'
 			# 报表类型从summary转变成matrix时，需要把原来summary报表清除
+			gridLoadedArray = null
 			self.dataGridInstance?.get()?.dispose()
 			renderMatrixReport.bind(self)(reportObject)
 
