@@ -46,6 +46,11 @@ Creator.baseObject =
 			omit: true
 			index: true
 			hidden: true
+		sharing:
+			label: "记录级权限"
+			type: "Array"
+			hidden: true
+			blackbox: true
 
 	permission_set:
 		none: 
