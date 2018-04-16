@@ -1,11 +1,14 @@
 Creator.getObjectSchema = (obj) ->
 	schema = {}
 
+	fieldsArr = []
+
 	_.each obj.fields , (field, field_name)->
 		if !_.has(field, "name")
 			field.name = field_name
+		fieldsArr.push field
 
-	_.each _.sortBy(obj.fields, "sort_no"), (field)->
+	_.each _.sortBy(fieldsArr, "sort_no"), (field)->
 
 		field_name = field.name
 
