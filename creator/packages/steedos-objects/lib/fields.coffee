@@ -294,9 +294,18 @@ Creator.getFieldOperation = (field_type) ->
 
 	return operations
 
+###
+    先按照有排序号的小的在前，大的在后
+    再将没有排序号的显示在
+###
 Creator.getObjectFieldsName = (object_name)->
 	fields = Creator.getObject(object_name)?.fields
+	fieldsArr = []
+
+	_.each fields, (field)->
+		fieldsArr.push {name: field.name, sort_no: field.sort_no}
+
 	fieldsName = []
-	_.each _.sortBy(fields, "sort_no"), (field)->
+	_.each _.sortBy(fieldsArr, "sort_no"), (field)->
 		fieldsName.push(field.name)
 	return fieldsName
