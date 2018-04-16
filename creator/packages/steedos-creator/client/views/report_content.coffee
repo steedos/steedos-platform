@@ -282,6 +282,11 @@ renderTabularReport = (reportObject)->
 			caption: caption
 			dataField: item
 		}
+		if itemField.type == "select"
+			field.calculateDisplayValue = (rowData)->
+				tFieldValue = rowData[item]
+				tFieldLabel = _.findWhere(itemField.options,{value:tFieldValue})?.label
+				return if tFieldLabel then tFieldLabel else tFieldValue
 		if sorts[item]
 			field.sortOrder = sorts[item]
 		if columnWidths[item]
@@ -383,6 +388,12 @@ renderSummaryReport = (reportObject)->
 			caption: itemLabel
 			dataField: item
 		}
+		if itemField.type == "select"
+			field.calculateDisplayValue = (rowData)->
+				tFieldValue = rowData[item]
+				tFieldLabel = _.findWhere(itemField.options,{value:tFieldValue})?.label
+				return if tFieldLabel then tFieldLabel else tFieldValue
+
 		if sorts[item]
 			field.sortOrder = sorts[item]
 		if columnWidths[item]
@@ -403,6 +414,11 @@ renderSummaryReport = (reportObject)->
 			dataField: group
 			groupIndex: index
 		}
+		if groupField.type == "select"
+			field.calculateDisplayValue = (rowData)->
+				tFieldValue = rowData[group]
+				tFieldLabel = _.findWhere(groupField.options,{value:tFieldValue})?.label
+				return if tFieldLabel then tFieldLabel else tFieldValue
 		if sorts[group]
 			field.sortOrder = sorts[group]
 		if columnWidths[group]
@@ -562,6 +578,11 @@ renderMatrixReport = (reportObject)->
 				dataField: row
 				area: 'row'
 			}
+			if rowField.type == "select"
+				field.customizeText = (data)->
+					tFieldValue = data.value
+					tFieldLabel = _.findWhere(rowField.options,{value:tFieldValue})?.label
+					return if tFieldLabel then tFieldLabel else tFieldValue
 			if sorts[row]
 				field.sortOrder = sorts[row]
 			if columnWidths[row]
@@ -581,16 +602,12 @@ renderMatrixReport = (reportObject)->
 				width: 100
 				dataField: column
 				area: 'column'
-				customizeText: (data)->
-					if columnField.type == "select"
-						valueOption = _.findWhere(columnField.options,{value:data.value})
-						if valueOption
-							return valueOption.label
-						else
-							return data.value
-					else
-						return data.value
 			}
+			if columnField.type == "select"
+				field.customizeText = (data)->
+					tFieldValue = data.value
+					tFieldLabel = _.findWhere(columnField.options,{value:tFieldValue})?.label
+					return if tFieldLabel then tFieldLabel else tFieldValue
 			if sorts[column]
 				field.sortOrder = sorts[column]
 			if columnWidths[column]
