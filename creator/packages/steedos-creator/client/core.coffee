@@ -153,12 +153,15 @@ if Meteor.isClient
 		if related_object_name == "cms_files"
 			selector.push("and", ["parent/o", "=", object_name])
 			selector.push("and", ["parent/ids", "=", record_id])
+		else if object_name == "objects"
+			record_object_name = Creator.getObjectRecord().name
+			selector.push("and", [related_field_name, "=", record_object_name])
 		else
 			selector.push("and", [related_field_name, "=", record_id])
 		
 		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
 		if !permissions.viewAllRecords and permissions.allowRead
-			selector.push("and", ["owner", "and", userId])
+			selector.push("and", ["owner", "=", userId])
 
 		return selector
 
