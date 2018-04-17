@@ -121,7 +121,7 @@ Creator.Objects.object_fields =
 				_.forEach Creator.Objects, (o, k)->
 					_options.push {label: o.label, value: k, icon: o.icon}
 				return _options
-			multiple: true
+#			multiple: true #先修改为单选
 
 		rows:
 			type: "currency"
@@ -183,8 +183,11 @@ Creator.Objects.object_fields =
 				if modifier?.$set?.name && isRepeatedName(doc, modifier.$set.name)
 					throw new Meteor.Error 500, "对象名称不能重复"
 
-				if modifier?.$set?.reference_to && modifier.$set.reference_to.length == 1
-					_reference_to = modifier.$set.reference_to[0]
+				if modifier?.$set?.reference_to
+					if modifier.$set.reference_to.length == 1
+						_reference_to = modifier.$set.reference_to[0]
+					else
+						_reference_to = modifier.$set.reference_to
 
 				object = Creator.getCollection("objects").findOne({_id: doc.object}, {fields: {name: 1, label: 1}})
 
@@ -197,17 +200,17 @@ Creator.Objects.object_fields =
 					if modifier?.$unset?.reference_to && doc.reference_to != _reference_to && object_documents.count() > 0
 						throw new Meteor.Error 500, "对象#{object.label}中已经有记录，不能修改reference_to字段"
 
-					if modifier?.$set?.reference_to
-						if modifier.$set.reference_to.length == 1
-							modifier.$set.reference_to = modifier.$set.reference_to[0]
+#					if modifier?.$set?.reference_to
+#						if modifier.$set.reference_to.length == 1
+#							modifier.$set.reference_to = modifier.$set.reference_to[0]
 
 		"before.insert.server.object_fields":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
 
-				if doc.reference_to?.length == 1
-					doc.reference_to = doc.reference_to[0]
+#				if doc.reference_to?.length == 1
+#					doc.reference_to = doc.reference_to[0]
 
 				if isRepeatedName(doc)
 					throw new Meteor.Error 500, "对象名称不能重复"
