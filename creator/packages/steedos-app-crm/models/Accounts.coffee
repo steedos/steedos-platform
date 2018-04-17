@@ -11,7 +11,7 @@ Creator.Objects.accounts =
 		owner:
 			label: "所有人"
 			omit: false
-			disabled: true
+			readonly: true
 		priority:
 			label: "优先级"
 			type: "select"
