@@ -46,7 +46,7 @@ Creator.Objects.object_listviews =
 		shared:
 			label: "共享视图到工作区"
 			type: "boolean"
-			hidden: true
+			# hidden: true
 		filters:
 			type: "[Object]"
 			omit: true

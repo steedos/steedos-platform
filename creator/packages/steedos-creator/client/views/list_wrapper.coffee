@@ -23,6 +23,8 @@ Template.creator_list_wrapper.helpers
 		listview_fields = Creator.getObject("object_listviews").fields
 		field_keys = _.keys(listview_fields)
 		field_keys.remove(field_keys.indexOf("object_name"))
+		if !Steedos.isSpaceAdmin()
+			field_keys.remove(field_keys.indexOf("shared"))
 		return field_keys.join(",")
 
 	isRefreshable: ()->
