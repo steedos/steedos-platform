@@ -221,11 +221,10 @@ renderChart = (self)->
 			_.each dataSourceItems, (dsi, index2)->
 				tempKey = "key#{index2 + 1}"
 				chartItem = {}
-				chartItem[tempKey] = dsi.key
+				chartItem[tempKey] = if dsi.key then dsi.key else "--"
 				chartItem[tempSummaryType] = dsi.aggregates[index1]
 				chartData.push chartItem
 				chartSeries.push pane: tempPaneName, valueField: tempSummaryType, name: "#{dsi.key} #{tempSummaryType}", argumentField: tempKey
-
 		dxOptions = 
 			dataSource: chartData, 
 			commonSeriesSettings: {
