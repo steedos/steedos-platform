@@ -77,6 +77,24 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
 	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
+Creator.getObjectLookupFieldOptions = (object_name, is_deep)->
+	_options = []
+	_object = Creator.getObject(object_name)
+	fields = _object?.fields
+	icon = _object?.icon
+	_.forEach fields, (f, k)->
+		if f.type == "select"
+			_options.push {label: "#{f.label || k}", value: "#{k}", icon: icon}
+		else
+			_options.push {label: f.label || k, value: k, icon: icon}
+			if is_deep
+				if (f.type == "lookup" || f.type == "master_detail") && f.reference_to
+					r_object = Creator.getObject(f.reference_to)
+					if r_object
+						_.forEach r_object.fields, (f2, k2)->
+							_options.push {label: "#{f.label || k}=>#{f2.label || k2}", value: "#{k}.#{k2}", icon: r_object?.icon}
+	return _options
+
 Creator.getObjectRecord = (object_name, record_id)->
 	if !record_id
 		record_id = Session.get("record_id")
