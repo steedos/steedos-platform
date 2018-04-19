@@ -65,8 +65,8 @@ Creator.Objects.permission_share =
 			type: "select"
 			sortable: true
 			options: [
-				{label: "只读", value: "read"},
-				{label: "读写", value: "read & modify"},
+				{label: "只读", value: "r"},
+				{label: "读写", value: "w"},
 			]
 	list_views:
 		default:
