@@ -4,10 +4,19 @@ Template.select_fields.onCreated ->
         list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
         if list_view_obj and Session.get("object_name")
             all_fields = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
+            object_fields = Creator.getObject(Session.get("object_name")).fields
             visible_columns = list_view_obj.columns
             available_fields = _.difference(all_fields, visible_columns)
             schema = Creator.getSchema(Session.get("object_name"))._schema
             permission_fields = Creator.getFields(Session.get("object_name"))
+
+            permission_fields = _.map permission_fields, (f)->
+                if !object_fields[f].hidden and !object_fields[f].omit
+                    return f
+                else
+                    return undefined
+            
+            permission_fields = _.compact permission_fields
 
             available_fields = _.map available_fields, (field) ->
                 obj = _.pick(schema, field)

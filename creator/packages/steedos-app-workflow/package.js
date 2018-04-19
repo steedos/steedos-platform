@@ -14,4 +14,5 @@ Package.onUse(function(api) {
 	api.addFiles('models/Instances.coffee');
 	api.addFiles('models/forms.coffee');
 	api.addFiles('models/flows.coffee');
+	api.addFiles('models/statistic_instance.coffee');	
 })

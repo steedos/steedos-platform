@@ -72,7 +72,7 @@ _select = (object_name) ->
 	obj = Creator.getObject(object_name)
 	if !obj
 		return
-	default_columns = obj.list_views?.default.columns || [obj.NAME_FIELD_KEY]
+	default_columns = Creator.getObjectDefaultColumns(object_name) || [obj.NAME_FIELD_KEY]
 	fields = obj.fields
 	default_columns = _.map default_columns, (column) ->
 		if fields[column].type and !fields[column].hidden

@@ -22,8 +22,8 @@ Apps 表示功能模块，Apps下包含Objects
 - 增删改页面，根据Schema，自动生成对象新建、编辑、删除操作界面
 
 ### list_views 列表
-用于定义Object的列表显示样式，至少包含一个除default之外的视图
-- list_views.default.columns用于定义各列表中默认显示的列
+用于定义Object的列表显示样式
+- all view的columns、filter_scope、sort、extra_columns作为其他视图的属性默认值
 - 可在objects中定义多个list_view
 - 未来允许用户自己配置list_view，保存在数据库中
 - 系统会自动计算，为master_detail类型的字段，在主表中自动生成子表的list_views, 使用默认列
@@ -31,8 +31,6 @@ Apps 表示功能模块，Apps下包含Objects
 - sort 用于定义指定list_view的排序方式，可以同时定义多种排序方式。sort属性为数组，暂时只支持按照一个字段排序，预留多个字段排序的功能。
 - 实例:
 	- list_views:
-		- default:
-			- columns: ["name", "customer_id", "amount", "company_signed_date", "company_signed_id"]
 		- recent:
 			- filter_scope: "space"
 		- all:

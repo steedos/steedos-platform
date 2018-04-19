@@ -25,8 +25,9 @@ initLayout = ()->
 FlowRouter.route '/home',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		Tracker.autorun ->
-			if Creator.bootstrapLoaded.get()
+		Tracker.autorun (c)->
+			if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+				c.stop()
 				firstApp = _.keys(Creator.Apps)[0]
 				FlowRouter.go '/app/' + firstApp
 

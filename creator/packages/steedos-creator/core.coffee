@@ -33,16 +33,6 @@ Creator.loadObjects = (obj, object_name)->
 	if !obj.list_views
 		obj.list_views = {}
 
-	if !obj.list_views.default
-		obj.list_views.default = {
-			columns: ["name"]
-		}
-
-	if !obj.list_views.all
-		obj.list_views.all = {
-			filter_scope: "space"
-		}
-
 	Creator.convertObject(obj)
 	new Creator.Object(obj);
 

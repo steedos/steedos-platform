@@ -25,10 +25,7 @@ Creator.getUserObjectListViews = (userId, spaceId, object_name)->
 	})
 
 	object_listview.forEach (listview)->
-		if listview.is_default
-			_user_object_list_views.all = listview
-		else
-			_user_object_list_views[listview._id] = listview
+		_user_object_list_views[listview._id] = listview
 
 	return _user_object_list_views
 

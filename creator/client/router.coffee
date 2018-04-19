@@ -1,12 +1,13 @@
 FlowRouter.route '/',
 	action: (params, queryParams)->
-		if !Meteor.userId()
-			FlowRouter.go '/steedos/sign-in';
-		else
-			if Steedos.isMobile()
-				FlowRouter.go '/app/menu'
+		Meteor.autorun (c)->
+			if !Meteor.userId()
+				FlowRouter.go '/steedos/sign-in';
 			else
-				FlowRouter.go '/home'
+				if Steedos.isMobile()
+					FlowRouter.go '/app/menu'
+				else
+					FlowRouter.go '/home'
 
 
 # Meteor.startup ->

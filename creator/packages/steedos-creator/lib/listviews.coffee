@@ -134,19 +134,13 @@ Creator.getTabularOrder = (object_name, list_view_id, columns) ->
 
 Creator.initListViews = (object_name)->
 	object = Creator.getObject(object_name)
-	columns = ["name"]
-	defaultListView = _.findWhere(_.values(object.list_views),{is_default:true})
-	unless defaultListView
-		defaultListView = object.list_views?.default
-	if defaultListView?.columns
-		columns = defaultListView.columns
+	columns = Creator.getObjectDefaultColumns(object_name) || ["name"]
 	extra_columns = ["owner"]
-	if defaultListView?.extra_columns
-		extra_columns = _.union extra_columns, defaultListView.extra_columns
+	default_extra_columns = Creator.getObjectDefaultExtraColumns(object_name) || ["owner"]
+	if default_extra_columns
+		extra_columns = _.union extra_columns, default_extra_columns
 
-	order = []
-	if defaultListView?.order
-		order = defaultListView.order
+	order = Creator.getObjectDefaultSort(object_name) || []
 	if Meteor.isClient
 		Creator.TabularSelectedIds[object_name] = []
 
@@ -231,7 +225,7 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 	if !_.has(oitem, "_id")
 		oitem._id = list_view_name
 	else
-		oitem.label = list_view.name
+		oitem.label = oitem.label || list_view.name
 
 	return oitem
 
@@ -249,14 +243,22 @@ if Meteor.isClient
 				return
 			tabular_name = "creator_" + related_object_name
 			if Tabular.tablesByName[tabular_name]
-				columns = ["name"]
-				defaultListView = _.findWhere(_.values(related_object.list_views),{is_default:true})
-				unless defaultListView
-					defaultListView = related_object.list_views?.default
-				if defaultListView?.columns
-					columns = defaultListView.columns
+				columns = Creator.getObjectDefaultColumns(related_object_name) || ["name"]
 				columns = _.without(columns, related_field_name)
 				Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
+
+				order = Creator.getObjectDefaultSort(related_object_name)
+				tabular_order = []
+				_.each order, (_o)->
+					if _o.length == 1
+						column_index = columns.indexOf(_o[0])
+						if column_index > -1
+							tabular_order.push [column_index, "asc"]
+					else if _o.length == 2
+						column_index = columns.indexOf(_o[0])
+						if column_index > -1
+							tabular_order.push [column_index, _o[1]]
+				Tabular.tablesByName[tabular_name].options?.order = tabular_order
 
 				if /\w+\.\$\.\w+/g.test(related_field_name)
 					# object类型带子属性的related_field_name要去掉中间的美元符号，否则显示不出字段值
@@ -311,3 +313,52 @@ Creator.getListViewIsRecent = (object_name, list_view_id)->
 	else
 		listView = list_view_id
 	return listView?.name == "recent"
+
+
+###
+    获取默认视图
+###
+Creator.getObjectDefaultView = (object_name)->
+	object = Creator.getObject(object_name)
+	if !object
+		object = Creator.Objects[object_name]
+	if object?.list_views?.default
+		#TODO 此代码只是暂时兼容以前code中定义的default视图，待code中的default清理完成后，需要删除此代码
+		defaultView = object.list_views.default
+	else
+		defaultView = _.findWhere(object?.list_views, {name: "all"})
+	return defaultView;
+
+###
+    获取对象的列表默认显示字段
+###
+Creator.getObjectDefaultColumns = (object_name)->
+	defaultView = Creator.getObjectDefaultView(object_name)
+	return defaultView?.columns
+
+###
+	获取对象的列表默认额外加载的字段
+###
+Creator.getObjectDefaultExtraColumns = (object_name)->
+	defaultView = Creator.getObjectDefaultView(object_name)
+	return defaultView?.extra_columns
+
+###
+	获取对象的默认排序
+###
+Creator.getObjectDefaultSort = (object_name)->
+	defaultView = Creator.getObjectDefaultView(object_name)
+	return defaultView?.sort
+
+
+###
+    判断是否All view
+###
+Creator.isAllView = (list_view)->
+	return list_view?.name == "all"
+
+###
+    判断是否最近查看 view
+###
+Creator.isRecentView = (list_view)->
+	return list_view?.name == "recent"

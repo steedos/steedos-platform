@@ -47,9 +47,10 @@ Creator.Object = (options)->
 			self.fields[field_name] = {}
 		self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
 
-	self.list_views = {} 
+	self.list_views = {}
+	defaultColumns = Creator.getObjectDefaultColumns(self.name)
 	_.each options.list_views, (item, item_name)->
-		oitem = Creator.convertListView(self.list_views.default?.columns, item, item_name)
+		oitem = Creator.convertListView(defaultColumns, item, item_name)
 		self.list_views[item_name] = oitem
 
 	self.triggers = _.clone(Creator.baseObject.triggers)

@@ -5,4 +5,4 @@ Creator.Apps.workflow =
 	icon_slds: "task" 
 	visible: true
 	is_creator:true
-	objects: ["flows", "instances"]
+	objects: ["flows", "instances","instances_statistic"]

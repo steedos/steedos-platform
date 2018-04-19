@@ -138,6 +138,7 @@ Creator.Objects.object_fields =
 	list_views:
 		default:
 			columns: ["name", "label", "type", "object", "sort_no", "modified"]
+			sort: [["sort_no", "asc"]]
 		all:
 			filter_scope: "space"
 

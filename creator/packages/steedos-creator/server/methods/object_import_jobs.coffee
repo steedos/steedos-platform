@@ -1,7 +1,7 @@
 fs = Npm.require 'fs'
 path = Npm.require('path')
+xls = Npm.require('node-xlsx')
 logger = new Logger 'QUEUE_IMPORT'
-
 converterString = (field_name, dataCell,jsonObj)->
 	text_error = ""
 	if dataCell
@@ -55,25 +55,22 @@ converterBool = (field_name, dataCell,jsonObj)->
 	else 
 		bool_error = "#{dataCell}不是bool类型数据"
 	return bool_error
+
 insertRow = (dataRow,objectName,field_mapping,space)->
 	jsonObj = {}
 	insertInfo = {}
 	errorInfo = ""
 	# 对象的fields
 	objFields = Creator?.getObject(objectName)?.fields
-	# 转换方法
-	# 每行数据根据分隔符再次分割,dataRow代表一行数据
-	dataCellList = dataRow.split(",")
-	# 读取每个单元格的数据
-	dataCellList.forEach (dataCell,i) ->
-		fieldLable = field_mapping[i]
+	dataRow.forEach (dataCell,i) ->
+		field_mapping_name = field_mapping[i]
 		if !field_mapping[i]
 			return
 		noField = true
 		error = null
 		# 找到需要插入的数据
 		_.each objFields, (field,field_name)->
-			if field.label == fieldLable
+			if field_name == field_mapping_name
 				noField = false
 				switch field?.type
 					when "date","datetime" then error = converterDate field_name,dataCell,jsonObj
@@ -85,7 +82,7 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 					when  "textarea" then error = converterString field_name,dataCell,jsonObj
 					when "master_detail" then error = converterLookup objectName,field_name,dataCell,jsonObj			
 		if noField
-			error ="#{fieldLable}不是对象的属性"
+			error ="#{field_mapping_name}不是对象的属性"
 		if error
 			errorInfo = errorInfo + "," + error
 	insertInfo["insertState"] = true
@@ -103,70 +100,55 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 importObject = (importObj,space) ->
 	# 错误的数据
 	errorList = []
+	#cms_files = Creator.Collections['cms.files'].find({'parent.ids':importObj._id}).fetch()
 
-	# 需要导入的对象名
+	#file = Creator.Collections['cms.files'].findOne('parent.ids':record_id)
+	files = Creator.Collections['cfs.files.filerecord'].find({'metadata.record_id':importObj._id},{sort: {created: -1}}).fetch()
+	file = files[0]
+	stream = file.createReadStream('files')
+	chunks = []
 	objectName = importObj?.object_name
 	field_mapping = importObj?.field_mapping
-	dataStr = importObj?.import_file
-	dataTable = dataStr.split("\n")
-	# # 读取文件
-	# filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
+	stream.on 'data', (chunk) ->
+		chunks.push chunk 
 
-	# fileName = importObj?._id + "-no.csv"
-
-	# fileAddress = path.join filePath, fileName
-
-	# readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
-
-	# # # 将字符串根据换行符分割为数组
-	# dataTable = readStream.split("\r\n")
-
-	# 循环每一行，读取数据的每一列
-	total_count = dataTable.length
-	success_count = 0
-	failure_count = 0
-	dataTable.forEach (dataRow)->
-		if dataRow
-			# 插入一行数据
-			insertInfo = insertRow dataRow,objectName,field_mapping,space
-			if insertInfo
-				# 存到数据库 error字段
-				if insertInfo?.errorInfo
-					errorList.push dataRow+insertInfo.errorInfo			
-				if insertInfo?.insertState
-					success_count = success_count + 1
-				else
-					failure_count = failure_count + 1
-	Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
-		error:errorList
-		total_count:total_count
-		success_count:success_count
-		failure_count:failure_count
-		state:"finished"
-		}})
-	
-
-# Creator.readCSV()
-Creator.readCSV = ()->
-	# 读取文件流
-	filePath = filePath = path.join(__meteor_bootstrap__.serverDir, "../../../imports/")
-
-	fileName = "zSrsKtKh3aMmrS4ts-no.csv"
-
-	fileAddress = path.join filePath, fileName
-
-	readStream = fs.readFileSync fileAddress, {encoding:'utf8'}
-
-	dataTable = readStream.split("\n")
+	stream.on 'end', Meteor.bindEnvironment(() ->
+		workbook = xls.parse(Buffer.concat(chunks))
+		workbook.forEach (sheet)->
+			data = sheet.data
+			total_count = data.length
+			success_count = 0
+			failure_count = 0
+			data.forEach (dataRow)->
+				insertInfo = insertRow dataRow,objectName,field_mapping,space
+				# 	# 插入一行数据	
+				if insertInfo
+					# 存到数据库 error字段
+					if insertInfo?.errorInfo
+						errorList.push dataRow+insertInfo.errorInfo			
+					if insertInfo?.insertState
+						success_count = success_count + 1
+					else
+						failure_count = failure_count + 1
+				Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
+					error:errorList
+					total_count:total_count
+					success_count:success_count
+					failure_count:failure_count
+					state:"finished"
+					}})
+		)	
+		
 # 启动导入Jobs
 # Creator.startImportJobs()
 Meteor.methods
-	startImportJobs:(importObj,space) ->
+	startImportJobs:(record_id,space) ->
 		# collection = Creator.Collections["queue_import"]
 		# importList = collection.find({"status":"waitting"}).fetch()
 		# importList.forEach (importObj)->
 		# 	# 根据recordObj提供的对象名，逐个文件导入
 		starttime = new Date()
+		importObj = Creator.Collections["queue_import"].findOne({_id:record_id})
 		importObject importObj,space
 		endtime = new Date()
 		Creator.Collections["queue_import"].direct.update(importObj._id,{$set:{start_time:starttime,end_time:endtime}})

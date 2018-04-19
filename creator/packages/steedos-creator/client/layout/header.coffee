@@ -17,3 +17,12 @@ Template.creatorHeader.helpers
 
 	signOutUrl: ()->
 		return Steedos.absoluteUrl("/steedos/logout")
+
+
+Template.creatorHeader.events
+
+	'click .creator-button-setup': (e, t)->
+		FlowRouter.go(Steedos.absoluteUrl("/app/admin"))
+
+	'click .creator-button-help': (e, t)->
+		Steedos.openWindow("https://www.steedos.com/cn/help/creator/")

@@ -105,12 +105,3 @@ Template.mobileList.events
 	'click .add-list-item': (event, template)->
 		Session.set("reload_dxlist", false)
 		template.$(".btn-add-list-item").click()
-
-AutoForm.hooks addListItem:
-	onSuccess: (formType, result)->
-		Session.set("reload_dxlist", true)
-		record_id = result
-		app_id = FlowRouter._current.params.app_id
-		object_name = FlowRouter._current.params.object_name
-		record_url = Creator.getObjectUrl(object_name, record_id, app_id)
-		FlowRouter.go record_url

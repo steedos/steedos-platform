@@ -39,7 +39,7 @@ Creator.Objects.organizations =
 
 		sort_no:
 			label: "排序号"
-			type: "text"
+			type: "number"
 			defaultValue: 100
 			sortable: true
 

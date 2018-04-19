@@ -131,10 +131,8 @@ steedos:accounts-phone@0.0.3
 steedos:accounts-t9n@1.14.2_8
 steedos:adminlte@2.3.12_3
 steedos:app-admin@0.0.1
-steedos:app-archive@0.0.2
 steedos:app-cms@0.0.1
 steedos:app-crm@0.0.1
-steedos:app-statistic@0.0.1
 steedos:app-workflow@0.0.1
 steedos:autoform@0.0.10
 steedos:autoform-bs-datetimepicker@1.0.6
@@ -142,7 +140,7 @@ steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_1
 steedos:autoform-lookup@0.3.10
 steedos:autoform-modals@0.3.9_10
-steedos:base@0.0.76
+steedos:base@0.0.77
 steedos:cfs-access-point@0.1.50
 steedos:cfs-aliyun@0.1.0
 steedos:cfs-base-package@0.0.30

@@ -69,8 +69,9 @@ _fields = (object_name, list_view_id)->
 		if object.list_views[list_view_id]?.columns
 			fields = object.list_views[list_view_id].columns
 		else
-			if object.list_views?.default?.columns
-				fields = object.list_views.default.columns
+			defaultColumns = Creator.getObjectDefaultColumns(object_name)
+			if defaultColumns
+				fields = defaultColumns
 
 	fields = fields.map (n)->
 		if object.fields[n]?.type and !object.fields[n].hidden
@@ -117,6 +118,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
 	defaultWidth = _defaultWidth(columns)
+	column_default_sort = Creator.getObjectDefaultSort(object_name)
 	return columns.map (n,i)->
 		field = object.fields[n]
 		columnItem = 
@@ -147,6 +149,11 @@ _columns = (object_name, columns, list_view_id, is_related)->
 
 		if column_sort_settings and column_sort_settings.length > 0
 			_.each column_sort_settings, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
+		else
+			#默认读取default view的sort配置
+			_.each column_default_sort, (sort)->
 				if sort[0] == n
 					columnItem.sortOrder = sort[1]
 		
@@ -231,8 +238,9 @@ Template.creator_grid.onRendered ->
 
 			extra_columns = ["owner"]
 			object = Creator.getObject(curObjectName)
-			if object.list_views?.default?.extra_columns
-				extra_columns = _.union extra_columns, object.list_views.default.extra_columns
+			defaultExtraColumns = Creator.getObjectDefaultExtraColumns(object_name)
+			if defaultExtraColumns
+				extra_columns = _.union extra_columns, defaultExtraColumns
 			
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
 			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)

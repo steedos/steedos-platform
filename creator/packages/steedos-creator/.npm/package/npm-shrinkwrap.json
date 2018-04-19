@@ -5,20 +5,45 @@
       "resolved": "https://registry.npmjs.org/MD5/-/MD5-1.3.0.tgz",
       "from": "MD5@1.3.0"
     },
+    "adler-32": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/adler-32/-/adler-32-1.2.0.tgz",
+      "from": "adler-32@>=1.2.0 <1.3.0"
+    },
     "busboy": {
       "version": "0.2.13",
       "resolved": "https://registry.npmjs.org/busboy/-/busboy-0.2.13.tgz",
       "from": "busboy@0.2.13"
+    },
+    "cfb": {
+      "version": "1.0.6",
+      "resolved": "https://registry.npmjs.org/cfb/-/cfb-1.0.6.tgz",
+      "from": "cfb@>=1.0.6 <1.1.0"
     },
     "charenc": {
       "version": "0.0.2",
       "resolved": "https://registry.npmjs.org/charenc/-/charenc-0.0.2.tgz",
       "from": "charenc@>=0.0.1"
     },
+    "codepage": {
+      "version": "1.12.2",
+      "resolved": "https://registry.npmjs.org/codepage/-/codepage-1.12.2.tgz",
+      "from": "codepage@>=1.12.1 <1.13.0"
+    },
+    "commander": {
+      "version": "2.14.1",
+      "resolved": "https://registry.npmjs.org/commander/-/commander-2.14.1.tgz",
+      "from": "commander@>=2.14.1 <2.15.0"
+    },
     "core-util-is": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz",
       "from": "core-util-is@>=1.0.0 <1.1.0"
+    },
+    "crc-32": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/crc-32/-/crc-32-1.2.0.tgz",
+      "from": "crc-32@>=1.2.0 <1.3.0"
     },
     "crypt": {
       "version": "0.0.2",
@@ -29,6 +54,16 @@
       "version": "0.2.5",
       "resolved": "https://registry.npmjs.org/dicer/-/dicer-0.2.5.tgz",
       "from": "dicer@0.2.5"
+    },
+    "exit-on-epipe": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/exit-on-epipe/-/exit-on-epipe-1.0.1.tgz",
+      "from": "exit-on-epipe@>=1.0.1 <1.1.0"
+    },
+    "frac": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/frac/-/frac-1.1.2.tgz",
+      "from": "frac@>=1.1.2 <1.2.0"
     },
     "ical.js": {
       "version": "1.2.2",
@@ -56,14 +91,24 @@
       "from": "mkdirp@0.3.5"
     },
     "moment": {
-      "version": "2.20.1",
-      "resolved": "https://registry.npmjs.org/moment/-/moment-2.20.1.tgz",
+      "version": "2.22.1",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.22.1.tgz",
       "from": "moment@>=2.9.0"
     },
     "moment-timezone": {
       "version": "0.5.13",
       "resolved": "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.13.tgz",
       "from": "moment-timezone@0.5.13"
+    },
+    "node-xlsx": {
+      "version": "0.12.0",
+      "resolved": "https://registry.npmjs.org/node-xlsx/-/node-xlsx-0.12.0.tgz",
+      "from": "node-xlsx@0.12.0"
+    },
+    "printj": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/printj/-/printj-1.1.2.tgz",
+      "from": "printj@>=1.1.0 <1.2.0"
     },
     "readable-stream": {
       "version": "1.1.14",
@@ -75,6 +120,11 @@
       "resolved": "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz",
       "from": "sax@>=0.6.0"
     },
+    "ssf": {
+      "version": "0.10.2",
+      "resolved": "https://registry.npmjs.org/ssf/-/ssf-0.10.2.tgz",
+      "from": "ssf@>=0.10.2 <0.11.0"
+    },
     "streamsearch": {
       "version": "0.1.2",
       "resolved": "https://registry.npmjs.org/streamsearch/-/streamsearch-0.1.2.tgz",
@@ -85,14 +135,19 @@
       "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-0.10.31.tgz",
       "from": "string_decoder@>=0.10.0 <0.11.0"
     },
+    "xlsx": {
+      "version": "0.12.9",
+      "resolved": "https://registry.npmjs.org/xlsx/-/xlsx-0.12.9.tgz",
+      "from": "xlsx@0.12.9"
+    },
     "xml2js": {
       "version": "0.4.19",
       "resolved": "https://registry.npmjs.org/xml2js/-/xml2js-0.4.19.tgz",
       "from": "xml2js@0.4.19"
     },
     "xmlbuilder": {
-      "version": "9.0.4",
-      "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-9.0.4.tgz",
+      "version": "9.0.7",
+      "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-9.0.7.tgz",
       "from": "xmlbuilder@>=9.0.1 <9.1.0"
     }
   }
