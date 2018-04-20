@@ -41,14 +41,12 @@ Creator.Objects.instances_statistic =
 			readonly: true			
 		
 	list_views:
-		default:
+		all:
+			filter_scope: ""
 			columns: ["user","year","month",
 			"month_finished_count","inbox_count",
 			"month_finished_time","inbox_time",
 			"avg_cost_time"]
-		all:
-			filter_scope: ""
-
 	permission_set:
 		user:
 			allowCreate: false

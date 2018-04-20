@@ -46,6 +46,24 @@ Creator.Objects.object_listviews =
 						label = _object.fields[f].label
 						_options.push {label: f.label || f, value: f, icon: icon}
 				return _options
+###################### TODO 待table类型字段开发完成后，再开启sort属性
+#		sort:
+#			label: "默认排序规则"
+#			type: "[Object]"
+#
+#		"sort.$":
+#			blackbox: true
+#			type: "Object"
+#
+#		"sort.$.field_name":
+#			label: "字段"
+#			type: "String"
+#
+#		"sort.$.order":
+#			label: "顺序"
+#			type: "select"
+#			defaultValue: "asc"
+#			options: "正序:asc,倒序:desc"
 		shared:
 			label: "共享视图到工作区"
 			type: "boolean"
@@ -105,9 +123,8 @@ Creator.Objects.object_listviews =
 					throw new Meteor.Error 403, "can not remove default list view"
 				
 	list_views:
-		default:
-			columns: ["name", "shared", "modified"]
 		all:
+			columns: ["name", "shared", "modified"]
 			label:'全部列表视图'
 			filter_scope: "space"
 

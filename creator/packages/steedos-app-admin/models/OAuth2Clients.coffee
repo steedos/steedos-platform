@@ -37,11 +37,9 @@ Creator.Objects.OAuth2Clients =
 				return Random.secret()
 		
 	list_views:
-		default:
-			columns:["clientName","active","redirectUri"]
 		all:
 			label:"所有"
-					
+			columns:["clientName","active","redirectUri"]		
 	permission_set:
 		user:
 			allowCreate: false

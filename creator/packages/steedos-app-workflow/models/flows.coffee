@@ -78,9 +78,6 @@ Creator.Objects.flows =
 			group: "高级"
 
 	list_views:
-		default:
-			columns: ["name", "modified", "modified_by", "auto_remind"]
-			extra_columns: ["instance_template", "print_template", "field_map", "events", "distribute_optional_users"]
 		enabled:
 			label: "已启用"
 			filter_scope: "space"
@@ -92,6 +89,7 @@ Creator.Objects.flows =
 		all:
 			label: "全部"
 			filter_scope: "space"
+			extra_columns: ["instance_template", "print_template", "field_map", "events", "distribute_optional_users"]
 			columns: ["name", "modified", "modified_by", "auto_remind", "state", "is_deleted"]
 		is_deleted:
 			label: "已删除"

@@ -27,7 +27,9 @@ Creator.Objects.notes =
 				return o 
 
 	list_views:
-		default:
+		all:
+			label: "所有备忘"
+			filter_scope: "space"
 			columns: ["name", "created_by", "created", "related_to"]
 		recent:
 			label: "最近查看"
@@ -36,9 +38,7 @@ Creator.Objects.notes =
 			label: "我的备忘"
 			filter_scope: "space"
 			filters: [["owner", "=", "{userId}"]]
-		all:
-			label: "所有备忘"
-			filter_scope: "space"
+		
 
 	permission_set:
 		user:

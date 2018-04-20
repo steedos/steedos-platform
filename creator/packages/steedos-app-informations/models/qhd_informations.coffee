@@ -53,15 +53,13 @@ Creator.Objects.qhd_informations =
 		# 	label:"是否采用"
 		# 	defaultValue:"否"
 	list_views:
-		default:
+		all:
+			label: "所有上报信息"
 			columns: ["title", "content", "company","score_point","created"]
+			filter_scope: "space"
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
-		all:
-			label: "所有上报信息"
-			filter_scope: "space"
-
 		mine:
 			label: "我的上报信息"
 			filter_scope: "mine"

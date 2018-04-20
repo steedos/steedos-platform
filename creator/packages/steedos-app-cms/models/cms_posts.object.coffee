@@ -21,7 +21,7 @@ Creator.Objects.cms_posts =
 			type: "lookup"
 			reference_to: "users"
 	list_views:
-		default:
-			columns: ["title", "site", "postDate", "author"]
 		all:
+			label:'所有'
+			columns: ["title", "site", "postDate", "author"]
 			filter_scope: "space"

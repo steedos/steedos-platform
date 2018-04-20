@@ -29,10 +29,10 @@ Creator.Objects.spaces =
 			reference_to: "apps"
 			multiple: true
 
-	list_views:
-		default:
-			columns: ["name"]
+	list_views:		
 		all:
+			label:"所有"
+			columns: ["name"]
 			filter_scope: "all"
 			filters: [["_id", "=", "{spaceId}"]]
 	permission_set:

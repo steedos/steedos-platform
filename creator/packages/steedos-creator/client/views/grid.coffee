@@ -118,7 +118,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
 	defaultWidth = _defaultWidth(columns)
-	column_default_sort = Creator.getObjectDefaultSort(object_name)
+	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
 	return columns.map (n,i)->
 		field = object.fields[n]
 		columnItem = 
@@ -136,8 +136,8 @@ _columns = (object_name, columns, list_view_id, is_related)->
 		
 		if grid_settings and grid_settings.settings
 			column_width_settings = grid_settings.settings[list_view_id]?.column_width
-			column_sort_settings = grid_settings.settings[list_view_id]?.sort
-		
+			column_sort_settings = Creator.transformSortToDX(grid_settings.settings[list_view_id]?.sort)
+
 		if column_width_settings
 			width = column_width_settings[n]
 			if width
@@ -318,7 +318,7 @@ Template.creator_grid.onRendered ->
 								if column_obj.width
 									column_width[column_obj.dataField] = column_obj.width
 								if column_obj.sortOrder
-									sort.push [column_obj.dataField, column_obj.sortOrder]
+									sort.push {field_name: column_obj.dataField, order: column_obj.sortOrder}
 							
 							Meteor.call 'grid_settings', curObjectName, list_view_id, column_width, sort,
 								(error, result)->

@@ -77,7 +77,19 @@ Meteor.startup ()->
 					console.error "Creator.convertFieldsOptions", field.options, error
 
 			
-			
+			if Meteor.isServer
+				options = field.options
+				if options && _.isFunction(options)
+					field._options = field.options.toString()
+			else
+				options = field._options
+				if options && _.isString(options)
+					try
+						field.options = Creator.eval("(#{options})")
+					catch error
+						console.error "convert error #{object.name} -> #{field.name}", error
+
+
 			if Meteor.isServer
 				if field.autoform
 					_type = field.autoform.type

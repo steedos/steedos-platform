@@ -74,7 +74,8 @@ Creator.Objects.instances =
 			type: "string"
 
 	list_views:
-		default:
+		all:
+			label:'所有'
 			columns: ["name", "applicant", "applicant_organization", "modified"]
 		inbox:
 			label: "待办文件"

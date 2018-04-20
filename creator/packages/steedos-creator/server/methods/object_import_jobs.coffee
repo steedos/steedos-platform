@@ -105,39 +105,41 @@ importObject = (importObj,space) ->
 	#file = Creator.Collections['cms.files'].findOne('parent.ids':record_id)
 	files = Creator.Collections['cfs.files.filerecord'].find({'metadata.record_id':importObj._id},{sort: {created: -1}}).fetch()
 	file = files[0]
-	stream = file.createReadStream('files')
-	chunks = []
-	objectName = importObj?.object_name
-	field_mapping = importObj?.field_mapping
-	stream.on 'data', (chunk) ->
-		chunks.push chunk 
+	console.log file
+	if file
+		stream = file.createReadStream('files')
+		chunks = []
+		objectName = importObj?.object_name
+		field_mapping = importObj?.field_mapping
+		stream.on 'data', (chunk) ->
+			chunks.push chunk 
 
-	stream.on 'end', Meteor.bindEnvironment(() ->
-		workbook = xls.parse(Buffer.concat(chunks))
-		workbook.forEach (sheet)->
-			data = sheet.data
-			total_count = data.length
-			success_count = 0
-			failure_count = 0
-			data.forEach (dataRow)->
-				insertInfo = insertRow dataRow,objectName,field_mapping,space
-				# 	# 插入一行数据	
-				if insertInfo
-					# 存到数据库 error字段
-					if insertInfo?.errorInfo
-						errorList.push dataRow+insertInfo.errorInfo			
-					if insertInfo?.insertState
-						success_count = success_count + 1
-					else
-						failure_count = failure_count + 1
-				Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
-					error:errorList
-					total_count:total_count
-					success_count:success_count
-					failure_count:failure_count
-					state:"finished"
-					}})
-		)	
+		stream.on 'end', Meteor.bindEnvironment(() ->
+			workbook = xls.parse(Buffer.concat(chunks))
+			workbook.forEach (sheet)->
+				data = sheet.data
+				total_count = data.length
+				success_count = 0
+				failure_count = 0
+				data.forEach (dataRow)->
+					insertInfo = insertRow dataRow,objectName,field_mapping,space
+					# 	# 插入一行数据	
+					if insertInfo
+						# 存到数据库 error字段
+						if insertInfo?.errorInfo
+							errorList.push dataRow+insertInfo.errorInfo			
+						if insertInfo?.insertState
+							success_count = success_count + 1
+						else
+							failure_count = failure_count + 1
+					Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
+						error:errorList
+						total_count:total_count
+						success_count:success_count
+						failure_count:failure_count
+						state:"finished"
+						}})
+			)	
 		
 # 启动导入Jobs
 # Creator.startImportJobs()

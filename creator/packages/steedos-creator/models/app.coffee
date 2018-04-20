@@ -44,11 +44,10 @@ Creator.Objects.apps =
 			type:"boolean"
 
 	list_views:
-		default:
-			columns: ["name", "objects", "visible", "sort"]
 		all:
 			label: "所有应用"
 			filter_scope: "space"
+			columns: ["name", "objects", "visible", "sort"]
 	permission_set:
 		user:
 			allowCreate: false

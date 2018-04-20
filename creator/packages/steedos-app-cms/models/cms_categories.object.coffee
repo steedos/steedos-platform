@@ -17,7 +17,6 @@ Creator.Objects.cms_categories =
 			type: "boolean"
 
 	list_views:
-		default:
-			columns: ["name", "site"]
 		all:
+			columns: ["name", "site"]
 			filter_scope: "space"

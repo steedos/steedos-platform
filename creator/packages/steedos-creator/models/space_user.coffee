@@ -50,11 +50,10 @@ Creator.Objects.space_users =
 			type: "text"
 		company:
 			type: "text"
-	list_views:
-		default:
-			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]
+	list_views:	
 		all:
 			label: "所有人员"
+			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]
 			filter_scope: "space"
 
 	permission_set:

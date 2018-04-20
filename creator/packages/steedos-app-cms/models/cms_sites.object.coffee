@@ -9,7 +9,7 @@ Creator.Objects.cms_sites =
 			searchable:true
 			index:true
 	list_views:
-		default:
-			columns: ["name"]
 		all:
+			label:'所有'
+			columns: ["name"]
 			filter_scope: "space"

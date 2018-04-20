@@ -49,14 +49,12 @@ Creator.Objects.contract_receipts =
 			is_wide: true
 
 	list_views:
-		default:
-			columns: ["name", "amount", "contract", "close_date", "due_date"]
-
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
 			label: "所有"
+			columns: ["name", "amount", "contract", "close_date", "due_date"]
 			filter_scope: "space"
 			
 	permission_set:

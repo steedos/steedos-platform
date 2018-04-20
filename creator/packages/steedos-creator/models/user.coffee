@@ -10,10 +10,10 @@ Creator.Objects.users =
 			required: true
 			searchable:true
 			index:true
-	list_views:
-		default:
-			columns: ["name", "username"]
+	list_views:	
 		all:
+			label:'所有'
+			columns: ["name", "username"]
 			filter_scope: "all"
 			filters: [["_id", "=", "{userId}"]]
 	permission_set:

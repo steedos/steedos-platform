@@ -3,7 +3,7 @@ Creator.Objects.cms_files =
 	label: "文件"
 	icon: "drafts"
 	enable_search: true
-	enable_api: false
+	enable_api: true
 	fields:
 		name: 
 			label: "名称"
@@ -33,11 +33,10 @@ Creator.Objects.cms_files =
 				return _.keys(Creator.Objects)
 
 	list_views:
-		default:
+		all:
 			columns: ["name", "size", "owner", "created", "modified"]
 			extra_columns: ["versions"]
 			order: [[4, "asc"]]
-		all:
 			filter_scope: "space"
 
 	permission_set:

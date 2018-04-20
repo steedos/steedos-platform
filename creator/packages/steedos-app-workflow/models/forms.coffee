@@ -38,8 +38,6 @@ Creator.Objects.forms =
 		description:
 			type: "textarea"
 	list_views:
-		default:
-			columns: ["name", "modified", "modified_by"]
 		enabled:
 			label: "已启用"
 			filter_scope: "space"

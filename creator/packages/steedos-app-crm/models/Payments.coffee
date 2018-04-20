@@ -49,14 +49,12 @@ Creator.Objects.contract_payments =
 			is_wide: true
 
 	list_views:
-		default:
-			columns: ["name", "amount", "contract", "due_date", "is_closed"]
-
 		recent:
 			label: "最近查看"
 			filter_scope: "space"
 		all:
 			label: "所有"
+			columns: ["name", "amount", "contract", "due_date", "is_closed"]
 			filter_scope: "space"
 
 	permission_set:

@@ -68,8 +68,6 @@ Creator.Objects.tasks =
 		# 	type: "boolean"
 
 	list_views:
-		default:
-			columns: ["name", "due_date", "state", "assignees", "related_to"]
 		# recent:
 		# 	label: "最近查看"
 		# 	filter_scope: "space"
@@ -87,6 +85,7 @@ Creator.Objects.tasks =
 			filters: [["owner", "=", "{userId}"]]
 		all:
 			label: "所有任务"
+			columns: ["name", "due_date", "state", "assignees", "related_to"]
 			filter_scope: "space"
 
 	permission_set:

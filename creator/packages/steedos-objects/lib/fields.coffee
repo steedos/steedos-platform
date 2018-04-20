@@ -276,6 +276,9 @@ Creator.getFieldOperation = (field_type) ->
 		starts_with: {label: t("creator_filter_operation_starts_with"), value: "startswith"},
 	}
 
+	if field_type == undefined
+		return _.values(optionals)
+
 	operations = []
 
 	if field_type == "date" or field_type == "datetime"

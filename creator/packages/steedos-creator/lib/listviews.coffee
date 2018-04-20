@@ -248,16 +248,7 @@ if Meteor.isClient
 				Tabular.tablesByName[tabular_name].options?.columns = Creator.getTabularColumns(related_object_name, columns, true);
 
 				order = Creator.getObjectDefaultSort(related_object_name)
-				tabular_order = []
-				_.each order, (_o)->
-					if _o.length == 1
-						column_index = columns.indexOf(_o[0])
-						if column_index > -1
-							tabular_order.push [column_index, "asc"]
-					else if _o.length == 2
-						column_index = columns.indexOf(_o[0])
-						if column_index > -1
-							tabular_order.push [column_index, _o[1]]
+				tabular_order = Creator.transformSortToTabular(order, columns)
 				Tabular.tablesByName[tabular_name].options?.order = tabular_order
 
 				if /\w+\.\$\.\w+/g.test(related_field_name)
@@ -326,7 +317,9 @@ Creator.getObjectDefaultView = (object_name)->
 		#TODO 此代码只是暂时兼容以前code中定义的default视图，待code中的default清理完成后，需要删除此代码
 		defaultView = object.list_views.default
 	else
-		defaultView = _.findWhere(object?.list_views, {name: "all"})
+		_.each object?.list_views, (list_view, key)->
+			if list_view.name == "all" || key == "all"
+				defaultView = list_view
 	return defaultView;
 
 ###
@@ -362,3 +355,48 @@ Creator.isAllView = (list_view)->
 ###
 Creator.isRecentView = (list_view)->
 	return list_view?.name == "recent"
+
+###
+    将sort转换为Tabular控件所需要的格式
+###
+Creator.transformSortToTabular = (sort, tabularColumns)->
+	tabular_sort = []
+	_.each sort, (item)->
+		if _.isArray(item)
+			# 兼容旧的数据格式[["field_name", "order"]]
+			if item.length == 1
+				column_index = tabularColumns.indexOf(item[0])
+				if column_index > -1
+					tabular_sort.push [column_index, "asc"]
+			else if item.length == 2
+				column_index = tabularColumns.indexOf(item[0])
+				if column_index > -1
+					tabular_sort.push [column_index, item[1]]
+		else if _.isObject(item)
+			#新数据格式：[{field_name: , order: }]
+			field_name = item.field_name
+			order = item.order
+			if field_name && order
+				column_index = tabularColumns.indexOf(field_name)
+				if column_index > -1
+					tabular_sort.push [column_index, order]
+
+	return tabular_sort
+
+###
+    将sort转换为DevExpress控件所需要的格式
+###
+Creator.transformSortToDX = (sort)->
+	dx_sort = []
+	_.each sort, (item)->
+		if _.isArray(item)
+			#兼容旧格式：[["field_name", "order"]]
+			dx_sort.push(item)
+		else if _.isObject(item)
+			#新数据格式：[{field_name: , order: }]
+			field_name = item.field_name
+			order = item.order
+			if field_name && order
+				dx_sort.push [field_name, order]
+
+	return dx_sort

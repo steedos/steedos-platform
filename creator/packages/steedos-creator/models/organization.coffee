@@ -65,9 +65,9 @@ Creator.Objects.organizations =
 			omit: true
 
 	list_views:
-		default:
-			columns: ["name", "parent", "sort_no", "modified"]
+	
 		all:
+			columns: ["name", "parent", "sort_no", "modified"]
 			label: "所有部门"
 			filter_scope: "space"
 

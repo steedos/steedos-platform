@@ -35,7 +35,7 @@ Creator.Objects.object_recent_viewed =
 			viewAllRecords: true
 
 	list_views:
-		default:
+		all:
 			columns: ["record", "space", "modified"]
 
 if Meteor.isServer

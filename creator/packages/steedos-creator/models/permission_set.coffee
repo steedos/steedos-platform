@@ -25,11 +25,9 @@ Creator.Objects.permission_set =
 				return _options
 
 	list_views:
-		default:
-			columns: ["name", "users"]
 		all:
 			filter_scope: "space"
-
+			columns: ["name", "users"]
 	permission_set:
 		user:
 			allowCreate: false

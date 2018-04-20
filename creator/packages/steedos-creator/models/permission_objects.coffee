@@ -118,11 +118,10 @@ Creator.Objects.permission_objects =
 					_options.push {label: _object.label || i, value: i, icon: _object.icon}
 				return _options
 
-	list_views:
-		default:
-			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
+	list_views:		
 		all:
 			label:"所有对象权限"
+			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
 			filter_scope: "space"
 
 	triggers:
