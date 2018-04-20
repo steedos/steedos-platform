@@ -11,8 +11,6 @@ getODataFilterForReport = (object_name, filter_scope, filters)->
 			selector.push ["_id", "=", userId]
 
 		if filters and filters.length > 0
-			filters = _.map filters, (obj)->
-				return [obj.field, obj.operation, obj.value]
 			filters = Creator.formatFiltersToDev(filters)
 			if filters and filters.length > 0
 				if selector.length > 0
