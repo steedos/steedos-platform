@@ -198,6 +198,10 @@ Creator.getAppsObjects = ()->
 Creator.formatFiltersToMongo = (filters)->
 	unless filters.length
 		return
+	# 当filters不是[Array]类型而是[Object]类型时，进行格式转换
+	unless filters[0] instanceof Array
+		filters = _.map filters, (obj)->
+			return [obj.field, obj.operation, obj.value]
 	selector = []
 	_.each filters, (filter)->
 		field = filter[0]
