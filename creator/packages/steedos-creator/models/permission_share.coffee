@@ -3,6 +3,12 @@ Creator.Objects.permission_share =
 	label: "共享规则"
 	icon: "user"
 	fields:
+		name: 
+			label: "名称"
+			type: "text"
+			required: true
+			searchable:true
+			index:true
 		object_name: 
 			label: "对象名"
 			type: "lookup"
@@ -16,15 +22,18 @@ Creator.Objects.permission_share =
 			label: "过虑范围"
 			type: "select"
 			defaultValue: "space"
-			omit: true
+			# omit: true
 			options: [
 				{label: "所有", value: "space"},
 				{label: "与我相关", value: "mine"}
 			]
 		filters: 
 			label: "过滤条件"
-			type: [Object]
-			omit: true
+			type: "[Object]"
+			# omit: true
+		# "filters.$":
+		# 	blackbox: true
+		# 	omit: true
 		"filters.$.field": 
 			label: "字段名"
 			type: "text"
@@ -33,17 +42,7 @@ Creator.Objects.permission_share =
 			type: "select"
 			defaultValue: "="
 			options: ()->
-				options = [
-					{label: t("creator_filter_operation_equal"), value: "="},
-					{label: t("creator_filter_operation_unequal"), value: "<>"},
-					{label: t("creator_filter_operation_less_than"), value: "<"},
-					{label: t("creator_filter_operation_greater_than"), value: ">"},
-					{label: t("creator_filter_operation_less_or_equal"), value: "<="},
-					{label: t("creator_filter_operation_greater_or_equal"), value: ">="},
-					{label: t("creator_filter_operation_contains"), value: "contains"},
-					{label: t("creator_filter_operation_does_not_contain"), value: "notcontains"},
-					{label: t("creator_filter_operation_starts_with"), value: "startswith"},
-				]
+				return Creator.getFieldOperation()
 		"filters.$.value": 
 			label: "字段值"
 			# type: "text"
@@ -69,11 +68,10 @@ Creator.Objects.permission_share =
 				{label: "读写", value: "w"},
 			]
 	list_views:
-		default:
-			columns: ["object_name"]
 		all:
 			label: "所有共享规则"
 			filter_scope: "space"
+			columns: ["name", "object_name"]
 		mine:
 			label: "我的共享规则"
 			filter_scope: "mine"

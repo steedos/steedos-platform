@@ -89,6 +89,9 @@ Creator.Objects.accounts =
 		label: "共享信息"
 		type: [Object]
 		omit: true
+	"sharing.$":
+		blackbox: true
+		omit: true
 	"sharing.$.u": 
 		label: "授权用户"
 		type: [String]
