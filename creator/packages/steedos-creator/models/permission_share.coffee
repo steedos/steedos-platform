@@ -90,3 +90,26 @@ Creator.Objects.permission_share =
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: true 
+
+	triggers:
+		"after.insert.server.sharing":
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+
+		"after.update.server.sharing":
+			on: "server"
+			when: "after.update"
+			# todo: (userId, doc)->
+			todo: (userId, doc, fieldNames, modifier, options)->
+				# db = Creator.getCollection(doc.object_name)
+				console.log "after.update.server.sharing======doc:", doc
+				# console.log "after.update.server.sharing======fieldNames:", fieldNames
+				# console.log "after.update.server.sharing======modifier:", modifier
+				# console.log "after.update.server.sharing======options:", options
+				console.log "after.update.server.sharing======this.previous:", this.previous
+				console.log "after.update.server.sharing======this.previous2:", JSON.stringify(this.previous)
+		"after.remove.server.sharing":
+			on: "server"
+			when: "after.remove"
+			todo: (userId, doc)->
