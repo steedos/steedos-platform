@@ -102,13 +102,23 @@ Creator.Objects.permission_share =
 			when: "after.update"
 			# todo: (userId, doc)->
 			todo: (userId, doc, fieldNames, modifier, options)->
-				# db = Creator.getCollection(doc.object_name)
+				previous = this.previous
+				collection = Creator.getCollection(doc.object_name)
+				console.log "after.update.server.sharing====================doc.filters===",doc.filters
+				filters = Creator.formatFiltersToMongo(doc.filters)
+				console.log "after.update.server.sharing====================filters===",filters
+				selector = {space: doc.space,$and:filters}
+				push = {sharing: {"u":doc.users,"o":doc.organizations,"p":doc.permissions,"r":doc._id}}
+				console.log "after.update.server.sharing====================selector===",selector
+				console.log "after.update.server.sharing====================push===",push
+				console.log "after.update.server.sharing====================find===",collection.direct.find(selector).count()
+				
+				collection.direct.update(selector, {$push: push})
 				console.log "after.update.server.sharing======doc:", doc
 				# console.log "after.update.server.sharing======fieldNames:", fieldNames
 				# console.log "after.update.server.sharing======modifier:", modifier
 				# console.log "after.update.server.sharing======options:", options
-				console.log "after.update.server.sharing======this.previous:", this.previous
-				console.log "after.update.server.sharing======this.previous2:", JSON.stringify(this.previous)
+				# console.log "after.update.server.sharing======this.previous:", this.previous
 		"after.remove.server.sharing":
 			on: "server"
 			when: "after.remove"
