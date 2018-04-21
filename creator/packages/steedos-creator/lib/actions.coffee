@@ -64,7 +64,7 @@ if Meteor.isClient
 				cancelButtonText: t('Cancel')
 				(option) ->
 					if option
-						Creator.removeRecord object_name, record_id, ()->
+						Creator.odata_delete object_name, record_id, ()->
 							if record_title
 								info = object.label + "\"#{record_title}\"" + "已删除"
 							else
