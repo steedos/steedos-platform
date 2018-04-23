@@ -96,30 +96,39 @@ Creator.Objects.permission_share =
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc)->
+				# 查找出所有满足条件的记录，并同步相关共享规则
+				collection = Creator.getCollection(doc.object_name)
+				filters = Creator.formatFiltersToMongo(doc.filters)
+				selector = { space: doc.space, $and:filters }
+				push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
+				collection.direct.update(selector, {$push: push}, {multi: true})
 
 		"after.update.server.sharing":
 			on: "server"
 			when: "after.update"
 			# todo: (userId, doc)->
 			todo: (userId, doc, fieldNames, modifier, options)->
-				previous = this.previous
+				# 查找出所有满足条件的记录，并同步相关共享规则
 				collection = Creator.getCollection(doc.object_name)
-				console.log "after.update.server.sharing====================doc.filters===",doc.filters
+				preObjectName = this.previous.object_name
+				if preObjectName != doc.object_name
+					# 如果修改了doc.object_name，则应该移除老的object_name对应的记录中的共享规则
+					preCollection = Creator.getCollection(preObjectName)
+				else
+					preCollection = collection
+				selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
+				pull = { sharing: { r:doc._id } }
+				preCollection.direct.update(selector, {$pull: pull}, {multi: true})
 				filters = Creator.formatFiltersToMongo(doc.filters)
-				console.log "after.update.server.sharing====================filters===",filters
-				selector = {space: doc.space,$and:filters}
-				push = {sharing: {"u":doc.users,"o":doc.organizations,"p":doc.permissions,"r":doc._id}}
-				console.log "after.update.server.sharing====================selector===",selector
-				console.log "after.update.server.sharing====================push===",push
-				console.log "after.update.server.sharing====================find===",collection.direct.find(selector).count()
-				
-				collection.direct.update(selector, {$push: push})
-				console.log "after.update.server.sharing======doc:", doc
-				# console.log "after.update.server.sharing======fieldNames:", fieldNames
-				# console.log "after.update.server.sharing======modifier:", modifier
-				# console.log "after.update.server.sharing======options:", options
-				# console.log "after.update.server.sharing======this.previous:", this.previous
+				selector = { space: doc.space, $and:filters }
+				push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
+				collection.direct.update(selector, {$push: push}, {multi: true})
 		"after.remove.server.sharing":
 			on: "server"
 			when: "after.remove"
 			todo: (userId, doc)->
+				# 移除当前共享规则相关的所有记录的共享规则数据
+				collection = Creator.getCollection(doc.object_name)
+				selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
+				pull = { sharing: { r:doc._id } }
+				collection.direct.update(selector, {$pull: pull}, {multi: true})
