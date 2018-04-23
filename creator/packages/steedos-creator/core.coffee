@@ -206,7 +206,10 @@ Creator.formatFiltersToMongo = (filters)->
 	_.each filters, (filter)->
 		field = filter[0]
 		option = filter[1]
-		value = Creator.evaluateFormula(filter[2])
+		if Meteor.isClient
+			value = Creator.evaluateFormula(filter[2])
+		else
+			value = filter[2]
 		sub_selector = {}
 		sub_selector[field] = {}
 		if option == "="
