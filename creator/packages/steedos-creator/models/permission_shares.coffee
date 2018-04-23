@@ -1,5 +1,5 @@
-Creator.Objects.permission_share = 
-	name: "permission_share"
+Creator.Objects.permission_shares = 
+	name: "permission_shares"
 	label: "共享规则"
 	icon: "user"
 	fields:

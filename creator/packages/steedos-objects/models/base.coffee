@@ -110,7 +110,7 @@ Creator.baseObject =
 				obj = Creator.getObject(object_name)
 				if obj.enable_shares
 					collection = Creator.getCollection(object_name)
-					psCollection = Creator.getCollection("permission_share")
+					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }
 					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1, permissions: 1 })
 					psRecords.forEach (ps)->
@@ -130,7 +130,7 @@ Creator.baseObject =
 				obj = Creator.getObject(object_name)
 				if obj.enable_shares
 					collection = Creator.getCollection(object_name)
-					psCollection = Creator.getCollection("permission_share")
+					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }
 					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1, permissions: 1 })
 					collection.direct.update({ _id: doc._id }, { $unset: { "sharing" : 1 } })
