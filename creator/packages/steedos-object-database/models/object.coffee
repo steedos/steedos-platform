@@ -40,6 +40,9 @@ Creator.Objects.objects =
 			type: "boolean"
 			defaultValue: true
 			hidden: true
+		enable_shares:
+			type: "boolean"
+			defaultValue: false
 		is_view:
 			type: 'boolean'
 			defaultValue: false

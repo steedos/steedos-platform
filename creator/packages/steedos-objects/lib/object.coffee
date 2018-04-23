@@ -32,6 +32,7 @@ Creator.Object = (options)->
 	self.hidden = options.hidden
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
 	self.custom = options.custom
+	self.enable_shares = options.enable_shares
 
 	if (!options.fields) 
 		throw new Error('Creator.Object options must specify name');	

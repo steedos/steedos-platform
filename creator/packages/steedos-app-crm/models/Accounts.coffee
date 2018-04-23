@@ -5,8 +5,9 @@ Creator.Objects.accounts =
 	enable_files: true
 	enable_search: true
 	enable_tasks: true
-	enable_notes: true
+	enable_notes: false
 	enable_api: true
+	enable_shares: true
 	fields:
 		owner:
 			label: "所有人"
