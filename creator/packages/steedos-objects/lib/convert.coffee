@@ -89,6 +89,17 @@ Meteor.startup ()->
 					catch error
 						console.error "convert error #{object.name} -> #{field.name}", error
 
+			if Meteor.isServer
+				regEx = field.regEx
+				if regEx
+					field._regEx = field.regEx.toString()
+			else
+				regEx = field._regEx
+				if regEx
+					try
+						field.regEx = Creator.eval("(#{regEx})")
+					catch error
+						console.error "convert error #{object.name} -> #{field.name}", error
 
 			if Meteor.isServer
 				if field.autoform

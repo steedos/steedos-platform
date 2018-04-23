@@ -4,12 +4,30 @@ Creator.bootstrap = (spaceId, callback)->
 	Creator.bootstrapLoaded.set(false)
 	unless spaceId
 		return
-	Meteor.call "creator.bootstrap", spaceId, (error, result)->
-		if error or !result
-			console.log error
-		else
-			if result.space._id != spaceId
-				Steedos.setSpaceId(result.space._id)
+
+	#Meteor.call "creator.bootstrap", spaceId, (error, result)->
+	
+	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+	$.ajax
+		type: "get"
+		url: url
+		dataType: "json"
+		#contentType: "application/json"
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+		error: (jqXHR, textStatus, errorThrown) ->
+				error = jqXHR.responseJSON
+				console.error error
+				if error?.reason
+					toastr?.error?(TAPi18n.__(error.reason))
+				else if error?.message
+					toastr?.error?(TAPi18n.__(error.message))
+				else
+					toastr?.error?(error)
+		success: (result) ->
+			# if result.space._id != spaceId
+			# 	Steedos.setSpaceId(result.space._id)
 
 			Creator.Objects = result.objects
 			object_listviews = result.object_listviews
@@ -32,10 +50,10 @@ Creator.bootstrap = (spaceId, callback)->
 					else
 						app.visible = false
 
-		if _.isFunction(callback)
-			callback()
+			if _.isFunction(callback)
+				callback()
 
-		Creator.bootstrapLoaded.set(true)
+			Creator.bootstrapLoaded.set(true)
 
 Meteor.startup ->
 	Tracker.autorun ->

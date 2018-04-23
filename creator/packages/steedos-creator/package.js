@@ -148,7 +148,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/publications/related_objects_records.coffee', 'server');
 
 	api.addFiles('server/routes/s3.coffee', 'server');
-
+	api.addFiles('server/routes/bootstrap.coffee','server');
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
 	api.addFiles('client/layout/layout.html', 'client');
