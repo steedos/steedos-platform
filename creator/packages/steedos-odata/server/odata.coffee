@@ -511,7 +511,8 @@ Meteor.startup ->
 		put:()->
 			try
 				key = @urlParams.object_name
-				if not Creator.objectsByName[key]?.enable_api
+				object = Creator.objectsByName[key]
+				if not object?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
@@ -525,7 +526,14 @@ Meteor.startup ->
 					}
 				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 				record_owner = collection.findOne({_id: @urlParams._id, space: @urlParams.spaceId})?.owner
-				if permissions.modifyAllRecords or (permissions.allowEdit and record_owner==@userId )
+				isAllowed = permissions.modifyAllRecords or (permissions.allowEdit and record_owner == @userId )
+				if !isAllowed and object.enable_shares and permissions.allowEdit
+					shares = []
+					orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+					shares.push { "sharing": { $elemMatch: { p: "w", u: @userId } } }
+					shares.push { "sharing": { $elemMatch: { p: "w", o: { $in: orgs } } } }
+					isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
+				if isAllowed
 					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
 					fields_editable = true
 					_.keys(@bodyParams.$set).forEach (key)->
@@ -570,7 +578,8 @@ Meteor.startup ->
 		delete:()->
 			try
 				key = @urlParams.object_name
-				if not Creator.objectsByName[key]?.enable_api
+				object = Creator.objectsByName[key]
+				if not object?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
@@ -584,7 +593,14 @@ Meteor.startup ->
 					}
 				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 				record_owner = collection.findOne({_id: @urlParams._id, space: @urlParams.spaceId})?.owner
-				if permissions.modifyAllRecords or (permissions.allowDelete and record_owner==@userId )
+				isAllowed = permissions.modifyAllRecords or (permissions.allowDelete and record_owner==@userId )
+				if !isAllowed and object.enable_shares and permissions.allowEdit
+					shares = []
+					orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+					shares.push { "sharing": { $elemMatch: { p: "w", u: @userId } } }
+					shares.push { "sharing": { $elemMatch: { p: "w", o: { $in: orgs } } } }
+					isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
+				if isAllowed
 					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
 					if collection.remove selector
 						{status: 'success', message: 'Item removed'}
