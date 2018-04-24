@@ -8,6 +8,10 @@ Template.objectMenu.helpers
     app: ()->
         app_id = Template.instance().data.app_id
         return Creator.getApp(app_id)
+    
+    object_enabled: (object_name)->
+        app_obj = Creator.getObject(object_name)
+        return app_obj?.is_enable && !app_obj.hidden && app_obj.permissions.get().allowRead
 
     object_icon: (object_name)->
         return Creator.getObject(object_name).icon

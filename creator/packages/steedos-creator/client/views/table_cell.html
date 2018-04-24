@@ -2,20 +2,26 @@
 	<span class="slds-grid slds-grid_align-spread creator_table_cell">
 		<div class="cell-container">
 			{{#each cellData}}
-				{{#if href}}
-					<a href="{{href}}" title="{{value}}" class = "slds-truncate link-detail fulltex list-item-link-{{id}}">{{value}}</a>
+				{{#if isTable}}
+					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
 				{{else}}
-					<span class="fulltex">{{{value}}}</span>
+					{{#if href}}
+						<a href="{{href}}" title="{{value}}" class = "slds-truncate link-detail fulltex list-item-link-{{id}}">{{value}}</a>
+					{{else}}
+						<span class="fulltex">{{{value}}}</span>
+					{{/if}}
 				{{/if}}
 			{{/each}}
 		</div>
-		<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">
-			{{#if editable}}
-				{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
-			{{else}}
-				{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
-			{{/if}}
-			<span class="slds-assistive-text">Edit</span>
-		</button>
+		{{#if showEditIcon}}
+			<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">
+				{{#if editable}}
+					{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
+				{{else}}
+					{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
+				{{/if}}
+				<span class="slds-assistive-text">Edit</span>
+			</button>
+		{{/if}}
 	</span>
 </template>

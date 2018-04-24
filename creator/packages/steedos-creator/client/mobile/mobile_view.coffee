@@ -247,7 +247,7 @@ Template.mobileView.events
 				Session.set "reload_dxlist", true
 				template.$(".mobile-view-back").click()
 		else
-			Creator.executeAction object_name, this, record_id
+			Creator.executeAction object_name, this, record_id, $(event.currentTarget)
 
 	'click .group-section-control': (event, template)->
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')

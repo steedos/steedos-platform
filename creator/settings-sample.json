@@ -1,0 +1,11 @@
+{
+    "public": {},
+    "cron": {
+        "instancerecordqueue_interval": 10000 // creator同步instance到record队列执行间隔
+    },
+    "cfs": {
+        "worker": {
+            "enabled": true // 附件功能必须要配置此项
+        }
+    }
+}

@@ -26,7 +26,12 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 		data = {
 			find: ()->
 				self.unblock();
-				return _table.collection.find({_id: {$in: ids}}, {fields: fields});
+				field_keys = {}
+				_.each _.keys(fields), (f)->
+					unless /\w+(\.\$){1}\w?/.test(f)
+						field_keys[f] = 1
+				
+				return _table.collection.find({_id: {$in: ids}}, {fields: field_keys});
 		}
 
 		data.children = []
@@ -49,7 +54,13 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 
 							query = {}
 
-							reference_ids = parent[key]
+							# 表格子字段特殊处理
+							if /\w+(\.\$\.){1}\w+/.test(key)
+								p_k = key.replace(/(\w+)\.\$\.\w+/ig, "$1")
+								s_k = key.replace(/\w+\.\$\.(\w+)/ig, "$1")
+								reference_ids = parent[p_k].getProperty(s_k)
+							else
+								reference_ids = parent[key]
 
 							reference_to = reference_field.reference_to
 

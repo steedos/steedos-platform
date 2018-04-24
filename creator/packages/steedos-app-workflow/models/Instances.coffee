@@ -1,9 +1,9 @@
-Creator.Objects.instances = 
+Creator.Objects.instances =
 	name: "instances"
 	icon: "task"
 	label: "申请单"
 	fields:
-		name: 
+		name:
 			type: "text"
 			defaultValue: ""
 			description: ""
@@ -73,6 +73,16 @@ Creator.Objects.instances =
 		state:
 			type: "string"
 
+		record_ids:
+			type: "Object"
+			omit: true
+
+		"record_ids.o":
+			type: String
+
+		"record_ids.ids":
+			type: [String]
+
 	list_views:
 		all:
 			label:'所有'
@@ -93,11 +103,11 @@ Creator.Objects.instances =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: true
 		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: true

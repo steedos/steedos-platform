@@ -1,5 +1,5 @@
-Creator.baseObject = 
-	fields: 
+Creator.baseObject =
+	fields:
 		owner:
 			label:"所有者"
 			type: "lookup"
@@ -46,6 +46,14 @@ Creator.baseObject =
 			omit: true
 			index: true
 			hidden: true
+		instance_ids:
+			type: [String]
+			omit: true
+			hidden: true
+		instance_state:
+			type: String
+			omit: true
+			hidden: true
 		sharing: 
 			label: "记录级权限"
 			type: ["Object"]
@@ -74,7 +82,7 @@ Creator.baseObject =
 			type: "text"
 
 	permission_set:
-		none: 
+		none:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
@@ -86,18 +94,18 @@ Creator.baseObject =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true
 
 	triggers:
-		
-		"before.insert.server.default": 
+
+		"before.insert.server.default":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
@@ -108,7 +116,7 @@ Creator.baseObject =
 					doc.created_by = userId;
 					doc.modified_by = userId;
 
-		"before.update.server.default": 
+		"before.update.server.default":
 			on: "server"
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
@@ -117,7 +125,7 @@ Creator.baseObject =
 					modifier.$set = modifier.$set || {};
 					modifier.$set?.modified_by = userId
 
-		"before.insert.client.default": 
+		"before.insert.client.default":
 			on: "client"
 			when: "before.insert"
 			todo: (userId, doc)->
@@ -202,6 +210,19 @@ Creator.baseObject =
 			on: "record_more"
 			todo: "standard_delete"
 
+		standard_approve:
+			label: "发起审批"
+			visible: (object_name, record_id, record_permissions) ->
+				#TODO 是否有对应关系
+				#TODO 权限判断
+				object_workflow = _.find Creator.object_workflows, (ow) ->
+					return ow.object_name is object_name
+
+				return !!object_workflow
+			on: "record"
+			todo: ()->
+				Modal.show('initiate_approval', { object_name: this.object_name, record_id: this.record_id })
+
 		# "export":
 		# 	label: "Export"
 		# 	visible: false
@@ -210,4 +231,4 @@ Creator.baseObject =
 		# 		alert("please write code in baseObject to export data for " + this.object_name)
 
 
-		
+

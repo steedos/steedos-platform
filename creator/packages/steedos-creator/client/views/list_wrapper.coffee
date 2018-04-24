@@ -103,10 +103,15 @@ Template.creator_list_wrapper.helpers
 		if list_view_obj
 			original_filter_scope = list_view_obj.filter_scope
 			original_filter_items = list_view_obj.filters
+			original_filter_logic = list_view_obj.filter_logic
+			current_filter_logic = Session.get("filter_logic")
 			current_filter_scope = Session.get("filter_scope")
 			current_filter_items = Session.get("filter_items")
 			if original_filter_scope == current_filter_scope and JSON.stringify(original_filter_items) == JSON.stringify(current_filter_items)
-				return false
+				if (!current_filter_logic and !original_filter_logic) or (current_filter_logic == original_filter_logic)
+					return false
+				else
+					return true
 			else
 				return true
 	
@@ -204,15 +209,61 @@ Template.creator_list_wrapper.events
 			else
 				return obj
 		filter_items = _.compact(filter_items)
-		Session.set "list_view_visible", false
-		Meteor.call "update_filters", list_view_id, filter_items, filter_scope, (error, result) ->
-			Session.set "list_view_visible", true
-			if error 
-				console.log "error", error 
-			else if result
-				Session.set("filter_items", filter_items)
-		#$(event.currentTarget).toggleClass("slds-is-selected")
-		# $(".filter-list-container").toggleClass("slds-hide")
+
+		error = {}
+		filter_length = filter_items.length
+		format_logic = template.$("#filter-logic").val()
+		if format_logic
+			# 格式化filter
+			format_logic = format_logic.replace(/\n/g, "").replace(/\s+/g, " ")
+
+			# 判断特殊字符
+			if /[._\-!+]+/ig.test(format_logic)
+				error.message = "含有特殊字符。"
+
+			if !error.message
+				index = format_logic.match(/\d+/ig)
+				if !index
+					error.message = "有些筛选条件进行了定义，但未在高级筛选条件中被引用。"
+				else
+					index.forEach (i)->
+						if i < 1 or i > filter_length
+							error.message = "您的筛选条件引用了未定义的筛选器：#{i}。"
+						
+					flag = 1
+					while flag <= filter_length
+						if !index.includes("#{flag}")
+							error.message = "有些筛选条件进行了定义，但未在高级筛选条件中被引用。"
+						flag++;
+					
+			if !error.message
+				# 判断是否有非法英文字符
+				word = format_logic.match(/[a-zA-Z]+/ig)
+				if word
+					word.forEach (w)->
+						if !/^(and|or)$/ig.test(w)
+							error.message = "检查您的高级筛选条件中的拼写。"
+			
+			if !error.message
+				# 判断格式是否正确
+				try
+					Creator.eval(format_logic.replace(/and/ig, "&&").replace(/or/ig, "||"))
+				catch e	
+					error.message = "您的筛选器中含有特殊字符"
+
+				if /(AND)[^()]+(OR)/ig.test(format_logic) ||  /(OR)[^()]+(AND)/ig.test(format_logic)
+					error.message = "您的筛选器必须在连续性的 AND 和 OR 表达式前后使用括号。"
+
+		if error.message
+			console.log "error", error.message
+		else
+			Session.set "list_view_visible", false
+			Meteor.call "update_filters", list_view_id, filter_items, filter_scope, format_logic, (error, result) ->
+				Session.set "list_view_visible", true
+				if error 
+					console.log "error", error 
+				else if result
+					Session.set("filter_items", filter_items)		
 
 	'click .filters-save-as': (event, template)->
 		filter_items = Session.get("filter_items")

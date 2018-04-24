@@ -7,7 +7,7 @@ if Meteor.isClient
 		_.each actions, (todo, action_name)->
 			Creator.actionsByName[action_name] = todo 
 
-	Creator.executeAction = (object_name, action, record_id)->
+	Creator.executeAction = (object_name, action, record_id, item_element)->
 		obj = Creator.getObject(object_name)
 		if action?.todo
 			if typeof action.todo == "string"
@@ -22,6 +22,7 @@ if Meteor.isClient
 					record_id: record_id
 					object: obj
 					action: action
+					item_element: item_element
 				}, todoArgs
 				
 

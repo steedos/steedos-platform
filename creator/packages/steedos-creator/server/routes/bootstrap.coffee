@@ -3,7 +3,9 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res,next)->
 	# 	return null
 	userId = req.headers['x-user-id']
 	space_id = req.headers['x-space-id'] || req.params?.spaceId
-	# check if user in the space
+	if !userId
+		return 
+	# check if user in the space 
 	su = Creator.Collections["space_users"].findOne({space: space_id, user: userId})
 	if !su
 		space_id == null
@@ -21,6 +23,7 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res,next)->
 	result.space = space
 	result.apps = _.extend Creator.getDBApps(space_id), Creator.Apps
 	result.object_listviews = Creator.getUserObjectsListViews(userId, space_id, result.objects)
+	result.object_workflows = Meteor.call 'object_workflows.get', space_id, userId
 	JsonRoutes.sendResult res,
 		code:200,
 		data:result

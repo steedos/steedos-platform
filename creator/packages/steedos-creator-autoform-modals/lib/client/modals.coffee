@@ -52,6 +52,9 @@ getObjectName = (collectionName)->
 
 getSimpleSchema = (collectionName)->
 	if collectionName
+		object_name = getObjectName collectionName
+		object_fields = Creator.getObject(object_name).fields
+		_fields = Creator.getFields(object_name)
 		schema = collectionObj(collectionName).simpleSchema()._schema
 		fields = Session.get("cmFields")
 
@@ -59,6 +62,11 @@ getSimpleSchema = (collectionName)->
 		if fields
 			fields = fields.replace(/\ /g, "").split(",")
 			_.each fields, (field)->
+				if object_fields[field]?.type == "grid"
+					table_fields = _.filter _fields, (f)->
+						return /\w+(\.\$\.){1}\w+/.test(f)
+					_.each table_fields, (f)->
+						_.extend(final_schema, _.pick(schema, f))
 				obj = _.pick(schema, field, field + ".$")
 				_.extend(final_schema, obj)
 		else
@@ -318,8 +326,9 @@ helpers =
 				permission_fields.push "_object_name"
 
 			if Session.get 'cmFields'
-				firstLevelKeys = Session.get('cmFields').replace(/\ /g, "")
-				firstLevelKeys = firstLevelKeys.split(",")
+				cmFields = Session.get('cmFields').replace(/\ /g, "")
+				cmFields = cmFields.split(",")
+				firstLevelKeys = _.intersection(firstLevelKeys, cmFields)
 			if Session.get 'cmOmitFields'
 				firstLevelKeys = _.difference firstLevelKeys, [Session.get('cmOmitFields')]
 			
@@ -365,6 +374,8 @@ helpers =
 				groupFields: fieldGroups
 				hiddenFields: hiddenFields
 				disabledFields: disabledFields
+
+			console.log finalFields
 
 			return finalFields
 
@@ -484,6 +495,8 @@ Template.CreatorAfModal.events
 										trigger.todo.apply({object_name: object_name},[userId, result])
 						return result
 				onSubmit: (insertDoc, updateDoc, currentDoc)->
+					console.log insertDoc
+
 					userId = Meteor.userId()
 					cmCollection = Session.get 'cmCollection'
 					object_name = getObjectName(cmCollection)
@@ -514,6 +527,9 @@ Template.CreatorAfModal.events
 						if updateDoc["$unset"]
 							delete updateDoc["$unset"]._ids
 							delete updateDoc["$unset"]._object_name
+
+						# insertDoc里面的值是最全最精确的
+						updateDoc["$set"] = insertDoc
 
 						_ids = _id.split(",")
 						_.each _ids, (id)->

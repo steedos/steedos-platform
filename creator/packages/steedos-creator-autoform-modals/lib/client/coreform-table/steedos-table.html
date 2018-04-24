@@ -1,0 +1,49 @@
+<template name="afTable">
+    <div class="panel panel-default creator-table">
+        <div class="panel-body">
+            <div class="panel-content">
+                <table type='table' class="table table-bordered table-condensed autoform-table" data-label="{{afFieldLabelText name=this.atts.name}}"
+                    {{this.atts}} id="{{this.name}}Table" data-schema-key="{{this.name}}">
+                    <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
+
+                    </thead>
+                    <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
+                    {{#each trField}}
+                        {{#if this}}
+                        <tr>
+                            <td class="delete-row" data-index = {{this.index}}>
+                                <i class="ion ion-close-round"></i>
+                            </td>
+                            {{#each fieldName this.index this.value}}
+                                {{#if isHiddenField this.key}}
+                                    {{#if isDisabledField this.key}}
+                                        <td class="hidden-field">
+                                            <span class="disabled-field-value">{{disabledFieldsValue this.key}}</span>
+                                            <span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true}}</span>
+                                        </td>
+                                    {{else}}
+                                        <td class="hidden-field">{{> afQuickField name=this.name}}</td>
+                                    {{/if}}
+                                {{else}}
+                                    {{#if isDisabledField this.key}}
+                                        <td>
+                                            <span class="disabled-field-value">{{disabledFieldsValue this.key}}</span>
+                                            <span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true}}</span>
+                                        </td>
+                                    {{else}}
+                                        <td>{{> afQuickField name=this.name}}</td>
+                                    {{/if}}
+                                {{/if}}
+                            {{/each}}
+                        </tr>
+                        {{/if}}
+					{{/each}}
+					</tbody>
+                    <tfoot id="{{this.name}}Tfoot" name="{{this.name}}Tfoot">
+
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

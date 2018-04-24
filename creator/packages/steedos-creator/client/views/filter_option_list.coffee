@@ -15,6 +15,12 @@ Template.filter_option_list.helpers
 		object_name = Template.instance().data?.object_name
 		return Creator.getObject(object_name)
 
+	default_filter_logic: ()->
+		Session.get("filter_logic")
+
+	show_filter_logic: ()->
+		return Template.instance().showFilterLogic?.get()
+
 Template.filter_option_list.events 
 	'click .btn-filter-scope': (event, template)->
 		left = $(event.currentTarget).closest(".filter-list-container").offset().left
@@ -97,6 +103,28 @@ Template.filter_option_list.events
 	'click .remove-all-filters': (event, template)->
 		Session.set("filter_items", [])
 
+	'click .add_filter_logic': (e, t)->
+		filter_items = Session.get "filter_items"
+		arr = []
+		i = 0
+		while i < filter_items.length
+			arr.push(i + 1)
+			i++
+
+		val = arr.join(" AND ")
+		console.log "val", val
+		t.showFilterLogic.set(true)
+		Session.set("filter_logic", val)
+		
+
+	'click .remove_filter_logic': (e, t)->
+		Session.set("filter_logic", "")
+		t.showFilterLogic.set(false)
+
+	'keyup #filter-logic': (e, t)->
+		val = $(e.currentTarget).val()
+		Session.set("filter_logic", val)
+
 
 Template.filter_option_list.onCreated ->
 	self = this
@@ -110,6 +138,17 @@ Template.filter_option_list.onCreated ->
 	$(document).on "click",".content-wrapper, .oneHeader", self.destroyOptionbox
 
 	self.filterItems = new ReactiveVar()
+	self.showFilterLogic = new ReactiveVar()
+	self.autorun -> 
+		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
+		if list_view_obj
+			if list_view_obj.filter_logic
+				self.showFilterLogic.set(true)
+				Session.set("filter_logic", list_view_obj.filter_logic)
+			else
+				self.showFilterLogic.set(false)
+		else
+			self.showFilterLogic.set(false)
 
 	self.autorun ->
 		if Session.get("filter_items")
@@ -150,7 +189,27 @@ Template.filter_option_list.onCreated ->
 						filter.valuelabel = options_labels
 				else
 					self.filterItems.set(filters)	
+
 Template.filter_option_list.onRendered ->
+	$("#info_popover").dxPopover({
+		target: "#logic_logic",
+		showEvent: "mouseenter",
+		hideEvent: "mouseleave",
+		position: "top",
+		width: 300,
+		animation: { 
+			show: {
+				type: "pop",
+				from: {  scale: 0 },
+				to: { scale: 1 }
+			},
+			hide: {
+				type: "fade",
+				from: 1,
+				to: 0
+			}
+		}
+	});
 
 Template.filter_option_list.onDestroyed ->
 	$(document).off "click", ".wrapper", self.destroyOptionbox

@@ -22,6 +22,7 @@ Meteor.methods
 		result.space = space
 		result.apps = _.extend Creator.getDBApps(space_id), Creator.Apps
 		result.object_listviews = Creator.getUserObjectsListViews(this.userId, space_id, result.objects)
+		result.object_workflows = Meteor.call 'object_workflows.get', space_id
 
 		return result;
 

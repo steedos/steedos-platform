@@ -1,0 +1,258 @@
+uuflowManager = {}
+
+uuflowManager.check_authorization = (req) ->
+	query = req.query
+	current_user = query["X-User-Id"]
+	auth_token = query["X-Auth-Token"]
+
+	if not current_user or not auth_token
+		throw new Meteor.Error 401, 'Unauthorized'
+
+	current_user_info = Creator.Collections.users.findOne(current_user)
+
+	if not current_user_info
+		throw new Meteor.Error 401, 'Unauthorized'
+
+	return current_user_info
+
+uuflowManager.getSpace = (space_id) ->
+	space = Creator.Collections.spaces.findOne(space_id)
+	if not space
+		throw new Meteor.Error('error!', "space_id有误或此space已经被删除")
+	return space
+
+uuflowManager.getFlow = (flow_id) ->
+	flow = Creator.Collections.flows.findOne(flow_id)
+	if not flow
+		throw new Meteor.Error('error!', "id有误或此流程已经被删除")
+	return flow
+
+uuflowManager.getSpaceUser = (space_id, user_id) ->
+	space_user = Creator.Collections.space_users.findOne({ space: space_id, user: user_id })
+	if not space_user
+		throw new Meteor.Error('error!', "user_id对应的用户不属于当前space")
+	return space_user
+
+uuflowManager.getSpaceUserOrgInfo = (space_user) ->
+	info = new Object
+	info.organization = space_user.organization
+	org = Creator.Collections.organizations.findOne(space_user.organization, { fields: { name: 1 , fullname: 1 } })
+	info.organization_name = org.name
+	info.organization_fullname = org.fullname
+	return info
+
+uuflowManager.isFlowEnabled = (flow) ->
+	if flow.state isnt "enabled"
+		throw new Meteor.Error('error!', "流程未启用,操作失败")
+
+uuflowManager.isFlowSpaceMatched = (flow, space_id) ->
+	if flow.space isnt space_id
+		throw new Meteor.Error('error!', "流程和工作区ID不匹配")
+
+uuflowManager.getForm = (form_id) ->
+	form = Creator.Collections.forms.findOne(form_id)
+	if not form
+		throw new Meteor.Error('error!', '表单ID有误或此表单已经被删除')
+
+	return form
+
+uuflowManager.getCategory = (category_id) ->
+	return Creator.Collections.categories.findOne(category_id)
+
+uuflowManager.create_instance = (instance_from_client, user_info) ->
+	check instance_from_client["applicant"], String
+	check instance_from_client["space"], String
+	check instance_from_client["flow"], String
+	check instance_from_client["record_ids"], {o: String, ids: [String]}
+
+	# 校验是否record已经发起过审批，如果发起过审批则报错
+	uuflowManager.checkIsFirstInitiate(instance_from_client["record_ids"])
+
+	space_id = instance_from_client["space"]
+	flow_id = instance_from_client["flow"]
+	user_id = user_info._id
+	# 获取前台所传的trace
+	trace_from_client = null
+	# 获取前台所传的approve
+	approve_from_client = null
+	if instance_from_client["traces"] and instance_from_client["traces"][0]
+		trace_from_client = instance_from_client["traces"][0]
+		if trace_from_client["approves"] and trace_from_client["approves"][0]
+			approve_from_client = instance_from_client["traces"][0]["approves"][0]
+
+	# 获取一个space
+	space = uuflowManager.getSpace(space_id)
+	# 获取一个flow
+	flow = uuflowManager.getFlow(flow_id)
+	# 获取一个space下的一个user
+	space_user = uuflowManager.getSpaceUser(space_id, user_id)
+	# 获取space_user所在的部门信息
+	space_user_org_info = uuflowManager.getSpaceUserOrgInfo(space_user)
+	# 判断一个flow是否为启用状态
+	uuflowManager.isFlowEnabled(flow)
+	# 判断一个flow和space_id是否匹配
+	uuflowManager.isFlowSpaceMatched(flow, space_id)
+
+	form = uuflowManager.getForm(flow.form)
+
+	permissions = permissionManager.getFlowPermissions(flow_id, user_id)
+
+	if not permissions.includes("add")
+		throw new Meteor.Error('error!', "当前用户没有此流程的新建权限")
+
+	now = new Date
+	ins_obj = {}
+	ins_obj._id = Creator.Collections.instances._makeNewID()
+	ins_obj.space = space_id
+	ins_obj.flow = flow_id
+	ins_obj.flow_version = flow.current._id
+	ins_obj.form = flow.form
+	ins_obj.form_version = flow.current.form_version
+	ins_obj.name = flow.name
+	ins_obj.submitter = user_id
+	ins_obj.submitter_name = user_info.name
+	ins_obj.applicant = if instance_from_client["applicant"] then instance_from_client["applicant"] else user_id
+	ins_obj.applicant_name = if instance_from_client["applicant_name"] then instance_from_client["applicant_name"] else user_info.name
+	ins_obj.applicant_organization = if instance_from_client["applicant_organization"] then instance_from_client["applicant_organization"] else space_user.organization
+	ins_obj.applicant_organization_name = if instance_from_client["applicant_organization_name"] then instance_from_client["applicant_organization_name"] else space_user_org_info.organization_name
+	ins_obj.applicant_organization_fullname = if instance_from_client["applicant_organization_fullname"] then instance_from_client["applicant_organization_fullname"] else  space_user_org_info.organization_fullname
+	ins_obj.state = 'draft'
+	ins_obj.code = ''
+	ins_obj.is_archived = false
+	ins_obj.is_deleted = false
+	ins_obj.created = now
+	ins_obj.created_by = user_id
+	ins_obj.modified = now
+	ins_obj.modified_by = user_id
+	ins_obj.values = new Object
+
+	ins_obj.record_ids = instance_from_client["record_ids"]
+
+	# 新建Trace
+	trace_obj = {}
+	trace_obj._id = new Mongo.ObjectID()._str
+	trace_obj.instance = ins_obj._id
+	trace_obj.is_finished = false
+	# 当前最新版flow中开始节点
+	start_step = _.find(flow.current.steps, (step) ->
+		return step.step_type is 'start'
+	)
+	trace_obj.step = start_step._id
+	trace_obj.name = start_step.name
+
+	trace_obj.start_date = now
+	# 新建Approve
+	appr_obj = {}
+	appr_obj._id = new Mongo.ObjectID()._str
+	appr_obj.instance = ins_obj._id
+	appr_obj.trace = trace_obj._id
+	appr_obj.is_finished = false
+	appr_obj.user = if instance_from_client["applicant"] then instance_from_client["applicant"] else user_id
+	appr_obj.user_name = if instance_from_client["applicant_name"] then instance_from_client["applicant_name"] else user_info.name
+	appr_obj.handler = user_id
+	appr_obj.handler_name = user_info.name
+	appr_obj.handler_organization = space_user.organization
+	appr_obj.handler_organization_name = space_user_org_info.name
+	appr_obj.handler_organization_fullname = space_user_org_info.fullname
+	appr_obj.type = 'draft'
+	appr_obj.start_date = now
+	appr_obj.read_date = now
+	appr_obj.is_read = true
+	appr_obj.is_error = false
+	appr_obj.description = ''
+	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids, flow_id)
+
+	trace_obj.approves = [appr_obj]
+	ins_obj.traces = [trace_obj]
+
+	ins_obj.inbox_users = instance_from_client.inbox_users || []
+
+	ins_obj.current_step_name = start_step.name
+
+	if flow.auto_remind is true
+		ins_obj.auto_remind = true
+
+	# 新建申请单时，instances记录流程名称、流程分类名称 #1313
+	ins_obj.flow_name = flow.name
+	if form.category
+		category = uuflowManager.getCategory(form.category)
+		if category
+			ins_obj.category_name = category.name
+
+	new_ins_id = Creator.Collections.instances.insert(ins_obj)
+
+	uuflowManager.initiateAttach(ins_obj.record_ids, space_id, ins_obj._id, appr_obj._id)
+
+	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids, new_ins_id)
+
+	return new_ins_id
+
+uuflowManager.initiateValues = (recordIds, flowId) ->
+	values = {}
+	ow = Creator.Collections.object_workflows.findOne({
+		object_name: recordIds.o,
+		flow_id: flowId
+	})
+	record = Creator.Collections[recordIds.o].findOne(recordIds.ids[0])
+	if ow and record
+		_.each ow.field_map, (fm) ->
+			if record.hasOwnProperty(fm.object_field)
+				values[fm.workflow_field] = record[fm.object_field]
+
+	return values
+
+uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
+
+	Creator.Collections['cms_files'].find({
+		space: spaceId,
+		parent: recordIds
+	}).forEach (cf) ->
+		_.each cf.versions, (versionId, idx) ->
+			f = Creator.Collections['cfs.files.filerecord'].findOne(versionId)
+			newFile = new FS.File()
+
+			newFile.attachData f.createReadStream('files'), {
+					type: f.original.type
+			}, (err) ->
+				if (err)
+					throw new Meteor.Error(err.error, err.reason)
+
+				newFile.name(f.name())
+				newFile.size(f.size())
+				metadata = {
+					owner: f.metadata.owner,
+					owner_name: f.metadata.owner_name,
+					space: spaceId,
+					instance: insId,
+					approve: approveId
+					parent: cf._id
+				}
+
+				if idx is 0
+					metadata.current = true
+
+				newFile.metadata = metadata
+				cfs.instances.insert(newFile)
+
+
+	return
+
+uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
+	Creator.Collections[recordIds.o].update(recordIds.ids[0], {
+		$set: {
+			instance_ids: [insId],
+			instance_state: 'draft'
+		}
+	})
+
+	return
+
+uuflowManager.checkIsFirstInitiate = (recordIds) ->
+	record = Creator.Collections[recordIds.o].findOne({
+		_id: recordIds.ids[0], instance_ids: { $exists: true }, instance_state: { $exists: true }
+	}, { fields: { instance_ids: 1 } })
+
+	if record and Creator.Collections.instances.find(record.instance_ids[0]).count() > 0
+		throw new Meteor.Error('error!', "此记录已发起过流程审批！")
+
+	return

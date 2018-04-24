@@ -1,6 +1,6 @@
 Meteor.methods
-    update_filters: (listview_id, filters, filter_scope)->
-        Creator.Collections.object_listviews.direct.update({_id: listview_id}, {$set: {filters: filters, filter_scope: filter_scope}})
+    update_filters: (listview_id, filters, filter_scope, filter_logic)->
+        Creator.Collections.object_listviews.direct.update({_id: listview_id}, {$set: {filters: filters, filter_scope: filter_scope, filter_logic: filter_logic}})
 
     update_columns: (listview_id, columns)->
         check(columns, Array)

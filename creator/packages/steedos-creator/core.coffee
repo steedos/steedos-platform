@@ -444,11 +444,11 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 		is_wide_2 = false
 
 		_.each sc_1, (value) ->
-			if value.autoform?.is_wide
+			if value.autoform?.is_wide || value.autoform?.type == "table"
 				is_wide_1 = true
 
 		_.each sc_2, (value) ->
-			if value.autoform?.is_wide
+			if value.autoform?.is_wide || value.autoform?.type == "table"
 				is_wide_2 = true
 
 		if isSingle

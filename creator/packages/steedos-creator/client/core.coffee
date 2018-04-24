@@ -81,10 +81,44 @@ if Meteor.isClient
 		custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
 		selector = []
 		if custom_list_view
+			filter_logic = custom_list_view.filter_logic
 			filter_scope = custom_list_view.filter_scope
 			filters = custom_list_view.filters
 			if filter_scope == "mine"
 				selector.push ["owner", "=", Meteor.userId()]
+
+			if filter_logic
+				format_logic = filter_logic.replace(/\(\s+/ig, "(").replace(/\s+\)/ig, ")").replace(/\(/g, "[").replace(/\)/g, "]").replace(/\s+/g, ",").replace(/(and|or)/ig, "'$1'")
+				format_logic = format_logic.replace(/(\d)+/ig, (x)->
+					_f = filters[x-1]
+					field = _f.field
+					option = _f.operation
+					value = Creator.evaluateFormula(_f.value)
+					sub_selector = []
+					if _.isArray(value) == true
+						if option == "="
+							_.each value, (v)->
+								sub_selector.push [field, option, v], "or"
+						else if option == "<>"
+							_.each value, (v)->
+								sub_selector.push [field, option, v], "and"
+						else
+							_.each value, (v)->
+								sub_selector.push [field, option, v], "or"
+						if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
+							sub_selector.pop()
+					else
+						sub_selector = [field, option, value]
+					console.log "sub_selector", sub_selector
+					return JSON.stringify(sub_selector)
+				)
+				format_logic = "[#{format_logic}]"
+				if selector.length
+					selector.push("and", Creator.eval(format_logic))
+				else
+					selector.push(Creator.eval(format_logic))
+
+				return selector
 
 			if filters and filters.length > 0
 				if selector.length > 0
@@ -192,7 +226,6 @@ Meteor.startup ->
 
 	$(document).keydown (e) ->
 		if e.keyCode == "13" or e.key == "Enter"
-			return
 			if e.target.tagName != "TEXTAREA" or $(e.target).closest("div").hasClass("bootstrap-tagsinput")
 				if Session.get("cmOperation") == "update"
 					$(".creator-auotform-modals .btn-update").click()

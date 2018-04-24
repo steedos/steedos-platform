@@ -17,15 +17,17 @@
                     <div class="weui-media-box weui-media-box_small-appmsg">
                         <div class="weui-cells">
                             {{#each app.objects}}
-                            <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
-                                <div class="weui-cell__hd">
-                                    {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
-                                </div>
-                                <div class="weui-cell__bd weui-cell_primary">
-                                    <p>{{object_label this}}</p>
-                                </div>
-                                <span class="weui-cell__ft"></span>
-                            </a>
+                                {{#if object_enabled this}}
+                                <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
+                                    <div class="weui-cell__hd">
+                                        {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
+                                    </div>
+                                    <div class="weui-cell__bd weui-cell_primary">
+                                        <p>{{object_label this}}</p>
+                                    </div>
+                                    <span class="weui-cell__ft"></span>
+                                </a>
+                                {{/if}}
                             {{/each}}
                         </div>
                     </div>

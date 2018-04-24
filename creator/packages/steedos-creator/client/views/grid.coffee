@@ -33,7 +33,7 @@ _itemClick = (e, curObjectName)->
 				Creator.executeAction objectName, action, recordId, action_record_title, ()->
 					dxDataGridInstance.refresh()
 			else
-				Creator.executeAction objectName, action, recordId
+				Creator.executeAction objectName, action, recordId, value.itemElement
 	unless actions.length
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
@@ -147,11 +147,22 @@ _columns = (object_name, columns, list_view_id, is_related)->
 		else
 			columnItem.width = defaultWidth
 
+		list_view = Creator.getListView(object_name, list_view_id)
+
+		list_view_sort = Creator.transformSortToDX(list_view.sort)
+
 		if column_sort_settings and column_sort_settings.length > 0
+			console.log("settings sort...")
 			_.each column_sort_settings, (sort)->
 				if sort[0] == n
 					columnItem.sortOrder = sort[1]
+		else if !_.isEmpty(list_view_sort)
+			console.log("view sort...")
+			_.each list_view_sort, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
 		else
+			console.log("default sort...")
 			#默认读取default view的sort配置
 			_.each column_default_sort, (sort)->
 				if sort[0] == n

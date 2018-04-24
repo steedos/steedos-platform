@@ -10,6 +10,9 @@ Creator.getObject = (object_name)->
 	if object_name
 		return Creator.objectsByName[object_name]
 
+Creator.getObjectById = (object_id)->
+	return _.findWhere(Creator.objectsByName, {_id: object_id})
+
 Creator.removeObject = (object_name)->
 	delete Creator.Objects[object_name]
 	delete Creator.objectsByName[object_name]

@@ -3,7 +3,7 @@
 # - this.field_name
 # - this.field
 # - this.doc
-# - this.id
+# - this._id
 
 formatFileSize = (filesize)->
 	rev = filesize / 1024.00
@@ -20,6 +20,45 @@ formatFileSize = (filesize)->
 
 	return rev.toFixed(2) + unit
 
+Template.creator_table_cell.onRendered ->
+	self = this
+	self.autorun ->
+		_field = self.data.field
+		object_name = self.data.object_name
+		this_object = Creator.getObject(object_name)
+		record_id = self.data._id
+		record = Creator.getCollection(object_name).findOne(record_id)
+
+		if  _field.type == "grid"
+			val = record[_field.name]
+
+			columns = Creator.getSchema(object_name)._objectKeys[_field.name + ".$."]
+
+			columns = _.map columns, (column)->
+				field = this_object.fields[_field.name + ".$." + column]
+				if field.hidden
+					return undefined
+				columnItem =
+					cssClass: "slds-cell-edit"
+					caption: field.label || column
+					dataField: column
+					alignment: "left"
+					cellTemplate: (container, options) ->
+						field_name = _field.name + ".$." + column
+						field_name = field_name.replace(/\$\./,"")
+						cellOption = {_id: options.data._id, val: options.data[column], doc: options.data, field: field, field_name: field_name, object_name:object_name, isTable: true}
+						Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+				return columnItem
+			
+			columns = _.compact(columns)
+
+			self.$(".cellGridContainer").dxDataGrid
+				dataSource: val,
+				columns: columns
+				showColumnLines: false
+				showRowLines: true
+				height: "auto"
+
 Template.creator_table_cell.helpers Creator.helpers
 
 Template.creator_table_cell.helpers
@@ -28,11 +67,15 @@ Template.creator_table_cell.helpers
 
 		val = this.val
 
-		this_object = Creator.getObject(this.object_name)
+		object_name = this.object_name
+
+		this_object = Creator.getObject(object_name)
 
 		this_name_field_key = this_object.NAME_FIELD_KEY
 
 		_field = this.field
+
+		# debugger
 
 		if !_field
 			return
@@ -42,7 +85,10 @@ Template.creator_table_cell.helpers
 		if _.isFunction(reference_to)
 			reference_to = reference_to()
 
-		if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
+		if _field.type == "grid"
+			data.push {isTable: true}
+
+		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
 
 			# 有optionsFunction的情况下，reference_to不考虑数组
 			if _.isFunction(_field.optionsFunction)
@@ -83,6 +129,7 @@ Template.creator_table_cell.helpers
 					if !_.isArray(val)
 						val = if val then [val] else []
 					try
+						# debugger;
 
 						reference_to_object = Creator.getObject(reference_to)
 
@@ -166,4 +213,9 @@ Template.creator_table_cell.helpers
 		if !permission.allowEdit
 			return false
 
+		return true
+
+	showEditIcon: ()->
+		if this.isTable
+			return false
 		return true

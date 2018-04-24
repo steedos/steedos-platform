@@ -17,6 +17,9 @@ AutoForm.addInputType('steedosLookups', {
 
 		val = this.val();
 
+		console.log("look valueOut", val)
+		console.log("this", this)
+
 		if(this[0] && this[0].dataset.init === "0"){
 			val = this[0].dataset.oldValue
 		}
@@ -191,6 +194,10 @@ Template.steedosLookups.helpers({
 	lookupInit: function () {
 		var template = Template.instance();
 		return template.uniSelectize.initialized.get();
+	},
+
+	dataSchemaKeyFromAtts: function(){
+		return Template.instance().data.atts.dataSchemaKey
 	},
     createText: function () {
         var template = Template.instance();

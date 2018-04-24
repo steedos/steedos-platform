@@ -100,6 +100,35 @@ Creator.Objects.objects =
 			modifyAllRecords: true
 			viewAllRecords: true
 
+	actions:
+		copy_odata:
+			label: "复制OData网址"
+			visible: true
+			on: "record"
+			todo: (object_name, record_id, item_element)->
+				record = Creator.getObjectById(record_id)
+				#enable_api 属性未开放
+				if record?.enable_api || true
+					o_name = record?.name
+					path = SteedosOData.getODataPath(Session.get("spaceId"), o_name)
+					item_element.attr('data-clipboard-text', path);
+					if !item_element.attr('data-clipboard-new')
+						clipboard = new Clipboard(item_element[0]);
+						item_element.attr('data-clipboard-new', true)
+
+						clipboard.on('success',  (e) ->
+							toastr.success('复制成功');
+						)
+						clipboard.on('error',  (e) ->
+							toastr.error('复制失败');
+							console.error "e"
+						);
+						#fix 详细页面(网页LI 手机版view-action)第一次点击复制不执行
+						if item_element[0].tagName == 'LI' || item_element.hasClass('view-action')
+							item_element.trigger("click");
+				else
+					toastr.error('复制失败: 未启用API');
+
 
 	triggers:
 		"before.insert.server.objects":
