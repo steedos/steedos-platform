@@ -110,7 +110,6 @@ Creator.Objects.permission_shares =
 		"after.update.server.sharing":
 			on: "server"
 			when: "after.update"
-			# todo: (userId, doc)->
 			todo: (userId, doc, fieldNames, modifier, options)->
 				object_name = doc.object_name
 				obj = Creator.getObject(object_name)

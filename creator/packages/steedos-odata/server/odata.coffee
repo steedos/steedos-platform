@@ -132,7 +132,8 @@ Meteor.startup ->
 	SteedosOdataAPI.addRoute(':object_name', {authRequired: true, spaceRequired: false}, {
 		get: ()->
 			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
+			object = Creator.objectsByName[key]
+			if not object?.enable_api
 				return {
 					statusCode: 401
 					body:setErrorMessage(401)
@@ -182,7 +183,17 @@ Meteor.startup ->
 					_.each readable_fields,(field)->
 						createQuery.projection[field] = 1
 				if not permissions.viewAllRecords
-					createQuery.query.owner = @userId
+					if object.enable_shares
+						# 满足共享规则中的记录也要搜索出来
+						delete createQuery.query.owner
+						shares = []
+						orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+						shares.push {"owner": @userId}
+						shares.push { "sharing.u": @userId }
+						shares.push { "sharing.o": { $in: orgs } }
+						createQuery.query["$or"] = shares
+					else
+						createQuery.query.owner = @userId
 
 				entities = []
 				if @queryParams.$top isnt '0'
