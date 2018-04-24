@@ -46,11 +46,32 @@ Creator.baseObject =
 			omit: true
 			index: true
 			hidden: true
-		sharing:
+		sharing: 
 			label: "记录级权限"
-			type: "Array"
+			type: ["Object"]
+			# omit: true
 			hidden: true
 			blackbox: true
+		"sharing.$":
+			blackbox: true
+			omit: true
+		"sharing.$.u": 
+			label: "授权用户"
+			type: "[text]"
+		"sharing.$.o": 
+			label: "授权组织"
+			type: "[text]"
+		"sharing.$.p": 
+			label: "访问权限"
+			type: "select"
+			defaultValue: "r"
+			options: [
+				{label: "只读", value: "r"},
+				{label: "读写", value: "w"},
+			]
+		"sharing.$.r": 
+			label: "来自规则"
+			type: "text"
 
 	permission_set:
 		none: 
