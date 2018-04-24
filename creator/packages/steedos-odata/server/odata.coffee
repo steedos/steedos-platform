@@ -440,8 +440,8 @@ Meteor.startup ->
 
 				{body: body, headers: headers}
 			else
-
-				if not Creator.objectsByName[key]?.enable_api
+				object = Creator.objectsByName[key]
+				if not object?.enable_api
 					return {
 						statusCode: 401
 						body: setErrorMessage(401)
@@ -475,7 +475,14 @@ Meteor.startup ->
 					entity = collection.findOne(createQuery.query,visitorParser(createQuery))
 					entities = []
 					if entity
-						if entity.owner == @userId
+						isAllowed = entity.owner == @userId or permissions.viewAllRecords
+						if object.enable_shares and !isAllowed
+							shares = []
+							orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+							shares.push { "sharing.u": @userId }
+							shares.push { "sharing.o": { $in: orgs } }
+							isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
+						if isAllowed
 							body = {}
 							headers = {}
 							entities.push entity
