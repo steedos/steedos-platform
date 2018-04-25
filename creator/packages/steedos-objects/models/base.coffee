@@ -135,7 +135,7 @@ Creator.baseObject =
 					selector = { space: doc.space, object_name: object_name }
 					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1 })
 					psRecords.forEach (ps)->
-						filters = Creator.formatFiltersToMongo(ps.filters)
+						filters = Creator.formatFiltersToMongo(ps.filters, { extend: false })
 						selector = { space: doc.space, _id: doc._id, $and: filters }
 						count = collection.find(selector).count()
 						if count
@@ -156,7 +156,7 @@ Creator.baseObject =
 					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1 })
 					collection.direct.update({ _id: doc._id }, { $unset: { "sharing" : 1 } })
 					psRecords.forEach (ps)->
-						filters = Creator.formatFiltersToMongo(ps.filters)
+						filters = Creator.formatFiltersToMongo(ps.filters, { extend: false })
 						selector = { space: doc.space, _id: doc._id, $and: filters }
 						count = collection.find(selector).count()
 						if count

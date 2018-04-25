@@ -29,6 +29,7 @@ Creator.bootstrap = (spaceId, callback)->
 			# if result.space._id != spaceId
 			# 	Steedos.setSpaceId(result.space._id)
 
+			Creator.USER_CONTEXT = result.USER_CONTEXT
 			Creator.Objects = result.objects
 			object_listviews = result.object_listviews
 			Creator.object_workflows = result.object_workflows

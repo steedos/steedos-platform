@@ -101,7 +101,7 @@ Creator.Objects.permission_shares =
 					collection = Creator.getCollection(object_name)
 					selector = { space: doc.space }
 					if doc.filters
-						filters = Creator.formatFiltersToMongo(doc.filters)
+						filters = Creator.formatFiltersToMongo(doc.filters, { extend: false })
 						selector["$and"] = filters
 					push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})
@@ -126,7 +126,7 @@ Creator.Objects.permission_shares =
 					preCollection.direct.update(selector, {$pull: pull}, {multi: true})
 					selector = { space: doc.space }
 					if doc.filters
-						filters = Creator.formatFiltersToMongo(doc.filters)
+						filters = Creator.formatFiltersToMongo(doc.filters, { extend: false })
 						selector["$and"] = filters
 					push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})

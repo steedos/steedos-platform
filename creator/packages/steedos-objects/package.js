@@ -52,7 +52,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/eval.js');
 	api.addFiles('lib/convert.coffee');
 
-	api.addFiles('lib/formular.coffee', "client");
+	api.addFiles('lib/formular.coffee');
 	
 	api.addFiles('lib/object.coffee');
 	api.addFiles('lib/fields.coffee');

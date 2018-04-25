@@ -38,13 +38,13 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 		return space.admins.indexOf(userId) >= 0
 
 
-Creator.evaluateFormula = (formular, context)->
+Creator.evaluateFormula = (formular, context, options)->
 
 	if !_.isString(formular)
 		return formular
 
 	if Creator.Formular.checkFormula(formular)
-		return Creator.Formular.run(formular, context)
+		return Creator.Formular.run(formular, context, options)
 
 	return formular				
 
