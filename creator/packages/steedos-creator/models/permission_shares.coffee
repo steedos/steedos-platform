@@ -64,6 +64,8 @@ Creator.Objects.permission_shares =
 			label: "访问权限"
 			type: "select"
 			sortable: true
+			defaultValue: "r"
+			hidden: true
 			options: [
 				{label: "只读", value: "r"},
 				{label: "读写", value: "w"},
