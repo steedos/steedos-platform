@@ -44,7 +44,7 @@ Creator.Objects.object_listviews =
 				_.forEach fields, (f)->
 					if !_object.fields[f].hidden and !_object.fields[f].omit
 						label = _object.fields[f].label
-						_options.push {label: f.label || f, value: f, icon: icon}
+						_options.push {label:label || f, value: f, icon: icon}
 				return _options
 		sort:
 			label: "默认排序规则"

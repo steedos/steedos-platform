@@ -13,6 +13,14 @@ Meteor.startup ()->
 #
 #				if !document.list_views.all
 #					document.list_views.all = all_viewlist
+
+			_.each document.fields, (f, k) ->
+				if _.size(f.fields) > 0
+					_.each f.fields, (_f, _k)->
+						document.fields[k + ".$." + _k] = _f
+
+					delete f.fields
+
 			Creator.Objects[document.name] = document
 			Creator.loadObjects document
 

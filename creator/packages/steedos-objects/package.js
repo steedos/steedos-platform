@@ -47,6 +47,7 @@ Package.onUse(function(api) {
 	api.addFiles('core.coffee');
 
 	api.addFiles('lib/add_simple_schema_validation_error.coffee');
+	api.addFiles('lib/field_simple_schema_validation_error.coffee')
 
 	api.addFiles('lib/eval.js');
 	api.addFiles('lib/convert.coffee');
