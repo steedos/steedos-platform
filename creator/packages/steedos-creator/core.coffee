@@ -245,6 +245,13 @@ Creator.getAppsObjects = ()->
 
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
+###
+options参数：
+	extend-- 是否需要把当前用户基本信息加入公式，即让公式支持Creator.USER_CONTEXT中的值，默认为true
+	userId-- 当前登录用户
+	spaceId-- 当前所在工作区
+extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
+### 
 Creator.formatFiltersToMongo = (filters, options)->
 	unless filters.length
 		return
@@ -286,7 +293,14 @@ Creator.formatFiltersToMongo = (filters, options)->
 		selector.push sub_selector
 	return selector
 
-Creator.formatFiltersToDev = (filters)->
+###
+options参数：
+	extend-- 是否需要把当前用户基本信息加入公式，即让公式支持Creator.USER_CONTEXT中的值，默认为true
+	userId-- 当前登录用户
+	spaceId-- 当前所在工作区
+extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
+### 
+Creator.formatFiltersToDev = (filters, options)->
 	unless filters.length
 		return
 	# 当filters不是[Array]类型而是[Object]类型时，进行格式转换
@@ -297,7 +311,10 @@ Creator.formatFiltersToDev = (filters)->
 	_.each filters, (filter)->
 		field = filter[0]
 		option = filter[1]
-		value = Creator.evaluateFormula(filter[2])
+		if Meteor.isClient
+			value = Creator.evaluateFormula(filter[2])
+		else
+			value = Creator.evaluateFormula(filter[2], null, options)
 		sub_selector = []
 		if _.isArray(value) == true
 			v_selector = []
