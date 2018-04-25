@@ -38,7 +38,7 @@ search_object = (space, object_name,userId, searchText)->
 						permissions_fields[field_name] = field					
 				fields = {_id: 1}
 				_.each permissions_fields, (field,field_name)->
-					if field.searchable
+					if field.searchable and (field.type =='text' or field.type == 'textarea')
 						subquery = {}
 						fields[field_name] = 1
 						if field.is_name

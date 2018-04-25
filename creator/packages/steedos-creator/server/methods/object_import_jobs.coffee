@@ -105,7 +105,6 @@ importObject = (importObj,space) ->
 	#file = Creator.Collections['cms.files'].findOne('parent.ids':record_id)
 	files = Creator.Collections['cfs.files.filerecord'].find({'metadata.record_id':importObj._id},{sort: {created: -1}}).fetch()
 	file = files[0]
-	console.log file
 	if file
 		stream = file.createReadStream('files')
 		chunks = []
