@@ -69,14 +69,6 @@ Creator.baseObject =
 		"sharing.$.o": 
 			label: "授权组织"
 			type: "[text]"
-		"sharing.$.p": 
-			label: "访问权限"
-			type: "select"
-			defaultValue: "r"
-			options: [
-				{label: "只读", value: "r"},
-				{label: "读写", value: "w"},
-			]
 		"sharing.$.r": 
 			label: "来自规则"
 			type: "text"
@@ -141,14 +133,14 @@ Creator.baseObject =
 					collection = Creator.getCollection(object_name)
 					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }
-					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1, permissions: 1 })
+					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1 })
 					psRecords.forEach (ps)->
 						filters = Creator.formatFiltersToMongo(ps.filters)
 						selector = { space: doc.space, _id: doc._id, $and: filters }
 						count = collection.find(selector).count()
 						if count
 							# 如果当前新增的记录有满足条件的共享规则存在，则把共享规则配置保存起来
-							push = { sharing: { "u": ps.users, "o": ps.organizations, "p": ps.permissions, "r": ps._id } }
+							push = { sharing: { "u": ps.users, "o": ps.organizations, "r": ps._id } }
 							collection.direct.update({ _id: doc._id }, {$push: push})
 
 		"after.update.server.sharing": 
@@ -161,7 +153,7 @@ Creator.baseObject =
 					collection = Creator.getCollection(object_name)
 					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }
-					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1, permissions: 1 })
+					psRecords = psCollection.find(selector, fields: { _id:1, filters: 1, organizations: 1, users: 1 })
 					collection.direct.update({ _id: doc._id }, { $unset: { "sharing" : 1 } })
 					psRecords.forEach (ps)->
 						filters = Creator.formatFiltersToMongo(ps.filters)
@@ -169,7 +161,7 @@ Creator.baseObject =
 						count = collection.find(selector).count()
 						if count
 							# 如果当前修改的记录有满足条件的共享规则存在，则把共享规则配置保存起来
-							push = { sharing: { "u": ps.users, "o": ps.organizations, "p": ps.permissions, "r": ps._id } }
+							push = { sharing: { "u": ps.users, "o": ps.organizations, "r": ps._id } }
 							collection.direct.update({ _id: doc._id }, {$push: push})
 
 	actions:

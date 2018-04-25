@@ -51,16 +51,6 @@ Creator.Objects.permission_shares =
 			reference_to: "users"
 			multiple: true
 			defaultValue: []
-		permissions:
-			label: "访问权限"
-			type: "select"
-			sortable: true
-			defaultValue: "r"
-			hidden: true
-			options: [
-				{label: "只读", value: "r"},
-				{label: "读写", value: "w"},
-			]
 	list_views:
 		all:
 			label: "所有共享规则"
@@ -99,7 +89,7 @@ Creator.Objects.permission_shares =
 					if doc.filters
 						filters = Creator.formatFiltersToMongo(doc.filters)
 						selector["$and"] = filters
-					push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
+					push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})
 
 		"after.update.server.sharing":
@@ -124,7 +114,7 @@ Creator.Objects.permission_shares =
 					if doc.filters
 						filters = Creator.formatFiltersToMongo(doc.filters)
 						selector["$and"] = filters
-					push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
+					push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})
 		"after.remove.server.sharing":
 			on: "server"
