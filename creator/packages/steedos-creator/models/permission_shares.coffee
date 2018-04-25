@@ -19,15 +19,6 @@ Creator.Objects.permission_shares =
 						_options.push { label: o.label, value: k, icon: o.icon }
 				return _options
 			required: true
-		filter_scope:
-			label: "过虑范围"
-			type: "select"
-			defaultValue: "space"
-			# omit: true
-			options: [
-				{label: "所有", value: "space"},
-				{label: "与我相关", value: "mine"}
-			]
 		filters: 
 			label: "过滤条件"
 			type: "[Object]"
@@ -104,8 +95,10 @@ Creator.Objects.permission_shares =
 				if obj.enable_shares
 					# 查找出所有满足条件的记录，并同步相关共享规则
 					collection = Creator.getCollection(object_name)
-					filters = Creator.formatFiltersToMongo(doc.filters)
-					selector = { space: doc.space, $and:filters }
+					selector = { space: doc.space }
+					if doc.filters
+						filters = Creator.formatFiltersToMongo(doc.filters)
+						selector["$and"] = filters
 					push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})
 
@@ -127,8 +120,10 @@ Creator.Objects.permission_shares =
 					selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
 					pull = { sharing: { r:doc._id } }
 					preCollection.direct.update(selector, {$pull: pull}, {multi: true})
-					filters = Creator.formatFiltersToMongo(doc.filters)
-					selector = { space: doc.space, $and:filters }
+					selector = { space: doc.space }
+					if doc.filters
+						filters = Creator.formatFiltersToMongo(doc.filters)
+						selector["$and"] = filters
 					push = { sharing: { "u": doc.users, "o": doc.organizations, "p": doc.permissions, "r": doc._id } }
 					collection.direct.update(selector, {$push: push}, {multi: true})
 		"after.remove.server.sharing":
