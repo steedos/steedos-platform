@@ -32,5 +32,6 @@ Creator.Formular.run = (formula_str, _CONTEXT, options)->
 			return data
 		catch e
 			console.error("Creator.Formular.run: #{formula_str}", e)
+			throw new Meteor.Error 500, "Creator.Formular.run: #{formula_str}#{e}"
 
 	return formula_str
