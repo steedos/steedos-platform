@@ -195,9 +195,36 @@ uuflowManager.initiateValues = (recordIds, flowId) ->
 	})
 	record = Creator.Collections[recordIds.o].findOne(recordIds.ids[0])
 	if ow and record
-		_.each ow.field_map, (fm) ->
-			if record.hasOwnProperty(fm.object_field)
+		tableFieldCodes = []
+		tableFieldMap = []
+
+		ow.field_map.forEach (fm) ->
+			# 判断是否是子表字段
+			if fm.workflow_field.indexOf('.$.') > 0 and fm.object_field.indexOf('.$.') > 0
+				wTableCode = fm.workflow_field.split('.$.')[0]
+				oTableCode = fm.object_field.split('.$.')[0]
+				if record.hasOwnProperty(oTableCode) and _.isArray(record[oTableCode])
+					tableFieldCodes.push(JSON.stringify({
+						workflow_table_field_code: wTableCode,
+						object_table_field_code: oTableCode
+					}))
+					tableFieldMap.push(fm)
+
+			else if record.hasOwnProperty(fm.object_field)
 				values[fm.workflow_field] = record[fm.object_field]
+
+		_.uniq(tableFieldCodes).forEach (tfc) ->
+			c = JSON.parse(tfc)
+			values[c.workflow_table_field_code] = []
+			record[c.object_table_field_code].forEach (tr) ->
+				newTr = {}
+				_.each tr, (v, k) ->
+					tableFieldMap.forEach (tfm) ->
+						if tfm.object_field is (c.object_table_field_code + '.$.' + k)
+							wTdCode = tfm.workflow_field.split('.$.')[1]
+							newTr[wTdCode] = v
+				if not _.isEmpty(newTr)
+					values[c.workflow_table_field_code].push(newTr)
 
 	return values
 

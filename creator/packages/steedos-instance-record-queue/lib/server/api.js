@@ -158,6 +158,50 @@ InstanceRecordQueue.Configure = function (options) {
 		}
 	}
 
+	self.syncValues = function (obj, field_map, values) {
+		var
+			tableFieldCodes = [],
+			tableFieldMap = [];
+
+		field_map.forEach(function (fm) {
+			// 判断是否是子表字段
+			if (fm.workflow_field.indexOf('.$.') > 0 && fm.object_field.indexOf('.$.') > 0) {
+				var wTableCode = fm.workflow_field.split('.$.')[0];
+				var oTableCode = fm.object_field.split('.$.')[0];
+				if (values.hasOwnProperty(wTableCode) && _.isArray(values[wTableCode])) {
+					tableFieldCodes.push(JSON.stringify({
+						workflow_table_field_code: wTableCode,
+						object_table_field_code: oTableCode
+					}));
+					tableFieldMap.push(fm);
+				}
+
+			} else if (values.hasOwnProperty(fm.workflow_field)) {
+				obj[fm.object_field] = values[fm.workflow_field];
+			}
+		})
+
+		_.uniq(tableFieldCodes).forEach(function (tfc) {
+			var c = JSON.parse(tfc);
+			obj[c.object_table_field_code] = [];
+			values[c.workflow_table_field_code].forEach(function (tr) {
+				var newTr = {};
+				_.each(tr, function (v, k) {
+					tableFieldMap.forEach(function (tfm) {
+						if (tfm.workflow_field == (c.workflow_table_field_code + '.$.' + k)) {
+							var oTdCode = tfm.object_field.split('.$.')[1];
+							newTr[oTdCode] = v;
+						}
+					})
+				})
+				if (!_.isEmpty(newTr)) {
+					obj[c.object_table_field_code].push(newTr);
+				}
+			})
+		})
+
+	}
+
 	self.sendDoc = function (doc) {
 		if (InstanceRecordQueue.debug) {
 			console.log("sendDoc");
@@ -182,7 +226,7 @@ InstanceRecordQueue.Configure = function (options) {
 				object_name: objectName,
 				flow_id: ins.flow
 			});
-			var setObj,
+			var
 				objectCollection = Creator.getCollection(objectName),
 				sync_attachment = ow.sync_attachment;
 			objectCollection.find({
@@ -190,12 +234,10 @@ InstanceRecordQueue.Configure = function (options) {
 					$in: records.ids
 				}
 			}).forEach(function (record) {
-				setObj = {};
-				ow.field_map.forEach(function (fm) {
-					if (values.hasOwnProperty(fm.workflow_field)) {
-						setObj[fm.object_field] = values[fm.workflow_field];
-					}
-				})
+				var setObj = {};
+
+				self.syncValues(setObj, ow.field_map, values);
+
 				if (!_.isEmpty(setObj)) {
 					objectCollection.update(record._id, {
 						$set: setObj
@@ -244,11 +286,9 @@ InstanceRecordQueue.Configure = function (options) {
 						newRecordId = objectCollection._makeNewID(),
 						spaceId = ow.space,
 						objectName = ow.object_name;
-					ow.field_map.forEach(function (fm) {
-						if (values.hasOwnProperty(fm.workflow_field)) {
-							newObj[fm.object_field] = values[fm.workflow_field];
-						}
-					})
+
+					self.syncValues(newObj, ow.field_map, values);
+
 					newObj._id = newRecordId;
 					newObj.space = spaceId;
 					newObj.name = ins.name;

@@ -62,6 +62,16 @@ Template.creator_list_wrapper.helpers
 			else
 				Session.set("list_view_id", list_view.name)
 		return list_view
+
+	list_view_url: (list_view)->
+		if list_view._id
+			list_view_id = String(list_view._id)
+		else
+			list_view_id = String(list_view.name)
+		
+		app_id = Session.get("app_id")
+		object_name = Session.get("object_name")
+		return Creator.getListViewUrl(object_name, app_id, list_view_id)
 	
 	list_view_label: (item)->
 		if item
@@ -120,12 +130,10 @@ Template.creator_list_wrapper.helpers
 	
 	current_list_view: ()->
 		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
-		console.log "current_list_view", list_view_obj
 		return list_view_obj?._id
 
 	delete_on_success: ()->
 		return ->
-			console.log "onsuccess callback.........."
 			list_views = Creator.getListViews()
 			Session.set("list_view_id", list_views[0]._id)
 
@@ -140,32 +148,6 @@ Template.creator_list_wrapper.events
 		Session.set("action_collection_name", collection_name)
 		Session.set("action_save_and_insert", true)
 		Creator.executeAction objectName, this
-
-	'click .list-view-switch': (event)->
-		Session.set("list_view_visible", false)
-
-		if this._id
-			list_view_id = String(this._id)
-		else
-			list_view_id = String(this.name)
-		## 强制重新加载Render Tabular，包含columns
-		Tracker.afterFlush ()->
-			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			Session.set("list_view_id", list_view_id)
-			Session.set("list_view_visible", true)
-
-	'click .custom-list-view-switch': (event)->
-		Session.set("list_view_visible", false)
-		list_view_id = String(this._id)
-		Tracker.afterFlush ()->
-			list_view = Creator.getListView(Session.get("object_name"), list_view_id)
-			obj = Creator.Collections.object_listviews.findOne(list_view_id)
-			filter_items = obj.filters || []
-			filter_scope = obj.filter_scope
-			Session.set("filter_items", filter_items)
-			Session.set("filter_scope", filter_scope)
-			Session.set("list_view_id", list_view_id)
-			Session.set("list_view_visible", true)
 
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")
