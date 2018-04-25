@@ -6,7 +6,7 @@ Creator.Objects.contacts =
 	enable_search: true
 	enable_notes: true
 	enable_api: true
-	enable_shares: true
+	enable_share: true
 	fields:
 		name: 
 			type: "text"

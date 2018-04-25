@@ -129,7 +129,7 @@ Creator.baseObject =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				object_name = this.object_name
 				obj = Creator.getObject(object_name)
-				if obj.enable_shares
+				if obj.enable_share
 					collection = Creator.getCollection(object_name)
 					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }
@@ -149,7 +149,7 @@ Creator.baseObject =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				object_name = this.object_name
 				obj = Creator.getObject(object_name)
-				if obj.enable_shares
+				if obj.enable_share
 					collection = Creator.getCollection(object_name)
 					psCollection = Creator.getCollection("permission_shares")
 					selector = { space: doc.space, object_name: object_name }

@@ -182,7 +182,7 @@ Meteor.startup ->
 					_.each readable_fields,(field)->
 						createQuery.projection[field] = 1
 				if not permissions.viewAllRecords
-					if object.enable_shares
+					if object.enable_share
 						# 满足共享规则中的记录也要搜索出来
 						delete createQuery.query.owner
 						shares = []
@@ -474,7 +474,7 @@ Meteor.startup ->
 					entities = []
 					if entity
 						isAllowed = entity.owner == @userId or permissions.viewAllRecords
-						if object.enable_shares and !isAllowed
+						if object.enable_share and !isAllowed
 							shares = []
 							orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
 							shares.push { "sharing.u": @userId }

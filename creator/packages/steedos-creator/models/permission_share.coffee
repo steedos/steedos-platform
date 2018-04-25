@@ -15,7 +15,7 @@ Creator.Objects.permission_shares =
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.Objects, (o, k)->
-					if o.enable_shares
+					if o.enable_share
 						_options.push { label: o.label, value: k, icon: o.icon }
 				return _options
 			required: true
@@ -96,7 +96,7 @@ Creator.Objects.permission_shares =
 			todo: (userId, doc)->
 				object_name = doc.object_name
 				obj = Creator.getObject(object_name)
-				if obj.enable_shares
+				if obj.enable_share
 					# 查找出所有满足条件的记录，并同步相关共享规则
 					collection = Creator.getCollection(object_name)
 					selector = { space: doc.space }
@@ -112,7 +112,7 @@ Creator.Objects.permission_shares =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				object_name = doc.object_name
 				obj = Creator.getObject(object_name)
-				if obj.enable_shares
+				if obj.enable_share
 					# 查找出所有满足条件的记录，并同步相关共享规则
 					collection = Creator.getCollection(object_name)
 					preObjectName = this.previous.object_name
@@ -136,7 +136,7 @@ Creator.Objects.permission_shares =
 			todo: (userId, doc)->
 				object_name = doc.object_name
 				obj = Creator.getObject(object_name)
-				if obj.enable_shares
+				if obj.enable_share
 					# 移除当前共享规则相关的所有记录的共享规则数据
 					collection = Creator.getCollection(object_name)
 					selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
