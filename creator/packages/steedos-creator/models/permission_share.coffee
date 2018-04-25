@@ -76,6 +76,20 @@ Creator.Objects.permission_shares =
 			viewAllRecords: true 
 
 	triggers:
+		"before.insert.server.sharing":
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				if _.isEmpty(doc.organizations) and _.isEmpty(doc.users)
+					throw new Meteor.Error 500, "请在授权组织或授权用户中至少填写一个值"
+
+		"before.update.server.sharing":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if _.isEmpty(modifier.$set.organizations) and _.isEmpty(modifier.$set.users)
+					throw new Meteor.Error 500, "请在授权组织或授权用户中至少填写一个值"
+					
 		"after.insert.server.sharing":
 			on: "server"
 			when: "after.insert"
