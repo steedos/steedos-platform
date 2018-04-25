@@ -149,6 +149,9 @@ Template.creator_list_wrapper.events
 		Session.set("action_save_and_insert", true)
 		Creator.executeAction objectName, this
 
+	'click .export-data-grid': (event, template)->
+		template.$(".dx-datagrid-export-button").click()
+
 	'click .btn-filter-list': (event, template)->
 		$(event.currentTarget).toggleClass("slds-is-selected")
 		$(".filter-list-container").toggleClass("slds-hide")

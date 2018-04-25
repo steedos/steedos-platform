@@ -264,6 +264,7 @@ Template.creator_grid.onRendered ->
 				showColumns.push
 					dataField: "_id_actions"
 					width: 46
+					allowExporting: false
 					allowSorting: false
 					allowReordering: false
 					headerCellTemplate: (container) ->
@@ -287,6 +288,7 @@ Template.creator_grid.onRendered ->
 			showColumns.splice 0, 0, 
 				dataField: "_id_checkbox"
 				width: 60
+				allowExporting: false
 				allowSorting: false
 				allowReordering: false
 				headerCellTemplate: (container) ->
@@ -302,6 +304,9 @@ Template.creator_grid.onRendered ->
 			else
 				pageSize = 10
 				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
+
+			# fileName
+			fileName = Creator.getObject(curObjectName).label + "-" + Creator.getListView(curObjectName, list_view_id).label
 			dxOptions = 
 				paging: 
 					pageSize: pageSize
@@ -310,6 +315,10 @@ Template.creator_grid.onRendered ->
 					allowedPageSizes: [10,25, 50, 100],
 					showInfo: false,
 					showNavigationButtons: true
+				export:
+					enabled: true
+					fileName: fileName
+					allowExportSelectedData: false
 				showColumnLines: false
 				allowColumnReordering: true
 				allowColumnResizing: true
@@ -357,6 +366,18 @@ Template.creator_grid.onRendered ->
 					filter: filter
 					expand: expand_fields
 				columns: showColumns
+				customizeExportData: (col, row)->
+					_.each row, (r)->
+						_.each r.values, (val, index)->
+							if val
+								if val.constructor == Object
+									r.values[index] = val.name
+								else if val.constructor == Array
+									r.values[index] = val.getProperty("name").join(",")
+								else if val.constructor == Date
+									utcOffset = moment().utcOffset() / 60
+									val = moment(val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
+									r.values[index] = val
 				onCellClick: (e)->
 					console.log "curObjectName", curObjectName
 					if e.column?.dataField ==  "_id_actions"
