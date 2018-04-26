@@ -22,6 +22,6 @@ JsonRoutes.add 'post', '/api/workflow/drafts', (req, res, next) ->
 		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: 200
-			data: { errors: [{ errorMessage: e.reason }] }
+			data: { errors: [{ errorMessage: e.reason || e.message }] }
 		}
 

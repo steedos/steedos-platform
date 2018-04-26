@@ -63,10 +63,10 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	check instance_from_client["applicant"], String
 	check instance_from_client["space"], String
 	check instance_from_client["flow"], String
-	check instance_from_client["record_ids"], {o: String, ids: [String]}
+	check instance_from_client["record_ids"], [{o: String, ids: [String]}]
 
-	# 校验是否record已经发起过审批，如果发起过审批则报错
-	uuflowManager.checkIsFirstInitiate(instance_from_client["record_ids"])
+	# 校验是否record已经发起的申请还在审批中
+	uuflowManager.checkIsInApproval(instance_from_client["record_ids"][0])
 
 	space_id = instance_from_client["space"]
 	flow_id = instance_from_client["flow"]
@@ -160,7 +160,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	appr_obj.is_read = true
 	appr_obj.is_error = false
 	appr_obj.description = ''
-	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids, flow_id)
+	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids[0], flow_id)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
@@ -181,9 +181,9 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
 
-	uuflowManager.initiateAttach(ins_obj.record_ids, space_id, ins_obj._id, appr_obj._id)
+	uuflowManager.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
-	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids, new_ins_id)
+	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id)
 
 	return new_ins_id
 
@@ -261,25 +261,29 @@ uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 				newFile.metadata = metadata
 				cfs.instances.insert(newFile)
 
-
 	return
 
 uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
 	Creator.Collections[recordIds.o].update(recordIds.ids[0], {
-		$set: {
-			instance_ids: [insId],
-			instance_state: 'draft'
+		$push: {
+			instances: {
+				$each: [{
+					_id: insId,
+					state: 'draft'
+				}],
+				$position: 0
+			}
 		}
 	})
 
 	return
 
-uuflowManager.checkIsFirstInitiate = (recordIds) ->
+uuflowManager.checkIsInApproval = (recordIds) ->
 	record = Creator.Collections[recordIds.o].findOne({
-		_id: recordIds.ids[0], instance_ids: { $exists: true }, instance_state: { $exists: true }
-	}, { fields: { instance_ids: 1 } })
+		_id: recordIds.ids[0], instances: { $exists: true }
+	}, { fields: { instances: 1 } })
 
-	if record and Creator.Collections.instances.find(record.instance_ids[0]).count() > 0
-		throw new Meteor.Error('error!', "此记录已发起过流程审批！")
+	if record and record.instances[0].state isnt 'completed' and Creator.Collections.instances.find(record.instances[0]._id).count() > 0
+		throw new Meteor.Error('error!', "此记录已发起流程正在审批中，待审批结束方可发起下一次审批！")
 
 	return

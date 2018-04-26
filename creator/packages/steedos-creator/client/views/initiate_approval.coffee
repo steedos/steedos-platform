@@ -8,7 +8,7 @@ Template.initiate_approval.events
         flowId = e.currentTarget.dataset.flow
         object_name = t.data.object_name
         record_id = t.data.record_id
-        record_ids = { o: object_name, ids: [record_id] }
+        record_ids = [{ o: object_name, ids: [record_id] }]
         uobj = {}
         uobj.methodOverride = 'POST'
         uobj['X-User-Id'] = Meteor.userId()

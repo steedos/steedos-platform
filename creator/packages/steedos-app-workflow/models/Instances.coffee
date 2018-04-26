@@ -74,14 +74,14 @@ Creator.Objects.instances =
 			type: "string"
 
 		record_ids:
-			type: "Object"
+			type: "[Object]"
 			omit: true
 
-		"record_ids.o":
-			type: String
+		"record_ids.$.o":
+			type: "text"
 
-		"record_ids.ids":
-			type: [String]
+		"record_ids.$.ids":
+			type: "[text]"
 
 	list_views:
 		all:

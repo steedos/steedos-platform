@@ -46,15 +46,15 @@ Creator.baseObject =
 			omit: true
 			index: true
 			hidden: true
-		instance_ids:
-			type: [String]
+		instances:
+			type: "[Object]"
 			omit: true
 			hidden: true
-		instance_state:
-			type: String
-			omit: true
-			hidden: true
-		sharing: 
+		"instances.$._id":
+			type: "text"
+		"instances.$.state":
+			type: "text"
+		sharing:
 			label: "记录级权限"
 			type: ["Object"]
 			# omit: true
@@ -63,13 +63,13 @@ Creator.baseObject =
 		"sharing.$":
 			blackbox: true
 			omit: true
-		"sharing.$.u": 
+		"sharing.$.u":
 			label: "授权用户"
 			type: "[text]"
-		"sharing.$.o": 
+		"sharing.$.o":
 			label: "授权组织"
 			type: "[text]"
-		"sharing.$.r": 
+		"sharing.$.r":
 			label: "来自规则"
 			type: "text"
 
@@ -123,7 +123,7 @@ Creator.baseObject =
 			todo: (userId, doc)->
 				doc.space = Session.get("spaceId")
 
-		"after.insert.server.sharing": 
+		"after.insert.server.sharing":
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc, fieldNames, modifier, options)->
@@ -143,7 +143,7 @@ Creator.baseObject =
 							push = { sharing: { "u": ps.users, "o": ps.organizations, "r": ps._id } }
 							collection.direct.update({ _id: doc._id }, {$push: push})
 
-		"after.update.server.sharing": 
+		"after.update.server.sharing":
 			on: "server"
 			when: "after.update"
 			todo: (userId, doc, fieldNames, modifier, options)->

@@ -98,7 +98,7 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 		object_name = Session.get("object_name")
 
 	list_view = Creator.getListView(object_name, null)
-	list_view_id = list_view._id
+	list_view_id = list_view?._id
 
 	if record_id
 		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)

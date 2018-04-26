@@ -221,7 +221,7 @@ InstanceRecordQueue.Configure = function (options) {
 
 		if (records) {
 			// 此情况属于从creator中发起审批
-			var objectName = records.o;
+			var objectName = records[0].o;
 			var ow = Creator.getCollection('object_workflows').findOne({
 				object_name: objectName,
 				flow_id: ins.flow
@@ -231,21 +231,23 @@ InstanceRecordQueue.Configure = function (options) {
 				sync_attachment = ow.sync_attachment;
 			objectCollection.find({
 				_id: {
-					$in: records.ids
+					$in: records[0].ids
 				}
 			}).forEach(function (record) {
-				var setObj = {};
-
-				self.syncValues(setObj, ow.field_map, values);
-
-				if (!_.isEmpty(setObj)) {
-					objectCollection.update(record._id, {
-						$set: setObj
-					})
-				}
-
 				// 附件同步
 				try {
+					var setObj = {};
+
+					self.syncValues(setObj, ow.field_map, values);
+
+					setObj['instances.$.state'] = 'completed';
+
+					objectCollection.update({
+						_id: record._id,
+						'instances._id': insId
+					}, {
+						$set: setObj
+					})
 					// 以最终申请单附件为准，旧的record中附件删除
 					Creator.getCollection('cms_files').remove({
 						'parent': {
@@ -259,6 +261,14 @@ InstanceRecordQueue.Configure = function (options) {
 					// 同步新附件
 					self.syncAttach(sync_attachment, insId, record.space, record._id, objectName);
 				} catch (error) {
+					objectCollection.update({
+						_id: record._id,
+						'instances._id': insId
+					}, {
+						$set: {
+							'instances.$.state': 'pending'
+						}
+					})
 
 					Creator.getCollection('cms_files').remove({
 						'parent': {
@@ -292,12 +302,14 @@ InstanceRecordQueue.Configure = function (options) {
 					newObj._id = newRecordId;
 					newObj.space = spaceId;
 					newObj.name = ins.name;
-					newObj.instance_ids = [insId];
-					newObj.instance_state = 'completed';
+					newObj.instances = [{
+						_id: insId,
+						state: 'completed'
+					}];
 					var r = objectCollection.insert(newObj);
 					if (r) {
 						Creator.getCollection('instances').update(ins._id, {
-							$set: {
+							$push: {
 								record_ids: {
 									o: objectName,
 									ids: [newRecordId]
@@ -316,8 +328,11 @@ InstanceRecordQueue.Configure = function (options) {
 						space: spaceId
 					});
 					Creator.getCollection('instances').update(ins._id, {
-						$unset: {
-							record_ids: 1
+						$pull: {
+							record_ids: {
+								o: objectName,
+								ids: [newRecordId]
+							}
 						}
 					})
 					Creator.getCollection('cms_files').remove({
