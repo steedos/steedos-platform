@@ -1,0 +1,26 @@
+<template name="standard_query_modal">
+	<div class="modal fade creator-modal standard-query-modal" id="standQueryModal">
+		<div class="modal-dialog slds-modal slds-fade-in-open modal-lg">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					QUERY
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+                    {{#autoForm schema=schema id="standardQueryForm"}}
+                        {{#each fields}}
+                            {{> afQuickField name=this}}
+                        {{/each}}
+                    {{/autoForm}}
+				</div>
+
+				<footer class="slds-modal__footer">
+						<button type="submit" class="slds-button slds-button_brand btn-confirm">确定</button>
+
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+
+				</footer>
+			</div>
+		</div>
+	</div>
+</template>

@@ -386,7 +386,7 @@ Creator.formatFiltersToDev = (filters, options)->
 
 			if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
 				sub_selector.pop()
-			selector.push sub_selector
+			selector.push sub_selector, "and"
 		else
 			selector.push [field, option, value], "and"
 	

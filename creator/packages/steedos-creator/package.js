@@ -283,6 +283,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/select_fields.coffee', 'client');
 	api.addFiles('client/views/select_fields.less', 'client');
 
+	api.addFiles('client/views/standard_query.html', 'client');
+	api.addFiles('client/views/standard_query.coffee', 'client');
+	api.addFiles('client/views/standard_query.less', 'client');
+
 	api.addFiles('client/views/custom_data_source.html', 'client');
 	api.addFiles('client/views/custom_data_source.coffee', 'client');
 	api.addFiles('client/views/odata_service.html', 'client');

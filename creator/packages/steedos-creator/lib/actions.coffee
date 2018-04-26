@@ -28,6 +28,9 @@ if Meteor.isClient
 
 	Creator.actions 
 		# 在此定义全局 actions
+		"standard_query": ()->
+			Modal.show("standard_query_modal")
+			
 		"standard_new": (object_name, record_id, fields)->
 			Meteor.defer ()->
 				$(".creator-add").click()

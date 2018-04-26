@@ -1,5 +1,18 @@
 dxDataGridInstance = null
 
+_standardQuery = (curObjectName)->
+	standard_query = Session.get("standard_query")
+	if !standard_query or !standard_query.query or !_.size(standard_query.query)
+		delete Session.keys["standard_query"]
+	else
+		object_name = standard_query.object_name
+		query = standard_query.query
+		query_arr = []
+		_.each query, (val, key)->
+			query_arr.push([key, "=", val])
+
+		return Creator.formatFiltersToDev(query_arr)
+	
 _itemClick = (e, curObjectName)->
 	record = e.data
 	if !record
@@ -222,7 +235,11 @@ Template.creator_grid.onRendered ->
 				else
 					url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 					filter = Creator.getODataFilter(list_view_id, object_name)
-			
+
+				standardQuery = _standardQuery(curObjectName)
+				if standardQuery and standardQuery.length
+					filter = [filter, "and", standardQuery]
+
 			curObjectName = if is_related then related_object_name else object_name
 
 			selectColumns = Tracker.nonreactive ()->
@@ -297,7 +314,7 @@ Template.creator_grid.onRendered ->
 					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
 			# console.log "selectColumns", selectColumns
-			# console.log "filter", filter
+			console.log "filter", filter
 			# console.log "expand_fields", expand_fields
 			if localStorage.getItem("creator_pageSize:"+Meteor.userId())
 				pageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
