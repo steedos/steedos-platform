@@ -8,8 +8,18 @@
 
 				<div class="slds-modal__content slds-p-around_medium">
                     {{#autoForm schema=schema id="standardQueryForm"}}
+                       
                         {{#each fields}}
-                            {{> afQuickField name=this}}
+                            <div class="slds-grid view-page-section-row">
+                                {{#each this}}
+                                    <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+                                        <div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+                                            {{> afQuickField name=this}}
+                                        </div>
+                                    </div>
+                                    <span class="to">到</span>
+                                {{/each}}
+                            </div>
                         {{/each}}
                     {{/autoForm}}
 				</div>

@@ -12,10 +12,18 @@ Template.standard_query_modal.helpers
 				searchable_fields.push(key)
 		schema = {}
 		_.each searchable_fields, (field)->
+			console.log field
 			schema[field] = obj_schema[field]
 			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[field].type)
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
+
+			if ["date", "datetime"].includes(object_fields[field.type])
+				schema[field + "_endDate"] =  obj_schema[field]
+				schema[field + "_endDate"].autoform.readonly = false
+				schema[field + "_endDate"].autoform.disabled = false
+				schema[field + "_endDate"].autoform.omit = false
+
 			
 			if schema[field].autoform
 				schema[field].autoform.readonly = false
@@ -32,9 +40,15 @@ Template.standard_query_modal.helpers
 		searchable_fields = []
 		_.each object_fields, (field, key)->
 			if field.searchable
-				searchable_fields.push(key)
+				if ["date", "datetime"].includes(field.type)
+					searchable_fields.push([key, key + "_endDate"])
+				else
+					searchable_fields.push([key])
 
 		return searchable_fields
+
+	label: (name)->
+		return AutoForm.getLabelForField(name)
 
 Template.standard_query_modal.events
 	'click .btn-confirm': (event, template)->
