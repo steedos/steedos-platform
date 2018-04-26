@@ -243,6 +243,62 @@ Creator.getAppsObjects = ()->
 		objects = objects.concat(app.objects)
 	return _.uniq objects
 
+Creator.validateFilters = (filters, logic)->
+	filter_items = _.map filters, (obj) ->
+		if _.isEmpty(obj)
+			return false
+		else
+			return obj
+	filter_items = _.compact(filter_items)
+	errorMsg = ""
+	filter_length = filter_items.length
+	if logic
+		# 格式化filter
+		logic = logic.replace(/\n/g, "").replace(/\s+/g, " ")
+
+		# 判断特殊字符
+		if /[._\-!+]+/ig.test(logic)
+			errorMsg = "含有特殊字符。"
+
+		if !errorMsg
+			index = logic.match(/\d+/ig)
+			if !index
+				errorMsg = "有些筛选条件进行了定义，但未在高级筛选条件中被引用。"
+			else
+				index.forEach (i)->
+					if i < 1 or i > filter_length
+						errorMsg = "您的筛选条件引用了未定义的筛选器：#{i}。"
+					
+				flag = 1
+				while flag <= filter_length
+					if !index.includes("#{flag}")
+						errorMsg = "有些筛选条件进行了定义，但未在高级筛选条件中被引用。"
+					flag++;
+				
+		if !errorMsg
+			# 判断是否有非法英文字符
+			word = logic.match(/[a-zA-Z]+/ig)
+			if word
+				word.forEach (w)->
+					if !/^(and|or)$/ig.test(w)
+						errorMsg = "检查您的高级筛选条件中的拼写。"
+		
+		if !errorMsg
+			# 判断格式是否正确
+			try
+				Creator.eval(logic.replace(/and/ig, "&&").replace(/or/ig, "||"))
+			catch e	
+				errorMsg = "您的筛选器中含有特殊字符"
+
+			if /(AND)[^()]+(OR)/ig.test(logic) ||  /(OR)[^()]+(AND)/ig.test(logic)
+				errorMsg = "您的筛选器必须在连续性的 AND 和 OR 表达式前后使用括号。"
+	if errorMsg
+		console.log "error", errorMsg
+		if Meteor.isClient
+			toastr.error(errorMsg)
+		return false
+	else
+		return true
 
 # "=", "<>", ">", ">=", "<", "<=", "startswith", "contains", "notcontains".
 ###
