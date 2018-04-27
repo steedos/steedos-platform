@@ -17,9 +17,6 @@ AutoForm.addInputType('steedosLookups', {
 
 		val = this.val();
 
-		console.log("look valueOut", val)
-		console.log("this", this)
-
 		if(this[0] && this[0].dataset.init === "0"){
 			val = this[0].dataset.oldValue
 		}
@@ -130,9 +127,8 @@ Template.steedosLookups.onRendered(function () {
 
 			if(_.isFunction(optionsFunction)){
 				options = optionsFunction(_values)
+				template.uniSelectize.setItems(options, value);
 			}
-
-			template.uniSelectize.setItems(options, value);
 		}
 	});
 
@@ -371,8 +367,14 @@ Template.steedosLookups.helpers({
 		return Template.instance().data.atts.disabled
 	},
 
+	isShowIcon: function () {
+		if(Template.instance().data.atts.showIcon === false)
+			return false
+		return true;
+	},
+
 	getIcon: function (icon) {
-		return this.icon || icon || Template.instance().uniSelectize.defaultIcon.get() || 'link'
+		return this.icon || icon || Template.instance().uniSelectize.defaultIcon.get() || 'document'
 	},
 
 	showObjectSwitche: function () {

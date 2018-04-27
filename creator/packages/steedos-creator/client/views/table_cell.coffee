@@ -173,7 +173,18 @@ Template.creator_table_cell.helpers
 				else
 					val = "否"
 			else if _field.type == "select"
-				val = _.findWhere(_field.options, {value: this.val})?.label
+				_options = _field.options
+				if _.isFunction(_field.options)
+					_options = _field.options()
+				if _.isArray(this.val)
+					self_val = this.val
+					_val = ""
+					_.each _options, (_o)->
+						if _.indexOf(self_val, _o.value) > -1
+							_val += _o.label
+					val = _val
+				else
+					val = _.findWhere(_options, {value: this.val})?.label
 				unless val
 					val = this.val
 			else if _field.type == "lookup"

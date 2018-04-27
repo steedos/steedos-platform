@@ -151,9 +151,13 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = String
 			if field.multiple
 				fs.type = [String]
-			fs.autoform.type = "select"
-			fs.autoform.options = field.options
-			fs.autoform.firstOption = ""
+				fs.autoform.type = "steedosLookups"
+				fs.autoform.showIcon = false
+				fs.autoform.options = field.options
+			else
+				fs.autoform.type = "select"
+				fs.autoform.options = field.options
+				fs.autoform.firstOption = ""
 		else if field.type == "currency"
 			fs.type = Number
 		else if field.type == "number"
