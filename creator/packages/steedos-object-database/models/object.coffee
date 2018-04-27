@@ -43,11 +43,13 @@ Creator.Objects.objects =
 		enable_share:
 			type: "boolean"
 			defaultValue: false
+		enable_instances:
+			type: "boolean"
 		is_view:
 			type: 'boolean'
 			defaultValue: false
 			omit: true
-		description: 
+		description:
 			label: "Description"
 			type: "textarea"
 			is_wide: true
@@ -74,7 +76,7 @@ Creator.Objects.objects =
 		custom:
 			type: "boolean"
 			omit: true
-		owner: 
+		owner:
 			hidden: true
 
 	list_views:
@@ -91,7 +93,7 @@ Creator.Objects.objects =
 			allowEdit: false
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -187,7 +189,7 @@ Creator.Objects.objects =
 				Creator.getCollection("permission_objects").direct.remove({object_name: doc.name})
 
 				Creator.getCollection("object_listviews").direct.remove({object_name: doc.name})
-				
+
 				#drop collection
 				console.log "drop collection", doc.name
 				try

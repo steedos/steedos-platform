@@ -13,6 +13,7 @@
 	"objects_enable_notes": "允许添加备注",
 	"objects_enable_api": "允许 API 访问",
 	"objects_enable_share": "允许共享记录",
+	"objects_enable_instances": "允许查看申请单",
 	"objects_description": "描述",
 
 

@@ -43,7 +43,7 @@ Template.creator_view.helpers
 		schema = Creator.getSchema(Session.get("object_name"))._schema
 		firstLevelKeys = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
 		permission_fields = Creator.getFields()
-		
+
 		fieldGroups = []
 		fieldsForGroup = []
 
@@ -67,7 +67,7 @@ Template.creator_view.helpers
 				name: fieldGroupName
 				fields: fieldsForGroup
 
-		finalFields = 
+		finalFields =
 			grouplessFields: grouplessFields
 			groupFields: fieldGroups
 
@@ -145,6 +145,10 @@ Template.creator_view.helpers
 				# 附件的关联搜索条件是定死的
 				selector["#{related_field_name}.o"] = Session.get "object_name"
 				selector["#{related_field_name}.ids"] = [record_id]
+			else if object_name == "instances"
+				instances = Creator.getObjectRecord()?.instances
+				if instances
+					selector["_id"] = { $in: _.pluck(instances, "_id") }
 			else if Session.get("object_name") == "objects"
 				recordObjectName = Creator.getObjectRecord()?.name
 				selector[related_field_name] = recordObjectName
@@ -208,7 +212,7 @@ Template.creator_view.helpers
 			else
 				return false
 		return actions
-	
+
 	isFileDetail: ()->
 		return "cms_files" == Session.get "object_name"
 
@@ -218,7 +222,7 @@ Template.creator_view.helpers
 		app_id = Session.get "app_id"
 		related_object_name = this.object_name
 		return Creator.getRelatedObjectUrl(object_name, app_id, record_id, related_object_name)
-	
+
 	cell_data: (key)->
 		record = Creator.getObjectRecord()
 		data = {}
@@ -320,7 +324,7 @@ Template.creator_view.events
 		Session.set("action_save_and_insert", true)
 		Meteor.defer ()->
 			$(".creator-add-related").click()
-		return 
+		return
 
 	'click .list-item-action': (event, template) ->
 		actionKey = event.currentTarget.dataset.actionKey

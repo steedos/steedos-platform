@@ -111,3 +111,16 @@ Creator.Objects.instances =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
+
+	actions:
+		view_instance:
+			label: "查看申请单"
+			visible: true
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				uobj = {}
+				uobj["box"] = 'monitor'
+				uobj["X-User-Id"] = Meteor.userId()
+				uobj["X-Auth-Token"] = Accounts._storedLoginToken()
+				workflowUrl = window.location.protocol + '//' + window.location.hostname + '/'
+				Steedos.openWindow(workflowUrl + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "",'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ')

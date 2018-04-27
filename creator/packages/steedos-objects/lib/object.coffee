@@ -4,7 +4,7 @@ Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完�
 Creator.Object = (options)->
 	self = this
 
-	if (!options.name) 
+	if (!options.name)
 		throw new Error('Creator.Object options must specify name');
 	unless options.permission_set
 		options.permission_set = {}
@@ -33,9 +33,10 @@ Creator.Object = (options)->
 	self.enable_api = (options.enable_api == undefined) or options.enable_api
 	self.custom = options.custom
 	self.enable_share = options.enable_share
+	self.enable_instances = options.enable_instances
 
-	if (!options.fields) 
-		throw new Error('Creator.Object options must specify name');	
+	if (!options.fields)
+		throw new Error('Creator.Object options must specify name');
 
 	self.fields = _.clone(options.fields)
 
@@ -73,7 +74,7 @@ Creator.Object = (options)->
 		item.name = item_name
 
 	self.related_objects = Creator.getObjectRelateds(self.name)
-	
+
 	# 让所有object默认有所有list_views/actions/related_objects/readable_fields/editable_fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
 	self.permission_set = _.clone(Creator.baseObject.permission_set)
 	# defaultListViews = _.keys(self.list_views)
@@ -86,7 +87,7 @@ Creator.Object = (options)->
 	# 		defaultReadableFields.push field_name
 	# 		if !field.readonly
 	# 			defaultEditableFields.push field_name
-		
+
 	# _.each self.permission_set, (item, item_name)->
 	# 	if item_name == "none"
 	# 		return

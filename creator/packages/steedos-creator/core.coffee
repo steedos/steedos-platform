@@ -49,7 +49,7 @@ Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
 			throw new Meteor.Error 500, "the params userId and spaceId is required for the function Creator.getUserContext"
 			return null
 		suFields = {name: 1, mobile: 1, position: 1, email: 1, company: 1, organization: 1, space: 1}
-		# check if user in the space 
+		# check if user in the space
 		su = Creator.Collections["space_users"].findOne({space: spaceId, user: userId}, {fields: suFields})
 		if !su
 			spaceId = null
@@ -63,7 +63,7 @@ Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
 				spaceId = su.space
 			else
 				return null
-		
+
 		USER_CONTEXT = {}
 		USER_CONTEXT.userId = userId
 		USER_CONTEXT.spaceId = spaceId
@@ -147,7 +147,7 @@ Creator.getObjectRelateds = (object_name)->
 	if Meteor.isClient
 		if !object_name
 			object_name = Session.get("object_name")
-	
+
 	related_objects = []
 	# _object = Creator.getObject(object_name)
 	# 因Creator.getObject函数内部要调用该函数，所以这里不可以调用Creator.getObject取对象，只能调用Creator.Objects来取对象
@@ -163,13 +163,15 @@ Creator.getObjectRelateds = (object_name)->
 					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
 				else
 					related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
-	
+
 	if _object.enable_files
 		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
 	if _object.enable_tasks
 		related_objects.push {object_name:"tasks", foreign_key: "related_to"}
 	if _object.enable_notes
 		related_objects.push {object_name:"notes", foreign_key: "related_to"}
+	if _object.enable_instances
+		related_objects.push {object_name:"instances", foreign_key: "instances"}
 
 	return related_objects
 
@@ -268,13 +270,13 @@ Creator.validateFilters = (filters, logic)->
 				index.forEach (i)->
 					if i < 1 or i > filter_length
 						errorMsg = "您的筛选条件引用了未定义的筛选器：#{i}。"
-					
+
 				flag = 1
 				while flag <= filter_length
 					if !index.includes("#{flag}")
 						errorMsg = "有些筛选条件进行了定义，但未在高级筛选条件中被引用。"
 					flag++;
-				
+
 		if !errorMsg
 			# 判断是否有非法英文字符
 			word = logic.match(/[a-zA-Z]+/ig)
@@ -282,12 +284,12 @@ Creator.validateFilters = (filters, logic)->
 				word.forEach (w)->
 					if !/^(and|or)$/ig.test(w)
 						errorMsg = "检查您的高级筛选条件中的拼写。"
-		
+
 		if !errorMsg
 			# 判断格式是否正确
 			try
 				Creator.eval(logic.replace(/and/ig, "&&").replace(/or/ig, "||"))
-			catch e	
+			catch e
 				errorMsg = "您的筛选器中含有特殊字符"
 
 			if /(AND)[^()]+(OR)/ig.test(logic) ||  /(OR)[^()]+(AND)/ig.test(logic)
@@ -307,7 +309,7 @@ options参数：
 	userId-- 当前登录用户
 	spaceId-- 当前所在工作区
 extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
-### 
+###
 Creator.formatFiltersToMongo = (filters, options)->
 	unless filters.length
 		return
@@ -355,7 +357,7 @@ options参数：
 	userId-- 当前登录用户
 	spaceId-- 当前所在工作区
 extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
-### 
+###
 Creator.formatFiltersToDev = (filters, options)->
 	unless filters.length
 		return
@@ -389,7 +391,7 @@ Creator.formatFiltersToDev = (filters, options)->
 			selector.push sub_selector, "and"
 		else
 			selector.push [field, option, value], "and"
-	
+
 	if selector[selector.length - 1] == "and"
 		selector.pop()
 
@@ -445,7 +447,7 @@ Creator.getActions = (object_name, spaceId, userId)->
 
 	actions = _.filter actions, (action)->
 		return _.indexOf(disabled_actions, action.name) < 0
-	
+
 	return actions
 
 ///
@@ -474,7 +476,7 @@ Creator.getListViews = (object_name, spaceId, userId)->
 		if item_name != "default"
 			if _.indexOf(disabled_list_views, item_name) < 0 || item.owner == userId
 				list_views.push item
-	
+
 	return list_views
 
 # 前台理论上不应该调用该函数，因为字段的权限都在Creator.getObject(object_name).fields的相关属性中有标识了
@@ -540,7 +542,7 @@ Creator.getFieldsWithoutOmit = (schema, keys) ->
 		field = _.pick(schema, key)
 		if field[key].autoform?.omit
 			return false
-		else 
+		else
 			return key
 	)
 	keys = _.compact(keys)
@@ -594,7 +596,7 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 					childKeys.push undefined
 				fields.push childKeys
 				i += 2
-	
+
 	return fields
 
 
@@ -624,5 +626,5 @@ if Meteor.isServer
 
 		if Creator.getObject(object_name).enable_files
 			related_object_names.push "cms_files"
-		
+
 		return related_object_names
