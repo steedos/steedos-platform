@@ -62,6 +62,10 @@ Template.filter_option.helpers
 				schema.value.autoform.multiple = true
 				schema.value.type = [String]
 
+				if object_fields[schema_key].type == "select"
+					schema.value.autoform.type = "steedosLookups"
+					schema.value.autoform.showIcon = false
+
 			if schema.value.autoform
 				schema.value.autoform.readonly = false
 				schema.value.autoform.disabled = false

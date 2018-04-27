@@ -31,6 +31,10 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
 
+				if object_fields[field].type == "select"
+					schema[field].autoform.type = "steedosLookups"
+					schema[field].autoform.showIcon = false
+
 			if ["date", "datetime"].includes(object_fields[field].type)
 				schema[field + "_endDate"] =  obj_schema[field]
 				schema[field + "_endDate"].autoform.readonly = false
@@ -42,6 +46,8 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.readonly = false
 				schema[field].autoform.disabled = false
 				schema[field].autoform.omit = false
+
+		console.log("schema", schema)
 
 		return new SimpleSchema(schema)
 
