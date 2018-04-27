@@ -115,7 +115,7 @@ _expandFields = (object_name, columns)->
 	_.each columns, (n)->
 		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
 			if fields[n].optionsFunction
-				ref = fields[n].optionsFunction().getProperty("value")
+				ref = fields[n].optionsFunction({}).getProperty("value")
 			else  
 				ref = fields[n].reference_to
 				if _.isFunction(ref)
