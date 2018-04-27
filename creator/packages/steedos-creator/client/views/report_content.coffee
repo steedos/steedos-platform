@@ -1,6 +1,6 @@
 Template.creator_report_content.helpers Creator.helpers
 
-getODataFilterForReport = (object_name, filter_scope, filters)->
+getODataFilterForReport = (object_name, filter_scope, filters, filter_logic)->
 	unless object_name
 		return ["_id", "=", -1]
 	userId = Meteor.userId()
@@ -11,13 +11,20 @@ getODataFilterForReport = (object_name, filter_scope, filters)->
 			selector.push ["_id", "=", userId]
 
 		if filters and filters.length > 0
-			filters = Creator.formatFiltersToDev(filters)
-			if filters and filters.length > 0
-				if selector.length > 0
-					selector.push "and"
-				_.each filters, (filter)->
-					if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
-						selector.push filter
+			if filter_logic
+				format_logic = Creator.formatLogicFiltersToDev(filters, filter_logic)
+				if selector.length
+					selector.push("and", format_logic)
+				else
+					selector.push(format_logic)
+			else
+				filters = Creator.formatFiltersToDev(filters)
+				if filters and filters.length > 0
+					if selector.length > 0
+						selector.push "and"
+					_.each filters, (filter)->
+						if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
+							selector.push filter
 
 			if filter_scope == "mine"
 				if selector.length > 0
@@ -44,6 +51,7 @@ getReportContent = ()->
 	self = this
 	filters = Session.get("filter_items")
 	filter_scope = Session.get("filter_scope")
+	filter_logic = Session.get("filter_logic")
 	columns = []
 	rows = []
 	values = []
@@ -128,6 +136,7 @@ getReportContent = ()->
 	return {
 		filters: filters
 		filter_scope: filter_scope
+		filter_logic: filter_logic
 		columns: columns
 		rows: rows
 		values: values
@@ -327,7 +336,7 @@ renderTabularReport = (reportObject)->
 	expands = []
 	_.each expandFields, (v,k)->
 		expands.push "#{k}($select=#{_.uniq(v).join(',')})"
-	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters, reportObject.filter_logic
 	dxOptions = 
 		showColumnLines: false
 		columnResizingMode: "widget"
@@ -511,7 +520,7 @@ renderSummaryReport = (reportObject)->
 	expands = []
 	_.each expandFields, (v,k)->
 		expands.push "#{k}($select=#{_.uniq(v).join(',')})"
-	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters, reportObject.filter_logic
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -709,7 +718,7 @@ renderMatrixReport = (reportObject)->
 	expands = []
 	_.each expandFields, (v,k)->
 		expands.push "#{k}($select=#{_.uniq(v).join(',')})"
-	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters
+	filter = getODataFilterForReport reportObject.object_name, reportObject.filter_scope, reportObject.filters, reportObject.filter_logic
 	dxOptions = 
 		columnResizingMode: "widget"
 		sorting: 
@@ -807,8 +816,11 @@ renderReport = (reportObject)->
 		return Session.get("filter_items")
 	filter_scope = Tracker.nonreactive ()->
 		return Session.get("filter_scope")
+	filter_logic = Tracker.nonreactive ()->
+		return Session.get("filter_logic")
 	reportObject.filters = filter_items
 	reportObject.filter_scope = filter_scope
+	reportObject.filter_logic = filter_logic
 	report_settings = Tracker.nonreactive ()->
 		return self.report_settings.get()
 	reportObject.grouping = report_settings.grouping
@@ -856,8 +868,10 @@ Template.creator_report_content.onRendered ->
 				return
 			filter_items = reportObject.filters || []
 			filter_scope = reportObject.filter_scope
+			filter_logic = reportObject.filter_logic
 			Session.set("filter_items", filter_items)
 			Session.set("filter_scope", filter_scope)
+			Session.set("filter_logic", filter_logic)
 			self.report_settings.set {grouping: reportObject.grouping, totaling:reportObject.totaling, counting:reportObject.counting}
 			if reportObject.report_type == "tabular"
 				self.is_chart_open.set false

@@ -397,6 +397,41 @@ Creator.formatFiltersToDev = (filters, options)->
 
 	return selector
 
+###
+options参数：
+	extend-- 是否需要把当前用户基本信息加入公式，即让公式支持Creator.USER_CONTEXT中的值，默认为true
+	userId-- 当前登录用户
+	spaceId-- 当前所在工作区
+extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
+###
+Creator.formatLogicFiltersToDev = (filters, filter_logic, options)->
+	format_logic = filter_logic.replace(/\(\s+/ig, "(").replace(/\s+\)/ig, ")").replace(/\(/g, "[").replace(/\)/g, "]").replace(/\s+/g, ",").replace(/(and|or)/ig, "'$1'")
+	format_logic = format_logic.replace(/(\d)+/ig, (x)->
+		_f = filters[x-1]
+		field = _f.field
+		option = _f.operation
+		value = Creator.evaluateFormula(_f.value)
+		sub_selector = []
+		if _.isArray(value) == true
+			if option == "="
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "or"
+			else if option == "<>"
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "and"
+			else
+				_.each value, (v)->
+					sub_selector.push [field, option, v], "or"
+			if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
+				sub_selector.pop()
+		else
+			sub_selector = [field, option, value]
+		console.log "sub_selector", sub_selector
+		return JSON.stringify(sub_selector)
+	)
+	format_logic = "[#{format_logic}]"
+	return Creator.eval(format_logic)
+
 Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name

@@ -91,16 +91,20 @@ Template.creator_report.events
 	'click .btn-filter-cancel': (event, template)->
 		filter_items = template.filter_items_for_cancel.get()
 		filter_scope = template.filter_scope_for_cancel.get()
+		filter_logic = template.filter_logic_for_cancel.get()
 		Session.set("filter_items", filter_items)
 		Session.set("filter_scope", filter_scope)
+		Session.set("filter_logic", filter_logic)
 		Meteor.defer ->
 			template.filter_dirty_count.set(1)
 	
 	'click .btn-filter-apply': (event, template)->
 		filter_items = Session.get("filter_items")
 		filter_scope = Session.get("filter_scope")
+		filter_logic = Session.get("filter_logic")
 		template.filter_items_for_cancel.set(filter_items)
 		template.filter_scope_for_cancel.set(filter_scope)
+		template.filter_logic_for_cancel.set(filter_logic)
 		Meteor.defer ->
 			template.filter_dirty_count.set(1)
 			Template.creator_report_content.renderReport()
@@ -180,8 +184,7 @@ Template.creator_report.events
 		record_id = Session.get "record_id"
 		objectName = Session.get("object_name")
 		reportContent = Template.creator_report_content.getReportContent()
-		Creator.odata.update "reports", record_id,reportContent
-		#Creator.getCollection(objectName).update({_id: record_id},{$set:reportContent})
+		Creator.odata.update "reports", record_id, reportContent
 		if template.is_filter_open.get()
 			template.is_filter_open.set(false)
 
@@ -190,18 +193,21 @@ Template.creator_report.onRendered ->
 		if Creator.subs["CreatorRecord"].ready()
 			filter_items = Session.get("filter_items")
 			filter_scope = Session.get("filter_scope")
+			filter_logic = Session.get("filter_logic")
 			if filter_items and filter_scope
 				filter_dirty_count = Tracker.nonreactive ()->
 					return Template.instance().filter_dirty_count.get()
 				if filter_dirty_count == 0
 					Template.instance().filter_items_for_cancel.set(filter_items)
 					Template.instance().filter_scope_for_cancel.set(filter_scope)
+					Template.instance().filter_logic_for_cancel.set(filter_logic)
 				Template.instance().filter_dirty_count.set(filter_dirty_count+1)
 
 Template.creator_report.onCreated ->
 	this.filter_dirty_count = new ReactiveVar(0)
 	this.filter_items_for_cancel = new ReactiveVar()
 	this.filter_scope_for_cancel = new ReactiveVar()
+	this.filter_logic_for_cancel = new ReactiveVar()
 	this.is_filter_open = new ReactiveVar(false)
 	this.is_designer_open = new ReactiveVar(false)
 

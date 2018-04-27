@@ -88,47 +88,21 @@ if Meteor.isClient
 				selector.push ["owner", "=", Meteor.userId()]
 
 			if filter_logic
-				format_logic = filter_logic.replace(/\(\s+/ig, "(").replace(/\s+\)/ig, ")").replace(/\(/g, "[").replace(/\)/g, "]").replace(/\s+/g, ",").replace(/(and|or)/ig, "'$1'")
-				format_logic = format_logic.replace(/(\d)+/ig, (x)->
-					_f = filters[x-1]
-					field = _f.field
-					option = _f.operation
-					value = Creator.evaluateFormula(_f.value)
-					sub_selector = []
-					if _.isArray(value) == true
-						if option == "="
-							_.each value, (v)->
-								sub_selector.push [field, option, v], "or"
-						else if option == "<>"
-							_.each value, (v)->
-								sub_selector.push [field, option, v], "and"
-						else
-							_.each value, (v)->
-								sub_selector.push [field, option, v], "or"
-						if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
-							sub_selector.pop()
-					else
-						sub_selector = [field, option, value]
-					console.log "sub_selector", sub_selector
-					return JSON.stringify(sub_selector)
-				)
-				format_logic = "[#{format_logic}]"
+				format_logic = Creator.formatLogicFiltersToDev(filters, filter_logic)
 				if selector.length
-					selector.push("and", Creator.eval(format_logic))
+					selector.push("and", format_logic)
 				else
-					selector.push(Creator.eval(format_logic))
-
-				return selector
-
-			if filters and filters.length > 0
-				if selector.length > 0
-					selector.push "and"
-				filters = _.map filters, (obj)->
-					return [obj.field, obj.operation, obj.value]
-				
-				filters = Creator.formatFiltersToDev(filters)
-				_.each filters, (filter)->
-					selector.push filter
+					selector.push(format_logic)
+			else
+				if filters and filters.length > 0
+					if selector.length > 0
+						selector.push "and"
+					filters = _.map filters, (obj)->
+						return [obj.field, obj.operation, obj.value]
+					
+					filters = Creator.formatFiltersToDev(filters)
+					_.each filters, (filter)->
+						selector.push filter
 		else
 			if spaceId and userId
 				list_view = Creator.getListView(object_name, list_view_id)

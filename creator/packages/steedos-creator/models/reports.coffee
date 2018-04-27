@@ -56,6 +56,9 @@ Creator.Objects.reports =
 			label: "字段值"
 			# type: "text"
 			blackbox: true
+		filter_logic:
+			type: "text"
+			omit: true
 		fields: 
 			label: "字段"
 			type: "lookup"

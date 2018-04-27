@@ -15,11 +15,8 @@ Template.filter_option_list.helpers
 		object_name = Template.instance().data?.object_name
 		return Creator.getObject(object_name)
 
-	default_filter_logic: ()->
+	filter_logic: ()->
 		Session.get("filter_logic")
-
-	show_filter_logic: ()->
-		return Template.instance().showFilterLogic?.get()
 
 Template.filter_option_list.events 
 	'click .btn-filter-scope': (event, template)->
@@ -113,13 +110,11 @@ Template.filter_option_list.events
 
 		val = arr.join(" AND ")
 		console.log "val", val
-		t.showFilterLogic.set(true)
 		Session.set("filter_logic", val)
 		
 
 	'click .remove_filter_logic': (e, t)->
 		Session.set("filter_logic", "")
-		t.showFilterLogic.set(false)
 
 	'keyup #filter-logic': (e, t)->
 		val = $(e.currentTarget).val()
@@ -138,17 +133,10 @@ Template.filter_option_list.onCreated ->
 	$(document).on "click",".content-wrapper, .oneHeader", self.destroyOptionbox
 
 	self.filterItems = new ReactiveVar()
-	self.showFilterLogic = new ReactiveVar()
 	self.autorun -> 
 		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
-		if list_view_obj
-			if list_view_obj.filter_logic
-				self.showFilterLogic.set(true)
-				Session.set("filter_logic", list_view_obj.filter_logic)
-			else
-				self.showFilterLogic.set(false)
-		else
-			self.showFilterLogic.set(false)
+		if list_view_obj and list_view_obj.filter_logic
+			Session.set("filter_logic", list_view_obj.filter_logic)
 
 	self.autorun ->
 		if Session.get("filter_items")
