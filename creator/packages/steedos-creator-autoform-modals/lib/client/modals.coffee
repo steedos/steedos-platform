@@ -64,7 +64,8 @@ getSimpleSchema = (collectionName)->
 			_.each fields, (field)->
 				if object_fields[field]?.type == "grid"
 					table_fields = _.filter _fields, (f)->
-						return /\w+(\.\$\.){1}\w+/.test(f)
+						reg = new RegExp("^(" + field + ")(\\.\\$\\.){1}\\w+")
+						return reg.test(f)
 					_.each table_fields, (f)->
 						_.extend(final_schema, _.pick(schema, f))
 				obj = _.pick(schema, field, field + ".$")

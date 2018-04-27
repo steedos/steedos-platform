@@ -2,6 +2,7 @@ Creator.Objects.instances_statistic =
 	name: "instances_statistic"
 	icon: "metrics"
 	label: "审批效率"
+	enable_share: true
 	fields:
 		user:
 			type: "master_detail"
@@ -38,11 +39,18 @@ Creator.Objects.instances_statistic =
 			type:"number"
 			scale:2
 			label:"平均耗时"
-			readonly: true			
+			readonly: true
+		owner_organizations:
+			label:"所属部门"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+			defaultValue: []			
 		
 	list_views:
 		all:
-			filter_scope: ""
+			label: "全部"
+			filter_scope: "space"
 			columns: ["user","year","month",
 			"month_finished_count","inbox_count",
 			"month_finished_time","inbox_time",
@@ -52,7 +60,7 @@ Creator.Objects.instances_statistic =
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
 		admin:

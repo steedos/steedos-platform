@@ -9,7 +9,7 @@
     </div>
     {{> headerSearch}}
     <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
-      <li class="slds-grid">
+      <li class="slds-hide slds-grid">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites slds-is-disabled" aria-pressed="false" title="Toggle Favorites">
           {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="favorite"}}
         </button>
@@ -19,7 +19,7 @@
           </button>
         </span>
       </li>
-      <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+      <li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled" title="Global Actions">
           {{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="add"}}
         </button>
@@ -34,7 +34,7 @@
           {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup" title="Setup"}}
         </button>
       </li>
-      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+      <li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
         <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-is-disabled" title="Notifications">
           {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="notification" title="Notifications"}}
         </button>

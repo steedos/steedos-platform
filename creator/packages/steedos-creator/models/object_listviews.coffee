@@ -11,6 +11,7 @@ Creator.Objects.object_listviews =
 			required: true
 		label:
 			label: "显示名称"
+			type:'text'
 		object_name:
 			label: "对象",
 			type: "master_detail"
@@ -36,10 +37,11 @@ Creator.Objects.object_listviews =
 			label: "选择要显示的字段"
 			type: "lookup"
 			multiple: true
-			optionsFunction: ()->
+			depend_on: ["object_name"]
+			optionsFunction: (values)->
 				_options = []
-				_object = Creator.getObject(Session.get("object_name"))
-				fields = Creator.getFields(Session.get("object_name"))
+				_object = Creator.getObject(values?.object_name)
+				fields = Creator.getFields(values?.object_name)
 				icon = _object.icon
 				_.forEach fields, (f)->
 					if !_object.fields[f].hidden and !_object.fields[f].omit
@@ -131,7 +133,7 @@ Creator.Objects.object_listviews =
 				
 	list_views:
 		all:
-			columns: ["name", "shared", "modified"]
+			columns: ["name","label", "shared", "modified"]
 			label:'全部列表视图'
 			filter_scope: "space"
 

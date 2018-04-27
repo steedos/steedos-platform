@@ -74,7 +74,7 @@ Creator.Objects.instances =
 			type: "string"
 
 		record_ids:
-			type: "[Object]"
+			type: "grid"
 			omit: true
 
 		"record_ids.$.o":

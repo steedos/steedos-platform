@@ -48,13 +48,17 @@ Creator.baseObject =
 			index: true
 			hidden: true
 		instances:
-			type: "[Object]"
+			type: "grid"
 			omit: true
 			hidden: true
 		"instances.$._id":
 			type: "text"
+			omit:true
+			hidden: true
 		"instances.$.state":
 			type: "text"
+			omit:true
+			hidden: true
 		sharing:
 			label: "记录级权限"
 			type: ["Object"]
@@ -67,13 +71,15 @@ Creator.baseObject =
 		"sharing.$.u":
 			label: "授权用户"
 			type: "[text]"
+			omit:true
 		"sharing.$.o":
 			label: "授权组织"
 			type: "[text]"
+			omit:true
 		"sharing.$.r":
 			label: "来自规则"
 			type: "text"
-
+			omit:true
 	permission_set:
 		none:
 			allowCreate: false
@@ -214,12 +220,18 @@ Creator.baseObject =
 		standard_approve:
 			label: "发起审批"
 			visible: (object_name, record_id, record_permissions) ->
-				#TODO 是否有对应关系
 				#TODO 权限判断
 				object_workflow = _.find Creator.object_workflows, (ow) ->
 					return ow.object_name is object_name
 
-				return !!object_workflow
+				if not object_workflow
+					return false
+
+				r = Creator.getObjectRecord object_name, record_id
+				if r and ( (r.instances and r.instances[0].state is 'completed') or (not r.instances) )
+					return true
+
+				return false
 			on: "record"
 			todo: ()->
 				Modal.show('initiate_approval', { object_name: this.object_name, record_id: this.record_id })

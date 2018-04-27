@@ -40,6 +40,7 @@ Template.filter_option.helpers
 					type: "select"
 					defaultValue: ()->
 						return "="
+					firstOption: ""
 					options: ()->
 						if object_fields[schema_key]
 							console.log "schema_key is:", schema_key

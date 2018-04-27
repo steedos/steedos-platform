@@ -114,16 +114,16 @@ _mixRelatedData = (obj,objName) ->
 	return related_objects
 
 # Creator.Export2xml()
-Creator.Export2xml = (objName) ->
+Creator.Export2xml = (objName, recordList) ->
 	logger.info "Run Creator.Export2xml"
 
 	console.time "Creator.Export2xml"
 
-# 测试数据
+	# 测试数据
 	objName = "archive_records"
 	# 查找对象数据
 	collection = Creator.Collections[objName]
-# 测试数据
+	# 测试数据
 	recordList = collection.find({}).fetch()
 
 	recordList.forEach (recordObj)->
