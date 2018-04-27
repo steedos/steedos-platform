@@ -23,7 +23,7 @@ _standardQuery = (curObjectName)->
 
 		return Creator.formatFiltersToDev(query_arr)
 	
-_itemClick = (e, curObjectName)->
+_itemClick = (e, curObjectName, list_view_id)->
 	record = e.data
 	if !record
 		return
@@ -53,7 +53,7 @@ _itemClick = (e, curObjectName)->
 			Session.set("action_save_and_insert", true)
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
-				Creator.executeAction objectName, action, recordId, action_record_title, ()->
+				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, ()->
 					dxDataGridInstance.refresh()
 			else
 				Creator.executeAction objectName, action, recordId, value.itemElement
@@ -252,6 +252,9 @@ Template.creator_grid.onRendered ->
 						filter = [filter, "and", standardQuery]
 					else
 						filter = standardQuery
+
+				if !filter
+					filter = ["_id", "<>", -1]
 
 			curObjectName = if is_related then related_object_name else object_name
 
