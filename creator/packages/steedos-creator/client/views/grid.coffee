@@ -407,7 +407,13 @@ Template.creator_grid.onRendered ->
 								if val.constructor == Object
 									r.values[index] = val.name
 								else if val.constructor == Array
-									r.values[index] = val.getProperty("name").join(",")
+									_val = [];
+									_.each val, (_v)->
+										if _.isString(_v)
+											_val.push _v
+										else if _.isObject(_v)
+											_val.push(_v.name)
+									r.values[index] = _val.join(",")
 								else if val.constructor == Date
 									utcOffset = moment().utcOffset() / 60
 									val = moment(val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
