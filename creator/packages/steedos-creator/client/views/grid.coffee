@@ -275,8 +275,9 @@ Template.creator_grid.onRendered ->
 				if Session.get("page_index")
 					if Session.get("page_index").object_name == curObjectName
 						page_index = Session.get("page_index").page_index
-						delete Session.keys["page_index"]
 						return page_index
+					else
+						delete Session.keys["page_index"]
 				else
 					return 0
 

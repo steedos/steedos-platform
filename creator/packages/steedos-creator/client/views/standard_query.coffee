@@ -16,12 +16,14 @@ Template.standard_query_modal.helpers
 			
 		new_schema = new SimpleSchema(Creator.getObjectSchema(object))
 		obj_schema = new_schema._schema
+		first_level_keys = new_schema._firstLevelSchemaKeys
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			if field.searchable
+			if !field.hidden and field.type != "grid"
 				searchable_fields.push(key)
 		schema = {}
+		searchable_fields = _.intersection(first_level_keys, searchable_fields)
 		_.each searchable_fields, (field)->
 			console.log field
 			schema[field] = obj_schema[field]
@@ -46,11 +48,12 @@ Template.standard_query_modal.helpers
 	fields: ()->
 		object_name = Session.get("object_name")
 		object = Creator.getObject(object_name)
+		first_level_keys = Creator.getSchema(object_name)._firstLevelSchemaKeys
 
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			if field.searchable
+			if !field.hidden and field.type != "grid" and first_level_keys.includes(key)
 				if ["date", "datetime"].includes(field.type)
 					searchable_fields.push([key, key + "_endDate"])
 				else

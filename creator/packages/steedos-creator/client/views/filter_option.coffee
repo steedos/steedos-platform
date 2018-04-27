@@ -18,13 +18,14 @@ Template.filter_option.helpers
 					type: "select"
 					defaultValue: ()->
 						return "name"
+					firstOption: ""
 					options: ()->
 						keys = Creator.getSchema(object_name)._firstLevelSchemaKeys
 						permission_fields = Creator.getFields(object_name)
 						schema = Creator.getSchema(object_name)._schema
 						keys = _.map keys, (key) ->
-							# hidden 类型的字段，不需要过滤
-							if object_fields[key].hidden
+							# hidden,grid 类型的字段，不需要过滤
+							if object_fields[key].hidden or object_fields[key].type == "grid"
 								return undefined
 							if _.indexOf(permission_fields, key) > -1
 								obj = _.pick(schema, key)
