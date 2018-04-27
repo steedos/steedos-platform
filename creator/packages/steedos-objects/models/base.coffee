@@ -175,9 +175,7 @@ Creator.baseObject =
 
 		standard_query:
 			label: "查询"
-			visible: ()->
-				object = Creator.getObject()
-				return object?.enable_search
+			visible: true
 			on: "list"
 			todo: "standard_query"
 
