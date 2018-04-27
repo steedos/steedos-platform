@@ -2,14 +2,24 @@ dxDataGridInstance = null
 
 _standardQuery = (curObjectName)->
 	standard_query = Session.get("standard_query")
-	if !standard_query or !standard_query.query or !_.size(standard_query.query)
+	object_fields = Creator.getObject(curObjectName).fields
+	if !standard_query or !standard_query.query or !_.size(standard_query.query) or standard_query.object_name != curObjectName
 		delete Session.keys["standard_query"]
+		return;
 	else
 		object_name = standard_query.object_name
 		query = standard_query.query
 		query_arr = []
 		_.each query, (val, key)->
-			query_arr.push([key, "=", val])
+			if object_fields[key]
+				if ["date", "datetime"].includes(object_fields[key].type)
+					query_arr.push([key, ">=", val])
+				else
+					query_arr.push([key, "=", val])
+			else
+				key = key.replace(/(_endDate)$/, "")
+				if object_fields[key] and ["date", "datetime"].includes(object_fields[key].type)
+					query_arr.push([key, "<=", val])
 
 		return Creator.formatFiltersToDev(query_arr)
 	
@@ -236,9 +246,12 @@ Template.creator_grid.onRendered ->
 					url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 					filter = Creator.getODataFilter(list_view_id, object_name)
 
-				standardQuery = _standardQuery(curObjectName)
+				standardQuery = _standardQuery(object_name)
 				if standardQuery and standardQuery.length
-					filter = [filter, "and", standardQuery]
+					if filter
+						filter = [filter, "and", standardQuery]
+					else
+						filter = standardQuery
 
 			curObjectName = if is_related then related_object_name else object_name
 

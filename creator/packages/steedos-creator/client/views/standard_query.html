@@ -3,22 +3,32 @@
 		<div class="modal-dialog slds-modal slds-fade-in-open modal-lg">
 			<div class="slds-modal__container">
 				<header class="slds-modal__header">
-					QUERY
+					<h2 class="title slds-text-heading--medium">
+						<h2 class="slds-text-heading--medium">列表查询</h2>
+					</h2>
 				</header>
 
-				<div class="slds-modal__content slds-p-around_medium">
-                    {{#autoForm schema=schema id="standardQueryForm"}}
+				<div class="slds-modal__content slds-p-around_medium {{#if isContainerVis fields}}container-vis{{/if}}">
+                    {{#autoForm schema=schema id="standardQueryForm" doc=value}}
                        
                         {{#each fields}}
                             <div class="slds-grid view-page-section-row">
-                                {{#each this}}
-                                    <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-                                        <div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-                                            {{> afQuickField name=this}}
-                                        </div>
-                                    </div>
-                                    <span class="to">到</span>
-                                {{/each}}
+								{{#if isArray this}}
+									{{#each this}}
+										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+											<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+												{{> afQuickField name=this}}
+											</div>
+										</div>
+										<span class="to">到</span>
+									{{/each}}
+								{{else}}
+									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+											{{> afQuickField name=this}}
+										</div>
+									</div>
+								{{/if}}
                             </div>
                         {{/each}}
                     {{/autoForm}}
@@ -26,6 +36,8 @@
 
 				<footer class="slds-modal__footer">
 						<button type="submit" class="slds-button slds-button_brand btn-confirm">确定</button>
+
+						<button type="submit" class="slds-button slds-button_neutral btn-reset">重置</button>
 
 						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
 

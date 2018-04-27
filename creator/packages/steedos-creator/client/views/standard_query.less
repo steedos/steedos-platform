@@ -1,3 +1,9 @@
+#standQueryModal {
+    .container-vis {
+        overflow: visible !important;
+    }
+}
+
 .standard-query-modal {
     .view-page-section-row {
         align-items: center;
@@ -5,17 +11,27 @@
         .to:last-child {
             display: none;
         }
-    }
-    .view-page-block-item {
-        .form-group {
-            font-size: 0;
+
+        .view-page-block-item {
+            .form-group {
+                font-size: 0;
+                .control-label {
+                    min-width: 1px;
+                    height: 20px;
+                    font-size: 0.8125rem;
+                }
+                .form-control {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .to + .view-page-block-item {
             .control-label {
-                min-width: 1px;
-                height: 20px;
-                font-size: 0.8125rem;
+                display: none;
             }
             .form-control {
-                font-size: 14px;
+                margin-top: 25px;
             }
         }
     }

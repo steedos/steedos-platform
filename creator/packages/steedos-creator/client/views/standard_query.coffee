@@ -1,4 +1,15 @@
-Template.standard_query_modal.helpers 
+Template.standard_query_modal.onCreated ->
+	this.modalValue = new ReactiveVar()
+
+Template.standard_query_modal.onRendered ->
+	standard_query = Session.get("standard_query")
+	if standard_query and standard_query.object_name == Session.get("object_name")
+		this.modalValue.set(standard_query.query)
+
+Template.standard_query_modal.helpers
+	value: ()->
+		return Template.instance().modalValue?.get()
+
 	schema: ()->
 		object_name = Session.get("object_name")
 		object = Creator.getObject(object_name)
@@ -18,7 +29,7 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
 
-			if ["date", "datetime"].includes(object_fields[field.type])
+			if ["date", "datetime"].includes(object_fields[field].type)
 				schema[field + "_endDate"] =  obj_schema[field]
 				schema[field + "_endDate"].autoform.readonly = false
 				schema[field + "_endDate"].autoform.disabled = false
@@ -43,18 +54,31 @@ Template.standard_query_modal.helpers
 				if ["date", "datetime"].includes(field.type)
 					searchable_fields.push([key, key + "_endDate"])
 				else
-					searchable_fields.push([key])
+					searchable_fields.push(key)
 
 		return searchable_fields
 
 	label: (name)->
 		return AutoForm.getLabelForField(name)
 
+	isArray: (val)->
+		return _.isArray(val)
+
+	isContainerVis: (fields)->
+		console.log "isContainerVis", fields
+		# 为了时间控件能够正常显示
+		if fields.length < 4
+			return true
+
 Template.standard_query_modal.events
+	'click .btn-reset': (event, template)->
+		template.modalValue.set()
+		AutoForm.resetForm("standardQueryForm")
+
 	'click .btn-confirm': (event, template)->
 		query = AutoForm.getFormValues("standardQueryForm").insertDoc
 		object_name = Session.get("object_name")
 
-		Session.set 'standard_query', {object_name; object_name, query: query}
+		Session.set 'standard_query', {object_name: object_name, query: query}
 		Modal.hide(template)
 
