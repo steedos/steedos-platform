@@ -76,6 +76,11 @@ Meteor.startup ()->
 				catch error
 					console.error "Creator.convertFieldsOptions", field.options, error
 
+			else if field.options && !_.isFunction(field.options) && !_.isArray(field.options) && _.isObject(field.options)
+				_options = []
+				_.each field.options, (v, k)->
+					_options.push {label: v, value: k}
+				field.options = _options
 			
 			if Meteor.isServer
 				options = field.options
