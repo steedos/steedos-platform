@@ -61,8 +61,8 @@ Creator.baseObject =
 			hidden: true
 		sharing:
 			label: "记录级权限"
-			type: ["Object"]
-			# omit: true
+			type: "grid"
+			omit: true
 			hidden: true
 			blackbox: true
 		"sharing.$":
