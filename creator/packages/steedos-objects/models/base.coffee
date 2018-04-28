@@ -174,7 +174,7 @@ Creator.baseObject =
 	actions:
 
 		standard_query:
-			label: "查询"
+			label: "查找"
 			visible: true
 			on: "list"
 			todo: "standard_query"
