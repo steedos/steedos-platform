@@ -1,10 +1,10 @@
 Template.standard_query_modal.onCreated ->
 	this.modalValue = new ReactiveVar()
-
-Template.standard_query_modal.onRendered ->
 	standard_query = Session.get("standard_query")
 	if standard_query and standard_query.object_name == Session.get("object_name")
 		this.modalValue.set(standard_query.query)
+
+#Template.standard_query_modal.onRendered ->
 
 Template.standard_query_modal.helpers
 	value: ()->
