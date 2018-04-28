@@ -109,12 +109,23 @@
 	height: 19px
 }
 
+.reportsFilterPanel .bodyTitle{
+	padding: 0 .75rem .5rem .75rem;
+}
+
 .reportsFilterPanel .editableFilters,
 .reportsFilterPanel .lockedFilters,
 .reportsFilterPanel .chartFilters,
 .reportsFilterPanel .speedyFilters {
 	padding: 0;
-	margin: 0
+	margin: 0;
+	&.showNumbers{
+		margin-left: 25px;
+		.filter-item{
+			list-style-type: decimal;
+			padding-left: 0px;
+		}
+	}
 }
 
 .reportsFilterPanel .panelHeader {
