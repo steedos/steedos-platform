@@ -44,7 +44,7 @@ Creator.Objects.object_listviews =
 				fields = Creator.getFields(values?.object_name)
 				icon = _object.icon
 				_.forEach fields, (f)->
-					if !_object.fields[f].hidden and !_object.fields[f].omit
+					if !_object.fields[f].hidden
 						label = _object.fields[f].label
 						_options.push {label:label || f, value: f, icon: icon}
 				return _options
@@ -59,13 +59,16 @@ Creator.Objects.object_listviews =
 		"sort.$.field_name":
 			label: "字段"
 			type: "lookup"
+			depend_on: ["object_name"]
 			optionsFunction: (values)->
 				_options = []
-				_object = Creator.getObject()
-				fields = _object.fields
+				_object = Creator.getObject(values?.object_name)
+				fields = Creator.getFields(values?.object_name)
 				icon = _object.icon
-				_.forEach fields, (f, k)->
-					_options.push {label: f.label || k, value: k, icon: icon}
+				_.forEach fields, (f)->
+					if !_object.fields[f].hidden
+						label = _object.fields[f].label
+						_options.push {label: label || f, value: f, icon: icon}
 				return _options
 
 		"sort.$.order":
