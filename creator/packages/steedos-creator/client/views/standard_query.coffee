@@ -35,11 +35,12 @@ Template.standard_query_modal.helpers
 					schema[field].autoform.type = "steedosLookups"
 					schema[field].autoform.showIcon = false
 
-			if ["date", "datetime"].includes(object_fields[field].type)
-				schema[field + "_endDate"] =  obj_schema[field]
-				schema[field + "_endDate"].autoform.readonly = false
-				schema[field + "_endDate"].autoform.disabled = false
-				schema[field + "_endDate"].autoform.omit = false
+			if ["date", "datetime", "currency", "number"].includes(object_fields[field].type)
+				schema[field + "_endLine"] =  obj_schema[field]
+				if schema[field + "_endLine"].autoform
+					schema[field + "_endLine"].autoform.readonly = false
+					schema[field + "_endLine"].autoform.disabled = false
+					schema[field + "_endLine"].autoform.omit = false
 
 			
 			if schema[field].autoform
@@ -60,8 +61,8 @@ Template.standard_query_modal.helpers
 		searchable_fields = []
 		_.each object_fields, (field, key)->
 			if !field.hidden and field.type != "grid" and first_level_keys.includes(key)
-				if ["date", "datetime"].includes(field.type)
-					searchable_fields.push([key, key + "_endDate"])
+				if ["date", "datetime", "currency", "number"].includes(field.type)
+					searchable_fields.push([key, key + "_endLine"])
 				else
 					searchable_fields.push(key)
 

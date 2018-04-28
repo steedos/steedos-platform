@@ -12,13 +12,13 @@ _standardQuery = (curObjectName)->
 		query_arr = []
 		_.each query, (val, key)->
 			if object_fields[key]
-				if ["date", "datetime"].includes(object_fields[key].type)
+				if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
 					query_arr.push([key, ">=", val])
 				else
 					query_arr.push([key, "=", val])
 			else
-				key = key.replace(/(_endDate)$/, "")
-				if object_fields[key] and ["date", "datetime"].includes(object_fields[key].type)
+				key = key.replace(/(_endLine)$/, "")
+				if object_fields[key] and ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
 					query_arr.push([key, "<=", val])
 
 		return Creator.formatFiltersToDev(query_arr)
