@@ -410,7 +410,10 @@ Creator.formatLogicFiltersToDev = (filters, filter_logic, options)->
 		_f = filters[x-1]
 		field = _f.field
 		option = _f.operation
-		value = Creator.evaluateFormula(_f.value)
+		if Meteor.isClient
+			value = Creator.evaluateFormula(_f.value)
+		else
+			value = Creator.evaluateFormula(_f.value, null, options)
 		sub_selector = []
 		if _.isArray(value) == true
 			if option == "="
