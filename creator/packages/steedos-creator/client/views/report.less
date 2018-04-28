@@ -111,6 +111,11 @@
 
 .reportsFilterPanel .bodyTitle{
 	padding: 0 .75rem .5rem .75rem;
+	color: #706e6b;
+	font-weight: 400;
+	font-size: .8125rem;
+	line-height: 1.5;
+	background: #fff;
 }
 
 .reportsFilterPanel .editableFilters,
@@ -119,8 +124,9 @@
 .reportsFilterPanel .speedyFilters {
 	padding: 0;
 	margin: 0;
+	background: #fff;
 	&.showNumbers{
-		margin-left: 25px;
+		padding-left: 25px;
 		.filter-item{
 			list-style-type: decimal;
 			padding-left: 0px;
@@ -208,8 +214,13 @@
 	-webkit-flex: 1 1 auto;
 	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
-	padding-top: .75rem;
-	background-color: rgb(255, 255, 255)
+	background: #f3f2f2;
+	.slds-filters__footer{
+		background: #fff;
+	}
+	&>:first-child{
+		padding-top: .75rem;
+	}
 }
 
 .reportsFilterPanel .lockedHeader,
@@ -370,7 +381,8 @@
 	border-bottom: solid 1px #cfd4d9;
 	-webkit-transition: width .2s ease-out, min-width .2s ease-out;
 	transition: width .2s ease-out, min-width .2s ease-out;
-	overflow: hidden
+	overflow: hidden;
+	padding-bottom: 0px;
 }
 
 .reportsReportPage .sidebar.filterOpen {
