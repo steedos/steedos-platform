@@ -22,7 +22,8 @@ Creator.Objects.permission_objects =
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.objectsByName, (o, k)->
-					_options.push {label: o.label, value: k, icon: o.icon}
+					if !o.hidden
+						_options.push { label: o.label, value: k, icon: o.icon }
 				return _options
 		allowRead: 
 			type: "boolean"

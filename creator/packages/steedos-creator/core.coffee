@@ -235,14 +235,20 @@ Creator.getVisibleApps = ()->
 Creator.getVisibleAppsObjects = ()->
 	apps = Creator.getVisibleApps()
 	objects = []
+	tempObjects = []
 	_.forEach apps, (app)->
-		objects = objects.concat(app.objects)
+		tempObjects = _.filter app.objects, (obj)->
+			return !obj.hidden
+		objects = objects.concat(tempObjects)
 	return _.uniq objects
 
 Creator.getAppsObjects = ()->
 	objects = []
+	tempObjects = []
 	_.forEach Creator.Apps, (app)->
-		objects = objects.concat(app.objects)
+		tempObjects = _.filter app.objects, (obj)->
+			return !obj.hidden
+		objects = objects.concat(tempObjects)
 	return _.uniq objects
 
 Creator.validateFilters = (filters, logic)->

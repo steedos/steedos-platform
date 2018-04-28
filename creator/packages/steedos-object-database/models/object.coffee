@@ -49,6 +49,9 @@ Creator.Objects.objects =
 			type: 'boolean'
 			defaultValue: false
 			omit: true
+		hidden:
+			type: "boolean"
+			omit: true
 		description:
 			label: "Description"
 			type: "textarea"
