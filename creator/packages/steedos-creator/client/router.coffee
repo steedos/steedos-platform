@@ -163,10 +163,12 @@ objectRoutes.route '/view/:record_id',
 					Blaze.renderWithData(Template.mobileView, data, $(".content-wrapper")[0], $(".layout-placeholder")[0])
 		else
 			Session.set("detail_info_visible", true)
-			# ObjectRecent.insert(object_name, record_id, Session.get("spaceId"))
-#			Meteor.call "object_recent_viewed", FlowRouter.getParam("object_name"), FlowRouter.getParam("record_id")
+			if object_name == "users"
+				main = "user"
+			else
+				main = "creator_view"
 			BlazeLayout.render Creator.getLayout(),
-				main: "creator_view"
+				main: main
 
 FlowRouter.route '/app/:app_id/:object_name/:template/:list_view_id',
 	triggersEnter: [ checkUserSigned, initLayout ],

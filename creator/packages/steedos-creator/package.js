@@ -295,6 +295,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/initiate_approval.html', 'client');
 	api.addFiles('client/views/initiate_approval.coffee', 'client');
 
+	api.addFiles('client/views/user.html', 'client');
+	api.addFiles('client/views/user.coffee', 'client');
+	api.addFiles('client/views/user.less', 'client');
+
 	api.addFiles('client/theme.less', 'client');
 	api.addFiles('client/i18n.coffee', 'client');
 
