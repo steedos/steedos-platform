@@ -32,6 +32,8 @@ Creator.Formular.run = (formula_str, _CONTEXT, options)->
 			return data
 		catch e
 			console.error("Creator.Formular.run: #{formula_str}", e)
+			if Meteor.isClient
+				toastr?.error("公式执行出错了，请检查公式配置是否正确！")
 			throw new Meteor.Error 500, "Creator.Formular.run: #{formula_str}#{e}"
 
 	return formula_str

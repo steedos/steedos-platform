@@ -121,3 +121,5 @@ steedos:object-database
 # steedos:app-archive
 
 steedos:instance-record-queue
+
+steedos:instances-statistics

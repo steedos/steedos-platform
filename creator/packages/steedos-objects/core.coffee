@@ -2,9 +2,14 @@ if !Creator?
 	@Creator = {}
 Creator.Objects = {}
 Creator.Collections = {}
-
+Creator.deps = {
+	app: new Tracker.Dependency
+	object: new Tracker.Dependency
+};
 
 Creator.getObject = (object_name)->
+	if Meteor.isClient
+		Creator.deps?.object?.depend()
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 	if object_name
@@ -14,6 +19,7 @@ Creator.getObjectById = (object_id)->
 	return _.findWhere(Creator.objectsByName, {_id: object_id})
 
 Creator.removeObject = (object_name)->
+	console.log("removeObject", object_name)
 	delete Creator.Objects[object_name]
 	delete Creator.objectsByName[object_name]
 

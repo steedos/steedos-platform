@@ -1,74 +1,104 @@
 subs_objects = new SubsManager()
 
-#_changeClientObjects = ()->
-#	console.log "_changeClientObjects run.."
-#	_objects = Creator.getCollection("objects").find({space: {$in: [null, Session.get("spaceId")]}})
-#	_objects.forEach (doc)->
-#		if _.size(doc.fields) > 0
-#			#TODO list views
-#			doc.list_views = {
-#				default: {
-#					columns: ["name", "description", "modified"]
-#				}
-#				all: {
-#					filter_scope: "space"
-#				}
-#			}
-#			Creator.convertObject(doc)
-#			Creator.Objects[doc.name] = doc
-#			Creator.loadObjects doc
+_changeClientApps = (document)->
+	Creator.Apps[document._id] = document
+	if Session.get("app_id") == document._id
+		Creator.deps.app.changed();
 
 _changeClientObjects = (document)->
+	type = "added"
 
-	Meteor.setTimeout ()->
-		console.log("document.name", document.name)
-		if _.size(document.fields) > 0
-			#TODO list views
-			document.list_views = {
-				default: {
-					columns: ["name", "description", "modified"]
-				}
-				all: {
-					filter_scope: "space"
-				}
-			}
-			Creator.convertObject(document)
-			Creator.Objects[document.name] = document
-			Creator.loadObjects document
-			#TODO 更新object permissions
-	, 1
+	if !_.isEmpty(_.findWhere(Creator.objectsByName, {_id: document._id}))
+		type = "changed"
+
+	_getObject document._id, type, (result)->
+		if _.size(result.fields) > 0
+			old_obj = Creator.Objects[result.name]
+			if type != "added"
+				result.permissions = old_obj?.permissions || {}
+			Creator.Objects[result.name] = result
+			Creator.loadObjects result
+			if Session.get("object_name")
+				Creator.deps.object.changed();
 
 _removeClientObjects = (document)->
-	Creator.removeObject(document.name)
-	Creator.removeCollection(document.name)
+	_object = _.findWhere Creator.objectsByName, {_id: document._id}
+	Creator.removeObject(_object?.name)
+	Creator.removeCollection(_object?.name)
+	if Session.get("object_name") == _object?.name
+		FlowRouter.go(Steedos.absoluteUrl())
+	Creator.deps.object.changed();
 
-_loadObjectsPremissions = ()->
-	console.log "Creator.bootstrap....................."
-	Creator.bootstrap()
+_removeClientApps = (document)->
+	delete Creator.Apps[document._id]
+	if Session.get("app_id") == document._id
+		FlowRouter.go(Steedos.absoluteUrl())
+
+#_loadObjectsPremissions = ()->
+#	Creator.bootstrap()
+
+
+_getObject = (objectId, type, callback)->
+	if !objectId || !_.isString(objectId)
+		return
+	spaceId = Session.get("spaceId")
+	$.ajax
+		type: "get"
+		url: Steedos.absoluteUrl "/api/creator/#{spaceId}/objects/#{objectId}?type=#{type}"
+		dataType: "json"
+		beforeSend: (request) ->
+			request.setRequestHeader('X-User-Id', Meteor.userId())
+			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+		error: (jqXHR, textStatus, errorThrown) ->
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
+		success: (result) ->
+			if _.isFunction(callback)
+				callback(result)
 
 Meteor.startup ()->
 	Tracker.autorun (c)->
 		spaceId = Session.get("spaceId")
 		if spaceId
-			console.log "subscribe -> creator_objects"
+#			subs_objects.subscribe "creator_apps", spaceId
 			subs_objects.subscribe "creator_objects", spaceId
 
-#	Tracker.autorun (c)->
-#		spaceId = Session.get("spaceId")
-#		console.log("spaceId", spaceId)
-#		console.log "subs_objects.ready()", subs_objects.ready()
-#		if subs_objects.ready() && spaceId
-#			Tracker.nonreactive _changeClientObjects
 
-	tid = 0
+	Tracker.autorun (c) ->
+		if Creator.bootstrapLoaded.get()
+			objects_observer_init = false
+			Creator.getCollection("objects").find().observe {
+#				added: (newDocument)->
+#					if objects_observer_init
+#						_changeClientObjects newDocument
+				changed: (newDocument, oldDocument)->
+					if objects_observer_init
+						_changeClientObjects newDocument
+				removed: (oldDocument)->
+					if objects_observer_init
+						console.log("removed oldDocument", oldDocument)
+						_removeClientObjects oldDocument
+			}
+			objects_observer_init = true
 
-	Creator.getCollection("objects").find().observe {
-		added: (newDocument)->
-			_changeClientObjects newDocument
-			Meteor.clearTimeout(tid)
-			tid = Meteor.setTimeout(_loadObjectsPremissions, 2000)
-		changed: (newDocument, oldDocument)->
-			_changeClientObjects newDocument
-		removed: (oldDocument)->
-			_removeClientObjects oldDocument
-	}
+			apps_observer_init = false
+			Creator.getCollection("apps").find({is_creator: true}).observe {
+				added: (newDocument)->
+					if apps_observer_init
+						_changeClientApps(newDocument)
+				changed: (newDocument, oldDocument)->
+					if apps_observer_init
+						_changeClientApps(newDocument)
+				removed: (oldDocument)->
+					if apps_observer_init
+						console.log("apps removed",oldDocument );
+						_removeClientApps(oldDocument)
+			}
+			apps_observer_init = true
+

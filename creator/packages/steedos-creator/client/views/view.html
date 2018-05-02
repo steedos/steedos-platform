@@ -2,7 +2,7 @@
 
 	<div class="steedos-brand-band slds-brand-band_medium creator_view">
 		<div class="slds-template__container">
-			<div class="test-listViewManager slds-grid slds-grid--vertical">
+			<div class="objectViewManager slds-grid slds-grid--vertical">
 				<div class="slds-page-header">
 					<div class="slds-grid">
 						<div class="slds-col slds-has-flexi-truncate">
@@ -71,7 +71,7 @@
 				</div>
 
 				<div class="slds-grid table-grid-content">
-					<div class="slds-tabs_default creator-view-tabs_default" style="padding: 15px;">
+					<div class="slds-tabs_default creator-view-tabs_default">
 						<ul class="slds-tabs_default__nav" role="tablist">
 							<li class="slds-tabs_default__item" title="Item Two" role="presentation">
 								<a class="slds-tabs_default__link creator-view-tabs-link" role="tab" tabindex="-1" aria-selected="false" data-tab="creator-tabular">{{_ "creator_view_related_objects"}}</a>
@@ -82,7 +82,7 @@
 						</ul>
 						<div id="creator-tabular" class="slds-tabs_default__content creator-view-tabs-content slds-hide" role="tabpanel">
 							{{#each related_list}}
-								<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
+								<div class="forceRelatedListCardDesktop related-object-tabular">
 									<div class="slds-card__header slds-grid">
 										<header class="slds-media slds-media_center slds-has-flexi-truncate">
 											<div class="slds-media__figure">

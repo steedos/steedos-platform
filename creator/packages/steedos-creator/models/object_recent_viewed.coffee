@@ -11,6 +11,7 @@ Creator.Objects.object_recent_viewed =
 #			index:true
 		record:
 			type: "lookup"
+			label:"记录"
 			omit: true
 			is_name: true
 			reference_to: ()->

@@ -31,7 +31,7 @@ Creator.Objects.OAuth2Clients =
 				return Random.id()
 		clientSecret:
 			type:"text"
-			label:"Secret"
+			label:"密钥"
 			is_wide:true
 			defaultValue: ()->
 				return Random.secret()

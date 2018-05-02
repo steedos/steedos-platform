@@ -19,6 +19,7 @@ Creator.Objects.apps =
 		icon:
 			type: "text"
 		icon_slds:
+			label: "图标"
 			type: "lookup"
 			optionsFunction: ()->
 				options = []
@@ -36,13 +37,16 @@ Creator.Objects.apps =
 					_options.push {label: o.label, value: o.name, icon: o.icon}
 				return _options
 		visible:
+			label: "可见性"
 			type: "boolean"
 		sort:
 			type: "number"
 			defaultValue: 9100
 		is_creator:
 			type:"boolean"
-
+			label: "creator应用"
+			hidden:true
+			defaultValue:true
 	list_views:
 		all:
 			label: "所有应用"

@@ -37,8 +37,12 @@ Package.onUse(function(api) {
 	api.addFiles('models/object_triggers.coffee');
 	api.addFiles('models/object_actions.coffee');
 
+	// api.addFiles('server/routes/api_creator_apps.coffee', 'server');
+	api.addFiles('server/routes/api_creator_objects.coffee', 'server');
+
 	api.addFiles('server/objects_observe.coffee', 'server');
-	// api.addFiles('server/publications/objects.coffee', 'server');
-	// api.addFiles('client/subscribe.coffee', 'client');
+	// api.addFiles('server/publications/apps.coffee', 'server');
+	api.addFiles('server/publications/objects.coffee', 'server');
+	api.addFiles('client/subscribe.coffee', 'client');
 
 });

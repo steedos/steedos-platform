@@ -173,6 +173,7 @@ steedos:fullcalendar@3.4.0_1
 steedos:i18n@0.0.11
 steedos:i18n-iso-countries@3.3.0
 steedos:instance-record-queue@0.0.1
+steedos:instances-statistics@0.0.1
 steedos:ionicons@0.1.7
 steedos:jstree@3.3.2
 steedos:lightning-design-system@0.0.1

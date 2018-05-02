@@ -164,10 +164,9 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"
 			fs.autoform.precision = field.precision || 18
-			if !field.scale && field.scale !=0
-				fs.autoform.scale = 2
-			else
+			if field?.scale
 				fs.autoform.scale = field.scale
+				fs.decimal = true
 		else if field.type == "boolean"
 			fs.type = Boolean
 			fs.autoform.type = "boolean-checkbox"

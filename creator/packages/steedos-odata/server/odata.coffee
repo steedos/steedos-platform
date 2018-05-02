@@ -5,10 +5,8 @@ Meteor.startup ->
 
 	visitorParser = (visitor)->
 		parsedOpt = {}
-
 		if visitor.projection
 			parsedOpt.fields = visitor.projection
-
 		if visitor.hasOwnProperty('limit')
 			parsedOpt.limit = visitor.limit
 
@@ -170,17 +168,22 @@ Meteor.startup ->
 					else if Steedos.isLegalVersion(@urlParams.spaceId,"workflow.standard") and limit>1000 and !Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise") and !Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
 							createQuery.limit = 1000
 				else
-					createQuery.limit = 10
+					createQuery.limit = 1000
 				unreadable_fields = permissions.unreadable_fields || []
+				fields = Creator.getObject(key).fields
 				if createQuery.projection
 					projection = {}
 					_.keys(createQuery.projection).forEach (key)->
 						if _.indexOf(unreadable_fields, key) < 0
-							projection[key] = 1
+							if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								projection[key] = 1
+					createQuery.projection = projection
 				if not createQuery.projection or !_.size(createQuery.projection)
 					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
 					_.each readable_fields,(field)->
-						createQuery.projection[field] = 1
+						if field.indexOf('$')<0
+							if fields[field]?.multiple!= true
+								createQuery.projection[field] = 1
 				if not permissions.viewAllRecords
 					if object.enable_share
 						# 满足共享规则中的记录也要搜索出来
@@ -197,9 +200,10 @@ Meteor.startup ->
 				entities = []
 				if @queryParams.$top isnt '0'
 					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
-				scannedCount = collection.find(createQuery.query).count()
+				scannedCount = collection.find(createQuery.query,{fields:{_id: 1}}).count()
 				if entities
 					dealWithExpand(createQuery, entities, key)
+					#scannedCount = entities.length
 					body = {}
 					headers = {}
 					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
@@ -299,13 +303,24 @@ Meteor.startup ->
 				recent_view_records_ids = _.uniq(recent_view_records_ids)
 				qs = decodeURIComponent(querystring.stringify(@queryParams))
 				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
-				createQuery.query._id = {$in:recent_view_records_ids}
 				if key is 'cfs.files.filerecord'
 					createQuery.query['metadata.space'] = @urlParams.spaceId
 				else
 					createQuery.query.space = @urlParams.spaceId
 				if not createQuery.limit
 					createQuery.limit = 100
+				if createQuery.limit and recent_view_records_ids.length>createQuery.limit
+					recent_view_records_ids = _.first(recent_view_records_ids,createQuery.limit)
+				createQuery.query._id = {$in:recent_view_records_ids}
+				unreadable_fields = permissions.unreadable_fields || []
+				fields = Creator.getObject(key).fields
+				if createQuery.projection
+					projection = {}
+					_.keys(createQuery.projection).forEach (key)->
+						if _.indexOf(unreadable_fields, key) < 0
+							if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								projection[key] = 1
+					createQuery.projection = projection
 				if @queryParams.$top isnt '0'
 					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 				entities_index = []
@@ -461,11 +476,15 @@ Meteor.startup ->
 						createQuery.query['metadata.space'] = @urlParams.spaceId
 					else
 						createQuery.query.space =  @urlParams.spaceId
+					unreadable_fields = permissions.unreadable_fields || []
+					fields = Creator.getObject(key).fields
 					if createQuery.projection
 						projection = {}
 						_.keys(createQuery.projection).forEach (key)->
 							if _.indexOf(unreadable_fields, key) < 0
-								projection[key] = 1
+								if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+									projection[key] = 1
+						createQuery.projection = projection
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
 						_.each readable_fields,(field)->

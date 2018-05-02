@@ -54,6 +54,7 @@ Creator.Objects.object_listviews =
 			type: "grid"
 
 		"sort.$":
+			label: "排序条件"
 			blackbox: true
 			type: "Object"
 
@@ -82,16 +83,20 @@ Creator.Objects.object_listviews =
 			type: "boolean"
 			# hidden: true
 		filters:
+			label: "过滤器"
 			type: "[Object]"
 			omit: true
 		"filters.$":
+			label: "过滤条件"
 			blackbox: true
 			omit: true
 		filter_logic:
+			label: "过滤逻辑"
 			type: String
 			omit: true
 
 		is_default:
+			label: "是否为默认视图"
 			type: "boolean"
 			omit: true
 			defaultValue: false

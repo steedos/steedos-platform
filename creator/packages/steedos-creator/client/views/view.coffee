@@ -146,9 +146,8 @@ Template.creator_view.helpers
 				selector["#{related_field_name}.o"] = Session.get "object_name"
 				selector["#{related_field_name}.ids"] = [record_id]
 			else if object_name == "instances"
-				instances = Creator.getObjectRecord()?.instances
-				if instances
-					selector["_id"] = { $in: _.pluck(instances, "_id") }
+				instances = Creator.getObjectRecord()?.instances || []
+				selector["_id"] = { $in: _.pluck(instances, "_id") }
 			else if Session.get("object_name") == "objects"
 				recordObjectName = Creator.getObjectRecord()?.name
 				selector[related_field_name] = recordObjectName

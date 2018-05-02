@@ -21,11 +21,8 @@ Creator.Objects.permission_shares =
 			required: true
 		filters: 
 			label: "过滤条件"
-			type: "[Object]"
+			type: "grid"
 			# omit: true
-		# "filters.$":
-		# 	blackbox: true
-		# 	omit: true
 		"filters.$.field": 
 			label: "字段名"
 			type: "text"

@@ -1,7 +1,6 @@
 Meteor.startup ()->
 
 	_changeServerObjects = (document)->
-#		console.log "change object" , document.name
 		if _.size(document.fields) > 0
 #
 #			all_viewlist = Creator.getCollection("object_listviews").findOne({space: document.space, object_name: document.name, shared: true, name: "all"})
@@ -26,12 +25,14 @@ Meteor.startup ()->
 
 	_removeServerObjects = (document)->
 		Creator.removeObject(document.name)
-
+	server_objects_init = false
 	Creator.getCollection("objects").find().observe {
 		added: (newDocument)->
-			_changeServerObjects newDocument
+			if !server_objects_init
+				_changeServerObjects newDocument
 		changed: (newDocument, oldDocument)->
 			_changeServerObjects newDocument
 		removed: (oldDocument)->
 			_removeServerObjects oldDocument
 	}
+	server_objects_init = true

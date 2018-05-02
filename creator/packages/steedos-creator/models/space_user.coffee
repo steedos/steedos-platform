@@ -40,6 +40,7 @@ Creator.Objects.space_users =
 			type: "boolean"
 			defaultValue: true
 		invite_state:
+			label: "邀请状态"
 			type: "text"
 			omit: true
 		mobile:

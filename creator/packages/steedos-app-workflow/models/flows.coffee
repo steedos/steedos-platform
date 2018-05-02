@@ -5,75 +5,96 @@ Creator.Objects.flows =
 	fields:
 		name:
 			type: "text"
+			label:"流程名"
 			required: true
 			searchable: true
 			readonly: true
 		form:
+			label:"流程表单"
 			type: "master_detail"
 			reference_to: "forms"
 			readonly: true
 		flowtype:
+			label:"流程分类"
 			type: "text"
 			omit: true
 		state:
+			label:"流程状态"
 			type: "select"
 			options: [{label: "启用",value: "enabled"},{label: "停用",value: "disabled"}]
 		is_valid:
+			label:"流程是否有效"
 			type: "boolean"
 		description:
+			label:"流程介绍"
 			type: "textarea"
 		help_text:
+			label:"流程帮助"
 			type: "text"
 		current_no:
+			label:"流程编号"
 			type: "number"
 		current:
 			blackbox: true
 			omit: true
+			label:"当前版本"
 		perms:
 			blackbox: true
 			omit: true
+			label:"流程权限"
 		app:
+			label:"所属应用"
 			type: "text"
 			omit: true
 		historys:
+			label:"历史版本"
 			blackbox: true
 			omit: true
 		name_formula:
+			label:"标题公式"
 			type: "text"
 			group: "高级"
 		code_formula:
+			label:"系统公式"
 			type: "text"
 			group: "高级"
 		auto_remind:
+			label:"自动催办"
 			type: "boolean"
 			group: "高级"
 		instance_template:
+			label:"表单模板"
 			type: "textarea"
 			is_wide: true
 			rows: 6
 			group: "高级"
 		print_template:
+			label:"打印模板"
 			type: "textarea"
 			rows: 6
 			is_wide: true
 			group: "高级"
 		field_map:
+			label:"映射关系"
 			type: "textarea"
 			rows: 6
 			is_wide: true
 			group: "高级"
 		events:
+			label:"相关事件"
 			type: "textarea"
 			rows: 6
 			is_wide: true
 			group: "高级"
 		distribute_optional_users:
 			type: "lookup"
+			label: "分发者"
 			reference_to: "users"
 			multiple: true
 			is_wide: true
 			group: "高级"
 		distribute_to_self:
+			label:"分发给自己"
 			type: "boolean"
 			group: "高级"
 

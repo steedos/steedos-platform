@@ -2,18 +2,21 @@ uuflowManager = {}
 
 uuflowManager.check_authorization = (req) ->
 	query = req.query
-	current_user = query["X-User-Id"]
-	auth_token = query["X-Auth-Token"]
+	userId = query["X-User-Id"]
+	authToken = query["X-Auth-Token"]
 
-	if not current_user or not auth_token
+	if not userId or not authToken
 		throw new Meteor.Error 401, 'Unauthorized'
 
-	current_user_info = Creator.Collections.users.findOne(current_user)
+	hashedToken = Accounts._hashLoginToken(authToken)
+	user = Meteor.users.findOne
+		_id: userId,
+		"services.resume.loginTokens.hashedToken": hashedToken
 
-	if not current_user_info
+	if not user
 		throw new Meteor.Error 401, 'Unauthorized'
 
-	return current_user_info
+	return user
 
 uuflowManager.getSpace = (space_id) ->
 	space = Creator.Collections.spaces.findOne(space_id)

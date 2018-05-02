@@ -41,8 +41,10 @@ Creator.Objects.reports =
 			type: "[Object]"
 			omit: true
 		"filters.$":
+			label: "过滤器"
 			blackbox: true
 			omit: true
+			hidden: true
 		"filters.$.field": 
 			label: "字段名"
 			type: "text"
@@ -57,6 +59,7 @@ Creator.Objects.reports =
 			# type: "text"
 			blackbox: true
 		filter_logic:
+			label: "过滤逻辑"
 			type: "text"
 			omit: true
 		fields: 
@@ -92,6 +95,7 @@ Creator.Objects.reports =
 			optionsFunction: (values)->
 				return Creator.getObjectLookupFieldOptions values?.object_name, true
 		options:
+			label: "操作"
 			omit: true
 			blackbox: true
 		# column_width: 

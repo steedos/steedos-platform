@@ -22,41 +22,30 @@ search_object = (space, object_name,userId, searchText)->
 	data = new Array()
 
 	if searchText
-		_object = Creator.getObject(object_name)	 	
-		permissions = Creator.getObjectPermissions(space, userId,object_name)
+
+		_object = Creator.getObject(object_name)
+
 		_object_collection = Creator.getCollection(object_name)
-		if permissions.allowRead or permissions.viewAllRecords
-			if _object && _object_collection
-				query = {}
-				query_or = []
-				_object_name_key = _object.NAME_FIELD_KEY
-				objFields = Creator.getObject(object_name).fields
-				unreadable_fields = permissions.unreadable_fields || []
-				permissions_fields = {}
-				_.each objFields, (field,field_name)->
-					if unreadable_fields.indexOf(field_name) < 0
-						permissions_fields[field_name] = field					
-				fields = {_id: 1}
-				_.each permissions_fields, (field,field_name)->
-					if field.searchable and (field.type =='text' or field.type == 'textarea')
-						subquery = {}
-						fields[field_name] = 1
-						if field.is_name
-							_object_name_key = field_name
-						search_Keywords = searchText.trim().split(" ")
-						search_Keywords.forEach (keyword)->
-							keyword = Creator.convertSpecialCharacter(keyword)
-							subquery[field_name] = {$regex: keyword.trim()}
-							query_or.push subquery
-				if query_or.length>0
-					query.$or = query_or
-					query.space = {$in: [space]}
-					if not permissions.viewAllRecords
-						if permissions.allowRead
-							query.owner = userId
-					records = _object_collection.find(query, {fields: fields, sort: {modified: -1}, limit: 5}).fetch()
-					records.forEach (record)->
-						data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
+		_object_name_key = _object?.NAME_FIELD_KEY
+		if _object && _object_collection && _object_name_key
+			query = {}
+			search_Keywords = searchText.split(" ")
+			query_and = []
+			search_Keywords.forEach (keyword)->
+				subquery = {}
+				subquery[_object_name_key] = {$regex: keyword.trim()}
+				query_and.push subquery
+
+			query.$and = query_and
+			query.space = {$in: [space]}
+
+			fields = {_id: 1}
+			fields[_object_name_key] = 1
+
+			records = _object_collection.find(query, {fields: fields, sort: {modified: 1}, limit: 5})
+
+			records.forEach (record)->
+				data.push {_id: record._id, _name: record[_object_name_key], _object_name: object_name}
 	
 	return data
 

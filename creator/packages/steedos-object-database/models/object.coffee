@@ -50,6 +50,7 @@ Creator.Objects.objects =
 			defaultValue: false
 			omit: true
 		hidden:
+			label: "隐藏"
 			type: "boolean"
 			omit: true
 		description:
@@ -57,26 +58,32 @@ Creator.Objects.objects =
 			type: "textarea"
 			is_wide: true
 		fields:
+			label: "字段"
 			blackbox: true
 			omit: true
 			hidden: true
 		list_views:
+			label: "列表视图"
 			blackbox: true
 			omit: true
 			hidden: true
 		actions:
+			label: "操作"
 			blackbox: true
 			omit: true
 			hidden: true
 		permission_set:
+			label: "权限设置"
 			blackbox: true
 			omit: true
 			hidden: true
 		triggers:
+			label: "触发器"
 			blackbox: true
 			omit: true
 			hidden: true
 		custom:
+			label: "规则"
 			type: "boolean"
 			omit: true
 		owner:

@@ -22,11 +22,13 @@ Creator.Objects.cms_files =
 			type: "filesize"
 			disabled: true
 		versions:
+			label: "历史版本"
 			type: "file"
 			collection: "files"
 			multiple: true
 			omit: true
 		parent:
+			label: "起始版本"
 			type: "lookup"
 			omit: true
 			reference_to: ()->

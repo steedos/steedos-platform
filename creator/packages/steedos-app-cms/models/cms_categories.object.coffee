@@ -9,6 +9,7 @@ Creator.Objects.cms_categories =
 			searchable:true
 			index:true
 		site:
+			label:"站点"
 			type: "lookup"
 			reference_to: "cms_sites"
 		featured:
