@@ -86,4 +86,7 @@ Template.user.events
 
 	'click .edit-space-user': (event, template)->
 		template.$(".btn-edit-space-user").click()
+
+	'click .change-pwd': (event, template)->
+	
 		 
