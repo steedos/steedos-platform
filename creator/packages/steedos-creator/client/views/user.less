@@ -4,6 +4,15 @@
     position: relative;
     height: 100%;
     width: 100%;
+    overflow: auto;
+
+    .slds-template__container {
+        box-shadow: none !important;
+
+        #spaceUserForm {
+            padding: 16px;
+        }
+    }
 
     .media--rec-home {
         overflow: visible;
@@ -17,13 +26,23 @@
                 display: inline-block;
                 position: relative;
                 box-sizing: border-box;
-                background: red;
                 border: 5px solid rgb(243, 242, 242);
+                background: #f3f2f2;
                 border-radius: 50%;
                 overflow: hidden;
                 width: 100%;
                 height: 100%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                }
             }
+        }
+
+        .user-name {
+            font-size: 24px;
         }
     }
 }

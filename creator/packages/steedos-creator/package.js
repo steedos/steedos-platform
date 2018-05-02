@@ -149,6 +149,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/publications/object_listviews.coffee', 'server');
 	api.addFiles('server/publications/user_tabular_settings.coffee', 'server');
 	api.addFiles('server/publications/related_objects_records.coffee', 'server');
+	api.addFiles('server/publications/space_user_info.coffee', 'server');
 
 	api.addFiles('server/lib/permission_manager.coffee', 'server');
 	api.addFiles('server/lib/uuflow_manager.coffee', 'server');
