@@ -24,7 +24,12 @@ Template.user.helpers
 		return Creator.getCollection("space_users").findOne({space: spaceId, user: userId})
 
 	fields: ()->
-		return [["name", "email"], ["position", "organization"], ["manager", "mobile"], ["work_phone", "position"], ["company", "organizations"]]
+		schema = Creator.getSchema("space_users")._schema
+		fields = Creator.getSchema("space_users")._firstLevelSchemaKeys
+		fields.splice(_.indexOf(fields, "instances"), 1)
+		fields.splice(_.indexOf(fields, "sharing"), 1)
+		fields = Creator.getFieldsForReorder(schema, fields)
+		return fields
 
 	keyValue: (key)->
 		spaceId = Session.get "spaceId"
@@ -33,6 +38,9 @@ Template.user.helpers
 		if doc
 			console.log doc
 			return doc[key]
+	
+	showEditBtn: ()->
+		return Session.get("record_id") == Meteor.userId()
 
 	keyField: (key) ->
 		fields = Creator.getObject("space_users").fields
@@ -46,9 +54,14 @@ Template.user.helpers
 		avatar = Creator.getCollection("users").findOne({_id: userId})?.avatar
 		if avatar
 			return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?w=220&h=200&fs=160&avatar=#{avatar}")
+		else
+			return Steedos.absoluteUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
 
 
 Template.user.events 
+	'click .profile-pic': (event, template)->
+		$("#avator-upload").click()
+
 	'change #avator-upload': (event, template)->
 		file = event.target.files[0];
 		unless file
@@ -70,4 +83,7 @@ Template.user.events
 						else
 							$(document.body).removeClass('loading')
 				, 3000)
+
+	'click .edit-space-user': (event, template)->
+		template.$(".btn-edit-space-user").click()
 		 

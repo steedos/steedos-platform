@@ -13,6 +13,11 @@
 
 										<img src="{{avatarUrl}}" alt="">
 									</div>
+									<div class="circular">
+										<span class="slds-icon_container slds-icon-utility-photo photoIcon slds-text-align--center slds-button__icon forceIcon">
+											{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="photo"}}
+										</span>
+									</div>
 								</div>
 							</div>
 							<div class="slds-p-left--x-large slds-no-space user-name">
@@ -22,21 +27,23 @@
 									</b>
 								</div>
 							</div>
-							<div class="slds-grid slds-shrink-none slds-m-top--medium slds-container_right">
-								<div class="slds-align-middle">
-									<ul class="branding-actions slds-button-group slds-m-left--xx-small">
-										<li class="slds-button slds-button--neutral slds-truncate">
-											<a href="javascript:void(0);">
-												<div class="slds-truncate">编辑</div>
-											</a>
-										</li>
-									</ul>
+							{{#if showEditBtn}}
+								<div class="slds-grid slds-shrink-none slds-m-top--medium slds-container_right">
+									<div class="slds-align-middle">
+										<ul class="branding-actions slds-button-group slds-m-left--xx-small">
+											<li class="slds-button slds-button--neutral slds-truncate edit-space-user">
+												<a href="javascript:void(0);">
+													<div class="slds-truncate">编辑</div>
+												</a>
+											</li>
+										</ul>
+									</div>
 								</div>
-							</div>
+							{{/if}}
 						</div>
 					</div>
 					<div class="slds-grid slds-m-bottom--medium">
-						<div class="slds-form-element">
+						<div class="slds-form-element" style="display: none">
 							<div class="slds-form-element__control">
 								<div class="slds-file-selector slds-file-selector_files">
 									<div class="slds-file-selector__dropzone">
@@ -66,8 +73,7 @@
 							</div>
 							<div class="slds-form-element__control slds-grid itemBody">
 								<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
-									{{> creator_table_cell _id=doc._id val=(keyValue this) doc=doc field=(keyField this) field_name=this object_name="space_users"
-									disabled=true parent_view='record_details'}}
+									{{> creator_table_cell _id=doc._id val=(keyValue this) doc=doc field=(keyField this) field_name=this object_name="space_users" disabled=true parent_view='record_details' hideIcon=true}}
 								</span>
 							</div>
 							{{/if}}
@@ -79,4 +85,7 @@
 			</div>
 		</div>
 	</div>
+	{{#if showEditBtn}}
+		{{#CreatorAfModal formId="editSpaceUser" doc=doc._id meteormethod="af_update" class="btn btn-primary btn-edit-space-user hidden" collection="Creator.Collections.space_users" operation="update" dialogClass="modal-lg modal-body-zoom.includes" collectionName="人员" useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+	{{/if}}
 </template>
