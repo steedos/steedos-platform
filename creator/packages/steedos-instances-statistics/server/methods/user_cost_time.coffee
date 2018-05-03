@@ -54,19 +54,28 @@ UserCostTime::startStat = () ->
 	console.log "start_date", start_date
 	console.log "end_date", end_date
 
-	query = {}
-
-	query.space = spaceId
-	
-	# 不是 已删除 的
-	query.is_deleted = false
-
-	# 排除 取消申请 的
-	query.final_decision = {$ne: "terminated"}
-
-	# completed	已完成
-	# pending	进行中
-	query.state = {$in: ["pending", "completed"]}
+	query = {
+		"space": spaceId,
+		# 去掉 已删除 的
+		"is_deleted": false,
+		# 排除 取消申请 的
+		"final_decision": {$ne: "terminated"},
+		# state判断，进行中和已完成的
+		$or:[
+				# 进行中的申请单，全部查出来
+				{
+					"state": "pending"
+				},
+				# 审批结束的申请单，且最后的修改时间是在[开始，结束]区间
+				{
+					$and:[
+						{"state": "completed"},
+						{"modified": { $gt: start_date }},
+						{"modified": { $lt: end_date }}
+					]
+				}
+			]
+	}
 
 	space_users = db.space_users.find({space: spaceId},{fields: {user: 1}}).fetch()
 
@@ -156,13 +165,13 @@ UserCostTime::startStat = () ->
 				}
 			]
 
-
 	console.time("async_aggregate_cost_time")
 
 	# 管道在Unix和Linux中一般用于将当前命令的输出结果作为下一个命令的参数。
 	cursor = async_aggregate(pipeline, ins_approves)
 
 	if ins_approves?.length > 0
+		console.log "====================",ins_approves?.length
 
 		ins_approves_group = _.groupBy ins_approves, "is_finished"
 
@@ -203,9 +212,6 @@ UserCostTime::startStat = () ->
 
 	else
 		finished_approves = []
-
-
-	console.log "finished_approves?.length", finished_approves?.length
 	
 	# 整理存入数据库中
 	if finished_approves?.length > 0
@@ -219,8 +225,14 @@ UserCostTime::startStat = () ->
 					sum += minus
 			return sum
 
+		console.log 'finished_approves',finished_approves.length
+
 		# 循环已处理的审批步骤
 		finished_approves.forEach (approve)->
+
+			# console.log "=================================="
+			
+			# console.log "approve", approve
 
 			# 当月待处理的总耗时
 			inbox_time = sumTime(approve?.itemsSold)
@@ -232,27 +244,26 @@ UserCostTime::startStat = () ->
 				inbox_avg = 0
 
 			# 当月已处理的总耗时
-			month_finished_time = approve.month_finished_time / (1000*60*60)
+			month_finished_time = approve?.month_finished_time / (1000*60*60) || 0
 
 			# 当月已处理的平均耗时
 			if approve?.month_finished_count > 0
-				month_finished_avg = month_finished_time/approve?.month_finished_count
+				month_finished_avg = month_finished_time/approve?.month_finished_count || 0
 			else
 				month_finished_avg = 0
 
 			# 总平均耗时
 			if (approve?.month_finished_count + approve?.inbox_count) > 0
-				avg_time = (month_finished_time + inbox_time)/(approve?.month_finished_count + approve?.inbox_count)
+				avg_time = (month_finished_time + inbox_time)/(approve?.month_finished_count + approve?.inbox_count) || 0
 			else
 				avg_time = 0
 
 			# double-保留2位
-			approve.inbox_time = Math.round(inbox_time*100)/100
-			approve.month_finished_time = Math.round(month_finished_time*100)/100
-			approve.inbox_avg = Math.round(inbox_avg*100)/100
-			approve.month_finished_avg = Math.round(month_finished_avg*100)/100
-			approve.avg_time = Math.round(avg_time*100)/100
-
+			approve.inbox_time = Math.round(inbox_time*100)/100 || 0
+			approve.month_finished_time = Math.round(month_finished_time*100)/100 || 0
+			approve.inbox_avg = Math.round(inbox_avg*100)/100 || 0
+			approve.month_finished_avg = Math.round(month_finished_avg*100)/100 || 0
+			approve.avg_time = Math.round(avg_time*100)/100 || 0
 
 			userId = approve?._id?.handler
 
@@ -276,20 +287,17 @@ UserCostTime::startStat = () ->
 
 			delete approve._id
 
-			# 权限有问题，管理员无法查看所有记录，临时这样改
-
 			approve.owner = userId
-
-			# console.log "approve", approve
 
 			statCollection = Creator.Collections["instances_statistic"]
 			exist_obj = statCollection.findOne({
-				'user': approve.user,
 				'year': approve.year,
-				'month': approve.month
+				'month': approve.month,
+				'user': approve.user
 			})
+
 			if exist_obj
-				statCollection.update(
+				result = statCollection.update(
 					{'_id':exist_obj._id},
 					{$set:{
 						inbox_time: approve.inbox_time,
@@ -309,5 +317,6 @@ UserCostTime::startStat = () ->
 						}
 					})
 			else
-				statCollection.insert(approve)
+				result = statCollection.insert(approve)
+			
 	return
