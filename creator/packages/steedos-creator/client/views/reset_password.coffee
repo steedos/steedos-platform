@@ -28,7 +28,6 @@ Template.reset_password_modal.helpers
 
 Template.reset_password_modal.events 
 	"click .btn-confirm": (event, template) ->
-		debugger
 		doc = AutoForm.getFormValues("resetPwdForm").insertDoc
 		old_pwd = doc.old_pwd
 		new_pwd = doc.new_pwd
