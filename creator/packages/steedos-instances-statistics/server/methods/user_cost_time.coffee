@@ -55,18 +55,21 @@ UserCostTime::startStat = () ->
 	console.log "end_date", end_date
 
 	query = {
+		# 筛选出当前工作区
 		"space": spaceId,
-		# 去掉 已删除 的
+		# 去掉 已删除 的表单
 		"is_deleted": false,
-		# 排除 取消申请 的
+		# 排除 取消申请 的表单
 		"final_decision": {$ne: "terminated"},
-		# state判断，进行中和已完成的
+		# state判断，进行中和已完成的表单
 		$or:[
 				# 进行中的申请单，全部查出来
+				# 在pipeline中会再次筛选，筛选出步骤的开始日期比统计结束日期大的表单
 				{
 					"state": "pending"
 				},
 				# 审批结束的申请单，且最后的修改时间是在[开始，结束]区间
+				# 例如，统计2017年12月的申请单，则找12月1号-31号之间处理完成的申请单
 				{
 					$and:[
 						{"state": "completed"},
@@ -100,23 +103,28 @@ UserCostTime::startStat = () ->
 
 	pipeline = [
 				{
+					# 根据query的条件查询所有的intances
 					$match: query
 				},
 				{
 					# $project:修改输入文档的结构。可以用来重命名、增加或删除域，也可以用于创建计算结果以及嵌套文档。
+					# 将查询到的instances取traces字段的approves属性存为_approve
 					$project:{
 						"_approve": '$traces.approves'
 					}
 				},
 				{
 					# $unwind:将数组拆分，每条包含数组中的一个值。
+					# 取_approve[0]
 					$unwind: "$_approve"
 				},
 				{
 					# $unwind:将数组拆分，每条包含数组中的一个值。
+					# 两次unwind
 					$unwind: "$_approve"
 				},
 				{
+					# 再次过滤，此时结构为approve list
 					# $match:过滤   draft:表示草稿
 					$match: {
 						# 不包括 草稿、分发和转发
@@ -126,6 +134,7 @@ UserCostTime::startStat = () ->
 						# 或：
 						$or:[
 							# 审批未结束的申请单,开始日期 小于 统计结束日期
+							# 例如统计17年11月份的数据，某申请单11月创建，到12月份仍正在进行，则排除其approve
 							{
 								$and:[
 									{"_approve.is_finished": false},
@@ -170,9 +179,12 @@ UserCostTime::startStat = () ->
 	# 管道在Unix和Linux中一般用于将当前命令的输出结果作为下一个命令的参数。
 	cursor = async_aggregate(pipeline, ins_approves)
 
-	if ins_approves?.length > 0
-		console.log "====================",ins_approves?.length
+	
+	console.log "====================",ins_approves?.length
 
+	if ins_approves?.length > 0
+
+		# 将查询到的approve分两个组，一组是已完成，一组是正在进行的
 		ins_approves_group = _.groupBy ins_approves, "is_finished"
 
 		# 审批完成的步骤
@@ -188,11 +200,12 @@ UserCostTime::startStat = () ->
 				inbox_approve = _.find(inbox_approves, (item ,index)->
 					# 待审批步骤里面的人员和审批完成步骤里面的人员一致
 					if item._id?.handler == finished_approve._id?.handler
+						# 从待审核数组中将该user剪切掉
 						inbox_approves.splice(index,1)
 						return item
 				)
 
-				# 本月待处理数量
+				# 本月待处理数量 = 在待审核数组中，元素的当月数量
 				finished_approve.inbox_count = inbox_approve?.month_finished_count||0
 
 				delete finished_approve.is_finished	# 本来就是已完成
@@ -216,12 +229,12 @@ UserCostTime::startStat = () ->
 	# 整理存入数据库中
 	if finished_approves?.length > 0
 
-		# 未处理文件总耗时，截止到当月的最后一天
+		# 未处理文件总耗时，已 end_date 为判断
 		sumTime = (itemsSold)->
 			sum = 0
 			if itemsSold?.length > 0
 				itemsSold.forEach (sold)->
-					minus = (end_date - sold?.start_date) / (1000*60*60)
+					minus = (end_date - sold?.start_date) / (1000*60*60) || 0
 					sum += minus
 			return sum
 

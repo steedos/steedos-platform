@@ -11,7 +11,7 @@ Template.select_fields.onCreated ->
             permission_fields = Creator.getFields(Session.get("object_name"))
 
             permission_fields = _.map permission_fields, (f)->
-                if !object_fields[f].hidden and !object_fields[f].omit
+                if !object_fields[f].hidden
                     return f
                 else
                     return undefined
