@@ -60,7 +60,8 @@ Template.user.helpers
 
 Template.user.events 
 	'click .profile-pic': (event, template)->
-		$("#avator-upload").click()
+		if Session.get("record_id") == Meteor.userId()
+			$("#avator-upload").click()
 
 	'change #avator-upload': (event, template)->
 		file = event.target.files[0];
