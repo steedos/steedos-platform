@@ -31,8 +31,8 @@ checkObjectPermission = (context, redirect)->
 		if Creator.bootstrapLoaded.get() and Session.get("spaceId")
 			c.stop()
 			object_name = context.params.object_name
-			objs = Creator.getVisibleAppsObjects()
-			if objs.indexOf(object_name) < 0
+			allowRead = Creator.getObject(object_name)?.permissions?.get()?.allowRead
+			unless allowRead
 				FlowRouter.go "/app"
 
 initLayout = ()->
