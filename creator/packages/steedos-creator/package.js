@@ -252,6 +252,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/report_settings.coffee', 'client');
 	api.addFiles('client/views/report_settings.less', 'client');
 
+	api.addFiles('client/views/reset_password.html', 'client');
+	api.addFiles('client/views/reset_password.coffee', 'client');
+	api.addFiles('client/views/reset_password.less', 'client');
+
 	api.addFiles('client/views/table_cell.html', 'client');
 	api.addFiles('client/views/table_cell.coffee', 'client');
 	api.addFiles('client/views/table_cell.less', 'client');

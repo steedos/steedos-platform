@@ -88,5 +88,6 @@ Template.user.events
 		template.$(".btn-edit-space-user").click()
 
 	'click .change-pwd': (event, template)->
+		Modal.show("reset_password_modal")
 	
 		 
