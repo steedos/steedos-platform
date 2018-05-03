@@ -64,26 +64,27 @@ Template.user.events
 			$("#avator-upload").click()
 
 	'change #avator-upload': (event, template)->
-		file = event.target.files[0];
-		unless file
-			return
-		$("body").addClass("loading");
-		db.avatars.insert file, (error, fileDoc)->
-			if error
-				console.error error
-				toastr.error t(error.reason)
-				$(document.body).removeClass('loading')
-			else
-				# Inserted new doc with ID fileDoc._id, and kicked off the data upload using HTTP
-				# 理论上这里不需要加setTimeout，但是当上传图片很快成功的话，定阅到Avatar变化时可能请求不到上传成功的图片
-				setTimeout(()->
-					Meteor.call "updateUserAvatar", fileDoc._id, (error, result)->
-						if result?.error
-							$(document.body).removeClass('loading')
-							toastr.error t(result.message)
-						else
-							$(document.body).removeClass('loading')
-				, 3000)
+		if Session.get("record_id") == Meteor.userId()
+			file = event.target.files[0];
+			unless file
+				return
+			$("body").addClass("loading");
+			db.avatars.insert file, (error, fileDoc)->
+				if error
+					console.error error
+					toastr.error t(error.reason)
+					$(document.body).removeClass('loading')
+				else
+					# Inserted new doc with ID fileDoc._id, and kicked off the data upload using HTTP
+					# 理论上这里不需要加setTimeout，但是当上传图片很快成功的话，定阅到Avatar变化时可能请求不到上传成功的图片
+					setTimeout(()->
+						Meteor.call "updateUserAvatar", fileDoc._id, (error, result)->
+							if result?.error
+								$(document.body).removeClass('loading')
+								toastr.error t(result.message)
+							else
+								$(document.body).removeClass('loading')
+					, 3000)
 
 	'click .edit-space-user': (event, template)->
 		template.$(".btn-edit-space-user").click()
