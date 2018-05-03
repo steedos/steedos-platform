@@ -29,22 +29,18 @@ if Meteor.isServer
 		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1}}).fetch()
 		apps = []
 		if Creator.isSpaceAdmin(spaceId, userId)
-			if psetsAdmin?.assigned_apps and psetsUser?.assigned_apps
-				psetsAdmin?.assigned_apps = _.union(psetsAdmin?.assigned_apps,psetsUser?.assigned_apps)
-				psetBase = psetsAdmin
-			if !psetsUser?.assigned_apps
-				psetBase = psetsUser
+			return []
 		else
 			psetBase = psetsUser
-		if psetBase?.assigned_apps
-			apps = _.union apps, psetBase.assigned_apps
-		_.each psets, (pset)->
-			if !pset.assigned_apps
-				return
-			if pset.name == "admin" ||  pset.name == "user"
-				return
-			apps = _.union apps, pset.assigned_apps
-		return _.without(_.uniq(apps),undefined,null)
+			if psetBase?.assigned_apps
+				apps = _.union apps, psetBase.assigned_apps
+			_.each psets, (pset)->
+				if !pset.assigned_apps
+					return
+				if pset.name == "admin" ||  pset.name == "user"
+					return
+				apps = _.union apps, pset.assigned_apps
+			return _.without(_.uniq(apps),undefined,null)
 
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}

@@ -22,6 +22,7 @@ InstancesStat.costTime = (space)->
 	userCostTime = new UserCostTime(space)
 	userCostTime.startStat()
 	logger.info "[#{new Date()}] end run InstancesStat.costTime"
+	return
 
 
 InstancesStat.run = ()->
@@ -49,6 +50,7 @@ Meteor.startup ->
 InstancesStat.init = (space, year, month)->
 	userCostTime = new UserCostTime(space, year, month)
 	userCostTime.startStat()
+	return
 	
 # InstancesStat.test('Af8eM6mAHo7wMDqD3')
 InstancesStat.test = (space) ->

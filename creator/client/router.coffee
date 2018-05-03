@@ -7,7 +7,7 @@ FlowRouter.route '/',
 				if Steedos.isMobile()
 					FlowRouter.go '/app/menu'
 				else
-					FlowRouter.go '/home'
+					FlowRouter.go '/app'
 
 
 # Meteor.startup ->

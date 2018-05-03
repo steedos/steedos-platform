@@ -82,7 +82,7 @@
 						</ul>
 						<div id="creator-tabular" class="slds-tabs_default__content creator-view-tabs-content slds-hide" role="tabpanel">
 							{{#each related_list}}
-								<div class="forceRelatedListCardDesktop related-object-tabular">
+								<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
 									<div class="slds-card__header slds-grid">
 										<header class="slds-media slds-media_center slds-has-flexi-truncate">
 											<div class="slds-media__figure">
@@ -120,6 +120,7 @@
 							{{/each}}
 						</div>
 						<div id="creator-quick-form" class="slds-tabs_default__content creator-view-tabs-content slds-show" role="tabpanel">
+							<div class="slds-card slds-card_boundary ">
 							{{#if detail_info_visible}}
 								{{#if showForm}}
 									{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
@@ -161,13 +162,13 @@
 																<div class="slds-grid view-page-section-row">
 																	{{#each this}}
 																		<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-																			<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+																			<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput ">
 																				{{#if this}}
 																					<div class="test-id__field-label-container">
 																						<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
 																					</div>
 																					<div class="slds-form-element__control slds-grid itemBody">
-																						<span class="test-id__field-value slds-form-element__static slds-grow">
+																						<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
 																							{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true}}
 																						</span>
 																					</div>
@@ -186,6 +187,7 @@
 									{{/autoForm}}
 								{{/if}}
 							{{/if}}
+							</div>
 						</div>
 					</div>
 				</div>

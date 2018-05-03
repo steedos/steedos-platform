@@ -17,19 +17,28 @@ set_sessions = (context, redirect)->
 	Session.set("object_name", context.params.object_name)
 	Session.set("record_id", context.params.record_id)
 
+checkAppPermission = (context, redirect)->
+	Tracker.autorun (c)->
+		if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+			c.stop()
+			app_id = context.params.app_id
+			apps = _.pluck(Creator.getVisibleApps(),"_id")
+			if apps.indexOf(app_id) < 0
+				FlowRouter.go "/app"
+
+checkObjectPermission = (context, redirect)->
+	Tracker.autorun (c)->
+		if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+			c.stop()
+			object_name = context.params.object_name
+			objs = Creator.getVisibleAppsObjects()
+			if objs.indexOf(object_name) < 0
+				FlowRouter.go "/app"
+
 initLayout = ()->
 	if Steedos.isMobile() and (!$(".wrapper").length or !$("#home_menu").length)
 		BlazeLayout.render Creator.getLayout(),
 			main: "homeMenu"
-
-FlowRouter.route '/home',
-	triggersEnter: [ checkUserSigned, initLayout ],
-	action: (params, queryParams)->
-		Tracker.autorun (c)->
-			if Creator.bootstrapLoaded.get() and Session.get("spaceId")
-				c.stop()
-				firstApp = _.keys(Creator.Apps)[0]
-				FlowRouter.go '/app/' + firstApp
 
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
@@ -37,15 +46,12 @@ FlowRouter.route '/app',
 		if Steedos.isMobile()
 			FlowRouter.go '/app/menu'
 		else
-			app_id = Session.get("app_id")
-			if !app_id
-				app_id = "crm"
-
-			object_name = Session.get("object_name")
-			if object_name
-				FlowRouter.go "/app/" + app_id + "/" + object_name + "/grid"
-			else
-				FlowRouter.go "/app/" + app_id
+			Tracker.autorun (c)->
+				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+					c.stop()
+					apps = Creator.getVisibleApps()
+					firstApp = apps[0]
+					FlowRouter.go '/app/' + firstApp?._id
 
 FlowRouter.route '/app/menu',
 	triggersEnter: [ checkUserSigned, initLayout ],
@@ -53,7 +59,7 @@ FlowRouter.route '/app/menu',
 		return
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned, initLayout ],
+	triggersEnter: [ checkUserSigned, checkAppPermission, initLayout ],
 	action: (params, queryParams)->
 		if Steedos.isMobile() 
 			if $(".content-wrapper #object_menu").length == 0
@@ -112,7 +118,7 @@ FlowRouter.route '/app/:app_id/reports/view/:record_id',
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
-	triggersEnter: [checkUserSigned, set_sessions, initLayout]
+	triggersEnter: [checkUserSigned, checkObjectPermission, set_sessions, initLayout]
 
 objectRoutes.route '/list/switch',
 	action: (params, queryParams)->
@@ -171,7 +177,7 @@ objectRoutes.route '/view/:record_id',
 				main: main
 
 FlowRouter.route '/app/:app_id/:object_name/:template/:list_view_id',
-	triggersEnter: [ checkUserSigned, initLayout ],
+	triggersEnter: [ checkUserSigned, checkObjectPermission, initLayout ],
 	action: (params, queryParams)->
 		if Session.get("object_name") != FlowRouter.getParam("object_name")
 			Session.set("list_view_id", null)

@@ -36,7 +36,10 @@ Package.onUse(function(api) {
 	api.use('steedos:logger');
 	api.use('steedos:base');
 
+	api.addFiles('client/methods/call_statistics.coffee', 'client');	
+
 	api.addFiles('server/lib/instances_stat.coffee', 'server');
+	api.addFiles('server/methods/init_statistics.coffee', 'server');	
 	api.addFiles('server/methods/user_cost_time.coffee', 'server');
 
 	// api.addFiles('server/models/models.coffee');

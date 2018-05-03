@@ -1,6 +1,7 @@
 body {
 
 	background-size: cover;
+	background-color: #158bc6 !important;
 	
 	button {
 		margin-right: 0px;
@@ -11,18 +12,18 @@ body {
 
 .steedos.fixed {
 	.content-wrapper {
-		background: transparent;
-		//background: linear-gradient(to top, #d5d5d5 0, #f8f8f8);
 		top: 90px;
-		background: rgba(255, 255, 255, 0.90);
+		background: #efeff4;
+		background: rgba(255, 255, 255, 0.95);
 	}
 	.dx-widget {
 		font-size: 13px;
 	}
 	.slds-global-header_container {
 		z-index: 1000;
-		/*box-shadow: rgba(0,0,0,0.3) 0 1px 2px, rgba(255,255,255,0.2) 0 -1px 0 inset;*/
-		background: rgba(255, 255, 255, 0.90);
+		background: #fbfbfb;
+		background: linear-gradient(to top, rgba(255, 255, 255, 0.7) 0, rgb(255, 255, 255));
+		border-bottom: 1px solid #a1a0a0;
 		transition: all 1s ease-in-out 0.5s;
 
 		.slds-global-header {
@@ -38,10 +39,18 @@ body {
 			}
 		}
 		.slds-context-bar {
-			background: transparent;
+			border-bottom: 0;
+		    padding: 0px 0px 0px 1rem;
+		    background: transparent;
+		    a {
+		    	text-decoration: none !important;
+		    }
 		}
 		.slds-context-bar__item:hover:after {
 			background: transparent !important;
+		}
+		.slds-context-bar__item.slds-is-active:before {
+			height: 0;
 		}
 	}
 
@@ -51,9 +60,6 @@ body {
 		border-bottom: 0;
 		background: transparent;
 		padding-bottom: 0.5em
-	}
-	.slds-context-bar {
-	    padding: 0px 0px 0px 1rem;
 	}
 
 	.slds-form-element {
@@ -106,9 +112,10 @@ body {
 			margin: 0 1em;
 		}
 		.slds-tabs_default__content {
-			border: 1px solid #dddbda;
-			background: white;
-			padding: 0.5em 0;
+			padding: 1em 0;
+		}
+		#viewRecordForm {
+			padding: 1em 0.5em;
 		}
 	}
 	
