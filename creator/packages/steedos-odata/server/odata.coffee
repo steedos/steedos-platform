@@ -178,13 +178,12 @@ Meteor.startup ->
 					else if is_standard and !is_enterprise and !is_professional
 						createQuery.limit = 1000
 				unreadable_fields = permissions.unreadable_fields || []
-				fields = Creator.getObject(key).fields
 				if createQuery.projection
 					projection = {}
 					_.keys(createQuery.projection).forEach (key)->
 						if _.indexOf(unreadable_fields, key) < 0
-							if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-								projection[key] = 1
+							#if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+							projection[key] = 1
 					createQuery.projection = projection
 				if not createQuery.projection or !_.size(createQuery.projection)
 					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
@@ -321,13 +320,13 @@ Meteor.startup ->
 					recent_view_records_ids = _.first(recent_view_records_ids,createQuery.limit)
 				createQuery.query._id = {$in:recent_view_records_ids}
 				unreadable_fields = permissions.unreadable_fields || []
-				fields = Creator.getObject(key).fields
+			#	fields = Creator.getObject(key).fields
 				if createQuery.projection
 					projection = {}
 					_.keys(createQuery.projection).forEach (key)->
 						if _.indexOf(unreadable_fields, key) < 0
-							if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-								projection[key] = 1
+						#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+							projection[key] = 1
 					createQuery.projection = projection
 				if @queryParams.$top isnt '0'
 					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
@@ -485,13 +484,13 @@ Meteor.startup ->
 					else
 						createQuery.query.space =  @urlParams.spaceId
 					unreadable_fields = permissions.unreadable_fields || []
-					fields = Creator.getObject(key).fields
+					#fields = Creator.getObject(key).fields
 					if createQuery.projection
 						projection = {}
 						_.keys(createQuery.projection).forEach (key)->
 							if _.indexOf(unreadable_fields, key) < 0
-								if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-									projection[key] = 1
+								#if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								projection[key] = 1
 						createQuery.projection = projection
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
