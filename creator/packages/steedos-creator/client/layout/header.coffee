@@ -6,8 +6,12 @@ Template.creatorHeader.helpers
 
 
 	avatarURL: (avatar,w,h,fs) ->
-		#return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?w=#{w}&h=#{h}&fs=#{fs}&avatar=#{avatar}");
-		return Steedos.absoluteUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
+		userId = Meteor.userId()
+		avatar = Creator.getCollection("users").findOne({_id: userId})?.avatar
+		if avatar
+			return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?w=220&h=200&fs=160&avatar=#{avatar}")
+		else
+			return Steedos.absoluteUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
 
 	displayName: ->
 		if Meteor.user()
