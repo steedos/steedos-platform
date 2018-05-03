@@ -3514,3 +3514,34 @@
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp;
 }
+
+@-webkit-keyframes rotate {
+  from {
+    webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  to {
+    webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  to {
+    webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation-name: rotate;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-name: rotate;
+}

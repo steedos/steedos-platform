@@ -226,6 +226,7 @@ Template.creator_list_wrapper.events
 		$(".btn-delete-list-view").click()
 
 	'click .btn-refresh': (event, template)->
+		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		Template["creator_#{FlowRouter.getParam('template')}"]?.refresh()
 
 

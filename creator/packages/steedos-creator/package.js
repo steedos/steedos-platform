@@ -173,6 +173,8 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/sidebar.html', 'client');
 	api.addFiles('client/layout/sidebar.coffee', 'client');
 	api.addFiles('client/layout/sidebar.less', 'client');
+	api.addFiles('client/layout/loading.html', 'client');
+	api.addFiles('client/layout/loading.less', 'client');
 
 	api.addFiles('client/mobile/admin.html', 'client');
 	api.addFiles('client/mobile/admin.coffee', 'client');
