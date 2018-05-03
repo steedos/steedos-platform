@@ -84,6 +84,7 @@ Creator.baseObject =
 			label: "授权组织"
 			type: "[text]"
 			omit:true
+			hidden:true
 		"sharing.$.r":
 			label: "来自规则"
 			type: "text"

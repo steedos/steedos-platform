@@ -59,7 +59,7 @@ Creator.Objects.object_listviews =
 			type: "Object"
 
 		"sort.$.field_name":
-			label: "字段"
+			label: "排序字段"
 			type: "lookup"
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
@@ -74,7 +74,7 @@ Creator.Objects.object_listviews =
 				return _options
 
 		"sort.$.order":
-			label: "顺序"
+			label: "排序方式"
 			type: "select"
 			defaultValue: "asc"
 			options: "正序:asc,倒序:desc"

@@ -105,9 +105,10 @@ Creator.Objects.instances =
 
 		"record_ids.$.o":
 			type: "text"
-
+			hidden:true
 		"record_ids.$.ids":
 			type: "[text]"
+			hidden:true
 
 	list_views:
 		all:
