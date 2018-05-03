@@ -123,3 +123,5 @@ steedos:object-database
 steedos:instance-record-queue
 
 steedos:instances-statistics
+
+http@1.2.9
