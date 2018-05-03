@@ -4,16 +4,19 @@ Template.reset_password_modal.helpers
 		schema =
 			old_pwd:
 				type: String
+				label: "旧密码"
 				autoform:
 					type: "password"
 
 			new_pwd:
 				type: String
+				label: "新密码"
 				autoform:
 					type: "password"
 
 			confirm_pwd:
 				type: String
+				label: "确认密码"
 				autoform:
 					type: "password"
 
