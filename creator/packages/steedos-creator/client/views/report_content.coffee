@@ -166,6 +166,7 @@ getSelectFieldLabel = (value, options)->
 
 pivotGridChart = null
 gridLoadedArray = null
+maxLoadCount = 10000
 
 renderChart = (self)->
 	record_id = Session.get("record_id")
@@ -330,8 +331,7 @@ renderTabularReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	pageSize = 10000
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->
@@ -364,7 +364,11 @@ renderTabularReport = (reportObject)->
 					self.is_chart_open.set(false)
 					self.is_chart_disabled.set(true)
 					$('#pivotgrid-chart').hide()
-					return
+					
+					Meteor.defer ()->
+						totalCount = datagrid.getDataSource()._store._dataSource?._totalCount
+						if totalCount > maxLoadCount
+							toastr.warning("统计数据达#{totalCount}条记录，已超出限制，以下统计结果基于前#{maxLoadCount}条记录")
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
@@ -514,8 +518,7 @@ renderSummaryReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	pageSize = 10000
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->
@@ -555,7 +558,12 @@ renderSummaryReport = (reportObject)->
 						self.is_chart_open.set(false)
 						self.is_chart_disabled.set(true)
 						$('#pivotgrid-chart').hide()
-					return
+						
+					Meteor.defer ()->
+						debugger
+						totalCount = datagrid.getDataSource()._store._dataSource?._totalCount
+						if totalCount > maxLoadCount
+							toastr.warning("统计数据达#{totalCount}条记录，已超出限制，以下统计结果基于前#{maxLoadCount}条记录")
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
@@ -712,8 +720,7 @@ renderMatrixReport = (reportObject)->
 	_.every reportFields, (n)->
 		n.sortingMethod = Creator.sortingMethod.bind({key:"value"})
 	
-	pageSize = 10000
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{pageSize}&$count=true"
+	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->
@@ -763,7 +770,11 @@ renderMatrixReport = (reportObject)->
 						self.is_chart_open.set(false)
 						self.is_chart_disabled.set(true)
 						$('#pivotgrid-chart').hide()
-					return
+					
+					Meteor.defer ()->
+						totalCount = pivotGrid.getDataSource()._store._dataSource._totalCount
+						if totalCount > maxLoadCount
+							toastr.warning("统计数据达#{totalCount}条记录，已超出限制，以下统计结果基于前#{maxLoadCount}条记录")
 				errorHandler: (error) ->
 					if error.httpStatus == 404 || error.httpStatus == 400
 						error.message = t "creator_odata_api_not_found"
