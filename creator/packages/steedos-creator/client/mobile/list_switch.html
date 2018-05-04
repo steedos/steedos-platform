@@ -3,40 +3,25 @@
         <header class="mobile-template-header">
             <div class="forceHeaderLayout">
                 <div class="bLeft list-switch-back">
-                    <i class="ion ion-android-arrow-back"></i>
+                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+                    <!-- {{object_label}} -->
                 </div>
                 {{#if allowCreate}}
                     <div class="bRight add-list-item">
-                        <i class="ion ion-plus"></i>
+                        {{> steedos_icon class="slds-icon" source="utility-sprite" name="add"}}
                     </div>
                 {{else}}
                     <div class="bRight"></div>
                 {{/if}}
-                <div class="bBody">
-                    {{object_label}}
+                <div class="bBody list-name">
+                    {{list_view_label}}
+                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
+                    <div id="action-sheet"></div>
                 </div>
             </div>
         </header>
         <div class="mobile-template-content">
-            <div class="list-title-container">
-                <div class="bLeft">
-                    {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object_icon}}
-                </div>
-                <div class="bBody">
-                    <h2 class="list-name truncate">
-                        <span class="title">
-                            {{list_view_label}}
-                        </span>
-                        <span class="slds-icon_container slds-icon-utility-switch slds-button__icon">
-                            {{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
-                        </span>
-                    </h2>
-                    <div id="action-sheet"></div>
-                </div>
-            </div>
-            <div class="mobile-template-content" style="top: 52px">
-                <div id="gridContainer" style="overflow: hidden"></div>
-            </div>
+            <div id="gridContainer" style="overflow: hidden"></div>
         </div>
     </div>
     {{#CreatorAfModal formId="addListItem" class="btn btn-primary btn-add-list-item hidden" meteormethod="af_insert" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}

@@ -6,6 +6,12 @@ helpers =
 	formatName: (name) ->
 		return name?.replace(/_/ig, "-")
 
+	getSourceName: (source)->
+		if source?.endsWith("-sprite")
+			return source.substr(0, source.length-7)
+		return source
+
+
 Template.steedos_icon.helpers helpers
 
 Template.steedos_button_icon.helpers helpers

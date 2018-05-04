@@ -7,6 +7,7 @@ Meteor.startup ->
 
 	SimpleSchema.extendOptions({filtersFunction: Match.Optional(Match.OneOf(Function, String))})
 	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Match.OneOf(Function, String))})
+	SimpleSchema.extendOptions({createFunction: Match.Optional(Match.OneOf(Function, String))})
 
 	if Meteor.isServer
 		_.each Creator.Objects, (obj, object_name)->

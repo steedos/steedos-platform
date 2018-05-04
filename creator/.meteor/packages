@@ -125,3 +125,4 @@ steedos:instance-record-queue
 steedos:instances-statistics
 
 http@1.2.9
+aldeed:moment-timezone

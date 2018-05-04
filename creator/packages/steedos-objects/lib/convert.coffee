@@ -124,22 +124,30 @@ Meteor.startup ()->
 
 				optionsFunction = field.optionsFunction
 				reference_to = field.reference_to
+				createFunction = field.createFunction
 
 				if optionsFunction && _.isFunction(optionsFunction)
 					field._optionsFunction = optionsFunction.toString()
 
 				if reference_to && _.isFunction(reference_to)
 					field._reference_to = reference_to.toString()
+
+				if createFunction && _.isFunction(createFunction)
+					field._createFunction = createFunction.toString()
 			else
 
 				optionsFunction = field._optionsFunction
 				reference_to = field._reference_to
+				createFunction = field._createFunction
 
 				if optionsFunction && _.isString(optionsFunction)
 					field.optionsFunction = Creator.eval("(#{optionsFunction})")
 
 				if reference_to && _.isString(reference_to)
 					field.reference_to = Creator.eval("(#{reference_to})")
+
+				if createFunction && _.isString(createFunction)
+					field.createFunction = Creator.eval("(#{createFunction})")
 
 			if Meteor.isServer
 				defaultValue = field.defaultValue

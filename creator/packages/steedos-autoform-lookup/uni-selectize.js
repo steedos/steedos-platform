@@ -2,7 +2,7 @@
 /* eslint strict: 0 */
 /* jshint strict: false */
 
-UniSelectize = function (options, template, filtersFunction, optionsFunction) {
+UniSelectize = function (options, template, filtersFunction, optionsFunction, createFunction) {
 	this.items = new ReactiveVar([]);
 	this.itemsSelected = new ReactiveVar([]);
 	this.itemsUnselected = new ReactiveVar([]);
@@ -33,6 +33,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction) {
 	this.dependOn = options.dependOn;
 	this.optionsSort = options.optionsSort
 	this.filtersFunction = filtersFunction;
+	this.createFunction = createFunction;
 
 	this.initialized = new ReactiveVar(0);
 
@@ -229,7 +230,6 @@ UniSelectize.prototype.itemsAutorun = function () {
 	var items = this.items.get();
 	var itemsSelected = [];
 	var itemsUnselected = [];
-
 	_.each(items, function (item) {
 		if (item.selected) {
 			itemsSelected.push(item);
@@ -387,35 +387,39 @@ UniSelectize.prototype.insertItem = function (item) {
 };
 
 UniSelectize.prototype.createItem = function () {
-	var self = this;
-	var template = this.template;
-	var searchText = this.searchText.get();
-
-	if (!searchText) {
-		return false;
+	cf = this.createFunction
+	if(_.isFunction(cf)){
+		cf(this)
 	}
-
-	var item = {
-		label: searchText,
-		value: searchText,
-		selected: true
-	};
-
-	if (template.uniSelectize.createMethod) {
-		Meteor.call(template.uniSelectize.createMethod, searchText, searchText, function (error, value) {
-			if (error) {
-				console.error('universe selectize create method error:', error);
-				return;
-			}
-
-			Meteor.defer(function () {
-				item.value = value || item.value;
-				self.insertItem(item);
-			});
-		});
-	} else {
-		this.insertItem(item);
-	}
+	// var self = this;
+	// var template = this.template;
+	// var searchText = this.searchText.get();
+	//
+	// if (!searchText) {
+	// 	return false;
+	// }
+	//
+	// var item = {
+	// 	label: searchText,
+	// 	value: searchText,
+	// 	selected: true
+	// };
+	//
+	// if (template.uniSelectize.createMethod) {
+	// 	Meteor.call(template.uniSelectize.createMethod, searchText, searchText, function (error, value) {
+	// 		if (error) {
+	// 			console.error('universe selectize create method error:', error);
+	// 			return;
+	// 		}
+	//
+	// 		Meteor.defer(function () {
+	// 			item.value = value || item.value;
+	// 			self.insertItem(item);
+	// 		});
+	// 	});
+	// } else {
+	// 	this.insertItem(item);
+	// }
 
 	if (this.multiple) {
 		this.inputFocus();

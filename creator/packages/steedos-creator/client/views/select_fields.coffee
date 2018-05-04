@@ -122,7 +122,7 @@ Template.select_fields.events
                 console.log "error", error
                 toastr.error(error.reason)
             if result
-                toastr.success("List view updated.")
+                toastr.success(t('creator_listview_update'))
                 
             Modal.hide(template)
 

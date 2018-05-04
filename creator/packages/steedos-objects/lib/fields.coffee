@@ -36,11 +36,9 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			fs.autoform.afFieldInput =
 				type: "bootstrap-datetimepicker"
+				timezoneId: "utc"
 				dateTimePickerOptions:
 					format: "YYYY-MM-DD"
-			# fs.autoform.afFieldInput.type = "bootstrap-datetimepicker"
-			# fs.autoform.afFieldInput.dateTimePickerOptions =
-			# 	format: "YYYY-MM-DD"
 		else if field.type == "datetime"
 			fs.type = Date
 			fs.autoform.afFieldInput =
@@ -88,6 +86,36 @@ Creator.getObjectSchema = (obj) ->
 				fs.optionsFunction = field.optionsFunction
 
 			if field.reference_to
+
+				if _.isBoolean(field.create)
+					fs.autoform.create = field.create
+				if Meteor.isClient
+					if field.createFunction && _.isFunction(field.createFunction)
+						console.log("fs.createFunction", field.createFunction)
+						fs.createFunction = field.createFunction
+					else
+						if _.isString(field.reference_to)
+							_ref_obj = Creator.Objects[field.reference_to]
+							if _ref_obj?.permissions?.allowCreate
+								fs.autoform.create = true
+								fs.createFunction = (lookup_field)->
+									Modal.show("CreatorObjectModal", {
+										collection: "Creator.Collections.#{field.reference_to}",
+										formId: "new#{field.reference_to}",
+										object_name: "#{field.reference_to}",
+										operation: "insert",
+										onSuccess: (operation, result)->
+											console.log("result", result)
+											object = Creator.getObject(result.object_name)
+											if result.object_name == "objects"
+												console.log("[{label: result.value.label, value: result.value.name}]", [{label: result.value.label, value: result.value.name, icon: result.value.icon}])
+												console.log("result.value.name", result.value.name)
+												lookup_field.addItems([{label: result.value.label, value: result.value.name, icon: result.value.icon}], result.value.name)
+											else
+												lookup_field.addItems([{label: result.value[object.NAME_FIELD_KEY] || result.value.label || result.value.name, value: result._id}], result._id)
+									})
+							else
+								fs.autoform.create = false
 
 				if field.reference_sort
 					fs.autoform.optionsSort = field.reference_sort

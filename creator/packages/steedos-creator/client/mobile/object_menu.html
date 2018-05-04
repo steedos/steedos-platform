@@ -3,7 +3,7 @@
         <header class="mobile-template-header">
             <div class="forceHeaderLayout">
                 <div class="bLeft object-menu-back">
-                    <i class="ion ion-android-arrow-back"></i>
+                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="home"}}
                 </div>
                 <div class="bRight"></div>
                 <div class="bBody">
@@ -12,26 +12,20 @@
             </div>
         </header>
         <div class="mobile-template-content">
-            <div class="weui-panel">
-                <div class="weui-panel__bd">
-                    <div class="weui-media-box weui-media-box_small-appmsg">
-                        <div class="weui-cells">
-                            {{#each app.objects}}
-                                {{#if object_enabled this}}
-                                <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
-                                    <div class="weui-cell__hd">
-                                        {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
-                                    </div>
-                                    <div class="weui-cell__bd weui-cell_primary">
-                                        <p>{{object_label this}}</p>
-                                    </div>
-                                    <span class="weui-cell__ft"></span>
-                                </a>
-                                {{/if}}
-                            {{/each}}
+            <div class="weui-cells">
+                {{#each app.objects}}
+                    {{#if object_enabled this}}
+                    <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
+                        <div class="weui-cell__hd">
+                            {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
                         </div>
-                    </div>
-                </div>
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <p>{{object_label this}}</p>
+                        </div>
+                        <span class="weui-cell__ft"></span>
+                    </a>
+                    {{/if}}
+                {{/each}}
             </div>
         </div>
     </div> 

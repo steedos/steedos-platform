@@ -102,7 +102,7 @@
 											  role="option">
 											{{!----}}
 											{{#if isShowIcon}}
-											<span class="slds-media__figure">
+												<span class="slds-media__figure">
 												<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
 													{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 												</span>
@@ -115,6 +115,22 @@
 										</span>
 									</li>
 								{{/each}}
+								{{#if canCreate}}
+								<li role="presentation">
+									<span class="createNew slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+										  role="option">
+										<span class="slds-media__figure">
+											<span class="slds-icon_container steedos-icon-add slds-button__icon">
+												{{> steedos_icon class="slds-icon slds-icon_small" source="utility-sprite" name="add"}}
+											</span>
+										</span>
+
+										<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
+											<span class="slds-listbox__option-text slds-listbox__option-text_entity">新建{{createTitle}}</span>
+										</span>
+									</span>
+								</li>
+								{{/if}}
 							</ul>
 						</div>
 					</div>
@@ -122,14 +138,15 @@
 				{{#if isMultiple}}
 				{{!--已选中的(多选)--}}
 					<div id="listbox-selections-unique-id" role="listbox" aria-orientation="horizontal">
-						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small slds-selected-items-{{id}}" role="group"
+						<ul class="slds-listbox slds-listbox_inline slds-p-top_xxx-small slds-selected-items-{{id}}"
+							role="group"
 							aria-label="Selected Options:">
 							{{#each getItemsSelected}}
 								<li role="presentation" class="slds-listbox__item" data-value={{value}}>
 									<span class="slds-pill" role="option" tabindex="0" aria-selected="true">
 										{{!----}}
 										{{#if isShowIcon}}
-										<span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
+											<span class="slds-avatar slds-avatar_x-small slds-pill__icon_container">
 											<span class="slds-icon_container slds-icon_object steedos-icon-{{selectedReferenceObject}}">
 												{{> steedos_icon class="slds-icon" source="standard-sprite" name=(getIcon selectedReferenceIcon)}}
 											</span>

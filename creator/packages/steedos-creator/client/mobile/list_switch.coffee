@@ -39,6 +39,7 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 			result = $("<a>").addClass("weui-cell weui-cell_access weui-cell-profile record-item").attr("href", record_url)
 			$("<div>").html(Blaze.toHTMLWithData Template.steedos_icon, {class: "slds-icon slds-page-header__icon", source: "standard-sprite", name: icon}).addClass("weui-cell__hd").appendTo(result)
 			$("<div>").html("<p>#{data[name_field_key]}</p>").addClass("weui-cell__bd weui-cell_primary").appendTo(result)
+			$("<span>").addClass("weui-cell__ft").appendTo(result)
 			return result
 
 	self.dxListInstance = self.$("#gridContainer").dxList(list_options).dxList('instance')

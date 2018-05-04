@@ -134,7 +134,8 @@ UserCostTime::startStat = () ->
 						# 或：
 						$or:[
 							# 审批未结束的申请单,开始日期 小于 统计结束日期
-							# 例如统计17年11月份的数据，某申请单11月创建，到12月份仍正在进行，则排除其approve
+							# 例如统计17年11月份的数据（end_date为12月1号凌晨0点）
+							# 某申请单11月创建，到12月份仍正在进行，则排除其approve
 							{
 								$and:[
 									{"_approve.is_finished": false},
@@ -157,7 +158,7 @@ UserCostTime::startStat = () ->
 						_id : {
 							"handler": "$_approve.handler",
 							"is_finished": "$_approve.is_finished"
-						}
+						},
 						# 当月已处理总耗时
 						month_finished_time: {
 							$sum: "$_approve.cost_time"

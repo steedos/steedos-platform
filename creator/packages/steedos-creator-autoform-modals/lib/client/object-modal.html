@@ -1,0 +1,152 @@
+<template name="CreatorObjectModal">
+	<div class="modal fade creator-modal creator-object-modals" id="creatorObjectModal">
+		<div class="modal-dialog modal-lg modal-body-zoom.includes slds-modal slds-fade-in-open" role="document">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					{{#if isMobile}}
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						{{#if $eq cmOperation 'insert'}}
+							<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+						{{/if}}
+
+						{{#if $eq cmOperation 'update'}}
+							<button class="slds-button slds-button_brand btn-update">保存</button>
+						{{/if}}
+
+						<h2 class="title slds-text-heading--medium">
+							{{{title}}}
+						</h2>
+					{{else}}
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+							<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+							</svg>
+							<span class="slds-assistive-text">Close</span>
+						</button>
+						<h2 class="title slds-text-heading--medium">
+							<h2 class="slds-text-heading--medium">{{{title}}}</h2>
+						</h2>
+					{{/if}}
+				</header>
+
+				<div class="slds-modal__content slds-p-around_medium">
+					{{#autoForm title=this.title id=this.formId collection=this.collection doc=this.doc buttonContent=false meteormethod=this.meteormethod type=this.type template="bootstrap3-horizontal"}}
+						{{>CreatorObjectFields schemaFields=objectSchema fields=fields}}
+					{{/autoForm}}
+				</div>
+				<footer class="slds-modal__footer">
+					<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+
+					{{#if cmSaveAndInsert}}
+						<button class="slds-button slds-button_neutral btn-insert-and-create">保存并新建</button>
+					{{/if}}
+
+					<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+				</footer>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<template name="CreatorObjectFields">
+	{{#if schemaFields.grouplessFields}}
+		{{#each schemaFields.grouplessFields}}
+			<div class="slds-grid view-page-section-row">
+				{{#each this}}
+					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+							{{#if this}}
+								{{#if isDisabled this}}
+									<div class="form-group is-disabled">
+										<label class="control-label">{{getLabel this}}</label>
+										<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
+											<span class="slds-grid slds-grid_align-spread creator_table_cell">
+												<div class="cell-container">
+													<span class="fulltex">{{disabledFieldsValue this}}</span>
+												</div>
+											</span>
+										</span>
+									</div>
+								{{else}}
+									{{> afQuickField name=this}}
+								{{/if}}
+							{{/if}}
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		{{/each}}
+	{{/if}}
+
+	{{#if schemaFields.groupFields}}
+		{{#each schemaFields.groupFields}}
+			{{#if this.fields}}
+				<div class="slds-section slds-is-open group-section">
+					<h3 class="slds-section__title group-section-control">
+						<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+							{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+							<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+						</button>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+						{{#each this.fields}}
+							<div class="slds-grid view-page-section-row">
+								{{#each this}}
+									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+											{{#if this}}
+												{{#if isDisabled this}}
+													<div class="form-group">
+														<label class="control-label">{{getLabel this}}</label>
+														<span class="test-id__field-value slds-form-element__static slds-grow">
+															<span class="slds-grid slds-grid_align-spread creator_table_cell">
+																<div class="cell-container">
+																	<span class="fulltex">{{disabledFieldsValue this}}</span>
+																</div>
+															</span>
+														</span>
+													</div>
+												{{else}}
+													{{> afQuickField name=this}}
+												{{/if}}
+											{{/if}}
+										</div>
+									</div>
+								{{/each}}
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			{{/if}}
+		{{/each}}
+	{{/if}}
+
+	{{#if schemaFields.hiddenFields}}
+		<div class="slds-grid view-page-section-row hidden-fields">
+			<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+				{{#each schemaFields.hiddenFields}}
+					<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+						{{#if this}}
+							{{> afQuickField name=this}}
+						{{/if}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	{{/if}}
+
+	{{#if schemaFields.disabledFields}}
+		<div class="slds-grid view-page-section-row disabled-fields">
+			<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+				{{#each schemaFields.disabledFields}}
+					<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+						{{#if this}}
+							{{> afQuickField name=this disabled=false readonly=true}}
+						{{/if}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	{{/if}}
+</template>

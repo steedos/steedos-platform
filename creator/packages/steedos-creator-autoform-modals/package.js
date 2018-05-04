@@ -27,6 +27,9 @@ Package.on_use(function (api) {
   api.add_files('lib/client/modals.coffee', 'client');
   api.add_files('lib/client/modals.less', 'client');
 
+	api.add_files('lib/client/object-modal.html', 'client');
+	api.add_files('lib/client/object-modal.coffee', 'client');
+
   api.add_files('lib/client/coreform-table/steedos-table.html', 'client');
   api.add_files('lib/client/coreform-table/steedos-table.js', 'client');
   api.add_files('lib/client/coreform-table/steedos-table.less', 'client');

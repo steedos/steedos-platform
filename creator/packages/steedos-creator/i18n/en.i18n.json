@@ -55,7 +55,7 @@
 
 	"creator_actions_upload_file": "Upload",
 
-	"creator_home_apps": "Apps",
+	"creator_home_apps": "Steedos Office",
 	"creator_detail_info": "DETAILS",
 	"creator_detail_related": "RELATED",
 	"creator_new": "New",
@@ -66,5 +66,6 @@
 	"creator_list_view_permissions_lost": "You do not have permission to access this view",
 
 	"creator_report_drill_down_label": "Drill Down Data",
-	"creator_report_drill_down_total_label": "Total"
+	"creator_report_drill_down_total_label": "Total",
+	"creator_listview_update":"list view updated"
 }

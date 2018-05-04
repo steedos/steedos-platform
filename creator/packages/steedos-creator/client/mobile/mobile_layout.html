@@ -1,13 +1,12 @@
 <template name="creatorMobileLayout">
 	{{#if subsReady}}
 		<div class="steedos layout-top-nav skin-blue-light">
-			{{# AdminLTE skin="blue" sidebarMini="true" }}
             
-			<div class="content-wrapper">
+			<div class="mobile-content-wrapper">
 				{{> Template.dynamic template=main}}
                 <div class="layout-placeholder"></div>
             </div>
-			{{/ AdminLTE}} {{> CreatorAutoformModals}}
+			{{> CreatorAutoformModals}}
 		</div>
 		<div class="connection-status">
 			{{> status}}

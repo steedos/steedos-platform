@@ -77,10 +77,11 @@ Template.steedosLookups.onCreated(function () {
 
 	if(fieldSchema){
 		filtersFunction = fieldSchema.filtersFunction;
-		optionsFunction = fieldSchema.optionsFunction
+		optionsFunction = fieldSchema.optionsFunction;
+		createFunction = fieldSchema.createFunction;
 	}
 
-    template.uniSelectize = new UniSelectize(template.data, template, filtersFunction, optionsFunction);
+    template.uniSelectize = new UniSelectize(template.data, template, filtersFunction, optionsFunction, createFunction);
 });
 
 Template.steedosLookups.onRendered(function () {
@@ -134,7 +135,7 @@ Template.steedosLookups.onRendered(function () {
 
 			if(_.isFunction(optionsFunction)){
 				options = optionsFunction(_values)
-				template.uniSelectize.setItems(options, value);
+				template.uniSelectize.setItems(options, _values[template.data.atts.dataSchemaKey] || value);
 			}
 		}
 	});
@@ -397,6 +398,19 @@ Template.steedosLookups.helpers({
 		}
 
 		return Template.instance().data.objectSwitche && !isReadonly()
+	},
+
+	createTitle: function () {
+		ref = Template.instance().uniSelectize.selectedReference.get();
+		if(ref)
+			return ref.label
+	},
+
+	canCreate: function () {
+		data = Template.instance().data
+
+		if(data.atts.create)
+			return true
 	}
 });
 
@@ -589,7 +603,7 @@ Template.steedosLookups.events({
 	//
     //     template.uniSelectize.activeOption.set(elIndex);
     // },
-    'click .create': function (e, template) {
+    'click .createNew': function (e, template) {
         e.preventDefault();
         template.uniSelectize.checkDisabled();
         var $input = $(template.find('input'));

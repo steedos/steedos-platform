@@ -1,4 +1,4 @@
-.content-wrapper {
+.mobile-content-wrapper {
     .hidden {
         opacity: 0;
     }
@@ -8,7 +8,6 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgb(243, 242, 242);
         transform: translate3d(0, 0, 0);
         animation-duration: 0.4s;
         -webkit-animation-duration: 0.4s;
@@ -17,20 +16,28 @@
         will-change: transfrom, -webkit-transform, opacity;
         .mobile-template-header {
             position: relative;
-            background-color: rgb(0, 112, 210);
+            background-color: #435d73;
             .forceHeaderLayout {
                 position: relative;
                 width: 100%;
                 height: 44px;
                 .bLeft {
                     float: left;
-                    padding-left: 15px;
+                    padding-left: 10px;
                     min-width: 44px;
                     width: auto;
                     line-height: 44px;
-                    color: #fff;
+                    color: #cae4fb;
                     height: 100%;
                     text-align: left;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #cae4fb;
+                    }
+                }
+                .bLeft:active {
+                    background: rgba(0, 0, 0, 0.3);
                 }
                 .bBody {
                     height: 100%;
@@ -40,6 +47,11 @@
                     color: #fff;
                     font-size: 16px;
                     font-weight: 700;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #fff;
+                    }
                 }
                 .bRight {
                     float: right;
@@ -47,9 +59,17 @@
                     min-width: 44px;
                     width: auto;
                     line-height: 44px;
-                    color: #fff;
+                    color: #cae4fb;
                     height: 100%;
                     text-align: right;
+                    .slds-icon {
+                        height: 16px;
+                        width: 16px;
+                        fill: #cae4fb;
+                    }
+                }
+                .bRight:active {
+                    background: rgba(0, 0, 0, 0.3);
                 }
             }
         }
@@ -59,10 +79,17 @@
             bottom: 0;
             width: 100%;
             overflow: auto;
-            background-color: rgb(243, 242, 242);
+            background-color: #efeff4;
             a:hover,
             a:focus {
                 text-decoration: none !important;
+            }
+            .list-title-container {
+                background-color: #435d73;
+                color: #fff;
+                .bBody .list-name .slds-icon_container .slds-icon {
+                    fill: #fff;
+                }
             }
             .dx-list {
                 background: #fff;
@@ -120,6 +147,7 @@
                     }
                 }
                 .dx-list-item {
+                    font-size: 17px;
                     &.dx-state-active {
                         background: #e6e6e6;
                     }
