@@ -115,11 +115,12 @@ importObject = (importObj,space) ->
 
 		stream.on 'end', Meteor.bindEnvironment(() ->
 			workbook = xls.parse(Buffer.concat(chunks))
+			total_count = 0
+			success_count = 0
+			failure_count = 0
 			workbook.forEach (sheet)->
 				data = sheet.data
 				total_count = data.length
-				success_count = 0
-				failure_count = 0
 				data.forEach (dataRow)->
 					insertInfo = insertRow dataRow,objectName,field_mapping,space
 					# 	# 插入一行数据	
@@ -131,13 +132,13 @@ importObject = (importObj,space) ->
 							success_count = success_count + 1
 						else
 							failure_count = failure_count + 1
-					Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
-						error:errorList
-						total_count:total_count
-						success_count:success_count
-						failure_count:failure_count
-						state:"finished"
-						}})
+			Creator.Collections["queue_import"].direct.update({_id:importObj._id},{$set:{
+				error:errorList
+				total_count:total_count
+				success_count:success_count
+				failure_count:failure_count
+				state:"finished"
+				}})
 			)	
 		
 # 启动导入Jobs
