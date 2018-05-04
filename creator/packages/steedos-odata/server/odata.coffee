@@ -187,6 +187,7 @@ Meteor.startup ->
 					createQuery.projection = projection
 				if not createQuery.projection or !_.size(createQuery.projection)
 					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
+					fields = Creator.getObject(key).fields
 					_.each readable_fields,(field)->
 						if field.indexOf('$')<0
 							if fields[field]?.multiple!= true
