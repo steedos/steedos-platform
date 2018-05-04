@@ -36,9 +36,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			fs.autoform.afFieldInput =
 				type: "bootstrap-datetimepicker"
-				# locale: "zh-CN"
-				# timezoneId: "utc"
-				# timezoneId: "Asia/Shanghai"
+				timezoneId: "utc"
 				dateTimePickerOptions:
 					format: "YYYY-MM-DD"
 		else if field.type == "datetime"
@@ -47,9 +45,6 @@ Creator.getObjectSchema = (obj) ->
 				type: "bootstrap-datetimepicker"
 				dateTimePickerOptions:
 					format: "YYYY-MM-DD HH:mm"
-			# fs.autoform.afFieldInput.type = "bootstrap-datetimepicker"
-			# fs.autoform.afFieldInput.dateTimePickerOptions =
-			# 	format: "YYYY-MM-DD HH:mm"
 		else if field.type == "[Object]"
 			fs.type = [Object]
 		else if field.type == "html"

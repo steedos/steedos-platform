@@ -36,9 +36,8 @@ aldeed:collection2
 aldeed:simple-schema
 aldeed:autoform
 steedos:autoform-bs-datetimepicker
-# aldeed:moment-timezone
-# risul:moment-timezone
-tsega:bootstrap3-datetimepicker@4.17.37
+risul:moment-timezone
+steedos:bootstrap3-datetimepicker
 steedos:creator-autoform-modals
 steedos:autoform-bs-minicolors
 steedos:autoform-file
