@@ -1,7 +1,7 @@
 Creator.Objects.permission_set = 
 	name: "permission_set"
 	label: "权限组"
-	icon: "user"
+	icon: "groups"
 	fields: 
 		name:
 			label: "名称"
@@ -21,7 +21,7 @@ Creator.Objects.permission_set =
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.Apps, (o, k)->
-					_options.push {label: o.name, value: k, icon: o.icon}
+					_options.push {label: o.name, value: k, icon: o.icon_slds}
 				return _options
 
 	list_views:

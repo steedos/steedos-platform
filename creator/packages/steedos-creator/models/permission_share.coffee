@@ -1,7 +1,7 @@
 Creator.Objects.permission_shares = 
 	name: "permission_shares"
 	label: "共享规则"
-	icon: "user"
+	icon: "assigned_resource"
 	fields:
 		name: 
 			label: "名称"

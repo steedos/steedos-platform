@@ -408,10 +408,54 @@ helpers =
 
 	isSingle: ()->
 		return Session.get("cmEditSingleField")
+
+	hasInlineHelpText: (key)->
+		cmCollection = Session.get 'cmCollection'
+		if cmCollection
+			object_name = getObjectName(cmCollection)
+			fields = Creator.getObject(object_name).fields
+			return fields[key]?.inlineHelpText
 	
 Template.CreatorAutoformModals.helpers helpers
 
 Template.CreatorFormField.helpers helpers
+
+Template.CreatorFormField.onRendered ->
+	self = this
+	self.$(".has-inline-text").each ->
+		id = "info_" + $(".control-label", $(this)).attr("for")
+		html = """
+			<span class="help-info" id="#{id}">
+				<i class="ion ion-information-circled"></i>
+			</span>
+		"""
+		$(".control-label", $(this)).after(html)
+
+	
+	self.$(".info-popover").each ->
+		_id = $("~ .form-group .help-info", $(this)).attr("id");
+		$(this).dxPopover
+			target: "#" + _id,
+			showEvent: "mouseenter",
+			hideEvent: "mouseleave",
+			position: "top",
+			width: 300,
+			animation: {
+				show: {
+					type: "pop",
+					from: {
+						scale: 0
+					},
+					to: {
+						scale: 1
+					}
+				},
+				hide: {
+					type: "fade",
+					from: 1,
+					to: 0
+				}
+			}
 
 Template.CreatorAfModal.events
 	'click *': (e, t) ->

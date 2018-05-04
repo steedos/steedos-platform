@@ -267,6 +267,9 @@ Creator.getObjectSchema = (obj) ->
 		if field.disabled
 			fs.autoform.disabled = true
 
+		if field.inlineHelpText
+			fs.autoform.inlineHelpText = field.inlineHelpText
+
 		if field.blackbox
 			fs.blackbox = true
 

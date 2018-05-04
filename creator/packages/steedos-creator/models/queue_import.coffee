@@ -1,7 +1,7 @@
 Creator.Objects.queue_import = 
 	name: "queue_import"
 	label: "数据导入"
-	icon: "report"
+	icon: "product_consumed"
 	enable_files:true
 	fields:
 		description: 

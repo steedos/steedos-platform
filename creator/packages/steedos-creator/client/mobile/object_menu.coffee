@@ -30,3 +30,5 @@ Template.objectMenu.events
         template.$(".object-menu").animateCss "fadeOutRight", ->
             Blaze.remove(template.view)
             FlowRouter.go '/app/menu'
+    'click .go-admin-menu': (event, template)->
+        FlowRouter.go '/admin'
