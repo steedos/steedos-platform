@@ -31,6 +31,8 @@ _writeXmlFile = (jsonObj,objName) ->
 	fs.writeFile fileAddress, stream, (err) ->
 		if err
 			logger.error "#{jsonObj._id}写入xml文件失败",err
+	
+	return filePath
 
 
 # 整理Fields的json数据
@@ -120,7 +122,8 @@ Creator.Export2xml = (objName, recordList) ->
 	console.time "Creator.Export2xml"
 
 	# 测试数据
-	objName = "archive_records"
+	# objName = "archive_records"
+
 	# 查找对象数据
 	collection = Creator.Collections[objName]
 	# 测试数据
@@ -140,6 +143,7 @@ Creator.Export2xml = (objName, recordList) ->
 		jsonObj["related_objects"] = related_objects
 
 		# 转为xml保存文件
-		_writeXmlFile jsonObj,objName
+		filePath = _writeXmlFile jsonObj,objName
 
 	console.timeEnd "Creator.Export2xml"
+	return filePath
