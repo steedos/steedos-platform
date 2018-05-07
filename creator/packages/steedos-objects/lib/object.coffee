@@ -130,7 +130,7 @@ Creator.Object = (options)->
 				else
 					field.hidden = true
 	else
-		self.permissions = new ReactiveVar(Creator.baseObject.permission_set.none)
+		self.permissions = null
 
 	Creator.Collections[self.name] = Creator.createCollection(options)
 	self.db = Creator.Collections[self.name]
