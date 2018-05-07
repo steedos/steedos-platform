@@ -35,8 +35,11 @@ Package.onUse(function(api) {
 	api.addFiles('package.app.coffee');
 	api.addFiles('models/application_package.coffee', 'server');
 	api.addFiles('server/routes/export.coffee', 'server');
+	api.addFiles('server/routes/import.coffee', 'server');
+	api.addFiles('server/methods/listviews_options.coffee', 'server');
 	api.addFiles('lib/transform.coffee', 'server');
 
 
 	api.addFiles('client/import_modal.html', 'client');
+	api.addFiles('client/import_modal.coffee', 'client');
 });

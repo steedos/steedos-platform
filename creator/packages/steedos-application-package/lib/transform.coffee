@@ -55,7 +55,7 @@ APTransform.exportObject = (object)->
 		if _.isFunction(_field.defaultValue)
 			_field.defaultValue = _field.defaultValue.toString()
 			delete _field._defaultValue
-		#TODO 转换field.autoform.type
+		#TODO 转换field.autoform.type，已和朱思嘉确认，目前不支持autoform.type 为function类型
 		fields[key] = _field
 
 	_obj.fields = fields
@@ -91,9 +91,13 @@ APTransform.export = (record)->
 		export_data.apps = []
 
 		_.each record.apps, (appKey)->
-			app = Creator.Apps[appKey]
-			if !app
+			app = {}
+			_.extend(app, Creator.Apps[appKey])
+			if !app || _.isEmpty(app)
 				app = Creator.getCollection("apps").findOne({_id: appKey}, {fields: ignore_fields})
+			else
+				if !_.has(app, "_id")
+					app._id = appKey
 			if app
 				export_data.apps.push app
 
@@ -104,8 +108,8 @@ APTransform.export = (record)->
 			if object
 				export_data.objects.push APTransform.exportObject(object)
 	#TODO list_views 处理
-#	if _.isArray(record.list_views) && record.list_views.length > 0
-#		export_data.list_views = Creator.getCollection("list_views").find({_id: {$in: record.list_views}}, {fields: ignore_fields}).fetch()
+	if _.isArray(record.list_views) && record.list_views.length > 0
+		export_data.list_views = Creator.getCollection("object_listviews").find({_id: {$in: record.list_views}}, {fields: ignore_fields}).fetch()
 
 	if _.isArray(record.permission_set) && record.permission_set.length > 0
 		export_data.permission_set = Creator.getCollection("permission_set").find({_id: {$in: record.permission_set}}, {fields: ignore_fields}).fetch()

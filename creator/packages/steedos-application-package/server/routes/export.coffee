@@ -13,6 +13,13 @@ JsonRoutes.add 'get', '/api/creator/app_package/export/:space_id/:record_id', (r
 		record_id = req.params.record_id
 		space_id = req.params.space_id
 
+		if !Creator.isSpaceAdmin(space_id, userId)
+			JsonRoutes.sendResult res, {
+				code: 401
+				data: {errors: "Permission denied"}
+			}
+			return
+
 		record = Creator.getCollection("application_package").findOne({_id: record_id})
 
 		if !record
@@ -44,6 +51,6 @@ JsonRoutes.add 'get', '/api/creator/app_package/export/:space_id/:record_id', (r
 		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: 200
-			data: { errors: [{ errorMessage: e.reason || e.message }] }
+			data: { errors: errorMessage: e.reason || e.message }
 		}
 

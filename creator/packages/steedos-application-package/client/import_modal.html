@@ -1,22 +1,26 @@
 <template name="APPackageImportModal">
-	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">
-						{{_ "workflow_import_flow"}}
-					</h4>
-				</div>
-				<div class="modal-body modal-zoom" style='overflow-y:auto'>
-					<input type="file" name="importFlowFile" id="importFlowFile">
-				</div>
+	<div class="modal fade creator-modal creator-object-modals">
+		<div class="modal-dialog modal-lg modal-body-zoom.includes slds-modal slds-fade-in-open" role="document">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/packages/steedos_lightning-design-system/client/icons/utility-sprite/symbols.svg#close" />
+						</svg>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="title slds-text-heading--medium">
+						<h2 class="slds-text-heading--medium">导入</h2>
+					</h2>
+				</header>
 
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="import_flow_ok">{{_ "OK"}}</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				<div class="slds-modal__content slds-p-around_medium">
+					<input type="file" name="importFile" id="importFile">
 				</div>
+				<footer class="slds-modal__footer">
+					<button type="button" class="btn btn-primary" id="import_ok">{{_ "OK"}}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</footer>
 			</div>
 		</div>
 	</div>

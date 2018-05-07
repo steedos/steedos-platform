@@ -21,7 +21,6 @@ Creator.Objects.application_package =
 			label: "对象"
 			reference_to: "objects"
 			multiple: true
-			required: true
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.objectsByName, (o, k)->
@@ -32,15 +31,8 @@ Creator.Objects.application_package =
 		list_views:
 			type: "lookup"
 			multiple: true
-			defaultIcon: "lead_list"
-			optionsFunction: (values)->
-				_options = []
-				_object = Creator.getObject(values.object_name)
-				list_views = _object.list_views
-				_.forEach list_views, (f, k)->
-					if k != "default" and (!_.has(f, "shared") || f.shared)
-						_options.push {label: f.label || f.name || k, value: f._id}
-				return _options
+			reference_to: "object_listviews"
+			optionsMethod: "creator.listviews_options"
 		permission_set:
 			type: "lookup"
 			multiple: true
