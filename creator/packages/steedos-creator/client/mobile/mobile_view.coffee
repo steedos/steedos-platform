@@ -170,7 +170,6 @@ Template.mobileView.helpers
 		return Template.instance()?.action_collection_name.get()
 
 	fields: ()->
-		debugger;
 		return Template.instance().action_fields.get()
 
 	actions: ()->
@@ -269,7 +268,6 @@ Template.mobileView.events
 		Session.set "cmDoc", record
 		Meteor.defer ->
 			template.$(".btn-edit-cellrecord").click()
-		debugger
 
 AutoForm.hooks addRelatedRecord:
 	onSuccess: (formType, result)->
