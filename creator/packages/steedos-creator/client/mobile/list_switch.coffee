@@ -119,14 +119,17 @@ Template.listSwitch.events
 
 	'click .list-name': (event, template)->
 		template.$(".switch-list-mask").css({"opacity": "1", "display": "block"})
+		template.$(".switch-list-actionsheet").css({"opacity": "1", "display": "block"})
 		template.$(".switch-list-actionsheet").addClass("weui-actionsheet_toggle")
 
 	'click .weui-actionsheet__cell': (event, template)->
 		template.$(".switch-list-mask").css({"opacity": "0", "display": "none"})
+		template.$(".switch-list-actionsheet").css({"opacity": "0", "display": "none"})
 		template.$(".switch-list-actionsheet").removeClass("weui-actionsheet_toggle")
 
 	'click .switch-list-mask': (event, template)->
 		template.$(".switch-list-mask").css({"opacity": "0", "display": "none"})
+		template.$(".switch-list-actionsheet").css({"opacity": "0", "display": "none"})
 		template.$(".switch-list-actionsheet").removeClass("weui-actionsheet_toggle")
 
 	'click .switch-list': (event, template)->

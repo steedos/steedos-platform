@@ -216,14 +216,17 @@ Template.mobileView.events
 
 	'click .action-manage': (event, template)->
 		template.$(".view-action-mask").css({"opacity": "1", "display": "block"})
+		template.$(".view-action-actionsheet").css({"opacity": "1", "display": "block"})
 		template.$(".view-action-actionsheet").addClass("weui-actionsheet_toggle")
 
 	'click .weui-actionsheet__cell': (event, template)->
 		template.$(".view-action-mask").css({"opacity": "0", "display": "none"})
+		template.$(".view-action-actionsheet").css({"opacity": "0", "display": "none"})
 		template.$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
 
 	'click .view-action-mask': (event, template)->
 		template.$(".view-action-mask").css({"opacity": "0", "display": "none"})
+		template.$(".view-action-actionsheet").css({"opacity": "0", "display": "none"})
 		template.$(".view-action-actionsheet").removeClass("weui-actionsheet_toggle")
 
 	'click .add-related-record': (event, template)->
@@ -267,7 +270,7 @@ Template.mobileView.events
 		template.action_fields.set(field)
 		Session.set "cmDoc", record
 		Meteor.defer ->
-			template.$(".btn-edit-cellrecord").click()
+			$(".btn-edit-cellrecord").click()
 
 AutoForm.hooks addRelatedRecord:
 	onSuccess: (formType, result)->

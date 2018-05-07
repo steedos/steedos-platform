@@ -3,7 +3,7 @@
 		<header class="mobile-template-header">
 			<div class="forceHeaderLayout">
 				<div class="bLeft mobile-view-back">
-                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
 				</div>
 				<div class="bRight action-manage">
 					{{> steedos_icon class="slds-icon" source="utility-sprite" name="threedots_vertical"}}
@@ -141,10 +141,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div>
-		<div class="weui-mask view-action-mask" style="display: none;opacity: 0"></div>
-		<div class="weui-actionsheet view-action-actionsheet" >
+		<div class="weui-mask view-action-mask" style="display: none ;opacity: 0"></div>
+		<div class="weui-actionsheet view-action-actionsheet" style="display: none;opacity: 0">
 			<div class="weui-actionsheet__menu">
 				{{#each actions}}
 					<div class="weui-actionsheet__cell view-action">{{this.label}}</div>

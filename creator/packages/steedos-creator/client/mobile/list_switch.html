@@ -1,40 +1,40 @@
 <template name="listSwitch">
 	<div class="list-switch mobile-template-container hidden" id="list_switch">
-        <header class="mobile-template-header">
-            <div class="forceHeaderLayout">
-                <div class="bLeft list-switch-back">
-                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
-                </div>
-                {{#if allowCreate}}
-                    <div class="bRight add-list-item">
-                        {{> steedos_icon class="slds-icon" source="utility-sprite" name="add"}}
-                    </div>
-                {{else}}
-                    <div class="bRight"></div>
-                {{/if}}
-                <div class="bBody list-name">
-                    {{list_view_label}}
-                    {{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
-                    <div id="action-sheet"></div>
-                </div>
-            </div>
-        </header>
-        <div class="mobile-template-content">
-            <div id="gridContainer" style="overflow: hidden"></div>
-        </div>
-    </div>
-    <div>
-        <div class="weui-mask switch-list-mask" style="display: none;opacity: 0"></div>
-		<div class="weui-actionsheet switch-list-actionsheet" >
-			<div class="weui-actionsheet__menu">
-				{{#each list_views}}
-					<div class="weui-actionsheet__cell switch-list">{{this.label}}</div>
-				{{/each}}
+		<header class="mobile-template-header">
+			<div class="forceHeaderLayout">
+				<div class="bLeft list-switch-back">
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}}
+				</div>
+				{{#if allowCreate}}
+					<div class="bRight add-list-item">
+						{{> steedos_icon class="slds-icon" source="utility-sprite" name="add"}}
+					</div>
+				{{else}}
+					<div class="bRight"></div>
+				{{/if}}
+				<div class="bBody list-name">
+					{{list_view_label}}
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
+					<div id="action-sheet"></div>
+				</div>
 			</div>
-			<div class="weui-actionsheet__action">
-				<div class="weui-actionsheet__cell actionsheet-cancel">{{_ "Cancel"}}</div>
-            </div>
-        </div>
-    </div>
-    {{#CreatorAfModal formId="addListItem" class="btn btn-primary btn-add-list-item hidden" meteormethod="af_insert" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+		</header>
+		<div class="mobile-template-content">
+			<div id="gridContainer" style="overflow: hidden"></div>
+		</div>
+		<div>
+			<div class="weui-mask switch-list-mask" style="display: none ;opacity: 0"></div>
+			<div class="weui-actionsheet switch-list-actionsheet" style="display: none ;opacity: 0">
+				<div class="weui-actionsheet__menu">
+					{{#each list_views}}
+						<div class="weui-actionsheet__cell switch-list">{{this.label}}</div>
+					{{/each}}
+				</div>
+				<div class="weui-actionsheet__action">
+					<div class="weui-actionsheet__cell actionsheet-cancel">{{_ "Cancel"}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{#CreatorAfModal formId="addListItem" class="btn btn-primary btn-add-list-item hidden" meteormethod="af_insert" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
 </template>
