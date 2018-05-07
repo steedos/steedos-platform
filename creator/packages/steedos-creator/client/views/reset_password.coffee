@@ -24,6 +24,9 @@ Template.reset_password_modal.helpers
 
 	fields: ()->
 		return ["old_pwd", "new_pwd", "confirm_pwd"]
+
+	isMobile: ()->
+		return Steedos.isMobile()
 		 
 
 Template.reset_password_modal.events 

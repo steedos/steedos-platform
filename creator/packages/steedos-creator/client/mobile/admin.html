@@ -42,23 +42,36 @@
 
 					<div class="weui-media-box weui-media-box_small-appmsg">
 						<div class="weui-cells">
-							<a class="weui-cell weui-cell_access btn-switch-space">
+							<a class="weui-cell weui-cell_access btn-change-avatar">
 								<div class="weui-cell__bd weui-cell_primary">
 									<p>更改头像</p>
 								</div>
-								<span class="space-name">{{spaceName}}</span>
 								<span class="weui-cell__ft"></span>
 							</a>
+						</div>
+						<div class="slds-form-element" style="display: none">
+							<div class="slds-form-element__control">
+								<div class="slds-file-selector slds-file-selector_files">
+									<div class="slds-file-selector__dropzone">
+										<input type="file" class="slds-file-selector__input slds-assistive-text" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" id="mobile-avator-upload" aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+										/>
+										<label class="slds-file-selector__body" for="mobile-avator-upload" id="file-selector-label">
+											<span class="slds-file-selector__button slds-button slds-button_neutral">
+												Upload Files
+											</span>
+										</label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 
 					<div class="weui-media-box weui-media-box_small-appmsg">
 						<div class="weui-cells">
-							<a class="weui-cell weui-cell_access btn-switch-space">
+							<a class="weui-cell weui-cell_access btn-change-password">
 								<div class="weui-cell__bd weui-cell_primary">
 									<p>更改密码</p>
-				</div>
-								<span class="space-name">{{spaceName}}</span>
+								</div>
 								<span class="weui-cell__ft"></span>
 							</a>
 						</div>
@@ -70,7 +83,7 @@
 				<div class="weui-panel__bd">
 					<div class="weui-media-box weui-media-box_small-appmsg">
 						<div class="weui-cells">
-							<a href="/steedos/logout" class="weui-cell weui-cell_access log-out">
+							<a href="{{logoutUrL}}" class="weui-cell weui-cell_access log-out">
 								<div class="weui-cell__bd weui-cell_primary">
 									<p>退出登录</p>
 								</div>
