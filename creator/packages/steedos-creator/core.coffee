@@ -238,10 +238,12 @@ Creator.getVisibleAppsObjects = ()->
 	apps = Creator.getVisibleApps()
 	objects = []
 	tempObjects = []
-	_.forEach apps, (app)->
-		tempObjects = _.filter app.objects, (obj)->
-			return !obj.hidden
-		objects = objects.concat(tempObjects)
+	#_.forEach apps, (app)->
+	tempObjects = _.filter Creator.Objects, (obj)->
+		return !obj.hidden
+	objects = objects.concat(tempObjects)
+	objects = _.sortBy(objects,'name')
+	objects = _.pluck(objects,'name')
 	return _.uniq objects
 
 Creator.getAppsObjects = ()->

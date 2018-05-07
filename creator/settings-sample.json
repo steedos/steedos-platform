@@ -1,16 +1,32 @@
 {
-    "public": {},
+    "public": {
+        "cfs": {
+            "store": "" // 值为空或者未配置此属性表示文件存本地，OSS表示存阿里云， S3表示存AWS
+        }
+    },
     "cron": {
         "instancerecordqueue_interval": 10000 // creator同步instance到record队列执行间隔
     },
     "cfs": {
-        "worker": {
-            "enabled": true // 附件功能必须要配置此项
+        "aliyun": {
+            "region": "xxxxxx",
+            "internal": false,
+            "bucket": "xxxxxx",
+            "folder": "xxxxxx",
+            "accessKeyId": "xxxxxx",
+            "secretAccessKey": "xxxxxx"
+        },
+        "aws": {
+            "region": "xxxxxx",
+            "bucket": "xxxxxx",
+            "folder": "xxxxxx",
+            "accessKeyId": "xxxxxx",
+            "secretAccessKey": "xxxxxx"
         }
     },
     // 效率统计
-    "instances_stat":{
-        "space":"Af8eM6mAHo7wMDqD3",
-        "schedule": "10 10 0 * * *"    //每天的晚上的 0点10分10秒调用执行
+    "instances_stat": {
+        "space": "Af8eM6mAHo7wMDqD3",
+        "schedule": "10 10 0 * * *" //每天的晚上的 0点10分10秒调用执行
     }
 }

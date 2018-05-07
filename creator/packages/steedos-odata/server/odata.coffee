@@ -17,7 +17,6 @@ Meteor.startup ->
 			parsedOpt.sort = visitor.sort
 
 		parsedOpt
-
 	dealWithExpand = (createQuery, entities, key,action)->
 		if _.isEmpty createQuery.includes
 			return
@@ -129,110 +128,120 @@ Meteor.startup ->
 		return body
 	SteedosOdataAPI.addRoute(':object_name', {authRequired: true, spaceRequired: false}, {
 		get: ()->
-			key = @urlParams.object_name
-			object = Creator.objectsByName[key]
-			if not object?.enable_api
-				return {
-					statusCode: 401
-					body:setErrorMessage(401)
-				}
-			collection = Creator.Collections[key]
-			if not collection
-				return {
-					statusCode: 404
-					body:setErrorMessage(404,collection,key)
-				}
-				
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.viewAllRecords or (permissions.allowRead and @userId)
-				qs = decodeURIComponent(querystring.stringify(@queryParams))
-				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
-				if key is 'cfs.files.filerecord'
-					createQuery.query['metadata.space'] = @urlParams.spaceId
-				else if key is 'spaces'
-					createQuery.query._id = @urlParams.spaceId
-				else
-					createQuery.query.space = @urlParams.spaceId
-
-				if Creator.isCommonSpace(@urlParams.spaceId) && Creator.isSpaceAdmin(@urlParams.spaceId, @userId)
-					delete createQuery.query.space
-
-				if not createQuery.sort or !_.size(createQuery.sort)
-					createQuery.sort = { modified: -1 }
-				is_enterprise = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise")
-				is_professional = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
-				is_standard = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.standard")
-				if createQuery.limit
-					limit = createQuery.limit
-					if is_enterprise and limit>100000
-						createQuery.limit = 100000
-					else if is_professional and limit>10000 and !is_enterprise
-						createQuery.limit = 10000
-					else if is_standard and limit>1000 and !is_professional and !is_enterprise
-						createQuery.limit = 1000
-				else
-					if is_enterprise
-						createQuery.limit = 100000
-					else if is_professional and !is_enterprise
-						createQuery.limit = 10000
-					else if is_standard and !is_enterprise and !is_professional
-						createQuery.limit = 1000
-				unreadable_fields = permissions.unreadable_fields || []
-				if createQuery.projection
-					projection = {}
-					_.keys(createQuery.projection).forEach (key)->
-						if _.indexOf(unreadable_fields, key) < 0
-							#if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-							projection[key] = 1
-					createQuery.projection = projection
-				if not createQuery.projection or !_.size(createQuery.projection)
-					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-					fields = Creator.getObject(key).fields
-					_.each readable_fields,(field)->
-						if field.indexOf('$')<0
-							if fields[field]?.multiple!= true
-								createQuery.projection[field] = 1
-				if not permissions.viewAllRecords
-					if object.enable_share
-						# 满足共享规则中的记录也要搜索出来
-						delete createQuery.query.owner
-						shares = []
-						orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
-						shares.push {"owner": @userId}
-						shares.push { "sharing.u": @userId }
-						shares.push { "sharing.o": { $in: orgs } }
-						createQuery.query["$or"] = shares
+			try
+				key = @urlParams.object_name
+				object = Creator.objectsByName[key]
+				if not object?.enable_api
+					return {
+						statusCode: 401
+						body:setErrorMessage(401)
+					}
+				collection = Creator.Collections[key]
+				if not collection
+					return {
+						statusCode: 404
+						body:setErrorMessage(404,collection,key)
+					}
+					
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.viewAllRecords or (permissions.allowRead and @userId)
+					qs = decodeURIComponent(querystring.stringify(@queryParams))
+					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+					if key is 'cfs.files.filerecord'
+						createQuery.query['metadata.space'] = @urlParams.spaceId
+					else if key is 'spaces'
+						createQuery.query._id = @urlParams.spaceId
 					else
-						createQuery.query.owner = @userId
+						createQuery.query.space = @urlParams.spaceId
 
-				entities = []
-				if @queryParams.$top isnt '0'
-					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
-				scannedCount = collection.find(createQuery.query,{fields:{_id: 1}}).count()
-				if entities
-					dealWithExpand(createQuery, entities, key)
-					#scannedCount = entities.length
-					body = {}
-					headers = {}
-					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
-				#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
-					body['@odata.count'] = scannedCount
-					entities_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-					body['value'] = entities_OdataProperties
-					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-					headers['OData-Version'] = SteedosOData.VERSION
-					{body: body, headers: headers}
+					if Creator.isCommonSpace(@urlParams.spaceId) && Creator.isSpaceAdmin(@urlParams.spaceId, @userId)
+						delete createQuery.query.space
+
+					if not createQuery.sort or !_.size(createQuery.sort)
+						createQuery.sort = { modified: -1 }
+					is_enterprise = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.enterprise")
+					is_professional = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.professional")
+					is_standard = Steedos.isLegalVersion(@urlParams.spaceId,"workflow.standard")
+					if createQuery.limit
+						limit = createQuery.limit
+						if is_enterprise and limit>100000
+							createQuery.limit = 100000
+						else if is_professional and limit>10000 and !is_enterprise
+							createQuery.limit = 10000
+						else if is_standard and limit>1000 and !is_professional and !is_enterprise
+							createQuery.limit = 1000
+					else
+						if is_enterprise
+							createQuery.limit = 100000
+						else if is_professional and !is_enterprise
+							createQuery.limit = 10000
+						else if is_standard and !is_enterprise and !is_professional
+							createQuery.limit = 1000
+					unreadable_fields = permissions.unreadable_fields || []
+					if createQuery.projection
+						projection = {}
+						_.keys(createQuery.projection).forEach (key)->
+							if _.indexOf(unreadable_fields, key) < 0
+								#if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								projection[key] = 1
+						createQuery.projection = projection
+					if not createQuery.projection or !_.size(createQuery.projection)
+						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
+						fields = Creator.getObject(key).fields
+						_.each readable_fields,(field)->
+							if field.indexOf('$')<0
+								if fields[field]?.multiple!= true
+									createQuery.projection[field] = 1
+					if not permissions.viewAllRecords
+						if object.enable_share
+							# 满足共享规则中的记录也要搜索出来
+							delete createQuery.query.owner
+							shares = []
+							orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+							shares.push {"owner": @userId}
+							shares.push { "sharing.u": @userId }
+							shares.push { "sharing.o": { $in: orgs } }
+							createQuery.query["$or"] = shares
+						else
+							createQuery.query.owner = @userId
+
+					entities = []
+					if @queryParams.$top isnt '0'
+						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
+					scannedCount = collection.find(createQuery.query,{fields:{_id: 1}}).count()
+					if entities
+						dealWithExpand(createQuery, entities, key)
+						#scannedCount = entities.length
+						body = {}
+						headers = {}
+						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
+					#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
+						body['@odata.count'] = scannedCount
+						entities_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+						body['value'] = entities_OdataProperties
+						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+						headers['OData-Version'] = SteedosOData.VERSION
+						{body: body, headers: headers}
+					else
+						return{
+							statusCode: 404
+							body: setErrorMessage(404,collection,key)
+						}
 				else
 					return{
-						statusCode: 404
-						body: setErrorMessage(404,collection,key)
+						statusCode: 403
+						body: setErrorMessage(403,collection,key,"get")
 					}
-			else
-				return{
-					statusCode: 403
-					body: setErrorMessage(403,collection,key,"get")
-				}
-				
+			catch e
+				console.log e
+				console.log e.message
+				body = {}
+				body['message'] = e.message
+				console.log body
+				return {
+					statusCode: 500
+					body:body
+				}	
 		post: ()->
 			try
 				key = @urlParams.object_name
@@ -329,6 +338,13 @@ Meteor.startup ->
 						#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
 							projection[key] = 1
 					createQuery.projection = projection
+				if not createQuery.projection or !_.size(createQuery.projection)
+					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
+					fields = Creator.getObject(key).fields
+					_.each readable_fields,(field)->
+						if field.indexOf('$')<0
+							if fields[field]?.multiple!= true
+								createQuery.projection[field] = 1
 				if @queryParams.$top isnt '0'
 					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 				entities_index = []
@@ -461,78 +477,89 @@ Meteor.startup ->
 
 				{body: body, headers: headers}
 			else
-				object = Creator.objectsByName[key]
-				if not object?.enable_api
-					return {
-						statusCode: 401
-						body: setErrorMessage(401)
-					}
-				collection = Creator.Collections[key]
-				if not collection
-					return{
-						statusCode: 404
-						body: setErrorMessage(404,collection,key)
-					}
+				try
+					object = Creator.objectsByName[key]
+					if not object?.enable_api
+						return {
+							statusCode: 401
+							body: setErrorMessage(401)
+						}
+					collection = Creator.Collections[key]
+					if not collection
+						return{
+							statusCode: 404
+							body: setErrorMessage(404,collection,key)
+						}
 
-				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-				if permissions.allowRead
-					unreadable_fields = permissions.unreadable_fields || []
-					qs = decodeURIComponent(querystring.stringify(@queryParams))
-					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
-					createQuery.query._id =  @urlParams._id
-					if key is 'cfs.files.filerecord'
-						createQuery.query['metadata.space'] = @urlParams.spaceId
-					else
-						createQuery.query.space =  @urlParams.spaceId
-					unreadable_fields = permissions.unreadable_fields || []
-					#fields = Creator.getObject(key).fields
-					if createQuery.projection
-						projection = {}
-						_.keys(createQuery.projection).forEach (key)->
-							if _.indexOf(unreadable_fields, key) < 0
-								#if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-								projection[key] = 1
-						createQuery.projection = projection
-					if not createQuery.projection or !_.size(createQuery.projection)
-						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-						_.each readable_fields,(field)->
-							createQuery.projection[field] = 1
-					entity = collection.findOne(createQuery.query,visitorParser(createQuery))
-					entities = []
-					if entity
-						isAllowed = entity.owner == @userId or permissions.viewAllRecords
-						if object.enable_share and !isAllowed
-							shares = []
-							orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
-							shares.push { "sharing.u": @userId }
-							shares.push { "sharing.o": { $in: orgs } }
-							isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
-						if isAllowed
-							body = {}
-							headers = {}
-							entities.push entity
-							dealWithExpand(createQuery, entities, key)
-							body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-							entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-							_.extend body,entity_OdataProperties[0]
-							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-							headers['OData-Version'] = SteedosOData.VERSION
-							{body: body, headers: headers}
+					permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+					if permissions.allowRead
+						unreadable_fields = permissions.unreadable_fields || []
+						qs = decodeURIComponent(querystring.stringify(@queryParams))
+						createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+						createQuery.query._id =  @urlParams._id
+						if key is 'cfs.files.filerecord'
+							createQuery.query['metadata.space'] = @urlParams.spaceId
+						else
+							createQuery.query.space =  @urlParams.spaceId
+						unreadable_fields = permissions.unreadable_fields || []
+						#fields = Creator.getObject(key).fields
+						if createQuery.projection
+							projection = {}
+							_.keys(createQuery.projection).forEach (key)->
+								if _.indexOf(unreadable_fields, key) < 0
+								#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+									projection[key] = 1
+							createQuery.projection = projection
+						if not createQuery.projection or !_.size(createQuery.projection)
+							readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
+							fields = Creator.getObject(key).fields
+							_.each readable_fields,(field)->
+								if field.indexOf('$')<0
+									createQuery.projection[field] = 1
+						entity = collection.findOne(createQuery.query,visitorParser(createQuery))
+						entities = []
+						if entity
+							isAllowed = entity.owner == @userId or permissions.viewAllRecords
+							if object.enable_share and !isAllowed
+								shares = []
+								orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+								shares.push { "sharing.u": @userId }
+								shares.push { "sharing.o": { $in: orgs } }
+								isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
+							if isAllowed
+								body = {}
+								headers = {}
+								entities.push entity
+								dealWithExpand(createQuery, entities, key)
+								body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+								entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+								_.extend body,entity_OdataProperties[0]
+								headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+								headers['OData-Version'] = SteedosOData.VERSION
+								{body: body, headers: headers}
+							else
+								return{
+									statusCode: 403
+									body: setErrorMessage(403,collection,key,'get')
+								}
 						else
 							return{
-								statusCode: 403
-								body: setErrorMessage(403,collection,key,'get')
+								statusCode: 404
+								body: setErrorMessage(404,collection,key,'get')
 							}
 					else
 						return{
-							statusCode: 404
-							body: setErrorMessage(404,collection,key,'get')
+							statusCode: 403
+							body: setErrorMessage(403,collection,key,'get')
 						}
-				else
+				catch e
+					console.error e
+					body = e
 					return{
-						statusCode: 403
-						body: setErrorMessage(403,collection,key,'get')
+						statusCode:500
+						body:body
 					}
+
 		put:()->
 			try
 				key = @urlParams.object_name
@@ -561,17 +588,19 @@ Meteor.startup ->
 					if fields_editable
 						entityIsUpdated = collection.update selector, @bodyParams
 						if entityIsUpdated
-							entity = collection.findOne @urlParams._id
-							entities = []
-							body = {}
+							#statusCode: 201
+							# entity = collection.findOne @urlParams._id
+							# entities = []
+							# body = {}
 							headers = {}
-							entities.push entity
-							body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
-							entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
-							_.extend body,entity_OdataProperties[0]
+							body = {}
+							# entities.push entity
+							# body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+							# entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+							# _.extend body,entity_OdataProperties[0]
 							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
 							headers['OData-Version'] = SteedosOData.VERSION
-							{body: body, headers: headers}
+							{headers: headers,body:body}
 						else
 							return{
 								statusCode: 404
@@ -616,7 +645,15 @@ Meteor.startup ->
 				if isAllowed
 					selector = {_id: @urlParams._id, space: @urlParams.spaceId}
 					if collection.remove selector
-						{status: 'success', message: 'Item removed'}
+						headers = {}
+						body = {}
+						# entities.push entity
+						# body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
+						# entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
+						# _.extend body,entity_OdataProperties[0]
+						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+						headers['OData-Version'] = SteedosOData.VERSION
+						{headers: headers,body:body}
 					else
 						return{
 							statusCode: 404
