@@ -8,7 +8,6 @@ Template.adminMenu.helpers
 		userId = Meteor.userId()
 		avatar = Creator.getCollection("users").findOne({_id: userId})?.avatar
 		if avatar
-			alert(Steedos.absoluteUrl("avatar/#{Meteor.userId()}?avatar=#{avatar}"))
 			return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?avatar=#{avatar}")
 		else
 			return Steedos.absoluteUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
