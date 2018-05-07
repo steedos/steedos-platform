@@ -11,7 +11,6 @@ if Meteor.isServer
 		permissions.assigned_apps = Creator.getAssignedApps.bind(psets)(spaceId, userId)
 		_.each Creator.objectsByName, (object, object_name)->
 			permissions.objects[object_name] = _.clone Creator.Objects[object_name]
-			Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 			permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 		return permissions
 
