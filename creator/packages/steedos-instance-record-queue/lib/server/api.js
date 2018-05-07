@@ -158,7 +158,10 @@ InstanceRecordQueue.Configure = function (options) {
 		}
 	}
 
-	self.syncValues = function (obj, field_map, values) {
+	self.syncInsFields = ['name', 'submitter_name', 'applicant_name', 'applicant_organization_name', 'applicant_organization_fullname', 'state',
+		'current_step_name', 'flow_name', 'category_name', 'submit_date', 'finish_date', 'final_decision'
+	];
+	self.syncValues = function (obj, field_map, values, ins) {
 		var
 			tableFieldCodes = [],
 			tableFieldMap = [];
@@ -178,6 +181,10 @@ InstanceRecordQueue.Configure = function (options) {
 
 			} else if (values.hasOwnProperty(fm.workflow_field)) {
 				obj[fm.object_field] = values[fm.workflow_field];
+			} else if (fm.workflow_field.startsWith('instance.')) {
+				var insField = fm.workflow_field.split('instance.')[1];
+				if (self.syncInsFields.includes(insField))
+					obj[fm.object_field] = ins[insField];
 			}
 		})
 
@@ -210,12 +217,15 @@ InstanceRecordQueue.Configure = function (options) {
 
 		var insId = doc.info.instance_id,
 			records = doc.info.records;
+		var fields = {
+			flow: 1,
+			values: 1
+		};
+		self.syncInsFields.forEach(function (f) {
+			fields[f] = 1;
+		})
 		var ins = Creator.getCollection('instances').findOne(insId, {
-			fields: {
-				name: 1,
-				flow: 1,
-				values: 1
-			}
+			fields: fields
 		});
 		var values = ins.values;
 
@@ -238,7 +248,7 @@ InstanceRecordQueue.Configure = function (options) {
 				try {
 					var setObj = {};
 
-					self.syncValues(setObj, ow.field_map, values);
+					self.syncValues(setObj, ow.field_map, values, ins);
 
 					setObj['instances.$.state'] = 'completed';
 
@@ -297,7 +307,7 @@ InstanceRecordQueue.Configure = function (options) {
 						spaceId = ow.space,
 						objectName = ow.object_name;
 
-					self.syncValues(newObj, ow.field_map, values);
+					self.syncValues(newObj, ow.field_map, values, ins);
 
 					newObj._id = newRecordId;
 					newObj.space = spaceId;
