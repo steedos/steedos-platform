@@ -130,8 +130,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('models/object_workflows.coffee');
 
-	api.addFiles('server/methods/bootstrap.coffee', 'server');
-
 	api.addFiles('server/methods/object_options.coffee', 'server');
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');
 	api.addFiles('server/methods/object_recent_record.coffee', 'server');
