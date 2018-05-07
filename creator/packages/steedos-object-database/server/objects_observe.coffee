@@ -1,5 +1,4 @@
 Meteor.startup ()->
-
 	_changeServerObjects = (document)->
 		if _.size(document.fields) > 0
 #
@@ -26,7 +25,14 @@ Meteor.startup ()->
 	_removeServerObjects = (document)->
 		Creator.removeObject(document.name)
 	server_objects_init = false
-	Creator.getCollection("objects").find().observe {
+	Creator.getCollection("objects").find({}, {
+		fields: {
+			created: 0,
+			created_by: 0,
+			modified: 0,
+			modified_by: 0
+		}
+	}).observe {
 		added: (newDocument)->
 			if !server_objects_init
 				_changeServerObjects newDocument
