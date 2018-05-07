@@ -94,12 +94,16 @@ Creator.Objects.permission_shares =
 				object_name = doc.object_name
 				# 查找出所有满足条件的记录，并同步相关共享规则
 				collection = Creator.getCollection(object_name)
+				# 批量更新数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
+				bulk = collection.rawCollection().initializeUnorderedBulkOp()
 				selector = { space: doc.space }
 				if doc.filters
 					filters = Creator.formatFiltersToMongo(doc.filters, { extend: false })
 					selector["$and"] = filters
 				push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
-				collection.direct.update(selector, {$push: push}, {multi: true})
+				bulk.find(selector).update({$push: push})
+				# collection.direct.update(selector, {$push: push}, {multi: true})
+				bulk.execute()
 
 		"after.update.server.sharing":
 			on: "server"
@@ -114,15 +118,23 @@ Creator.Objects.permission_shares =
 					preCollection = Creator.getCollection(preObjectName)
 				else
 					preCollection = collection
+				# 批量更新数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
+				preBulk = preCollection.rawCollection().initializeUnorderedBulkOp()
+				bulk = collection.rawCollection().initializeUnorderedBulkOp()
 				selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
 				pull = { sharing: { r:doc._id } }
-				preCollection.direct.update(selector, {$pull: pull}, {multi: true})
+				preBulk.find(selector).update({$pull: pull})
+				# preCollection.direct.update(selector, {$pull: pull}, {multi: true})
+				preBulk.execute()
 				selector = { space: doc.space }
 				if doc.filters
 					filters = Creator.formatFiltersToMongo(doc.filters, { extend: false })
 					selector["$and"] = filters
 				push = { sharing: { "u": doc.users, "o": doc.organizations, "r": doc._id } }
-				collection.direct.update(selector, {$push: push}, {multi: true})
+				bulk.find(selector).update({$push: push})
+				# collection.direct.update(selector, {$push: push}, {multi: true})
+				bulk.execute()
+
 		"after.remove.server.sharing":
 			on: "server"
 			when: "after.remove"
@@ -130,6 +142,11 @@ Creator.Objects.permission_shares =
 				object_name = doc.object_name
 				# 移除当前共享规则相关的所有记录的共享规则数据
 				collection = Creator.getCollection(object_name)
+				# 批量更新数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
+				bulk = collection.rawCollection().initializeUnorderedBulkOp()
 				selector = { space: doc.space, "sharing": { $elemMatch: { r:doc._id } } }
 				pull = { sharing: { r:doc._id } }
-				collection.direct.update(selector, {$pull: pull}, {multi: true})
+				bulk.find(selector).update({$pull: pull})
+				# collection.direct.update(selector, {$pull: pull}, {multi: true})
+				bulk.execute()
+				
