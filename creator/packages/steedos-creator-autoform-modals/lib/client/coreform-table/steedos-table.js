@@ -67,7 +67,7 @@ CreatorTable.getKeys = function(field) {
 
 if(Meteor.isClient){
     AutoForm.addInputType("table", {
-        template: "afTable",
+        template: "creatorTable",
         valueOut: function() {
             // console.log("valueOut..............")
             // CreatorTable.getTableValue(this);
@@ -90,7 +90,7 @@ if(Meteor.isClient){
         }
     });
 
-    Template.afTable.events({
+    Template.creatorTable.events({
         'click .add-item-tr': function(event, template) {
 
             var field = template.data.name;
@@ -117,11 +117,11 @@ if(Meteor.isClient){
         }
     });
 
-    Template.afTable.onCreated(function(){
+    Template.creatorTable.onCreated(function(){
         this.trField = new ReactiveVar([]);
     })
 
-    Template.afTable.rendered = function() {
+    Template.creatorTable.rendered = function() {
         var field = this.data.name;
 
         var keys = CreatorTable.getKeys(field);
@@ -150,7 +150,7 @@ if(Meteor.isClient){
         }
     };
 
-    Template.afTable.helpers({
+    Template.creatorTable.helpers({
         trField: function() {
             if (Template.instance().trField) {
                 return Template.instance().trField.get();
