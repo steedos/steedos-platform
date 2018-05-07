@@ -172,7 +172,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 
 		list_view = Creator.getListView(object_name, list_view_id)
 
-		list_view_sort = Creator.transformSortToDX(list_view.sort)
+		list_view_sort = Creator.transformSortToDX(list_view?.sort)
 
 		if column_sort_settings and column_sort_settings.length > 0
 			console.log("settings sort...")
@@ -340,7 +340,7 @@ Template.creator_grid.onRendered ->
 				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
 
 			# fileName
-			fileName = Creator.getObject(curObjectName).label + "-" + Creator.getListView(curObjectName, list_view_id).label
+			fileName = Creator.getObject(curObjectName).label + "-" + Creator.getListView(curObjectName, list_view_id)?.label
 			dxOptions = 
 				paging: 
 					pageSize: pageSize
@@ -396,6 +396,9 @@ Template.creator_grid.onRendered ->
 						errorHandler: (error) ->
 							if error.httpStatus == 404 || error.httpStatus == 400
 								error.message = t "creator_odata_api_not_found"
+							if error.httpStatus == 500
+								if error.message == "Unexpected character at 106"
+									error.message = t "creator_odata_unexpected_character"
 					select: selectColumns
 					filter: filter
 					expand: expand_fields

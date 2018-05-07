@@ -96,22 +96,22 @@ Meteor.startup ->
 				if action == 'post'
 					innererror['message'] = 'the record added fail.'
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
-					error['code'] = 'No item added'
+					error['code'] = 404
 					error['message'] = 'the record added fail'
 				else
 					innererror['message'] = 'the record does not exist for the given query.'
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
-					error['code'] = 'Record Not Found'
+					error['code'] = 404
 					error['message'] = 'the record does not exist for the given query.'
 			else
 				innererror['message'] = 'Collection not found for the segment '+ key
 				innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
-				error['code'] = 'Collection Not Found'
+				error['code'] = 404
 				error['message'] = 'Collection not found for the segment '+ key
 		if  statusCode == 401
 			innererror['message'] = 'Authentication is required and has not been provided.'
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
-			error['code'] = 'Unauthorized'
+			error['code'] = 401
 			error['message'] = 'Authentication is required and has not been provided.'
 		if statusCode == 403
 			switch action
@@ -121,7 +121,7 @@ Meteor.startup ->
 				when 'delete' then innererror['message'] = 'User does not have privileges to remove the entity'
 			innererror['message'] = 'User does not have privileges to access the entity'
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
-			error['code'] = 'Unauthorized'
+			error['code'] = 403
 			error['message'] = innererror['message']
 		error['innererror'] = innererror
 		body['error'] = error
@@ -233,11 +233,11 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,"get")
 					}
 			catch e
-				console.log e
-				console.log e.message
 				body = {}
-				body['message'] = e.message
-				console.log body
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
 				return {
 					statusCode: 500
 					body:body
@@ -285,102 +285,117 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
-				console.error e
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
 				return {
 					statusCode: 500
-					body:e
-				}
+					body:body
+				}	
 
 	})
 	SteedosOdataAPI.addRoute(':object_name/recent', {authRequired: true, spaceRequired: false}, {
 		get:()->
-			key = @urlParams.object_name
-			if not Creator.objectsByName[key]?.enable_api
-				return{
-					statusCode: 401
-					body: setErrorMessage(401)
-				}
-			collection = Creator.Collections[key]
-			if not collection
-				return {
-					statusCode: 404
-					body: setErrorMessage(404,collection,key)
-				}
-			permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-			if permissions.allowRead
-				recent_view_collection = Creator.Collections["object_recent_viewed"]
-				recent_view_selector = {"record.o":key,created_by:@userId}
-				recent_view_options = {}
-				recent_view_options.sort = {created: -1}
-				recent_view_options.fields = {record:1}
-				recent_view_records = recent_view_collection.find(recent_view_selector,recent_view_options).fetch()
-				recent_view_records_ids = _.pluck(recent_view_records,'record')
-				recent_view_records_ids = recent_view_records_ids.getProperty("ids")
-				recent_view_records_ids = _.flatten(recent_view_records_ids)
-				recent_view_records_ids = _.uniq(recent_view_records_ids)
-				qs = decodeURIComponent(querystring.stringify(@queryParams))
-				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
-				if key is 'cfs.files.filerecord'
-					createQuery.query['metadata.space'] = @urlParams.spaceId
-				else
-					createQuery.query.space = @urlParams.spaceId
-				if not createQuery.limit
-					createQuery.limit = 100
-				if createQuery.limit and recent_view_records_ids.length>createQuery.limit
-					recent_view_records_ids = _.first(recent_view_records_ids,createQuery.limit)
-				createQuery.query._id = {$in:recent_view_records_ids}
-				unreadable_fields = permissions.unreadable_fields || []
-			#	fields = Creator.getObject(key).fields
-				if createQuery.projection
-					projection = {}
-					_.keys(createQuery.projection).forEach (key)->
-						if _.indexOf(unreadable_fields, key) < 0
-						#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
-							projection[key] = 1
-					createQuery.projection = projection
-				if not createQuery.projection or !_.size(createQuery.projection)
-					readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-					fields = Creator.getObject(key).fields
-					_.each readable_fields,(field)->
-						if field.indexOf('$')<0
-							if fields[field]?.multiple!= true
-								createQuery.projection[field] = 1
-				if @queryParams.$top isnt '0'
-					entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
-				entities_index = []
-				entities_ids = _.pluck(entities,'_id')
-				sort_entities = []
-				if not createQuery.sort or !_.size(createQuery.sort)
-					_.each recent_view_records_ids ,(recent_view_records_id)->
-						index = _.indexOf(entities_ids,recent_view_records_id)
-						if index>-1
-							sort_entities.push entities[index]
-				else
-					sort_entities = entities
-				if sort_entities
-					dealWithExpand(createQuery, sort_entities, key)
-					body = {}
-					headers = {}
-					body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
-				#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
-					body['@odata.count'] = sort_entities.length
-					entities_OdataProperties = setOdataProperty(sort_entities,@urlParams.spaceId, key)
-					body['value'] = entities_OdataProperties
-					headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-					headers['OData-Version'] = SteedosOData.VERSION
-					{body: body, headers: headers}
-				else
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
 					return{
-						statusCode: 404
-						body: setErrorMessage(404,collection,key,'get')
+						statusCode: 401
+						body: setErrorMessage(401)
 					}
-			else
-				console.error e
-				return{
-					statusCode: 403
-					body: setErrorMessage(403,collection,key,'get')
-				}
-	})
+				collection = Creator.Collections[key]
+				if not collection
+					return {
+						statusCode: 404
+						body: setErrorMessage(404,collection,key)
+					}
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.allowRead
+					recent_view_collection = Creator.Collections["object_recent_viewed"]
+					recent_view_selector = {"record.o":key,created_by:@userId}
+					recent_view_options = {}
+					recent_view_options.sort = {created: -1}
+					recent_view_options.fields = {record:1}
+					recent_view_records = recent_view_collection.find(recent_view_selector,recent_view_options).fetch()
+					recent_view_records_ids = _.pluck(recent_view_records,'record')
+					recent_view_records_ids = recent_view_records_ids.getProperty("ids")
+					recent_view_records_ids = _.flatten(recent_view_records_ids)
+					recent_view_records_ids = _.uniq(recent_view_records_ids)
+					qs = decodeURIComponent(querystring.stringify(@queryParams))
+					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+					if key is 'cfs.files.filerecord'
+						createQuery.query['metadata.space'] = @urlParams.spaceId
+					else
+						createQuery.query.space = @urlParams.spaceId
+					if not createQuery.limit
+						createQuery.limit = 100
+					if createQuery.limit and recent_view_records_ids.length>createQuery.limit
+						recent_view_records_ids = _.first(recent_view_records_ids,createQuery.limit)
+					createQuery.query._id = {$in:recent_view_records_ids}
+					unreadable_fields = permissions.unreadable_fields || []
+				#	fields = Creator.getObject(key).fields
+					if createQuery.projection
+						projection = {}
+						_.keys(createQuery.projection).forEach (key)->
+							if _.indexOf(unreadable_fields, key) < 0
+							#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								projection[key] = 1
+						createQuery.projection = projection
+					if not createQuery.projection or !_.size(createQuery.projection)
+						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
+						fields = Creator.getObject(key).fields
+						_.each readable_fields,(field)->
+							if field.indexOf('$')<0
+								if fields[field]?.multiple!= true
+									createQuery.projection[field] = 1
+					if @queryParams.$top isnt '0'
+						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
+					entities_index = []
+					entities_ids = _.pluck(entities,'_id')
+					sort_entities = []
+					if not createQuery.sort or !_.size(createQuery.sort)
+						_.each recent_view_records_ids ,(recent_view_records_id)->
+							index = _.indexOf(entities_ids,recent_view_records_id)
+							if index>-1
+								sort_entities.push entities[index]
+					else
+						sort_entities = entities
+					if sort_entities
+						dealWithExpand(createQuery, sort_entities, key)
+						body = {}
+						headers = {}
+						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
+					#	body['@odata.nextLink'] = SteedosOData.getODataNextLinkPath(@urlParams.spaceId,key)+"?%24skip="+ 10
+						body['@odata.count'] = sort_entities.length
+						entities_OdataProperties = setOdataProperty(sort_entities,@urlParams.spaceId, key)
+						body['value'] = entities_OdataProperties
+						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+						headers['OData-Version'] = SteedosOData.VERSION
+						{body: body, headers: headers}
+					else
+						return{
+							statusCode: 404
+							body: setErrorMessage(404,collection,key,'get')
+						}
+				else
+					console.error e
+					return{
+						statusCode: 403
+						body: setErrorMessage(403,collection,key,'get')
+					}
+			catch e
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
+				return {
+					statusCode: 500
+					body:body
+				}	
+})
 
 	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
 		post: ()->
@@ -424,12 +439,15 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
-				console.error e
-				body = e
-				return{
-					statusCode:500
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
+				return {
+					statusCode: 500
 					body:body
-				}
+				}	
 		get:()->
 
 			key = @urlParams.object_name
@@ -553,12 +571,15 @@ Meteor.startup ->
 							body: setErrorMessage(403,collection,key,'get')
 						}
 				catch e
-					console.error e
-					body = e
-					return{
-						statusCode:500
+					body = {}
+					error = {}
+					error['message'] = e.message
+					error['code'] = 500
+					body['error'] = error				
+					return {
+						statusCode: 500
 						body:body
-					}
+					}	
 
 		put:()->
 			try
@@ -617,12 +638,15 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'put')
 					}
 			catch e
-				console.error e
-				body = e
-				return{
-					statusCode:500
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
+				return {
+					statusCode: 500
 					body:body
-				}
+				}	
 		delete:()->
 			try
 				key = @urlParams.object_name
@@ -665,10 +689,15 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key)
 					}
 			catch e
-				console.error e
-				return{
-					statusCode: 404
-					body:e }
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error				
+				return {
+					statusCode: 500
+					body:body
+				}	
 	})
 	
 	#TODO remove
