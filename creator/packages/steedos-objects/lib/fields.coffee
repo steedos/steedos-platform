@@ -101,7 +101,6 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.create = field.create
 				if Meteor.isClient
 					if field.createFunction && _.isFunction(field.createFunction)
-						console.log("fs.createFunction", field.createFunction)
 						fs.createFunction = field.createFunction
 					else
 						if _.isString(field.reference_to)
@@ -115,11 +114,8 @@ Creator.getObjectSchema = (obj) ->
 										object_name: "#{field.reference_to}",
 										operation: "insert",
 										onSuccess: (operation, result)->
-											console.log("result", result)
 											object = Creator.getObject(result.object_name)
 											if result.object_name == "objects"
-												console.log("[{label: result.value.label, value: result.value.name}]", [{label: result.value.label, value: result.value.name, icon: result.value.icon}])
-												console.log("result.value.name", result.value.name)
 												lookup_field.addItems([{label: result.value.label, value: result.value.name, icon: result.value.icon}], result.value.name)
 											else
 												lookup_field.addItems([{label: result.value[object.NAME_FIELD_KEY] || result.value.label || result.value.name, value: result._id}], result._id)
@@ -136,7 +132,7 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.type = "selectorg"
 				else
 					fs.autoform.type = "steedosLookups"
-					fs.autoform.optionsMethod = "creator.object_options"
+					fs.autoform.optionsMethod = field.optionsMethod || "creator.object_options"
 
 					if typeof(field.reference_to) == "function"
 						_reference_to = field.reference_to()
