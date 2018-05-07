@@ -34,17 +34,30 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.rows = field.rows || 3
 		else if field.type == "date"
 			fs.type = Date
-			fs.autoform.afFieldInput =
-				type: "bootstrap-datetimepicker"
-				timezoneId: "utc"
-				dateTimePickerOptions:
-					format: "YYYY-MM-DD"
+			if Meteor.isClient
+				if Steedos.isMobile() || Steedos.isPad()
+					fs.autoform.type = 'date'
+				else
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "bootstrap-datetimepicker"
+						timezoneId: "utc"
+						dateTimePickerOptions:
+							format: "YYYY-MM-DD"
+							locale: Session.get("TAPi18n::loaded_lang")
+
 		else if field.type == "datetime"
 			fs.type = Date
-			fs.autoform.afFieldInput =
-				type: "bootstrap-datetimepicker"
-				dateTimePickerOptions:
-					format: "YYYY-MM-DD HH:mm"
+			if Meteor.isClient
+				if Steedos.isMobile() || Steedos.isPad()
+					fs.autoform.type = 'datetime-local'
+				else
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "bootstrap-datetimepicker"
+						dateTimePickerOptions:
+							format: "YYYY-MM-DD HH:mm"
+							locale: Session.get("TAPi18n::loaded_lang")
 		else if field.type == "[Object]"
 			fs.type = [Object]
 		else if field.type == "html"
