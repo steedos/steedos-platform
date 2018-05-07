@@ -4,10 +4,12 @@ FlowRouter.route '/',
 			if !Meteor.userId()
 				FlowRouter.go '/steedos/sign-in';
 			else
-				if Steedos.isMobile()
-					FlowRouter.go '/app/menu'
-				else
-					FlowRouter.go '/app'
+				FlowRouter.go '/app'
+
+				# if Steedos.isMobile()
+				# 	FlowRouter.go '/app/menu'
+				# else
+				# 	FlowRouter.go '/app'
 
 
 # Meteor.startup ->

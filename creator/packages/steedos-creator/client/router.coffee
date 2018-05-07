@@ -43,10 +43,10 @@ initLayout = ()->
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
-		if Steedos.isMobile()
-			FlowRouter.go '/app/menu'
-		else
-			Tracker.autorun (c)->
+		Tracker.autorun (c)->
+			if Session.get("app_id")
+				FlowRouter.go '/app/' + Session.get("app_id")
+			else
 				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
 					c.stop()
 					apps = Creator.getVisibleApps()
@@ -61,14 +61,12 @@ FlowRouter.route '/app/menu',
 FlowRouter.route '/app/:app_id',
 	triggersEnter: [ checkUserSigned, checkAppPermission, initLayout ],
 	action: (params, queryParams)->
+		Session.set("app_id", FlowRouter.getParam("app_id"))
 		if Steedos.isMobile() 
 			if $(".mobile-content-wrapper #object_menu").length == 0
-				app_id = FlowRouter.getParam("app_id")
-				data = {app_id: app_id}
 				Meteor.defer ->
-					Blaze.renderWithData(Template.objectMenu, data, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
+					Blaze.renderWithData(Template.objectMenu, {}, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
 		else
-			Session.set("app_id", FlowRouter.getParam("app_id"))
 			BlazeLayout.render Creator.getLayout(),
 				main: "creator_app_home"
 

@@ -34,16 +34,9 @@
 						{{#if $and cmCollection cmOperation}}
 							<p>{{{prompt}}}</p>
 							{{#if shouldUpdateQuickForm}}
-								{{#if isUseMethod}}
-									{{#autoForm title=cmTitle id=cmFormId schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-										{{>CreatorFormField schemaFields=schemaFields}}
-									{{/autoForm}}
-								{{else}}
-									{{#autoForm title=cmTitle id=cmFormId collection=cmCollection doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
-										{{>CreatorFormField schemaFields=schemaFields}}
-									{{/autoForm}}
-								{{/if}}
-					
+								{{#autoForm title=cmTitle id=cmFormId schema=schema doc=cmDoc buttonContent=false template=cmTemplate label-class=cmLabelClass input-col-class=cmInputColClass buttonClasses=cmButtonClasses meteormethod=cmMeteorMethod type=cmAutoformType}}
+									{{>CreatorFormField schemaFields=schemaFields}}
+								{{/autoForm}}
 							{{/if}}
 						{{/if}}
 					{{/if}}

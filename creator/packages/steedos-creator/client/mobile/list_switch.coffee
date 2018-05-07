@@ -7,7 +7,6 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 	else
 		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 	filter = Creator.getODataFilter(list_view_id, object_name)
-	console.log list_view_id, object_name, JSON.stringify(filter)
 	DevExpress.ui.setTemplateEngine("underscore");
 	list_options = 
 		dataSource: {
@@ -38,7 +37,7 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 			record_url = Creator.getObjectUrl(object_name, data._id, app_id)
 			result = $("<a>").addClass("weui-cell weui-cell_access weui-cell-profile record-item").attr("href", record_url)
 			$("<div>").html(Blaze.toHTMLWithData Template.steedos_icon, {class: "slds-icon slds-page-header__icon", source: "standard-sprite", name: icon}).addClass("weui-cell__hd").appendTo(result)
-			$("<div>").html("<p>#{data[name_field_key]}</p>").addClass("weui-cell__bd weui-cell_primary").appendTo(result)
+			$("<div>").html("<p class='slds-truncate'>#{data[name_field_key]}</p>").addClass("weui-cell__bd weui-cell_primary slds-truncate").appendTo(result)
 			$("<span>").addClass("weui-cell__ft").appendTo(result)
 			return result
 
@@ -119,26 +118,20 @@ Template.listSwitch.events
 		template.$(".btn-add-list-item").click()
 
 	'click .list-name': (event, template)->
-		actionSheetItems = []
-		app_id = Template.instance().data.app_id
-		object_name = Template.instance().data.object_name
-		list_views = Creator.getListViews(object_name)
-		_.each list_views, (view)->
-			actionSheetItems.push {text: view.label, list_view_id: view._id}
+		template.$(".switch-list-mask").css({"opacity": "1", "display": "block"})
+		template.$(".switch-list-actionsheet").addClass("weui-actionsheet_toggle")
 
-		actionSheetOption = 
-			dataSource: actionSheetItems
-			showTitle: false
-			usePopover: true
-			onItemClick: (value)->
-				template.list_view_id.set(value.itemData.list_view_id)
-				template.list_view_label.set(value.itemData.text)
-				console.log template.list_view_label.get()
-				console.log(value.itemData)
+	'click .weui-actionsheet__cell': (event, template)->
+		template.$(".switch-list-mask").css({"opacity": "0", "display": "none"})
+		template.$(".switch-list-actionsheet").removeClass("weui-actionsheet_toggle")
 
-		actionSheet = template.$("#action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
-		actionSheet.option("target", event.target);
-		actionSheet.option("visible", true);
+	'click .switch-list-mask': (event, template)->
+		template.$(".switch-list-mask").css({"opacity": "0", "display": "none"})
+		template.$(".switch-list-actionsheet").removeClass("weui-actionsheet_toggle")
+
+	'click .switch-list': (event, template)->
+		template.list_view_id.set(this._id)
+		template.list_view_label.set(this.label)
 
 
 Template.listSwitch.onCreated ->

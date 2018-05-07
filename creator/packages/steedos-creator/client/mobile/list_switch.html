@@ -23,5 +23,18 @@
             <div id="gridContainer" style="overflow: hidden"></div>
         </div>
     </div>
+    <div>
+        <div class="weui-mask switch-list-mask" style="display: none;opacity: 0"></div>
+		<div class="weui-actionsheet switch-list-actionsheet" >
+			<div class="weui-actionsheet__menu">
+				{{#each list_views}}
+					<div class="weui-actionsheet__cell switch-list">{{this.label}}</div>
+				{{/each}}
+			</div>
+			<div class="weui-actionsheet__action">
+				<div class="weui-actionsheet__cell actionsheet-cancel">{{_ "Cancel"}}</div>
+            </div>
+        </div>
+    </div>
     {{#CreatorAfModal formId="addListItem" class="btn btn-primary btn-add-list-item hidden" meteormethod="af_insert" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
 </template>

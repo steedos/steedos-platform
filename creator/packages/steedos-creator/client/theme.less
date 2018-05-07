@@ -178,3 +178,29 @@ body {
 		cursor: pointer;
 	}
 }
+
+@media screen and (max-width: 767px) {
+	.slds-modal.modal-dialog {
+		.slds-modal__container {
+			margin: 0;
+			padding: 0;
+
+			.slds-modal__header {
+				border-radius: 0;
+
+				h2.slds-text-heading--medium {
+					font-size: 20px;
+    				line-height: 1.875rem;
+				}
+			}
+
+			.slds-modal__content {
+				flex: 1
+			}
+
+			.slds-modal__footer {
+				display: none;
+			}
+		}
+	}
+}
