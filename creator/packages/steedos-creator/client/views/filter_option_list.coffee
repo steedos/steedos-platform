@@ -92,6 +92,8 @@ Template.filter_option_list.events
 
 	'click .add-filter': (event, template)->
 		filter_items = Session.get("filter_items")
+		unless filter_items
+			filter_items = []
 		filter_items.push({})
 		Session.set("filter_items", filter_items)
 		Meteor.defer ->
