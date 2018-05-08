@@ -71,5 +71,7 @@
 	"creator_report_drill_down_total_label": "Total",
 	"creator_listview_update":"list view updated",
 
-	"Request Entity Too Large": "Request Entity Too Large"
+	"Request Entity Too Large": "Request Entity Too Large",
+
+	"creator_permission_share_miss": "Please fill in at least one value in the authorized organization or authorized user"
 }

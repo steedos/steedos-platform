@@ -84,8 +84,16 @@ Creator.Objects.permission_shares =
 			on: "server"
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
-				if _.isEmpty(modifier.$set.organizations) and _.isEmpty(modifier.$set.users)
-					throw new Meteor.Error 500, "请在授权组织或授权用户中至少填写一个值"
+				errMsg = t "creator_permission_share_miss"
+				if fieldNames.length == 1
+					if fieldNames.indexOf("organizations") > -1
+						if _.isEmpty(modifier.$set.organizations) and _.isEmpty(doc.users)
+							throw new Meteor.Error 500, errMsg
+					else if fieldNames.indexOf("users") > -1
+						if _.isEmpty(doc.organizations) and _.isEmpty(modifier.$set.users)
+							throw new Meteor.Error 500, errMsg
+				else if _.isEmpty(modifier.$set.organizations) and _.isEmpty(modifier.$set.users)
+					throw new Meteor.Error 500, errMsg
 					
 		"after.insert.server.sharing":
 			on: "server"
