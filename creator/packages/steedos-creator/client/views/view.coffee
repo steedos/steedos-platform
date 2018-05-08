@@ -420,4 +420,4 @@ Template.creator_view.events
 					toastr.error t(msg)
 					return
 			i++
-
+		$(event.target).val("")
