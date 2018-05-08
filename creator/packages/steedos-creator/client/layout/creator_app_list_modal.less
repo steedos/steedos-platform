@@ -60,4 +60,34 @@
 			display: block;
 		}
 	}
+
+	.app-sction-part-2 {
+		.object-item {
+			.slds-app-launcher__tile_small {
+				text-align: left;
+			}
+		}
+
+		@media screen and (min-width: 1441px) {
+			.object-item {
+				width: 20%;
+			}
+		}
+		@media screen and (max-width: 1440px) {
+			.object-item {
+				width: 25%;
+			}
+		}
+		@media screen and (max-width: 1024px) {
+			.object-item {
+				width: 33%;
+			}
+		}
+
+		@media screen and (max-width: 700px) {
+			.object-item {
+				width: 50%;
+			}
+		}
+	}
 }
