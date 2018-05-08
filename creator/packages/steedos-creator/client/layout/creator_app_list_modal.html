@@ -62,9 +62,18 @@
 											</span>
 										</div>
 										<div class="slds-app-launcher__tile-body">
-											<div class="app-title slds-text-link">
-												{{_ name}}
-											</div>
+											{{#if description}}
+												<span class="slds-text-link">
+													{{_ name}}
+												</span>
+												<p class="desc">
+													{{description}}
+												</p>
+											{{else}}
+												<div class="app-title slds-text-link">
+													{{_ name}}
+												</div>
+											{{/if}}
 										</div>
 									</a>
 								</li>
