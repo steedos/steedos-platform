@@ -406,7 +406,6 @@ Template.creator_view.events
 				success: (responseText, status) ->
 					fileObj = undefined
 					$(document.body).removeClass 'loading'
-					# $('.loading-text').text ''
 					if responseText.errors
 						responseText.errors.forEach (e) ->
 							toastr.error e.errorMessage
@@ -416,8 +415,9 @@ Template.creator_view.events
 					return
 				error: (xhr, msg, ex) ->
 					$(document.body).removeClass 'loading'
-					# $('.loading-text').text ''
-					toastr.error msg
+					if ex
+						msg = ex
+					toastr.error t(msg)
 					return
 			i++
 

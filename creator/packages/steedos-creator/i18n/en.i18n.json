@@ -67,5 +67,7 @@
 
 	"creator_report_drill_down_label": "Drill Down Data",
 	"creator_report_drill_down_total_label": "Total",
-	"creator_listview_update":"list view updated"
+	"creator_listview_update":"list view updated",
+
+	"Request Entity Too Large": "Request Entity Too Large"
 }
