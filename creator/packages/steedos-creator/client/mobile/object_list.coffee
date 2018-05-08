@@ -13,7 +13,7 @@ Template.object_list_modal.helpers
 
 
 Template.object_list_modal.events
-	"click .object-item": (event, template) ->
+	"click .app-item": (event, template) ->
 		# Session.set("app_id", this.app_id)
 		Modal.hide(template)
 

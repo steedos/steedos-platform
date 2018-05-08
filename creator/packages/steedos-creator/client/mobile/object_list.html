@@ -4,26 +4,21 @@
 			<div class="slds-modal__container">
 				<header class="slds-modal__header">
 						<button class="slds-button slds-button_neutral slds-float_left btn-cancel" data-dismiss="modal">取消</button>
-						<button type="submit" class="slds-button slds-button_brand slds-float_right btn-insert">保存</button>
-						
 						<h2 class="title slds-text-heading--medium">
 							选择应用
 						</h2>
 				</header>
 
 				<div class="slds-modal__content slds-p-around_medium">
-					<div class="weui-cells">
+					<div class="weui-grids">
 						{{#each apps}}
-							<a href="{{this.url}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
-								<div class="weui-cell__hd">
+							<a class="weui-grid app-item" href="{{this.url}}">
+								<div class="weui-grid__icon">
 									{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
 								</div>
-								<div class="weui-cell__bd weui-cell_primary">
-									<p>{{this.name}}</p>
-								</div>
-								<span class="weui-cell__ft"></span>
+								<p class="weui-grid__label">{{this.name}}</p>
 							</a>
-						{{/each}}
+						{{/each}}        
 					</div>
 				</div>
 			</div>

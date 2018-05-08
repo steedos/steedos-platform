@@ -188,21 +188,39 @@ body {
 			.slds-modal__header {
 				background: #1075a9;
 				border-radius: 0;
-				padding: 6px 16px;
+				padding: 0;
+				height: 44px;
+				max-height: 44px;
+				border: none;
 
 				button {
+					padding: 12px;
+					min-width: 44px;
+					width: auto;
+					color: #cae4fb;
+					height: 100%;
+					line-height: unset;
+					text-align: left;
 					background: transparent;
 					border: none;
-					color: #cae4fb;
 					font-size: 15px;
+
+					&.active {
+						background-color: rgba(0, 0, 0, 0.1);
+    					border-color: transparent;
+					}
 				}
 
 				h2.slds-text-heading--medium {
 					font-size: 20px;
-					line-height: 1.875rem;
+					line-height: 44px;
 					color: #fff;
 					font-weight: 700;
 					font-size: 16px;
+					position: absolute;
+					left: 65px;
+					right: 65px;
+					text-align: center;
 				}
 			}
 
