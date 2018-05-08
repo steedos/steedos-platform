@@ -157,7 +157,7 @@ Creator.Objects.objects =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				if modifier?.$set?.name && doc.name != modifier.$set.name
 					console.log "不能修改name"
-					throw new Meteor.Error 500, "不能修改name"
+					throw new Meteor.Error 500, "不能修改对象名"
 				if modifier.$set
 					modifier.$set.custom = true
 
