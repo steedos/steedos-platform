@@ -1,19 +1,19 @@
-Creator.Objects.cms_files = 
+Creator.Objects.cms_files =
 	name: "cms_files"
 	label: "文件"
 	icon: "drafts"
 	enable_search: true
 	enable_api: true
 	fields:
-		name: 
+		name:
 			label: "名称"
 			type: "text"
 			searchable:true
 			index:true
-		description: 
+		description:
 			label: "描述"
 			type: "textarea"
-		extention: 
+		extention:
 			label: "文件后缀"
 			type: "text"
 			disabled: true
@@ -48,24 +48,24 @@ Creator.Objects.cms_files =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true 
+			viewAllRecords: true
 
 	triggers:
-		"before.remove.server.default": 
+		"before.remove.server.default":
 			on: "server"
 			when: "before.remove"
 			todo: (userId, doc)->
 				collection = cfs.files
 				collection.remove {"metadata.parent": doc._id}
 
-	actions: 
+	actions:
 		download:
 			label: "下载"
 			visible: true
@@ -74,7 +74,14 @@ Creator.Objects.cms_files =
 				file = Creator.getObjectRecord(object_name,record_id)
 				fileId = file?.versions?[0]
 				if fileId
-					window.location = Steedos.absoluteUrl("/api/files/files/#{fileId}?download=true")
+					if Meteor.isCordova
+						url = Steedos.absoluteUrl("/api/files/files/#{fileId}")
+						filename = file.name
+						rev = fileId
+						length = file.size
+						Steedos.cordovaDownload(url, filename, rev, length)
+					else
+						window.location = Steedos.absoluteUrl("/api/files/files/#{fileId}?download=true")
 		new_version:
 			label: "上传新版本"
 			visible: true
