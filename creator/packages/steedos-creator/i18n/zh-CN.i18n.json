@@ -72,7 +72,7 @@
 	"creator_report_drill_down_total_label": "总",
 	"creator_listview_update":"列表视图已更新",
 
-	"Request Entity Too Large": "请求文件太大了",
+	"creator_request_oversized": "请求文件太大了",
 
 	"creator_permission_share_miss": "请在授权组织或授权用户中至少填写一个值"
 }

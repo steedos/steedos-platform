@@ -417,6 +417,8 @@ Template.creator_view.events
 					$(document.body).removeClass 'loading'
 					if ex
 						msg = ex
+					if msg == "Request Entity Too Large"
+						msg = "creator_request_oversized"
 					toastr.error t(msg)
 					return
 			i++
