@@ -25,7 +25,6 @@ Template.standard_query_modal.helpers
 		schema = {}
 		searchable_fields = _.intersection(first_level_keys, searchable_fields)
 		_.each searchable_fields, (field)->
-			console.log field
 			schema[field] = obj_schema[field]
 			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[field].type)
 				schema[field].autoform.multiple = true
@@ -48,7 +47,8 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.disabled = false
 				schema[field].autoform.omit = false
 
-		console.log("schema", schema)
+			obj = _.pick(obj_schema, field + ".$")
+			_.extend(schema, obj)
 
 		return new SimpleSchema(schema)
 
