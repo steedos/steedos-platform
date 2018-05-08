@@ -63,6 +63,8 @@
 
 	"creator_odata_api_not_found": "很抱歉，您要访问的资源不存在或者您没有权限访问该资源！",
 	"creator_odata_unexpected_character" :"不支持的特殊字符",
+	"creator_odata_authentication":"您需要提供身份验证",
+	"creator_odata_user_privileges":"用户没有访问实体的权限",
 	"creator_list_no_actions_tip": "没有可做的操作",
 	"creator_list_view_permissions_lost": "您没有权限访问该视图",
 

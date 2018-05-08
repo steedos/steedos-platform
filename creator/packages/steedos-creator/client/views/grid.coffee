@@ -396,9 +396,14 @@ Template.creator_grid.onRendered ->
 						errorHandler: (error) ->
 							if error.httpStatus == 404 || error.httpStatus == 400
 								error.message = t "creator_odata_api_not_found"
-							if error.httpStatus == 500
+							else if error.httpStatus == 401
+								error.message = t "creator_odata_unexpected_character"
+							else if error.httpStatus == 403
+								error.message = t "creator_odata_user_privileges"
+							else if error.httpStatus == 500
 								if error.message == "Unexpected character at 106"
 									error.message = t "creator_odata_unexpected_character"
+							toastr.error(error.message)
 					select: selectColumns
 					filter: filter
 					expand: expand_fields
