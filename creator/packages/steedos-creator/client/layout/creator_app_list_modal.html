@@ -1,5 +1,6 @@
 <template name="creator_app_list_modal">
-	<div class="modal fade creator-app-list-modal creator-modal" id="creator_app_list_modal" role="dialog" aria-labelledby="creator_app_list_modal_label" tabindex="-1">
+	<div class="modal fade creator-app-list-modal creator-modal" id="creator_app_list_modal" role="dialog" aria-labelledby="creator_app_list_modal_label"
+	 tabindex="-1">
 		<div class="modal-dialog modal-extra slds-modal slds-fade-in-open" role="document">
 			<div class="slds-modal__container">
 				<header class="slds-modal__header slds-app-launcher__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
@@ -43,24 +44,27 @@
 					<div class="app-sction-part-1 slds-section slds-is-open">
 						<h3 class="slds-section__title">
 							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-app-list">
-								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" source="utility-sprite" name="chevrondown"}}
+								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
+								source="utility-sprite" name="chevrondown"}}
 								<span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_apps"}}</span>
 							</button>
 						</h3>
 
 						<div class="slds-section__content">
-							<ul class="slds-grid slds-wrap">
+							<ul class="slds-grid slds-grid_pull-padded slds-wrap">
 								{{#each apps}}
-								
-								<li class="slds-p-horizontal_small slds-size_xx-small">
-									<a href="{{app_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-app-launcher__tile_small object-launcher-link">
-										<div class="slds-app-launcher__tile-figure slds-app-launcher__tile-figure_small">
-											{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=this.icon_slds}}
+
+								<li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3 app-item app-launcher-link">
+									<a aria-describedby="drag-instructions" draggable="true" href="{{app_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-is-draggable">
+										<div class="slds-app-launcher__tile-figure">
+											<span class="slds-icon_container" title="">
+												{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=this.icon_slds}}
+											</span>
 										</div>
-										<div class="slds-app-launcher__tile-body slds-app-launcher__tile-body_small">
-											<p class="slds-truncate slds-text-link">
+										<div class="slds-app-launcher__tile-body">
+											<div class="app-title slds-text-link">
 												{{_ name}}
-											</p>
+											</div>
 										</div>
 									</a>
 								</li>
@@ -71,7 +75,8 @@
 					<div class="app-sction-part-2 slds-section slds-is-open">
 						<h3 class="slds-section__title">
 							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-object-list">
-								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse" source="utility-sprite" name="chevrondown"}}
+								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
+								source="utility-sprite" name="chevrondown"}}
 								<span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_items"}}</span>
 							</button>
 						</h3>
