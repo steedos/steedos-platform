@@ -14,6 +14,8 @@ _standardQuery = (curObjectName)->
 			if object_fields[key]
 				if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
 					query_arr.push([key, ">=", val])
+				else if ["text", "textarea", "html"].includes(object_fields[key].type)
+					query_arr.push([key, "contains", val])
 				else
 					query_arr.push([key, "=", val])
 			else
