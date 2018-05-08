@@ -46,7 +46,7 @@ JsonRoutes.add 'get', '/api/creator/app_package/export/:space_id/:record_id', (r
 
 		res.setHeader('Content-type', 'application/x-msdownload');
 		res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(fileName)+'.json');
-		res.end(JSON.stringify(data))
+		res.end(JSON.stringify(data, null, 4))
 	catch e
 		console.error e.stack
 		JsonRoutes.sendResult res, {
