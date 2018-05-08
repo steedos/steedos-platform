@@ -46,6 +46,7 @@ Template.standard_query_modal.helpers
 				schema[field].autoform.readonly = false
 				schema[field].autoform.disabled = false
 				schema[field].autoform.omit = false
+				delete schema[field].autoform.defaultValue
 
 			obj = _.pick(obj_schema, field + ".$")
 			_.extend(schema, obj)
