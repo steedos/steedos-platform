@@ -24,6 +24,7 @@ checkAppPermission = (context, redirect)->
 			app_id = context.params.app_id
 			apps = _.pluck(Creator.getVisibleApps(),"_id")
 			if apps.indexOf(app_id) < 0
+				Session.set("app_id", null)
 				FlowRouter.go "/app"
 
 checkObjectPermission = (context, redirect)->
@@ -33,6 +34,7 @@ checkObjectPermission = (context, redirect)->
 			object_name = context.params.object_name
 			allowRead = Creator.getObject(object_name)?.permissions?.get()?.allowRead
 			unless allowRead
+				Session.set("object_name", null)
 				FlowRouter.go "/app"
 
 initLayout = ()->

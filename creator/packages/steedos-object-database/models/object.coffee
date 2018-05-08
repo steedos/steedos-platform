@@ -58,26 +58,31 @@ Creator.Objects.objects =
 			type: "textarea"
 			is_wide: true
 		fields:
+			type: "object"
 			label: "字段"
 			blackbox: true
 			omit: true
 			hidden: true
 		list_views:
+			type: "object"
 			label: "列表视图"
 			blackbox: true
 			omit: true
 			hidden: true
 		actions:
+			type: "object"
 			label: "操作"
 			blackbox: true
 			omit: true
 			hidden: true
 		permission_set:
+			type: "object"
 			label: "权限设置"
 			blackbox: true
 			omit: true
 			hidden: true
 		triggers:
+			type: "object"
 			label: "触发器"
 			blackbox: true
 			omit: true
@@ -87,12 +92,12 @@ Creator.Objects.objects =
 			type: "boolean"
 			omit: true
 		owner:
+			type: "lookup"
 			hidden: true
 
 	list_views:
-		default:
-			columns: ["name", "label", "is_enable", "modified"]
 		all:
+			columns: ["name", "label", "is_enable", "modified"]
 			label:"所有对象"
 			filter_scope: "space"
 

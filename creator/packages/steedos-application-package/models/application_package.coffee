@@ -5,6 +5,7 @@ Creator.Objects.application_package =
 	fields:
 		name:
 			type: "text"
+			label: "名称"
 		apps:
 			type: "lookup"
 			label: "应用"
@@ -30,19 +31,23 @@ Creator.Objects.application_package =
 
 		list_views:
 			type: "lookup"
+			label: "列表视图"
 			multiple: true
 			reference_to: "object_listviews"
 			optionsMethod: "creator.listviews_options"
 		permission_set:
 			type: "lookup"
+			label: "权限组"
 			multiple: true
 			reference_to: "permission_set"
 		permission_objects:
 			type: "lookup"
+			label: "权限集"
 			multiple: true
 			reference_to: "permission_objects"
 		reports:
 			type: "lookup"
+			label: "报表"
 			multiple: true
 			reference_to: "reports"
 	list_views:

@@ -78,9 +78,8 @@ Creator.Objects.object_triggers =
 			is_wide:true
 
 	list_views:
-		default:
-			columns: ["name", "label", "object", "on", "when", "is_enable"]
 		all:
+			columns: ["name", "label", "object", "on", "when", "is_enable"]
 			filter_scope: "space"
 
 	permission_set:

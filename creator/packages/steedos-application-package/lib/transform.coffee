@@ -1,10 +1,39 @@
 @APTransform = {}
 
+ignore_fields = {
+	owner: 0,
+	space: 0,
+	created: 0,
+	created_by: 0,
+	modified: 0,
+	modified_by: 0,
+	is_deleted: 0,
+	instances: 0,
+	sharing: 0
+}
 
 APTransform.exportObject = (object)->
 	_obj = {}
 
 	_.extend(_obj , object)
+
+	obj_list_views = {}
+
+	_.extend(obj_list_views, _obj.list_views || {})
+
+	#获取object自定义的共享list_views
+	list_views = Creator.getCollection("object_listviews").find({object_name: _obj.name, shared: true}, {fields: ignore_fields})
+
+	list_views.forEach (list_view)->
+		obj_list_views[list_view._id] = list_view
+
+	_.each obj_list_views, (v, k)->
+		if !_.has(v, "_id")
+			v._id = k
+		if !_.has(v, "name")
+			v.name = k
+	_obj.list_views = obj_list_views
+
 
 	#只修改_obj属性原object属性保持不变
 	triggers = {}
@@ -75,18 +104,6 @@ APTransform.exportObject = (object)->
 ###
 APTransform.export = (record)->
 	export_data = {}
-	ignore_fields = {
-		owner: 0,
-		space: 0,
-		created: 0,
-		created_by: 0,
-		modified: 0,
-		modified_by: 0,
-		is_deleted: 0,
-		instances: 0,
-		sharing: 0
-	}
-	console.log("record", JSON.stringify(record))
 	if _.isArray(record.apps) && record.apps.length > 0
 		export_data.apps = []
 

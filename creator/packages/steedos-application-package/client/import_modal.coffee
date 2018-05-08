@@ -8,8 +8,9 @@ Template.APPackageImportModal.events
 			return ;
 		reader = new FileReader();
 		reader.onload = (ev) ->
-			data = ev.target.result
-			console.log("data", data)
+			data = reader.result
+			###
+    		由于使用接口方式会导致collection的after、before中获取不到userId，再此问题未解决之前，还是使用Method
 			$.ajax
 				type:"POST"
 				url: Steedos.absoluteUrl("api/creator/app_package/import/#{Session.get('spaceId')}")
@@ -26,5 +27,13 @@ Template.APPackageImportModal.events
 					else
 						toastr.error(e.responseText);
 					console.log e
+			###
 
-		reader.readAsBinaryString(files[0]);
+			Meteor.call "import_app_package", Session.get('spaceId'), JSON.parse(data), (error, result)->
+				if error
+					toastr.error(error.reason)
+				else
+					toastr.success("导入完成")
+					Modal.hide(template)
+
+		reader.readAsText(files[0], "utf-8");
