@@ -44,53 +44,33 @@ Creator.odata.get = (object_name, record_id,field_name)->
 					toastr?.error?("未找到记录")
 	else
 		toastr.error("未找到记录")
-Creator.odata.query = (object_name, options)->
+Creator.odata.query = (object_name, filters, fields, sort)->
 	if object_name
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
-		store = new DevExpress.data.ODataStore({
-			type: "odata"
-			version: 4
+		selector = {}  #Creator.odata_get('qhd_informations','(company eq \'股份办公室\')', 'content,score_point,title','modified desc')
+		selector['$filter'] = filters
+		selector['$select'] = fields
+		selector['$orderby'] = sort
+		$.ajax
+			type: "get"
 			url: url
+			data:selector
+			dataType: "json"
+			contentType: "application/json"
 			beforeSend: (request) ->
-				request.headers['X-User-Id'] = Meteor.userId()
-				request.headers['X-Space-Id'] = Steedos.spaceId()
-				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-		})
-		options.store = store
-		datasource = new DevExpress.data.DataSource(options)
-		datasource.load()
-			.done((result) ->
-				console.log result
-			)
-			.fail((error) ->
-				console.log error
+				request.setRequestHeader('X-User-Id', Meteor.userId())
+				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+			error: (jqXHR, textStatus, errorThrown) ->
+				error = jqXHR.responseJSON
+				console.error error
 				if error.reason
 					toastr?.error?(TAPi18n.__(error.reason))
 				else if error.message
 					toastr?.error?(TAPi18n.__(error.message))
 				else
 					toastr?.error?(error)
-			)
-	# 	$.ajax
-	# 		type: "get"
-	# 		url: url
-	# 		data:selector
-	# 		dataType: "json"
-	# 		contentType: "application/json"
-	# 		beforeSend: (request) ->
-	# 			request.setRequestHeader('X-User-Id', Meteor.userId())
-	# 			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
-	# 		error: (jqXHR, textStatus, errorThrown) ->
-	# 			error = jqXHR.responseJSON
-	# 			console.error error
-	# 			if error.reason
-	# 				toastr?.error?(TAPi18n.__(error.reason))
-	# 			else if error.message
-	# 				toastr?.error?(TAPi18n.__(error.message))
-	# 			else
-	# 				toastr?.error?(error)
-	# else
-	# 	toastr.error("未找到记录")				
+	else
+		toastr.error("未找到记录")				
 Creator.odata.delete = (object_name,record_id,callback)->
 	if object_name and record_id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{record_id}"
