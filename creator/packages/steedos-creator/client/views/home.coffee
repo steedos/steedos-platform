@@ -6,7 +6,7 @@ Template.creator_home.helpers
 		_.each Creator.Apps, (v, k)->
 			if v.visible != false
 				if v._id
-					v.url = Steedos.absoluteUrl("/app/#{v._id}/");
+					v.url = Creator.getRelativeUrl("/app/#{v._id}/");
 				
 				apps.push v
 		

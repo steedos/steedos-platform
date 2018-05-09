@@ -42,6 +42,15 @@ Creator.loadObjects = (obj, object_name)->
 	# if Meteor.isServer
 	# 	Creator.initPermissions(object_name)
 
+Creator.getRelativeUrl = (url)->
+	if url
+		# url开头没有"/"，需要添加"/"
+		if !/^\//.test(url)
+			url = "/" + url
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url
+	else
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+
 Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
 	if Meteor.isClient
 		return Creator.USER_CONTEXT
@@ -102,21 +111,21 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	list_view_id = list_view?._id
 
 	if record_id
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getListViewUrl = (object_name, app_id, list_view_id) ->
-	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 	if list_view_id
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + list_view_id + "/list")
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + list_view_id + "/list")
 	else
-		return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/list/switch")
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/list/switch")
 
 Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
-	return Steedos.absoluteUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
+	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
 Creator.getObjectLookupFieldOptions = (object_name, is_deep)->
 	_options = []

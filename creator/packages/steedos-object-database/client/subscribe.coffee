@@ -26,13 +26,13 @@ _removeClientObjects = (document)->
 	Creator.removeObject(_object?.name)
 	Creator.removeCollection(_object?.name)
 	if Session.get("object_name") == _object?.name
-		FlowRouter.go(Steedos.absoluteUrl())
+		FlowRouter.go(Creator.getRelativeUrl())
 	Creator.deps.object.changed();
 
 _removeClientApps = (document)->
 	delete Creator.Apps[document._id]
 	if Session.get("app_id") == document._id
-		FlowRouter.go(Steedos.absoluteUrl())
+		FlowRouter.go(Creator.getRelativeUrl())
 
 #_loadObjectsPremissions = ()->
 #	Creator.bootstrap()

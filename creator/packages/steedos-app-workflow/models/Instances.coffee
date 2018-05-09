@@ -113,6 +113,7 @@ Creator.Objects.instances =
 	list_views:
 		all:
 			label:'所有'
+			filter_scope: "space"
 			columns: ["name", "applicant", "applicant_organization", "modified"]
 		inbox:
 			label: "待办文件"

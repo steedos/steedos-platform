@@ -31,7 +31,7 @@ Creator.Objects.reports =
 			label: "过虑范围"
 			type: "select"
 			defaultValue: "space"
-			omit: true
+			hidden: true
 			options: [
 				{label: "所有", value: "space"},
 				{label: "与我相关", value: "mine"}

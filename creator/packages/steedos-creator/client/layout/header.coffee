@@ -2,7 +2,7 @@ Template.creatorHeader.helpers Creator.helpers
 
 Template.creatorHeader.helpers
 	logo: ()->
-		return Steedos.absoluteUrl("/packages/steedos_creator/assets/logo.png")
+		return Creator.getRelativeUrl("/packages/steedos_creator/assets/logo.png")
 
 
 	avatarURL: (avatar,w,h,fs) ->
@@ -11,7 +11,7 @@ Template.creatorHeader.helpers
 		if avatar
 			return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?w=220&h=200&fs=160&avatar=#{avatar}")
 		else
-			return Steedos.absoluteUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
+			return Creator.getRelativeUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
 
 	displayName: ->
 		if Meteor.user()
@@ -20,13 +20,13 @@ Template.creatorHeader.helpers
 			return " "
 
 	signOutUrl: ()->
-		return Steedos.absoluteUrl("/steedos/logout")
+		return Creator.getRelativeUrl("/steedos/logout")
 
 
 Template.creatorHeader.events
 
 	'click .creator-button-setup': (e, t)->
-		FlowRouter.go(Steedos.absoluteUrl("/app/admin"))
+		FlowRouter.go("/app/admin")
 
 	'click .creator-button-help': (e, t)->
 		Steedos.openWindow("https://www.steedos.com/cn/help/creator/")

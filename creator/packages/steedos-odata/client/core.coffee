@@ -34,7 +34,7 @@ Creator.odata.get = (object_name, record_id,field_name)->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 			error: (jqXHR, textStatus, errorThrown) ->
-				error = jqXHR.responseJSON
+				error = jqXHR.responseJSON.error
 				console.error error
 				if error?.reason
 					toastr?.error?(TAPi18n.__(error.reason))
@@ -110,7 +110,7 @@ Creator.odata.delete = (object_name,record_id,callback)->
 					toastr?.success?(t("afModal_remove_suc"))
 
 			error: (jqXHR, textStatus, errorThrown) ->
-				error = jqXHR.responseJSON
+				error = jqXHR.responseJSON.error
 				console.error error
 				if error.reason
 		 			toastr?.error?(TAPi18n.__(error.reason))
@@ -142,7 +142,7 @@ Creator.odata.update = (object_name,record_id,doc)->
 			# 		toastr?.success?(t("afModal_remove_suc"))
 
 			error: (jqXHR, textStatus, errorThrown) ->
-				error = jqXHR.responseJSON
+				error = jqXHR.responseJSON.error
 				console.error error
 				if error.reason
 					toastr?.error?(TAPi18n.__(error.reason))
@@ -171,7 +171,7 @@ Creator.odata.insert = (object_name,doc)->
 			# 		toastr?.success?(t("afModal_remove_suc"))
 
 			error: (jqXHR, textStatus, errorThrown) ->
-				error = jqXHR.responseJSON
+				error = jqXHR.responseJSON.error
 				console.error error
 				if error.reason
 					toastr?.error?(TAPi18n.__(error.reason))

@@ -560,7 +560,6 @@ renderSummaryReport = (reportObject)->
 						$('#pivotgrid-chart').hide()
 						
 					Meteor.defer ()->
-						debugger
 						totalCount = datagrid.getDataSource()._store._dataSource?._totalCount
 						if totalCount > maxLoadCount
 							toastr.warning("统计数据达#{totalCount}条记录，已超出限制，以下统计结果基于前#{maxLoadCount}条记录")
