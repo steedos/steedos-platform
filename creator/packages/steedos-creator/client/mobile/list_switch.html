@@ -3,7 +3,10 @@
 		<header class="mobile-template-header">
 			<div class="forceHeaderLayout">
 				<div class="bLeft list-switch-back">
-					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}} {{object_label}}
+					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}} 
+					<span class="object-label">
+						{{object_label}}
+					</span>
 				</div>
 				{{#if allowCreate}}
 					<div class="bRight add-list-item">
