@@ -17,13 +17,13 @@
         </li>
     </ul>
     {{#if filterItems.length}}
-        {{#if filter_logic}}
+        {{#unless isFilterLogicEmpty}}
             <h3 class="bodyTitle">匹配这些筛选器</h3>
         {{else}}
             <h3 class="bodyTitle">匹配所有这些筛选器</h3>
-        {{/if}}
+        {{/unless}}
     {{/if}}
-    <ul class="editableFilters {{#if filter_logic}} showNumbers {{/if}}">
+    <ul class="editableFilters {{#unless isFilterLogicEmpty}} showNumbers {{/unless}}">
         {{#each filterItems}}
         <li class="filterCardContainer editable reportsFilterCard filter-item">
             <a class="filterCardEditor filter-option-item" href="javascript:void(0);">
@@ -51,7 +51,7 @@
     {{#if filterItems.length}}
         <div class="filter-logic-container slds-p-around--small" style="background: #f3f2f2">
             <div class="filter-logic-title slds-p-bottom--x-small">
-                {{#if filter_logic}}
+                {{#unless isFilterLogicEmpty}}
                     <span class="title">
                         <span class="slds-m-right--xx-small uiLabel">
                             筛选器逻辑
@@ -59,21 +59,21 @@
                     </span>
                 {{else}}
                     <a class="add_filter_logic">添加筛选逻辑</a>
-                {{/if}}
-                <span class="logic-info {{#unless filter_logic}}hidden{{/unless}}" id="logic_logic">
+                {{/unless}}
+                <span class="logic-info {{#if isFilterLogicEmpty}}hidden{{/if}}" id="logic_logic">
                     <i class="ion ion-information-circled"></i>
                 </span>
-                {{#if filter_logic}}
+                {{#unless isFilterLogicEmpty}}
                     <a class="remove_filter_logic">删除</a>
-                {{/if}}
+                {{/unless}}
             </div>
-            {{#if filter_logic}}
+            {{#unless isFilterLogicEmpty}}
             <div class="slds-form-element">
                 <div class="slds-form-element__control">
                     <textarea id="filter-logic" cols="20" rows="3" maxlength="120" class="slds-textarea filterLogicText textarea uiInput uiInputTextArea uiInput--default uiInput--textarea">{{filter_logic}}</textarea>
                 </div>
             </div>
-            {{/if}}
+            {{/unless}}
         </div>
     {{/if}}
     <div id="info_popover">
