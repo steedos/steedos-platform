@@ -179,10 +179,13 @@ Template.creator_list_wrapper.events
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")
-		filters = Creator.Collections.object_listviews.findOne(list_view_id).filters || []
-		filter_scope = Creator.Collections.object_listviews.findOne(list_view_id).filter_scope
+		listView = Creator.Collections.object_listviews.findOne(list_view_id)
+		filters = listView.filters || []
+		filter_scope = listView.filter_scope
+		filter_logic = listView.filter_logic
 		Session.set("filter_items", filters)
 		Session.set("filter_scope", filter_scope)
+		Session.set("filter_logic", filter_logic)
 
 	'click .save-change': (event, template)->
 		list_view_id = Session.get("list_view_id")
