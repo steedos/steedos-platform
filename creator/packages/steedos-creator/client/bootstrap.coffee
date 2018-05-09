@@ -1,12 +1,11 @@
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
 Creator.bootstrap = (spaceId, callback)->
-	Creator.bootstrapLoaded.set(false)
+	if Meteor.loggingIn() || Meteor.loggingOut()
+		return
 	unless spaceId and Meteor.userId()
 		return
-
-	#Meteor.call "creator.bootstrap", spaceId, (error, result)->
-	
+	Creator.bootstrapLoaded.set(false)
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
 	$.ajax
 		type: "get"
