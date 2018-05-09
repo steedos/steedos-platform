@@ -14,7 +14,7 @@ import_app_package = (userId, space_id, imp_data)->
 	if _.isArray(imp_data.apps) && imp_data.apps.length > 0
 		_.each imp_data.apps, (app)->
 			if _.include(_.keys(Creator.Apps), app._id)
-				throw new Meteor.Error("500", "应用'#{app.namme}'已存在")
+				throw new Meteor.Error("500", "应用'#{app.name}'已存在")
 
 	# 2 objects校验：根据object.name判断对象是否已存在; 校验triggers
 	if _.isArray(imp_data.objects) && imp_data.objects.length > 0
@@ -123,7 +123,7 @@ import_app_package = (userId, space_id, imp_data)->
 				list_view.object_name = object.name
 				if Creator.isAllView(list_view) || Creator.isRecentView(list_view)
 					# 创建object时，会自动添加all view、recent view
-					Creator.getCollection("object_listviews").update({object_name: object.name, name: list_view.name}, {$set: list_view})
+					Creator.getCollection("object_listviews").update({object_name: object.name, name: list_view.name, space: space_id}, {$set: list_view})
 				else
 					new_id = Creator.getCollection("object_listviews").insert(list_view)
 					list_views_id_maps[object.name + "_" + old_id] = new_id
@@ -138,7 +138,7 @@ import_app_package = (userId, space_id, imp_data)->
 					field.name = k
 				if field.name == "name"
 					# 创建object时，会自动添加name字段，因此在此处对name字段进行更新
-					Creator.getCollection("object_fields").update({object: object.name, name: "name"}, {$set: field})
+					Creator.getCollection("object_fields").update({object: object.name, name: "name", space: space_id}, {$set: field})
 				else
 					Creator.getCollection("object_fields").insert(field)
 
@@ -170,8 +170,14 @@ import_app_package = (userId, space_id, imp_data)->
 
 			list_view.space = space_id
 			list_view.owner = userId
-
-			new_id = Creator.getCollection("object_listviews").insert(action)
+			if Creator.isAllView(list_view) || Creator.isRecentView(list_view)
+				# 创建object时，会自动添加all view、recent view
+				_list_view = Creator.getCollection("object_listviews").findOne({object_name: list_view.object_name, name: list_view.name, space: space_id},{fields: {_id: 1}})
+				if _list_view
+					new_id = _list_view._id
+				Creator.getCollection("object_listviews").update({object_name: list_view.object_name, name: list_view.name, space: space_id}, {$set: list_view})
+			else
+				new_id = Creator.getCollection("object_listviews").insert(list_view)
 
 			list_views_id_maps[list_view.object_name + "_" + old_id] = new_id
 

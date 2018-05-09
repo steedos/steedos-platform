@@ -21,12 +21,6 @@ APTransform.exportObject = (object)->
 
 	_.extend(obj_list_views, _obj.list_views || {})
 
-	#获取object自定义的共享list_views
-	list_views = Creator.getCollection("object_listviews").find({object_name: _obj.name, shared: true}, {fields: ignore_fields})
-
-	list_views.forEach (list_view)->
-		obj_list_views[list_view._id] = list_view
-
 	_.each obj_list_views, (v, k)->
 		if !_.has(v, "_id")
 			v._id = k
@@ -124,7 +118,7 @@ APTransform.export = (record)->
 			object = Creator.Objects[object_name]
 			if object
 				export_data.objects.push APTransform.exportObject(object)
-	#TODO list_views 处理
+
 	if _.isArray(record.list_views) && record.list_views.length > 0
 		export_data.list_views = Creator.getCollection("object_listviews").find({_id: {$in: record.list_views}}, {fields: ignore_fields}).fetch()
 

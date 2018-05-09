@@ -45,6 +45,7 @@ Creator.Objects.object_fields =
 	name: "object_fields"
 	icon: "orders"
 	enable_api: true
+	label:"字段"
 	fields:
 		name:
 			type: "text"

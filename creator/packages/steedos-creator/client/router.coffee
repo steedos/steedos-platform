@@ -40,7 +40,7 @@ checkObjectPermission = (context, redirect)->
 initLayout = ()->
 	if Steedos.isMobile() and (!$(".wrapper").length or !$("#home_menu").length)
 		BlazeLayout.render Creator.getLayout(),
-			main: "homeMenu"
+			main: "objectMenu"
 
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
@@ -135,11 +135,14 @@ objectRoutes = FlowRouter.group
 objectRoutes.route '/list/switch',
 	action: (params, queryParams)->
 		if Steedos.isMobile() and $(".mobile-content-wrapper #list_switch").length == 0
-			app_id = FlowRouter.getParam("app_id")
-			object_name = FlowRouter.getParam("object_name")
-			data = {app_id: app_id, object_name: object_name}
-			Meteor.defer ->
-				Blaze.renderWithData(Template.listSwitch, data, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
+			Tracker.autorun (c)->
+				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+					c.stop()
+					app_id = FlowRouter.getParam("app_id")
+					object_name = FlowRouter.getParam("object_name")
+					data = {app_id: app_id, object_name: object_name}
+					Meteor.defer ->
+						Blaze.renderWithData(Template.listSwitch, data, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
 
 objectRoutes.route '/:list_view_id/list',
 	action: (params, queryParams)->

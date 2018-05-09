@@ -35,6 +35,7 @@ check = (userId, doc)->
 Creator.Objects.object_triggers =
 	name: "object_triggers"
 	icon: "asset_relationship"
+	label:"触发器"
 	fields:
 		name:
 			type: "text"

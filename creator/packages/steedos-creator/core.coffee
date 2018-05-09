@@ -251,7 +251,7 @@ Creator.getVisibleAppsObjects = ()->
 	tempObjects = _.filter Creator.Objects, (obj)->
 		return !obj.hidden
 	objects = objects.concat(tempObjects)
-	objects = _.sortBy(objects,'name')
+	objects = objects.sort(Creator.sortingMethod.bind({key:"label"}))
 	objects = _.pluck(objects,'name')
 	return _.uniq objects
 

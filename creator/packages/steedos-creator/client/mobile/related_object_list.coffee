@@ -85,7 +85,7 @@ Template.relatedObjectList.events
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
-				FlowRouter.go '/app/menu'
+				FlowRouter.go '/app'
 
 	'click .add-related-item': (event, template)->
 		record_id = Template.instance().data.record_id

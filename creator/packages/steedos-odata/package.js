@@ -40,7 +40,9 @@ Package.onUse(function(api) {
 	//api.addFiles('server/routes/metadata.coffee', 'server');
 	api.addFiles('client/core.coffee','client');
 	api.addFiles('core.coffee');
-
+	api.use('tap:i18n@1.7.0');
+	tapi18nFiles = ['i18n/zh-CN.i18n.json','i18n/en.i18n.json'];
+	api.addFiles(tapi18nFiles, ['client', 'server']);
 });
 
 Package.onTest(function(api) {

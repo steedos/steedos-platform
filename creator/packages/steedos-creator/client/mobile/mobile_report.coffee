@@ -30,4 +30,4 @@ Template.reportView.events
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
-				FlowRouter.go '/app/menu'
+				FlowRouter.go '/app'

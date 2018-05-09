@@ -111,7 +111,7 @@ Template.listSwitch.events
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
-				FlowRouter.go '/app/menu'
+				FlowRouter.go '/app'
 
 	'click .add-list-item': (event, template)->
 		Session.set("reload_dxlist", false)

@@ -36,6 +36,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/routes/export.coffee', 'server');
 	api.addFiles('server/routes/import.coffee', 'server');
 	api.addFiles('server/methods/listviews_options.coffee', 'server');
+	api.addFiles('server/methods/init_export_data.coffee', 'server');
 	api.addFiles('lib/transform.coffee', 'server');
 
 

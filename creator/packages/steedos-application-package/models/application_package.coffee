@@ -55,6 +55,17 @@ Creator.Objects.application_package =
 			columns: ["name"]
 			filter_scope: "space"
 	actions:
+		init_data:
+			label: "初始化"
+			visible: true
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				console.log(object_name, record_id, fields)
+				Meteor.call "appPackage.init_export_data", Session.get("spaceId"), record_id,(error, result)->
+					if error
+						toastr.error(error.reason)
+					else
+						toastr.success("初始化完成")
 		export:
 			label: "导出"
 			visible: true

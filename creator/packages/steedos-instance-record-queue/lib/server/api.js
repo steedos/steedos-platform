@@ -219,7 +219,8 @@ InstanceRecordQueue.Configure = function (options) {
 			records = doc.info.records;
 		var fields = {
 			flow: 1,
-			values: 1
+			values: 1,
+			applicant: 1
 		};
 		self.syncInsFields.forEach(function (f) {
 			fields[f] = 1;
@@ -316,6 +317,9 @@ InstanceRecordQueue.Configure = function (options) {
 						_id: insId,
 						state: 'completed'
 					}];
+					newObj.owner = ins.applicant;
+					newObj.created_by = ins.applicant;
+					newObj.modified_by = ins.applicant;
 					var r = objectCollection.insert(newObj);
 					if (r) {
 						Creator.getCollection('instances').update(ins._id, {

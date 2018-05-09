@@ -17,7 +17,7 @@ Template.switchSpace.helpers
 Template.switchSpace.events 
 	"click .switchSpace": (event, template) ->
 		Steedos.setSpaceId(this._id)
-		FlowRouter.go '/app/menu'
+		FlowRouter.go '/app'
 
 	"click .switch-space-back": (event, template) ->
 		lastUrl = urlQuery[urlQuery.length - 2]
@@ -27,5 +27,5 @@ Template.switchSpace.events
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
-				FlowRouter.go '/app/menu'
+				FlowRouter.go '/app'
 		 
