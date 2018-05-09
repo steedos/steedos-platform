@@ -24,7 +24,7 @@ Template.objectMenu.helpers
 
 Template.objectMenu.events
     'click .show-object-list': (event, template)->
-        Modal.show("object_list_modal")
+        $('#object_list_modal').modal 'show'
 
     'click .go-admin-menu': (event, template)->
         FlowRouter.go '/admin'

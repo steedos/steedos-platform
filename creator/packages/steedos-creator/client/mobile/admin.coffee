@@ -41,7 +41,7 @@ Template.adminMenu.events
 		FlowRouter.go '/admin/switchspace'
 
 	'click .btn-change-password': (event, template)->
-		Modal.show("reset_password_modal")
+		$("#reset_password_modal").modal "show"
 
 	'click .btn-change-avatar': (event, template)->
 		template.$("#mobile-avator-upload").click()

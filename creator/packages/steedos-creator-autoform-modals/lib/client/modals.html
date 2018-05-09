@@ -4,7 +4,9 @@
 			<div class="slds-modal__container {{cmModalContentClass}}">
 				<header class="slds-modal__header">
 					{{#if isMobile}}
-						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">
+							{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="close"}}
+						</button>
 						{{#if $eq cmOperation 'insert'}}
 							<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
 						{{/if}}
