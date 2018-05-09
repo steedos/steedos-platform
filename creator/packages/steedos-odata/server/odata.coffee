@@ -94,32 +94,32 @@ Meteor.startup ->
 		if statusCode == 404
 			if collection
 				if action == 'post'
-					innererror['message'] = 'the record added fail.'
+					innererror['message'] = t("creator_odata_post_fail")
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 					error['code'] = 404
-					error['message'] = 'the record added fail'
+					error['message'] = t("creator_odata_post_fail")
 				else
-					innererror['message'] = 'the record does not exist for the given query.'
+					innererror['message'] = t("creator_odata_record_query_fail")
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 					error['code'] = 404
-					error['message'] = 'the record does not exist for the given query.'
+					error['message'] = t("creator_odata_record_query_fail")
 			else
-				innererror['message'] = 'Collection not found for the segment '+ key
+				innererror['message'] = t("creator_odata_collection_query_fail")+ key
 				innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 				error['code'] = 404
-				error['message'] = 'Collection not found for the segment '+ key
+				error['message'] = t("creator_odata_collection_query_fail")+ key
 		if  statusCode == 401
-			innererror['message'] = 'Authentication is required and has not been provided.'
+			innererror['message'] = t("creator_odata_authentication_required")
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 			error['code'] = 401
-			error['message'] = 'Authentication is required and has not been provided.'
+			error['message'] = t("creator_odata_authentication_required")
 		if statusCode == 403
 			switch action
-				when 'get' then innererror['message'] = 'User does not have privileges to access the entity'
-				when 'post' then innererror['message'] = 'User does not have privileges to create the entity'
-				when 'put' then innererror['message'] = 'User does not have privileges to update the entity'
-				when 'delete' then innererror['message'] = 'User does not have privileges to remove the entity'
-			innererror['message'] = 'User does not have privileges to access the entity'
+				when 'get' then innererror['message'] = t("creator_odata_user_access_fail")
+				when 'post' then innererror['message'] = t("creator_odata_user_create_fail")
+				when 'put' then innererror['message'] = t("creator_odata_user_update_fail")
+				when 'delete' then innererror['message'] = t("creator_odata_user_remove_fail")
+			innererror['message'] = t("creator_odata_user_access_fail")
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 			error['code'] = 403
 			error['message'] = innererror['message']

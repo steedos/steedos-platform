@@ -1,3 +1,10 @@
 {
-    "creator_odata_post_fail": "the record added fail"
+    "creator_odata_post_fail":  "记录添加失败",
+    "creator_odata_record_query_fail": "未找到符合查询条件的记录",
+    "creator_odata_collection_query_fail": "未找到符合查询条件的集合",
+    "creator_odata_creator_odata_authentication_required": "用户需提供身份认证",
+    "creator_odata_user_access_fail": "用户无访问该对象的权限",
+    "creator_odata_user_create_fail": "用户无创建该对象的权限",
+    "creator_odata_user_update_fail": "用户无更新该对象的权限",
+    "creator_odata_user_remove_fail": "用户无删除该对象的权限"
 }
