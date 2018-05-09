@@ -167,7 +167,7 @@ steedos:cfs-ui@0.1.4
 steedos:cfs-upload-http@0.0.22
 steedos:cfs-worker@0.1.5_2
 steedos:cms@0.0.7
-steedos:cors@0.0.2
+steedos:cors@0.0.3
 steedos:creator@0.0.5
 steedos:creator-autoform-modals@0.0.1
 steedos:datatables-extensions@0.0.1
