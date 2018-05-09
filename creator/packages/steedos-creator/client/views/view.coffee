@@ -240,7 +240,8 @@ Template.creator_view.helpers
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
-		id = Creator.getObjectRecord()._id
+		record = Creator.getObjectRecord()
+		recordId = record._id
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
 		collection_name = object.label
@@ -248,7 +249,11 @@ Template.creator_view.events
 		Session.set("action_collection", "Creator.Collections.#{objectName}")
 		Session.set("action_collection_name", collection_name)
 		Session.set("action_save_and_insert", true)
-		Creator.executeAction objectName, this, id, $(event.currentTarget)
+		if this.todo == "standard_delete"
+			action_record_title = record[object.NAME_FIELD_KEY]
+			Creator.executeAction objectName, this, recordId, action_record_title
+		else
+			Creator.executeAction objectName, this, recordId, $(event.currentTarget)
 
 	'click .creator-view-tabs-link': (event) ->
 		$(".creator-view-tabs-link").closest(".slds-tabs_default__item").removeClass("slds-is-active")

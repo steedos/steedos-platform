@@ -4,7 +4,7 @@
 			<div class="forceHeaderLayout">
 				<div class="bLeft list-switch-back">
 					{{> steedos_icon class="slds-icon" source="utility-sprite" name="chevronleft"}} 
-					<span class="object-label">
+					<span class="object-label slds-truncate">
 						{{object_label}}
 					</span>
 				</div>
@@ -15,8 +15,8 @@
 				{{else}}
 					<div class="bRight"></div>
 				{{/if}}
-				<div class="bBody list-name">
-					{{list_view_label}}
+				<div class="bBody list-name slds-truncate">
+					<span class="list-view-label slds-truncate">{{list_view_label}}</span>
 					{{> steedos_icon class="slds-icon" source="utility-sprite" name="switch"}}
 					<div id="action-sheet"></div>
 				</div>

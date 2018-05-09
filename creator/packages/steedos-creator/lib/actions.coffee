@@ -56,7 +56,7 @@ if Meteor.isClient
 		"standard_delete": (object_name, record_id, record_title, list_view_id, call_back)->
 			object = Creator.getObject(object_name)
 			if record_title
-				text = "是否确定要删除此#{object.label} [#{record_title}]"
+				text = "是否确定要删除此#{object.label}\"#{record_title}\""
 			else
 				text = "是否确定要删除此#{object.label}"
 			swal
@@ -76,6 +76,10 @@ if Meteor.isClient
 							toastr.success info
 							if record_id == Session.get("record_id") and !Steedos.isMobile()
 								appid = Session.get("app_id")
+								unless list_view_id
+									list_view_id = Session.get("list_view_id")
+								unless list_view_id
+									list_view_id = "all"
 								FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 							if call_back and typeof call_back == "function"
 								call_back()
