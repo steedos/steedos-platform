@@ -32,7 +32,8 @@ _removeClientObjects = (document)->
 _removeClientApps = (document)->
 	delete Creator.Apps[document._id]
 	if Session.get("app_id") == document._id
-		FlowRouter.go(Creator.getRelativeUrl())
+		# FlowRouter.go(Creator.getRelativeUrl())
+		FlowRouter.go("/")
 
 #_loadObjectsPremissions = ()->
 #	Creator.bootstrap()
