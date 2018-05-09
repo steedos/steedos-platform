@@ -7,7 +7,7 @@ helpers =
 				source += "-sprite"
 			name = foo[1]
 		url = "/packages/steedos_lightning-design-system/client/icons/#{source}/symbols.svg##{name}"
-		return Creator.getRelativeUrl(url)
+		return Steedos.absoluteUrl(url)
 
 	formatName: (name) ->
 		foo = name?.split(".")
