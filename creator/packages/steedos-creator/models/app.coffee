@@ -16,6 +16,9 @@ Creator.Objects.apps =
 			type: "url"
 			required: false
 			hidden: true
+		description:
+			type: "textarea"
+			is_wide: true
 		icon:
 			type: "text"
 		icon_slds:
