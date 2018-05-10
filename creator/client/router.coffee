@@ -1,7 +1,6 @@
 FlowRouter.route '/',
 	action: (params, queryParams)->
-		Meteor.autorun (c)->
-			FlowRouter.go '/app'
+		FlowRouter.go '/app'
 
 
 # Meteor.startup ->

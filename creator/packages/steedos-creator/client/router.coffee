@@ -49,6 +49,8 @@ FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
 		$("body").addClass("loading")
+		BlazeLayout.render Creator.getLayout(),
+			main: "creator_app_home"
 		Tracker.autorun (c)->
 			if Creator.bootstrapLoaded.get()
 				c.stop()
