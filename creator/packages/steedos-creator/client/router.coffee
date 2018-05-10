@@ -1,5 +1,8 @@
 @urlQuery = new Array()
 
+Accounts.onLogout ()->
+	Creator.bootstrapLoaded.set(false)
+
 checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
@@ -45,15 +48,15 @@ initLayout = ()->
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned, initLayout ],
 	action: (params, queryParams)->
+		$("body").addClass("loading")
 		Tracker.autorun (c)->
-			if Session.get("app_id")
-				FlowRouter.go '/app/' + Session.get("app_id")
-			else
-				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
-					c.stop()
-					apps = Creator.getVisibleApps()
-					firstApp = apps[0]
-					FlowRouter.go '/app/' + firstApp?._id
+			if Creator.bootstrapLoaded.get()
+				c.stop()
+				$("body").removeClass("loading")
+				apps = Creator.getVisibleApps()
+				firstAppId = apps[0]?._id
+				if firstAppId
+					FlowRouter.go '/app/' + firstAppId
 
 FlowRouter.route '/app/menu',
 	triggersEnter: [ checkUserSigned, initLayout ],
