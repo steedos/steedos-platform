@@ -4,7 +4,8 @@ Template.standard_query_modal.onCreated ->
 	if standard_query and standard_query.object_name == Session.get("object_name")
 		this.modalValue.set(standard_query.query)
 
-#Template.standard_query_modal.onRendered ->
+Template.standard_query_modal.onRendered ->
+	this.$("input[type='number']").val("")
 
 Template.standard_query_modal.helpers
 	value: ()->
@@ -40,8 +41,17 @@ Template.standard_query_modal.helpers
 					schema[field + "_endLine"].autoform.readonly = false
 					schema[field + "_endLine"].autoform.disabled = false
 					schema[field + "_endLine"].autoform.omit = false
-
 			
+			if ["boolean"].includes(object_fields[field].type)
+				schema[field].type = String
+				schema[field].autoform = {}
+				schema[field].autoform.type = "select"
+				schema[field].autoform.firstOption = ""
+				schema[field].autoform.options = [
+					{label: "是", value: "true"}
+					{label: "否", value: "false"}
+				]
+
 			if schema[field].autoform
 				schema[field].autoform.readonly = false
 				schema[field].autoform.disabled = false
@@ -76,7 +86,6 @@ Template.standard_query_modal.helpers
 		return _.isArray(val)
 
 	isContainerVis: (fields)->
-		console.log "isContainerVis", fields
 		# 为了时间控件能够正常显示
 		if fields.length < 4
 			return true
@@ -84,8 +93,12 @@ Template.standard_query_modal.helpers
 Template.standard_query_modal.events
 	'click .btn-reset': (event, template)->
 		template.modalValue.set()
+		$("body").addClass("loading")
 		AutoForm.resetForm("standardQueryForm")
-
+		Meteor.defer ->
+			template.$("input[type='number']").val("")
+			$("body").removeClass("loading")
+	
 	'click .btn-confirm': (event, template)->
 		query = AutoForm.getFormValues("standardQueryForm").insertDoc
 		object_name = Session.get("object_name")

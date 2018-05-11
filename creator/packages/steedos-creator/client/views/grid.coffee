@@ -16,6 +16,8 @@ _standardQuery = (curObjectName)->
 					query_arr.push([key, ">=", val])
 				else if ["text", "textarea", "html"].includes(object_fields[key].type)
 					query_arr.push([key, "contains", val])
+				else if ["boolean"].includes(object_fields[key].type)
+					query_arr.push([key, "=", JSON.parse(val)])
 				else
 					query_arr.push([key, "=", val])
 			else
