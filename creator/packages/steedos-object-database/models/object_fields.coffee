@@ -175,7 +175,7 @@ Creator.Objects.object_fields =
 			modifyAllRecords: true
 			viewAllRecords: true
 
-	triggers:
+	triggers:				
 		"after.insert.server.object_fields":
 			on: "server"
 			when: "after.insert"
@@ -191,7 +191,6 @@ Creator.Objects.object_fields =
 			when: "after.remove"
 			todo: (userId, doc)->
 				_syncToObject(doc)
-
 		"before.update.server.object_fields":
 			on: "server"
 			when: "before.update"
@@ -206,7 +205,8 @@ Creator.Objects.object_fields =
 						_reference_to = modifier.$set.reference_to[0]
 					else
 						_reference_to = modifier.$set.reference_to
-
+				if modifier?.$set?.index and (modifier?.$set?.type == 'textarea' or modifier?.$set?.type == 'html')
+					throw new Meteor.Error 500, "多行文本不支持建立索引"
 				object = Creator.getCollection("objects").findOne({_id: doc.object}, {fields: {name: 1, label: 1}})
 
 				if object
@@ -217,7 +217,6 @@ Creator.Objects.object_fields =
 
 					if modifier?.$unset?.reference_to && doc.reference_to != _reference_to && object_documents.count() > 0
 						throw new Meteor.Error 500, "对象#{object.label}中已经有记录，不能修改reference_to字段"
-
 #					if modifier?.$set?.reference_to
 #						if modifier.$set.reference_to.length == 1
 #							modifier.$set.reference_to = modifier.$set.reference_to[0]
@@ -232,7 +231,8 @@ Creator.Objects.object_fields =
 
 				if isRepeatedName(doc)
 					throw new Meteor.Error 500, "对象名称不能重复"
-
+				if doc?.index and (doc?.type == 'textarea' or doc?.type == 'html')
+					throw new Meteor.Error 500,'多行文本不支持建立索引'
 		"before.remove.server.object_fields":
 			on: "server"
 			when: "before.remove"
