@@ -405,7 +405,7 @@ Template.creator_grid.onRendered ->
 							else if error.httpStatus == 403
 								error.message = t "creator_odata_user_privileges"
 							else if error.httpStatus == 500
-								if error.message == "Unexpected character at 106"
+								if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
 									error.message = t "creator_odata_unexpected_character"
 							toastr.error(error.message)
 					select: selectColumns

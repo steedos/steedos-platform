@@ -79,7 +79,7 @@ Creator.Objects.object_workflows =
 
 	list_views:
 		default:
-			columns: ["name", "object_name", "flow_id","field_map"]
+			columns: ["name", "object_name", "flow_id"]
 		all:
 			label: "对象与流程对应关系"
 			filter_scope: "space"
