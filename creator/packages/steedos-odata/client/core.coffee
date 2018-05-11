@@ -21,7 +21,9 @@ Creator.odata = {}
 # 					toastr?.error?(error)
 # 	else
 # 		toastr.error("未找到记录")
-Creator.odata.get = (object_name, record_id,field_name)->
+Creator.odata.get = (object_name, record_id,field_name, callback)->
+	result = null
+	isAsync = if typeof callback == "function" then true else false
 	if object_name and record_id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{record_id}"
 		$.ajax
@@ -30,9 +32,14 @@ Creator.odata.get = (object_name, record_id,field_name)->
 			data:{'$select':field_name}
 			dataType: "json"
 			contentType: "application/json"
+			async: isAsync
 			beforeSend: (request) ->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+			success: (data) ->
+				if callback and typeof callback == "function"
+					callback(data)
+				result = data
 			error: (jqXHR, textStatus, errorThrown) ->
 				error = jqXHR.responseJSON.error
 				console.error error
@@ -44,6 +51,8 @@ Creator.odata.get = (object_name, record_id,field_name)->
 					toastr?.error?("未找到记录")
 	else
 		toastr.error("未找到记录")
+	return result
+
 Creator.odata.query = (object_name, options)->
 	if object_name
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
@@ -91,6 +100,7 @@ Creator.odata.query = (object_name, options)->
 	# 				toastr?.error?(error)
 	# else
 	# 	toastr.error("未找到记录")				
+
 Creator.odata.delete = (object_name,record_id,callback)->
 	if object_name and record_id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{record_id}"

@@ -68,7 +68,7 @@ Creator.Objects.object_workflows =
 							form_field['value'] = field_name
 							form_field['label'] = field_name
 							form_fields.push form_field
-					options = _.union(instance_fields,form_fields)
+				options = _.union(instance_fields,form_fields)
 				return options
 
 		sync_attachment:
@@ -79,7 +79,7 @@ Creator.Objects.object_workflows =
 
 	list_views:
 		default:
-			columns: ["name", "object_name", "flow_id"]
+			columns: ["name", "object_name", "flow_id","field_map"]
 		all:
 			label: "对象与流程对应关系"
 			filter_scope: "space"
