@@ -6,10 +6,10 @@ var express = Npm.require('express'),
 
 // configure the server-side collections. The rest of the collections
 // exist in common.js and are for both client and server.
-var accessTokenCollection = new Meteor.Collection('OAuth2AccessTokens');
+db.OAuth2AccessTokens = new Meteor.Collection('OAuth2AccessTokens');
 
 if(Meteor.isServer){
-    accessTokenCollection.before.insert(function(userId, doc){
+    db.OAuth2AccessTokens.before.insert(function(userId, doc){
         spaceId = db.space_users.findOne({user: doc.userId}).space;
         doc.spaceId = spaceId;
     });
@@ -17,7 +17,7 @@ if(Meteor.isServer){
 
 // setup the node oauth2 model.
 var meteorModel = new MeteorModel(
-    accessTokenCollection,
+    db.OAuth2AccessTokens,
     refreshTokensCollection,
     authCodesCollection,
     db.OAuth2Clients,
@@ -32,7 +32,7 @@ oAuth2Server.oauthserver = oauthserver({
     debug: true
 });
 
-oAuth2Server.collections.accessToken = accessTokenCollection;
+oAuth2Server.collections.accessToken = db.OAuth2AccessTokens;
 
 // configure a url handler for the /steedos/oauth2/token path.
 var app = express();
