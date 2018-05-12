@@ -167,8 +167,16 @@ Template.creator_list_wrapper.events
 		list_view_id = Session.get("list_view_id")
 		object_name = Session.get("object_name")
 		grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
+		column_width = {}
+		_.each grid_settings?.settings[list_view_id]?.column_width,(val, key)->
+			if key == "_id_checkbox"
+				column_width[key] = 60
+			else if key == '_id_actions'
+				column_width[key] = 46
+			else
+				column_width[key] = 0
 		Session.set "list_view_visible", false
-		Meteor.call 'grid_settings', object_name, list_view_id, {}, (e, r)->
+		Meteor.call 'grid_settings', object_name, list_view_id, column_width, (e, r)->
 			if e
 				console.log e
 			else
