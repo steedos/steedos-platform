@@ -42,11 +42,18 @@ Creator.odata.get = (object_name, record_id,field_name, callback)->
 				result = data
 			error: (jqXHR, textStatus, errorThrown) ->
 				error = jqXHR.responseJSON.error
-				console.error error
+				# if error.httpStatus == 400 or error.httpStatus == 401
+				# 	message = t("creator_odata_authentication_required")
+				# else if error.httpStatus == 403
+				# 	message =t("creator_odata_user_access_fail")
+				# else if error.httpStatus == 404
+				# 	message =t("creator_odata_record_query_fail")
+				# else if error.httpStatus == 500
 				if error?.reason
 					toastr?.error?(TAPi18n.__(error.reason))
 				else if error?.message
-					toastr?.error?(TAPi18n.__(error.message))
+					#toastr?.error?(TAPi18n.__(error.message))
+					toastr.error(t(error?.message))
 				else
 					toastr?.error?("未找到记录")
 	else

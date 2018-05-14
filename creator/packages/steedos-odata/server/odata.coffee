@@ -97,22 +97,22 @@ Meteor.startup ->
 					innererror['message'] = t("creator_odata_post_fail")
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 					error['code'] = 404
-					error['message'] = t("creator_odata_post_fail")
+					error['message'] = "creator_odata_post_fail"
 				else
 					innererror['message'] = t("creator_odata_record_query_fail")
 					innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 					error['code'] = 404
-					error['message'] = t("creator_odata_record_query_fail")
+					error['message'] = "creator_odata_record_query_fail"
 			else
 				innererror['message'] = t("creator_odata_collection_query_fail")+ key
 				innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 				error['code'] = 404
-				error['message'] = t("creator_odata_collection_query_fail")+ key
+				error['message'] = "creator_odata_collection_query_fail"
 		if  statusCode == 401
 			innererror['message'] = t("creator_odata_authentication_required")
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 			error['code'] = 401
-			error['message'] = t("creator_odata_authentication_required")
+			error['message'] = "creator_odata_authentication_required"
 		if statusCode == 403
 			switch action
 				when 'get' then innererror['message'] = t("creator_odata_user_access_fail")
@@ -122,7 +122,7 @@ Meteor.startup ->
 			innererror['message'] = t("creator_odata_user_access_fail")
 			innererror['type'] = 'Microsoft.OData.Core.UriParser.ODataUnrecognizedPathException'
 			error['code'] = 403
-			error['message'] = innererror['message']
+			error['message'] = "creator_odata_user_access_fail"
 		error['innererror'] = innererror
 		body['error'] = error
 		return body
