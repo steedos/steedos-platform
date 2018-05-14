@@ -91,6 +91,8 @@ mpowaga:autoform-summernote@0.4.3
 mpowaga:jquery-fileupload@9.11.2
 mpowaga:jquery-ui-widget@1.11.4
 mpowaga:string-template@0.1.0
+mrt:moment@2.14.1
+mrt:moment-timezone@0.2.1
 natestrauser:select2@4.0.3
 nimble:restivus@0.8.12
 npm-bcrypt@0.9.3
