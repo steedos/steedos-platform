@@ -58,7 +58,7 @@ Package.onUse(function(api) {
 
 	api.use('es5-shim@4.6.15');
 	api.use('simple:json-routes@2.1.0');
-	api.use('steedos:fullcalendar@3.4.0_1');
+	api.use('steedos:fullcalendar@3.4.0_3');
 	api.use('steedos:autoform-lookup@0.3.10');
 	api.use('steedos:filesize@0.0.1');
 
@@ -74,11 +74,11 @@ Package.onUse(function(api) {
 	api.use('accounts-base@1.3.4');
 	api.use('steedos:sso@0.0.4')
 	api.use('steedos:adminlte@2.3.12_3');
-	api.use('steedos:base@0.0.73');
+	api.use('steedos:base@0.0.79');
 	api.use('steedos:accounts@0.0.31');
 	api.use('steedos:theme@0.0.29');
 	api.use('steedos:i18n@0.0.11');
-	api.use('steedos:autoform@0.0.1');
+	api.use('steedos:autoform@0.0.12');
 	api.use('steedos:creator-autoform-modals@0.0.1');
 	api.use('raix:push@3.0.2');
 

@@ -1,0 +1,20 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "moment-timezone": {
+        "path": "."
+      }
+    },
+    "packages": {
+      "moment-timezone": {
+        "path": "."
+      },
+      "moment": {
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.8.1",
+        "commit": "722ea63783d594341023836b7d418ab2567dab8c"
+      }
+    }
+  }
+}

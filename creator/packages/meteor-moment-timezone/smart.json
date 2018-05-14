@@ -1,0 +1,11 @@
+{
+  "name": "moment-timezone",
+  "description": "Timezone support for moment.js, packaged for Meteor. See http://momentjs.com/timezone",
+  "homepage": "https://github.com/acreeger/meteor-moment-timezone",
+  "author": "Adam Creeger <adamcreeger@gmail.com>",
+  "version": "0.2.1",
+  "git": "https://github.com/acreeger/meteor-moment-timezone",
+  "packages": {
+    "moment": {}
+  }
+}

@@ -36,7 +36,6 @@ aldeed:collection2
 aldeed:simple-schema
 aldeed:autoform
 steedos:autoform-bs-datetimepicker
-risul:moment-timezone
 steedos:bootstrap3-datetimepicker
 steedos:creator-autoform-modals
 steedos:autoform-bs-minicolors
@@ -55,6 +54,8 @@ meteorhacks:subs-manager
 dburles:collection-helpers
 
 momentjs:moment
+mrt:moment
+mrt:moment-timezone
 
 steedos:loaders-css
 
