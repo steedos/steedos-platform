@@ -16,11 +16,6 @@ Creator.Objects.apps =
 			type: "url"
 			required: false
 			hidden: true
-		description:
-			type: "textarea"
-			is_wide: true
-		icon:
-			type: "text"
 		icon_slds:
 			label: "图标"
 			type: "lookup"
@@ -29,6 +24,9 @@ Creator.Objects.apps =
 				_.forEach Creator.resources.sldsIcons.standard, (svg)->
 					options.push {value: svg, label: svg, icon: svg}
 				return options
+		description:
+			type: "textarea"
+			is_wide: true
 		objects:
 			label: "对象"
 			type: "lookup"
