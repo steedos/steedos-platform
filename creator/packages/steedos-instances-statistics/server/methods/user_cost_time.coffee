@@ -54,6 +54,10 @@ UserCostTime::startStat = () ->
 	console.log "start_date", start_date
 	console.log "end_date", end_date
 
+	space_users = db.space_users.find({space: spaceId},{fields: {user: 1}}).fetch()
+
+	space_user_ids = space_users.map((m)->return m.user)
+
 	query = {
 		# 筛选出当前工作区
 		"space": spaceId,
@@ -61,6 +65,8 @@ UserCostTime::startStat = () ->
 		"is_deleted": false,
 		# 排除 取消申请 的表单
 		"final_decision": {$ne: "terminated"},
+		# 申请人必须是当前工作区
+		"submitter": {$in: space_user_ids},
 		# state判断，进行中和已完成的表单
 		$or:[
 				# 进行中的申请单，全部查出来
@@ -79,10 +85,6 @@ UserCostTime::startStat = () ->
 				}
 			]
 	}
-
-	space_users = db.space_users.find({space: spaceId},{fields: {user: 1}}).fetch()
-
-	space_user_ids = space_users.map((m)->return m.user)
 
 	aggregate = (pipeline, ins_approves, cb) ->
 		# aggregate聚合
@@ -152,24 +154,60 @@ UserCostTime::startStat = () ->
 						]
 					}
 				},
+				# {
+				# 	$group : {
+				# 		_id : {
+				# 			"instance": "$_approve.instance",
+				# 		},
+				# 		_user :{
+				# 			$push:"$$ROOT"
+				# 		}
+				# 	}
+				# },
+				{
+					$group: {
+						_id: {
+							"handler": "$_approve.handler",
+							"is_finished": "$_approve.is_finished",
+							"instance": "$_approve.instance",
+						},
+						# 用户处理这个文件消耗的时间
+						instance_time:{
+							$sum: "$_approve.cost_time"
+						},
+						# 用户得到这个文件的最早的时间
+						start_date: {
+							"$first":"$_approve.start_date"
+						}
+					}
+				},
+				{
+					$project:{
+						"handler": "$_id.handler",
+						"is_finished": "$_id.is_finished",
+						"instance_time": "$instance_time",
+						"start_date": "$start_date",
+						"instance_itemsSold": "$instance_itemsSold"
+					}
+				},
 				{
 					# $group:将集合中的文档分组，可用于统计结果。
 					$group : {
 						_id : {
-							"handler": "$_approve.handler",
-							"is_finished": "$_approve.is_finished"
+							"handler": "$handler",
+							"is_finished": "$is_finished"
 						},
-						# 当月已处理总耗时
+						# 当月处理总耗时(计算的是已处理的)
 						month_finished_time: {
-							$sum: "$_approve.cost_time"
+							$sum: "$instance_time"
 						},
-						# 当月审批总数
+						# 当月审批总数(已审批和待审批)
 						month_finished_count: {
 							$sum: 1
 						},
 						# 审批开始时间
 						itemsSold: {
-							$push:  { start_date: "$_approve.start_date"}
+							$push: { start_date: "$start_date"}
 						}
 					}
 				}
@@ -181,9 +219,13 @@ UserCostTime::startStat = () ->
 	cursor = async_aggregate(pipeline, ins_approves)
 
 	
-	console.log "====================",ins_approves?.length
+	# console.log "====================",ins_approves?.length
 
 	if ins_approves?.length > 0
+
+		# console.log "========================"
+
+		# console.log ins_approves
 
 		# 将查询到的approve分两个组，一组是已完成，一组是正在进行的
 		ins_approves_group = _.groupBy ins_approves, "is_finished"
@@ -201,7 +243,7 @@ UserCostTime::startStat = () ->
 				inbox_approve = _.find(inbox_approves, (item ,index)->
 					# 待审批步骤里面的人员和审批完成步骤里面的人员一致
 					if item._id?.handler == finished_approve._id?.handler
-						# 从待审核数组中将该user剪切掉
+						# 从待审核数组中将该user去掉
 						inbox_approves.splice(index,1)
 						return item
 				)
@@ -239,28 +281,28 @@ UserCostTime::startStat = () ->
 					sum += minus
 			return sum
 
-		console.log 'finished_approves',finished_approves.length
+		# console.log 'finished_approves',finished_approves.length
 
 		# 循环已处理的审批步骤
 		finished_approves.forEach (approve)->
 
-			# console.log "=================================="
+			console.log "=================================="
 			
-			# console.log "approve", approve
+			console.log "approve", approve
 
-			# 当月待处理的总耗时
+			# 当月待处理文件的总耗时
 			inbox_time = sumTime(approve?.itemsSold)
 
-			# 当月待处理的平均耗时
+			# 当月待处理文件的平均耗时
 			if approve?.inbox_count > 0
 				inbox_avg = inbox_time/approve?.inbox_count
 			else
 				inbox_avg = 0
 
-			# 当月已处理的总耗时
+			# 当月已处理文件的总耗时
 			month_finished_time = approve?.month_finished_time / (1000*60*60) || 0
 
-			# 当月已处理的平均耗时
+			# 当月已处理文件的平均耗时
 			if approve?.month_finished_count > 0
 				month_finished_avg = month_finished_time/approve?.month_finished_count || 0
 			else
@@ -307,7 +349,7 @@ UserCostTime::startStat = () ->
 			exist_obj = statCollection.findOne({
 				'year': approve.year,
 				'month': approve.month,
-				'user': approve.user
+				'user': userId
 			})
 
 			if exist_obj
