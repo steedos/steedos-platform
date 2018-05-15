@@ -27,7 +27,12 @@ Template.reset_password_modal.helpers
 
 	isMobile: ()->
 		return Steedos.isMobile()
-		 
+
+
+
+Template.reset_password_modal.rendered = ->
+	$("#reset_password_modal").on "hidden.bs.modal", ->
+		AutoForm.resetForm("resetPwdForm")
 
 Template.reset_password_modal.events 
 	"click .btn-confirm": (event, template) ->
