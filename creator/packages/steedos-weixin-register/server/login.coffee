@@ -21,6 +21,16 @@ JsonRoutes.add 'post', '/api/creator/weixin/login', (req, res, next) ->
 	secret = Meteor.settings.weixin.appSecret
 	code = userInfo.code
 
+	console.log("appId", appId)
+	console.log("secret", secret)
+	console.log("code", code)
+
+	if !code
+		JsonRoutes.sendResult res, {
+			code: 401,
+			data: {}
+		}
+
 	resData = getWeiXinSessionAsync appId, secret, code
 
 	console.log("resData", JSON.stringify(resData))
