@@ -15,7 +15,8 @@ Package.onUse(function(api) {
 	api.use('simple:json-routes@2.1.0');
 	api.use('coffeescript@1.11.1_4');
 
-	api.addFiles('lib/WXBizDataCrypt.js', 'server');
+	api.use('steedos:weixin-aes');
+
 	api.addFiles('server/login.coffee', 'server');
 	// api.addFiles('server/register.coffee', 'server');
 });
