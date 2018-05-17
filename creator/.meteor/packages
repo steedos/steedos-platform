@@ -128,4 +128,4 @@ steedos:instances-statistics
 
 http@1.2.9
 
-steedos:weixin-register
+steedos:weixin-login
