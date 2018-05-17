@@ -28,5 +28,10 @@
     "instances_stat": {
         "space": "Af8eM6mAHo7wMDqD3",
         "schedule": "10 10 0 * * *" //每天的晚上的 0点10分10秒调用执行
+    },
+    "weixin": {
+        "appSecret": {
+            "应用ID": "应用secret"
+        }
     }
 }

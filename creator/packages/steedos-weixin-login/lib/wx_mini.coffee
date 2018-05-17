@@ -68,3 +68,19 @@ WXMini.newSpaceUser = (userId, spaceId, orgId, userName)->
 	}
 	spaceUserId = Creator.getCollection("space_users").direct.insert(spaceUser)
 	return spaceUserId
+
+WXMini.addUserToSpace = (userId, spaceId, userName)->
+	console.log("addUserToSpace", userId, spaceId, userName)
+	space = Creator.getCollection("spaces").findOne({_id: spaceId})
+	if space
+		#将用户添加到space的根部门下
+		root_org = Creator.getCollection("organizations").findOne({space: space._id, is_company: true}, {fields: {_id: 1}})
+		if root_org
+			Creator.getCollection("organizations").direct.update({_id: root_org._id}, {$push: {users: userId}})
+			# 新增一条space_user
+			WXMini.newSpaceUser(userId, spaceId, root_org._id, userName)
+		else
+			throw new Meteor.Error(500, "工作区#{spaceId}，未找到根部门")
+	else
+		throw new Meteor.Error(500, "无效的space: #{spaceId}")
+
