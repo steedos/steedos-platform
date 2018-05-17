@@ -51,6 +51,6 @@ JsonRoutes.add 'get', '/api/creator/app_package/export/:space_id/:record_id', (r
 		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: 200
-			data: { errors: errorMessage: e.reason || e.message }
+			data: { errors: e.reason || e.message }
 		}
 
