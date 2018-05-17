@@ -61,3 +61,7 @@ Creator.Objects.vip_card =
             label:'激活时间'
             type:'datetime'
             omit:true
+        enable_share:
+            label:'是否共享'
+            type:'Boolean'
+            defaultValue:false

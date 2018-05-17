@@ -24,4 +24,11 @@ Creator.Objects.vip_post =
             label:'是否显示'
             type:'Boolean'
             defaultValue:true
+        enable_comment:
+            label:'是否允许评论'
+            type:'Boolean'
+            defaultValue:true
+        publish_time:
+            label:'发布时间'
+            type:'datetime'
         
