@@ -19,7 +19,7 @@ Package.onUse(function(api) {
 	api.use('steedos:weixin-aes');
 
 	api.addFiles('lib/wx_mini.coffee', 'server');
-	api.addFiles('server/login.coffee', 'server');
+	api.addFiles('server/routes/login.coffee', 'server');
 	// api.addFiles('server/register.coffee', 'server');
 });
 

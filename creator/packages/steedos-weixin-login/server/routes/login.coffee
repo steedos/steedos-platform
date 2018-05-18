@@ -18,6 +18,7 @@ getWeiXinSessionAsync = Meteor.wrapAsync(getWeiXinSession);
    参数为：object
     object = wx.getUserInfo()
     object.code = wx.login().code
+   如果url上有spaceId 参数，在spaceId有效且当前用户没有加入此工作区时，将用户添加到工作区
 ###
 JsonRoutes.add 'post', '/api/creator/weixin/login', (req, res, next) ->
 	try
