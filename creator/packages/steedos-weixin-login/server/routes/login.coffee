@@ -62,7 +62,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 
 		if unionid
 			user_unionid = Creator.getCollection("users").findOne({"services.weixin.unionid": unionid}, {fields: {_id: 1}})
-			userId = user_openid._id
+			userId = user_openid?._id
 			console.log("unionid find...")
 
 		if openid
@@ -70,7 +70,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 				"services.weixin.openid.appid": appId,
 				"services.weixin.openid._id": openid
 			}, {fields: {_id: 1}})
-			userId = user_openid._id
+			userId = user_openid?._id
 			console.log("openid find...")
 
 		if userInfo.language == "zh_CN" || userInfo.language == "zh_TW"
@@ -108,6 +108,12 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 			# 加入工作区
 			if !user_space
 				WXMini.addUserToSpace(userId, spaceId, userInfo.nickName)
+		else
+			user_space = Creator.getCollection("space_users").findOne({user: userId}, {fields: {space: 1}})
+			if user_space
+				spaceId = user_space.space
+			else
+				throw new Meteor.Error(500, "用户#{userId}不属于任何工作区")
 
 		if user
 			loginTokens = user.services?.resume?.loginTokens
