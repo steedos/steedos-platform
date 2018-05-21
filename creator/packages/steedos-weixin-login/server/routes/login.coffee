@@ -74,9 +74,9 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 			console.log("openid find...")
 
 		if userInfo.language == "zh_CN" || userInfo.language == "zh_TW"
-			  locale = "zh-cn"
-		  else
-			  locale = "en-us"
+			locale = "zh-cn"
+		else
+			locale = "en-us"
 
 		# 未找到user，则新建
 		if !user_unionid && !user_openid
@@ -104,7 +104,10 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 		user = Creator.getCollection("users").findOne({_id: userId}, {fields: {services: 1}})
 
 		if spaceId
-			user_space = Creator.getCollection("space_users").findOne({user: userId, space: spaceId}, {fields: {space: 1}})
+			user_space = Creator.getCollection("space_users").findOne({
+				user: userId,
+				space: spaceId
+			}, {fields: {space: 1}})
 			# 加入工作区
 			if !user_space
 				WXMini.addUserToSpace(userId, spaceId, userInfo.nickName)
@@ -124,8 +127,14 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 				)
 				if open_token
 					token = open_token.token
-		  else
-			  throw new Meteor.Error(401, "无效的用户#{userId}")
+					#修改session_key
+					Creator.getCollection("users").direct.update({
+						_id: userId,
+						"services.resume.loginTokens.app_id": appId,
+						"services.resume.loginTokens.open_id": openid
+					}, {$set: {"services.resume.loginTokens.$.session_key": sessionKey}})
+		else
+			throw new Meteor.Error(401, "无效的用户#{userId}")
 
 		if !token
 			authToken = Accounts._generateStampedLoginToken()
@@ -134,6 +143,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 			hashedToken = Accounts._hashStampedToken authToken
 			hashedToken.app_id = appId
 			hashedToken.open_id = openid
+			hashedToken.session_key = sessionKey
 			hashedToken.token = token
 			Accounts._insertHashedLoginToken userId, hashedToken
 
@@ -149,5 +159,5 @@ JsonRoutes.add 'post', '/api/steedos/weixin/login', (req, res, next) ->
 		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: e.error
-			data: { errors: e.reason || e.message }
+			data: {errors: e.reason || e.message}
 		}
