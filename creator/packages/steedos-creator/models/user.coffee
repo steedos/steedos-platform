@@ -10,6 +10,20 @@ Creator.Objects.users =
 			required: true
 			searchable:true
 			index:true
+		profile:
+			type:'[Object]'
+			label:'用户信息'
+			omit: true
+		'profile.$.sex':
+			type:'select'
+			label:'性别'
+			options:[
+				{label:'男',value:'男'},
+				{label:'女',value:'女'}
+			]
+		'profile.$.birthdate':
+			type:'date'
+			label:'生日'
 	list_views:	
 		all:
 			label:'所有'
