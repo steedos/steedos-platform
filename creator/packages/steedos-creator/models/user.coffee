@@ -14,14 +14,14 @@ Creator.Objects.users =
 			type:'[Object]'
 			label:'用户信息'
 			omit: true
-		'profile.$.sex':
+		'profile.sex':
 			type:'select'
 			label:'性别'
 			options:[
 				{label:'男',value:'男'},
 				{label:'女',value:'女'}
 			]
-		'profile.$.birthdate':
+		'profile.birthdate':
 			type:'date'
 			label:'生日'
 	list_views:	
