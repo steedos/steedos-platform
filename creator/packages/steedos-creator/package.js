@@ -123,6 +123,8 @@ Package.onUse(function(api) {
 	api.addFiles('models/cms_files_cfs.coffee');
 	api.addFiles('models/cfs_files.coffee');
 
+	api.addFiles('models/cfs_images.coffee');
+
 	api.addFiles('models/reports.coffee');
 	api.addFiles('models/tasks.coffee');
 	api.addFiles('models/notes.coffee');
@@ -174,7 +176,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/sidebar.less', 'client');
 	api.addFiles('client/layout/loading.html', 'client');
 	api.addFiles('client/layout/loading.less', 'client');
-	
+
 
 	api.addFiles('client/mobile/admin.html', 'client');
 	api.addFiles('client/mobile/admin.coffee', 'client');
@@ -238,7 +240,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/view.coffee', 'client');
 	api.addFiles('client/views/view.less', 'client');
 	api.addFiles('client/views/app_home.html', 'client');
-	
+
 	api.addFiles('client/views/filter_logic.html', 'client');
 	api.addFiles('client/views/filter_logic.coffee', 'client');
 	api.addFiles('client/views/filter_logic.less', 'client');
