@@ -13,7 +13,7 @@ body {
 
 .steedos.fixed {
 	.content-wrapper {
-		top: 90px;
+		top: 94px;
 		background: #f5f5f7;
 	}
 	.dx-widget {
@@ -50,15 +50,18 @@ body {
 			padding: 0px 0px 0px 1rem;
 			background: #353535;
 			color: white;
+			height: 44px;
 			a {
 				text-decoration: none !important;
 			}
-			.slds-icon-waffle [class*="slds-r"] {
-				background-color: white;
+			.slds-context-bar__secondary {
+				color: silver;
+			}			
+			.slds-context-bar__item.slds-is-active{
+				color: white;
 			}
-			
 			.slds-context-bar__item.slds-is-active:before {
-				height: 2px;
+				height: 0px;
 			}
 			.slds-context-bar__item:not(.slds-no-hover):hover:after {
 				height: 2px;
@@ -202,6 +205,11 @@ body {
 	  100% {
 		background-color: rgba(33, 146, 190, 0.1); } 
 	}
+}
+
+
+.slds-icon-waffle [class*="slds-r"] {
+	background-color: silver;
 }
 
 .dx-actionsheet-container {
