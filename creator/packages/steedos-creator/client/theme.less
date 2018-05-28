@@ -2,6 +2,7 @@ body {
 
 	background-size: cover;
 	background-color: #158bc6 !important;
+    background-image: none !important;
 	
 	button {
 		margin-right: 0px;
@@ -13,21 +14,19 @@ body {
 .steedos.fixed {
 	.content-wrapper {
 		top: 90px;
-		background: #efeff4;
-		background: rgba(255, 255, 255, 0.95);
+		background: #f5f5f7;
 	}
 	.dx-widget {
 		font-size: 13px;
 	}
 	.slds-global-header_container {
 		z-index: 1000;
-		background: #fbfbfb;
-		background: linear-gradient(to top, rgba(255, 255, 255, 0.7) 0, rgb(255, 255, 255));
-		border-bottom: 1px solid #a1a0a0;
+		background: #fff;
+		border-bottom: 0;
 		transition: all 1s ease-in-out 0.5s;
 
 		.slds-global-header {
-			background: transparent;
+			background: #f5f5f7;
 			box-shadow: none;
 
 			.slds-global-header__logo {
@@ -37,20 +36,36 @@ body {
 				background-repeat: no-repeat;
 				background-position: left center;
 			}
+
+			.slds-lookup__search-input {
+				background: #e9ebed;
+				border: 0;
+			}
+			.slds-lookup__search-input:fucus, .slds-lookup__search-input:active {
+				background: #fff;
+			}
 		}
 		.slds-context-bar {
 			border-bottom: 0;
-		    padding: 0px 0px 0px 1rem;
-		    background: transparent;
-		    a {
-		    	text-decoration: none !important;
-		    }
-		}
-		.slds-context-bar__item:hover:after {
-			background: transparent !important;
-		}
-		.slds-context-bar__item.slds-is-active:before {
-			height: 0;
+			padding: 0px 0px 0px 1rem;
+			background: #353535;
+			color: white;
+			a {
+				text-decoration: none !important;
+			}
+			.slds-icon-waffle [class*="slds-r"] {
+				background-color: white;
+			}
+			
+			.slds-context-bar__item.slds-is-active:before {
+				height: 2px;
+			}
+			.slds-context-bar__item:not(.slds-no-hover):hover:after {
+				height: 2px;
+				top: 0px;
+				bottom: auto;
+				color: #00a1df;
+			}
 		}
 	}
 
@@ -65,7 +80,7 @@ body {
 	.slds-form-element {
 		.control-label{
 			font-weight: normal;
-    		color: rgb(112, 110, 107);
+			color: rgb(112, 110, 107);
 		}
 	}
 	.dx-datagrid {
@@ -84,7 +99,7 @@ body {
 		.dx-datagrid-pager.dx-widget {
 			padding: 3px;
 			font-size: 12px;
-    		border-top: 1px solid #ddd;
+			border-top: 1px solid #ddd;
 			.dx-page-sizes .dx-page-size {
 				padding: 3px 8px 3px 8px;
 			}
@@ -96,6 +111,13 @@ body {
 				line-height: 25px;
 			}
 
+		}
+	}
+
+	.slds-tabs_default__nav, .slds-tabs--default__nav {
+		border-bottom: 1px solid rgb(221, 219, 218);
+		.slds-tabs_default__item:after, .slds-tabs--default__item:after {
+			height: 1px;
 		}
 	}
 
@@ -136,15 +158,15 @@ body {
 	}
 	.slds-context-bar {
 		z-index: 1000;
-	    height: 50px;
-	    padding: 0 0 0 1rem;
+		height: 50px;
+		padding: 0 0 0 1rem;
 		color: white;
-	    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 9px, rgba(255, 255, 255, 0.2) 0 -1px 0 inset;
-	    -webkit-transition: all 1s ease-in-out 0.5s;
-	    transition: all 1s ease-in-out 0.5s;
-	    border-bottom: 1px solid #000;
-	    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-	    background: rgba(22, 84, 150, 0.84);
+		box-shadow: rgba(0, 0, 0, 0.3) 0 1px 9px, rgba(255, 255, 255, 0.2) 0 -1px 0 inset;
+		-webkit-transition: all 1s ease-in-out 0.5s;
+		transition: all 1s ease-in-out 0.5s;
+		border-bottom: 1px solid #000;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		background: rgba(22, 84, 150, 0.84);
 
 		.slds-context-bar__icon-action {
 			color: white;
@@ -176,9 +198,9 @@ body {
 
 	@keyframes bkAnim {
 	  50% {
-	    background-color: rgba(33, 146, 190, 0.3); }
+		background-color: rgba(33, 146, 190, 0.3); }
 	  100% {
-	    background-color: rgba(33, 146, 190, 0.1); } 
+		background-color: rgba(33, 146, 190, 0.1); } 
 	}
 }
 
