@@ -59,9 +59,12 @@ Creator.Objects.instances =
 		code:
 			label:"公式"
 			type: "string"
-		is_archived:
+		is_recorded:
 			type: "boolean"
 			label:"已归档"
+		is_archived:
+			type: "boolean"
+			label:"已归档(旧)"
 		is_deleted:
 			type: "boolean"
 			label:"已删除"
