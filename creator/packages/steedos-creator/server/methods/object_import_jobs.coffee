@@ -1,6 +1,6 @@
 fs = Npm.require 'fs'
 path = Npm.require('path')
-xls = Npm.require('node-xlsx')
+xlsx = Npm.require('node-xlsx')
 logger = new Logger 'QUEUE_IMPORT'
 converterString = (field_name, dataCell,jsonObj)->
 	text_error = ""
@@ -114,14 +114,16 @@ importObject = (importObj,space) ->
 			chunks.push chunk 
 
 		stream.on 'end', Meteor.bindEnvironment(() ->
-			workbook = xls.parse(Buffer.concat(chunks))
+			workbook = xlsx.parse(Buffer.concat(chunks), {cellDates: true})
 			total_count = 0
 			success_count = 0
 			failure_count = 0
 			workbook.forEach (sheet)->
+				console.log "sheet",sheet
 				data = sheet.data
 				total_count = data.length
 				data.forEach (dataRow)->
+					console.log "dataRow",dataRow
 					insertInfo = insertRow dataRow,objectName,field_mapping,space
 					# 	# 插入一行数据	
 					if insertInfo
@@ -149,6 +151,7 @@ Meteor.methods
 		# importList = collection.find({"status":"waitting"}).fetch()
 		# importList.forEach (importObj)->
 		# 	# 根据recordObj提供的对象名，逐个文件导入
+		console.log "==============="
 		starttime = new Date()
 		importObj = Creator.Collections["queue_import"].findOne({_id:record_id})
 		importObject importObj,space
@@ -166,4 +169,10 @@ Meteor.methods
 		data = []
 		_.each results ,(result)->
 			data.push result[name_field]
-		return data	
+		return data
+
+	# Creator.testImportJobs("fSNrgYcftFkiBXEvi","Af8eM6mAHo7wMDqD3")
+	# 测试
+	testImportJobs:(record_id,space) ->
+		importObj = Creator.Collections["queue_import"].findOne({_id:record_id})
+		importObject importObj,space
