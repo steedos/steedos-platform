@@ -2,6 +2,10 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 	record = e.data
 	if !record
 		return
+
+	if _.isObject(record._id)
+		record._id = record._id._value
+
 	record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
 	actions = _actionItems(object_name, record._id, record_permissions)
 

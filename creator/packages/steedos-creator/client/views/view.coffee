@@ -21,7 +21,8 @@ Template.creator_view.onRendered ->
 			fields = Creator.getFields(object_name)
 			ref_fields = {}
 			_.each fields, (f)->
-				ref_fields[f] = 1
+				if f.indexOf(".")  < 0
+					ref_fields[f] = 1
 			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields
 
 Template.creator_view.helpers Creator.helpers
@@ -40,9 +41,14 @@ Template.creator_view.helpers
 		return schema
 
 	schemaFields: ()->
-		schema = Creator.getSchema(Session.get("object_name"))._schema
-		firstLevelKeys = Creator.getSchema(Session.get("object_name"))._firstLevelSchemaKeys
+		simpleSchema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
+		schema = simpleSchema._schema
+		firstLevelKeys = simpleSchema._firstLevelSchemaKeys
 		permission_fields = Creator.getFields()
+
+		_.forEach schema, (field, name)->
+			if field.type == Object && field.autoform
+				field.autoform.type = 'hidden'
 
 		fieldGroups = []
 		fieldsForGroup = []

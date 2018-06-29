@@ -18,6 +18,7 @@ Creator.Objects.flows =
 			label:"流程分类"
 			type: "text"
 			omit: true
+			hidden: true
 		state:
 			label:"流程状态"
 			type: "select"
@@ -37,11 +38,46 @@ Creator.Objects.flows =
 		current:
 			blackbox: true
 			omit: true
+			hidden: true
 			label:"当前版本"
 		perms:
-			blackbox: true
-			omit: true
 			label:"流程权限"
+			type: 'Object'
+			is_wide: true
+
+		"perms.users_can_add":
+			label:"授权用户: 新建申请单"
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
+		"perms.orgs_can_add":
+			label:"授权部门: 新建申请单"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+
+		"perms.users_can_monitor":
+			label:"授权用户: 查看所有申请单"
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
+		"perms.orgs_can_monitor":
+			label:"授权部门: 查看所有申请单"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+
+		"perms.users_can_admin":
+			label:"授权用户: 查看所有申请单，并能执行重定位、转签核、删除操作"
+			type: "lookup"
+			reference_to: "users"
+			multiple: true
+		"perms.orgs_can_admin":
+			label:"授权部门: 查看所有申请单，并能执行重定位、转签核、删除操作"
+			type: "lookup"
+			reference_to: "organizations"
+			multiple: true
+
 		app:
 			label:"所属应用"
 			type: "text"
@@ -50,6 +86,7 @@ Creator.Objects.flows =
 			label:"历史版本"
 			blackbox: true
 			omit: true
+			hidden: true
 		name_formula:
 			label:"标题公式"
 			type: "text"
@@ -110,7 +147,7 @@ Creator.Objects.flows =
 		all:
 			label: "全部"
 			filter_scope: "space"
-			extra_columns: ["instance_template", "print_template", "field_map", "events", "distribute_optional_users"]
+#			extra_columns: ["instance_template", "print_template", "field_map", "events", "distribute_optional_users", "perms"]
 			columns: ["name", "modified", "modified_by", "auto_remind", "state", "is_deleted"]
 		is_deleted:
 			label: "已删除"
@@ -119,19 +156,44 @@ Creator.Objects.flows =
 			filters: [["is_deleted", "=", true]]
 
 	actions:
+		standard_edit:
+			visible: false
+			on: "record"
+		standard_delete:
+			visible: false
+			on: "record_more"
 		edit_template:
 			label: "设置模板"
-			visible: true
+			visible: (object_name, record_id, record_permissions)->
+				if FlowRouter.current().params?.record_id
+					return true && record_permissions["allowEdit"]
+				return false
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
 				Session.set 'action_fields', 'instance_template,print_template'
 				Meteor.defer ()->
 					$(".creator-edit").click()
+		edit_perms:
+			label: "设置权限"
+			visible: (object_name, record_id, record_permissions)->
+				if FlowRouter.current().params?.record_id
+					return true && record_permissions["allowEdit"]
+				return false
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				console.log('edit_perms', object_name, record_id)
+				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
+				Session.set 'action_fields', 'perms, perms.orgs_can_add, perms.users_can_add, perms.orgs_can_monitor, perms.users_can_monitor, perms.orgs_can_admin, perms.users_can_admin'
+				Meteor.defer ()->
+					$(".creator-edit").click()
 
 		edit_events:
 			label: "设置脚本"
-			visible: true
+			visible: (object_name, record_id, record_permissions)->
+				if FlowRouter.current().params?.record_id
+					return true && record_permissions["allowEdit"]
+				return false
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
@@ -141,7 +203,10 @@ Creator.Objects.flows =
 
 		edit_field_map:
 			label: "设置归档关系"
-			visible: true
+			visible: (object_name, record_id, record_permissions)->
+				if FlowRouter.current().params?.record_id
+					return true && record_permissions["allowEdit"]
+				return false
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
@@ -150,7 +215,10 @@ Creator.Objects.flows =
 					$(".creator-edit").click()
 		edit_distribute:
 			label: "设置分发"
-			visible: true
+			visible: (object_name, record_id, record_permissions)->
+				if FlowRouter.current().params?.record_id
+					return true && record_permissions["allowEdit"]
+				return false
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
@@ -172,5 +240,5 @@ Creator.Objects.flows =
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
-			modifyAllRecords: false
+			modifyAllRecords: true
 			viewAllRecords: true

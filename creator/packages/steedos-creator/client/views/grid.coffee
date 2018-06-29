@@ -31,6 +31,10 @@ _itemClick = (e, curObjectName, list_view_id)->
 	record = e.data
 	if !record
 		return
+
+	if _.isObject(record._id)
+		record._id = record._id._value
+
 	record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
 	actions = _actionItems(curObjectName, record._id, record_permissions)
 
