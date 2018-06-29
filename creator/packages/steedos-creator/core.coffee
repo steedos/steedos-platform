@@ -226,7 +226,6 @@ Creator.processPermissions = (po)->
 	if po.modifyAllRecords
 		po.allowRead = true
 		po.allowEdit = true
-		po.allowDelete = true
 		po.viewAllRecords = true
 
 Creator.getApp = (app_id)->
