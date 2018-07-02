@@ -9,7 +9,9 @@ Template.creator_report.helpers
 		obj = Creator.getObject()
 		object_name = obj.name
 		record_id = Session.get "record_id"
-		permissions = obj.permissions.get()
+		record = Creator.Reports[record_id] or Creator.getObjectRecord()
+		userId = Meteor.userId()
+		record_permissions = Creator.getRecordPermissions obj.name, record, userId
 		actions = _.values(obj.actions) 
 		# actions = _.where(actions, {on: "record", visible: true})
 		actions = _.filter actions, (action)->
@@ -17,7 +19,7 @@ Template.creator_report.helpers
 				if action.only_list_item
 					return false
 				if typeof action.visible == "function"
-					return action.visible(object_name, record_id, permissions)
+					return action.visible(object_name, record_id, record_permissions)
 				else
 					return action.visible
 			else
@@ -28,14 +30,16 @@ Template.creator_report.helpers
 		obj = Creator.getObject()
 		object_name = obj.name
 		record_id = Session.get "record_id"
-		permissions = obj.permissions.get()
+		record = Creator.Reports[record_id] or Creator.getObjectRecord()
+		userId = Meteor.userId()
+		record_permissions = Creator.getRecordPermissions object_name, record, userId
 		actions = _.values(obj.actions) 
 		actions = _.filter actions, (action)->
 			if action.on == "record_more"
 				if action.only_list_item
 					return false
 				if typeof action.visible == "function"
-					return action.visible(object_name, record_id, permissions)
+					return action.visible(object_name, record_id, record_permissions)
 				else
 					return action.visible
 			else
@@ -55,13 +59,15 @@ Template.creator_report.helpers
 		return Template.instance().is_chart_disabled?.get()
 	
 	isSavable: ->
-		report = Creator.getObjectRecord()
-		unless report
+		obj = Creator.getObject()
+		object_name = obj.name
+		record_id = Session.get "record_id"
+		record = Creator.Reports[record_id] or Creator.getObjectRecord()
+		unless record
 			return false
-		if report?.owner == Meteor.userId()
-			return true
-		else
-			return Creator.isSpaceAdmin()
+		userId = Meteor.userId()
+		record_permissions = Creator.getRecordPermissions object_name, record, userId
+		return record_permissions.allowEdit
 	
 	isDesignerOpen: ()->
 		return Template.instance().is_designer_open?.get()
