@@ -42,6 +42,11 @@ Creator.Objects.meetingroom =
 			label: "所有"
 			columns: ["name", "capacity","region","features"]
 			filter_scope: "space"
+		region_one:
+			label: "一号楼"
+			columns: ["name", "capacity","region","features"]
+			filter_scope: "space"
+			filters: [["region", "=", "一号楼"]]
 	permission_set:
 		user:
 			allowCreate: true
