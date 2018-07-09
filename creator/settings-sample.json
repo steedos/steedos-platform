@@ -30,8 +30,41 @@
         "schedule": "10 10 0 * * *" //每天的晚上的 0点10分10秒调用执行
     },
     "weixin": {
+        "invite": {
+            "iv": "", // 密钥，16位字符串
+            "validity_period": 86400 //有效期，默认值24小时
+        },
         "appSecret": {
             "应用ID": "应用secret"
+        }
+    },
+    // 微信支付
+    "billing": {
+        "service_mch": {
+            "appid": "公众账号ID",
+            "mch_id": "服务商商户号",
+            "partner_key": "服务商平台API密钥"
+        },
+        "normal_mch": {
+            "appid": "公众账号ID",
+            "mch_id": "普通商户商户号",
+            "partner_key": "商户平台API密钥"
+        }
+    },
+    //sms短信平台账户配置相关，优先识别海外平台，即twilio
+    "sms": {
+        //海外短信平台账户相关
+        "twilio": {
+            "FROM": "XXXXXXXXXXXX",
+            "ACCOUNT_SID": "XXXXXXXXXXXX",
+            "AUTH_TOKEN": "XXXXXXXXXXXX"
+        },
+        // 腾讯云短信服务
+        "qcloud": {
+            "smsqueue_interval": 1000,
+            "sdkappid": "xxx",
+            "appkey": "xxx",
+            "signname": "xxx" // 短信签名
         }
     }
 }

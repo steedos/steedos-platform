@@ -10,10 +10,11 @@ Npm.depends({
 	busboy: "0.2.13",
 	mkdirp: "0.3.5",
 	"xml2js": "0.4.19",
-	"node-xlsx":"0.12.0"
+	"node-xlsx": "0.12.0",
+	"aliyun-sdk": "1.11.7"
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
 	api.versionsFrom('1.0');
 
 	api.use('reactive-var@1.0.10');
@@ -61,6 +62,7 @@ Package.onUse(function(api) {
 	api.use('steedos:fullcalendar@3.4.0_3');
 	api.use('steedos:autoform-lookup@0.3.10');
 	api.use('steedos:filesize@0.0.1');
+	api.use('steedos:location@0.0.1');
 
 	api.use('natestrauser:select2@4.0.3');
 	api.use('aldeed:autoform-select2@1.0.5')
@@ -68,7 +70,7 @@ Package.onUse(function(api) {
 	api.use('steedos:cfs-standard-packages@0.5.10');
 	api.use('steedos:cfs-s3@0.1.4');
 	api.use('steedos:cfs-aliyun@0.1.0');
-	api.use('steedos:autoform-file@0.4.2_1');
+	api.use('steedos:autoform-file@0.4.2_2');
 
 
 	api.use('accounts-base@1.3.4');
@@ -78,7 +80,7 @@ Package.onUse(function(api) {
 	api.use('steedos:accounts@0.0.31');
 	api.use('steedos:theme@0.0.29');
 	api.use('steedos:i18n@0.0.11');
-	api.use('steedos:autoform@0.0.12');
+	api.use('steedos:autoform@0.0.13');
 	api.use('steedos:creator-autoform-modals@0.0.1');
 	api.use('raix:push@3.0.2');
 
@@ -124,12 +126,15 @@ Package.onUse(function(api) {
 	api.addFiles('models/cfs_files.coffee');
 
 	api.addFiles('models/cfs_images.coffee');
+	api.addFiles('models/cfs_audios.coffee');
+	api.addFiles('models/cfs_videos.coffee');
 
 	api.addFiles('models/reports.coffee');
 	api.addFiles('models/tasks.coffee');
 	api.addFiles('models/notes.coffee');
 	api.addFiles('models/queue_import.coffee');
 	api.addFiles('models/settings.coffee');
+	api.addFiles('models/user_star.coffee');
 
 	api.addFiles('models/object_workflows.coffee');
 
@@ -158,7 +163,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/routes/s3.coffee', 'server');
 	api.addFiles('server/routes/api_workflow_drafts.coffee', 'server');
 
-	api.addFiles('server/routes/bootstrap.coffee','server');
+	api.addFiles('server/routes/bootstrap.coffee', 'server');
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
 	api.addFiles('client/layout/layout.html', 'client');

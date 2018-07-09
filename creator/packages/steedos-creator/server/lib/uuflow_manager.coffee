@@ -1,3 +1,5 @@
+ALY = Npm.require('aliyun-sdk')
+
 uuflowManager = {}
 
 uuflowManager.check_authorization = (req) ->
@@ -290,3 +292,30 @@ uuflowManager.checkIsInApproval = (recordIds) ->
 		throw new Meteor.Error('error!', "此记录已发起流程正在审批中，待审批结束方可发起下一次审批！")
 
 	return
+
+uuflowManager.getQueryString = (accessKeyId, secretAccessKey, query, method) ->
+	console.log "----uuflowManager.getQueryString----"
+	date = ALY.util.date.getDate()
+
+	query.Format = "json"
+	query.Version = "2017-03-21"
+	query.AccessKeyId = accessKeyId
+	query.SignatureMethod = "HMAC-SHA1"
+	query.Timestamp = ALY.util.date.iso8601(date)
+	query.SignatureVersion = "1.0"
+	query.SignatureNonce = String(date.getTime())
+
+	queryKeys = Object.keys(query)
+	queryKeys.sort()
+
+	canonicalizedQueryString = ""
+	queryKeys.forEach (name) ->
+		canonicalizedQueryString += "&" + name + "=" + ALY.util.popEscape(query[name])
+
+	stringToSign = method.toUpperCase() + '&%2F&' + ALY.util.popEscape(canonicalizedQueryString.substr(1))
+
+	query.Signature = ALY.util.crypto.hmac(secretAccessKey + '&', stringToSign, 'base64', 'sha1')
+
+	queryStr = ALY.util.queryParamsToString(query)
+	console.log queryStr
+	return queryStr

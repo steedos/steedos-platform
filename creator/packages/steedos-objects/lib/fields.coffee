@@ -20,12 +20,12 @@ Creator.getObjectSchema = (obj) ->
 
 		autoform_type = field.autoform?.type
 
-		if field.type == "text"
+		if field.type == "text" or field.type == "phone"
 			fs.type = String
 			if field.multiple
 				fs.type = [String]
 				fs.autoform.type = "tags"
-		else if field.type == "[text]"
+		else if field.type == "[text]" or field.type == "[phone]"
 			fs.type = [String]
 			fs.autoform.type = "tags"
 		else if field.type == "textarea"
@@ -246,6 +246,37 @@ Creator.getObjectSchema = (obj) ->
 				fs.autoform.type = 'fileUpload'
 				fs.autoform.collection = 'images'
 				fs.autoform.accept = 'image/*'
+		else if field.type == "audio"
+			if field.multiple
+				fs.type = [String]
+				schema[field_name + ".$"] =
+					autoform:
+						type: 'fileUpload'
+						collection: 'audios'
+						accept: 'audio/*'
+			else
+				fs.type = String
+				fs.autoform.type = 'fileUpload'
+				fs.autoform.collection = 'audios'
+				fs.autoform.accept = 'audio/*'
+		else if field.type == "video"
+			if field.multiple
+				fs.type = [String]
+				schema[field_name + ".$"] =
+					autoform:
+						type: 'fileUpload'
+						collection: 'videos'
+						accept: 'video/*'
+			else
+				fs.type = String
+				fs.autoform.type = 'fileUpload'
+				fs.autoform.collection = 'videos'
+				fs.autoform.accept = 'video/*'
+		else if field.type == "location"
+			fs.type = Object
+			fs.autoform.type = "location"
+			fs.autoform.system = field.system || "wgs84"
+			fs.blackbox = true
 		else
 			fs.type = field.type
 

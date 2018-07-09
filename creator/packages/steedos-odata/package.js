@@ -32,6 +32,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/restivus/route.coffee', 'server');
 	api.addFiles('lib/restivus/restivus.coffee', 'server');
 
+	api.addFiles('server/objects.coffee', 'server');
 	api.addFiles('server/odata.coffee', 'server');
 	api.addFiles('server/middleware.coffee', 'server');
 	api.addFiles('server/metadata.coffee', 'server');

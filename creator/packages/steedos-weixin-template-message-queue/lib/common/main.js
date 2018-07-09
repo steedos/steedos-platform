@@ -1,0 +1,1 @@
+WeixinTemplateMessageQueue = new EventState();

@@ -121,7 +121,8 @@ Creator.baseObject =
 				doc.created = new Date();
 				doc.modified = new Date();
 				if userId
-					# doc.owner = userId
+					unless doc.owner
+						doc.owner = userId
 					doc.created_by = userId;
 					doc.modified_by = userId;
 

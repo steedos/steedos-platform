@@ -1,5 +1,6 @@
 Busboy = Npm.require('busboy');
 Fiber = Npm.require('fibers');
+ALY = Npm.require('aliyun-sdk')
 
 JsonRoutes.parseFiles = (req, res, next) ->
 		files = []; # Store files in an array and then pass them to request.
@@ -96,7 +97,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 							size: size
 							modified: (new Date())
 							modified_by: owner
-						$push: 
+						$push:
 							versions:
 								$each: [ fileObj._id ]
 								$position: 0
@@ -129,3 +130,141 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 			res.statusCode = 500;
 			res.end();
 
+JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
+	try
+		userId = Steedos.getUserIdFromAuthToken(req, res)
+		if !userId
+			throw new Meteor.Error(500, "No permission")
+
+		collectionName = req.params.collection
+
+		JsonRoutes.parseFiles req, res, ()->
+			collection = cfs[collectionName]
+
+			if not collection
+				throw new Meteor.Error(500, "No Collection")
+
+			if req.files and req.files[0]
+
+				newFile = new FS.File()
+				newFile.name(req.files[0].filename)
+
+				if req.body
+					newFile.metadata = req.body
+
+				newFile.owner = userId
+				newFile.metadata.owner = userId
+
+				newFile.attachData req.files[0].data, {type: req.files[0].mimeType}
+
+				collection.insert newFile
+
+				resultData = collection.files.findOne(newFile._id)
+				JsonRoutes.sendResult res,
+					code: 200
+					data: resultData
+				return
+			else
+				throw new Meteor.Error(500, "No File")
+
+		return
+	catch e
+		console.error e.stack
+		JsonRoutes.sendResult res, {
+			code: e.error || 500
+			data: {errors: e.reason || e.message}
+		}
+
+JsonRoutes.add "post", "/s3/vod/upload",  (req, res, next) ->
+	try
+		userId = Steedos.getUserIdFromAuthToken(req, res)
+		if !userId
+			throw new Meteor.Error(500, "No permission")
+
+		collectionName = "videos"
+
+		JsonRoutes.parseFiles req, res, ()->
+			collection = cfs[collectionName]
+
+			if not collection
+				throw new Meteor.Error(500, "No Collection")
+
+			if req.files and req.files[0]
+
+				if collectionName is 'videos' and Meteor.settings.public.cfs?.store is "OSS"
+					accessKeyId = Meteor.settings.cfs.aliyun?.accessKeyId
+					secretAccessKey = Meteor.settings.cfs.aliyun?.secretAccessKey
+
+					date = ALY.util.date.getDate()
+
+					query = {
+						Action: "CreateUploadVideo"
+						Title: req.files[0].filename
+						FileName: req.files[0].filename
+					}
+
+					url = "http://vod.cn-shanghai.aliyuncs.com/?" + uuflowManager.getQueryString(accessKeyId, secretAccessKey, query, 'GET')
+
+					r = HTTP.call 'GET', url
+
+					console.log r
+
+					if r.data?.VideoId
+						videoId = r.data.VideoId
+						uploadAddress = JSON.parse(new Buffer(r.data.UploadAddress, 'base64').toString())
+						console.log uploadAddress
+						uploadAuth = JSON.parse(new Buffer(r.data.UploadAuth, 'base64').toString())
+						console.log uploadAuth
+
+						oss = new ALY.OSS({
+							"accessKeyId": uploadAuth.AccessKeyId,
+							"secretAccessKey": uploadAuth.AccessKeySecret,
+							"endpoint": uploadAddress.Endpoint,
+							"apiVersion": '2013-10-15',
+							"securityToken": uploadAuth.SecurityToken
+						})
+
+						oss.putObject {
+							Bucket: uploadAddress.Bucket,
+							Key: uploadAddress.FileName,
+							Body: req.files[0].data,
+							AccessControlAllowOrigin: '',
+							ContentType: req.files[0].mimeType,
+							CacheControl: 'no-cache',
+							ContentDisposition: '',
+							ContentEncoding: 'utf-8',
+							ServerSideEncryption: 'AES256',
+							Expires: null
+						}, Meteor.bindEnvironment (err, data) ->
+
+							if err
+								console.log('error:', err)
+								throw new Meteor.Error(500, err.message)
+
+							console.log('success:', data)
+
+							newDate = ALY.util.date.getDate()
+
+							getPlayInfoQuery = {
+								Action: 'GetPlayInfo'
+								VideoId: videoId
+							}
+
+							getPlayInfoUrl = "http://vod.cn-shanghai.aliyuncs.com/?" + uuflowManager.getQueryString(accessKeyId, secretAccessKey, getPlayInfoQuery, 'GET')
+
+							getPlayInfoResult = HTTP.call 'GET', getPlayInfoUrl
+
+							JsonRoutes.sendResult res,
+								code: 200
+								data: getPlayInfoResult
+
+			else
+				throw new Meteor.Error(500, "No File")
+
+		return
+	catch e
+		console.error e.stack
+		JsonRoutes.sendResult res, {
+			code: e.error || 500
+			data: {errors: e.reason || e.message}
+		}

@@ -54,11 +54,16 @@ else
       }
 
 
-cfs.images = new FS.Collection store_name,
-    stores: [files_store]
+cfs[store_name] = new FS.Collection store_name,
+    stores: [files_store],
+    filter: {
+      allow: {
+        contentTypes: ['image/*'] # allow only images in this FS.Collection
+      }
+    }
 
 
-cfs.images.allow
+cfs[store_name].allow
   insert: (userId, doc) ->
     true
   update: (userId, doc) ->

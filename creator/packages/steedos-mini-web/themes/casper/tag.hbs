@@ -1,0 +1,31 @@
+{{!< default}}
+{{!-- The tag above means - insert everything in this file into the {body} of the default.hbs template --}}
+
+{{!-- The big featured header, it uses blog cover image as a BG if available --}}
+<header class="site-header outer {{#unless feature_image}}no-cover{{/unless}}" style="{{#if feature_image}}background-image: url({{feature_image}}){{/if}}">
+    <div class="inner">
+        {{> site_nav}}
+        <div class="site-header-content">
+            <h1 class="site-title">{{name}}</h1>
+            <h2 class="site-description">
+                {{#if description}}
+                    {{description}}
+                {{else}}
+                    A collection of {{plural pagination.total empty='posts' singular='% post' plural='% posts'}}
+                {{/if}}
+            </h2>
+        </div>
+    </div>
+</header>
+
+{{!-- The main content area --}}
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+        <div class="post-feed">
+            {{#each posts}}
+                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
+                {{> post_card}}
+            {{/each}}
+        </div>
+    </div>
+</main>

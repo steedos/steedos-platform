@@ -24,6 +24,9 @@ Creator.Objects.users =
 		'profile.birthdate':
 			type:'date'
 			label:'生日'
+		'profile.avatar':
+			type:'text'
+			label:'头像'
 	list_views:	
 		all:
 			label:'所有'

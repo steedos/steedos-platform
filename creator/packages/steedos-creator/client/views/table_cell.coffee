@@ -87,7 +87,8 @@ Template.creator_table_cell.helpers
 
 		if _field.type == "grid"
 			data.push {isTable: true}
-
+		else if _field.type == "location"
+			data.push {value: val?.address || '', id: this._id}
 		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
 
 			# 有optionsFunction的情况下，reference_to不考虑数组
@@ -178,11 +179,11 @@ Template.creator_table_cell.helpers
 					_options = _field.options()
 				if _.isArray(this.val)
 					self_val = this.val
-					_val = ""
+					_val = []
 					_.each _options, (_o)->
 						if _.indexOf(self_val, _o.value) > -1
-							_val += _o.label
-					val = _val
+							_val.push _o.label
+					val = _val.join(",")
 				else
 					val = _.findWhere(_options, {value: this.val})?.label
 				unless val

@@ -13,7 +13,7 @@ body {
 
 .steedos.fixed {
 	.content-wrapper {
-		top: 94px;
+		top: 90px;
 		background: #f8f9fb;
 	}
 	.dx-widget {
@@ -21,13 +21,13 @@ body {
 	}
 	.slds-global-header_container {
 		z-index: 1000;
-		background: #fff;
+		background: #f8f9fb;
 		border-bottom: 0;
 		transition: all 1s ease-in-out 0.5s;
 
 		.slds-global-header {
-			background: #f8f9fb;
-			box-shadow: none;
+			background: #fff;
+			box-shadow: 0 1px 2px rgba(150,150,150,0.3);
 
 			.slds-global-header__logo {
 				width: 12.5rem;
@@ -38,7 +38,7 @@ body {
 			}
 
 			.slds-lookup__search-input {
-				background: #e9ebed;
+				background: #f8f9fb;
 				border: 0;
 			}
 			.slds-lookup__search-input:fucus, .slds-lookup__search-input:active {
@@ -46,28 +46,28 @@ body {
 			}
 		}
 		.slds-context-bar {
-			border-bottom: 0;
 			padding: 0px 0px 0px 1rem;
-			background: #353535;
-			color: white;
-			height: 44px;
+			border-bottom: 1px solid #e7e7eb;
+			color: #353535;
+			background: transparent;
 			a {
 				text-decoration: none !important;
 			}
-			.slds-context-bar__secondary {
-				color: silver;
-			}			
-			.slds-context-bar__item.slds-is-active{
-				color: white;
+			.slds-context-bar__app-name {
+				height: 2.5rem;
+				color: #888888;
+				font-size: 1rem;
+				font-weight: 300;
+				position: fixed;
+				left: 150px;
+				top: 5px;
 			}
-			.slds-context-bar__item.slds-is-active:before {
-				height: 0px;
+			.slds-context-bar__primary, .slds-context-bar__secondary, .slds-context-bar__tertiary {
+				height: 2.5rem;
 			}
 			.slds-context-bar__item:not(.slds-no-hover):hover:after {
-				height: 2px;
-				top: 0px;
 				bottom: auto;
-				color: #00a1df;
+				top: 0;
 			}
 		}
 	}
@@ -78,6 +78,16 @@ body {
 		border-bottom: 0;
 		background: transparent;
 		padding-bottom: 0.5em
+	}
+
+	.slds-card.slds-card_boundary {
+		border-radius: 4px;
+		box-shadow: 0 1px 2px rgba(150,150,150,0.3);
+		border: 1px solid #e7e7eb;
+	}
+
+	.slds-button_neutral, .slds-button--neutral, .slds-button_icon-border-filled, .slds-button--icon-border-filled, .slds-button_icon-border, .slds-button--icon-border {
+		border-color: #e7e7eb;
 	}
 
 	.slds-form-element {
@@ -118,7 +128,7 @@ body {
 	}
 
 	.slds-tabs_default__nav, .slds-tabs--default__nav {
-		border-bottom: 1px solid rgb(221, 219, 218);
+		border-bottom: 1px solid #e7e7eb;
 		.slds-tabs_default__item:after, .slds-tabs--default__item:after {
 			height: 1px;
 		}
@@ -205,11 +215,6 @@ body {
 	  100% {
 		background-color: rgba(33, 146, 190, 0.1); } 
 	}
-}
-
-
-.slds-icon-waffle [class*="slds-r"] {
-	background-color: silver;
 }
 
 .dx-actionsheet-container {

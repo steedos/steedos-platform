@@ -85,6 +85,9 @@ steedos:cfs-s3
 steedos:cfs-standard-packages
 steedos:cfs-ui
 
+steedos:e164-phones-countries
+steedos:i18n-iso-countries
+steedos:qcloud-smsqueue
 steedos:oauth2-server
 
 smoral:sweetalert@1.1.1
@@ -94,14 +97,15 @@ peppelg:bootstrap-3-modal@1.0.4
 keepnox:perfect-scrollbar
 
 steedos:ionicons@0.1.7
-
+steedos:vip-card
+steedos:vip-post
 steedos:objects
 steedos:sso
-steedos:app-crm
-steedos:app-informations
-steedos:app-admin
-steedos:app-cms
+#steedos:app-crm
+#steedos:app-informations
+#steedos:app-cms
 steedos:app-workflow
+steedos:app-admin
 #steedos:app-example
 steedos:creator
 natestrauser:select2
@@ -109,7 +113,7 @@ meteorhacks:unblock@1.1.0
 
 steedos:lightning-design-system
 
-steedos:cms
+##steedos:cms
 
 # steedos:qhd-records
 
@@ -120,12 +124,16 @@ steedos:logger@0.0.2
 
 steedos:object-database
 
-steedos:app-archive
+#steedos:app-archive
 
 steedos:instance-record-queue
 
 steedos:instances-statistics
-
+steedos:meeting
 http@1.2.9
 
-steedos:weixin-login
+steedos:weixin
+steedos:pay
+
+steedos:weixin-template-message-queue
+steedos:mini-web
