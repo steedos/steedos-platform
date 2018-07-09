@@ -1,0 +1,73 @@
+<template name="creator_calendar">
+	<div class="steedos-brand-band slds-brand-band_medium">
+		<div class="slds-template__container">
+			<div class="listViewManager slds-grid slds-grid--vertical filter-list-wraper">
+				<div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object.icon}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>{{_ object.label}}</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+											<div class="triggerLinkTextAndIconWrapper">
+												<span class="triggerLinkText selectedListView uiOutputText">日历</span>
+												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
+														{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+													</span>
+												</span>
+											</div>
+										</a>
+										<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
+											<ul class="slds-dropdown__list slds-show">
+												<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+													<a role="option" tabindex="-1" class="list-view-switch">
+														<span class="">日历}</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
+								{{#each actions}}
+									<li class="slds-button slds-button--neutral slds-truncate list-action-custom">
+										<a href="javascript:void(0);" title="{{this.label}}" class="">
+											<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+										</a>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+						
+					</div>
+				</div>
+				<div class="slds-grid table-grid-content">
+					<div class="slds-col slds-no-space">
+						<div id="scheduler"></div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
