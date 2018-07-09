@@ -1,5 +1,34 @@
 DevExpress.config
 
+# start: moment(start).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
+# end: moment(end).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
+
+getTooltipTemplate = (data) ->
+	str = """
+		<div class='meeting-tooltip'>
+			<div class="dx-scheduler-appointment-tooltip-title">#{data.name}</div>
+			<div class='dx-scheduler-appointment-tooltip-date'>
+				#{moment(data.start).tz("Asia/Shanghai").format("MMM D, h:mm A")} - #{moment(data.end).tz("Asia/Shanghai").format("MMM D, h:mm A")}
+			</div>
+			<div class="action">
+				<div class="dx-scheduler-appointment-tooltip-buttons">
+					<div class="dx-button dx-button-normal dx-widget dx-button-has-icon" role="button" aria-label="trash" tabindex="0">
+						<div class="dx-button-content">
+							<i class="dx-icon dx-icon-trash"></i>
+						</div>
+					</div>
+					<div class="dx-button dx-button-normal dx-widget dx-button-has-text dx-state-hover" role="button" aria-label="打开日程" tabindex="0">
+						<div class="dx-button-content">
+							<span class="dx-button-text">打开日程</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	"""
+	return $(str)
+
+
 Template.creator_calendar.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -29,7 +58,6 @@ Template.creator_calendar.onRendered ->
 								if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
 									error.message = t "creator_odata_unexpected_character"
 							toastr.error(error.message)
-					select: ["_id", "name", "start", "end"]
 				}
 				views: ["day", "week", "timelineDay"]
 				currentView: "day"
@@ -41,45 +69,60 @@ Template.creator_calendar.onRendered ->
 				endDateExpr: "end"
 				startDateExpr: "start"
 				timeZone: "Asia/Shanghai"
-				# showAllDayPanel: true
-				height: 600
-				# groups: ["room"]
+				showAllDayPanel: false,
+				height: "100%"
+				groups: ["room"]
 				crossScrollingEnabled: true
 				cellDuration: 30
 				editing: { 
-					allowAdding: true
+					allowAdding: false,
+					# allowUpdating: false
 				},
-				# appointmentTemplate: (data)->
-				# 	console.log('[appointmentTemplate]', data)
-
-				# 	return $("<div class='showtime-preview'>sasasasa</div>"); 
-				# resources: [{
-				# 	fieldExpr: "room",
-				# 	dataSource: {
-				# 		store: 
-				# 			type: "odata"
-				# 			version: 4
-				# 			url: "/api/odata/v4/#{Steedos.spaceId()}/meetingroom"
-				# 			withCredentials: false
-				# 			beforeSend: (request) ->
-				# 				request.headers['X-User-Id'] = Meteor.userId()
-				# 				request.headers['X-Space-Id'] = Steedos.spaceId()
-				# 				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				# 			errorHandler: (error) ->
-				# 				if error.httpStatus == 404 || error.httpStatus == 400
-				# 					error.message = t "creator_odata_api_not_found"
-				# 				else if error.httpStatus == 401
-				# 					error.message = t "creator_odata_unexpected_character"
-				# 				else if error.httpStatus == 403
-				# 					error.message = t "creator_odata_user_privileges"
-				# 				else if error.httpStatus == 500
-				# 					if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
-				# 						error.message = t "creator_odata_unexpected_character"
-				# 				toastr.error(error.message)
-				# 		select: ["_id", "name"]
-				# 	}
-				# }]
+				resources: [{
+					fieldExpr: "room"
+					valueExpr: "_id"
+					displayExpr: "name"
+					label: "会议室"
+					dataSource: {
+						store: 
+							type: "odata"
+							version: 4
+							url: "/api/odata/v4/#{Steedos.spaceId()}/meetingroom"
+							withCredentials: false
+							beforeSend: (request) ->
+								request.headers['X-User-Id'] = Meteor.userId()
+								request.headers['X-Space-Id'] = Steedos.spaceId()
+								request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+							errorHandler: (error) ->
+								if error.httpStatus == 404 || error.httpStatus == 400
+									error.message = t "creator_odata_api_not_found"
+								else if error.httpStatus == 401
+									error.message = t "creator_odata_unexpected_character"
+								else if error.httpStatus == 403
+									error.message = t "creator_odata_user_privileges"
+								else if error.httpStatus == 500
+									if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
+										error.message = t "creator_odata_unexpected_character"
+								toastr.error(error.message)
+					}
+				}],
+				onAppointmentDblClick: (e) ->
+					console.log('[onAppointmentDblClick]',e)
+				onCellClick: (e) ->
+					console.log('[onCellClick', e)
+				appointmentTooltipTemplate: (data, container) ->
+					console.log(data)
+					markup = getTooltipTemplate(data);
+					# markup.find(".edit").dxButton({
+					# 	text: "Edit details",
+					# 	type: "default",
+					# 	onClick: function() {
+					# 		scheduler.showAppointmentPopup(data, false);
+					# 	}
+					# });
+					return markup;
 			})
+
 
 
 
