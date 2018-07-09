@@ -3,7 +3,6 @@ Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完�
 
 Creator.Object = (options)->
 	self = this
-
 	if (!options.name)
 		throw new Error('Creator.Object options must specify name');
 	unless options.permission_set
@@ -34,7 +33,7 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
-
+	self.calendar = _.clone(options.calendar)
 	if (!options.fields)
 		throw new Error('Creator.Object options must specify name');
 
