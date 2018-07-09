@@ -8,19 +8,11 @@ Template.creator_calendar.onRendered ->
 			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 			dxSchedulerInstance =  $("#scheduler").dxScheduler({
 				dataSource: {
-					# store: [{
-					# 	"@odata.editLink":"http://127.0.0.1:5000/api/odata/v4/Qsi6D2dnKCrhG4Xd9/meeting('BJ84aAFsBydyvQ5Nc')"
-					# 	"@odata.id":"http://127.0.0.1:5000/api/odata/v4/Qsi6D2dnKCrhG4Xd9/meeting('BJ84aAFsBydyvQ5Nc')"
-					# 	end:"2018-07-09T08:00:00.000Z"
-					# 	name:"333"
-					# 	room:"dvxLqRP4x3nJHv8Fe"
-					# 	start:"2018-07-08T21:00:00.000Z"
-					# 	_id:"BJ84aAFsBydyvQ5Nc"
-					# }]
 					store: 
 						type: "odata"
 						version: 4
 						url: Steedos.absoluteUrl(url)
+						deserializeDates: false
 						withCredentials: false
 						beforeSend: (request) ->
 							request.headers['X-User-Id'] = Meteor.userId()
@@ -45,7 +37,7 @@ Template.creator_calendar.onRendered ->
 				firstDayOfWeek: 0
 				startDayHour: 0
 				endDayHour: 23
-				textExpr: "text"
+				textExpr: "name"
 				endDateExpr: "end"
 				startDateExpr: "start"
 				timeZone: "Asia/Shanghai"
