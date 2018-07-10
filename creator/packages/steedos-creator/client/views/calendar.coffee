@@ -213,7 +213,7 @@ Template.creator_calendar.helpers
 		actions: ()->
 		actions = Creator.getActions()
 		actions = _.filter actions, (action)->
-			if action.on == "list"
+			if action.on == "list" && action.todo != "standard_query"
 				if typeof action.visible == "function"
 					return action.visible()
 				else
