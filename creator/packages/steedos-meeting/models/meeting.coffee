@@ -4,6 +4,12 @@
 # 	year = new date.getYear()
 # 	month = date.getMonth()
 # 	start_date = new Date(date.getYear(),month,1)
+clashRemind = (room,start,end)->
+	meetings = Creator.getCollection("meeting").find({room:room,end:{$gte:start},start:{$lte:start},end:{$gte:new Date()}}).count()
+	return meetings
+	#console.log("mettings===",mettings)
+	# mettings.forEach (metting) ->
+	# 	if meeting.start < start and start<meeting.
 Creator.Objects.meeting =
 	name: "meeting"
 	label: "会议"
@@ -108,31 +114,7 @@ Creator.Objects.meeting =
 			label: "日历"
 			columns: ["name", "start","end"]
 			filter_scope: "space"
-		# today:
-		# 	label: "今日"
-		# 	columns: ["name", "start", "unit", "room","count","owner" ,"phone",                    "features","start_stamp"]
-		# 	filter_scope: "space"
-		# 	filters: [["start_stamp", ">=", (new Date(new Date().toLocaleDateString()).getTime()-28800000)], ["start_stamp", "<=", 
-		# 		new Date(new Date().toLocaleDateString()).getTime()+57600000]]
-		# week:
-		# 	label: "本周"
-		# 	columns: ["name", "start", "unit", "room","count","owner" ,"phone",                    "features","start_stamp"]
-		# 	filter_scope: "space"
-		# 	filters: [["start_stamp", ">=", new Date(new Date().toLocaleDateString()).getTime() - (new Date().getDay()-1)* 24 * 60*60*1000 - 28800000
-		# 	], 
-		# 	["start_stamp", "<", new Date(new Date().toLocaleDateString()).getTime() + 
-		# 		(7-new Date().getDay())* 24 * 60*60*1000 + 57600000
-		# 	]]
-		# today:
-		# 	label: "本月"
-		# 	columns: ["name", "start", "unit", "room","count","owner" ,"phone",                    "features","start_stamp"]
-		# 	filter_scope: "space"
-		# 	filters: [["start_stamp", ">=", new Date(new Date(new Date().toLocaleDateString()).setDate(1))], ["start_stamp", "<", 
-		# 		new Date(new Date(new Date().toLocaleDateString()).setMonth(new Date().getMonth()+1))]]
-		# room:
-		# 	label: "按会议室查看"
-		# 	columns: ["name", "start", "unit", "room","count","owner" ,"phone",                 "features"]
-		# 	filter_scope: "space"
+		
 	permission_set:
 		user:
 			allowCreate: true
@@ -170,6 +152,9 @@ Creator.Objects.meeting =
 			todo: (userId, doc)->
 				if doc.end < doc.start
 					throw new Meteor.Error 500, "开始时间不能大于结束时间"
+				clashs = clashRemind(doc.room,doc.start,doc.end)
+				if clashs
+					throw new Meteor.Error 500, "该时间段的此会议室已被占用"
 		"before.update.server.event":
 			on: "server"
 			when: "before.update"
