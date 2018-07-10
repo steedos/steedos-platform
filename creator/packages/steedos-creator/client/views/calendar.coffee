@@ -12,6 +12,15 @@ _editData = (data) ->
 	Meteor.defer ->
 		dxSchedulerInstance.hideAppointmentTooltip()
 		$(".creator-edit").click();
+
+_insertData = () ->
+	object_name = Session.get("object_name")
+	action_collection_name = Creator.getObject(object_name).label
+	Session.set("action_collection", "Creator.Collections.#{object_name}")
+	Session.set("action_collection_name", action_collection_name)
+	Session.set("action_save_and_insert", false)
+	Meteor.defer ->
+		$(".creator-add").click();
 	
 
 getTooltipTemplate = (data) ->
@@ -40,6 +49,10 @@ getTooltipTemplate = (data) ->
 	return $(str)
 
 Template.creator_calendar.onCreated ->
+	AutoForm.hooks creatorAddForm:
+		onSuccess: (formType,result)->
+			dxSchedulerInstance.repaint()
+	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			dxSchedulerInstance.repaint()
@@ -130,7 +143,21 @@ Template.creator_calendar.onRendered ->
 					e.cancel = true	
 
 				onCellClick: (e) ->
-					console.log('[onCellClick', e)
+					cellData = e.cellData
+					# debugger
+					doc = {
+						start: cellData.startDate
+						end: cellData.endDate
+						room: cellData.groups.room
+					}
+					
+					console.log('[onCellClick]', e)
+					if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
+						_insertData()
+					else
+						Session.set("cmDoc", doc)
+					
+					
 				onAppointmentUpdating: (e)->
 					e.cancel = true
 					doc = {}
@@ -139,6 +166,7 @@ Template.creator_calendar.onRendered ->
 							doc[key] = e.newData[key]
 					doc['modified'] = new Date()
 					Creator.odata.update("meeting",e.newData['_id'],doc)
+
 				appointmentTooltipTemplate: (data, container) ->
 					console.log('[appointmentTooltipTemplate]', data, container)
 					markup = getTooltipTemplate(data);
@@ -168,5 +196,7 @@ Template.creator_calendar.helpers
 		return actions
 
 Template.creator_calendar.events 
-	"click #event": (event, template) -> 
+	"click .list-action-custom": (event, template) ->
+		_insertData()
+
 		
