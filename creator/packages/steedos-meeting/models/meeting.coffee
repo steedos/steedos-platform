@@ -169,11 +169,18 @@ Creator.Objects.meeting =
 			when: "before.insert"
 			todo: (userId, doc)->
 				if doc.end < doc.start
-					throw new Meteor.Error 500, "开始时间不能小于结束时间"
+					throw new Meteor.Error 500, "开始时间不能大于结束时间"
 		"before.update.server.event":
 			on: "server"
-			when: "before.insert"
+			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
-				if doc.end < doc.start
-					throw new Meteor.Error 500, "开始时间不能小于结束时间"	
+				if modifier?.$set?.start || modifier?.$set?.end
+					start = modifier?.$set?.start
+					end = modifier?.$set?.end
+				if !modifier?.$set?.start
+					start = doc.start
+				if !modifier?.$set?.end
+					end = doc.end
+				if end < start
+					throw new Meteor.Error 500, "开始时间不能大于结束时间"	
 				
