@@ -174,8 +174,6 @@ Creator.Objects.meeting =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc, fieldNames, modifier, options)->
-				if modifier?.set.?start
-					
 				if doc.end < doc.start
 					throw new Meteor.Error 500, "开始时间不能小于结束时间"	
 				
