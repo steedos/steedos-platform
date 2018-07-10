@@ -183,7 +183,12 @@ Template.creator_calendar.onRendered ->
 						if _.indexOf(key, '@') < 0
 							doc[key] = e.newData[key]
 					doc['modified'] = new Date()
-					Creator.odata.update("meeting",e.newData['_id'],doc)
+					Creator.odata.update("meeting", e.newData['_id'], doc, () -> 
+						dxSchedulerInstance.repaint()
+					)
+
+				onAppointmentUpdated: (e)->
+					dxSchedulerInstance.repaint()
 
 				appointmentTooltipTemplate: (data, container) ->
 					console.log('[appointmentTooltipTemplate]', data, container)

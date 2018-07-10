@@ -136,7 +136,7 @@ Creator.odata.delete = (object_name,record_id,callback)->
 				else
 					toastr?.error?(error)
 
-Creator.odata.update = (object_name,record_id,doc)->
+Creator.odata.update = (object_name,record_id,doc,callback)->
 	if object_name and record_id
 		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{record_id}"
 		data = {}
@@ -152,11 +152,11 @@ Creator.odata.update = (object_name,record_id,doc)->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 
-			# success: (data) ->
-			# 	if callback and typeof callback == "function"
-			# 		callback()
-			# 	else
-			# 		toastr?.success?(t("afModal_remove_suc"))
+			success: (data) ->
+				if callback and typeof callback == "function"
+					callback()
+				# else
+				# 	toastr?.success?(t("afModal_remove_suc"))
 
 			error: (jqXHR, textStatus, errorThrown) ->
 				error = jqXHR.responseJSON.error
