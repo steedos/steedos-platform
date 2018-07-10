@@ -23,6 +23,8 @@ Template.creatorLayout.helpers
 AutoForm.hooks creatorAddForm:
 	onSuccess: (formType, result)->
 		$('#afModal').modal 'hide'
+		if FlowRouter._current.route.path == "/app/:app_id/:object_name/calendar/"
+			return
 		if result.type == "post"
 			app_id = Session.get("app_id")
 			object_name = result.object_name
