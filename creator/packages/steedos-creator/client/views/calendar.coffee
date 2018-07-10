@@ -2,6 +2,18 @@ dxSchedulerInstance = null
 # start: moment(start).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
 # end: moment(end).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
 
+_editData = (data) ->
+	object_name = Session.get('object_name');
+	action_collection_name = Creator.getObject(object_name).label
+	Session.set("action_collection", "Creator.Collections.#{object_name}")
+	Session.set("action_collection_name", action_collection_name)
+	Session.set("action_save_and_insert", false)
+	Session.set("cmDoc", data)
+	Meteor.defer ->
+		dxSchedulerInstance.hideAppointmentTooltip()
+		$(".creator-edit").click();
+	
+
 getTooltipTemplate = (data) ->
 	str = """
 		<div class='meeting-tooltip'>
@@ -27,8 +39,15 @@ getTooltipTemplate = (data) ->
 	"""
 	return $(str)
 
+Template.creator_calendar.onCreated ->
+	AutoForm.hooks creatorEditForm:
+		onSuccess: (formType,result)->
+			dxSchedulerInstance.repaint()
+	,false
+
 
 Template.creator_calendar.onRendered ->
+	Session.set("hideTooltip", false)
 	self = this
 	self.autorun (c)->
 		object_name = Session.get("object_name")
@@ -108,9 +127,11 @@ Template.creator_calendar.onRendered ->
 					}
 				}],
 				onAppointmentDblClick: (e) ->
-					console.log('[onAppointmentDblClick]',e)
+					e.cancel = true	
+
 				onCellClick: (e) ->
 					console.log('[onCellClick', e)
+
 				appointmentTooltipTemplate: (data, container) ->
 					console.log('[appointmentTooltipTemplate]', data, container)
 					markup = getTooltipTemplate(data);
@@ -118,25 +139,10 @@ Template.creator_calendar.onRendered ->
 						text: "Edit details",
 						type: "default",
 						onClick: () ->
-							object_name = Session.get('object_name');
-							action_collection_name = Creator.getObject(object_name).label
-							Session.set("action_collection", "Creator.Collections.#{object_name}")
-							Session.set("action_collection_name", action_collection_name)
-							Session.set("action_save_and_insert", false)
-							Session.set("cmDoc", data)
-							Meteor.defer ->
-								dxSchedulerInstance.hideAppointmentTooltip()
-								$(".creator-edit").click();
-							# scheduler.showAppointmentPopup(data, false);
+							_editData(data)
 					});
 					return markup;
 			}).dxScheduler("instance")
-
-Template.creator_calendar.onCreated ->
-	AutoForm.hooks creatorEditForm:
-		onSuccess: (formType,result)->
-			dxSchedulerInstance.repaint()
-	,false
 
 Template.creator_calendar.helpers Creator.helpers
 
