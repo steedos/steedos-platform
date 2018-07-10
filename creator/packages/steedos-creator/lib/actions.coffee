@@ -74,7 +74,7 @@ if Meteor.isClient
 							else
 								info = "删除成功"
 							toastr.success info
-							if record_id == Session.get("record_id") and !Steedos.isMobile()
+							if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
 								appid = Session.get("app_id")
 								unless list_view_id
 									list_view_id = Session.get("list_view_id")
