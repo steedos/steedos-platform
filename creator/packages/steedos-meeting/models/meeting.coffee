@@ -5,7 +5,7 @@
 # 	month = date.getMonth()
 # 	start_date = new Date(date.getYear(),month,1)
 clashRemind = (room,start,end)->
-	meetings = Creator.getCollection("meeting").find({room:room,end:{$gte:start},start:{$lte:start},end:{$gte:new Date()}}).count()
+	meetings = Creator.getCollection("meeting").find({room:room,end:{$gte:start},start:{$lte:start}}).count()
 	return meetings
 	#console.log("mettings===",mettings)
 	# mettings.forEach (metting) ->

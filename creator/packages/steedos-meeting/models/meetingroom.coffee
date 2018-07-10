@@ -4,7 +4,7 @@ Creator.Objects.meetingroom =
 	icon: "contract"
 	fields:
 		name:
-			label:'名称'
+			label:'会议室'
 			type:'text'
 			is_wide:true
 			sortable:true
