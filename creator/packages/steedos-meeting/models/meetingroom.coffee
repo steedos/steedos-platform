@@ -56,12 +56,12 @@ Creator.Objects.meetingroom =
 			filter_scope: "space"
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -70,19 +70,19 @@ Creator.Objects.meetingroom =
 			modifyAllRecords: true
 			viewAllRecords: true
 		member:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 		guest:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
-			allowRead: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 
 	triggers:
 
