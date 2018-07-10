@@ -104,7 +104,10 @@ Template.creator_calendar.onRendered ->
 									error.message = t "creator_odata_unexpected_character"
 							toastr.error(error.message)
 				}
-				views: ["day", "week"]
+				views: [{
+					type: "day",
+					groups: ["room"]
+				}, "week", "month"]
 				currentView: "day"
 				# currentDate: new Date()
 				firstDayOfWeek: 0
@@ -116,7 +119,7 @@ Template.creator_calendar.onRendered ->
 				timeZone: "Asia/Shanghai"
 				showAllDayPanel: false,
 				height: "100%"
-				groups: ["room"]
+				# groups: ["room"]
 				crossScrollingEnabled: true
 				cellDuration: 30
 				editing: { 
