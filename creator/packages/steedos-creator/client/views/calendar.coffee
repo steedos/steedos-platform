@@ -90,7 +90,7 @@ Template.creator_calendar.onRendered ->
 									error.message = t "creator_odata_unexpected_character"
 							toastr.error(error.message)
 				}
-				views: ["day", "week", "timelineDay"]
+				views: ["day", "week"]
 				currentView: "day"
 				# currentDate: new Date()
 				firstDayOfWeek: 0

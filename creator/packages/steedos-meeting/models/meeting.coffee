@@ -9,8 +9,36 @@ Creator.Objects.meeting =
 	label: "会议"
 	icon: "contract"
 	fields:
+		room:
+			label:'会议室'
+			type:'lookup'
+			reference_to:'meetingroom'
+			is_wide:true
+			required:true
+		start:
+			label:'开始时间'
+			type:'datetime'
+			required:true
+			defaultValue: ()->
+				# 默认取值为下一个整点
+				now = new Date()
+				reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000)
+				reValue.setMinutes(0)
+				reValue.setSeconds(0)
+				return reValue
+		end:
+			label:'结束时间'
+			type:'datetime'
+			required:true
+			defaultValue: ()->
+				# 默认取值为下一个整点
+				now = new Date()
+				reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000)
+				reValue.setMinutes(0)
+				reValue.setSeconds(0)
+				return reValue
 		name:
-			label:'标题'
+			label:'会议标题'
 			type:'text'
 			is_wide:true
 			required:true
@@ -20,63 +48,33 @@ Creator.Objects.meeting =
 		unit:
 			label:'参会单位'
 			type:'text'
+			required:true
 		count:
 			label:'参会人数'
 			type:'number'
-		room:
-			label:'会议室'
-			type:'lookup'
-			reference_to:'meetingroom'
-		start:
-			label:'开始时间'
-			type:'datetime'
-			defaultValue: ()->
-				# 默认取值为下一个整点
-				now = new Date()
-				reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000)
-				reValue.setMinutes(0)
-				reValue.setSeconds(0)
-				return reValue
-		start_stamp:
-			label:'开始时间'
-			type:'number'
-			hidden:true
-		end:
-			label:'结束时间'
-			type:'datetime'
-			defaultValue: ()->
-				# 默认取值为下一个整点
-				now = new Date()
-				reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000)
-				reValue.setMinutes(0)
-				reValue.setSeconds(0)
-				return reValue
-		alarms:
-			label:'提醒时间'
-			type:'select'
-			defaultValue: '-PT1H'
-			options:[
-				{label:'不提醒',value:'null'},
-				{label:'活动开始时',value:'Now'},
-				{label:'5分钟前',value:'-PT5M'},
-				{label:'10分钟前',value:'-PT10M'},
-				{label:'15分钟前',value:'-PT15M'},
-				{label:'30分钟前',value:'-PT30M'},
-				{label:'1小时前',value:'-PT1H'},
-				{label:'2小时前',value:'-PT2H'},
-				{label:'1天前',value:'-P1D'},
-				{label:'2天前',value:'-P2D'}
-			]
-			group:'-'
+		
+		# alarms:
+		# 	label:'提醒时间'
+		# 	type:'select'
+		# 	defaultValue: '-PT1H'
+		# 	options:[
+		# 		{label:'不提醒',value:'null'},
+		# 		{label:'活动开始时',value:'Now'},
+		# 		{label:'5分钟前',value:'-PT5M'},
+		# 		{label:'10分钟前',value:'-PT10M'},
+		# 		{label:'15分钟前',value:'-PT15M'},
+		# 		{label:'30分钟前',value:'-PT30M'},
+		# 		{label:'1小时前',value:'-PT1H'},
+		# 		{label:'2小时前',value:'-PT2H'},
+		# 		{label:'1天前',value:'-P1D'},
+		# 		{label:'2天前',value:'-P2D'}
+		# 	]
+		# 	group:'-'
 		phone:
 			label:'联系方式'
 			type:'text'
-		description:
-			label:'备注'
-			type:'textarea'
-			is_wide:true
 		features:
-			label:'其他用品需求'
+			label:'用品需求'
 			type:'select'
 			options:[
 				{label:'上网',value:'surfing'},
@@ -85,10 +83,17 @@ Creator.Objects.meeting =
 				{label:'会标',value:'monogram'}
 				]
 			multiple:true
-		other_features:
-			label:'其他功能'
-			type:'text'
-			multiple:true
+		description:
+			label:'备注'
+			type:'textarea'
+			is_wide:true
+
+		# other_features:
+		# 	label:'其他功能'
+		# 	type:'text'
+		# 	multiple:true
+		owner:
+			hidden:true
 	calendar:
 		textExpr:'name'
 		startDateExpr:'start'
@@ -163,5 +168,14 @@ Creator.Objects.meeting =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.start_stamp = doc.start.getTime()
+				if doc.end < doc.start
+					throw new Meteor.Error 500, "开始时间不能小于结束时间"
+		"before.update.server.event":
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if modifier?.set.?start
+					
+				if doc.end < doc.start
+					throw new Meteor.Error 500, "开始时间不能小于结束时间"	
 				
