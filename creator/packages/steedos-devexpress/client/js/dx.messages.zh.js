@@ -223,7 +223,7 @@
 
         'dxScheduler-switcherAgenda': '议程',
 
-        'dxScheduler-switcherTimelineDay': '日',
+        'dxScheduler-switcherTimelineDay': '时间轴日',
         'dxScheduler-switcherTimelineWeek': '周',
         'dxScheduler-switcherTimelineWorkWeek': '工作日',
         'dxScheduler-switcherTimelineMonth': '月',
