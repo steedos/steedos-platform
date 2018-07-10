@@ -1,5 +1,4 @@
-DevExpress.config
-
+dxSchedulerInstance = null
 # start: moment(start).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
 # end: moment(end).tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm")
 
@@ -12,12 +11,12 @@ getTooltipTemplate = (data) ->
 			</div>
 			<div class="action">
 				<div class="dx-scheduler-appointment-tooltip-buttons">
-					<div class="dx-button dx-button-normal dx-widget dx-button-has-icon" role="button" aria-label="trash" tabindex="0">
+					<div class="dx-button dx-button-normal dx-widget dx-button-has-icon delete" role="button" aria-label="trash" tabindex="0">
 						<div class="dx-button-content">
 							<i class="dx-icon dx-icon-trash"></i>
 						</div>
 					</div>
-					<div class="dx-button dx-button-normal dx-widget dx-button-has-text dx-state-hover" role="button" aria-label="打开日程" tabindex="0">
+					<div class="dx-button dx-button-normal dx-widget dx-button-has-text dx-state-hover edit" role="button" aria-label="打开日程" tabindex="0">
 						<div class="dx-button-content">
 							<span class="dx-button-text">打开日程</span>
 						</div>
@@ -76,6 +75,8 @@ Template.creator_calendar.onRendered ->
 				cellDuration: 30
 				editing: { 
 					allowAdding: false,
+					allowDragging: false,
+					allowResizing: false,
 					# allowUpdating: false
 				},
 				resources: [{
@@ -111,20 +112,31 @@ Template.creator_calendar.onRendered ->
 				onCellClick: (e) ->
 					console.log('[onCellClick', e)
 				appointmentTooltipTemplate: (data, container) ->
-					console.log(data)
+					console.log('[appointmentTooltipTemplate]', data, container)
 					markup = getTooltipTemplate(data);
-					# markup.find(".edit").dxButton({
-					# 	text: "Edit details",
-					# 	type: "default",
-					# 	onClick: function() {
-					# 		scheduler.showAppointmentPopup(data, false);
-					# 	}
-					# });
+					markup.find(".edit").dxButton({
+						text: "Edit details",
+						type: "default",
+						onClick: () ->
+							object_name = Session.get('object_name');
+							action_collection_name = Creator.getObject(object_name).label
+							Session.set("action_collection", "Creator.Collections.#{object_name}")
+							Session.set("action_collection_name", action_collection_name)
+							Session.set("action_save_and_insert", false)
+							Session.set("cmDoc", data)
+							Meteor.defer ->
+								dxSchedulerInstance.hideAppointmentTooltip()
+								$(".creator-edit").click();
+							# scheduler.showAppointmentPopup(data, false);
+					});
 					return markup;
-			})
+			}).dxScheduler("instance")
 
-
-
+Template.creator_calendar.onCreated ->
+	AutoForm.hooks creatorEditForm:
+		onSuccess: (formType,result)->
+			dxSchedulerInstance.repaint()
+	,false
 
 Template.creator_calendar.helpers Creator.helpers
 
