@@ -81,8 +81,8 @@ Template.creator_calendar.onRendered ->
 				currentView: "day"
 				# currentDate: new Date()
 				firstDayOfWeek: 0
-				startDayHour: 0
-				endDayHour: 23
+				startDayHour: 8
+				endDayHour: 18
 				textExpr: "name"
 				endDateExpr: "end"
 				startDateExpr: "start"
@@ -131,7 +131,14 @@ Template.creator_calendar.onRendered ->
 
 				onCellClick: (e) ->
 					console.log('[onCellClick', e)
-
+				onAppointmentUpdating: (e)->
+					e.cancel = true
+					doc = {}
+					_.keys(e.newData).forEach (key)->
+						if _.indexOf(key, '@') < 0
+							doc[key] = e.newData[key]
+					doc['modified'] = new Date()
+					Creator.odata.update("meeting",e.newData['_id'],doc)
 				appointmentTooltipTemplate: (data, container) ->
 					console.log('[appointmentTooltipTemplate]', data, container)
 					markup = getTooltipTemplate(data);
