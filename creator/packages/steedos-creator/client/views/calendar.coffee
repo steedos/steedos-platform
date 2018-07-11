@@ -114,11 +114,17 @@ Template.creator_calendar.onRendered ->
 				dataSource: _dataSource()
 				views: [{
 					type: "day",
+					maxAppointmentsPerCell:"unlimited"
 					groups: ["room"]
-				}, "week", "month"]
+				}, {
+					type:"week",
+					maxAppointmentsPerCell:"unlimited"
+				}, "month"]
 				currentView: "day"
-				# currentDate: new Date()
-				firstDayOfWeek: 0
+				currentDate: new Date()
+				crossScrollingEnabled: true,
+				showAllDayPanel: false,
+				firstDayOfWeek: 1
 				startDayHour: 8
 				endDayHour: 18
 				textExpr: "name"
