@@ -32,7 +32,34 @@ _deleteData = (data) ->
 	object_name = Session.get("object_name")
 	dxSchedulerInstance.hideAppointmentTooltip()
 	Creator.executeAction object_name, action, record_id, action_record_title, 'calendar', ()->
-		dxSchedulerInstance.repaint()
+		dxSchedulerInstance.option("dataSource", _dataSource())
+
+_dataSource = () ->
+	url = "/api/odata/v4/#{Steedos.spaceId()}/#{Session.get('object_name')}"
+	dataSource = {
+		store: 
+			type: "odata"
+			version: 4
+			url: Steedos.absoluteUrl(url)
+			deserializeDates: false
+			withCredentials: false
+			beforeSend: (request) ->
+				request.headers['X-User-Id'] = Meteor.userId()
+				request.headers['X-Space-Id'] = Steedos.spaceId()
+				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+			errorHandler: (error) ->
+				if error.httpStatus == 404 || error.httpStatus == 400
+					error.message = t "creator_odata_api_not_found"
+				else if error.httpStatus == 401
+					error.message = t "creator_odata_unexpected_character"
+				else if error.httpStatus == 403
+					error.message = t "creator_odata_user_privileges"
+				else if error.httpStatus == 500
+					if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
+						error.message = t "creator_odata_unexpected_character"
+				toastr.error(error.message)
+	}
+	return dataSource
 	
 
 getTooltipTemplate = (data) ->
@@ -65,11 +92,11 @@ getTooltipTemplate = (data) ->
 Template.creator_calendar.onCreated ->
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
-			dxSchedulerInstance.repaint()
+			dxSchedulerInstance.option("dataSource", _dataSource())
 	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
-			dxSchedulerInstance.repaint()
+			dxSchedulerInstance.option("dataSource", _dataSource())
 	,false
 
 
@@ -81,29 +108,7 @@ Template.creator_calendar.onRendered ->
 		if Steedos.spaceId()
 			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 			dxSchedulerInstance =  $("#scheduler").dxScheduler({
-				dataSource: {
-					store: 
-						type: "odata"
-						version: 4
-						url: Steedos.absoluteUrl(url)
-						deserializeDates: false
-						withCredentials: false
-						beforeSend: (request) ->
-							request.headers['X-User-Id'] = Meteor.userId()
-							request.headers['X-Space-Id'] = Steedos.spaceId()
-							request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-						errorHandler: (error) ->
-							if error.httpStatus == 404 || error.httpStatus == 400
-								error.message = t "creator_odata_api_not_found"
-							else if error.httpStatus == 401
-								error.message = t "creator_odata_unexpected_character"
-							else if error.httpStatus == 403
-								error.message = t "creator_odata_user_privileges"
-							else if error.httpStatus == 500
-								if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
-									error.message = t "creator_odata_unexpected_character"
-							toastr.error(error.message)
-				}
+				dataSource: _dataSource()
 				views: [{
 					type: "day",
 					groups: ["room"]
@@ -157,6 +162,9 @@ Template.creator_calendar.onRendered ->
 						#orderby:'name'
 					}
 				}],
+				onAppointmentClick: (e) ->
+					console.log('[onAppointmentClick]', e)
+
 				onAppointmentDblClick: (e) ->
 					e.cancel = true	
 
@@ -178,7 +186,6 @@ Template.creator_calendar.onRendered ->
 					else
 						Session.set("cmDoc", doc)
 					
-					
 				onAppointmentUpdating: (e)->
 					e.cancel = true
 					doc = {}
@@ -187,11 +194,11 @@ Template.creator_calendar.onRendered ->
 							doc[key] = e.newData[key]
 					doc['modified'] = new Date()
 					Creator.odata.update("meeting", e.newData['_id'], doc, () -> 
-						dxSchedulerInstance.repaint()
+						dxSchedulerInstance.option("dataSource", _dataSource())
 					)
 
 				onAppointmentUpdated: (e)->
-					dxSchedulerInstance.repaint()
+					dxSchedulerInstance.option("dataSource", _dataSource())
 
 				appointmentTooltipTemplate: (data, container) ->
 					console.log('[appointmentTooltipTemplate]', data, container)
