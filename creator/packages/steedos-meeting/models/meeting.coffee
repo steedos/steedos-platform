@@ -1,17 +1,10 @@
-# start_month_time = ()->
-# 	console.log("1111111111111111")
-# 	date = new Date()
-# 	year = new date.getYear()
-# 	month = date.getMonth()
-# 	start_date = new Date(date.getYear(),month,1)
+
 clashRemind = (_id,room,start,end)->
 	console.log("start====end===",start,end)
 	meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,$or: [{start:{$lte:start},end:{$gt:start}},{start:{$lt:end},end:{$gte:end}},{start:{$gte:start},end:{$lte:end}}]}).fetch()
-	console.log "meetings=================",meetings
+	#console.log "meetings=================",meetings
 	return meetings?.length
-	#console.log("mettings===",mettings)
-	# mettings.forEach (metting) ->
-	# 	if meeting.start < start and start<meeting.
+
 Creator.Objects.meeting =
 	name: "meeting"
 	label: "会议"
@@ -58,6 +51,10 @@ Creator.Objects.meeting =
 		unit:
 			label:'参会单位'
 			type:'text'
+			defaultValue:()->
+				collection = Creator.Collections["organizations"]
+				organziation = collection.findOne({users:Meteor.userId(),space:Session.get("spaceId")},{fields:{name:1}}).name
+				return organziation
 			required:true
 		count:
 			label:'参会人数'
@@ -83,6 +80,10 @@ Creator.Objects.meeting =
 		phone:
 			label:'联系方式'
 			type:'text'
+			defaultValue:()->
+				collection = Creator.Collections["space_users"]
+				mobile = collection.findOne({user:Meteor.userId(),space:Session.get("spaceId")},{fields:{mobile:1}}).mobile
+				return mobile
 		features:
 			label:'用品需求'
 			type:'select'
