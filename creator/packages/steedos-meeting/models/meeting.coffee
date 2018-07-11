@@ -4,9 +4,10 @@
 # 	year = new date.getYear()
 # 	month = date.getMonth()
 # 	start_date = new Date(date.getYear(),month,1)
-clashRemind = (room,start,end)->
-	meetings = Creator.getCollection("meeting").find({room:room,end:{$gte:start},start:{$lte:start}}).count()
-	return meetings
+clashRemind = (_id,room,start,end)->
+	meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,end:{$gte:start},start:{$lte:start}}).fetch()
+	#console.log "meetings=================",meetings
+	return meetings?.length
 	#console.log("mettings===",mettings)
 	# mettings.forEach (metting) ->
 	# 	if meeting.start < start and start<meeting.
@@ -21,6 +22,8 @@ Creator.Objects.meeting =
 			reference_to:'meetingroom'
 			is_wide:true
 			required:true
+			reference_sort:{name:1}
+			reference_limit: 20
 		start:
 			label:'开始时间'
 			type:'datetime'
@@ -152,7 +155,7 @@ Creator.Objects.meeting =
 			todo: (userId, doc)->
 				if doc.end < doc.start
 					throw new Meteor.Error 500, "开始时间不能大于结束时间"
-				clashs = clashRemind(doc.room,doc.start,doc.end)
+				clashs = clashRemind(doc._id,doc.room,doc.start,doc.end)
 				if clashs
 					throw new Meteor.Error 500, "该时间段的此会议室已被占用"
 		"before.update.server.event":
@@ -166,6 +169,14 @@ Creator.Objects.meeting =
 					start = doc.start
 				if !modifier?.$set?.end
 					end = doc.end
+				#console.log("start,,end======",start,end)
 				if end < start
 					throw new Meteor.Error 500, "开始时间不能大于结束时间"	
-				
+				if modifier?.$set?.room
+					room = modifier?.$set?.room
+				else
+					room  = doc.room
+			#	console.log("room===========",room)
+				clashs = clashRemind(doc._id,room,start,end)
+				if clashs
+					throw new Meteor.Error 500, "该时间段的此会议室已被占用"
