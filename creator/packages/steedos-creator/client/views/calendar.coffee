@@ -60,7 +60,7 @@ _dataSource = () ->
 				toastr.error(error.message)
 	}
 	return dataSource
-	
+
 
 getTooltipTemplate = (data) ->
 	if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
@@ -162,10 +162,33 @@ Template.creator_calendar.onRendered ->
 					}
 				}],
 				onAppointmentClick: (e) ->
-					console.log('[onAppointmentClick]', e)
+					if e.event.currentTarget.className.includes("dx-list-item")
+						e.cancel = true
 
 				onAppointmentDblClick: (e) ->
 					e.cancel = true	
+
+				dropDownAppointmentTemplate: (data, index, container) ->
+					container.addClass('appointment-border')
+					if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
+						$("body").off("click", ".appointment-border")
+						$("body").on("click", ".appointment-border", ()->
+							_editData(data)
+						)
+					markup = getTooltipTemplate(data);
+					markup.find(".edit").dxButton({
+						text: "Edit details",
+						type: "default",
+						onClick: () ->
+							_editData(data)
+					});
+					
+					markup.find(".delete").dxButton({
+						onClick: () ->
+							_deleteData(data)
+					})
+					return markup;
+					console.log('[dropDownAppointmentTemplate]', data)
 
 				onCellClick: (e) ->
 					console.log('[onCellClick]', e)
