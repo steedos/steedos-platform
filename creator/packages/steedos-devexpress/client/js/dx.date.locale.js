@@ -251,12 +251,12 @@
                                         "yM": "M/y",
                                         "yMd": "M/d/y",
                                         "yMEd": "E, M/d/y",
-                                        "yMMM": "MMM y",
+                                        "yMMM": "y MMM",
                                         "yMMMd": "MMM d, y",
                                         "yMMMEd": "E, MMM d, y",
-                                        "yMMMM": "MMMM y",
-                                        "yQQQ": "QQQ y",
-                                        "yQQQQ": "QQQQ y"
+                                        "yMMMM": "y MMMM",
+                                        "yQQQ": "y QQQ",
+                                        "yQQQQ": "y QQQQ"
                                     },
                                     "appendItems": {
                                         "Day": "{0} ({2}: {1})",
