@@ -232,6 +232,26 @@ Template.creator_calendar.helpers
 				return false
 		return actions
 
+	list_views: ()->
+		Session.get("change_list_views")
+		return Creator.getListViews()
+	
+	list_view_label: (item)->
+		if item
+			return item.label || item.name 
+		else
+			return ""
+
+	list_view_url: (list_view)->
+		if list_view._id
+			list_view_id = String(list_view._id)
+		else
+			list_view_id = String(list_view.name)
+		
+		app_id = Session.get("app_id")
+		object_name = Session.get("object_name")
+		return Creator.getListViewUrl(object_name, app_id, list_view_id)
+
 Template.creator_calendar.events 
 	"click .list-action-custom": (event, template) ->
 		_insertData()

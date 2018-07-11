@@ -113,10 +113,16 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if record_id
 		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
 	else
-		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+		if object_name is "meeting"
+			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+		else
+			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getListViewUrl = (object_name, app_id, list_view_id) ->
-	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
+	if list_view_id is "calendar"
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/calendar/")
+	else
+		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
 Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 	if list_view_id

@@ -68,7 +68,8 @@ FlowRouter.route '/app/menu',
 FlowRouter.route '/app/:app_id',
 	triggersEnter: [ checkUserSigned, checkAppPermission, initLayout ],
 	action: (params, queryParams)->
-		Session.set("app_id", FlowRouter.getParam("app_id"))
+		app_id = FlowRouter.getParam("app_id")
+		Session.set("app_id", app_id)
 		if Steedos.isMobile()
 			Tracker.autorun (c)->
 				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
@@ -77,8 +78,11 @@ FlowRouter.route '/app/:app_id',
 						Meteor.defer ->
 							Blaze.renderWithData(Template.objectMenu, {}, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
 		else
-			BlazeLayout.render Creator.getLayout(),
-				main: "creator_app_home"
+			if FlowRouter.getParam("app_id") is "meeting"
+				FlowRouter.go('/app/' + app_id + '/meeting/calendar')
+			else
+				BlazeLayout.render Creator.getLayout(),
+					main: "creator_app_home"
 
 FlowRouter.route '/admin',
 	triggersEnter: [ checkUserSigned, initLayout ],
