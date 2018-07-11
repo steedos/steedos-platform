@@ -26,7 +26,7 @@
                             "_cldrVersion": "28",
                             "_number": "$Revision: 11972 $"
                         },
-                        "language": "en"
+                        "language": "zh"
                     },
                     "dates": {
                         "calendars": {
@@ -391,6 +391,11 @@
                 days.push(daysObj[k]);
             }
             return days;
+        }
+        localization.date.getPeriodNames = function (format) {
+            var dayPeriodsObj = localeData.dates.calendars.gregorian.dayPeriods.format[(format || "wide")];
+            var dayPeriods = [dayPeriodsObj.am, dayPeriodsObj.pm];
+            return dayPeriods;
         }
     }
 });
