@@ -20,5 +20,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/css/dx.light.css', 'client');
 	api.addFiles('client/js/dx.all.js', 'client');
 	api.addFiles('client/js/dx.messages.zh.js', 'client');
+	api.addFiles('client/js/dx.date.formatter.js', 'client');
 	api.addFiles('client/js/dx.date.locale.js', 'client');
 })
