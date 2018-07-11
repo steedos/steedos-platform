@@ -15,6 +15,8 @@ Meteor.methods
 
 				selected = options?.selected || []
 
+				options_limit = options?.options_limit || 10
+
 				if options.searchText
 					searchTextQuery = {}
 					searchTextQuery[name_field_key] = {$regex: options.searchText}
@@ -34,7 +36,7 @@ Meteor.methods
 				if options.filterQuery
 					_.extend query, options.filterQuery
 
-				query_options = {limit: 10}
+				query_options = {limit: options_limit}
 
 				if sort && _.isObject(sort)
 					query_options.sort = sort

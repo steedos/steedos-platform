@@ -35,6 +35,8 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction, cr
 	this.filtersFunction = filtersFunction;
 	this.createFunction = createFunction;
 
+	this.optionsLimit = options.optionsLimit
+
 	this.initialized = new ReactiveVar(0);
 
 	if(this.optionsSort){
@@ -506,6 +508,7 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	var searchText = this.searchText.get();
 	var params = this.optionsMethodParams.get();
 	var optionsFunction = this.optionsFunction;
+	var optionsLimit = this.optionsLimit;
 
 	if (optionsFunction) {
 		return false;
@@ -538,7 +541,8 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 		values: values || [],
 		params: params || null,
 		selected: _.pluck(seleted, 'value'),
-		filterQuery: filterQuery
+		filterQuery: filterQuery,
+		options_limit: optionsLimit
 	};
 
 	if(this.optionsSort){
