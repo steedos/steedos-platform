@@ -161,15 +161,18 @@ Template.creator_calendar.onRendered ->
 					e.cancel = true	
 
 				onCellClick: (e) ->
+					console.log('[onCellClick]', e)
+
 					cellData = e.cellData
 					# debugger
 					doc = {
 						start: cellData.startDate
 						end: cellData.endDate
-						room: cellData.groups.room
 					}
+
+					if cellData.groups?.room
+						doc.room = cellData.groups.room
 					
-					console.log('[onCellClick]', e)
 					if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
 						_insertData()
 					else
