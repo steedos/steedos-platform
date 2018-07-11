@@ -61,11 +61,15 @@ _dataSource = () ->
 	}
 	return dataSource
 
-
+getAppointmentColor = (room) ->
+	result = Creator.odata.get('meetingroom',room,'color')
+	return result.color
+	
 getTooltipTemplate = (data) ->
+	color = getAppointmentColor(data.room)
 	if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
 		action = """
-			<div class="action">
+			<div class="action" style='background-color:" + color + ";'>
 				<div class="dx-scheduler-appointment-tooltip-buttons">
 					<div class="dx-button dx-button-normal dx-widget dx-button-has-icon delete" role="button" aria-label="trash" tabindex="0">
 						<i class="dx-icon dx-icon-trash"></i>
@@ -79,7 +83,7 @@ getTooltipTemplate = (data) ->
 	else
 		action = ""
 	str = """
-		<div class='meeting-tooltip'>
+		<div class='meeting-tooltip' style='background-color:" + color + ";'>
 			<div class="dx-scheduler-appointment-tooltip-title">#{data.name}</div>
 			<div class='dx-scheduler-appointment-tooltip-date'>
 				#{moment(data.start).tz("Asia/Shanghai").format("MMM D, h:mm A")} - #{moment(data.end).tz("Asia/Shanghai").format("MMM D, h:mm A")}
