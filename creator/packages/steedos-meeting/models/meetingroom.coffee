@@ -61,7 +61,7 @@ Creator.Objects.meetingroom =
 			allowEdit: false
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -75,14 +75,14 @@ Creator.Objects.meetingroom =
 			allowEdit: false
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		guest:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 
 	triggers:
 
