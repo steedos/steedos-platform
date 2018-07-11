@@ -106,7 +106,6 @@ Template.creator_calendar.onRendered ->
 	self.autorun (c)->
 		object_name = Session.get("object_name")
 		if Steedos.spaceId()
-			url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
 			dxSchedulerInstance =  $("#scheduler").dxScheduler({
 				dataSource: _dataSource()
 				views: [{
@@ -142,7 +141,7 @@ Template.creator_calendar.onRendered ->
 						store: 
 							type: "odata"
 							version: 4
-							url: "/api/odata/v4/#{Steedos.spaceId()}/meetingroom?$orderby=name"
+							url: Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/meetingroom?$orderby=name"
 							withCredentials: false
 							beforeSend: (request) ->
 								request.headers['X-User-Id'] = Meteor.userId()
