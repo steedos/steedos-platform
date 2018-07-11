@@ -272,9 +272,9 @@
                                         "Year": "{0} {1}"
                                     },
                                     "intervalFormats": {
-                                        "intervalFormatFallback": "{0} – {1}",
+                                        "intervalFormatFallback": "{0} - {1}",
                                         "d": {
-                                            "d": "d – d"
+                                            "d": "MMM – d"
                                         },
                                         "h": {
                                             "a": "h a – h a",
@@ -348,8 +348,8 @@
                                             "y": "E, M/d/y – E, M/d/y"
                                         },
                                         "yMMM": {
-                                            "M": "MMM – MMM y",
-                                            "y": "MMM y – MMM y"
+                                            "M": "y MMM – MMM",
+                                            "y": "y MMM – y MMM"
                                         },
                                         "yMMMd": {
                                             "d": "MMM d – d, y",
@@ -362,8 +362,8 @@
                                             "y": "E, MMM d, y – E, MMM d, y"
                                         },
                                         "yMMMM": {
-                                            "M": "MMMM – MMMM y",
-                                            "y": "MMMM y – MMMM y"
+                                            "M": "y MMMM – MMMM",
+                                            "y": "y MMMM – y MMMM"
                                         }
                                     }
                                 }
@@ -444,7 +444,6 @@
         };
         var dateLocalization = {
             getMonthNames: function (format) {
-                console.log("=========getMonthNames===========", format);
                 var monthsObj = localeData.dates.calendars.gregorian.months.format[(format || "wide")];
                 var months = [];
                 for (var k in monthsObj) {
@@ -453,7 +452,6 @@
                 return months;
             },
             getDayNames: function (format) {
-                console.log("=========getDayNames===========", format);
                 var daysObj = localeData.dates.calendars.gregorian.days.format[(format || "wide")];
                 var days = [];
                 for (var k in daysObj) {
@@ -462,7 +460,6 @@
                 return days;
             },
             getPeriodNames: function (format) {
-                console.log("=========getPeriodNames===========", format);
                 var dayPeriodsObj = localeData.dates.calendars.gregorian.dayPeriods.format[(format || "wide")];
                 var dayPeriods = [dayPeriodsObj.am, dayPeriodsObj.pm];
                 return dayPeriods;
