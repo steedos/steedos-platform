@@ -5,7 +5,8 @@
 # 	month = date.getMonth()
 # 	start_date = new Date(date.getYear(),month,1)
 clashRemind = (_id,room,start,end)->
-	meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,end:{$gte:start},start:{$lte:start}}).fetch()
+	console.log("start====end===",start,end)
+	meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,$or: [{start:{$lt:start},end:{$gt:start}},{start:{$lt:end},end:{$gt:end}},{start:{$gt:start},end:{$lt:end}}]}).fetch()
 	#console.log "meetings=================",meetings
 	return meetings?.length
 	#console.log("mettings===",mettings)
