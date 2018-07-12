@@ -95,9 +95,10 @@ Template.standard_query_modal.events
 		template.modalValue.set()
 		$("body").addClass("loading")
 		AutoForm.resetForm("standardQueryForm")
-		Meteor.defer ->
+		Meteor.setTimeout ->
 			template.$("input[type='number']").val("")
 			$("body").removeClass("loading")
+		, 100
 	
 	'click .btn-confirm': (event, template)->
 		query = AutoForm.getFormValues("standardQueryForm").insertDoc
