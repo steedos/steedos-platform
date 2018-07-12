@@ -165,7 +165,7 @@ Template.creator_table_cell.helpers
 					if _field.type == "datetime"
 						val = moment(this.val).format('YYYY-MM-DD H:mm')
 					else if _field.type == "date"
-						val = moment(this.val).format('YYYY-MM-DD')
+						val = moment.utc(this.val).format('YYYY-MM-DD')
 			else if (this.val == null)
 				val = ""
 			else if _field.type == "boolean"
