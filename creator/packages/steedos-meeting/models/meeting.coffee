@@ -36,7 +36,7 @@ Creator.Objects.meeting =
 			defaultValue: ()->
 				# 默认取值为下一个整点
 				now = new Date()
-				reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000)
+				reValue = new Date(now.getTime() + 2 * 60 * 60 * 1000)
 				reValue.setMinutes(0)
 				reValue.setSeconds(0)
 				return reValue
@@ -155,8 +155,8 @@ Creator.Objects.meeting =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				if doc.end < doc.start
-					throw new Meteor.Error 500, "开始时间不能大于结束时间"
+				if doc.end <= doc.start
+					throw new Meteor.Error 500, "开始时间需小于结束时间"
 				clashs = clashRemind(doc._id,doc.room,doc.start,doc.end)
 				if clashs
 					throw new Meteor.Error 500, "该时间段的此会议室已被占用"
@@ -172,7 +172,7 @@ Creator.Objects.meeting =
 				if !modifier?.$set?.end
 					end = doc.end
 				#console.log("start,,end======",start,end)
-				if end < start
+				if end <= start
 					throw new Meteor.Error 500, "开始时间不能大于结束时间"	
 				if modifier?.$set?.room
 					room = modifier?.$set?.room
