@@ -201,10 +201,10 @@
                                     }
                                 },
                                 "dateFormats": {
-                                    "full": "EEEE, MMMM d, y",
-                                    "long": "MMMM d, y",
-                                    "medium": "MMM d, y",
-                                    "short": "M/d/yy"
+                                    "full": "y年 MMMM d日 EEEE",
+                                    "long": "y年 MMMM d日",
+                                    "medium": "y年 MMM d日",
+                                    "short": "yy年 M d日"
                                 },
                                 "timeFormats": {
                                     "full": "h:mm:ss a zzzz",
@@ -218,7 +218,7 @@
                                     "medium": "{1}, {0}",
                                     "short": "{1}, {0}",
                                     "availableFormats": {
-                                        "d": "d",
+                                        "d": "d日",
                                         "E": "ccc",
                                         "Ed": "d E",
                                         "Ehm": "E h:mm a",
@@ -240,23 +240,23 @@
                                         "hmv": "h:mm a v",
                                         "Hmv": "HH:mm v",
                                         "M": "L",
-                                        "Md": "M/d",
-                                        "MEd": "E, M/d",
+                                        "Md": "M d日",
+                                        "MEd": "M d日 E",
                                         "MMM": "LLL",
-                                        "MMMd": "MMM d",
-                                        "MMMEd": "E, MMM d",
-                                        "MMMMd": "MMMM d",
+                                        "MMMd": "MMM d日",
+                                        "MMMEd": "MMM d日 E",
+                                        "MMMMd": "MMMM d日",
                                         "ms": "mm:ss",
-                                        "y": "y",
-                                        "yM": "M/y",
-                                        "yMd": "M/d/y",
-                                        "yMEd": "E, M/d/y",
-                                        "yMMM": "y MMM",
-                                        "yMMMd": "MMM d, y",
-                                        "yMMMEd": "E, MMM d, y",
-                                        "yMMMM": "y MMMM",
-                                        "yQQQ": "y QQQ",
-                                        "yQQQQ": "y QQQQ"
+                                        "y": "y年",
+                                        "yM": "y年 M",
+                                        "yMd": "y年 M d日",
+                                        "yMEd": "y年 M d日 E",
+                                        "yMMM": "y年 MMM",
+                                        "yMMMd": "y年 MMM d日",
+                                        "yMMMEd": "y年 MMM d日 E",
+                                        "yMMMM": "y年 MMMM",
+                                        "yQQQ": "y年 QQQ",
+                                        "yQQQQ": "y年 QQQQ"
                                     },
                                     "appendItems": {
                                         "Day": "{0} ({2}: {1})",
