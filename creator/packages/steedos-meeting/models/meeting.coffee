@@ -8,7 +8,8 @@ clashRemind = (_id,room,start,end)->
 Creator.Objects.meeting =
 	name: "meeting"
 	label: "会议"
-	icon: "contract"
+	icon: "event"
+	enable_search: true
 	fields:
 		room:
 			label:'会议室'

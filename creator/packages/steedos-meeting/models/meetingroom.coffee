@@ -1,7 +1,8 @@
 Creator.Objects.meetingroom =
 	name: "meetingroom"
 	label: "会议室"
-	icon: "contract"
+	icon: "location"
+	enable_search: true
 	fields:
 		name:
 			label:'会议室'
