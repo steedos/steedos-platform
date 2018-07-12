@@ -1,4 +1,4 @@
-dxDataGridInstance = null
+# dxDataGridInstance = null
 
 _standardQuery = (curObjectName)->
 	standard_query = Session.get("standard_query")
@@ -62,7 +62,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
 				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, ()->
-					dxDataGridInstance.refresh()
+					self.dxDataGridInstance.refresh()
 			else
 				Creator.executeAction objectName, action, recordId, value.itemElement
 	unless actions.length
@@ -169,14 +169,15 @@ _columns = (object_name, columns, list_view_id, is_related)->
 			column_width_settings = grid_settings.settings[list_view_id]?.column_width
 			column_sort_settings = Creator.transformSortToDX(grid_settings.settings[list_view_id]?.sort)
 
-		if column_width_settings
-			width = column_width_settings[n]
-			if width
-				columnItem.width = width
+		if !is_related
+			if column_width_settings
+				width = column_width_settings[n]
+				if width
+					columnItem.width = width
+				else
+					columnItem.width = defaultWidth
 			else
 				columnItem.width = defaultWidth
-		else
-			columnItem.width = defaultWidth
 
 		list_view = Creator.getListView(object_name, list_view_id)
 
@@ -234,7 +235,7 @@ Template.creator_grid.onRendered ->
 		if !creator_obj
 			return
 
-		related_object_name = Session.get("related_object_name")
+		related_object_name = self.data.related_object_name || Session.get("related_object_name")
 		name_field_key = creator_obj.NAME_FIELD_KEY
 		record_id = Session.get("record_id")
 
@@ -371,6 +372,8 @@ Template.creator_grid.onRendered ->
 		   			type: "custom"
 					enabled: true
 					customSave: (gridState)->
+						if self.data.is_related
+							return
 						columns = gridState.columns
 						column_width = {}
 						sort = []
@@ -440,12 +443,17 @@ Template.creator_grid.onRendered ->
 						_itemClick(e, curObjectName)
 
 				onContentReady: (e)->
-					self.data.total.set dxDataGridInstance.totalCount()
+					if self.data.total
+						self.data.total.set self.dxDataGridInstance.totalCount()
+					else if self.data.recordsTotal
+						recordsTotal = self.data.recordsTotal.get()
+						recordsTotal[curObjectName] = self.dxDataGridInstance.totalCount()
+						self.data.recordsTotal.set recordsTotal
 					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
 					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
-			dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
-			dxDataGridInstance.pageSize(pageSize)
+			self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
+			self.dxDataGridInstance.pageSize(pageSize)
 			
 Template.creator_grid.helpers Creator.helpers
 
@@ -490,25 +498,26 @@ Template.creator_grid.events
 		$(event.currentTarget).addClass("slds-has-focus")
 
 	'click .link-detail': (event, template)->
-		page_index = dxDataGridInstance.pageIndex()
+		page_index = Template.instance().dxDataGridInstance.pageIndex()
 		object_name = Session.get("object_name")
 		Session.set 'page_index', {object_name: object_name, page_index: page_index}
 
 Template.creator_grid.onCreated ->
+	self = this
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
-			dxDataGridInstance.refresh().done (result)->
-				Creator.remainCheckboxState(dxDataGridInstance.$element())
+			self.dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
-			dxDataGridInstance.refresh().done (result)->
-				Creator.remainCheckboxState(dxDataGridInstance.$element())
+			self.dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	,false
 	AutoForm.hooks creatorCellEditForm:
 		onSuccess: (formType,result)->
-			dxDataGridInstance.refresh().done (result)->
-				Creator.remainCheckboxState(dxDataGridInstance.$element())
+			self.dxDataGridInstance.refresh().done (result)->
+				Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 	,false
 
 # Template.creator_grid.onDestroyed ->
@@ -540,5 +549,6 @@ Template.creator_grid.onCreated ->
 
 
 Template.creator_grid.refresh = ->
-	dxDataGridInstance.refresh().done (result)->
-		Creator.remainCheckboxState(dxDataGridInstance.$element())
+	self = this
+	self.dxDataGridInstance.refresh().done (result)->
+		Creator.remainCheckboxState(self.dxDataGridInstance.$element())
