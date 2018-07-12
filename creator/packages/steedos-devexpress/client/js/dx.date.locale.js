@@ -204,7 +204,7 @@
                                     "full": "y年 MMMM d日 EEEE",
                                     "long": "y年 MMMM d日",
                                     "medium": "y年 MMM d日",
-                                    "short": "yy年 M d日"
+                                    "short": "yy年 M月 d日"
                                 },
                                 "timeFormats": {
                                     "full": "h:mm:ss a zzzz",
@@ -248,9 +248,9 @@
                                         "MMMMd": "MMMM d日",
                                         "ms": "mm:ss",
                                         "y": "y年",
-                                        "yM": "y年 M",
-                                        "yMd": "y年 M d日",
-                                        "yMEd": "y年 M d日 E",
+                                        "yM": "y年 M月",
+                                        "yMd": "y年 M月 d日",
+                                        "yMEd": "y年 M月 d日 E",
                                         "yMMM": "y年 MMM",
                                         "yMMMd": "y年 MMM d日",
                                         "yMMMEd": "y年 MMM d日 E",
