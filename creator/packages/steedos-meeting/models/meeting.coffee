@@ -18,6 +18,7 @@ Creator.Objects.meeting =
 			required:true
 			reference_sort:{name:1}
 			reference_limit: 20
+			sortable:true
 		start:
 			label:'开始时间'
 			type:'datetime'
@@ -29,6 +30,7 @@ Creator.Objects.meeting =
 				reValue.setMinutes(0)
 				reValue.setSeconds(0)
 				return reValue
+			sortable:true
 		end:
 			label:'结束时间'
 			type:'datetime'
@@ -56,6 +58,7 @@ Creator.Objects.meeting =
 				organziation = collection.findOne({users:Meteor.userId(),space:Session.get("spaceId")},{fields:{name:1}}).name
 				return organziation
 			required:true
+			sortable:true
 		count:
 			label:'参会人数'
 			type:'number'
