@@ -7,5 +7,6 @@ Creator.Apps.meeting =
 	is_creator:true
 	objects: [
 		"meeting",
-		"meetingroom"
+		"meetingroom",
+		"reports"
 		]
