@@ -99,13 +99,13 @@
                                             "sat": "六"
                                         },
                                         "short": {
-                                            "sun": "日",
-                                            "mon": "一",
-                                            "tue": "二",
-                                            "wed": "三",
-                                            "thu": "四",
-                                            "fri": "五",
-                                            "sat": "六"
+                                            "sun": "周日",
+                                            "mon": "周一",
+                                            "tue": "周二",
+                                            "wed": "周三",
+                                            "thu": "周四",
+                                            "fri": "周五",
+                                            "sat": "周六"
                                         },
                                         "wide": {
                                             "sun": "星期日",
@@ -476,7 +476,6 @@
                 return re;
             },
             _getPatternByFormat: function (format) {
-                // return 'EEEE';
                 var that = this,
                     lowerFormat = format.toLowerCase(),
                     globalizeFormat = FORMATS_TO_GLOBALIZE_MAP[lowerFormat];
