@@ -156,6 +156,7 @@ Template.creator_table_cell.helpers
 		else
 			if (val instanceof Date)
 				if this.agreement == "odata"
+					# 老的datatable列表界面，现在没有在用了，都用DevExtreme的grid列表代替了
 					if _field.type == "datetime"
 						utcOffset = moment().utcOffset() / 60
 						val = moment(this.val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
