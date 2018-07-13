@@ -589,7 +589,7 @@ Creator.getFieldsWithNoGroup = (schema)->
 
 Creator.getSortedFieldGroupNames = (schema)->
 	names = _.map(schema, (field) ->
- 		return field.autoform and field.autoform.group and field.autoform.group != "-"
+ 		return field.autoform and field.autoform.group != "-" and field.autoform.group
 	)
 	names = _.compact(names)
 	names = _.unique(names)
