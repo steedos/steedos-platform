@@ -582,14 +582,14 @@ Creator.getHiddenFields = (schema)->
 
 Creator.getFieldsWithNoGroup = (schema)->
 	fields = _.map(schema, (field, fieldName) ->
-  		return (!field.autoform or !field.autoform.group) and (!field.autoform or field.autoform.type != "hidden") and fieldName
+		return (!field.autoform or !field.autoform.group or field.autoform.group == "-") and (!field.autoform or field.autoform.type != "hidden") and fieldName
 	)
 	fields = _.compact(fields)
 	return fields
 
 Creator.getSortedFieldGroupNames = (schema)->
 	names = _.map(schema, (field) ->
- 		return field.autoform and field.autoform.group
+ 		return field.autoform and field.autoform.group and field.autoform.group != "-"
 	)
 	names = _.compact(names)
 	names = _.unique(names)
