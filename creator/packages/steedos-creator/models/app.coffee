@@ -16,6 +16,9 @@ Creator.Objects.apps =
 			type: "url"
 			required: false
 			hidden: true
+		icon:
+			type:'text'
+			hidden:true
 		icon_slds:
 			label: "图标"
 			type: "lookup"
@@ -67,4 +70,16 @@ Creator.Objects.apps =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true
+	triggers:
+		"before.insert.server.apps": 
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)-> 
+				doc.icon = doc.icon_slds
+		"after.update.server.apps":
+			on: "server"
+			when: "after.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if modifier?.$set?.icon_slds
+					Creator.getCollection("apps").direct.update({_id: doc._id}, {$set:	{icon:modifier.$set.icon_slds}}) 
