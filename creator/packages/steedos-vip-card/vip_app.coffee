@@ -9,7 +9,7 @@ Creator.Apps.vip =
 		"vip_product",
 		"vip_product_category",
 		"vip_order",
-		"vip_category",
+		"vip_card_rule",
 		"vip_card",
 		"vip_points",
 		"vip_coupon",

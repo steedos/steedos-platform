@@ -1,0 +1,105 @@
+Creator.Objects.vip_customers =
+	name: "vip_customers"
+	label: "客户"
+	icon: "partners"
+	fields:
+		name:
+			label: '姓名'
+			type: 'text'
+
+		from:
+			label: '推荐人'
+			type: 'lookup'
+			reference_to: 'users'
+
+		space:
+			label: '商户'
+
+		owner:
+			label: '客户'
+
+		mobile:
+			type: "text"
+			label:'手机'
+
+		is_member:
+			label: '是否会员'
+			type: "boolean"
+
+		share:
+			label: '分享ID'
+			type: 'lookup'
+			reference_to: 'vip_share'
+
+		balance:
+			label: "余额"
+			type: "number"
+			defaultValue: 0
+			scale: 2
+		
+		cash_back_total:
+			label: "累计返现"
+			type: "number"
+			defaultValue: 0
+			scale: 2
+		
+		cash_back_percentage:
+			label:'返现比例'
+			type:'number'
+			scale: 2
+		
+		cash_back_expired:
+			label:"返现有效期"
+			type:'datetime'
+
+	list_views:
+		all:
+			label: "所有"
+			columns: ["name","share","created"]
+			filter_scope: "space"
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		admin:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		member:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		guest:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+
+	triggers:
+		"before.insert.server.vip_customers":
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				share_id = doc?.share
+				space_id = doc?.space
+				if share_id
+					store = Creator.getCollection("vip_store").findOne({_id: space_id}, {fields: {cash_back_enabled:1,cash_back_percentage:1,cash_back_period:1}})
+					if(store and store.cash_back_enabled)
+						period = store.cash_back_period
+						unless period
+							period = 90
+						expired = new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * period)
+						doc.cash_back_expired = expired
+						doc.cash_back_percentage = store.cash_back_percentage

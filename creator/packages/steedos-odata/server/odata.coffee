@@ -722,6 +722,59 @@ Meteor.startup ->
 				}
 	})
 
+	SteedosOdataAPI.addRoute(':object_name/:_id/:methodName', {authRequired: true, spaceRequired: false}, {
+		post: ()->
+			try
+				key = @urlParams.object_name
+				if not Creator.objectsByName[key]?.enable_api
+					return{
+						statusCode: 401
+						body: setErrorMessage(401)
+					}
+				collection = Creator.Collections[key]
+				if not collection
+					return{
+						statusCode: 404
+						body: setErrorMessage(404,collection,key)
+					}
+
+				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
+				if permissions.allowRead
+					methodName = @urlParams.methodName
+					methods = Creator.Objects[key]?.methods || {}
+					if methods.hasOwnProperty(methodName)
+						thisObj = {
+							object_name: key
+							record_id: @urlParams._id
+							space_id: @urlParams.spaceId
+							user_id: @userId
+							permissions: permissions
+						}
+						methods[methodName].apply(thisObj, [@bodyParams])
+						{}
+					else
+						return {
+							statusCode: 404
+							body: setErrorMessage(404,collection,key)
+						}
+				else
+					return {
+						statusCode: 403
+						body: setErrorMessage(403,collection,key)
+					}
+			catch e
+				body = {}
+				error = {}
+				error['message'] = e.message
+				error['code'] = 500
+				body['error'] = error
+				return {
+					statusCode: 500
+					body:body
+				}
+
+	})
+
 	#TODO remove
 	_.each [], (value, key, list)-> #Creator.Collections
 		if not Creator.objectsByName[key]?.enable_api

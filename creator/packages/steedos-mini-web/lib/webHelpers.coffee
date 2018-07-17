@@ -11,7 +11,10 @@ Template.registerHelper 'body_class', ->
 		return 'post-template'
 
 Template.registerHelper 'url', (context, options)->
-	outputUrl = Meteor.absoluteUrl(this.url)
+	url = this.url
+	if url && url.indexOf('/') == 0
+		url = url.substr(1)
+	outputUrl = Meteor.absoluteUrl(url)
 	outputUrl = encodeURI(decodeURI(outputUrl))
 	return new Handlebars.SafeString(outputUrl);
 

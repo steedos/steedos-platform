@@ -15,8 +15,8 @@ Creator.Objects.post =
 			omit:true
 		description:
 			label:'正文'
-			is_wide:false
-			type:'textarea'
+			is_wide:true
+			type:'markdown'
 			rows: 8
 		comment_count:
 			label:'评论数'

@@ -2,9 +2,9 @@ MarkdownIt = Npm.require('markdown-it')
 
 getPostPrimaryTag = (space_id, post)->
 	if _.isArray(post.categories) && post.categories.length > 0
-		categorie = Creator.getCollection('post_category').findOne({_id: post.categories[0]})
+		categorie = Creator.getCollection('post_category').findOne({_id: post.categories[0]}, {fields: {_id: 1, name: 1}})
 		if categorie
-			return {url: '/site/'+space_id+'/categorie/' + categorie._id, name: categorie.name}
+			return {url: '/site/'+space_id+'/tag/' + categorie._id, name: categorie.name}
 
 getBlog = (space_id) ->
 	blog = {}
@@ -16,6 +16,11 @@ getBlog = (space_id) ->
 	blog.navigation = [{
 		label: '首页', url: '/site/' +  space_id
 	}]
+
+	post_categorys = Creator.getCollection("post_category").find({space: space_id}, {fields: {_id: 1, name: 1}, sort: {sort_no: 1}})
+
+	post_categorys.forEach (categorie)->
+		blog.navigation.push {label: categorie.name, url: '/site/'+space_id+'/tag/' + categorie._id}
 
 	store = Creator.getCollection("vip_store").findOne({_id: space_id}, {fields: {avatar: 1, cover: 1, name: 1, description: 1}})
 	blog.logo = store.avatar
@@ -35,7 +40,7 @@ getPosts = (space_id, categorie) ->
 	Creator.getCollection("post").find(query, {sort: {modified: -1}}).forEach (post)->
 		feature_image = if post.images?.length > 0 then post.images[0] else ''
 		authors = []
-		url = '/site/'+space_id+'/' + post._id
+		url = '/site/'+space_id+'/post/' + post._id
 		primary_tag = getPostPrimaryTag(space_id, post)
 		posts.push({
 			feature_image: feature_image,
@@ -107,17 +112,18 @@ JsonRoutes.add "get", "/site/:space_id", (req, res, next) ->
 	res.end(view);
 
 # categorie post list
-JsonRoutes.add "get", "/site/:space_id/categorie/:_id", (req, res, next)->
+JsonRoutes.add "get", "/site/:space_id/tag/:_id", (req, res, next)->
 
 	space_id = req.params.space_id
 
 	template_type = 'tag'
 
-	categorie = Creator.getCollection('post_category').findOne({_id: req.params._id})
+	categorie = Creator.getCollection('post_category').findOne({_id: req.params._id}, {fields: {_id: 1, name: 1, description: 1}})
 
 	options = {
 		posts: getPosts(space_id, req.params._id)
 		name: categorie.name
+		description: categorie.description
 	}
 	_.extend(options, getBaseConfig(space_id, template_type))
 
@@ -129,7 +135,7 @@ JsonRoutes.add "get", "/site/:space_id/categorie/:_id", (req, res, next)->
 	res.end(view);
 
 # post detailed
-JsonRoutes.add "get", "/site/:space_id/:_id", (req, res, next)->
+JsonRoutes.add "get", "/site/:space_id/post/:_id", (req, res, next)->
 	space_id = req.params.space_id
 
 	template_type = 'post'

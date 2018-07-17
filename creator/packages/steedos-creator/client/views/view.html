@@ -136,7 +136,7 @@
 																	</div>
 																	<div class="slds-form-element__control slds-grid itemBody">
 																		<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
-																			{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details'}}
+																			{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this)}}
 																		</span>
 																	</div>
 																{{/if}}

@@ -116,8 +116,13 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				delete s.space
 				return s
 			)
+			
+		customers = Creator.getCollection("vip_customers").find({
+			owner: ret_data.user_id
+		}).fetch()
 
 		ret_data.my_spaces = space_users
+		ret_data.my_customers = customers
 
 		#设置sessionKey
 		Creator.getCollection("users").direct.update({

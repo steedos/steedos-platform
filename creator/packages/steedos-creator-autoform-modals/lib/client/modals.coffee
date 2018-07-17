@@ -147,7 +147,8 @@ Template.CreatorAutoformModals.rendered = ->
 			'cmShowRemoveButton',
 			'cmIsMultipleUpdate',
 			'cmTargetIds',
-			"cmEditSingleField"
+			'cmEditSingleField',
+			'cmFullScreen'
 		]
 		delete Session.keys[key] for key in sessionKeys
 
@@ -408,6 +409,9 @@ helpers =
 
 	isSingle: ()->
 		return Session.get("cmEditSingleField")
+
+	isFullScreen: ()->
+		return Session.get("cmFullScreen")
 
 	hasInlineHelpText: (key)->
 		cmCollection = Session.get 'cmCollection'

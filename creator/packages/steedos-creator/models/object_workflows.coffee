@@ -28,6 +28,7 @@ Creator.Objects.object_workflows =
 		field_map:
 			label: "字段映射关系"
 			type: "grid"
+			depend_on: ["object_name", "flow_id"]
 
 		"field_map.$.object_field":
 			label: "对象字段"
@@ -55,19 +56,21 @@ Creator.Objects.object_workflows =
 						{value:"finish_date",label:"结束时间"},
 						{value:"final_decision",label:"最终意见"}
 					]
-				res_flow = Creator.odata.get("flows",values?.flow_id,"form")
-				if res_flow?.form
-					form_id = res_flow?.form
-					res_form = Creator.odata.get("forms",form_id,"current")
-					if res_form?.current
-						fields = res_form?.current.fields
-						fields_name = _.pluck(fields,'code')
-						form_fields = []
-						fields_name.forEach (field_name)->
-							form_field = {}
-							form_field['value'] = field_name
-							form_field['label'] = field_name
-							form_fields.push form_field
+				console.log('表单字段 --> values', values)
+				form_fields = []
+				if values?.flow_id
+					res_flow = Creator.odata.get("flows",values.flow_id,"form")
+					if res_flow?.form
+						form_id = res_flow?.form
+						res_form = Creator.odata.get("forms",form_id,"current")
+						if res_form?.current
+							fields = res_form?.current.fields
+							fields_name = _.pluck(fields,'code')
+							fields_name.forEach (field_name)->
+								form_field = {}
+								form_field['value'] = field_name
+								form_field['label'] = field_name
+								form_fields.push form_field
 				options = _.union(instance_fields,form_fields)
 				return options
 

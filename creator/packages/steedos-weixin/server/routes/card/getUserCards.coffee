@@ -16,7 +16,7 @@ JsonRoutes.add 'get', '/api/steedos/weixin/cards', (req, res, next) ->
 	user_cards.forEach (card)->
 		allBalance += card.balance
 		space = Creator.getCollection("spaces").findOne({_id: card.space},{fields:{name:1}})
-		card_category = Creator.getCollection("vip_category").findOne(card.card_name,{fields:{name:1}})
+		card_category = Creator.getCollection("vip_card_rule").findOne(card.card_name,{fields:{name:1}})
 		if card_category?.name
 			name = card_category.name
 		else

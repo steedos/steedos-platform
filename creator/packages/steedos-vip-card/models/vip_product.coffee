@@ -58,11 +58,11 @@ Creator.Objects.vip_product =
 			label:'重量'
 			type:'number'   
 			scale: 2
-		gift:
-			label:'分享赠礼'
-			type:'textarea'
-			inlineHelpText:'邀请好友成功购买，可获得增礼。'
-			group:'-'
+		# gift:
+		# 	label:'分享赠礼'
+		# 	type:'textarea'
+		# 	inlineHelpText:'邀请好友成功购买，可获得增礼。'
+		# 	group:'-'
 		status:
 			label:'上架'
 			type:'boolean'

@@ -1,6 +1,6 @@
-Creator.Objects.vip_category =
-	name: "vip_category"
-	label: "卡项"
+Creator.Objects.vip_card_rule =
+	name: "vip_card_rule"
+	label: "卡充值规则"
 	icon: "work_type"
 	fields:
 		name:
@@ -18,6 +18,10 @@ Creator.Objects.vip_category =
 			type:'currency'
 			required:true
 			group:'-'
+		present_amount:
+			label:'赠送金额'
+			type:'currency'
+			omit:true
 		valid_period:
 			label:"有效期(天)"
 			defaultValue:365
@@ -30,11 +34,16 @@ Creator.Objects.vip_category =
 		cover:
 			label:'背景图'
 			type:'image'
+		
+		enabled:
+			label:"启用"
+			type:'boolean'
+			group:'-'
 
-		count:
-			label:'发行数量'
-			type:'number'
-			omit:true
+		# count:
+		# 	label:'发行数量'
+		# 	type:'number'
+		# 	omit:true
 		# state:
 		# 	label:'状态'
 		# 	type:'select'
@@ -101,10 +110,7 @@ Creator.Objects.vip_category =
 		# 	label:'充值金额'
 		# 	type:'currency'
 		# 	omit:true
-		# present_amount:
-		# 	label:'赠送金额'
-		# 	type:'currency'
-		# 	omit:true
+		
 		# handsel:
 		# 	label:'购卡赠送'
 		# 	type:'grid'

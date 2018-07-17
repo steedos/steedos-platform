@@ -280,6 +280,9 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "location"
 			fs.autoform.system = field.system || "wgs84"
 			fs.blackbox = true
+		else if field.type == "markdown"
+			fs.type = String
+			fs.autoform.type = "steedos-markdown"
 		else
 			fs.type = field.type
 

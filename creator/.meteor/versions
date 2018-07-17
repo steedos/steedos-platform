@@ -99,8 +99,10 @@ npm-mongo@2.2.30
 observe-sequence@1.0.16
 ordered-dict@1.0.9
 peppelg:bootstrap-3-modal@1.0.4
+perak:markdown@1.0.5
 percolate:migrations@0.9.8
 promise@0.9.0
+q42:autoform-markdown@1.0.0
 raix:eventemitter@0.1.3
 raix:eventstate@0.0.4
 raix:handlebar-helpers@0.2.5
@@ -135,7 +137,7 @@ steedos:application-package@0.0.1
 steedos:autoform@0.0.13
 steedos:autoform-bs-datetimepicker@1.0.6
 steedos:autoform-bs-minicolors@1.0.0
-steedos:autoform-file@0.4.2_2
+steedos:autoform-file@0.4.2_3
 steedos:autoform-lookup@0.3.10
 steedos:base@0.0.82
 steedos:bootstrap3-datetimepicker@4.17.47
@@ -177,6 +179,7 @@ steedos:lightning-design-system@0.0.1
 steedos:loaders-css@0.1.2
 steedos:location@0.0.1
 steedos:logger@0.0.2
+steedos:markdown@0.0.1
 steedos:meeting@0.0.1
 steedos:mini-web@0.0.1
 steedos:oauth2-server@0.0.6

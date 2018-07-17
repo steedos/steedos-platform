@@ -18,8 +18,8 @@ Creator.Objects.vip_card =
 			group:'-'
 		card_name:
 			label:'名称'
-			type:'lookup'
-			reference_to:'vip_category'
+			type:'text'
+			#reference_to:'vip_card_rule'
 			is_wide:true
 		# user:
 		# 	label:'持卡人'
@@ -40,9 +40,9 @@ Creator.Objects.vip_card =
 		# 		{label: "铂金", value: "铂金"},
 		# 		{label: "钻石", value: "钻石"}
 		# 	]
-		discount:
-			label:'折扣'
-			type:'number'
+		# discount:
+		# 	label:'折扣'
+		# 	type:'number'
 		balance:
 			label:'余额'
 			type:'number'
@@ -73,11 +73,11 @@ Creator.Objects.vip_card =
 			reference_to:'users'
 			multiple:true
 			omit:true
-		introducer:
-			label:'推荐人'
-			type:'lookup'
-			reference_to:'users'
-			omit:true
+		# introducer:
+		# 	label:'推荐人'
+		# 	type:'lookup'
+		# 	reference_to:'users'
+		# 	omit:true
 		is_actived:
 			label:'是否激活'
 			type:'boolean'
@@ -91,14 +91,14 @@ Creator.Objects.vip_card =
 		#     type:'lookup'
 		#     mutiple: true
 		#     reference_to:'users'
-		enable_forward:
-			label:'允许转发'
-			type:'boolean'
-			defaultValue:false
-		forward_count:
-			label:'转发次数'
-			type:'number'
-			omit:true
+		# enable_forward:
+		# 	label:'允许转发'
+		# 	type:'boolean'
+		# 	defaultValue:false
+		# forward_count:
+		# 	label:'转发次数'
+		# 	type:'number'
+		# 	omit:true
 		description:
 			label:'备注'
 			type:'textarea'

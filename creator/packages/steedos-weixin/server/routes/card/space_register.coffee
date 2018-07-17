@@ -76,7 +76,7 @@ JsonRoutes.add 'post', '/api/mini/vip/space_register', (req, res, next) ->
 			created: now
 			modified: now
 		}
-		Creator.getCollection("vip_category").insert(default_vip_category)
+		Creator.getCollection("vip_card_rule").insert(default_vip_category)
 
 		JsonRoutes.sendResult res, {
 			code: 200,

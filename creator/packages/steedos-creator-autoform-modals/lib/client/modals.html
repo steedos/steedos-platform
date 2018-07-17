@@ -1,6 +1,6 @@
 <template name="CreatorAutoformModals">
 	<div class="modal fade creator-modal creator-auotform-modals" id="afModal">
-		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open normal-large">
+		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open normal-large {{#if isSingle}}is-single{{/if}} {{#if isFullScreen}}full-screen{{/if}}">
 			<div class="slds-modal__container {{cmModalContentClass}}">
 				<header class="slds-modal__header">
 					{{#if isMobile}}

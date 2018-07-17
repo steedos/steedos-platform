@@ -31,6 +31,12 @@ Creator.Objects.billing_record =
             label: '支付方式'
             type: 'text'
 
+        out_trade_no:
+            label: '微信支付订单号'
+            type: 'text'
+            omit: true
+            hidden: true
+
 
 
 

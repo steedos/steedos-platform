@@ -121,7 +121,7 @@ UniSelectize.prototype.setItems = function (items, value) {
 	var values = value && (_.isArray(value) ? value : [value]);
 
 	items = _.filter(items, function (item) {
-		if (!item.value || !item.label) {
+		if (!item || !item.value || !item.label) {
 			console.info('invalid option', item);
 			return false;
 		}

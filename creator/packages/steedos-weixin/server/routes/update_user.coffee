@@ -31,10 +31,10 @@ JsonRoutes.add 'put', '/mini/vip/user', (req, res, next) ->
 		})
 		
 		#不需要同步到space_users
-#		if data.phoneNumber
-#			Creator.getCollection("space_users").direct.update({
-#				user: userId
-#			}, {$set: {mobile: data.phoneNumber}}, {multi: true})
+		if data.name
+			Creator.getCollection("space_users").direct.update({
+				user: userId
+			}, {$set: {name: data.name}}, {multi: true})
 
 		JsonRoutes.sendResult res, {
 			code: 200,

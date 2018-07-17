@@ -46,7 +46,7 @@ Template.creator_table_cell.onRendered ->
 						cellTemplate: (container, options) ->
 							field_name = _field.name + ".$." + column
 							field_name = field_name.replace(/\$\./,"")
-							cellOption = {_id: options.data._id, val: options.data[column], doc: options.data, field: field, field_name: field_name, object_name:object_name, hideIcon: true}
+							cellOption = {_id: options.data._id, val: options.data[column], record_val: record, doc: options.data, field: field, field_name: field_name, object_name:object_name, hideIcon: true}
 							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 					return columnItem
 				
@@ -94,12 +94,13 @@ Template.creator_table_cell.helpers
 			# 有optionsFunction的情况下，reference_to不考虑数组
 			if _.isFunction(_field.optionsFunction)
 				_values = this.doc || {}
+				_record_val = this.record_val
 				_val = val
 				if _val
 					if !_.isArray(_val)
 						_val = [_val]
-					selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
-						return _val.indexOf(_o.value) > -1
+					selectedOptions = _.filter _field.optionsFunction(_record_val || _values), (_o)->
+						return _val.indexOf(_o?.value) > -1
 					if selectedOptions
 						if val && _.isArray(val) && _.isArray(selectedOptions)
 							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
@@ -205,6 +206,9 @@ Template.creator_table_cell.helpers
 			else if _field.type == "number" && val
 				val = Number(val).toFixed(_field.scale)
 
+			else if _field.type == "markdown"
+				val = Spacebars.SafeString(marked(val))
+
 			if this.parent_view != 'record_details' && this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
 
@@ -232,3 +236,6 @@ Template.creator_table_cell.helpers
 		if this.hideIcon
 			return false
 		return true
+
+	isMarkdown: (type)->
+		return type is "markdown"
