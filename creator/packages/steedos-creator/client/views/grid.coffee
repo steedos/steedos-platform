@@ -1,4 +1,4 @@
-# dxDataGridInstance = null
+dxDataGridInstance = null
 
 _standardQuery = (curObjectName)->
 	standard_query = Session.get("standard_query")
@@ -62,7 +62,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
 				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, ()->
-					self.dxDataGridInstance.refresh()
+					dxDataGridInstance.refresh()
 			else
 				Creator.executeAction objectName, action, recordId, value.itemElement
 	unless actions.length
@@ -453,6 +453,7 @@ Template.creator_grid.onRendered ->
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
 					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
 			self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
+			dxDataGridInstance = self.dxDataGridInstance
 			self.dxDataGridInstance.pageSize(pageSize)
 			
 Template.creator_grid.helpers Creator.helpers
