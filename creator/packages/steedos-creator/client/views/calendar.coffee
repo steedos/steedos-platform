@@ -66,8 +66,8 @@ getAppointmentColor = (room) ->
 	return result.color
 	
 getRoomAdmin = (room) ->
-	result = Creator.odata.get('meetingroom',room,'admin')
-	return result?.admin || []
+	result = Creator.odata.get('meetingroom',room,'admins')
+	return result?.admins || []
 
 getRoomPermission = (room) ->
 	result = Creator.odata.get('meetingroom',room,'enable_open')
