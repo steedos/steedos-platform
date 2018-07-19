@@ -227,7 +227,8 @@ Template.creator_calendar.onRendered ->
 							_insertData()
 						else
 							Session.set("cmDoc", doc)
-					
+					else
+						toastr.error("此会议室为特约会议室，您暂无权限。")
 				onAppointmentUpdating: (e)->
 					e.cancel = true
 					doc = {}
