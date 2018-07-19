@@ -50,6 +50,15 @@ Creator.Objects.meetingroom =
 					{label:'蓝色',value:"#34aadc"},
 					{label:'紫色',value:"#cc73e1"},
 					{label:'棕色',value:"#a2845e"}]
+		enable_open:
+			label:'开放预约'
+			type:'boolean'
+			defaultValue:true
+		admins:
+			label:'管理员'
+			type:'lookup'
+			reference_to:'users'
+			multiple:true
 	list_views:
 		all:
 			label: "所有"
@@ -87,8 +96,9 @@ Creator.Objects.meetingroom =
 
 	triggers:
 
-		"before.insert.server.event":
+		"before.insert.server.meetingroom":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
+				doc.admin.push doc.owner
 				

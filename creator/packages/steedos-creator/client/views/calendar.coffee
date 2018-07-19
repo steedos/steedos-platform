@@ -65,6 +65,14 @@ getAppointmentColor = (room) ->
 	result = Creator.odata.get('meetingroom',room,'color')
 	return result.color
 	
+getRoomAdmin = (room) ->
+	result = Creator.odata.get('meetingroom',room,'admin')
+	return result?.admin || []
+
+getRoomPermission = (room) ->
+	result = Creator.odata.get('meetingroom',room,'enable_open')
+	return result?.enable_open
+
 getTooltipTemplate = (data) ->
 	color = getAppointmentColor(data.room)
 	if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
@@ -202,21 +210,23 @@ Template.creator_calendar.onRendered ->
 
 				onCellClick: (e) ->
 					console.log('[onCellClick]', e)
-
 					cellData = e.cellData
+					roomAdmins = getRoomAdmin(cellData.groups.room)
+					isOpen = getRoomPermission(cellData.groups.room)
+					if roomAdmins.indexOf(Meteor.userId())>-1 or isOpen
 					# debugger
-					doc = {
-						start: cellData.startDate
-						end: cellData.endDate
-					}
+						doc = {
+							start: cellData.startDate
+							end: cellData.endDate
+						}
 
-					if cellData.groups?.room
-						doc.room = cellData.groups.room
-					
-					if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
-						_insertData()
-					else
-						Session.set("cmDoc", doc)
+						if cellData.groups?.room
+							doc.room = cellData.groups.room
+						
+						if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
+							_insertData()
+						else
+							Session.set("cmDoc", doc)
 					
 				onAppointmentUpdating: (e)->
 					e.cancel = true

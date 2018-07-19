@@ -19,6 +19,22 @@ Creator.Objects.meeting =
 			required:true
 			reference_sort:{name:1}
 			reference_limit: 20
+			# filters: [["name","$eq","313会议室"],'or',["admins","$eq","{userId}"]]			
+			# ##[["name","=","测试冲突1"],'or',["name","=","3"]]
+			optionsFunction: (values)->
+				result = []
+				options = {
+					$orderby:'name'
+					$select:'enable_open,admins,name'
+				}
+				rooms = Creator.odata.query('meetingroom',options,true)
+				rooms.forEach (room)->
+					if room?.admins?.indexOf(Meteor.userId())>-1 or room?.enable_open
+						console.log room.name
+						result.push 
+							label: room.name
+							value: room._id
+				return result
 			sortable:true
 		start:
 			label:'开始时间'

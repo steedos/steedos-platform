@@ -60,33 +60,61 @@ Creator.odata.get = (object_name, record_id,field_name, callback)->
 		toastr.error("未找到记录")
 	return result
 
-Creator.odata.query = (object_name, options)->
-	if object_name
-		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
-		store = new DevExpress.data.ODataStore({
-			type: "odata"
-			version: 4
-			url: url
-			beforeSend: (request) ->
-				request.headers['X-User-Id'] = Meteor.userId()
-				request.headers['X-Space-Id'] = Steedos.spaceId()
-				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-		})
-		options.store = store
-		datasource = new DevExpress.data.DataSource(options)
-		datasource.load()
-			.done((result) ->
-				console.log result
-			)
-			.fail((error) ->
-				console.log error
-				if error.reason
-					toastr?.error?(TAPi18n.__(error.reason))
-				else if error.message
-					toastr?.error?(TAPi18n.__(error.message))
-				else
-					toastr?.error?(error)
-			)
+Creator.odata.query = (object_name, options,is_async)->
+	result = null
+	if is_async
+		if object_name
+			url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+			$.ajax
+				type: "get"
+				url: url
+				data:options
+				dataType: "json"
+				async: false
+				contentType: "application/json"
+				beforeSend: (request) ->
+					request.setRequestHeader('X-User-Id', Meteor.userId())
+					request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+				error: (jqXHR, textStatus, errorThrown) ->
+					error = jqXHR.responseJSON
+					console.error error
+					if error.reason
+						toastr?.error?(TAPi18n.__(error.reason))
+					else if error.message
+						toastr?.error?(TAPi18n.__(error.message))
+					else
+						toastr?.error?(error)
+				success:(data) ->
+					result = data.value
+		return result
+	else
+		if object_name
+			url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+			store = new DevExpress.data.ODataStore({
+				type: "odata"
+				version: 4
+				url: url
+				beforeSend: (request) ->
+					request.headers['X-User-Id'] = Meteor.userId()
+					request.headers['X-Space-Id'] = Steedos.spaceId()
+					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+			})
+			options.store = store
+			datasource = new DevExpress.data.DataSource(options)
+			datasource.load()
+				.done((result) ->
+					console.log result
+				)
+				.fail((error) ->
+					console.log error
+					if error.reason
+						toastr?.error?(TAPi18n.__(error.reason))
+					else if error.message
+						toastr?.error?(TAPi18n.__(error.message))
+					else
+						toastr?.error?(error)
+				)
+	
 	# 	$.ajax
 	# 		type: "get"
 	# 		url: url
