@@ -100,5 +100,5 @@ Creator.Objects.meetingroom =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.admin.push doc.owner
+				doc.admins.push doc.owner
 				
