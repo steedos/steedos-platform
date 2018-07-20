@@ -29,8 +29,7 @@ Creator.Objects.meeting =
 				}
 				rooms = Creator.odata.query('meetingroom',options,true)
 				rooms.forEach (room)->
-					if room?.admins?.indexOf(Meteor.userId())>-1 or room?.enable_open
-						console.log room.name
+					if room?.admins?.indexOf(Meteor.userId())>-1 or room?.enable_open or Steedos.isSpaceAdmin()
 						result.push 
 							label: room.name
 							value: room._id
