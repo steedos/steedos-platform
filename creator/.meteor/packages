@@ -130,6 +130,7 @@ steedos:instance-record-queue
 
 steedos:instances-statistics
 steedos:meeting
+steedos:love
 http@1.2.9
 
 steedos:weixin
