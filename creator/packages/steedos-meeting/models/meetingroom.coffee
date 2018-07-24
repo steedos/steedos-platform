@@ -100,5 +100,7 @@ Creator.Objects.meetingroom =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.admins.push doc.owner
-				
+				if !doc?.admins
+					doc['admins'] = []
+				if doc?.admins.indexOf(doc.owner)<0
+					doc.admins.push doc.owner
