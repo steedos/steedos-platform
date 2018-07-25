@@ -28,7 +28,11 @@ Creator.Objects.love_about_me =
 		live:
 			type:'text'
 			label:"现居地(定位)"
-			required:true
+			required:true				
+		hometown:
+			type:'text'
+			label:"家乡"
+		
 		height:
 			type:'number'
 			label:"身高"
