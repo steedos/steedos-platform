@@ -111,3 +111,11 @@ Creator.Objects.vip_customers =
 						expired = new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * period)
 						doc.cash_back_expired = expired
 						doc.cash_back_percentage = store.cash_back_percentage
+
+		"before.update.server.vip_customers":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if not doc.invite_code and modifier.$set and modifier.$set.invite_code
+					modifier.$set.is_member = true
+					modifier.$set.member_expried = new Date(new Date().getTime() + 365*24*3600*1000)

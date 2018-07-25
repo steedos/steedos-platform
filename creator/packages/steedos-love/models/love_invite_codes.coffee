@@ -15,13 +15,13 @@ Creator.Objects.love_invite_codes =
 			label: "所有"
 			columns: ["code", "expired", "owner"]
 			filter_scope: "space"
-		
+
 	permission_set:
 		user:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
 		admin:
@@ -34,7 +34,7 @@ Creator.Objects.love_invite_codes =
 		member:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: true
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
@@ -42,6 +42,6 @@ Creator.Objects.love_invite_codes =
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
