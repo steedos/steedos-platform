@@ -26,6 +26,14 @@ Creator.Objects.vip_customers =
 			label: '是否会员'
 			type: "boolean"
 
+		member_expried:
+			label: '会员过期时间'
+			type: "datetime"
+
+		invite_code:
+			label: '邀请码'
+			type: "text"
+
 		share:
 			label: '分享ID'
 			type: 'lookup'
@@ -36,18 +44,18 @@ Creator.Objects.vip_customers =
 			type: "number"
 			defaultValue: 0
 			scale: 2
-		
+
 		cash_back_total:
 			label: "累计返现"
 			type: "number"
 			defaultValue: 0
 			scale: 2
-		
+
 		cash_back_percentage:
 			label:'返现比例'
 			type:'number'
 			scale: 2
-		
+
 		cash_back_expired:
 			label:"返现有效期"
 			type:'datetime'
