@@ -31,6 +31,7 @@ Creator.Objects.love_answer =
 		astrological:
 			type:'select'
 			label:"是否相信星座"
+			options: "相信:相信,不相信:不相信,不太相信:不太相信"
 		astrological_o:
 			type:'select'
 			label:"对方是否相信星座"
