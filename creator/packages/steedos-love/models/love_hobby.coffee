@@ -25,3 +25,39 @@ Creator.Objects.love_hobby =
 		music:
 			type:'text'
 			label:"我喜欢的音乐"
+	list_views:
+		all:
+			label: "所有"
+			columns: ["sport", "star", "movie_type", "game","travel", "book", "music"]
+			filter_scope: "space"
+		
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true
+		member:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false
+		guest:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: false
+

@@ -5,11 +5,13 @@ Creator.Objects.love_looking_for =
 	enable_search: true
 	fields:
 		looking_forward:
-			type:'text'
+			type:'select'
 			label:"我想找的类型"
+			options: "一周:一周,短期:短期,长期:长期,余生:余生"
 		sex:
-			type:'性别'
-			label:"明星"
+			type:'select'
+			label:"性别"
+			options:['男','女']
 		age_range:
 			type:'text'
 			label:"年龄段(范围)"
@@ -19,3 +21,39 @@ Creator.Objects.love_looking_for =
 		body_type:
 			type:'text'
 			label:"体型"
+	
+	list_views:
+		all:
+			label: "所有"
+			columns: ["looking_forward", "sex", "age_range" ,"height_range"]
+			filter_scope: "space"
+		
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true
+		member:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
+		guest:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: true
+			allowRead: false
+			modifyAllRecords: false
+			viewAllRecords: false
