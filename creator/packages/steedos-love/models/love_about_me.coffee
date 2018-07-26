@@ -1,6 +1,6 @@
 Creator.Objects.love_about_me =
 	name: "love_about_me"
-	label: "关于我"
+	label: "我的资料"
 	icon: "event"
 	enable_search: true
 	fields:
