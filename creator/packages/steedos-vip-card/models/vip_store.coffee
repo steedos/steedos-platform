@@ -100,6 +100,11 @@ Creator.Objects.vip_store =
 			type:'number'
 			readonly:true
 			omit:true
+		show_space_info:
+			label:'是否显示商户信息'
+			type:'boolean'
+			group:'-'
+			defaultValue:true
 		# post_types:
 		# 	label:'信息分类'
 		# 	type:'select'
