@@ -7,20 +7,16 @@ Creator.Objects.love_about_me =
 		mobile:
 			type:'text'
 			label:"手机号"
-			required:true
 		name:
 			type:'text'
 			label:"姓名"
-			required:true
 		sex:
 			type:'select'
 			label:"性别"
 			options:[{label:'先生',value:'男'},{label:'小姐',value:'女'}]
-			required:true
 		birthday:
 			type:'date'
 			label:"生日"
-			required:true
 		self_introduction:
 			type:'textarea'
 			is_wide:true	
@@ -28,7 +24,6 @@ Creator.Objects.love_about_me =
 		live:
 			type:'text'
 			label:"现居地(定位)"
-			required:true				
 		hometown:
 			type:'text'
 			label:"家乡"

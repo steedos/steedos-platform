@@ -11,13 +11,19 @@ Creator.Objects.love_looking_for =
 		sex:
 			type:'select'
 			label:"性别"
-			options: "男:男,女:女"
-		age_range:
-			type:'text'
-			label:"年龄段(范围)"
-		height_range:
-			type:'text'
-			label:"身高(范围）"
+			options:['男','女']
+		age_max:
+			type:'number'
+			label:"最大年龄"
+		age:
+			type:'number'
+			label:"年龄"
+		height_max:
+			type:'number'
+			label:"最大身高"
+		height:
+			type:'number'
+			label:"身高"
 		body_type:
 			type:'text'
 			label:"体型"
