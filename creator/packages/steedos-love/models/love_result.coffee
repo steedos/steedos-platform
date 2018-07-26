@@ -11,30 +11,39 @@ Creator.Objects.love_result =
 		scoreA_B:
 			type:'[Object]'
 			label:"我喜欢的"
-		"scoreA_B.$userB":
+		"scoreA_B.$.userB":
 			type: "text"
 			label:'我喜欢的'
-		"scoreA_B.$score": 
+		"scoreA_B.$.BName":
+			type: "text"
+			label:'他(她)的名字'
+		"scoreA_B.$.score": 
 			label: "匹配度"
 			type: "text"
 		
 		scoreB_A:
 			type:'[Object]'
 			label:"喜欢我的"
-		"scoreB_A.$userB":
+		"scoreB_A.$.userB":
 			type: "text"
 			label:'喜欢我的'
-		"scoreB_A.$score": 
+		"scoreB_A.$.BName":
+			type: "text"
+			label:'他(她)的名字'
+		"scoreB_A.$.score": 
 			label: "匹配度"
 			type: "text"
 		
 		score:
 			type:'[Object]'
 			label:"最适合我的"
-		"score.$userB":
+		"score.$.userB":
 			type: "text"
 			label:'最适合我的'
-		"score.$score": 
+		"score.$.BName":
+			type: "text"
+			label:'他(她)的名字'
+		"score.$.score": 
 			label: "匹配度"
 			type: "text"
 	permission_set:
