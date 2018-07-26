@@ -11,7 +11,7 @@ Creator.Objects.love_looking_for =
 		sex:
 			type:'select'
 			label:"性别"
-			options:['男','女']
+			options: "男:男,女:女"
 		age_max:
 			type:'number'
 			label:"最大年龄"
