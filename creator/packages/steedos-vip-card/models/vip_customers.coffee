@@ -60,6 +60,10 @@ Creator.Objects.vip_customers =
 			label:"返现有效期"
 			type:'datetime'
 
+		questionnaire_progess: # about_me, about_you, questions, completed
+			label: '问卷回答进度'
+			type: 'text'
+
 	list_views:
 		all:
 			label: "所有"
