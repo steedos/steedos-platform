@@ -11,10 +11,16 @@ Creator.Objects.vip_product_category =
 		sort_no:
 			label:'排序号'
 			type:'number'
+		parent:
+			label:'上级分类'
+			type:'lookup'
+			reference_to:'vip_product_category'
+			defaultValue:'全部'
+			group:'-'
 	list_views:
 		all:
 			label: "所有"
-			columns: ["name", "sort_no"]
+			columns: ["name", "sort_no",'parent']
 			filter_scope: "space"
 	permission_set:
 		user:
@@ -45,3 +51,10 @@ Creator.Objects.vip_product_category =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: true
+	triggers:
+		"before.update.server.product_category":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if(modifier?.$set?.parent and modifier?.$set?.parent==doc._id)
+					throw new Meteor.Error 500, "上级分类不能等于当前分类"

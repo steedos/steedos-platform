@@ -23,6 +23,7 @@ Creator.Objects.post_category =
 			label:'上级栏目'
 			type:'lookup'
 			reference_to:'post_category'
+			defaultValue:'全部'
 			group:'-'
 		sort_no:
 			label:'排序号'
@@ -61,4 +62,11 @@ Creator.Objects.post_category =
 			allowRead: false
 			modifyAllRecords: false
 			viewAllRecords: true
+	triggers:
+		"before.update.server.post_category":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if(modifier?.$set?.parent and modifier?.$set?.parent==doc._id)
+					throw new Meteor.Error 500, "上级栏目不能等于当前栏目"
 
