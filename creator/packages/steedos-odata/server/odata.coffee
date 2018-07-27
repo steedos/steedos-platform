@@ -204,8 +204,8 @@ Meteor.startup ->
 						fields = Creator.getObject(key).fields
 						_.each readable_fields,(field)->
 							if field.indexOf('$')<0
-								if fields[field]?.multiple!= true
-									createQuery.projection[field] = 1
+								#if fields[field]?.multiple!= true
+								createQuery.projection[field] = 1
 					if not permissions.viewAllRecords
 						if object.enable_share
 							# 满足共享规则中的记录也要搜索出来
@@ -364,8 +364,8 @@ Meteor.startup ->
 						fields = Creator.getObject(key).fields
 						_.each readable_fields,(field)->
 							if field.indexOf('$')<0
-								if fields[field]?.multiple!= true
-									createQuery.projection[field] = 1
+								#if fields[field]?.multiple!= true
+								createQuery.projection[field] = 1
 					if @queryParams.$top isnt '0'
 						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 					entities_index = []
