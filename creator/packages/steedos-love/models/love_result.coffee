@@ -46,6 +46,22 @@ Creator.Objects.love_result =
 		"score.$.score": 
 			label: "匹配度"
 			type: "text"
+		
+		result:
+			type:'[Object]'
+			label:"匹配的人"
+		"result.$.user":
+			type: "text"
+			label:'匹配的人'
+		"result.$.name":
+			type: "text"
+			label:'他(她)的名字'
+		"result.$.score": 
+			label: "匹配度"
+			type: "text"
+		"result.$.comment": 
+			label: "评论"
+			type: "text"
 	permission_set:
 		user:
 			allowCreate: false
