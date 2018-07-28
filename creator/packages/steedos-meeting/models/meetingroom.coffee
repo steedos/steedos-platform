@@ -8,7 +8,6 @@ Creator.Objects.meetingroom =
 			label:'会议室'
 			type:'text'
 			is_wide:true
-			sortable:true
 		# number:
 		#     label:'编号'
 		# 	type:'text'
