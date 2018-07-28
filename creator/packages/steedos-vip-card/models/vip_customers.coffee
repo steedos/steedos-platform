@@ -106,6 +106,11 @@ Creator.Objects.vip_customers =
 			todo: (userId, doc)->
 				share_id = doc?.share
 				space_id = doc?.space
+				share_id = doc?.share
+				space_id = doc?.space
+				customer = Creator.getCollection("vip_customers").findOne({space: space_id, owner: userId});
+				if customer
+					throw new Meteor.Error 405, "同一商家不能重复新建客户"
 				if share_id
 					store = Creator.getCollection("vip_store").findOne({_id: space_id}, {fields: {cash_back_enabled:1,cash_back_percentage:1,cash_back_period:1}})
 					if(store and store.cash_back_enabled)
