@@ -4,32 +4,24 @@ Creator.Objects.love_looking_for =
 	icon: "event"
 	enable_search: true
 	fields:
-		looking_forward:
-			type:'select'
-			label:"我想找的类型"
-			options: "一周:一周,短期:短期,长期:长期,余生:余生"
 		sex:
 			type:'select'
-			label:"性别"
+			label:"我希望对方的性别？"
 			options: "男:男,女:女"
 		
 		age:
 			type:'number'
-			label:"年龄"
+			label:"我希望对方的年龄？"
 		age_max:
 			type:'number'
 			label:"最大年龄"
 		
 		height:
 			type:'number'
-			label:"身高"
+			label:"我希望对方的身高？"
 		height_max:
 			type:'number'
 			label:"最大身高"
-		
-		body_type:
-			type:'text'
-			label:"体型"
 	
 	list_views:
 		all:

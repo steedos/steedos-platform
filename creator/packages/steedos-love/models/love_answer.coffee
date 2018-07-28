@@ -4,22 +4,11 @@ Creator.Objects.love_answer =
 	icon: "event"
 	enable_search: true
 	fields:
-		how_long:
-			type:'select'
-			label:"你希望这段关系维持多久?"
-			options: "一周:一周,几个月:几个月,长久:长久,终身:终身"
-		how_long_o:
-			type:'select'
-			label:"对方希望这段关系维持多久"
-			multiple:true
-		how_long_i:
-			type:'boolean'
-			label:"是否重要"
 		
 		smoking:
 			type:'select'
 			label:"你吸烟吗?"
-			options:"吸烟:吸烟,不吸烟:不吸烟,几乎不吸:几乎不吸"
+			options:"吸烟:吸烟,不吸烟:不吸烟,偶尔吸烟:偶尔吸烟"
 		smoking_o:
 			type:'select'
 			label:"对方是否吸烟"
@@ -31,7 +20,7 @@ Creator.Objects.love_answer =
 		astrological:
 			type:'select'
 			label:"你相信星座吗？"
-			options: "相信:相信,不相信:不相信,不太相信:不太相信"
+			options: "相信:相信,不相信:不相信,无所谓:无所谓"
 		astrological_o:
 			type:'select'
 			label:"对方是否相信星座"
@@ -42,8 +31,8 @@ Creator.Objects.love_answer =
 		
 		employed:
 			type:'select'
-			label:"你的工作状况是？"
-			options: "全职工作:全职工作,兼职工作:兼职工作,没有工作:没有工作,学生:学生"
+			label:"你的工作状况？"
+			options: "全职:全职,兼职:兼职,学生:学生"
 		employed_o:
 			type:'select'
 			label:"对方工作状况"
@@ -52,10 +41,24 @@ Creator.Objects.love_answer =
 			type:'boolean'
 			label:"是否重要"
 
+				
+		body_type:
+			type:'text'
+			label:"你的体型？"
+			options: "偏瘦:偏瘦,正常:正常,微胖:微胖"
+		body_type_o:
+			type:'select'
+			label:"对方体型"
+			multiple:true
+		body_type_i:
+			type:'boolean'
+			label:"是否重要"
+
+
 		relationship_status:
 			type:'select'
-			label:"你的感情状况是？"
-			options: "单身:单身,恋爱中:恋爱中"
+			label:"你的感情状况？"
+			options: "单身:单身,恋爱中:恋爱中,已订婚:已订婚,已婚:已婚,离异:离异"
 		relationship_status_o:
 			type:'select'
 			label:"对方感情状况"
@@ -64,34 +67,10 @@ Creator.Objects.love_answer =
 			type:'boolean'
 			label:"是否重要"
 		
-		marital_status:
-			type:'select'
-			label:"你的婚姻状况是？"
-			options: "未婚:未婚,已婚:已婚,离异:离异"
-		marital_status_o:
-			type:'select'
-			label:"对方婚姻状况"
-			multiple:true
-		marital_status_i:
-			type:'boolean'
-			label:"是否重要"
-		
-		# zodiac:
-		# 	type:'select'
-		# 	label:"生肖"
-		# 	options: "鼠:鼠,牛:牛,虎:虎,龙:龙,兔:兔,蛇:蛇,马:马,羊:羊,猴:猴,鸡:鸡,狗:狗,猪:猪"
-		# zodiac_o:
-		# 	type:'select'
-		# 	label:"对方生肖"
-		# 	multiple:true
-		# zodiac_i:
-		# 	type:'boolean'
-		# 	label:"是否重要"
-		
 		education:
 			type:'select'
-			label:"你的学历是？"
-			options: "高中及高中以下学历:高中及高中学历以下,本科:本科,硕士:硕士,博士及博士以上学历:博士及博士以上学历"
+			label:"你的学历？"
+			options: "高中:高中,大专:大专,本科:本科,硕士:硕士,博士及博士以上学历:博士及博士以上学历"
 		education_o:
 			type:'select'
 			label:"对方学历"

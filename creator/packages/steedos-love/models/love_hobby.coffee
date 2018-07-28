@@ -6,25 +6,25 @@ Creator.Objects.love_hobby =
 	fields:
 		sport:
 			type:'text'
-			label:"运动"
+			label:"你最喜欢的运动？"
 		star:
 			type:'text'
-			label:"明星"
+			label:"你最喜欢的明星？"
 		movie_type:
 			type:'text'
-			label:"影视类型"
+			label:"你最喜欢的电影？"
 		game:
 			type:'text'
-			label:"游戏"
+			label:"你最喜欢的游戏？"
 		travel:
 			type:'text'
-			label:"旅游目的地"
+			label:"你最想去旅行的城市？"
 		book:
 			type:'text'
-			label:"我最推荐的书籍"
+			label:"你最推荐的书籍？"
 		music:
 			type:'text'
-			label:"我喜欢的音乐"
+			label:"你最喜欢的一首歌？"
 	list_views:
 		all:
 			label: "所有"
