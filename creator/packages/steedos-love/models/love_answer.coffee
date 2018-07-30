@@ -1,6 +1,6 @@
 Creator.Objects.love_answer =
 	name: "love_answer"
-	label: "恋爱小测试"
+	label: "交友匹配"
 	icon: "event"
 	enable_search: true
 	fields:
