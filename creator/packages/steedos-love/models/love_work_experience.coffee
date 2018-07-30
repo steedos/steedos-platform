@@ -11,7 +11,7 @@ Creator.Objects.love_work_experience =
         
         company:
             type:'text'
-            label:"专业"
+            label:"公司"
             inlineHelpText:'例如：华炎软件'
         
         area:
@@ -27,9 +27,9 @@ Creator.Objects.love_work_experience =
             label:"离职时间"
         
         is_incumbent:
-            type:'boolean'
+            type:'select'
             label:"是否在职"
-        
+            options:"是,否"
         description:
             type:'textarea'
             is_wide:true	

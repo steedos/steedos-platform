@@ -8,29 +8,25 @@ Creator.Objects.love_educational_experience =
 			type:'text'
 			label:"学校名称"
 			inlineHelpText:'例如:北京大学'
+			group:'-'
 		
 		educational_background:
 			type:'select'
 			label:"学历"	
 			options: "高中:高中,大专:大专,本科:本科,硕士:硕士,博士及博士以上:博士及博士以上"
+			group:'-'
 		
 		profession:
 			type:'text'
 			label:"专业"
 			inlineHelpText:'例如:计算机科学与技术'
+			group:'-'
 		
 		entry_time:
 			type:'date'
 			label:"入学时间"
+			group:'-'
 		
-		separation_time:
-			type:'date'
-			label:"离校时间"
-		
-		description:
-			type:'textarea'
-			is_wide:true	
-			label:"在校经历"
 	list_views:
 		all:
 			label: "所有"
