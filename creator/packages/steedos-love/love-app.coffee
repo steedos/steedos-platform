@@ -11,5 +11,7 @@ Creator.Apps.love =
 		"love_hobby",
 		"love_invite_codes",
 		"love_looking_for",
-		"love_result"
+		"love_result",
+		"love_educational_experience",
+		"love_work_experience"
 		]
