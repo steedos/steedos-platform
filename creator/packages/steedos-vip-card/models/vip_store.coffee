@@ -81,6 +81,7 @@ Creator.Objects.vip_store =
 		featured:
 			label:'发布到首页'
 			type:'boolean'
+			index:true
 			group:'-'
 		cash_back_enabled:
 			label:'启用转发返现'

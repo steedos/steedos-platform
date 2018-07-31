@@ -15,12 +15,14 @@ Creator.Objects.vip_card =
 		card_number:
 			label:"卡号"
 			type:'text'
+			index:true
 			group:'-'
 		card_name:
 			label:'名称'
 			type:'text'
 			#reference_to:'vip_card_rule'
 			is_wide:true
+			index:true
 		# user:
 		# 	label:'持卡人'
 		# 	type:'master_detail'
@@ -82,6 +84,7 @@ Creator.Objects.vip_card =
 			label:'是否激活'
 			type:'boolean'
 			omit:true
+			index:true
 		actived_time:
 			label:'激活时间'
 			type:'datetime'

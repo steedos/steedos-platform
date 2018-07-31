@@ -58,6 +58,7 @@ Creator.Objects.vip_event_attendees =
 			reference_to:'vip_event'
 			is_wide:true
 			omit:true
+			index:true
 		comment:
 			label:'备注'
 			type:'textarea'

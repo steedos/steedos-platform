@@ -65,6 +65,7 @@ Creator.Objects.vip_event =
 			label:'发布到首页'
 			type:'boolean'
 			group:'-'
+			index:true
 		cover:
 			label:'封面照片'
 			type:'image'

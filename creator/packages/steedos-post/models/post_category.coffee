@@ -24,6 +24,7 @@ Creator.Objects.post_category =
 			type:'lookup'
 			reference_to:'post_category'
 			defaultValue:'全部'
+			index:true
 			group:'-'
 		sort_no:
 			label:'排序号'

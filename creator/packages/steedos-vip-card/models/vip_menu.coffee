@@ -35,6 +35,7 @@ Creator.Objects.vip_menu =
 		enabled:
 			label:'是否启用'
 			type:'boolean'
+			index:true
 	list_views:
 		all:
 			label: "所有"

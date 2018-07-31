@@ -7,6 +7,8 @@ Creator.Objects.love_invite_codes =
 		code:
 			type:'text'
 			label:"邀请码"
+			index:true
+			
 		expired:
 			type:'datetime'
 			label:"截止日期"

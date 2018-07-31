@@ -39,6 +39,7 @@ Creator.Objects.spaces =
 			label: "管理员"
 			type: "lookup"
 			reference_to: "users"
+			index:true
 			multiple: true
 		apps:
 			label: "应用"

@@ -7,10 +7,12 @@ Creator.Objects.vip_address =
 			label:'收货人'
 			type:'text'
 			required:true
+			index:true
 		address:
 			label:'地址'
 			type:'location'
 			required:true
+			index:true
 		door:
 			label:'门牌号'
 			type:'text'

@@ -7,6 +7,7 @@ Creator.Objects.user_star =
 			label: "用户"
 			type: "lookup"
 			reference_to: "users"
+			index:true
 		star_space:
 			label: "店铺"
 			type: "lookup"
@@ -15,6 +16,7 @@ Creator.Objects.user_star =
 			label: "文章"
 			type: "lookup"
 			reference_to: "post"
+			index:true
 	list_views:
 		all:
 			label:"所有"

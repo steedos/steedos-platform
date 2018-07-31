@@ -71,6 +71,7 @@ Creator.Objects.space_users =
 		user:
 			type: "master_detail"
 			reference_to: "users"
+			index:true
 			# required: true
 			omit: true
 	list_views:	

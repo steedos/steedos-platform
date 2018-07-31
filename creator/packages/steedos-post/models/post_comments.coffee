@@ -12,6 +12,7 @@ Creator.Objects.post_comments =
 			label:'评论对象'
 			type:'master_detail'
 			reference_to:'post'
+			index:true
 	triggers:
 		"after.insert.server.post_comments":
 			on: "server"

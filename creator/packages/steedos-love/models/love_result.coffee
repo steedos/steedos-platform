@@ -7,6 +7,7 @@ Creator.Objects.love_result =
 		userA:
 			type:'text'
 			label:"用户"
+			index:true
 		
 		scoreA_B:
 			type:'[Object]'

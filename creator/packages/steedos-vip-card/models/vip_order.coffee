@@ -81,6 +81,7 @@ Creator.Objects.vip_order =
 				{label:'已完成',value:'completed'},
 				{label:'已取消',value:'canceled'}]
 			omit:true
+			index:true
 		store:
 			label:'门店'
 			type:'lookup'
@@ -91,7 +92,7 @@ Creator.Objects.vip_order =
 			label:'会员卡'
 			type:'master_detail'
 			reference_to:'vip_card'
-
+			index:true
 		# type: # recharge, pay, ...
 		# 	label: '类型'
 		# 	type: 'text'

@@ -63,6 +63,7 @@ Creator.Objects.organizations =
 			label: "隐藏"
 			type: "boolean"
 			omit: true
+			index:true
 
 	list_views:
 	

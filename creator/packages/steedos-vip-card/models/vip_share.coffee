@@ -12,13 +12,16 @@ Creator.Objects.vip_share =
 			label: "商品"
 			type: "lookup"
 			reference_to: 'vip_product'
+			index:true
 		post:
 			label: "动态"
 			type: "lookup"
 			reference_to: 'post'
+			index:true
 		other:#记录URL值
 			label: "其他"
 			type: "text"
+			index:true
 	list_views:
 		all:
 			label: "所有"
