@@ -1,10 +1,10 @@
-Creator.Objects.users = 
+Creator.Objects.users =
 	name: "users"
 	label: "用户"
 	icon: "user"
 	enable_api: true
 	fields:
-		name: 
+		name:
 			label: "名称"
 			type: "text"
 			required: true
@@ -27,7 +27,7 @@ Creator.Objects.users =
 		'profile.avatar':
 			type:'text'
 			label:'头像'
-	list_views:	
+	list_views:
 		all:
 			label:'所有'
 			columns: ["name", "username"]
@@ -40,11 +40,17 @@ Creator.Objects.users =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
 		admin:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false 
+			viewAllRecords: false
+
+if Meteor.isServer
+	Meteor.users._ensureIndex({
+		"services.weixin.openid.appid": 1,
+		"services.weixin.openid._id": 1
+	},{background: true})
