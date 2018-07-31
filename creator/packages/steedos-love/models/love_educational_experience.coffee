@@ -4,7 +4,7 @@ Creator.Objects.love_educational_experience =
 	icon: "event"
 	enable_search: true
 	fields:
-		school:
+		name:
 			type:'text'
 			label:"学校名称"
 			inlineHelpText:'例如:北京大学'

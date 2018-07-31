@@ -9,7 +9,7 @@ Creator.Objects.love_work_experience =
             label:"职位"
             inlineHelpText:'例如：经理'
         
-        company:
+        name:
             type:'text'
             label:"公司"
             inlineHelpText:'例如：华炎软件'
