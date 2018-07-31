@@ -3,24 +3,22 @@ Creator.Objects.love_work_experience =
     label: "工作经历"
     icon: "event"
     enable_search: true
-    fields:
-        position:
-            type:'text'
-            label:"职位"
-            inlineHelpText:'例如：经理'
-        
+    fields:    
         name:
             type:'text'
             label:"公司"
             inlineHelpText:'例如：华炎软件'
         
-        area:
+        position:
             type:'text'
-            label:"地区"
+            label:"职位"
+            inlineHelpText:'例如：经理'
+            group:'-'
         
         entry_time:
             type:'date'
             label:"入职时间"
+            group:'-'
         
         separation_time:
             type:'date'
@@ -30,10 +28,7 @@ Creator.Objects.love_work_experience =
             type:'select'
             label:"是否在职"
             options:"是,否"
-        description:
-            type:'textarea'
-            is_wide:true	
-            label:"说明"
+            group:'-'
     
     list_views:
         all:
