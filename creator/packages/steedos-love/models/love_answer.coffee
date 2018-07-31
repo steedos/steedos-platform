@@ -70,7 +70,7 @@ Creator.Objects.love_answer =
 		education:
 			type:'select'
 			label:"你的学历？"
-			options: "高中:高中,大专:大专,本科:本科,硕士:硕士,博士及博士以上:博士及博士以上"
+			options: "小学:小学,初中:初中,高中:高中,大专:大专,本科:本科,硕士:硕士,博士及博士以上:博士及博士以上"
 		education_o:
 			type:'select'
 			label:"对方学历"
