@@ -1,21 +1,25 @@
-Creator.Objects.love_invite_codes =
-	name: "love_invite_codes"
-	label: "邀请码表"
+Creator.Objects.love_recommend =
+	name: "love_recommend"
+	label: "每周推荐结果"
 	icon: "event"
 	enable_search: true
 	fields:
-		code:
-			type:'text'
-			label:"邀请码"
-			index:true
+		user_a:
+			label:"第一个用户ID"
+			type: "lookup"
+			reference_to: "users"
+			index: true
 
-		expired:
-			type:'datetime'
-			label:"截止日期"
+		user_b:
+			label:"第二个用户ID"
+			type: "lookup"
+			reference_to: "users"
+			index: true
+
 	list_views:
 		all:
 			label: "所有"
-			columns: ["code", "expired", "owner"]
+			columns: ["name"]
 			filter_scope: "space"
 
 	permission_set:
@@ -25,7 +29,7 @@ Creator.Objects.love_invite_codes =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -39,11 +43,12 @@ Creator.Objects.love_invite_codes =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 		guest:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
+

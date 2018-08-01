@@ -8,7 +8,7 @@ Creator.Objects.love_result =
 			type:'text'
 			label:"用户"
 			index:true
-		
+
 		scoreA_B:
 			type:'[Object]'
 			label:"我喜欢的"
@@ -18,10 +18,11 @@ Creator.Objects.love_result =
 		"scoreA_B.$.BName":
 			type: "text"
 			label:'他(她)的名字'
-		"scoreA_B.$.score": 
+		"scoreA_B.$.score":
 			label: "匹配度"
-			type: "text"
-		
+			type: "number"
+			scale: 2
+
 		scoreB_A:
 			type:'[Object]'
 			label:"喜欢我的"
@@ -31,10 +32,11 @@ Creator.Objects.love_result =
 		"scoreB_A.$.BName":
 			type: "text"
 			label:'他(她)的名字'
-		"scoreB_A.$.score": 
+		"scoreB_A.$.score":
 			label: "匹配度"
-			type: "text"
-		
+			type: "number"
+			scale: 2
+
 		score:
 			type:'[Object]'
 			label:"最适合我的"
@@ -44,10 +46,11 @@ Creator.Objects.love_result =
 		"score.$.BName":
 			type: "text"
 			label:'他(她)的名字'
-		"score.$.score": 
+		"score.$.score":
 			label: "匹配度"
-			type: "text"
-		
+			type: "number"
+			scale: 2
+
 		result:
 			type:'[Object]'
 			label:"匹配的人"
@@ -57,10 +60,11 @@ Creator.Objects.love_result =
 		"result.$.name":
 			type: "text"
 			label:'他(她)的名字'
-		"result.$.score": 
+		"result.$.score":
 			label: "匹配度"
-			type: "text"
-		"result.$.comment": 
+			type: "number"
+			scale: 2
+		"result.$.comment":
 			label: "评论"
 			type: "text"
 	permission_set:
