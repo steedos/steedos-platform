@@ -1,6 +1,6 @@
 Creator.Objects.love_answer2 =
 	name: "love_answer2"
-	label: "交友问答(中阶)"
+	label: "玫瑰卷"
 	icon: "event"
 	enable_search: true
 	fields:					
@@ -91,7 +91,7 @@ Creator.Objects.love_answer2 =
 		hurt_happened:
 			type:'select'
 			label:"有没有一些事情，虽然过了很久，你还是感觉很受伤?"
-			options:'是,否'
+			options:'有,没有'
 		hurt_happened_o:
 			type:'select'
 			label:"为曾经发生的过某事而伤心"
@@ -162,7 +162,7 @@ Creator.Objects.love_answer2 =
 
 		high_income:
 			type:'select'
-			label:"你的理想伴侣是高收入者，或者有成为高收入者的潜力？"
+			label:"你希望你的理想伴侣是高收入者，或者至少有成为高收入者的潜力？"
 			options:'是的，这很重要,有点看重,无所谓'
 		high_income_o:
 			type:'select'

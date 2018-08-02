@@ -1,6 +1,6 @@
 Creator.Objects.love_answer =
 	name: "love_answer"
-	label: "交友问答(初阶)"
+	label: "百合卷"
 	icon: "event"
 	enable_search: true
 	fields:					
@@ -115,7 +115,7 @@ Creator.Objects.love_answer =
 		previous_picture:
 			type:'select'
 			label:"对方还留着前任的照片，会让你觉得恼火吗？"
-			options:'是,否'
+			options:'会,不会'
 		previous_picture_o:
 			type:'select'
 			label:"前任的照片"
@@ -126,8 +126,8 @@ Creator.Objects.love_answer =
 		
 		minimum_page:
 			type:'select'
-			label:"你的另一半对自己现在低工资很满意，也没有计划找一份更有挑战/高薪工作。你觉得是问题吗？"
-			options:'是的，我不能接受,看情况，毕竟这是Ta的人生,不是问题'
+			label:"对方满足于现在的低工资，没有计划找一份更有挑战/高薪工作。你能接受吗？"
+			options:'能接受,看情况，毕竟这是Ta的人生,不，我不能接受'
 		minimum_page_o:
 			type:'select'
 			label:"低工资"
