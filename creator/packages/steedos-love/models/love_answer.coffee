@@ -7,7 +7,7 @@ Creator.Objects.love_answer =
 		finance_budget:
 			type:'select'
 			label:"你会规划自己的财务开支吗？"
-			options:'是,否'
+			options:'会,不会'
 		finance_budget_o:
 			type:'select'
 			label:"规划自己的财务开支"
@@ -235,7 +235,7 @@ Creator.Objects.love_answer =
 		spelling_mistake:
 			type:'select'
 			label:"你看见错别字会感觉很不舒服吗？"
-			options:'是,不是'
+			options:'会,不会'
 		spelling_mistake_o:
 			type:'select'
 			label:"对方错别字？"
