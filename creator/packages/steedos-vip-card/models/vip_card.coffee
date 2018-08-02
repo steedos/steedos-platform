@@ -11,7 +11,7 @@ Creator.Objects.vip_card =
 			label:'手机'
 			type:'text'
 			is_wide:true
-		
+
 		card_number:
 			label:"卡号"
 			type:'text'
@@ -19,15 +19,15 @@ Creator.Objects.vip_card =
 			group:'-'
 		card_name:
 			label:'名称'
-			type:'text'
-			#reference_to:'vip_card_rule'
+			type:'lookup'
+			reference_to:'vip_card_rule'
 			is_wide:true
 			index:true
 		# user:
 		# 	label:'持卡人'
 		# 	type:'master_detail'
 		# 	reference_to:'users'
-		
+
 		points:
 			label:'积分'
 			type:'number'
@@ -49,7 +49,7 @@ Creator.Objects.vip_card =
 			label:'余额'
 			type:'number'
 			scale: 2
-		
+
 		store:
 			label:'办卡门店'
 			type:'lookup'
@@ -60,7 +60,7 @@ Creator.Objects.vip_card =
 			type:'master_detail'
 			reference_to:'vip_store'
 			multiple:true
-		
+
 		start_time:
 			label:'办卡时间'
 			type:'datetime'
@@ -68,7 +68,7 @@ Creator.Objects.vip_card =
 		end_time:
 			label:"截止时间"
 			type:'datetime'
-		
+
 		members:
 			label:'共享成员'
 			type:'lookup'
@@ -139,7 +139,7 @@ Creator.Objects.vip_card =
 					if modifier.$set.card_number!=doc.card_number
 						count = Creator.getCollection("vip_card").find({space:doc.space,card_number:modifier.$set.card_number}).count()
 						if count
-							throw new Meteor.Error 500, "卡号不能重复"		
+							throw new Meteor.Error 500, "卡号不能重复"
 	permission_set:
 		user:
 			allowCreate: false
