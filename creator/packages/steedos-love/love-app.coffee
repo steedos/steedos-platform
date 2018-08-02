@@ -8,6 +8,7 @@ Creator.Apps.love =
 	objects: [
 		"love_about_me",
 		"love_answer",
+		"love_answer2",
 		"love_hobby",
 		"love_invite_codes",
 		"love_looking_for",
