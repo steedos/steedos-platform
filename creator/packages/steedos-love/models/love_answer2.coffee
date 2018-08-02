@@ -1,5 +1,5 @@
-Creator.Objects.love_answer =
-	name: "love_answer"
+Creator.Objects.love_answer2 =
+	name: "love_answer2"
 	label: "交友问答(中阶)"
 	icon: "event"
 	enable_search: true
