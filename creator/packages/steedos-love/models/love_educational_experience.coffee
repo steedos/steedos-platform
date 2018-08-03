@@ -7,7 +7,7 @@ Creator.Objects.love_educational_experience =
 		name:
 			type:'text'
 			label:"学校名称"
-			inlineHelpText:'例如:北京大学'
+			inlineHelpText:'例如:北京航空航天大学'
 			required:true
 			group:'-'
 		
@@ -19,19 +19,20 @@ Creator.Objects.love_educational_experience =
 		
 		profession:
 			type:'text'
-			label:"专业"
-			inlineHelpText:'例如:计算机科学与技术'
+			label:"院系"
+			inlineHelpText:'例如:计算机系'
 			group:'-'
 		
 		entry_year:
-			type:'number'
+			type:'select'
 			label:"入学年份"
+			options:"1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018"
 			group:'-'
 		
 		end_year:
-			type:'number'
+			type:'select'
 			label:"毕业年份"
-		
+			options:"1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022"
 	list_views:
 		all:
 			label: "所有"
