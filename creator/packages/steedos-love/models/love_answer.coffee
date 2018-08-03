@@ -30,7 +30,7 @@ Creator.Objects.love_answer =
 		
 		morning:
 			type:'select'
-			label:"你是习惯早起的人吗？"
+			label:"你习惯早起吗？"
 			options:'是,不是'
 		morning_o:
 			type:'select'
