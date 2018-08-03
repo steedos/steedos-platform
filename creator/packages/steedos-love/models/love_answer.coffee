@@ -1,6 +1,6 @@
 Creator.Objects.love_answer =
 	name: "love_answer"
-	label: "百合卷"
+	label: "玫瑰卷"
 	icon: "event"
 	enable_search: true
 	fields:					
@@ -186,7 +186,7 @@ Creator.Objects.love_answer =
 		
 		parter_to_be:
 			type:'select'
-			label:"你更喜欢你的另一半是一个什么样的人？"
+			label:"你希望另一半是一个什么样的人？"
 			options:'主导的,顺从的,平衡的'
 		parter_to_be_o:
 			type:'select'

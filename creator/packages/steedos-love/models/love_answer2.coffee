@@ -1,6 +1,6 @@
 Creator.Objects.love_answer2 =
 	name: "love_answer2"
-	label: "玫瑰卷"
+	label: "百合卷"
 	icon: "event"
 	enable_search: true
 	fields:					
