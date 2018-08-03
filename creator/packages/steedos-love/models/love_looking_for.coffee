@@ -1,6 +1,6 @@
 Creator.Objects.love_looking_for =
 	name: "love_looking_for"
-	label: "理想伴侣"
+	label: "筛选条件"
 	icon: "event"
 	enable_search: true
 	fields:
