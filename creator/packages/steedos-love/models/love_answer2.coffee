@@ -42,11 +42,11 @@ Creator.Objects.love_answer2 =
 
 		debt:
 			type:'select'
-			label:"你介意与有大额债务的人交往吗？"
+			label:"你介意与负债很多人交往吗？"
 			options:'不介意,看情况,介意'
 		debt_o:
 			type:'select'
-			label:"大额债务"
+			label:"负债很多"
 			multiple:true
 		debt_i:
 			type:'number'
@@ -102,7 +102,7 @@ Creator.Objects.love_answer2 =
 
 		first_date_say:
 			type:'select'
-			label:"你和刚认识的某人第一次约会，临别时，Ta说：“我觉得我爱上你了”，你会觉得？"
+			label:"你和刚认识的某人第一次约会，临别时对方说爱上你了，你会觉得？"
 			options:'甜蜜,可怕'
 		first_date_say_o:
 			type:'select'
