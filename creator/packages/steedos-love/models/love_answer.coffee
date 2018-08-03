@@ -78,7 +78,7 @@ Creator.Objects.love_answer =
 		
 		pet:
 			type:'select'
-			label:"你会让你的宠物睡在你的床上吗？"
+			label:"你会让你的宠物睡在床上吗？"
 			options:'会,不会'
 		pet_o:
 			type:'select'
