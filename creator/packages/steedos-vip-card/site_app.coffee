@@ -6,6 +6,7 @@ Creator.Apps.site =
 	visible:true 
 	is_creator:true
 	objects: [
+		"vip_customers",
 		"post_category",
 		"post",
 		"post_comments",

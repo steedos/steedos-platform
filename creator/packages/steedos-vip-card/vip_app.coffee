@@ -6,6 +6,7 @@ Creator.Apps.vip =
 	visible:true 
 	is_creator:true
 	objects: [
+		"vip_customers",
 		"vip_product",
 		"vip_product_category",
 		"vip_order",

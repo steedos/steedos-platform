@@ -6,6 +6,7 @@ Creator.Apps.love =
 	visible:true 
 	is_creator:true
 	objects: [
+		"vip_customers",
 		"love_about_me",
 		"love_answer",
 		"love_answer2",
