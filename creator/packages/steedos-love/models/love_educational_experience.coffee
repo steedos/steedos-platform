@@ -8,6 +8,7 @@ Creator.Objects.love_educational_experience =
 			type:'text'
 			label:"学校名称"
 			inlineHelpText:'例如:北京大学'
+			required:true
 			group:'-'
 		
 		educational_background:
@@ -22,10 +23,14 @@ Creator.Objects.love_educational_experience =
 			inlineHelpText:'例如:计算机科学与技术'
 			group:'-'
 		
-		entry_time:
-			type:'date'
-			label:"入学时间"
+		entry_year:
+			type:'number'
+			label:"入学年份"
 			group:'-'
+		
+		end_year:
+			type:'number'
+			label:"毕业年份"
 		
 	list_views:
 		all:

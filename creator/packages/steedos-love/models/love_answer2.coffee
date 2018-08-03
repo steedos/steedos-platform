@@ -1,42 +1,66 @@
 Creator.Objects.love_answer2 =
 	name: "love_answer2"
-	label: "百合卷"
+	label: "蔷薇卷"
 	icon: "event"
 	enable_search: true
-	fields:					
-		astrological:
+	fields:						
+		jealousy:
 			type:'select'
-			label:"你相信星座吗？"
-			options: "相信,不相信,无所谓"
-		astrological_o:
+			label:"你认为吃醋是对恋情有益的吗？"
+			options:'是,不是'
+		jealousy_o:
 			type:'select'
-			label:"对方是否相信星座"
+			label:"对方吃醋"
 			multiple:true
-		astrological_i:
-			type:'number'
-			label:'重要程度'
-
-		messy:
-			type:'select'
-			label:"你介意同邋遢的人交往吗？"
-			options:'介意,不介意'
-		messy_o:
-			type:'select'
-			label:"介意对方邋遢？"
-			multiple:true
-		messy_i:
+		jealousy_i:
 			type:'number'
 			label:'重要程度'
 		
-		scary_movie:
+		before_married:
 			type:'select'
-			label:"你喜欢悬疑电影吗？"
-			options:'喜欢,不喜欢'
-		scary_movie_o:
+			label:"你觉得在结婚之前至少需要谈多久的恋爱？"
+			options:'至少两年,至少一年,至少半年,少于半年或不需要'
+		before_married_o:
 			type:'select'
-			label:"对方悬疑"
+			label:"结婚之前"
 			multiple:true
-		scary_movie_i:
+		before_married_i:
+			type:'number'
+			label:'重要程度'
+		
+		flicp_coin:
+			type:'select'
+			label:"对于生活中一些重要事项，你会考虑用抛硬币的方式来决定吗？"
+			options:'会,不会'
+		flicp_coin_o:
+			type:'select'
+			label:"抛硬币"
+			multiple:true
+		flicp_coin_i:
+			type:'number'
+			label:'重要程度'
+		
+		minimum_page:
+			type:'select'
+			label:"对方满足于现在的低工资，没有计划找一份更有挑战/高薪工作。你能接受吗？"
+			options:'能接受,看情况，毕竟这是Ta的人生,不，我不能接受'
+		minimum_page_o:
+			type:'select'
+			label:"低工资"
+			multiple:true
+		minimum_page_i:
+			type:'number'
+			label:'重要程度'
+		
+		intellectual:
+			type:'select'
+			label:"你经常和别人进行理性且深层次的辩论吗？"
+			options:'是,不是'
+		intellectual_o:
+			type:'select'
+			label:"理性且深层次的辩论"
+			multiple:true
+		intellectual_i:
 			type:'number'
 			label:'重要程度'
 
@@ -64,22 +88,35 @@ Creator.Objects.love_answer2 =
 			type:'number'
 			label:'重要程度'
 
-		more_into:
+		
+		show_your_love:
 			type:'select'
-			label:"你希望你的的理想伴侣更热衷于？"
-			options:'运动,阅读,音乐,电影'
-		more_into_o:
+			label:'你更喜欢如何表达你的爱？'
+			options:"语言：说一些甜蜜的话,行动：做一些浪漫的事（比如约会）,礼物：花、首饰、小物件,拥抱：一个爱的拥抱"
+		show_your_love_o:
 			type:'select'
-			label:"理想伴侣更热衷于"
+			label:"表达你的爱"
 			multiple:true
-		more_into_i:
+		show_your_love_i:
 			type:'number'
 			label:'重要程度'
-
+				
+		before_meeting:
+			type:'select'
+			label:"你至少需要和对方聊多久，才愿意出来见面？"
+			options:'立刻，如果是我喜欢的类型,几天,几周,几个月'
+		before_meeting_o:
+			type:'select'
+			label:"约会之前"
+			multiple:true
+		before_meeting_i:
+			type:'number'
+			label:'重要程度'
+		
 		appearance_emphasia:
 			type:'select'
-			label:"你讨厌颜控吗？"
-			options:'讨厌,看情况，分程度,不讨厌'
+			label:"只看重外表的人，会让你觉得恼火吗？"
+			options:'会,不会,有时候'
 		appearance_emphasia_o:
 			type:'select'
 			label:"讨厌颜控"
@@ -88,15 +125,15 @@ Creator.Objects.love_answer2 =
 			type:'number'
 			label:'重要程度'
 		
-		hurt_happened:
+		dinner:
 			type:'select'
-			label:"有没有一些事情，虽然过了很久，你还是感觉很受伤?"
-			options:'有,没有'
-		hurt_happened_o:
+			label:"Ta的前任来到你们的城市，Ta计划独自与前任共进晚餐，你会怎么做？"
+			options:'相信爱情，不反对,不会激动，但会跟着去,绝不允许'
+		dinner_o:
 			type:'select'
-			label:"为曾经发生的过某事而伤心"
+			label:"共进晚餐"
 			multiple:true
-		hurt_happened_i:
+		dinner_i:
 			type:'number'
 			label:'重要程度'
 
@@ -124,18 +161,6 @@ Creator.Objects.love_answer2 =
 			type:'number'
 			label:'重要程度'
 
-		quite:
-			type:'select'
-			label:"你愿意与一个安静的人约会吗？"
-			options:'愿意,不愿意'
-		quite_o:
-			type:'select'
-			label:"安静的人"
-			multiple:true
-		quite_i:
-			type:'number'
-			label:'重要程度'
-
 		thing_work_out:
 			type:'select'
 			label:"你喜欢花时间探索事物背后的工作原理吗？"
@@ -160,6 +185,18 @@ Creator.Objects.love_answer2 =
 			type:'number'
 			label:'重要程度'
 
+		married:
+			type:'select'
+			label:"你想尽快结婚吗？"
+			options:'我想尽快结婚,看缘分,暂时没有结婚的打算'
+		married_o:
+			type:'select'
+			label:"尽快结婚"
+			multiple:true
+		married_i:
+			type:'number'
+			label:'重要程度'
+		
 		high_income:
 			type:'select'
 			label:"你希望你的理想伴侣是高收入者，或者至少有成为高收入者的潜力？"
@@ -220,39 +257,15 @@ Creator.Objects.love_answer2 =
 			type:'number'
 			label:'重要程度'
 
-		dinner:
-			type:'select'
-			label:"Ta的前任来到你们的城市，Ta计划独自与前任共进晚餐，你会怎么做？"
-			options:'相信爱情，不反对,不会激动，但会跟着去,绝不允许'
-		dinner_o:
-			type:'select'
-			label:"共进晚餐"
-			multiple:true
-		dinner_i:
-			type:'number'
-			label:'重要程度'
-
 		housemate:
 			type:'select'
-			label:"发现你的约会对象有一个异性的室友，会让你觉得？"
+			label:"发现你的约会对象有一个与你性别相同的室友，会让你觉得？"
 			options:'不舒服,无所谓'
 		housemate_o:
 			type:'select'
 			label:"异性的室友"
 			multiple:true
 		housemate_i:
-			type:'number'
-			label:'重要程度'
-		
-		politics:
-			type:'select'
-			label:"你喜欢讨论时政吗？"
-			options:'喜欢,不喜欢'
-		politics_o:
-			type:'select'
-			label:"讨论时政"
-			multiple:true
-		politics_i:
 			type:'number'
 			label:'重要程度'
 
@@ -277,18 +290,6 @@ Creator.Objects.love_answer2 =
 			label:"沉思"
 			multiple:true
 		meditate_i:
-			type:'number'
-			label:'重要程度'
-
-		dangerous:
-			type:'select'
-			label:"你喜欢极限运动吗？"
-			options:'喜欢,不喜欢'
-		dangerous_o:
-			type:'select'
-			label:"喜欢极限运动"
-			multiple:true
-		dangerous_i:
 			type:'number'
 			label:'重要程度'
 		
