@@ -113,3 +113,4 @@ Creator.Objects.love_about_me =
 					Creator.Collections['love_about_me'].direct.update({_id:doc._id},{$set:{age:age,zodiac:zodiac,constellation:constellation}})
 				if modifier?.$set?.name
 					Creator.getCollection("users").direct.update(doc.owner,{$set:{name:modifier.$set.name}})
+					Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$set: {name: modifier.$set.name}}, {multi: true})
