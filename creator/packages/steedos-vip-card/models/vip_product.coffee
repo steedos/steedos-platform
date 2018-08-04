@@ -1,3 +1,22 @@
+calculateParents = (parentId)->
+	parents = [];
+	while (parentId)
+		if parentId!='全部'
+			parents.push(parentId)
+		parentOrg = Creator.getCollection('vip_product_category').findOne(parentId, {fields:{parent: 1, name: 1}});
+		if (parentOrg)
+			parentId = parentOrg.parent
+		else
+			parentId = null
+	return parents
+
+calculateChildren = ()->
+	children = []
+	childrenObjs = Creator.getCollection('vip_product_category').findOne(parent, {fields: {_id:1}});
+	childrenObjs.forEach (child) ->
+		children.push(child._id);
+	return children;
+
 Creator.Objects.vip_product =
 	name: "vip_product"
 	label: "商品"
@@ -42,6 +61,12 @@ Creator.Objects.vip_product =
 		# video:
 		# 	label:'视频'
 		# 	type:'video'
+		category:
+			label:'所属分类'
+			type:'lookup'
+			reference_to:'vip_product_category'
+			multiple:true
+			group:'-'
 		categories:
 			label:'分类'
 			type:'lookup'
@@ -72,7 +97,7 @@ Creator.Objects.vip_product =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["name", "default_price", "compared_price", "avatar", "categories"]
+			columns: ["name", "default_price", "compared_price", "avatar", "category"]
 			filter_scope: "space"
 	permission_set:
 		user:
@@ -104,15 +129,37 @@ Creator.Objects.vip_product =
 			modifyAllRecords: false
 			viewAllRecords: true
 	triggers:
+		
 		"before.insert.server.product":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
 				if(doc.covers)
 					doc.avatar = doc.covers[0]
-		"before.update.server.product":
+				if(doc.category)
+					doc.category.forEach (category)->
+						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{children:1,parents:1}})
+						if product_category.parents
+							parents = []
+							product_category.parents.forEach (parent)->
+								parents = _.union(parents,calculateParents(parent))
+							doc.categories = _.union(doc.categories,parents)
+					doc.categories = _.union(doc.categories,doc.category)
+		
+		"after.update.server.product":
 			on: "server"
-			when: "before.update"
+			when: "after.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
 				if(modifier?.$set?.covers)
 					modifier.$set['avatar'] = modifier?.$set?.covers[0]
+				if(modifier?.$set?.category)
+					categories = []
+					modifier.$set.category.forEach (category)->
+						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{children:1,parents:1}})
+						if product_category.parents
+							parents = []
+							product_category.parents.forEach (parent)->
+								parents = _.union(parents,calculateParents(parent))
+							categories = _.union(categories, parents)
+					modifier.$set['categories'] = _.union(categories,modifier.$set.category)
+					Creator.getCollection("vip_product").direct.update(doc._id,{$set:{categories:_.union(categories,modifier.$set.category)}})
