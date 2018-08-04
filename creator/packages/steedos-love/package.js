@@ -26,5 +26,9 @@ Package.onUse(function(api) {
 	api.addFiles('models/love_recommend.coffee');
 	api.addFiles('models/love_recommend_history.coffee');
 	// api.addFiles('models/love_city.coffee');
-	api.addFiles('server/schedule.coffee');
+
+	api.addFiles('server/lib/love_manager.coffee', 'server');
+	api.addFiles('server/schedule.coffee', 'server');
+
+	api.export(['LoveManager'], ['server']);
 })

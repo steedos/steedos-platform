@@ -3,7 +3,7 @@ Creator.Objects.love_answer =
 	label: "玫瑰卷"
 	icon: "event"
 	enable_search: true
-	fields:					
+	fields:
 		employed:
 			type:'select'
 			label:"你的工作状况？"
@@ -12,10 +12,10 @@ Creator.Objects.love_answer =
 			type:'select'
 			label:"对方工作状况"
 			multiple:true
-		employed_i:
+		employed_i: # 重要程度: 跳过 -1， 全选：0 (计算时算作0分)， 未全选： 1 (计算时算作1分)， 重要：2 (计算时算作5分)
 			type:'number'
 			label:'重要程度'
-		
+
 		education:
 			type:'select'
 			label:"你的学历？"
@@ -27,7 +27,7 @@ Creator.Objects.love_answer =
 		education_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		body_type:
 			type:'select'
 			label:"你的体型？"
@@ -39,7 +39,7 @@ Creator.Objects.love_answer =
 		body_type_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		astrological:
 			type:'select'
 			label:"你相信星座吗？"
@@ -51,7 +51,7 @@ Creator.Objects.love_answer =
 		astrological_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		finance_budget:
 			type:'select'
 			label:"你会规划自己的财务开支吗？"
@@ -63,7 +63,7 @@ Creator.Objects.love_answer =
 		finance_budget_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		scary_movie:
 			type:'select'
 			label:"你喜欢悬疑电影吗？"
@@ -75,7 +75,7 @@ Creator.Objects.love_answer =
 		scary_movie_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		messy:
 			type:'select'
 			label:"你介意同邋遢的人交往吗？"
@@ -87,7 +87,7 @@ Creator.Objects.love_answer =
 		messy_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		morning:
 			type:'select'
 			label:"你习惯早起吗？"
@@ -99,7 +99,7 @@ Creator.Objects.love_answer =
 		morning_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		disgust_smoke:
 			type:'select'
 			label:"你觉得吸烟是令人厌恶的行为吗？"
@@ -123,7 +123,7 @@ Creator.Objects.love_answer =
 		dangerous_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		quite:
 			type:'select'
 			label:"你愿意与一个安静的人约会吗？"
@@ -135,7 +135,7 @@ Creator.Objects.love_answer =
 		quite_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		hurt_happened:
 			type:'select'
 			label:"有没有一些事情，虽然过了很久，你还是感觉很受伤?"
@@ -159,7 +159,7 @@ Creator.Objects.love_answer =
 		communicate_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		pet:
 			type:'select'
 			label:"你会让你的宠物睡在床上吗？"
@@ -171,7 +171,7 @@ Creator.Objects.love_answer =
 		pet_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		politics:
 			type:'select'
 			label:"你喜欢讨论时政吗？"
@@ -183,7 +183,7 @@ Creator.Objects.love_answer =
 		politics_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		previous_picture:
 			type:'select'
 			label:"对方还留着前任的照片，会让你觉得恼火吗？"
@@ -195,7 +195,7 @@ Creator.Objects.love_answer =
 		previous_picture_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		parents_influence:
 			type:'select'
 			label:"父母对你生活的影响有多大?"
@@ -219,7 +219,7 @@ Creator.Objects.love_answer =
 		more_into_i:
 			type:'number'
 			label:'重要程度'
-		
+
 		parter_to_be:
 			type:'select'
 			label:"你希望对方是一个什么样的人？"
@@ -267,7 +267,7 @@ Creator.Objects.love_answer =
 		spelling_mistake_i:
 			type:'number'
 			label:'重要程度'
-	
+
 		value_most:
 			type:'select'
 			label:"下列哪项能力你认为更重要？"
@@ -291,7 +291,7 @@ Creator.Objects.love_answer =
 		beer_i:
 			type:'number'
 			label:'重要程度'
-	
+
 		consider_adult:
 			type:'select'
 			label:"不考虑你现在的实际年龄，你觉得自己是个成年人吗?"
@@ -303,13 +303,13 @@ Creator.Objects.love_answer =
 		consider_adult_i:
 			type:'number'
 			label:'重要程度'
-		
+
 	list_views:
 		all:
 			label: "所有"
 			columns: ["finance_budget", "education", "consider_adult", "beer","zodiac", "before_married"]
 			filter_scope: "space"
-		
+
 	permission_set:
 		user:
 			allowCreate: true

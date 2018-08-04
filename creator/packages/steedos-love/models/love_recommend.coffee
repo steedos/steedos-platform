@@ -16,6 +16,29 @@ Creator.Objects.love_recommend =
 			reference_to: "users"
 			index: true
 
+		a_to_b:
+			label:"我喜欢的"
+			type: "number"
+			scale: 2
+
+		b_to_a:
+			label:"适合我的"
+			type: "number"
+			scale: 2
+
+		match:
+			label:"互相匹配度"
+			type: "number"
+			scale: 2
+
+		shake_time:
+			label:"摇一摇时间"
+			type: "datetime"
+
+		commmon_description:
+			label: "共同点描述"
+			type: "text"
+
 	list_views:
 		all:
 			label: "所有"
