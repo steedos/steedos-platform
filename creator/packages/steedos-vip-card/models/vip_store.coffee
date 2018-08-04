@@ -106,6 +106,11 @@ Creator.Objects.vip_store =
 			type:'boolean'
 			group:'-'
 			defaultValue:true
+		show_post:
+			label:'是否显示动态'
+			type:'boolean'
+			group:'-'
+			defaultValue:true
 		# post_types:
 		# 	label:'信息分类'
 		# 	type:'select'
