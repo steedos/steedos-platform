@@ -29,6 +29,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/lib/love_manager.coffee', 'server');
 	api.addFiles('server/schedule.coffee', 'server');
+	api.addFiles('test/generator.coffee');
 
 	api.export(['LoveManager'], ['server']);
 })
