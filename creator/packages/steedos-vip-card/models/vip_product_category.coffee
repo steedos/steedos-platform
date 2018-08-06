@@ -59,7 +59,8 @@ Creator.Objects.vip_product_category =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				doc.parent = '全部'
+				if !doc.parent
+					doc.parent = '全部'
 		"before.update.server.product_category":
 			on: "server"
 			when: "before.update"
