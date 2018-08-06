@@ -138,11 +138,10 @@ Creator.Objects.vip_product =
 					doc.avatar = doc.covers[0]
 				if(doc.category)
 					doc.category.forEach (category)->
-						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{children:1,parents:1}})
-						if product_category.parents
+						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{parent:1}})
+						if product_category.parent
 							parents = []
-							product_category.parents.forEach (parent)->
-								parents = _.union(parents,calculateParents(parent))
+							parents = _.union(parents,calculateParents(product_category.parent))
 							doc.categories = _.union(doc.categories,parents)
 					doc.categories = _.union(doc.categories,doc.category)
 		
@@ -155,11 +154,10 @@ Creator.Objects.vip_product =
 				if(modifier?.$set?.category)
 					categories = []
 					modifier.$set.category.forEach (category)->
-						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{children:1,parents:1}})
-						if product_category.parents
+						product_category = Creator.getCollection("vip_product_category").findOne(category,{fields:{parent:1}})
+						if product_category.parent
 							parents = []
-							product_category.parents.forEach (parent)->
-								parents = _.union(parents,calculateParents(parent))
+							parents = _.union(parents,calculateParents(product_category.parent))
 							categories = _.union(categories, parents)
 					modifier.$set['categories'] = _.union(categories,modifier.$set.category)
 					Creator.getCollection("vip_product").direct.update(doc._id,{$set:{categories:_.union(categories,modifier.$set.category)}})
