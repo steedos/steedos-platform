@@ -130,8 +130,6 @@ Template.creator_calendar.onRendered ->
 				}, "month"]
 				currentView: "day"
 				currentDate: new Date()
-				crossScrollingEnabled: true,
-				showAllDayPanel: false,
 				firstDayOfWeek: 1
 				startDayHour: 8
 				endDayHour: 18
@@ -139,7 +137,7 @@ Template.creator_calendar.onRendered ->
 				endDateExpr: "end"
 				startDateExpr: "start"
 				timeZone: "Asia/Shanghai"
-				showAllDayPanel: false,
+				# showAllDayPanel: false,
 				height: "100%"
 				# groups: ["room"]
 				crossScrollingEnabled: true
