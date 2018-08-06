@@ -95,7 +95,7 @@ WXMini.addUserToSpace = (userId, spaceId, userName, profile)->
 
 WXMini.updateUser = (userId, options)->
 	if options.$set.mobile
-		options.$set.phone = {number: "+86" + options.$set.mobile, mobile: options.$set.mobile, verified:true}
+		options.$set.phone = {number: "+86" + options.$set.mobile, mobile: options.$set.mobile, verified:true, modified:new Date()}
 	Creator.getCollection("users").direct.update({_id: userId}, options)
 
 	if Creator.getCollection("vip_customers")
