@@ -209,24 +209,24 @@ Template.creator_calendar.onRendered ->
 				onCellClick: (e) ->
 					console.log('[onCellClick]', e)
 					cellData = e.cellData
-					roomAdmins = getRoomAdmin(cellData.groups.room)
-					isOpen = getRoomPermission(cellData.groups.room)
-					if roomAdmins.indexOf(Meteor.userId())>-1 or isOpen
-					# debugger
-						doc = {
-							start: cellData.startDate
-							end: cellData.endDate
-						}
+					doc = {
+								start: cellData.startDate
+								end: cellData.endDate
+							}
 
-						if cellData.groups?.room
-							doc.room = cellData.groups.room
-						
-						if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
-							_insertData()
+					if cellData?.groups?.room
+						roomAdmins = getRoomAdmin(cellData.groups.room)
+						isOpen = getRoomPermission(cellData.groups.room)
+						if roomAdmins.indexOf(Meteor.userId())>-1 or isOpen
+						# debugger
+							if cellData.groups?.room
+								doc.room = cellData.groups.room
 						else
-							Session.set("cmDoc", doc)
+							toastr.error("此会议室为特约会议室，您暂无权限。")
+					if Session.get("cmDoc") and _.isEqual(doc, Session.get("cmDoc"))
+						_insertData()
 					else
-						toastr.error("此会议室为特约会议室，您暂无权限。")
+								Session.set("cmDoc", doc)
 				onAppointmentUpdating: (e)->
 					e.cancel = true
 					doc = {}
