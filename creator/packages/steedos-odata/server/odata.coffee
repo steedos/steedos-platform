@@ -251,6 +251,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -305,6 +308,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -406,6 +412,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -459,6 +468,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -591,6 +603,9 @@ Meteor.startup ->
 					error = {}
 					error['message'] = e.message
 					error['code'] = 500
+					error['error'] = e.error
+					error['details'] = e.details
+					error['reason'] = e.reason
 					body['error'] = error
 					return {
 						statusCode: 500
@@ -661,6 +676,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -715,6 +733,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
@@ -767,6 +788,9 @@ Meteor.startup ->
 				error = {}
 				error['message'] = e.message
 				error['code'] = 500
+				error['error'] = e.error
+				error['details'] = e.details
+				error['reason'] = e.reason
 				body['error'] = error
 				return {
 					statusCode: 500
