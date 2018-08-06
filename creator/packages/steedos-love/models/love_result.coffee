@@ -50,6 +50,7 @@ Creator.Objects.love_result =
 			label: "匹配度"
 			type: "number"
 			scale: 2
+			index: true
 
 		result:
 			type:'[Object]'

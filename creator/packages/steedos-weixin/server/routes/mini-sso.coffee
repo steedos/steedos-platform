@@ -116,7 +116,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				delete s.space
 				return s
 			)
-			
+
 		customers = Creator.getCollection("vip_customers").find({
 			owner: ret_data.user_id
 		}).fetch()
@@ -138,6 +138,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		ret_data.sex = user.profile?.sex
 		ret_data.birthdate = user.profile?.birthdate
 		ret_data.avatar = user.profile?.avatar
+
+		ret_data.love = Meteor.settings.love
 
 		JsonRoutes.sendResult res, {
 			code: 200,
