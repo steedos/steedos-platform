@@ -59,7 +59,7 @@ Creator.Objects.vip_invites =
 			when: "before.insert"
 			todo: (userId, doc)->
 				owner = doc?.owner
-				from = doc?.form
+				from = doc?.from
 				invite = Creator.getCollection("vip_invites").findOne({owner: userId, from: from});
 				if invite
 					throw new Meteor.Error 405, "该invite信息已存在"
