@@ -1,7 +1,7 @@
 Creator.Objects.love_answer =
 	name: "love_answer"
 	label: "玫瑰卷"
-	icon: "event"
+	icon: "social"
 	enable_search: true
 	fields:
 		employed:

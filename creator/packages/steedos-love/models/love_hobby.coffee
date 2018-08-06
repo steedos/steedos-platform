@@ -1,7 +1,7 @@
 Creator.Objects.love_hobby =
 	name: "love_hobby"
 	label: "兴趣爱好"
-	icon: "event"
+	icon: "solution"
 	enable_search: true
 	fields:
 		sport:

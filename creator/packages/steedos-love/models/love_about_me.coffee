@@ -10,7 +10,7 @@ getzodiac = (year)->
 Creator.Objects.love_about_me =
 	name: "love_about_me"
 	label: "关于我"
-	icon: "event"
+	icon: "client"
 	enable_search: true
 	fields:
 		name:

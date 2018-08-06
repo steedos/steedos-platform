@@ -1,7 +1,7 @@
 Creator.Objects.love_result =
 	name: "love_result"
 	label: "计算结果"
-	icon: "event"
+	icon: "topic"
 	enable_search: true
 	fields:
 		userA:

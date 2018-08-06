@@ -1,7 +1,7 @@
 Creator.Objects.love_work_experience =
     name: "love_work_experience"
     label: "工作经历"
-    icon: "event"
+    icon: "poll"
     enable_search: true
     fields:    
         name:

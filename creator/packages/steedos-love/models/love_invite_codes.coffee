@@ -1,7 +1,7 @@
 Creator.Objects.love_invite_codes =
 	name: "love_invite_codes"
 	label: "邀请码表"
-	icon: "event"
+	icon: "topic2"
 	enable_search: true
 	fields:
 		code:
