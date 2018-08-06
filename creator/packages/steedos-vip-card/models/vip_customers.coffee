@@ -1,7 +1,7 @@
 Creator.Objects.vip_customers =
 	name: "vip_customers"
 	label: "客户"
-	icon: "partners"
+	icon: "person_account"
 	fields:
 		name:
 			label: '姓名'
@@ -64,6 +64,10 @@ Creator.Objects.vip_customers =
 			label: '问卷回答进度'
 			type: 'number'
 			index:true
+		disable:
+			label: '停用'
+			type: 'text'
+			omit:true
 
 	list_views:
 		all:
