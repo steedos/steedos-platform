@@ -182,7 +182,7 @@ LoveManager.getMatchScores = (questionKeys, aAnswer, bAnswer) ->
 LoveManager.createResultScoreView = () ->
     db = Creator.getCollection('love_result').rawDatabase()
 
-    db.createCollection('testView', {
+    db.createCollection('love_result_score_view', {
         viewOn: 'love_result',
         pipeline: [{
             $unwind: '$score'
@@ -206,6 +206,7 @@ LoveManager.caculateRecommend = () ->
     if not LoveManager.resultScoreViewCollection
         throw new Meteor.Error('caculateRecommend', "No LoveManager.resultScoreViewCollection")
 
+    Creator.getCollection('love_recommend_history').direct.insert(Creator.getCollection('love_recommend').find({}).fetch)
     Creator.getCollection('love_recommend').remove({})
 
     newRecommendUserIds = []
@@ -232,12 +233,12 @@ LoveManager.caculateRecommend = () ->
                     recommend_date: now
                 })
 
-                Creator.getCollection('love_recommend_history').insert({
-                    user_a: user_a
-                    user_b: user_b
-                    match: score
-                    recommend_date: now
-                })
+                # Creator.getCollection('love_recommend_history').insert({
+                #     user_a: user_a
+                #     user_b: user_b
+                #     match: score
+                #     recommend_date: now
+                # })
 
                 Creator.getCollection('love_recommend').insert({
                     user_a: user_b
@@ -246,12 +247,12 @@ LoveManager.caculateRecommend = () ->
                     recommend_date: now
                 })
 
-                Creator.getCollection('love_recommend_history').insert({
-                    user_a: user_b
-                    user_b: user_a
-                    match: score
-                    recommend_date: now
-                })
+                # Creator.getCollection('love_recommend_history').insert({
+                #     user_a: user_b
+                #     user_b: user_a
+                #     match: score
+                #     recommend_date: now
+                # })
 
 
     console.timeEnd 'caculateRecommend'
