@@ -100,6 +100,23 @@ if Meteor.isDevelopment
 
 		return doc;
 
+	getCustomers = (space_id, user)->
+		return {
+			"_id" : Creator.getCollection('vip_customers')._makeNewID(),
+			"name" : user.name,
+			"space" : space_id,
+			"mobile" : user.mobile,
+			"created" : new Date(),
+			"modified" : new Date(),
+			"owner" : user._id,
+			"created_by" : user._id,
+			"modified_by" : user._id,
+			"invite_code" : "" +  _.random(1000,9999),
+			"is_member" : _.random(0,1) == 1,
+			"member_expried" : new Date('2019-12-31'),
+			"questionnaire_progess" : _.random(1,4)
+		}
+
 	getSpaceUserDoc = (space_id, main_org_id, user)->
 		return {
 			"_id": Creator.getCollection('space_users')._makeNewID(),
@@ -207,14 +224,19 @@ if Meteor.isDevelopment
 
 		space_user_docs = []
 
+		customers = []
+
 		other_docs = {}
 
 		_.range(0, number).forEach ()->
 			user_doc = getUserDoc()
 			space_user_doc = getSpaceUserDoc(space_id, main_org_id, user_doc)
 
+			customer = getCustomers(space_id, user_doc)
+
 			user_docs.push(user_doc)
 			space_user_docs.push(space_user_doc)
+			customers.push(customer)
 
 			other_object.forEach (object_name)->
 				if !other_docs[object_name]
@@ -229,6 +251,7 @@ if Meteor.isDevelopment
 
 		insertMany('users', user_docs)
 		insertMany('space_users', space_user_docs)
+		insertMany('vip_customers', customers)
 
 		_.forEach other_docs, (other_doc, key)->
 			insertMany(key, other_doc)
