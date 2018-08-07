@@ -57,5 +57,15 @@ Creator.Objects.vip_share =
 			modifyAllRecords: false
 			viewAllRecords: true
 
+	triggers:
+		"before.insert.server.vip_share":
+			on: "server"
+			when: "before.insert"
+			todo: (userId, doc)->
+				share = Creator.getCollection("vip_share").findOne({other:'love', owner:userId},{fields:{name:1}})
+				if share
+					throw new Meteor.Error 'repeat', "不能重复添加share记录"
+
+
 
 
