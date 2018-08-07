@@ -98,6 +98,8 @@ if Meteor.isDevelopment
 			"verified": false
 		}
 
+		doc._test_data = true
+
 		return doc;
 
 	getCustomers = (space_id, user)->
@@ -114,7 +116,8 @@ if Meteor.isDevelopment
 			"invite_code" : "" +  _.random(1000,9999),
 			"is_member" : _.random(0,1) == 1,
 			"member_expried" : new Date('2019-12-31'),
-			"questionnaire_progess" : _.random(1,4)
+			"questionnaire_progess" : _.random(1,4),
+			"_test_data": true
 		}
 
 	getSpaceUserDoc = (space_id, main_org_id, user)->
@@ -131,7 +134,8 @@ if Meteor.isDevelopment
 			"created": new Date(),
 			"created_by": user._id,
 			"modified": new Date(),
-			"modified_by": user._id
+			"modified_by": user._id,
+			"_test_data": true
 		}
 
 	getAstro = (month,day)->
@@ -292,6 +296,8 @@ if Meteor.isDevelopment
 
 		doc.music = getMusic()
 
+		doc._test_data = true
+
 		return doc;
 
 
@@ -306,7 +312,7 @@ if Meteor.isDevelopment
 
 		fields = object.fields;
 
-		values = {_id: Creator.getCollection(object_name)._makeNewID()}
+		values = {_id: Creator.getCollection(object_name)._makeNewID(), _test_data: true}
 
 		_.forEach fields, (f, k)->
 
