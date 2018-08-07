@@ -16,10 +16,6 @@ Creator.Objects.love_recommend_history =
 			reference_to: "users"
 			index: true
 
-		recommend_date:
-			label:"推荐时间"
-			type: "datetime"
-
 		a_to_b:
 			label:"我喜欢的"
 			type: "number"
@@ -42,6 +38,10 @@ Creator.Objects.love_recommend_history =
 		commmon_description:
 			label: "共同点描述"
 			type: "text"
+
+		recommend_date:
+			label:"推荐时间"
+			type: "datetime"
 
 	list_views:
 		all:

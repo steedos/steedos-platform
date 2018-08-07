@@ -39,6 +39,10 @@ Creator.Objects.love_recommend =
 			label: "共同点描述"
 			type: "text"
 
+		recommend_date:
+			label:"推荐时间"
+			type: "datetime"
+
 	list_views:
 		all:
 			label: "所有"
