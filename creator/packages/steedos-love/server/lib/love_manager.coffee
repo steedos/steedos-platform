@@ -1,9 +1,9 @@
 LoveManager = {}
 
-LoveManager.caculateResult = () ->
+LoveManager.caculateResult = (loveSpaceId) ->
+    check loveSpaceId, String
     console.time 'caculateScore'
 
-    loveSpaceId = 'Lnre96ro35Wf9b3gA'
     answerObjectNames = ['love_answer','love_answer2']
 
     topNumber = 10

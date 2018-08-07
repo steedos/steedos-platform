@@ -19,13 +19,14 @@
 ###
 
 # 根据答题表，计算love_result
-if Meteor.settings.cron and Meteor.settings.cron.caculateScore
+if Meteor.settings.cron and Meteor.settings.cron.caculateResult
     schedule = Npm.require('node-schedule')
     # 定时执行同步
-    rule = Meteor.settings.cron.caculateScore
+    rule = Meteor.settings.cron.caculateResult
     schedule.scheduleJob rule, Meteor.bindEnvironment ()->
         try
-            LoveManager.caculateResult()
+            loveSpaceId = 'Lnre96ro35Wf9b3gA'
+            LoveManager.caculateResult(loveSpaceId)
         catch e
             console.error e.stack
             return
@@ -47,9 +48,10 @@ if Meteor.settings.cron and Meteor.settings.cron.caculateRecommend
             return
 
 Meteor.methods
-    caculateScore: () ->
+    caculateResult: (loveSpaceId) ->
+        check loveSpaceId, String
         try
-            LoveManager.caculateResult()
+            LoveManager.caculateResult(loveSpaceId)
         catch e
             console.error e.stack
             return
