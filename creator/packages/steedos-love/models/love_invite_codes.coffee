@@ -8,10 +8,13 @@ Creator.Objects.love_invite_codes =
 			type:'text'
 			label:"邀请码"
 			index:true
-
 		expired:
 			type:'datetime'
 			label:"截止日期"
+		card_rule:
+			label:'卡项'
+			type:'lookup'
+			reference_to:'vip_card_rule'
 	list_views:
 		all:
 			label: "所有"
