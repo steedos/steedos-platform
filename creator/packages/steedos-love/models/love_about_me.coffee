@@ -40,10 +40,10 @@ Creator.Objects.love_about_me =
 			type:'selectCity'
 			label:"你的家乡？"
 		
-		self_introduction:
-			type:'textarea'
-			is_wide:true	
-			label:"自我介绍:"
+		# self_introduction:
+		# 	type:'textarea'
+		# 	is_wide:true	
+		# 	label:"自我介绍:"
 		
 		age:
 			type:'number'
