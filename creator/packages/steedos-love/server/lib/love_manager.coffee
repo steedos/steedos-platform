@@ -80,7 +80,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
             console.log { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
 
-            aToB = parseFloat((bGotPoints/aFullPoints).toFixed('2'))
+            aToB = bGotPoints/aFullPoints
             if scoreA_B.length < topNumber
                 scoreA_B.push({userB: owner, BName: name, score: aToB})
             else
@@ -91,7 +91,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
                         break
                     i++
 
-            bToA = parseFloat((aGotPoints/bFullPoints).toFixed('2'))
+            bToA = aGotPoints/bFullPoints
             if scoreB_A.length < topNumber
                 scoreB_A.push({userB: owner, BName: name, score: bToA})
             else
@@ -102,7 +102,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
                         break
                     i++
 
-            match = parseFloat((Math.pow(aToB*bToA, 1/questionsNumber)).toFixed('2'))
+            match = Math.pow(aToB*bToA, 1/questionsNumber)
             if score.length < topNumber
                 score.push({userB: owner, BName: name, score: match})
             else
@@ -137,7 +137,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
 LoveManager.getQuestionKeys = (objectName) ->
     keys = []
     _.each Creator.Objects[objectName].fields, (v, k) ->
-        if k.substr(k.length-2,2) is '_o' or k.substr(k.length-2,2) is '_i'
+        if k.endsWith('_o') or k.endsWith('_i')
             return
         else
             keys.push k
@@ -154,24 +154,26 @@ LoveManager.getMatchScores = (questionKeys, aAnswer, bAnswer) ->
     questionsNumber = 0
 
     questionKeys.forEach (ak) ->
-        if aAnswer[ak+'_i'] > -1 and bAnswer[ak+'_i'] > -1
+        akI = ak+'_i'
+        akO = ak+'_o'
+        if aAnswer[akI] > -1 and bAnswer[akI] > -1
             questionsNumber++
-            if aAnswer[ak+'_i'] is 1
+            if aAnswer[akI] is 1
                 aFullPoints += normalP
-                if bAnswer[ak+'_o'] and bAnswer[ak+'_o'].includes(aAnswer[ak])
+                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
                     bGotPoints += normalP
-            else if aAnswer[ak+'_i'] is 2
+            else if aAnswer[akI] is 2
                 aFullPoints += importP
-                if bAnswer[ak+'_o'] and bAnswer[ak+'_o'].includes(aAnswer[ak])
+                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
                     bGotPoints += importP
 
-            if bAnswer[ak+'_i'] is 1
+            if bAnswer[akI] is 1
                 bFullPoints += normalP
-                if aAnswer[ak+'_o'] and aAnswer[ak+'_o'].includes(bAnswer[ak])
+                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
                     aGotPoints += normalP
-            else if bAnswer[ak+'_i'] is 2
+            else if bAnswer[akI] is 2
                 bFullPoints += importP
-                if aAnswer[ak+'_o'] and aAnswer[ak+'_o'].includes(bAnswer[ak])
+                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
                     aGotPoints += importP
 
     return { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
@@ -208,7 +210,7 @@ LoveManager.caculateRecommend = () ->
     newRecommendUserIds = []
 
     LoveManager.resultScoreViewCollection.find({}, { sort: { 'score': -1 } }).forEach (r) ->
-        if newRecommendUserIds.includes r.userA or newRecommendUserIds.includes r.userB
+        if newRecommendUserIds.includes(r.userA) or newRecommendUserIds.includes(r.userB)
             return
 
         if r.score

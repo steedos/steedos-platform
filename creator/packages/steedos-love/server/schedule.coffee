@@ -63,3 +63,22 @@ Meteor.methods
         catch e
             console.error e.stack
             return
+
+### 清除测试数据
+db.getCollection('users').remove({_test_data: true})
+db.getCollection('space_users').remove({_test_data: true})
+db.getCollection('vip_customers').remove({_test_data: true})
+db.getCollection('love_about_me').remove({_test_data: true})
+db.getCollection('love_answer').remove({_test_data: true})
+db.getCollection('love_answer2').remove({_test_data: true})
+db.getCollection('love_educational_experience').remove({_test_data: true})
+db.getCollection('love_work_experience').remove({_test_data: true})
+db.getCollection('love_hobby').remove({_test_data: true})
+db.getCollection('love_looking_for').remove({_test_data: true})
+db.getCollection('love_result').remove({})
+db.getCollection('love_recommend').remove({})
+db.getCollection('love_recommend_history').remove({})
+###
+### 设置 questionnaire_progess 为 4
+db.getCollection('vip_customers').update({_test_data:true},{$set:{questionnaire_progess:4}},{multi:true})
+###
