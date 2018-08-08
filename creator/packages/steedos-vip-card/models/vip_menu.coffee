@@ -32,10 +32,10 @@ Creator.Objects.vip_menu =
 			label:'排序号'
 			type:'number'
 			group:'-'
-		enabled:
-			label:'是否启用'
-			type:'boolean'
-			index:true
+		# enabled:
+		# 	label:'是否启用'
+		# 	type:'boolean'
+		# 	index:true
 	list_views:
 		all:
 			label: "所有"
