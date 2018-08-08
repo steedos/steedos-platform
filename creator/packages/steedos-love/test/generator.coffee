@@ -373,6 +373,14 @@ if Meteor.isDevelopment
 				values[k] = getCity()
 
 
+			if k.endsWith('_max') && f.type == 'select'
+				mk = k.substr(0, k.lastIndexOf('_max'))
+				mv = values[mk]
+				o_vs = _.pluck(f.options, 'value')
+				index = _.random(_.indexOf(o_vs, mv), o_vs.length - 1)
+				values[k] = o_vs[index]
+
+
 		if object_name == 'love_about_me'
 			birthday = values['birthday']
 			values['zodiac'] = getzodiac(birthday.getFullYear())
