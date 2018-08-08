@@ -7,7 +7,7 @@ Creator.Objects.love_work_experience =
         name:
             type:'text'
             label:"公司"
-            inlineHelpText:'例如：华炎软件'
+            inlineHelpText:'例如：上海华炎软件科技有限公司'
         
         position:
             type:'text'
@@ -16,19 +16,21 @@ Creator.Objects.love_work_experience =
             group:'-'
         
         entry_time:
-            type:'date'
-            label:"入职时间"
-            group:'-'
+            type:'select'
+			label:"入职年份"
+			options:"1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018"
+			group:'-'
         
         separation_time:
-            type:'date'
-            label:"离职时间"
-        
-        is_incumbent:
             type:'select'
-            label:"是否在职"
-            options:"是,否"
-            group:'-'
+			label:"离职年份"
+			options:"1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018"
+        
+        # is_incumbent:
+        #     type:'select'
+        #     label:"是否在职"
+        #     options:"是,否"
+        #     group:'-'
     
     list_views:
         all:
