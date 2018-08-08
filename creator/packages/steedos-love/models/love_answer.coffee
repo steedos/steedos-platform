@@ -31,7 +31,7 @@ Creator.Objects.love_answer =
 		body_type:
 			type:'select'
 			label:"你的体型？"
-			options: "骨感,偏瘦,标准,偏胖,胖"
+			options: "骨感,微瘦,标准,健壮,微胖,胖"
 		body_type_o:
 			type:'select'
 			label:"体型"
