@@ -20,7 +20,7 @@ WebApp.connectHandlers.use '/api/steedos/weixin/code', (req, res, next) ->
 		appId = req.query.appid
 		userId = Steedos.getUserIdFromAuthToken(req, res)
 		secret = Meteor.settings.weixin.appSecret[appId]
-		storeId = req.query.store_id
+		scene = req.query.scene
 		page = req.query.page
 		if !secret
 			throw new Meteor.Error(500, "无效的appId #{appId}")
@@ -30,7 +30,7 @@ WebApp.connectHandlers.use '/api/steedos/weixin/code', (req, res, next) ->
 		if wxToken
 			formData = {
 				page: page,
-				scene:storeId,
+				scene:scene,
 				width: 430,
 				line_color:{"r":"35","g":"35","b":"35"}
 			}
