@@ -16,6 +16,10 @@ Creator.Objects.vip_invites =
 			label: '转发人'
 			type: 'lookup'
 			reference_to: 'users'
+
+		open_group_id:
+			label: "群"
+			type: "text"
 	
 	list_views:
 		all:
