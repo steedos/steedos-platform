@@ -20,7 +20,7 @@ WebApp.connectHandlers.use '/api/steedos/weixin/code', (req, res, next) ->
 		appId = req.query.appid
 		userId = Steedos.getUserIdFromAuthToken(req, res)
 		secret = Meteor.settings.weixin.appSecret[appId]
-		scene = req.query.scene
+		scene = req.query.scene or req.query.store_id
 		page = req.query.page
 		if !secret
 			throw new Meteor.Error(500, "无效的appId #{appId}")
