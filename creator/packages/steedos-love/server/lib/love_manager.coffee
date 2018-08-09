@@ -57,7 +57,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
             if lrh
                 return
 
-            console.log userId + '>>' + aboutMe.owner
+            # console.log userId + '>>' + aboutMe.owner
 
             owner = aboutMe.owner
             name = aboutMe.name
@@ -70,7 +70,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
             questionsNumber = 0
             answerObjectNames.forEach (objName) ->
                 if dv[objName] and data[owner][objName] # 当两人都做了同一套问卷时计算分数
-                    console.log objName
+                    # console.log objName
                     r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], data[owner][objName])
                     aFullPoints += r.aFullPoints
                     bGotPoints += r.bGotPoints
@@ -78,7 +78,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
                     aGotPoints += r.aGotPoints
                     questionsNumber += r.questionsNumber
 
-            console.log { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
+            # console.log { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
 
             aToB = bGotPoints/aFullPoints
             if scoreA_B.length < topNumber
