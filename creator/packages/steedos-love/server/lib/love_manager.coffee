@@ -259,13 +259,17 @@ LoveManager.caculateRecommend = () ->
     console.timeEnd 'caculateRecommend'
     return
 
-LoveManager.caculateFriendsScore = (objectName, userId, spaceId) ->
+LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
     collection = Creator.getCollection(objectName)
     if not collection
         throw new Meteor.Error('Love', "No collection")
 
     questionKeys = LoveManager.getQuestionKeys objectName
     aAnswer = collection.findOne({ space: spaceId, owner: userId })
+
+    query = { space: spaceId, owner: userId }
+    if rest
+        query.match = { $exists: false }
 
     Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
         bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
