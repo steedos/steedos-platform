@@ -272,27 +272,29 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         query.match = { $exists: false }
 
     Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
-        bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
+        try
+            bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
 
-        if not aAnswer or not bAnswer
-            return
+            if not aAnswer or not bAnswer
+                return
 
-        r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
-        aFullPoints = r.aFullPoints
-        bGotPoints = r.bGotPoints
-        bFullPoints = r.bFullPoints
-        aGotPoints = r.aGotPoints
-        questionsNumber = r.questionsNumber
+            r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
+            aFullPoints = r.aFullPoints
+            bGotPoints = r.bGotPoints
+            bFullPoints = r.bFullPoints
+            aGotPoints = r.aGotPoints
+            questionsNumber = r.questionsNumber
 
-        aToB = bGotPoints/aFullPoints || 0
+            aToB = bGotPoints/aFullPoints || 0
 
-        bToA = aGotPoints/bFullPoints || 0
+            bToA = aGotPoints/bFullPoints || 0
 
-        match = Math.pow(aToB*bToA, 1/2)
+            match = Math.pow(aToB*bToA, 1/2)
 
-        Creator.getCollection('love_friends').update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-        Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
-
+            Creator.getCollection('love_friends').update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+        catch e
+            console.error e.stack
     return
 
 
