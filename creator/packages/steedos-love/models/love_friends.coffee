@@ -4,11 +4,6 @@ Creator.Objects.love_friends =
 	icon: "event"
 	enable_search: true
 	fields:
-		user_a:
-			label:"第一个用户ID"
-			type: "lookup"
-			reference_to: "users"
-			index: true
 
 		user_b:
 			label:"第二个用户ID"
@@ -34,6 +29,12 @@ Creator.Objects.love_friends =
 		open_group_id:
 			label: "群"
 			type: "text"
+
+		owner:
+			label:"第一个用户ID"
+			type: "lookup"
+			reference_to: "users"
+			index: true
 
 	list_views:
 		all:
