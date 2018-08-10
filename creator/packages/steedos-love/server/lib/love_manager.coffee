@@ -287,7 +287,7 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId) ->
         match = Math.pow(aToB*bToA, 1/2)
 
         Creator.getCollection('love_friends').update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-        Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+        Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
 
     return
 
