@@ -32,6 +32,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		space_id = req.query.space_id
 		share_id = req.query.share_id
 		share_from = req.query.share_from
+		iv = req.body.iv
+		encryptedData = req.body.encryptedData
 
 		appId = req.headers["appid"]
 
@@ -146,6 +148,13 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 			owner: ret_data.user_id
 		}).fetch()
 		if space_id
+			# 获取微信群openGId
+			if iv && encryptedData && appId
+				pc = new Creator.WXBizDataCrypt(appId, sessionKey)
+				groupData = pc.decryptData(encryptedData, iv)
+				console.log("========groupData=======", groupData)
+				openGId = groupData.openGId
+			
 			# 生成vip_customers记录
 			current_customer = customers.find((customer) ->
 				return customer.space == space_id
@@ -185,6 +194,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						owner: ret_data.user_id
 						from: share_from
 						space: space_id
+					if openGId
+						values.open_group_id = openGId
 					new_invite_id = collection_invites.insert values
 					console.log "current_invite========new=====", new_invite_id
 			
@@ -201,6 +212,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						owner: ret_data.user_id
 						user_b: share_from
 						space: space_id
+					if openGId
+						values.open_group_id = openGId
 					new_friend_id = collection_friends.insert values
 					console.log "current_friend========new=====", new_friend_id
 				current_friend = collection_friends.findOne({
@@ -213,8 +226,25 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						owner: share_from
 						user_b: ret_data.user_id
 						space: space_id
+					if openGId
+						values.open_group_id = openGId
 					new_friend_id = collection_friends.insert values
 					console.log "current_friend========new=====", new_friend_id
+			
+			# 生成微信群记录
+			if openGId
+				collection_groups = Creator.getCollection("vip_groups")
+				current_group = collection_groups.update(
+					{ open_group_id: openGId },
+					{
+						$addToSet: {
+							users: ret_data.user_id
+						}
+					},
+					{ upsert: true }
+				)
+
+			
 		
 		ret_data.my_customers = customers
 		JsonRoutes.sendResult res, {
