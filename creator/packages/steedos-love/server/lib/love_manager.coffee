@@ -270,6 +270,9 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId) ->
     Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
         bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
 
+        if not aAnswer or not bAnswer
+            return
+
         r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
         aFullPoints = r.aFullPoints
         bGotPoints = r.bGotPoints
