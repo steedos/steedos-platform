@@ -10,7 +10,9 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 		if !spaceId
 			throw new Meteor.Error('Love', "No spaceId")
 
-		LoveManager.caculateFriendsScore 'love_answer', userId, spaceId
+		objectName = req.query.object_name || 'love_answer'
+
+		LoveManager.caculateFriendsScore objectName, userId, spaceId
 
 		JsonRoutes.sendResult res, {
 			code: 200,

@@ -260,11 +260,15 @@ LoveManager.caculateRecommend = () ->
     return
 
 LoveManager.caculateFriendsScore = (objectName, userId, spaceId) ->
+    collection = Creator.getCollection(objectName)
+    if not collection
+        throw new Meteor.Error('Love', "No collection")
+
     questionKeys = LoveManager.getQuestionKeys objectName
-    aAnswer = Creator.getCollection(objectName).findOne({ space: spaceId, owner: userId })
+    aAnswer = collection.findOne({ space: spaceId, owner: userId })
 
     Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
-        bAnswer = Creator.getCollection(objectName).findOne({ space: spaceId, owner: lf.user_b })
+        bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
 
         r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
         aFullPoints = r.aFullPoints
