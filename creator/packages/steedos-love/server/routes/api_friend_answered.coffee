@@ -14,12 +14,12 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 
 		JsonRoutes.sendResult res, {
 			code: 200,
-			data: {}
+			data: 'ok'
 		}
 		return
 	catch e
 		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: e.error
-			data: {errors: e.reason || e.message}
+			data: { errors: e.reason || e.message }
 		}
