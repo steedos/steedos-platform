@@ -21,6 +21,7 @@ Package.onUse(function(api) {
 	api.addFiles('models/love_invite_codes.coffee');
 	api.addFiles('models/love_about_me.coffee');
 	api.addFiles('models/love_result.coffee');
+	api.addFiles('models/love_friends.coffee');
 	api.addFiles('models/love_work_experience.coffee');
 	api.addFiles('models/love_educational_experience.coffee');
 	api.addFiles('models/love_recommend.coffee');
