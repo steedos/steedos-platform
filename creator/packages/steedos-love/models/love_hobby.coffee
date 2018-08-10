@@ -7,6 +7,7 @@ Creator.Objects.love_hobby =
 		sport:
 			type:'text'
 			label:"你最喜欢的运动？"
+			is_name: true
 		star:
 			type:'text'
 			label:"你最喜欢的明星？"

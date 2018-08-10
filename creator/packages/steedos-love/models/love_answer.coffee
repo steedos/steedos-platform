@@ -20,6 +20,7 @@ Creator.Objects.love_answer =
 			type:'select'
 			label:"你的学历？"
 			options: "高中及以下,大专,本科,硕士,博士及以上"
+			is_name: true
 		education_o:
 			type:'select'
 			label:"对方学历"
@@ -307,7 +308,10 @@ Creator.Objects.love_answer =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["finance_budget", "education", "consider_adult", "beer","zodiac", "before_married"]
+			columns: ["employed", "body_type", "astrological", "scary_movie", "messy", "morning", "disgust_smoke", "dangerous",
+			 "quite", "hurt_happened", "parter_to_be", "boyfriend_girlfriend", "more_into", "communicate", "spelling_mistake", 
+			 "parents_influence", "pet", "previous_picture", "politics", "finance_budget", "education", "video_game", "value_most", 
+			 "consider_adult", "beer"]
 			filter_scope: "space"
 
 	permission_set:

@@ -3,7 +3,7 @@ Creator.Objects.love_answer2 =
 	label: "蔷薇卷"
 	icon: "feed"
 	enable_search: true
-	fields:						
+	fields:				
 		jealousy:
 			type:'select'
 			label:"你认为吃醋是对恋情有益的吗？"
@@ -225,6 +225,7 @@ Creator.Objects.love_answer2 =
 			type:'select'
 			label:"你更喜欢单纯还是精明的人？"
 			options:'单纯,精明'
+			is_name: true
 		simple_complex_o:
 			type:'select'
 			label:"单纯还是精明"
@@ -308,7 +309,10 @@ Creator.Objects.love_answer2 =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["challenge", "dangerous", "politics", "housemate","sleeping", "simple_complex"]
+			columns: ["jealousy", "before_married", "flicp_coin", "minimum_page", "intellectual", "debt", "do_nothing", 
+			"show_your_love", "before_meeting", "appearance_emphasia", "dinner", "first_date_say", "parter_with_children", 
+			"thing_work_out", "alone", "married", "high_income", "intellectual_debate", "simple_complex", "sleeping", "children", 
+			"housemate", "worry_about", "meditate", "challenge"]
 			filter_scope: "space"
 		
 	permission_set:

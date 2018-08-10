@@ -8,6 +8,7 @@ Creator.Objects.love_looking_for =
 			type:'select'
 			label:"我希望对方的性别？"
 			options: "男:男,女:女"
+			is_name: true
 		
 		age:
 			type:'select'
@@ -29,7 +30,7 @@ Creator.Objects.love_looking_for =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["looking_forward", "sex", "age_range" ,"height_range"]
+			columns: ["sex", "age", "age_max", "height", "height_max"]
 			filter_scope: "space"
 		
 	permission_set:
