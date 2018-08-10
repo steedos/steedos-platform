@@ -13,6 +13,8 @@ Npm.depends({
 Package.onUse(function(api) {
 	api.use('coffeescript@1.11.1_4');
 	api.use('steedos:creator@0.0.4');
+	api.use('simple:json-routes@2.1.0');
+
 	api.addFiles('love-app.coffee');
 	api.addFiles('models/love_answer.coffee');
 	api.addFiles('models/love_answer2.coffee');
@@ -31,6 +33,8 @@ Package.onUse(function(api) {
 	api.addFiles('server/lib/love_manager.coffee', 'server');
 	api.addFiles('server/schedule.coffee', 'server');
 	api.addFiles('test/generator.coffee');
+
+	api.addFiles('server/routes/api_friend_answered.coffee');
 
 	api.export(['LoveManager'], ['server']);
 })

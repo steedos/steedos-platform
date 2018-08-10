@@ -5,12 +5,14 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 		if !userId
 			throw new Meteor.Error('Love', "No permission")
 
-		spaceId = req.query.space_id
+		body = req.body
+
+		spaceId = req.query.space_id || body.space_id
 
 		if !spaceId
 			throw new Meteor.Error('Love', "No spaceId")
 
-		objectName = req.query.object_name || 'love_answer'
+		objectName = req.query.object_name || body.object_name || 'love_answer'
 
 		LoveManager.caculateFriendsScore objectName, userId, spaceId
 
