@@ -62,8 +62,10 @@ Creator.Objects.vip_invites =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				owner = doc?.owner
+				space_id = doc?.space
 				from = doc?.from
-				invite = Creator.getCollection("vip_invites").findOne({owner: userId, from: from});
-				if invite
-					throw new Meteor.Error 405, "该invite信息已存在"
+				if userId
+					# userId存在说明是前端新建记录，需要判断重复，反之，后台调用不用判断
+					invite = Creator.getCollection("vip_invites").findOne({space: space_id, owner: userId, from: from}, fields:{name:1});
+					if invite
+						throw new Meteor.Error 405, "同一商家不能重复新建邀请记录"

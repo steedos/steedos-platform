@@ -30,6 +30,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		old_user_id = req.query.old_user_id
 		old_auth_token = req.query.old_auth_token
 		space_id = req.query.space_id
+		share_id = req.query.share_id
+		share_from = req.query.share_from
 
 		appId = req.headers["appid"]
 
@@ -116,13 +118,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				delete s.space
 				return s
 			)
-
-		customers = Creator.getCollection("vip_customers").find({
-			owner: ret_data.user_id
-		}).fetch()
-
+		
 		ret_data.my_spaces = space_users
-		ret_data.my_customers = customers
 
 		#设置sessionKey
 		Creator.getCollection("users").direct.update({
@@ -141,6 +138,85 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 
 		ret_data.love = Meteor.settings.love
 
+
+		collection_customers = Creator.getCollection("vip_customers")
+		collection_invites = Creator.getCollection("vip_invites")
+		collection_friends = Creator.getCollection("love_friends")
+		customers = collection_customers.find({
+			owner: ret_data.user_id
+		}).fetch()
+		if space_id
+			# 生成vip_customers记录
+			current_customer = customers.find((customer) ->
+				return customer.space == space_id
+			)
+			console.log "current_customer=============", current_customer
+			unless current_customer
+				values =
+					name: user.name,
+					space: space_id,
+					mobile: user.mobile
+					owner : ret_data.user_id,
+					created_by : ret_data.user_id,
+					modified_by : ret_data.user_id
+				
+				if(share_id)
+					values.share = share_id;
+				if(share_from)
+					values.from = share_from;
+				new_customer_id = collection_customers.insert values
+				current_customer = collection_customers.findOne({
+					_id: new_customer_id
+				})
+				console.log "current_customer========new=====", current_customer
+				customers.push current_customer
+			
+			# 生成vip_invites记录
+			if share_from and share_from != ret_data.user_id
+				# 自己不能邀请自己
+				current_invite = collection_invites.findOne({
+					owner: ret_data.user_id
+					from: share_from
+					space: space_id
+				})
+				unless current_invite
+					values =
+						name: user.name
+						owner: ret_data.user_id
+						from: share_from
+						space: space_id
+					new_invite_id = collection_invites.insert values
+					console.log "current_invite========new=====", new_invite_id
+			
+			# 生成love_friends记录
+			if share_from and share_from != ret_data.user_id
+				# 自己不能邀请自己
+				current_friend = collection_friends.findOne({
+					owner: ret_data.user_id
+					user_b: share_from
+					space: space_id
+				})
+				unless current_friend
+					values =
+						owner: ret_data.user_id
+						user_b: share_from
+						space: space_id
+					new_friend_id = collection_friends.insert values
+					console.log "current_friend========new=====", new_friend_id
+				current_friend = collection_friends.findOne({
+					owner: share_from
+					user_b: ret_data.user_id
+					space: space_id
+				})
+				unless current_friend
+					values =
+						owner: share_from
+						user_b: ret_data.user_id
+						space: space_id
+					new_friend_id = collection_friends.insert values
+					console.log "current_friend========new=====", new_friend_id
+		
+		ret_data.my_customers = customers
 		JsonRoutes.sendResult res, {
 			code: 200,
 			data: ret_data
