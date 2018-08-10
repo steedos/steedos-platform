@@ -284,9 +284,9 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         aGotPoints = r.aGotPoints
         questionsNumber = r.questionsNumber
 
-        aToB = bGotPoints/aFullPoints
+        aToB = bGotPoints/aFullPoints || 0
 
-        bToA = aGotPoints/bFullPoints
+        bToA = aGotPoints/bFullPoints || 0
 
         match = Math.pow(aToB*bToA, 1/2)
 
