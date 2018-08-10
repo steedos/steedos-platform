@@ -258,3 +258,30 @@ LoveManager.caculateRecommend = () ->
 
     console.timeEnd 'caculateRecommend'
     return
+
+LoveManager.caculateFriendsScore = (objectName, userId, spaceId) ->
+    questionKeys = LoveManager.getQuestionKeys objectName
+    aAnswer = Creator.getCollection(objectName).findOne({ space: spaceId, owner: userId })
+
+    Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
+        bAnswer = Creator.getCollection(objectName).findOne({ space: spaceId, owner: lf.user_b })
+
+        r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
+        aFullPoints = r.aFullPoints
+        bGotPoints = r.bGotPoints
+        bFullPoints = r.bFullPoints
+        aGotPoints = r.aGotPoints
+        questionsNumber = r.questionsNumber
+
+        aToB = bGotPoints/aFullPoints
+
+        bToA = aGotPoints/bFullPoints
+
+        match = Math.pow(aToB*bToA, 1/questionsNumber)
+
+        Creator.getCollection('love_friends').update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+        Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+
+    return
+
+
