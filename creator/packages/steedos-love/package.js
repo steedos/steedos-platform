@@ -32,9 +32,9 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/lib/love_manager.coffee', 'server');
 	api.addFiles('server/schedule.coffee', 'server');
-	api.addFiles('test/generator.coffee');
+	api.addFiles('test/generator.coffee', 'server');
 
-	api.addFiles('server/routes/api_friend_answered.coffee');
+	api.addFiles('server/routes/api_friend_answered.coffee', 'server');
 
 	api.export(['LoveManager'], ['server']);
 })
