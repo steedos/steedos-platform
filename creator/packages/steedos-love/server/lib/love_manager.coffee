@@ -102,7 +102,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
                         break
                     i++
 
-            match = Math.pow(aToB*bToA, 1/questionsNumber)
+            match = Math.pow(aToB*bToA, 1/2)
             if score.length < topNumber
                 score.push({userB: owner, BName: name, score: match})
             else
