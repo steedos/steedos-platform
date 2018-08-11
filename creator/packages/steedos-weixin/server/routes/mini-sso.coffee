@@ -231,20 +231,63 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					new_friend_id = collection_friends.insert values
 					console.log "current_friend========new=====", new_friend_id
 			
-			# 生成微信群记录
-			if openGId
+			if openGId and share_from and share_from != ret_data.user_id
+				# 自己不能邀请自己
+				# 生成微信群记录
 				collection_groups = Creator.getCollection("vip_groups")
 				current_group = collection_groups.update(
 					{ open_group_id: openGId },
 					{
 						$addToSet: {
-							users: ret_data.user_id
+							users: { $each: [ ret_data.user_id, share_from] }
 						}
 					},
 					{ upsert: true }
 				)
 
-			
+				# 根据微信群记录，生成互相之前的friends记录
+				current_group = collection_groups.findOne({
+					open_group_id: openGId
+				})
+				if current_group and current_group.users and current_group.users.length
+					console.log "========先排除掉自己及share_from==0===="
+					# 批量插入数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
+					bulk = collection_groups.rawCollection().initializeUnorderedBulkOp()
+					isBulkEmpty = true
+					current_group.users.forEach (member)->
+						console.log "========先排除掉自己及share_from==1===="
+						# 先排除掉自己及share_from，然后其他人与ret_data.user_id建立friend关系
+						if member != ret_data.user_id and member != share_from
+							console.log "========先排除掉自己及share_from==2===="
+							current_friend = collection_friends.findOne({
+								owner: ret_data.user_id
+								user_b: member
+								space: space_id
+							})
+							unless current_friend
+								values =
+									owner: member
+									user_b: ret_data.user_id
+									space: space_id
+									open_group_id: openGId
+								isBulkEmpty = false
+								bulk.insert values
+							current_friend2 = collection_friends.findOne({
+								owner: member
+								user_b: ret_data.user_id
+								space: space_id
+							})
+							unless current_friend2
+								values =
+									owner: member
+									user_b: ret_data.user_id
+									space: space_id
+									open_group_id: openGId
+								isBulkEmpty = false
+								bulk.insert values
+					unless isBulkEmpty
+						console.log("============isBulkEmpty====================");
+						bulk.execute()
 		
 		ret_data.my_customers = customers
 		JsonRoutes.sendResult res, {
