@@ -6,7 +6,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
     answerObjectNames = ['love_answer','love_answer2']
 
-    topNumber = 10
+    topNumber = 50
 
     # 数据加载到内存
     data = {}
@@ -46,7 +46,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
         query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
         query.height = { $gte: heightMin, $lte: heightMax }
 
-        console.log 'query: ', query
+        # console.log 'query: ', query
         Creator.getCollection('love_about_me').find(query, { fields: { owner: 1, name: 1 } }).fetch().forEach (aboutMe) ->
             if not data[aboutMe.owner]
                 return
@@ -80,7 +80,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
             # console.log { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
 
-            aToB = bGotPoints/aFullPoints
+            aToB = bGotPoints/aFullPoints || 0
             if scoreA_B.length < topNumber
                 scoreA_B.push({userB: owner, BName: name, score: aToB})
             else
@@ -91,7 +91,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
                         break
                     i++
 
-            bToA = aGotPoints/bFullPoints
+            bToA = aGotPoints/bFullPoints || 0
             if scoreB_A.length < topNumber
                 scoreB_A.push({userB: owner, BName: name, score: bToA})
             else
@@ -202,70 +202,115 @@ LoveManager.createResultScoreView = () ->
 LoveManager.caculateRecommend = () ->
     console.time 'caculateRecommend'
 
-    if not LoveManager.resultScoreViewCollection
-        throw new Meteor.Error('caculateRecommend', "No LoveManager.resultScoreViewCollection")
-
     Creator.getCollection('love_recommend').remove({})
 
     newRecommendUserIds = []
+    limit = 10000
+    skip = 0
+    scoreCount = 0
+    recommendColl = Creator.getCollection('love_recommend')
+    recommendHistColl = Creator.getCollection('love_recommend_history')
+    tempScoreResult = []
 
-    LoveManager.resultScoreViewCollection.find({}, { sort: { 'score': -1 } }).forEach (r) ->
-        if newRecommendUserIds.includes(r.userA) or newRecommendUserIds.includes(r.userB)
-            return
+    Meteor.wrapAsync((callback) ->
 
-        if r.score
-
-            user_a = r.userA
-            user_b = r.userB
-            score = r.score
-
-            if Creator.getCollection('love_recommend').find({ user_a: user_a }).count() > 0 or Creator.getCollection('love_recommend_history').find({ user_a: user_a, user_b: user_b }).count() > 0
+        Creator.getCollection('love_result').rawCollection().aggregate([{ $unwind: '$score' }, { $project: { userA: "$userA", userB: "$score.userB", BName: "$score.BName", score: "$score.score" } }, { $count: 'count' }], (err, data)->
+            if err
+                console.error err
                 return
 
-            newRecommendUserIds.push user_a
-            newRecommendUserIds.push user_b
+            scoreCount = data[0].count
 
-            now = new Date()
+            if callback && _.isFunction(callback)
+                callback()
+            return
+        )
 
-            Creator.getCollection('love_recommend').direct.insert({
-                user_a: user_a
-                user_b: user_b
-                match: score
-                recommend_date: now
-            })
+    )()
 
-            Creator.getCollection('love_recommend_history').direct.insert({
-                user_a: user_a
-                user_b: user_b
-                match: score
-                recommend_date: now
-            })
+    console.log 'scoreCount: ', scoreCount
 
-            Creator.getCollection('love_recommend').direct.insert({
-                user_a: user_b
-                user_b: user_a
-                match: score
-                recommend_date: now
-            })
+    wrapFunc = Meteor.wrapAsync((callback) ->
+        console.log 'skip: ', skip
+        Creator.getCollection('love_result').rawCollection().aggregate([{ $unwind: '$score' }, { $project: { userA: "$userA", userB: "$score.userB", BName: "$score.BName", score: "$score.score" } }, { $sort: { 'score': -1 } }, { $skip: skip }, { $limit: limit }], { allowDiskUse: true }, (err, data)->
+            if err
+                console.error err
+                return
 
-            Creator.getCollection('love_recommend_history').direct.insert({
-                user_a: user_b
-                user_b: user_a
-                match: score
-                recommend_date: now
-            })
+            data.forEach (r) ->
+                tempScoreResult.push r
 
+            if callback && _.isFunction(callback)
+                callback()
+            return
+        )
+    )
+
+    while skip < scoreCount
+
+        wrapFunc()
+
+        tempScoreResult.forEach (r)->
+            skip++
+            if newRecommendUserIds.includes(r.userA) or newRecommendUserIds.includes(r.userB)
+                return
+
+            if r.score
+
+                user_a = r.userA
+                user_b = r.userB
+                score = r.score
+
+                if recommendColl.find({ user_a: user_a }).count() > 0 or recommendHistColl.find({ user_a: user_a, user_b: user_b }).count() > 0
+                    return
+
+                newRecommendUserIds.push user_a
+                newRecommendUserIds.push user_b
+
+                now = new Date()
+
+                recommendColl.direct.insert({
+                    user_a: user_a
+                    user_b: user_b
+                    match: score
+                    recommend_date: now
+                })
+
+                recommendHistColl.direct.insert({
+                    user_a: user_a
+                    user_b: user_b
+                    match: score
+                    recommend_date: now
+                })
+
+                recommendColl.direct.insert({
+                    user_a: user_b
+                    user_b: user_a
+                    match: score
+                    recommend_date: now
+                })
+
+                recommendHistColl.direct.insert({
+                    user_a: user_b
+                    user_b: user_a
+                    match: score
+                    recommend_date: now
+                })
+
+        tempScoreResult = []
 
     console.timeEnd 'caculateRecommend'
     return
 
 LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
-    collection = Creator.getCollection(objectName)
-    if not collection
-        throw new Meteor.Error('Love', "No collection")
+    answerObjectNames = ['love_answer','love_answer2']
 
-    questionKeys = LoveManager.getQuestionKeys objectName
-    aAnswer = collection.findOne({ space: spaceId, owner: userId })
+    # 获取题目字段key
+    answerKeyObj = {}
+    dv = {}
+    answerObjectNames.forEach (objName) ->
+        answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
+        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
 
     query = { space: spaceId, owner: userId }
     if rest
@@ -273,17 +318,22 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
 
     Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
         try
-            bAnswer = collection.findOne({ space: spaceId, owner: lf.user_b })
-
-            if not aAnswer or not bAnswer
-                return
-
-            r = LoveManager.getMatchScores(questionKeys, aAnswer, bAnswer)
-            aFullPoints = r.aFullPoints
-            bGotPoints = r.bGotPoints
-            bFullPoints = r.bFullPoints
-            aGotPoints = r.aGotPoints
-            questionsNumber = r.questionsNumber
+            # 计算分子、分母
+            aFullPoints = 0
+            bGotPoints = 0
+            bFullPoints = 0
+            aGotPoints = 0
+            questionsNumber = 0
+            answerObjectNames.forEach (objName) ->
+                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
+                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
+                    # console.log objName
+                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
+                    aFullPoints += r.aFullPoints
+                    bGotPoints += r.bGotPoints
+                    bFullPoints += r.bFullPoints
+                    aGotPoints += r.aGotPoints
+                    questionsNumber += r.questionsNumber
 
             aToB = bGotPoints/aFullPoints || 0
 

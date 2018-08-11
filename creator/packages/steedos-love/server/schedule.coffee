@@ -58,7 +58,6 @@ Meteor.methods
 
     caculateRecommend: () ->
         try
-            LoveManager.createResultScoreView()
             LoveManager.caculateRecommend()
         catch e
             console.error e.stack
