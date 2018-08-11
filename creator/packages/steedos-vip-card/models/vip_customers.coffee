@@ -12,6 +12,12 @@ Creator.Objects.vip_customers =
 			type: 'lookup'
 			reference_to: 'users'
 
+		froms:
+			label: '推荐人历史'
+			type: 'lookup'
+			reference_to: 'users'
+			multiple: true
+
 		space:
 			label: '商户'
 
