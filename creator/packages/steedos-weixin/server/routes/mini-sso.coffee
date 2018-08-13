@@ -252,7 +252,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				if current_group and current_group.users and current_group.users.length
 					console.log "========先排除掉自己及share_from==0===="
 					# 批量插入数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
-					bulk = collection_groups.rawCollection().initializeUnorderedBulkOp()
+					now = new Date()
+					bulk = collection_friends.rawCollection().initializeUnorderedBulkOp()
 					isBulkEmpty = true
 					current_group.users.forEach (member)->
 						console.log "========先排除掉自己及share_from==1===="
@@ -270,6 +271,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									user_b: ret_data.user_id
 									space: space_id
 									open_group_id: openGId
+									created: now
+									modified: now
 								isBulkEmpty = false
 								bulk.insert values
 							current_friend2 = collection_friends.findOne({
@@ -283,6 +286,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									user_b: ret_data.user_id
 									space: space_id
 									open_group_id: openGId
+									created: now
+									modified: now
 								isBulkEmpty = false
 								bulk.insert values
 					unless isBulkEmpty
