@@ -250,51 +250,38 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					open_group_id: openGId
 				})
 				if current_group and current_group.users and current_group.users.length
-					console.log "========先排除掉自己及share_from==0===="
-					# 批量插入数据需要调用mongo的initializeUnorderedBulkOp函数优化性能
-					now = new Date()
-					bulk = collection_friends.rawCollection().initializeUnorderedBulkOp()
-					isBulkEmpty = true
 					current_group.users.forEach (member)->
-						console.log "========先排除掉自己及share_from==1===="
 						# 先排除掉自己及share_from，然后其他人与ret_data.user_id建立friend关系
 						if member != ret_data.user_id and member != share_from
-							console.log "========先排除掉自己及share_from==2===="
-							current_friend = collection_friends.findOne({
-								owner: ret_data.user_id
-								user_b: member
-								space: space_id
-							})
-							unless current_friend
-								values =
-									_id: collection_friends._makeNewID()
+							try
+								current_friend = collection_friends.findOne({
+									owner: ret_data.user_id
+									user_b: member
+									space: space_id
+								})
+								unless current_friend
+									values =
+										_id: collection_friends._makeNewID()
+										owner: ret_data.user_id
+										user_b: member
+										space: space_id
+										open_group_id: openGId
+									collection_friends.insert values
+								current_friend2 = collection_friends.findOne({
 									owner: member
 									user_b: ret_data.user_id
 									space: space_id
-									open_group_id: openGId
-									created: now
-									modified: now
-								isBulkEmpty = false
-								bulk.insert values
-							current_friend2 = collection_friends.findOne({
-								owner: member
-								user_b: ret_data.user_id
-								space: space_id
-							})
-							unless current_friend2
-								values =
-									_id: collection_friends._makeNewID()
-									owner: member
-									user_b: ret_data.user_id
-									space: space_id
-									open_group_id: openGId
-									created: now
-									modified: now
-								isBulkEmpty = false
-								bulk.insert values
-					unless isBulkEmpty
-						console.log("============isBulkEmpty====================");
-						bulk.execute()
+								})
+								unless current_friend2
+									values =
+										_id: collection_friends._makeNewID()
+										owner: member
+										user_b: ret_data.user_id
+										space: space_id
+										open_group_id: openGId
+									collection_friends.insert values
+							catch ex
+								console.error "群转发出错了,openGId=#{openGId},member=#{member},user_id=#{ret_data.user_id}"
 		
 		ret_data.my_customers = customers
 		JsonRoutes.sendResult res, {
