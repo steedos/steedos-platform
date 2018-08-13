@@ -43,7 +43,7 @@ Creator.Objects.love_about_me =
 			label:'照片'
 			type:'image'
 			multiple:true
-			max: 5
+			max: 9
 			group:'-'
 		
 		self_introduction:
