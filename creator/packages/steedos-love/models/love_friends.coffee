@@ -72,3 +72,9 @@ Creator.Objects.love_friends =
 			modifyAllRecords: false
 			viewAllRecords: false
 
+if Meteor.isServer
+	Meteor.startup ->
+		Creator.getCollection('love_friends')._ensureIndex({
+			"owner": 1,
+			"user_b": 1
+		},{background: true, unique: true})
