@@ -173,6 +173,19 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					values.share = share_id;
 				if(share_from)
 					values.from = share_from;
+					share_from_customer = collection_customers.findOne({
+						space: space_id,
+						owner: share_from
+					}, {fields: {from: 1, froms: 1}})
+					if share_from_customer
+						share_from_from = share_from_customer.from
+						share_from_froms = share_from_customer.froms
+						if share_from_from
+							if share_from_froms and share_from_froms.length
+								share_from_froms.push share_from_from
+							else
+								share_from_froms = [share_from_from]
+							values.froms = share_from_froms
 				new_customer_id = collection_customers.insert values
 				current_customer = collection_customers.findOne({
 					_id: new_customer_id
