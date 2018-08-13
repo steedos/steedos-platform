@@ -267,6 +267,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 							})
 							unless current_friend
 								values =
+									_id: collection_friends._makeNewID()
 									owner: member
 									user_b: ret_data.user_id
 									space: space_id
@@ -282,6 +283,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 							})
 							unless current_friend2
 								values =
+									_id: collection_friends._makeNewID()
 									owner: member
 									user_b: ret_data.user_id
 									space: space_id
