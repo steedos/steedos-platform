@@ -22,6 +22,15 @@ WebApp.connectHandlers.use '/api/steedos/weixin/code', (req, res, next) ->
 		secret = Meteor.settings.weixin.appSecret[appId]
 		scene = req.query.scene or req.query.store_id
 		page = req.query.page
+		width = parseInt(req.query.width) || 430
+		if req.query.line_color
+			line_color = JSON.parse(req.query.line_color)
+		else
+			line_color = {"r":"35","g":"35","b":"35"}
+		if req.query.is_hyaline == 'true'
+			is_hyaline = true
+		else
+			is_hyaline = false
 		if !secret
 			throw new Meteor.Error(500, "无效的appId #{appId}")
 		wxToken = WXMini.getNewAccessTokenSync appId, secret
@@ -31,8 +40,9 @@ WebApp.connectHandlers.use '/api/steedos/weixin/code', (req, res, next) ->
 			formData = {
 				page: page,
 				scene:scene,
-				width: 430,
-				line_color:{"r":"35","g":"35","b":"35"}
+				width: width,
+				line_color:line_color,
+				is_hyaline:is_hyaline
 			}
 			requestSettings = {
 				url: "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=",
