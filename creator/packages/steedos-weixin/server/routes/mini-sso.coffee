@@ -187,7 +187,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner: ret_data.user_id
 					from: share_from
 					space: space_id
-				})
+				}, {fields: {_id: 1}})
 				unless current_invite
 					values =
 						name: user.name
@@ -206,7 +206,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner: ret_data.user_id
 					user_b: share_from
 					space: space_id
-				})
+				}, {fields: {_id: 1}})
 				unless current_friend
 					values =
 						owner: ret_data.user_id
@@ -220,7 +220,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner: share_from
 					user_b: ret_data.user_id
 					space: space_id
-				})
+				}, {fields: {_id: 1}})
 				unless current_friend
 					values =
 						owner: share_from
@@ -258,7 +258,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									owner: ret_data.user_id
 									user_b: member
 									space: space_id
-								})
+								}, {fields: {_id: 1}})
 								unless current_friend
 									values =
 										_id: collection_friends._makeNewID()
@@ -271,7 +271,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									owner: member
 									user_b: ret_data.user_id
 									space: space_id
-								})
+								}, {fields: {_id: 1}})
 								unless current_friend2
 									values =
 										_id: collection_friends._makeNewID()
