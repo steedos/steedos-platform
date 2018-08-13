@@ -69,6 +69,11 @@ Creator.Objects.vip_customers =
 		questionnaire_progess: # 1:about_me, 2:about_you, 3:questions, 4:completed
 			label: '问卷回答进度'
 			type: '[text]'
+		
+		enable_match:
+			label: '开启匹配'
+			type: "boolean"
+		
 		disable:
 			label: '停用'
 			type: 'text'
