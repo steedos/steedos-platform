@@ -46,10 +46,10 @@ Creator.Objects.love_about_me =
 			max: 5
 			group:'-'
 		
-		# self_introduction:
-		# 	type:'textarea'
-		# 	is_wide:true
-		# 	label:"自我介绍:"
+		self_introduction:
+			type:'textarea'
+			is_wide:true
+			label:"自我介绍:"
 		
 		age:
 			type:'number'
