@@ -20,7 +20,7 @@ Creator.Objects.love_about_me =
 		sex:
 			type:'select'
 			label:"你的性别？"
-			options:[{label:'男生',value:'男'},{label:'女生',value:'女'}]	
+			options:[{label:'男生',value:'男'},{label:'女生',value:'女'}]
 		
 		height:
 			type:'select'
@@ -38,10 +38,17 @@ Creator.Objects.love_about_me =
 		hometown:
 			type:'selectCity'
 			label:"你的家乡？"
+
+		photos:
+			label:'照片'
+			type:'image'
+			multiple:true
+			max: 5
+			group:'-'
 		
 		# self_introduction:
 		# 	type:'textarea'
-		# 	is_wide:true	
+		# 	is_wide:true
 		# 	label:"自我介绍:"
 		
 		age:
