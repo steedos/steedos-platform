@@ -8,6 +8,16 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
     topNumber = 10
 
+    loveAboutMeCollection = Creator.getCollection('love_about_me')
+    loveAnswerCollection = Creator.getCollection('love_answer')
+    loveAnswer2Collection = Creator.getCollection('love_answer2')
+    loveResultCollection = Creator.getCollection('love_result')
+    loveLookingForCollection = Creator.getCollection('love_looking_for')
+    loveHobbyCollection = Creator.getCollection('love_hobby')
+    loveEducationalExperienceCollection = Creator.getCollection('love_educational_experience')
+    loveWorkExperienceCollection = Creator.getCollection('love_work_experience')
+    loveRecommendHistoryCollection = Creator.getCollection('love_recommend_history')
+
     # 数据加载到内存
     data = {}
     customQuery = { space: loveSpaceId, $or: [] }
@@ -18,15 +28,15 @@ LoveManager.caculateResult = (loveSpaceId) ->
     Creator.getCollection('vip_customers').find(customQuery).forEach (cust)->
         owner = cust.owner
         data[owner] = {
-            love_about_me: Creator.getCollection('love_about_me').findOne({ space: loveSpaceId, owner: owner })
-            love_answer: Creator.getCollection('love_answer').findOne({ space: loveSpaceId, owner: owner })
-            love_answer2: Creator.getCollection('love_answer2').findOne({ space: loveSpaceId, owner: owner })
-            love_result: Creator.getCollection('love_result').findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
-            love_looking_for: Creator.getCollection('love_looking_for').findOne({ space: loveSpaceId, owner: owner })
-            love_hobby: Creator.getCollection('love_hobby').findOne({ space: loveSpaceId, owner: owner })
-            love_educational_experience: Creator.getCollection('love_educational_experience').findOne({ space: loveSpaceId, owner: owner })
-            love_work_experience: Creator.getCollection('love_work_experience').findOne({ space: loveSpaceId, owner: owner })
-            love_recommend_history: Creator.getCollection('love_recommend_history').find({ space: loveSpaceId, user_a: owner }).fetch()
+            love_about_me: loveAboutMeCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_answer: loveAnswerCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_answer2: loveAnswer2Collection.findOne({ space: loveSpaceId, owner: owner })
+            love_result: loveResultCollection.findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
+            love_looking_for: loveLookingForCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_educational_experience: loveEducationalExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_work_experience: loveWorkExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_recommend_history: loveRecommendHistoryCollection.find({ space: loveSpaceId, user_a: owner }).fetch()
         }
 
     # 获取题目字段key
@@ -52,7 +62,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
         query.height = { $gte: heightMin, $lte: heightMax }
 
         # console.log 'query: ', query
-        Creator.getCollection('love_about_me').find(query, { fields: { owner: 1, name: 1 } }).fetch().forEach (aboutMe) ->
+        loveAboutMeCollection.find(query, { fields: { owner: 1, name: 1 } }).fetch().forEach (aboutMe) ->
             if not data[aboutMe.owner]
                 return
 
@@ -120,13 +130,13 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
         if scoreA_B.length > 0 or scoreB_A.length > 0 or score.length > 0
             if resultMe
-                Creator.getCollection('love_result').direct.update(resultMe._id,{$set:{
+                loveResultCollection.direct.update(resultMe._id,{$set:{
                     scoreA_B: scoreA_B
                     scoreB_A: scoreB_A
                     score: score
                 }})
             else
-                Creator.getCollection('love_result').direct.insert({
+                loveResultCollection.direct.insert({
                     userA: userId
                     scoreA_B: scoreA_B
                     scoreB_A: scoreB_A
@@ -329,6 +339,8 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         try
             customQuery.owner = lf.user_b
             unless customCollection.find(customQuery).count()
+                friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
+                friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
                 return
 
             # 计算分子、分母
