@@ -6,11 +6,16 @@ LoveManager.caculateResult = (loveSpaceId) ->
 
     answerObjectNames = ['love_answer','love_answer2']
 
-    topNumber = 50
+    topNumber = 10
 
     # 数据加载到内存
     data = {}
-    Creator.getCollection('vip_customers').find({ space: loveSpaceId, questionnaire_progess: 4 }).forEach (cust)->
+    customQuery = { space: loveSpaceId, $or: [] }
+    answerObjectNames.forEach (objName) ->
+        customQuery.$or.push { questionnaire_progess: objName }
+    console.log customQuery
+
+    Creator.getCollection('vip_customers').find(customQuery).forEach (cust)->
         owner = cust.owner
         data[owner] = {
             love_about_me: Creator.getCollection('love_about_me').findOne({ space: loveSpaceId, owner: owner })
@@ -304,6 +309,9 @@ LoveManager.caculateRecommend = () ->
 
 LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
     answerObjectNames = ['love_answer','love_answer2']
+    customQuery = { space: spaceId, owner: '', $or: [] }
+    customCollection = Creator.getCollection('vip_customers')
+    friendCollection = Creator.getCollection('love_friends')
 
     # 获取题目字段key
     answerKeyObj = {}
@@ -311,13 +319,18 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
     answerObjectNames.forEach (objName) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
         dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        customQuery.$or.push { questionnaire_progess: objName }
 
     query = { space: spaceId, owner: userId }
     if rest
         query.match = { $exists: false }
 
-    Creator.getCollection('love_friends').find({ space: spaceId, owner: userId }).forEach (lf) ->
+    friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
         try
+            customQuery.owner = lf.user_b
+            unless customCollection.find(customQuery).count()
+                return
+
             # 计算分子、分母
             aFullPoints = 0
             bGotPoints = 0
@@ -341,8 +354,8 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
 
             match = Math.pow(aToB*bToA, 1/2)
 
-            Creator.getCollection('love_friends').update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-            Creator.getCollection('love_friends').update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+            friendCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
     return
