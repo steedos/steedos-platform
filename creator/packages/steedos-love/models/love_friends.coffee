@@ -36,6 +36,14 @@ Creator.Objects.love_friends =
 			reference_to: "users"
 			index: true
 
+		heart:
+			label: "点“心”"
+			type: "boolean"
+	
+		heart_at:
+			label: "点“心”时间"
+			type: "datetime"
+
 	list_views:
 		all:
 			label: "所有"
@@ -46,7 +54,7 @@ Creator.Objects.love_friends =
 		user:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
@@ -60,17 +68,26 @@ Creator.Objects.love_friends =
 		member:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
 		guest:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
+	
+	triggers:
+		"before.update.server.love_friends":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				if modifier?.$set?.heart
+					modifier.$set.heart_at = new Date()
+
 
 if Meteor.isServer
 	Meteor.startup ->
