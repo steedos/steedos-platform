@@ -69,6 +69,14 @@ Creator.Objects.vip_customers =
 		questionnaire_progess: # 1:about_me, 2:about_you, 3:questions, 4:completed
 			label: '问卷回答进度'
 			type: '[text]'
+
+		avatar:
+			label:'头像'
+			type:'image'
+
+		cover:
+			label:'封面'
+			type:'image'
 		
 		enable_match:
 			label: '开启匹配'
@@ -78,6 +86,13 @@ Creator.Objects.vip_customers =
 			label: '停用'
 			type: 'text'
 			omit:true
+		
+		privacy_protection:
+			label: '隐私保护'
+			type: 'select'
+			multiple:true
+			options: "姓名:name,身高:height,年龄:age,现居地:live,家乡:hometown,照片:photos,,兴趣爱好:love_hobby,教育经历:love_educational_experience" #工作经历:love_work_experience
+
 
 	list_views:
 		all:
