@@ -43,6 +43,10 @@ Creator.Objects.love_friends =
 		heart_at:
 			label: "点“心”时间"
 			type: "datetime"
+		
+		is_looking_for:
+			label: "是否满足筛选条件"
+			type: "boolean"
 
 	list_views:
 		all:
