@@ -249,7 +249,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				# 生成微信群记录
 				collection_groups = Creator.getCollection("vip_groups")
 				current_group = collection_groups.update(
-					{ open_group_id: openGId },
+					{ open_group_id: openGId, space: space_id },
 					{
 						$addToSet: {
 							users: { $each: [ ret_data.user_id, share_from] }
@@ -260,7 +260,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 
 				# 根据微信群记录，生成互相之前的friends记录
 				current_group = collection_groups.findOne({
-					open_group_id: openGId
+					open_group_id: openGId,
+					space: space_id
 				})
 				if current_group and current_group.users and current_group.users.length
 					current_group.users.forEach (member)->
