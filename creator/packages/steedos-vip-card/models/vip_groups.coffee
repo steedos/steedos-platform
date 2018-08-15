@@ -25,7 +25,7 @@ Creator.Objects.vip_groups =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -46,5 +46,5 @@ Creator.Objects.vip_groups =
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 
