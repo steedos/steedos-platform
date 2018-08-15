@@ -173,22 +173,28 @@ LoveManager.getMatchScores = (questionKeys, aAnswer, bAnswer) ->
         akO = ak+'_o'
         if aAnswer[akI] > -1 and bAnswer[akI] > -1
             questionsNumber++
-            if aAnswer[akI] is 1
+            if aAnswer[akI] is 0
                 aFullPoints += normalP
-                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
+                bGotPoints += normalP
+            else if aAnswer[akI] is 1
+                aFullPoints += normalP
+                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
                     bGotPoints += normalP
             else if aAnswer[akI] is 2
                 aFullPoints += importP
-                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
+                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
                     bGotPoints += importP
 
-            if bAnswer[akI] is 1
+            if bAnswer[akI] is 0
                 bFullPoints += normalP
-                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
+                aGotPoints += normalP
+            else if bAnswer[akI] is 1
+                bFullPoints += normalP
+                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
                     aGotPoints += normalP
             else if bAnswer[akI] is 2
                 bFullPoints += importP
-                if aAnswer[akO] and aAnswer[akO].includes(bAnswer[ak])
+                if bAnswer[akO] and bAnswer[akO].includes(aAnswer[ak])
                     aGotPoints += importP
 
     return { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
