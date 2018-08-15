@@ -316,6 +316,7 @@ Creator.getObjectSchema = (obj) ->
 					return Creator.Formular.run(field.defaultValue)
 			else
 				fs.autoform.defaultValue = field.defaultValue
+				fs.defaultValue = field.defaultValue
 
 		if field.readonly
 			fs.autoform.readonly = true
