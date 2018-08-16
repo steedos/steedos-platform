@@ -120,7 +120,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				delete s.space
 				return s
 			)
-		
+
 		ret_data.my_spaces = space_users
 
 		#设置sessionKey
@@ -154,7 +154,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				groupData = pc.decryptData(encryptedData, iv)
 				console.log("========groupData=======", groupData)
 				openGId = groupData.openGId
-			
+
 			# 生成vip_customers记录
 			current_customer = customers.find((customer) ->
 				return customer.space == space_id
@@ -168,7 +168,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner : ret_data.user_id,
 					created_by : ret_data.user_id,
 					modified_by : ret_data.user_id
-				
+
 				if(share_id)
 					values.share = share_id;
 				if(share_from)
@@ -192,7 +192,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				})
 				console.log "current_customer========new=====", current_customer
 				customers.push current_customer
-			
+
 			# 生成vip_invites记录
 			if share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
@@ -211,7 +211,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						values.open_group_id = openGId
 					new_invite_id = collection_invites.insert values
 					console.log "current_invite========new=====", new_invite_id
-			
+
 			# 生成love_friends记录
 			if share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
@@ -243,20 +243,31 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						values.open_group_id = openGId
 					new_friend_id = collection_friends.insert values
 					console.log "current_friend========new=====", new_friend_id
-			
+
 			if openGId and share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
 				# 生成微信群记录
 				collection_groups = Creator.getCollection("vip_groups")
-				current_group = collection_groups.update(
-					{ open_group_id: openGId, space: space_id },
-					{
-						$addToSet: {
-							users: { $each: [ ret_data.user_id, share_from] }
+				current_group = collection_groups.findOne({ open_group_id: openGId, space: space_id })
+				if current_group
+					collection_groups.update(
+						current_group._id,
+						{
+							$addToSet: {
+								users: { $each: [ ret_data.user_id, share_from] }
+							}
 						}
-					},
-					{ upsert: true }
-				)
+					)
+				else
+					collection_groups.insert(
+						{
+							_id: collection_groups._makeNewID()
+							users: [ ret_data.user_id, share_from]
+							space: space_id
+							open_group_id: openGId
+							owner: ret_data.user_id
+						}
+					)
 
 				# 根据微信群记录，生成互相之前的friends记录
 				current_group = collection_groups.findOne({
@@ -296,7 +307,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									collection_friends.insert values
 							catch ex
 								console.error "群转发出错了,openGId=#{openGId},member=#{member},user_id=#{ret_data.user_id}"
-		
+
 		ret_data.my_customers = customers
 		JsonRoutes.sendResult res, {
 			code: 200,
