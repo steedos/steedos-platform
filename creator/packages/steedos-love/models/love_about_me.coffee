@@ -13,10 +13,6 @@ Creator.Objects.love_about_me =
 	icon: "client"
 	enable_search: true
 	fields:
-		name:
-			type:'text'
-			label:"你的姓名？"
-		
 		sex:
 			type:'select'
 			label:"你的性别？"
@@ -69,7 +65,7 @@ Creator.Objects.love_about_me =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["name", "age", "sex", "birthday","live", "height", "hometown", "constellation", "zodiac" ]
+			columns: ["age", "sex", "birthday","live", "height", "hometown", "constellation", "zodiac" ]
 			filter_scope: "space"
 		
 	permission_set:
