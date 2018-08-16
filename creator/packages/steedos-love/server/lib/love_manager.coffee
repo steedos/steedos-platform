@@ -324,7 +324,7 @@ LoveManager.caculateRecommend = () ->
     return
 
 LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
-    answerObjectNames = ['love_answer','love_answer2']
+    answerObjectNames = ['love_answer','love_answer2','love_test']
     customQuery = { space: spaceId, owner: '', $or: [] }
     customCollection = Creator.getCollection('vip_customers')
     friendCollection = Creator.getCollection('love_friends')
@@ -337,12 +337,12 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
-    query = { space: spaceId, owner: userId }
-    if rest
-        query.match = { $exists: false }
 
     friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
         try
+            if rest and not lf.hasOwnProperty('match')
+                return
+
             customQuery.owner = lf.user_b
             unless customCollection.find(customQuery).count()
                 friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
@@ -378,4 +378,35 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
             console.error e.stack
     return
 
+# 缘分榜加筛选条件功能，每次刷新调用answered接口应该计算is_looking_for属性值并保存 #572
+LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
+    friendCollection = Creator.getCollection('love_friends')
+    loveLookingForCollection = Creator.getCollection('love_looking_for')
+    loveAboutMeCollection = Creator.getCollection('love_about_me')
 
+    lookingFor = loveLookingForCollection.findOne({ space: spaceId, owner: userId })
+    if lookingFor
+        gender = lookingFor.sex
+        ageMin = lookingFor.age
+        ageMax = lookingFor.age_max
+        heightMin = lookingFor.height
+        heightMax = lookingFor.height_max
+        query = { space: spaceId }
+        query.sex = gender
+        query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+        query.height = { $gte: heightMin, $lte: heightMax }
+
+    friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
+        try
+            if not query or not loveAboutMeCollection.find({ space: spaceId, owner: lf.user_b }).count()
+                friendCollection.update(lf._id, { $unset: { is_looking_for: 1 } })
+                return
+
+            query.owner = lf.user_b
+            if loveAboutMeCollection.find(query).count()
+                friendCollection.update(lf._id, { $set: { is_looking_for: true } })
+            else
+                friendCollection.update(lf._id, { $set: { is_looking_for: false } })
+        catch e
+            console.error e.stack
+    return
