@@ -394,9 +394,12 @@ LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
         heightMin = lookingFor.height
         heightMax = lookingFor.height_max
         query = { space: spaceId }
-        query.sex = gender
-        query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
-        query.height = { $gte: heightMin, $lte: heightMax }
+        if gender
+            query.sex = gender
+        if ageMin and ageMax
+            query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+        if heightMin and heightMax
+            query.height = { $gte: heightMin, $lte: heightMax }
 
     friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
         try
