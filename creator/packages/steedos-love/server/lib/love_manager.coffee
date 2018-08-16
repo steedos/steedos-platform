@@ -337,12 +337,12 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
+    query = { space: spaceId, owner: userId }
+    if rest
+        query.match = { $exists: false }
 
-    friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
+    friendCollection.find(query).forEach (lf) ->
         try
-            if rest and not lf.hasOwnProperty('match')
-                return
-
             customQuery.owner = lf.user_b
             unless customCollection.find(customQuery).count()
                 friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
