@@ -376,6 +376,8 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
             friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
+
+    LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
     return
 
 # 缘分榜加筛选条件功能，每次刷新调用answered接口应该计算is_looking_for属性值并保存 #572
