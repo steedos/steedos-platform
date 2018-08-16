@@ -8,7 +8,10 @@ Package.describe({
 Npm.depends({
 	'request': '2.81.0',
 	'base-64': '0.1.0',
-	"node-schedule": "1.1.1"
+	"node-schedule": "1.1.1",
+	"wechat-auth": "1.1.2",
+	"xml2js": "0.4.17",
+	"wechat-crypto": "0.0.2"
 });
 
 Package.onUse(function (api) {
@@ -20,6 +23,8 @@ Package.onUse(function (api) {
 	api.use('steedos:weixin-aes');
 
 	api.use(['webapp'], 'server');
+
+	api.addFiles('models/weixin_third_party_platforms.coffee');
 
 	api.addFiles('lib/wx_mini.coffee', 'server');
 	api.addFiles('server/routes/mini-sso.coffee', 'server');
@@ -39,6 +44,13 @@ Package.onUse(function (api) {
 
 	api.addFiles('server/routes/refresh_access_token.coffee', 'server');
 	api.addFiles('server/schedule/refresh_access_token.coffee', 'server');
+
+	api.addFiles('server/routes/third_party_notify.coffee', 'server');
+	api.addFiles('server/routes/third_party_push.coffee', 'server');
+
+	api.addFiles('server/weixin_auth_init.coffee', 'server');
+
+	api.export(['wxAuth'], ['server']);
 });
 
 Package.onTest(function (api) {
