@@ -65,18 +65,6 @@ Creator.Objects.love_answer =
 			type:'number'
 			label:'重要程度'
 
-		scary_movie:
-			type:'select'
-			label:"你喜欢悬疑电影吗？"
-			options:'喜欢,不喜欢'
-		scary_movie_o:
-			type:'select'
-			label:"对方悬疑"
-			multiple:true
-		scary_movie_i:
-			type:'number'
-			label:'重要程度'
-
 		messy:
 			type:'select'
 			label:"你介意同邋遢的人交往吗？"
@@ -137,42 +125,6 @@ Creator.Objects.love_answer =
 			type:'number'
 			label:'重要程度'
 
-		hurt_happened:
-			type:'select'
-			label:"有没有一些事情，虽然过了很久，你还是感觉很受伤?"
-			options:'有,没有'
-		hurt_happened_o:
-			type:'select'
-			label:"为曾经发生的过某事而伤心"
-			multiple:true
-		hurt_happened_i:
-			type:'number'
-			label:'重要程度'
-
-		communicate:
-			type:'select'
-			label:"你每天都要和你的另一半交流吗？（电话、微信等）"
-			options:'是的，雷打不动,是的，除非特殊情况,不，没必要,不，我会很烦'
-		communicate_o:
-			type:'select'
-			label:"每天交流"
-			multiple:true
-		communicate_i:
-			type:'number'
-			label:'重要程度'
-
-		pet:
-			type:'select'
-			label:"你会让你的宠物睡在床上吗？"
-			options:'会,不会'
-		pet_o:
-			type:'select'
-			label:"宠物"
-			multiple:true
-		pet_i:
-			type:'number'
-			label:'重要程度'
-
 		politics:
 			type:'select'
 			label:"你喜欢讨论时政吗？"
@@ -182,18 +134,6 @@ Creator.Objects.love_answer =
 			label:"讨论时政"
 			multiple:true
 		politics_i:
-			type:'number'
-			label:'重要程度'
-
-		previous_picture:
-			type:'select'
-			label:"对方还留着前任的照片，会让你觉得恼火吗？"
-			options:'会,不会'
-		previous_picture_o:
-			type:'select'
-			label:"前任的照片"
-			multiple:true
-		previous_picture_i:
 			type:'number'
 			label:'重要程度'
 
@@ -254,18 +194,6 @@ Creator.Objects.love_answer =
 			label:"爱打游戏的人"
 			multiple:true
 		video_game_i:
-			type:'number'
-			label:'重要程度'
-
-		spelling_mistake:
-			type:'select'
-			label:"你看见错别字会感觉很不舒服吗？"
-			options:'会,不会'
-		spelling_mistake_o:
-			type:'select'
-			label:"对方错别字？"
-			multiple:true
-		spelling_mistake_i:
 			type:'number'
 			label:'重要程度'
 

@@ -18,6 +18,7 @@ Package.onUse(function(api) {
 	api.addFiles('love-app.coffee');
 	api.addFiles('models/love_answer.coffee');
 	api.addFiles('models/love_answer2.coffee');
+	api.addFiles('models/love_test.coffee');
 	api.addFiles('models/love_hobby.coffee');
 	api.addFiles('models/love_looking_for.coffee');
 	api.addFiles('models/love_invite_codes.coffee');
