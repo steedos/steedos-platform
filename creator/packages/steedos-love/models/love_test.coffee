@@ -1,6 +1,6 @@
 Creator.Objects.love_test =
 	name: "love_test"
-	label: "好友测试"
+	label: "缘分卷"
 	icon: "social"
 	enable_search: true
 	fields:
