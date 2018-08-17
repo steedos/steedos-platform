@@ -30,6 +30,10 @@ Creator.Objects.love_friends =
 			label: "群"
 			type: "text"
 
+		open_groups:
+			label: "群"
+			type: "[text]"
+
 		owner:
 			label:"第一个用户ID"
 			type: "lookup"
@@ -39,11 +43,11 @@ Creator.Objects.love_friends =
 		heart:
 			label: "点“心”"
 			type: "boolean"
-	
+
 		heart_at:
 			label: "点“心”时间"
 			type: "datetime"
-		
+
 		is_looking_for:
 			label: "是否满足筛选条件"
 			type: "boolean"
@@ -83,7 +87,7 @@ Creator.Objects.love_friends =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
-	
+
 	triggers:
 		"before.update.server.love_friends":
 			on: "server"

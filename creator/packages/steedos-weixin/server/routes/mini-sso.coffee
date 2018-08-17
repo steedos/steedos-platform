@@ -152,14 +152,12 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 			if iv && encryptedData && appId
 				pc = new Creator.WXBizDataCrypt(appId, sessionKey)
 				groupData = pc.decryptData(encryptedData, iv)
-				console.log("========groupData=======", groupData)
 				openGId = groupData.openGId
 
 			# 生成vip_customers记录
 			current_customer = customers.find((customer) ->
 				return customer.space == space_id
 			)
-			console.log "current_customer=============", current_customer
 			unless current_customer
 				values =
 					name: user.name,
@@ -190,7 +188,6 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				current_customer = collection_customers.findOne({
 					_id: new_customer_id
 				})
-				console.log "current_customer========new=====", current_customer
 				customers.push current_customer
 
 			# 生成vip_invites记录
@@ -210,7 +207,6 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					if openGId
 						values.open_group_id = openGId
 					new_invite_id = collection_invites.insert values
-					console.log "current_invite========new=====", new_invite_id
 
 			# 生成love_friends记录
 			if share_from and share_from != ret_data.user_id
@@ -219,30 +215,41 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner: ret_data.user_id
 					user_b: share_from
 					space: space_id
-				}, {fields: {_id: 1}})
-				unless current_friend
+				}, {fields: {_id: 1, open_groups: 1}})
+				if current_friend
+					if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
+						collection_friends.update(current_friend._id, {
+							$addToSet: { open_groups: openGId }
+						})
+				else
 					values =
 						owner: ret_data.user_id
 						user_b: share_from
 						space: space_id
 					if openGId
 						values.open_group_id = openGId
-					new_friend_id = collection_friends.insert values
-					console.log "current_friend========new=====", new_friend_id
+						values.open_groups = [openGId]
+					collection_friends.insert values
+
 				current_friend = collection_friends.findOne({
 					owner: share_from
 					user_b: ret_data.user_id
 					space: space_id
-				}, {fields: {_id: 1}})
-				unless current_friend
+				}, {fields: {_id: 1, open_groups: 1}})
+				if current_friend
+					if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
+						collection_friends.update(current_friend._id, {
+							$addToSet: { open_groups: openGId }
+						})
+				else
 					values =
 						owner: share_from
 						user_b: ret_data.user_id
 						space: space_id
 					if openGId
 						values.open_group_id = openGId
-					new_friend_id = collection_friends.insert values
-					console.log "current_friend========new=====", new_friend_id
+						values.open_groups = [openGId]
+					collection_friends.insert values
 
 			if openGId and share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
@@ -283,29 +290,45 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 									owner: ret_data.user_id
 									user_b: member
 									space: space_id
-								}, {fields: {_id: 1}})
-								unless current_friend
-									values =
+								}, {fields: {_id: 1, open_groups: 1 }})
+
+								if current_friend
+									if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
+										collection_friends.update(current_friend._id, {
+											$addToSet: { open_groups: openGId }
+										})
+								else
+									collection_friends.insert {
 										_id: collection_friends._makeNewID()
 										owner: ret_data.user_id
 										user_b: member
 										space: space_id
 										open_group_id: openGId
-									collection_friends.insert values
+										open_groups: [openGId]
+									}
+
 								current_friend2 = collection_friends.findOne({
 									owner: member
 									user_b: ret_data.user_id
 									space: space_id
-								}, {fields: {_id: 1}})
-								unless current_friend2
-									values =
+								}, {fields: {_id: 1, open_groups: 1 }})
+
+								if current_friend2
+									if not current_friend2.open_groups or not current_friend2.open_groups.includes(openGId)
+										collection_friends.update(current_friend2._id, {
+											$addToSet: { open_groups: openGId }
+										})
+								else
+									collection_friends.insert {
 										_id: collection_friends._makeNewID()
 										owner: member
 										user_b: ret_data.user_id
 										space: space_id
 										open_group_id: openGId
-									collection_friends.insert values
-							catch ex
+										open_groups: [openGId]
+									}
+							catch e
+								console.error e.stack
 								console.error "群转发出错了,openGId=#{openGId},member=#{member},user_id=#{ret_data.user_id}"
 
 		ret_data.my_customers = customers
