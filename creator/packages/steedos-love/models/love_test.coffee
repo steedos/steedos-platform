@@ -4,39 +4,40 @@ Creator.Objects.love_test =
 	icon: "social"
 	enable_search: true
 	fields:
-		scary_movie:
+		previous_picture:
 			type:'select'
-			label:"你喜欢悬疑电影吗？"
-			options:'喜欢,不喜欢'
-		scary_movie_o:
+			label:"对方还留着前任的照片，会让你觉得恼火吗？"
+			options:'会,不会'
+		previous_picture_o:
 			type:'select'
-			label:"对方悬疑"
+			label:"前任的照片"
 			multiple:true
-		scary_movie_i:
+		previous_picture_i:
 			type:'number'
 			label:'重要程度'
 		
-		spelling_mistake:
+		parents_influence:
 			type:'select'
-			label:"你看见错别字会感觉很不舒服吗？"
-			options:'会,不会'
-		spelling_mistake_o:
+			label:"父母对你生活的影响有多大?"
+			options:'没有影响，我自己做主,我会考虑他们的意见,我通常会听父母的,完全听父母的'
+		parents_influence_o:
 			type:'select'
-			label:"对方错别字？"
+			label:"父母对你生活的影响"
 			multiple:true
-		spelling_mistake_i:
+		parents_influence_i:
 			type:'number'
 			label:'重要程度'
-
-		communicate:
+		
+		education:
 			type:'select'
-			label:"你每天都要和你的另一半交流吗？（电话、微信等）"
-			options:'是的，雷打不动,是的，除非特殊情况,不，没必要,不，我会很烦'
-		communicate_o:
+			label:"你的学历？"
+			options: "高中及以下,大专,本科,硕士,博士及以上"
+			is_name: true
+		education_o:
 			type:'select'
-			label:"每天交流"
+			label:"对方学历"
 			multiple:true
-		communicate_i:
+		education_i:
 			type:'number'
 			label:'重要程度'
 		
@@ -51,84 +52,84 @@ Creator.Objects.love_test =
 		pet_i:
 			type:'number'
 			label:'重要程度'
-
-		hurt_happened:
+		
+		body_type:
 			type:'select'
-			label:"有没有一些事情，虽然过了很久，你还是感觉很受伤?"
-			options:'有,没有'
-		hurt_happened_o:
+			label:"你的体型？"
+			options: "骨感,微瘦,标准,健壮,微胖,胖"
+		body_type_o:
 			type:'select'
-			label:"为曾经发生的过某事而伤心"
+			label:"体型"
 			multiple:true
-		hurt_happened_i:
+		body_type_i:
 			type:'number'
 			label:'重要程度'
-
-		first_date_say:
+		
+		employed:
 			type:'select'
-			label:"你和刚认识的某人第一次约会，临别时对方说爱上你了，你会觉得？"
-			options:'甜蜜,可怕'
-		first_date_say_o:
+			label:"你的工作状况？"
+			options: "全职,兼职,学生"
+		employed_o:
 			type:'select'
-			label:"第一次约会之后，Ta说喜欢你"
+			label:"对方工作状况"
 			multiple:true
-		first_date_say_i:
+		employed_i: # 重要程度: 跳过 -1， 全选：0 (计算时算作0分)， 未全选： 1 (计算时算作1分)， 重要：2 (计算时算作5分)
 			type:'number'
 			label:'重要程度'
-
-		before_meeting:
+		
+		communicate:
 			type:'select'
-			label:"你至少需要和对方聊多久，才愿意出来见面？"
-			options:'立刻，如果是我喜欢的类型,几天,几周,几个月'
-		before_meeting_o:
+			label:"你每天都要和你的另一半交流吗？（电话、微信等）"
+			options:'是的，雷打不动,是的，除非特殊情况,不，没必要,不，我会很烦'
+		communicate_o:
 			type:'select'
-			label:"约会之前"
+			label:"每天交流"
 			multiple:true
-		before_meeting_i:
+		communicate_i:
 			type:'number'
 			label:'重要程度'
-
-		previous_picture:
+		
+		finance_budget:
 			type:'select'
-			label:"对方还留着前任的照片，会让你觉得恼火吗？"
+			label:"你会规划自己的财务开支吗？"
 			options:'会,不会'
-		previous_picture_o:
+		finance_budget_o:
 			type:'select'
-			label:"前任的照片"
+			label:"规划自己的财务开支"
 			multiple:true
-		previous_picture_i:
+		finance_budget_i:
 			type:'number'
 			label:'重要程度'
-
-		challenge:
+		
+		messy:
 			type:'select'
-			label:"你面临一项挑战，几乎不可能完成，你希望Ta会怎么做？"
-			options:'全力支持,提醒你认清现实,不介入，失败的时候安慰你'
-		challenge_o:
+			label:"你介意同邋遢的人交往吗？"
+			options:'介意,不介意'
+		messy_o:
 			type:'select'
-			label:"面临一项挑战"
+			label:"介意对方邋遢？"
 			multiple:true
-		challenge_i:
+		messy_i:
 			type:'number'
 			label:'重要程度'
-
-		dinner:
+		
+		disgust_smoke:
 			type:'select'
-			label:"Ta的前任来到你们的城市，Ta计划独自与前任共进晚餐，你会怎么做？"
-			options:'相信爱情，不反对,不会激动，但会跟着去,绝不允许'
-		dinner_o:
+			label:"你觉得吸烟是令人厌恶的行为吗？"
+			options:'是,不是'
+		disgust_smoke_o:
 			type:'select'
-			label:"共进晚餐"
+			label:'对方厌恶吸烟'
 			multiple:true
-		dinner_i:
+		disgust_smoke_i:
 			type:'number'
 			label:'重要程度'
 
 	list_views:
 		all:
 			label: "所有"
-			columns: ["scary_movie", "spelling_mistake", "communicate", "pet", "hurt_happened", "first_date_say", "before_meeting", "previous_picture",
-			 "challenge", "dinner"]
+			columns: ["previous_picture", "parents_influence", "education", "pet", "body_type", "employed", "communicate", "finance_budget",
+			 "messy", "disgust_smoke"]
 			filter_scope: "space"
 
 	permission_set:
