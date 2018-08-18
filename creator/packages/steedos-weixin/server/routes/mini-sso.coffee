@@ -153,6 +153,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 				pc = new Creator.WXBizDataCrypt(appId, sessionKey)
 				groupData = pc.decryptData(encryptedData, iv)
 				openGId = groupData.openGId
+				ret_data.open_group_id = openGId
 
 			# 生成vip_customers记录
 			current_customer = customers.find((customer) ->
