@@ -130,10 +130,10 @@ Creator.baseObject =
 			on: "server"
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
-				modifier.$set?.modified = new Date();
+				modifier.$set = modifier.$set || {}
+				modifier.$set.modified = new Date()
 				if userId
-					modifier.$set = modifier.$set || {};
-					modifier.$set?.modified_by = userId
+					modifier.$set.modified_by = userId
 
 		"before.insert.client.default":
 			on: "client"
