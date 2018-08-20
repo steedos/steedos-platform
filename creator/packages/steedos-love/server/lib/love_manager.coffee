@@ -323,11 +323,11 @@ LoveManager.caculateRecommend = () ->
     console.timeEnd 'caculateRecommend'
     return
 
-LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
+LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable) ->
     answerObjectNames = ['love_answer','love_answer2','love_test']
-    customQuery = { space: spaceId, owner: '', $or: [] }
-    customCollection = Creator.getCollection('vip_customers')
-    friendCollection = Creator.getCollection('love_friends')
+    customQuery = { space: spaceId, owner: {}, $or: [] }
+    vipCustomersCollection = Creator.getCollection('vip_customers')
+    loveFriendsCollection = Creator.getCollection('love_friends')
 
     # 获取题目字段key
     answerKeyObj = {}
@@ -341,13 +341,154 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
     if rest
         query.match = { $exists: false }
 
-    friendCollection.find(query).forEach (lf) ->
+    friendsIds = _.pluck(loveFriendsCollection.find(query, { fields: { user_b: 1 } }).fetch(), 'user_b')
+
+    customQuery.owner = { $in: friendsIds }
+
+    vipCustomersCollection.find(customQuery).forEach (lf) ->
         try
-            customQuery.owner = lf.user_b
-            unless customCollection.find(customQuery).count()
-                friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
-                friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
-                return
+            # 计算分子、分母
+            aFullPoints = 0
+            bGotPoints = 0
+            bFullPoints = 0
+            aGotPoints = 0
+            questionsNumber = 0
+            answerObjectNames.forEach (objName) ->
+                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
+                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
+                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
+                    aFullPoints += r.aFullPoints
+                    bGotPoints += r.bGotPoints
+                    bFullPoints += r.bFullPoints
+                    aGotPoints += r.aGotPoints
+                    questionsNumber += r.questionsNumber
+
+            aToB = bGotPoints/aFullPoints || 0
+
+            bToA = aGotPoints/bFullPoints || 0
+
+            match = Math.pow(aToB*bToA, 1/2)
+
+            loveFriendsCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            loveFriendsCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+        catch e
+            console.error e.stack
+
+    # 暂时注释掉以兼容 老的小程序版本，待新小程序版本发布后 可开放
+    # if matchingFilterEnable
+    #     LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
+
+    LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
+
+    return
+
+# 缘分榜加筛选条件功能，每次刷新调用answered接口应该计算is_looking_for属性值并保存 #572
+LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
+    answerObjectNames = ['love_answer','love_answer2','love_test']
+    customQuery = { space: spaceId, owner: {}, $or: [] }
+    now = new Date()
+    loveFriendsCollection = Creator.getCollection('love_friends')
+    loveLookingForCollection = Creator.getCollection('love_looking_for')
+    loveAboutMeCollection = Creator.getCollection('love_about_me')
+    vipCustomersCollection = Creator.getCollection('vip_customers')
+
+    answerObjectNames.forEach (objName) ->
+        customQuery.$or.push { questionnaire_progess: objName }
+
+    customer = vipCustomersCollection.findOne({ space: spaceId, owner: userId }, { fields: { matching_filter_caculate_time: 1 } })
+
+    matchingFilterCaculateTime = customer.matching_filter_caculate_time || 0
+
+    lookingFor = loveLookingForCollection.findOne({ space: spaceId, owner: userId })
+    if lookingFor
+        gender = lookingFor.sex
+        ageMin = lookingFor.age
+        ageMax = lookingFor.age_max
+        heightMin = lookingFor.height
+        heightMax = lookingFor.height_max
+        query = { space: spaceId }
+        if gender
+            query.sex = gender
+        if ageMin and ageMax
+            query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+        if heightMin and heightMax
+            query.height = { $gte: heightMin, $lte: heightMax }
+
+    unless query
+        return
+
+    friendsIds = _.pluck(loveFriendsCollection.find({ space: spaceId, owner: userId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+    customQuery.owner = { $in: friendsIds }
+    customersIds = _.pluck(vipCustomersCollection.find(customQuery, { fields: { owner: 1 } }).fetch(), 'owner')
+    query.owner = { $in: customersIds }
+    if matchingFilterCaculateTime >= lookingFor.modified
+        query.modified = { $gte: matchingFilterCaculateTime }
+
+    modifiedQuery = _.pick(query, 'space', 'owner', 'modified')
+    filterIds = _.pluck(loveAboutMeCollection.find(query, { fields: { owner: 1 } }).fetch(), 'owner')
+    modifiedIds = _.pluck(loveAboutMeCollection.find(modifiedQuery, { fields: { owner: 1 } }).fetch(), 'owner')
+    restIds = _.difference modifiedIds, filterIds
+
+    if filterIds.length > 0
+        loveFriendsCollection.update({ space: spaceId, owner: { $in: filterIds } }, { $set: { is_looking_for: true } }, { multi: true })
+
+    if restIds.length > 0
+        loveFriendsCollection.update({ space: spaceId, owner: { $in: restIds } }, { $set: { is_looking_for: false } }, { multi: true })
+
+    vipCustomersCollection.update({ space: spaceId, owner: userId }, { $set: { matching_filter_caculate_time: now } })
+    return
+
+# 摇一摇：计算与好友的好友匹配 #609
+LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
+    answerObjectNames = ['love_answer','love_answer2','love_test']
+    customQuery = { space: spaceId, $or: [] }
+    customCollection = Creator.getCollection('vip_customers')
+    friendCollection = Creator.getCollection('love_friends')
+
+    loveAboutMeCollection = Creator.getCollection('love_about_me')
+    loveAnswerCollection = Creator.getCollection('love_answer')
+    loveAnswer2Collection = Creator.getCollection('love_answer2')
+    loveResultCollection = Creator.getCollection('love_result')
+    loveLookingForCollection = Creator.getCollection('love_looking_for')
+    loveHobbyCollection = Creator.getCollection('love_hobby')
+    loveEducationalExperienceCollection = Creator.getCollection('love_educational_experience')
+    loveWorkExperienceCollection = Creator.getCollection('love_work_experience')
+    loveRecommendHistoryCollection = Creator.getCollection('love_recommend_history')
+
+     # 数据加载到内存
+    data = {}
+    # 获取题目字段key
+    answerKeyObj = {}
+    userAData = {}
+    answerObjectNames.forEach (objName) ->
+        answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
+        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        customQuery.$or.push { questionnaire_progess: objName }
+
+    Creator.getCollection('vip_customers').find(customQuery).forEach (cust)->
+        owner = cust.owner
+        data[owner] = {
+            love_about_me: loveAboutMeCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_answer: loveAnswerCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_answer2: loveAnswer2Collection.findOne({ space: loveSpaceId, owner: owner })
+            love_result: loveResultCollection.findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
+            love_looking_for: loveLookingForCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_educational_experience: loveEducationalExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_work_experience: loveWorkExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            love_recommend_history: loveRecommendHistoryCollection.find({ space: loveSpaceId, user_a: owner }).fetch()
+        }
+
+    # 我的好友
+    bIds = _.pluck(friendCollection.find({ space: spaceId, owner: userId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+    # 我的好友的好友
+    bFriendsIds = _.uniq _.pluck(friendCollection.find({ space: spaceId, owner: { $in: bIds }, user_b: { $ne: userId } }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+
+
+
+
+    bFriendsIds.forEach (lf) ->
+        try
 
             # 计算分子、分母
             aFullPoints = 0
@@ -377,41 +518,60 @@ LoveManager.caculateFriendsScore = (objectName, userId, spaceId, rest) ->
         catch e
             console.error e.stack
 
-    LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
     return
 
-# 缘分榜加筛选条件功能，每次刷新调用answered接口应该计算is_looking_for属性值并保存 #572
-LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
+
+LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
+    answerObjectNames = ['love_answer','love_answer2','love_test']
+    customQuery = { space: spaceId, owner: '', $or: [] }
+    customCollection = Creator.getCollection('vip_customers')
     friendCollection = Creator.getCollection('love_friends')
-    loveLookingForCollection = Creator.getCollection('love_looking_for')
-    loveAboutMeCollection = Creator.getCollection('love_about_me')
 
-    lookingFor = loveLookingForCollection.findOne({ space: spaceId, owner: userId })
-    if lookingFor
-        gender = lookingFor.sex
-        ageMin = lookingFor.age
-        ageMax = lookingFor.age_max
-        heightMin = lookingFor.height
-        heightMax = lookingFor.height_max
-        query = { space: spaceId }
-        if gender
-            query.sex = gender
-        if ageMin and ageMax
-            query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
-        if heightMin and heightMax
-            query.height = { $gte: heightMin, $lte: heightMax }
+    # 获取题目字段key
+    answerKeyObj = {}
+    dv = {}
+    answerObjectNames.forEach (objName) ->
+        answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
+        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        customQuery.$or.push { questionnaire_progess: objName }
 
-    friendCollection.find({ space: spaceId, owner: userId }).forEach (lf) ->
+    query = { space: spaceId, owner: friendId }
+
+    friendCollection.find(query).forEach (lf) ->
         try
-            if not query or not loveAboutMeCollection.find({ space: spaceId, owner: lf.user_b }).count()
-                friendCollection.update(lf._id, { $unset: { is_looking_for: 1 } })
+            customQuery.owner = lf.user_b
+            unless customCollection.find(customQuery).count()
+                friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
+                friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: friendId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
                 return
 
-            query.owner = lf.user_b
-            if loveAboutMeCollection.find(query).count()
-                friendCollection.update(lf._id, { $set: { is_looking_for: true } })
-            else
-                friendCollection.update(lf._id, { $set: { is_looking_for: false } })
+            # 计算分子、分母
+            aFullPoints = 0
+            bGotPoints = 0
+            bFullPoints = 0
+            aGotPoints = 0
+            questionsNumber = 0
+            answerObjectNames.forEach (objName) ->
+                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
+                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
+                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
+                    aFullPoints += r.aFullPoints
+                    bGotPoints += r.bGotPoints
+                    bFullPoints += r.bFullPoints
+                    aGotPoints += r.aGotPoints
+                    questionsNumber += r.questionsNumber
+
+            aToB = bGotPoints/aFullPoints || 0
+
+            bToA = aGotPoints/bFullPoints || 0
+
+            match = Math.pow(aToB*bToA, 1/2)
+
+            # beenFriend =
+
+            # friendCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            # friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
+
     return

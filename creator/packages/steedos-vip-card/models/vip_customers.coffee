@@ -77,22 +77,25 @@ Creator.Objects.vip_customers =
 		cover:
 			label:'封面'
 			type:'image'
-		
+
 		enable_match:
 			label: '开启匹配'
 			type: "boolean"
-		
+
 		disable:
 			label: '停用'
 			type: 'text'
 			omit:true
-		
+
 		privacy_protection:
 			label: '隐私保护'
 			type: 'select'
 			multiple:true
 			options: "姓名:name,身高:height,年龄:age,现居地:live,家乡:hometown,照片:photos,,兴趣爱好:love_hobby,教育经历:love_educational_experience" #工作经历:love_work_experience
 
+		matching_filter_caculate_time:
+			label: '计算是否满足筛选条件的时间'
+			type: 'datetime'
 
 	list_views:
 		all:

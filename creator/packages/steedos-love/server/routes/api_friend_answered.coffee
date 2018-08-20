@@ -12,11 +12,20 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 		if !spaceId
 			throw new Meteor.Error('Love', "No spaceId")
 
+		objectName = req.query.object_name || body.object_name
+
+		if ['love_about_me', 'love_looking_for'].includes(objectName)
+			JsonRoutes.sendResult res, {
+				code: 200,
+				data: 'ok'
+			}
+			return
+
 		rest = req.query.rest || body.rest
 
-		objectName = req.query.object_name || body.object_name || 'love_answer'
+		matching_filter_enable = req.query.matching_filter_enable || body.matching_filter_enable
 
-		LoveManager.caculateFriendsScore objectName, userId, spaceId, rest
+		LoveManager.caculateFriendsScore userId, spaceId, rest, matching_filter_enable
 
 		JsonRoutes.sendResult res, {
 			code: 200,
