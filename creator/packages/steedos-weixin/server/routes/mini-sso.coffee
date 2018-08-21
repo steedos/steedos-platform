@@ -219,7 +219,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					space: space_id
 				}, {fields: {_id: 1, open_groups: 1}})
 				if current_friend
-					if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
+					if openGId and (not current_friend.open_groups or not current_friend.open_groups.includes(openGId))
 						collection_friends.update(current_friend._id, {
 							$addToSet: { open_groups: openGId }
 						})
@@ -239,7 +239,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					space: space_id
 				}, {fields: {_id: 1, open_groups: 1}})
 				if current_friend
-					if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
+					if openGId and (not current_friend.open_groups or not current_friend.open_groups.includes(openGId))
 						collection_friends.update(current_friend._id, {
 							$addToSet: { open_groups: openGId }
 						})
