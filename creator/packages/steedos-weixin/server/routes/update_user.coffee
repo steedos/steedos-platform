@@ -12,7 +12,8 @@ JsonRoutes.add 'put', '/mini/vip/user', (req, res, next) ->
 			throw new Meteor.Error(500, "姓名为必填")
 
 		updateDoc.name = data.name
-
+		if data.qrcode
+			updateDoc.qrcode = data.qrcode
 #		if data.phoneNumber
 #			updateDoc.mobile = data.phoneNumber
 

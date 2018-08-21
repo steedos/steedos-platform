@@ -27,6 +27,9 @@ Creator.Objects.users =
 		'profile.avatar':
 			type:'text'
 			label:'头像'
+		qrcode:
+			type:'image'
+			label:'二维码'
 	list_views:
 		all:
 			label:'所有'
