@@ -586,16 +586,70 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
 LoveManager.caculateLoveEnemyScore = (userId, friendId, spaceId) ->
     answerObjectNames = ['love_answer','love_answer2','love_test']
     customQuery = { space: spaceId, owner: '', $or: [] }
-    customCollection = Creator.getCollection('vip_customers')
+    vipCustomersCollection = Creator.getCollection('vip_customers')
     friendCollection = Creator.getCollection('love_friends')
     loveLookingForCollection = Creator.getCollection('love_looking_for')
+    loveAboutMeCollection = Creator.getCollection('love_about_me')
 
     # 两个人的总匹配度小于60%
     friend = friendCollection.findOne({ space: spaceId, owner: userId, user_b: friendId })
+    if not friend
+        # console.log 'not friend'
+        return
+
     if friend.match >= 0.6
+        # console.log 'friend.match >= 0.6'
         return
 
     # 互相不满足筛选条件
+    lookingFor = loveLookingForCollection.findOne({ space: spaceId, owner: userId })
+    if lookingFor
+        gender = lookingFor.sex
+        ageMin = lookingFor.age
+        ageMax = lookingFor.age_max
+        heightMin = lookingFor.height
+        heightMax = lookingFor.height_max
+        query = { space: spaceId, owner: friendId }
+        if gender
+            query.sex = gender
+        if ageMin and ageMax
+            query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+        if heightMin and heightMax
+            query.height = { $gte: heightMin, $lte: heightMax }
+
+        if loveAboutMeCollection.find(query).count()
+            # console.log 'loveAboutMe match lookingFor'
+            return
+    else
+        # console.log 'no lookingFor'
+        return
+
+    friendLookingFor = loveLookingForCollection.findOne({ space: spaceId, owner: friendId })
+    if friendLookingFor
+        gender = friendLookingFor.sex
+        ageMin = friendLookingFor.age
+        ageMax = friendLookingFor.age_max
+        heightMin = friendLookingFor.height
+        heightMax = friendLookingFor.height_max
+        query = { space: spaceId, owner: userId }
+        if gender
+            query.sex = gender
+        if ageMin and ageMax
+            query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+        if heightMin and heightMax
+            query.height = { $gte: heightMin, $lte: heightMax }
+
+        if loveAboutMeCollection.find(query).count()
+            # console.log 'loveAboutMe match friendLookingFor'
+            return
+    else
+        # console.log 'no friendLookingFor'
+        return
+
+    # 两个人都喜欢男生/女生
+    if (lookingFor.sex isnt friendLookingFor.sex) or not lookingFor.sex or not friendLookingFor.sex
+        # console.log 'not both like male/female'
+        return
 
     # 获取题目字段key
     answerKeyObj = {}
@@ -605,8 +659,45 @@ LoveManager.caculateLoveEnemyScore = (userId, friendId, spaceId) ->
         dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
-    query = { space: spaceId, owner: friendId }
+    customer = vipCustomersCollection.findOne({ space: spaceId, owner: userId }, { fields: { questionnaire_progess: 1 } })
+    friendCustomer = vipCustomersCollection.findOne({ space: spaceId, owner: friendId }, { fields: { questionnaire_progess: 1 } })
+    questionnaireProgess = customer.questionnaire_progess || []
+    friendQuestionnaireProgess = friendCustomer.questionnaire_progess || []
+    # console.log 'questionnaireProgess: ', questionnaireProgess
+    # console.log 'friendQuestionnaireProgess: ', friendQuestionnaireProgess
+    # 计算分子、分母
+    score = 0
+    questionsNumber = 0
+    answerObjectNames.forEach (objName) ->
+        if questionnaireProgess.includes(objName) and friendQuestionnaireProgess.includes(objName)
+            console.log 'objName: ', objName
+            bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: friendId })
+            if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
+                r = LoveManager.getLoveEnemyScore(answerKeyObj[objName], dv[objName], bAnswer)
+                # console.log r
+                score += r.score
+                questionsNumber += r.questionsNumber
 
+    return score/questionsNumber || 0
 
+LoveManager.getLoveEnemyScore = (questionKeys, aAnswer, bAnswer) ->
+    score = 0
+    questionsNumber = 0
 
-    return
+    questionKeys.forEach (ak) ->
+        akI = ak+'_i'
+        akO = ak+'_o'
+        if aAnswer[akI] > -1 and bAnswer[akI] > -1
+            # console.log 'aAnswer[akO]: '
+            # console.log  aAnswer[akO]
+            # console.log 'bAnswer[akO]: '
+            # console.log  bAnswer[akO]
+            # console.log '--------------------------------------'
+            questionsNumber++
+            if aAnswer[akO].toString() is bAnswer[akO].toString()
+                score += 1
+            else
+                common = _.intersection aAnswer[akO], bAnswer[akO]
+                score += common.length/aAnswer[akO].length
+
+    return { score: score, questionsNumber: questionsNumber }
