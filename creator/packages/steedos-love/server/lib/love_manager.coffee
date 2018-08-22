@@ -345,8 +345,9 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
 
     customQuery.owner = { $in: friendsIds }
 
-    vipCustomersCollection.find(customQuery).forEach (lf) ->
+    vipCustomersCollection.find(customQuery).forEach (cust) ->
         try
+            userB = cust.owner
             # 计算分子、分母
             aFullPoints = 0
             bGotPoints = 0
@@ -354,7 +355,7 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
             aGotPoints = 0
             questionsNumber = 0
             answerObjectNames.forEach (objName) ->
-                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
+                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: userB })
                 if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
                     r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
                     aFullPoints += r.aFullPoints
@@ -369,8 +370,8 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
 
             match = Math.pow(aToB*bToA, 1/2)
 
-            loveFriendsCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-            loveFriendsCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+            loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: userB }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            loveFriendsCollection.update({ space: spaceId, owner: userB, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
 
@@ -573,5 +574,39 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
             # friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
+
+    return
+
+### 计算情敌指数 #594
+前提：
+在friends范围内
+两个人的总匹配度小于60%,且互相不满足筛选条件
+两个人都喜欢男生/女生
+###
+LoveManager.caculateLoveEnemyScore = (userId, friendId, spaceId) ->
+    answerObjectNames = ['love_answer','love_answer2','love_test']
+    customQuery = { space: spaceId, owner: '', $or: [] }
+    customCollection = Creator.getCollection('vip_customers')
+    friendCollection = Creator.getCollection('love_friends')
+    loveLookingForCollection = Creator.getCollection('love_looking_for')
+
+    # 两个人的总匹配度小于60%
+    friend = friendCollection.findOne({ space: spaceId, owner: userId, user_b: friendId })
+    if friend.match >= 0.6
+        return
+
+    # 互相不满足筛选条件
+
+    # 获取题目字段key
+    answerKeyObj = {}
+    dv = {}
+    answerObjectNames.forEach (objName) ->
+        answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
+        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        customQuery.$or.push { questionnaire_progess: objName }
+
+    query = { space: spaceId, owner: friendId }
+
+
 
     return
