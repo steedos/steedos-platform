@@ -65,7 +65,7 @@ Creator.Objects.love_friends =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -79,14 +79,14 @@ Creator.Objects.love_friends =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		guest:
 			allowCreate: false
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 
 	triggers:
 		"before.update.server.love_friends":
