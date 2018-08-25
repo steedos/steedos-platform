@@ -152,7 +152,7 @@ getFieldLabel = (field, key)->
 	unless fieldLabel
 		fieldLabel = key.split(".")[0]
 	if field.type == "lookup" or field.type == "master_detail"
-		if field?.reference_to
+		if field?.reference_to && _.isString(field.reference_to)
 			relate_object_Fields = Creator.getObject(field?.reference_to)?.fields
 			relate_field = relate_object_Fields[key.split(".")[1]]
 			if relate_field?.label
