@@ -34,13 +34,13 @@ Creator.Objects.love_about_me =
 		hometown:
 			type:'selectCity'
 			label:"你的家乡？"
-		#暂时去掉
-		# photos:
-		# 	label:'照片'
-		# 	type:'image'
-		# 	multiple:true
-		# 	max: 9
-		# 	group:'-'
+		
+		photos:
+			label:'照片'
+			type:'image'
+			multiple:true
+			max: 9
+			group:'-'
 		
 		self_introduction:
 			type:'textarea'
