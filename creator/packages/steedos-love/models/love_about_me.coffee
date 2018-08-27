@@ -112,6 +112,8 @@ Creator.Objects.love_about_me =
 					birthday_day = birthday.getDate()
 					if !(age> 18 or (age==18 and birthday_month-date.getMonth()<=0 and birthday_day-date.getDate()<=0))
 						Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$set: {disable: "未满18周岁，不予匹配"}}, {multi: true})
+					else
+						Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$unset: {disable: ""}}, {multi: true})
 					constellation = getAstro(birthday_month,birthday_day)
 					zodiac = getzodiac(birthday_year)
 					Creator.Collections['love_about_me'].direct.update({_id:doc._id},{$set:{age:age,zodiac:zodiac,constellation:constellation}})
