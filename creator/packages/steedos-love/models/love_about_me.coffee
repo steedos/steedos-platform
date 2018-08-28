@@ -1,7 +1,10 @@
 getAstro = (month,day)->    
 	s="魔羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
 	arr=[20,19,21,21,21,22,23,23,23,23,22,22];
-	return s.substr(month*2-(day<arr[month-1]?2:0),2);
+	if day<arr[month-1]
+		return s.substr(month*2-2,2);
+	else
+		return s.substr(month*2,2);
 
 getzodiac = (year)->
 	arr = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
@@ -114,7 +117,7 @@ Creator.Objects.love_about_me =
 						Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$set: {disable: "未满18周岁，不予匹配"}}, {multi: true})
 					else
 						Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$unset: {disable: ""}}, {multi: true})
-					constellation = getAstro(birthday_month,birthday_day)
+					constellation = getAstro(birthday_month+1,birthday_day)
 					zodiac = getzodiac(birthday_year)
 					Creator.Collections['love_about_me'].direct.update({_id:doc._id},{$set:{age:age,zodiac:zodiac,constellation:constellation}})
 				if modifier?.$set?.name
