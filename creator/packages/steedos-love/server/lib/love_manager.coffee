@@ -4,7 +4,7 @@ LoveManager.caculateResult = (loveSpaceId) ->
     check loveSpaceId, String
     console.time 'caculateScore'
 
-    answerObjectNames = ['love_answer','love_answer2']
+    answerObjectNames = ['love_answer','love_answer2','love_test']
 
     topNumber = 10
 
