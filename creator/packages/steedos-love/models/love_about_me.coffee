@@ -48,7 +48,7 @@ Creator.Objects.love_about_me =
 		self_introduction:
 			type:'textarea'
 			is_wide:true
-			label:"自我介绍:"
+			label:"交友宣言:"
 		
 		age:
 			type:'number'
