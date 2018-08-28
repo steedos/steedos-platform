@@ -33,7 +33,7 @@ Creator.Objects.permission_set =
 			allowCreate: false
 			allowDelete: false
 			allowEdit: false
-			allowRead: false
+			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false 
 		admin:
