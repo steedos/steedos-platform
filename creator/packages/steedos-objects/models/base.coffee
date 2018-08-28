@@ -123,6 +123,9 @@ Creator.baseObject =
 				if userId
 					unless doc.owner
 						doc.owner = userId
+					if doc.owner == '{userId}'
+						doc.owner = userId
+
 					doc.created_by = userId;
 					doc.modified_by = userId;
 
