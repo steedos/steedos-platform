@@ -1,6 +1,6 @@
 LoveManager = {}
 
-LoveManager.caculateResult = (loveSpaceId) ->
+LoveManager.caculateResult = (loveSpaceId, userIds) ->
     check loveSpaceId, String
     console.time 'caculateScore'
 
@@ -33,9 +33,9 @@ LoveManager.caculateResult = (loveSpaceId) ->
             love_answer2: loveAnswer2Collection.findOne({ space: loveSpaceId, owner: owner })
             love_result: loveResultCollection.findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
             love_looking_for: loveLookingForCollection.findOne({ space: loveSpaceId, owner: owner })
-            love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })
-            love_educational_experience: loveEducationalExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
-            love_work_experience: loveWorkExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            # love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })
+            # love_educational_experience: loveEducationalExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
+            # love_work_experience: loveWorkExperienceCollection.findOne({ space: loveSpaceId, owner: owner })
             love_recommend_history: loveRecommendHistoryCollection.find({ space: loveSpaceId, user_a: owner }).fetch()
         }
 
@@ -45,6 +45,9 @@ LoveManager.caculateResult = (loveSpaceId) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
 
     _.each data, (dv, userId) ->
+        if userIds and not userIds.includes(userId)
+            return
+
         lookingFor = dv['love_looking_for']
         if not lookingFor
             console.log('no love_looking_for: ', userId)

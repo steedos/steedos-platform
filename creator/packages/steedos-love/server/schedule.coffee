@@ -48,10 +48,10 @@ if Meteor.settings.cron and Meteor.settings.cron.caculateRecommend
             return
 
 Meteor.methods
-    caculateResult: (loveSpaceId) ->
+    caculateResult: (loveSpaceId, userIds) ->
         check loveSpaceId, String
         try
-            LoveManager.caculateResult(loveSpaceId)
+            LoveManager.caculateResult(loveSpaceId, userIds)
         catch e
             console.error e.stack
             return
