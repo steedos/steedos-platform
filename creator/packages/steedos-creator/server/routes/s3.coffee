@@ -69,7 +69,7 @@ JsonRoutes.add "post", "/s3/",  (req, res, next) ->
 
 				newFile.name(filename)
 
-				if body && body['owner'] && body['owner_name'] && body['space'] && body['record_id']  && body['object_name']
+				if body && body['owner'] && body['space'] && body['record_id']  && body['object_name']
 					parent = body['parent']
 					owner = body['owner']
 					owner_name = body['owner_name']
