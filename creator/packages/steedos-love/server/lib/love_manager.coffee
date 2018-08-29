@@ -45,8 +45,12 @@ LoveManager.caculateResult = (loveSpaceId) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
 
     _.each data, (dv, userId) ->
-        resultMe = dv['love_result']
         lookingFor = dv['love_looking_for']
+        if not lookingFor
+            console.log('no love_looking_for: ', userId)
+            return
+
+        resultMe = dv['love_result']
         scoreA_B = []
         scoreB_A = []
         score = []
@@ -295,6 +299,7 @@ LoveManager.caculateRecommend = () ->
                     user_b: user_b
                     match: score
                     recommend_date: now
+                    owner: user_a
                 })
 
                 recommendHistColl.direct.insert({
@@ -302,6 +307,7 @@ LoveManager.caculateRecommend = () ->
                     user_b: user_b
                     match: score
                     recommend_date: now
+                    owner: user_a
                 })
 
                 recommendColl.direct.insert({
@@ -309,6 +315,7 @@ LoveManager.caculateRecommend = () ->
                     user_b: user_a
                     match: score
                     recommend_date: now
+                    owner: user_b
                 })
 
                 recommendHistColl.direct.insert({
@@ -316,6 +323,7 @@ LoveManager.caculateRecommend = () ->
                     user_b: user_a
                     match: score
                     recommend_date: now
+                    owner: user_b
                 })
 
         tempScoreResult = []
