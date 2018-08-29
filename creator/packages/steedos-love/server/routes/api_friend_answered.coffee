@@ -14,7 +14,7 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 
 		objectName = req.query.object_name || body.object_name
 
-		if ['love_about_me', 'love_looking_for'].includes(objectName)
+		if ['love_about_me'].includes(objectName)
 			JsonRoutes.sendResult res, {
 				code: 200,
 				data: 'ok'

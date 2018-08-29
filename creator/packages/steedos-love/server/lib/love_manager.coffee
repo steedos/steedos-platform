@@ -23,6 +23,8 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
     customQuery = { space: loveSpaceId, $or: [] }
     answerObjectNames.forEach (objName) ->
         customQuery.$or.push { questionnaire_progess: objName }
+    # 双方必须已经填写手机号才能计算推荐
+    customQuery.mobile = { $exists: true }
     console.log customQuery
 
     Creator.getCollection('vip_customers').find(customQuery).forEach (cust)->
@@ -50,7 +52,6 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
 
         lookingFor = dv['love_looking_for']
         if not lookingFor
-            console.log('no love_looking_for: ', userId)
             return
 
         resultMe = dv['love_result']
@@ -442,10 +443,10 @@ LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
     restIds = _.difference modifiedIds, filterIds
 
     if filterIds.length > 0
-        loveFriendsCollection.update({ space: spaceId, owner: { $in: filterIds } }, { $set: { is_looking_for: true } }, { multi: true })
+        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: filterIds } }, { $set: { is_looking_for: true } }, { multi: true })
 
     if restIds.length > 0
-        loveFriendsCollection.update({ space: spaceId, owner: { $in: restIds } }, { $set: { is_looking_for: false } }, { multi: true })
+        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: restIds } }, { $set: { is_looking_for: false } }, { multi: true })
 
     vipCustomersCollection.update({ space: spaceId, owner: userId }, { $set: { matching_filter_caculate_time: now } })
     return
