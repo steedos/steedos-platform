@@ -17,6 +17,7 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
     loveEducationalExperienceCollection = Creator.getCollection('love_educational_experience')
     loveWorkExperienceCollection = Creator.getCollection('love_work_experience')
     loveRecommendHistoryCollection = Creator.getCollection('love_recommend_history')
+    loveFriendsCollection = Creator.getCollection('love_friends')
 
     # 数据加载到内存
     data = {}
@@ -78,6 +79,10 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
                 return h.user_b is aboutMe.owner
 
             if lrh
+                return
+
+            # 好友（love_friends）不在计算范围内
+            if loveFriendsCollection.find({ space: loveSpaceId, owner: userId, user_b: aboutMe.owner }).count() > 0
                 return
 
             # console.log userId + '>>' + aboutMe.owner
