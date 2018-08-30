@@ -25,6 +25,7 @@ if Meteor.settings.cron and Meteor.settings.cron.caculateResult
     rule = Meteor.settings.cron.caculateResult
     schedule.scheduleJob rule, Meteor.bindEnvironment ()->
         try
+            Creator.getCollection('love_recommend').remove({})
             loveSpaceId = 'Lnre96ro35Wf9b3gA'
             LoveManager.caculateResult(loveSpaceId)
         catch e

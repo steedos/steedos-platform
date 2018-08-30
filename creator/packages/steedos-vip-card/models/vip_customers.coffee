@@ -97,6 +97,12 @@ Creator.Objects.vip_customers =
 			label: '计算是否满足筛选条件的时间'
 			type: 'datetime'
 
+		recommend_count_every_day:
+			label: '每天可推荐的次数'
+			type: 'number'
+			defaultValue: 3
+			omit:true
+
 	list_views:
 		all:
 			label: "所有"
