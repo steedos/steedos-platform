@@ -52,6 +52,10 @@ Creator.Objects.love_friends =
 			label: "是否满足筛选条件"
 			type: "boolean"
 
+		source:
+			label: "分享来源"
+			type: "text"
+
 	list_views:
 		all:
 			label: "所有"
