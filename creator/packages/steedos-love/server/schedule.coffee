@@ -56,9 +56,10 @@ Meteor.methods
             console.error e.stack
             return
 
-    caculateRecommend: () ->
+    caculateRecommend: (spaceId) ->
+        check spaceId, String
         try
-            LoveManager.caculateRecommend()
+            LoveManager.caculateRecommend(spaceId)
         catch e
             console.error e.stack
             return

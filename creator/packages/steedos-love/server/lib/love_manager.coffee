@@ -233,7 +233,7 @@ LoveManager.createResultScoreView = () ->
 
     return
 
-LoveManager.caculateRecommend = () ->
+LoveManager.caculateRecommend = (spaceId) ->
     console.time 'caculateRecommend'
 
     Creator.getCollection('love_recommend').remove({})
@@ -309,6 +309,7 @@ LoveManager.caculateRecommend = () ->
                     match: score
                     recommend_date: now
                     owner: user_a
+                    space: spaceId
                 })
 
                 recommendHistColl.direct.insert({
@@ -317,6 +318,7 @@ LoveManager.caculateRecommend = () ->
                     match: score
                     recommend_date: now
                     owner: user_a
+                    space: spaceId
                 })
 
                 recommendColl.direct.insert({
@@ -325,6 +327,7 @@ LoveManager.caculateRecommend = () ->
                     match: score
                     recommend_date: now
                     owner: user_b
+                    space: spaceId
                 })
 
                 recommendHistColl.direct.insert({
@@ -333,6 +336,7 @@ LoveManager.caculateRecommend = () ->
                     match: score
                     recommend_date: now
                     owner: user_b
+                    space: spaceId
                 })
 
         tempScoreResult = []
