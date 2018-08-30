@@ -92,4 +92,9 @@ Creator.Objects.organizations =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: true
-			viewAllRecords: true 
+			viewAllRecords: true
+
+
+if Meteor.isServer
+	Meteor.publish "subCompany", (space_id)->
+		return Creator.Collections.organizations.find({space: space_id, $or: [{is_subcompany: true}, is_company: true]}, {fields: {_id: 1, name: 1, parent: 1, parents: 1, space: 1, is_subcompany: 1, is_company: 1}})

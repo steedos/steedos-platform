@@ -4,6 +4,7 @@ Accounts.onLogout ()->
 	Creator.bootstrapLoaded.set(false)
 
 checkUserSigned = (context, redirect) ->
+	Session.set('listTreeFilter', null);
 	if !Meteor.userId()
 		FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
 	else

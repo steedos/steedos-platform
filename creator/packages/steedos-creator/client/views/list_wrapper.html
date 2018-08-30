@@ -139,32 +139,37 @@
 						</div>
 					</div>
 				</div>
-				<div class="slds-grid table-grid-content">
-					<div class="slds-col slds-no-space">
-						<div class="slds-table tale-content list-table-container td-cell-wrap">
-							{{#if list_view_visible}}
-								{{> Template.dynamic template=list_template data=list_data}}
-							{{/if}}
+				<div class="weui-flex" style="height: 100%;">
+					{{#if showListTree}}
+						{{> Template.dynamic template='listTree'}}
+					{{/if}}
+					<div style="{{#if showListTree}}margin-left: 0px; width: calc(100% - 230px);{{else}}width: calc(100% - 30px);{{/if}}" class="slds-grid table-grid-content weui-flex__item">
+						<div class="slds-col slds-no-space">
+							<div class="slds-table tale-content list-table-container td-cell-wrap">
+								{{#if list_view_visible}}
+									{{> Template.dynamic template=list_template data=list_data}}
+								{{/if}}
+							</div>
 						</div>
-					</div>
-					<div class="slds-grid slds-no-flex slds-hide filter-list-container">
-						<div class="filter-list slds-grid slds-grid_vertical">
-							<div class="slds-form slds-form_stacked slds-grow slds-scrollable_y slds-grid slds-grid_vertical">
-								<div class="slds-filters">
-									<div class="slds-filters__header slds-grid slds-has-divider_bottom-space">
-										{{#unless is_filter_changed}}
-											<h2 class="slds-align-middle slds-text-heading_small">{{_ "creator_list_filter"}}</h2>
-											<button class="slds-button slds-button_icon slds-col_bump-left slds-button_icon slds-button_icon-small close-filter-panel" title="Close Filter Panel">
-												{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="forward"}}
-											</button>
-										{{else}}
-											<button class="slds-button slds-button_neutral cancel-change">{{_ "creator_list_filter_cancel"}}</button>
-											<!-- <button class="slds-button slds-button_neutral filters-save-as">{{_ "creator_list_filter_save_as"}}</button> -->
-											<button class="slds-button slds-button_brand save-change">{{_ "creator_list_filter_save"}}</button>
-										{{/unless}}
-									</div>
-									<div class="vert-scroller">
-										{{> filter_option_list}}
+						<div class="slds-grid slds-no-flex slds-hide filter-list-container">
+							<div class="filter-list slds-grid slds-grid_vertical">
+								<div class="slds-form slds-form_stacked slds-grow slds-scrollable_y slds-grid slds-grid_vertical">
+									<div class="slds-filters">
+										<div class="slds-filters__header slds-grid slds-has-divider_bottom-space">
+											{{#unless is_filter_changed}}
+												<h2 class="slds-align-middle slds-text-heading_small">{{_ "creator_list_filter"}}</h2>
+												<button class="slds-button slds-button_icon slds-col_bump-left slds-button_icon slds-button_icon-small close-filter-panel" title="Close Filter Panel">
+													{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="forward"}}
+												</button>
+											{{else}}
+												<button class="slds-button slds-button_neutral cancel-change">{{_ "creator_list_filter_cancel"}}</button>
+												<!-- <button class="slds-button slds-button_neutral filters-save-as">{{_ "creator_list_filter_save_as"}}</button> -->
+												<button class="slds-button slds-button_brand save-change">{{_ "creator_list_filter_save"}}</button>
+											{{/unless}}
+										</div>
+										<div class="vert-scroller">
+											{{> filter_option_list}}
+										</div>
 									</div>
 								</div>
 							</div>
