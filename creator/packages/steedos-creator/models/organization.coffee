@@ -55,15 +55,21 @@ Creator.Objects.organizations =
 			reference_to: "users"
 			multiple: true
 
-		hidden:
-			label: "隐藏"
-			type: "boolean"
-
 		is_company:
-			label: "隐藏"
+			label: "根部门"
 			type: "boolean"
 			omit: true
 			index:true
+		
+		is_subcompany:
+			label: "子公司"
+			type: "boolean"
+			defaultValue: false
+			index:true
+		
+		hidden:
+			label: "隐藏"
+			type: "boolean"
 
 	list_views:
 	
