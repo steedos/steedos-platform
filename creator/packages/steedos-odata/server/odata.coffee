@@ -53,6 +53,7 @@ Meteor.startup ->
 					if _.isArray field.reference_to
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]?.ids
+								_o = entity[navigationProperty].o
 								referenceToCollection = Creator.Collections[entity[navigationProperty].o]
 								if referenceToCollection
 									if field.multiple
@@ -68,6 +69,7 @@ Meteor.startup ->
 										entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions)
 										if entities[idx][navigationProperty]
 											entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
+											entities[idx][navigationProperty]['reference_to._o'] = _o
 
 				else
 				# TODO
