@@ -3,14 +3,14 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 		userId = Steedos.getUserIdFromAuthToken(req, res);
 
 		if !userId
-			throw new Meteor.Error('Love', "No permission")
+			throw new Meteor.Error(500, "No permission")
 
 		body = req.body
 
 		spaceId = req.query.space_id || body.space_id
 
 		if !spaceId
-			throw new Meteor.Error('Love', "No spaceId")
+			throw new Meteor.Error(500, "No spaceId")
 
 		objectName = req.query.object_name || body.object_name
 

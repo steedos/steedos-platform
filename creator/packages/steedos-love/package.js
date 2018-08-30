@@ -37,6 +37,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/routes/api_friend_answered.coffee', 'server');
 	api.addFiles('server/routes/api_love_enemy.coffee', 'server');
+	api.addFiles('server/routes/api_match_result.coffee', 'server');
 
 	api.export(['LoveManager'], ['server']);
 })
