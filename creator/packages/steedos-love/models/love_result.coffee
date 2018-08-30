@@ -15,9 +15,6 @@ Creator.Objects.love_result =
 		"scoreA_B.$.userB":
 			type: "text"
 			label:'我喜欢的'
-		"scoreA_B.$.BName":
-			type: "text"
-			label:'他(她)的名字'
 		"scoreA_B.$.score":
 			label: "匹配度"
 			type: "number"
@@ -29,9 +26,6 @@ Creator.Objects.love_result =
 		"scoreB_A.$.userB":
 			type: "text"
 			label:'喜欢我的'
-		"scoreB_A.$.BName":
-			type: "text"
-			label:'他(她)的名字'
 		"scoreB_A.$.score":
 			label: "匹配度"
 			type: "number"
@@ -43,9 +37,6 @@ Creator.Objects.love_result =
 		"score.$.userB":
 			type: "text"
 			label:'最适合我的'
-		"score.$.BName":
-			type: "text"
-			label:'他(她)的名字'
 		"score.$.score":
 			label: "匹配度"
 			type: "number"
@@ -58,9 +49,6 @@ Creator.Objects.love_result =
 		"result.$.user":
 			type: "text"
 			label:'匹配的人'
-		"result.$.name":
-			type: "text"
-			label:'他(她)的名字'
 		"result.$.score":
 			label: "匹配度"
 			type: "number"
