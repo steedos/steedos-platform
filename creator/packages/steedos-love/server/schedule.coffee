@@ -35,14 +35,15 @@ if Meteor.settings.cron and Meteor.settings.cron.caculateResult
 # 计算love_result的时候过滤掉已经推荐过的用户
 # 一对一匹配的时候 根据love_result的score字段的视图表score字段降序排序挑选最优匹配
 if Meteor.settings.cron and Meteor.settings.cron.caculateRecommend
-    LoveManager.createResultScoreView()
+    # LoveManager.createResultScoreView()
 
     schedule = Npm.require('node-schedule')
     # 定时执行同步
     rule = Meteor.settings.cron.caculateRecommend
     schedule.scheduleJob rule, Meteor.bindEnvironment ()->
         try
-            LoveManager.caculateRecommend()
+            loveSpaceId = 'Lnre96ro35Wf9b3gA'
+            LoveManager.caculateRecommend(loveSpaceId)
         catch e
             console.error e.stack
             return
