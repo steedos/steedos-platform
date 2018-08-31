@@ -33,6 +33,18 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 
 		userB = ''
 		score = 0
+		# {
+		# 	_id: '',
+		# 	user_b: {
+		# 		_id: '',
+		# 		name: '',
+		# 		profile: {
+		# 			sex: '',
+		# 			avatar: ''
+		# 		}
+		# 	}
+		# }
+		data = {}
 
 		i = 0
 		while i < scores.length
@@ -45,7 +57,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 		if userB
 			now = new Date()
 
-			Creator.getCollection('love_recommend').direct.insert({
+			data._id = Creator.getCollection('love_recommend').direct.insert({
 				user_a: userId
 				user_b: userB
 				match: score
@@ -53,6 +65,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 				owner: userId
 				space: spaceId
 			})
+
 			Creator.getCollection('love_recommend_history').direct.insert({
 				user_a: userId
 				user_b: userB
@@ -62,9 +75,11 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 				space: spaceId
 			})
 
+			data.user_b = Meteor.users.findOne(userB, { fields: { name: 1, profile: 1 } })
+
 		JsonRoutes.sendResult res, {
 			code: 200,
-			data: userB
+			data: data
 		}
 		return
 	catch e
