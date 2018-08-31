@@ -43,6 +43,14 @@ Creator.Objects.love_recommend_history =
 			label:"推荐时间"
 			type: "datetime"
 
+		heart:
+			label: "点“心”"
+			type: "boolean"
+
+		heart_at:
+			label: "点“心”时间"
+			type: "datetime"
+
 	list_views:
 		all:
 			label: "所有"
