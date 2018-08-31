@@ -19,13 +19,13 @@ JsonRoutes.add 'post', '/api/mini/vip/like/sms', (req, res, next) ->
 
 		toCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: toUserId }, { fields: { mobile: 1 } })
 
-		fromCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: userId }, { fields: { name: 1 } })
+		fromCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: userId }, { fields: { name: 1, mobile: 1 } })
 
 		if toCustomer.mobile
 			# 发送手机短信
 			SMSQueue.send({
 				RecNum: toCustomer.mobile,
-				msg: "系统通知：刚刚 #{fromCustomer.name} 表示喜欢你。"
+				msg: "系统通知：刚刚 #{fromCustomer.name}(#{fromCustomer.mobile}) 表示喜欢你。"
 			})
 
 		JsonRoutes.sendResult res, {
