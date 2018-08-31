@@ -19,6 +19,8 @@ Template.creator_list_wrapper.helpers Creator.helpers
 
 Template.creator_list_wrapper.helpers
 	showListTree: ()->
+		if Steedos.isMobile()
+			return false;
 		return Creator.getObject(Session.get('object_name')).enable_tree || false;
 
 	object_listviews_fields: ()->
