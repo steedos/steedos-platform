@@ -167,3 +167,13 @@ Creator.Objects.vip_customers =
 				if not doc.invite_code and modifier.$set and modifier.$set.invite_code
 					modifier.$set.is_member = true
 					modifier.$set.member_expried = new Date(new Date().getTime() + 365*24*3600*1000)
+
+		"after.update.server.vip_customers":
+			on: "server"
+			when: "after.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				qp = doc.questionnaire_progess
+				preQP = this.previous.questionnaire_progess
+				if _.difference(qp, preQP).includes('love_test') and doc.from
+					if doc.recommend_count_every_day < 10
+						Creator.getCollection('vip_customers').update({ space: doc.space, owner: doc.from }, { $inc: { recommend_count_every_day: 1 } })

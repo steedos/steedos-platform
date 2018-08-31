@@ -29,7 +29,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 		recommendCount = customer.recommend_count_every_day || 3
 
 		if recommendUserIds.length >= recommendCount
-			throw new Meteor.Error(500, "Reach the upper limit")
+			throw new Meteor.Error(200, "Reach the upper limit")
 
 		userB = ''
 		score = 0
@@ -83,7 +83,6 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 		}
 		return
 	catch e
-		console.error e.stack
 		JsonRoutes.sendResult res, {
 			code: e.error
 			data: { errors: e.reason || e.message }
