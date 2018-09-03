@@ -18,7 +18,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 		result = Creator.getCollection('love_result').findOne({ space: spaceId, owner: userId })
 
 		if not result
-			throw new Meteor.Error(500, "No result")
+			throw new Meteor.Error(200, "No result")
 
 		scores = result.score || []
 
