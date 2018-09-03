@@ -67,28 +67,28 @@ Creator.Objects.spaces =
 			filters: [["_id", "=", "{spaceId}"]]
 	permission_set:
 		user:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		admin:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		member:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		guest:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: false
 			allowRead: true
