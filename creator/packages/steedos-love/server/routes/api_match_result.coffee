@@ -57,7 +57,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 		if userB
 			now = new Date()
 
-			data._id = Creator.getCollection('love_recommend').direct.insert({
+			Creator.getCollection('love_recommend').insert({
 				user_a: userId
 				user_b: userB
 				match: score
@@ -66,7 +66,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 				space: spaceId
 			})
 
-			Creator.getCollection('love_recommend_history').direct.insert({
+			data._id = Creator.getCollection('love_recommend_history').insert({
 				user_a: userId
 				user_b: userB
 				match: score

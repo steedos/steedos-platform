@@ -53,7 +53,7 @@ Creator.Objects.love_recommend =
 		user:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false

@@ -64,7 +64,7 @@ Creator.Objects.love_recommend_history =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -75,14 +75,14 @@ Creator.Objects.love_recommend_history =
 		member:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: true
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
 		guest:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: true
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false

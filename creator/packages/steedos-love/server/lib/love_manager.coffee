@@ -143,13 +143,13 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
 
         if scoreA_B.length > 0 or scoreB_A.length > 0 or score.length > 0
             if resultMe
-                loveResultCollection.direct.update(resultMe._id,{$set:{
+                loveResultCollection.update(resultMe._id,{$set:{
                     scoreA_B: scoreA_B
                     scoreB_A: scoreB_A
                     score: score
                 }})
             else
-                loveResultCollection.direct.insert({
+                loveResultCollection.insert({
                     userA: userId
                     scoreA_B: scoreA_B
                     scoreB_A: scoreB_A
@@ -303,7 +303,7 @@ LoveManager.caculateRecommend = (spaceId) ->
 
                 now = new Date()
 
-                recommendColl.direct.insert({
+                recommendColl.insert({
                     user_a: user_a
                     user_b: user_b
                     match: score
@@ -312,7 +312,7 @@ LoveManager.caculateRecommend = (spaceId) ->
                     space: spaceId
                 })
 
-                recommendHistColl.direct.insert({
+                recommendHistColl.insert({
                     user_a: user_a
                     user_b: user_b
                     match: score
@@ -321,7 +321,7 @@ LoveManager.caculateRecommend = (spaceId) ->
                     space: spaceId
                 })
 
-                recommendColl.direct.insert({
+                recommendColl.insert({
                     user_a: user_b
                     user_b: user_a
                     match: score
@@ -330,7 +330,7 @@ LoveManager.caculateRecommend = (spaceId) ->
                     space: spaceId
                 })
 
-                recommendHistColl.direct.insert({
+                recommendHistColl.insert({
                     user_a: user_b
                     user_b: user_a
                     match: score
