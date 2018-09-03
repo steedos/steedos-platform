@@ -131,15 +131,17 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
                     i++
 
             match = Math.pow(aToB*bToA, 1/2)
-            if score.length < topNumber
-                score.push({userB: owner, BName: name, score: match})
-            else
-                i = 0
-                while i<score.length
-                    if score[i].score < match
-                        score[i] = {userB: owner, BName: name, score: match}
-                        break
-                    i++
+            # 互相匹配超过60%才算入匹配结果
+            if match > 0.6
+                if score.length < topNumber
+                    score.push({userB: owner, BName: name, score: match})
+                else
+                    i = 0
+                    while i<score.length
+                        if score[i].score < match
+                            score[i] = {userB: owner, BName: name, score: match}
+                            break
+                        i++
 
         if scoreA_B.length > 0 or scoreB_A.length > 0 or score.length > 0
             if resultMe
