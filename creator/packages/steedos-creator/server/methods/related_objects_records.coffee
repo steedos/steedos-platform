@@ -17,5 +17,5 @@ Meteor.methods
 		if !permissions.viewAllRecords and permissions.allowRead
 			selector.owner = userId
 		
-		related_records = Creator.Collections[related_object_name].find(selector)
+		related_records = Creator.getCollection(related_object_name).find(selector)
 		return related_records.count()

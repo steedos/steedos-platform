@@ -153,7 +153,7 @@ Template.mobileView.helpers
 		if !permissions.viewAllRecords and permissions.allowRead
 			selector.owner = userId
 
-		return Creator.Collections[related_object_name].find(selector).count()
+		return Creator.getCollection(related_object_name).find(selector).count()
 
 	related_object_url: (related_object_name)->
 		app_id = Template.instance().data.app_id

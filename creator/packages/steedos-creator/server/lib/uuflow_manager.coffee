@@ -198,7 +198,7 @@ uuflowManager.initiateValues = (recordIds, flowId) ->
 		object_name: recordIds.o,
 		flow_id: flowId
 	})
-	record = Creator.Collections[recordIds.o].findOne(recordIds.ids[0])
+	record = Creator.getCollection(recordIds.o).findOne(recordIds.ids[0])
 	if ow and record
 		tableFieldCodes = []
 		tableFieldMap = []
@@ -269,7 +269,7 @@ uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 	return
 
 uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
-	Creator.Collections[recordIds.o].update(recordIds.ids[0], {
+	Creator.getCollection(recordIds.o).update(recordIds.ids[0], {
 		$push: {
 			instances: {
 				$each: [{
@@ -284,7 +284,7 @@ uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
 	return
 
 uuflowManager.checkIsInApproval = (recordIds) ->
-	record = Creator.Collections[recordIds.o].findOne({
+	record = Creator.getCollection(recordIds.o).findOne({
 		_id: recordIds.ids[0], instances: { $exists: true }
 	}, { fields: { instances: 1 } })
 

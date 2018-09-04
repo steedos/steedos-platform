@@ -145,7 +145,7 @@ Template.creator_table_cell.helpers
 						reference_to_sort[reference_to_object_name_field_key] = -1
 
 
-						values = Creator.Collections[reference_to].find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort}).fetch()
+						values = Creator.getCollection(reference_to).find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort}).fetch()
 
 						values = Creator.getOrderlySetByIds(values, val)
 

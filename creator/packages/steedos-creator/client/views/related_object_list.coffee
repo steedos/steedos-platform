@@ -10,8 +10,8 @@ Template.related_object_list.helpers
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-		if Creator.Collections[object_name].findOne(record_id)
-			return Creator.Collections[object_name].findOne(record_id)[name_field_key]
+		if Creator.getCollection(object_name).findOne(record_id)
+			return Creator.getCollection(object_name).findOne(record_id)[name_field_key]
 
 	record_url: ()->
 		object_name = Session.get "object_name"

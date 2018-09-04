@@ -72,7 +72,7 @@ Meteor.startup ->
 						reference_to = [reference_to]
 
 					reference_to.forEach (r)->
-						reference_obj = Creator.objectsByName[r]
+						reference_obj = Creator.getObject(r)
 						if reference_obj
 							_name = field_name + SteedosOData.EXPAND_FIELD_SUFFIX
 							if _.isArray(field.reference_to)

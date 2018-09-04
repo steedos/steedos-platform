@@ -88,7 +88,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 							if name_field_key
 								children_fields[name_field_key] = 1
 
-							return Creator.Collections[reference_to].find(query, {
+							return Creator.getCollection(reference_to).find(query, {
 								fields: children_fields
 							});
 						catch e

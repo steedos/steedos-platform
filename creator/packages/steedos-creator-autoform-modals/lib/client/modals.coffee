@@ -55,7 +55,7 @@ getSimpleSchema = (collectionName)->
 		object_name = getObjectName collectionName
 		object_fields = Creator.getObject(object_name).fields
 		_fields = Creator.getFields(object_name)
-		schema = collectionObj(collectionName).simpleSchema()._schema
+		schema = collectionObj("Creator.Collections."+Creator.getObject(object_name)._collection_name).simpleSchema()._schema
 		fields = Session.get("cmFields")
 
 		final_schema = {}

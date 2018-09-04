@@ -177,10 +177,10 @@ if Meteor.isClient
 Tracker.autorun ()->
 	if Session.get("spaceId")
 		_.each Creator.Objects, (obj, object_name)->
-			if Creator.Collections[object_name]
+			if Creator.getCollection(object_name)
 				_.each obj.fields, (field, field_name)->
 					if field.type == "master_detail" or field.type == "lookup"
-						_schema = Creator.Collections[object_name]?._c2?._simpleSchema?._schema
+						_schema = Creator.getCollection(object_name)?._c2?._simpleSchema?._schema
 						_schema?[field_name]?.autoform?.optionsMethodParams?.space = Session.get("spaceId")
 
 

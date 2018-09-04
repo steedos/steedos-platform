@@ -132,16 +132,21 @@ Creator.Object = (options)->
 	else
 		self.permissions = null
 
-	Creator.Collections[self.name] = Creator.createCollection(options)
-	self.db = Creator.Collections[self.name]
+	_db = Creator.createCollection(options)
+
+	Creator.Collections[_db._name] = _db
+
+	self.db = _db
+
+	self._collection_name = _db._name
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
 	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view
 		if Meteor.isClient
-			Creator.Collections[self.name].attachSchema(self.schema, {replace: true})
+			_db.attachSchema(self.schema, {replace: true})
 		else
-			Creator.Collections[self.name].attachSchema(self.schema)
+			_db.attachSchema(self.schema)
 
 	Creator.objectsByName[self.name] = self
 

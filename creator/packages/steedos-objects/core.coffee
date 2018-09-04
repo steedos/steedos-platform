@@ -13,6 +13,13 @@ Creator.getObject = (object_name)->
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 	if object_name
+
+		obj = _.find Creator.objectsByName, (o)->
+				return o._collection_name == object_name
+
+		if obj
+			return obj
+
 		return Creator.objectsByName[object_name]
 
 Creator.getObjectById = (object_id)->
@@ -27,7 +34,8 @@ Creator.getCollection = (object_name)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
-		return Creator.Collections[object_name]
+		console.log("getCollection", object_name)
+		return Creator.Collections[Creator.getObject(object_name)?._collection_name]
 
 Creator.removeCollection = (object_name)->
 	delete Creator.Collections[object_name]

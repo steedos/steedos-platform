@@ -146,7 +146,7 @@ Creator.initListViews = (object_name)->
 
 	tabularOptions = {
 		name: "creator_" + object_name
-		collection: Creator.Collections[object_name]
+		collection: Creator.getCollection(object_name)
 		pub: "steedos_object_tabular"
 		columns: Creator.getTabularColumns(object_name, columns)
 		headerCallback: ( thead, data, start, end, display )->

@@ -16,4 +16,4 @@ Meteor.publish "related_objects_records", (object_name, related_object_name, rel
 	if !permissions.viewAllRecords and permissions.allowRead
 		selector.owner = userId
 	
-	return Creator.Collections[related_object_name].find(selector)
+	return Creator.getCollection(related_object_name).find(selector)

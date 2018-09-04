@@ -39,7 +39,7 @@ converterLookup = (objectName,field_name, dataCell,jsonObj)->
 	fields = Creator.getObject(objectName).fields
 	reference_to_object = fields[field_name]?.reference_to
 	selectfield = Creator.getObject(reference_to_object).NAME_FIELD_KEY
-	lookup = Creator.Collections[reference_to_object].findOne({"#{selectfield}":dataCell})
+	lookup = Creator.getCollection(reference_to_object).findOne({"#{selectfield}":dataCell})
 	if lookup
 		jsonObj[field_name] =lookup._id
 	else
@@ -88,7 +88,7 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 	insertInfo["insertState"] = true
 	if jsonObj
 		jsonObj.space = space
-		Creator.Collections[objectName].insert(jsonObj,(error,result)->
+		Creator.getCollection(objectName).insert(jsonObj,(error,result)->
 			if error
 				insertInfo["insertState"] = false
 				)
@@ -162,7 +162,7 @@ Meteor.methods
 			ids.push value
 		fields = {_id: 1}
 		fields[name_field] = 1
-		results =  Creator.Collections[reference_to_object].find({_id:{$in:value}},{fields: fields}).fetch()
+		results =  Creator.getCollection(reference_to_object).find({_id:{$in:value}},{fields: fields}).fetch()
 		data = []
 		_.each results ,(result)->
 			data.push result[name_field]
