@@ -34,7 +34,6 @@ Creator.getCollection = (object_name)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
-		console.log("getCollection", object_name)
 		return Creator.Collections[Creator.getObject(object_name)?._collection_name]
 
 Creator.removeCollection = (object_name)->
