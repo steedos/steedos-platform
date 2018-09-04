@@ -59,6 +59,13 @@ APTransform.exportObject = (object)->
 			_field.options = _field.options.toString()
 			delete _field._options
 
+		if _.isArray(_field.options)
+			_fo = []
+			_.forEach _field.options, (_o1)->
+				_fo.push("#{_o1.label}:#{_o1.value}")
+			_field.options = _fo.join(",")
+			delete _field._options
+
 		if _field.regEx
 			_field.regEx = _field.regEx.toString()
 			delete _field._regEx
