@@ -474,7 +474,8 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	if !_object
 		return related_object_names
 
-	related_object_names = _.pluck(_object.related_objects,"object_name")
+#	related_object_names = _.pluck(_object.related_objects,"object_name")
+	related_object_names = _.pluck(Creator.getObjectRelateds(object_name),"object_name")
 	if related_object_names?.length == 0
 		return related_object_names
 
