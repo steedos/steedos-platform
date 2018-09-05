@@ -111,6 +111,8 @@ Creator.Objects.object_fields =
 
 #		disabled:
 #			type: "boolean"
+		hidden:
+			type: "boolean"
 		#TODO 将此功能开放给用户时，需要关闭此属性
 		omit:
 			type: "boolean"
