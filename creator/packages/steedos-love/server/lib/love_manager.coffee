@@ -397,7 +397,7 @@ LoveManager.caculateLoveTags = (userId, spaceId, objectName) ->
                 owner: userId 
             }, { 
                 $set: { 
-                   tags: tags
+                   love_test_tags: tags
                 } 
             })
 

@@ -103,7 +103,7 @@ Creator.Objects.vip_customers =
 			defaultValue: 3
 			omit:true
 
-		tags:
+		love_test_tags:
 			label: '缘分卷测试小结'
 			type: '[text]'
 
