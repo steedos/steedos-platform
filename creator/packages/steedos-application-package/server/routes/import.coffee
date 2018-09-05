@@ -107,6 +107,7 @@ import_app_package = (userId, space_id, imp_data)->
 			delete object.triggers
 			delete object.actions
 			delete object.permissions #删除permissions动态属性
+			delete object.list_views
 
 			object.space = space_id
 			object.owner = userId
