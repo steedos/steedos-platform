@@ -475,7 +475,10 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 		return related_object_names
 
 #	related_object_names = _.pluck(_object.related_objects,"object_name")
-	related_object_names = _.pluck(Creator.getObjectRelateds(object_name),"object_name")
+
+	related_objects = Creator.getObjectRelateds(object_name)
+
+	related_object_names = _.pluck(related_objects,"object_name")
 	if related_object_names?.length == 0
 		return related_object_names
 
@@ -483,7 +486,7 @@ Creator.getRelatedObjects = (object_name, spaceId, userId)->
 	unrelated_objects = permissions.unrelated_objects
 
 	related_object_names = _.difference related_object_names, unrelated_objects
-	return _.filter _object.related_objects, (related_object)->
+	return _.filter related_objects, (related_object)->
 		related_object_name = related_object.object_name
 		isActive = related_object_names.indexOf(related_object_name) > -1
 		allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
