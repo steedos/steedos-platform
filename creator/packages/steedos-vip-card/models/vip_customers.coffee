@@ -103,6 +103,10 @@ Creator.Objects.vip_customers =
 			defaultValue: 3
 			omit:true
 
+		tags:
+			label: '缘分卷测试小结'
+			type: '[text]'
+
 	list_views:
 		all:
 			label: "所有"

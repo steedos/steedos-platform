@@ -14,6 +14,8 @@ JsonRoutes.add 'post', '/api/mini/vip/friend/answered', (req, res, next) ->
 
 		objectName = req.query.object_name || body.object_name
 
+		LoveManager.caculateLoveTags userId, spaceId, objectName
+
 		if ['love_about_me'].includes(objectName)
 			JsonRoutes.sendResult res, {
 				code: 200,

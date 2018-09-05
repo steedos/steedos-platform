@@ -346,6 +346,61 @@ LoveManager.caculateRecommend = (spaceId) ->
     console.timeEnd 'caculateRecommend'
     return
 
+LoveManager.caculateLoveTags = (userId, spaceId, objectName) ->
+    vipCustomersCollection = Creator.getCollection('vip_customers')
+    if objectName == "love_test"
+        loveTestCollection = Creator.getCollection('love_test')
+        loveTestAnswer = loveTestCollection.findOne({ 
+                space: spaceId, 
+                owner: userId 
+            }, { 
+                fields: { 
+                    education: 1, 
+                    body_type: 1, 
+                    employed: 1, 
+                    disgust_smoke: 1, 
+                    pet: 1, 
+                    messy: 1, 
+                    previous_picture: 1 , 
+                    parents_influence: 1 , 
+                    finance_budget: 1 , 
+                    communicate: 1 
+                } 
+            })
+        tags = []
+        if loveTestAnswer.education
+            tags.push "#{loveTestAnswer.education}学历"
+        if loveTestAnswer.body_type
+            tags.push "#{loveTestAnswer.body_type}身材"
+        if loveTestAnswer.employed
+            tags.push "#{loveTestAnswer.employed}"
+        if loveTestAnswer.disgust_smoke and loveTestAnswer.disgust_smoke == "是"
+            tags.push "不吸烟"
+        if loveTestAnswer.pet and loveTestAnswer.pet == "会"
+            tags.push "超爱宠物"
+        if (loveTestAnswer.pet and loveTestAnswer.pet == "不会") or (loveTestAnswer.messy and loveTestAnswer.messy == "介意")
+            tags.push "爱干净"
+        if loveTestAnswer.previous_picture and loveTestAnswer.previous_picture == "会"
+            tags.push "占有欲强"
+        else if loveTestAnswer.previous_picture and loveTestAnswer.previous_picture == "不会"
+            tags.push "宽容"
+        if loveTestAnswer.parents_influence and loveTestAnswer.parents_influence == "我自己做主"
+            tags.push "独立"
+        else if loveTestAnswer.parents_influence and "我通常会听父母的,完全听父母的".split(",").indexOf(loveTestAnswer.parents_influence) > -1
+            tags.push "乖宝宝"
+        if loveTestAnswer.finance_budget and loveTestAnswer.finance_budget == "会"
+            tags.push "未来的有钱人"
+        if loveTestAnswer.communicate and loveTestAnswer.communicate == "是的，雷打不动"
+            tags.push "粘人"
+        vipCustomersCollection.update({ 
+                space: spaceId, 
+                owner: userId 
+            }, { 
+                $set: { 
+                   tags: tags
+                } 
+            })
+
 LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable) ->
     answerObjectNames = ['love_answer','love_answer2','love_test']
     customQuery = { space: spaceId, owner: {}, $or: [] }
