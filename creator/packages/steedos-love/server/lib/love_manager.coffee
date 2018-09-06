@@ -6,7 +6,6 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
     check loveSpaceId, String
     console.time 'caculateScore'
 
-
     topNumber = 10
 
     loveAboutMeCollection = Creator.getCollection('love_about_me')
@@ -19,6 +18,7 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
     loveWorkExperienceCollection = Creator.getCollection('love_work_experience')
     loveRecommendHistoryCollection = Creator.getCollection('love_recommend_history')
     loveFriendsCollection = Creator.getCollection('love_friends')
+    loveTestCollection = Creator.getCollection('love_test')
 
     # 数据加载到内存
     data = {}
@@ -35,6 +35,7 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
             love_about_me: loveAboutMeCollection.findOne({ space: loveSpaceId, owner: owner })
             love_answer: loveAnswerCollection.findOne({ space: loveSpaceId, owner: owner })
             love_answer2: loveAnswer2Collection.findOne({ space: loveSpaceId, owner: owner })
+            love_test: loveTestCollection.findOne({ space: loveSpaceId, owner: owner })
             love_result: loveResultCollection.findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
             love_looking_for: loveLookingForCollection.findOne({ space: loveSpaceId, owner: owner })
             # love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })
@@ -91,25 +92,11 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
             owner = aboutMe.owner
             name = aboutMe.name
 
-            # 计算分子、分母
-            aFullPoints = 0
-            bGotPoints = 0
-            bFullPoints = 0
-            aGotPoints = 0
-            questionsNumber = 0
-            LoveManager.answerObjectNames.forEach (objName) ->
-                if dv[objName] and data[owner][objName] # 当两人都做了同一套问卷时计算分数
-                    # console.log objName
-                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], data[owner][objName])
-                    aFullPoints += r.aFullPoints
-                    bGotPoints += r.bGotPoints
-                    bFullPoints += r.bFullPoints
-                    aGotPoints += r.aGotPoints
-                    questionsNumber += r.questionsNumber
+            r = LoveManager.caculateScore(dv, data[owner], answerKeyObj)
+            aToB = r.a_to_b
+            bToA = r.b_to_a
+            match = r.match
 
-            # console.log { aFullPoints, bGotPoints, bFullPoints, aGotPoints, questionsNumber }
-
-            aToB = bGotPoints/aFullPoints || 0
             if scoreA_B.length < topNumber
                 scoreA_B.push({userB: owner, BName: name, score: aToB})
             else
@@ -120,7 +107,6 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
                         break
                     i++
 
-            bToA = aGotPoints/bFullPoints || 0
             if scoreB_A.length < topNumber
                 scoreB_A.push({userB: owner, BName: name, score: bToA})
             else
@@ -131,7 +117,6 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
                         break
                     i++
 
-            match = Math.pow(aToB*bToA, 1/2)
             # 互相匹配超过60%才算入匹配结果
             if match > 0.6
                 if score.length < topNumber
@@ -163,7 +148,6 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
 
     console.timeEnd 'caculateScore'
     return
-
 
 LoveManager.getQuestionKeys = (objectName) ->
     keys = []
@@ -411,10 +395,10 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
 
     # 获取题目字段key
     answerKeyObj = {}
-    dv = {}
+    aAnswers = {}
     LoveManager.answerObjectNames.forEach (objName) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
-        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        aAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
     query = { space: spaceId, owner: userId }
@@ -428,36 +412,23 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
     vipCustomersCollection.find(customQuery).forEach (cust) ->
         try
             userB = cust.owner
-            # 计算分子、分母
-            aFullPoints = 0
-            bGotPoints = 0
-            bFullPoints = 0
-            aGotPoints = 0
-            questionsNumber = 0
+
+            bAnswers = {}
             LoveManager.answerObjectNames.forEach (objName) ->
-                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: userB })
-                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
-                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
-                    aFullPoints += r.aFullPoints
-                    bGotPoints += r.bGotPoints
-                    bFullPoints += r.bFullPoints
-                    aGotPoints += r.aGotPoints
-                    questionsNumber += r.questionsNumber
+                bAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userB })
 
-            aToB = bGotPoints/aFullPoints || 0
-
-            bToA = aGotPoints/bFullPoints || 0
-
-            match = Math.pow(aToB*bToA, 1/2)
+            r = LoveManager.caculateScore(aAnswers, bAnswers, answerKeyObj)
+            aToB = r.a_to_b
+            bToA = r.b_to_a
+            match = r.match
 
             loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: userB }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
             loveFriendsCollection.update({ space: spaceId, owner: userB, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
 
-    # 暂时注释掉以兼容 老的小程序版本，待新小程序版本发布后 可开放
-    # if matchingFilterEnable
-    #     LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
+    if matchingFilterEnable
+        LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
 
     LoveManager.caculateFriendsIsLookingFor(userId, spaceId)
 
@@ -538,10 +509,10 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
     data = {}
     # 获取题目字段key
     answerKeyObj = {}
-    userAData = {}
+    aAnswers = {}
     LoveManager.answerObjectNames.forEach (objName) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
-        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        aAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
     customCollection.find(customQuery).forEach (cust)->
@@ -565,29 +536,14 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
 
     bFriendsIds.forEach (lf) ->
         try
-
-            # 计算分子、分母
-            aFullPoints = 0
-            bGotPoints = 0
-            bFullPoints = 0
-            aGotPoints = 0
-            questionsNumber = 0
+            bAnswers = {}
             LoveManager.answerObjectNames.forEach (objName) ->
-                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
-                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
-                    # console.log objName
-                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
-                    aFullPoints += r.aFullPoints
-                    bGotPoints += r.bGotPoints
-                    bFullPoints += r.bFullPoints
-                    aGotPoints += r.aGotPoints
-                    questionsNumber += r.questionsNumber
+                bAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
 
-            aToB = bGotPoints/aFullPoints || 0
-
-            bToA = aGotPoints/bFullPoints || 0
-
-            match = Math.pow(aToB*bToA, 1/2)
+            r = LoveManager.caculateScore(aAnswers, bAnswers, answerKeyObj)
+            aToB = r.a_to_b
+            bToA = r.b_to_a
+            match = r.match
 
             friendCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
             friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
@@ -604,10 +560,10 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
 
     # 获取题目字段key
     answerKeyObj = {}
-    dv = {}
+    aAnswers = {}
     LoveManager.answerObjectNames.forEach (objName) ->
         answerKeyObj[objName] = LoveManager.getQuestionKeys(objName)
-        dv[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
+        aAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
     query = { space: spaceId, owner: friendId }
@@ -620,27 +576,11 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
                 friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: friendId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
                 return
 
-            # 计算分子、分母
-            aFullPoints = 0
-            bGotPoints = 0
-            bFullPoints = 0
-            aGotPoints = 0
-            questionsNumber = 0
+            bAnswers = {}
             LoveManager.answerObjectNames.forEach (objName) ->
-                bAnswer = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
-                if dv[objName] and bAnswer # 当两人都做了同一套问卷时计算分数
-                    r = LoveManager.getMatchScores(answerKeyObj[objName], dv[objName], bAnswer)
-                    aFullPoints += r.aFullPoints
-                    bGotPoints += r.bGotPoints
-                    bFullPoints += r.bFullPoints
-                    aGotPoints += r.aGotPoints
-                    questionsNumber += r.questionsNumber
+                bAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: lf.user_b })
 
-            aToB = bGotPoints/aFullPoints || 0
-
-            bToA = aGotPoints/bFullPoints || 0
-
-            match = Math.pow(aToB*bToA, 1/2)
+            r = LoveManager.caculateScore(aAnswers, bAnswers, answerKeyObj)
 
             # beenFriend =
 
