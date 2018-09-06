@@ -357,6 +357,10 @@ LoveManager.caculateLoveTags = (userId, spaceId, objectName) ->
             return;
         if loveTestAnswer.education
             tags.push "#{loveTestAnswer.education}学历"
+        if loveTestAnswer.education
+            education = loveTestAnswer.education
+            if education != "高中及以下"
+                tags.push "#{education}学历"
         if loveTestAnswer.body_type
             tags.push "#{loveTestAnswer.body_type}身材"
         if loveTestAnswer.employed
