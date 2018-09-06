@@ -5,7 +5,7 @@ Creator.Objects.love_post =
 	enable_files:true
 	fields:
 		name:
-			label:'标题'
+			label:'内容'
 			type:'textarea'
 			required:true
 			is_wide:true
