@@ -356,8 +356,6 @@ LoveManager.caculateLoveTags = (userId, spaceId, objectName) ->
         unless loveTestAnswer
             return;
         if loveTestAnswer.education
-            tags.push "#{loveTestAnswer.education}学历"
-        if loveTestAnswer.education
             education = loveTestAnswer.education
             if education != "高中及以下"
                 tags.push "#{education}学历"
