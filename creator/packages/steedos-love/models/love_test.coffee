@@ -31,7 +31,7 @@ Creator.Objects.love_test =
 		education:
 			type:'select'
 			label:"你的学历？"
-			options: "高中及以下,大专,本科,硕士,博士及以上"
+			options: "高中及以下,大专,本科,硕士,博士"
 			is_name: true
 		education_o:
 			type:'select'
