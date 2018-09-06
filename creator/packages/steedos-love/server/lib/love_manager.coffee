@@ -810,10 +810,10 @@ LoveManager.caculateScore = (aAnswers, bAnswers, answerKeyObj) ->
             aGotPoints += r.aGotPoints
             questionsNumber += r.questionsNumber
 
-    aToB = bGotPoints/aFullPoints || 0
+    a_to_b = bGotPoints/aFullPoints || 0
 
-    bToA = aGotPoints/bFullPoints || 0
+    b_to_a = aGotPoints/bFullPoints || 0
 
     match = Math.pow(aToB*bToA, 1/2)
 
-    return { aToB, bToA, match }
+    return { a_to_b, b_to_a, match }
