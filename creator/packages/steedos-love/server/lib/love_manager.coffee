@@ -368,6 +368,8 @@ LoveManager.caculateLoveTags = (userId, spaceId, objectName) ->
                 } 
             })
         tags = []
+        unless loveTestAnswer
+            return;
         if loveTestAnswer.education
             tags.push "#{loveTestAnswer.education}学历"
         if loveTestAnswer.body_type
