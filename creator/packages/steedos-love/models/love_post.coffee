@@ -6,10 +6,9 @@ Creator.Objects.love_post =
 	fields:
 		name:
 			label:'标题'
-			type:'text'
+			type:'textarea'
 			required:true
 			is_wide:true
-			multiple:true
 		images:
 			label: '图片'
 			type: 'image'
