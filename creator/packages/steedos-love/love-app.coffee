@@ -17,5 +17,6 @@ Creator.Apps.love =
 		"love_result",
 		"love_friends",
 		"love_educational_experience",
-		"love_work_experience"
+		"love_work_experience",
+		"love_post"
 		]

@@ -41,7 +41,7 @@ Creator.Objects.love_looking_for =
 			allowEdit: true
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
@@ -55,11 +55,11 @@ Creator.Objects.love_looking_for =
 			allowEdit: true
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 		guest:
 			allowCreate: true
 			allowDelete: false
 			allowEdit: true
 			allowRead: false
 			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
