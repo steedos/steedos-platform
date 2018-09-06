@@ -14,7 +14,7 @@ Creator.Objects.love_educational_experience =
 		educational_background:
 			type:'select'
 			label:"学历"	
-			options: "高中:高中,大专:大专,本科:本科,硕士:硕士,博士及博士以上:博士及博士以上"
+			options: "高中:高中,大专:大专,本科:本科,硕士:硕士,博士:博士"
 			group:'-'
 		
 		profession:
