@@ -1,9 +1,9 @@
 Meteor.methods
     "caculate_love_tags": (object_name, space_id)->
         unless object_name
-            throw new Error("object_name不能为空")
+            object_name = "love_test"
         unless space_id
-            throw new Error("space_id不能为空")
+            space_id = "Lnre96ro35Wf9b3gA"
         vipCustomersCollection = Creator.getCollection('vip_customers')
         customers = vipCustomersCollection.find({ 
                 space: space_id
