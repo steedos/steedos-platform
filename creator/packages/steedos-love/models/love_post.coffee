@@ -9,10 +9,11 @@ Creator.Objects.love_post =
 			type:'text'
 			required:true
 			is_wide:true
+			multiple:true
 		images:
 			label: '图片'
 			type: 'image'
-			multiple : true			
+			multiple : true 
 		# featured:
 		# 	label:'推荐'
 		# 	type:'boolean'
@@ -39,28 +40,28 @@ Creator.Objects.love_post =
 		user:
 			allowCreate: true
 			allowDelete: true
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		admin:
 			allowCreate: true
 			allowDelete: true
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		guest:
 			allowCreate: true
 			allowDelete: true
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		member:
 			allowCreate: true
 			allowDelete: true
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
