@@ -46,15 +46,17 @@ JsonRoutes.add 'post', '/api/steedos/weixin/invite_user', (req, res, next) ->
 		if space.owner != introducer
 			throw new Meteor.Error(500, "邀请者不是商户拥有者")
 
-		store = Creator.getCollection("vip_store").findOne({_id: store_id}, {fields: {_id: 1, owner: 1, space: 1}})
+		if store_id
 
-		if !store
-			throw new Meteor.Error(500, "无效的门店id：#{space_id}")
+			store = Creator.getCollection("vip_store").findOne({_id: store_id}, {fields: {_id: 1, owner: 1, space: 1}})
 
-		if space._id != store.space
-			throw new Meteor.Error(500, "参数不匹配")
+			if !store
+				throw new Meteor.Error(500, "无效的门店id：#{space_id}")
 
-		#校验当前用户是否输入space：不属于，则创建space users
+			if space._id != store.space
+				throw new Meteor.Error(500, "参数不匹配")
+
+		#校验当前用户是否属于space：不属于，则创建space users
 		space_user = Creator.getCollection("space_users").findOne({user: userId, space: space_id}, {fields: {_id: 1, profile: 1, owner: 1}})
 
 		if !space_user
@@ -69,7 +71,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/invite_user', (req, res, next) ->
 			code: 200,
 			data: {
 				_id: space_id,
-				space_name: space.name,
+				name: space.name,
 				profile: 'user'
 				owner: space.owner
 			}
