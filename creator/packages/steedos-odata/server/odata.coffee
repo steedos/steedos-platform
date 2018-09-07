@@ -547,7 +547,7 @@ Meteor.startup ->
 						createQuery.query._id =  @urlParams._id
 						if key is 'cfs.files.filerecord'
 							createQuery.query['metadata.space'] = @urlParams.spaceId
-						else
+						else if key != 'spaces'
 							createQuery.query.space =  @urlParams.spaceId
 						unreadable_fields = permissions.unreadable_fields || []
 						#fields = Creator.getObject(key).fields
