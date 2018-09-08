@@ -50,6 +50,9 @@ Package.onUse(function (api) {
 
 	api.addFiles('server/weixin_auth_init.coffee', 'server');
 
+	api.addFiles('server/routes/account_binding.coffee', 'server');
+	api.addFiles('server/routes/account_binding_use_phone.coffee', 'server');
+
 	api.export(['wxAuth'], ['server']);
 });
 
