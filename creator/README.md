@@ -21,3 +21,36 @@ Creator是华炎公司整合近20年的业务系统开发经验，推出的一�
   - 回收站: 系统内置回收站功能，对于误删除的记录可以一键恢复
 
 [了解更多](https://www.steedos.com/cn/help/creator/)
+
+## 本地运行Creator服务
+
+### 准备工作：Meteor的安装
+
+Meteor 支持Windows 7/Windows Server 2008 R2 以上系统。Windows具体安装如下：
+
+- 首先，确保你已经“以管理员身份运行终端命令行工具”；
+- 然后，在终端命令行输入以下命令后，直接回车；
+
+    ```
+    @powershell -NoProfile -ExecutionPolicy unrestricted -Command “iex ((new-object net.webclient).DownloadString(‘https://chocolatey.org/install.ps1‘))” && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+    ```
+
+- 最后，使用管理员终端命令行命令行运行此命令，完成Meteor的安装。
+    ```
+    choco install meteor
+    ```
+
+注：OSX / LINUX系统安装参照 https://www.meteor.com/install 来安装。
+## 本地服务运行
+
+### Github代码仓库下载Creator相关代码
+
+- 浏览器访问  https://github.com/steedos/creator
+- 点击“Clown or download”将代码下载到本地（可提前下载Github客户端）
+- 下载完成后可在指定下载文件夹位置看到Creator相应代码
+
+### 运行本地Creator代码
+
+- 打开终端命令行工具，在代码存储文件夹下，执行start.bat文件
+- start.bat文件执行成功后，浏览器跳转 http://127.0.0.1:5000，访问本地运行的Creator服务。
+- 点击“企业注册”，注册系统账号，使用Creator相关功能。
