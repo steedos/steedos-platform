@@ -41,7 +41,6 @@ Meteor 支持Windows 7/Windows Server 2008 R2 以上系统。Windows具体安装
     ```
 
 注：OSX / LINUX系统安装参照 https://www.meteor.com/install 来安装。
-## 本地服务运行
 
 ### Github代码仓库下载Creator相关代码
 
