@@ -506,6 +506,7 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
     loveEducationalExperienceCollection = Creator.getCollection('love_educational_experience')
     loveWorkExperienceCollection = Creator.getCollection('love_work_experience')
     loveRecommendHistoryCollection = Creator.getCollection('love_recommend_history')
+    loveTestCollection = Creator.getCollection('love_test')
 
      # 数据加载到内存
     data = {}
@@ -523,6 +524,7 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
             love_about_me: loveAboutMeCollection.findOne({ space: loveSpaceId, owner: owner })
             love_answer: loveAnswerCollection.findOne({ space: loveSpaceId, owner: owner })
             love_answer2: loveAnswer2Collection.findOne({ space: loveSpaceId, owner: owner })
+            love_test: loveTestCollection.findOne({ space: loveSpaceId, owner: owner })
             love_result: loveResultCollection.findOne({ space: loveSpaceId, userA: owner }, { fields: { _id: 1 } })
             love_looking_for: loveLookingForCollection.findOne({ space: loveSpaceId, owner: owner })
             love_hobby: loveHobbyCollection.findOne({ space: loveSpaceId, owner: owner })

@@ -745,6 +745,7 @@ Meteor.startup ->
 				}
 	})
 
+	# _id可传all
 	SteedosOdataAPI.addRoute(':object_name/:_id/:methodName', {authRequired: true, spaceRequired: false}, {
 		post: ()->
 			try
@@ -773,8 +774,7 @@ Meteor.startup ->
 							user_id: @userId
 							permissions: permissions
 						}
-						methods[methodName].apply(thisObj, [@bodyParams])
-						{}
+						return methods[methodName].apply(thisObj, [@bodyParams]) || {}
 					else
 						return {
 							statusCode: 404
