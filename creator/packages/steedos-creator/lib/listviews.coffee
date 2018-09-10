@@ -227,6 +227,14 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 	else
 		oitem.label = oitem.label || list_view.name
 
+	_.forEach oitem.filters, (filter, _index)->
+		if !_.isArray(filter) && _.isObject(filter)
+			if Meteor.isServer
+				if _.isFunction(filter?.value)
+					filter._value = filter.value.toString()
+			else
+				if _.isString(filter?._value)
+					filter.value = Creator.eval("(#{filter._value})")
 	return oitem
 
 

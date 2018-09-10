@@ -162,3 +162,14 @@ Meteor.startup ()->
 						console.error "convert error #{object.name} -> #{field.name}", error
 
 
+		_.forEach object.list_views, (list_view, key) ->
+			_.forEach list_view.filters, (filter, _index)->
+				if !_.isArray(filter) && _.isObject(filter)
+					if Meteor.isServer
+						if _.isFunction(filter?.value)
+							filter._value = filter.value.toString()
+					else
+						if _.isString(filter?._value)
+							filter.value = Creator.eval("(#{filter._value})")
+
+

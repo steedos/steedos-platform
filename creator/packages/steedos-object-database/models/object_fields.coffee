@@ -66,7 +66,7 @@ Creator.Objects.object_fields =
 				return _options
 		type:
 			type: "select"
-			required: true
+#			required: true
 			options:
 				text: "文本",
 				textarea: "长文本"

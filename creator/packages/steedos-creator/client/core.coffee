@@ -98,6 +98,9 @@ if Meteor.isClient
 					if selector.length > 0
 						selector.push "and"
 					filters = _.map filters, (obj)->
+						if Meteor.isClient
+							if _.isString(obj?._value)
+								return [obj.field, obj.operation, Creator.eval("(#{obj._value})")()]
 						return [obj.field, obj.operation, obj.value]
 					
 					filters = Creator.formatFiltersToDev(filters)
@@ -119,7 +122,12 @@ if Meteor.isClient
 							selector.push "and"
 						_.each filters, (filter)->
 							if object_name != 'spaces' || (filter.length > 0 && filter[0] != "_id")
-								selector.push filter
+								if filter.length ==3 && _.isFunction(filter[2])
+									_filter = _.clone(filter)
+									_filter[2] = filter[2]()
+									selector.push _filter
+								else
+									selector.push filter
 
 					if list_view.filter_scope == "mine"
 						if selector.length > 0
