@@ -44,12 +44,12 @@ Meteor 支持Windows 7/Windows Server 2008 R2 以上系统。Windows具体安装
 
 ### Github代码仓库下载Creator相关代码
 
-- 浏览器访问  https://github.com/steedos/creator
-- 点击“Clown or download”将代码下载到本地（可提前下载Github客户端）
-- 下载完成后可在指定下载文件夹位置看到Creator相应代码
+- 浏览器访问  https://github.com/steedos/creator ；
+- 点击“Clown or download”将代码下载到本地（可提前下载Github客户端）；
+- 下载完成后可在指定下载文件夹位置看到Creator相应代码。
 
 ### 运行本地Creator代码
 
-- 打开终端命令行工具，在代码存储文件夹下，执行start.bat文件
-- start.bat文件执行成功后，浏览器跳转 http://127.0.0.1:5000， 访问本地运行的Creator服务。
+- 打开终端命令行工具，在代码存储文件夹下，执行start.bat文件；
+- start.bat文件执行成功后，浏览器跳转 http://127.0.0.1:5000 ，访问本地运行的Creator服务；
 - 点击“企业注册”，注册系统账号，使用Creator相关功能。
