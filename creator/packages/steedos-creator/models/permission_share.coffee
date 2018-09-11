@@ -52,7 +52,7 @@ Creator.Objects.permission_shares =
 		all:
 			label: "所有共享规则"
 			filter_scope: "space"
-			columns: ["name", "object_name"]
+			columns: ["name"]
 		mine:
 			label: "我的共享规则"
 			filter_scope: "mine"
