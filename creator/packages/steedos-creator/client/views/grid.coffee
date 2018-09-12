@@ -215,7 +215,7 @@ _depandOnFields = (object_name, columns)->
 	fields = Creator.getObject(object_name).fields
 	depandOnFields = []
 	_.each columns, (column)->
-		if fields[column].depend_on
+		if fields[column]?.depend_on
 			depandOnFields = _.union(fields[column].depend_on)
 	return depandOnFields
 
