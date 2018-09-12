@@ -427,6 +427,7 @@ Template.creator_grid.onRendered ->
 					expand: expand_fields
 				columns: showColumns
 				customizeExportData: (col, row)->
+					fields = creator_obj.fields
 					_.each row, (r)->
 						_.each r.values, (val, index)->
 							if val
@@ -441,9 +442,14 @@ Template.creator_grid.onRendered ->
 											_val.push(_v.name)
 									r.values[index] = _val.join(",")
 								else if val.constructor == Date
-									utcOffset = moment().utcOffset() / 60
-									val = moment(val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
-									r.values[index] = val
+									dataField = col[index]?.dataField
+									if fields and fields[dataField]?.type == "date"
+										val = moment(val).format('YYYY-MM-DD')
+										r.values[index] = val
+									else
+										utcOffset = moment().utcOffset() / 60
+										val = moment(val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
+										r.values[index] = val
 				onCellClick: (e)->
 					console.log "curObjectName", curObjectName
 					if e.column?.dataField ==  "_id_actions"
