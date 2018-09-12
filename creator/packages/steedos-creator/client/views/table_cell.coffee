@@ -155,6 +155,8 @@ Template.creator_table_cell.helpers
 					catch e
 						console.error(reference_to, e)
 						return
+		else if _field.type == "image"
+			data.push {value: val, id: this._id, isImage: true}
 		else
 			if (val instanceof Date)
 				if this.agreement == "odata"
@@ -206,7 +208,6 @@ Template.creator_table_cell.helpers
 				val = formatFileSize(val)
 			else if _field.type == "number" && val
 				val = Number(val).toFixed(_field.scale)
-
 			else if _field.type == "markdown"
 				val = Spacebars.SafeString(marked(val))
 
