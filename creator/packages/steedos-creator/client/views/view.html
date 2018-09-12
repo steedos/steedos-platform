@@ -113,7 +113,9 @@
 										</div>
 									</div>
 									<div class="slds-card__body">
-										{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+										{{#if record}}
+											{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+										{{/if}}
 									</div>
 									<footer class="slds-card__footer"></footer>
 								</div>
