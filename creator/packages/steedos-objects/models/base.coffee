@@ -7,6 +7,7 @@ Creator.baseObject =
 			sortable: true
 			index: true
 			defaultValue: "{userId}"
+			group: "记录"
 		space:
 			type: "lookup"
 			label:"所属工作区"
@@ -20,6 +21,7 @@ Creator.baseObject =
 			readonly: true
 			sortable: true
 			omit: true
+			group: "记录"
 		created_by:
 			label:"创建人"
 			type: "lookup"
@@ -28,6 +30,7 @@ Creator.baseObject =
 			disabled: true
 			index: true
 			omit: true
+			group: "记录"
 		modified:
 			label:"修改时间"
 			type: "datetime"
@@ -36,6 +39,7 @@ Creator.baseObject =
 			searchable: true
 			index: true
 			omit: true
+			group: "记录"
 		modified_by:
 			label:"修改人"
 			type: "lookup"
@@ -43,6 +47,7 @@ Creator.baseObject =
 			reference_to: "users"
 			disabled: true
 			omit: true
+			group: "记录"
 		is_deleted:
 			type: "boolean"
 			label:"已删除"
