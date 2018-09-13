@@ -5,7 +5,9 @@
 				{{#if isTable}}
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
 				{{else if isImage}}
-					<img class="creator-table-cell-image" src="/api/files/images/{{value}}" alt="{{value}}" />
+					{{#each value}}
+						<img class="creator-table-cell-image" src="/api/files/images/{{this}}" alt="{{this}}" />
+					{{/each}}
 				{{else}}
 					{{#if href}}
 						<a href="{{href}}" title="{{value}}" class = "slds-truncate link-detail fulltex list-item-link-{{id}}">{{value}}</a>

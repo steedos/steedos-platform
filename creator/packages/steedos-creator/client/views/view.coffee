@@ -370,7 +370,6 @@ Template.creator_view.events
 		$(event.currentTarget).addClass("slds-has-focus")
 
 	'click #creator-quick-form .table-cell-edit': (event, template)->
-		debugger;
 		# $(".creator-record-edit").click()
 		full_screen = this.full_screen
 		field = this.field_name
