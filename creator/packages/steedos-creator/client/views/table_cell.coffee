@@ -156,7 +156,11 @@ Template.creator_table_cell.helpers
 						console.error(reference_to, e)
 						return
 		else if _field.type == "image"
-			data.push {value: val, id: this._id, isImage: true}
+			if typeof val is "string"
+				data.push {value: val, id: this._id, isImage: true}
+			else
+				data.push {value: val, id: this._id, isImages: true}
+				 
 		else
 			if (val instanceof Date)
 				if this.agreement == "odata"
