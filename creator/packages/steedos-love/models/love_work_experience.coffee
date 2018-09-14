@@ -35,7 +35,7 @@ Creator.Objects.love_work_experience =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["position", "company", "area", "entry_time","separation_time", "is_incumbent"]
+			columns: ["name", "position", "company", "area", "entry_time","separation_time", "is_incumbent"]
 			filter_scope: "space"
 		
 	permission_set:
