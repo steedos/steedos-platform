@@ -273,4 +273,3 @@ Meteor.methods
 	'import_app_package': (space_id, imp_data)->
 		userId = this.userId
 		Creator.import_app_package(userId, space_id, imp_data)
-		return 'import ok!!!!'
