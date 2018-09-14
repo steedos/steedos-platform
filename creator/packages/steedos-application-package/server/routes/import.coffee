@@ -1,4 +1,4 @@
-Creator.importObject = (userId, space_id, object) ->
+Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 	fields = object.fields
 	triggers = object.triggers
 	actions = object.actions
@@ -173,7 +173,7 @@ Creator.import_app_package = (userId, space_id, imp_data, from_template)->
 	# 2 持久化objects
 	if _.isArray(imp_data.objects) && imp_data.objects.length > 0
 		_.each imp_data.objects, (object)->
-			Creator.importObject(userId, space_id, object)
+			Creator.importObject(userId, space_id, object, list_views_id_maps)
 
 	# 3 持久化list_views
 	if _.isArray(imp_data.list_views) && imp_data.list_views.length > 0
