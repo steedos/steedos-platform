@@ -92,7 +92,7 @@ Template.creator_table_cell.helpers
 		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
 
 			# 有optionsFunction的情况下，reference_to不考虑数组
-			if _.isFunction(_field.optionsFunction) && !reference_to
+			if _.isFunction(_field.optionsFunction)
 				_values = this.doc || {}
 				_record_val = this.record_val
 				_val = val
@@ -108,7 +108,7 @@ Template.creator_table_cell.helpers
 						if val && _.isArray(val) && _.isArray(selectedOptions)
 							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
 						val = selectedOptions.getProperty("label")
-				if reference_to
+				if reference_to && false
 					_.each val, (v)->
 						href = Creator.getObjectUrl(reference_to, v)
 						data.push {reference_to: reference_to,  rid: v, value: v, id: this._id, href: href}

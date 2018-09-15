@@ -122,12 +122,12 @@ _expandFields = (object_name, columns)->
 	fields = Creator.getObject(object_name).fields
 	_.each columns, (n)->
 		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
-			if fields[n].optionsFunction
-				ref = fields[n].optionsFunction({}).getProperty("value")
-			else  
+			if fields[n].reference_to
 				ref = fields[n].reference_to
 				if _.isFunction(ref)
 					ref = ref()
+			else
+				ref = fields[n].optionsFunction({}).getProperty("value")
 
 			if !_.isArray(ref)
 				ref = [ref]
@@ -141,7 +141,9 @@ _expandFields = (object_name, columns)->
 			ref = _.uniq(ref)
 			
 			ref = ref.join(",")
-			expand_fields.push(n + "($select=" + ref + ")")
+
+			if ref
+				expand_fields.push(n + "($select=" + ref + ")")
 			# expand_fields.push n + "($select=name)"
 	return expand_fields
 
