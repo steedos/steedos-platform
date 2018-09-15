@@ -754,10 +754,16 @@ LoveManager.caculateScore = (aAnswers, bAnswers, answerKeyObj) ->
             aGotPoints += r.aGotPoints
             questionsNumber += r.questionsNumber
 
-    a_to_b = bGotPoints/aFullPoints || 0
+    # 共同答题少于5题不计算匹配度。#703
+    if questionsNumber >= 5
 
-    b_to_a = aGotPoints/bFullPoints || 0
+        a_to_b = bGotPoints/aFullPoints || 0
 
-    match = Math.pow(a_to_b*b_to_a, 1/2)
+        b_to_a = aGotPoints/bFullPoints || 0
+
+        match = Math.pow(a_to_b*b_to_a, 1/2)
+
+    else
+        a_to_b = b_to_a = match = 0
 
     return { a_to_b, b_to_a, match }
