@@ -1,4 +1,4 @@
-getAstro = (month,day)->    
+getAstro = (month,day)->
 	s="魔羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
 	arr=[20,19,21,21,21,22,23,23,23,23,22,22];
 	if day<arr[month-1]
@@ -9,7 +9,7 @@ getAstro = (month,day)->
 getzodiac = (year)->
 	arr = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
 	return arr[year % 12]
-		
+
 Creator.Objects.love_about_me =
 	name: "love_about_me"
 	label: "关于我"
@@ -20,41 +20,41 @@ Creator.Objects.love_about_me =
 			type:'select'
 			label:"你的性别？"
 			options:[{label:'男生',value:'男'},{label:'女生',value:'女'}]
-		
+
 		height:
 			type:'select'
 			label:"你的身高？"
 			options:"150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200"
-		
+
 		birthday:
 			type:'date'
 			label:"你的生日？"
-		
+
 		live:
 			type:'selectCity'
 			label:"你的现居地？"
-		
+
 		hometown:
 			type:'selectCity'
 			label:"你的家乡？"
-		
+
 		# photos:
 		# 	label:'照片'
 		# 	type:'image'
 		# 	multiple:true
 		# 	max: 9
 		# 	group:'-'
-		
+
 		self_introduction:
 			type:'textarea'
 			is_wide:true
 			label:"交友宣言:"
-		
+
 		age:
 			type:'number'
 			label:"年龄"
 			hidden:true
-		
+
 		zodiac:
 			type:'text'
 			label:"生肖"
@@ -64,13 +64,13 @@ Creator.Objects.love_about_me =
 			type:'text'
 			label:"星座"
 			hidden:true
-	
+
 	list_views:
 		all:
 			label: "所有"
 			columns: ["age", "sex", "birthday","live", "height", "hometown", "constellation", "zodiac" ]
 			filter_scope: "space"
-		
+
 	permission_set:
 		user:
 			allowCreate: true
@@ -100,7 +100,7 @@ Creator.Objects.love_about_me =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
-	
+
 	triggers:
 		"before.update.server.love_about_me":
 			on: "server"
@@ -123,3 +123,29 @@ Creator.Objects.love_about_me =
 				if modifier?.$set?.name
 					Creator.getCollection("users").direct.update(doc.owner,{$set:{name:modifier.$set.name}})
 					Creator.Collections['vip_customers'].direct.update({owner: doc.owner}, {$set: {name: modifier.$set.name}}, {multi: true})
+
+	methods:
+		# 可通过this获取到object_name, record_id, space_id, user_id; params为request的body
+		dailyRecommend: (params) ->
+			spaceId = this.space_id
+			userId = this.user_id
+			result = []
+
+			lookingFor = Creator.getCollection('love_looking_for').findOne({ space: spaceId, owner: userId })
+
+			gender = lookingFor.sex
+			ageMin = lookingFor.age
+			ageMax = lookingFor.age_max
+			heightMin = lookingFor.height
+			heightMax = lookingFor.height_max
+
+			query = { space: spaceId, owner: { $ne: userId } }
+			query.sex = gender
+			query.age = { $gte: parseInt(ageMin), $lte: parseInt(ageMax) }
+			query.height = { $gte: heightMin, $lte: heightMax }
+
+			result = Creator.getCollection('love_about_me').find(query, { sort: { created: -1 }, limit: 6 }).fetch().map (item)->
+				item.owner = Meteor.users.findOne(item.owner, { fields: { name: 1, profile: 1 } })
+				return item
+
+			return result
