@@ -17,11 +17,11 @@ Meteor.startup ->
 			parsedOpt.sort = visitor.sort
 
 		parsedOpt
-	dealWithExpand = (createQuery, entities, key,action)->
+	dealWithExpand = (createQuery, entities, key, spaceId)->
 		if _.isEmpty createQuery.includes
 			return
 
-		obj = Creator.getObject(key)
+		obj = Creator.getObject(key, spaceId)
 		_.each createQuery.includes, (include)->
 			# console.log 'include: ', include
 			navigationProperty = include.navigationProperty
@@ -33,7 +33,7 @@ Meteor.startup ->
 				if field.reference_to
 					queryOptions = visitorParser(include)
 					if _.isString field.reference_to
-						referenceToCollection = Creator.getCollection(field.reference_to)
+						referenceToCollection = Creator.getCollection(field.reference_to, spaceId)
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]
 								if field.multiple
@@ -54,7 +54,7 @@ Meteor.startup ->
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]?.ids
 								_o = entity[navigationProperty].o
-								referenceToCollection = Creator.getCollection(entity[navigationProperty].o)
+								referenceToCollection = Creator.getCollection(entity[navigationProperty].o, spaceId)
 								if referenceToCollection
 									if field.multiple
 										_ids = _.clone(entity[navigationProperty].ids)
@@ -132,19 +132,19 @@ Meteor.startup ->
 		get: ()->
 			try
 				key = @urlParams.object_name
-				object = Creator.getObject(key)
+				spaceId = @urlParams.spaceId
+				object = Creator.getObject(key, spaceId)
 				if not object?.enable_api
 					return {
 						statusCode: 401
 						body:setErrorMessage(401)
 					}
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, spaceId)
 				if not collection
 					return {
 						statusCode: 404
 						body:setErrorMessage(404,collection,key)
 					}
-				spaceId = @urlParams.spaceId
 				permissions = Creator.getObjectPermissions(spaceId, @userId, key)
 				if permissions.viewAllRecords or (permissions.allowRead and @userId)
 					qs = decodeURIComponent(querystring.stringify(@queryParams))
@@ -203,7 +203,7 @@ Meteor.startup ->
 						createQuery.projection = projection
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, spaceId, @userId)
-						fields = Creator.getObject(key).fields
+						fields = Creator.getObject(key, spaceId).fields
 						_.each readable_fields,(field)->
 							if field.indexOf('$')<0
 								#if fields[field]?.multiple!= true
@@ -225,7 +225,7 @@ Meteor.startup ->
 						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 					scannedCount = collection.find(createQuery.query,{fields:{_id: 1}}).count()
 					if entities
-						dealWithExpand(createQuery, entities, key)
+						dealWithExpand(createQuery, entities, key, spaceId)
 						#scannedCount = entities.length
 						body = {}
 						headers = {}
@@ -264,19 +264,19 @@ Meteor.startup ->
 		post: ()->
 			try
 				key = @urlParams.object_name
-				if not Creator.getObject(key)?.enable_api
+				spaceId = @urlParams.spaceId
+				if not Creator.getObject(key, spaceId)?.enable_api
 					return {
 						statusCode: 401
 						body:setErrorMessage(401)
 				}
 
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, spaceId)
 				if not collection
 					return {
 						statusCode: 404
 						body:setErrorMessage(404,collection,key)
 					}
-				spaceId = @urlParams.spaceId
 				permissions = Creator.getObjectPermissions(spaceId, @userId, key)
 				if permissions.allowCreate
 					@bodyParams.space = spaceId
@@ -324,12 +324,12 @@ Meteor.startup ->
 		get:()->
 			try
 				key = @urlParams.object_name
-				if not Creator.getObject(key)?.enable_api
+				if not Creator.getObject(key, @urlParams.spaceId)?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
 					}
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, @urlParams.spaceId)
 				if not collection
 					return {
 						statusCode: 404
@@ -369,7 +369,7 @@ Meteor.startup ->
 						createQuery.projection = projection
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-						fields = Creator.getObject(key).fields
+						fields = Creator.getObject(key, @urlParams.spaceId).fields
 						_.each readable_fields,(field)->
 							if field.indexOf('$')<0
 								#if fields[field]?.multiple!= true
@@ -387,7 +387,7 @@ Meteor.startup ->
 					else
 						sort_entities = entities
 					if sort_entities
-						dealWithExpand(createQuery, sort_entities, key)
+						dealWithExpand(createQuery, sort_entities, key, @urlParams.spaceId)
 						body = {}
 						headers = {}
 						body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key)
@@ -428,12 +428,12 @@ Meteor.startup ->
 		post: ()->
 			try
 				key = @urlParams.object_name
-				if not Creator.getObject(key)?.enable_api
+				if not Creator.getObject(key, @urlParams.spaceId)?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
 					}
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, @urlParams.spaceId)
 				if not collection
 					return{
 						statusCode: 404
@@ -490,7 +490,7 @@ Meteor.startup ->
 				collectionName = collectionInfoSplit[0]
 				id = collectionInfoSplit[1].split('\'')[1]
 
-				collection = Creator.getCollection(collectionName)
+				collection = Creator.getCollection(collectionName, @urlParams.spaceId)
 				fieldsOptions = {}
 				fieldsOptions[fieldName] = 1
 				entity = collection.findOne({_id: id}, {fields: fieldsOptions})
@@ -499,12 +499,12 @@ Meteor.startup ->
 				if entity
 					fieldValue = entity[fieldName]
 
-				obj = Creator.getObject(collectionName)
+				obj = Creator.getObject(collectionName, @urlParams.spaceId)
 				field = obj.fields[fieldName]
 
 				if field  and fieldValue and (field.type is 'lookup' or field.type is 'master_detail')
-					lookupCollection = Creator.getCollection(field.reference_to)
-					lookupObj = Creator.getObject(field.reference_to)
+					lookupCollection = Creator.getCollection(field.reference_to, @urlParams.spaceId)
+					lookupObj = Creator.getObject(field.reference_to, @urlParams.spaceId)
 					queryOptions = {fields: {}}
 					_.each lookupObj.fields, (v, k)->
 						queryOptions.fields[k] = 1
@@ -526,13 +526,13 @@ Meteor.startup ->
 				{body: body, headers: headers}
 			else
 				try
-					object = Creator.getObject(key)
+					object = Creator.getObject(key, @urlParams.spaceId)
 					if not object?.enable_api
 						return {
 							statusCode: 401
 							body: setErrorMessage(401)
 						}
-					collection = Creator.getCollection(key)
+					collection = Creator.getCollection(key, @urlParams.spaceId)
 					if not collection
 						return{
 							statusCode: 404
@@ -578,7 +578,7 @@ Meteor.startup ->
 								body = {}
 								headers = {}
 								entities.push entity
-								dealWithExpand(createQuery, entities, key)
+								dealWithExpand(createQuery, entities, key, @urlParams.spaceId)
 								body['@odata.context'] = SteedosOData.getODataContextPath(@urlParams.spaceId, key) + '/$entity'
 								entity_OdataProperties = setOdataProperty(entities,@urlParams.spaceId, key)
 								_.extend body,entity_OdataProperties[0]
@@ -617,14 +617,14 @@ Meteor.startup ->
 		put:()->
 			try
 				key = @urlParams.object_name
-				object = Creator.getObject(key)
+				object = Creator.getObject(key, @urlParams.spaceId)
 				if not object?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
 					}
 
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, @urlParams.spaceId)
 				if not collection
 					return{
 						statusCode: 404
@@ -689,14 +689,14 @@ Meteor.startup ->
 		delete:()->
 			try
 				key = @urlParams.object_name
-				object = Creator.getObject(key)
+				object = Creator.getObject(key, @urlParams.spaceId)
 				if not object?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
 						}
 
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, @urlParams.spaceId)
 				if not collection
 					return{
 						statusCode: 404
@@ -750,12 +750,12 @@ Meteor.startup ->
 		post: ()->
 			try
 				key = @urlParams.object_name
-				if not Creator.getObject(key)?.enable_api
+				if not Creator.getObject(key, @urlParams.spaceId)?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
 					}
-				collection = Creator.getCollection(key)
+				collection = Creator.getCollection(key, @urlParams.spaceId)
 				if not collection
 					return{
 						statusCode: 404
@@ -840,7 +840,7 @@ Meteor.startup ->
 									scannedCount = collection.find(createQuery.query).count()
 
 									if entities
-										dealWithExpand(createQuery, entities, key)
+										dealWithExpand(createQuery, entities, key, @urlParams.spaceId)
 
 										body = {}
 										headers = {}

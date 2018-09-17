@@ -1,4 +1,5 @@
 Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
+	console.log('------------------importObject------------------', object.name)
 	fields = object.fields
 	triggers = object.triggers
 	actions = object.actions
@@ -20,7 +21,7 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 	internal_list_view = {}
 
 	hasRecentView = false
-
+	console.log('持久化对象list_views');
 	_.each obj_list_views, (list_view)->
 		old_id = list_view._id
 		delete list_view._id
@@ -39,7 +40,7 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 
 	if !hasRecentView
 		Creator.getCollection("object_listviews").remove({name: "recent", space: space_id, object_name: object.name, owner: userId})
-
+	console.log('持久化对象字段');
 	# 2.2 持久化对象字段
 	_.each fields, (field, k)->
 		delete field._id
@@ -53,7 +54,7 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 			Creator.getCollection("object_fields").update({object: object.name, name: "name", space: space_id}, {$set: field})
 		else
 			Creator.getCollection("object_fields").insert(field)
-
+	console.log('持久化触发器');
 	# 2.3 持久化触发器
 	_.each triggers, (trigger, k)->
 		delete triggers._id
@@ -62,8 +63,12 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 		trigger.object = object.name
 		if !_.has(trigger, "name")
 			trigger.name = k.replace(new RegExp("\\.", "g"), "_")
-		Creator.getCollection("object_triggers").insert(trigger)
 
+		if !_.has(trigger, "is_enable")
+			trigger.is_enable = true
+
+		Creator.getCollection("object_triggers").insert(trigger)
+	console.log('持久化操作');
 	# 2.4 持久化操作
 	_.each actions, (action, k)->
 		delete action._id
@@ -72,8 +77,11 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 		action.object = object.name
 		if !_.has(action, "name")
 			action.name = k.replace(new RegExp("\\.", "g"), "_")
+		if !_.has(action, "is_enable")
+			action.is_enable = true
 		Creator.getCollection("object_actions").insert(action)
 
+	console.log('------------------importObject end------------------', object.name)
 
 Creator.import_app_package = (userId, space_id, imp_data, from_template)->
 	if !userId

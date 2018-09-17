@@ -146,9 +146,9 @@ Creator.Object = (options)->
 		if Meteor.isClient
 			_db.attachSchema(self.schema, {replace: true})
 		else
-			_db.attachSchema(self.schema)
-
-	Creator.objectsByName[self.name] = self
+			_db.attachSchema(self.schema, {replace: true})
+#	console.log('Creator.objectsByName---------->', self._collection_name, self.name)
+	Creator.objectsByName[self._collection_name] = self
 
 	return self
 

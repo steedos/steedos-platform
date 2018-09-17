@@ -19,7 +19,11 @@ Meteor.startup ()->
 
 					delete f.fields
 
-			Creator.Objects[document.name] = document
+			object_name = document.name
+			if document.space
+				object_name = 'c_' + document.space + '_' + document.name
+
+			Creator.Objects[object_name] = document
 			Creator.loadObjects document
 
 	_removeServerObjects = (document)->

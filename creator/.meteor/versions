@@ -132,8 +132,10 @@ steedos:accounts-phone@0.0.4
 steedos:accounts-t9n@1.14.2_8
 steedos:adminlte@2.3.12_3
 steedos:app-admin@0.0.1
+steedos:app-sales@0.0.1
 steedos:app-workflow@0.0.1
 steedos:application-package@0.0.1
+steedos:application-template@0.0.1
 steedos:autoform@0.0.14
 steedos:autoform-bs-datetimepicker@1.0.6
 steedos:autoform-bs-minicolors@1.0.0

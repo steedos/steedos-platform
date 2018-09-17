@@ -70,7 +70,7 @@ Template.headerSearch.events
 	'click #global-search': (e, t)->
 		t.openItem.set(true)
 		if !t.searchText.get()
-			Meteor.call 'object_recent_record', (error, result)->
+			Meteor.call 'object_recent_record', Session.get("spaceId"),(error, result)->
 				if error
 					console.error('object_recent_record method error:', error);
 				t.recentItems.set(result)

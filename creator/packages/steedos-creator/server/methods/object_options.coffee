@@ -3,7 +3,7 @@ Meteor.methods
 	"creator.object_options": (options)->
 		if options?.params?.reference_to
 
-			object = Creator.getObject(options.params.reference_to)
+			object = Creator.getObject(options.params.reference_to, options.params.space)
 
 			name_field_key = object.NAME_FIELD_KEY
 

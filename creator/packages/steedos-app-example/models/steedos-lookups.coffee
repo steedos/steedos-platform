@@ -16,20 +16,20 @@ if Meteor.isDevelopment
 #			company_signed_id:
 #				type: "lookup"
 #				reference_to: "users"
-			customer_id:
-				label: "客户(单选)"
-				type: "lookup"
-				reference_to: ["accounts", "contracts"]
-			customer_ids:
-				label: "客户(多选)"
-				type: "lookup"
-				reference_to: "accounts"
-				multiple: true
-			customer_ua:
-				label: "客户、合同(多选)"
-				type: "lookup"
-				reference_to: ["accounts", "contracts"]
-				multiple: true
+#			customer_id:
+#				label: "客户(单选)"
+#				type: "lookup"
+#				reference_to: ["accounts", "contracts"]
+#			customer_ids:
+#				label: "客户(多选)"
+#				type: "lookup"
+#				reference_to: "accounts"
+#				multiple: true
+#			customer_ua:
+#				label: "客户、合同(多选)"
+#				type: "lookup"
+#				reference_to: ["accounts", "contracts"]
+#				multiple: true
 			# object_switche_id:
 			# 	label: "客户/用户(单选)"
 			# 	type: "lookup"

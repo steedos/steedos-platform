@@ -18,7 +18,10 @@ Meteor.startup ()->
 				if _todo_from_db && _.isString(_todo_from_db)
 					#只有update时， fieldNames, modifier, options 才有值
 					#TODO 控制可使用的变量，尤其是Collection
-					trigger.todo = Creator.eval("(function(userId, doc, fieldNames, modifier, options){#{_todo_from_db}})")
+					if _todo_from_db.startsWith("function")
+						trigger.todo = Creator.eval("(#{_todo_from_db})")
+					else
+						trigger.todo = Creator.eval("(function(userId, doc, fieldNames, modifier, options){#{_todo_from_db}})")
 
 			if Meteor.isServer && trigger.on == "client"
 				_todo = trigger.todo
@@ -38,9 +41,12 @@ Meteor.startup ()->
 				if _todo_from_db && _.isString(_todo_from_db)
 					#TODO 控制可使用的变量
 					try
-						action.todo = Creator.eval("(function(){#{_todo_from_db}})")
+						if _todo_from_db.startsWith("function")
+							action.todo = Creator.eval("(#{_todo_from_db})")
+						else
+							action.todo = Creator.eval("(function(){#{_todo_from_db}})")
 					catch error
-						console.error "todo_from_db", _todo_from_db
+						console.error "todo_from_db", _todo_from_db, error
 
 				_visible = action?._visible
 				if _visible

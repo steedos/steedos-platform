@@ -9,7 +9,7 @@ Meteor.startup ->
 
 	_NAMESPACE = "CreatorEntities"
 
-	getObjectsOdataSchema = ()->
+	getObjectsOdataSchema = (spaceId)->
 		schema = {version: SteedosOData.VERSION, dataServices: {schema: []}}
 
 		entities_schema = {}
@@ -21,7 +21,7 @@ Meteor.startup ->
 		entities_schema.annotations = []
 
 		_.each Creator.Collections, (value, key, list)->
-			_object = Creator.getObject(key)
+			_object = Creator.getObject(key, spaceId)
 			if not _object?.enable_api
 				return
 
@@ -72,7 +72,7 @@ Meteor.startup ->
 						reference_to = [reference_to]
 
 					reference_to.forEach (r)->
-						reference_obj = Creator.getObject(r)
+						reference_obj = Creator.getObject(r, spaceId)
 						if reference_obj
 							_name = field_name + SteedosOData.EXPAND_FIELD_SUFFIX
 							if _.isArray(field.reference_to)
@@ -130,7 +130,7 @@ Meteor.startup ->
 	SteedosOdataAPI.addRoute('', {authRequired: SteedosOData.AUTHREQUIRED}, {
 		get: ()->
 			context = SteedosOData.getMetaDataPath(@urlParams?.spaceId)
-			serviceDocument  = ServiceDocument.processMetadataJson(getObjectsOdataSchema(), {context: context});
+			serviceDocument  = ServiceDocument.processMetadataJson(getObjectsOdataSchema(@urlParams?.spaceId), {context: context});
 			body = serviceDocument.document()
 			return {
 				headers: {
@@ -143,7 +143,7 @@ Meteor.startup ->
 
 	SteedosOdataAPI.addRoute(SteedosOData.METADATA_PATH, {authRequired: SteedosOData.AUTHREQUIRED}, {
 		get: ()->
-			serviceMetadata = ServiceMetadata.processMetadataJson(getObjectsOdataSchema())
+			serviceMetadata = ServiceMetadata.processMetadataJson(getObjectsOdataSchema(@urlParams?.spaceId))
 			body = serviceMetadata.document()
 			return {
 				headers: {

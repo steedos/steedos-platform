@@ -489,7 +489,7 @@ Template.creator_grid.events
 		collection_name = Creator.getObject(objectName).label
 		# rowData = this.doc
 
-		Meteor.call "object_record", objectName, this._id, (error, result)->
+		Meteor.call "object_record", Session.get("spaceId"), objectName, this._id, (error, result)->
 			if result
 				Session.set("cmFullScreen", full_screen)
 				Session.set 'cmDoc', result

@@ -1,5 +1,5 @@
 _syncToObject = (doc) ->
-	object_triggers = Creator.getCollection("object_triggers").find({object: doc.object, is_enable: true}, {
+	object_triggers = Creator.getCollection("object_triggers").find({space: doc.space, object: doc.object, is_enable: true}, {
 		fields: {
 			created: 0,
 			modified: 0,
@@ -14,13 +14,13 @@ _syncToObject = (doc) ->
 	_.forEach object_triggers, (f)->
 		triggers[f.name] = f
 
-	Creator.getCollection("objects").update({name: doc.object}, {
+	Creator.getCollection("objects").update({space: doc.space, name: doc.object}, {
 		$set:
 			triggers: triggers
 	})
 
 isRepeatedName = (doc, name)->
-	other = Creator.getCollection("object_triggers").find({object: doc.object, _id: {$ne: doc._id}, name: name || doc.name}, {fields:{_id: 1}})
+	other = Creator.getCollection("object_triggers").find({object: doc.object,  space: doc.space, _id: {$ne: doc._id}, name: name || doc.name}, {fields:{_id: 1}})
 	if other.count() > 0
 		return true
 	return false
@@ -29,6 +29,7 @@ check = (userId, doc)->
 	if Steedos.isSpaceAdmin(userId, doc.space)
 		throw new Meteor.Error 500, "只有工作去管理员才能配置触发器"
 
+	#TODO 校验关键字：remove、 drop、delete、db、collection、eval等，然后取消 企业版版限制
 	if doc.on == 'server' && !Steedos.isLegalVersion(doc.space,"workflow.enterprise")
 		throw new Meteor.Error 500, "只有企业版支持配置服务端的触发器"
 
@@ -116,24 +117,26 @@ Creator.Objects.object_triggers =
 			todo: (userId, doc)->
 				_syncToObject(doc)
 
-		"before.delete.server.object_actions":
+		"before.delete.server.object_triggers":
 			on: "server"
 			when: "before.remove"
 			todo: (userId, doc)->
 				check(userId, doc)
 
-		"before.update.server.object_actions":
+		"before.update.server.object_triggers":
 			on: "server"
 			when: "before.update"
 			todo: (userId, doc, fieldNames, modifier, options)->
 				check(userId, doc)
 				if modifier?.$set?.name && isRepeatedName(doc, modifier.$set.name)
-					throw new Meteor.Error 500, "对象名称不能重复"
+					console.log("update triggers对象名称不能重复#{doc.name}")
+					throw new Meteor.Error 500, "对象名称不能重复#{doc.name}"
 
-		"before.insert.server.object_actions":
+		"before.insert.server.object_triggers":
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
 				check(userId, doc)
 				if isRepeatedName(doc)
+					console.log("insert triggers对象名称不能重复#{doc.name}")
 					throw new Meteor.Error 500, "对象名称不能重复"

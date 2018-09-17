@@ -13,7 +13,7 @@ Meteor.startup ()->
 
 Creator.createCollection = (object)->
 	collection_key = object.name
-	if object.custom && object.space
+	if object.space #object.custom &&
 		collection_key = "c_" + object.space + "_" + object.name
 
 	if db[collection_key]

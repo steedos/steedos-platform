@@ -1,24 +1,27 @@
 Creator._trigger_hooks = {}
 
 initTrigger = (object_name, trigger)->
-	collection = Creator.getCollection(object_name)
-	if !trigger.todo 
-		return
-	todoWrapper = ()->
-		this.object_name = object_name
-		return trigger.todo.apply(this,arguments)
-	if trigger.when == "before.insert"
-		return collection.before.insert(todoWrapper)
-	else if trigger.when == "before.update"
-		return collection.before.update(todoWrapper)
-	else if trigger.when == "before.remove"
-		return collection.before.remove(todoWrapper)
-	else if trigger.when == "after.insert"
-		return collection.after.insert(todoWrapper)
-	else if trigger.when == "after.update"
-		return collection.after.update(todoWrapper)
-	else if trigger.when == "after.remove"
-		return collection.after.remove(todoWrapper)
+	try
+		collection = Creator.getCollection(object_name)
+		if !trigger.todo
+			return
+		todoWrapper = ()->
+			  this.object_name = object_name
+			  return trigger.todo.apply(this, arguments)
+		if trigger.when == "before.insert"
+			  return collection.before.insert(todoWrapper)
+		  else if trigger.when == "before.update"
+			  return collection.before.update(todoWrapper)
+		  else if trigger.when == "before.remove"
+			  return collection.before.remove(todoWrapper)
+		  else if trigger.when == "after.insert"
+			  return collection.after.insert(todoWrapper)
+		  else if trigger.when == "after.update"
+			  return collection.after.update(todoWrapper)
+		  else if trigger.when == "after.remove"
+			  return collection.after.remove(todoWrapper)
+	catch error
+		console.error('initTrigger error', error)
 
 cleanTrigger = (object_name)->
 	###
@@ -30,7 +33,7 @@ cleanTrigger = (object_name)->
 		_hook.remove()
 
 Creator.initTriggers = (object_name)->
-
+#	console.log('Creator.initTriggers object_name', object_name)
 	obj = Creator.getObject(object_name)
 
 	cleanTrigger(object_name)

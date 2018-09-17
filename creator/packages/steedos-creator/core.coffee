@@ -34,9 +34,15 @@ Creator.loadObjects = (obj, object_name)->
 	if !obj.list_views
 		obj.list_views = {}
 
-	Creator.convertObject(obj)
-	new Creator.Object(obj);
+	if obj.space
+		object_name = 'c_' + obj.space + '_' + obj.name
 
+#	console.log('loadObjects', obj.name, object_name)
+
+	Creator.convertObject(obj)
+#	console.log('new Creator.Object(obj)', obj.name, object_name)
+	new Creator.Object(obj);
+#	console.log('new Creator.Object(obj) end...')
 	Creator.initTriggers(object_name)
 	Creator.initListViews(object_name)
 	# if Meteor.isServer

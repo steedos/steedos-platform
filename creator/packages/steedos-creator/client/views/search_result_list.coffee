@@ -230,7 +230,7 @@ Template.search_result_list.events
 		objectName = this.object_name
 		collection_name = Creator.getObject(objectName).label
 
-		Meteor.call "object_record", objectName, this._id, (error, result)->
+		Meteor.call "object_record", Session.get("spaceId"), objectName, this._id, (error, result)->
 			console.log "method: object_record", error, result
 			if result
 				console.log result, "result"

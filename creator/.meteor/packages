@@ -140,3 +140,6 @@ steedos:weixin-template-message-queue
 steedos:mini-web
 q42:autoform-markdown
 steedos:markdown@0.0.1
+
+steedos:application-template
+steedos:app-sales

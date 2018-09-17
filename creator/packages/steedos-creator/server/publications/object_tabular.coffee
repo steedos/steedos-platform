@@ -1,4 +1,4 @@
-Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
+Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields, spaceId)->
 	unless this.userId
 		return this.ready()
 
@@ -6,11 +6,14 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 	check(ids, Array);
 	check(fields, Match.Optional(Object));
 
-	_table = Tabular.tablesByName[tableName];
-
 	_object_name = tableName.replace("creator_","")
 
-	_fields = Creator.objectsByName[_object_name]?.fields
+	if spaceId
+		tableName = 'creator_' + "c_#{spaceId}_#{_object_name}"
+
+	_table = Tabular.tablesByName[tableName];
+
+	_fields = Creator.objectsByName["c_#{spaceId}_#{_object_name}"]?.fields
 
 	if !_fields || !_table
 		return this.ready()
@@ -79,7 +82,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 							else
 								query._id = reference_ids
 
-							reference_to_object = Creator.getObject(reference_to)
+							reference_to_object = Creator.getObject(reference_to, spaceId)
 
 							name_field_key = reference_to_object.NAME_FIELD_KEY
 
@@ -88,7 +91,7 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields)->
 							if name_field_key
 								children_fields[name_field_key] = 1
 
-							return Creator.getCollection(reference_to).find(query, {
+							return Creator.getCollection(reference_to, spaceId).find(query, {
 								fields: children_fields
 							});
 						catch e

@@ -15,6 +15,8 @@ AutoForm.addInputType('steedosLookups', {
 	},
 	valueOut: function(){
 
+		console.log('lookup valueOut')
+
 		val = this.val();
 
 		if(this[0] && this[0].dataset.init === "0"){

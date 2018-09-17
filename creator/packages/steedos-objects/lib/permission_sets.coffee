@@ -12,8 +12,9 @@ if Meteor.isServer
 		psets = { psetsAdmin, psetsUser, psetsCurrent, psetsMember, psetsGuest }
 		permissions.assigned_apps = Creator.getAssignedApps.bind(psets)(spaceId, userId)
 		_.each Creator.objectsByName, (object, object_name)->
-			permissions.objects[object_name] = _.clone Creator.Objects[object_name]
-			permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
+			if !_.has(object, 'space') || !object.space || object.space == spaceId
+				permissions.objects[object_name] = _.clone Creator.Objects[object_name]
+				permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 		return permissions
 
 	unionPlus = (array, other) ->
@@ -48,7 +49,7 @@ if Meteor.isServer
 
 	Creator.getObjectPermissions = (spaceId, userId, object_name)->
 		permissions = {}
-		object = Creator.getObject(object_name)
+		object = Creator.getObject(object_name, spaceId)
 
 		if spaceId is 'guest'
 			permissions = _.clone(object.permission_set.guest) || {}

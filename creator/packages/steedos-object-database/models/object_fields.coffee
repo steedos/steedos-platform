@@ -1,5 +1,5 @@
 _syncToObject = (doc) ->
-	object_fields = Creator.getCollection("object_fields").find({object: doc.object}, {
+	object_fields = Creator.getCollection("object_fields").find({space: doc.space, object: doc.object}, {
 		fields: {
 			created: 0,
 			modified: 0,
@@ -30,13 +30,13 @@ _syncToObject = (doc) ->
 				fields[k].fields = {}
 			_.extend(fields[k].fields, f)
 
-	Creator.getCollection("objects").update({name: doc.object}, {
+	Creator.getCollection("objects").update({space: doc.space, name: doc.object}, {
 		$set:
 			fields: fields
 	})
 
 isRepeatedName = (doc, name)->
-	other = Creator.getCollection("object_fields").find({object: doc.object, _id: {$ne: doc._id}, name: name || doc.name}, {fields:{_id: 1}})
+	other = Creator.getCollection("object_fields").find({object: doc.object,  space: doc.space, _id: {$ne: doc._id}, name: name || doc.name}, {fields:{_id: 1}})
 	if other.count() > 0
 		return true
 	return false
@@ -200,6 +200,7 @@ Creator.Objects.object_fields =
 				if doc.name == 'name' && modifier?.$set?.name && doc.name != modifier.$set.name
 					throw new Meteor.Error 500, "不能修改此纪录的name属性"
 				if modifier?.$set?.name && isRepeatedName(doc, modifier.$set.name)
+					console.log("update fields对象名称不能重复#{doc.name}")
 					throw new Meteor.Error 500, "对象名称不能重复"
 
 				if modifier?.$set?.reference_to
@@ -232,6 +233,7 @@ Creator.Objects.object_fields =
 #					doc.reference_to = doc.reference_to[0]
 
 				if isRepeatedName(doc)
+					console.log("insert fields对象名称不能重复#{doc.name}")
 					throw new Meteor.Error 500, "对象名称不能重复"
 				if doc?.index and (doc?.type == 'textarea' or doc?.type == 'html')
 					throw new Meteor.Error 500,'多行文本不支持建立索引'

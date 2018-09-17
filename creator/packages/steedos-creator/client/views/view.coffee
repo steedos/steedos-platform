@@ -24,7 +24,7 @@ Template.creator_view.onRendered ->
 			_.each fields, (f)->
 				if f.indexOf(".")  < 0
 					ref_fields[f] = 1
-			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields
+			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields, Session.get("spaceId")
 
 Template.creator_view.helpers Creator.helpers
 

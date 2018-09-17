@@ -49,7 +49,7 @@ if Meteor.isClient
 				else
 					Session.set 'action_object_name', object_name
 					Session.set 'action_record_id', record_id
-					Meteor.call "object_record", object_name, record_id, (error, result)->
+					Meteor.call "object_record", Session.get("spaceId"), object_name, record_id, (error, result)->
 						if result
 							Session.set 'cmDoc', result
 							Meteor.defer ()->
