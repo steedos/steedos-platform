@@ -75,26 +75,6 @@ Creator.Objects.space_users =
 			# required: true
 			omit: true
 
-		wechat:
-			type: "text"
-			label:'微信号'
-
-		avatar:
-			label:'名片头像'
-			type:'image'
-
-		photos:
-			label:'照片'
-			type:'image'
-			multiple:true
-			max: 9
-			group:'-'
-
-		self_introduction:
-			type:'textarea'
-			is_wide:true
-			label:"个人简介"
-
 	list_views:
 		user:
 			label: "员工"
