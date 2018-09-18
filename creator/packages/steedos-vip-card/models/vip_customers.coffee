@@ -6,23 +6,58 @@ Creator.Objects.vip_customers =
 		name:
 			label: '姓名'
 			type: 'text'
+		
+		position:
+			type: "text"
+			label:'职务'
+
+		email:
+			type: "text"
+			label:'邮件'
+
+		work_phone:
+			type: "text"
+			label:'工作电话'
+
+		wechat:
+			type: "text"
+			label:'微信号'
+
+		company:
+			type: "text"
+			label:'公司'
+		
+		location:
+			label:'地址'
+			type:'location'
+			system: 'gcj02'
+
+		self_introduction:
+			type:'textarea'
+			is_wide:true
+			label:"个人简介"
 
 		from:
 			label: '推荐人'
 			type: 'lookup'
 			reference_to: 'users'
+			omit: true
 
 		froms:
 			label: '推荐人历史'
 			type: 'lookup'
 			reference_to: 'users'
 			multiple: true
+			omit: true
 
 		space:
 			label: '商户'
+			omit: true
+			omit: true
 
 		owner:
 			label: '客户'
+			omit: true
 
 		mobile:
 			type: "text"
@@ -31,44 +66,53 @@ Creator.Objects.vip_customers =
 		is_member:
 			label: '是否会员'
 			type: "boolean"
+			omit: true
 
 		member_expried:
 			label: '会员过期时间'
 			type: "datetime"
+			omit: true
 
 		invite_code:
 			label: '邀请码'
 			type: "text"
+			omit: true
 
 		share:
 			label: '分享ID'
 			type: 'lookup'
 			reference_to: 'vip_share'
+			omit: true
 
 		balance:
 			label: "余额"
 			type: "number"
 			defaultValue: 0
 			scale: 2
+			omit: true
 
 		cash_back_total:
 			label: "累计返现"
 			type: "number"
 			defaultValue: 0
 			scale: 2
+			omit: true
 
 		cash_back_percentage:
 			label:'返现比例'
 			type:'number'
 			scale: 2
+			omit: true
 
 		cash_back_expired:
 			label:"返现有效期"
 			type:'datetime'
+			omit: true
 
 		questionnaire_progess: # 1:about_me, 2:about_you, 3:questions, 4:completed
 			label: '问卷回答进度'
 			type: '[text]'
+			omit: true
 
 		avatar:
 			label:'头像'
@@ -78,9 +122,17 @@ Creator.Objects.vip_customers =
 			label:'封面'
 			type:'image'
 
+		photos:
+			label:'照片'
+			type:'image'
+			multiple:true
+			max: 9
+			group:'-'
+
 		enable_match:
 			label: '开启匹配'
 			type: "boolean"
+			omit: true
 
 		disable:
 			label: '停用'
@@ -92,10 +144,12 @@ Creator.Objects.vip_customers =
 			type: 'select'
 			multiple:true
 			options: "姓名:name,身高:height,年龄:age,现居地:live,家乡:hometown,照片:photos,,兴趣爱好:love_hobby,教育经历:love_educational_experience" #工作经历:love_work_experience
+			omit: true
 
 		matching_filter_caculate_time:
 			label: '计算是否满足筛选条件的时间'
 			type: 'datetime'
+			omit: true
 
 		recommend_count_every_day:
 			label: '每天可推荐的次数'
@@ -106,6 +160,7 @@ Creator.Objects.vip_customers =
 		love_test_tags:
 			label: '缘分卷测试小结'
 			type: '[text]'
+			omit: true
 
 	list_views:
 		all:
