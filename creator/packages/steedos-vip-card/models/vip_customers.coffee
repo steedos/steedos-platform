@@ -3,39 +3,55 @@ Creator.Objects.vip_customers =
 	label: "客户"
 	icon: "client"
 	fields:
+		avatar:
+			label:'头像'
+			type:'image'
+			group:'-'
+
 		name:
 			label: '姓名'
 			type: 'text'
+			group:'-'
+		
+		company:
+			type: "text"
+			label:'公司'
 		
 		position:
 			type: "text"
 			label:'职务'
 
-		email:
+		mobile:
 			type: "text"
-			label:'邮件'
-
-		work_phone:
-			type: "text"
-			label:'工作电话'
-
+			label:'手机'
+			group:'-'
+		
 		wechat:
 			type: "text"
 			label:'微信号'
 
-		company:
+		email:
 			type: "text"
-			label:'公司'
-		
+			label:'邮件'
+
 		location:
 			label:'地址'
 			type:'location'
 			system: 'gcj02'
 
+
 		self_introduction:
 			type:'textarea'
 			is_wide:true
 			label:"个人简介"
+			group:'-'
+
+		photos:
+			label:'照片'
+			type:'image'
+			multiple:true
+			max: 9
+			group:'-'
 
 		from:
 			label: '推荐人'
@@ -58,10 +74,6 @@ Creator.Objects.vip_customers =
 		owner:
 			label: '客户'
 			omit: true
-
-		mobile:
-			type: "text"
-			label:'手机'
 
 		is_member:
 			label: '是否会员'
@@ -114,20 +126,11 @@ Creator.Objects.vip_customers =
 			type: '[text]'
 			omit: true
 
-		avatar:
-			label:'头像'
-			type:'image'
 
-		cover:
-			label:'封面'
-			type:'image'
+		# cover:
+		# 	label:'封面'
+		# 	type:'image'
 
-		photos:
-			label:'照片'
-			type:'image'
-			multiple:true
-			max: 9
-			group:'-'
 
 		enable_match:
 			label: '开启匹配'
