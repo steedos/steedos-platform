@@ -130,20 +130,13 @@ Creator.Objects.users =
 			filter_scope: "all"
 			filters: [["_id", "=", "{userId}"]]
 	permission_set:
-		user:
+		guest:
 			allowCreate: false
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: false
-		admin:
-			allowCreate: false
-			allowDelete: false
-			allowEdit: false
-			allowRead: true
-			modifyAllRecords: false
-			viewAllRecords: false
+			viewAllRecords: true
 
 if Meteor.isServer
 	Meteor.users._ensureIndex({

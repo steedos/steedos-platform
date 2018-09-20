@@ -155,7 +155,7 @@ Meteor.startup ->
 						if spaceId isnt 'guest'
 							createQuery.query._id = spaceId
 					else
-						if spaceId isnt 'guest'
+						if spaceId isnt 'guest' and key != "users"
 							createQuery.query.space = spaceId
 
 					if Creator.isCommonSpace(spaceId)
@@ -632,11 +632,14 @@ Meteor.startup ->
 					}
 				spaceId = @urlParams.spaceId
 				permissions = Creator.getObjectPermissions(spaceId, @userId, key)
-				record_owner = collection.findOne({ _id: @urlParams._id }, { fields: { owner: 1 } })?.owner
+				if key == "users"
+					record_owner = @urlParams._id
+				else
+					record_owner = collection.findOne({ _id: @urlParams._id }, { fields: { owner: 1 } })?.owner
 				isAllowed = permissions.modifyAllRecords or (permissions.allowEdit and record_owner == @userId )
 				if isAllowed
 					selector = {_id: @urlParams._id, space: spaceId}
-					if spaceId is 'guest' or spaceId is 'common'
+					if spaceId is 'guest' or spaceId is 'common' or key == "users"
 						delete selector.space
 					fields_editable = true
 					_.keys(@bodyParams.$set).forEach (key)->

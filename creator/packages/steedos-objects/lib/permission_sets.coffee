@@ -51,7 +51,7 @@ if Meteor.isServer
 		permissions = {}
 		object = Creator.getObject(object_name, spaceId)
 
-		if spaceId is 'guest'
+		if spaceId is 'guest' || object_name == "users"
 			permissions = _.clone(object.permission_set.guest) || {}
 			Creator.processPermissions permissions
 			return permissions
