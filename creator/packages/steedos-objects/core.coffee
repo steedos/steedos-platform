@@ -18,6 +18,8 @@ Creator.getObjectName = (object) ->
 	retrurn object.name
 
 Creator.getObject = (object_name, space_id)->
+	if _.isArray(object_name)
+		return ;
 	if Meteor.isClient
 		Creator.deps?.object?.depend()
 	if !object_name and Meteor.isClient
