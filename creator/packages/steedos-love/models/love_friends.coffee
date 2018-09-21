@@ -96,7 +96,7 @@ Creator.Objects.love_friends =
 
 	permission_set:
 		user:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
@@ -110,14 +110,14 @@ Creator.Objects.love_friends =
 			modifyAllRecords: true
 			viewAllRecords: true
 		member:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
 		guest:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
