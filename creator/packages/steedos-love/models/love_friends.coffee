@@ -131,6 +131,8 @@ Creator.Objects.love_friends =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				if modifier?.$set?.heart
 					modifier.$set.heart_at = new Date()
+				if modifier?.$set?.star
+					modifier.$set.star_at = new Date()
 
 
 if Meteor.isServer
