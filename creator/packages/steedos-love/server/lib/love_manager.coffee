@@ -57,6 +57,10 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
         if not lookingFor
             return
 
+        loveAboutMe = dv['love_about_me']
+        if not loveAboutMe
+            return
+
         resultMe = dv['love_result']
         scoreA_B = []
         scoreB_A = []
@@ -75,6 +79,13 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
         # console.log 'query: ', query
         loveAboutMeCollection.find(query, { fields: { owner: 1, name: 1 } }).fetch().forEach (aboutMe) ->
             if not data[aboutMe.owner]
+                return
+
+            aboutMeLookingFor = data[aboutMe.owner]['love_looking_for']
+            if not aboutMeLookingFor
+                return
+
+            if loveAboutMe.sex isnt aboutMeLookingFor.sex or loveAboutMe.age < parseInt(aboutMeLookingFor.age) or loveAboutMe.age > parseInt(aboutMeLookingFor.age_max) or loveAboutMe.height < aboutMeLookingFor.height or loveAboutMe.height > aboutMeLookingFor.height_max
                 return
 
             lrh = _.find data[userId]['love_recommend_history'], (h) ->
