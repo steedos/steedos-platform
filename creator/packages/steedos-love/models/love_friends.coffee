@@ -10,59 +10,83 @@ Creator.Objects.love_friends =
 			type: "lookup"
 			reference_to: "users"
 			index: true
+			omit: true
 
 		a_to_b:
 			label:"我喜欢的"
 			type: "number"
 			scale: 2
+			omit: true
 
 		b_to_a:
 			label:"适合我的"
 			type: "number"
 			scale: 2
+			omit: true
 
 		match:
 			label:"互相匹配度"
 			type: "number"
 			scale: 2
+			omit: true
 
 		open_group_id:
 			label: "群"
 			type: "text"
+			omit: true
 
 		open_groups:
 			label: "群"
 			type: "[text]"
+			omit: true
 
 		owner:
 			label:"第一个用户ID"
 			type: "lookup"
 			reference_to: "users"
 			index: true
+			omit: true
 
 		heart:
 			label: "点“心”"
 			type: "boolean"
+			omit: true
 
 		heart_at:
 			label: "点“心”时间"
 			type: "datetime"
+			omit: true
 
 		star:
 			label: "收录"
 			type: "boolean"
+			omit: true
 
 		star_at:
 			label: "收录时间"
 			type: "datetime"
+			omit: true
 
 		is_looking_for:
 			label: "是否满足筛选条件"
 			type: "boolean"
+			omit: true
 
 		source:
 			label: "分享来源"
 			type: "text"
+			omit: true
+
+		view_count:
+			label:"名片查看次数"
+			type: "number"
+			omit: true
+		
+		from:
+			label: '名片推荐人'
+			type: 'lookup'
+			reference_to: 'users'
+			omit: true
 
 	list_views:
 		all:

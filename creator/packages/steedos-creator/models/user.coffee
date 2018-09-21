@@ -10,6 +10,7 @@ Creator.Objects.users =
 			required: true
 			searchable:true
 			index:true
+
 		profile:
 			type:'[Object]'
 			label:'用户信息'
@@ -27,6 +28,12 @@ Creator.Objects.users =
 		'profile.avatar':
 			type:'text'
 			label:'头像'
+
+		card_published:
+			label: "名片已发布"
+			type: "boolean"
+			omit: true
+
 		qrcode:
 			type:'image'
 			label:'二维码'
