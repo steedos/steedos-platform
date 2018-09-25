@@ -134,6 +134,7 @@ Creator.Objects.users =
 			label:'好友个数'
 			type:'text'
 			multiple: true
+			omit: true
 			group:'-'
 
 	list_views:
