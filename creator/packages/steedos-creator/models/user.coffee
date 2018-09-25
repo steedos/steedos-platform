@@ -4,43 +4,17 @@ Creator.Objects.users =
 	icon: "user"
 	enable_api: true
 	fields:
+		avatar:
+			label:'头像'
+			type:'image'
+			group:'-'
+		
 		name:
-			label: "名称"
+			label: "姓名"
 			type: "text"
 			required: true
 			searchable:true
 			index:true
-
-		profile:
-			type:'[Object]'
-			label:'用户信息'
-			omit: true
-		'profile.sex':
-			type:'select'
-			label:'性别'
-			options:[
-				{label:'男',value:'男'},
-				{label:'女',value:'女'}
-			]
-		'profile.birthdate':
-			type:'date'
-			label:'生日'
-		'profile.avatar':
-			type:'text'
-			label:'头像'
-
-		card_published:
-			label: "名片已发布"
-			type: "boolean"
-			omit: true
-
-		qrcode:
-			type:'image'
-			label:'二维码'
-
-		avatar:
-			label:'头像'
-			type:'image'
 			group:'-'
 		
 		company:
@@ -69,12 +43,16 @@ Creator.Objects.users =
 			type:'location'
 			system: 'gcj02'
 
-
 		self_introduction:
 			type:'textarea'
 			is_wide:true
 			label:"个人简介"
 			group:'-'
+
+		voice:
+			label:'语音介绍'
+			type:'audio'
+			omit: true
 
 		photos:
 			label:'照片'
@@ -83,13 +61,45 @@ Creator.Objects.users =
 			max: 9
 			group:'-'
 
+		card_published:
+			label: "名片已发布"
+			type: "boolean"
+			omit: true
+
+		profile:
+			type:'[Object]'
+			label:'用户信息'
+			omit: true
+		'profile.sex':
+			type:'select'
+			label:'性别'
+			options:[
+				{label:'男',value:'男'},
+				{label:'女',value:'女'}
+			]
+			group:'-'
+		'profile.birthdate':
+			type:'date'
+			label:'生日'
+
+		'profile.avatar':
+			type:'text'
+			label:'头像'
+			group:'-'
+
+		qrcode:
+			type:'image'
+			label:'二维码'
+
 		birthday:
 			type:'date'
 			label:"生日"
+			group:'-'
 
 		live:
 			type:'selectCity'
 			label:"现居地"
+			group:'-'
 
 		hometown:
 			type:'selectCity'
@@ -124,11 +134,7 @@ Creator.Objects.users =
 			label:'好友个数'
 			type:'text'
 			multiple: true
-
-		voice:
-			label:'语音介绍'
-			type:'audio'
-			omit: true
+			group:'-'
 
 	list_views:
 		all:
