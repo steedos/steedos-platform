@@ -30,6 +30,10 @@ Creator.Objects.vip_customers =
 			label: '客户'
 			omit: true
 
+		mobile:
+			type: "text"
+			label:'手机'
+
 		is_member:
 			label: '是否会员'
 			type: "boolean"
@@ -81,10 +85,13 @@ Creator.Objects.vip_customers =
 			type: '[text]'
 			omit: true
 
+		avatar:
+			label:'头像'
+			type:'image'
 
-		# cover:
-		# 	label:'封面'
-		# 	type:'image'
+		cover:
+			label:'封面'
+			type:'image'
 
 
 		enable_match:
