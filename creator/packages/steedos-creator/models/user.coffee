@@ -20,15 +20,18 @@ Creator.Objects.users =
 		company:
 			type: "text"
 			label:'公司'
+			required: true
 		
 		position:
 			type: "text"
 			label:'职务'
+			required: true
 
 		mobile:
 			type: "text"
 			label:'手机'
 			group:'-'
+			required: true
 		
 		wechat:
 			type: "text"
