@@ -87,6 +87,37 @@ Creator.Objects.love_friends =
 			type: 'lookup'
 			reference_to: 'users'
 			omit: true
+		
+		# 以下字段同步于users表，用户名片搜索
+		name:
+			label: "姓名"
+			type: "text"
+			searchable:true
+			index:true
+		
+		company:
+			type: "text"
+			label:'公司'
+			searchable:true
+			index:true
+	
+		mobile:
+			type: "text"
+			label:'手机'
+			searchable:true
+			index:true
+		
+		wechat:
+			type: "text"
+			label:'微信号'
+			searchable:true
+			index:true
+
+		email:
+			type: "text"
+			label:'邮件'
+			searchable:true
+			index:true
 
 	list_views:
 		all:
