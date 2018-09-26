@@ -28,7 +28,7 @@ Creator.Objects.chat_subscriptions = {
 		user:
 			allowCreate: true
 			allowDelete: false
-			allowEdit: false
+			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: false
