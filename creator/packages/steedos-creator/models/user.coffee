@@ -135,13 +135,13 @@ Creator.Objects.users =
 			type:'number'
 			omit: true
 
-		star_count:
+		heart_count:
 			label:'点赞数'
 			type:'number'
 			omit: true
 
 		tags:
-			label:'好友个数'
+			label:'好友标签'
 			type:'text'
 			multiple: true
 			omit: true

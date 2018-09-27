@@ -165,6 +165,18 @@ Creator.Objects.love_friends =
 				if modifier?.$set?.star
 					modifier.$set.star_at = new Date()
 
+		"after.update.server.love_friends":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				inc = false
+				if modifier?.$set?.heart == true
+					inc = 1
+				else if modifier?.$set?.heart == false
+					inc = -1
+				if inc
+					Creator.getCollection('users').update({_id: doc.user_b}, { $inc: { heart_count: inc } });
+
 
 if Meteor.isServer
 	Meteor.startup ->
