@@ -130,13 +130,14 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 			"services.weixin.openid._id": openid
 		}, {$set: {"services.weixin.openid.$.session_key": sessionKey}})
 
-		user = Creator.getCollection("users").findOne({_id: ret_data.user_id}, {fields: {name: 1, profile: 1, mobile: 1, qrcode: 1}})
+		user_fields = {name: 1, mobile: 1, sex:1, birthday:1, avatar:1, qrcode: 1, profile: 1}
+		user = Creator.getCollection("users").findOne({_id: ret_data.user_id}, {fields: user_fields})
 
 		ret_data.name = user.name
 		ret_data.mobile = user.mobile
-		ret_data.sex = user.profile?.sex
-		ret_data.birthdate = user.profile?.birthdate
-		ret_data.avatar = user.profile?.avatar
+		ret_data.sex = if user.sex then user.sex else user.profile?.sex
+		ret_data.birthdate = if user.birthday then user.birthday else user.profile?.birthdate
+		ret_data.avatar = if user.avatar then user.avatar else user.profile?.avatar
 		ret_data.qrcode = user?.qrcode
 		
 		ret_data.love = Meteor.settings.love

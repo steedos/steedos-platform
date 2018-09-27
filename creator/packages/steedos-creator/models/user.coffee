@@ -94,15 +94,22 @@ Creator.Objects.users =
 			type:'image'
 			label:'二维码'
 
+		sex:
+			type:'select'
+			label:'性别'
+			options:[
+				{label:'男',value:'男'},
+				{label:'女',value:'女'}
+			]
+			group:'-'
+
 		birthday:
 			type:'date'
 			label:"生日"
-			group:'-'
 
 		live:
 			type:'selectCity'
 			label:"现居地"
-			group:'-'
 
 		hometown:
 			type:'selectCity'
@@ -138,7 +145,6 @@ Creator.Objects.users =
 			type:'text'
 			multiple: true
 			omit: true
-			group:'-'
 
 	list_views:
 		all:
