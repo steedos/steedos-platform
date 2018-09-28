@@ -256,6 +256,19 @@ Creator.getObjectSchema = (obj) ->
 				fs.autoform.type = 'fileUpload'
 				fs.autoform.collection = 'images'
 				fs.autoform.accept = 'image/*'
+		else if field.type == "avatar"
+			if field.multiple
+				fs.type = [String]
+				schema[field_name + ".$"] =
+					autoform:
+						type: 'fileUpload'
+						collection: 'avatars'
+						accept: 'image/*'
+			else
+				fs.type = String
+				fs.autoform.type = 'fileUpload'
+				fs.autoform.collection = 'avatars'
+				fs.autoform.accept = 'image/*'
 		else if field.type == "audio"
 			if field.multiple
 				fs.type = [String]
