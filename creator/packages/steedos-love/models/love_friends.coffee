@@ -40,6 +40,11 @@ Creator.Objects.love_friends =
 			type: "[text]"
 			omit: true
 
+		mini_app_id:
+			label: "小程序id"
+			type: "text"
+			index: true
+
 		owner:
 			label:"第一个用户ID"
 			type: "lookup"
@@ -81,32 +86,32 @@ Creator.Objects.love_friends =
 			label:"名片查看次数"
 			type: "number"
 			omit: true
-		
+
 		from:
 			label: '名片推荐人'
 			type: 'lookup'
 			reference_to: 'users'
 			omit: true
-		
+
 		# 以下字段同步于users表，用户名片搜索
 		name:
 			label: "姓名"
 			type: "text"
 			searchable:true
 			index:true
-		
+
 		company:
 			type: "text"
 			label:'公司'
 			searchable:true
 			index:true
-	
+
 		mobile:
 			type: "text"
 			label:'手机'
 			searchable:true
 			index:true
-		
+
 		wechat:
 			type: "text"
 			label:'微信号'

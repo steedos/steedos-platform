@@ -23,6 +23,31 @@ setNewToken = (userId, appId, openid)->
 	Accounts._insertHashedLoginToken userId, hashedToken
 	return token
 
+checkLoveFriends = (owner, userB, appId, openGId, spaceId)->
+	collection_friends = Creator.getCollection("love_friends")
+
+	current_friend = collection_friends.findOne({
+		owner: owner
+		user_b: userB
+		space: spaceId
+		mini_app_id: appId
+	}, {fields: {_id: 1, open_groups: 1}})
+	if current_friend
+		if openGId and (not current_friend.open_groups or not current_friend.open_groups.includes(openGId))
+			collection_friends.update(current_friend._id, {
+				$addToSet: { open_groups: openGId }
+			})
+	else
+		values =
+			owner: owner
+			user_b: userB
+			space: spaceId
+			mini_app_id: appId
+		if openGId
+			values.open_group_id = openGId
+			values.open_groups = [openGId]
+		collection_friends.insert values
+
 #TODO 处理unionid
 JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 	try
@@ -139,7 +164,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		ret_data.birthdate = if user.birthday then user.birthday else user.profile?.birthdate
 		ret_data.avatar = if user.avatar then user.avatar else user.profile?.avatar
 		ret_data.qrcode = user?.qrcode
-		
+
 		ret_data.love = Meteor.settings.love
 
 
@@ -200,6 +225,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 					owner: ret_data.user_id
 					from: share_from
 					space: space_id
+					mini_app_id: appId
 				}, {fields: {_id: 1}})
 				unless current_invite
 					values =
@@ -207,6 +233,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						owner: ret_data.user_id
 						from: share_from
 						space: space_id
+						mini_app_id: appId
 					if openGId
 						values.open_group_id = openGId
 					new_invite_id = collection_invites.insert values
@@ -214,45 +241,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 			# 生成love_friends记录
 			if share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
-				current_friend = collection_friends.findOne({
-					owner: ret_data.user_id
-					user_b: share_from
-					space: space_id
-				}, {fields: {_id: 1, open_groups: 1}})
-				if current_friend
-					if openGId and (not current_friend.open_groups or not current_friend.open_groups.includes(openGId))
-						collection_friends.update(current_friend._id, {
-							$addToSet: { open_groups: openGId }
-						})
-				else
-					values =
-						owner: ret_data.user_id
-						user_b: share_from
-						space: space_id
-					if openGId
-						values.open_group_id = openGId
-						values.open_groups = [openGId]
-					collection_friends.insert values
-
-				current_friend = collection_friends.findOne({
-					owner: share_from
-					user_b: ret_data.user_id
-					space: space_id
-				}, {fields: {_id: 1, open_groups: 1}})
-				if current_friend
-					if openGId and (not current_friend.open_groups or not current_friend.open_groups.includes(openGId))
-						collection_friends.update(current_friend._id, {
-							$addToSet: { open_groups: openGId }
-						})
-				else
-					values =
-						owner: share_from
-						user_b: ret_data.user_id
-						space: space_id
-					if openGId
-						values.open_group_id = openGId
-						values.open_groups = [openGId]
-					collection_friends.insert values
+				checkLoveFriends(ret_data.user_id, share_from, appId, openGId, space_id)
+				checkLoveFriends(share_from, ret_data.user_id, appId, openGId, space_id)
 
 			if openGId and share_from and share_from != ret_data.user_id
 				# 自己不能邀请自己
@@ -276,6 +266,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 							space: space_id
 							open_group_id: openGId
 							owner: ret_data.user_id
+							mini_app_id: appId
 						}
 					)
 
@@ -289,47 +280,8 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 						# 先排除掉自己及share_from，然后其他人与ret_data.user_id建立friend关系
 						if member != ret_data.user_id and member != share_from
 							try
-								current_friend = collection_friends.findOne({
-									owner: ret_data.user_id
-									user_b: member
-									space: space_id
-								}, {fields: {_id: 1, open_groups: 1 }})
-
-								if current_friend
-									if not current_friend.open_groups or not current_friend.open_groups.includes(openGId)
-										collection_friends.update(current_friend._id, {
-											$addToSet: { open_groups: openGId }
-										})
-								else
-									collection_friends.insert {
-										_id: collection_friends._makeNewID()
-										owner: ret_data.user_id
-										user_b: member
-										space: space_id
-										open_group_id: openGId
-										open_groups: [openGId]
-									}
-
-								current_friend2 = collection_friends.findOne({
-									owner: member
-									user_b: ret_data.user_id
-									space: space_id
-								}, {fields: {_id: 1, open_groups: 1 }})
-
-								if current_friend2
-									if not current_friend2.open_groups or not current_friend2.open_groups.includes(openGId)
-										collection_friends.update(current_friend2._id, {
-											$addToSet: { open_groups: openGId }
-										})
-								else
-									collection_friends.insert {
-										_id: collection_friends._makeNewID()
-										owner: member
-										user_b: ret_data.user_id
-										space: space_id
-										open_group_id: openGId
-										open_groups: [openGId]
-									}
+								checkLoveFriends(ret_data.user_id, member, appId, openGId, space_id)
+								checkLoveFriends(member, ret_data.user_id, appId, openGId, space_id)
 							catch e
 								console.error e.stack
 								console.error "群转发出错了,openGId=#{openGId},member=#{member},user_id=#{ret_data.user_id}"

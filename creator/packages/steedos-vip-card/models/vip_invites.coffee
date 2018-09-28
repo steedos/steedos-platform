@@ -6,12 +6,12 @@ Creator.Objects.vip_invites =
 		name:
 			label: '名称'
 			type: 'text'
-		
+
 		owner:
 			label: '邀请对象'
 			type: 'lookup'
 			reference_to: 'users'
-		
+
 		from:
 			label: '转发人'
 			type: 'lookup'
@@ -20,7 +20,12 @@ Creator.Objects.vip_invites =
 		open_group_id:
 			label: "群"
 			type: "text"
-	
+
+		mini_app_id:
+			label: "小程序id"
+			type: "text"
+			index: true
+
 	list_views:
 		all:
 			label: "所有"

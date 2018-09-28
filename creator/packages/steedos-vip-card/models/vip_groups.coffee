@@ -7,7 +7,7 @@ Creator.Objects.vip_groups =
 		name:
 			label: '名称'
 			type: 'text'
-			
+
 		users:
 			label:"用户ID"
 			type: "[text]"
@@ -15,6 +15,11 @@ Creator.Objects.vip_groups =
 
 		open_group_id:
 			label: "群"
+			type: "text"
+			index: true
+
+		mini_app_id:
+			label: "小程序id"
 			type: "text"
 			index: true
 
