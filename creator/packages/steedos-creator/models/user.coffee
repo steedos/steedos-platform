@@ -6,7 +6,7 @@ Creator.Objects.users =
 	fields:
 		avatar:
 			label:'头像'
-			type:'image'
+			type:'avatar'
 			group:'-'
 		
 		name:
@@ -32,12 +32,22 @@ Creator.Objects.users =
 			label:'手机'
 			group:'-'
 			required: true
+
+		mobile2:
+			type: "text"
+			label:'手机'
+			group:'-'
+			required: true
 		
 		wechat:
 			type: "text"
 			label:'微信号'
 
 		email:
+			type: "text"
+			label:'邮件'
+
+		email2:
 			type: "text"
 			label:'邮件'
 
