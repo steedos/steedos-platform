@@ -155,7 +155,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 			"services.weixin.openid._id": openid
 		}, {$set: {"services.weixin.openid.$.session_key": sessionKey}})
 
-		user_fields = {name: 1, mobile: 1, sex:1, birthday:1, avatar:1, qrcode: 1, profile: 1}
+		user_fields = {name: 1, mobile: 1, sex:1, birthday:1, avatar:1, avatarUrl:1, qrcode: 1, profile: 1}
 		user = Creator.getCollection("users").findOne({_id: ret_data.user_id}, {fields: user_fields})
 
 		ret_data.name = user.name
