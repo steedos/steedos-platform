@@ -8,6 +8,10 @@ Creator.Objects.users =
 			label:'头像'
 			type:'avatar'
 			group:'-'
+
+		avatarUrl:
+			label:'头像URL'
+			type:'text'
 		
 		name:
 			label: "姓名"
@@ -50,6 +54,10 @@ Creator.Objects.users =
 		email2:
 			type: "text"
 			label:'邮件'
+
+		work_phone:
+			type: "text"
+			label:'工作电话'
 
 		location:
 			label:'地址'
