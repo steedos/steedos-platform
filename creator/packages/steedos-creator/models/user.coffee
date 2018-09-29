@@ -12,6 +12,7 @@ Creator.Objects.users =
 		avatarUrl:
 			label:'头像URL'
 			type:'text'
+			omit: true
 		
 		name:
 			label: "姓名"
