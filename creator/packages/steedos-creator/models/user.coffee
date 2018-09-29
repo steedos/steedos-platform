@@ -40,8 +40,6 @@ Creator.Objects.users =
 		mobile2:
 			type: "text"
 			label:'手机'
-			group:'-'
-			required: true
 		
 		wechat:
 			type: "text"
