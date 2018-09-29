@@ -1,5 +1,6 @@
 LoveManager = {
     answerObjectNames: ['love_answer','love_answer2','love_test']
+    loveMiniAppId: 'wx033a2ed30bf98cc2'
 }
 
 LoveManager.caculateResult = (loveSpaceId, userIds) ->
@@ -7,6 +8,7 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
     console.time 'caculateScore'
 
     topNumber = 10
+    loveMiniAppId = LoveManager.loveMiniAppId
 
     loveAboutMeCollection = Creator.getCollection('love_about_me')
     loveAnswerCollection = Creator.getCollection('love_answer')
@@ -95,7 +97,7 @@ LoveManager.caculateResult = (loveSpaceId, userIds) ->
                 return
 
             # 好友（love_friends）不在计算范围内
-            if loveFriendsCollection.find({ space: loveSpaceId, owner: userId, user_b: aboutMe.owner }).count() > 0
+            if loveFriendsCollection.find({ space: loveSpaceId, owner: userId, user_b: aboutMe.owner, mini_app_id: loveMiniAppId }).count() > 0
                 return
 
             # console.log userId + '>>' + aboutMe.owner
@@ -405,6 +407,8 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
     customQuery = { space: spaceId, owner: {}, $or: [] }
     vipCustomersCollection = Creator.getCollection('vip_customers')
     loveFriendsCollection = Creator.getCollection('love_friends')
+    loveMiniAppId = LoveManager.loveMiniAppId
+
 
     # 获取题目字段key
     answerKeyObj = {}
@@ -414,7 +418,7 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
         aAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
-    query = { space: spaceId, owner: userId }
+    query = { space: spaceId, owner: userId, mini_app_id: loveMiniAppId }
     if rest
         query.match = { $exists: false }
 
@@ -435,8 +439,8 @@ LoveManager.caculateFriendsScore = (userId, spaceId, rest, matchingFilterEnable)
             bToA = r.b_to_a
             match = r.match
 
-            loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: userB }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-            loveFriendsCollection.update({ space: spaceId, owner: userB, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+            loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: userB, mini_app_id: loveMiniAppId }, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
+            loveFriendsCollection.update({ space: spaceId, owner: userB, user_b: userId, mini_app_id: loveMiniAppId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
 
@@ -455,6 +459,7 @@ LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
     loveLookingForCollection = Creator.getCollection('love_looking_for')
     loveAboutMeCollection = Creator.getCollection('love_about_me')
     vipCustomersCollection = Creator.getCollection('vip_customers')
+    loveMiniAppId = LoveManager.loveMiniAppId
 
     LoveManager.answerObjectNames.forEach (objName) ->
         customQuery.$or.push { questionnaire_progess: objName }
@@ -481,7 +486,7 @@ LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
     unless query
         return
 
-    friendsIds = _.pluck(loveFriendsCollection.find({ space: spaceId, owner: userId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+    friendsIds = _.pluck(loveFriendsCollection.find({ space: spaceId, owner: userId, mini_app_id: loveMiniAppId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
     customQuery.owner = { $in: friendsIds }
     customersIds = _.pluck(vipCustomersCollection.find(customQuery, { fields: { owner: 1 } }).fetch(), 'owner')
     query.owner = { $in: customersIds }
@@ -494,10 +499,10 @@ LoveManager.caculateFriendsIsLookingFor = (userId, spaceId) ->
     restIds = _.difference modifiedIds, filterIds
 
     if filterIds.length > 0
-        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: filterIds } }, { $set: { is_looking_for: true } }, { multi: true })
+        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: filterIds }, mini_app_id: loveMiniAppId }, { $set: { is_looking_for: true } }, { multi: true })
 
     if restIds.length > 0
-        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: restIds } }, { $set: { is_looking_for: false } }, { multi: true })
+        loveFriendsCollection.update({ space: spaceId, owner: userId, user_b: { $in: restIds }, mini_app_id: loveMiniAppId }, { $set: { is_looking_for: false } }, { multi: true })
 
     vipCustomersCollection.update({ space: spaceId, owner: userId }, { $set: { matching_filter_caculate_time: now } })
     return
@@ -507,6 +512,7 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
     customQuery = { space: spaceId, $or: [] }
     customCollection = Creator.getCollection('vip_customers')
     friendCollection = Creator.getCollection('love_friends')
+    loveMiniAppId = LoveManager.loveMiniAppId
 
     loveAboutMeCollection = Creator.getCollection('love_about_me')
     loveAnswerCollection = Creator.getCollection('love_answer')
@@ -545,9 +551,9 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
         }
 
     # 我的好友
-    bIds = _.pluck(friendCollection.find({ space: spaceId, owner: userId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+    bIds = _.pluck(friendCollection.find({ space: spaceId, owner: userId, mini_app_id: loveMiniAppId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
     # 我的好友的好友
-    bFriendsIds = _.uniq _.pluck(friendCollection.find({ space: spaceId, owner: { $in: bIds }, user_b: { $ne: userId } }, { fields: { user_b: 1 } }).fetch(), 'user_b')
+    bFriendsIds = _.uniq _.pluck(friendCollection.find({ space: spaceId, owner: { $in: bIds }, user_b: { $ne: userId }, mini_app_id: loveMiniAppId }, { fields: { user_b: 1 } }).fetch(), 'user_b')
 
     bFriendsIds.forEach (lf) ->
         try
@@ -561,7 +567,7 @@ LoveManager.caculateShakeFriendsScore = (userId, spaceId) ->
             match = r.match
 
             friendCollection.update(lf._id, { $set: { a_to_b: aToB, b_to_a: bToA, match: match } })
-            friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
+            friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: userId, mini_app_id: loveMiniAppId }, { $set: { a_to_b: bToA, b_to_a: aToB, match: match } })
         catch e
             console.error e.stack
 
@@ -572,6 +578,7 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
     customQuery = { space: spaceId, owner: '', $or: [] }
     customCollection = Creator.getCollection('vip_customers')
     friendCollection = Creator.getCollection('love_friends')
+    loveMiniAppId = LoveManager.loveMiniAppId
 
     # 获取题目字段key
     answerKeyObj = {}
@@ -581,14 +588,14 @@ LoveManager.caculateFriendsOfFriendScore = (userId, friendId, spaceId) ->
         aAnswers[objName] = Creator.getCollection(objName).findOne({ space: spaceId, owner: userId })
         customQuery.$or.push { questionnaire_progess: objName }
 
-    query = { space: spaceId, owner: friendId }
+    query = { space: spaceId, owner: friendId, mini_app_id: loveMiniAppId }
 
     friendCollection.find(query).forEach (lf) ->
         try
             customQuery.owner = lf.user_b
             unless customCollection.find(customQuery).count()
                 friendCollection.update(lf._id, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
-                friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: friendId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
+                friendCollection.update({ space: spaceId, owner: lf.user_b, user_b: friendId, mini_app_id: loveMiniAppId }, { $unset: { a_to_b: 1, b_to_a: 1, match: 1 } })
                 return
 
             bAnswers = {}
@@ -618,9 +625,10 @@ LoveManager.caculateLoveEnemyScore = (userId, friendId, spaceId) ->
     friendCollection = Creator.getCollection('love_friends')
     loveLookingForCollection = Creator.getCollection('love_looking_for')
     loveAboutMeCollection = Creator.getCollection('love_about_me')
+    loveMiniAppId = LoveManager.loveMiniAppId
 
     # 两个人的总匹配度小于60%
-    friend = friendCollection.findOne({ space: spaceId, owner: userId, user_b: friendId })
+    friend = friendCollection.findOne({ space: spaceId, owner: userId, user_b: friendId, mini_app_id: loveMiniAppId })
     if not friend
         # console.log 'not friend'
         return
