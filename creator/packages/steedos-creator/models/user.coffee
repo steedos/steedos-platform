@@ -168,6 +168,21 @@ Creator.Objects.users =
 			columns: ["name", "username"]
 			filter_scope: "all"
 			filters: [["_id", "=", "{userId}"]]
+
+	triggers:
+		"before.update.server.user":
+			on: "server"
+			when: "before.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				# 同步头像avatar/profile.avatar字段值到头像URLavatarUrl
+				profileAvatar = modifier.$set.profile?.avatar or modifier.$set["profile.avatar"]
+				if modifier.$set.avatar
+					modifier.$set.avatarUrl = "/api/files/avatars/" + modifier.$set.avatar
+				else if profileAvatar
+					user = Creator.getCollection("users").findOne({_id: userId}, fields: {avatarUrl: 1})
+					unless user.avatarUrl
+						modifier.$set.avatarUrl = profileAvatar
+	
 	permission_set:
 		guest:
 			allowCreate: false
