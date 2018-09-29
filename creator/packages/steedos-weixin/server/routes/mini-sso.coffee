@@ -163,6 +163,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		ret_data.sex = if user.sex then user.sex else user.profile?.sex
 		ret_data.birthdate = if user.birthday then user.birthday else user.profile?.birthdate
 		ret_data.avatar = if user.avatar then user.avatar else user.profile?.avatar
+		ret_data.avatarUrl = user.avatarUrl
 		ret_data.qrcode = user?.qrcode
 
 		ret_data.love = Meteor.settings.love
