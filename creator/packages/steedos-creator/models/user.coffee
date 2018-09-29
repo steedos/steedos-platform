@@ -42,6 +42,10 @@ Creator.Objects.users =
 			type: "text"
 			label:'手机'
 		
+		work_phone:
+			type: "text"
+			label:'座机'
+		
 		wechat:
 			type: "text"
 			label:'微信号'
@@ -53,10 +57,6 @@ Creator.Objects.users =
 		email2:
 			type: "text"
 			label:'邮件'
-
-		work_phone:
-			type: "text"
-			label:'工作电话'
 
 		location:
 			label:'地址'
