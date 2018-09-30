@@ -61,6 +61,8 @@ JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 			if !phone_user
 				set = {
 					mobile: phone_number
+					mobile2: phone_number
+					wechat: phone_number
 					name: nickName
 					"profile.avatar": avatarUrl
 				}
