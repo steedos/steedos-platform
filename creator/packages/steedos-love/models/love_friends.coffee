@@ -106,7 +106,7 @@ Creator.Objects.love_friends =
 			searchable:true
 			index:true
 
-		mobile:
+		mobile2:
 			type: "text"
 			label:'手机'
 			searchable:true
@@ -118,7 +118,7 @@ Creator.Objects.love_friends =
 			searchable:true
 			index:true
 
-		email:
+		email2:
 			type: "text"
 			label:'邮件'
 			searchable:true

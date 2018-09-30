@@ -42,13 +42,13 @@ Creator.Objects.users =
 			type: "text"
 			label:'手机'
 		
-		work_phone:
-			type: "text"
-			label:'座机'
-		
 		wechat:
 			type: "text"
 			label:'微信号'
+		
+		work_phone:
+			type: "text"
+			label:'座机'
 
 		email:
 			type: "text"
