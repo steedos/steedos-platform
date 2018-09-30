@@ -41,6 +41,7 @@ Creator.Objects.users =
 		mobile2:
 			type: "text"
 			label:'手机'
+			required: true
 		
 		wechat:
 			type: "text"
@@ -57,11 +58,13 @@ Creator.Objects.users =
 		email2:
 			type: "text"
 			label:'邮件'
+			required: true
 
 		location:
 			label:'地址'
 			type:'location'
 			system: 'gcj02'
+			required: true
 
 		self_introduction:
 			type:'textarea'
