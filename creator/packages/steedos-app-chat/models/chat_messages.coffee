@@ -16,10 +16,14 @@ Creator.Objects.chat_messages = {
 			type: 'select'
 			options: 'text,image,video,href,system'
 
+		display_time:
+			lable: '显示消息时间'
+			type: 'boolean'
+
 	list_views:
 		all:
 			label: "所有"
-			columns: ["related_to", "name", "type"]
+			columns: ["related_to", "name", "type", "display_time"]
 			filter_scope: "space"
 
 	permission_set:
