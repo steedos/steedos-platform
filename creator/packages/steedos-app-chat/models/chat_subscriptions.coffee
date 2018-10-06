@@ -15,6 +15,10 @@ Creator.Objects.chat_subscriptions = {
 			label: '最新消息预览(文本)'
 			type: 'text'
 
+		last_message_date:
+			label: '最新消息发送时间'
+			type: 'datetime'
+
 		unread:
 			label: '未读数'
 

@@ -50,5 +50,5 @@ Creator.Objects.chat_messages = {
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc)->
-				Creator.getCollection("chat_subscriptions").upsert({space: doc.space, 'related_to.o': doc.related_to.o, 'related_to.ids': doc.related_to.ids}, {$inc: {unread: 1}, $set: {last_message_text: doc.name, modified: new Date(), modified_by: userId}}, {multi: true})
+				Creator.getCollection("chat_subscriptions").upsert({space: doc.space, 'related_to.o': doc.related_to.o, 'related_to.ids': doc.related_to.ids}, {$inc: {unread: 1}, $set: {last_message_text: doc.name, last_message_date: new Date(), modified: new Date(), modified_by: userId}}, {multi: true})
 }
