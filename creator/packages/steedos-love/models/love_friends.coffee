@@ -185,7 +185,9 @@ Creator.Objects.love_friends =
 
 if Meteor.isServer
 	Meteor.startup ->
+		Creator.getCollection('love_friends')._dropIndex("owner_1_user_b_1")
 		Creator.getCollection('love_friends')._ensureIndex({
+			"mini_app_id": 1,
 			"owner": 1,
 			"user_b": 1
 		},{background: true, unique: true})
