@@ -1,4 +1,52 @@
 
+userDataTransfer = (appId, from_user, to_user)->
+
+	#数据结构： {待转移的数据对象: [user字段数组]}
+	dataTransferObjects = {
+		vip_customers: ['from', 'owner', 'created_by', 'modified_by'],
+		love_friends: ['created_by', 'modified_by'],
+		vip_invites: ['from', 'owner', 'created_by', 'modified_by'],
+		vip_groups: ['owner', 'created_by', 'modified_by']
+	}
+
+	_.forEach dataTransferObjects, (object_user_keys, object)->
+		object_coll = Creator.getCollection(object);
+		object_user_keys.forEach (key)->
+			query = {}
+			query[key] = from_user
+			set = {$set: {}}
+			set.$set[key] = to_user
+			console.log(object, JSON.stringify(query), JSON.stringify(set))
+			try
+				object_coll.update(query, set)
+			catch e
+				console.log(e)
+
+	#单独处理love_friends的'user_b', 'owner'字段
+	love_friends_coll = Creator.getCollection("love_friends");
+
+	#user_b
+	love_friends_coll.find({mini_app_id: appId, user_b: from_user}, {fields: {_id: 1, owner: 1}}).forEach (f)->
+		old_f = love_friends_coll.findOne({mini_app_id: appId, user_b: to_user, owner: f.owner}, {fields: {_id: 1}})
+		if old_f
+			love_friends_coll.remove({_id: old_f._id})
+		love_friends_coll.update({_id: f._id}, {$set: {user_b: to_user}})
+
+	#owner
+	love_friends_coll.find({mini_app_id: appId, owner: from_user}, {fields: {_id: 1, user_b: 1}}).forEach (f)->
+		old_f = love_friends_coll.findOne({mini_app_id: appId, user_b: f.user_b, owner: to_user}, {fields: {_id: 1}})
+		if old_f
+			love_friends_coll.remove({_id: old_f._id})
+		love_friends_coll.update({_id: f._id}, {$set: {owner: to_user}})
+
+
+
+
+	#单独处理vip_groups的users字段
+	vip_groups_coll = Creator.getCollection("vip_groups");
+	vip_groups_coll.update({users: from_user}, {$addToSet: {users: to_user}})
+	vip_groups_coll.update({users: from_user}, {$pull: {users: from_user}})
+
 
 JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 	try
@@ -54,6 +102,8 @@ JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 						ret_data.sex = phone_user.profile?.sex
 						ret_data.birthdate = phone_user.profile?.birthdate
 						ret_data.avatar = phone_user.profile?.avatar
+
+					userDataTransfer(appId, userId, phone_user._id)
 				else
 					ret_data.mobile = phone_number
 
