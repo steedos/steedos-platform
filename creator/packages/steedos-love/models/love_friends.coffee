@@ -82,17 +82,6 @@ Creator.Objects.love_friends =
 			type: "text"
 			omit: true
 
-		view_count:
-			label:"名片查看次数"
-			type: "number"
-			omit: true
-
-		from:
-			label: '名片推荐人'
-			type: 'lookup'
-			reference_to: 'users'
-			omit: true
-
 		# 以下字段同步于users表，用户名片搜索
 		name:
 			label: "姓名"
