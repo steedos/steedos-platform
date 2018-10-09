@@ -153,7 +153,7 @@ Creator.Objects.love_friends =
 			modifyAllRecords: false
 			viewAllRecords: true
 		guest:
-			allowCreate: true
+			allowCreate: false
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
@@ -181,6 +181,39 @@ Creator.Objects.love_friends =
 					inc = -1
 				if inc
 					Creator.getCollection('users').update({_id: doc.user_b}, { $inc: { heart_count: inc } });
+
+	methods:
+		# 可通过this获取到object_name, record_id, space_id, user_id; params为request的body
+		getMyFriend: (params) ->
+			# 获取当前用户与user_b的friend记录，没有就新增
+			collection = Creator.getCollection(this.object_name)
+			filters = { owner: this.user_id, space: this.space_id, 'user_b': params.user_b, 'mini_app_id': params.mini_app_id}
+			if params.fields
+				myFriend = collection.findOne(filters, fields: params.fields)
+			else
+				myFriend = collection.findOne(filters)
+			unless myFriend
+				values = 
+					user_b: params.user_b
+					owner: this.user_id
+					space: this.space_id
+					mini_app_id: params.mini_app_id
+					created: new Date()
+					created_by: this.user_id
+					modified: new Date()
+					modified_by: this.user_id
+				myFriend = collection.insert(values)
+				values = 
+					user_b: this.user_id,
+					owner: params.user_b
+					space: this.space_id
+					mini_app_id: params.mini_app_id
+					created: new Date()
+					created_by: this.user_id
+					modified: new Date()
+					modified_by: this.user_id
+				collection.insert(values)
+			return myFriend
 
 
 if Meteor.isServer
