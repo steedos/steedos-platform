@@ -1,0 +1,43 @@
+<template name="steedosHeader">
+	{{#if subsReady}}
+	<header class="main-header">
+		{{> steedosHeaderLogo}}
+		<!-- Header Navbar: style can be found in header.less -->
+		<nav class="navbar navbar-static-top">
+			<!-- Navbar Left Menu -->
+			<ul class="nav navbar-nav navbar-nav-apps">
+				<li class="fssh-show hide">
+					<a class="menu-apps-link">
+						<i class="ion ion-grid"></i>
+					</a>
+				</li>
+				{{#each getSpaceApps}}
+					<li class="{{#if isAppActive this}} active {{/if}}">
+						<a class="menu-app-link" data-appid="{{_id}}">
+							{{_ name}}
+							<span class="label label-danger">{{appBadge _id}}</span>
+						</a>
+					</li>
+					{{eachEnd @index}}
+				{{/each}}
+				{{#if isShowMenuAppsLink}}
+					<li>
+						<a class="menu-apps-link">
+							<i class="ion ion-grid"></i>
+						</a>
+					</li>
+				{{/if}}
+			</ul>
+			<!-- Navbar Right Menu -->
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					{{> headerLoading}}
+					{{> headerRefresh}}
+					<li class="hide fssh-show"><a href="/admin/">设置</a></li>
+					{{> steedosHeaderAccount}}
+				</ul>
+			</div>
+		</nav>
+	</header>
+	{{/if}}
+</template>

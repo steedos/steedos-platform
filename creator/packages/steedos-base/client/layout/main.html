@@ -1,0 +1,284 @@
+<head>
+	<style>
+		body { background-color: rgba(0, 0, 0, 0.6); }
+	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, user-scalable=no">
+	<title>Steedos</title>
+
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+	<link rel="manifest" href="/favicons/manifest.json">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="theme-color" content="#000">
+	<meta name="application-name">
+	<link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicons/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title">
+	<link rel="icon" type="image/png" sizes="228x228" href="/favicons/coast-228x228.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="230x230" href="/favicons/favicon-230x230.png">
+	<link rel="shortcut icon" href="/favicons/favicon.ico">
+	<link rel="yandex-tableau-widget" href="/favicons/yandex-browser-manifest.json">
+	<meta name="msapplication-TileColor" content="#fff">
+	<meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png">
+	<meta name="msapplication-config" content="/favicons/browserconfig.xml">
+	<meta property="twitter:image" content="/favicons/twitter.png">
+	<meta property="og:image" content="/favicons/open-graph.png">
+	
+	<script type="text/javascript">
+		window.SC = window.SC || {
+			MODULE_INFO: {},
+			LAZY_INSTANTIATION: {}
+		};
+		SC.BROWSER = {
+			android: "android",
+			blackberry: "blackberry",
+			chrome: "chrome",
+			firefox: "firefox",
+			ie: "ie",
+			opera: "opera",
+			safari: "safari",
+			unknown: "unknown"
+		};
+		SC.CLASS_PREFIX = {
+			gecko: "Moz",
+			opera: "O",
+			presto: "O",
+			trident: "Ms",
+			webkit: "WebKit"
+		};
+		SC.CSS_PREFIX = {
+			gecko: "-moz-",
+			opera: "-o-",
+			presto: "-o-",
+			trident: "-ms-",
+			webkit: "-webkit-"
+		};
+		SC.DEVICE = {
+			android: "android",
+			blackberry: "blackberry",
+			desktop: "desktop",
+			ipad: "ipad",
+			iphone: "iphone",
+			ipod: "ipod",
+			mobile: "mobile"
+		};
+		SC.DOM_PREFIX = {
+			gecko: "Moz",
+			opera: "O",
+			presto: "O",
+			trident: "ms",
+			webkit: "Webkit"
+		};
+		SC.ENGINE = {
+			gecko: "gecko",
+			opera: "opera",
+			presto: "presto",
+			trident: "trident",
+			webkit: "webkit"
+		};
+		SC.OS = {
+			android: "android",
+			blackberry: "blackberry",
+			ios: "ios",
+			linux: "linux",
+			mac: "mac",
+			win: "windows"
+		};
+		SC.detectBrowser = function(userAgent, language) {
+			var browser = {},
+				device, engineAndVersion, isIOSDevice, conExp = "(?:[\\/:\\::\\s:;])",
+				numExp = "(\\S+[^\\s:;:\\)]|)",
+				nameAndVersion, os, osAndVersion, override;
+			userAgent = (userAgent || navigator.userAgent).toLowerCase();
+			language = language || navigator.language || navigator.browserLanguage;
+			device = userAgent.match(new RegExp("(android|ipad|iphone|ipod|blackberry)")) || userAgent.match(new RegExp("(mobile)")) || ["", SC.DEVICE.desktop];
+			browser.device = device[1];
+			isIOSDevice = browser.device === SC.DEVICE.ipad || browser.device === SC.DEVICE.iphone || browser.device === SC.DEVICE.ipod;
+			nameAndVersion = userAgent.match(new RegExp("(opera|chrome|firefox|android|blackberry)" + conExp + numExp)) || userAgent.match(new RegExp("(ie|safari)" + conExp + numExp)) || userAgent.match(new RegExp("(trident)")) || ["", SC.BROWSER.unknown, "0"];
+			if (isIOSDevice) {
+				nameAndVersion[1] = SC.BROWSER.safari
+			}
+			override = userAgent.match(new RegExp("(version)" + conExp + numExp));
+			if (override) {
+				nameAndVersion[2] = override[2]
+			} else {
+				if (nameAndVersion[1] === SC.BROWSER.safari) {
+					nameAndVersion[2] = "0"
+				} else {
+					if (nameAndVersion[1] === SC.ENGINE.trident) {
+						nameAndVersion[1] = SC.BROWSER.ie;
+						this._ieVersion = nameAndVersion[2];
+						nameAndVersion[2] = userAgent.match(new RegExp("(rv)" + conExp + numExp))[2]
+					}
+				}
+			}
+			browser.name = nameAndVersion[1];
+			browser.version = nameAndVersion[2];
+			engineAndVersion = userAgent.match(new RegExp("(presto)" + conExp + numExp)) || userAgent.match(new RegExp("(opera|trident|webkit|gecko)" + conExp + numExp)) || ["", SC.BROWSER.unknown, "0"];
+			override = browser.name === SC.BROWSER.ie ? SC.ENGINE.trident : false;
+			if (override) {
+				engineAndVersion[1] = override
+			}
+			override = browser.name === SC.BROWSER.ie && engineAndVersion[2] === "0";
+			if (override) {
+				engineAndVersion[2] = browser.version
+			}
+			override = userAgent.match(new RegExp("(rv)" + conExp + numExp));
+			if (override && engineAndVersion[1] !== SC.ENGINE.trident) {
+				engineAndVersion[2] = override[2]
+			}
+			browser.engine = engineAndVersion[1];
+			browser.engineVersion = engineAndVersion[2];
+			browser.domPrefix = SC.DOM_PREFIX[browser.engine];
+			browser.classPrefix = SC.CLASS_PREFIX[browser.engine];
+			browser.cssPrefix = SC.CSS_PREFIX[browser.engine];
+			if (browser.name === SC.BROWSER.unknown) {
+				browser.name = browser.engine
+			}
+			osAndVersion = userAgent.match(new RegExp("(blackberry)")) || userAgent.match(new RegExp("(android|iphone(?: os)|windows(?: nt))" + conExp + numExp)) || userAgent.match(new RegExp("(os|mac(?: os)(?: x))" + conExp + numExp)) || userAgent.match(new RegExp("(linux)")) || [null, SC.BROWSER.unknown, "0"];
+			if (isIOSDevice) {
+				os = SC.OS.ios
+			} else {
+				if (osAndVersion[1] === "mac os x" || osAndVersion[1] === "mac os") {
+					os = SC.OS.mac
+				} else {
+					if (osAndVersion[1] === "windows nt") {
+						os = SC.OS.win
+					} else {
+						os = osAndVersion[1]
+					}
+				}
+			}
+			osAndVersion[2] = osAndVersion[2] ? osAndVersion[2].replace(/_/g, ".") : "0";
+			browser.os = os;
+			browser.osVersion = osAndVersion[2];
+			browser.windows = browser.isWindows = browser.os === SC.OS.win;
+			browser.mac = browser.isMac = browser.os === SC.OS.mac;
+			browser.lion = browser.isLion = !!(/mac os x 10_7/.test(userAgent) && !/like mac os x 10_7/.test(userAgent));
+			browser.iPhone = browser.isiPhone = browser.device === SC.DEVICE.iphone;
+			browser.iPod = browser.isiPod = browser.device === SC.DEVICE.ipod;
+			browser.iPad = browser.isiPad = browser.device === SC.DEVICE.ipad;
+			browser.iOS = browser.isiOS = browser.os === SC.OS.ios;
+			browser.android = browser.isAndroid = browser.os === SC.OS.android;
+			browser.opera = browser.name === SC.BROWSER.opera ? browser.version : "0";
+			browser.isOpera = browser.name === SC.BROWSER.opera;
+			browser.msie = browser.name === SC.BROWSER.ie ? browser.version : "0";
+			browser.isIE = browser.engine === SC.ENGINE.trident;
+			browser.isIE8OrLower = browser.name === SC.BROWSER.ie && browser.version <= 8;
+			browser.mozilla = browser.engine === SC.ENGINE.gecko ? browser.version : "0";
+			browser.isMozilla = browser.engine === SC.ENGINE.gecko;
+			browser.webkit = browser.engine === SC.ENGINE.webkit ? browser.engineVersion : "0";
+			browser.isWebkit = browser.engine === SC.ENGINE.webkit;
+			browser.chrome = browser.name === SC.BROWSER.chrome ? browser.version : "0";
+			browser.isChrome = browser.name === SC.BROWSER.chrome;
+			browser.mobileSafari = browser.os === SC.OS.ios ? browser.version : "0";
+			browser.isMobileSafari = browser.name === SC.BROWSER.safari && browser.os === SC.OS.ios;
+			browser.iPadSafari = browser.device === SC.DEVICE.ipad && browser.name === SC.BROWSER.safari ? browser.version : 0;
+			browser.isiPadSafari = browser.device === SC.DEVICE.ipad && browser.name === SC.BROWSER.safari;
+			browser.iPhoneSafari = browser.device === SC.DEVICE.iphone && browser.name === SC.BROWSER.safari ? browser.version : 0;
+			browser.isiPhoneSafari = browser.device === SC.DEVICE.iphone && browser.name === SC.BROWSER.safari;
+			browser.iPodSafari = browser.device === SC.DEVICE.ipod && browser.name === SC.BROWSER.safari ? browser.version : 0;
+			browser.isiPodSafari = browser.device === SC.DEVICE.ipod && browser.name === SC.BROWSER.safari;
+			browser.isiOSHomeScreen = browser.isMobileSafari && !(/apple.*mobile.*safari/.test(userAgent));
+			browser.safari = browser.name === SC.BROWSER.safari && browser.os === SC.OS.mac ? browser.version : 0;
+			browser.isSafari = browser.name === SC.BROWSER.safari && browser.os === SC.OS.mac;
+			browser.language = language.split("-", 1)[0];
+			browser.countryCode = language.split("-")[1] ? language.split("-")[1].toLowerCase() : undefined;
+			browser.current = browser.name;
+			return browser
+		};
+		SC.browser = SC.detectBrowser();
+		if (typeof SC_benchmarkPreloadEvents !== "undefined") {
+			SC.benchmarkPreloadEvents = SC_benchmarkPreloadEvents;
+			SC_benchmarkPreloadEvents = undefined
+		} else {
+			SC.benchmarkPreloadEvents = {
+				headStart: new Date().getTime()
+			}
+		}
+		SC.setupBodyClassNames = function() {
+			var el = document.body,
+				browser, platform, shadows, borderRad, classNames, style, ieVersion;
+			if (!el) {
+				return
+			}
+			browser = SC.browser.current;
+			platform = SC.browser.isWindows ? "windows" : SC.browser.isMac ? "mac" : "other-platform";
+			style = document.documentElement.style;
+			shadows = (style.MozBoxShadow !== undefined) || (style.webkitBoxShadow !== undefined) || (style.oBoxShadow !== undefined) || (style.boxShadow !== undefined);
+			borderRad = (style.MozBorderRadius !== undefined) || (style.webkitBorderRadius !== undefined) || (style.oBorderRadius !== undefined) || (style.borderRadius !== undefined);
+			classNames = [];
+			if (shadows) {
+				classNames.push("box-shadow")
+			}
+			if (borderRad) {
+				classNames.push("border-rad")
+			}
+			classNames.push(browser, platform);
+			ieVersion = parseInt(SC.browser.version, 10);
+			if (SC.browser.isIE) {
+				if (ieVersion === 7) {
+					classNames.push("ie7")
+				} else {
+					if (ieVersion === 8) {
+						classNames.push("ie8")
+					} else {
+						if (ieVersion === 9) {
+							classNames.push("ie9")
+						}
+					}
+				}
+			}
+			if (browser === "safari" || browser === "chrome") {
+				classNames.push("webkit")
+			}
+			if (SC.browser.isMobileSafari) {
+				classNames.push("mobile-safari")
+			}
+			if ("createTouch" in document) {
+				classNames.push("touch")
+			}
+			for (i=0; i<classNames.length; i++)
+			{
+				$("body").addClass(classNames[i])
+			}
+			//el.className = classNames.join(" ")
+		};
+	</script>
+</head>
+
+<body class="skin-blue-light fixed steedos sidebar-mini three-columns loading">
+	<script type="text/javascript">
+		$(function(){
+			$("body").addClass("loading");
+		});
+	</script>
+
+	<section class="loadingOverlay keyboard">
+		<div class="loading-box">
+			<div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+			<div class="loading-text">
+				<a class="btn btn-default btn-reload hide" onclick="window.location.reload(true);">{{_ "loading_reload_button_title"}}</a>
+			</div>
+		</div>
+	</section>
+
+</body>

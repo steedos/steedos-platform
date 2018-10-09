@@ -1,0 +1,323 @@
+<template name="profile">
+	<div class="navigation-bar">
+		<a class="btn btn-default" href="/admin">
+			<i class="ion ion-android-arrow-back"></i>
+		</a>
+		<span class="navigation-title dropdown">
+			{{navigationTitle}}
+		</span>
+		<div class="pull-right"></div>
+	</div>
+	<!-- 
+	<section class="content-header">
+	  <h1>
+		{{_ "Account"}}
+		<small></small>
+	  </h1>
+	  <ol class="breadcrumb">
+			<li><a href="{{urlPrefix}}/"><i class="ion ion-home"></i> {{_ "Steedos"}}</a></li>
+		<li><a href="{{urlPrefix}}/admin">{{_ "Settings"}}</a></li>
+		<li class="active">{{_ "Account"}}</li>
+	  </ol>
+	</section>  -->
+	<section class="content admin-content admin-profile-content">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				{{#if isShowProfileInfo}}
+				<li class="active">
+					<a aria-expanded="true" data-toggle="tab" href="#profile">
+						{{_ "Profile"}}
+					</a>
+				</li>
+				{{/if}}
+				<li class="{{#unless isShowProfileInfo}}active{{/unless}}">
+					<a aria-expanded="false" data-toggle="tab" href="#avatar">
+						{{_ "Avatar"}}
+					</a>
+				</li>
+				<li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#account">
+						{{_ "Account"}}
+					</a>
+				</li>
+				<!-- <li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#emails">
+						{{_ "email"}}
+					</a>
+				</li> -->
+				<!-- <li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#person">
+						{{_ "personalization"}}
+					</a>
+				</li> -->
+				<li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#password">
+						{{_ "Password"}}
+					</a>
+				</li>
+				<li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#accountZoom">
+						{{_ "Accountzoom"}}
+					</a>
+				</li>
+				<li class="">
+					<a aria-expanded="false" data-toggle="tab" href="#backgroundImage">
+						{{_ "Backgroundimage"}}
+					</a>
+				</li>
+				<!-- <li class=""><a href="#secrets" data-toggle="tab" aria-expanded="false">{{_ "Secret"}}</a></li> -->
+			</ul>
+			<div class="tab-content">
+				{{#if isShowProfileInfo}}
+				<div class="tab-pane active" id="profile">
+					<div class="box box-solid">
+						<div class="box-body">
+							{{> quickForm collection="db.users" doc=user id="updateProfile" schema=schema type="update" fields="steedos_id,name,locale,email_notification" buttonContent=btn_save_i18n}}
+						</div>
+					</div>
+				</div>
+				{{/if}}
+				<div class="tab-pane {{#unless isShowProfileInfo}}active{{/unless}}" id="avatar">
+					<div class="box box-solid">
+						<div class="box-body">
+							<div class="form-group">
+								{{#if user.avatar}}
+								<img class="avatar-preview img-circle" height="160" src="{{avatarURL user.avatar}}" width="160"/>
+								{{else}}
+								<i aria-hidden="true" class="ion ion-android-person account-default-avatar">
+								</i>
+								{{/if}}
+								<div class="btn btn-primary btn-sm change-avatar {{#unless user.avatar}}miss-avator{{/unless}}">
+									{{_ 'Change Avatar'}}
+									<input accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" class="avatar-file" type="file"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="account">
+					<div class="box box-solid">
+						<div class="box-body">
+							{{#if usePhone}}
+							<h2 style="margin-top: 0px;">
+								{{_ 'change_phone'}}
+							</h2>
+							<hr style="margin-top: 0px;"/>
+							{{#if user.phone}}
+							<div class="phone-box">
+								<span class="phone-number">
+									{{accountPhoneNumber}}
+								</span>
+								{{#if user.phone.verified}}
+								<span class="phone-status text-success">
+									<i class="ion ion-checkmark-circled">
+									</i>
+									<span class="phone-status-text">
+										{{_ 'account_phone_verified_text'}}
+									</span>
+								</span>
+								{{else}}
+								<span class="phone-status text-danger">
+									<i class="ion ion-alert-circled">
+									</i>
+									<span class="phone-status-text">
+										{{_ 'account_phone_unverified_text'}}
+									</span>
+								</span>
+								{{/if}}
+							</div>
+							{{else}}
+							<div class="phone-box">
+								<span class="phone-status-text">
+									{{_ 'account_phone_unbind_text'}}
+								</span>
+							</div>
+							{{/if}}
+							<button class="btn btn-primary btn-sm btn-change-phone" type="submit">
+								{{_ 'change_phone'}}
+							</button>
+							{{/if}}
+							<!-- 更改用户名 -->
+							<div class="change-username-box">
+								{{#if usePhone}}
+								<h2 style="margin-top: 40px;">
+									{{_ 'Change username'}}
+								</h2>
+								{{else}}
+								<h2 style="margin-top: 0px;">
+									{{_ 'Change username'}}
+								</h2>
+								{{/if}}
+								<hr style="margin-top: 0px;"/>
+								{{#if user.username}}
+								<div class="username-text">
+									{{user.username}}
+								</div>
+								{{else}}
+								<div class="username-text">
+									{{_ 'username_unset_text'}}
+								</div>
+								{{/if}}
+								<button class="btn btn-primary btn-sm change-username" type="submit">
+									{{_ 'Change username'}}
+								</button>
+							</div>
+							<!-- 更改邮箱 -->
+							<h2 style="margin-top: 40px;">
+								{{_ "binding_mailbox"}}
+							</h2>
+							<hr style="margin-top: 0px;"/>
+							<div class="list-group">
+								{{#each emails}}
+								<div class="list-group-item">
+									<span>
+										{{this.address}}
+									</span>
+									{{#if this.verified}}
+										{{#if isPrimary this.address}}
+										<span class="text-muted">
+											{{_ 'email_is_primary'}}
+										</span>
+										{{/if}}
+						  			{{else}}
+										<span class="text-muted">
+											{{_ 'email_unvrified'}}
+										</span>
+									{{/if}}
+									<span class="pull-right">
+										{{#if this.verified}}
+							  				{{#unless isPrimary this.address}}
+											<span>
+												<button class="set-primary-email btn-link" data-email="{{address}}">
+													{{_ 'email_set_primary'}}
+												</button>
+											</span>
+											{{/unless}}
+										{{else}}
+										<span>
+											{{_ 'email_verify_sent'}}
+											<button class="send-verify-email btn-link" data-email="{{address}}">
+												{{_ 'email_send_verify'}}
+											</button>
+										</span>
+										{{/if}}
+										{{#if more_than_one_address}}
+							  				{{#unless isPrimary this.address}}
+											<span>
+												<button class="remove-email btn-link">
+													{{_ 'Delete'}}
+												</button>
+											</span>
+											{{/unless}}
+										{{/if}}
+									</span>
+								</div>
+								{{/each}}
+							</div>
+							<div class="row" style="margin-top: 25px;">
+								<div class="col-lg-6">
+									<div class="input-group">
+										<input class="form-control" id="newEmail" name="newEmail" required="" type="text" />
+										<span class="input-group-btn">
+											<button class="btn btn-primary add-email" type="button">
+												{{_ 'Add'}}
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="password">
+					<div class="box box-solid">
+						<div class="box-body">
+							<!-- 更改密码 -->
+							<div class="form-group">
+								<label class="control-label">
+									{{_ 'Old Password'}}
+								</label>
+								<input class="form-control" id="oldPassword" name="oldPassword" required="" type="password" />
+							</div>
+							<div class="form-group">
+								<label class="control-label">
+									{{_ 'New Password'}}
+								</label>
+								<input class="form-control" id="Password" name="Password" required="" type="password" />
+							</div>
+							<div class="form-group">
+								<label class="control-label">
+									{{_ 'Confirm Password'}}
+								</label>
+								<input class="form-control" id="confirmPassword" name="confirmPassword" required="" type="password" />
+							</div>
+							<button class="btn btn-primary btn-sm change-password" type="submit">
+								{{_ 'Change Password'}}
+							</button>
+							<a class="btn btn-link btn-sm btn-set-password-by-phone">
+								{{_ 'set_password_by_phone'}}
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="accountZoom">
+					<div class="box box-solid">
+						<div class="box-body">
+							<!-- 字体设置 -->
+							<div class="row zoom-setting">
+								{{#each zooms}}
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+									<a class="thumbnail zoom-setting-item-wrap clearfix full-opacity-hover {{isCurrentZoomNameWaitingSave this.name}} {{isCurrentZoomNameActive this.name}}" data-name="{{this.name}}" data-size="{{this.size}}">
+										<div class="zoom-setting-item zoom-{{this.name}}">
+											{{this.title}}
+										</div>
+									</a>
+								</div>
+								{{/each}}
+							</div>
+							<button class="btn btn-primary btn-sm btn-save-zoom hide" type="button">
+								{{_ 'profile_save_zoom_setting'}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="backgroundImage">
+					<div class="box box-solid">
+						<div class="box-body">
+							<!-- 背景设置 -->
+							<div class="row bg-body-setting">
+								{{#each bgBodys}}
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+									<a class="thumbnail {{isCurrentBgUrlWaitingSave url}} {{isCurrentBgUrlActive url}}" data-url="{{url}}">
+										<div class="bg-body" style="background-image:url({{url}})">
+										</div>
+									</a>
+								</div>
+								{{/each}}
+					  			{{#if accountBgBodyValue.avatar}}
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+									<a class="thumbnail {{isCurrentBgUrlWaitingSave(accountBgBodyValue.avatar)}} {{isCurrentBgUrlActive(accountBgBodyValue.avatar)}}" data-url="{{accountBgBodyValue.avatar}}">
+										<div class="bg-body" style="background-image:url({{avatarUrl accountBgBodyValue.avatar}})">
+										</div>
+									</a>
+								</div>
+								{{/if}}
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+									<div class="upload-box">
+										<div class="btn btn-info btn-sm btn-upload-bg-file">
+											{{_ 'profile_upload_image'}}
+											<input accept="image/*" class="avatar-file" type="file" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<button class="btn btn-primary btn-sm btn-save-bg hide" type="button">
+								{{_ 'profile_save_bg_setting'}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</template>

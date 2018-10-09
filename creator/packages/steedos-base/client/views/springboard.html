@@ -1,0 +1,29 @@
+<template name="springboard">
+	<div class="springboard-wrapper">
+		<div class="navigation-bar">
+			<span class="navigation-title">
+				{{> space_switcher}}
+			</span>
+			<div class="pull-right">
+			</div>
+		</div>
+		<div class="springboard">
+			<div class="bd">
+				<div class="weui_grids">
+					{{#each apps}}
+					<a class="weui_grid" data-appid="{{_id}}">
+						<div class="weui_grid_icon">
+							<i class="ion {{icon}}"></i>
+							<span class="label label-danger">{{getBadge _id null}}</span>
+						</div>
+						<p class="weui_grid_label text-overflow">
+							{{_ name}}
+						</p>
+					</a>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+		{{> baseTabbar}}
+	</div>
+</template>

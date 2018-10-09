@@ -1,0 +1,39 @@
+.steedos.fixed{
+	&.sidebar-swapping{
+		.main-sidebar, .content-wrapper, .content-wrapper-shadow{
+			-webkit-transition: none;
+			-moz-transition: none;
+			-o-transition: none;
+			transition: none;
+		}
+		.content-wrapper{
+			&.content-wrapper-shadow{
+				z-index: 999;
+			}
+		}
+	}
+	.content-wrapper{
+		&.content-wrapper-shadow{
+			background: rgba(0, 0, 0, 0.4);
+			z-index: -10;
+			opacity: 0.1;
+		}
+	}
+	@media (max-width:767px) {
+		&.sidebar-open {
+			.content-wrapper{
+				&.content-wrapper-shadow{
+					z-index: 999;
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.content-wrapper-shadow{
+		-webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		-moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		-o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	}
+}
