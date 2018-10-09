@@ -42,6 +42,7 @@ Creator.Objects.users =
 			type: "text"
 			label:'手机'
 			required: true
+			group:'-'
 		
 		wechat:
 			type: "text"
@@ -66,16 +67,16 @@ Creator.Objects.users =
 			system: 'gcj02'
 			required: true
 
+		voice:
+			label:'语音介绍'
+			type:'audio'
+			group:'-'
+
 		self_introduction:
 			type:'textarea'
 			is_wide:true
 			label:"个人简介"
 			group:'-'
-
-		voice:
-			label:'语音介绍'
-			type:'audio'
-			omit: true
 
 		photos:
 			label:'照片'
