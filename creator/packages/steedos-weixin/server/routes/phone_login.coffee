@@ -87,7 +87,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 			ret_data.mobile = login_user.mobile
 		else
 			#如果手机号对应的用户与当前用户不同，则切换到手机号对应的用户
-			if phone_user
+			if phone_user && phone_number
 				if phone_user._id != userId
 					console.log('如果手机号对应的用户与当前用户不同，则切换到手机号对应的用户')
 					openids = login_user.services?.weixin?.openid
@@ -108,7 +108,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 					ret_data.mobile = phone_number
 
 			#如果手机号未曾使用，绑定到当前用户
-			if !phone_user
+			if !phone_user || !phone_number
 				set = {
 					mobile: phone_number
 					mobile2: phone_number
