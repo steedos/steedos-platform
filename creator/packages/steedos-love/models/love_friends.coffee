@@ -175,6 +175,9 @@ Creator.Objects.love_friends =
 		# 可通过this获取到object_name, record_id, space_id, user_id; params为request的body
 		getMyFriend: (params) ->
 			# 获取当前用户与user_b的friend记录，没有就新增
+			if params.user_b == this.user_id
+				# 自己不能是自己的friend
+				return {}
 			collection = Creator.getCollection(this.object_name)
 			filters = { owner: this.user_id, space: this.space_id, 'user_b': params.user_b, 'mini_app_id': params.mini_app_id}
 			if params.fields
