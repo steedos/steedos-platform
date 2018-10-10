@@ -9,6 +9,11 @@ userDataTransfer = (appId, from_user, to_user)->
 		vip_groups: ['owner', 'created_by', 'modified_by']
 	}
 
+	#单独处理vip_groups的users字段
+	vip_groups_coll = Creator.getCollection("vip_groups");
+	vip_groups_coll.update({users: from_user}, {$addToSet: {users: to_user}})
+	vip_groups_coll.update({users: from_user}, {$pull: {users: from_user}})
+
 	_.forEach dataTransferObjects, (object_user_keys, object)->
 		object_coll = Creator.getCollection(object);
 		object_user_keys.forEach (key)->
@@ -39,13 +44,11 @@ userDataTransfer = (appId, from_user, to_user)->
 			love_friends_coll.remove({_id: old_f._id})
 		love_friends_coll.update({_id: f._id}, {$set: {owner: to_user}})
 
+	#清理异常的love_friends记录：owner == user_b
+	love_friends_coll.remove({mini_app_id: appId, owner: to_user, user_b: to_user})
 
-
-
-	#单独处理vip_groups的users字段
-	vip_groups_coll = Creator.getCollection("vip_groups");
-	vip_groups_coll.update({users: from_user}, {$addToSet: {users: to_user}})
-	vip_groups_coll.update({users: from_user}, {$pull: {users: from_user}})
+	#清理旧数据的love_friends
+	love_friends_coll.remove({mini_app_id: appId, user_b: from_user})
 
 
 JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
