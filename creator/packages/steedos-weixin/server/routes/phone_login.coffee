@@ -96,6 +96,7 @@ JsonRoutes.add 'post', '/api/steedos/weixin/phone_login', (req, res, next) ->
 							return t.appid is appId
 						)
 						Creator.getCollection("users").update(_id: phone_user._id, {$push: {'services.weixin.openid': openid}})
+						Creator.getCollection("users").update({_id: userId}, {$pull: {"services.weixin.openid": {_id: openid._id, appid: openid.appid}}})
 						ret_data.user_id = phone_user._id
 						ret_data.name = phone_user.name
 						ret_data.mobile = phone_user.mobile
