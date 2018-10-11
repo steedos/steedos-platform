@@ -16,10 +16,6 @@ Creator.Objects.chat_messages = {
 			type: 'select'
 			options: 'text,image,video,href,system'
 
-		display_time:
-			lable: '显示消息时间'
-			type: 'boolean'
-
 	list_views:
 		all:
 			label: "所有"
