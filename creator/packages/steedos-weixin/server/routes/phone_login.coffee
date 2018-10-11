@@ -3,7 +3,7 @@ userDataTransfer = (appId, from_user, to_user)->
 
 	#数据结构： {待转移的数据对象: [user字段数组]}
 	dataTransferObjects = {
-		vip_customers: ['from', 'owner', 'created_by', 'modified_by'],
+#		vip_customers: ['from', 'owner', 'created_by', 'modified_by'],
 		love_friends: ['created_by', 'modified_by'],
 		vip_invites: ['from', 'owner', 'created_by', 'modified_by'],
 		vip_groups: ['owner', 'created_by', 'modified_by']
@@ -17,7 +17,7 @@ userDataTransfer = (appId, from_user, to_user)->
 	_.forEach dataTransferObjects, (object_user_keys, object)->
 		object_coll = Creator.getCollection(object);
 		object_user_keys.forEach (key)->
-			query = {}
+			query = {mini_app_id: appId}
 			query[key] = from_user
 			set = {$set: {}}
 			set.$set[key] = to_user
