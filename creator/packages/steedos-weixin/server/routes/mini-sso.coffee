@@ -167,7 +167,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		ret_data.qrcode = user?.qrcode
 
 		ret_data.love = Meteor.settings.love #暂时保留这个属性配置，等下次小程序正式审核通过上线后，这句可以删掉
-		ret_data.mini_app = Meteor.settings.mini_apps[appId]
+		ret_data.mini_app = Meteor.settings.mini_apps?[appId]
 
 
 		collection_customers = Creator.getCollection("vip_customers")
