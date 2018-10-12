@@ -166,7 +166,7 @@ JsonRoutes.add 'post', '/mini/vip/sso', (req, res, next) ->
 		ret_data.avatarUrl = user.avatarUrl
 		ret_data.qrcode = user?.qrcode
 
-		ret_data.love = Meteor.settings.love
+		ret_data.mini_app = Meteor.settings.mini_apps[appId]
 
 
 		collection_customers = Creator.getCollection("vip_customers")
