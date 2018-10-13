@@ -32,12 +32,13 @@ JsonRoutes.add 'post', '/api/account/binding_use_phone', (req, res, next) ->
 
 			if phone_user
 				if phone_user._id != user._id
-					openids = login_user.services?.weixin?.openid
+					openids = user.services?.weixin?.openid
 					if openids
 						openid = _.find(openids, (t)->
 							return t.appid is appId
 						)
 						Creator.getCollection("users").update(_id: phone_user._id, {$push: {'services.weixin.openid': openid}})
+						Creator.getCollection("users").update({_id: user._id}, {$pull: {"services.weixin.openid": {_id: openid._id, appid: openid.appid}}})
 			else
 				WXMini.updateUser(user._id, {
 					$set: {mobile: data.purePhoneNumber}
