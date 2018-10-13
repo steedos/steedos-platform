@@ -194,7 +194,7 @@ Creator.Objects.objects =
 				if doc.app_unique_id && doc.app_version
 					return
 
-				object_collections = Creator.getCollection(doc.name)
+				object_collections = Creator.getCollection(doc.name, doc.space)
 
 				documents = object_collections.find({},{fields: {_id: 1}})
 

@@ -8,7 +8,7 @@ Meteor.startup ->
 		return data;
 
 	getObject = (spaceId, userId, object_name)->
-		data = _.clone(Creator.Objects[object_name])
+		data = _.clone(Creator.Objects[Creator.getObjectName(Creator.getObject(object_name, spaceId))])
 		if !data
 			throw new Meteor.Error(500, "无效的id #{object_name}")
 

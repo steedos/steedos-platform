@@ -15,7 +15,7 @@ Creator._TEMPLATE = {
 Creator.getObjectName = (object) ->
 	if object.space
 		return "c_#{object.space}_#{object.name}"
-	retrurn object.name
+	return object.name
 
 Creator.getObject = (object_name, space_id)->
 	if _.isArray(object_name)
