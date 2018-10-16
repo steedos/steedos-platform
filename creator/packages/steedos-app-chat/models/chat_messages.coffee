@@ -19,7 +19,7 @@ Creator.Objects.chat_messages =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["related_to", "name", "type", "display_time"]
+			columns: ["related_to", "name", "type"]
 			filter_scope: "space"
 
 	triggers:
