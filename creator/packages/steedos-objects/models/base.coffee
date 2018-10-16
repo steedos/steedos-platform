@@ -95,6 +95,11 @@ Creator.baseObject =
 			type: "text"
 			omit:true
 			hidden: true
+		# chat_messages的related_to表统一记录消息数量
+		message_count:
+			label:'评论数'
+			type:'number'
+			omit:true
 	permission_set:
 		none:
 			allowCreate: false

@@ -1,4 +1,4 @@
-Creator.Objects.chat_messages = {
+Creator.Objects.chat_messages = 
 	name: 'chat_messages'
 	label: '消息'
 	fields:
@@ -22,6 +22,18 @@ Creator.Objects.chat_messages = {
 			columns: ["related_to", "name", "type", "display_time"]
 			filter_scope: "space"
 
+	triggers:
+		"after.insert.server.chatMessages":
+			on: "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				Creator.getCollection("chat_subscriptions").upsert({space: doc.space, 'related_to.o': doc.related_to.o, 'related_to.ids': doc.related_to.ids}, {$inc: {unread: 1}, $set: {last_message_text: doc.name, last_message_date: new Date(), modified: new Date(), modified_by: userId}}, {multi: true})
+				# 更新chat_messages的related_to表，统一记录消息数量
+				object_name = doc.related_to?.o
+				_id = doc.related_to?.ids[0]
+				if object_name and _id
+					Creator.getCollection(object_name).direct.update({_id: _id}, {$inc: {message_count: 1}})
+
 	permission_set:
 		user:
 			allowCreate: true
@@ -44,11 +56,3 @@ Creator.Objects.chat_messages = {
 			allowRead: true
 			modifyAllRecords: true
 			viewAllRecords: true
-
-	triggers:
-		"after.insert.server.chatMessages":
-			on: "server"
-			when: "after.insert"
-			todo: (userId, doc)->
-				Creator.getCollection("chat_subscriptions").upsert({space: doc.space, 'related_to.o': doc.related_to.o, 'related_to.ids': doc.related_to.ids}, {$inc: {unread: 1}, $set: {last_message_text: doc.name, last_message_date: new Date(), modified: new Date(), modified_by: userId}}, {multi: true})
-}

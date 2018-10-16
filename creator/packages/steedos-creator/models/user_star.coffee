@@ -8,15 +8,14 @@ Creator.Objects.user_star =
 			type: "lookup"
 			reference_to: "users"
 			index:true
-		star_space:
-			label: "店铺"
+		# 暂时有space及post两个表中有用到该功能
+		related_to:
 			type: "lookup"
-			reference_to: "spaces"
-		star_post:
-			label: "文章"
-			type: "lookup"
-			reference_to: "post"
-			index:true
+			label:"记录"
+			omit: true
+			is_name: true
+			reference_to: ()->
+				return _.keys(Creator.Objects)
 	list_views:
 		all:
 			label:"所有"
@@ -27,31 +26,19 @@ Creator.Objects.user_star =
 			on: "server"
 			when: "after.insert"
 			todo: (userId, doc)->
-				if doc.star_space
-					object_name = "vip_store"
-				else
-					object_name = "post"
-				_id = doc.star_space || doc.star_post
-				obj = Creator.getCollection(object_name).findOne({_id: _id})
-				if obj._id
-					star_count = obj.star_count || 0
-					star_count++
-					Creator.getCollection(object_name).direct.update({_id: _id}, {$set: {star_count: star_count}})
+				object_name = doc.related_to?.o
+				_id = doc.related_to?.ids[0]
+				if object_name and _id
+					Creator.getCollection(object_name).direct.update({_id: _id}, {$inc: {star_count: 1}})
 
 		"after.remove.server.user_star":
 			on: "server"
 			when: "after.remove"
 			todo: (userId, doc)->
-				if doc.star_space
-					object_name = "vip_store"
-				else
-					object_name = "post"
-				_id = doc.star_space || doc.star_post
-				obj = Creator.getCollection(object_name).findOne({_id: _id})
-				if obj._id
-					star_count = obj.star_count || 0
-					star_count--
-					Creator.getCollection(object_name).direct.update({_id: _id}, {$set: {star_count: star_count}})
+				object_name = doc.related_to?.o
+				_id = doc.related_to?.ids[0]
+				if object_name and _id
+					Creator.getCollection(object_name).direct.update({_id: _id}, {$inc: {star_count: -1}})
 
 	permission_set:
 		user:

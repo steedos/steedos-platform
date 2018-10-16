@@ -18,10 +18,6 @@ Creator.Objects.post =
 			is_wide:true
 			type:'markdown'
 			rows: 8
-		comment_count:
-			label:'评论数'
-			type:'number'
-			omit:true
 		star_count:
 			label:'点赞数'
 			type:'number'

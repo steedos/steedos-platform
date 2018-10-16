@@ -5,19 +5,31 @@ Creator.Objects.love_post =
 	enable_files:true
 	fields:
 		name:
-			label:'内容'
-			type:'textarea'
+			label:'标题'
+			type:'text'
 			required:true
 			is_wide:true
+		description:
+			label:'正文'
+			is_wide:true
+			type:'markdown'
+			rows: 8
 		images:
 			label: '图片'
 			type: 'image'
-			multiple : true 
-		# featured:
-		# 	label:'推荐'
-		# 	type:'boolean'
-		# 	index:true
-		# 	group:'-'
+			multiple : true
+		star_count:
+			label:'点赞数'
+			type:'number'
+			omit:true
+		read_count:
+			label:'阅读数'
+			type:'number'
+			omit:true
+		forward_count:
+			label:'转发数'
+			type:'number'
+			omit:true
 	list_views:
 		all:
 			label: "所有"
