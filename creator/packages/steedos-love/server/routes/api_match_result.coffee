@@ -75,7 +75,7 @@ JsonRoutes.add 'post', '/api/mini/vip/match/result', (req, res, next) ->
 				space: spaceId
 			})
 
-			data.user_b = Meteor.users.findOne(userB, { fields: { name: 1, profile: 1 } })
+			data.user_b = Meteor.users.findOne(userB, { fields: { name: 1, profile: 1, avatarUrl: 1 } })
 
 		JsonRoutes.sendResult res, {
 			code: 200,
