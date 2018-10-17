@@ -18,9 +18,11 @@ JsonRoutes.add 'put', '/mini/vip/user', (req, res, next) ->
 #			updateDoc.mobile = data.phoneNumber
 
 		if data.sex
+			updateDoc["sex"] = data.sex
 			updateDoc["profile.sex"] = data.sex
 
 		if data.birthdate
+			updateDoc["birthday"] = data.birthdate
 			updateDoc["profile.birthdate"] = data.birthdate
 		
 		if data.avatar
