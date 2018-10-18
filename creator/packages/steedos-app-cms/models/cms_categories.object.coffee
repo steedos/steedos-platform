@@ -2,6 +2,7 @@ Creator.Objects.cms_categories =
 	name: "cms_categories"
 	icon: "cms"
 	label: "文章分类"
+	enable_tree: true
 	fields:
 		name: 
 			type: "text"
@@ -16,6 +17,11 @@ Creator.Objects.cms_categories =
 			type: "boolean"
 		menu:
 			type: "boolean"
+		parent:
+			label: "文章分类"
+			type: "lookup"
+			reference_to: "cms_categories"
+			sortable: true
 
 	list_views:
 		all:

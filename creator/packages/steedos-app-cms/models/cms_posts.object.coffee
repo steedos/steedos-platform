@@ -15,8 +15,13 @@ Creator.Objects.cms_posts =
 			type: "html"
 			is_wide: true
 		site:
-			type: "master_detail"
+			label:"站点"
+			type: "lookup"
 			reference_to: "cms_sites"
+		categorie:
+			label:"文章分类"
+			type: "lookup"
+			reference_to: "cms_categories"
 		author: 
 			type: "lookup"
 			reference_to: "users"
