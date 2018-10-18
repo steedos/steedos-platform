@@ -1,0 +1,8 @@
+<template name="afSelectOrg">
+	{{#if disabled}}
+		<div class='form-control' readonly disabled>
+			{{val this.value}}
+		</div>
+	{{/if}}
+  <input type='text' value="{{val this.value}}" readonly {{this.atts}} style="{{#if disabled}}display: none{{/if}}">
+</template>

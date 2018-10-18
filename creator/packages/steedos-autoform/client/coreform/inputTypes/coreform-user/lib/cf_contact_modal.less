@@ -1,0 +1,351 @@
+
+.steedos .navigation-bar .navigation-title {
+    height: 40px;
+    overflow: hidden;
+    text-align: center;
+    position: absolute;
+    left: 70px;
+    right: 70px;
+    line-height: 34px;
+    font-size: 18px;
+    font-weight: bold;
+    a {
+        color: black;
+    }
+}
+
+.cf_contact_modal{
+    z-index:6666;
+    .box {
+        border-radius: 0px;
+    }
+
+    .cf-organization-list,.cf-spaceusers-list{
+        .box {
+          box-shadow: none;
+          border: none !important;
+        }
+    }
+
+    //.cf-spaceusers-list{
+    //    border-left: 1px solid #d2d6de; 边线会出现半截的情况
+    //}
+
+    .navigation-bar{
+        margin-top: -30px;
+        height: 31px !important;
+        .dropdown-toggle{
+            margin-top: -10px;
+        }
+    }
+
+    .breadcrumb{
+        float: right;
+        background: transparent;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        padding: 7px 5px;
+        top: 15px;
+        right: 10px;
+        border-radius: 2px;
+    }
+
+    .breadcrumb >li+li:before{
+        content: '>\00a0'
+    }
+
+    .breadcrumb >li>a{
+        font-size: 12px;
+        color: #444;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .box-header{
+        border-bottom: 0;
+        padding: 0;
+        padding-left: 10px;
+        padding-bottom: 0px;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    .organizations_tree{
+        color: #444;
+        font-size: 14px;
+        font-weight:400;
+    }
+
+    .modal-header{
+        border-bottom: 1px solid #d2d6de;
+        .navigation-bar{
+            background-color: #fff;
+            padding: 0px;
+            // height: 42px;
+            border-bottom: 0px;
+            margin-top: -15px;
+            .cf-contact-modal-menu{
+                position: fixed;
+                top: inherit;
+                width: 100%;
+                border: 0px;
+                margin-top: -10px;
+                padding-top: 1px;
+            }
+
+            .box-body{
+                overflow-y: auto;
+            }
+
+            .box-solid{
+                border: 0px;
+            }
+        }
+    }
+
+    .contacts-modal-body{
+        padding-bottom: 0px;
+        //overflow-y:auto;
+        padding-top: 0px;
+        &>.row{
+            height: 100%;
+        }
+    }
+    
+
+    .cf_space_user_list {
+
+        .input-group{
+            border-bottom: solid 1px #d2d6de;
+        }
+
+        .input-group-btn{
+            background: #ffffff;
+        }
+
+        #cf-contact-list-search_button{
+            background: #ffffff;
+            border-top: 0px;
+            border-bottom: 0px;
+            border: 0px;
+        }
+
+        .cf_space_user_list_table{
+
+            th{
+                padding-right: 0;
+            }
+
+            .user-name{
+                img{
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 5px;
+                }
+
+                font{
+                    color: #444;
+                    font-size: 14px;
+                    font-weight:400;
+                }
+            }
+
+            .for-input{
+                width: 100%;
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    .cf-organization-list, .cf-spaceusers-list{
+        height: 100%;
+        padding: 0px;
+        overflow-y: auto;
+        overflow-x: auto;
+        .box-body{
+          padding: 0px;
+        }
+    }
+
+    #selectTagModal-content {
+        overflow-y: auto;
+        max-height: 500px; 
+    }
+
+    .selectTag-users > tbody > tr > td{
+        padding: 4px 6px 4px 6px;
+    }
+
+    .modal-footer{
+        text-align: left;
+        border-top:1px solid #d2d6de;
+    }
+
+    .selectTagButton{
+        text-align: right;
+        padding-top: 5px;
+    }
+
+    .valueLabel {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 0px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        width: 100%;
+        min-height: 32px;
+        line-height: 22px;
+        cursor: text;
+        list-style:none;
+        overflow-x: auto;
+    }
+
+    .valueLabel:after{
+        clear: both;
+        content: '';
+        display:block;
+    }
+
+    .valueLabel li {
+        cursor: move;
+        margin: 4px 5px 4px 0;
+        //padding: 2px 4px;
+        background-color: #1b9dec;
+        text-align:center;
+        color:#fff;
+        font-size:14px;
+        display: inline-block;
+        span{
+            display: inline-block;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+        a:hover{
+            background-color: rgba(0, 0, 0, 0.05);
+            //border-left: 1px solid #ffffff;
+        }
+    }
+
+    .valueLabel .value-label-remove{
+        background-color: #1b9dec;
+        //border-left: 1px solid #5F9EDF;
+        display: inline-block;
+        color: #fff;
+        cursor: pointer;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .selectTag-users .checkbox, .selectTag-users .radio{
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    .selectTag-users .checkbox > label, .selectTag-users .radio > label{
+        padding-left: 0;
+    }
+
+    .selectTag-users .fa{
+        margin-right: 5px;
+    }
+
+    .selectTag-users a{
+        border-radius: 0;
+        border-top: 0;
+        border-left: 3px solid transparent;
+        color: #444;
+        font-size: 14px;
+    }
+
+
+    .selectTag-users img{
+        width: 24px;
+        height: 24px;
+        margin-right: 5px;
+    }
+
+    .user label, .org label{
+        font-weight: normal;
+    }
+
+    .selectUser.form-control[readonly], .selectOrg.form-control[readonly]{
+        background-color: transparent;
+        opacity: 1;
+    }
+
+    .selectUser.form-control[disabled], .selectOrg.form-control[disabled]{
+        background-color: #eee;
+        opacity: 1;
+    }
+
+    .cf-contact-list-search-key{
+        border-top: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        border-bottom: 0px;
+    }
+
+
+    //.dropdown-menu.dropdown-space{
+    //    overflow-y: scroll;
+    //    overflow-x: hidden;
+    //    margin-top: 5px;
+    //    max-height: 300px;
+    //}
+	//
+    //.space-switcher{
+    //    text-align: center;
+    //    position: absolute;
+    //    left: 70px;
+    //    right: 70px;
+    //}
+	//
+    //.dropdown-space{
+    //    text-align: center;
+    //    left: 70px;
+    //    right: 70px;
+    //}
+}
+
+.cf-users-organization-modal{
+    z-index: 7777;
+    .cf-users-organization-modal-body{
+        overflow-y: auto;
+        .box-body{
+            overflow-x: auto;
+        }
+    }
+}
+
+.steedos {
+    @media(max-width: 767px) {
+        #cf_contact_modal {
+            .navigation-bar .navigation-title > a {
+                color: black !important;
+            }
+        }
+    }
+}
+
+.steedos {
+    .selectUser-box {
+        min-height: 34px;
+        height: auto;
+        max-height: 100px;
+        color: black;
+        overflow: auto;
+        word-break: break-all;
+        .selectUser-placeholder {
+            color: #999;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<template name="cf_users_organization_modal">
+  <div class="steedos modal fade cf-users-organization-modal" id="cf_users_organization_modal" tabindex="-1" role="dialog" aria-labelledby="cf-users-organization-title" style='position: fixed;' data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content ins-modal">
+        <div class="modal-header">
+          <button type="button" class="close" id="cf-users-organization-modal-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="cf-users-organization-title">{{_ "coreform_select_org_title"}}</h4>
+         
+        </div>
+        <div class="modal-body cf-users-organization-modal-body modal-zoom">
+          {{> cf_organization_list}}
+        </div>
+        <div class="modal-footer">
+          <div class="pull-right">
+            <button type="button" class="btn btn-primary" id='cf-users-organization-modal-confirm' title='{{_ "OK"}}' style="width:100%">{{_ "OK"}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,25 @@
+<template name="cf_space_user_list">
+	<div class="cf_space_user_list" id="cf_space_user_list">
+		
+		<div class="box box-default box-solid" style="min-height:75%">
+			<div class="box-header" style="padding-left: 0px">
+
+				<div class="input-group">
+					<input type="text" name="cf-contact-list-search-key" id="cf-contact-list-search-key" class="form-control cf-contact-list-search-key" placeholder='{{_ "Search"}}...'>
+					<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="cf-contact-list-search_button">
+						<i class="fa fa-search"></i>
+					</button>
+				</span>
+				</div>
+            </div>
+			<div class="box-body">
+				{{> tabular table=TabularTables.cf_tabular_space_user selector=(selector userOptions filters) class="table table-striped table-condensed cf_space_user_list_table"}}
+			</div>
+			<!-- /.box-body -->
+			<!-- Loading (remove the following to stop the loading)-->
+
+			<!-- end loading -->
+		</div>
+    </div>
+</template>

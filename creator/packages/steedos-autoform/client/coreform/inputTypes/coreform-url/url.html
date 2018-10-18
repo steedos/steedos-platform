@@ -1,0 +1,10 @@
+<template name="steedosInputUrl">
+    {{#if isReadOnly}}
+        <div {{attsPlusFormControlClass}}>
+            <a href="{{this.value}}" target="_blank">{{this.value}}</a>
+        </div>
+        <input type="url" value="{{this.value}}" {{this.atts}} {{attsPlusFormControlClass}} style="display: none"/>
+    {{else}}
+        <input type="url" value="{{this.value}}" {{this.atts}} {{attsPlusFormControlClass}}/>
+    {{/if}}
+</template>
