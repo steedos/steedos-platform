@@ -4,11 +4,28 @@ AutoForm.addInputType("selectTree", {
 		return val;
 	},
 	valueOut: function () {
-		return this.eq(0).val();
+		debugger;
+		var reValue;
+		var input = this.eq(0);
+		if (this.attr("multiple")) {
+			reValue = input.val().split(",");
+		}
+		else{
+			reValue = input.val();
+		}
+		return reValue;
+	},
+	contextAdjust: function (context) {
+		// if (context.atts.multiple){
+		// 	context.atts.class = "af-select-tree-box multiple-tree";
+		// 	context.atts.multiple = true;
+		// }
+		return context;
 	}
 });
 
 Template.afSelectTree.onRendered(function () {
+	debugger;
 	if(!$.fn.dxDropDownBox){
 		console.error("未找到dxDropDownBox插件");
 		return;
@@ -24,7 +41,10 @@ Template.afSelectTree.onRendered(function () {
 	};
 	var spaceId = Steedos.spaceId();
 	var userId = Meteor.userId();
+	var isMultiple = this.data.atts.multiple;
 	var initValue = this.data.value;
+	var selectionMode = isMultiple ? "multiple" : "single";
+	var showCheckBoxesMode = isMultiple ? "normal" : "none";
 	this.$(".af-select-tree-box").dxDropDownBox({
 		value: initValue,
 		valueExpr: "_id",
@@ -65,19 +85,25 @@ Template.afSelectTree.onRendered(function () {
 				dataStructure: "plain",
 				keyExpr: "_id",
 				parentIdExpr: "parent",
-				selectionMode: "single",
+				selectionMode: selectionMode,
 				displayExpr: "name",
 				selectByClick: true,
 				onContentReady: function (args) {
 					syncTreeViewSelection(args.component, value);
 				},
 				selectNodesRecursive: false,
+				showCheckBoxesMode: showCheckBoxesMode,
 				onItemSelectionChanged: function (args) {
 					var selectedValue = args.component.getSelectedNodesKeys();
 					e.component.option("value", selectedValue);
 					if (selectedValue.length) {
-						self.data.value = selectedValue[0];
-						self.$(".input-af-select-tree").val(selectedValue[0]);
+						if (isMultiple){
+							selectedValue = selectedValue.join(",");
+						}
+						else{
+							selectedValue = selectedValue[0];
+						}
+						self.$(".input-af-select-tree").val(selectedValue);
 					}
 				}
 			});

@@ -22,6 +22,11 @@ Creator.Objects.cms_posts =
 			label:"文章分类"
 			type: "lookup"
 			reference_to: "cms_categories"
+		categories:
+			label:"多选文章分类"
+			type: "lookup"
+			reference_to: "cms_categories"
+			multiple: true
 		author: 
 			type: "lookup"
 			reference_to: "users"
