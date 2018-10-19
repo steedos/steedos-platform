@@ -29,7 +29,7 @@ Template.afSelectTree.onRendered(function () {
 		value: initValue,
 		valueExpr: "_id",
 		displayExpr: "name",
-		placeholder: "Select a value...",
+		// placeholder: "Select a value...",
 		showClearButton: true,
 		dataSource: {
 			store: {
