@@ -9,6 +9,10 @@ AutoForm.addInputType("selectTree", {
 });
 
 Template.afSelectTree.onRendered(function () {
+	if(!$.fn.dxDropDownBox){
+		console.error("未找到dxDropDownBox插件");
+		return;
+	}
 	var self = this;
 	var treeView, dataGrid;
 	var syncTreeViewSelection = function (treeView, value) {
@@ -21,8 +25,7 @@ Template.afSelectTree.onRendered(function () {
 	var spaceId = Steedos.spaceId();
 	var userId = Meteor.userId();
 	var initValue = this.data.value;
-	debugger;
-	$("#treeBox").dxDropDownBox({
+	this.$(".af-select-tree-box").dxDropDownBox({
 		value: initValue,
 		valueExpr: "_id",
 		displayExpr: "name",
