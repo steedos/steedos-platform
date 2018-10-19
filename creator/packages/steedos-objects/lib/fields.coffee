@@ -134,9 +134,6 @@ Creator.getObjectSchema = (obj) ->
 				else if field.reference_to == "organizations"
 					fs.autoform.type = "selectorg"
 				else
-					fs.autoform.type = "steedosLookups"
-					fs.autoform.optionsMethod = field.optionsMethod || "creator.object_options"
-
 					if typeof(field.reference_to) == "function"
 						_reference_to = field.reference_to()
 					else
@@ -159,34 +156,35 @@ Creator.getObjectSchema = (obj) ->
 
 					else
 						_reference_to = [_reference_to]
+					
+					_object = Creator.Objects[_reference_to[0]]
+					if _object and _object.enable_tree
+						fs.autoform.type = "selectTree"
+					else
+						fs.autoform.type = "steedosLookups"
+						fs.autoform.optionsMethod = field.optionsMethod || "creator.object_options"
 
-					if Meteor.isClient
+						if Meteor.isClient
+							fs.autoform.optionsMethodParams = ()->
+								return {space: Session.get("spaceId")}
+							fs.autoform.references = []
+							_reference_to.forEach (_reference)->
+								_object = Creator.Objects[_reference]
+								if _object
+									fs.autoform.references.push {
+										object: _reference
+										label: _object?.label
+										icon: _object?.icon
+										link: ()->
+											return "/app/#{Session.get('app_id')}/#{_reference}/view/"
+									}
+								else
+									fs.autoform.references.push {
+										object: _reference
+										link: ()->
+											return "/app/#{Session.get('app_id')}/#{_reference}/view/"
+									}
 
-						fs.autoform.optionsMethodParams = ()->
-							return {space: Session.get("spaceId")}
-
-						fs.autoform.references = []
-
-						_reference_to.forEach (_reference)->
-							_object = Creator.Objects[_reference]
-
-							if _object
-								fs.autoform.references.push {
-									object: _reference
-									label: _object?.label
-									icon: _object?.icon
-									link: ()->
-										return "/app/#{Session.get('app_id')}/#{_reference}/view/"
-								}
-							else
-
-								fs.autoform.references.push {
-									object: _reference
-									link: ()->
-										return "/app/#{Session.get('app_id')}/#{_reference}/view/"
-								}
-
-#								throw new Meteor.Error("Creator.getObjectSchema", "#{obj.name}.#{field_name} reference_to #{_reference} Can not find.")
 			else
 				fs.autoform.type = "steedosLookups"
 				fs.autoform.defaultIcon = field.defaultIcon

@@ -3,7 +3,7 @@
  */
 Package.describe({
 	name: 'steedos:autoform',
-	version: '0.0.14',
+	version: '0.0.15',
 	summary: 'Steedos libraries',
 	git: 'https://github.com/steedos/apps/tree/master/packages/steedos-autoform',
 	documentation: null
@@ -76,6 +76,10 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/coreform/inputTypes/coreform-user/select-users.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-user/select-users.js', 'client');
+
+	api.addFiles('client/coreform/inputTypes/coreform-tree/select-tree.less', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-tree/select-tree.html', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-tree/select-tree.js', 'client');
 
 	api.addFiles('client/coreform/inputTypes/coreform-email/email.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-email/email.js', 'client');

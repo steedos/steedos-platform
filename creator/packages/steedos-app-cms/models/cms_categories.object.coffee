@@ -18,7 +18,7 @@ Creator.Objects.cms_categories =
 		menu:
 			type: "boolean"
 		parent:
-			label: "文章分类"
+			label: "上级分类"
 			type: "lookup"
 			reference_to: "cms_categories"
 			sortable: true

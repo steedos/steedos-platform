@@ -137,7 +137,7 @@ steedos:app-cms@0.0.1
 steedos:app-workflow@0.0.1
 steedos:application-package@0.0.1
 steedos:application-template@0.0.1
-steedos:autoform@0.0.14
+steedos:autoform@0.0.15
 steedos:autoform-bs-datetimepicker@1.0.6
 steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-file@0.4.2_3
