@@ -36,7 +36,7 @@ Template.afSelectTree.onRendered(function () {
 			return;
 		}
 		if (!isMultiple){
-			value = [value]
+			value = [value];
 		}
 		value.forEach(function (key) {
 			treeView.selectItem(key);
@@ -87,7 +87,11 @@ Template.afSelectTree.onRendered(function () {
 				selectByClick: true,
 				onContentReady: function (args) {
 					debugger;
-					syncTreeViewSelection(args.component, value);
+					if (!args.component.isReady()){
+						// 把dxDropDownBox控件中的值赋值到dxTreeView控件中
+						// 如果isReady为true，说明不是第一次加载tree，而是在tree中展开节点，这时不需要，也不可以再把dxDropDownBox中的老值同步到dxTreeView控件中
+						syncTreeViewSelection(args.component, value);
+					}
 				},
 				selectNodesRecursive: false,
 				showCheckBoxesMode: showCheckBoxesMode,
