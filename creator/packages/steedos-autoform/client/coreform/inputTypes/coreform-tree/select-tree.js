@@ -31,7 +31,6 @@ Template.afSelectTree.onRendered(function () {
 	var showCheckBoxesMode = isMultiple ? "normal" : "none";
 
 	var syncTreeViewSelection = function (treeView, value) {
-		debugger;
 		if (!value) {
 			treeView.unselectAll();
 			return;
@@ -87,29 +86,34 @@ Template.afSelectTree.onRendered(function () {
 				displayExpr: "name",
 				selectByClick: true,
 				onContentReady: function (args) {
+					debugger;
 					syncTreeViewSelection(args.component, value);
 				},
 				selectNodesRecursive: false,
 				showCheckBoxesMode: showCheckBoxesMode,
 				onItemSelectionChanged: function (args) {
+					debugger;
 					var selectedValue = args.component.getSelectedNodesKeys();
 					e.component.option("value", selectedValue);
-					if (selectedValue.length) {
-						if (isMultiple){
-							selectedValue = selectedValue.join(",");
-						}
-						else{
-							selectedValue = selectedValue[0];
-						}
-						self.$(".input-af-select-tree").val(selectedValue);
-					}
 				}
 			});
 			treeView = $treeView.dxTreeView("instance");
 			e.component.on("valueChanged", function (args) {
+				debugger;
 				syncTreeViewSelection(treeView, args.value);
 			});
 			return $treeView;
+		},
+		onValueChanged: function (e) {
+			debugger;
+			var selectedValue = e.value;
+			if (selectedValue && selectedValue.length) {
+				selectedValue = selectedValue.join(",");
+				self.$(".input-af-select-tree").val(selectedValue);
+			}
+			else{
+				self.$(".input-af-select-tree").val("");
+			}
 		}
 	});
 });
