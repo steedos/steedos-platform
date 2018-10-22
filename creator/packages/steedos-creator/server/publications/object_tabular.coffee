@@ -7,13 +7,14 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields, space
 	check(fields, Match.Optional(Object));
 
 	_object_name = tableName.replace("creator_","")
+	_object = Creator.getObject(_object_name, spaceId)
 
 	if spaceId
-		tableName = 'creator_' + "c_#{spaceId}_#{_object_name}"
+		_object_name = Creator.getObjectName(_object)
 
 	_table = Tabular.tablesByName[tableName];
 
-	_fields = Creator.objectsByName["c_#{spaceId}_#{_object_name}"]?.fields
+	_fields = Creator.objectsByName[_object_name]?.fields
 
 	if !_fields || !_table
 		return this.ready()
@@ -49,7 +50,6 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields, space
 			reference_field = _fields[key]
 
 			if reference_field && (_.isFunction(reference_field.reference_to) || !_.isEmpty(reference_field.reference_to))  # and Creator.Collections[reference_field.reference_to]
-
 				data.children.push {
 					find: (parent) ->
 						try
