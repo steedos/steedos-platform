@@ -133,7 +133,6 @@ steedos:accounts-t9n@1.14.2_8
 steedos:adminlte@2.3.12_3
 steedos:app-admin@0.0.1
 steedos:app-chat@0.0.1
-steedos:app-cms@0.0.1
 steedos:app-workflow@0.0.1
 steedos:application-package@0.0.1
 steedos:application-template@0.0.1
