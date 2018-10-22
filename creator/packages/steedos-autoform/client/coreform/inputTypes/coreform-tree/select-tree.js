@@ -86,30 +86,32 @@ Template.afSelectTree.onRendered(function () {
 				displayExpr: "name",
 				selectByClick: true,
 				onContentReady: function (args) {
-					debugger;
 					if (!args.component.isReady()){
 						// 把dxDropDownBox控件中的值赋值到dxTreeView控件中
 						// 如果isReady为true，说明不是第一次加载tree，而是在tree中展开节点，这时不需要，也不可以再把dxDropDownBox中的老值同步到dxTreeView控件中
 						syncTreeViewSelection(args.component, value);
+						// 找到并默认展开第一个节点
+						var nodes = args.component.getNodes();
+						var rootNode = nodes[0];
+						if (rootNode && rootNode.key){
+							args.component.expandItem(rootNode.key);
+						}
 					}
 				},
 				selectNodesRecursive: false,
 				showCheckBoxesMode: showCheckBoxesMode,
 				onItemSelectionChanged: function (args) {
-					debugger;
 					var selectedValue = args.component.getSelectedNodesKeys();
 					e.component.option("value", selectedValue);
 				}
 			});
 			treeView = $treeView.dxTreeView("instance");
 			e.component.on("valueChanged", function (args) {
-				debugger;
 				syncTreeViewSelection(treeView, args.value);
 			});
 			return $treeView;
 		},
 		onValueChanged: function (e) {
-			debugger;
 			var selectedValue = e.value;
 			if (selectedValue && selectedValue.length) {
 				selectedValue = selectedValue.join(",");
