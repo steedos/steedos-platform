@@ -4,7 +4,6 @@ AutoForm.addInputType("selectTree", {
 		return val;
 	},
 	valueOut: function () {
-		debugger;
 		var reValue;
 		var input = this.eq(0);
 		if (this.attr("multiple")) {
@@ -14,37 +13,36 @@ AutoForm.addInputType("selectTree", {
 			reValue = input.val();
 		}
 		return reValue;
-	},
-	contextAdjust: function (context) {
-		// if (context.atts.multiple){
-		// 	context.atts.class = "af-select-tree-box multiple-tree";
-		// 	context.atts.multiple = true;
-		// }
-		return context;
 	}
 });
 
 Template.afSelectTree.onRendered(function () {
-	debugger;
 	if(!$.fn.dxDropDownBox){
 		console.error("未找到dxDropDownBox插件");
 		return;
 	}
 	var self = this;
 	var treeView, dataGrid;
-	var syncTreeViewSelection = function (treeView, value) {
-		if (!value) {
-			treeView.unselectAll();
-		} else {
-			treeView.selectItem(value);
-		}
-	};
 	var spaceId = Steedos.spaceId();
 	var userId = Meteor.userId();
 	var isMultiple = this.data.atts.multiple;
 	var initValue = this.data.value;
 	var selectionMode = isMultiple ? "multiple" : "single";
 	var showCheckBoxesMode = isMultiple ? "normal" : "none";
+
+	var syncTreeViewSelection = function (treeView, value) {
+		debugger;
+		if (!value) {
+			treeView.unselectAll();
+			return;
+		}
+		if (!isMultiple){
+			value = [value]
+		}
+		value.forEach(function (key) {
+			treeView.selectItem(key);
+		});
+	};
 	this.$(".af-select-tree-box").dxDropDownBox({
 		value: initValue,
 		valueExpr: "_id",
