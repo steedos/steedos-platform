@@ -300,6 +300,8 @@ Template.creator_grid.onRendered ->
 					return 0
 
 			extra_columns = ["owner"]
+			if creator_obj.enable_tree
+				extra_columns.push("parent")
 			object = Creator.getObject(curObjectName)
 			defaultExtraColumns = Creator.getObjectDefaultExtraColumns(object_name)
 			if defaultExtraColumns
@@ -337,16 +339,18 @@ Template.creator_grid.onRendered ->
 							</span>
 						"""
 						$("<div>").append(htmlText).appendTo(container);
-			showColumns.splice 0, 0, 
-				dataField: "_id_checkbox"
-				width: 60
-				allowExporting: false
-				allowSorting: false
-				allowReordering: false
-				headerCellTemplate: (container) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
-				cellTemplate: (container, options) ->
-					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
+			
+			unless creator_obj.enable_tree
+				showColumns.splice 0, 0, 
+					dataField: "_id_checkbox"
+					width: 60
+					allowExporting: false
+					allowSorting: false
+					allowReordering: false
+					headerCellTemplate: (container) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
+					cellTemplate: (container, options) ->
+						Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
 			
 			# console.log "selectColumns", selectColumns
 			console.log "filter", filter
@@ -357,7 +361,6 @@ Template.creator_grid.onRendered ->
 				pageSize = 10
 				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
 
-			# fileName
 			fileName = Creator.getObject(curObjectName).label + "-" + Creator.getListView(curObjectName, list_view_id)?.label
 			dxOptions = 
 				paging: 
@@ -464,10 +467,20 @@ Template.creator_grid.onRendered ->
 						recordsTotal = self.data.recordsTotal.get()
 						recordsTotal[curObjectName] = self.dxDataGridInstance.totalCount()
 						self.data.recordsTotal.set recordsTotal
-					current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
+					if creator_obj.enable_tree
+						current_pagesize = self.$(".gridContainer").dxTreeList().dxTreeList('instance').pageSize()
+						self.$(".gridContainer").dxTreeList().dxTreeList('instance').pageSize(current_pagesize)
+					else
+						current_pagesize = self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize()
+						self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
 					localStorage.setItem("creator_pageSize:"+Meteor.userId(),current_pagesize)
-					self.$(".gridContainer").dxDataGrid().dxDataGrid('instance').pageSize(current_pagesize)
-			self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
+			if creator_obj.enable_tree
+				dxOptions.keyExpr = "_id"
+				dxOptions.parentIdExpr = "parent._id"
+				dxOptions.autoExpandAll = true
+				self.dxDataGridInstance = self.$(".gridContainer").dxTreeList(dxOptions).dxTreeList('instance')
+			else
+				self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 			dxDataGridInstance = self.dxDataGridInstance
 			self.dxDataGridInstance.pageSize(pageSize)
 			
