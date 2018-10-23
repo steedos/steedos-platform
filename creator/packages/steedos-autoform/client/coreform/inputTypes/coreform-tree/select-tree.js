@@ -17,6 +17,7 @@ AutoForm.addInputType("selectTree", {
 });
 
 Template.afSelectTree.onRendered(function () {
+	debugger;
 	if(!$.fn.dxDropDownBox){
 		console.error("未找到dxDropDownBox插件");
 		return;
@@ -29,6 +30,7 @@ Template.afSelectTree.onRendered(function () {
 	var initValue = this.data.value;
 	var selectionMode = isMultiple ? "multiple" : "single";
 	var showCheckBoxesMode = isMultiple ? "normal" : "none";
+	var reference_to = this.data.atts.reference_to;
 
 	var syncTreeViewSelection = function (treeView, value) {
 		if (!value) {
@@ -52,7 +54,7 @@ Template.afSelectTree.onRendered(function () {
 			store: {
 				type: "odata",
 				version: 4,
-				url: Steedos.absoluteUrl("/api/odata/v4/" + spaceId + "/cms_categories"),
+				url: Steedos.absoluteUrl("/api/odata/v4/" + spaceId + "/" + reference_to),
 				withCredentials: false,
 				beforeSend: function (request) {
 					request.headers['X-User-Id'] = userId;

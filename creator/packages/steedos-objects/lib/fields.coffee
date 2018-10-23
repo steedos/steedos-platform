@@ -17,6 +17,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.regEx = field.regEx
 		fs.autoform = {}
 		fs.autoform.multiple = field.multiple
+		fs.autoform.reference_to = field.reference_to
 
 		autoform_type = field.autoform?.type
 
