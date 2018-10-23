@@ -105,5 +105,14 @@
             "signaturer":"System",
             "public_key_file": "../../../ca/archive.csr"
         }
+    },
+    // 微信小程序app开关
+    "mini_apps": {
+        "app_id1": {
+            "enabled": true
+        },
+        "app_id2": {
+            "enabled": true
+        }
     }
 }
