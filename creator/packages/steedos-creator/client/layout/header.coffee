@@ -1,7 +1,7 @@
 Template.creatorHeader.helpers Creator.helpers
 
 Template.creatorHeader.helpers
-	logo: ()->
+	logoUrl: ()->
 		logo_main_custome = Meteor?.settings?.public?.theme?.logo_main_custome
 		if logo_main_custome
 			logo_url = logo_main_custome
@@ -9,7 +9,13 @@ Template.creatorHeader.helpers
 			logo_url = "/packages/steedos_creator/assets/logo.png"
 		return Creator.getRelativeUrl(logo_url)
 
-
+	showSwitchOrganization : ()->
+		show_switch_organization = Meteor?.settings?.public?.theme?.show_switch_organization
+		if show_switch_organization
+			return show_switch_organization
+		else
+			return false
+		
 	avatarURL: (avatar,w,h,fs) ->
 		userId = Meteor.userId()
 		avatar = Creator.getCollection("users").findOne({_id: userId})?.avatar
