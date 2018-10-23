@@ -181,10 +181,16 @@ InstanceRecordQueue.Configure = function (options) {
 
 			} else if (values.hasOwnProperty(fm.workflow_field)) {
 				obj[fm.object_field] = values[fm.workflow_field];
-			} else if (fm.workflow_field.startsWith('instance.')) {
-				var insField = fm.workflow_field.split('instance.')[1];
-				if (self.syncInsFields.includes(insField))
-					obj[fm.object_field] = ins[insField];
+			} else{
+				if (fm.workflow_field.startsWith('instance.')) {
+					var insField = fm.workflow_field.split('instance.')[1];
+					if (self.syncInsFields.includes(insField))
+						obj[fm.object_field] = ins[insField];
+				}else{
+					if(ins[fm.workflow_field]){
+						obj[fm.object_field] = ins[fm.workflow_field];
+					}
+				}
 			}
 		})
 

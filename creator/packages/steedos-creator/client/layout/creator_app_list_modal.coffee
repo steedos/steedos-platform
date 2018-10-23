@@ -1,3 +1,5 @@
+
+
 Template.creator_app_list_modal.helpers Creator.helpers
 
 Template.creator_app_list_modal.helpers
@@ -14,7 +16,9 @@ Template.creator_app_list_modal.helpers
 
 
 	app_url: ()->
-		if this._id
+		if this?.url
+			return Creator.getRelativeUrl(this.url);
+		else if this._id
 			return Creator.getRelativeUrl("/app/#{this._id}/");
 
 	object_url: ()->

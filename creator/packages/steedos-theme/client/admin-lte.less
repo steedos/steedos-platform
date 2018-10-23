@@ -1,0 +1,205 @@
+.steedos.fixed {
+	&.sidebar-collapse{
+		.main-header{
+			.logo {
+				background: transparent!important;
+			}
+			.navbar{
+				margin-left: 50px;
+			}
+		}
+	}
+	.main-header, .main-sidebar, .left-side {
+		position: absolute;
+	}
+	.main-header {
+		box-shadow: rgba(0,0,0,0.3) 0 1px 9px, rgba(255,255,255,0.2) 0 -1px 0 inset;
+		transition: all 1s ease-in-out 0.5s;
+		border-bottom: 1px solid #000;
+		border-bottom: 1px solid rgba(0,0,0,0.2);
+		background: rgba(22, 84, 150, 0.84);
+
+		.logo {
+			background: transparent;
+			cursor:pointer;
+			&.logo-avatar{
+				background-size: contain!important;
+				.logo-lg{
+					display: none!important;
+				}
+			}
+		}
+
+		.logo-x {
+			width: 50px;
+			background-color: #0078D7;
+			transition: background-color .467s cubic-bezier(.1,.9,.2,1) 34ms;
+			&:hover, &:active {
+				background-color: #104A7D;
+			}
+			.logo-mini {
+				display: block;
+				.ion {
+					font-size: 25px;
+					line-height: 50px;
+				}
+			}
+		}
+		.navbar {
+			margin: 0;
+			margin-left: 230px;
+			background-color: transparent;
+			.navbar-title {
+				
+			}
+			.navbar-nav {
+				float: left;
+				margin: 0;
+				font-size: 16px;
+				>li {
+					&.active{
+						a{
+							background: rgba(0, 0, 0, 0.2);
+							&:hover{
+								background: rgba(0, 0, 0, 0.3);
+							}
+						}
+					}
+					max-height: 50px;
+					>a {
+						padding-left: 10px;
+						padding-right: 10px;
+						padding-top: 15px;
+						padding-bottom: 15px;
+						text-shadow: #222 0 0 25px;
+						&:hover, &:active, &:focus{
+							background: transparent;
+						}
+						&.menu-apps-link{
+							.ion{
+								font-size: 20px;
+							}
+						}
+					}
+					.nav-brandingText {
+						padding-left: 20px;
+						display: inline-block;
+						font-family: "SegoeUI-SemiLight-final","Segoe UI SemiLight","Segoe UI WPC Semilight","Segoe UI",Segoe,Tahoma,Helvetica,Arial,sans-serif;
+						font-size: 22px;
+						-webkit-font-smoothing: antialiased;
+					}
+				}
+			}
+			.navbar-custom-menu {
+				>li {
+					a {
+						padding-left: 5px;
+						padding-right: 5px;
+					}
+					.dropdown-menu {
+						background: transparent;
+					}
+					&.notifications-menu{
+						a {
+							padding-left: 15px;
+							padding-right: 15px;
+							.label{
+							}
+						}
+						.tooltip{
+							word-break: keep-all;
+							white-space: nowrap;
+						}
+					}
+					&.user-menu{
+						padding-left: 6px;
+					}
+				}
+			} 
+		}
+	}
+	.wrapper {
+		background: transparent;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+	.content-wrapper {
+		background: rgba(255, 255, 255, 0.6);
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50px;
+		bottom: 0;
+		padding-top: 0px;
+		min-height: auto;
+		&.no-sidebar{
+			margin-left: 0px!important;
+		}
+	}
+	&.no-sidebar{
+		.main-sidebar{
+			display:none;
+		}
+		.content-wrapper{
+			margin-left: 0px;
+		}
+	}
+
+	.dropdown-menu{
+		a:hover{
+			cursor: pointer;
+		}
+		.menu-item-help{
+			margin-top: 4px;
+			padding-top: 4px;
+			font-size: 0.9em;
+			color: #999;
+			width: 280px;
+			word-wrap: break-word;
+			white-space: normal;
+			@media(max-width: 767px) {
+				&{
+					min-width: 140px;
+					width: auto;
+				}
+			}
+		}
+	}
+}
+
+
+@media (max-width: 767px){
+	.steedos.fixed {
+		.main-header{
+			display: none !important;
+			.logo {
+				width: 50px;
+				float: left;
+			}
+			.navbar {
+				width: initial;
+				.navbar-title {
+					display: none;
+				}
+				.navbar-custom-menu {
+					display: none;
+				}
+			}
+		} 
+		.content-wrapper {
+			background-color: transparent;
+		}
+		.content-wrapper, .right-side { 
+			padding-top: 0px;
+			top: 0px;
+		}
+	}
+
+}
+
+
+
+

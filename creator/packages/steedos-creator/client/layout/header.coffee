@@ -2,7 +2,12 @@ Template.creatorHeader.helpers Creator.helpers
 
 Template.creatorHeader.helpers
 	logo: ()->
-		return Creator.getRelativeUrl("/packages/steedos_creator/assets/logo.png")
+		logo_main_custome = Meteor?.settings?.public?.theme?.logo_main_custome
+		if logo_main_custome
+			logo_url = logo_main_custome
+		else
+			logo_url = "/packages/steedos_creator/assets/logo.png"
+		return Creator.getRelativeUrl(logo_url)
 
 
 	avatarURL: (avatar,w,h,fs) ->
@@ -39,3 +44,6 @@ Template.creatorHeader.events
 
 	'click .creator-button-shopping': (e, t)->
 		Modal.show('template_apps_list_modal')
+		
+	'click .creator-button-toggle': (e, t)->
+		Modal.show("list_tree_modal")

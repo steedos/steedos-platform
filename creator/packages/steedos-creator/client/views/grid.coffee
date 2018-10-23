@@ -243,7 +243,7 @@ Template.creator_grid.onRendered ->
 		name_field_key = creator_obj.NAME_FIELD_KEY
 		record_id = Session.get("record_id")
 
-		listTreeFilter = Session.get('listTreeFilter')
+		listTreeCompany = Session.get('listTreeCompany')
 
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
 			if is_related
@@ -271,8 +271,10 @@ Template.creator_grid.onRendered ->
 				if !filter
 					filter = ["_id", "<>", -1]
 
-				if listTreeFilter
-					filter = [filter, "and", listTreeFilter]
+				if listTreeCompany and  listTreeCompany!='undefined' and creator_obj?.filter_company==true
+					listTreeFilter = [ "company", "=" , listTreeCompany ]
+					filter = [ filter, "and", listTreeFilter ]
+
 
 			curObjectName = if is_related then related_object_name else object_name
 
@@ -341,6 +343,21 @@ Template.creator_grid.onRendered ->
 						$("<div>").append(htmlText).appendTo(container);
 			
 			unless creator_obj.enable_tree
+				showColumns.splice 0, 0,
+					dataField: "_index"
+					width: 60
+					allowExporting: true
+					allowSorting: false
+					allowReordering: false
+					caption: "序号"
+					cellTemplate: (container, options) ->
+						pageSize = self.dxDataGridInstance.pageSize();
+						pageIndex = self.dxDataGridInstance.pageIndex();
+						# console.log('[self.dxDataGridInstance]', self.dxDataGridInstance)
+						# Template.instance().dxDataGridInstance.pageIndex()
+						htmlText = options.rowIndex + 1 + pageSize * pageIndex;
+						$("<div>").append(htmlText).appendTo(container);
+				
 				showColumns.splice 0, 0, 
 					dataField: "_id_checkbox"
 					width: 60
@@ -350,8 +367,10 @@ Template.creator_grid.onRendered ->
 					headerCellTemplate: (container) ->
 						Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
 					cellTemplate: (container, options) ->
+						# console.log('[container]', container)
+						# console.log('[options]', options)
 						Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
-			
+		
 			# console.log "selectColumns", selectColumns
 			console.log "filter", filter
 			# console.log "expand_fields", expand_fields
@@ -367,7 +386,7 @@ Template.creator_grid.onRendered ->
 					pageSize: pageSize
 				pager: 
 					showPageSizeSelector: true,
-					allowedPageSizes: [10,25, 50, 100],
+					allowedPageSizes: [10, 50, 100, 200],
 					showInfo: false,
 					showNavigationButtons: true
 				export:

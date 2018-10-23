@@ -51,6 +51,11 @@ Creator.Objects.space_users =
 			type: "master_detail"
 			reference_to: "organizations"
 			omit: true
+		company: 
+			type: "master_detail"
+			label: '所属公司'
+			reference_to: "organizations"
+			# omit: true
 		user_accepted:
 			type: "boolean"
 			label:'接受状态'
@@ -74,8 +79,11 @@ Creator.Objects.space_users =
 			index:true
 			# required: true
 			omit: true
-
 	list_views:
+		all:
+			label: "所有人员"
+			columns: ["name", "organization","company", "position", "mobile", "email", "sort_no"]
+			filter_scope: "space"	
 		user:
 			label: "员工"
 			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]

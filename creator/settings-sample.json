@@ -2,6 +2,10 @@
     "public": {
         "cfs": {
             "store": "" // 值为空或者未配置此属性表示文件存本地，OSS表示存阿里云， S3表示存AWS
+        },
+        "theme":{
+            "logo_login_custome": "/packages/steedos_theme/client/images/logo_login_custome.png",   //配置登录页logo
+            "logo_main_custome": "/packages/steedos_theme/client/images/logo_main_custome.png"   //配置主页左上角logo
         }
     },
     "cron": {
@@ -65,6 +69,41 @@
             "sdkappid": "xxx",
             "appkey": "xxx",
             "signname": "xxx" // 短信签名
+        }
+    },
+    //同步OA表单
+    "records_qhd": {
+        "spaces": ["Af8eM6mAHo7wMDqD3"],    //需要同步的工作区Ids
+        "-recurrenceRule": "* /10 * * * *",    //同步时间
+        "instance_file_path":"D:\\Documents\\instances\\",    //同步过来的文件存储路径
+        "to_archive": {
+            "object_name":"archive_wenshu",    //同步到的对象
+            "admin":{
+                "userid":"hPgDcEd9vKQxwndQR",    //该工作区管理员的userid
+                "username":"hPgDcEd9vKQxwndQR",    //该工作区管理员的username
+                "password":"123456"    //该工作区管理员的明文密码
+            },
+            "apps_url":"http://192.168.0.23",    //同步的apps路径
+            "contract_instances": {
+                "flows": [    //不需要同步的合同流程
+                    "49cd342e-76a3-41ed-bbd6-e0921be9f004",
+                    "2d6055de-53d2-4d65-8e56-0df9862b3226",
+                    "25d7f36f-747d-4031-b767-e3023783846f",
+                    "6a520bf56a83eac20a604bde",
+                    "f0a3f03c7a64c6cc2cb2d40b"
+                ]
+            }
+        }
+    },
+    //档案系统XML备份
+    "records_xml":{
+        "spaces":["Af8eM6mAHo7wMDqD3"],    //需要封装的工作区Ids
+        "-recurrenceRule": "/20 * * * * *",    //封装时间
+        "xml_file_path":"D:\\Documents\\xml\\",    //封装文件存储路径
+        "archive":{    //封装数字证书
+            "private_key_file":"../../../ca/archive.key",
+            "signaturer":"System",
+            "public_key_file": "../../../ca/archive.csr"
         }
     }
 }

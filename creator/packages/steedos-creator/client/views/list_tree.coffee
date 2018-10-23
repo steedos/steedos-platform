@@ -14,10 +14,16 @@ getTreeData = ()->
 
 	#处理数据上下级
 	_.forEach subCompany, (item)->
+	
+		listTreeCompany = localStorage.getItem("listTreeCompany")
+
 		if item.is_company
-			item.state = {opened: true, selected: true}
+			item.state = {opened: true}
 		else
-			item.filter = ['sub_company', '=', item._id]
+			item.filter = item._id
+			if listTreeCompany == item._id
+				item.state = {opened: true, selected: true}
+
 		parent = findParent(subCompany, item)
 		if parent
 			item.parent = parent._id
@@ -40,7 +46,8 @@ Template.listTree.helpers
 
 Template.listTree.onRendered ->
 	$("#creator_list_tree").on('select_node.jstree', (e, data) ->
-		Session.set('listTreeFilter', data.node.data.filter)
+		localStorage.setItem("listTreeCompany", data.node.data.filter)
+		Session.set('listTreeCompany', data.node.data.filter)
 	).jstree
 		core:
 			multiple:false,

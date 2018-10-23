@@ -36,6 +36,13 @@ else
               filename = fileObj.name();
               filenameInStore = fileObj.name({store: "files"})
 
+              name = filenameInStore || filename
+
+              name_split = name.split('.')
+              extention = name_split.pop()
+
+              final_filename = name_split.join('.').substring(0,50) + '.' + extention
+
               now = new Date
               year = now.getFullYear()
               month = now.getMonth() + 1
@@ -48,7 +55,7 @@ else
               mkdirp.sync(absolutePath)
               
               # If no store key found we resolve / generate a key
-              return year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename)
+              return year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + final_filename
 
       }
 

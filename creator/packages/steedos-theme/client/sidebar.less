@@ -1,0 +1,139 @@
+.steedos.skin-blue {
+
+	.main-sidebar {
+		background: rgba(0, 0, 0, 0.6);
+		box-shadow: 0 3px 6px rgba(0,0,0,.4);
+		top: 0px;
+		margin-top: 50px;
+		padding-top: 0px;
+		bottom: 0;
+		min-height: auto;
+		
+		.sidebar {
+			.header-app{
+				cursor: pointer;
+			}
+			.ion{
+				position: relative;
+				top: 1px;
+			}
+
+			.space-switcher .space-name {
+				color: white;
+			}
+			.sidebar-menu > li.header {
+				color: #d8d8d8;
+				background: transparent;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+				overflow: visible;
+				padding: 10px 15px 10px 15px;
+				
+				.pull-right-container{
+					position: absolute;
+					right: 0px;
+					top: 50%;
+					margin-top: -7px;
+				}
+			}
+
+			.sidebar-menu > li > a {
+				color: #f6f6f6;
+			}
+			.sidebar-menu > li > a:active,
+			.sidebar-menu > li > a:focus,
+			.sidebar-menu > li.active > a,
+			.sidebar-menu > li.active > a:hover {
+				color: #ffffff;
+				background: rgba(255, 255, 255, 0.15);
+			}
+
+			.sidebar-menu > li:hover > a,
+			.sidebar-menu > li > a:hover {
+				color: #ffffff;
+				background: rgba(255, 255, 255, 0.07);
+			}
+
+			.sidebar-menu > li > .treeview-menu {
+				background: transparent;
+				margin-left: 10px;
+			}
+			.sidebar-form input[type="text"], 
+			.sidebar-form input[type="text"] + .input-group-btn .btn,
+			.sidebar-form .btn {
+				background-color: rgba(0, 0, 0, 0.15);
+			}
+			.sidebar-form input[type="text"]:focus,
+			.sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+				background-color: #fff;
+			}
+			.treeview-menu > li > a {
+				color: #f6f6f6;
+			}
+			.user-panel > .info, .user-panel > .info > a {
+				color: white;
+			}
+		}
+		
+	}
+
+	@media (min-width: 768px){
+		.sidebar-toggle {
+			display: none;
+		}
+	}
+
+	&.sidebar-collapse{
+		.main-sidebar {		
+			.sidebar {
+				.sidebar-menu > li > a {
+					color: #fff;
+				}
+				.sidebar-menu > li > a:hover {
+					color: #fff;
+					background: rgba(0, 0, 0, 0.7);
+				}
+				.sidebar-menu > li:hover > a {
+					background-color: rgba(0, 0, 0, 0.7);
+				}
+				.sidebar-menu > li:hover > a > .pull-right-container{
+					background-color: transparent;
+				}
+				.sidebar-menu > li > a:hover .pull-right-container{
+					background-color: rgba(255, 255, 255, 0);
+				}
+				.sidebar-menu > li > a:active,
+				.sidebar-menu > li > a:focus,
+				.sidebar-menu > li.active > a,
+				.sidebar-menu > li.active > a:hover {
+					color: #fff;
+					background: rgba(0, 0, 0, 0.7);
+				}
+				.sidebar-menu > li.active > a:hover .pull-right-container{
+					background-color: rgba(255, 255, 255, 0);
+				}
+				.sidebar-menu > li > .treeview-menu {
+					background: rgba(44, 59, 65, 0.8);
+				}
+				.sidebar-menu > li > .treeview:hover a {
+					background: rgba(44, 59, 65, 0.8);
+				}
+				.sidebar-menu > li > .treeview-menu {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {
+	.steedos.sidebar-mini {
+		.main-sidebar {
+			box-shadow: none !important;
+		}
+	} 
+	.steedos.sidebar-open {
+		.main-sidebar {
+			box-shadow: 0 3px 6px rgba(0,0,0,.4) !important;
+		}
+	}
+}

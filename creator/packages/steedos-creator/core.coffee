@@ -177,6 +177,9 @@ Creator.getObjectRelateds = (object_name)->
 	if !_object
 		return related_objects
 
+	if _object.enable_files
+		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
+		
 	_.each Creator.Objects, (related_object, related_object_name)->
 		_.each related_object.fields, (related_field, related_field_name)->
 			if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
@@ -186,8 +189,6 @@ Creator.getObjectRelateds = (object_name)->
 				else
 					related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
 
-	if _object.enable_files
-		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
 	if _object.enable_tasks
 		related_objects.push {object_name:"tasks", foreign_key: "related_to"}
 	if _object.enable_notes

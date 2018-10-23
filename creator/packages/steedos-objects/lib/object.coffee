@@ -33,7 +33,9 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
-	self.enable_tree =options.enable_tree
+	self.enable_tree = options.enable_tree
+	self.open_window = options.open_window
+	self.filter_company = options.filter_company
 	self.calendar = _.clone(options.calendar)
 	if (!options.fields)
 		throw new Error('Creator.Object options must specify name');

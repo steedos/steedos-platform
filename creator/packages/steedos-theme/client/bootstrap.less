@@ -1,0 +1,156 @@
+.steedos.fixed {
+    .modal {
+        // bootstrap会给modal加touch样式，同时modal也加了position:fix样式固定了，
+        // 这在iphone中是不允许的，所以只能把touch功能放到下面的modal-body中。
+        -webkit-overflow-scrolling: auto;
+        .modal-header {
+            button.close {
+                padding: 2px 8px;
+            }
+        }
+        .btn-default {
+            background-color: #f4f4f4;
+            border-color: #ddd;
+        }
+        .modal-body{
+            -webkit-overflow-scrolling: touch;
+            form{
+                .form-group{
+                    position: relative;/*为了解决Modal中日期时间控件定位问题*/
+                }
+                /*分组字段字体问题*/
+                .panel{
+                    .panel-heading{
+                        font-weight:bold;
+                        h3{
+                            font-size: 14px;
+                        }
+                    }
+                    .panel-body{
+                        .form-group{
+                            .control-label{
+                                font-size: 14px;
+                                font-weight: normal;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal-body{
+            &.weui_cells,&.weui-cells{
+                padding: 0;
+                margin-top: 0;
+            }
+        }
+        .modal-footer{
+            .row{
+                .pull-right{
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+
+    .dropdown-menu {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        border: 0;
+    }
+    .dropdown-toggle{
+        cursor: pointer;
+    }
+}
+
+.steedos {
+    @media (max-width: 767px) {
+        .modal-dialog {
+            margin: 0px;
+            .modal-content {
+                border-radius: 0;
+                .modal-header:first-of-type {
+                    height: 51px;
+                    -webkit-transition: all 1s ease-in-out 0.5s;
+                    transition: all 1s ease-in-out 0.5s;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+                    background: rgba(22, 84, 150, 0.92);
+                    color: #fff !important;
+                    .modal-title {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    a {
+                        color: #fff;
+                    }
+                    button.close {
+                        opacity: 1;
+                        color: #fff;
+                    }
+                }
+                .modal-footer {
+                    padding: 8px 15px;
+                    background: #F7F7FA;
+                    position: relative;
+                    border-top: none;
+                    &:before {
+                        content: " ";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        right: 0;
+                        height: 1px;
+                        width: 100%;
+                        border-top: 1px solid #C0BFC4;
+                        color: #C0BFC4;
+                        -webkit-transform-origin: 0 0;
+                        transform-origin: 0 0;
+                        -webkit-transform: scaleY(0.5);
+                        transform: scaleY(0.5);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.steedos {
+    .form-horizontal {
+        .form-group {
+            margin-bottom: 5px;
+            .checkbox {
+                padding-top: 4px;
+                & + .help-block {
+                    margin-bottom: 5px;
+                }   
+            }
+            .autoform-padding-fix {
+                .autoform-array-item {
+                    .form-group {
+                        .control-label:empty {
+                            display: none;
+                        }
+                    }
+                }
+                .panel-body {
+                    .form-group {
+                        .control-label {
+                            padding-top: 0px;
+                            padding-bottom: 7px;
+                        }
+                    }
+                }
+            }
+            .col-sm-10 {
+                button[type='submit'] {
+                    float: right;
+                }
+            }
+            @media(max-width: 767px) {
+                .control-label:empty {
+                    display: none;
+                }
+            }
+        }
+    }
+}

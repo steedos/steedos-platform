@@ -1,0 +1,131 @@
+.steedos {
+	&.login{
+		.at-form{
+			.at-pwd-link{
+				margin-top: 10px;
+			}
+			img.logo{
+				width: 100%;
+				height: auto;
+				@media (max-width: 767px) {
+					width: 100%;
+					height: auto;
+				}
+			}
+			.at-title{
+				h3{
+					display: none;
+				}
+			}
+		}
+		.main-header{
+			display:none;
+		}
+	}
+	.logo {
+		font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, Microsoft Yahei, SimHei;
+		font-weight: bold;
+		.logo-arrow{
+			float: right;
+			margin-top: -50px;
+			font-size: 14px;
+		}
+	}
+	.navigation-title {
+		font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, Microsoft Yahei, SimHei;
+		font-weight: bold;
+	}
+	.text-danger {
+		color: #dd4b39;
+	}
+}
+
+.hidden {
+  display: none !important;
+}
+
+.ion {
+	font-size: 120%;
+}
+
+.steedos {
+ 
+	.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+		background-color: #F9F9F9;
+		opacity: 1;
+		color: black;  
+	}
+}
+
+.jstree-default .jstree-wholerow-clicked {
+	background: #08C;
+}
+
+.jstree-default .jstree-clicked{
+	color:white;
+}
+
+.btn-transparent {
+	background-color: transparent;
+	color: #444;
+	border: none;
+	&.btn:focus, &.btn:active:focus, &.btn.active:focus, &.btn.focus, &.btn:active.focus, &.btn.active.focus{
+		outline:none;
+		box-shadow: none;
+	}
+}
+
+.modal{
+	.modal-header{
+		.btn-help{
+			margin-left:4px;
+			padding:0px;
+		}
+	}
+	.modal-footer{
+		.btn-help{
+			margin-top:6px;
+			padding:0px;
+		}
+	}
+	.modal-body{
+		overflow-x:hidden;
+		overflow-y:auto;
+		&.panel{
+			border-radius: 0;
+			padding: 0;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+		&.weui_cells_form{
+			padding:0;
+			margin:0;
+		}
+	}
+}
+
+.dataTables_wrapper{
+	.table-responsive{
+		border: none;
+	}
+}
+
+.modal-dialog .modal-content{
+	border-radius: 4px;
+}
+
+.list-group{
+	button.list-group-item{
+		outline:none;
+	}
+}
+
+/*APP中让弹出的服务器列表窗口显示在最上面*/
+#serverList{
+	z-index:9999999999!important;
+}
+
+
+
+
+

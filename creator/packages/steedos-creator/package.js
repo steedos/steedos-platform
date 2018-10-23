@@ -135,7 +135,7 @@ Package.onUse(function (api) {
 	api.addFiles('models/notes.coffee');
 	api.addFiles('models/queue_import.coffee');
 	api.addFiles('models/settings.coffee');
-	api.addFiles('models/user_star.coffee');
+	// api.addFiles('models/user_star.coffee');
 
 	api.addFiles('models/object_workflows.coffee');
 
@@ -235,6 +235,8 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/home.less', 'client');
 	api.addFiles('client/views/list_tree.html', 'client');
 	api.addFiles('client/views/list_tree.coffee', 'client');
+	api.addFiles('client/views/list_tree_modal.html', 'client');
+	api.addFiles('client/views/list_tree_modal.coffee', 'client');
 	api.addFiles('client/views/list_wrapper.html', 'client');
 	api.addFiles('client/views/list_wrapper.coffee', 'client');
 	api.addFiles('client/views/list_wrapper.less', 'client');
