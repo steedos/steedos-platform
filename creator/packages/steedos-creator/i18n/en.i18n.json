@@ -45,7 +45,7 @@
 	"creator_filter_operation_contains":"contains",
 	"creator_filter_operation_does_not_contain":"not contain",
 	"creator_filter_operation_starts_with":"starts with",
-	"creator_app_launcher": "App Luncher",
+	"creator_app_launcher": "App Launcher",
 	"creator_app_launcher_all_apps": "App Apps",
 	"creator_app_launcher_all_items": "All Items",
 
