@@ -3,6 +3,7 @@ Creator.Objects.organizations =
 	label: "部门"
 	icon: "team_member"
 	enable_search: true
+	enable_tree: true
 	fields:
 		name: 
 			label: "名称"
