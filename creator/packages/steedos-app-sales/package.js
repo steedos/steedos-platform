@@ -1,7 +1,7 @@
 Package.describe({
 	name: 'steedos:app-sales',
 	version: '0.0.1',
-	summary: 'Creator Sales',
+	summary: '示例项目,请不要开启',
 	git: '',
 	documentation: null
 });
