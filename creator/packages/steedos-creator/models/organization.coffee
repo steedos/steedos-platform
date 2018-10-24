@@ -78,6 +78,7 @@ Creator.Objects.organizations =
 			columns: ["name", "parent", "sort_no", "modified"]
 			label: "所有部门"
 			filter_scope: "space"
+			sort : [ "field_name":"sort_no", "order":"asc"]
 
 	permission_set:
 		user:

@@ -28,6 +28,7 @@ Creator.Objects.vip_product =
 			type:'text'
 			is_wide:true
 			required:true
+			sortable: true
 		description:
 			label:'商品描述'
 			type:'textarea'
@@ -38,11 +39,13 @@ Creator.Objects.vip_product =
 			type:'number'
 			required:true
 			scale: 2
+			sortable: true
 			group:'-'
 		compared_price:
 			label:'原价'
 			type:'number'
 			scale: 2
+			sortable: true
 		
 		covers:
 			label:'轮播图'
