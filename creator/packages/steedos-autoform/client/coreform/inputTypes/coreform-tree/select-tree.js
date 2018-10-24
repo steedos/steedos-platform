@@ -87,6 +87,9 @@ Template.afSelectTree.onRendered(function () {
 				selectionMode: selectionMode,
 				displayExpr: "name",
 				selectByClick: true,
+				height: function(args){
+					return 300;
+				},
 				onContentReady: function (args) {
 					if (!args.component.isReady()){
 						// 把dxDropDownBox控件中的值赋值到dxTreeView控件中
@@ -99,6 +102,8 @@ Template.afSelectTree.onRendered(function () {
 							args.component.expandItem(rootNode.key);
 						}
 					}
+				},
+				onItemExpanded: function(args){
 				},
 				selectNodesRecursive: false,
 				showCheckBoxesMode: showCheckBoxesMode,
