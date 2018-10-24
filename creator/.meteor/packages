@@ -130,15 +130,15 @@ steedos:object-database
 
 steedos:instance-record-queue
 
-# steedos:instances-statistics
-# steedos:meeting
+steedos:instances-statistics
+steedos:meeting
 http@1.2.9
 
-# steedos:weixin
-# steedos:pay
+steedos:weixin
+steedos:pay
 
-# steedos:weixin-template-message-queue
-# steedos:mini-web
+steedos:weixin-template-message-queue
+steedos:mini-web
 
 q42:autoform-markdown
 steedos:markdown@0.0.1
