@@ -109,7 +109,7 @@ steedos:objects
 steedos:sso
 # steedos:app-crm
 # steedos:app-informations
-# steedos:app-cms
+steedos:app-cms
 steedos:app-workflow
 steedos:app-admin
 # steedos:app-example
