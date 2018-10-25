@@ -137,6 +137,12 @@ Template.creator_list_wrapper.helpers
 			list_views = Creator.getListViews()
 			Session.set("list_view_id", list_views[0]._id)
 
+	isTree: ()->
+		objectName = Session.get("object_name")
+		object = Creator.getObject(objectName)
+		return object.enable_tree
+
+
 Template.creator_list_wrapper.events
 
 	'click .list-action-custom': (event) ->
