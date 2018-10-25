@@ -191,7 +191,7 @@
 	"users_company": "Company",
 	"users_position": "Position",
 	"users_work_phone": "Work Phone",
-	"users_mobile": "Moblie",
+	"users_mobile": "Mobile",
 	"users_locale": "Language",
 	"users_timezone": "Timezone",
 	"users_emails": "Emails",
@@ -261,7 +261,7 @@
 	"organizations_space": "Space ID",
 	"organizations_sort_no": "Sort No.",
 	"organizations_hidden": "Hidden",
-	"organizations_admins": "Organizations Admins",
+	"organizations_admins": "Admins",
 
 
 	"space_users": "Space Users",
@@ -280,7 +280,7 @@
 	"space_users_modified": "Modified",
 	"space_users_created_by": "Created By",
 	"space_users_modified_by": "Modified By",
-	"space_users_mobile": "Moblie",
+	"space_users_mobile": "Mobile",
 	"space_users_work_phone": "Work Phone",
 	"space_users_company": "Company",
 	"space_users_position": "Position",
