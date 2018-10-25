@@ -100,6 +100,7 @@ Creator.baseObject =
 			label:'评论数'
 			type:'number'
 			omit:true
+			hidden: true
 	permission_set:
 		none:
 			allowCreate: false
