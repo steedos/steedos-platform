@@ -149,8 +149,8 @@ _expandFields = (object_name, columns)->
 
 _columns = (object_name, columns, list_view_id, is_related)->
 	object = Creator.getObject(object_name)
-	grid_settings = Creator.Collections.settings.findOne({object_name: object_name, record_id: "object_gridviews"})
-	defaultWidth = _defaultWidth(columns)
+	grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
+	defaultWidth = _defaultWidth(columns, object.enable_tree)
 	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
 	return columns.map (n,i)->
 		field = object.fields[n]
@@ -208,9 +208,10 @@ _columns = (object_name, columns, list_view_id, is_related)->
 			columnItem.allowSorting = false
 		return columnItem
 
-_defaultWidth = (columns)->
+_defaultWidth = (columns, isTree)->
 	column_counts = columns.length
-	content_width = $(".gridContainer").width() - 46 - 60
+	subWidth = if isTree then 46 else 46 + 60 + 60
+	content_width = $(".gridContainer").width() - subWidth
 	return content_width/column_counts
 
 _depandOnFields = (object_name, columns)->

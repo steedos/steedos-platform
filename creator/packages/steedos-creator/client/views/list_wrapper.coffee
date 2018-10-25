@@ -171,6 +171,8 @@ Template.creator_list_wrapper.events
 		_.each grid_settings?.settings[list_view_id]?.column_width,(val, key)->
 			if key == "_id_checkbox"
 				column_width[key] = 60
+			else if key == '_index'
+				column_width[key] = 60
 			else if key == '_id_actions'
 				column_width[key] = 46
 			else
