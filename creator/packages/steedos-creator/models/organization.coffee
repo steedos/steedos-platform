@@ -1,6 +1,6 @@
 Creator.Objects.organizations = 
 	name: "organizations"
-	label: "部门"
+	label: "组织机构"
 	icon: "team_member"
 	enable_search: true
 	enable_tree: true
@@ -17,6 +17,7 @@ Creator.Objects.organizations =
 			label: "全路径"
 			type: "text"
 			omit: true
+			hidden: true
 
 		parent:
 			label: "上级组织"
@@ -30,6 +31,7 @@ Creator.Objects.organizations =
 			reference_to: "organizations"
 			multiple: true
 			omit: true
+			hidden: true
 
 		children:
 			label: "下级组织"
@@ -37,6 +39,7 @@ Creator.Objects.organizations =
 			reference_to: "organizations"
 			multiple: true
 			omit: true
+			hidden: true
 
 		sort_no:
 			label: "排序号"
@@ -57,13 +60,14 @@ Creator.Objects.organizations =
 			multiple: true
 
 		is_company:
-			label: "根部门"
+			label: "根组织"
 			type: "boolean"
 			omit: true
 			index:true
+			hidden: true
 		
 		is_subcompany:
-			label: "子公司"
+			label: "公司级"
 			type: "boolean"
 			defaultValue: false
 			index:true
@@ -75,7 +79,7 @@ Creator.Objects.organizations =
 	list_views:
 	
 		all:
-			columns: ["name", "sort_no", "modified"]
+			columns: ["name", "sort_no", "admins", "hidden"]
 			label: "所有部门"
 			filter_scope: "space"
 			sort : [ "field_name":"sort_no", "order":"asc"]
