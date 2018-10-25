@@ -52,7 +52,7 @@ Creator.Objects.space_users =
 			reference_to: "organizations"
 			omit: true
 		company: 
-			type: "master_detail"
+			type: "lookup"
 			label: '所属公司'
 			reference_to: "organizations"
 			# omit: true
