@@ -4,6 +4,7 @@
             "store": "" // 值为空或者未配置此属性表示文件存本地，OSS表示存阿里云， S3表示存AWS
         },
         "theme":{
+            "show_switch_organization": true,   //显示切换单位按钮
             "logo_login_custome": "/packages/steedos_theme/client/images/logo_login_custome.png",   //配置登录页logo
             "logo_main_custome": "/packages/steedos_theme/client/images/logo_main_custome.png"   //配置主页左上角logo
         }
