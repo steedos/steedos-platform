@@ -3,140 +3,155 @@ db.spaces = new Meteor.Collection('spaces')
 db.spaces.allow
 	update: (userId, doc, fields, modifier) ->
 		return doc.owner == userId;
- 
 
 db.spaces._simpleSchema = new SimpleSchema
-	name: 
-		type: String,
-		# unique: true,
-		max: 200
-	owner: 
-		type: String,
-		optional: true,
-		autoform:
-			type: "selectuser"
-			defaultValue: ->
-				return Meteor.userId()
 
-	admins: 
-		type: [String],
-		optional: true,
-		autoform:
-			type: "selectuser"
+Creator.Objects.spaces =
+	name: "spaces"
+	label: "工作区"
+	icon: "groups"
+	fields:
+		name:
+			label: "名称"
+			type: "text"
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			required: true
+			searchable:true
+			index:true
+		industry:
+            label: "行业"
+            type: "select"
+            options:[
+                {label:'餐饮',value:'food'},
+                {label:'酒店住宿',value:'accommodation'},
+                {label:'出行',value:'travel'},
+                {label:'休闲娱乐',value:'entertainment'},
+                {label:'丽人',value:'beauty'},
+                {label:'教育',value:'education'},
+                {label:'母婴亲子',value:'parent-child'},
+                {label:'运动健身',value:'sport'},
+                {label:'家具装修',value:'decoration'},
+                {label:'生活服务',value:'life'},
+                {label:'宠物',value:'pets'},
+                {label:'汽车服务',value:'car'}
+            ]
+		owner:
+			label: "所有者"
+			type: "lookup"
+			reference_to: "users"
+			disabled: true
+			omit: false
+		admins:
+			label: "管理员"
+			type: "lookup"
+			reference_to: "users"
+			index:true
 			multiple: true
-
-	cover:
-		type: String,
-		optional: true,
-		autoform:
-			type: 'fileUpload'
-			collection: 'avatars'
-			accept: 'image/*'
-	avatar:
-		type: String,
-		optional: true,
-		autoform:
-			type: 'fileUpload'
-			collection: 'avatars'
-			accept: 'image/*'
-			
-	# apps_enabled:
-	# 	type: [String],
-	# 	optional: true,
-	# 	autoform:
-	# 		omit: true
-	# 		type: "select-checkbox"
-	# 		options: ()->
-	# 			options = []
-	# 			objs = db.apps.find({})
-	# 			objs.forEach (obj) ->
-	# 				options.push
-	# 					label: t(obj.name),
-	# 					value: obj._id
-	# 			return options
-
-	apps_paid:
-		type: [String],
-		optional: true,
-		autoform:
+		apps:
+			label: "应用"
+			type: "lookup"
+			reference_to: "apps"
+			multiple: true
+		avatar:
+			label:'头像'
+			type:'avatar'
+		cover:
+			label:'封面照片'
+			type:'avatar'
+		location:
+			label:'地址'
+			type:'location'
+			system: 'gcj02'
+		phone:
+			label:'联系电话'
+			type:'text'
+		apps_paid:
+			label:'已付费应用'
+			type: "[text]"
 			omit: true
-
-	hostname: 
-		type: String,
-		optional: true,
-
-	balance: 
-		type: Number,
-		decimal: true
-		optional: true,
-		autoform:
+		hostname: 
+			label:'域名'
+			type: "[text]"
+		balance: 
+			label:'余额'
+			type:"number"
+			scale:2
 			omit: true
-	is_paid: 
-		type: Boolean,
-		label: t("Spaces_isPaid"),
-		optional: true,
-		autoform:
+		is_paid: 
+			label: t("Spaces_isPaid")
+			type: "boolean"
 			omit: true
 			readonly: true
+		services:
+			type: "object"
+			blackbox: true
+			omit: true
+		is_deleted:
+			type: "boolean"
+			omit: true
+			hidden:true
+		"billing.remaining_months":
+			type:"number"
+			omit: true
+		user_limit:
+			label:'用户数限制'
+			type:"number"
+			omit: true
+		start_date:
+			label:'开始时间'
+			type: "datetime"
+			omit: true
+		end_date:
+			label:'结束时间'
+			type: "datetime"
+			omit: true
+		modules:
+			label:'模块'
+			type: "[text]"
+			omit: true
+		enable_register:
+			label:'允许新用户注册'
+			type: "boolean"
+			defaultValue:false
+	list_views:
+		all:
+			label:"所有"
+			columns: ["name"]
+			filter_scope: "all"
+			filters: [["_id", "=", "{spaceId}"]]
+	permission_set:
+		user:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		admin:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		member:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		guest:
+			allowCreate: true
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
 
-	created:
-		type: Date,
-		optional: true
-	created_by:
-		type: String,
-		optional: true
-	modified:
-		type: Date,
-		optional: true
-	modified_by:
-		type: String,
-		optional: true
-	services:
-		type: Object
-		optional: true,
-		blackbox: true
-		autoform:
-			omit: true
-	is_deleted:
-		type: Boolean
-		optional: true,
-		autoform:
-			omit: true
 
-	"billing.remaining_months":
-		type: Number
-		optional: true
-		autoform:
-			omit: true
-
-	user_limit:
-		type: Number
-		optional: true
-		autoform:
-			omit: true
-
-	end_date:
-		type: Date
-		optional: true
-		autoform:
-			omit: true
-
-	start_date:
-		type: Date
-		optional: true
-		autoform:
-			omit: true
-
-	modules:
-		type: [String]
-		optional: true
-		autoform:
-			omit: true
-	enable_register:
-		type: Boolean,
-		defaultValue:false,
-		optional: true
-	
 if Meteor.isClient
 	db.spaces._simpleSchema.i18n("spaces")
 

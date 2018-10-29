@@ -233,7 +233,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "filesize"
 			fs.type = Number
 			fs.autoform.type = 'filesize'
-		else if field.type == "Object"
+		else if field.type == "Object" || field.type == "object"
 			fs.type = Object
 		else if field.type == "grid"
 			fs.type = Array

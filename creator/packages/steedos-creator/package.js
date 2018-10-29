@@ -116,7 +116,6 @@ Package.onUse(function (api) {
 	api.addFiles('models/permission_share.coffee');
 
 	api.addFiles('models/app.coffee');
-	api.addFiles('models/space.coffee');
 
 	api.addFiles('models/cms_files.coffee');
 	api.addFiles('models/cms_files_cfs.coffee');
