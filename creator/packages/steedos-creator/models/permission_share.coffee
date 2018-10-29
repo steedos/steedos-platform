@@ -15,7 +15,8 @@ Creator.Objects.permission_shares =
 			optionsFunction: ()->
 				_options = []
 				_.forEach Creator.objectsByName, (o, k)->
-					if o.enable_share and !o.hidden
+					enable_share = if o.enable_share == undefined then true else o.enable_share
+					if enable_share and !o.hidden
 						_options.push { label: o.label, value: k, icon: o.icon }
 				return _options
 			required: true
