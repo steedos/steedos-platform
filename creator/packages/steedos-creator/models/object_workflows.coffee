@@ -1,6 +1,6 @@
 Creator.Objects.object_workflows =
 	name: "object_workflows"
-	label: "相关流程"
+	label: "对象流程"
 	icon: "apps"
 	fields:
 		name:
@@ -84,7 +84,7 @@ Creator.Objects.object_workflows =
 		default:
 			columns: ["name", "object_name", "flow_id"]
 		all:
-			label: "对象与流程对应关系"
+			label: "全部"
 			filter_scope: "space"
 	permission_set:
 		user:
