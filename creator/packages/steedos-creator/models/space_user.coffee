@@ -51,7 +51,7 @@ Creator.Objects.space_users =
 			type: "master_detail"
 			reference_to: "organizations"
 			omit: true
-		company: 
+		organization_company: 
 			type: "lookup"
 			label: '所属公司'
 			reference_to: "organizations"
@@ -72,6 +72,12 @@ Creator.Objects.space_users =
 			# required: true
 			omit: true
 			hidden: true
+		hr:
+			type: Object,
+			blackbox: true
+			omit: true
+			hidden: true
+	
 	list_views:
 		all:
 			label: "所有人员"
