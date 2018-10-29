@@ -118,7 +118,6 @@ Package.onUse(function (api) {
 	api.addFiles('models/app.coffee');
 	api.addFiles('models/space.coffee');
 	api.addFiles('models/user.coffee');
-	api.addFiles('models/space_user.coffee');
 
 	api.addFiles('models/cms_files.coffee');
 	api.addFiles('models/cms_files_cfs.coffee');

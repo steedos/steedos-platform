@@ -1,111 +1,126 @@
 db.space_users = new Meteor.Collection('space_users')
 
-Meteor.startup ()->
+db.space_users._simpleSchema = new SimpleSchema
 
-	db.space_users._simpleSchema = new SimpleSchema
-		space:
-			type: String,
-			autoform:
-				type: "hidden",
-				defaultValue: ->
-					return Session.get("spaceId");
+Creator.Objects.space_users =
+	name: "space_users"
+	label: "人员"
+	icon: "user"
+	enable_search: true
+	fields:
 		name:
-			type: String,
-			max: 50,
+			label: "姓名"
+			type: "text"
+			defaultValue: ""
+			description: ""
+			inlineHelpText: ""
+			required: true
+			searchable:true
+			index:true
+		position:
+			type: "text"
+			label:'职务'
+
+		mobile:
+			type: "text"
+			label:'手机'
+			group:'-'
 		email:
-			type: String,
-			regEx: SimpleSchema.RegEx.Email,
-			optional: true
-		user:
-			type: String,
-			optional: true,
-			foreign_key: true,
-			references:
-				collection: 'users',
-				key: '_id',
-				search_keys: ['username']
-			autoform:
-				omit: true
+			type: "text"
+			label:'邮件'
+		work_phone:
+			type: "text"
+			label:'工作电话'
 
-		organization:
-			type: String,
-			optional: true,
-			autoform:
-				omit: true
-
+		company:
+			type: "text"
+			label:'单位'
+			group:'-'
 		organizations:
-			type: [String],
-			autoform:
-				type: "selectorg"
-				multiple: true
-				defaultValue: ->
-					return []
-
+			type: "lookup"
+			label:'所属部门'
+			reference_to: "organizations"
+			multiple: true
+			defaultValue: []
 		manager:
-			type: String,
-			optional: true,
-			autoform:
-				type: "selectuser"
+			type: "lookup"
+			label:'上级主管'
+			reference_to: "users"
 
 		sort_no:
-			type: Number,
-			optional: true
-
+			type: "number"
+			label:'排序号'
+			group:'-'
+		organization:
+			type: "master_detail"
+			reference_to: "organizations"
+			omit: true
+		organization_company: 
+			type: "lookup"
+			label: '所属公司'
+			reference_to: "organizations"
+			omit: true
+			hidden: true
 		user_accepted:
-			type: Boolean,
-			optional: true,
-			autoform:
-				defaultValue: true
-
+			type: "boolean"
+			label:'接受状态'
+			defaultValue: true
+			omit:true
 		invite_state:
-			type: String
-			optional: true,
-			autoform:
-				omit: true
-
-		created:
-			type: Date,
-			optional: true
-			autoform:
-				omit: true
-		created_by:
-			type: String,
-			optional: true
-			autoform:
-				omit: true
-		modified:
-			type: Date,
-			optional: true
-			autoform:
-				omit: true
-		modified_by:
-			type: String,
-			optional: true
-			autoform:
-				omit: true
-		mobile:
-			type: String,
-			optional: true,
-			autoform:
-				type: ->
-					return "text"
-		work_phone:
-			type: String,
-			optional: true
-		position:
-			type: String,
-			optional: true
+			label: "邀请状态"
+			type: "text"
+			omit: true
+		user:
+			type: "master_detail"
+			reference_to: "users"
+			index:true
+			# required: true
+			omit: true
+			hidden: true
 		hr:
 			type: Object,
-			optional: true,
 			blackbox: true
-			autoform:
-				omit: true
-		company:
-			type: String,
-			optional: true
+			omit: true
+			hidden: true
+	
+	list_views:
+		all:
+			label: "所有人员"
+			columns: ["name", "organization","company", "position", "mobile", "email", "sort_no"]
+			filter_scope: "space"	
+		user:
+			label: "员工"
+			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]
+			filter_scope: "space"
+			filters: [["profile", "=", "user"]]
+		member:
+			label: "会员"
+			columns: ["name", "mobile", "email", "sort_no"]
+			filter_scope: "space"
+			filters: [["profile", "=", "member"]]
+		# guest:
+		# 	label: "游客"
+		# 	columns: ["name",  "mobile", "email", "sort_no"]
+		# 	filter_scope: "space"
+		# 	filters: [["profile", "=", "guest"]]
+	permission_set:
+		user:
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
+			allowRead: true
+			modifyAllRecords: false
+			viewAllRecords: true
+		admin:
+			allowCreate: true
+			allowDelete: true
+			allowEdit: true
+			allowRead: true
+			modifyAllRecords: true
+			viewAllRecords: true
 
 
+Meteor.startup ()->
 	if Meteor.isClient
 		db.space_users._simpleSchema.i18n("space_users")
 		db.space_users._sortFunction = (doc1, doc2) ->
