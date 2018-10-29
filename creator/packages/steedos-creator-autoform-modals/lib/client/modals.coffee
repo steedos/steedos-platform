@@ -45,7 +45,7 @@ oDataOperation = (type, url, data, object_name)->
 			self.done(null, data)
 		error: (jqXHR, textStatus, errorThrown) ->
 			# console.log(errorThrown);
-			self.done(jqXHR.responseJSON.error.message)
+			self.done(jqXHR.responseJSON.error)
 
 getObjectName = (collectionName)->
 	return collectionName.replace(/Creator.Collections./, "")
