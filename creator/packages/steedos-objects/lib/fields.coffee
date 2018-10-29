@@ -313,6 +313,9 @@ Creator.getObjectSchema = (obj) ->
 
 		if !field.required
 			fs.optional = true
+		
+		if field.unique
+			fs.unique = true
 
 		if field.omit
 			fs.autoform.omit = true
