@@ -28,7 +28,6 @@ Meteor.startup ->
 		if !Steedos.isLoading()  
 			setTimeout ->
 				if !Steedos.isLoading() 
-					console.log ("remove loading")
 					$("body").removeClass("loading")
 			, 500
 
