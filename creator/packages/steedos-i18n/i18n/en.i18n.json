@@ -518,5 +518,6 @@
 	"customize_apps": "Apps",
 
 	"space_users_error_roles_used": "User has been used by roles：__names__",
-	"space_users_error_flows_used": "User has been used by flows：__names__"
+	"space_users_error_flows_used": "User has been used by flows：__names__",
+	"contact_need_phone_or_email": "You should fill in phone-number or email-address"
 }

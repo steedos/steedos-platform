@@ -536,5 +536,6 @@
 	"customize_apps": "企业应用",
 
 	"space_users_error_roles_used": "已有角色指定该用户：__names__",
-	"space_users_error_flows_used": "已有流程指定该用户为处理人：__names__"
+	"space_users_error_flows_used": "已有流程指定该用户为处理人：__names__",
+	"contact_need_phone_or_email": "手机和邮箱不能同时为空"
 }
