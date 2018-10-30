@@ -74,6 +74,7 @@ Package.onUse(function(api) {
 	api.use('steedos:i18n-iso-countries@3.3.0');
 	api.use('steedos:objects');
 
+	api.addFiles('lib/meteor_fix.js', ['server']);
 	api.addFiles('lib/steedos_util.js', ['client', 'server']);
 
 	api.addFiles([
