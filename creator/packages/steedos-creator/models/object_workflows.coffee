@@ -21,7 +21,7 @@ Creator.Objects.object_workflows =
 
 		flow_id:
 			label: "流程"
-			type: "lookup"
+			type: "master_detail"
 			required: true
 			reference_to: "flows"
 
