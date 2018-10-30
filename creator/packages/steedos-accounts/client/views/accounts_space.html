@@ -1,0 +1,27 @@
+<template name="accounts_space">
+	<div class="container accounts-wrapper">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="accounts-content">
+					<h3 class="accounts-title">{{title}}</h3>
+					<div class="weui-cells__tips">{{_ "accounts_space_help"}}</div>
+					<div class="weui-cells weui-cells_form">
+						<div class="weui-cell">
+							<div class="weui-cell__bd">
+								<input class="weui-input accounts-space-name" type="text" placeholder="{{_ "accounts_space_placeholder"}}">
+							</div>
+						</div>
+					</div>
+					<div class="weui-btn-area">
+						<a class="weui-btn btn-primary btn-ok" href="javascript:">{{_ "accounts_space_btn_ok"}}</a>
+					</div>
+					<div class="weui-footer weui-btn-area">
+						<p class="weui-footer__links">
+							<a class="weui-footer__link btn-cancel" href="/steedos/logout">{{_ "accounts_space_calcel"}}</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

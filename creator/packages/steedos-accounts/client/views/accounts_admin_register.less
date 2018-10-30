@@ -1,0 +1,84 @@
+.accounts-admin-register-wrapper{
+	background: #fff;
+	border-radius: 6px;
+	padding: 0px;
+	width: 400px;
+	.page__title{
+		text-align: center;
+	}
+	@media (max-width: 767px) {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0;
+		width: auto!important;
+		border-radius: 0px;
+		overflow-y: auto;
+		background: transparent;
+		.accounts-admin-register-content{
+			background: #fff;
+			padding: 2px 0px;
+			border-radius: 6px;
+			margin: 20px;
+		}
+		.page__hd{
+			.page__title{
+				font-size: 24px;
+			}
+		}
+		.page__bd{
+			.weui-cell {
+				.weui-cell__hd{
+					display: none;
+				}
+			}
+		}
+	}
+	.page__hd{
+		padding: 0 15px;
+		h1{
+			font-weight: bold;
+			font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+			margin-top: 20px;
+			margin-bottom: 10px;
+			font-size: 26px;
+		}
+	}
+	.page__bd{
+		margin-bottom: 20px;
+		.weui-cells__title:not(:first-child) {
+			margin-top: 20px;
+		}
+	}
+	.weui-label{
+		display: none;
+		margin-bottom: 0px;
+		font-weight: normal;
+		width: 140px;
+		.locale-zh-cn &{
+			width: 125px;
+		}
+	}
+	.weui-input{
+		font-size: 16px;
+		&:-ms-input-placeholder {
+			font-size: 16px;
+		}
+
+		&::placeholder {
+			font-size: 16px;
+		}
+	}
+	.weui-btn-area{
+		.signin-link{
+			text-align: center;
+			margin: 10px;
+			font-size: 15px;
+			a{
+				margin-left: 6px;
+			}
+		}
+	}
+}

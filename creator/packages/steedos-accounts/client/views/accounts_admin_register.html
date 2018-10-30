@@ -1,0 +1,118 @@
+<template name="accounts_admin_register">
+	<div class="container accounts-admin-register-wrapper">
+		<div class="accounts-admin-register-content">
+			<div class="page__hd">
+				<h1 class="page__title">{{_ 'accounts_register_title'}}</h1>
+			</div>
+			<div class="page__bd">
+				<div class="weui-cells__title">{{_ 'accounts_register_company_title'}}</div>
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell {{#if errors.company}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">{{_ 'accounts_register_company_label'}}</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-company" type="text" placeholder="{{_ 'accounts_register_company_placeholder'}}">
+							{{#if errors.company}}
+								<span class="text-danger">{{errors.company}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">{{_ 'accounts_register_admin_title'}}</div>
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell {{#if errors.name}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">{{_ 'accounts_register_name_label'}}</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-name" type="text" autocomplete="off" placeholder="{{_ 'accounts_register_name_placeholder'}}">
+							{{#if errors.name}}
+								<span class="text-danger">{{errors.name}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_vcode hide {{#if errors.mobile}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd">
+							<label class="weui-label">管理员手机号</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-mobile" autocomplete="off" type="text" placeholder="请输入手机号">
+							{{#if errors.mobile}}
+								<span class="text-danger">{{errors.mobile}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<button class="weui-vcode-btn">获取验证码</button>
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+					<div class="weui-cell hide {{#if errors.vcode}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">短信验证码</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-vcode" type="text" autocomplete="off" value="" placeholder="请输入手机短信收到的验证码">
+							{{#if errors.vcode}}
+								<span class="text-danger">{{errors.vcode}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+					<div class="weui-cell {{#if errors.email}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">{{_ 'accounts_register_email_label'}}</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-email" type="text" autocomplete="off" placeholder="{{_ 'accounts_register_email_placeholder'}}">
+							{{#if errors.email}}
+								<span class="text-danger">{{errors.email}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+					<div class="weui-cell {{#if errors.password}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">{{_ 'accounts_register_password_label'}}</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-password" type="password" autocomplete="off" placeholder="{{_ 'accounts_register_password_placeholder'}}">
+							{{#if errors.password}}
+								<span class="text-danger">{{errors.password}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+					<div class="weui-cell {{#if errors.confirmpwd}}weui-cell_warn{{/if}}">
+						<div class="weui-cell__hd"><label class="weui-label">{{_ 'accounts_register_confirmpwd_label'}}</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input form-confirmpwd" type="password" autocomplete="off" placeholder="{{_ 'accounts_register_confirmpwd_placeholder'}}">
+							{{#if errors.confirmpwd}}
+								<span class="text-danger">{{errors.confirmpwd}}</span>
+							{{/if}}
+						</div>
+						<div class="weui-cell__ft">
+							<i class="weui-icon-warn"></i>
+						</div>
+					</div>
+				</div>
+
+				<label for="weuiAgree" class="weui-agree hide">
+					<input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+					<span class="weui-agree__text">
+						阅读并同意<a href="javascript:void(0);">《相关条款》</a>
+					</span>
+				</label>
+
+				<div class="weui-btn-area">
+					<a class="weui-btn btn-primary btn-save" href="javascript:">{{_ "signUp"}}</a>
+					<div class="signin-link">
+						{{_ "ifYouAlreadyHaveAnAccount"}}<a href="/steedos/sign-in">{{_ "signIn"}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
