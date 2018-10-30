@@ -5,7 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.55",
+    "@babel/runtime": "7.0.0-beta.55",
     "@salesforce-ux/design-system": "^2.5.0-alpha.11",
     "admin-lte": "^2.3.11",
     "babel-runtime": "^6.26.0",
