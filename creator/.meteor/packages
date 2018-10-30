@@ -119,7 +119,7 @@ steedos:ionicons@0.1.7
 # steedos:vip-post
 steedos:objects
 steedos:sso
-# steedos:app-crm
+steedos:app-crm
 # steedos:app-informations
 # ssteedos:app-cms
 steedos:app-workflow
