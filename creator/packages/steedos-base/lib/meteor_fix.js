@@ -13,4 +13,9 @@ if (typeof mongoOptionStr !== 'undefined') {
 	mongoOptions = Object.assign({}, mongoOptions, jsonMongoOptions);
 }
 
-Mongo.setConnectionOptions(mongoOptions);
+if (Meteor.isServer) {
+	Mongo.setConnectionOptions(mongoOptions);
+}
+
+
+Meteor.autorun = Tracker.autorun
