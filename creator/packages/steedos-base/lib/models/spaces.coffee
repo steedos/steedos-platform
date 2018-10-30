@@ -41,7 +41,7 @@ Creator.Objects.spaces =
 			label: "所有者"
 			type: "lookup"
 			reference_to: "users"
-			disabled: true
+			readonly: true
 			omit: false
 		admins:
 			label: "管理员"
