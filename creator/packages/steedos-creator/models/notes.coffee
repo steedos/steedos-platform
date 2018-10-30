@@ -28,7 +28,7 @@ Creator.Objects.notes =
 
 	list_views:
 		all:
-			label: "所有备忘"
+			label: "全部"
 			filter_scope: "space"
 			columns: ["name", "created_by", "created", "related_to"]
 		recent:

@@ -104,7 +104,7 @@ Creator.Objects.objects =
 	list_views:
 		all:
 			columns: ["name", "label", "is_enable", "modified"]
-			label:"所有对象"
+			label:"全部"
 			filter_scope: "space"
 
 	permission_set:

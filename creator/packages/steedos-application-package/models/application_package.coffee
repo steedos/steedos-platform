@@ -52,6 +52,7 @@ Creator.Objects.application_package =
 			reference_to: "reports"
 	list_views:
 		all:
+			label: "所有"
 			columns: ["name"]
 			filter_scope: "space"
 	actions:

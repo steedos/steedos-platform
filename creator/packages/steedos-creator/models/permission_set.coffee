@@ -26,6 +26,7 @@ Creator.Objects.permission_set =
 
 	list_views:
 		all:
+			label:"全部"
 			filter_scope: "space"
 			columns: ["name", "users"]
 	permission_set:

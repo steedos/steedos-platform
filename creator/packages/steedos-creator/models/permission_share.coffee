@@ -51,12 +51,9 @@ Creator.Objects.permission_shares =
 			defaultValue: []
 	list_views:
 		all:
-			label: "所有共享规则"
+			label: "全部"
 			filter_scope: "space"
 			columns: ["name"]
-		mine:
-			label: "我的共享规则"
-			filter_scope: "mine"
 	permission_set:
 		user:
 			allowCreate: true

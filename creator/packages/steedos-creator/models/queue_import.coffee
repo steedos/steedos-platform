@@ -90,19 +90,9 @@ Creator.Objects.queue_import =
 			omit:true
 	list_views:
 		all:
-			label: "所有导入队列"
-			columns: ["object_name","encoding","field_mapping","description"]
+			label: "全部"
+			columns: ["object_name","encoding","field_mapping","description", "state"]
 			filter_scope: "space"
-		waitting:
-			label: "待执行"
-			columns: ["description","object_name","encoding","field_mapping","created"]
-			filter_scope: "space"
-			filters: [["state", "=", "waitting"]]
-		finished:
-			label: "已完成"
-			columns: ["object_name","encoding","field_mapping","start_time","success_count","failure_count","error"]
-			filter_scope: "space"
-			filters: [["state", "=", "finished"]]
 	permission_set:
 		user:
 			allowCreate: false

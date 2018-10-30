@@ -1,7 +1,7 @@
 Creator.Objects.OAuth2Clients = 
 	name: "OAuth2Clients"
 	icon: "entity"
-	label: "连接的应用程序"
+	label: "OAuth2应用"
 	enable_search: false
 	# db: Package["steedos:oauth2-server"]?.oAuth2Server?.collections?.clients
 	fields: 
@@ -38,7 +38,7 @@ Creator.Objects.OAuth2Clients =
 		
 	list_views:
 		all:
-			label:"所有"
+			label:"全部"
 			columns:["clientName","active","redirectUri"]		
 	permission_set:
 		user:

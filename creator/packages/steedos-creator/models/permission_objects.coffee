@@ -121,7 +121,7 @@ Creator.Objects.permission_objects =
 
 	list_views:		
 		all:
-			label:"所有对象权限"
+			label:"全部"
 			columns: ["name", "permission_set_id", "object_name", "allowCreate", "allowDelete", "allowEdit", "allowRead", "modifyAllRecords", "viewAllRecords"]
 			filter_scope: "space"
 

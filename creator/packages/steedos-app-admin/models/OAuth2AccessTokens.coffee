@@ -1,7 +1,7 @@
 Creator.Objects.OAuth2AccessTokens = 
 	name: "OAuth2AccessTokens"
 	icon: "entity"
-	label: "配置Token"
+	label: "OAuth2 Token"
 	enable_search: false
 	fields: 
 		userId:
@@ -24,7 +24,7 @@ Creator.Objects.OAuth2AccessTokens =
 		
 	list_views:
 		all:
-			label:"所有"
+			label:"全部"
 			columns:["userId","expires","accessToken"]		
 	permission_set:
 		user:

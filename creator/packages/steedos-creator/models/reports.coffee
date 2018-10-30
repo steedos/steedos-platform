@@ -125,7 +125,7 @@ Creator.Objects.reports =
 		default:
 			columns: ["name", "report_type", "object_name"]
 		all:
-			label: "所有报表"
+			label: "全部报表"
 			filter_scope: "space"
 		mine:
 			label: "我的报表"

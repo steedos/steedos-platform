@@ -18,7 +18,7 @@ Creator.Objects.user_star =
 				return _.keys(Creator.Objects)
 	list_views:
 		all:
-			label:"所有"
+			label:"全部"
 			columns: ["user", "star_space", "star_post"]
 			filter_scope: "space"
 	triggers:

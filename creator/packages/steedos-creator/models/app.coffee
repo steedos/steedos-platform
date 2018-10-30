@@ -62,7 +62,7 @@ Creator.Objects.apps =
 			defaultValue:true
 	list_views:
 		all:
-			label: "所有应用"
+			label: "所有"
 			filter_scope: "space"
 			columns: ["name", "objects", "visible", "sort"]
 	permission_set:
