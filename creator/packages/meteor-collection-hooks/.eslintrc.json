@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "standard"
+  ],
+  "installedESLint": true,
+  "plugins": [
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  }
+}
