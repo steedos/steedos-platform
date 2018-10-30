@@ -4,7 +4,7 @@ db.organizations._simpleSchema = new SimpleSchema
 
 Creator.Objects.organizations = 
 	name: "organizations"
-	label: "组织机构"
+	label: "部门"
 	icon: "team_member"
 	enable_search: true
 	enable_tree: true
@@ -84,7 +84,7 @@ Creator.Objects.organizations =
 	
 		all:
 			columns: ["name", "sort_no", "admins", "hidden"]
-			label: "所有部门"
+			label: "所有"
 			filter_scope: "space"
 			sort : [ "field_name":"sort_no", "order":"asc"]
 

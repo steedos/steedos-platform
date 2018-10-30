@@ -85,24 +85,10 @@ Creator.Objects.space_users =
 	
 	list_views:
 		all:
-			label: "所有人员"
+			label: "所有"
 			columns: ["name", "organization","company", "position", "mobile", "email", "sort_no"]
 			filter_scope: "space"	
-		user:
-			label: "员工"
-			columns: ["name", "organization", "position", "mobile", "email", "sort_no"]
-			filter_scope: "space"
-			filters: [["profile", "=", "user"]]
-		member:
-			label: "会员"
-			columns: ["name", "mobile", "email", "sort_no"]
-			filter_scope: "space"
-			filters: [["profile", "=", "member"]]
-		# guest:
-		# 	label: "游客"
-		# 	columns: ["name",  "mobile", "email", "sort_no"]
-		# 	filter_scope: "space"
-		# 	filters: [["profile", "=", "guest"]]
+	
 	permission_set:
 		user:
 			allowCreate: false
