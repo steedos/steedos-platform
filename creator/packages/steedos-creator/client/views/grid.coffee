@@ -237,12 +237,12 @@ _columns = (object_name, columns, list_view_id, is_related)->
 			columnItem.allowSorting = false
 		return columnItem
 	
-	
-	_.each list_view_sort, (sort,index)->
-		sortColumn = _.findWhere(result,{dataField:sort[0]})
-		if sortColumn
-			sortColumn.sortOrder = sort[1]
-			sortColumn.sortIndex = index
+	if !_.isEmpty(list_view_sort)
+		_.each list_view_sort, (sort,index)->
+			sortColumn = _.findWhere(result,{dataField:sort[0]})
+			if sortColumn
+				sortColumn.sortOrder = sort[1]
+				sortColumn.sortIndex = index
 	
 	return result
 
@@ -419,7 +419,8 @@ Template.creator_grid.onRendered ->
 							$("<div>").append(htmlText).appendTo(container)
 						else
 							$("<div>").append(htmlText).appendTo(container)
-						
+			_.every showColumns, (n)->
+				n.sortingMethod = Creator.sortingMethod
 			# console.log "selectColumns", selectColumns
 			console.log "filter", filter
 			# console.log "expand_fields", expand_fields
