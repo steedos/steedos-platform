@@ -133,12 +133,16 @@ Creator.sortingMethod = (value1, value2) ->
 		value1 = value1.getTime()
 	if value2 instanceof Date
 		value2 = value2.getTime()
+	if typeof value1 is "number" and typeof value2 is "number"
+		return value1 - value2
 	# Handling null values
-	if !value1 and value2
+	isValue1Empty = value1 == null or value1 == undefined
+	isValue2Empty = value2 == null or value2 == undefined
+	if isValue1Empty and !isValue2Empty
 		return -1
-	if !value1 and !value2
+	if isValue1Empty and isValue2Empty
 		return 0
-	if value1 and !value2
+	if !isValue1Empty and isValue2Empty
 		return 1
 	locale = Steedos.locale()
 	return value1.toString().localeCompare value2.toString(), locale
