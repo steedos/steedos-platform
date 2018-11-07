@@ -455,7 +455,6 @@ Template.creator_grid.onRendered ->
 					customSave: (gridState)->
 						if self.data.is_related
 							return
-						debugger
 						columns = gridState.columns
 						column_width = {}
 						sort = []
