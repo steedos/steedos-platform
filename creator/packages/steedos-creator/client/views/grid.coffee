@@ -467,8 +467,6 @@ Template.creator_grid.onRendered ->
 							_.each columns, (column_obj)->
 								if column_obj.sortOrder
 									sort.push {field_name: column_obj.dataField, order: column_obj.sortOrder}
-							console.log "==========stateStoring====column_width======", column_width
-							console.log "==========stateStoring====sort======", sort
 							Meteor.call 'grid_settings', curObjectName, list_view_id, column_width, sort,
 								(error, result)->
 									if error
@@ -569,10 +567,8 @@ Template.creator_grid.onRendered ->
 				# 不支持tree格式的翻页，因为OData模式下，每次翻页都请求了完整数据，没有意义
 				dxOptions.pager = null 
 				dxOptions.paging = null 
-				console.log "==========dxOptions=======x=========", dxOptions
 				self.dxDataGridInstance = self.$(".gridContainer").dxTreeList(dxOptions).dxTreeList('instance')
 			else
-				console.log "==========dxOptions=======y=========", dxOptions
 				self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 				self.dxDataGridInstance.pageSize(pageSize)
 			
