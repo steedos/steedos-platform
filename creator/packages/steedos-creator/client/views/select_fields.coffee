@@ -115,7 +115,7 @@ Template.select_fields.events
         listview_id = Session.get("list_view_id")
 
         Session.set("list_view_visible", false)
-
+        dxDataGridInstance = $(".gridContainer").dxDataGrid().dxDataGrid('instance')
         Meteor.call "update_columns", listview_id, columns, (error, result) -> 
             Session.set("list_view_visible", true)
             if error 
@@ -127,7 +127,7 @@ Template.select_fields.events
             Modal.hide(template)
 
             if FlowRouter.getParam('template') == "grid"
-                Template["creator_#{FlowRouter.getParam('template')}"]?.refresh()
+                Template["creator_#{FlowRouter.getParam('template')}"]?.refresh(dxDataGridInstance)
 
     'click .up-column': (event, template)->
         visible_fields = template.visible_fields.get()

@@ -3,15 +3,7 @@ Creator.Objects.apps =
 	label: "应用"
 	icon: "apps"
 	fields:
-		unique_id:
-			type: 'text',
-			hidden: true
-		version:
-			type: 'text',
-			hidden: true
-		from:
-			type: 'select',
-			options: '默认:0,定制:1,商城:2'
+
 		name: 
 			label: "名称"
 			type: "text"
@@ -60,6 +52,16 @@ Creator.Objects.apps =
 			label: "creator应用"
 			hidden:true
 			defaultValue:true
+		unique_id:
+			type: 'text',
+			hidden: true
+		version:
+			type: 'text',
+			hidden: true
+		from:
+			type: 'select',
+			options: '默认:0,定制:1,商城:2'
+			hidden: true
 	list_views:
 		all:
 			label: "所有"

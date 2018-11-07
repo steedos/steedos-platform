@@ -228,6 +228,9 @@ FlowRouter.route '/app/:app_id/:object_name/:template/:list_view_id',
 		if Session.get("object_name") != FlowRouter.getParam("object_name")
 			Session.set("list_view_id", null)
 
+		if queryParams?.hidden_header=="true"
+			Session.set("hidden_header", true)
+
 		Session.set("app_id", FlowRouter.getParam("app_id"))
 		Session.set("object_name", FlowRouter.getParam("object_name"))
 		Session.set("list_view_id", FlowRouter.getParam("list_view_id"))

@@ -2,6 +2,10 @@ http = Npm.require 'http';
 socket_io = Npm.require 'socket.io';
 Fiber = Npm.require('fibers');
 
+if !process.env.SOCKET_IO_PORT
+	console.warn('The environment variable SOCKET_IO_PORT is not configured, failing to start socket.io');
+	return;
+
 PORT = process.env.SOCKET_IO_PORT || 8080;
 
 SOCKETS = {}

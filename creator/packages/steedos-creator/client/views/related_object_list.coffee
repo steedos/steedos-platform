@@ -26,7 +26,8 @@ Template.related_object_list.helpers
 		return Template.instance().recordsTotal.get()
 		
 	list_data: ()->
-		return {total: Template.instance().recordsTotal, is_related: true}
+		related_object_name = Session.get("related_object_name")
+		return {related_object_name:related_object_name, total: Template.instance().recordsTotal, is_related: true}
 
 
 Template.related_object_list.events
@@ -45,7 +46,8 @@ Template.related_object_list.events
 			$(".creator-add").click()
 
 	'click .btn-refresh': (event, template)->
-		Template.creator_grid.refresh()
+		dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+		Template.creator_grid.refresh(dxDataGridInstance)
 
 
 Template.related_object_list.onCreated ->

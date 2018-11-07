@@ -23,7 +23,7 @@ Template.standard_query_modal.helpers
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			if !field.hidden and field.type != "grid"
+			if !field.hidden and !["grid", "image", "avatar"].includes(field.type)
 				searchable_fields.push(key)
 		schema = {}
 		searchable_fields = _.intersection(first_level_keys, searchable_fields)
@@ -78,7 +78,7 @@ Template.standard_query_modal.helpers
 		object_fields = object.fields
 		searchable_fields = []
 		_.each object_fields, (field, key)->
-			if !field.hidden and field.type != "grid" and first_level_keys.includes(key)
+			if !field.hidden and !["grid", "image", "avatar"].includes(field.type) and first_level_keys.includes(key)
 				if ["date", "datetime", "currency", "number"].includes(field.type)
 					searchable_fields.push([key, key + "_endLine"])
 				else
@@ -112,5 +112,6 @@ Template.standard_query_modal.events
 		object_name = Session.get("object_name")
 
 		Session.set 'standard_query', {object_name: object_name, query: query}
+		$(".filter-list-wraper #grid-search").val("")
 		Modal.hide(template)
 

@@ -30,6 +30,20 @@ Template.creator_view.helpers Creator.helpers
 
 Template.creator_view.helpers
 
+	isObjectField: (fieldKey)->
+		if !fieldKey
+			return
+		return Creator.getObject(Session.get("object_name")).schema._schema[fieldKey].type.name == 'Object'
+
+	objectField: (fieldKey)->
+		schema = Creator.getObject(Session.get("object_name")).schema
+		return {
+			name: schema._schema[fieldKey].label
+			fields: Creator.getFieldsForReorder(schema, _.map(schema._objectKeys[fieldKey + '.'], (k)->
+				return fieldKey + '.' + k
+			))
+		}
+
 	collection: ()->
 		return "Creator.Collections." + Creator.getObject(Session.get("object_name"))._collection_name
 
@@ -47,9 +61,9 @@ Template.creator_view.helpers
 		firstLevelKeys = simpleSchema._firstLevelSchemaKeys
 		permission_fields = Creator.getFields()
 
-		_.forEach schema, (field, name)->
-			if field.type == Object && field.autoform
-				field.autoform.type = 'hidden'
+#		_.forEach schema, (field, name)->
+#			if field.type == Object && field.autoform
+#				field.autoform.type = 'hidden'
 
 		fieldGroups = []
 		fieldsForGroup = []
@@ -82,7 +96,10 @@ Template.creator_view.helpers
 
 	keyValue: (key) ->
 		record = Creator.getObjectRecord()
-		return record[key]
+#		return record[key]
+		key.split('.').reduce (o, x) ->
+				o[x]
+		, record
 
 	keyField: (key) ->
 		fields = Creator.getObject().fields
@@ -255,8 +272,9 @@ Template.creator_view.helpers
 
 	list_data: (obj) ->
 		console.log obj
+		object_name = Session.get "object_name"
 		related_object_name = obj.object_name
-		return {related_object_name: related_object_name, recordsTotal: Template.instance().recordsTotal, is_related: true}
+		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true}
 
 Template.creator_view.events
 
@@ -373,6 +391,14 @@ Template.creator_view.events
 		# $(".creator-record-edit").click()
 		full_screen = this.full_screen
 		field = this.field_name
+		_fs = field.split('.')
+		if _fs.length > 1
+			schema = Creator.getObject(Session.get("object_name")).schema
+			_obj_fields = _.map(schema._objectKeys[_fs[0] + '.'], (k)->
+				return _fs[0] + '.' + k
+			)
+			field = _fs[0] + ',' + _obj_fields.join(',')
+
 		if this.field.depend_on && _.isArray(this.field.depend_on)
 			field = _.clone(this.field.depend_on)
 			field.push(this.field_name)
@@ -393,6 +419,7 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
+		dxDataGridInstance = $(event.currentTarget).closest(".related-object-tabular").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
 		parent = event.currentTarget.dataset?.parent
 		files = event.currentTarget.files
 		i = 0
@@ -441,6 +468,7 @@ Template.creator_view.events
 							return
 						return
 					toastr.success TAPi18n.__('Attachment was added successfully')
+					Template.creator_grid.refresh dxDataGridInstance
 					return
 				error: (xhr, msg, ex) ->
 					$(document.body).removeClass 'loading'

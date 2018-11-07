@@ -46,6 +46,9 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/core.coffee');
 
+	api.addFiles('client/coreform/inputTypes/boolean-checkbox/boolean-checkbox.html', 'client');
+	api.addFiles('client/coreform/inputTypes/boolean-checkbox/boolean-checkbox.js', 'client');
+
 	api.addFiles('client/coreform/inputTypes/coreform-org-localdata/select-orgs.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-org-localdata/select-orgs.js', 'client');
 

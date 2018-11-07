@@ -1,19 +1,20 @@
 {
+  "lockfileVersion": 1,
   "dependencies": {
     "clone": {
       "version": "2.1.1",
       "resolved": "https://registry.npmjs.org/clone/-/clone-2.1.1.tgz",
-      "from": "clone@https://registry.npmjs.org/clone/-/clone-2.1.1.tgz"
+      "integrity": "sha1-0hfR6WERjjrJpLi7oyhVU79kfNs="
     },
     "datatables": {
       "version": "1.10.9",
       "resolved": "https://registry.npmjs.org/datatables/-/datatables-1.10.9.tgz",
-      "from": "datatables@https://registry.npmjs.org/datatables/-/datatables-1.10.9.tgz"
+      "integrity": "sha1-TxIkcnUHfhsCQ4NhEexcRgP6FPQ="
     },
     "jquery": {
-      "version": "3.2.1",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz",
-      "from": "jquery@https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz"
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
+      "integrity": "sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg=="
     }
   }
 }

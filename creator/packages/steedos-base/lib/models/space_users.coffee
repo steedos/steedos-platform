@@ -17,9 +17,19 @@ Creator.Objects.space_users =
 			required: true
 			searchable:true
 			index:true
+		organizations:
+			type: "lookup"
+			label:'所属部门'
+			reference_to: "organizations"
+			multiple: true
+			defaultValue: []
 		position:
 			type: "text"
 			label:'职务'
+		manager:
+			type: "lookup"
+			label:'上级主管'
+			reference_to: "users"
 
 		mobile:
 			type: "text"
@@ -36,25 +46,17 @@ Creator.Objects.space_users =
 			type: "text"
 			label:'单位'
 			group:'-'
-		organizations:
-			type: "lookup"
-			label:'所属部门'
-			reference_to: "organizations"
-			multiple: true
-			defaultValue: []
-		manager:
-			type: "lookup"
-			label:'上级主管'
-			reference_to: "users"
+			hidden: true
 
 		sort_no:
 			type: "number"
 			label:'排序号'
 			group:'-'
 		organization:
-			type: "master_detail"
+			type: "lookup"
 			reference_to: "organizations"
 			omit: true
+			hidden: true
 		organization_company: 
 			type: "lookup"
 			label: '所属公司'
@@ -63,13 +65,14 @@ Creator.Objects.space_users =
 			hidden: true
 		user_accepted:
 			type: "boolean"
-			label:'接受状态'
+			label:'有效'
 			defaultValue: true
 			omit:true
 		invite_state:
 			label: "邀请状态"
 			type: "text"
 			omit: true
+			hidden: true
 		user:
 			type: "master_detail"
 			reference_to: "users"
@@ -86,7 +89,7 @@ Creator.Objects.space_users =
 	list_views:
 		all:
 			label: "所有"
-			columns: ["name", "organization","company", "position", "mobile", "email", "sort_no"]
+			columns: ["name", "organizations","position", "mobile", "email", "sort_no"]
 			filter_scope: "space"	
 	
 	permission_set:

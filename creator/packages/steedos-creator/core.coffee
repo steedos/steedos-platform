@@ -397,6 +397,7 @@ Creator.formatFiltersToDev = (filters, options)->
 		filters = _.map filters, (obj)->
 			return [obj.field, obj.operation, obj.value]
 	selector = []
+	logic_symbol = if options?.is_logic_or then "or" else "and"
 	_.each filters, (filter)->
 		field = filter[0]
 		option = filter[1]
@@ -419,11 +420,11 @@ Creator.formatFiltersToDev = (filters, options)->
 
 			if sub_selector[sub_selector.length - 1] == "and" || sub_selector[sub_selector.length - 1] == "or"
 				sub_selector.pop()
-			selector.push sub_selector, "and"
+			selector.push sub_selector, logic_symbol
 		else
-			selector.push [field, option, value], "and"
+			selector.push [field, option, value], logic_symbol
 
-	if selector[selector.length - 1] == "and"
+	if selector[selector.length - 1] == logic_symbol
 		selector.pop()
 
 	return selector

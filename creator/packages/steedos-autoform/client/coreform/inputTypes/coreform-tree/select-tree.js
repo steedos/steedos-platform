@@ -95,12 +95,12 @@ Template.afSelectTree.onRendered(function () {
 						// 把dxDropDownBox控件中的值赋值到dxTreeView控件中
 						// 如果isReady为true，说明不是第一次加载tree，而是在tree中展开节点，这时不需要，也不可以再把dxDropDownBox中的老值同步到dxTreeView控件中
 						syncTreeViewSelection(args.component, value);
-						// 找到并默认展开第一个节点
-						var nodes = args.component.getNodes();
-						var rootNode = nodes[0];
-						if (rootNode && rootNode.key){
-							args.component.expandItem(rootNode.key);
-						}
+						// // 找到并默认展开第一个节点
+						// var nodes = args.component.getNodes();
+						// var rootNode = nodes[0];
+						// if (rootNode && rootNode.key){
+						// 	args.component.expandItem(rootNode.key);
+						// }
 					}
 				},
 				onItemExpanded: function(args){

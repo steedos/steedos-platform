@@ -1,9 +1,10 @@
 <template name="creatorLayout">
 	{{#unless isloading}}
 	<div class="steedos layout-top-nav skin-blue-light">
-		{{> creatorHeader}}
-
-		<div class="content-wrapper">
+		{{#unless hiddenHeader}}
+			{{> creatorHeader}}
+		{{/unless}}
+		<div class="content-wrapper" style="{{#if hiddenHeader}}top: 0px;{{/if}}">
 			{{> Template.dynamic template=main}}
 		</div>
 	</div>

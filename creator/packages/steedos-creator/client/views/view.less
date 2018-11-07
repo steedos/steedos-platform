@@ -7,14 +7,24 @@
 			fill: currentColor;
 		}
 	}
-
-	.creator-view-tabs_default {
-		overflow: auto;
-		max-height: 600px;
+	.objectViewManager{
+		height: 100%;
+		.table-grid-content{
+			height: 100%;
+			.creator-view-tabs_default {
+				max-height: 100%;
+			}
+		}
 	}
 
-	.creator-view-tabs-content {
+	.slds-tabs_default__content {
 		.related-object-tabular {
+			.dx-datagrid-headers {
+				border-top: 1px solid #ddd;
+				.dx-datagrid-table .dx-row > td {
+					border-bottom: 0;
+				}
+			}
 			.dataTable {
 				thead > tr > th {
 					position: relative;

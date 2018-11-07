@@ -261,7 +261,7 @@
 	"organizations": "部门",
 	"organizations_id": "ID",
 	"organizations_fullname": "部门全名",
-	"organizations_users": "用户",
+	"organizations_users": "部门成员",
 	"organizations_name": "部门名称",
 	"organizations_parent": "上级部门",
 	"organizations_space_name()": "工作区",
@@ -276,7 +276,7 @@
 	"organizations_space": "所属工作区",
 	"organizations_sort_no": "排序号",
 	"organizations_hidden": "隐藏",
-	"organizations_admins": "组织管理员",
+	"organizations_admins": "部门管理员",
 
 	"space_users": "人员",
 	"space_users_id": "ID",

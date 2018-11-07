@@ -11,23 +11,26 @@ Creator.Objects.instances =
 			inlineHelpText: ""
 			required: true
 			searchable:true
+			is_wide: true
 			#index:true
 		flow:
-			label:"所属流程"
+			label:"流程"
 			type: "master_detail"
 			reference_to: "flows"
 			readonly: true
 		flow_version:
-			label:"流程版本"
+			label:"流程版本号"
 			type: "string"
+			hidden: true
 		form:
-			label:"申请单表单"
+			label:"表单"
 			type: "master_detail"
 			reference_to: "forms"
 			readonly: true
 		form_version:
-			label:"申请单版本"
+			label:"表单版本号"
 			type: "string"
+			hidden: true
 		submitter:
 			label:"提交者"
 			type: "master_detail"
@@ -36,6 +39,10 @@ Creator.Objects.instances =
 		submitter_name:
 			type: "string"
 			label:"提交者"
+			hidden: true
+		submit_date:
+			type: "datetime"
+			label:"提交日期"
 		applicant:
 			type: "lookup"
 			label:"申请人"
@@ -43,68 +50,89 @@ Creator.Objects.instances =
 		applicant_name:
 			type: "string"
 			label:"申请人"
+			hidden: true
 		applicant_organization:
 			type: "lookup"
-			label:"申请单位"
+			label:"申请人部门"
 			reference_to: "organizations"
 		applicant_organization_name:
 			type: "string"
-			label:"申请单位"
+			label:"申请人部门名称"
+			hidden: true
 		applicant_organization_fullname:
 			type: "string"
-			label:"申请单位全称"
-		submit_date:
-			type: "datetime"
-			label:"提交日期"
+			label:"申请人部门全称"
+			hidden: true
 		code:
 			label:"公式"
 			type: "string"
-		is_recorded:
-			type: "boolean"
-			label:"已归档"
-		is_archived:
-			type: "boolean"
-			label:"已归档(旧)"
-		is_deleted:
-			type: "boolean"
-			label:"已删除"
+			hidden: true
 		values:
 			blackbox: true
 			omit: true
 			label:"申请单内容"
+			hidden: true
 		inbox_users:
-			type: [String]
+			type: "string"
+			type: "lookup"
+			multiple: true
+			reference_to: "users"
 			label:"待办处理人"
 		outbox_users:
-			type: [String]
+			type: "string"
+			type: "lookup"
+			multiple: true
+			reference_to: "users"
 			label:"已办处理人"
 		traces:
 			type: [Object]
 			blackbox: true
 			omit: true
 			label:"步骤审批"
+			hidden: true
 		attachments:
 			type: [Object]
 			blackbox: true
 			omit: true
 			label:"附件"
+			hidden: true
 		flow_name:
 			type: "string"
 			label:"流程名"
+			hidden: true
 		category_name:
 			type: "string"
 			label:"流程分类"
-		related_instances:
-			type: [String]
-			label:"相关申请单"
+			hidden: true
 		state:
 			type: "string"
 			label:"申请单状态"
 
+		is_recorded:
+			type: "boolean"
+			label:"已归档"
+		is_archived:
+			type: "boolean"
+			label:"已归档(旧)"
+			hidden: true
+		is_deleted:
+			type: "boolean"
+			label:"已删除"
+			hidden: true
+
+		related_instances:
+			type: "string"
+			type: "lookup"
+			multiple: true
+			reference_to: "instances"
+			label:"相关申请单"
+			is_wide: true
+			
 		record_ids:
 			label:"记录ID"
 			type: "grid"
 			omit: true
+			hidden: true
 
 		"record_ids.$.o":
 			type: "text"

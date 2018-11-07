@@ -30,7 +30,9 @@ Template.creator_table_cell.onRendered ->
 		record = Creator.getCollection(object_name).findOne(record_id)
 		if record
 			if  _field.type == "grid"
-				val = record[_field.name]
+				val = _field.name.split('.').reduce (o, x) ->
+								o[x]
+						, record
 
 				columns = Creator.getSchema(object_name)._objectKeys[_field.name + ".$."]
 

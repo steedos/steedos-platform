@@ -45,8 +45,16 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields, space
 		if keys.length < 1
 			keys = _.keys(_fields)
 
-		keys.forEach (key)->
+		_keys = []
 
+		keys.forEach (key)->
+			if _object.schema._objectKeys[key + '.']
+				_keys = _keys.concat(_.map(_object.schema._objectKeys[key + '.'], (k)->
+					return key + '.' + k
+				))
+			_keys.push(key)
+
+		_keys.forEach (key)->
 			reference_field = _fields[key]
 
 			if reference_field && (_.isFunction(reference_field.reference_to) || !_.isEmpty(reference_field.reference_to))  # and Creator.Collections[reference_field.reference_to]
@@ -63,7 +71,9 @@ Meteor.publishComposite "steedos_object_tabular", (tableName, ids, fields, space
 								s_k = key.replace(/\w+\.\$\.(\w+)/ig, "$1")
 								reference_ids = parent[p_k].getProperty(s_k)
 							else
-								reference_ids = parent[key]
+								reference_ids = key.split('.').reduce (o, x) ->
+										o[x]
+								, parent
 
 							reference_to = reference_field.reference_to
 

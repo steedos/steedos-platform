@@ -1,7 +1,7 @@
 Creator.Objects.categories =
 	name: "categories"
 	icon: "metrics"
-	label: "分类"
+	label: "流程分类"
 	fields:
 		name:
 			type: "text"

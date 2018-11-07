@@ -9,6 +9,7 @@ Creator.baseObject =
 			defaultValue: "{userId}"
 			group:"记录"
 			omit: true
+			hidden: true
 		space:
 			type: "lookup"
 			label:"所属工作区"

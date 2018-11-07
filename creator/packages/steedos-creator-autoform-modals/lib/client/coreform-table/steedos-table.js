@@ -157,13 +157,19 @@ if(Meteor.isClient){
             }
         },
         fieldName: function(index, value){
+
             var field = Template.instance().data.name;
+
+			var formId = AutoForm.getFormId();
+			var schema = AutoForm.getFormSchema(formId)._schema;
+
             var keys = CreatorTable.getKeys(field);
             keys = _.map(keys, function(key, i){
                 var _value = {};
                 _value.name = field + "."+ index +"." + key;
                 _value.value = value[i]
                 _value.key = field + ".$." + key;
+                _value.type = 'field-type-' + schema[_value.key].type.name;
                 return _value
             });
             return keys

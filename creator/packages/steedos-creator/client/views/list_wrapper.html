@@ -28,7 +28,7 @@
 											<div class="triggerLinkTextAndIconWrapper">
 												<span class="triggerLinkText selectedListView uiOutputText">{{list_view_label list_view}}</span>
 												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
-													<span data-aura-rendered-by="127:0" class="lightningPrimitiveIcon">
+													<span class="lightningPrimitiveIcon">
 														{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
 													</span>
 												</span>
@@ -65,6 +65,22 @@
 					<div class="slds-grid">
 						<div class="slds-col slds-align-middle">
 							<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{else}}{{_ "creator_list_item_counts" 0}}{{/if}}</p>
+						</div>
+						<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink">
+							<div>
+								<div class="search-in-list slds-m-left_large slds-is-relative">
+									<div force-list-view-manager-search-bar_list-view-manager-search-bar="" class="slds-form-element">
+										<label for="grid-search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索此列表...</label>
+										<div class="slds-form-element__control slds-grow slds-input-has-icon slds-input-has-icon_left-right">
+											<input type="search" id="grid-search" placeholder="搜索此列表..." name="search-input" class="slds-input">
+											<div>
+												{{> steedos_icon class="slds-input__icon slds-input__icon_left" source="utility-sprite" name="search"}}
+											</div>
+											<div class="slds-input__icon-group slds-input__icon-group_right"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">

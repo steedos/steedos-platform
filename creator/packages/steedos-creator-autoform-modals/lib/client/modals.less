@@ -6,6 +6,9 @@
 .creator-auotform-modals {
 	.is-single {
 		width: 600px !important;
+		.slds-modal__content {
+			overflow:visible;
+		}
 	}
 
 	.full-screen {
@@ -131,6 +134,10 @@
 			}
 			.form-group {
 				margin-bottom: 0;
+
+				.form-group{
+					margin-bottom: 15px;
+				}
 				
 				.help-info {
 					font-size: 12px;
@@ -156,11 +163,12 @@
 							// font-weight: bold;
 							font-weight: normal;
 							color: #706e6b;
-							input[type="checkbox"] {
-								position: absolute;
-								top: 28px;
-								left: 20px;
-							}
+
+						}
+						input[type="checkbox"] {
+							position: absolute;
+							top: 28px;
+							left: 20px;
 						}
 					}
 				}

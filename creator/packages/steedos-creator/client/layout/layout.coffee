@@ -1,6 +1,11 @@
 Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
+	hiddenHeader: ()->
+		if Session.get("hidden_header") and Session.get("hidden_header") == true
+			return true
+		else
+			return false
 	
 	isloading: ->
 		return Creator.isloading()

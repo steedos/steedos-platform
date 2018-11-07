@@ -26,12 +26,12 @@
                                     {{/if}}
                                 {{else}}
                                     {{#if isDisabledField this.key}}
-                                        <td>
+                                        <td class="{{this.type}}">
                                             <span class="disabled-field-value">{{disabledFieldsValue this.key}}</span>
                                             <span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true}}</span>
                                         </td>
                                     {{else}}
-                                        <td>{{> afQuickField name=this.name}}</td>
+                                        <td class="{{this.type}}">{{> afQuickField name=this.name}}</td>
                                     {{/if}}
                                 {{/if}}
                             {{/each}}

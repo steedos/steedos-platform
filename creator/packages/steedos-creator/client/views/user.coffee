@@ -28,6 +28,9 @@ Template.user.helpers
 		fields = Creator.getSchema("space_users")._firstLevelSchemaKeys
 		fields.splice(_.indexOf(fields, "instances"), 1)
 		fields.splice(_.indexOf(fields, "sharing"), 1)
+		obj_fields = Creator.getObject("space_users").fields
+		fields = fields.filter (n)->
+			return !obj_fields[n]?.hidden
 		fields = Creator.getFieldsForReorder(schema, fields)
 		return fields
 

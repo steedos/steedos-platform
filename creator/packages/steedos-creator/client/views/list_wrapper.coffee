@@ -37,7 +37,8 @@ Template.creator_list_wrapper.helpers
 		return Template.instance().recordsTotal.get()
 	
 	list_data: ()->
-		return {total: Template.instance().recordsTotal}
+		object_name = Session.get "object_name"
+		return {object_name: object_name, total: Template.instance().recordsTotal}
 
 	list_views: ()->
 		Session.get("change_list_views")
@@ -246,7 +247,24 @@ Template.creator_list_wrapper.events
 
 	'click .btn-refresh': (event, template)->
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
-		Template["creator_#{FlowRouter.getParam('template')}"]?.refresh()
+		dxDataGridInstance = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+		Template["creator_#{FlowRouter.getParam('template')}"]?.refresh(dxDataGridInstance)
+
+	'keydown input#grid-search': (event, template)->
+		if event.keyCode == "13" or event.key == "Enter"
+			searchKey = $(event.currentTarget).val().trim()
+			if searchKey
+				object_name = Session.get("object_name")
+				obj = Creator.getObject(object_name)
+				obj_fields = obj.fields
+				query = {}
+				_.each obj_fields, (field,field_name)->
+					if field.searchable || field_name == obj.NAME_FIELD_KEY
+						query[field_name] = searchKey
+				standard_query = object_name: object_name, query: query, is_mini: true
+				Session.set 'standard_query', standard_query
+			else
+				delete Session.keys["standard_query"]
 
 
 Template.creator_list_wrapper.onCreated ->
@@ -260,6 +278,9 @@ Template.creator_list_wrapper.onDestroyed ->
 
 AutoForm.hooks addListView:
 	onSuccess: (formType,result)->
+		app_id = Session.get("app_id")
+		object_name = Session.get("object_name")
 		list_view_id = result._id
-		FlowRouter.go("/app/admin/objects/grid/#{list_view_id}");
+		url = Creator.getListViewUrl(object_name, app_id, list_view_id)
+		FlowRouter.go(url);
 			

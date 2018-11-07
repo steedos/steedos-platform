@@ -14,11 +14,10 @@ Creator.Objects.flows =
 			type: "master_detail"
 			reference_to: "forms"
 			readonly: true
-		flowtype:
-			label:"流程分类"
-			type: "text"
-			omit: true
-			hidden: true
+		category:
+			label: '流程分类'
+			type: "master_detail",
+			reference_to: "categories"
 		state:
 			label:"流程状态"
 			type: "select"
@@ -35,11 +34,111 @@ Creator.Objects.flows =
 		current_no:
 			label:"流程编号"
 			type: "number"
+
 		current:
-			blackbox: true
+#			blackbox: true
+#			omit: true
+#			hidden: true
+			label:"当前版本"
+			type: 'Object'
+			is_wide: true
+#		'current._id':
+#			type: 'text'
+#			readonly: true
+#			omit: true
+#			hidden: true
+#		'current._rev':
+#			label: '版本号'
+#			type: 'text'
+#			readonly: true
+#		'current.flow':
+#			type: 'text'
+#			readonly: true
+#			omit: true
+#			hidden: true
+#		'current.form_version':
+#			type: 'text'
+#			readonly: true
+#			omit: true
+#			hidden: true
+		'current.modified':
+			label: "修改时间"
+			type: 'datetime'
+			readonly: true
+		'current.modified_by':
+			label: "修改人"
+			type: "lookup"
+			reference_to: "users"
+			readonly: true
+		'current.created':
+			label: "创建时间"
+			type: 'datetime'
+			readonly: true
 			omit: true
 			hidden: true
-			label:"当前版本"
+		'current.created_by':
+			label: "创建人"
+			type: "lookup"
+			reference_to: "users"
+			readonly: true
+			omit: true
+			hidden: true
+		'current.steps':
+			label: "步骤"
+			type: "grid"
+			readonly: true
+			is_wide: true
+		'current.steps.$._id':
+			type: "text"
+			omit: true
+			readonly: true
+			hidden: true
+		'current.steps.$.name':
+			label: "名称"
+			readonly: true
+			type: "text"
+		'current.steps.$.disableCC':
+			label: "禁止传阅"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.allowDistribute':
+			label: "允许分发"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.can_edit_main_attach':
+			label: "允许修改正文"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.can_edit_normal_attach':
+			label: "允许修改附件"
+			type: "boolean"
+			readonly: true
+#		'current.steps.$.distribute_optional_flows':
+#			label: "此步骤分发时可选的流程范围"
+#			type: "lookup"
+#			reference_to: "flows"
+#			multiple: true
+		'current.steps.$.cc_must_finished':
+			label: "必须等待传阅完成"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.cc_alert':
+			label: "弹出传阅提醒"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.allowBatch':
+			label: "批量审批"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.oneClickApproval':
+			label: "一键核准"
+			type: "boolean"
+			readonly: true
+		'current.steps.$.oneClickRejection':
+			label: "一键驳回"
+			type: "boolean"
+			readonly: true
+
 		perms:
 			label:"流程权限"
 			type: 'Object'
@@ -82,6 +181,7 @@ Creator.Objects.flows =
 			label:"所属应用"
 			type: "text"
 			omit: true
+			hidden: true
 		historys:
 			label:"历史版本"
 			blackbox: true
@@ -156,6 +256,22 @@ Creator.Objects.flows =
 			filters: [["is_deleted", "=", true]]
 
 	actions:
+		standard_new:
+			label: "新建"
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return permissions["allowCreate"]
+			on: "list"
+			todo: (object_name, record_id, fields)->
+				Modal.show('new_flow_modal')
+		flowDesign:
+			label: "流程设计器"
+			visible: ()->
+				return true;
+			on: "list"
+			todo: (object_name, record_id, fields)->
+				Workflow.openFlowDesign(Steedos.locale(), Steedos.spaceId())
 		standard_edit:
 			visible: false
 			on: "record"
@@ -226,6 +342,28 @@ Creator.Objects.flows =
 				Meteor.defer ()->
 					$(".creator-edit").click()
 
+		designFlow:
+			label: "流程设计器"
+			visible: (object_name, record_id, record_permissions)->
+				return true;
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				Workflow.openFlowDesign(Steedos.locale(), Steedos.spaceId(), record_id)
+
+#		edit_steps:
+#			label: "设置步骤"
+#			visible: (object_name, record_id, record_permissions)->
+#				if FlowRouter.current().params?.record_id
+#					return true && record_permissions["allowEdit"]
+#				return false
+#			on: "record"
+#			todo: (object_name, record_id, fields)->
+#				console.log('edit_steps', object_name, record_id)
+#				Session.set 'cmDoc', Creator.getCollection(object_name).findOne(record_id)
+#				Session.set 'action_fields', 'current,current._rev,current.steps'
+#				Meteor.defer ()->
+#					$(".creator-edit").click()
+
 
 	permission_set:
 		user:
@@ -236,7 +374,7 @@ Creator.Objects.flows =
 			modifyAllRecords: false
 			viewAllRecords: true
 		admin:
-			allowCreate: false
+			allowCreate: true
 			allowDelete: false
 			allowEdit: true
 			allowRead: true
