@@ -33,7 +33,7 @@ Template.creator_view.helpers
 	isObjectField: (fieldKey)->
 		if !fieldKey
 			return
-		return Creator.getObject(Session.get("object_name")).schema._schema[fieldKey].type.name == 'Object'
+		return Creator.getObject(Session.get("object_name")).schema._schema[fieldKey]?.type.name == 'Object'
 
 	objectField: (fieldKey)->
 		schema = Creator.getObject(Session.get("object_name")).schema
