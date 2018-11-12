@@ -264,7 +264,7 @@ Template.creator_list_wrapper.events
 				standard_query = object_name: object_name, query: query, is_mini: true
 				Session.set 'standard_query', standard_query
 			else
-				delete Session.keys["standard_query"]
+				Session.set 'standard_query', null
 
 
 Template.creator_list_wrapper.onCreated ->
