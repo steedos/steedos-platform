@@ -562,7 +562,10 @@ Template.creator_grid.onRendered ->
 				dxOptions.keyExpr = "_id"
 				dxOptions.parentIdExpr = "parent._id"
 				dxOptions.expandNodesOnFiltering = false
-				dxOptions.remoteOperations = false
+				dxOptions.remoteOperations = 
+					filtering: true
+					sorting: false
+					grouping: false
 				# dxOptions.expandedRowKeys = ["9b7maW3W2sXdg8fKq"]
 				# dxOptions.autoExpandAll = true
 				# 不支持tree格式的翻页，因为OData模式下，每次翻页都请求了完整数据，没有意义
