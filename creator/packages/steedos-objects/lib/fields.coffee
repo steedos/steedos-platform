@@ -57,8 +57,8 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.afFieldInput =
 						type: "bootstrap-datetimepicker"
 						dateTimePickerOptions:
-							format: "YYYY-MM-DD HH:mm"
-							locale: Session.get("TAPi18n::loaded_lang")
+							type: "datetime"
+							displayFormat: "yyyy-MM-dd HH:mm"
 		else if field.type == "[Object]"
 			fs.type = [Object]
 		else if field.type == "html"

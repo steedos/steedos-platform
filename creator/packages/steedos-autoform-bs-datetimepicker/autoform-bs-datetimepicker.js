@@ -1,6 +1,7 @@
 AutoForm.addInputType("bootstrap-datetimepicker", {
   template: "afBootstrapDateTimePicker",
   valueIn: function (val, atts) {
+    console.log("AutoForm.addInputType=====valueIn=2===", val);
     if (typeof val === "string"){
 
       var year, month, date, hours, seconds;
@@ -37,6 +38,8 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
     return val;
   },
   valueOut: function () {
+    console.log("AutoForm.addInputType=====valueOut====");
+    debugger
     if (!this.data("DateTimePicker"))
       return null
     var m = this.data("DateTimePicker").date();
@@ -57,7 +60,7 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
   },
   valueConverters: {
     "string": function (val) {
-      var format = this.data("format")
+      var format = this.data("displayFormat")
       if(format){
         return (val instanceof Date) ? $.format.date(val,format) : val
       }else{
@@ -96,18 +99,10 @@ AutoForm.addInputType("bootstrap-datetimepicker", {
 });
 
 Template.afBootstrapDateTimePicker.helpers({
-  atts: function addFormControlAtts() {
-    var atts = _.clone(this.atts);
-    // Add bootstrap class
-    atts = AutoForm.Utility.addClass(atts, "form-control");
-    atts["data-format"] = atts.outFormat
-    delete atts.dateTimePickerOptions;
-    return atts;
-  }
 });
 
 Template.afBootstrapDateTimePicker.rendered = function () {
-  var $input = this.$('input');
+  var $input = this.$('.dx-date-box');
   var data = this.data;
   var opts = data.atts.dateTimePickerOptions || {};
   
@@ -117,38 +112,38 @@ Template.afBootstrapDateTimePicker.rendered = function () {
   if (!opts.defaultDate || opts.defaultDate === "") {
     opts.defaultDate = null;
   }
-
+  debugger;
   // instanciate datetimepicker
-  $input.datetimepicker(opts);
+  var now = new Date();
+  opts.value = now;
+  $input.dxDateBox(opts);
 
   // set and reactively update values
   this.autorun(function () {
     var data = Template.currentData();
-    var dtp = $input.data("DateTimePicker");
+    var dti = $input.dxDateBox("instance");
 
     // set field value
     if (data.value instanceof Date) {
-      dtp.date(data.value);
+      dti.option("value", data.value);
     } else {
-      dtp.date(); // clear
+      dti.option("value", null); // clear
     }
 
     // set start date if there's a min in the schema
     if (data.min instanceof Date) {
-      dtp.setMinDate(data.min);
+      dti.option("min", data.min);
     }
 
     // set end date if there's a max in the schema
     if (data.max instanceof Date) {
-      dtp.setMaxDate(data.max);
+      dti.option("max", data.max);
     }
   });
 
 };
 
 Template.afBootstrapDateTimePicker.destroyed = function () {
-  var dtp = this.$('input').data("DateTimePicker");
-  if (dtp) {
-    dtp.destroy();
-  }
+  var $input = this.$('.dx-date-box');
+  $input.dxDateBox("dispose");
 };
