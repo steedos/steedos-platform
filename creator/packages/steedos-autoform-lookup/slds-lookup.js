@@ -15,8 +15,6 @@ AutoForm.addInputType('steedosLookups', {
 	},
 	valueOut: function(){
 
-		console.log('lookup valueOut')
-
 		val = this.val();
 
 		if(this[0] && this[0].dataset.init === "0"){
@@ -235,6 +233,17 @@ Template.steedosLookups.helpers({
     },
     open: function () {
         var template = Template.instance();
+        var $input = $("#for-"+template.data.atts.id);
+        if($input.length > 0){
+			var element = $("#listbox-unique-id",$input.parent().parent());
+			var position = element.position();
+			$("#listbox-unique-id .slds-listbox",element.parent().parent()).css({
+				top: position.top + element.outerHeight(),
+				bottom: 'auto',
+				width: $input.parent().parent().parent().width()
+			})
+		}
+
         return template.uniSelectize.open.get();
     },
     loading: function () {
@@ -411,7 +420,7 @@ Template.steedosLookups.helpers({
 	canCreate: function () {
 		data = Template.instance().data
 
-		if(data.atts.create)
+		if(data.atts.create && !AutoForm.getFormId().startsWith("new"))
 			return true
 	}
 });
@@ -537,9 +546,13 @@ Template.steedosLookups.events({
 			return
 		}
 
-        var value = $el.val();
-        template.uniSelectize.searchText.set(value);
-        template.uniSelectize.getOptionsFromMethod();
+		Meteor.clearTimeout(template.searchTimeoutId);
+
+		template.searchTimeoutId = Meteor.setTimeout(function(){
+			var value = $el.val();
+			template.uniSelectize.searchText.set(value);
+			template.uniSelectize.getOptionsFromMethod();
+		}, 500);
     },
     'focus input.steedos-lookups-input': function (e, template) {
         template.uniSelectize.checkDisabled();

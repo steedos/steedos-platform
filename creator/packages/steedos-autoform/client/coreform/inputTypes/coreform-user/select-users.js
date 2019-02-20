@@ -129,11 +129,23 @@ Template.afSelectUser.events({
     },
 
     'click .selectUser': function(event, template) {
-        if (Modal.allowMultiple) {
-            return;
-        }
-        if ("disabled" in template.data.atts)
-            return;
+		if (Modal.allowMultiple) {
+			return;
+		}
+		if ("disabled" in template.data.atts)
+			return;
+		
+		try{
+			if (AutoForm.getCurrentDataForForm()){
+				var fieldSchema = AutoForm.getSchemaForField(template.data.name);
+				if(fieldSchema && _.isFunction(fieldSchema.beforeOpenFunction)){
+					fieldSchema.beforeOpenFunction(event, template)
+				}
+			}
+		}catch(e){
+			console.log('click .selectUser e', e);
+		}
+
 
         var options = {};
 
@@ -174,6 +186,15 @@ Template.afSelectUser.events({
             showOrg = false;
         }
 
+        if(showOrg){
+
+			// dataset.rootOrg = 'YrZJ35kLyvq5RNHfd'
+
+            if(dataset.rootOrg && _.isString(dataset.rootOrg)){
+				options.rootOrg = dataset.rootOrg
+            }
+        }
+
         var values = $("input[name='" + template.data.name + "']")[0].dataset.values;
 
 		options.unselectable_users = template.data.atts.unselectable_users
@@ -189,6 +210,12 @@ Template.afSelectUser.events({
             options.spaceId = dataset.spaceId || template.data.atts.spaceId || Session.get("spaceId")
         }
 
+        if (template.data.atts.is_company_only) {
+            options.showCompanyOnly = true
+        }
+        if (template.data.atts.is_company_limited) {
+            options.showLimitedCompanyOnly = true
+        }
 
         if (values && values.length > 0) {
             options.defaultValues = values.split(",");

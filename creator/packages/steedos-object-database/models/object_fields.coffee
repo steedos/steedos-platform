@@ -55,6 +55,9 @@ Creator.Objects.object_fields =
 			regEx: SimpleSchema.RegEx.field
 		label:
 			type: "text"
+		is_name:
+			type: "boolean"
+			hidden: true
 		object:
 			type: "master_detail"
 			reference_to: "objects"
@@ -77,9 +80,12 @@ Creator.Objects.object_fields =
 				datetime: "日期时间"
 				number: "数值"
 				currency: "金额"
+				password: "密码"
 				lookup: "相关表"
 				master_detail: "主表/子表"
 				grid: "表格"
+				url: "网址"
+				email: "邮件地址"
 		sort_no:
 			label: "排序号"
 			type: "number"

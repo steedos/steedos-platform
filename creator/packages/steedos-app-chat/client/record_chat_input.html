@@ -1,0 +1,46 @@
+<template name="steedos_record_chat_input">
+	<div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel"
+		 aria-labelledby="tab-default-1__item">
+		<div class="slds-tabs_scoped">
+			<ul class="slds-tabs_scoped__nav" role="tablist">
+				<li class="slds-tabs_scoped__item slds-is-active" role="presentation"><a
+						class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="0"
+						aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">评论</a></li>
+			</ul>
+			<div id="tab-scoped-1" class="slds-tabs_scoped__content slds-show" role="tabpanel"
+				 aria-labelledby="tab-scoped-1__item">
+				<div class="slds-media slds-comment slds-hint-parent">
+					<div class="slds-media__body">
+						<div class="slds-publisher slds-publisher_comment slds-is-active slds-has-focus"><label
+								for="comment-text-input-01" class="slds-assistive-text">Write a comment</label>
+							<textarea
+								id="comment-text-input"
+								class="slds-publisher__input slds-input_bare slds-text-longform"
+								placeholder="写评论"></textarea>
+							<div class="slds-publisher__actions slds-grid slds-grid_align-spread">
+								<ul class="slds-grid">
+									{{!--
+									<li>
+										<button class="slds-button slds-button_icon slds-button_icon-container"
+												title="@用户">
+											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name='adduser'}}
+											<span class="slds-assistive-text">@用户</span></button>
+									</li>
+									<li>
+										<button class="slds-button slds-button_icon slds-button_icon-container"
+												title="添加文件">
+											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name='attach'}}
+											<span class="slds-assistive-text">添加文件</span></button>
+									</li>
+									--}}
+								</ul>
+								<button class="slds-button slds-button_brand send-comment">评论</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</template>

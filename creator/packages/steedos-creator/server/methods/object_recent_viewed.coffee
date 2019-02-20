@@ -9,7 +9,6 @@ Meteor.methods
 		if object_name and record_id
 			collection_recent_viewed = Creator.getCollection("object_recent_viewed")
 			filters = { owner: this.userId, space: spaceId, 'record.o': object_name, 'record.ids': [record_id]}
-			console.log('object_recent_viewed', JSON.stringify(filters));
 			current_recent_viewed = collection_recent_viewed.findOne(filters)
 			if current_recent_viewed
 				collection_recent_viewed.update(

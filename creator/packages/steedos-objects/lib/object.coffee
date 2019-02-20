@@ -37,6 +37,9 @@ Creator.Object = (options)->
 	self.open_window = options.open_window
 	self.filter_company = options.filter_company
 	self.calendar = _.clone(options.calendar)
+	self.sidebar = _.clone(options.sidebar)
+	self.enable_chatter = options.enable_chatter
+	self.enable_trash = options.enable_trash
 	if (!options.fields)
 		throw new Error('Creator.Object options must specify name');
 
@@ -111,7 +114,7 @@ Creator.Object = (options)->
 	# 前端根据permissions改写field相关属性，后端只要走默认属性就行，不需要改写
 	if Meteor.isClient
 		permissions = options.permissions
-		disabled_list_views = permissions.disabled_list_views
+		disabled_list_views = permissions?.disabled_list_views
 		if disabled_list_views?.length
 			defaultListViewId = options.list_views?.all?._id
 			if defaultListViewId
@@ -121,10 +124,10 @@ Creator.Object = (options)->
 		self.permissions = new ReactiveVar(permissions)
 		_.each self.fields, (field, field_name)->
 			if field
-				if _.indexOf(permissions.unreadable_fields, field_name) < 0
+				if _.indexOf(permissions?.unreadable_fields, field_name) < 0
 					if field.hidden
 						return
-					if _.indexOf(permissions.uneditable_fields, field_name) > -1
+					if _.indexOf(permissions?.uneditable_fields, field_name) > -1
 						field.readonly = true
 						field.disabled = true
 						# 当只读时，如果不去掉必填字段，autoform是会报错的
@@ -144,12 +147,18 @@ Creator.Object = (options)->
 
 	schema = Creator.getObjectSchema(self)
 	self.schema = new SimpleSchema(schema)
-	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view
+	if self.name != "users" and self.name != "cfs.files.filerecord" && !self.is_view && !_.contains(["flows", "forms", "instances", "organizations"], self.name)
 		if Meteor.isClient
 			_db.attachSchema(self.schema, {replace: true})
 		else
 			_db.attachSchema(self.schema, {replace: true})
-#	console.log('Creator.objectsByName---------->', self._collection_name, self.name)
+	if self.name == "users"
+		_db._simpleSchema = self.schema
+
+	if _.contains(["flows", "forms", "instances", "organizations"], self.name)
+		if Meteor.isClient
+			_db.attachSchema(self.schema, {replace: true})
+
 	Creator.objectsByName[self._collection_name] = self
 
 	return self
@@ -190,6 +199,12 @@ if Meteor.isClient
 
 	Meteor.startup ->
 		Tracker.autorun ->
-			if Session.get("steedos-locale") && Creator.bootstrapLoaded.get()
+			if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
 				_.each Creator.objectsByName, (object, object_name)->
 					object.i18n()
+
+Meteor.startup ->
+	if !Creator.bootstrapLoaded && Creator.Objects
+		_.each Creator.Objects, (object)->
+			new Creator.Object(object)
+

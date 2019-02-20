@@ -10,7 +10,6 @@ checkUserSigned = (context, redirect) ->
 	else
 		# 从当前用户的space_users表中获取
 		s_user = db.space_users.findOne()
-		console.log "s_user",s_user?.company
 		if s_user?.company
 			localStorage.setItem("listTreeCompany", s_user?.company)
 			Session.set('listTreeCompany', s_user?.company);
@@ -38,6 +37,8 @@ checkAppPermission = (context, redirect)->
 		if Creator.bootstrapLoaded.get() and Session.get("spaceId")
 			c.stop()
 			app_id = context.params.app_id
+			if app_id == "admin"
+				return
 			apps = _.pluck(Creator.getVisibleApps(),"_id")
 			if apps.indexOf(app_id) < 0
 				Session.set("app_id", null)
@@ -83,6 +84,7 @@ FlowRouter.route '/app/:app_id',
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		Session.set("app_id", app_id)
+		Session.set("admin_template_name", null)
 		if Steedos.isMobile()
 			Tracker.autorun (c)->
 				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
@@ -257,3 +259,14 @@ FlowRouter.route '/app/:app_id/:object_name/calendar/',
 		
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_calendar"
+
+FlowRouter.route '/app/admin/page/:template_name', 
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		if Meteor.userId()
+			template_name = params?.template_name
+			Session.set("app_id", "admin")
+			Session.set("admin_template_name", template_name)
+			BlazeLayout.render Creator.getLayout(),
+				main: template_name
+

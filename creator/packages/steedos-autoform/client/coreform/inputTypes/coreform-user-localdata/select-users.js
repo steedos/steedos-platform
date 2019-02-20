@@ -88,7 +88,7 @@ Template.afSelectUser_localData.events({
     if(dataset.showOrg && dataset.showOrg == 'false'){
         showOrg = false;
     }
-    
+
     var values = $("input[name='"+template.data.name+"']")[0].dataset.values;
 
     var options = {};
@@ -96,7 +96,7 @@ Template.afSelectUser_localData.events({
     options.data = data;
     options.multiple = multiple;
     options.showOrg = showOrg;
-    
+
     if(values && values.length > 0){
         options.defaultValues = values.split(",");
     }
@@ -104,7 +104,7 @@ Template.afSelectUser_localData.events({
     var start_orgId = "";
 
     if(data.orgs && data.orgs.length > 0){
-        var start_org = data.orgs.filterProperty("is_company",true);
+        var start_org = data.orgs.filterProperty("is_company",true).filterProperty("parent", null);
         start_org.forEach(function(so){
             start_orgId = so.id;
         });
@@ -126,7 +126,7 @@ Template.afSelectUser_localData.confirm = function(name){
             $("input[name='"+name+"']")[0].dataset.values = values[0];
             $("input[name='"+name+"']").val(valuesObject[0].name).trigger("change");
         }
-        
+
     }else{
         $("input[name='"+name+"']")[0].dataset.values = '';
         $("input[name='"+name+"']").val('').trigger("change");
@@ -143,7 +143,7 @@ Template.afSelectUser_localData.rendered = function(){
     //     $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
     // }else{
     //     $("input[name='"+name+"']").val(value ? value.name : '');
-    //     $("input[name='"+name+"']")[0].dataset.values = value ? value.id : ''; 
+    //     $("input[name='"+name+"']")[0].dataset.values = value ? value.id : '';
     // }
 
     if(dataset){
@@ -151,6 +151,6 @@ Template.afSelectUser_localData.rendered = function(){
             $("input[name='"+name+"']")[0].dataset[dk] = dataset[dk]
         }
     }
-    
+
 }
 

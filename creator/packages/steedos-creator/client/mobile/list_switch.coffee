@@ -20,7 +20,6 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoading: (loadOptions)->
-					console.log loadOptions
 					return
 			},
 			select: [
@@ -148,13 +147,11 @@ Template.listSwitch.onCreated ->
 			if list_views.length
 				self.list_view_id.set(list_views[0].name)
 				self.list_view_label.set(list_views[0].label)
-				console.log "list_views",self.list_view_id.get()
 			else
 				custom_list_views = Creator.Collections.object_listviews.find({object_name: object_name}).fetch()
 				if custom_list_views.length
 					self.list_view_id.set(custom_list_views[0]._id)
 					self.list_view_label.set(custom_list_views[0].name)
-					console.log "custom_list_views",self.list_view_id.get()
 			c.stop()
 	
 AutoForm.hooks addListItem:

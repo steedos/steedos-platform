@@ -1,0 +1,125 @@
+<template name="steedos_record_chat_messages">
+	<ul class="slds-feed__list steedos-record_chat_messages">
+		{{#each messageList}}
+			<li class="slds-feed__item slds-border_bottom">
+				<article class="slds-post">
+					<header class="slds-post__header slds-media">
+						<div class="slds-media__figure">
+							<a href="javascript:void(0);" class="slds-avatar slds-avatar_circle slds-avatar_large" style="width: 2rem;height: 2rem;">
+								<img src="{{ownerAvatarUrl this.owner}}"/>
+							</a>
+						</div>
+						<div class="slds-media__body">
+							<div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+								<p>{{ownerName this.owner}}</p>
+								{{#with permissions}}
+									{{#if showAction}}
+										<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_las">
+											<button class="slds-button slds-button_icon-border slds-button_icon-x-small chat-message-actions" data-toggle="dropdown" aria-haspopup="true">
+												{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
+												<span class="slds-assistive-text">More Options</span>
+											</button>
+											<div class="dropdown-menu dropdown-menu-right chat-message-actions-menu" role="menu">
+												<ul class="dropdown__list">
+													{{#if this.allowEdit}}
+														<li class="slds-dropdown__item cuf-actionItem slds-truncate update-action" role="presentation" title="编辑">
+															<a href="javascript:void(0)" role="menuitem" tabindex="-1">
+														<span class="slds-truncate">
+															编辑</span>
+															</a>
+														</li>
+													{{/if}}
+													{{#if this.allowDelete}}
+														<li class="slds-dropdown__item cuf-actionItem slds-truncate remove-action" role="presentation" title="删除">
+															<a href="javascript:void(0)" role="menuitem" tabindex="-1">
+															<span class="slds-truncate">
+																删除</span>
+															</a>
+														</li>
+													{{/if}}
+												</ul>
+											</div>
+										</div>
+									{{/if}}
+								{{/with}}
+							</div>
+							<p class="slds-text-body_small">{{fromNow this.created}}</p>
+						</div>
+					</header>
+					<div class="slds-post__content slds-text-longform" style="margin-bottom: 0px">
+						<p>{{{message}}}</p>
+					</div>
+					{{!
+					<footer class="slds-post__footer">
+						<ul class="slds-post__footer-actions-list slds-list_horizontal">
+							<li class="slds-col slds-item slds-m-right_medium">
+								<button title="Like this item" class="slds-button_reset slds-post__footer-action" aria-pressed="false">
+									<svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-align-middle" aria-hidden="true">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.lightningdesignsystem.com/assets/icons/utility-sprite/svg/symbols.svg#like" />
+									</svg>Like</button>
+							</li>
+							<li class="slds-col slds-item slds-m-right_medium">
+								<button title="Comment on this item" class="slds-button_reset slds-post__footer-action">
+									<svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-align-middle" aria-hidden="true">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.lightningdesignsystem.com/assets/icons/utility-sprite/svg/symbols.svg#share_post" />
+									</svg> Comment</button>
+							</li>
+							<li class="slds-col slds-item slds-m-right_medium">
+								<button title="Share this item" class="slds-button_reset slds-post__footer-action">
+									<svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-align-middle" aria-hidden="true">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.lightningdesignsystem.com/assets/icons/utility-sprite/svg/symbols.svg#share" />
+									</svg> Share</button>
+							</li>
+						</ul>
+						<ul class="slds-post__footer-meta-list slds-list_horizontal slds-has-dividers_right slds-text-title">
+							<li class="slds-item">20 shares</li>
+							<li class="slds-item">259 views</li>
+						</ul>
+					</footer>
+					}}
+				</article>
+				{{!评论
+				<div class="slds-feed__item-comments">
+					<div class="slds-p-horizontal_medium slds-p-vertical_x-small slds-grid">
+						<button class="slds-button_reset slds-text-link">More comments</button>
+						<span class="slds-text-body_small slds-col_bump-left">1 of 8</span>
+					</div>
+					<ul>
+						<li>
+							<article class="slds-comment slds-media slds-hint-parent">
+								<div class="slds-media__figure">
+									<a href="javascript:void(0);" class="slds-avatar slds-avatar_circle slds-avatar_medium">
+										<img alt="Jenna Davis" src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg" title="Jenna Davis avatar" />
+									</a>
+								</div>
+								<div class="slds-media__body">
+									<header class="slds-media slds-media_center">
+										<div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+											<p class="slds-truncate" title="Jenna Davis"><a href="javascript:void(0);">Jenna Davis</a></p>
+											<button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-x-small" aria-haspopup="true" title="More Options">
+												<svg class="slds-button__icon" aria-hidden="true">
+													<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.lightningdesignsystem.com/assets/icons/utility-sprite/svg/symbols.svg#down" />
+												</svg>
+												<span class="slds-assistive-text">More Options</span>
+											</button>
+										</div>
+									</header>
+									<div class="slds-comment__content slds-text-longform">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+									<footer>
+										<ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
+											<li class="slds-item">
+												<button class="slds-button_reset slds-text-color_weak" title="Like this item" aria-pressed="false">Like</button>
+											</li>
+											<li class="slds-item">16hr Ago</li>
+										</ul>
+									</footer>
+								</div>
+							</article>
+						</li>
+					</ul>
+				</div>
+				}}
+			</li>
+		{{/each}}
+	</ul>
+</template>

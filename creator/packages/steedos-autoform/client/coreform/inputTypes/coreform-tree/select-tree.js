@@ -17,7 +17,6 @@ AutoForm.addInputType("selectTree", {
 });
 
 Template.afSelectTree.onRendered(function () {
-	debugger;
 	if(!$.fn.dxDropDownBox){
 		console.error("未找到dxDropDownBox插件");
 		return;
@@ -32,6 +31,11 @@ Template.afSelectTree.onRendered(function () {
 	var showCheckBoxesMode = isMultiple ? "normal" : "none";
 	var reference_to = this.data.atts.reference_to;
 
+	if (typeof initValue == "object"){
+		// fix 有时新建记录时，initValue值为： {ids: ["yPm6KM82r73Qn6NHn"],o: "contracts"}
+		// enable_tree时， 新建数据调用selectTree控件会报错 #880
+		initValue = initValue.ids;
+	}
 	var syncTreeViewSelection = function (treeView, value) {
 		if (!value) {
 			treeView.unselectAll();

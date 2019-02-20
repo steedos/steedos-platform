@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
-	'request': '2.81.0',
+	'request': '2.88.0',
 	'base-64': '0.1.0',
 	"node-schedule": "1.1.1",
 	"wechat-auth": "1.1.2",

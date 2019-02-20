@@ -2,9 +2,6 @@ import {moment} from 'meteor/momentjs:moment';
 
 Steedos.Helpers =
 
-	isMobile: ()->
-		return $(window).width() < 767
-
 	isPad: ()->
 		return /iP(ad)/.test(navigator.userAgent)
 
@@ -113,7 +110,6 @@ Steedos.Helpers =
 				reason: reason
 
 	handleOpenURL: (url)->
-		console.log("steedos received url: " + url)
 		search = url.split('?')[1]
 		if search
 			urlQuery = (name)->
@@ -158,15 +154,10 @@ Steedos.Helpers =
 	coreformNumberToString: (number, locale)->
 		return Steedos.numberToString number, locale
 
-	selfOrganization: ()->
-		selfOrgId = db.space_users.findOne({user:Meteor.userId()}).organization
-		if selfOrgId
-			query = {_id: selfOrgId}
-			if !Steedos.isSpaceAdmin()
-				query.hidden = $ne: true
-			return db.organizations.findOne(query)
-		else
-			return null
+	selfCompanys: ()->
+		# 返回当前用户所属公司Id集合
+		company_ids = Session.get("user_company_ids")
+		return if company_ids?.length then company_ids else null
 
 _.extend Steedos, Steedos.Helpers
 
@@ -207,7 +198,11 @@ TemplateHelpers =
 		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 
 	isMobile: ->
-		return $(window).width()<767
+
+		if window.DevExpress
+			return DevExpress.devices._currentDevice.phone
+		else
+			return $(window).width()<767
 
 	isAndroidOrIOS: ->
 		return Steedos.isAndroidApp() || Steedos.isiOS()

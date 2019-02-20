@@ -15,5 +15,6 @@ Creator.helpers =
 			when "contains" then return t("creator_filter_operation_contains")
 			when "notcontains" then return t("creator_filter_operation_does_not_contain")
 			when "startswith" then return t("creator_filter_operation_starts_with")
+			when "between" then return t("creator_filter_operation_between")
 	isMobile: ()->
 		return Steedos.isMobile()

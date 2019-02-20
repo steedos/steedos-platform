@@ -4,7 +4,7 @@ Template.creator_app_list_modal.helpers Creator.helpers
 
 Template.creator_app_list_modal.helpers
 	apps: ()->
-		return Creator.getVisibleApps()
+		return Creator.getVisibleApps(true)
 
 	app_objects: ()->
 		objects = []

@@ -1,0 +1,96 @@
+<template name="import_users_modal">
+	<div class="steedos modal fade import-users-modal" id="import_users_modal" tabindex="-1" role="dialog" aria-labelledby="import-users-modal" style='position: fixed;' data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="import-users-title">{{_ 'steedos_contacts_import_users'}}</h4>
+
+				</div>
+				<div class="modal-body import-users-modal-body modal-zoom">
+					<div class="alert alert-default alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<h4><i class="icon fa fa-info"></i> {{_ "steedos_contacts_import_users_note"}}</h4>
+						{{{_ 'steedos_contacts_import_users_note_detail'}}}
+					</div>
+
+					<div class="form-group">
+						<label>{{_ 'steedos_contacts_import_users_data_file_title'}}  <a href="{{import_simple_url}}" target="_blank">{{_ 'steedos_contacts_import_users_download_simple_data_file'}}</a></label>
+						<input type="file" id="import-file" />
+					</div>
+
+					<!-- <div class="form-group">
+						<div class="radio">
+							<label>
+								<input type="radio" value="username" name="user_pk" id="user_pk"/>
+								{{_ 'steedos_contacts_import_users_match_user_base_username'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" value="email" name="user_pk" id="user_pk" checked/>
+								{{_ 'steedos_contacts_import_users_match_user_base_email'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" value="phone" name="user_pk" id="user_pk" checked/>
+								{{_ 'steedos_contacts_import_users_match_user_base_mobile'}}
+							</label>
+						</div>
+					</div> -->
+
+					<div class="data-perview">
+						<h3 class="box-title">{{_ 'steedos_contacts_import_users_preview'}}</h3>
+
+						<div class="data-items">
+							<table class="table table-bordered">
+								<thead>
+								<tr>
+									<th>#</th>
+									<th>{{_ "steedos_contacts_import_users_organization"}}</th>
+									<th>{{_ "steedos_contacts_import_users_username"}}</th>
+									<th>{{_ "steedos_contacts_import_users_email"}}</th>
+									<th>{{_ "steedos_contacts_import_users_name"}}</th>
+									<th>{{_ "space_users_company"}}</th>
+									<th>{{_ "steedos_contacts_import_users_position"}}</th>
+									<th>{{_ "steedos_contacts_import_users_work_phone"}}</th>
+									<th>{{_ "steedos_contacts_import_users_phone"}}</th>
+									<!-- <th>{{_ "steedos_contacts_import_users_user_accepted"}}</th> -->
+									<th>{{_ "steedos_contacts_import_users_sort_no"}}</th>
+									<th>{{_ "steedos_contacts_import_users_password"}}</th>
+								</tr>
+								</thead>
+								<tbody>
+								{{#each items}}
+									<tr>
+										<td>{{row_number @index}}</td>
+										<td>{{organization}}</td>
+										<td>{{username}}</td>
+										<td>{{email}}</td>
+										<td>{{name}}</td>
+										<td>{{company}}</td>
+										<td>{{position}}</td>
+										<td>{{work_phone}}</td>
+										<td>{{phone}}</td>
+										<!-- <td>{{user_accepted}}</td> -->
+										<td>{{sort_no}}</td>
+										<td>{{password}}</td>
+									</tr>
+								{{/each}}
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="pull-right">
+						<!-- <button type="button" class="btn btn-info" id='import-user-modal-check' title='{{_ "steedos_contacts_import_users_check"}}' >{{_ "steedos_contacts_import_users_check"}}</button> -->
+						<button type="button" class="btn btn-primary" id='import-user-modal-confirm' title='{{_ "steedos_contacts_import_users_title"}}' >{{_ "steedos_contacts_import_users_title"}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

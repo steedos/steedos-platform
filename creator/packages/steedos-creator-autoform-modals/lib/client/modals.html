@@ -1,6 +1,6 @@
 <template name="CreatorAutoformModals">
 	<div class="modal fade creator-modal creator-auotform-modals" id="afModal">
-		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open normal-large {{#if isSingle}}is-single{{/if}} {{#if isFullScreen}}full-screen{{/if}}">
+		<div class="modal-dialog {{cmModalDialogClass}} slds-modal slds-fade-in-open normal-large {{#if isSingle}}is-single{{/if}} {{#if isFullScreen}}full-screen{{/if}} {{#if isOverflowVisible}}is-overflow-visible{{/if}}">
 			<div class="slds-modal__container {{cmModalContentClass}}">
 				<header class="slds-modal__header">
 					{{#if isMobile}}
@@ -114,7 +114,8 @@
 									<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
 								{{/if}}
 								{{#if isDisabled this}}
-									<div class="form-group is-disabled">
+									<!-- 不显示只读字段，而且发现只读字段值未能正确显示出来 -->
+									<!-- <div class="form-group is-disabled">
 										<label class="control-label" for="{{this}}">{{getLabel this}}</label>
 										<span class="test-id__field-value slds-form-element__static slds-grow slds-has-divider_bottom">
 											<span class="slds-grid slds-grid_align-spread creator_table_cell">
@@ -123,7 +124,7 @@
 												</div>
 											</span>
 										</span>
-									</div>
+									</div> -->
 								{{else}}
 									{{> afQuickField name=this}}
 								{{/if}}
@@ -156,7 +157,8 @@
 													<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
 												{{/if}}
 												{{#if isDisabled this}}
-													<div class="form-group">
+													<!-- 不显示只读字段，而且发现只读字段值未能正确显示出来 -->
+													<!-- <div class="form-group">
 														<label class="control-label" for="{{this}}">{{getLabel this}}</label>
 														<span class="test-id__field-value slds-form-element__static slds-grow">
 															<span class="slds-grid slds-grid_align-spread creator_table_cell">
@@ -165,7 +167,7 @@
 																</div>
 															</span>
 														</span>
-													</div>
+													</div> -->
 												{{else}}
 													{{> afQuickField name=this}}
 												{{/if}}

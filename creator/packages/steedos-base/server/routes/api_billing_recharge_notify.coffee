@@ -5,11 +5,11 @@ JsonRoutes.add 'post', '/api/billing/recharge/notify', (req, res, next) ->
 			body += chunk
 		)
 		req.on('end', Meteor.bindEnvironment((()->
-				xml2js = Npm.require('xml2js')
+				xml2js = require('xml2js')
 				parser = new xml2js.Parser({ trim:true, explicitArray:false, explicitRoot:false })
 				parser.parseString(body, (err, result)->
 						# 特别提醒：商户系统对于支付结果通知的内容一定要做签名验证,并校验返回的订单金额是否与商户侧的订单金额一致，防止数据泄漏导致出现“假通知”，造成资金损失
-						WXPay = Npm.require('weixin-pay')
+						WXPay = require('weixin-pay')
 						wxpay = WXPay({
 							appid: Meteor.settings.billing.appid,
 							mch_id: Meteor.settings.billing.mch_id,

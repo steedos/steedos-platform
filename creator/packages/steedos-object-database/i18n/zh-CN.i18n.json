@@ -1,4 +1,6 @@
 {
+	"_namespace": "",
+
 	"is_enable": "已启用",
 
 	"objects": "对象",
@@ -11,6 +13,9 @@
 	"objects_enable_files": "允许上传附件",
 	"objects_enable_tasks": "允许添加任务",
 	"objects_enable_notes": "允许添加备注",
+    "objects_enable_events": "允许添加事件",
+  	"objects_enable_chatter": "允许添加评论",
+  	"objects_enable_audit": "记录字段历史",
 	"objects_enable_api": "允许 API 访问",
 	"objects_enable_share": "允许共享记录",
 	"objects_enable_instances": "允许查看申请单",

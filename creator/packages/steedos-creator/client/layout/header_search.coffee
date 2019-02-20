@@ -1,3 +1,38 @@
+
+search_object = (object_name, searchText)->
+
+	object = Creator.getObject(object_name)
+
+	object_name_key = object?.NAME_FIELD_KEY
+
+	if !object_name_key
+		return []
+
+	filters = []
+
+	search_Keywords = searchText.split(" ")
+
+	search_Keywords.forEach (keyword)->
+		filters.push "(contains(tolower(#{object_name_key}),'#{encodeURIComponent(Creator.convertSpecialCharacter(keyword.trim()))}'))"
+
+	odata_options = {
+		$top: 5
+		$select: "#{object_name_key}"
+	}
+
+	if filters.length > 0
+		odata_options.$filter = "(#{filters.join(' and ')})"
+
+	result = Creator.odata.query(object_name, odata_options, true)
+
+	data = []
+
+	_.each result, (item)->
+		data.push {_id: item._id, _name: item[object_name_key], _object_name: object_name}
+
+	return data;
+
+
 Template.headerSearch.onCreated ()->
 	this.openItem = new ReactiveVar(false)
 	this.searchText = new ReactiveVar()
@@ -15,11 +50,13 @@ Template.headerSearch.onCreated ()->
 		searchText =this.searchText.get()
 		if searchText
 			self.is_searching.set(true)
-			Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
-				if error
-					console.error('object_record_search method error:', error);
-				self.searchItems.set(result)
-				self.is_searching.set(false)
+			searchData = []
+			_.forEach Creator.objectsByName, (_object, name)->
+				if _object.enable_search
+					object_record = search_object(_object.name, searchText)
+					searchData = searchData.concat(object_record)
+			self.searchItems.set(searchData)
+			self.is_searching.set(false)
 
 	this.clearSearchItems = ()->
 		this.searchItems.set([])

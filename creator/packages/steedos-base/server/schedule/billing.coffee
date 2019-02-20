@@ -1,6 +1,6 @@
 # Meteor.startup ->
 # 	if Meteor.settings.cron and Meteor.settings.cron.billing
-# 		schedule = Npm.require('node-schedule')
+# 		schedule = require('node-schedule')
 # 		# 定时执行同步
 # 		rule = Meteor.settings.cron.billing
 

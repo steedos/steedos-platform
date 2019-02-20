@@ -6,7 +6,13 @@ Array.prototype.sortByName = function (locale) {
         locale = Steedos.locale()
     }
     this.sort(function (p1, p2) {
-        return p1.name.localeCompare(p2.name, locale);
+		var p1_sort_no = p1.sort_no || 0;
+		var p2_sort_no = p2.sort_no || 0;
+		if(p1_sort_no != p2_sort_no){
+            return p1_sort_no > p2_sort_no ? -1 : 1
+        }else{
+			return p1.name.localeCompare(p2.name, locale);
+		}
     });
 };
 

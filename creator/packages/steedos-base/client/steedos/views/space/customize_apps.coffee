@@ -31,7 +31,6 @@ Template.customize_apps.events
 		if event.keyCode == 13
 			dataTable = $(".datatable-customize-apps").DataTable()
 			selector = $("input[name='customize-apps-search-key']").val()
-			console.log selector
 			dataTable.search(
 				selector
 			).draw();

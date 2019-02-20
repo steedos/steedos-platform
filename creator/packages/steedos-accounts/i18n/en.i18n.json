@@ -1,4 +1,6 @@
 {
+	"_namespace": "",
+
 	"accounts_phone_already_existed": "The phone number is already used.",
 	"accounts_phone_invalid": "Not a valid phone",
 	"accounts_phone_code_invalid": "Not a valid code",
@@ -39,8 +41,8 @@
 	"accounts_phone_password_invalid": "Password is invalid",
 	"accounts_phone_password_again_invalid": "Two passwords are different",
 	"accounts_phone_password_btn_save_title": "Set Password",
-	"accounts_phone_too_often_retries": "Too often retries, try again in __s__ seconds!",
-	"accounts_phone_too_many_retries": "Too many retries, try again in __m__ minutes!",
+	"accounts_phone_too_often_retries": "Too often retries, try again in {$s} seconds!",
+	"accounts_phone_too_many_retries": "Too many retries, try again in {$m} minutes!",
 	"accounts_phone_user_not_found": "The phone number is not bound to any account!",
 	"accounts_phone_sms_failed": "SMS Failed, Something bad happened!",
 	"accounts_phone_toastr_alert": "Your account has not yet bound phone number, binding phone number, you can use SMS to log in, retrieve the password and receive SMS notification, click to start binding!",

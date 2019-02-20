@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "**/.meteor/local": true,
+        "**/.npm": true
+    }
+}

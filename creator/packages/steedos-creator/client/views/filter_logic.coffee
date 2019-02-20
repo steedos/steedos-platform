@@ -32,7 +32,6 @@ Template.filter_logic.events
 			i++
 
 		val = arr.join(" AND ")
-		console.log "val", val
 		t.showFilterLogic.set(true)
 		t.filterLogic.set(val)
 		

@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:lightning-design-system',
-	version: '0.0.1',
+	version: '0.0.2',
 	summary: 'Steedos Saleforce',
 	git: ''
 });
@@ -12,9 +12,7 @@ Package.onUse(function(api) {
 	api.use('coffeescript@1.11.1_4');
 
 	api.addFiles('client/styles/salesforce-lightning-design-system.css', 'client');
-	api.addFiles('client/helpers.coffee', 'client');
-	api.addFiles('client/steedos_icon.html','client');
-	api.addFiles('client/steedos_icon.coffee','client');
+
 
 	api.addAssets('client/icons/action-sprite/symbols.svg', 'client');
 	api.addAssets('client/icons/custom-sprite/symbols.svg', 'client');

@@ -1,7 +1,25 @@
 Meteor.startup ->
 
-	odataV4Mongodb = Npm.require 'odata-v4-mongodb'
-	querystring = Npm.require 'querystring'
+	odataV4Mongodb = require 'odata-v4-mongodb'
+	querystring = require 'querystring'
+
+	handleError = (e)->
+		console.error e.stack
+		body = {}
+		error = {}
+		error['message'] = e.message
+		statusCode = 500
+		if e.error and _.isNumber(e.error)
+			statusCode = e.error
+		error['code'] = statusCode
+		error['error'] = statusCode
+		error['details'] = e.details
+		error['reason'] = e.reason
+		body['error'] = error
+		return {
+			statusCode: statusCode
+			body:body
+		}
 
 	visitorParser = (visitor)->
 		parsedOpt = {}
@@ -34,6 +52,7 @@ Meteor.startup ->
 					queryOptions = visitorParser(include)
 					if _.isString field.reference_to
 						referenceToCollection = Creator.getCollection(field.reference_to, spaceId)
+						_ro_NAME_FIELD_KEY = Creator.getObject(field.reference_to, spaceId)?.NAME_FIELD_KEY
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]
 								if field.multiple
@@ -44,16 +63,27 @@ Meteor.startup ->
 										entities[idx][navigationProperty] = originalData
 									#排序
 									entities[idx][navigationProperty] = Creator.getOrderlySetByIds(entities[idx][navigationProperty], originalData)
+									entities[idx][navigationProperty] = _.map entities[idx][navigationProperty], (o)->
+										o['reference_to.o'] = referenceToCollection._name
+										o['reference_to._o'] = field.reference_to
+										o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY]
+										return o
 								else
 									singleQuery = _.extend {_id: entity[navigationProperty]}, include.query
 
 									# 特殊处理在相关表中没有找到数据的情况，返回原数据
 									entities[idx][navigationProperty] = referenceToCollection.findOne(singleQuery, queryOptions) || entities[idx][navigationProperty]
-
+									if entities[idx][navigationProperty]
+										entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
+										entities[idx][navigationProperty]['reference_to._o'] = field.reference_to
+										entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
 					if _.isArray field.reference_to
 						_.each entities, (entity, idx)->
 							if entity[navigationProperty]?.ids
 								_o = entity[navigationProperty].o
+								_ro_NAME_FIELD_KEY = Creator.getObject(_o, spaceId)?.NAME_FIELD_KEY
+								if queryOptions?.fields && _ro_NAME_FIELD_KEY
+									queryOptions.fields[_ro_NAME_FIELD_KEY] = 1
 								referenceToCollection = Creator.getCollection(entity[navigationProperty].o, spaceId)
 								if referenceToCollection
 									if field.multiple
@@ -61,6 +91,8 @@ Meteor.startup ->
 										multiQuery = _.extend {_id: {$in: entity[navigationProperty].ids}}, include.query
 										entities[idx][navigationProperty] = _.map referenceToCollection.find(multiQuery, queryOptions).fetch(), (o)->
 											o['reference_to.o'] = referenceToCollection._name
+											o['reference_to._o'] = _o
+											o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY]
 											return o
 										#排序
 										entities[idx][navigationProperty] = Creator.getOrderlySetByIds(entities[idx][navigationProperty], _ids)
@@ -70,6 +102,7 @@ Meteor.startup ->
 										if entities[idx][navigationProperty]
 											entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name
 											entities[idx][navigationProperty]['reference_to._o'] = _o
+											entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
 
 				else
 				# TODO
@@ -128,6 +161,24 @@ Meteor.startup ->
 		error['innererror'] = innererror
 		body['error'] = error
 		return body
+
+	removeInvalidMethod = (queryParams)->
+		if queryParams.$filter && queryParams.$filter.indexOf('tolower(') > -1
+			removeMethod = ($1)->
+				return $1.replace('tolower(', '').replace(')', '')
+			queryParams.$filter = queryParams.$filter.replace(/tolower\(([^\)]+)\)/g, removeMethod)
+
+	isSameCompany = (spaceId, userId, companyId, query)->
+		su = Creator.getCollection("space_users").findOne({ space: spaceId, user: userId }, { fields: { company_id: 1, company_ids: 1 } })
+		if !companyId && query
+			companyId = su.company_id
+			query.company_id = { $in: su.company_ids }
+		return su.company_ids.includes(companyId)
+
+	# 不返回已假删除的数据
+	excludeDeleted = (query)->
+		query.is_deleted = { $ne: true }
+
 	SteedosOdataAPI.addRoute(':object_name', {authRequired: true, spaceRequired: false}, {
 		get: ()->
 			try
@@ -145,10 +196,13 @@ Meteor.startup ->
 						statusCode: 404
 						body:setErrorMessage(404,collection,key)
 					}
+
+				removeInvalidMethod(@queryParams)
+				qs = decodeURIComponent(querystring.stringify(@queryParams))
+				createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 				permissions = Creator.getObjectPermissions(spaceId, @userId, key)
-				if permissions.viewAllRecords or (permissions.allowRead and @userId)
-					qs = decodeURIComponent(querystring.stringify(@queryParams))
-					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
+				if permissions.viewAllRecords or (permissions.viewCompanyRecords && isSameCompany(spaceId, @userId, createQuery.query.company_id, createQuery.query)) or (permissions.allowRead and @userId)
+
 					if key is 'cfs.files.filerecord'
 						createQuery.query['metadata.space'] = spaceId
 					else if key is 'spaces'
@@ -208,7 +262,7 @@ Meteor.startup ->
 							if field.indexOf('$')<0
 								#if fields[field]?.multiple!= true
 								createQuery.projection[field] = 1
-					if not permissions.viewAllRecords
+					if not permissions.viewAllRecords && !permissions.viewCompanyRecords
 						if object.enable_share
 							# 满足共享规则中的记录也要搜索出来
 							delete createQuery.query.owner
@@ -221,6 +275,9 @@ Meteor.startup ->
 						else
 							createQuery.query.owner = @userId
 					entities = []
+
+					excludeDeleted(createQuery.query)
+
 					if @queryParams.$top isnt '0'
 						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 					scannedCount = collection.find(createQuery.query,{fields:{_id: 1}}).count()
@@ -248,19 +305,8 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,"get")
 					}
 			catch e
-				console.error e.stack
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
+
 		post: ()->
 			try
 				key = @urlParams.object_name
@@ -306,18 +352,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 
 	})
 	SteedosOdataAPI.addRoute(':object_name/recent', {authRequired: true, spaceRequired: false}, {
@@ -347,6 +382,7 @@ Meteor.startup ->
 					recent_view_records_ids = recent_view_records_ids.getProperty("ids")
 					recent_view_records_ids = _.flatten(recent_view_records_ids)
 					recent_view_records_ids = _.uniq(recent_view_records_ids)
+					removeInvalidMethod(@queryParams)
 					qs = decodeURIComponent(querystring.stringify(@queryParams))
 					createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 					if key is 'cfs.files.filerecord'
@@ -374,6 +410,9 @@ Meteor.startup ->
 							if field.indexOf('$')<0
 								#if fields[field]?.multiple!= true
 								createQuery.projection[field] = 1
+
+					excludeDeleted(createQuery.query)
+
 					if @queryParams.$top isnt '0'
 						entities = collection.find(createQuery.query, visitorParser(createQuery)).fetch()
 					entities_index = []
@@ -410,18 +449,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'get')
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 })
 
 	SteedosOdataAPI.addRoute(':object_name/:_id', {authRequired: true, spaceRequired: false}, {
@@ -466,20 +494,8 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'post')
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 		get:()->
-
 			key = @urlParams.object_name
 			if key.indexOf("(") > -1
 				body = {}
@@ -502,18 +518,28 @@ Meteor.startup ->
 				obj = Creator.getObject(collectionName, @urlParams.spaceId)
 				field = obj.fields[fieldName]
 
-				if field  and fieldValue and (field.type is 'lookup' or field.type is 'master_detail')
+				if field and fieldValue and (field.type is 'lookup' or field.type is 'master_detail')
 					lookupCollection = Creator.getCollection(field.reference_to, @urlParams.spaceId)
-					lookupObj = Creator.getObject(field.reference_to, @urlParams.spaceId)
 					queryOptions = {fields: {}}
-					_.each lookupObj.fields, (v, k)->
-						queryOptions.fields[k] = 1
+					readable_fields = Creator.getFields(field.reference_to, @urlParams.spaceId, @userId)
+					_.each readable_fields,(f)->
+						if f.indexOf('$')<0
+							queryOptions.fields[f] = 1
 
 					if field.multiple
-						body['value'] = lookupCollection.find({_id: {$in: fieldValue}}, queryOptions).fetch()
+						values = []
+						lookupCollection.find({_id: {$in: fieldValue}}, queryOptions).forEach (obj)->
+							_.each obj, (v, k)->
+								if _.isArray(v) || (_.isObject(v) && !_.isDate(v))
+									obj[k] = JSON.stringify(v)
+							values.push(obj)
+						body['value'] = values
 						body['@odata.context'] = SteedosOData.getMetaDataPath(@urlParams.spaceId) + "##{collectionInfo}/#{@urlParams._id}"
 					else
 						body = lookupCollection.findOne({_id: fieldValue}, queryOptions) || {}
+						_.each body, (v, k)->
+							if _.isArray(v) || (_.isObject(v) && !_.isDate(v))
+								body[k] = JSON.stringify(v)
 						body['@odata.context'] = SteedosOData.getMetaDataPath(@urlParams.spaceId) + "##{field.reference_to}/$entity"
 
 				else
@@ -542,6 +568,7 @@ Meteor.startup ->
 					permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 					if permissions.allowRead
 						unreadable_fields = permissions.unreadable_fields || []
+						removeInvalidMethod(@queryParams)
 						qs = decodeURIComponent(querystring.stringify(@queryParams))
 						createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 						createQuery.query._id =  @urlParams._id
@@ -560,14 +587,14 @@ Meteor.startup ->
 							createQuery.projection = projection
 						if not createQuery.projection or !_.size(createQuery.projection)
 							readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-							fields = Creator.getObject(key).fields
+							fields = Creator.getObject(key, @urlParams.spaceId).fields
 							_.each readable_fields,(field)->
 								if field.indexOf('$')<0
 									createQuery.projection[field] = 1
 						entity = collection.findOne(createQuery.query,visitorParser(createQuery))
 						entities = []
 						if entity
-							isAllowed = entity.owner == @userId or permissions.viewAllRecords
+							isAllowed = entity.owner == @userId or permissions.viewAllRecords or (permissions.viewCompanyRecords && isSameCompany(@urlParams.spaceId, @userId, entity.company_id))
 							if object.enable_share and !isAllowed
 								shares = []
 								orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
@@ -601,18 +628,7 @@ Meteor.startup ->
 							body: setErrorMessage(403,collection,key,'get')
 						}
 				catch e
-					body = {}
-					error = {}
-					error['message'] = e.message
-					error['code'] = 500
-					error['error'] = e.error
-					error['details'] = e.details
-					error['reason'] = e.reason
-					body['error'] = error
-					return {
-						statusCode: 500
-						body:body
-					}
+					return handleError e
 
 		put:()->
 			try
@@ -636,7 +652,10 @@ Meteor.startup ->
 					record_owner = @urlParams._id
 				else
 					record_owner = collection.findOne({ _id: @urlParams._id }, { fields: { owner: 1 } })?.owner
-				isAllowed = permissions.modifyAllRecords or (permissions.allowEdit and record_owner == @userId )
+
+				companyId = collection.findOne({ _id: @urlParams._id }, { fields: { company_id: 1 } })?.company_id
+
+				isAllowed = permissions.modifyAllRecords or (permissions.allowEdit and record_owner == @userId ) or (permissions.modifyCompanyRecords && isSameCompany(spaceId, @userId, companyId))
 				if isAllowed
 					selector = {_id: @urlParams._id, space: spaceId}
 					if spaceId is 'guest' or spaceId is 'common' or key == "users"
@@ -646,6 +665,8 @@ Meteor.startup ->
 						if _.indexOf(permissions.uneditable_fields, key) > -1
 							fields_editable = false
 					if fields_editable
+						if key is 'spaces'
+							delete selector.space
 						entityIsUpdated = collection.update selector, @bodyParams
 						if entityIsUpdated
 							#statusCode: 201
@@ -677,18 +698,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key,'put')
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 		delete:()->
 			try
 				key = @urlParams.object_name
@@ -707,45 +717,57 @@ Meteor.startup ->
 					}
 				spaceId = @urlParams.spaceId
 				permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
-				record_owner = collection.findOne({_id: @urlParams._id})?.owner
-				isAllowed = (permissions.modifyAllRecords and permissions.allowDelete)  or (permissions.allowDelete and record_owner==@userId )
+				recordData = collection.findOne({_id: @urlParams._id}, { fields: { owner: 1, company_id: 1 } })
+				record_owner = recordData?.owner
+				companyId = recordData?.company_id
+				isAllowed = (permissions.modifyAllRecords and permissions.allowDelete) or (permissions.modifyCompanyRecords and permissions.allowDelete and isSameCompany(spaceId, @userId, companyId)) or (permissions.allowDelete and record_owner==@userId )
 				if isAllowed
 					selector = {_id: @urlParams._id, space: spaceId}
 					if spaceId is 'guest'
 						delete selector.space
-					if collection.remove selector
-						headers = {}
-						body = {}
-						# entities.push entity
-						# body['@odata.context'] = SteedosOData.getODataContextPath(spaceId, key) + '/$entity'
-						# entity_OdataProperties = setOdataProperty(entities,spaceId, key)
-						# _.extend body,entity_OdataProperties[0]
-						headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
-						headers['OData-Version'] = SteedosOData.VERSION
-						{headers: headers,body:body}
+
+					if object?.enable_trash
+						entityIsUpdated = collection.update(selector, {
+							$set: {
+								is_deleted: true,
+								deleted: new Date(),
+								deleted_by: @userId
+							}
+						})
+						if entityIsUpdated
+							headers = {}
+							body = {}
+							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+							headers['OData-Version'] = SteedosOData.VERSION
+							{headers: headers,body:body}
+						else
+							return{
+								statusCode: 404
+								body: setErrorMessage(404,collection,key)
+							}
 					else
-						return{
-							statusCode: 404
-							body: setErrorMessage(404,collection,key)
-						}
+						if collection.remove selector
+							headers = {}
+							body = {}
+							# entities.push entity
+							# body['@odata.context'] = SteedosOData.getODataContextPath(spaceId, key) + '/$entity'
+							# entity_OdataProperties = setOdataProperty(entities,spaceId, key)
+							# _.extend body,entity_OdataProperties[0]
+							headers['Content-type'] = 'application/json;odata.metadata=minimal;charset=utf-8'
+							headers['OData-Version'] = SteedosOData.VERSION
+							{headers: headers,body:body}
+						else
+							return{
+								statusCode: 404
+								body: setErrorMessage(404,collection,key)
+							}
 				else
 					return {
 						statusCode: 403
 						body: setErrorMessage(403,collection,key)
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 	})
 
 	# _id可传all
@@ -789,18 +811,7 @@ Meteor.startup ->
 						body: setErrorMessage(403,collection,key)
 					}
 			catch e
-				body = {}
-				error = {}
-				error['message'] = e.message
-				error['code'] = 500
-				error['error'] = e.error
-				error['details'] = e.details
-				error['reason'] = e.reason
-				body['error'] = error
-				return {
-					statusCode: 500
-					body:body
-				}
+				return handleError e
 
 	})
 
@@ -826,6 +837,7 @@ Meteor.startup ->
 
 							permissions = Creator.getObjectPermissions(@urlParams.spaceId, @userId, key)
 							if permissions.viewAllRecords or (permissions.allowRead and @userId)
+									removeInvalidMethod(@queryParams)
 									qs = decodeURIComponent(querystring.stringify(@queryParams))
 									createQuery = if qs then odataV4Mongodb.createQuery(qs) else odataV4Mongodb.createQuery()
 

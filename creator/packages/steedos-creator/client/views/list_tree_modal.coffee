@@ -9,10 +9,10 @@ findParent = (items, item)->
 
 getTreeData = ()->
 	items = [];
-	subCompany = db.organizations.find({space: Session.get('spaceId'), $or: [{is_subcompany: true}, is_company: true]}, {fields: {_id: 1, name: 1, parent: 1, parents: 1, is_subcompany: 1, is_company: 1}}).fetch()
+	subCompany = db.organizations.find({space: Session.get('spaceId'), is_company: true}, {fields: {_id: 1, name: 1, parent: 1, parents: 1, is_company: 1}}).fetch()
 	#处理数据上下级
 	_.forEach subCompany, (item)->
-	
+
 		listTreeCompany = localStorage.getItem("listTreeCompany")
 
 		if item.is_company
@@ -54,7 +54,6 @@ Template.list_tree_modal.onRendered ->
 			Session.set('listTreeCompany', data.node.data.filter);
 		else
 			Session.set('listTreeCompany', "-1");
-		console.log("=== set === listTreeCompany ===", Session.get('listTreeCompany'));
 	).jstree
 		core:
 			multiple:false,

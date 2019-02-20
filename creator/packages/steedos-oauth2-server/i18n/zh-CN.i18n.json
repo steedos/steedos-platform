@@ -1,4 +1,6 @@
 {
+	"_namespace": "",
+
 	"authorize":"授权",
 	"get_user_info":"获取您的账户信息",
 	"get_follow_permission":"将获得以下权限"

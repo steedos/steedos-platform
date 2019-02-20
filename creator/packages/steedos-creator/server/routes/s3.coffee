@@ -1,6 +1,5 @@
-Busboy = Npm.require('busboy');
-Fiber = Npm.require('fibers');
-ALY = Npm.require('aliyun-sdk')
+Busboy = require('busboy');
+Fiber = require('fibers');
 
 JsonRoutes.parseFiles = (req, res, next) ->
 		files = []; # Store files in an array and then pass them to request.
@@ -175,6 +174,37 @@ JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 			data: {errors: e.reason || e.message}
 		}
 
+
+
+ALY = require('aliyun-sdk')
+
+getQueryString = (accessKeyId, secretAccessKey, query, method) ->
+	console.log "----uuflowManager.getQueryString----"
+	date = ALY.util.date.getDate()
+
+	query.Format = "json"
+	query.Version = "2017-03-21"
+	query.AccessKeyId = accessKeyId
+	query.SignatureMethod = "HMAC-SHA1"
+	query.Timestamp = ALY.util.date.iso8601(date)
+	query.SignatureVersion = "1.0"
+	query.SignatureNonce = String(date.getTime())
+
+	queryKeys = Object.keys(query)
+	queryKeys.sort()
+
+	canonicalizedQueryString = ""
+	queryKeys.forEach (name) ->
+		canonicalizedQueryString += "&" + name + "=" + ALY.util.popEscape(query[name])
+
+	stringToSign = method.toUpperCase() + '&%2F&' + ALY.util.popEscape(canonicalizedQueryString.substr(1))
+
+	query.Signature = ALY.util.crypto.hmac(secretAccessKey + '&', stringToSign, 'base64', 'sha1')
+
+	queryStr = ALY.util.queryParamsToString(query)
+	console.log queryStr
+	return queryStr
+
 JsonRoutes.add "post", "/s3/vod/upload",  (req, res, next) ->
 	try
 		userId = Steedos.getUserIdFromAuthToken(req, res)
@@ -203,7 +233,7 @@ JsonRoutes.add "post", "/s3/vod/upload",  (req, res, next) ->
 						FileName: req.files[0].filename
 					}
 
-					url = "http://vod.cn-shanghai.aliyuncs.com/?" + uuflowManager.getQueryString(accessKeyId, secretAccessKey, query, 'GET')
+					url = "http://vod.cn-shanghai.aliyuncs.com/?" + getQueryString(accessKeyId, secretAccessKey, query, 'GET')
 
 					r = HTTP.call 'GET', url
 
@@ -250,7 +280,7 @@ JsonRoutes.add "post", "/s3/vod/upload",  (req, res, next) ->
 								VideoId: videoId
 							}
 
-							getPlayInfoUrl = "http://vod.cn-shanghai.aliyuncs.com/?" + uuflowManager.getQueryString(accessKeyId, secretAccessKey, getPlayInfoQuery, 'GET')
+							getPlayInfoUrl = "http://vod.cn-shanghai.aliyuncs.com/?" + getQueryString(accessKeyId, secretAccessKey, getPlayInfoQuery, 'GET')
 
 							getPlayInfoResult = HTTP.call 'GET', getPlayInfoUrl
 

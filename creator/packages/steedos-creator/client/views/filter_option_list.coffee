@@ -1,3 +1,20 @@
+# 视图新增filter_fileds，配置了filter_fields的视图，右侧自动列出过滤器 #915
+getDefaultFilters = (object_name, filter_fields)->
+	unless filter_fields
+		list_view_id = Session.get("list_view_id")
+		list_view = Creator.getListView(object_name, list_view_id, true)
+		filter_fields = list_view?.filter_fields
+	fields = Creator.getObject(object_name)?.fields
+	filters = []
+	if filter_fields?.length
+		filter_fields.forEach (n)->
+			if fields[n]
+				filters.push {
+					field: n
+					is_default: true
+				}
+	return filters
+
 Template.filter_option_list.helpers Creator.helpers
 
 Template.filter_option_list.helpers 
@@ -20,6 +37,9 @@ Template.filter_option_list.helpers
 
 	isFilterLogicEmpty: ()->
 		return Session.get("filter_logic") == undefined or Session.get("filter_logic") == null
+
+	showOperationLabel: (operation)->
+		return !Creator.isBetweenFilterOperation(operation) && operation != '='
 
 Template.filter_option_list.events 
 	'click .btn-filter-scope': (event, template)->
@@ -90,7 +110,12 @@ Template.filter_option_list.events
 		if index < 0
 			index = 0
 		filter_items = Session.get("filter_items")
-		filter_items.splice(index, 1)
+		filter_item = filter_items[index]
+		if filter_item.is_default
+			delete filter_item.value
+			filter_items[index] = filter_item
+		else
+			filter_items.splice(index, 1)
 		Session.set("filter_items", filter_items)
 
 	'click .add-filter': (event, template)->
@@ -114,7 +139,6 @@ Template.filter_option_list.events
 			i++
 
 		val = arr.join(" AND ")
-		console.log "val", val
 		Session.set("filter_logic", val)
 		
 
@@ -135,7 +159,7 @@ Template.filter_option_list.onCreated ->
 			Blaze.remove self.optionbox
 	
 	#绑定事件从document委托到.wrapper中是为了避免过虑器中选人控件会解决该事件
-	$(document).on "click",".content-wrapper, .oneHeader", self.destroyOptionbox
+	$(document).on "click",".creator-content-wrapper, .oneHeader", self.destroyOptionbox
 
 	self.filterItems = new ReactiveVar()
 	self.autorun -> 
@@ -144,31 +168,44 @@ Template.filter_option_list.onCreated ->
 			Session.set("filter_logic", list_view_obj.filter_logic)
 
 	self.autorun ->
-		if Session.get("filter_items")
-			filters = Session.get("filter_items")
+		filters = Session.get("filter_items")
+		object_name = Template.instance().data?.object_name
+		fields = Creator.getObject(object_name)?.fields
+		unless filters?.length
+			# 报表过虑器会传入报表的filter_fields属性，否则默认取当前视图的filter_fields属性
+			filter_fields = Template.instance().data?.filter_fields
+			filters = getDefaultFilters(object_name, filter_fields)
+			if filters.length
+				Session.set("filter_items", filters)
+
+		if filters?.length
 			self.filterItems.set(filters)
-			object_name = Template.instance().data?.object_name
-			fields = Creator.getObject(object_name)?.fields
 			unless fields
 				return
 			filters?.forEach (filter) ->
+				filterValue = filter?.value
 				filter.fieldlabel = fields[filter.field]?.label
-				filter.valuelabel = filter?.value
+				filter.valuelabel = filterValue
 				field = fields[filter.field]
-				if field?.type == 'lookup' or field?.type =='master_detail' or field?.type=='select'
-					reference_to_objects = []
-					if field?.reference_to
-						if field.reference_to.constructor == Array
-							reference_to_objects = field.reference_to
-						else
-							reference_to_objects.push field.reference_to
-						reference_to_objects.forEach (reference_to_object)->
+				fieldType = field?.type
+				if fieldType == 'lookup' or fieldType =='master_detail' or fieldType=='select'
+					if field?.reference_to && filter.value
+						reference_to_object = field?.reference_to
+						reference_to_value = filter.value
+						if !_.isString(reference_to_object)
+							reference_to_object = filter.value?.o
+							reference_to_value = filter.value?.ids
+							if reference_to_object && !reference_to_value
+								filter.valuelabel = Creator.getObject(reference_to_object)?.label || ''
+
+						if reference_to_object && reference_to_value
 							name_field = Creator.getObject(reference_to_object).NAME_FIELD_KEY
-							Meteor.call 'getValueLable',reference_to_object,name_field,filter.value,
-								(error,result)->
-									if result
-										filter.valuelabel = result
-										self.filterItems.set(filters)
+							if filter.value
+								Meteor.call 'getValueLable',reference_to_object,name_field,reference_to_value, Session.get("spaceId"),
+									(error,result)->
+										if result
+											filter.valuelabel = result
+											self.filterItems.set(filters)
 					if field?.optionsFunction or field?.options
 						if field.optionsFunction
 							options = field?.optionsFunction()
@@ -176,12 +213,52 @@ Template.filter_option_list.onCreated ->
 							options = field.options
 						options_labels = []
 						_.each options,(option)->
-							if filter?.value
+							if filterValue
 								if _.indexOf(filter.value,option.value)>-1
 									options_labels.push option.label
 						filter.valuelabel = options_labels
-				else
-					self.filterItems.set(filters)	
+				else if Creator.checkFieldTypeSupportBetweenQuery(fieldType)
+					formatFun = (value, type)->
+						if type == "datetime"
+							return moment(value).format('YYYY-MM-DD HH:mm')
+						else
+							return moment.utc(value).format('YYYY-MM-DD')
+					if filterValue
+						if _.isString(filterValue)
+							builtinValue = Creator.getBetweenBuiltinValueItem(fieldType, filterValue)
+							# 如果是between运算符内置值，则取出对应values作为过滤值
+							# 比如value为last_year，返回对应的时间值
+							if builtinValue
+								filterValue = builtinValue.values
+						if _.isArray(filterValue)
+							if filterValue.length
+								if filterValue[0] || filterValue[1]
+									startLabel = if _.isNumber(filterValue[0]) then filterValue[0] else filterValue[0] || ""
+									endLabel = if _.isNumber(filterValue[1]) then filterValue[1] else filterValue[1] || ""
+									if fieldType == 'datetime' or fieldType == 'date'
+										startLabel = if filterValue[0] then formatFun(filterValue[0], fieldType) else ""
+										endLabel = if filterValue[1] then formatFun(filterValue[1], fieldType) else ""
+									if startLabel and endLabel
+										filter.valuelabel = "#{startLabel} ~ #{endLabel}"
+									else if startLabel
+										filter.valuelabel = ">= #{startLabel}"
+									else if endLabel
+										filter.valuelabel = "<= #{endLabel}"
+									if builtinValue
+										# 如果是between运算符内置值，应该显示出内置值对应的label
+										# filter.valuelabel = "#{builtinValue.label}:#{filter.valuelabel}"
+										filter.valuelabel = "#{builtinValue.label}"
+								else
+									filter.valuelabel = ""
+						else
+							filter.valuelabel = formatFun(filterValue, fieldType)
+					else
+						filter.valuelabel = ""
+				else if fieldType == 'boolean'
+					filter.valuelabel = if filterValue then "是" else "否"
+			self.filterItems.set(filters)
+		else
+			self.filterItems.set(null)
 
 Template.filter_option_list.onRendered ->
 	$("#info_popover").dxPopover({

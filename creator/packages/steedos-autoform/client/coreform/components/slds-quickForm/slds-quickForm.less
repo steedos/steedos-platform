@@ -1,0 +1,32 @@
+.quickForm_slds {
+	.view-page-section-row {
+		align-items: center;
+
+		.to:last-child {
+			display: none;
+		}
+
+		.view-page-block-item {
+			.form-group {
+				font-size: 0;
+				.control-label {
+					min-width: 1px;
+					height: 20px;
+					font-size: 0.8125rem;
+				}
+				.form-control {
+					font-size: 0.875rem;
+				}
+			}
+		}
+
+		.to + .view-page-block-item {
+			.control-label {
+				display: none;
+			}
+			.form-control {
+				margin-top: 21px;
+			}
+		}
+	}
+}

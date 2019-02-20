@@ -1,0 +1,105 @@
+<template name="creator_about">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>设置</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">关于</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-about-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						<div class="form-group">
+							<div class="weui_panel_bd weui_panel weui_panel_access">
+								<div class="weui_media_box weui_media_text">
+									<h4 class="weui_media_title">{{_ 'steedos_apps'}}</h4>
+									<p class="weui_media_desc">{{_ "steedos_info"}}</p>
+								</div>
+							</div>
+							<div class="weui_cells weui_cells_form">
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_version"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										<span class="weui_input">{{steedosInfoVersion}}</span>
+									</div>
+								</div>
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_commit_date"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										<span class="weui_input">{{steedosCommitDate}}</span>
+									</div>
+								</div>
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_build_date"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										<span class="weui_input">{{steedosBuildDate}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="weui_cells weui_cells_form">
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_company"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										<a href="#" class="steedos-about">{{_ "steedos_hotlong_software"}}</a>
+									</div>
+								</div>
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_phone"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										{{#if isAndroidOrIOS}}
+											<a href="tel:400-820-1612" class="weui_input" style="color: #3c8dbc">400-820-1612</a>
+										{{else}}
+											<span class="weui_input">400-820-1612</span>
+										{{/if}}
+									</div>
+								</div>
+								<div class="weui_cell">
+									<div class="weui_cell_hd">
+										<span class="weui_label" style="cursor: default;">{{_ "steedos_email"}}</span>
+									</div>
+									<div class="weui_cell_bd weui_cell_primary text-muted">
+										<a href="Mailto:support@steedos.com" class="weui_input" style="color: #3c8dbc">support@steedos.com</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

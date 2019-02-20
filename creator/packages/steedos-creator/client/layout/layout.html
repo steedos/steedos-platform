@@ -4,8 +4,17 @@
 		{{#unless hiddenHeader}}
 			{{> creatorHeader}}
 		{{/unless}}
-		<div class="content-wrapper" style="{{#if hiddenHeader}}top: 0px;{{/if}}">
-			{{> Template.dynamic template=main}}
+		<div class="creator-content-wrapper {{#if split}}split{{/if}}" style="{{#if hiddenHeader}}top: 0px;{{/if}}">
+			{{#if split}}
+				<div class="split-left">
+					{{> Template.dynamic template="creatorSidebar"}}
+				</div>
+				<div class="split-right">
+					{{> Template.dynamic template=main}}
+				</div>
+			{{else}}
+				{{> Template.dynamic template=main}}
+			{{/if}}
 		</div>
 	</div>
 	<div class="connection-status">

@@ -1,6 +1,6 @@
 Meteor.startup ->
-	ServiceMetadata = Npm.require('odata-v4-service-metadata').ServiceMetadata;
-	ServiceDocument = Npm.require('odata-v4-service-document').ServiceDocument;
+	ServiceMetadata = require('odata-v4-service-metadata').ServiceMetadata;
+	ServiceDocument = require('odata-v4-service-document').ServiceDocument;
 	_NUMBER_TYPES = ["number", "currency"]
 
 	_BOOLEAN_TYPES = ["boolean"]

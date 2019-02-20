@@ -1,27 +1,36 @@
 <template name="creator_table_cell">
-	<span class="slds-grid slds-grid_align-spread creator_table_cell field-{{field.type}}">
-		<div class="{{#unless isMarkdown field.type}}cell-container{{else}}editor-preview-side{{/unless}}">
+	<span class="creator_table_cell slds-grid slds-grid_align-spread field-{{field.type}}">
+		<div class="{{#unless is_detail_view}}slds-truncate {{/unless}}{{#unless isMarkdown field.type}}cell-container {{else}}editor-preview-side {{/unless}}">
 			{{#each cellData}}
 				{{#if isTable}}
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
 				{{else if isImages}}
 					{{#each value}}
-						<img class="creator-table-cell-image" src="/api/files/images/{{this}}" alt="{{this}}" />
+						<img class="creator-table-cell-image" src="{{baseUrl}}/{{this}}"/>
 					{{/each}}
 				{{else if isImage}}
-					<img class="creator-table-cell-image" src="/api/files/images/{{value}}" alt="{{value}}" />
+					<img class="creator-table-cell-image" src="{{baseUrl}}/{{value}}"/>
+				{{else if isUrl}}
+					<a href="#" onclick="window.open('{{href}}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false">{{value}}</a>
+				{{else if isEmail}}
+					<a href="mailto:{{value}}">{{value}}</a>
 				{{else}}
 					{{#if href}}
 						{{#if openWindow}}
-							<a href="#" onclick="window.open('{{href}}','_blank','width=800, height=800, left=300, top=20,toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false" title="{{value}}" class="slds-truncate link-detail fulltex list-item-link-{{id}}">{{value}}</a>
+							<a href="#" onclick="window.open('{{href}}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 						{{else}}
-							<a href="{{href}}" title="{{value}}" class="slds-truncate link-detail fulltex list-item-link-{{id}}">{{value}}</a>
+							<a href="{{href}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 						{{/if}}
 					{{else}}
-						<span class="fulltex">{{{value}}}</span>
+						<span class="">{{{value}}}&nbsp;</span>
 					{{/if}}
 				{{/if}}
 			{{/each}}
+			{{#if is_detail_view}}
+				{{#if isExtraField}}
+					<div class="cell-extra-field-container"></div>
+				{{/if}}
+			{{/if}}
 		</div>
 		{{#if showEditIcon}}
 			<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">

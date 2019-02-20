@@ -1,4 +1,5 @@
 <template name="filter_option_list">
+    <!--
     <ul class="editableFilters">
         <li class="filterCardContainer editable reportsFilterCard" data-filtercmp="filterSingleSelectPicklistWidget" title="All accounts"
            >
@@ -6,7 +7,7 @@
                 <a class="filterCardEditor btn-filter-scope" href="javascript:void(0);">
                     <div class="filterCard">
                         <div class="header">
-                            <span class="field">Show Me&nbsp;</span>
+                            <span class="field">按所有者筛选&nbsp;</span>
                         </div>
                         <div class="filterCardBody">
                             <span class="uiOutputText">{{filterScope}} {{_ relatedObject.label}}</span>
@@ -17,12 +18,8 @@
         </li>
     </ul>
     {{#if filterItems.length}}
-        {{#unless isFilterLogicEmpty}}
-            <h3 class="bodyTitle">匹配这些筛选器</h3>
-        {{else}}
-            <h3 class="bodyTitle">匹配所有这些筛选器</h3>
-        {{/unless}}
-    {{/if}}
+        <h3 class="bodyTitle">筛选条件</h3>
+    {{/if}}-->
     <ul class="editableFilters {{#unless isFilterLogicEmpty}} showNumbers {{/unless}}">
         {{#each filterItems}}
         <li class="filterCardContainer editable reportsFilterCard filter-item">
@@ -33,9 +30,11 @@
                             {{#if this.field}} {{this.fieldlabel}} {{else}} {{_ "creator_list_new_filter"}} {{/if}}
                         </span>
                     </div>
-                    <div class="filterCardBody">{{getOperationLabel(this.operation)}}&nbsp;
-                        <span class="uiOutputText">{{this.valuelabel}}</span>
-                    </div>
+                    {{#if this.valuelabel}}
+                        <div class="filterCardBody">{{#if showOperationLabel this.operation}}{{getOperationLabel(this.operation)}}&nbsp;{{/if}}
+                            <span class="uiOutputText">{{this.valuelabel}}</span>
+                        </div>
+                    {{/if}}
                 </div>
             </a>
             <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small removeFilter">
@@ -49,22 +48,22 @@
         <button class="slds-button_reset slds-text-link slds-col_bump-left remove-all-filters" href="javascript:void(0);">{{_ "creator_list_remove_all_filters"}}</button>
     </div>
     {{#if filterItems.length}}
-        <div class="filter-logic-container slds-p-around--small" style="background: #f3f2f2">
+        <div class="filter-logic-container slds-p-around--small hide" style="background: #f3f2f2">
             <div class="filter-logic-title slds-p-bottom--x-small">
                 {{#unless isFilterLogicEmpty}}
                     <span class="title">
                         <span class="slds-m-right--xx-small uiLabel">
-                            筛选器逻辑
+                            高级筛选
                         </span>
                     </span>
                 {{else}}
-                    <a class="add_filter_logic">添加筛选逻辑</a>
+                    <a class="add_filter_logic">高级筛选</a>
                 {{/unless}}
                 <span class="logic-info {{#if isFilterLogicEmpty}}hidden{{/if}}" id="logic_logic">
                     <i class="ion ion-information-circled"></i>
                 </span>
                 {{#unless isFilterLogicEmpty}}
-                    <a class="remove_filter_logic">删除</a>
+                    <a class="remove_filter_logic">取消</a>
                 {{/unless}}
             </div>
             {{#unless isFilterLogicEmpty}}
@@ -77,6 +76,6 @@
         </div>
     {{/if}}
     <div id="info_popover">
-        筛选逻辑管理筛选如何以及何时应用到列表视图。使用 AND 和 OR 运算符微调结果。
+        您可以使用 AND 和 OR 运算符对以上筛选条件进行组合。默认的组合为全部 AND。
     </div>
 </template>

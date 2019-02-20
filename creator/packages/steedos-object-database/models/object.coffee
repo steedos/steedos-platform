@@ -36,6 +36,8 @@ Creator.Objects.objects =
 			type: "boolean"
 		enable_notes:
 			type: "boolean"
+		enable_events:
+			type: "boolean"
 		enable_api:
 			type: "boolean"
 			defaultValue: true
@@ -44,6 +46,12 @@ Creator.Objects.objects =
 			type: "boolean"
 			defaultValue: false
 		enable_instances:
+			type: "boolean"
+		enable_chatter:
+			type: "boolean"
+		enable_audit:
+			type: "boolean"
+		enable_trash:
 			type: "boolean"
 		is_view:
 			type: 'boolean'
@@ -57,6 +65,12 @@ Creator.Objects.objects =
 			label: "Description"
 			type: "textarea"
 			is_wide: true
+		sidebar:
+			type: "object"
+			label: "左侧列表"
+			blackbox: true
+			omit: true
+			hidden: true
 		fields:
 			type: "object"
 			label: "字段"

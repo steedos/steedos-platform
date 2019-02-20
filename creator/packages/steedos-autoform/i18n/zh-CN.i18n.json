@@ -1,4 +1,6 @@
 {
+	"_namespace": "",
+
 	"coreform_select": "请选择",
 	"coreform_select_user_title": "请选择人员",
 	"coreform_select_org_title": "请选择部门"

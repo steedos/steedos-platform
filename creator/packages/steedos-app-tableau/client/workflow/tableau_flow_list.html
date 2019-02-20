@@ -1,0 +1,19 @@
+<template name="tableau_flow_list">
+	<div class="steedos modal fade" id="tableau_flow_list"  role="dialog" style="overflow-x: hidden;overflow-y: auto;">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content flow-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="steedos_tableau_workflow">{{_ "steedos_tableau_workflow"}}</h4>
+				</div>
+
+				<div class="modal-body modal-zoom">
+					{{> tabular table=TabularTables.tableau_flow_list  selector=selector class="table dataTable no-footer"}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btn-data-dismiss" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

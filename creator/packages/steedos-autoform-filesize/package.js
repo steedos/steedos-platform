@@ -1,10 +1,11 @@
 'use strict';
 
 Package.describe({
-    name: 'steedos:filesize',
+    name: 'steedos:autoform-filesize',
     summary: 'Steedos Autoform filesize',
     version: '0.0.1',
-    git: ''
+    git: '',
+    documentation: null
 });
 
 Package.onUse(function(api) {

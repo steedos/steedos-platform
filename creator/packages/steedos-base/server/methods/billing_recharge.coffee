@@ -26,7 +26,7 @@ Meteor.methods
 
 		attach = {}
 		attach.code_url_id = new_id
-		WXPay = Npm.require('weixin-pay')
+		WXPay = require('weixin-pay')
 
 		wxpay = WXPay({
 			appid: Meteor.settings.billing.appid,

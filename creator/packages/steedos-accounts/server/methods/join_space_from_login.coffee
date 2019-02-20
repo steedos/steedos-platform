@@ -20,7 +20,7 @@ Meteor.methods joinSpaceFromLogin: (options) ->
 		return true
 
 	user_email = currentUser.emails[0].address
-	rootOrg = db.organizations.findOne({space:space_logined, is_company:true},{fields: {_id:1}})
+	rootOrg = db.organizations.findOne({space:space_logined, is_company:true, parent: null},{fields: {_id:1}})
 	db.space_users.insert
 		email: user_email
 		user: currentUser._id

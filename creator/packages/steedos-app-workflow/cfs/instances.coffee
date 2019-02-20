@@ -48,8 +48,8 @@ else
                 month = now.getMonth() + 1
                 ins_id = fileObj.metadata.instance
 
-                path = Npm.require('path')
-                mkdirp = Npm.require('mkdirp')
+                path = require('path')
+                mkdirp = require('mkdirp')
                 pathname = path.join(__meteor_bootstrap__.serverDir, '../../../cfs/files/instances/' + year + '/' + month + '/' + ins_id)
                 # Set absolute path
                 absolutePath = path.resolve(pathname)

@@ -3,7 +3,7 @@
  */
 Package.describe({
 	name: 'steedos:autoform',
-	version: '0.0.15',
+	version: '0.0.19',
 	summary: 'Steedos libraries',
 	git: 'https://github.com/steedos/apps/tree/master/packages/steedos-autoform',
 	documentation: null
@@ -36,10 +36,11 @@ Package.onUse(function(api) {
 	api.use('momentjs:moment@2.14.1');
 	api.use('simple:json-routes@2.1.0');
 
-	api.use('steedos:jstree@3.3.2')
-	api.use('steedos:base@0.0.66');
+	api.use('steedos:jstree@3.3.2');
+	api.use('universe:i18n@1.13.0');
+
+	api.use('steedos:base@0.1.4');
 	api.use('rubaxa:sortable@1.3.0');
-	api.use('tap:i18n', ['client', 'server']);
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 
@@ -89,6 +90,18 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/coreform/inputTypes/coreform-url/url.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-url/url.js', 'client');
+
+	api.addFiles('client/coreform/inputTypes/coreform-widearea/lib/widearea.css', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-widearea/lib/widearea.js', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-widearea/widearea.html', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-widearea/widearea.coffee', 'client');
+
+	// api.addFiles('client/coreform/inputTypes/coreform-autosizearea/lib/autosize.js', 'client');
+	// api.addFiles('client/coreform/inputTypes/coreform-autosizearea/autosize-area.html', 'client');
+	// api.addFiles('client/coreform/inputTypes/coreform-autosizearea/autosize-area.coffee', 'client');
+
+	api.addFiles('client/coreform/components/slds-quickForm/slds-quickForm.html', 'client');
+	api.addFiles('client/coreform/components/slds-quickForm/slds-quickForm.coffee', 'client');
 
 	api.addFiles('client/coreform/inputTypes/coreform-typeahead/typeahead.js/bloodhound.js', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-typeahead/typeahead.js/typeahead.bundle.js', 'client');

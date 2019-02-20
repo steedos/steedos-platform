@@ -1,10 +1,11 @@
+fields = ['category', 'name', 'company_id']
 Template.new_flow_modal.helpers
 	schema: ()->
 		schema = {}
 		object = Creator.getObject('flows')
 		new_schema = new SimpleSchema(Creator.getObjectSchema(object))
 		obj_schema = new_schema._schema
-		_.each ['name', 'category'], (field)->
+		_.each fields, (field)->
 			schema[field] = obj_schema[field]
 			if schema[field].autoform
 				schema[field].autoform.readonly = false
@@ -12,7 +13,7 @@ Template.new_flow_modal.helpers
 		return new SimpleSchema(schema)
 
 	fields: ()->
-		return ['name', 'category']
+		return fields
 
 
 Template.new_flow_modal.events
@@ -40,6 +41,10 @@ Template.new_flow_modal.events
 		if doc.category
 			form.category = doc.category
 
+		companyId = doc.company_id
+		if companyId
+			form.company_id = companyId
+
 		data = {
 			"Forms": [form]
 		}
@@ -64,7 +69,8 @@ Template.new_flow_modal.events
 
 				newFlow = _.find flows, (f)->
 							return f.form == newFormId
-				Workflow.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id)
+				WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
+				FlowRouter.go("/app/admin/flows/view/#{newFlow._id}")
 				Modal.hide(template)
 
 			error: (jqXHR, textStatus, errorThrown) ->

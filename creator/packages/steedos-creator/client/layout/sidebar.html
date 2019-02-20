@@ -1,31 +1,3 @@
 <template name="creatorSidebar">
-	<aside class="main-sidebar">
-		<section class="sidebar">
-			<ul class="nav sidebar-menu" style="width: 100%;">
-				<li class="header header-app">
-					{{app_name}}
-				</li>
-				{{#each app_objects}}
-					<li class="{{object_class_name this}}">
-						<a href="{{object_url}}">
-							<!-- <i class="ion {{object_i.icon}}"></i> -->
-							<span>{{_ object_i.name}}</span>
-							<!-- <span class="pull-right-container">
-								<span class="label pull-right bg-red">10</span>
-							</span> -->
-						</a>
-					</li>
-				{{/each}}
-				<!-- <li class="header header-app">
-					Admin
-				</li>
-				<li class="">
-					<a href="/creator/admin/object_permissions/list">
-						<i class="ion {{object_i.icon}}"></i>
-						<span>Object Permissions</span>
-					</a>
-				</li> -->
-			</ul>
-		</section>
-	</aside>
+	<div id="sidebar-menu"></div>
 </template>

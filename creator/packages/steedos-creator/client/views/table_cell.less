@@ -1,8 +1,8 @@
-.creator_table_cell{
+.creator_table_cell {
 	flex-wrap: wrap;
 	flex-direction: row;
 
-	.slds-truncate{
+	.cell-container{
 		& > a:not(:last-of-type):after {
 			content: ",";
 		}
@@ -60,6 +60,7 @@
 	}
 }
 
+
 #creator-quick-form{
 	.cell-container{
 		.fulltex{
@@ -69,4 +70,9 @@
 			max-height: 80px;
 		}
 	}
+	
+	.cell-extra-field-container{
+		padding-left: 10px;
+	}
+
 }

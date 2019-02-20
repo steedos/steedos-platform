@@ -1,6 +1,6 @@
-Fiber = Npm.require('fibers')
+Fiber = require('fibers')
 
-basicAuth = Npm.require('basic-auth')
+basicAuth = require('basic-auth')
 
 JsonRoutes.Middleware.use '/api/odata/v4/', (req, res, next)->
 

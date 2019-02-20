@@ -1,0 +1,42 @@
+<template name="account_personal">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>账户设置</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">个人信息</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-account-personal-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						{{> quickForm collection="db.users" doc=user id="updateProfile" schema=schema type="update" fields="steedos_id,name,locale,email_notification" buttonContent=btn_save_i18n}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:oauth2-server',
-	version: '0.0.6',
+	version: '0.0.7',
 	summary: 'Add oauth2 server support to your application.'
 });
 
@@ -8,7 +8,8 @@ Npm.depends({
 	'cookies': "0.6.1",
 	"express": "4.13.4",
 	"body-parser": "1.14.2",
-	"oauth2-server": "2.4.1"
+	"oauth2-server": "2.4.1",
+	"unpipe": "1.0.0"
 });
 
 Package.onUse(function(api) {
@@ -18,7 +19,6 @@ Package.onUse(function(api) {
 	api.use('blaze@2.1.9');
 	api.use('templating@1.2.15');
 	api.use('flemay:less-autoprefixer@1.2.0');
-	api.use('tap:i18n@1.7.0');
 	api.use('kadira:blaze-layout@2.3.0');
 	api.use('kadira:flow-router@2.10.1');
 	
@@ -33,6 +33,7 @@ Package.onUse(function(api) {
 	api.use('http');
 
 	api.use('steedos:base@0.0.72');
+	api.use('universe:i18n@1.13.0');
 	// api.addFiles('lib/random.coffee', ['client', 'server']);
 
 	api.addFiles('lib/common.js', ['client', 'server']);
@@ -40,7 +41,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/server.js', 'server');
 	api.addFiles('lib/client.js', 'client');
 
-	api.use('tap:i18n', ['client', 'server']);
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 

@@ -24,7 +24,7 @@ _insertData = () ->
 
 _deleteData = (data) ->
 	action = {
-		name: "standard_delete", 
+		name: "standard_delete",
 		todo: "standard_delete"
 	}
 	action_record_title = data.name
@@ -37,12 +37,23 @@ _deleteData = (data) ->
 _dataSource = () ->
 	url = "/api/odata/v4/#{Steedos.spaceId()}/#{Session.get('object_name')}"
 	dataSource = {
-		store: 
+		store:
 			type: "odata"
 			version: 4
 			url: Steedos.absoluteUrl(url)
 			deserializeDates: false
 			withCredentials: false
+			onLoading: (loadOptions)->
+				startDate = loadOptions.dxScheduler.startDate
+				endDate = loadOptions.dxScheduler.endDate
+				_f = [
+					[[ 'end', ">=", startDate], 'and', [ 'start', "<=", endDate]]
+				]
+
+				if loadOptions.filter && _.isArray(loadOptions.filter)
+					loadOptions.filter = [loadOptions.filter, 'and', _f]
+				else
+					loadOptions.filter = _f
 			beforeSend: (request) ->
 				request.headers['X-User-Id'] = Meteor.userId()
 				request.headers['X-Space-Id'] = Steedos.spaceId()
@@ -58,13 +69,15 @@ _dataSource = () ->
 					if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
 						error.message = t "creator_odata_unexpected_character"
 				toastr.error(error.message)
+		expand: ["owner($select=name)"]
+
 	}
 	return dataSource
 
 getAppointmentColor = (room) ->
 	result = Creator.odata.get('meetingroom',room,'color')
 	return result.color
-	
+
 getRoomAdmin = (room) ->
 	result = Creator.odata.get('meetingroom',room,'admins')
 	return result?.admins || []
@@ -74,8 +87,10 @@ getRoomPermission = (room) ->
 	return result?.enable_open
 
 getTooltipTemplate = (data) ->
-	color = getAppointmentColor(data.room)
-	if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
+	room = Creator.odata.get('meetingroom', data.room,'color,admins')
+	color = room.color
+	roomAdmins = room.admins
+	if Steedos.isSpaceAdmin() || data.owner._id == Meteor.userId() || roomAdmins.indexOf(Meteor.userId())>-1
 		action = """
 			<div class="action" style='background-color:" + color + ";'>
 				<div class="dx-scheduler-appointment-tooltip-buttons">
@@ -117,8 +132,10 @@ Template.creator_calendar.onRendered ->
 	self = this
 	self.autorun (c)->
 		object_name = Session.get("object_name")
+		unless Session.get("object_name") is "meeting"
+			return
 		if Steedos.spaceId()
-			dxSchedulerInstance =  $("#scheduler").dxScheduler({
+			schedulerOptions = {
 				dataSource: _dataSource()
 				views: [{
 					type: "day",
@@ -127,7 +144,7 @@ Template.creator_calendar.onRendered ->
 				}, {
 					type:"week",
 					maxAppointmentsPerCell:"unlimited"
-				}, "month"]
+				}, "month", "agenda"]
 				currentView: "day"
 				currentDate: new Date()
 				firstDayOfWeek: 1
@@ -142,7 +159,7 @@ Template.creator_calendar.onRendered ->
 				# groups: ["room"]
 				crossScrollingEnabled: true
 				cellDuration: 30
-				editing: { 
+				editing: {
 					allowAdding: false,
 					allowDragging: true,
 					allowResizing: true,
@@ -154,7 +171,7 @@ Template.creator_calendar.onRendered ->
 					displayExpr: "name"
 					label: "会议室"
 					dataSource: {
-						store: 
+						store:
 							type: "odata"
 							version: 4
 							url: Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/meetingroom?$orderby=name"
@@ -177,16 +194,27 @@ Template.creator_calendar.onRendered ->
 						#orderby:'name'
 					}
 				}],
+				appointmentTemplate: (data)->
+					return $("""
+						<div style='height: 100%;' title='会议标题: #{data.name}&#10;创建人: #{data.owner.name}&#10;联系方式: #{data.phone || ''}'>
+							<div class='dx-scheduler-appointment-title'>#{data.name}</div>
+							<div class='dx-scheduler-appointment-content-details' style='white-space: nowrap;'>
+								<div class='dx-scheduler-appointment-content-date'>#{DevExpress.localization.formatDate(new Date(data.start), 'hh:mm a')}</div>
+								<div class='dx-scheduler-appointment-content-date'> - </div>
+								<div class='dx-scheduler-appointment-content-date'>#{DevExpress.localization.formatDate(new Date(data.end), 'hh:mm a')}</div>
+							</div>
+						</div>
+					""");
+				,
 				onAppointmentClick: (e) ->
 					if e.event.currentTarget.className.includes("dx-list-item")
 						e.cancel = true
 
 				onAppointmentDblClick: (e) ->
-					e.cancel = true	
+					e.cancel = true
 
 				dropDownAppointmentTemplate: (data, index, container) ->
-					container.addClass('appointment-border')
-					if Steedos.isSpaceAdmin() || data.owner == Meteor.userId()
+					if Steedos.isSpaceAdmin() || data.owner._id == Meteor.userId()
 						$("body").off("click", ".appointment-border")
 						$("body").on("click", ".appointment-border", ()->
 							_editData(data)
@@ -198,16 +226,14 @@ Template.creator_calendar.onRendered ->
 						onClick: () ->
 							_editData(data)
 					});
-					
+
 					markup.find(".delete").dxButton({
 						onClick: () ->
 							_deleteData(data)
 					})
 					return markup;
-					console.log('[dropDownAppointmentTemplate]', data)
 
 				onCellClick: (e) ->
-					console.log('[onCellClick]', e)
 					cellData = e.cellData
 					doc = {
 								start: cellData.startDate
@@ -233,21 +259,33 @@ Template.creator_calendar.onRendered ->
 						else
 							Session.set("cmDoc", doc)
 				onAppointmentUpdating: (e)->
-					e.cancel = true
-					doc = {}
-					_.keys(e.newData).forEach (key)->
-						if _.indexOf(key, '@') < 0
-							doc[key] = e.newData[key]
-					doc['modified'] = new Date()
-					Creator.odata.update("meeting", e.newData['_id'], doc, () -> 
-						dxSchedulerInstance.option("dataSource", _dataSource())
-					)
+					roomAdmins = getRoomAdmin(e.oldData.room)
+					if Steedos.isSpaceAdmin() || e.oldData.owner._id == Meteor.userId() || roomAdmins.indexOf(Meteor.userId())>-1
+						newRoom = Creator.odata.get('meetingroom',e.newData.room,'admins,enable_open')
+						if newRoom.admins.indexOf(Meteor.userId())>-1 or newRoom.enable_open
+							e.cancel = true
+							doc = {}
+							_.keys(e.newData).forEach (key)->
+								if _.indexOf(key, '@') < 0
+									if key == 'owner'
+										doc[key] = e.newData[key]?._id
+									else
+										doc[key] = e.newData[key]
+							doc['modified'] = new Date()
+							Creator.odata.update("meeting", e.newData['_id'], doc, () ->
+								dxSchedulerInstance.option("dataSource", _dataSource())
+							)
+						else
+							e.cancel = true
+							toastr.error("此会议室为特约会议室，您暂无权限。")
+					else
+						e.cancel = true;
+						toastr.error("您无权限调整此记录");
 
 				onAppointmentUpdated: (e)->
 					dxSchedulerInstance.option("dataSource", _dataSource())
 
 				appointmentTooltipTemplate: (data, container) ->
-					console.log('[appointmentTooltipTemplate]', data, container)
 					markup = getTooltipTemplate(data);
 					markup.find(".edit").dxButton({
 						text: "Edit details",
@@ -260,13 +298,15 @@ Template.creator_calendar.onRendered ->
 							_deleteData(data)
 					})
 					return markup;
-			}).dxScheduler("instance")
+			};
+			module.dynamicImport("devextreme/ui/scheduler").then (dxScheduler)->
+				DevExpress.ui.dxScheduler = dxScheduler;
+				dxSchedulerInstance =  $("#scheduler").dxScheduler(schedulerOptions).dxScheduler("instance")
 
 Template.creator_calendar.helpers Creator.helpers
 
 Template.creator_calendar.helpers
 	actions: ()->
-		actions: ()->
 		actions = Creator.getActions()
 		actions = _.filter actions, (action)->
 			if action.on == "list" && action.todo != "standard_query"
@@ -281,10 +321,10 @@ Template.creator_calendar.helpers
 	list_views: ()->
 		Session.get("change_list_views")
 		return Creator.getListViews()
-	
+
 	list_view_label: (item)->
 		if item
-			return item.label || item.name 
+			return item.label || item.name
 		else
 			return ""
 
@@ -293,13 +333,11 @@ Template.creator_calendar.helpers
 			list_view_id = String(list_view._id)
 		else
 			list_view_id = String(list_view.name)
-		
+
 		app_id = Session.get("app_id")
 		object_name = Session.get("object_name")
 		return Creator.getListViewUrl(object_name, app_id, list_view_id)
 
-Template.creator_calendar.events 
+Template.creator_calendar.events
 	"click .list-action-custom": (event, template) ->
 		_insertData()
-
-		

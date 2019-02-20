@@ -60,5 +60,4 @@ Template.creatorHeader.events
 
 	'click .current-user-link': (e, t)->
 		url = "/app/admin/users/view/#{Steedos.userId()}"
-		url = Creator.getRelativeUrl(url)
 		FlowRouter.go(url)

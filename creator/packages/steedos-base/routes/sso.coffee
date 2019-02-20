@@ -1,5 +1,5 @@
-crypto = Npm.require('crypto')
-Cookies = Npm.require("cookies")
+crypto = require('crypto')
+Cookies = require("cookies")
 
 JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 

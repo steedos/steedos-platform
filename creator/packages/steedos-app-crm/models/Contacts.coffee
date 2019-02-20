@@ -32,7 +32,7 @@ Creator.Objects.contacts =
 			sortable: true
 		email:
 			label: "邮件"
-			type: "text"
+			type: "email"
 			group: "联系方式"
 		phone:
 			label: "工作电话"

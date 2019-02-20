@@ -1,4 +1,4 @@
-basicAuth = Npm.require('basic-auth')
+basicAuth = require('basic-auth')
 
 class @OdataRestivus
 

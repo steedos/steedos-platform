@@ -1,0 +1,119 @@
+<template name="tableau_info">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>设置</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">Tableau</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-account-avatar-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						<div class="form-group">
+							<section class="steedos-tableau-info">
+								<h2 class="page-header">{{_ "steedos_tableau_introduction"}}</h2>
+								<ul>
+									<li>{{_ "steedos_tableau_function"}}<a href="https://www.tableau.com/zh-cn" target="_blank">Tableau</a> {{_ "steedos_tableau_web_connect"}}</li>
+									<li>{{_ "steedos_tableau_statistics_analysis"}}</li>
+								</ul>
+							</section>
+
+							<section class="steedos-tableau-start">
+								<h2 class="page-header">{{_ "steedos_tableau_use"}}</h2>
+								<ul>
+									<li><a href="https://public.tableau.com/zh-cn/s/download" target="_blank">{{_ "steedos_tableau_download"}}</a></li>
+									<li>{{_ "steedos_tableau_button_copy_link"}}<b>{{_ "steedos_tableau_copy_Link"}}</b>{{_ "steedos_tableau_get_link"}}</li>
+									<li>{{_ "steedos_tableau_use_step"}}</li>
+								</ul>
+							</section>
+
+							<section class="steedos-tableau-connectors">
+								<h2 class="page-header">{{_ "steedos_tableau_url_copy"}}</h2>
+								<div class="row data-connectors">
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-aqua">
+											<div class="inner">
+												<h3>{{_ "steedos_tableau_efficiency_statistics"}}</h3>
+												<p>{{_ "steedos_tableau_organization_statistics"}}</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-stats-bars"></i>
+											</div>
+											<a href="#" class="small-box-footer steedos-tableau-approve-cost-time" data-clipboard-text="{{cost_time_connector}}">{{_ "steedos_tableau_copy_Link"}}</a>
+										</div>
+									</div>
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-green">
+											<div class="inner">
+												<h3>{{_ "steedos_tableau_request_statistics"}}</h3>
+												<p>{{_ "steedos_tableau_workflow_request_statistic"}}</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-pie-graph"></i>
+											</div>
+											<a href="#" class="small-box-footer steedos-tableau-workflow">{{_ "steedos_tableau_select_workflow"}} <i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-red">
+											<div class="inner">
+												<h3>{{_ "steedos_tableau_forward"}}</h3>
+												<p>...</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-bag"></i>
+											</div>
+											<a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-yellow">
+											<div class="inner">
+												<h3>{{_ "steedos_tableau_forward"}}</h3>
+												<p>...</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-person-add"></i>
+											</div>
+											<a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

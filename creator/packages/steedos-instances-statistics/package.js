@@ -17,7 +17,6 @@ Package.onUse(function(api) {
 	api.use('blaze@2.1.9');
 	api.use('templating@1.2.15');
 	api.use('flemay:less-autoprefixer@1.2.0');
-	api.use('tap:i18n@1.7.0');
 	api.use('kadira:blaze-layout@2.3.0');
 	api.use('kadira:flow-router@2.10.1');
 	

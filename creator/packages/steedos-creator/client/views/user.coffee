@@ -39,7 +39,6 @@ Template.user.helpers
 		userId = Session.get "record_id"
 		doc = Creator.getCollection("space_users").findOne({space: spaceId, user: userId})
 		if doc
-			console.log doc
 			return doc[key]
 	
 	showEditBtn: ()->

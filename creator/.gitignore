@@ -10,6 +10,7 @@
 .meteor/meteorite
 
 
-settings.json
+/settings.json
 .idea/**
 start.bat
+.vscode/*

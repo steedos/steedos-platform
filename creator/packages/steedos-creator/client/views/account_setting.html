@@ -1,0 +1,175 @@
+<template name="account_setting">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>账户设置</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">账户</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-account-setting-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						<div class="slds-grid view-page-section-row">
+							<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+								<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+									{{#if usePhone}}
+										<h2 style="margin-top: 0px;">
+											{{_ 'change_phone'}}
+										</h2>
+									<hr style="margin-top: 0px;" />
+									{{#if user.phone}}
+										<div class="phone-box">
+											<span class="phone-number">
+												{{accountPhoneNumber}}
+											</span>
+											{{#if user.phone.verified}}
+												<span class="phone-status text-success">
+													<i class="ion ion-checkmark-circled">
+													</i>
+													<span class="phone-status-text">
+														{{_ 'account_phone_verified_text'}}
+													</span>
+												</span>
+											{{else}}
+											<span class="phone-status text-danger">
+												<i class="ion ion-alert-circled">
+												</i>
+												<span class="phone-status-text">
+													{{_ 'account_phone_unverified_text'}}
+												</span>
+											</span>
+											{{/if}}
+										</div>
+									{{else}}
+										<div class="phone-box">
+											<span class="phone-status-text">
+												{{_ 'account_phone_unbind_text'}}
+											</span>
+										</div>
+									{{/if}}
+										<button class="btn btn-primary btn-sm btn-change-phone" type="submit">
+											{{_ 'change_phone'}}
+										</button>
+									{{/if}}
+									<div class="change-username-box">
+										{{#if usePhone}}
+											<h2 style="margin-top: 40px;">
+												{{_ 'Change username'}}
+											</h2>
+										{{else}}
+											<h2 style="margin-top: 0px;">
+												{{_ 'Change username'}}
+											</h2>
+										{{/if}}
+										<hr style="margin-top: 0px;" />
+										{{#if user.username}}
+											<div class="username-text">
+												{{user.username}}
+											</div>
+										{{else}}
+											<div class="username-text">
+												{{_ 'username_unset_text'}}
+											</div>
+										{{/if}}
+										<button class="btn btn-primary btn-sm change-username" type="submit">
+											{{_ 'Change username'}}
+										</button>
+									</div>
+									<!-- 更改邮箱 -->
+									<h2 style="margin-top: 40px;">
+										{{_ "binding_mailbox"}}
+									</h2>
+									<hr style="margin-top: 0px;" />
+									<div class="list-group">
+										{{#each emails}}
+											<div class="list-group-item">
+												<span>
+													{{this.address}}
+												</span>
+												{{#if this.verified}}
+													{{#if isPrimary this.address}}
+														<span class="text-muted">
+															{{_ 'email_is_primary'}}
+														</span>
+													{{/if}}
+												{{else}}
+													<span class="text-muted">
+														{{_ 'email_unvrified'}}
+													</span>
+												{{/if}}
+												<span class="pull-right">
+													{{#if this.verified}}
+														{{#unless isPrimary this.address}}
+															<span>
+																<button class="set-primary-email btn-link" data-email="{{address}}">
+																	{{_ 'email_set_primary'}}
+																</button>
+															</span>
+														{{/unless}}
+													{{else}}
+														<span>
+															{{_ 'email_verify_sent'}}
+															<button class="send-verify-email btn-link" data-email="{{address}}">
+																{{_ 'email_send_verify'}}
+															</button>
+														</span>
+													{{/if}}
+													{{#if more_than_one_address}}
+														{{#unless isPrimary this.address}}
+															<span>
+																<button class="remove-email btn-link">
+																	{{_ 'Delete'}}
+																</button>
+															</span>
+														{{/unless}}
+													{{/if}}
+												</span>
+											</div>
+										{{/each}}
+									</div>
+									<div class="row" style="margin-top: 25px;">
+										<div class="col-lg-6">
+											<div class="input-group">
+												<input class="form-control" id="newEmail" name="newEmail" required="" type="text" />
+												<span class="input-group-btn">
+													<button class="btn btn-primary add-email" type="button">
+														{{_ 'Add'}}
+													</button>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</template>

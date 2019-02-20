@@ -19,7 +19,6 @@ Template.odata_service.onRendered ()->
 					request.headers['X-Space-Id'] = 'n9eLY4aFpnvGroHy6';
 					request.headers['X-Auth-Token'] = 's2c3DVHBDS6vjaxDsd9MFZD7LbJW1UQSN00qw_oqZSf';
 				onLoading: (loadOptions)->
-					console.log loadOptions
 					return
 
 			},

@@ -65,6 +65,11 @@ Meteor.startup ->
 			if !object_name
 				throw new Meteor.Error(500, "Miss id")
 
+			_obj = Creator.getCollection("objects").findOne({_id: object_name})
+
+			if _obj && _obj.name
+				object_name = _obj.name
+
 			if object_name.split(',').length > 1
 				data = getObjects(spaceId, userId, object_name)
 			else

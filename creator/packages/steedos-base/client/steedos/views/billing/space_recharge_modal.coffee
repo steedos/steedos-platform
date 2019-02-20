@@ -1,3 +1,17 @@
+Template.space_recharge_modal.onCreated ->
+	Steedos.subs["Modules"] = new SubsManager()
+	Steedos.subs["Modules"].subscribe("modules");
+
+	if Session.get('spaceId')
+		Meteor.call 'get_space_user_count', Session.get('spaceId'), (err, result)->
+			if err
+				console.log err.reason
+			if result
+				Session.set('space_user_count', result.accepted_user_count)
+
+Template.space_recharge_modal.onDestroyed ->
+	Steedos.subs["Modules"].clear()
+
 Template.space_recharge_modal.onRendered ()->
 	$("#space_recharge_end_date").datetimepicker({
 		format: "YYYY-MM-DD",
@@ -72,7 +86,7 @@ Template.space_recharge_modal.events
 
 		if space.is_paid
 
-			balance = 0 
+			balance = 0
 			old_listprices = 0
 			remain_months = 0
 			old_end_date = space.end_date
@@ -121,7 +135,7 @@ Template.space_recharge_modal.events
 			if not user_count
 				toastr.warning "请填写用户数"
 				return
-		
+
 			if space_modules.length > 0 and listprices > 0 and user_count > 0 and months > 0
 				fee_value = listprices * user_count * months
 			else
@@ -131,9 +145,9 @@ Template.space_recharge_modal.events
 			$('#space_recharge_fee')[0].value = ""
 			return
 
-		total_fee = 100 * parseFloat(fee_value.toFixed(2))
+		total_fee = parseInt((100 * parseFloat(fee_value.toFixed(2))).toFixed())
 
-		new_id = db.billing_pay_records._makeNewID() 
+		new_id = db.billing_pay_records._makeNewID()
 
 		$("body").addClass("loading")
 
@@ -170,7 +184,7 @@ Template.space_recharge_modal.events
 			if checked
 				document.getElementById('workflow.standard').checked = true
 				document.getElementById('workflow.standard').disabled = "disabled"
-			else 
+			else
 				if modules and !modules.includes("workflow.standard")
 					document.getElementById('workflow.standard').disabled = ""
 				else if !modules
@@ -210,7 +224,7 @@ Template.space_recharge_modal.events
 
 		if space.is_paid
 			console.log "is_paid"
-			balance = 0 
+			balance = 0
 			old_listprices = 0
 			remain_months = 0
 			old_end_date = space.end_date

@@ -1,4 +1,4 @@
-Cookies = Npm.require("cookies")
+Cookies = require("cookies")
 
 JsonRoutes.add "post", "/api/collection/find", (req, res, next) ->
     try

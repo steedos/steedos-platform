@@ -1,6 +1,6 @@
-http = Npm.require 'http';
-socket_io = Npm.require 'socket.io';
-Fiber = Npm.require('fibers');
+http = require 'http';
+socket_io = require 'socket.io';
+Fiber = require('fibers');
 
 if !process.env.SOCKET_IO_PORT
 	console.warn('The environment variable SOCKET_IO_PORT is not configured, failing to start socket.io');

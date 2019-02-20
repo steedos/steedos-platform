@@ -27,6 +27,11 @@
                         {{else}}
                             {{#if is_show_form}}
                                 {{#autoForm id="filter-option" schema=schema doc=filter_item}}
+									<div class="forceFilterPanelFieldSelector" style="display: none">
+										<div class="forceRecordLayout valueInput">
+											{{> afQuickField name="is_default"}}
+										</div>
+									</div>
                                     <div class="forceFilterPanelFieldSelector">
                                         <div class="forceRecordLayout valueInput">
                                             {{> afQuickField name="field" label=(_ "creator_filter_option_field")}}
@@ -40,7 +45,12 @@
                                     <div class="forceFilterPanelFieldSelector">
                                         <div class="forceRecordLayout valueInput" style="min-height: 70px;">
                                             {{#if show_form}}
-                                                {{> afQuickField name="value" label=(_ "creator_filter_option_value")}}
+                                                {{#if isBetweenOperation}}
+                                                    {{> afQuickField name="start_value" label=(_ "creator_filter_option_start_value")}}
+                                                    {{> afQuickField name="end_value" label=(_ "creator_filter_option_end_value")}}
+                                                {{else}}
+                                                    {{> afQuickField name="value" label=(_ "creator_filter_option_value")}}
+                                                {{/if}}
                                             {{/if}}
                                         </div>
                                     </div>

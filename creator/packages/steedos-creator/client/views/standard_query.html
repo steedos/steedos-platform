@@ -9,29 +9,9 @@
 				</header>
 
 				<div class="slds-modal__content slds-p-around_medium {{#if isContainerVis fields}}container-vis{{/if}}">
-                    {{#autoForm schema=schema id="standardQueryForm" doc=value}}
-                       
-                        {{#each fields}}
-                            <div class="slds-grid view-page-section-row">
-								{{#if isArray this}}
-									{{#each this}}
-										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-											<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-												{{> afQuickField name=this}}
-											</div>
-										</div>
-										<span class="to">到</span>
-									{{/each}}
-								{{else}}
-									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-											{{> afQuickField name=this}}
-										</div>
-									</div>
-								{{/if}}
-                            </div>
-                        {{/each}}
-                    {{/autoForm}}
+
+					{{> quickForm id="standardQueryForm" schema=schema doc=value template="slds" object_name=object_name}}
+
 				</div>
 
 				<footer class="slds-modal__footer">

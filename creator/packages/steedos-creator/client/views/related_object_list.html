@@ -1,9 +1,9 @@
 <template name="related_object_list">
 
-	<div class="steedos-brand-band slds-brand-band_medium related_object_list">
+	<div class="steedos-brand-band slds-brand-band_medium  slds-template_bottom-magnet related_object_list">
 		<div class="slds-template__container">
 			<div class="listViewManager slds-grid slds-grid--vertical">
-				<div class="slds-page-header">
+				<div class="slds-page-header slds-page-header_joined">
 					<div class="slds-grid">
 						<div class="slds-col slds-has-flexi-truncate">
 							<div class="slds-media slds-no-space slds-grow">
@@ -49,7 +49,7 @@
 				</div>
 				<div class="slds-grid table-grid-content">
 					<div class="slds-col slds-no-space">
-						<div class="slds-table tale-content slds-table--header-fixed_container list-table-container td-cell-wrap">
+						<div class="slds-table tale-content list-table-container td-cell-wrap">
 							{{> Template.dynamic template="creator_grid" data=list_data}}
 						</div>
 					</div>

@@ -1,0 +1,71 @@
+<template name="account_background">
+	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
+		<div class="slds-template__container">
+			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
+				<div class="slds-page-header slds-page-header_bleed">
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media slds-no-space slds-grow">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container">
+										<div class="slds-icon crm-header-icon">
+											<span class="uiImage">
+												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name="team_member"}}
+											</span>
+										</div>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<nav>
+										<ol class="slds-breadcrumb slds-line-height_reset">
+											<li class="slds-breadcrumb__item crm-breadcrumb-item">
+												<span>账户设置</span>
+											</li>
+										</ol>
+									</nav>
+									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+										<div class="">
+											<span class="">背景图</span>
+										</div>
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="creator-account-background-form" class="slds-show slds-form slds-form_stacked slds-grid slds-page-header__detail-row" role="tabpanel">
+						<!-- 背景设置 -->
+						<div class="row bg-body-setting">
+							{{#each bgBodys}}
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+								<a class="thumbnail {{isCurrentBgUrlWaitingSave url}} {{isCurrentBgUrlActive url}}" data-url="{{url}}">
+									<div class="bg-body" style="background-image:url({{absoluteUrl url}})">
+									</div>
+								</a>
+							</div>
+							{{/each}}
+							{{#if accountBgBodyValue.avatar}}
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+								<a class="thumbnail {{isCurrentBgUrlWaitingSave(accountBgBodyValue.avatar)}} {{isCurrentBgUrlActive(accountBgBodyValue.avatar)}}" data-url="{{accountBgBodyValue.avatar}}">
+									<div class="bg-body" style="background-image:url({{avatarUrl accountBgBodyValue.avatar}})">
+									</div>
+								</a>
+							</div>
+							{{/if}}
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
+								<div class="upload-box">
+									<div class="btn btn-info btn-sm btn-upload-bg-file">
+										{{_ 'profile_upload_image'}}
+										<input accept="image/*" class="avatar-file" type="file" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-primary btn-sm btn-save-bg hide" type="button">
+							{{_ 'profile_save_bg_setting'}}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

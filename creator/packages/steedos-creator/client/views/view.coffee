@@ -29,19 +29,56 @@ Template.creator_view.onRendered ->
 Template.creator_view.helpers Creator.helpers
 
 Template.creator_view.helpers
+	form_horizontal: ()->
+		if Session.get("app_id") == "admin"
+			return window.innerWidth > (767 + 250)
+		else
+			return window.innerWidth > 767
+
+	hasUnObjectField: (t)->
+		r = false;
+
+		if t && t.length > 0
+			_object = Creator.getObject(Session.get("object_name"))
+			_.find t, (fieldKey)->
+				if !fieldKey
+					return
+				field = _object.fields[fieldKey]
+				if _object.schema._schema[fieldKey]?.type.name != 'Object'
+					r = true;
+				if field.type == 'lookup' || field.type == 'master_detail'
+					reference_to = field.reference_to
+					if _.isFunction(reference_to)
+						reference_to = reference_to()
+					if _.isArray(reference_to)
+						r = true;
+				return r;
+		return r;
 
 	isObjectField: (fieldKey)->
 		if !fieldKey
 			return
-		return Creator.getObject(Session.get("object_name")).schema._schema[fieldKey]?.type.name == 'Object'
+		_object = Creator.getObject(Session.get("object_name"))
+		return _object.schema._schema[fieldKey]?.type.name == 'Object' && _object.fields[fieldKey].type != 'lookup' && _object.fields[fieldKey].type != 'master_detail'
 
 	objectField: (fieldKey)->
 		schema = Creator.getObject(Session.get("object_name")).schema
+		name = schema._schema[fieldKey].label
+		schemaFieldKeys = _.map(schema._objectKeys[fieldKey + '.'], (k)->
+			return fieldKey + '.' + k
+		)
+		schemaFieldKeys = schemaFieldKeys.filter (key)->
+			# 子表字段不应该显示hidden字段
+			schemaFieldItem = schema._schema[key]
+			if schemaFieldItem
+				return !(schemaFieldItem.autoform?.type == "hidden")
+			else
+				return false
+
+		fields = Creator.getFieldsForReorder(schema, schemaFieldKeys)
 		return {
-			name: schema._schema[fieldKey].label
-			fields: Creator.getFieldsForReorder(schema, _.map(schema._objectKeys[fieldKey + '.'], (k)->
-				return fieldKey + '.' + k
-			))
+			name: name
+			fields: fields
 		}
 
 	collection: ()->
@@ -56,9 +93,11 @@ Template.creator_view.helpers
 		return schema
 
 	schemaFields: ()->
-		simpleSchema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(Session.get("object_name"))))
+		object = Creator.getObject(Session.get("object_name"))
+		simpleSchema = new SimpleSchema(Creator.getObjectSchema(object))
 		schema = simpleSchema._schema
-		firstLevelKeys = simpleSchema._firstLevelSchemaKeys
+		# 不显示created/modified，因为它们显示在created_by/modified_by字段后面
+		firstLevelKeys = _.without simpleSchema._firstLevelSchemaKeys, "created", "modified"
 		permission_fields = Creator.getFields()
 
 #		_.forEach schema, (field, name)->
@@ -98,16 +137,20 @@ Template.creator_view.helpers
 		record = Creator.getObjectRecord()
 #		return record[key]
 		key.split('.').reduce (o, x) ->
-				o[x]
+				o?[x]
 		, record
 
 	keyField: (key) ->
 		fields = Creator.getObject().fields
 		return fields[key]
 
+	is_wide: (key) ->
+		fields = Creator.getObject().fields
+		return fields[key]?.is_wide
+
 	full_screen: (key) ->
 		fields = Creator.getObject().fields
-		if fields[key].type is "markdown"
+		if fields[key]?.type is "markdown"
 			return true
 		else
 			return false
@@ -205,6 +248,12 @@ Template.creator_view.helpers
 	allowCreate: ()->
 		return Creator.getPermissions(this.object_name).allowCreate
 
+	isUnlocked: ()->
+		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
+			return true
+		record = Creator.getObjectRecord()
+		return !record.locked
+
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
 
@@ -267,19 +316,22 @@ Template.creator_view.helpers
 		data.object_name = Session.get("object_name")
 		data.disabled = true
 		data.parent_view = "record_details"
-		console.log data
 		return data
 
 	list_data: (obj) ->
-		console.log obj
 		object_name = Session.get "object_name"
 		related_object_name = obj.object_name
 		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true}
 
+	enable_chatter: ()->
+		return Creator.getObject(Session.get("object_name"))?.enable_chatter
+
+	show_chatter: ()->
+		return Creator.subs["Creator"].ready() && Creator.getObjectRecord()
+
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
-		console.log('click record-action-custom')
 		record = Creator.getObjectRecord()
 		recordId = record._id
 		objectName = Session.get("object_name")
@@ -419,13 +471,13 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
-		dxDataGridInstance = $(event.currentTarget).closest(".related-object-tabular").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
 		parent = event.currentTarget.dataset?.parent
 		files = event.currentTarget.files
 		i = 0
 		record_id = Session.get("record_id")
 		object_name = Session.get("object_name")
 		spaceId = Session.get("spaceId")
+		dxDataGridInstance = $(".related-object-tabular").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
 		while i < files.length
 			file = files[i]
 			if !file.name

@@ -1,3 +1,4 @@
+source /srv/git/nvm/nvm.sh
 nvm use v8.11.3
 #!/bin/bash
 BUNDLE_PATH="/srv/vip"

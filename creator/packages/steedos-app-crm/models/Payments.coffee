@@ -1,9 +1,9 @@
-Creator.Objects.contract_payments = 
+Creator.Objects.contract_payments =
 	name: "contract_payments"
 	label: "付款"
 	icon: "orders"
 	fields:
-		name: 
+		name:
 			label: "名称"
 			type: "text"
 			required: true
@@ -43,10 +43,15 @@ Creator.Objects.contract_payments =
 		billing_no:
 			label: "发票号"
 			type: "text"
-		description: 
+		description:
 			label: "备注"
 			type: "textarea"
 			is_wide: true
+
+		company_id:
+			required: true
+			omit: false
+			hidden: false
 
 	list_views:
 		recent:
@@ -64,7 +69,7 @@ Creator.Objects.contract_payments =
 			allowEdit: true
 			allowRead: true
 			modifyAllRecords: false
-			viewAllRecords: true
+			viewAllRecords: false
 		admin:
 			allowCreate: true
 			allowDelete: true

@@ -1,3 +1,25 @@
+transformFilters = (filters)->
+	_filters = []
+	_.each filters, (f)->
+		if _.isArray(f) && f.length == 3
+			_filters.push {field: f[0], operation: f[1], value: f[2]}
+		else
+			_filters.push f
+	return _filters
+
+transformFieldOptions = (options)->
+	if !_.isArray(options)
+		return options
+
+	_options = []
+
+	_.each options, (o)->
+		if o && _.has(o, 'label') && _.has(o, 'value')
+			_options.push "#{o.label}:#{o.value}"
+
+	return _options.join(',')
+
+
 Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 	console.log('------------------importObject------------------', object.name)
 	fields = object.fields
@@ -31,9 +53,18 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 		if Creator.isRecentView(list_view)
 			hasRecentView = true
 
+		if list_view.filters
+			list_view.filters = transformFilters(list_view.filters)
+
 		if Creator.isAllView(list_view) || Creator.isRecentView(list_view)
 	# 创建object时，会自动添加all view、recent view
-			Creator.getCollection("object_listviews").update({object_name: object.name, name: list_view.name, space: space_id}, {$set: list_view})
+
+			options = {$set: list_view}
+
+			if !list_view.columns
+				options.$unset = {columns: ''}
+
+			Creator.getCollection("object_listviews").update({object_name: object.name, name: list_view.name, space: space_id}, options)
 		else
 			new_id = Creator.getCollection("object_listviews").insert(list_view)
 			list_views_id_maps[object.name + "_" + old_id] = new_id
@@ -42,18 +73,32 @@ Creator.importObject = (userId, space_id, object, list_views_id_maps) ->
 		Creator.getCollection("object_listviews").remove({name: "recent", space: space_id, object_name: object.name, owner: userId})
 	console.log('持久化对象字段');
 	# 2.2 持久化对象字段
+
+	_fieldnames = []
+
 	_.each fields, (field, k)->
 		delete field._id
 		field.space = space_id
 		field.owner = userId
 		field.object = object.name
+
+		if field.options
+			field.options = transformFieldOptions(field.options)
+
 		if !_.has(field, "name")
 			field.name = k
+
+		_fieldnames.push field.name
+
 		if field.name == "name"
-	# 创建object时，会自动添加name字段，因此在此处对name字段进行更新
+			# 创建object时，会自动添加name字段，因此在此处对name字段进行更新
 			Creator.getCollection("object_fields").update({object: object.name, name: "name", space: space_id}, {$set: field})
 		else
 			Creator.getCollection("object_fields").insert(field)
+
+		if !_.contains(_fieldnames, 'name')
+			Creator.getCollection("object_fields").direct.remove({object: object.name, name: "name", space: space_id})
+
 	console.log('持久化触发器');
 	# 2.3 持久化触发器
 	_.each triggers, (trigger, k)->
@@ -156,7 +201,7 @@ Creator.import_app_package = (userId, space_id, imp_data, from_template)->
 				if !report.object_name || !_.isString(report.object_name)
 					throw new Meteor.Error("500", "报表'#{report.name}'的object_name属性无效")
 				if !_.include(object_names, report.object_name) && !_.include(imp_object_names, report.object_name)
-					throw new Meteor.Error("500", "权限集'#{report.name}'中指定的对象'#{report.object_name}'不存在")
+					throw new Meteor.Error("500", "报表'#{report.name}'中指定的对象'#{report.object_name}'不存在")
 
 	###数据校验 结束###
 

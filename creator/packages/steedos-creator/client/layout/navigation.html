@@ -24,23 +24,24 @@
 			</span>
 		</div>
 	</div>
-	<nav class="slds-context-bar__secondary" role="navigation">
-		<ul class="slds-grid">
-			<!-- <li class="slds-context-bar__item">
-				<a href="/app/{{app_id}}" class="slds-context-bar__label-action" title="Home">
-					<span class="slds-truncate" title="Home">Home</span>
-				</a>
-			</li> -->
-			
-			{{#each app_objects}}
-				<li class="slds-context-bar__item {{object_class_name this}}">
-					<a href="{{object_url}}" class="slds-context-bar__label-action">
-						<span class="slds-truncate">{{_ object_i.label}}</span>
+	{{#unless hideObjects}}
+		<nav class="slds-context-bar__secondary" role="navigation">
+			<ul class="slds-grid">
+				<!-- <li class="slds-context-bar__item">
+					<a href="/app/{{app_id}}" class="slds-context-bar__label-action" title="Home">
+						<span class="slds-truncate" title="Home">Home</span>
 					</a>
-				</li>
-			{{/each}}
-		</ul>
-	</nav>
+				</li> -->
+				{{#each app_objects}}
+					<li class="slds-context-bar__item {{object_class_name this}}">
+						<a href="{{object_url}}" class="slds-context-bar__label-action">
+							<span class="slds-truncate">{{_ object_i.label}}</span>
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+		</nav>
+	{{/unless}}
 	<div class="slds-context-bar__tertiary slds-col--bump-left navRight" data-aura-rendered-by="197:19;a">
 
 

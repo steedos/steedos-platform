@@ -1,7 +1,15 @@
+@db = {}
+
 if !Creator?
 	@Creator = {}
 Creator.Objects = {}
 Creator.Collections = {}
+Creator.Menus = []
+Creator.Apps = {}
+Creator.Reports = {}
+Creator.subs = {}
+
+
 Creator.deps = {
 	app: new Tracker.Dependency
 	object: new Tracker.Dependency
@@ -11,6 +19,32 @@ Creator._TEMPLATE = {
 	Apps: {},
 	Objects: {}
 }
+
+Meteor.startup ->
+	SimpleSchema.extendOptions({filtersFunction: Match.Optional(Match.OneOf(Function, String))})
+	SimpleSchema.extendOptions({optionsFunction: Match.Optional(Match.OneOf(Function, String))})
+	SimpleSchema.extendOptions({createFunction: Match.Optional(Match.OneOf(Function, String))})
+
+	if Meteor.isServer
+		_.each Creator.Objects, (obj, object_name)->
+			Creator.loadObjects obj, object_name
+
+Creator.loadObjects = (obj, object_name)->
+	if !object_name
+		object_name = obj.name
+
+	if !obj.list_views
+		obj.list_views = {}
+
+	if obj.space
+		object_name = 'c_' + obj.space + '_' + obj.name
+
+	Creator.convertObject(obj)
+	new Creator.Object(obj);
+
+	Creator.initTriggers(object_name)
+	Creator.initListViews(object_name)
+	return obj
 
 Creator.getObjectName = (object) ->
 	if object.space
@@ -60,11 +94,11 @@ Creator.removeCollection = (object_name)->
 
 Creator.isSpaceAdmin = (spaceId, userId)->
 	if Meteor.isClient
-		if !spaceId 
+		if !spaceId
 			spaceId = Session.get("spaceId")
 		if !userId
 			userId = Meteor.userId()
-	
+
 	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
 	if space?.admins
 		return space.admins.indexOf(userId) >= 0
@@ -78,7 +112,7 @@ Creator.evaluateFormula = (formular, context, options)->
 	if Creator.Formular.checkFormula(formular)
 		return Creator.Formular.run(formular, context, options)
 
-	return formular				
+	return formular
 
 Creator.evaluateFilters = (filters, context)->
 	selector = {}
@@ -146,3 +180,146 @@ Creator.sortingMethod = (value1, value2) ->
 		return 1
 	locale = Steedos.locale()
 	return value1.toString().localeCompare value2.toString(), locale
+
+
+# 该函数只在初始化Object时，把相关对象的计算结果保存到Object的related_objects属性中，后续可以直接从related_objects属性中取得计算结果而不用再次调用该函数来计算
+Creator.getObjectRelateds = (object_name)->
+	if Meteor.isClient
+		if !object_name
+			object_name = Session.get("object_name")
+
+	related_objects = []
+	# _object = Creator.getObject(object_name)
+	# 因Creator.getObject函数内部要调用该函数，所以这里不可以调用Creator.getObject取对象，只能调用Creator.Objects来取对象
+	_object = Creator.Objects[object_name]
+	if !_object
+		return related_objects
+
+	if _object.enable_files
+		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
+
+	_.each Creator.Objects, (related_object, related_object_name)->
+		_.each related_object.fields, (related_field, related_field_name)->
+			if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+				if related_object_name == "object_fields"
+					#TODO 待相关列表支持排序后，删除此判断
+					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
+				else
+					related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
+
+	if _object.enable_tasks
+		related_objects.push {object_name:"tasks", foreign_key: "related_to"}
+	if _object.enable_notes
+		related_objects.push {object_name:"notes", foreign_key: "related_to"}
+	if _object.enable_events
+		related_objects.push {object_name:"events", foreign_key: "related_to"}
+	if _object.enable_instances
+		related_objects.push {object_name:"instances", foreign_key: "record_ids"}
+	#record 详细下的audit_records仅modifyAllRecords权限可见
+	if Meteor.isClient
+		permissions = Creator.getPermissions(object_name)
+		if _object.enable_audit && permissions?.modifyAllRecords
+			related_objects.push {object_name:"audit_records", foreign_key: "related_to"}
+
+	return related_objects
+
+Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
+	if Meteor.isClient
+		return Creator.USER_CONTEXT
+	else
+		if !(userId and spaceId)
+			throw new Meteor.Error 500, "the params userId and spaceId is required for the function Creator.getUserContext"
+			return null
+		suFields = {name: 1, mobile: 1, position: 1, email: 1, company: 1, organization: 1, space: 1, company_id: 1, company_ids: 1}
+		# check if user in the space
+		su = Creator.Collections["space_users"].findOne({space: spaceId, user: userId}, {fields: suFields})
+		if !su
+			spaceId = null
+
+		# if spaceId not exists, get the first one.
+		if !spaceId
+			if isUnSafeMode
+				su = Creator.Collections["space_users"].findOne({user: userId}, {fields: suFields})
+				if !su
+					return null
+				spaceId = su.space
+			else
+				return null
+
+		USER_CONTEXT = {}
+		USER_CONTEXT.userId = userId
+		USER_CONTEXT.spaceId = spaceId
+		USER_CONTEXT.user = {
+			_id: userId
+			name: su.name,
+			mobile: su.mobile,
+			position: su.position,
+			email: su.email
+			company: su.company
+			company_id: su.company_id
+			company_ids: su.company_ids
+		}
+		space_user_org = Creator.getCollection("organizations")?.findOne(su.organization)
+		if space_user_org
+			USER_CONTEXT.user.organization = {
+				_id: space_user_org._id,
+				name: space_user_org.name,
+				fullname: space_user_org.fullname,
+				is_company: space_user_org.is_company
+			}
+		return USER_CONTEXT
+
+Creator.getRelativeUrl = (url)->
+	if url
+		# url开头没有"/"，需要添加"/"
+		if !/^\//.test(url)
+			url = "/" + url
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url
+	else
+		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+
+Creator.getUserCompanyId = (userId, spaceId)->
+	userId = userId || Meteor.userId()
+	if Meteor.isClient
+		spaceId = spaceId || Session.get('spaceId')
+	else
+		if !spaceId
+			throw new Meteor.Error(400, 'miss spaceId')
+	su = Creator.getCollection('space_users').findOne({space: spaceId, user: userId}, {fields: {company_id:1}})
+	return su.company_id
+
+Creator.getUserCompanyIds = (userId, spaceId)->
+	userId = userId || Meteor.userId()
+	if Meteor.isClient
+		spaceId = spaceId || Session.get('spaceId')
+	else
+		if !spaceId
+			throw new Meteor.Error(400, 'miss spaceId')
+	su = Creator.getCollection('space_users').findOne({space: spaceId, user: userId}, {fields: {company_ids:1}})
+	return su?.company_ids
+
+Creator.processPermissions = (po)->
+	if po.allowCreate
+		po.allowRead = true
+	if po.allowEdit
+		po.allowRead = true
+	if po.allowDelete
+		po.allowEdit = true
+		po.allowRead = true
+	if po.viewAllRecords
+		po.allowRead = true
+	if po.modifyAllRecords
+		po.allowRead = true
+		po.allowEdit = true
+		po.allowDelete = true
+		po.viewAllRecords = true
+	if po.viewCompanyRecords
+		po.allowRead = true
+	if po.modifyCompanyRecords
+		po.allowRead = true
+		po.allowEdit = true
+		po.allowDelete = true
+		po.viewCompanyRecords = true
+	return po
+
+

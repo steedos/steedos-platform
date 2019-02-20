@@ -61,10 +61,10 @@ Meteor.startup ->
 Meteor.startup ->
 	Tracker.autorun (c)->
 		if Session.get("object_name") and Session.get("record_id")
-			Creator.subs["CreatorRecord"].subscribe "creator_object_record", Session.get("object_name"), Session.get("record_id") 
+			Creator.subs["CreatorRecord"].subscribe "creator_object_record", Session.get("object_name"), Session.get("record_id"), Session.get('spaceId')
 
 	Tracker.autorun (c)->
 		if Session.get("action_object_name") and Session.get("action_record_id")
-			Creator.subs["CreatorActionRecord"].subscribe "creator_object_record", Session.get("action_object_name"), Session.get("action_record_id")
+			Creator.subs["CreatorActionRecord"].subscribe "creator_object_record", Session.get("action_object_name"), Session.get("action_record_id"), Session.get('spaceId')
 
 

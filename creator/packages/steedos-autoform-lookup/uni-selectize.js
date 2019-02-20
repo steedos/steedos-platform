@@ -34,6 +34,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction, cr
 	this.optionsSort = options.optionsSort
 	this.filtersFunction = filtersFunction;
 	this.createFunction = createFunction;
+	this.dataSourceType = options.dataSourceType
 
 	this.optionsLimit = options.optionsLimit
 
@@ -551,20 +552,38 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 
 	// self.loading.set(true);
 
-	Meteor.call(methodName, searchVal, function (err, options) {
-		// self.loading.set(false);
-		if(err){
-			console.error(err)
-		}
-
+	if(self.dataSourceType != 'method'){
+		var options = DataSource.Odata.lookup_options(searchVal);
 		if (params) {
 			self.removeUnusedItems(options);
 		}
-
 		self.addItems(options, values);
-
 		Meteor.setTimeout(function () {
 			self.initialized.set(1);
-		}, 1)
-	});
+		}, 1);
+		if(searchVal.values.length > 0){
+			DataSource.Method.lookup_options(methodName, {params: searchVal.params, values: searchVal.values}, function (err, valueOptions) {
+				self.addItems(valueOptions, values);
+			});
+		}
+
+	}else{
+		DataSource.Method.lookup_options(methodName, searchVal, function (err, options) {
+			// self.loading.set(false);
+			if(err){
+				console.error(err)
+			}
+
+			if (params) {
+				self.removeUnusedItems(options);
+			}
+
+			self.addItems(options, values);
+
+			Meteor.setTimeout(function () {
+				self.initialized.set(1);
+			}, 1)
+		});
+	}
+
 };

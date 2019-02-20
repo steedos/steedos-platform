@@ -111,7 +111,8 @@
 												取消
 											</button>
 										</div>
-										<h2 class="panelTitle centered-header {{#if isFilterDirty}}hidden{{/if}}">Filters</h2>
+										<h2 class="panelTitle centered-header {{#if isFilterDirty}}hidden{{/if}}">筛选条件
+</h2>
 										<div class="centered-header">
 											<button class="slds-button slds-button_brand btn-filter-apply {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to apply changes">
 												应用
@@ -122,7 +123,7 @@
 										</div>
 									</div>
 									<div class="vert-scroller">
-										{{> filter_option_list object_name=reportObject.object_name}}
+										{{> filter_option_list object_name=reportObject.object_name filter_fields=reportFilterFields}}
 									</div>
 								</div>
 							</div>

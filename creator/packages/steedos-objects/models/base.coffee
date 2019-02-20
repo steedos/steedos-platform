@@ -7,23 +7,25 @@ Creator.baseObject =
 			sortable: true
 			index: true
 			defaultValue: "{userId}"
-			group:"记录"
 			omit: true
 			hidden: true
 		space:
-			type: "lookup"
+			type: "text"
 			label:"所属工作区"
 			reference_to: "spaces"
-			omit: true
+#			omit: true
 			index: true
 			hidden: true
+			defaultValue: "{spaceId}"
+#			defaultValue: ()->
+#				if Meteor.isClient
+#					return Session.get("spaceId")
 		created:
 			type: "datetime"
-			label:"创建日期"
+			label:"创建时间"
 			readonly: true
 			sortable: true
 			omit: true
-			group:"记录"
 		created_by:
 			label:"创建人"
 			type: "lookup"
@@ -32,16 +34,13 @@ Creator.baseObject =
 			disabled: true
 			index: true
 			omit: true
-			group:"记录"
 		modified:
 			label:"修改时间"
 			type: "datetime"
 			readonly: true
 			sortable: true
-			searchable: true
 			index: true
 			omit: true
-			group:"记录"
 		modified_by:
 			label:"修改人"
 			type: "lookup"
@@ -49,12 +48,27 @@ Creator.baseObject =
 			reference_to: "users"
 			disabled: true
 			omit: true
-			group:"记录"
 		is_deleted:
 			type: "boolean"
 			label:"已删除"
 			omit: true
 			index: true
+			hidden: true
+		deleted:
+			label:"删除时间"
+			type: "datetime"
+			readonly: true
+			sortable: true
+			index: true
+			omit: true
+			hidden: true
+		deleted_by:
+			label:"删除人"
+			type: "lookup"
+			readonly: true
+			reference_to: "users"
+			disabled: true
+			omit: true
 			hidden: true
 		instances:
 			label:"申请单"
@@ -103,6 +117,41 @@ Creator.baseObject =
 			type:'number'
 			omit:true
 			hidden: true
+		locked:
+			label:'已锁定'
+			type:'boolean'
+			omit:true
+			hidden: true
+
+		# 新增基本字段，类似子管理员作分级权限
+		company_id:
+			label: "所属单位"
+			type: "lookup"
+			reference_to: "organizations"
+			sortable: true
+			index: true
+			is_company_only: true
+			defaultValue: ()->
+				if Meteor.isClient
+					return Session.get("user_company_id")
+			omit: true
+			hidden: true
+
+		# 值范围为 draft, pending, completed, approved, rejected, terminated
+		instance_state:
+			label:'审批状态'
+			type:'select'
+			options: [
+				{label:"草稿", value:"draft"},
+				{label:"进行中", value:"pending"},
+				{label: "已完成", value:"completed"}
+				{label:"已核准", value:"approved"},
+				{label:"已驳回", value:"rejected"},
+				{label:"已取消", value:"terminated"}
+			]
+			omit: true
+			hidden: true
+
 	permission_set:
 		none:
 			allowCreate: false
@@ -197,7 +246,22 @@ Creator.baseObject =
 							# 如果当前修改的记录有满足条件的共享规则存在，则把共享规则配置保存起来
 							push = { sharing: { "u": ps.users, "o": ps.organizations, "r": ps._id } }
 							collection.direct.update({ _id: doc._id }, {$push: push})
-
+		"after.update.server.audit":
+			"on": "server"
+			when: "after.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				object_name = this.object_name
+				obj = Creator.getObject(object_name)
+				if obj.enable_audit
+					Creator.AuditRecords?.add('update', userId, this.object_name, doc, this.previous, modifier)
+		"after.insert.server.audit":
+			"on": "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				object_name = this.object_name
+				obj = Creator.getObject(object_name)
+				if obj.enable_audit
+					Creator.AuditRecords?.add('insert', userId, this.object_name, doc)
 	actions:
 
 		standard_query:
@@ -219,47 +283,111 @@ Creator.baseObject =
 			label: "编辑"
 			sort: 0
 			visible: (object_name, record_id, record_permissions)->
+				# 记录权限统一走Creator.getRecordPermissions函数，所以record_permissions参数值都应该是这个函数的结果
+				perms = {}
 				if record_permissions
-					return record_permissions["allowEdit"]
+					perms = record_permissions
 				else
-					record = Creator.Collections[object_name].findOne record_id
+					record = Creator.getObjectRecord(object_name, record_id)
 					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
 					if record_permissions
-						return record_permissions["allowEdit"]
+						perms = record_permissions
+
+				return perms["allowEdit"]
+
 			on: "record"
 			todo: "standard_edit"
 
 		standard_delete:
 			label: "删除"
 			visible: (object_name, record_id, record_permissions)->
+				# 记录权限统一走Creator.getRecordPermissions函数，所以record_permissions参数值都应该是这个函数的结果
+				perms = {}
 				if record_permissions
-					return record_permissions["allowDelete"]
+					perms = record_permissions
 				else
-					record = Creator.Collections[object_name].findOne record_id
+					record = Creator.getObjectRecord(object_name, record_id)
 					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
 					if record_permissions
-						return record_permissions["allowDelete"]
+						perms = record_permissions
+
+				return perms["allowDelete"]
+
 			on: "record_more"
 			todo: "standard_delete"
 
 		standard_approve:
 			label: "发起审批"
 			visible: (object_name, record_id, record_permissions) ->
-				#TODO 权限判断
+				if record_permissions && !record_permissions["allowEdit"]
+					return false
+
+				record = Creator.getObjectRecord(object_name, record_id)
+				record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+				if record_permissions && !record_permissions["allowEdit"]
+					return false
+
 				object_workflow = _.find Creator.object_workflows, (ow) ->
 					return ow.object_name is object_name
 
 				if not object_workflow
 					return false
 
-				r = Creator.getObjectRecord object_name, record_id
-				if r and ( (r.instances and r.instances[0].state is 'completed') or (not r.instances) )
-					return true
+				if record and record.instances and record.instances.length > 0
+					return false
 
 				return false
 			on: "record"
 			todo: ()->
 				Modal.show('initiate_approval', { object_name: this.object_name, record_id: this.record_id })
+
+		standard_view_instance:
+			label: "查看审批单"
+			visible: (object_name, record_id, record_permissions) ->
+				record = Creator.getObjectRecord(object_name, record_id)
+				if record && !_.isEmpty(record.instances)
+					return true
+
+				return false
+			on: "record"
+			todo: ()->
+				instanceId = this.record.instances[0]._id
+				if !instanceId
+					console.error 'instanceId not exists'
+					return
+
+				uobj = {}
+				uobj['X-User-Id'] = Meteor.userId()
+				uobj['X-Auth-Token'] = Accounts._storedLoginToken()
+
+				data = { object_name: this.object_name, record_id: this.record_id, space_id: Session.get("spaceId") }
+
+				url = Meteor.absoluteUrl() + "api/workflow/view/#{instanceId}?" + $.param(uobj)
+				data = JSON.stringify(data)
+				$(document.body).addClass 'loading'
+				$.ajax
+					url: url
+					type: 'POST'
+					async: true
+					data: data
+					dataType: 'json'
+					processData: false
+					contentType: 'application/json'
+					success: (responseText, status) ->
+						$(document.body).removeClass 'loading'
+						if responseText.errors
+							responseText.errors.forEach (e) ->
+								toastr.error e.errorMessage
+								return
+							return
+						else if responseText.redirect_url
+							Steedos.openWindow(responseText.redirect_url)
+
+						return
+					error: (xhr, msg, ex) ->
+						$(document.body).removeClass 'loading'
+						toastr.error msg
+						return
 
 		# "export":
 		# 	label: "Export"

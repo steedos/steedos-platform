@@ -1,5 +1,5 @@
 <template name="new_flow_modal">
-	<div class="modal fade creator-modal new-flow-modal" id="newFlowModal">
+	<div class="modal fade creator-modal flow-modal new-flow-modal" id="newFlowModal">
 		<div class="modal-dialog slds-modal slds-fade-in-open modal-lg">
 			<div class="slds-modal__container">
 				<header class="slds-modal__header">
@@ -9,18 +9,18 @@
 				</header>
 
 				<div class="slds-modal__content slds-p-around_medium">
-					{{#autoForm schema=schema id="newFlowForm"}}
-						{{#each fields}}
-							<div class="slds-grid view-page-section-row">
-								<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-									<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
-										{{> afQuickField name=this}}
-									</div>
+				{{#autoForm schema=schema id="newFlowForm"}}
+					{{#each fields}}
+						<div class="slds-grid view-page-section-row">
+							<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+								<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
+									{{> afQuickField name=this}}
 								</div>
 							</div>
-						{{/each}}
-					{{/autoForm}}
-				</div>
+						</div>
+					{{/each}}
+				{{/autoForm}}
+			</div>
 
 				<footer class="slds-modal__footer">
 					<button type="submit" class="slds-button slds-button_brand btn-confirm">确定</button>

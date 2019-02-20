@@ -7,14 +7,15 @@ Package.describe({
 
 
 Package.onUse(function (api) {
-	api.versionsFrom('1.0');
+	api.versionsFrom('METEOR@1.3');
 
 	api.use([
 		'raix:eventstate@0.0.2',
 		'check',
 		'mongo',
 		'underscore',
-		'coffeescript'
+		'coffeescript',
+		'ecmascript'
 	]);
 
 	api.use('mongo', 'server');
@@ -34,6 +35,8 @@ Package.onUse(function (api) {
 
 	// STARTUP
 	api.addFiles('server/startup.coffee', 'server');
+
+	api.addFiles('server/checkNpm.js', "server");
 
 	api.export('InstanceRecordQueue', ['server']);
 

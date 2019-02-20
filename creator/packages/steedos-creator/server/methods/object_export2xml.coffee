@@ -1,7 +1,7 @@
-xml2js = Npm.require 'xml2js'
-fs = Npm.require 'fs'
-path = Npm.require 'path'
-mkdirp = Npm.require 'mkdirp'
+xml2js = require 'xml2js'
+fs = require 'fs'
+path = require 'path'
+mkdirp = require 'mkdirp'
 
 logger = new Logger 'Export_TO_XML'
 

@@ -1,4 +1,5 @@
 {
+	"_namespace": "",
 	"Steedos Creator": "Creator",
 
 	"Refresh": "Refresh",
@@ -29,13 +30,18 @@
 	"creator_list_matching_all_filters": "Matching all these filters",
 	"creator_list_view_controls": "LIST VIEW CONTROLS",
 	"creator_list_export_list_view": "Export list view",
+  	"creator_list_copy_list_view": "Copy list view",
 	"reset_column_width": "Reset column width",
 	"creator_list_edit": "Edit List View",
 
 	"creator_filter_option_field": "field",
 	"creator_filter_option_operation": "operation",
 	"creator_filter_option_value": "value",
+	"creator_filter_option_start_value": "start value",
+	"creator_filter_option_end_value": "end value",
+	"creator_filter_option_start_end_error": "The starting value cannot be greater than the ending value",
 	"creator_filter_option_done": "Done",
+	"creator_filter_operation_required_error": "operation is required",
 	"creator_filter_operation_equal":"equal",
 	"creator_filter_operation_unequal":"not equal",
 	"creator_filter_operation_less_than":"less than",
@@ -48,6 +54,16 @@
 	"creator_app_launcher": "App Launcher",
 	"creator_app_launcher_all_apps": "App Apps",
 	"creator_app_launcher_all_items": "All Items",
+	"creator_filter_operation_between": "Range",
+	"creator_filter_operation_between_last_year": "Last Year",
+	"creator_filter_operation_between_this_year": "This Year",
+	"creator_filter_operation_between_next_year": "Next Year",
+	"creator_filter_operation_between_today": "Today",
+	"creator_filter_operation_between_yestday": "Yestday",
+	"creator_filter_operation_between_last_quarter": "Last Quarter",
+	"creator_filter_operation_between_tomorrow": "Tomorrow",
+	"creator_filter_operation_between_this_week": "This Week",
+	"creator_filter_operation_between_last_week": "Last Week",
 
 	"creator_header_search": "Search in %s and more...",
 	"creator_header_search_recent_items": "Recent Items",
@@ -62,18 +78,6 @@
 	"creator_detail_related": "RELATED",
 	"creator_new": "New",
 
-	"creator_odata_api_not_found": "Sorry, the resource you are trying to access does not exist or you do not have permission to access it!",
-	"creator_odata_unexpected_character" :"Unexpected character",
-	"creator_odata_authentication":"Authentication is required and has not been provided",
-	"creator_odata_user_privileges":"User does not have privileges to access the entity",
-	"creator_list_no_actions_tip": "no operation",
-	"creator_list_view_permissions_lost": "You do not have permission to access this view",
-
-	"creator_report_drill_down_label": "Drill Down Data",
-	"creator_report_drill_down_total_label": "Total",
-	"creator_listview_update":"list view updated",
-
-	"creator_request_oversized": "Request Entity Too Large",
-
-	"creator_permission_share_miss": "Please fill in at least one value in the authorized organization or authorized user"
+	"true": "YES",
+	"false": "NO"
 }

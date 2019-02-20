@@ -1,0 +1,8 @@
+{
+	"_namespace": "",
+
+	"categories_in_use": "分类在使用中，不能删除",
+
+	"process_delegation_rules_start_must_lt_end": "开始时间应小于结束时间",
+	"process_delegation_rules_only_one": "您已设置委托规则，修改即可"
+}

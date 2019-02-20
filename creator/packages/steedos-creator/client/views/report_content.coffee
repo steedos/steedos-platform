@@ -18,7 +18,7 @@ getODataFilterForReport = (object_name, filter_scope, filters, filter_logic)->
 				else
 					selector.push(format_logic)
 			else
-				filters = Creator.formatFiltersToDev(filters)
+				filters = Creator.formatFiltersToDev(filters, object_name)
 				if filters and filters.length > 0
 					if selector.length > 0
 						selector.push "and"
@@ -164,6 +164,9 @@ getSelectFieldLabel = (value, options)->
 	label = if label then label else value
 	return if label then label else "--"
 
+getBooleanFieldLabel = (value, caption)->
+	return "#{caption}: #{value}"
+
 pivotGridChart = null
 gridLoadedArray = null
 maxLoadCount = 10000
@@ -251,26 +254,30 @@ renderChart = (self)->
 			panes: chartPanes,
 			series: chartSeries,
 			valueAxis: chartValueAxis
-		pivotGridChart = $("#pivotgrid-chart").show().dxChart(dxOptions).dxChart('instance')
+		module.dynamicImport("devextreme/viz/chart").then (dxChart)->
+			DevExpress.viz.dxChart = dxChart;
+			pivotGridChart =  $("#pivotgrid-chart").show().dxChart(dxOptions).dxChart("instance")
 	else
 		grid = Tracker.nonreactive ()->
 			return self.pivotGridInstance.get()
 		unless grid
 			return
-		pivotGridChart = $('#pivotgrid-chart').show().dxChart(
-			equalBarWidth: false
-			commonSeriesSettings: 
-				type: 'bar'
-			tooltip:
-				enabled: true
-			size: 
-				height: 300
-			adaptiveLayout: 
-				width: 450
-		).dxChart('instance')
-		grid.bindChart pivotGridChart,
-			dataFieldsDisplayMode: 'splitPanes'
-			alternateDataFields: false
+		module.dynamicImport("devextreme/viz/chart").then (dxChart)->
+			DevExpress.viz.dxChart = dxChart;
+			pivotGridChart =  $("#pivotgrid-chart").show().dxChart(
+				equalBarWidth: false
+				commonSeriesSettings:
+					type: 'bar'
+				tooltip:
+					enabled: true
+				size:
+					height: 300
+				adaptiveLayout:
+					width: 450
+			).dxChart('instance')
+			grid.bindChart pivotGridChart,
+				dataFieldsDisplayMode: 'splitPanes'
+				alternateDataFields: false
 
 renderTabularReport = (reportObject)->
 	self = this
@@ -377,11 +384,12 @@ renderTabularReport = (reportObject)->
 			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
-	
-	
-	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
 
-	self.dataGridInstance?.set datagrid
+	datagrid = null
+	module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+		DevExpress.ui.dxDataGrid = dxDataGrid;
+		datagrid= $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
+		self.dataGridInstance?.set datagrid
 
 renderSummaryReport = (reportObject)->
 	self = this
@@ -571,9 +579,33 @@ renderSummaryReport = (reportObject)->
 			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
-	datagrid = $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
+	datagrid = null
+	module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+		DevExpress.ui.dxDataGrid = dxDataGrid;
+		datagrid= $('#datagrid').dxDataGrid(dxOptions).dxDataGrid('instance')
+		self.dataGridInstance?.set datagrid
 
-	this.dataGridInstance?.set datagrid
+transformValue = (object_name, fields, result)->
+
+	fieldNames = _.compact(_.pluck(fields,"dataField"))
+
+	objectFields = Creator.getObject(object_name).fields
+
+	booleanFields = []
+
+	_.forEach fieldNames, (fn)->
+		field = objectFields[fn]
+		if field?.type == 'boolean'
+			booleanFields.push fn
+
+	if booleanFields.length > 0
+		_.forEach result, (r)->
+			_.forEach booleanFields, (fn)->
+				if _.isBoolean(r[fn]) && r[fn]
+					r[fn] = TAPi18n.__("true")
+				else
+					r[fn] = TAPi18n.__("false")
+	return result
 
 renderMatrixReport = (reportObject)->
 	self = this
@@ -609,6 +641,10 @@ renderMatrixReport = (reportObject)->
 			if rowField.type == "select"
 				field.customizeText = (data)->
 					return getSelectFieldLabel data.value, rowField.options
+			if rowField.type == 'boolean'
+				field.customizeText = (data)->
+					return getBooleanFieldLabel(data.value, caption)
+
 			if sorts[row]
 				field.sortOrder = sorts[row]
 			if columnWidths[row]
@@ -634,6 +670,9 @@ renderMatrixReport = (reportObject)->
 			if columnField.type == "select"
 				field.customizeText = (data)->
 					return getSelectFieldLabel data.value, columnField.options
+			if columnField.type == 'boolean'
+				field.customizeText = (data)->
+					return getBooleanFieldLabel(data.value, caption)
 			if sorts[column]
 				field.sortOrder = sorts[column]
 			if columnWidths[column]
@@ -757,7 +796,8 @@ renderMatrixReport = (reportObject)->
 					request.headers['X-User-Id'] = userId
 					request.headers['X-Space-Id'] = spaceId
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				onLoaded: (loadOptions)->
+				onLoaded: (result)->
+					result = transformValue(reportObject.object_name, reportFields, result)
 					if _.where(reportFields,{area:"data"}).length
 						if reportObject.charting
 							self.is_chart_open.set(true)
@@ -779,43 +819,53 @@ renderMatrixReport = (reportObject)->
 						error.message = t "creator_odata_api_not_found"
 
 	drillDownDataSource = {}
-	salesPopup = $('#drill-down-popup').dxPopup(
-		width: 600
-		height: 400
-		contentTemplate: (contentElement) ->
-			drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
-			drillDownFields = _.without drillDownFields, null, undefined
-			drillDownColumns = []
-			gridFields = self.pivotGridInstance.get().getDataSource()._fields
-			drillDownFields.forEach (n)->
-				if n == "_id"
-					return
-				# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
-				gridFieldItem = _.findWhere(gridFields,{dataField:n})
-				drillDownColumns.push {
-					dataField: gridFieldItem.dataField
-					caption: gridFieldItem.caption
-					sortingMethod: Creator.sortingMethod
-				}
-			$('<div />').addClass('drill-down-content').dxDataGrid(
-				width: 560
-				height: 300
-				columns: drillDownColumns).appendTo contentElement
-		onShowing: ->
-			$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
-	).dxPopup('instance')
-	dxOptions.onCellClick = (e)->
-		if e.area == 'data'
-			pivotGridDataSource = e.component.getDataSource()
-			rowPathLength = e.cell.rowPath.length
-			rowPathName = e.cell.rowPath[rowPathLength - 1]
-			popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
-			drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
-			salesPopup.option 'title', popupTitle
-			salesPopup.show()
-	pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
+	salesPopup = null
+	pivotGrid = null
+	module.dynamicImport('devextreme/ui/popup').then (dxPopup)->
+		DevExpress.ui.dxPopup = dxPopup;
+		salesPopup = $('#drill-down-popup').dxPopup(
+			width: 600
+			height: 400
+			contentTemplate: (contentElement) ->
+				drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
+				drillDownFields = _.without drillDownFields, null, undefined
+				drillDownColumns = []
+				gridFields = self.pivotGridInstance.get().getDataSource()._fields
+				drillDownFields.forEach (n)->
+					if n == "_id"
+						return
+					# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
+					gridFieldItem = _.findWhere(gridFields,{dataField:n})
+					drillDownColumns.push {
+						dataField: gridFieldItem.dataField
+						caption: gridFieldItem.caption
+						sortingMethod: Creator.sortingMethod
+					}
+					module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+						DevExpress.ui.dxDataGrid = dxDataGrid;
+						$('<div />').addClass('drill-down-content').dxDataGrid(
+							width: 560
+							height: 300
+							columns: drillDownColumns).appendTo contentElement
+			onShowing: ->
+				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+					DevExpress.ui.dxDataGrid = dxDataGrid;
+					$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
+		).dxPopup('instance')
+		dxOptions.onCellClick = (e)->
+			if e.area == 'data'
+				pivotGridDataSource = e.component.getDataSource()
+				rowPathLength = e.cell.rowPath.length
+				rowPathName = e.cell.rowPath[rowPathLength - 1]
+				popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
+				drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
+				salesPopup.option 'title', popupTitle
+				salesPopup.show()
 
-	this.pivotGridInstance?.set pivotGrid
+		module.dynamicImport('devextreme/ui/pivot_grid').then (dxPivotGrid)->
+			DevExpress.ui.dxPivotGrid = dxPivotGrid;
+			pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
+			self.pivotGridInstance?.set pivotGrid
 
 renderReport = (reportObject)->
 	unless reportObject

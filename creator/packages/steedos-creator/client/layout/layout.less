@@ -1,10 +1,27 @@
 // steedos:account包升级到@0.0.33以后的任何版本之后，以下登录界面样式相关代码就可以删除掉
 .steedos.login {
-	.at-form {
-		a {
-			color: white;
-			outline: none;
-			text-decoration: none;
-		}
-	}
+    .at-form {
+        a {
+            color: white;
+            outline: none;
+            text-decoration: none;
+        }
+    }
+}
+
+.creator-content-wrapper {
+    &.split {
+        &>.split-left {
+            top: 0;
+            position: absolute;
+            width: 250px;
+            height: 100%;
+        }
+        &>.split-right {
+            left: 250px;
+            width: calc(~ "100% - 250px");
+            position: relative;
+            height: 100%;
+        }
+    }
 }

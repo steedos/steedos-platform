@@ -13,7 +13,7 @@ Package.onUse(function(api) {
 	api.use('blaze@2.1.9');
 	api.use('templating@1.2.15');
 
-	api.use('tap:i18n@1.8.2');
+	api.use('universe:i18n');
 	
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles);
@@ -22,9 +22,12 @@ Package.onUse(function(api) {
 	api.addFiles('models/Accounts.coffee','server');
 	api.addFiles('models/Contacts.coffee','server');
 	api.addFiles('models/Contracts.coffee','server');
+	api.addFiles('models/contract_type.coffee','server');
+	api.addFiles('models/contract_acceptance.coffee','server');
 	api.addFiles('models/Payments.coffee','server');
 	api.addFiles('models/Receipts.coffee','server');
-	api.addFiles('crm.coffee','server');
 	api.addFiles('reports/company.coffee','server');
 	api.addFiles('reports/contact.coffee','server');
+
+	api.addFiles('crm.coffee','server');
 })

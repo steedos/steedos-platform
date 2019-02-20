@@ -1,5 +1,4 @@
-ALY = Npm.require('aliyun-sdk')
-
+_eval = require('eval')
 uuflowManager = {}
 
 uuflowManager.check_authorization = (req) ->
@@ -71,7 +70,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	check instance_from_client["record_ids"], [{o: String, ids: [String]}]
 
 	# 校验是否record已经发起的申请还在审批中
-	uuflowManager.checkIsInApproval(instance_from_client["record_ids"][0])
+	uuflowManager.checkIsInApproval(instance_from_client["record_ids"][0], instance_from_client["space"])
 
 	space_id = instance_from_client["space"]
 	flow_id = instance_from_client["flow"]
@@ -121,6 +120,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	ins_obj.applicant_organization = if instance_from_client["applicant_organization"] then instance_from_client["applicant_organization"] else space_user.organization
 	ins_obj.applicant_organization_name = if instance_from_client["applicant_organization_name"] then instance_from_client["applicant_organization_name"] else space_user_org_info.organization_name
 	ins_obj.applicant_organization_fullname = if instance_from_client["applicant_organization_fullname"] then instance_from_client["applicant_organization_fullname"] else  space_user_org_info.organization_fullname
+	ins_obj.applicant_company = if instance_from_client["applicant_company"] then instance_from_client["applicant_company"] else space_user.company_id
 	ins_obj.state = 'draft'
 	ins_obj.code = ''
 	ins_obj.is_archived = false
@@ -132,6 +132,9 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	ins_obj.values = new Object
 
 	ins_obj.record_ids = instance_from_client["record_ids"]
+
+	if space_user.company_id
+		ins_obj.company_id = space_user.company_id
 
 	# 新建Trace
 	trace_obj = {}
@@ -165,7 +168,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	appr_obj.is_read = true
 	appr_obj.is_error = false
 	appr_obj.description = ''
-	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids[0], flow_id)
+	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
@@ -188,17 +191,25 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 
 	uuflowManager.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
-	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id)
+	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
 
 	return new_ins_id
 
-uuflowManager.initiateValues = (recordIds, flowId) ->
+uuflowManager.initiateValues = (recordIds, flowId, spaceId, fields) ->
+	fieldCodes = []
+	_.each fields, (f)->
+		if f.type == 'section'
+			_.each f.fields, (ff)->
+				fieldCodes.push ff.code
+		else
+			fieldCodes.push f.code
+
 	values = {}
 	ow = Creator.Collections.object_workflows.findOne({
 		object_name: recordIds.o,
 		flow_id: flowId
 	})
-	record = Creator.getCollection(recordIds.o).findOne(recordIds.ids[0])
+	record = Creator.getCollection(recordIds.o, spaceId).findOne(recordIds.ids[0])
 	if ow and record
 		tableFieldCodes = []
 		tableFieldMap = []
@@ -214,6 +225,20 @@ uuflowManager.initiateValues = (recordIds, flowId) ->
 						object_table_field_code: oTableCode
 					}))
 					tableFieldMap.push(fm)
+
+			# 处理lookup类型字段
+			else if fm.object_field.indexOf('.') > 0 and fm.object_field.indexOf('.$.') == -1
+				objectFieldName = fm.object_field.split('.')[0]
+				lookupFieldName = fm.object_field.split('.')[1]
+				object = Creator.getObject(recordIds.o, spaceId)
+				if object
+					objectField = object.fields[objectFieldName]
+					if objectField && (objectField.type == "lookup" || objectField.type == "master_detail") && !objectField.multiple
+						fieldsObj = {}
+						fieldsObj[lookupFieldName] = 1
+						lookupObject = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
+						if lookupObject
+							values[fm.workflow_field] = lookupObject[lookupFieldName]
 
 			else if record.hasOwnProperty(fm.object_field)
 				values[fm.workflow_field] = record[fm.object_field]
@@ -231,7 +256,30 @@ uuflowManager.initiateValues = (recordIds, flowId) ->
 				if not _.isEmpty(newTr)
 					values[c.workflow_table_field_code].push(newTr)
 
-	return values
+		# 如果配置了脚本则执行脚本
+		if ow.field_map_script
+			_.extend(values, uuflowManager.evalFieldMapScript(ow.field_map_script, recordIds.o, spaceId, recordIds.ids[0]))
+
+	# 过滤掉values中的非法key
+	filterValues = {}
+	_.each _.keys(values), (k)->
+		if fieldCodes.includes(k)
+			filterValues[k] = values[k]
+
+	return filterValues
+
+uuflowManager.evalFieldMapScript = (field_map_script, objectName, spaceId, objectId)->
+	record = Creator.getCollection(objectName, spaceId).findOne(objectId)
+	script = "module.exports = function (record) { " + field_map_script + " }"
+	func = _eval(script, "field_map_script")
+	values = func(record)
+	if _.isObject values
+		return values
+	else
+		console.error "evalFieldMapScript: 脚本返回值类型不是对象"
+	return {}
+
+
 
 uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 
@@ -268,8 +316,8 @@ uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 
 	return
 
-uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
-	Creator.getCollection(recordIds.o).update(recordIds.ids[0], {
+uuflowManager.initiateRecordInstanceInfo = (recordIds, insId, spaceId) ->
+	Creator.getCollection(recordIds.o, spaceId).update(recordIds.ids[0], {
 		$push: {
 			instances: {
 				$each: [{
@@ -278,13 +326,17 @@ uuflowManager.initiateRecordInstanceInfo = (recordIds, insId) ->
 				}],
 				$position: 0
 			}
+		},
+		$set: {
+			locked: true
+			instance_state: 'draft'
 		}
 	})
 
 	return
 
-uuflowManager.checkIsInApproval = (recordIds) ->
-	record = Creator.getCollection(recordIds.o).findOne({
+uuflowManager.checkIsInApproval = (recordIds, spaceId) ->
+	record = Creator.getCollection(recordIds.o, spaceId).findOne({
 		_id: recordIds.ids[0], instances: { $exists: true }
 	}, { fields: { instances: 1 } })
 
@@ -293,29 +345,3 @@ uuflowManager.checkIsInApproval = (recordIds) ->
 
 	return
 
-uuflowManager.getQueryString = (accessKeyId, secretAccessKey, query, method) ->
-	console.log "----uuflowManager.getQueryString----"
-	date = ALY.util.date.getDate()
-
-	query.Format = "json"
-	query.Version = "2017-03-21"
-	query.AccessKeyId = accessKeyId
-	query.SignatureMethod = "HMAC-SHA1"
-	query.Timestamp = ALY.util.date.iso8601(date)
-	query.SignatureVersion = "1.0"
-	query.SignatureNonce = String(date.getTime())
-
-	queryKeys = Object.keys(query)
-	queryKeys.sort()
-
-	canonicalizedQueryString = ""
-	queryKeys.forEach (name) ->
-		canonicalizedQueryString += "&" + name + "=" + ALY.util.popEscape(query[name])
-
-	stringToSign = method.toUpperCase() + '&%2F&' + ALY.util.popEscape(canonicalizedQueryString.substr(1))
-
-	query.Signature = ALY.util.crypto.hmac(secretAccessKey + '&', stringToSign, 'base64', 'sha1')
-
-	queryStr = ALY.util.queryParamsToString(query)
-	console.log queryStr
-	return queryStr

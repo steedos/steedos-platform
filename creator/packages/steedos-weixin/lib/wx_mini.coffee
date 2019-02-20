@@ -83,7 +83,7 @@ WXMini.addUserToSpace = (userId, spaceId, userName, profile)->
 	space = Creator.getCollection("spaces").findOne({_id: spaceId})
 	if space
 		#将用户添加到space的根部门下
-		root_org = Creator.getCollection("organizations").findOne({space: space._id, is_company: true}, {fields: {_id: 1}})
+		root_org = Creator.getCollection("organizations").findOne({space: space._id, is_company: true, parent: null}, {fields: {_id: 1}})
 		if root_org
 			Creator.getCollection("organizations").direct.update({_id: root_org._id}, {$push: {users: userId}})
 			# 新增一条space_user
@@ -96,7 +96,7 @@ WXMini.addUserToSpace = (userId, spaceId, userName, profile)->
 WXMini.updateUser = (userId, options)->
 	if options.$set.mobile
 		options.$set.phone = {number: "+86" + options.$set.mobile, mobile: options.$set.mobile, verified:true, modified:new Date()}
-	
+
 	# 同步头像avatar/profile.avatar字段值到头像URLavatarUrl
 	profileAvatar = options.$set.profile?.avatar or options.$set["profile.avatar"]
 	if options.$set.avatar
@@ -105,7 +105,7 @@ WXMini.updateUser = (userId, options)->
 		user = Creator.getCollection("users").findOne({_id: userId}, fields: {avatarUrl: 1})
 		unless user.avatarUrl
 			options.$set.avatarUrl = profileAvatar
-	
+
 	Creator.getCollection("users").direct.update({_id: userId}, options)
 
 	if Creator.getCollection("vip_customers")

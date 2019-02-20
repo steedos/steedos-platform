@@ -1,7 +1,6 @@
 displayListGrid = (app_id, object_name, related_object_name, record_id, icon, name_field_key)->
 	url = "/api/odata/v4/#{Steedos.spaceId()}/#{related_object_name}"
 	filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id)
-	console.log filter
 	self.$("#relatedObjectRecords").dxList({
 		dataSource: {
 			store: {
@@ -14,7 +13,6 @@ displayListGrid = (app_id, object_name, related_object_name, record_id, icon, na
 					request.headers['X-Space-Id'] = Steedos.spaceId()
 					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 				onLoading: (loadOptions)->
-					console.log loadOptions
 					return
 
 			},

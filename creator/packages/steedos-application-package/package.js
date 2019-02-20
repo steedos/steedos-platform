@@ -2,7 +2,8 @@ Package.describe({
 	name: 'steedos:application-package',
 	version: '0.0.1',
 	summary: 'Steedos Application Package',
-	git: ''
+	git: '',
+	documentation: null
 });
 
 Package.onUse(function(api) {
@@ -25,10 +26,9 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular@1.6.1');
 	api.use('matb33:collection-hooks@0.8.1');
 	api.use('meteorhacks:subs-manager@1.6.4');
-	api.use('gwendall:simple-schema-i18n');
-	api.use('steedos:creator');
+	api.use('templating@1.2.15');
+	api.use('steedos:objects');
 
-	api.use('tap:i18n@1.7.0');
 	// tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
 	// api.addFiles(tapi18nFiles, ['client', 'server']);
 	// api.addFiles('package.app.coffee');

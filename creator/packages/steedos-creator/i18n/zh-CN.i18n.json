@@ -1,4 +1,6 @@
 {
+	"_namespace": "",
+
 	"Steedos Creator": "开发平台",
 
 	"Refresh": "刷新",
@@ -19,16 +21,17 @@
 	"creator_list_select_fields": "选择要显示的字段",
 	"creator_available_fields" :"可利用字段",
 	"creator_visible_fields":"已显示字段",
-	"creator_list_filter": "过滤器",
+	"creator_list_filter": "筛选条件",
 	"creator_list_filter_cancel": "取消",
 	"creator_list_filter_save_as": "另存为",
 	"creator_list_filter_save": "保存",
-	"creator_list_new_filter": "新建筛选器",
-	"creator_list_add_filter": "添加筛选器",
-	"creator_list_remove_all_filters": "全部删除",
-	"creator_list_matching_all_filters": "匹配所有筛选器",
-	"creator_list_view_controls": "列表视图控制",
+	"creator_list_new_filter": "新建筛选条件",
+	"creator_list_add_filter": "添加筛选条件",
+	"creator_list_remove_all_filters": "清空",
+	"creator_list_matching_all_filters": "匹配所有筛选条件",
+	"creator_list_view_controls": "列表视图设置",
 	"creator_list_export_list_view": "导出Excel",
+  	"creator_list_copy_list_view": "复制视图",
 	"reset_column_width": "重置列宽",
 	"creator_list_edit": "编辑视图",
 
@@ -44,7 +47,21 @@
 	"creator_filter_operation_does_not_contain":"不包含",
 	"creator_filter_operation_starts_with":"起始字符",
 	"creator_filter_option_value": "值",
+	"creator_filter_option_start_value": "起始值",
+	"creator_filter_option_end_value": "结束值",
+	"creator_filter_option_start_end_error": "起始值不能大于结束值",
 	"creator_filter_option_done": "完成",
+	"creator_filter_operation_required_error": "请选择运算符",
+	"creator_filter_operation_between": "范围",
+	"creator_filter_operation_between_last_year": "去年",
+	"creator_filter_operation_between_this_year": "今年",
+	"creator_filter_operation_between_next_year": "明年",
+	"creator_filter_operation_between_today": "今天",
+	"creator_filter_operation_between_yestday": "昨天",
+	"creator_filter_operation_between_last_quarter": "上季度",
+	"creator_filter_operation_between_tomorrow": "明天",
+	"creator_filter_operation_between_this_week": "本周",
+	"creator_filter_operation_between_last_week": "上周",
 
 	"creator_app_launcher": "应用程序启动器",
 	"creator_app_launcher_all_apps": "所有应用程序",
@@ -63,18 +80,7 @@
 	"creator_detail_related": "相关",
 	"creator_new": "新建",
 
-	"creator_odata_api_not_found": "很抱歉，您要访问的资源不存在或者您没有权限访问该资源！",
-	"creator_odata_unexpected_character" :"不支持的特殊字符",
-	"creator_odata_authentication":"您需要提供身份验证",
-	"creator_odata_user_privileges":"用户没有访问实体的权限",
-	"creator_list_no_actions_tip": "没有可做的操作",
-	"creator_list_view_permissions_lost": "您没有权限访问该视图",
+	"true": "是",
+	"false": "否"
 
-	"creator_report_drill_down_label": "下钻数据",
-	"creator_report_drill_down_total_label": "总",
-	"creator_listview_update":"列表视图已更新",
-
-	"creator_request_oversized": "请求文件太大了",
-
-	"creator_permission_share_miss": "请在授权组织或授权用户中至少填写一个值"
 }

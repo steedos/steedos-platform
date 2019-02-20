@@ -7,7 +7,7 @@ AutoForm.addInputType("selectorg_localdata",{
         if(val instanceof Array && val.length > 0 && "string" == typeof(val[0])){
             val = WorkflowManager.getFormulaOrgObjects(val);
         }
-        
+
         return val;
     },
     valueOut:function(){
@@ -55,7 +55,7 @@ Template.afSelectOrg_localData.events({
     var start_orgId = "";
 
     if(data.orgs && data.orgs.length > 0){
-        var start_org = data.orgs.filterProperty("is_company",true);
+        var start_org = data.orgs.filterProperty("is_company",true).filterProperty("parent", null);
         start_org.forEach(function(so){
             start_orgId = so.id;
         });
@@ -107,7 +107,7 @@ Template.afSelectOrg_localData.confirm = function(name){
             $("input[name='"+name+"']")[0].dataset.values = values[0];
             $("input[name='"+name+"']").val(valuesObject[0].fullname).trigger("change");
         }
-        
+
     }else{
         $("input[name='"+name+"']")[0].dataset.values = '';
         $("input[name='"+name+"']").val('').trigger("change");
@@ -123,8 +123,8 @@ Template.afSelectOrg_localData.confirm = function(name){
 //         $("input[name='"+name+"']")[0].dataset.values = value ? value.getProperty("id") : '';
 //     }else{
 //         $("input[name='"+name+"']").val(value ? value.name : '');
-//         $("input[name='"+name+"']")[0].dataset.values = value ? value.id : ''; 
+//         $("input[name='"+name+"']")[0].dataset.values = value ? value.id : '';
 //     }
-    
+
 // }
 

@@ -41,46 +41,50 @@
 					</ul>
 				</header>
 				<div class="slds-modal__content slds-app-launcher__content slds-p-around_medium" id="modal-content-id-1">
-					<div class="app-sction-part-1 slds-section slds-is-open">
-						<h3 class="slds-section__title">
-							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-app-list">
-								{{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
+
+		<div class="app-sction-part-1 slds-section slds-is-open">
+          <h3 class="slds-section__title">
+            <button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-app-list">
+              {{> steedos_button_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left control-collapse"
 								source="utility-sprite" name="chevrondown"}}
-								<span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_apps"}}</span>
-							</button>
-						</h3>
-
-						<div class="slds-section__content">
-							<ul class="slds-grid slds-grid_pull-padded slds-wrap">
-								{{#each apps}}
-
-								<li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3 app-item app-launcher-link">
-									<a aria-describedby="drag-instructions" draggable="true" href="{{app_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-is-draggable">
-										<div class="slds-app-launcher__tile-figure">
-											<span class="slds-icon_container" title="">
+              <span class="slds-truncate" title="All Apps">{{_ "creator_app_launcher_all_apps"}}</span>
+            </button>
+          </h3>
+          <div aria-hidden="false" class="slds-section__content" id="appsContent">
+            <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive"></div>
+            <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+			{{#each apps}}
+              <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <a href="{{app_url}}" draggable="true" class="app-launcher-link slds-app-launcher__tile slds-text-link_reset slds-is-draggable">
+                  <div class="slds-app-launcher__tile-figure">
+                    <span class="slds-avatar slds-avatar_large">
+                      <span class="slds-icon_container" title="">
 												{{> steedos_icon class="slds-icon slds-icon-standard-account slds-icon_large" source="standard-sprite" name=this.icon_slds}}
 											</span>
-										</div>
-										<div class="slds-app-launcher__tile-body">
-											{{#if description}}
-												<span class="slds-text-link">
-													{{_ name}}
-												</span>
-												<p class="desc">
-													{{description}}
-												</p>
-											{{else}}
-												<div class="app-title slds-text-link">
-													{{_ name}}
-												</div>
-											{{/if}}
-										</div>
-									</a>
-								</li>
-								{{/each}}
-							</ul>
-						</div>
-					</div>
+                    </span>
+                    <div class="slds-m-top_xxx-small">
+                      <button class="slds-button slds-button_icon" aria-pressed="false" title="Reorder">
+                      	{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="rows"}}
+                        <span class="slds-assistive-text">Reorder</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="slds-app-launcher__tile-body">
+                    <a href="{{app_url}}" class="appTileTitle">{{_ name}}</a>
+                    <p>{{description}}
+                    </p>
+                    <div class="slds-popover slds-popover_tooltip slds-nubbin_top slds-hide" role="tooltip" id="help-0" style="position:absolute;top:100px;left:165px">
+                      <div class="slds-popover__body"></div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+
+
 					<div class="app-sction-part-2 slds-section">
 						<h3 class="slds-section__title">
 							<button aria-controls="appsContent" aria-expanded="true" class="slds-button slds-section__title-action control-object-list">
@@ -92,8 +96,8 @@
 						<div class="slds-section__content">
 							<ul class="slds-grid slds-wrap">
 								{{#each app_objects}}
-								<li class="slds-col--padded slds-grow-none object-item">
-									<a href="{{object_url}}" class="slds-app-launcher__tile slds-text-link_reset slds-app-launcher__tile_small object-launcher-link">
+								<li class="slds-col--padded slds-p-vertical_xx-small slds-size_1-of-5 slds-grow-none oneAppLauncherItem">
+									<a href="{{object_url}}" class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate">
 										<span class="slds-truncate slds-text-link">{{label}}</span>
 									</a>
 								</li>

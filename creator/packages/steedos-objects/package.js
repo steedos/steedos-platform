@@ -1,7 +1,7 @@
 Package.describe({
 
 	name: 'steedos:objects',
-	version: '0.0.1',
+	version: '0.0.11',
 	summary: 'Steedos Creator',
 	git: ''
 });
@@ -31,20 +31,25 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular@1.6.1');
 	api.use('matb33:collection-hooks@0.8.4');
 
-
 	api.use(['webapp@1.3.11'], 'server');
 
 	api.use('raix:push@3.0.2');
+	api.use('universe:i18n@1.13.0');
 
 	api.use('steedos:logger@0.0.2');
-
-	api.use('tap:i18n@1.7.0');
 
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 
-
 	api.addFiles('core.coffee');
+	api.addFiles('client/odata.coffee', 'client');
+	api.addFiles('client/helpers.coffee', 'client');
+	api.addFiles('client/steedos_icon.html','client');
+	api.addFiles('client/steedos_icon.coffee','client');
+
+	api.addFiles('server/methods/object_options.coffee', 'server');
+
+	api.addFiles('lib/listviews.coffee');
 
 	api.addFiles('lib/add_simple_schema_validation_error.coffee');
 	api.addFiles('lib/field_simple_schema_validation_error.coffee')
@@ -53,15 +58,18 @@ Package.onUse(function(api) {
 	api.addFiles('lib/convert.coffee');
 
 	api.addFiles('lib/formular.coffee');
-	
+
 	api.addFiles('lib/object.coffee');
 	api.addFiles('lib/fields.coffee');
 	api.addFiles('lib/triggers.coffee');
 	api.addFiles('lib/permission_sets.coffee');
 	api.addFiles('lib/collections.coffee');
+	api.addFiles('lib/actions.coffee');
 	api.addFiles('lib/resources.coffee',  "client");
 
 
 	api.addFiles('models/base.coffee');
+
+	api.addFiles('server/routes/api_workflow_view_instance.coffee', 'server');
 
 });

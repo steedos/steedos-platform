@@ -2,7 +2,7 @@ Meteor.startup(function () {
 
   if (Meteor.settings.cron && Meteor.settings.cron.statistics) {
 
-    var schedule = Npm.require('node-schedule');
+    var schedule = require('node-schedule');
     // 定时执行统计
     var rule = Meteor.settings.cron.statistics;
 

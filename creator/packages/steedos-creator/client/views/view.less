@@ -8,7 +8,7 @@
 		}
 	}
 	.objectViewManager{
-		height: 100%;
+		height: auto;
 		.table-grid-content{
 			height: 100%;
 			.creator-view-tabs_default {
@@ -60,6 +60,24 @@
 			}
 		}
 	}
+
+	/*chatter view*/
+	.steedos-record_chat{
+		padding: .75rem 1rem;
+		.slds-tabs_default__content{
+			padding: 0 0;
+		}
+
+		.slds-post {
+			border-top: none;
+			padding: 0 0;
+		}
+	}
+
+	.column{
+		width: 100%;
+	}
+	/*chatter view end*/
 }
 
 form.two-columns-form{
@@ -101,6 +119,16 @@ form.two-columns-form{
 	}
 	.slds-truncate.fulltext {
 		white-space: normal;
+	}
+
+	.view-page-section-row{
+		margin-top: 0.25rem;
+		margin-bottom: 0.25rem;
+
+		.slds-p-vertical_xx-small, .slds-p-vertical--xx-small{
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
 	}
 }
 

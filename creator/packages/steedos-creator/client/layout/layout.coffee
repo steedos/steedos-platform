@@ -25,10 +25,23 @@ Template.creatorLayout.helpers
 	saveAndInsert: ()->
 		return Session.get("action_save_and_insert")
 
+	split: ()->
+		app = Creator.getApp()
+		if app and app._id == "admin"
+			reg = /\/app\/\w+\/search\//
+			currentPath = Session.get("router-path")
+			return !reg.test(currentPath)
+		else
+			return false
+
+isCalendarView = ()->
+	view = Creator.getListView(Session.get "object_name", Session.get("list_view_id"))
+	return view?.type == 'calendar'
+
 AutoForm.hooks creatorAddForm:
 	onSuccess: (formType, result)->
 		$('#afModal').modal 'hide'
-		if FlowRouter._current.route.path == "/app/:app_id/:object_name/calendar/"
+		if FlowRouter._current.route.path == "/app/:app_id/:object_name/calendar/" || isCalendarView()
 			return
 		if result.type == "post"
 			app_id = Session.get("app_id")
@@ -41,6 +54,8 @@ AutoForm.hooks creatorAddForm:
 AutoForm.hooks creatorEditForm:
 	onSuccess: (formType, result)->
 		$('#afModal').modal 'hide'
+		if isCalendarView()
+			return;
 		if result.type == "post"
 			app_id = Session.get("app_id")
 			object_name = result.object_name

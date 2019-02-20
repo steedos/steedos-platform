@@ -106,3 +106,20 @@
 	border-left-color: #005fb2;
 	color: #000000;
 }
+.slds-col.sidebar-open{
+	display: flex;
+	flex: 4;
+	&>.list-table-container{
+		flex: 3;
+		&.list-table-sidebar{
+			flex: 1;
+			border-right: 1px solid rgb(224, 229, 238);
+		}
+	}
+}
+
+#addListView{
+	.view-page-section-row:nth-child(5){
+		display: none;
+	}
+}

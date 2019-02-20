@@ -55,6 +55,19 @@ Template.afSelectOrg.events({
 		}
 		if ("disabled" in template.data.atts)
 			return;
+
+		try{
+			if (AutoForm.getCurrentDataForForm()){
+				var fieldSchema = AutoForm.getSchemaForField(template.data.name);
+
+				if(_.isFunction(fieldSchema.beforeOpenFunction)){
+					fieldSchema.beforeOpenFunction(event, template)
+				}
+			}
+		}catch(e){
+			console.log('click .selectUser e', e);
+		}
+
 		var dataset = $("input[name='" + template.data.name + "']")[0].dataset;
 
 		//var data = {orgs:WorkflowManager.getSpaceOrganizations()};
@@ -82,6 +95,19 @@ Template.afSelectOrg.events({
 
 		options.title = this.atts.title?  this.atts.title: t('coreform_select_org_title'); //t('coreform_select') +
 
+		// dataset.rootOrg = 'YrZJ35kLyvq5RNHfd'
+
+		if(dataset.rootOrg && _.isString(dataset.rootOrg)){
+			options.rootOrg = dataset.rootOrg
+		}
+
+		if(template.data.atts.is_company_only){
+			options.showCompanyOnly = true
+		}
+		if (template.data.atts.is_company_limited) {
+			options.showLimitedCompanyOnly = true
+		}
+		
 		Modal.allowMultiple = true;
 		Modal.show("cf_organization_modal", options);
 		

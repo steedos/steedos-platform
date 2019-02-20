@@ -1,10 +1,11 @@
 'use strict';
 
 Package.describe({
-    name: 'steedos:location',
+    name: 'steedos:autoform-location',
     summary: 'Steedos Autoform location',
     version: '0.0.1',
-    git: ''
+    git: '',
+    documentation: null
 });
 
 Package.onUse(function(api) {

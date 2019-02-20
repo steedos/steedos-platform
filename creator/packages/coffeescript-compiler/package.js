@@ -7,13 +7,13 @@ Package.describe({
 });
 
 Npm.depends({
-  'coffeescript': '1.12.7',
+  'coffeescript': '2.3.2',
   'source-map': '0.5.6'
 });
 
 Package.onUse(function (api) {
-  api.use('babel-compiler@6.19.4||7.0.0');
-  api.use('ecmascript@0.8.2');
+  api.use('babel-compiler@6.24.7||7.1.1');
+  api.use('ecmascript@0.11.1');
 
   api.mainModule('coffeescript-compiler.js', 'server');
 

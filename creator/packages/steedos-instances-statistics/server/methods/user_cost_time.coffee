@@ -189,7 +189,7 @@ UserCostTime::startStat = () ->
 	# 管道在Unix和Linux中一般用于将当前命令的输出结果作为下一个命令的参数。
 	cursor = async_aggregate(pipeline, ins_approves)
 
-	
+
 	# console.log "====================",ins_approves?.length
 
 	if ins_approves?.length > 0
@@ -224,7 +224,7 @@ UserCostTime::startStat = () ->
 					finished_approve.inbox_count = inbox_approve?.inbox_instances.length
 				else
 					finished_approve.inbox_count = 0
-				
+
 				# 待审核的表单ID
 				finished_approve.inbox_instances = inbox_approve?.inbox_instances
 
@@ -233,12 +233,12 @@ UserCostTime::startStat = () ->
 				# delete finished_approve.inbox_instances # 删除已处理的ID，不用统计
 
 				finished_approve.itemsSold = inbox_approve?.itemsSold
-		
+
 		# 遍历剩余未处理的列表
 		if inbox_approves?.length > 0
 			inbox_approves?.forEach (inbox_approve)->
 				count = inbox_approve?.inbox_instances?.length || 0
-				itemsSold = 
+				itemsSold =
 				finished_approves.push({
 					_id: inbox_approve._id,
 					month_finished_time: 0,	#当月已处理总耗时
@@ -250,7 +250,7 @@ UserCostTime::startStat = () ->
 
 	else
 		finished_approves = []
-	
+
 	# 整理存入数据库中
 	if finished_approves?.length > 0
 
@@ -278,7 +278,7 @@ UserCostTime::startStat = () ->
 		finished_approves.forEach (approve)->
 
 			# console.log "=================================="
-			
+
 			# console.log "approve", approve
 
 			# 当月待处理的总耗时(如果一个待处理文件当前有多个步骤，取最早的步骤时间节点)
@@ -329,6 +329,8 @@ UserCostTime::startStat = () ->
 			if space_user
 				approve.owner_organization = space_user?.organization
 				approve.owner_organizations = space_user?.organizations || []
+				if space_user.company_id
+					approve.company_id = space_user.company_id
 
 			delete approve.itemsSold
 
@@ -344,26 +346,28 @@ UserCostTime::startStat = () ->
 			})
 
 			if exist_obj
-				result = statCollection.update(
-					{'_id':exist_obj._id},
-					{$set:{
-						inbox_time: approve.inbox_time,
-						inbox_count: approve.inbox_count,
-						inbox_avg: approve.inbox_avg,
+				setObj = {
+					inbox_time: approve.inbox_time,
+					inbox_count: approve.inbox_count,
+					inbox_avg: approve.inbox_avg,
 
-						month_finished_time: approve.month_finished_time,
-						month_finished_count: approve.month_finished_count,
-						month_finished_avg: approve.month_finished_avg,
+					month_finished_time: approve.month_finished_time,
+					month_finished_count: approve.month_finished_count,
+					month_finished_avg: approve.month_finished_avg,
 
-						avg_time: approve.avg_time,
+					avg_time: approve.avg_time,
 
-						owner_organization: approve.owner_organization,
-						owner_organizations: approve.owner_organizations,
+					owner_organization: approve.owner_organization,
+					owner_organizations: approve.owner_organizations,
 
-						modified: now_date
-						}
-					})
+					modified: now_date
+				}
+
+				if approve.company_id
+					setObj.company_id = approve.company_id
+
+				result = statCollection.update(exist_obj._id, { $set: setObj })
 			else
 				result = statCollection.insert(approve)
-			
+
 	return
