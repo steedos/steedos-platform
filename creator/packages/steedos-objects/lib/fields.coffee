@@ -512,6 +512,7 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_last_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_year"),
 		"between_time_this_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_year"),
 		"between_time_next_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_year"),
+		"between_time_this_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_month"),
 		"between_time_last_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_week"),
 		"between_time_this_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_week"),
 		"between_time_next_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_week"),
@@ -529,8 +530,6 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	tomorrow = new Date(now.getTime() + millisecond)
 	# 一周中的某一天
 	week = now.getDay()
-	# 一个月中的某一天
-	month = now.getDate()
 	# 减去的天数
 	minusDay = if week != 0 then week - 1 else 6
 	monday = new Date(now.getTime() - (minusDay * millisecond))
@@ -546,6 +545,27 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	currentYear = now.getFullYear()
 	previousYear = currentYear - 1
 	nextYear = currentYear + 1
+	# 当前月份
+	currentMonth = now.getMonth()
+	# 计数年、月
+	year = now.getFullYear()
+	month = now.getMonth()
+	# 本月第一天
+	firstDay = new Date(currentYear,currentMonth,1)
+
+	# 当为12月的时候年份需要加1
+	# 月份需要更新为0 也就是下一年的第一个月
+	if currentMonth == 11
+		year++
+		month++
+	else
+		month++
+	
+	# 下月的第一天
+	nextMonthFirstDay = new Date(year, month, 1)
+	# 本月最后一天
+	lastDay = new Date(nextMonthFirstDay.getTime() - millisecond)
+
 	switch key
 		when "last_year"
 			#去年
@@ -562,6 +582,13 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 			label = t("creator_filter_operation_between_next_year")
 			startValue = new Date("#{nextYear}-01-01T00:00:00Z")
 			endValue = new Date("#{nextYear}-12-31T23:59:59Z")
+		when "this_month"
+			#本月
+			strFirstDay = moment(firstDay).format("YYYY-MM-DD")
+			strLastDay = moment(lastDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_this_month")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "last_week"
 			#上周
 			strMonday = moment(lastMonday).format("YYYY-MM-DD")
