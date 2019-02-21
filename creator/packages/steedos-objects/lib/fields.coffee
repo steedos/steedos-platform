@@ -54,8 +54,8 @@ Creator.getObjectSchema = (obj) ->
 						type: "dx-date-box"
 						timezoneId: "utc"
 						dateTimePickerOptions:
-							format: "YYYY-MM-DD"
-							locale: Session.get("TAPi18n::loaded_lang")
+							type: "date"
+							displayFormat: "yyyy-MM-dd"
 
 		else if field.type == "datetime"
 			fs.type = Date

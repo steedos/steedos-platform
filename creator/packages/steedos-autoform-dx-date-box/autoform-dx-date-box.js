@@ -29,7 +29,7 @@ AutoForm.addInputType("dx-date-box", {
       if (typeof moment.tz !== "function") {
         throw new Error("If you specify a timezoneId, make sure that you've added a moment-timezone package to your app");
       }
-      if (val instanceof Date) {
+      if (val instanceof Date && !isNaN(val)) {
         return moment(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId), "YYYY-MM-DD[T]HH:mm:ss.SSS").toDate();
       }
     }
@@ -37,26 +37,25 @@ AutoForm.addInputType("dx-date-box", {
     return val;
   },
   valueOut: function () {
-    if (!this.data("DateTimePicker"))
+    this.dxDateBox("instance").option("value")
+    var dti = this.dxDateBox("instance")
+    if (!dti)
       return null
-    var m = this.data("DateTimePicker").date();
-
-    if (!m) {
-      return m;
-    }
+    value = dti.option("value")
     var timezoneId = this.attr("data-timezone-id");
     // default is local, but if there's a timezoneId, we use that
     if (typeof timezoneId === "string") {
       if (typeof moment.tz !== "function") {
         throw new Error("If you specify a timezoneId, make sure that you've added a moment-timezone package to your app");
       }
-      m = moment.tz(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(m.toDate()), timezoneId);
+      m = moment.tz(AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(value), timezoneId);
+      value = m.toDate();
     }
-    return m.toDate();
+    return value;
   },
   valueConverters: {
     "string": function (val) {
-      var format = this.data("format")
+      var format = this.data("displayFormat")
       if(format){
         return (val instanceof Date) ? $.format.date(val,format) : val
       }else{
@@ -106,16 +105,13 @@ AutoForm.addInputType("dx-date-box", {
 Template.dxDateBox.helpers({
   atts: function addFormControlAtts() {
     var atts = _.clone(this.atts);
-    // Add bootstrap class
-    atts = AutoForm.Utility.addClass(atts, "form-control");
-    atts["data-format"] = atts.outFormat
     delete atts.dateTimePickerOptions;
     return atts;
   }
 });
 
 Template.dxDateBox.rendered = function () {
-  var $input = this.$('input');
+  var $input = this.$('.dx-date-box');
   var data = this.data;
   var opts = data.atts.dateTimePickerOptions || {};
 
@@ -126,37 +122,36 @@ Template.dxDateBox.rendered = function () {
     opts.defaultDate = null;
   }
 
-  // instanciate datetimepicker
-  $input.datetimepicker(opts);
+  $input.dxDateBox(opts);
 
   // set and reactively update values
   this.autorun(function () {
     var data = Template.currentData();
-    var dtp = $input.data("DateTimePicker");
+    // var dtp = $input.data("DateTimePicker");
+    var dti = $input.dxDateBox("instance");
 
     // set field value
-    if (data.value instanceof Date) {
-      dtp.date(data.value);
+    // 当data.value为Invalid Date时，isNaN(data.value)为true
+    if (data.value instanceof Date && !isNaN(data.value)) {
+      dti.option("value", data.value);
     } else {
-      dtp.date(); // clear
+      dti.option("value", null); // clear
     }
 
     // set start date if there's a min in the schema
-    if (data.min instanceof Date) {
-      dtp.setMinDate(data.min);
+    if (data.min instanceof Date && !isNaN(data.min)) {
+      dti.option("min", data.min);
     }
 
     // set end date if there's a max in the schema
-    if (data.max instanceof Date) {
-      dtp.setMaxDate(data.max);
+    if (data.max instanceof Date && !isNaN(data.min)) {
+      dti.option("max", data.max);
     }
   });
 
 };
 
 Template.dxDateBox.destroyed = function () {
-  var dtp = this.$('input').data("DateTimePicker");
-  if (dtp) {
-    dtp.destroy();
-  }
+  var $input = this.$('.dx-date-box');
+  $input.dxDateBox("dispose");
 };
