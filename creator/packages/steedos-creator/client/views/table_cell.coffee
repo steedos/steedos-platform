@@ -53,12 +53,14 @@ Template.creator_table_cell.onRendered ->
 					return columnItem
 
 				columns = _.compact(columns)
-				self.$(".cellGridContainer").dxDataGrid
-					dataSource: val,
-					columns: columns
-					showColumnLines: false
-					showRowLines: true
-					height: "auto"
+				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+					DevExpress.ui.dxDataGrid = dxDataGrid;
+					self.$(".cellGridContainer").dxDataGrid
+						dataSource: val,
+						columns: columns
+						showColumnLines: false
+						showRowLines: true
+						height: "auto"
 		
 		# 显示额外的其他字段
 		if _field.name == "created_by"
