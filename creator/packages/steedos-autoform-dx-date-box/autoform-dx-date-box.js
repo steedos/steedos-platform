@@ -107,7 +107,7 @@ AutoForm.addInputType("dx-date-box", {
 Template.dxDateBox.helpers({
   atts: function addFormControlAtts() {
     var atts = _.clone(this.atts);
-    delete atts.dateTimePickerOptions;
+    delete atts.dxDateBoxOptions;
     return atts;
   }
 });
@@ -115,7 +115,7 @@ Template.dxDateBox.helpers({
 Template.dxDateBox.rendered = function () {
   var $input = this.$('.dx-date-box');
   var data = this.data;
-  var opts = data.atts.dateTimePickerOptions || {};
+  var opts = data.atts.dxDateBoxOptions || {};
 
   // To be able to properly detect a cleared field, the defaultDate,
   // which is "" by default, must be null instead. Otherwise we get

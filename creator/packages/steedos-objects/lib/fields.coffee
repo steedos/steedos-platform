@@ -49,11 +49,11 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.type = 'date'
 				else
 					fs.autoform.outFormat = 'yyyy-MM-dd';
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
 					fs.autoform.afFieldInput =
 						type: "dx-date-box"
 						timezoneId: "utc"
-						dateTimePickerOptions:
+						dxDateBoxOptions:
 							type: "date"
 							displayFormat: "yyyy-MM-dd"
 
@@ -63,10 +63,10 @@ Creator.getObjectSchema = (obj) ->
 				if Steedos.isMobile() || Steedos.isPad()
 					fs.autoform.type = 'datetime-local'
 				else
-					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
 					fs.autoform.afFieldInput =
 						type: "dx-date-box"
-						dateTimePickerOptions:
+						dxDateBoxOptions:
 							type: "datetime"
 							displayFormat: "yyyy-MM-dd HH:mm"
 		else if field.type == "[Object]"
