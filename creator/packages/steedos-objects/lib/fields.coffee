@@ -380,7 +380,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = "steedos-markdown"
 		else if field.type == 'url'
 			fs.type = String
-			fs.regEx = SimpleSchema.RegEx.Url
+			# fs.regEx = SimpleSchema.RegEx.Url
 			fs.autoform.type = 'steedosUrl'
 		else if field.type == 'email'
 			fs.type = String
