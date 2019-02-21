@@ -59,6 +59,7 @@ steedos:autoform-lookup
 steedos:autoform-tags
 q42:autoform-markdown
 steedos:markdown@0.0.1
+steedos:autoform-dx-date-box
 
 steedos:devexpress
 

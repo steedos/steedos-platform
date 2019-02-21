@@ -51,7 +51,7 @@ Creator.getObjectSchema = (obj) ->
 					fs.autoform.outFormat = 'yyyy-MM-dd';
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
 					fs.autoform.afFieldInput =
-						type: "bootstrap-datetimepicker"
+						type: "dx-date-box"
 						timezoneId: "utc"
 						dateTimePickerOptions:
 							format: "YYYY-MM-DD"
@@ -65,7 +65,7 @@ Creator.getObjectSchema = (obj) ->
 				else
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dateTimePickerOptions参数会报错
 					fs.autoform.afFieldInput =
-						type: "bootstrap-datetimepicker"
+						type: "dx-date-box"
 						dateTimePickerOptions:
 							type: "datetime"
 							displayFormat: "yyyy-MM-dd HH:mm"
