@@ -46,7 +46,7 @@ AutoForm.addInputType("dx-date-box", {
     value = dti.option("value")
     var timezoneId = this.attr("data-timezone-id");
     // default is local, but if there's a timezoneId, we use that
-    if (typeof timezoneId === "string") {
+    if (typeof timezoneId === "string" && value) {
       if (typeof moment.tz !== "function") {
         throw new Error("If you specify a timezoneId, make sure that you've added a moment-timezone package to your app");
       }
