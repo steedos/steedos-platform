@@ -514,6 +514,7 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_next_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_year"),
 		"between_time_last_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_week"),
 		"between_time_this_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_week"),
+		"between_time_next_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_week"),
 		"between_time_yestday": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "yestday"),
 		"between_time_today": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "today"),
 		"between_time_tomorrow": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "tomorrow")
@@ -531,14 +532,17 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	# 一个月中的某一天
 	month = now.getDate()
 	# 减去的天数
-	minusDay = week != 0 ? week - 1 : 6
+	minusDay = if week != 0 then week - 1 else 6
 	monday = new Date(now.getTime() - (minusDay * millisecond))
 	sunday = new Date(monday.getTime() + (6 * millisecond))
-	# 上周周日
+	# 上周日
 	lastSunday = new Date(monday.getTime() - millisecond)
-	# 上周周一
+	# 上周一
 	lastMonday = new Date(lastSunday.getTime() - (millisecond * 6))
-
+	# 下周一
+	nextMonday = new Date(sunday.getTime() + millisecond)
+	# 下周日
+	nextSunday = new Date(nextMonday.getTime() + (millisecond * 6))
 	currentYear = now.getFullYear()
 	previousYear = currentYear - 1
 	nextYear = currentYear + 1
@@ -570,6 +574,13 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 			strMonday = moment(monday).format("YYYY-MM-DD")
 			strSunday = moment(sunday).format("YYYY-MM-DD")
 			label = t("creator_filter_operation_between_this_week")
+			startValue = new Date("#{strMonday}T00:00:00Z")
+			endValue = new Date("#{strSunday}T23:59:59Z")
+		when "next_week"
+			#下周
+			strMonday = moment(nextMonday).format("YYYY-MM-DD")
+			strSunday = moment(nextSunday).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_next_week")
 			startValue = new Date("#{strMonday}T00:00:00Z")
 			endValue = new Date("#{strSunday}T23:59:59Z")
 		when "yestday"

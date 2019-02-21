@@ -203,7 +203,7 @@ steedos:useraccounts-bootstrap@1.14.2_8
 steedos:useraccounts-core@1.14.2_6
 steedos:useraccounts-flow-routing@1.14.2_4
 steedos:users-import@0.0.1
-steedos:version@1.0.5
+steedos:version@1.0.6
 steedos:webhookqueue@0.0.1
 tap:i18n@1.8.2
 templating@1.3.2
