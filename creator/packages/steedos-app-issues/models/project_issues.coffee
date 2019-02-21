@@ -24,7 +24,17 @@ Creator.Objects.project_issues =
 			type: 'master_detail'
 			reference_to: 'projects'
 			filterable: true
-			is_wide: true
+		
+		priority:
+			label: '处理优先级'
+			type: "select"
+			options: [
+				{label:"高", value:"high"},
+				{label:"中", value:"medium"},
+				{label:"低", value:"low"}
+			]
+			defaultValue: "medium"
+			filterable: true
 
 		# level:
 		# 	label: "级别"
@@ -51,23 +61,14 @@ Creator.Objects.project_issues =
 			filterable: true
 
 
-		tags:
-			label: '标签'
-			type: 'lookup'
-			reference_to: 'project_tags'
-			multiple: true
-			filterable: true
+		# tags:
+		# 	label: '标签'
+		# 	type: 'lookup'
+		# 	reference_to: 'project_tags'
+		# 	multiple: true
+		# 	filterable: true
 
-		priority:
-			label: '优先级'
-			type: "select"
-			options: [
-				{label:"高", value:"high"},
-				{label:"中", value:"medium"},
-				{label:"低", value:"low"}
-			]
-			defaultValue: "medium"
-			filterable: true
+	
 
 		# owner:
 		# 	label: '责任人'
@@ -204,9 +205,9 @@ Creator.Objects.project_issues =
 
 	permission_set:
 		user:
-			allowCreate: true
-			allowDelete: true
-			allowEdit: true
+			allowCreate: false
+			allowDelete: false
+			allowEdit: false
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
