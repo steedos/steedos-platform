@@ -155,5 +155,7 @@ Template.dxDateBox.rendered = function () {
 
 Template.dxDateBox.destroyed = function () {
   var $input = this.$('.dx-date-box');
-  $input.dxDateBox("dispose");
+  if ($input.find("input").length){
+    $input.dxDateBox("dispose");
+  }
 };
