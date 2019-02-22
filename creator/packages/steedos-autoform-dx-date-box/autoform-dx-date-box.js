@@ -39,6 +39,9 @@ AutoForm.addInputType("dx-date-box", {
     return val;
   },
   valueOut: function () {
+    if (!this.find("input").length) {
+      return null
+    }
     var dti = this.dxDateBox("instance")
     if (!dti)
       return null
@@ -106,6 +109,7 @@ AutoForm.addInputType("dx-date-box", {
 Template.dxDateBox.helpers({
   atts: function addFormControlAtts() {
     var atts = _.clone(this.atts);
+    atts = AutoForm.Utility.addClass(atts, "dx-date-box form-control");
     delete atts.dxDateBoxOptions;
     return atts;
   }
