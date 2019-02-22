@@ -39,7 +39,6 @@ AutoForm.addInputType("dx-date-box", {
     return val;
   },
   valueOut: function () {
-    this.dxDateBox("instance").option("value")
     var dti = this.dxDateBox("instance")
     if (!dti)
       return null
@@ -132,6 +131,10 @@ Template.dxDateBox.rendered = function () {
     // var dtp = $input.data("DateTimePicker");
     var dti = $input.dxDateBox("instance");
 
+    if(!dti){
+      return;
+    }
+
     // set field value
     // 当data.value为Invalid Date时，isNaN(data.value)为true
     if (data.value instanceof Date && !isNaN(data.value)) {
@@ -148,6 +151,19 @@ Template.dxDateBox.rendered = function () {
     // set end date if there's a max in the schema
     if (data.max instanceof Date && !isNaN(data.min)) {
       dti.option("max", data.max);
+    }
+
+    if (data.atts.disabled == "" || data.atts.disabled) {
+      dti.option("disabled", true);
+    }
+    else{
+      dti.option("disabled", false);
+    }
+
+    if (data.atts.readonly == "" || data.atts.readonly) {
+      dti.option("readOnly", true);
+    } else {
+      dti.option("readOnly", false);
     }
   });
 

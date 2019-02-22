@@ -122,6 +122,7 @@ Template.filter_option.helpers
 					if schema.start_value.autoform
 						schema.start_value.autoform.outFormat = 'yyyy-MM-dd';
 					if schema.end_value.autoform
+						# 老的日期控件bootstrap-datetimepicker需要outFormat
 						schema.end_value.autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						if schema.end_value.autoform.afFieldInput?.dxDateBoxOptions
 							schema.end_value.autoform.afFieldInput = _.clone schema.start_value.autoform.afFieldInput
