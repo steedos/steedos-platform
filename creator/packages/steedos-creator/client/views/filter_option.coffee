@@ -121,8 +121,16 @@ Template.filter_option.helpers
 				if isBetweenOperation
 					if schema.start_value.autoform
 						schema.start_value.autoform.outFormat = 'yyyy-MM-dd';
+						if schema.start_value.autoform.afFieldInput?.dxDateBoxOptions
+							schema.start_value.autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = null;
 					if schema.end_value.autoform
 						schema.end_value.autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
+						if schema.end_value.autoform.afFieldInput?.dxDateBoxOptions
+							schema.end_value.autoform.afFieldInput = _.clone schema.start_value.autoform.afFieldInput
+							schema.end_value.autoform.afFieldInput.dxDateBoxOptions = _.clone schema.start_value.autoform.afFieldInput.dxDateBoxOptions
+							# dx-date-box控件不支持outFormat，需要单独处理
+							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
+							schema.end_value.autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
 				else
 					if schema.value.autoform
 						schema.value.autoform.outFormat = 'yyyy-MM-dd';
