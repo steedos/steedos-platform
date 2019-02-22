@@ -121,8 +121,6 @@ Template.filter_option.helpers
 				if isBetweenOperation
 					if schema.start_value.autoform
 						schema.start_value.autoform.outFormat = 'yyyy-MM-dd';
-						if schema.start_value.autoform.afFieldInput?.dxDateBoxOptions
-							schema.start_value.autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = null;
 					if schema.end_value.autoform
 						schema.end_value.autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						if schema.end_value.autoform.afFieldInput?.dxDateBoxOptions
