@@ -97,7 +97,7 @@ Package.onUse(function (api) {
 
 
 	api.addFiles('lib/apps.coffee');
-	api.addFiles('lib/user_object_view.coffee', 'server');
+	// api.addFiles('lib/user_object_view.coffee', 'server');
 	// api.addFiles('lib/eval.js');
 	// api.addFiles('lib/formula_engine.coffee');
 	api.addFiles('lib/object_recent.coffee', 'client');
@@ -111,7 +111,7 @@ Package.onUse(function (api) {
 	api.addFiles('server/methods/object_export2xml.coffee', 'server');
 	api.addFiles('server/methods/object_import_jobs.coffee', 'server');
 	api.addFiles('server/methods/related_objects_records.coffee', 'server');
-	api.addFiles('server/methods/object_workflows.coffee', 'server');
+	// api.addFiles('server/methods/object_workflows.coffee', 'server');
 
 	api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
@@ -129,7 +129,7 @@ Package.onUse(function (api) {
 	api.addFiles('server/routes/s3.coffee', 'server');
 	api.addFiles('server/routes/api_workflow_drafts.coffee', 'server');
 
-	api.addFiles('server/routes/bootstrap.coffee', 'server');
+	// api.addFiles('server/routes/bootstrap.coffee', 'server');
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
 	api.addFiles('client/layout/layout.html', 'client');
@@ -189,7 +189,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
-	api.addFiles('client/bootstrap.coffee', 'client');
+	// api.addFiles('client/bootstrap.coffee', 'client');
 
 	api.addFiles('client/animate.css', 'client');
 	api.addFiles('client/animate.js', 'client');

@@ -99,6 +99,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/publications/modules.coffee', 'server');
 	api.addFiles('server/publications/weixin_pay_code_url.coffee', 'server');
 
+	api.addFiles('server/routes/bootstrap.coffee', 'server');
 	api.addFiles('server/routes/api_billing_recharge_notify.coffee', 'server');
 
 	api.addFiles('server/methods/my_contacts_limit.coffee', 'server');
@@ -109,11 +110,13 @@ Package.onUse(function(api) {
 	api.addFiles('server/methods/billing_recharge.coffee', 'server');
 	api.addFiles('server/methods/get_space_user_count.coffee', 'server');
 	api.addFiles('server/methods/user_secret.coffee', 'server');
+	api.addFiles('server/methods/object_workflows.coffee', 'server');
 
 	api.addFiles('server/methods/update_server_session.coffee', 'server');
 
 	api.addFiles('server/lib/billing_manager.coffee', 'server');
 
+	api.addFiles('client/bootstrap.coffee', 'client');
 	api.addFiles('client/lib/printThis/printThis.js', 'client');
 
 	api.addFiles('lib/methods/apps_init.coffee', 'server');
@@ -130,6 +133,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/admin.coffee');
 	api.addFiles('lib/array_includes.js');
 	api.addFiles('lib/settings.coffee', ['client', 'server']);
+	api.addFiles('lib/user_object_view.coffee', 'server');
 
 	api.addFiles('lib/server_session.js');
 	api.export('ServerSession');

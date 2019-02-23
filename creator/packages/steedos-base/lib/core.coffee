@@ -840,3 +840,18 @@ Steedos.convertSpecialCharacter = (str)->
 
 Steedos.removeSpecialCharacter = (str)->
 	return str.replace(/([\^\$\(\)\*\+\?\.\\\|\[\]\{\}\~\`\@\#\%\&\=\'\"\:\;\<\>\,\/])/g, "")
+
+Creator.getDBApps = (space_id)->
+	dbApps = {}
+	Creator.Collections["apps"].find({space: space_id,is_creator:true,visible:true}, {
+		fields: {
+			created: 0,
+			created_by: 0,
+			modified: 0,
+			modified_by: 0
+		}
+	}).forEach (app)->
+		dbApps[app._id] = app
+
+	return dbApps
+
