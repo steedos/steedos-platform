@@ -44,6 +44,7 @@ Template.filter_option.helpers
 		isBetweenOperation = Creator.isBetweenFilterOperation(filter_item_operation)
 		betweenBuiltinValues = Creator.getBetweenBuiltinValues(filter_field_type)
 		currentBuiltinValue = betweenBuiltinValues?[filter_item_operation]
+		clone = require('clone')
 		if isBetweenOperation
 			schema.start_value = 
 				type: ->
@@ -52,7 +53,7 @@ Template.filter_option.helpers
 				autoform:
 					type: "text"
 			
-			schema.end_value = _.clone schema.start_value
+			schema.end_value = clone schema.start_value
 			schema.end_value.label = "end_value"
 		else
 			schema.value = 
@@ -66,9 +67,8 @@ Template.filter_option.helpers
 			new_schema = new SimpleSchema(Creator.getObjectSchema(Creator.getObject(object_name)))
 			obj_schema = new_schema._schema
 			if isBetweenOperation
-				schema.start_value = _.clone obj_schema[schema_key]
+				schema.start_value = clone obj_schema[schema_key]
 				if schema.start_value.autoform
-					schema.start_value.autoform = _.clone obj_schema[schema_key].autoform
 					schema.start_value.autoform.readonly = false
 					schema.start_value.autoform.disabled = false
 					schema.start_value.autoform.omit = false
@@ -78,15 +78,14 @@ Template.filter_option.helpers
 						schema.start_value.autoform.disabled = true
 						schema.start_value.autoform.value = currentBuiltinValue.values[0]
 
-				schema.end_value = _.clone schema.start_value
+				schema.end_value = clone schema.start_value
 				schema.end_value.label = "end_value"
 				if schema.start_value.autoform
-					schema.end_value.autoform = _.clone(schema.start_value.autoform)
 					if currentBuiltinValue
 						# 如果是内置的运算符，则起止值控件只读，且显示出默认值
 						schema.end_value.autoform.value = currentBuiltinValue.values[1]
 			else
-				schema.value = _.clone obj_schema[schema_key]
+				schema.value = clone obj_schema[schema_key]
 				if ["lookup", "master_detail", "select", "checkbox"].includes(filter_field_type)
 					schema.value.autoform.multiple = true
 					schema.value.type = [String]
@@ -106,7 +105,6 @@ Template.filter_option.helpers
 							schema.value.blackbox = true
 
 				if schema.value.autoform
-					schema.value.autoform = _.clone obj_schema[schema_key].autoform
 					schema.value.autoform.readonly = false
 					schema.value.autoform.disabled = false
 					schema.value.autoform.omit = false
@@ -125,8 +123,6 @@ Template.filter_option.helpers
 						# 老的日期控件bootstrap-datetimepicker需要outFormat
 						schema.end_value.autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						if schema.end_value.autoform.afFieldInput?.dxDateBoxOptions
-							schema.end_value.autoform.afFieldInput = _.clone schema.start_value.autoform.afFieldInput
-							schema.end_value.autoform.afFieldInput.dxDateBoxOptions = _.clone schema.start_value.autoform.afFieldInput.dxDateBoxOptions
 							# dx-date-box控件不支持outFormat，需要单独处理
 							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
 							schema.end_value.autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
