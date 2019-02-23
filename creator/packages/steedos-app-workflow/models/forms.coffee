@@ -31,6 +31,10 @@ Creator.Objects.forms =
 			type: "boolean"
 			label:"是否有效"
 			readonly: true
+		instance_style:
+			type: 'select'
+			label: "样式"
+			options: "表格:table,默认:default"
 
 		historys:
 			label:"历史版本"
@@ -131,6 +135,13 @@ Creator.Objects.forms =
 		standard_delete:
 			visible: false
 			on: "record_more"
+		designForm:
+			label: "表单设计器"
+			visible: (object_name, record_id, record_permissions)->
+				return true;
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record._id, Creator.getUserCompanyId())
 
 	permission_set:
 		user:

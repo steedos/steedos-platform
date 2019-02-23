@@ -1,0 +1,40 @@
+.creator-form-builder{
+	._id-wrap{
+		display: none;
+	}
+	.className-wrap{
+		display: none !important;
+	}
+	.fields-wrap{
+		display: none;
+	}
+	.code-wrap{
+		label:after{
+			content: " *";
+			color: red;
+		}
+	}
+
+	.form-wrap.form-builder .frmb .prev-holder input[type=number]{
+		width: 100%;
+	}
+}
+
+.form-wrap.form-builder .frmb .prev-holder .form-group>label:not([class=fb-checkbox-label]) {
+	display: none;
+}
+
+.form-elements {
+	.form-group{
+		label{
+			display: block !important;
+		}
+	}
+}
+
+.table-field,.section-field{
+	.form-group {
+		margin-left: 0 !important;
+		margin-bottom: 15px !important;
+	}
+}

@@ -8,7 +8,8 @@ if Meteor.isClient
 		if companyId && !Creator.isSpaceAdmin(space, Meteor.userId())
 			url = url + "&companyId=#{companyId}"
 		Steedos.openWindow Steedos.absoluteUrl(url)
-
+	WorkflowCore.openFormDesign = (locale, space, form, companyId)->
+		Modal.show('formDesign', {formId: form})
 
 	Meteor.startup ->
 		$(document).keydown (e) ->

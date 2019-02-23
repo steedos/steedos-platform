@@ -3,6 +3,9 @@
         "webservices": {
             "workflow": {
                 "url": "http://steedos.ticp.net:8821/"
+            },
+            "workflowDesigner": {
+                "url": "http://steedos.ticp.net:8821/" //流程设计器服务地址
             }
         },
         "cfs": {

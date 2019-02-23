@@ -1,0 +1,24 @@
+<template name="formDesign">
+	<div class="modal fade creator-modal flow-modal new-flow-modal" id="newFlowModal">
+		<div class="modal-dialog slds-modal slds-fade-in-open modal-lg">
+			<div class="slds-modal__container">
+					{{#with form}}
+						<header class="slds-modal__header">
+							<h2 class="title slds-text-heading--medium">
+								<h2 class="slds-text-heading--medium">编辑表单：{{name}}</h2>
+							</h2>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium">
+							{{>formBuilder form=this}}
+						</div>
+
+						<footer class="slds-modal__footer">
+							<button type="submit" class="slds-button slds-button_brand btn-confirm">确定</button>
+							<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						</footer>
+					{{/with}}
+			</div>
+		</div>
+	</div>
+</template>

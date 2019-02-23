@@ -412,6 +412,13 @@ Creator.Objects.flows =
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				WorkflowCore.openFlowDesign(Steedos.locale(), Steedos.spaceId(), record_id, Creator.getUserCompanyId())
+		designForm:
+			label: "表单设计器"
+			visible: (object_name, record_id, record_permissions)->
+				return true;
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId())
 
 #		edit_steps:
 #			label: "设置步骤"

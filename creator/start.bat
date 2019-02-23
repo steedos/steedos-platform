@@ -1,5 +1,5 @@
-set DB_SERVER=127.0.0.1
-REM　set DB_SERVER=127.0.0.1
+REM set DB_SERVER=192.168.0.21
+set DB_SERVER=192.168.0.21
 REM set DB_SERVER=192.168.0.195
 REM set MONGO_URL=mongodb://%DB_SERVER%/test
 REM set MONGO_URL=mongodb://%DB_SERVER%/vip-test
@@ -12,5 +12,5 @@ REM set ROOT_URL=http://192.168.0.195:5000/creator
 set ROOT_URL=http://127.0.0.1:3000
 REM meteor run --port 5000
 set TOOL_NODE_FLAGS="--max-old-space-size=3800"
-set METEOR_PROFILE=100
+set SOCKET_IO_PORT=8080
 meteor run --port 3000 --inspect 

@@ -13,7 +13,6 @@
 # 	app._id = app_id
 # 	db.apps.update({_id: app_id}, app)
 
-
 Creator.getSchema = (object_name)->
 	return Creator.getObject(object_name)?.schema
 

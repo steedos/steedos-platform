@@ -48,6 +48,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/new_flow_modal.html', 'client');
 	api.addFiles('client/new_flow_modal.coffee', 'client');
 
+	api.addFiles('client/design/form_design.html', 'client');
+	api.addFiles('client/design/form_design.coffee', 'client');
+
 	api.addFiles('server/methods/flow_copy.coffee', 'server');
 
 	api.addFiles('workflow.app.coffee', "server");
