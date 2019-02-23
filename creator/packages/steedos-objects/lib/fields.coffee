@@ -512,7 +512,9 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_last_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_year"),
 		"between_time_this_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_year"),
 		"between_time_next_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_year"),
+		"between_time_last_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_month"),
 		"between_time_this_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_month"),
+		"between_time_next_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_month"),
 		"between_time_last_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_week"),
 		"between_time_this_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_week"),
 		"between_time_next_week": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_week"),
@@ -520,6 +522,32 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_today": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "today"),
 		"between_time_tomorrow": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "tomorrow")
 	}
+
+Creator.getMonthDays = (year,month)->
+	if month == 11
+		return 31
+	
+	millisecond = 1000 * 60 * 60 * 24
+	startDate = new Date(year, month, 1)
+	endDate = new Date(year, month+1, 1)
+	days = (endDate-startDate)/millisecond
+	return days
+
+Creator.getLastMonthFirstDay = (year, month)->
+	if !year
+		year = new Date().getFullYear()
+	if !month
+		month = new Date().getMonth()
+	
+	# 年份为0代表,是本年的第一月,所以不能减
+	if month == 0
+		month = 11
+		year--
+		return new Date(year, month, 1)
+	
+	# 否则,只减去月份
+	month--;
+	return new Date(year, month, 1)
 
 Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	# 过滤器between运算符，现算日期/日期时间类型字段的values值
@@ -561,10 +589,16 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	else
 		month++
 	
-	# 下月的第一天
+	# 下月第一天
 	nextMonthFirstDay = new Date(year, month, 1)
+	# 下月最后一天
+	nextMonthFinalDay = new Date(year,month,Creator.getMonthDays(year,month))
 	# 本月最后一天
 	lastDay = new Date(nextMonthFirstDay.getTime() - millisecond)
+	# 上月第一天
+	lastMonthFirstDay = Creator.getLastMonthFirstDay(currentYear,currentMonth)
+	# 上月最后一天
+	lastMonthFinalDay = new Date(firstDay.getTime() - millisecond)
 
 	switch key
 		when "last_year"
@@ -582,11 +616,25 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 			label = t("creator_filter_operation_between_next_year")
 			startValue = new Date("#{nextYear}-01-01T00:00:00Z")
 			endValue = new Date("#{nextYear}-12-31T23:59:59Z")
+		when "last_month"
+			#上月
+			strFirstDay = moment(lastMonthFirstDay).format("YYYY-MM-DD")
+			strLastDay = moment(lastMonthFinalDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_last_month")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "this_month"
 			#本月
 			strFirstDay = moment(firstDay).format("YYYY-MM-DD")
 			strLastDay = moment(lastDay).format("YYYY-MM-DD")
 			label = t("creator_filter_operation_between_this_month")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
+		when "next_month"
+			#下月
+			strFirstDay = moment(nextMonthFirstDay).format("YYYY-MM-DD")
+			strLastDay = moment(nextMonthFinalDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_next_month")
 			startValue = new Date("#{strFirstDay}T00:00:00Z")
 			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "last_week"

@@ -64,6 +64,8 @@
 	"creator_filter_operation_between_last_week": "上周",
 	"creator_filter_operation_between_next_week": "下周",
 	"creator_filter_operation_between_this_month": "本月",
+	"creator_filter_operation_between_last_month": "上月",
+	"creator_filter_operation_between_next_month": "下月",
 
 	"creator_app_launcher": "应用程序启动器",
 	"creator_app_launcher_all_apps": "所有应用程序",
