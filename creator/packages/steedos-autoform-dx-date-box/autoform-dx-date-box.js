@@ -127,48 +127,53 @@ Template.dxDateBox.rendered = function () {
     opts.defaultDate = null;
   }
 
-  $input.dxDateBox(opts);
+  module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
+    DevExpress.ui.dxDateBox = dxDateBox;
+    $input.dxDateBox(opts);
+  });
 
   // set and reactively update values
   this.autorun(function () {
     var data = Template.currentData();
     // var dtp = $input.data("DateTimePicker");
-    var dti = $input.dxDateBox("instance");
+    module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
+      DevExpress.ui.dxDateBox = dxDateBox;
+      var dti = $input.dxDateBox("instance");
 
-    if(!dti){
-      return;
-    }
+      if (!dti) {
+        return;
+      }
 
-    // set field value
-    // 当data.value为Invalid Date时，isNaN(data.value)为true
-    if (data.value instanceof Date && !isNaN(data.value)) {
-      dti.option("value", data.value);
-    } else {
-      dti.option("value", null); // clear
-    }
+      // set field value
+      // 当data.value为Invalid Date时，isNaN(data.value)为true
+      if (data.value instanceof Date && !isNaN(data.value)) {
+        dti.option("value", data.value);
+      } else {
+        dti.option("value", null); // clear
+      }
 
-    // set start date if there's a min in the schema
-    if (data.min instanceof Date && !isNaN(data.min)) {
-      dti.option("min", data.min);
-    }
+      // set start date if there's a min in the schema
+      if (data.min instanceof Date && !isNaN(data.min)) {
+        dti.option("min", data.min);
+      }
 
-    // set end date if there's a max in the schema
-    if (data.max instanceof Date && !isNaN(data.min)) {
-      dti.option("max", data.max);
-    }
+      // set end date if there's a max in the schema
+      if (data.max instanceof Date && !isNaN(data.min)) {
+        dti.option("max", data.max);
+      }
 
-    if (data.atts.disabled == "" || data.atts.disabled) {
-      dti.option("disabled", true);
-    }
-    else{
-      dti.option("disabled", false);
-    }
+      if (data.atts.disabled == "" || data.atts.disabled) {
+        dti.option("disabled", true);
+      } else {
+        dti.option("disabled", false);
+      }
 
-    if (data.atts.readonly == "" || data.atts.readonly) {
-      dti.option("readOnly", true);
-    } else {
-      dti.option("readOnly", false);
-    }
+      if (data.atts.readonly == "" || data.atts.readonly) {
+        dti.option("readOnly", true);
+      } else {
+        dti.option("readOnly", false);
+      }
+    });
   });
 
 };
@@ -176,6 +181,9 @@ Template.dxDateBox.rendered = function () {
 Template.dxDateBox.destroyed = function () {
   var $input = this.$('.dx-date-box');
   if ($input.find("input").length){
-    $input.dxDateBox("dispose");
+    module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
+      DevExpress.ui.dxDateBox = dxDateBox;
+      $input.dxDateBox("dispose");
+    });
   }
 };
