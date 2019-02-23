@@ -11,6 +11,7 @@
     "aws-sdk": "^2.0.23",
     "azure-storage": "^0.7.0",
     "basic-auth": "^2.0.1",
+    "clone": "2.1.1",
     "bcrypt": "3.0.2",
     "bootstrap": "^3.3.7",
     "buffer-stream-reader": "^0.1.1",
