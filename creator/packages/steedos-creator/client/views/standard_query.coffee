@@ -26,6 +26,7 @@ Template.standard_query_modal.helpers
 		object_fields = object.fields
 		searchable_fields = []
 		canSearchFields = []
+		clone = require('clone')
 		_.each object_fields, (field, key)->
 			if !field.hidden and !["grid", "image", "avatar"].includes(field.type)
 				canSearchFields.push(key)
@@ -56,10 +57,10 @@ Template.standard_query_modal.helpers
 						schema[field].blackbox = true
 
 			if Creator.checkFieldTypeSupportBetweenQuery(object_fields[field].type)
-				schema[field + "_endLine"] =  _.clone(obj_schema[field])
+				schema[field + "_endLine"] =  clone(obj_schema[field])
 				obj_schema[field].autoform.is_range = true
 				if schema[field + "_endLine"].autoform
-					schema[field + "_endLine"].autoform = _.clone(obj_schema[field].autoform)
+					# schema[field + "_endLine"].autoform = _.clone(obj_schema[field].autoform)
 					schema[field + "_endLine"].autoform.readonly = false
 					schema[field + "_endLine"].autoform.disabled = false
 					schema[field + "_endLine"].autoform.omit = false
@@ -69,8 +70,8 @@ Template.standard_query_modal.helpers
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						if schema[field + "_endLine"].autoform.afFieldInput?.dxDateBoxOptions
-							schema[field + "_endLine"].autoform.afFieldInput = _.clone obj_schema[field].autoform.afFieldInput
-							schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions = _.clone obj_schema[field].autoform.afFieldInput.dxDateBoxOptions
+							# schema[field + "_endLine"].autoform.afFieldInput = _.clone obj_schema[field].autoform.afFieldInput
+							# schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions = _.clone obj_schema[field].autoform.afFieldInput.dxDateBoxOptions
 							# dx-date-box控件不支持outFormat，需要单独处理
 							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
 							schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
