@@ -13,18 +13,16 @@ Package.describe({
   documentation: 'README.md',
 });
 
-Npm.depends({
-  connect: '2.30.2',
-  'connect-route': '0.1.5',
-});
-
 Package.onUse(function (api) {
   api.versionsFrom('1.0');
+	api.use('ecmascript');
 
   api.use([
     'underscore',
     'webapp',
   ], 'server');
+  
+	api.addFiles('checkNpm.js', "server");
 
   api.addFiles([
     'json-routes.js',
