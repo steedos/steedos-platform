@@ -29,6 +29,14 @@ Meteor.startup ->
 		_.each Creator.Objects, (obj, object_name)->
 			Creator.loadObjects obj, object_name
 
+# Creator.fiberLoadObjects 供steedos-cli项目使用
+if Meteor.isServer
+	Fiber = require('fibers')
+	Creator.fiberLoadObjects = (obj, object_name)->
+		Fiber(()->
+			Creator.loadObjects(obj, object_name)
+		).run()
+
 Creator.loadObjects = (obj, object_name)->
 	if !object_name
 		object_name = obj.name
