@@ -63,6 +63,8 @@ Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_na
 
 Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide)->
 	_options = []
+	unless object_name
+		return _options
 	_object = Creator.getObject(object_name)
 	fields = _object?.fields
 	icon = _object?.icon
@@ -84,6 +86,8 @@ Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide)->
 # 统一为对象object_name提供可用于过虑器过虑字段
 Creator.getObjectFilterFieldOptions = (object_name)->
 	_options = []
+	unless object_name
+		return _options
 	_object = Creator.getObject(object_name)
 	fields = _object?.fields
 	permission_fields = Creator.getFields(object_name)
