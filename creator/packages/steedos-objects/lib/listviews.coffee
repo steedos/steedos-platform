@@ -51,7 +51,7 @@ Creator.initListViews = (object_name)->
 
 	order = Creator.getObjectDefaultSort(object_name) || []
 	if Meteor.isClient
-		Creator.TabularSelectedIds[object_name] = []
+		Creator.TabularSelectedIds?[object_name] = []
 
 Creator.convertListView = (default_columens, list_view, list_view_name)->
 	oitem = _.clone(list_view)
