@@ -1,0 +1,15 @@
+{
+  "extends": "../../.jshintrc",
+  "globals": {
+    "JsonRoutes": true
+  },
+  "predef": [
+    "HTTP",
+    "Meteor",
+    "Npm",
+    "Package",
+    "testAsyncMulti",
+    "WebApp",
+    "_"
+  ]
+}
