@@ -51,7 +51,7 @@ Template.new_flow_modal.events
 
 		$.ajax
 			type: 'post'
-			url: "#{Meteor.settings.public.webservices.workflowDesigner.url}/am/forms?sync_token=" + (new Date()).getTime() / 1000
+			url: "#{Meteor.settings.public.webservices.workflow.url}/am/forms?sync_token=" + (new Date()).getTime() / 1000
 			data: JSON.stringify(data)
 			dataType: 'json'
 			contentType: "application/json"
