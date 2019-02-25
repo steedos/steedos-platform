@@ -6,9 +6,9 @@ var connectRoute = Npm.require('connect-route');
 
 JsonRoutes = {};
 
-WebApp.connectHandlers.use(connect.urlencoded({limit: '50mb'})); //Override default request size
-WebApp.connectHandlers.use(connect.json({limit: '50mb'})); //Override default request size
-WebApp.connectHandlers.use(connect.query());
+// WebApp.connectHandlers.use(connect.urlencoded({limit: '50mb'})); //Override default request size
+// WebApp.connectHandlers.use(connect.json({limit: '50mb'})); //Override default request size
+// WebApp.connectHandlers.use(connect.query());
 
 // Handler for adding middleware before an endpoint (JsonRoutes.middleWare
 // is just for legacy reasons). Also serves as a namespace for middleware
