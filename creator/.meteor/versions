@@ -194,7 +194,7 @@ steedos:object-database@0.0.2
 steedos:objects@0.0.11
 steedos:objects-billing@0.0.1
 steedos:objects-core@0.0.8
-steedos:odata@0.0.5
+steedos:odata@0.0.6
 steedos:qcloud-smsqueue@0.0.3
 steedos:smsqueue@0.0.3
 steedos:sso@0.0.4
