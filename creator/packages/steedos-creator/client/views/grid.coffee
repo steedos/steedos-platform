@@ -536,6 +536,8 @@ Template.creator_grid.onRendered ->
 			localPageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
 			if !is_related and localPageSize
 				pageSize = localPageSize
+			if is_related
+				pageSize = 5
 			else
 				pageSize = 50
 				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
