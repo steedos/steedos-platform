@@ -89,7 +89,7 @@ Creator.Objects.space_users =
 			type: "boolean"
 			label:'有效'
 			defaultValue: true
-			omit:true
+			# omit:true
 		invite_state:
 			label: "邀请状态"
 			type: "text"
