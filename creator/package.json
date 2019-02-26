@@ -33,7 +33,7 @@
     "length-stream": "^0.1.1",
     "md5": "^2.2.1",
     "meteor-node-stubs": "^0.4.1",
-    "mime": "^1.2.11",
+    "mime": "^2.0.2",
     "mkdirp": "^0.3.5",
     "mongodb": "^2.2.4",
     "negotiator": "^0.6.1",
@@ -53,12 +53,12 @@
     "socket.io-client": "1.4.8",
     "sprintf-js": "^1.0.3",
     "stream-buffers": "^0.2.5",
+    "strip-json-comments": "2.0.1",
     "superagent": "^3.5.2",
     "temp": "^0.7.0",
     "twilio": "^1.10.0",
     "weixin-pay": "^1.1.7",
-    "xml2js": "^0.4.19",
-    "strip-json-comments": "2.0.1"
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
