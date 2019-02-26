@@ -1,8 +1,12 @@
 getFormFieldOptions = (field)->
 	options = field.options.split('\n');
 	values = []
+	if _.isString(field.default_value)
+		default_value = field.default_value.split(',')
+	else
+		default_value = []
 	_.each options, (option)->
-		if option == field.default_value
+		if _.contains(default_value, option)
 			values.push {label: option, value: option, selected: true}
 		else
 			values.push {label: option, value: option}
