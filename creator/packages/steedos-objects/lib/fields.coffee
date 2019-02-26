@@ -512,6 +512,7 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_last_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_year"),
 		"between_time_this_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_year"),
 		"between_time_next_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_year"),
+		"between_time_this_quarter": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_quarter"),
 		"between_time_last_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_month"),
 		"between_time_this_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_month"),
 		"between_time_next_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_month"),
@@ -522,6 +523,32 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_today": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "today"),
 		"between_time_tomorrow": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "tomorrow")
 	}
+
+Creator.getQuarterStartMonth = (month)->
+	if !month
+		month = new Date().getMonth()
+	
+	if month < 3
+		return 0
+	else if month < 6
+		return 3
+	else if month < 9
+		return 6
+	
+	return 9
+
+Creator.getQuarterEndMonth = (month)->
+	if !month
+		month = new Date().getMonth()
+	
+	if month < 3
+		return 2
+	else if month < 6
+		return 5
+	else if month < 9
+		return 8
+	
+	return 11
 
 Creator.getMonthDays = (year,month)->
 	if month == 11
@@ -599,7 +626,11 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	lastMonthFirstDay = Creator.getLastMonthFirstDay(currentYear,currentMonth)
 	# 上月最后一天
 	lastMonthFinalDay = new Date(firstDay.getTime() - millisecond)
-
+	# 本季度开始日
+	thisQuarterStartDay = new Date(currentYear,Creator.getQuarterStartMonth(currentMonth),1)
+	# 本季度结束日
+	thisQuarterEndDay = new Date(currentYear,Creator.getQuarterEndMonth(currentMonth),Creator.getMonthDays(currentYear,Creator.getQuarterEndMonth(currentMonth)))
+	
 	switch key
 		when "last_year"
 			#去年
@@ -616,6 +647,13 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 			label = t("creator_filter_operation_between_next_year")
 			startValue = new Date("#{nextYear}-01-01T00:00:00Z")
 			endValue = new Date("#{nextYear}-12-31T23:59:59Z")
+		when "this_quarter"
+			#本季度
+			strFirstDay = moment(thisQuarterStartDay).format("YYYY-MM-DD")
+			strLastDay = moment(thisQuarterEndDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_this_quarter")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "last_month"
 			#上月
 			strFirstDay = moment(lastMonthFirstDay).format("YYYY-MM-DD")
