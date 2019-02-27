@@ -75,12 +75,15 @@ Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide)->
 			_options.push {label: "#{f.label || k}", value: "#{k}", icon: icon}
 		else
 			_options.push {label: f.label || k, value: k, icon: icon}
-			if is_deep
-				if (f.type == "lookup" || f.type == "master_detail") && f.reference_to
-					r_object = Creator.getObject(f.reference_to)
-					if r_object
-						_.forEach r_object.fields, (f2, k2)->
-							_options.push {label: "#{f.label || k}=>#{f2.label || k2}", value: "#{k}.#{k2}", icon: r_object?.icon}
+	if is_deep
+		_.forEach fields, (f, k)->
+			if is_skip_hide and f.hidden
+				return
+			if (f.type == "lookup" || f.type == "master_detail") && f.reference_to
+				r_object = Creator.getObject(f.reference_to)
+				if r_object
+					_.forEach r_object.fields, (f2, k2)->
+						_options.push {label: "#{f.label || k}=>#{f2.label || k2}", value: "#{k}.#{k2}", icon: r_object?.icon}
 	return _options
 
 # 统一为对象object_name提供可用于过虑器过虑字段
