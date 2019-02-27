@@ -54,8 +54,14 @@ Creator.bootstrap = (spaceId, callback)->
 			sortedApps = _.sortBy _.values(result.apps), 'sort'
 			# 按钮sort排序次序设置Creator.Apps值
 			Creator.Apps = {}
+			adminApp = {}
 			_.each sortedApps, (n) ->
-				Creator.Apps[n._id] = n
+				if n._id == "admin"
+					adminApp = n
+				else
+					Creator.Apps[n._id] = n
+			
+			Creator.Apps.admin = adminApp
 
 			apps = result.assigned_apps
 			if apps.length
