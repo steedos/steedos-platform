@@ -62,6 +62,7 @@
 	"creator_filter_operation_between_yestday": "Yestday",
 	"creator_filter_operation_between_last_quarter": "Last Quarter",
 	"creator_filter_operation_between_this_quarter": "This Quarter",
+	"creator_filter_operation_between_next_quarter": "Next Quarter",
 	"creator_filter_operation_between_tomorrow": "Tomorrow",
 	"creator_filter_operation_between_this_week": "This Week",
 	"creator_filter_operation_between_last_week": "Last Week",

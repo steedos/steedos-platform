@@ -60,6 +60,7 @@
 	"creator_filter_operation_between_yestday": "昨天",
 	"creator_filter_operation_between_last_quarter": "上季度",
 	"creator_filter_operation_between_this_quarter": "本季度",
+	"creator_filter_operation_between_next_quarter": "下季度",
 	"creator_filter_operation_between_tomorrow": "明天",
 	"creator_filter_operation_between_this_week": "本周",
 	"creator_filter_operation_between_last_week": "上周",

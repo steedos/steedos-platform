@@ -512,7 +512,9 @@ Creator.getBetweenTimeBuiltinValues = (is_check_only, field_type)->
 		"between_time_last_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_year"),
 		"between_time_this_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_year"),
 		"between_time_next_year": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_year"),
+		"between_time_last_quarter": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_quarter"),
 		"between_time_this_quarter": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_quarter"),
+		"between_time_next_quarter": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_quarter"),
 		"between_time_last_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "last_month"),
 		"between_time_this_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "this_month"),
 		"between_time_next_month": if is_check_only then true else Creator.getBetweenTimeBuiltinValueItem(field_type, "next_month"),
@@ -537,18 +539,43 @@ Creator.getQuarterStartMonth = (month)->
 	
 	return 9
 
-Creator.getQuarterEndMonth = (month)->
+
+Creator.getLastQuarterFirstDay = (year,month)->
+	if !year
+		year = new Date().getFullYear()
 	if !month
 		month = new Date().getMonth()
 	
 	if month < 3
-		return 2
+		year--
+		month = 9
 	else if month < 6
-		return 5
+		month = 0
 	else if month < 9
-		return 8
+		month = 3
+	else 
+		month = 6
 	
-	return 11
+	return new Date(year, month, 1)
+	
+
+Creator.getNextQuarterFirstDay = (year,month)->
+	if !year
+		year = new Date().getFullYear()
+	if !month
+		month = new Date().getMonth()
+	
+	if month < 3
+		month = 3
+	else if month < 6
+		month = 6
+	else if month < 9
+		month = 9
+	else
+		year++
+		month = 0
+	
+	return new Date(year, month, 1)
 
 Creator.getMonthDays = (year,month)->
 	if month == 11
@@ -629,8 +656,16 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 	# 本季度开始日
 	thisQuarterStartDay = new Date(currentYear,Creator.getQuarterStartMonth(currentMonth),1)
 	# 本季度结束日
-	thisQuarterEndDay = new Date(currentYear,Creator.getQuarterEndMonth(currentMonth),Creator.getMonthDays(currentYear,Creator.getQuarterEndMonth(currentMonth)))
-	
+	thisQuarterEndDay = new Date(currentYear,Creator.getQuarterStartMonth(currentMonth)+2,Creator.getMonthDays(currentYear,Creator.getQuarterStartMonth(currentMonth)+2))
+	# 上季度开始日
+	lastQuarterStartDay = Creator.getLastQuarterFirstDay(currentYear,currentMonth)
+	# 上季度结束日
+	lastQuarterEndDay = new Date(lastQuarterStartDay.getFullYear(),lastQuarterStartDay.getMonth()+2,Creator.getMonthDays(lastQuarterStartDay.getFullYear(),lastQuarterStartDay.getMonth()+2))
+	# 下季度开始日
+	nextQuarterStartDay = Creator.getNextQuarterFirstDay(currentYear,currentMonth)
+	# 下季度结束日
+	nextQuarterEndDay = new Date(nextQuarterStartDay.getFullYear(),nextQuarterStartDay.getMonth()+2,Creator.getMonthDays(nextQuarterStartDay.getFullYear(),nextQuarterStartDay.getMonth()+2))
+
 	switch key
 		when "last_year"
 			#去年
@@ -647,11 +682,25 @@ Creator.getBetweenTimeBuiltinValueItem = (field_type, key)->
 			label = t("creator_filter_operation_between_next_year")
 			startValue = new Date("#{nextYear}-01-01T00:00:00Z")
 			endValue = new Date("#{nextYear}-12-31T23:59:59Z")
+		when "last_quarter"
+			#上季度
+			strFirstDay = moment(lastQuarterStartDay).format("YYYY-MM-DD")
+			strLastDay = moment(lastQuarterEndDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_last_quarter")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "this_quarter"
 			#本季度
 			strFirstDay = moment(thisQuarterStartDay).format("YYYY-MM-DD")
 			strLastDay = moment(thisQuarterEndDay).format("YYYY-MM-DD")
 			label = t("creator_filter_operation_between_this_quarter")
+			startValue = new Date("#{strFirstDay}T00:00:00Z")
+			endValue = new Date("#{strLastDay}T23:59:59Z")
+		when "next_quarter"
+			#下季度
+			strFirstDay = moment(nextQuarterStartDay).format("YYYY-MM-DD")
+			strLastDay = moment(nextQuarterEndDay).format("YYYY-MM-DD")
+			label = t("creator_filter_operation_between_next_quarter")
 			startValue = new Date("#{strFirstDay}T00:00:00Z")
 			endValue = new Date("#{strLastDay}T23:59:59Z")
 		when "last_month"
