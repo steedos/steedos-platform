@@ -1,7 +1,7 @@
 Package.describe({
 
 	name: 'steedos:objects',
-	version: '0.0.12',
+	version: '0.0.13',
 	summary: 'Steedos Creator',
 	git: ''
 });
