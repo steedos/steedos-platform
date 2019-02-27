@@ -6,8 +6,6 @@ Meteor.startup ()->
 			if !oplog_url
 				throw new Meteor.Error(500, "Please configure environment variables: MONGO_OPLOG_URL_CREATOR")
 			Creator._CREATOR_DATASOURCE = {_driver: new MongoInternals.RemoteCollectionDriver(creator_db_url, {oplogUrl: oplog_url})}
-		else
-			console.warn("Please configure environment variables: MONGO_URL_CREATOR, MONGO_OPLOG_URL_CREATOR. Otherwise, custom objects will be stored using MONGO_URL(#{process.env.MONGO_URL})")
 
 Creator.createCollection = (object)->
 	collection_key = object.name

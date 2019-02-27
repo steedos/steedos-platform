@@ -191,7 +191,7 @@ steedos:logger@0.0.4
 steedos:mailqueue@0.0.1
 steedos:markdown@0.0.1
 steedos:object-database@0.0.2
-steedos:objects@0.0.13
+steedos:objects@0.0.14
 steedos:objects-billing@0.0.1
 steedos:objects-core@0.0.8
 steedos:odata@0.0.6
