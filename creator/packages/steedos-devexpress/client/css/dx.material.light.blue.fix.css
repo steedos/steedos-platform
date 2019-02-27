@@ -2,3 +2,10 @@
 .dx-searchbox .dx-texteditor-input, .dx-searchbox .dx-placeholder:before {
     padding-left: 34px;
 }
+
+.dx-texteditor.dx-editor-underlined:after {
+    border-bottom: none;
+}
+.dx-texteditor.dx-editor-underlined.dx-state-hover:after {
+    border-bottom: none;
+}
