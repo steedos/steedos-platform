@@ -4,14 +4,23 @@ var Fiber = require('fibers');
 var connect = require('connect');
 var connectRoute = require('connect-route');
 
-var query = require("qs-middleware");
+var qs = require("qs");
+var url = require("url");
 var bodyParser = require('body-parser');
 
 JsonRoutes = {};
 
+function qsMiddleware(options) {
+  return function (request, response, next) {
+    if (!request.query)
+      request.query = qs.parse(url.parse(request.url).query, options);
+    next();
+  };
+}
+
+WebApp.connectHandlers.use(qsMiddleware());
 WebApp.connectHandlers.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); //Override default request size
 WebApp.connectHandlers.use(bodyParser.json({ limit: '50mb' })); //Override default request size
-WebApp.connectHandlers.use(query());
 
 // Handler for adding middleware before an endpoint (JsonRoutes.middleWare
 // is just for legacy reasons). Also serves as a namespace for middleware
