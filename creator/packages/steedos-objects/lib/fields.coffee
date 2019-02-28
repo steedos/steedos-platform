@@ -603,7 +603,7 @@ Creator.getLastMonthFirstDay = (year, month)->
 	if !month
 		month = new Date().getMonth()
 	
-	# 年份为0代表,是本年的第一月,所以不能减
+	# 月份为0代表本年的第一月
 	if month == 0
 		month = 11
 		year--

@@ -552,6 +552,7 @@ if (Meteor.isServer)
 						db.space_users.direct.update({_id: su._id}, {$set: {organizations: [rootOrg._id], organization: rootOrg._id, company_id: rootOrg._id}})
 						db.space_users.update_organizations_parents(su._id, [rootOrg._id])
 						db.space_users.update_company_ids(su._id, su)
+						db.space_users.update_company(su._id,rootOrg._id)
 					else if orgs.length > 1
 						new_orgs = _.filter(orgs, (org_id)->
 							return org_id isnt doc._id
@@ -559,6 +560,7 @@ if (Meteor.isServer)
 						if su.organization is doc._id
 							top_organization = db.organizations.findOne(new_orgs[0],fields:{company_id:1})
 							db.space_users.direct.update({_id: su._id}, {$set: {organizations: new_orgs, organization: new_orgs[0], company_id: top_organization.company_id}})
+							db.space_users.update_company(su._id,top_organization.company_id)
 						else
 							db.space_users.direct.update({_id: su._id}, {$set: {organizations: new_orgs}})
 						db.space_users.update_organizations_parents(su._id, new_orgs)

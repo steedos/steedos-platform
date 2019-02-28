@@ -614,6 +614,11 @@ Meteor.startup ()->
 				db.space_users.update_organizations_parents(doc._id, modifier.$set.organizations)
 				db.space_users.update_company_ids(doc._id, doc)
 
+			# 设置主单位后更新单位字段
+			old_company_id = this.previous.company_id
+			new_company_id = doc.company_id
+			if new_company_id != old_company_id
+				db.space_users.update_company(doc._id,new_company_id)
 
 		db.space_users.before.remove (userId, doc) ->
 			# check space exists
@@ -686,7 +691,15 @@ Meteor.startup ()->
 			company_ids = _.uniq(_.compact(company_ids))
 			db.space_users.direct.update({_id: _id}, {$set: {company_ids: company_ids}})
 
+		db.space_users.update_company = (id,companyId)->
+			org = db.organizations.findOne({_id: companyId},{fields: {fullname: 1}})
+			user = db.space_users.findOne(id)
+			if !user
+				console.error "db.space_users.update_company,can't find space_users by _id of:", id
+			if org 
+				db.space_users.direct.update({_id: id}, {$set: {company: org.fullname}})
 
+		
 		Meteor.publish 'space_users', (spaceId)->
 			unless this.userId
 				return this.ready()
