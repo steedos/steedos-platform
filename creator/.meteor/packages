@@ -138,8 +138,6 @@ steedos:object-database
 # steedos:mini-web
 
 
-steedos:application-template
-
 steedos:mailqueue
 
 

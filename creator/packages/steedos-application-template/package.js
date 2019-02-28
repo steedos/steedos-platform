@@ -34,6 +34,10 @@ Package.onUse(function(api) {
 	// api.addFiles(tapi18nFiles, ['client', 'server']);
 	// api.addFiles('package.app.coffee');
 
+	api.addFiles('client/template_apps_list_modal.less', 'client');
+	api.addFiles('client/template_apps_list_modal.html', 'client');
+	api.addFiles('client/template_apps_list_modal.coffee', 'client');
+
 	api.addFiles('lib/template.coffee', 'server');
 
 	api.addFiles('server/methods/installTemplate.coffee', 'server');

@@ -140,7 +140,6 @@ steedos:app-meeting@0.0.1
 steedos:app-projects@0.0.1
 steedos:app-workflow@0.0.11
 steedos:application-package@0.0.1
-steedos:application-template@0.0.1
 steedos:audit@0.0.1
 steedos:autoform@0.0.19
 steedos:autoform-bs-datetimepicker@1.0.8
