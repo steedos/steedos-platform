@@ -18,6 +18,7 @@ Creator.Objects.objects =
 			regEx: SimpleSchema.RegEx.code
 		label:
 			type: "text"
+			required: true
 		icon:
 			type: "lookup"
 			optionsFunction: ()->
