@@ -7,7 +7,9 @@ Template.creatorNavigation.helpers
 
 	app_name: ()->
 		app = Creator.getApp()
-		return if app then t(app.name) else ""
+		unless app
+			return ""
+		return if app.label then t(app.label) else t(app.name)
 
 	app_objects: ()->
 		return Creator.getAppObjectNames()

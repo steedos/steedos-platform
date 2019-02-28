@@ -53,7 +53,7 @@
           <div aria-hidden="false" class="slds-section__content" id="appsContent">
             <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive"></div>
             <ul class="slds-grid slds-grid_pull-padded slds-wrap">
-			{{#each apps}}
+						{{#each apps}}
               <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
                 <a href="{{app_url}}" draggable="true" class="app-launcher-link slds-app-launcher__tile slds-text-link_reset slds-is-draggable">
                   <div class="slds-app-launcher__tile-figure">
@@ -70,7 +70,13 @@
                     </div>
                   </div>
                   <div class="slds-app-launcher__tile-body">
-                    <a href="{{app_url}}" class="appTileTitle">{{_ name}}</a>
+                    <a href="{{app_url}}" class="appTileTitle">
+											{{#if label}}
+												{{_ label}}
+											{{else}}
+												{{_ name}}
+											{{/if}}
+										</a>
                     <p>{{description}}
                     </p>
                     <div class="slds-popover slds-popover_tooltip slds-nubbin_top slds-hide" role="tooltip" id="help-0" style="position:absolute;top:100px;left:165px">
