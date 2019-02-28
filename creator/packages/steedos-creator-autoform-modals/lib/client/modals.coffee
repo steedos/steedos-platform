@@ -693,7 +693,7 @@ Template.CreatorAfModal.events
 
 		Session.set 'cmShowAgain', false
 
-		$('#afModal').data('bs.modal').options.backdrop = t.data.backdrop or true
+		$('#afModal').data('bs.modal').options.backdrop = t.data.backdrop or 'static'
 		$('#afModal').modal 'show'
 
 Template.CreatorAutoformModals.onCreated ->
