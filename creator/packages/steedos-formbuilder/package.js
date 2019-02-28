@@ -13,7 +13,7 @@ Package.onUse(function(api) {
 	api.use('flemay:less-autoprefixer@1.2.0');
 	api.use('underscore@1.0.10');
 
-	api.addFiles('checkNpm.js', "server");
+	api.addFiles('checkNpmClient.js', "client");
 
 	api.addFiles('formbuilder/jquery-ui.min.js','client');
 
