@@ -195,8 +195,8 @@ steedos:objects-billing@0.0.1
 steedos:objects-core@0.0.8
 steedos:objects-to-yaml@0.0.1
 steedos:odata@0.0.6
-steedos:qcloud-smsqueue@0.0.4
-steedos:smsqueue@0.0.3
+steedos:qcloud-smsqueue@0.0.5
+steedos:smsqueue@0.0.4
 steedos:sso@0.0.4
 steedos:theme@0.0.30
 steedos:toastr@2.1.3
