@@ -176,10 +176,9 @@ JsonRoutes.add "post", "/s3/:collection",  (req, res, next) ->
 
 
 
-ALY = require('aliyun-sdk')
-
 getQueryString = (accessKeyId, secretAccessKey, query, method) ->
 	console.log "----uuflowManager.getQueryString----"
+	ALY = require('aliyun-sdk')
 	date = ALY.util.date.getDate()
 
 	query.Format = "json"
@@ -212,6 +211,8 @@ JsonRoutes.add "post", "/s3/vod/upload",  (req, res, next) ->
 			throw new Meteor.Error(500, "No permission")
 
 		collectionName = "videos"
+
+		ALY = require('aliyun-sdk')
 
 		JsonRoutes.parseFiles req, res, ()->
 			collection = cfs[collectionName]
