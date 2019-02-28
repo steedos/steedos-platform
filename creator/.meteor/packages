@@ -155,19 +155,6 @@ steedos:objects-billing
 steedos:sso
 steedos:webhookqueue
 
-
-## 应用 apps
-steedos:app-crm
-# steedos:app-informations
-# ssteedos:app-cms
-steedos:app-workflow
-steedos:app-admin
-# steedos:app-example
-# steedos:cms
-steedos:app-meeting
-steedos:app-projects
-
-
 steedos:creator
 
 steedos:instance-record-queue
@@ -186,5 +173,17 @@ steedos:app-base
 steedos:version
 steedos:audit
 steedos:formbuilder
+steedos:app-workflow
+steedos:app-admin
 
-steedos:objects-to-yaml
+#steedos:objects-to-yaml
+
+## 应用 apps
+# steedos:app-informations
+# ssteedos:app-cms
+# steedos:app-example
+# steedos:cms
+
+steedos:app-crm
+steedos:app-meeting
+steedos:app-projects
