@@ -55,6 +55,8 @@ Creator.Objects.object_listviews =
 			multiple: true
 			depend_on: ["object_name"]
 			optionsFunction: (values)->
+				unless values?.object_name
+					values.object_name = Session.get("object_name")
 				return Creator.getObjectFilterFieldOptions values?.object_name
 		shared:
 			label: "共享视图到工作区"
