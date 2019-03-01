@@ -86,10 +86,11 @@ if Meteor.isClient
 							# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
 							gridObjectNameClass = object_name.replace(/\./g,"-")
 							gridContainer = $(".gridContainer.#{gridObjectNameClass}")
-							if object.enable_tree
-								dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
-							else
-								dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance')
+							if gridContainer?.length
+								if object.enable_tree
+									dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
+								else
+									dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance')
 							if dxDataGridInstance
 								if object.enable_tree
 									dxDataGridInstance.refresh()
