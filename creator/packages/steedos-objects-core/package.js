@@ -8,7 +8,7 @@ Package.describe({
 
 Package.onUse(function(api) {
 	api.versionsFrom('METEOR@1.3');
-	
+
 	api.use('ecmascript');
 	api.use('reactive-var@1.0.10');
 	api.use('reactive-dict@1.1.8');
@@ -29,14 +29,14 @@ Package.onUse(function(api) {
 	api.use('momentjs:moment@2.14.1');
 	api.use('tap:i18n@1.8.2');
 	api.use('universe:i18n@1.13.0');
-	
+
 	api.use('steedos:objects@0.0.10');
 
 	api.addFiles('i18n.coffee');
 
 	api.addFiles('i18n/en.i18n.json');
 	api.addFiles('i18n/zh-CN.i18n.json');
-	
+
 	api.addFiles('models/apps.coffee');
 	api.addFiles('models/users.coffee');
 	api.addFiles('models/spaces.coffee');
@@ -62,15 +62,10 @@ Package.onUse(function(api) {
 
 	api.addFiles('models/object_workflows.coffee');
 
-	
+
 	api.addFiles('cfs/cfs.coffee');
 	api.addFiles('cfs/cfs_fix.coffee');
-	api.addFiles('cfs/cms_files_cfs.coffee');
 	api.addFiles('cfs/cfs_files.coffee');
+	api.addFiles('cfs/stores.coffee');
 
-	api.addFiles('cfs/cfs_images.coffee');
-	api.addFiles('cfs/cfs_audios.coffee');
-	api.addFiles('cfs/cfs_videos.coffee');
-	api.addFiles('cfs/cfs_avatars.coffee');
-	
 });

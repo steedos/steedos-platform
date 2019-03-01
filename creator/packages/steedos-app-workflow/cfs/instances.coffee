@@ -50,7 +50,7 @@ else
 
                 path = require('path')
                 mkdirp = require('mkdirp')
-                pathname = path.join(__meteor_bootstrap__.serverDir, '../../../cfs/files/instances/' + year + '/' + month + '/' + ins_id)
+                pathname = path.join(Creator.cfsStorageDir, 'files/instances/' + year + '/' + month + '/' + ins_id)
                 # Set absolute path
                 absolutePath = path.resolve(pathname)
                 # Ensure the path exists
@@ -66,7 +66,7 @@ cfs.instances = new FS.Collection "instances",
 
 cfs.instances.allow
     download: ->
-                return true;
+        return true;
 
 if Meteor.isServer
         Meteor.startup ->

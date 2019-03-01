@@ -330,4 +330,9 @@ Creator.processPermissions = (po)->
 		po.viewCompanyRecords = true
 	return po
 
-
+if Meteor.isServer
+	if process.env.CFS_STORAGE_DIR
+		Creator.cfsStorageDir = process.env.CFS_STORAGE_DIR
+	else
+		path = require('path')
+		Creator.cfsStorageDir = path.resolve(path.join(__meteor_bootstrap__.serverDir, '../../../cfs'))
