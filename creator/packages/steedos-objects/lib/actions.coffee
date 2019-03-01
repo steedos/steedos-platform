@@ -86,6 +86,10 @@ if Meteor.isClient
 							# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
 							gridObjectNameClass = object_name.replace(/\./g,"-")
 							gridContainer = $(".gridContainer.#{gridObjectNameClass}")
+							unless gridContainer?.length
+								if window.opener
+									isOpenerRemove = true
+									gridContainer = window.opener.$(".gridContainer.#{gridObjectNameClass}")
 							if gridContainer?.length
 								if object.enable_tree
 									dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
@@ -96,12 +100,13 @@ if Meteor.isClient
 									dxDataGridInstance.refresh()
 								else
 									Template.creator_grid.refresh(dxDataGridInstance)
-							else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
-								appid = Session.get("app_id")
-								unless list_view_id
-									list_view_id = Session.get("list_view_id")
-								unless list_view_id
-									list_view_id = "all"
-								FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
+							if isOpenerRemove or !dxDataGridInstance
+								if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
+									appid = Session.get("app_id")
+									unless list_view_id
+										list_view_id = Session.get("list_view_id")
+									unless list_view_id
+										list_view_id = "all"
+									FlowRouter.go "/app/#{appid}/#{object_name}/grid/#{list_view_id}"
 							if call_back and typeof call_back == "function"
 								call_back()
