@@ -24,7 +24,7 @@ else if Meteor.settings.public.cfs?.store == "S3"
             secretAccessKey: Meteor.settings.cfs.aws.secretAccessKey
 else
     if Meteor.isClient
-        fs_store = new FS.Store.S3(store_name)
+        fs_store = new FS.Store.FileSystem(store_name)
     else if Meteor.isServer
         fs_store = new FS.Store.FileSystem(store_name, {
                 path: require('path').join(Creator.cfsStorageDir, "files/#{store_name}"),
