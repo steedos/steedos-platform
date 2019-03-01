@@ -331,8 +331,8 @@ Creator.processPermissions = (po)->
 	return po
 
 if Meteor.isServer
-	if process.env.CFS_STORAGE_DIR
-		Creator.cfsStorageDir = process.env.CFS_STORAGE_DIR
+	if process.env.STEEDOS_STORAGE_DIR
+		Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR
 	else
 		path = require('path')
-		Creator.cfsStorageDir = path.resolve(path.join(__meteor_bootstrap__.serverDir, '../../../cfs'))
+		Creator.steedosStorageDir = path.resolve(path.join(__meteor_bootstrap__.serverDir, '../../../cfs'))

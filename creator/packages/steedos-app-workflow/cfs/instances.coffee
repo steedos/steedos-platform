@@ -27,7 +27,7 @@ else
         fs_store = new FS.Store.FileSystem(store_name)
     else if Meteor.isServer
         fs_store = new FS.Store.FileSystem(store_name, {
-                path: require('path').join(Creator.cfsStorageDir, "files/#{store_name}"),
+                path: require('path').join(Creator.steedosStorageDir, "files/#{store_name}"),
                 fileKeyMaker: (fileObj)->
                     # Lookup the copy
                     store = fileObj and fileObj._getInfo(store_name)
@@ -54,7 +54,7 @@ else
 
                     path = require('path')
                     mkdirp = require('mkdirp')
-                    pathname = path.join(Creator.cfsStorageDir, "files/#{store_name}/" + year + '/' + month + '/' + ins_id)
+                    pathname = path.join(Creator.steedosStorageDir, "files/#{store_name}/" + year + '/' + month + '/' + ins_id)
                     # Set absolute path
                     absolutePath = path.resolve(pathname)
                     # Ensure the path exists
