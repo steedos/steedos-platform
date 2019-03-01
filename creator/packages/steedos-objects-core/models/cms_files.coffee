@@ -83,6 +83,9 @@ Creator.Objects.cms_files =
 				if object_name == Session.get('object_name')
 					# 文件详细界面编辑
 					fileRecord = Creator.getObjectRecord()
+					unless fileRecord
+						# 如果fileRecord为空说明是在文件列表界面
+						return false
 					object_name = fileRecord.parent.o
 					record_id = fileRecord.parent.ids[0]
 				else
@@ -107,6 +110,9 @@ Creator.Objects.cms_files =
 				if object_name == Session.get('object_name')
 					# 文件详细界面编辑
 					fileRecord = Creator.getObjectRecord()
+					unless fileRecord
+						# 如果fileRecord为空说明是在文件列表界面
+						return false
 					object_name = fileRecord.parent.o
 					record_id = fileRecord.parent.ids[0]
 				else
@@ -124,7 +130,14 @@ Creator.Objects.cms_files =
 			todo: "standard_delete"
 		download:
 			label: "下载"
-			visible: true
+			visible: (object_name, record_id, record_permissions)->
+				if object_name == Session.get('object_name')
+					# 文件详细界面编辑
+					fileRecord = Creator.getObjectRecord()
+					unless fileRecord
+						# 如果fileRecord为空说明是在文件列表界面
+						return false
+				return true
 			on: "record"
 			todo: (object_name, record_id)->
 				file = this.record
@@ -151,6 +164,9 @@ Creator.Objects.cms_files =
 				if object_name == Session.get('object_name')
 					# 文件详细界面编辑
 					fileRecord = Creator.getObjectRecord()
+					unless fileRecord
+						# 如果fileRecord为空说明是在文件列表界面
+						return false
 					object_name = fileRecord.parent.o
 					record_id = fileRecord.parent.ids[0]
 				else
