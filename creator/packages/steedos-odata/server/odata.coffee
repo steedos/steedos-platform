@@ -223,7 +223,7 @@ Meteor.startup ->
 							if key is 'spaces'
 								# space 对所有用户记录为只读
 								delete createQuery.query._id
-#								createQuery.query._id = {$in: _.pluck(user_spaces, 'space')}
+								# createQuery.query._id = {$in: _.pluck(user_spaces, 'space')}
 							else
 								createQuery.query.space = {$in: _.pluck(user_spaces, 'space')}
 
@@ -258,8 +258,8 @@ Meteor.startup ->
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, spaceId, @userId)
 						fields = Creator.getObject(key, spaceId).fields
-						_.each readable_fields,(field)->
-							if field.indexOf('$')<0
+						_.each readable_fields, (field)->
+							if field.indexOf('$') < 0
 								#if fields[field]?.multiple!= true
 								createQuery.projection[field] = 1
 					if not permissions.viewAllRecords && !permissions.viewCompanyRecords
@@ -359,7 +359,8 @@ Meteor.startup ->
 		get:()->
 			try
 				key = @urlParams.object_name
-				if not Creator.getObject(key, @urlParams.spaceId)?.enable_api
+				object = Creator.getObject(key, @urlParams.spaceId)
+				if not object?.enable_api
 					return{
 						statusCode: 401
 						body: setErrorMessage(401)
@@ -395,19 +396,18 @@ Meteor.startup ->
 						recent_view_records_ids = _.first(recent_view_records_ids,createQuery.limit)
 					createQuery.query._id = {$in:recent_view_records_ids}
 					unreadable_fields = permissions.unreadable_fields || []
-				#	fields = Creator.getObject(key).fields
 					if createQuery.projection
 						projection = {}
 						_.keys(createQuery.projection).forEach (key)->
 							if _.indexOf(unreadable_fields, key) < 0
-							#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+								# if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
 								projection[key] = 1
 						createQuery.projection = projection
 					if not createQuery.projection or !_.size(createQuery.projection)
 						readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
 						fields = Creator.getObject(key, @urlParams.spaceId).fields
-						_.each readable_fields,(field)->
-							if field.indexOf('$')<0
+						_.each readable_fields, (field)->
+							if field.indexOf('$') < 0
 								#if fields[field]?.multiple!= true
 								createQuery.projection[field] = 1
 
@@ -522,8 +522,8 @@ Meteor.startup ->
 					lookupCollection = Creator.getCollection(field.reference_to, @urlParams.spaceId)
 					queryOptions = {fields: {}}
 					readable_fields = Creator.getFields(field.reference_to, @urlParams.spaceId, @userId)
-					_.each readable_fields,(f)->
-						if f.indexOf('$')<0
+					_.each readable_fields, (f)->
+						if f.indexOf('$') < 0
 							queryOptions.fields[f] = 1
 
 					if field.multiple
@@ -577,19 +577,18 @@ Meteor.startup ->
 						else if key != 'spaces'
 							createQuery.query.space =  @urlParams.spaceId
 						unreadable_fields = permissions.unreadable_fields || []
-						#fields = Creator.getObject(key).fields
 						if createQuery.projection
 							projection = {}
 							_.keys(createQuery.projection).forEach (key)->
 								if _.indexOf(unreadable_fields, key) < 0
-								#	if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
+									# if not ((fields[key]?.type == 'lookup' or fields[key]?.type == 'master_detail') and fields[key].multiple)
 									projection[key] = 1
 							createQuery.projection = projection
 						if not createQuery.projection or !_.size(createQuery.projection)
 							readable_fields = Creator.getFields(key, @urlParams.spaceId, @userId)
-							fields = Creator.getObject(key, @urlParams.spaceId).fields
-							_.each readable_fields,(field)->
-								if field.indexOf('$')<0
+							fields = object.fields
+							_.each readable_fields, (field) ->
+								if field.indexOf('$') < 0
 									createQuery.projection[field] = 1
 						entity = collection.findOne(createQuery.query,visitorParser(createQuery))
 						entities = []
