@@ -471,13 +471,15 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
-		parent = event.currentTarget.dataset?.parent
+		dataset = event.currentTarget.dataset
+		parent = dataset?.parent
+		targetObjectName = dataset?.targetObjectName
 		files = event.currentTarget.files
 		i = 0
 		record_id = Session.get("record_id")
 		object_name = Session.get("object_name")
 		spaceId = Session.get("spaceId")
-		dxDataGridInstance = $(".related-object-tabular").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+		dxDataGridInstance = $(".related-object-tabular").find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
 		while i < files.length
 			file = files[i]
 			if !file.name

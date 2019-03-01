@@ -39,7 +39,7 @@
 										<a href="javascript:void(0);" title="{{this.label}}" class="">
 											{{#if this.is_file}}
 												{{this.label}}
-												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}">
+												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}" data-target-object-name="cfs-files-filerecord">
 											{{else}}
 												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
 											{{/if}}
@@ -206,7 +206,7 @@
 													{{#if isUnlocked}}
 													<button class="slds-button slds-button_neutral btn-upload-file">
 														{{_ "creator_actions_upload_file"}}
-														<input type="file" name="file" class="input-file-upload">
+														<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
 													</button>
 													{{/if}}
 												{{else}}
