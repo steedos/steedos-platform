@@ -25,34 +25,38 @@ _.each stores, (store_name)->
                 accessKeyId: Meteor.settings.cfs.aws.accessKeyId
                 secretAccessKey: Meteor.settings.cfs.aws.secretAccessKey
     else
-        file_store = new FS.Store.FileSystem(store_name, {
-                fileKeyMaker: (fileObj)->
-                    # Lookup the copy
-                    store = fileObj and fileObj._getInfo(store_name)
-                    # If the store and key is found return the key
-                    if store and store.key
-                        return store.key
+        if Meteor.isClient
+            file_store = new FS.Store.FileSystem(store_name)
+        else if Meteor.isServer
+            file_store = new FS.Store.FileSystem(store_name, {
+                    path: require('path').join(Creator.cfsStorageDir, "files/#{store_name}"),
+                    fileKeyMaker: (fileObj)->
+                        # Lookup the copy
+                        store = fileObj and fileObj._getInfo(store_name)
+                        # If the store and key is found return the key
+                        if store and store.key
+                            return store.key
 
-                    # TO CUSTOMIZE, REPLACE CODE AFTER THIS POINT
+                        # TO CUSTOMIZE, REPLACE CODE AFTER THIS POINT
 
-                    filename = fileObj.name();
-                    filenameInStore = fileObj.name({store: store_name})
+                        filename = fileObj.name();
+                        filenameInStore = fileObj.name({store: store_name})
 
-                    now = new Date
-                    year = now.getFullYear()
-                    month = now.getMonth() + 1
-                    path = require('path')
-                    mkdirp = require('mkdirp')
-                    pathname = path.join(Creator.cfsStorageDir, "files/#{store_name}/" + year + '/' + month)
-                    # Set absolute path
-                    absolutePath = path.resolve(pathname)
-                    # Ensure the path exists
-                    mkdirp.sync(absolutePath)
+                        now = new Date
+                        year = now.getFullYear()
+                        month = now.getMonth() + 1
+                        path = require('path')
+                        mkdirp = require('mkdirp')
+                        pathname = path.join(Creator.cfsStorageDir, "files/#{store_name}/" + year + '/' + month)
+                        # Set absolute path
+                        absolutePath = path.resolve(pathname)
+                        # Ensure the path exists
+                        mkdirp.sync(absolutePath)
 
-                    # If no store key found we resolve / generate a key
-                    return year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename)
+                        # If no store key found we resolve / generate a key
+                        return year + '/' + month + '/' + fileObj.collectionName + '-' + fileObj._id + '-' + (filenameInStore || filename)
 
-            })
+                })
 
     if store_name == 'audios'
         cfs[store_name] = new FS.Collection store_name,
