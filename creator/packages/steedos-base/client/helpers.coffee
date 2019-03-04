@@ -136,7 +136,19 @@ Steedos.Helpers =
 		path = Session.get("router-path")
 		unless path
 			return false
+		
 		isUrl = if typeof app is "string" then true else false
+		current_app_id = Session.get("current_app_id")
+		if !isUrl and current_app_id
+			return current_app_id == app._id
+		
+		if !isUrl and !current_app_id
+			# 刷新浏览器时，判断如果是id不是workflow但url是workflow的话不要选中，以避免选中两个workflow
+			if app._id != "workflow"
+				appUrl = db.apps.findOne(app._id).url
+				if /^\/?workflow\b/.test(appUrl)
+					return false
+
 		if !isUrl and /^\/apps\/iframe\/.+/.test path
 			# 以/apps/iframe/开头的url，则检查后面的id是否正好为app._id
 			matchs = path.match("/apps/iframe/#{app._id}")
@@ -429,6 +441,10 @@ TemplateHelpers =
 				}
 			badge = Events?.find(selector).count()
 		else
+			appUrl = db.apps.findOne(appId)?.url
+			# 如果appId不为workflow，但是url为/workflow格式则按workflow这个app来显示badge
+			if /^\/?workflow\b/.test(appUrl)
+				appId = "workflow"
 			# spaceId为空时统计所有space计数值
 			spaceSelector = if spaceId then {user: Meteor.userId(), space: spaceId, key: "badge"} else {user: Meteor.userId(), space: null, key: "badge"}
 			b = db.steedos_keyvalues.findOne(spaceSelector)

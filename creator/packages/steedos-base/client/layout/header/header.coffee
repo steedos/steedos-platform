@@ -8,6 +8,9 @@ Template.steedosHeader.helpers
 		appUrl = db.apps.findOne(appId).url
 		if appUrl == "/calendar"
 			return Steedos.getBadge(appId)
+		else if /^\/?workflow\b/.test(appUrl)
+			# 如果appId不为workflow，但是url为/workflow格式则按workflow这个app来显示badge
+			return Steedos.getBadge("workflow")
 
 		return ""
 

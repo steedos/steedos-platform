@@ -45,5 +45,6 @@ _.extend Steedos,
 			$("body").addClass('loading')
 			return false
 		else
+			Session.set("current_app_id", firstApp._id)
 			return firstApp.url
 		

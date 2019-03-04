@@ -205,6 +205,8 @@ if Meteor.isClient
 		if !app
 			FlowRouter.go("/")
 			return
+		
+		Session.set("current_app_id", app_id)
 
 		# creatorSettings = Meteor.settings.public?.webservices?.creator
 		# if app._id == "admin" and creatorSettings?.status == "active"
