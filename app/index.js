@@ -2,7 +2,7 @@ const _ = require("underscore");
 const fs = require("fs");
 const path = require("path");
 const yaml = require('js-yaml');
-const loadToDB = require('../lib/load_to_db');
+const loadToDB = require('./load_to_db');
 
 const appFileName = 'app.yml';
 const objectFolderName = 'objects';
