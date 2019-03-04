@@ -180,9 +180,9 @@ Meteor.startup ->
 		query.is_deleted = { $ne: true }
 
 	# 修改、删除时，如果 doc.space = "global"，报错
-	checkGlobalRecord = (collection, id)->
-		if collection.find({ _id: id, space: 'global'}).count()
-			throw new Meteor.Error(400, "不能修改或者删除全局对象")
+	checkGlobalRecord = (collection, id, object)->
+		if object.enable_space_global && collection.find({ _id: id, space: 'global'}).count()
+			throw new Meteor.Error(400, "不能修改或者删除标准对象")
 
 
 	SteedosOdataAPI.addRoute(':object_name', {authRequired: true, spaceRequired: false}, {
@@ -215,7 +215,7 @@ Meteor.startup ->
 						if spaceId isnt 'guest'
 							createQuery.query._id = spaceId
 					else
-						if spaceId isnt 'guest' and key != "users"
+						if spaceId isnt 'guest' and key != "users" and createQuery.query.space isnt 'global'
 							createQuery.query.space = spaceId
 
 					if Creator.isCommonSpace(spaceId)
@@ -662,7 +662,7 @@ Meteor.startup ->
 
 				isAllowed = permissions.modifyAllRecords or (permissions.allowEdit and record_owner == @userId ) or (permissions.modifyCompanyRecords && isSameCompany(spaceId, @userId, companyId))
 				if isAllowed
-					checkGlobalRecord(collection, @urlParams._id)
+					checkGlobalRecord(collection, @urlParams._id, object)
 					selector = {_id: @urlParams._id, space: spaceId}
 					if spaceId is 'guest' or spaceId is 'common' or key == "users"
 						delete selector.space
@@ -728,7 +728,7 @@ Meteor.startup ->
 				companyId = recordData?.company_id
 				isAllowed = (permissions.modifyAllRecords and permissions.allowDelete) or (permissions.modifyCompanyRecords and permissions.allowDelete and isSameCompany(spaceId, @userId, companyId)) or (permissions.allowDelete and record_owner==@userId )
 				if isAllowed
-					checkGlobalRecord(collection, @urlParams._id)
+					checkGlobalRecord(collection, @urlParams._id, object)
 					selector = {_id: @urlParams._id, space: spaceId}
 					if spaceId is 'guest'
 						delete selector.space
