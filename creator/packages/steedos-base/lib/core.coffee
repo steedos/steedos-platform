@@ -206,8 +206,6 @@ if Meteor.isClient
 			FlowRouter.go("/")
 			return
 		
-		Session.set("current_app_id", app_id)
-
 		# creatorSettings = Meteor.settings.public?.webservices?.creator
 		# if app._id == "admin" and creatorSettings?.status == "active"
 		# 	url = creatorSettings.url
@@ -258,6 +256,8 @@ if Meteor.isClient
 				console.error "#{e.message}\r\n#{e.stack}"
 		else
 			Steedos.openAppWithToken(app_id)
+		
+		Session.set("current_app_id", app_id)
 
 	Steedos.checkSpaceBalance = (spaceId)->
 		unless spaceId
