@@ -30,6 +30,12 @@ FlowRouter.triggers.enter [
 					localStorage.setItem('Steedos.lastURL:' + Meteor.userId(), lastUrl)
 ]
 
+FlowRouter.triggers.exit [
+	()-> 
+		# 变更路由时清除current_app_id值
+		Session.set("current_app_id", null)
+]
+
 
 # FlowRouter.route '/steedos', 
 #   action: (params, queryParams)->
