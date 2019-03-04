@@ -169,7 +169,10 @@ if Meteor.isServer
 	Creator.getAssignedMenus = (spaceId, userId)->
 		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, name:1}}).fetch()
 		isSpaceAdmin = if _.isBoolean(this.isSpaceAdmin) then this.isSpaceAdmin else Creator.isSpaceAdmin(spaceId, userId)
-		adminMenus = Creator.Apps.admin.admin_menus
+		adminMenus = Creator.Apps.admin?.admin_menus
+		# 如果没有admin菜单说明不需要相关功能，直接返回空
+		unless adminMenus
+			return []
 		aboutMenu = adminMenus.find (n) ->
 			n._id == 'about'
 		adminMenus = adminMenus.filter (n) ->

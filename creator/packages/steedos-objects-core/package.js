@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:objects-core',
-	version: '0.0.8',
+	version: '0.0.9',
 	summary: 'Creator core objects',
 	git: '',
 	documentation: null

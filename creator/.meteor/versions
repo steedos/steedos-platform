@@ -150,7 +150,7 @@ steedos:autoform-filesize@0.0.1
 steedos:autoform-location@0.0.1
 steedos:autoform-lookup@0.3.11
 steedos:autoform-tags@0.3.0
-steedos:base@0.1.9
+steedos:base@0.1.10
 steedos:bootstrap3-datetimepicker@4.17.47
 steedos:cfs-access-point@0.1.50_2
 steedos:cfs-aliyun@0.1.0_5
@@ -190,10 +190,10 @@ steedos:logger@0.0.4
 steedos:mailqueue@0.0.1
 steedos:markdown@0.0.1
 steedos:object-database@0.0.2
-steedos:objects@0.0.14
+steedos:objects@0.0.15
 steedos:objects-billing@0.0.1
-steedos:objects-core@0.0.8
-steedos:odata@0.0.6
+steedos:objects-core@0.0.9
+steedos:odata@0.0.7
 steedos:qcloud-smsqueue@0.0.5
 steedos:smsqueue@0.0.4
 steedos:sso@0.0.4
