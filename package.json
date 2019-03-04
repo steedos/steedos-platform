@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/meteor-bundle-runner": "^1.1.4",
     "fibers": "^3.1.1",
     "js-yaml": "3.12.1",
     "underscore": "1.5.2"
+  },
+  "devDependencies": {
+    "@steedos/meteor-bundle-runner": "^1.1.4"
   },
   "publishConfig": {
     "access": "public"
