@@ -1,15 +1,7 @@
-// const path = require("path")
-// const projectDir = path.resolve(__dirname, '../../../')
-// const {steedos} = require(`${projectDir}/package.json`);
+var core = {}
 
-// const steedos_plugins = steedos.plugins
+core.app = require("./app");
+core.objects = require("./objects");
+core.odata = require("./odata");
 
-// // const projectNodeModules = path.join(projectDir, 'node_modules');
-
-// //先加载plugin, 再加载本地app
-// _.each(steedos_plugins, (plugin)=>{
-//     // require(path.join(projectNodeModules,plugin));
-//     require(require.resolve(plugin))
-// })
-
-exports.load = require("./app").load;
+ exports = core;

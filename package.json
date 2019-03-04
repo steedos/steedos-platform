@@ -11,6 +11,7 @@
   "dependencies": {
     "fibers": "^3.1.1",
     "js-yaml": "3.12.1",
+    "simpl-schema": "^1.5.5",
     "underscore": "1.5.2"
   },
   "devDependencies": {
