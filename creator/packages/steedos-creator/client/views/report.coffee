@@ -4,16 +4,6 @@ Template.creator_report.helpers
 	reportObject: ->
 		record_id = Session.get "record_id"
 		return Creator.Reports[record_id] or Creator.getObjectRecord()
-	
-	reportFilterFields: ->
-		# 报表本身未配置过滤器默认过虑字段的情况下，默认过虑为空
-		# 不能返回null或undefined，否则会默认去取Session中list_view_id对应的视图中配置的默认过虑字段
-		record_id = Session.get "record_id"
-		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		filter_fields = reportObject?.filter_fields
-		unless filter_fields
-			filter_fields = []
-		return filter_fields
 
 	actions: ()->
 		obj = Creator.getObject()

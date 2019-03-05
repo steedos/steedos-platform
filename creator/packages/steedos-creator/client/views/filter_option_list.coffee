@@ -180,7 +180,15 @@ Template.filter_option_list.onCreated ->
 		object_name = Template.instance().data?.object_name
 		fields = Creator.getObject(object_name)?.fields
 		# 报表过虑器会传入报表的filter_fields属性，否则默认取当前视图的filter_fields属性
-		filter_fields = Template.instance().data?.filter_fields
+		is_report = Template.instance().data?.is_report
+		if is_report
+			# 报表本身未配置过滤器默认过虑字段的情况下，默认过虑为空
+			# 不能返回null或undefined，否则会默认去取Session中list_view_id对应的视图中配置的默认过虑字段
+			record_id = Session.get "record_id"
+			reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+			filter_fields = reportObject?.filter_fields
+			unless filter_fields
+				filter_fields = []
 		filters = getDefaultFilters(object_name, filter_fields, filters)
 		if filters.length
 			Session.set("filter_items", filters)
