@@ -1,4 +1,4 @@
-const SimpleSchema = require('simpl-schema');
+const SimpleSchema = require('simpl-schema').default;
 module.exports = new SimpleSchema({
     name: {
         type: String,

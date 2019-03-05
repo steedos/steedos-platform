@@ -1,5 +1,5 @@
 // 报表
-const SimpleSchema = require('simpl-schema');
+const SimpleSchema = require('simpl-schema').default;
 module.exports = new SimpleSchema({
     name: {
         type: String,
@@ -47,6 +47,10 @@ module.exports = new SimpleSchema({
         allowedValues: ['=', '<>', '<', '>', '<=', '>=', 'contains', 'notcontains', 'startswith', 'between']
     },
     'filters.$.value': {
+        type: SimpleSchema.oneOf(String, Number, SimpleSchema.Integer, Boolean, {
+            type: Object,
+            blackbox: true
+        }, Date),
         label: '字段值',
         optional: true,
         blackbox: true
@@ -61,27 +65,33 @@ module.exports = new SimpleSchema({
         label: '字段',
         optional: true
     },
+    'fields.$': String,
     rows: {
         type: Array,
         label: '行',
         optional: true
     },
+    'rows.$': String,
     columns: {
         type: Array,
         label: '列',
         optional: true
     },
+    'columns.$': String,
     values: {
         type: Array,
         label: '统计',
         optional: true
     },
+    'values.$': String,
     filter_fields: {
         type: Array,
         label: '默认过虑字段',
         optional: true
     },
+    'filter_fields.$': String,
     options: {
+        type: Object,
         label: '操作',
         optional: true,
         blackbox: true

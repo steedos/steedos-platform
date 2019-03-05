@@ -10,16 +10,13 @@ var _validateObject = function (obj, objName) {
         var validationContext = schema.newContext();
         validationContext.validate(cObj);
         if (!validationContext.isValid()) {
-            var err = validationContext.getErrorObject();
-            console.error(err);
-            throw new Error(`对象${objName}数据校验未通过：${err.message}`);
+            var err = validationContext.validationErrors();
+            throw new Error(`对象${objName}数据校验未通过：${JSON.stringify(err)}`);
         }
     } else {
         throw new Error(`对象${objName}未定义SimpleSchema`);
     }
-
 }
-
 
 exports.loadObject = function (obj) {
     var collection = Creator.getCollection('objects');
