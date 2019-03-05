@@ -13,9 +13,18 @@ var removeObject = function(name) {
     delete _objects[name]
 }
 
+var loadBaseObject = function(){
+    require('./standard/users.js')
+	require('./standard/spaces.js')
+	require('./standard/organizations.js')
+	require('./standard/space_users.js')
+	require('./standard/apps.js')
+}
+
 module.exports = {
     _objects,
     getObject,
     loadObject,
-    removeObject
+    removeObject,
+    loadBaseObject
 }

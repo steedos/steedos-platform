@@ -117,8 +117,11 @@ const loadReport = (reportPath)=>{
     Creator.Reports[report._id] = report;
     loadToDB.loadReports(report);
 }
-
-exports.load = function(srcDirectory) {
+/**
+ * 加载路径下的app,object,trigger,report
+ * 此函数加载object不保证顺序
+ */
+const load = function(srcDirectory) {
     if(fs.existsSync(srcDirectory) && fs.statSync(srcDirectory).isDirectory()){
         console.log('Loading app ... ', srcDirectory);
         fs.readdir(srcDirectory, (err, appFiles)=>{
@@ -174,4 +177,12 @@ exports.load = function(srcDirectory) {
         //     console.warn('文件修改未生效，请重启服务', eventType, filename);
         // })
     }
+}
+
+module.exports = {
+    load,
+    loadApp,
+    loadObject,
+    loadTrigger,
+    loadReport
 }

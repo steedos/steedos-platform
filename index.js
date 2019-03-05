@@ -1,5 +1,8 @@
 "use strict";
 
+require("./core.js")
+require("./i18n")
+
 var core = {}
 
 core.app = require("./app");
