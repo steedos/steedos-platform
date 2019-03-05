@@ -1,7 +1,9 @@
+"use strict";
+
 var core = {}
 
 core.app = require("./app");
-core.objects = require("./objects");
-core.odata = require("./odata");
+core.odata = require("./odata/mongodb");
+core.objects = require("./objects")
 
-exports = core;
+module.exports = core;
