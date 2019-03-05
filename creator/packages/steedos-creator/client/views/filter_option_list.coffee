@@ -1,18 +1,26 @@
 # 视图新增filter_fileds，配置了filter_fields的视图，右侧自动列出过滤器 #915
-getDefaultFilters = (object_name, filter_fields)->
+getDefaultFilters = (object_name, filter_fields, filters)->
 	unless filter_fields
 		list_view_id = Session.get("list_view_id")
 		list_view = Creator.getListView(object_name, list_view_id, true)
 		filter_fields = list_view?.filter_fields
 	fields = Creator.getObject(object_name)?.fields
-	filters = []
+	unless filters
+		filters = []
+	unless filter_fields
+		filter_fields = []
 	if filter_fields?.length
 		filter_fields.forEach (n)->
-			if fields[n]
+			if fields[n] and !_.findWhere(filters,{field:n})
 				filters.push {
 					field: n
 					is_default: true
 				}
+	filters.forEach (filterItem)->
+		if _.include(filter_fields, filterItem.field)
+			filterItem.is_default = true
+		else
+			delete filterItem.is_default
 	return filters
 
 Template.filter_option_list.helpers Creator.helpers
@@ -162,22 +170,20 @@ Template.filter_option_list.onCreated ->
 	$(document).on "click",".creator-content-wrapper, .oneHeader", self.destroyOptionbox
 
 	self.filterItems = new ReactiveVar()
-	self.autorun -> 
+
+	self.autorun ->
 		list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
 		if list_view_obj and list_view_obj.filter_logic
 			Session.set("filter_logic", list_view_obj.filter_logic)
-
-	self.autorun ->
+		
 		filters = Session.get("filter_items")
 		object_name = Template.instance().data?.object_name
 		fields = Creator.getObject(object_name)?.fields
-		unless filters?.length
-			# 报表过虑器会传入报表的filter_fields属性，否则默认取当前视图的filter_fields属性
-			filter_fields = Template.instance().data?.filter_fields
-			filters = getDefaultFilters(object_name, filter_fields)
-			if filters.length
-				Session.set("filter_items", filters)
-
+		# 报表过虑器会传入报表的filter_fields属性，否则默认取当前视图的filter_fields属性
+		filter_fields = Template.instance().data?.filter_fields
+		filters = getDefaultFilters(object_name, filter_fields, filters)
+		if filters.length
+			Session.set("filter_items", filters)
 		if filters?.length
 			self.filterItems.set(filters)
 			unless fields
