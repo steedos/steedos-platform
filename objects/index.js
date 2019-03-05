@@ -10,7 +10,7 @@ var loadObject = function(name, obj) {
 }
 
 var removeObject = function(name) {
-    _objects[name]
+    delete _objects[name]
 }
 
 module.exports = {

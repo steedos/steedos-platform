@@ -1,27 +1,23 @@
 // fix: Meteor code must always run within a Fiber.
-const Fiber = require("fibers");
-const _ = require('underscore');
+var Fiber = require("fibers");
+var _ = require('underscore');
 
-const _validateObject = function (obj, objName) {
+var _validateObject = function (obj, objName) {
     var cObj = _.clone(obj);
     delete cObj._id; // 不校验_id
-    var object = Creator.getObject(objName);
-    if (object) {
-        var schema = object.schema;
-        if (schema) {
-            var validationContext = schema.newContext();
-            validationContext.validate(cObj);
-            if (!validationContext.isValid()) {
-                var err = validationContext.getErrorObject();
-                console.error(err);
-                throw new Error(`对象${objName}数据校验未通过：${err.message}`);
-            }
-        } else {
-            throw new Error(`对象${objName}未定义SimpleSchema`);
+    var schema = require(`../schemas/${objName}.js`);
+    if (schema) {
+        var validationContext = schema.newContext();
+        validationContext.validate(cObj);
+        if (!validationContext.isValid()) {
+            var err = validationContext.getErrorObject();
+            console.error(err);
+            throw new Error(`对象${objName}数据校验未通过：${err.message}`);
         }
     } else {
-        throw new Error('未能获取到对象：', objName);
+        throw new Error(`对象${objName}未定义SimpleSchema`);
     }
+
 }
 
 
