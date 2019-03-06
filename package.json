@@ -9,13 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@salesforce/dev-config": "^1.4.4",
     "fibers": "^3.1.1",
     "js-yaml": "3.12.2",
     "simpl-schema": "^1.5.5",
+    "stream": "0.0.2",
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "@steedos/meteor-bundle-runner": "^1.1.4"
+    "@steedos/meteor-bundle-runner": "^1.1.4",
+    "@types/node": "^11.10.4",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333"
   },
   "publishConfig": {
     "access": "public"

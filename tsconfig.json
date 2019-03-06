@@ -1,0 +1,9 @@
+{   
+    "extends": "./node_modules/@salesforce/dev-config/tsconfig-strict",
+    "compilerOptions": {
+        "outDir": "./lib"
+    },
+    "include": [
+      "./src/**/*"
+    ]
+  }
