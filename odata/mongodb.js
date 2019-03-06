@@ -14,7 +14,7 @@ var update = function(object_name, _id, doc){
 
 }
 
-var deleteOne = function(object_name, _id){
+var remove = function(object_name, _id){
 
 }
 
@@ -23,5 +23,5 @@ module.exports = {
     findOne,
     insert,
     update,
-    deleteOne
+    remove
 }

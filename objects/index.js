@@ -1,30 +1,45 @@
 var _objects = {}
 
-var getObject = function(name) {
+var loadJSONFile = (filePath)=>{
+    return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
+}
+
+var loadYmlFile = (filePath)=>{
+    return yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+}
+var loadFile = (filePath)=>{
+    try {
+        let extname = path.extname(filePath);
+        if(extname.toLocaleLowerCase() == '.json')
+            return loadJSONFile(filePath);
+        else if(extname.toLocaleLowerCase() == '.yml')
+            return loadYmlFile(filePath);
+    } catch (error) {
+        console.error('loadFile error', filePath, error);
+        return {}
+    }
+}
+
+var get = function(name) {
     return _objects[name]
 }
 
-// 需要实现 merge
-var loadObject = function(name, obj) {
-    _objects[name] = obj
+var getAll = function(){
+
 }
 
-var removeObject = function(name) {
+// 需要实现 merge
+var load = function(path) {
+    // read yml
+    _objects[name] = loadFile(path)
+}
+
+var remove = function(name) {
     delete _objects[name]
 }
 
-var loadBaseObject = function(){
-    require('./standard/users.js')
-	require('./standard/spaces.js')
-	require('./standard/organizations.js')
-	require('./standard/space_users.js')
-	require('./standard/apps.js')
-}
-
 module.exports = {
-    _objects,
-    getObject,
-    loadObject,
-    removeObject,
-    loadBaseObject
+    get,
+    load,
+    remove
 }
