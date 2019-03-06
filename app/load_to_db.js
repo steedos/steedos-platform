@@ -1,11 +1,11 @@
 // fix: Meteor code must always run within a Fiber.
-var Fiber = require("fibers");
+var Fiber = require('fibers');
 var _ = require('underscore');
 
-var _validateObject = function (obj, objName) {
+var _validateObject = function (obj, objName, schemaName) {
     var cObj = _.clone(obj);
     delete cObj._id; // 不校验_id
-    var schema = require(`../schemas/${objName}.js`);
+    var schema = require(`../schemas/${schemaName}.js`);
     if (schema) {
         var validationContext = schema.newContext();
         validationContext.validate(cObj);
@@ -14,11 +14,21 @@ var _validateObject = function (obj, objName) {
             throw new Error(`对象${objName}数据校验未通过：${JSON.stringify(err)}`);
         }
     } else {
-        throw new Error(`对象${objName}未定义SimpleSchema`);
+        throw new Error(`对象${schemaName}未定义SimpleSchema`);
     }
 }
 
+var _validateObjectFields = function (fields, objName) {
+    _.each(fields, function (f) {
+        _validateObject(f, objName, 'object_fields')
+    })
+}
+
 exports.loadObject = function (obj) {
+    _validateObject(obj, obj.name, 'objects');
+    if (obj.fields) {
+        _validateObjectFields(obj.fields, obj.name);
+    }
     var collection = Creator.getCollection('objects');
     Fiber(function () {
         collection.upsert({
@@ -41,7 +51,7 @@ exports.loadTrigger = function (trigger) {
 }
 
 exports.loadReports = function (report) {
-    _validateObject(report, 'reports');
+    _validateObject(report, 'reports', 'reports');
     var collection = Creator.getCollection('reports');
     if (!report.space) {
         report.space = 'global';
