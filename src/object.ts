@@ -2,6 +2,8 @@
  * An interface for a config object with a persistent store.
  */
 export interface SteedosObject {
+    name: String
+    fields: Object
     getFields(): Object[]
 }
 
@@ -12,11 +14,13 @@ export interface SteedosObjectLoader {
 }
 
 
-export class BaseObject implements SteedosObject  {
-    protected obj: Object;
+export class BaseSteedosObject implements SteedosObject  {
+    name: String
+    fields: Object
 
-    public constructor(obj: Object) {
-        this.obj = obj;
+    public constructor(obj: SteedosObject) {
+        this.name = obj.name;
+        this.fields = obj.fields;
     }
 
     public getFields(): Object[] {
