@@ -1,6 +1,1 @@
-export {
-    LoggerLevel,
-    LoggerLevelValue,
-    LoggerOptions,
-} from './logger';
-  
+export { BaseObject } from './object';
