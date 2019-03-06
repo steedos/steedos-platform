@@ -10,12 +10,13 @@ Creator.Apps.admin =
 	# Menu 支持两种类型的参数
 	# - template_name 指向 Meteor Template, url=/app/admin/page/{template_name}/
 	# - object_name 指向对象, url=/app/admin/{object_name}/grid/all/	
+	# - mobile 是否手机上可见，默认为true
 	admin_menus: [
-		{ _id: 'account', name: '我的账户', permission_sets: ["user"], expanded: false },
+		{ _id: 'account', name: '我的账户', permission_sets: ["user"], expanded: false, mobile: false },
 		# { _id: 'account_personal', name: '个人信息', permission_sets: ["user"], template_name: "account_personal", parent: 'account' },
-		{ _id: 'account_avatar', name: '头像', permission_sets: ["user"], template_name: "account_avatar", parent: 'account' },
-		{ _id: 'account_setting', name: '账户', permission_sets: ["user"], template_name: "account_setting", parent: 'account' },
-		{ _id: 'account_password', name: '密码', permission_sets: ["user"], template_name: "account_password", parent: 'account' },
+		{ _id: 'account_avatar', name: '头像', permission_sets: ["user"], template_name: "account_avatar", parent: 'account', mobile: false },
+		{ _id: 'account_setting', name: '账户', permission_sets: ["user"], template_name: "account_setting", parent: 'account', mobile: false },
+		{ _id: 'account_password', name: '密码', permission_sets: ["user"], template_name: "account_password", parent: 'account', mobile: false },
 		{ _id: 'account_background', name: '背景图', permission_sets: ["user"], template_name: "account_background", parent: 'account' }
 
 		{ _id: 'menu_users', name: '用户', permission_sets: ["admin", "organization_admin"], expanded: false },
@@ -39,6 +40,6 @@ Creator.Apps.admin =
 		{ _id: 'OAuth2Clients', name: 'OAuth2 应用', permission_sets: ["admin"], object_name: "OAuth2Clients", parent: 'menu_advanced' },
 		{ _id: 'OAuth2AccessTokens', name: 'OAuth2 Token', permission_sets: ["admin"], object_name: "OAuth2AccessTokens", parent: 'menu_advanced' },
 		
-		{ _id: 'about', name: '关于', permission_sets: ["user"], template_name: "creator_about" }
+		{ _id: 'about', name: '关于', permission_sets: ["user"], template_name: "creator_about", mobile: false }
 	]
 		

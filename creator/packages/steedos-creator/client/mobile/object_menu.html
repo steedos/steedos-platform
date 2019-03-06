@@ -14,21 +14,38 @@
             </div>
         </header>
         <div class="mobile-template-content">
-            <div class="weui-cells">
-                {{#each app.objects}}
-                    {{#if object_enabled this}}
-                    <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
-                        <div class="weui-cell__hd">
-                            {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
-                        </div>
-                        <div class="weui-cell__bd weui-cell_primary">
-                            <p>{{object_label this}}</p>
-                        </div>
-                        <span class="weui-cell__ft"></span>
-                    </a>
-                    {{/if}}
+            {{#if is_admin}}
+                {{#each admin_menus}}
+                    <div class="weui-cells">
+                        {{#each admin_menus this}}
+                            <a href="{{menu_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
+                                <div class="weui-cell__hd">
+                                </div>
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <p>{{this.name}}</p>
+                                </div>
+                                <span class="weui-cell__ft"></span>
+                            </a>
+                        {{/each}}
+                    </div>
                 {{/each}}
-            </div>
+            {{else}}
+                <div class="weui-cells">
+                    {{#each app.objects}}
+                        {{#if object_enabled this}}
+                        <a href="{{object_url this}}" class="weui-cell weui-cell_access weui-cell-profile object-item">
+                            <div class="weui-cell__hd">
+                                {{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=(object_icon this)}}
+                            </div>
+                            <div class="weui-cell__bd weui-cell_primary">
+                                <p>{{object_label this}}</p>
+                            </div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            {{/if}}
         </div>
     </div>
 </template>
