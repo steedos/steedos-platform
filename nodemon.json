@@ -8,5 +8,6 @@
     "env": {
       "NODE_ENV": "development"
     },
-    "ext": "js,json,yml"
+    "ext": "js,json,yml",
+    "delay": "3000"
   }
