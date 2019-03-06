@@ -41,7 +41,7 @@ var ui = DevExpress.ui = require("devextreme/bundles/modules/ui");
 
 // ui.themes = require("devextreme/ui/themes");
 
-// ui.setTemplateEngine = require("devextreme/ui/set_template_engine");
+ui.setTemplateEngine = require("devextreme/ui/set_template_engine");
 
 ui.dialog = require("devextreme/ui/dialog");
 ui.notify = require("devextreme/ui/notify");

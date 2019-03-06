@@ -44,23 +44,26 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 
 Template.listSwitch.onRendered ->
 	self = this
+	templateData = Template.instance().data
 
-	object_name = Template.instance().data.object_name
-	app_id = Template.instance().data.app_id
-	name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-	icon = Creator.getObject(object_name).icon
+	module.dynamicImport('devextreme/ui/list').then (dxList)->
+		DevExpress.ui.dxList = dxList;
+		object_name = templateData.object_name
+		app_id = templateData.app_id
+		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+		icon = Creator.getObject(object_name).icon
 
-	this.$("#list_switch").removeClass "hidden"	
-	this.$("#list_switch").animateCss "fadeInRight", ->
+		self.$("#list_switch").removeClass "hidden"	
+		self.$("#list_switch").animateCss "fadeInRight", ->
 
-		self.autorun (c)->
-			list_view_id = self.list_view_id.get()
-			if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready() and !Creator.isloading() and list_view_id
-				displayListGrid(object_name, app_id, list_view_id, name_field_key, icon, self)
-		
-		self.autorun (c)->
-			if Session.get("reload_dxlist")
-				self.$("#gridContainer").dxList("reload")
+			self.autorun (c)->
+				list_view_id = self.list_view_id.get()
+				if Steedos.spaceId() and Creator.subs["CreatorListViews"].ready() and !Creator.isloading() and list_view_id
+					displayListGrid(object_name, app_id, list_view_id, name_field_key, icon, self)
+			
+			self.autorun (c)->
+				if Session.get("reload_dxlist")
+					self.$("#gridContainer").dxList("reload")
 
 Template.listSwitch.helpers Creator.helpers
 
