@@ -43,8 +43,12 @@ var remove = function(name) {
     delete _objects[name]
 }
 
+var init = function(){
+    require('./standard')
+}
 
 module.exports = {
+    init,
     get,
     getAll,
     load,
