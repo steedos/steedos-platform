@@ -1,3 +1,7 @@
+const fs = require("fs");
+const path = require("path");
+const yaml = require('js-yaml');
+
 var _objects = {}
 
 var loadJSONFile = (filePath)=>{
@@ -31,7 +35,8 @@ var getAll = function(){
 // 需要实现 merge
 var load = function(path) {
     // read yml
-    _objects[name] = loadFile(path)
+    var obj = loadFile(path);
+    _objects[obj.name] = obj
 }
 
 var remove = function(name) {
@@ -41,6 +46,7 @@ var remove = function(name) {
 
 module.exports = {
     get,
+    getAll,
     load,
     remove
 }

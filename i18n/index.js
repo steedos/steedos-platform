@@ -1,3 +1,5 @@
-global.t = (key)=>{
-    return key
+if(!global.t){
+    global.t = (key)=>{
+        return key
+    }
 }
