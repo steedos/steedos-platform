@@ -8,6 +8,9 @@
     "env": {
       "NODE_ENV": "development"
     },
-    "ext": "js,json,yml",
+    "ext": "ts,js,json,yml",
+    "execMap": {
+      "ts": "ts-node"
+    },
     "delay": "3000"
   }
