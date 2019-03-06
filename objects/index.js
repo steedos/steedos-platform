@@ -25,7 +25,7 @@ var get = function(name) {
 }
 
 var getAll = function(){
-
+    return _objects
 }
 
 // 需要实现 merge
@@ -38,8 +38,10 @@ var remove = function(name) {
     delete _objects[name]
 }
 
+
 module.exports = {
     get,
     load,
     remove
 }
+

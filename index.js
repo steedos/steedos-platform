@@ -7,6 +7,10 @@ var core = {}
 
 core.app = require("./app");
 core.odata = require("./odata/mongodb");
-core.objects = require("./objects")
+core.object = require("./objects")
+
+core.init = function(){
+
+}
 
 module.exports = core;
