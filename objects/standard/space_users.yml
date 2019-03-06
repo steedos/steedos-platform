@@ -25,7 +25,7 @@ fields:
     reference_to: organizations
     multiple: true
     index: true
-    defaultValue: |
+    defaultValue: !!js/function |
       function () {
               return Session.get("grid_sidebar_selected");
             }
@@ -159,11 +159,11 @@ actions:
   import:
     label: 导入
     'on': list
-    visible: |
+    visible: !!js/function |
       function (object_name, record_id, record_permissions) {
             return Creator.isSpaceAdmin();
           }
-    todo: |
+    todo: !!js/function |
       function () {
             if (!Steedos.isPaidSpace()) {
               Steedos.spaceUpgradedModal();
@@ -175,11 +175,11 @@ actions:
   export:
     label: 导出
     'on': list
-    visible: |
+    visible: !!js/function |
       function (object_name, record_id, record_permissions) {
             return Creator.isSpaceAdmin();
           }
-    todo: |
+    todo: !!js/function |
       function () {
             var orgId, ref, spaceId, uobj, url;
             spaceId = Session.get("spaceId");

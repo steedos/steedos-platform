@@ -26,21 +26,21 @@ fields:
   icon_slds:
     label: 图标
     type: lookup
-    optionsFunction: |
+    optionsFunction: !!js/function |
       function () {
-              var options;
-              options = [];
+        var options;
+        options = [];
 
-              _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
-                return options.push({
-                  value: svg,
-                  label: svg,
-                  icon: svg
-                });
-              });
+        _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+          return options.push({
+            value: svg,
+            label: svg,
+            icon: svg
+          });
+        });
 
-              return options;
-            }
+        return options;
+      }
     name: icon_slds
     filterable: true
   description:
@@ -53,7 +53,7 @@ fields:
     type: lookup
     required: true
     multiple: true
-    optionsFunction: |
+    optionsFunction: !!js/function |
       function () {
               var _options;
 
@@ -189,14 +189,14 @@ triggers:
   before.insert.server.apps:
     'on': server
     when: before.insert
-    todo: |
+    todo: !!js/function |
       function (userId, doc) {
               return doc.icon = doc.icon_slds;
             }
   after.update.server.apps:
     'on': server
     when: after.update
-    todo: |
+    todo: !!js/function |
       function (userId, doc, fieldNames, modifier, options) {
               var ref;
 

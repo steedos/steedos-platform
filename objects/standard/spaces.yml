@@ -136,7 +136,7 @@ actions:
     label: 订单
     'on': record
     visible: true
-    todo: |
+    todo: !!js/function |
       function () {
               var url;
               url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
@@ -146,7 +146,7 @@ actions:
     label: 升级
     'on': record
     visible: true
-    todo: |
+    todo: !!js/function |
       function () {
               return Modal.show('space_recharge_modal');
             }

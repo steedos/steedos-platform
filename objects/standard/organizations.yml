@@ -110,7 +110,7 @@ actions:
     todo: standard_query
   addSubOrganization:
     label: 添加子部门
-    visible: |
+    visible: !!js/function |
       function () {
               var permissions;
               permissions = Creator.getPermissions();
@@ -120,7 +120,7 @@ actions:
               }
             }
     'on': record
-    todo: |
+    todo: !!js/function |
       function (object_name, record_id) {
               var record;
 

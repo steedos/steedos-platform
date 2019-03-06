@@ -15,7 +15,7 @@ const loadJSONFile = (filePath)=>{
 }
 
 const loadYmlFile = (filePath)=>{
-    return yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    return yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 
 const loadJSFile = (filePath)=>{

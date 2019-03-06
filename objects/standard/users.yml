@@ -235,7 +235,7 @@ triggers:
   before.update.server.user:
     'on': server
     when: before.update
-    todo: |
+    todo: !!js/function |
       function (userId, doc, fieldNames, modifier, options) {
               var profileAvatar, ref, user;
               profileAvatar = ((ref = modifier.$set.profile) != null ? ref.avatar : void 0) || modifier.$set["profile.avatar"];

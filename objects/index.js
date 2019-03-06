@@ -9,7 +9,7 @@ var loadJSONFile = (filePath)=>{
 }
 
 var loadYmlFile = (filePath)=>{
-    return yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    return yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 var loadFile = (filePath)=>{
     try {
