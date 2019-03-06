@@ -149,5 +149,11 @@ module.exports = new SimpleSchema({
         type: String,
         label: '',
         optional: true
+    },
+    calendar: {
+        type: Object,
+        label: '日历',
+        optional: true,
+        blackbox: true
     }
 })
