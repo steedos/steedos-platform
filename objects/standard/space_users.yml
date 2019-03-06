@@ -1,0 +1,205 @@
+name: space_users
+label: 人员
+icon: user
+enable_search: true
+sidebar:
+  template_name: creator_grid_sidebar_organizations
+fields:
+  name:
+    label: 姓名
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+    name: name
+  position:
+    type: text
+    label: 职务
+    name: position
+  organizations:
+    type: lookup
+    label: 所属部门
+    reference_to: organizations
+    multiple: true
+    index: true
+    defaultValue: |
+      function () {
+              return Session.get("grid_sidebar_selected");
+            }
+    required: true
+    name: organizations
+    filterable: true
+  organizations_parents:
+    label: 所属部门（含上级）
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    omit: true
+    name: organizations_parents
+    filterable: true
+  company_id:
+    label: 主单位
+    hidden: false
+    readonly: true
+  company_ids:
+    label: 所属单位
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    index: true
+    is_company_only: true
+    omit: true
+    hidden: false
+    readonly: true
+    name: company_ids
+    filterable: true
+  manager:
+    type: lookup
+    label: 上级主管
+    reference_to: users
+    name: manager
+    filterable: true
+  mobile:
+    type: text
+    label: 手机
+    searchable: true
+    group: '-'
+    name: mobile
+  email:
+    type: text
+    label: 邮件
+    searchable: true
+    name: email
+  work_phone:
+    type: text
+    label: 工作电话
+    searchable: true
+    name: work_phone
+  company:
+    type: text
+    label: 单位
+    group: '-'
+    hidden: true
+    name: company
+  sort_no:
+    type: number
+    label: 排序号
+    group: '-'
+    name: sort_no
+  organization:
+    label: 主部门
+    type: lookup
+    reference_to: organizations
+    omit: true
+    name: organization
+    filterable: true
+  user_accepted:
+    type: boolean
+    label: 有效
+    defaultValue: true
+    name: user_accepted
+  invite_state:
+    label: 邀请状态
+    type: text
+    omit: true
+    hidden: true
+    name: invite_state
+  user:
+    type: master_detail
+    reference_to: users
+    index: true
+    omit: true
+    hidden: true
+    name: user
+    filterable: true
+  hr:
+    type: Object
+    blackbox: true
+    omit: true
+    hidden: true
+    name: hr
+  username:
+    type: text
+    label: 用户名
+    name: username
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - position
+      - sort_no
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  organization_admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyCompanyRecords: true
+    viewAllRecords: true
+actions:
+  import:
+    label: 导入
+    'on': list
+    visible: |
+      function (object_name, record_id, record_permissions) {
+            return Creator.isSpaceAdmin();
+          }
+    todo: |
+      function () {
+            if (!Steedos.isPaidSpace()) {
+              Steedos.spaceUpgradedModal();
+              return;
+            }
+
+            return Modal.show("import_users_modal");
+          }
+  export:
+    label: 导出
+    'on': list
+    visible: |
+      function (object_name, record_id, record_permissions) {
+            return Creator.isSpaceAdmin();
+          }
+    todo: |
+      function () {
+            var orgId, ref, spaceId, uobj, url;
+            spaceId = Session.get("spaceId");
+            orgId = (ref = Session.get("grid_sidebar_selected")) != null ? ref[0] : void 0;
+
+            if (spaceId && orgId) {
+              uobj = {};
+              uobj["X-User-Id"] = Meteor.userId();
+              uobj["X-Auth-Token"] = Accounts._storedLoginToken();
+              uobj.space_id = spaceId;
+              uobj.org_id = orgId;
+              url = Steedos.absoluteUrl() + "api/export/space_users?" + $.param(uobj);
+              return window.open(url, '_parent', 'EnableViewPortScale=yes');
+            } else {
+              return swal({
+                title: "左侧未选中任何组织",
+                text: "请在左侧组织机构树中选中一个组织后再执行导出操作",
+                html: true,
+                type: 'warning',
+                confirmButtonText: TAPi18n.__('OK')
+              });
+            }
+          }
