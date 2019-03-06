@@ -38,9 +38,13 @@ Template.objectMenu.helpers
         else
             return _.filter(Creator.Menus,(menu)-> return !menu.parent and menu.mobile != false)
 
-    menu_url: (menu)->
-        app_id = Session.get("app_id")
-        return Creator.getSwitchListUrl(menu.object_name, app_id)
+    admin_menu_url: (menu)->
+        if menu.object_name
+            return Creator.getSwitchListUrl(menu.object_name, "admin")
+        else if menu.template_name
+            return Creator.getRelativeUrl("/app/admin/page/#{menu.template_name}")
+        else
+            return ""
         
 
 Template.objectMenu.events

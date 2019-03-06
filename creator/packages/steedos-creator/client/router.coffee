@@ -263,10 +263,18 @@ FlowRouter.route '/app/:app_id/:object_name/calendar/',
 FlowRouter.route '/app/admin/page/:template_name', 
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		if Meteor.userId()
-			template_name = params?.template_name
-			Session.set("app_id", "admin")
-			Session.set("admin_template_name", template_name)
-			BlazeLayout.render Creator.getLayout(),
-				main: template_name
+		template_name = params?.template_name
+		if Steedos.isMobile()
+			Tracker.autorun (c)->
+				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
+					c.stop()
+					if $(".mobile-content-wrapper ##{template_name}").length == 0
+						Meteor.defer ->
+							Blaze.renderWithData(Template[template_name], {}, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
+		else
+			if Meteor.userId()
+				Session.set("app_id", "admin")
+				Session.set("admin_template_name", template_name)
+				BlazeLayout.render Creator.getLayout(),
+					main: template_name
 
