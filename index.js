@@ -7,7 +7,7 @@ var path = require("path");
 var core = {}
 
 core.app = require("./app");
-core.odata = require("./odata/mongodb");
+core.odata = require("./data/mongodb");
 core.object = require("./objects")
 
 core.init = function(){
