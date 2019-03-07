@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require('js-yaml');
 const loadToDB = require('./load_to_db');
+const schemaValidation = require('./schema_validation');
 
 const appFileName = 'app.yml';
 const objectFolderName = 'objects';
@@ -51,7 +52,7 @@ const loadObjectInCreator = (object)=>{
 
 const loadObject = (objectPath)=>{
     let obj =loadFile(objectPath);
-    loadToDB.loadObject(obj);
+    schemaValidation.validateObject(obj, obj.name);
     loadObjectInCreator(obj);
 
 }
@@ -85,6 +86,7 @@ const triggerMapping = {
 }
 const loadTrigger = (triggerPath)=>{
     let trigger = loadJSFile(triggerPath);
+    schemaValidation.validateTrigger(trigger, trigger.object_name);
     let object_name = trigger.object_name
     if(!object_name){
         console.error(`load trigger error：Missing attribute 'object_name' /r ${triggerPath}`)
