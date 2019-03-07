@@ -44,7 +44,7 @@ var remove = function(name) {
 }
 
 var init = function(){
-    require('./standard')
+    require('./init')
 }
 
 module.exports = {

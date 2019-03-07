@@ -1,4 +1,4 @@
-var object = require("../index");
+var object = require("./index");
 var path = require("path");
 
 object.load(path.resolve(__dirname, "./spaces.yml"))
