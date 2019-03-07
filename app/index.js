@@ -105,7 +105,7 @@ const loadTrigger = (triggerPath)=>{
         let tm = triggerMapping[key]
         if(!_.isEmpty(tm)){
             let tkey = `_${key}`.toLocaleUpperCase();
-            object.triggers[tkey] = _.extend({}, tm, {
+            object.triggers[tkey] = _.extend({name: `_${trigger.type}_${tkey}`, object: object_name}, tm, {
                 todo: attr
             })
         }
