@@ -1,7 +1,6 @@
 const _ = require("underscore");
 const fs = require("fs");
 const path = require("path");
-import { Dictionary, JsonMap } from '@salesforce/ts-types';
 const app = require("./app");
 const obj = require("./object");
 const trigger = require("./trigger");
@@ -12,8 +11,7 @@ let objectFolderName = 'objects';
 let triggerFolderName = 'triggers';
 let reportFolderName = 'reports';
 
-export const Modules: Dictionary<JsonMap> = {}
-export const ModuleManager = {
+export const Module = {
 
     load(srcDirectory:String) {
         if(!fs.existsSync(srcDirectory) || !fs.statSync(srcDirectory).isDirectory())
@@ -24,7 +22,7 @@ export const ModuleManager = {
         //读取 app
         let appFilePath = path.join(srcDirectory, appFileName);
         if(fs.existsSync(appFilePath)){
-            app.loadFile(appFilePath);
+            app.AppManager.loadFile(appFilePath);
         }
 
         //读取 object
@@ -32,7 +30,7 @@ export const ModuleManager = {
         if(fs.existsSync(objectFolderPath)){
             let objectFiles = fs.readdirSync(objectFolderPath)
             _.each(objectFiles, (aof:String)=>{
-                obj.loadFile(path.join(objectFolderPath, aof));
+                obj.ObjectManager.loadFile(path.join(objectFolderPath, aof));
             })
         }
 
@@ -41,7 +39,7 @@ export const ModuleManager = {
         if (fs.existsSync(triggerFolderPath)) {
             let triggerFiles = fs.readdirSync(triggerFolderPath)
             _.each(triggerFiles, (tf:String)=>{
-                trigger.loadFile(path.join(triggerFolderPath, tf));
+                trigger.TriggerManager.loadFile(path.join(triggerFolderPath, tf));
             })
         }
         
@@ -50,7 +48,7 @@ export const ModuleManager = {
         if (fs.existsSync(reportFolderPath)) {
             let reportFiles = fs.readdirSync(reportFolderPath)
             _.each(reportFiles, (rf:String)=>{
-                report.loadFile(path.join(reportFolderPath, rf));
+                report.ReportManager.loadFile(path.join(reportFolderPath, rf));
             })
         }
     }

@@ -3,6 +3,8 @@ var util = require("./util");
 
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 
+declare var Creator: any;
+
 export const Objects: Dictionary<JsonMap> = {}
 export const ObjectManager = {
     
@@ -16,6 +18,10 @@ export const ObjectManager = {
             let _id = getString(json, "_id") || getString(json, "name") ;
             if (_id){
                 Objects[_id] = json
+                if (Creator && Creator.Objects) {
+                    Creator.Objects[_id] = json;
+                    Creator.fiberLoadObjects(json);
+                }
             }
         }
     },
