@@ -126,6 +126,39 @@ const loadReport = (reportPath)=>{
 const load = function(srcDirectory) {
     if(fs.existsSync(srcDirectory) && fs.statSync(srcDirectory).isDirectory()){
         console.log('Loading app ... ', srcDirectory);
+        //读取 app
+        let appFilePath = path.join(srcDirectory, appFileName);
+        if(fs.existsSync(appFilePath)){
+            loadApp(appFilePath);
+        }
+
+        //读取 object
+        let objectFolderPath = path.join(srcDirectory, objectFolderName);
+        if(fs.existsSync(objectFolderPath)){
+            let objectFiles = fs.readdirSync(objectFolderPath)
+            _.each(objectFiles, (aof)=>{
+                loadObject(ath.join(objectFolderPath, aof));
+            })
+        }
+
+        //读取 triggers
+        let triggerFolderPath = path.join(srcDirectory, triggerFolderName);
+        if (fs.existsSync(triggerFolderPath)) {
+            let triggerFiles = fs.readdirSync(triggerFolderPath)
+            _.each(triggerFiles, (tf)=>{
+                loadTrigger(path.join(triggerFolderPath, tf));
+            })
+        }
+        
+        //读取 reports
+        let reportFolderPath = path.join(srcDirectory, reportFolderName);
+        if (fs.existsSync(reportFolderPath)) {
+            let reportFiles = fs.readdirSync(reportFolderPath)
+            _.each(reportFiles, (rf)=>{
+                loadReport(path.join(reportFolderPath, rf));
+            })
+        }
+/** 
         fs.readdir(srcDirectory, (err, appFiles)=>{
             //读取 app
             const appFilePath = path.join(srcDirectory, appFileName);
@@ -173,11 +206,7 @@ const load = function(srcDirectory) {
             }
 
         })
-
-        //监控apps文件夹变化
-        // fs.watch(srcDirectory, (eventType, filename)=>{
-        //     console.warn('文件修改未生效，请重启服务', eventType, filename);
-        // })
+**/
     }
 }
 
