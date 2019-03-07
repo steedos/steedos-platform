@@ -18,7 +18,7 @@ module.exports = new SimpleSchema({
     },
     filter_scope: {
         type: String,
-        label: '过虑范围',
+        label: '过滤范围',
         optional: true,
         defaultValue: 'space',
         allowedValues: ['space', 'mine']
