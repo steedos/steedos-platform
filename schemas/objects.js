@@ -1,4 +1,5 @@
 const SimpleSchema = require('simpl-schema').default;
+const permissionSetSchema = require('./object_permission_set');
 module.exports = new SimpleSchema({
     name: {
         type: String,
@@ -119,10 +120,9 @@ module.exports = new SimpleSchema({
         blackbox: true
     },
     permission_set: {
-        type: Object,
+        type: permissionSetSchema,
         label: '权限设置',
-        optional: true,
-        blackbox: true
+        optional: true
     },
     triggers: {
         type: Object,
