@@ -19,26 +19,32 @@ var _validateObject = function (obj, objName, schemaName) {
 }
 
 var _validateObjectFields = function (fields, objName) {
-    _.each(fields, function (f, k) {
-        _validateObject(_convertFunctionToString(f), objName, 'object_fields');
+    _.each(fields, function (v, k) {
+        _validateObject(v, objName, 'object_fields');
     })
 }
 
-var _validateObjectListViewss = function (list_views, objName) {
+var _validateObjectListViews = function (list_views, objName) {
     _.each(list_views, function (v, k) {
-        _validateObject(_convertFunctionToString(v), objName, 'object_listviews');
+        _validateObject(v, objName, 'object_listviews');
     })
 }
 
-var _convertFunctionToString = function (obj) {
-    var objStr = JSON.stringify(obj, function (key, val) {
-        if (typeof val === 'function') {
-            return val + '';
-        }
-        return val;
+var _validateObjectActions = function (actions, objName) {
+    _.each(actions, function (v, k) {
+        _validateObject(v, objName, 'object_actions');
     })
-    return JSON.parse(objStr);
 }
+
+// var _convertFunctionToString = function (obj) {
+//     var objStr = JSON.stringify(obj, function (key, val) {
+//         if (typeof val === 'function') {
+//             return val + '';
+//         }
+//         return val;
+//     })
+//     return JSON.parse(objStr);
+// }
 
 exports.validateObject = function (obj, objName) {
     if (objName === 'reports') {
@@ -49,7 +55,10 @@ exports.validateObject = function (obj, objName) {
             _validateObjectFields(obj.fields, objName);
         }
         if (obj.list_views) {
-            _validateObjectListViewss(obj.list_views, objName);
+            _validateObjectListViews(obj.list_views, objName);
+        }
+        if (obj.actions) {
+            _validateObjectActions(obj.actions, objName);
         }
     }
 }

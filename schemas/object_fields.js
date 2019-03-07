@@ -38,7 +38,7 @@ module.exports = new SimpleSchema({
         optional: true
     },
     defaultValue: {
-        type: SimpleSchema.oneOf(String, Boolean, Number),
+        type: SimpleSchema.oneOf(String, Boolean, Number, Function),
         label: '默认值',
         optional: true
     },
@@ -152,7 +152,7 @@ module.exports = new SimpleSchema({
         optional: true
     },
     optionsFunction: {
-        type: String,
+        type: Function,
         label: '',
         optional: true
     },
