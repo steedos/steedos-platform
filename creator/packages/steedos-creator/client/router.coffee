@@ -39,7 +39,7 @@ checkAppPermission = (context, redirect)->
 			app_id = context.params.app_id
 			if app_id == "admin"
 				return
-			apps = _.pluck(Creator.getVisibleApps(),"_id")
+			apps = _.pluck(Creator.getVisibleApps(true),"_id")
 			if apps.indexOf(app_id) < 0
 				Session.set("app_id", null)
 				FlowRouter.go "/app"
@@ -69,7 +69,7 @@ FlowRouter.route '/app',
 			if Creator.bootstrapLoaded.get()
 				c.stop()
 				$("body").removeClass("loading")
-				apps = Creator.getVisibleApps()
+				apps = Creator.getVisibleApps(true)
 				firstAppId = apps[0]?._id
 				if firstAppId
 					FlowRouter.go '/app/' + firstAppId
