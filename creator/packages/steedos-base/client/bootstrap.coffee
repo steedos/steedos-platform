@@ -61,6 +61,7 @@ Creator.bootstrap = (spaceId, callback)->
 				else
 					Creator.Apps[n._id] = n
 			
+			# admin菜单显示在最后
 			Creator.Apps.admin = adminApp
 
 			apps = result.assigned_apps

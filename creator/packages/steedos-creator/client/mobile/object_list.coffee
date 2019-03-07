@@ -1,15 +1,13 @@
 
 Template.object_list_modal.helpers
 	apps: ()->
-		apps = []
-		_.each Creator.Apps, (v, k)->
-			if v.visible != false
-				if v._id
-					v.url = Creator.getRelativeUrl "/app/#{v._id}/"
+		return Creator.getVisibleApps()
 
-				apps.push v
-
-		return apps
+	app_url: ()->
+		if this?.url
+			return Creator.getRelativeUrl(this.url);
+		else if this._id
+			return Creator.getRelativeUrl("/app/#{this._id}/");
 
 
 Template.object_list_modal.events

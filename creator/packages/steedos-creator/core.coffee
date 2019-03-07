@@ -133,7 +133,7 @@ Creator.getAppObjectNames = (app_id)->
 Creator.getVisibleApps = (includeAdmin)->
 	apps = []
 	_.each Creator.Apps, (v, k)->
-		if v.visible != false or (includeAdmin and v._id == "admin")
+		if (v.visible != false and v._id != "admin") or (includeAdmin and v._id == "admin")
 			apps.push v
 	return apps;
 
