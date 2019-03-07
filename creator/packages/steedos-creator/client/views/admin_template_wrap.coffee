@@ -11,11 +11,10 @@ Template.admin_template_wrap.helpers
 
 Template.admin_template_wrap.events
 	"click .admin-menu-back": (event, template) ->
-		debugger
 		lastUrl = urlQuery[urlQuery.length - 2]
 		urlQuery.pop()
 		template.$("##{template.data.id}").animateCss "fadeOutRight", ->
-			Blaze.remove(template.view)
+			Blaze.remove(template.view.parentView?.parentView)
 			if lastUrl
 				FlowRouter.go lastUrl
 			else
