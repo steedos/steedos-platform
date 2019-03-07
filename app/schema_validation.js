@@ -24,6 +24,12 @@ var _validateObjectFields = function (fields, objName) {
     })
 }
 
+var _validateObjectListViewss = function (list_views, objName) {
+    _.each(list_views, function (v, k) {
+        _validateObject(_convertFunctionToString(v), objName, 'object_listviews');
+    })
+}
+
 var _convertFunctionToString = function (obj) {
     var objStr = JSON.stringify(obj, function (key, val) {
         if (typeof val === 'function') {
@@ -38,9 +44,12 @@ exports.validateObject = function (obj, objName) {
     if (objName === 'reports') {
         _validateObject(obj, 'reports', 'reports');
     } else {
-        _validateObject(obj, obj.name, 'objects');
+        _validateObject(obj, objName, 'objects');
         if (obj.fields) {
-            _validateObjectFields(obj.fields, obj.name);
+            _validateObjectFields(obj.fields, objName);
+        }
+        if (obj.list_views) {
+            _validateObjectListViewss(obj.list_views, objName);
         }
     }
 }
