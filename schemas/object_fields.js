@@ -38,7 +38,7 @@ module.exports = new SimpleSchema({
         optional: true
     },
     defaultValue: {
-        type: String,
+        type: SimpleSchema.oneOf(String, Boolean, Number),
         label: '默认值',
         optional: true
     },
@@ -116,8 +116,23 @@ module.exports = new SimpleSchema({
         optional: true
     },
     options: {
-        type: String,
+        type: SimpleSchema.oneOf(String, Array),
         label: '选择项',
+        optional: true
+    },
+    'options.$': {
+        type: Object,
+        label: '',
+        optional: true
+    },
+    'options.$.label': {
+        type: String,
+        label: '显示名称',
+        optional: true
+    },
+    'options.$.value': {
+        type: String,
+        label: '值',
         optional: true
     },
     description: {
@@ -137,12 +152,17 @@ module.exports = new SimpleSchema({
         optional: true
     },
     optionsFunction: {
-        type: Function,
+        type: String,
         label: '',
         optional: true
     },
     filterable: {
         type: Boolean,
+        label: '',
+        optional: true
+    },
+    inlineHelpText: {
+        type: String,
         label: '',
         optional: true
     }

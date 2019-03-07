@@ -10,8 +10,10 @@ var _validateObject = function (obj, objName, schemaName) {
         var validationContext = schema.newContext();
         validationContext.validate(cObj);
         if (!validationContext.isValid()) {
+            console.log(`对象${objName}以下数据未通过校验：`)
+            console.log(obj);
             var err = validationContext.validationErrors();
-            throw new Error(`对象${objName}数据校验未通过：${JSON.stringify(err)}`);
+            throw new Error(`原因为：${JSON.stringify(err)}`);
         }
     } else {
         throw new Error(`对象${schemaName}未定义SimpleSchema`);
@@ -20,8 +22,18 @@ var _validateObject = function (obj, objName, schemaName) {
 
 var _validateObjectFields = function (fields, objName) {
     _.each(fields, function (f) {
-        _validateObject(f, objName, 'object_fields')
+        _validateObject(_convertFunctionToString(f), objName, 'object_fields');
     })
+}
+
+var _convertFunctionToString = function (obj) {
+    var objStr = JSON.stringify(obj, function (key, val) {
+        if (typeof val === 'function') {
+            return val + '';
+        }
+        return val;
+    })
+    return JSON.parse(objStr);
 }
 
 exports.loadObject = function (obj) {

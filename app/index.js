@@ -51,7 +51,9 @@ const loadObjectInCreator = (object)=>{
 
 const loadObject = (objectPath)=>{
     let obj =loadFile(objectPath);
-    loadObjectInCreator(obj)
+    loadToDB.loadObject(obj);
+    loadObjectInCreator(obj);
+
 }
 
 //TODO afterUndelete，beforeSubmit
