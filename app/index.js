@@ -139,7 +139,7 @@ const load = function(srcDirectory) {
         if(fs.existsSync(objectFolderPath)){
             let objectFiles = fs.readdirSync(objectFolderPath)
             _.each(objectFiles, (aof)=>{
-                loadObject(ath.join(objectFolderPath, aof));
+                loadObject(path.join(objectFolderPath, aof));
             })
         }
 
