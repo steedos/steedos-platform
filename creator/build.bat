@@ -1,0 +1,1 @@
+meteor build --directory .dist
