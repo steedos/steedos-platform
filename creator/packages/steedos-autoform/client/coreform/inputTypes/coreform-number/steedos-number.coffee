@@ -61,5 +61,26 @@ _format = (val, key, precision, scale)->
 			return _val.toFixed(scale)
 
 Template.afSteedosNumber.events
-	'input input[type=number]': (e, t)->
+	'blur input[type=number]': (e, t)->
 		e.currentTarget.value = _format(e.currentTarget.value, this.atts.name, this.atts.precision, this.atts.scale)
+	
+	'keydown input[type=number]': (e, t)->
+		scale = this.atts.scale || 0
+		currentValue = e.currentTarget.value
+		unless currentValue
+			return true
+		if /\./.test(e.key)
+			# 不能输入.连接符号
+			if scale == 0
+				return false
+			# 不能输入两个.连接符号
+			if /\./.test(currentValue)
+				return false
+		else if !/\d/.test(e.key) and !_.include([8,46,37,38,39,40,27],e.keyCode)
+			# 只能输入数字或退格、删除、方向键、esc
+			return false
+		scaleMatch = currentValue.match(/\..+/)?[0]
+		if scaleMatch and scaleMatch.length > scale
+			# 小数位后只能输入scale个小数
+			if /\d/.test(e.key)
+				return false
