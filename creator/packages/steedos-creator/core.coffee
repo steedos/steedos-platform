@@ -623,7 +623,12 @@ Creator.getListViews = (object_name, spaceId, userId)->
 
 	list_views = []
 
+	isMobile = Steedos.isMobile()
+
 	_.each object.list_views, (item, item_name)->
+		if isMobile and item.type == "calendar"
+			# 手机上先不显示日历视图
+			return
 		if item_name != "default"
 			if _.indexOf(disabled_list_views, item_name) < 0 || item.owner == userId
 				list_views.push item
