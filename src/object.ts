@@ -48,3 +48,7 @@ export const ObjectManager = {
     }
 
 }
+
+export class SteedosObject {
+
+}
