@@ -18,13 +18,11 @@ Template.mobileView.onRendered ->
 			relatedList.forEach (relatedObject)->
 				filters = Creator.getODataRelatedFilter(object_name, relatedObject.object_name, record_id)
 				options =
-					select:'_id',
 					filter: filters
-					pageSize: 1
-				Creator.odata.query relatedObject.object_name, options, false, (result, args)->
-					if result and args
+				Creator.odata.queryCount relatedObject.object_name, options, (count, error)->
+					if !error and count != false
 						recordsTotal = self.recordsTotal.get()
-						recordsTotal[relatedObject.object_name] = args.totalCount
+						recordsTotal[relatedObject.object_name] = count
 						self.recordsTotal.set recordsTotal
 
 

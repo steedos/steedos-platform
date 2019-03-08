@@ -128,26 +128,54 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 						callback(false, error)
 				)
 	
-	# 	$.ajax
-	# 		type: "get"
-	# 		url: url
-	# 		data:selector
-	# 		dataType: "json"
-	# 		contentType: "application/json"
-	# 		beforeSend: (request) ->
-	# 			request.setRequestHeader('X-User-Id', Meteor.userId())
-	# 			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
-	# 		error: (jqXHR, textStatus, errorThrown) ->
-	# 			error = jqXHR.responseJSON
-	# 			console.error error
-	# 			if error.reason
-	# 				toastr?.error?(TAPi18n.__(error.reason))
-	# 			else if error.message
-	# 				toastr?.error?(TAPi18n.__(error.message))
-	# 			else
-	# 				toastr?.error?(error)
-	# else
-	# 	toastr.error("未找到记录")				
+
+Creator.odata.queryCount = (object_name, options, callback)->
+	result = null
+	spaceId = Steedos.spaceId()
+	unless spaceId
+		return
+	unless callback and _.isFunction(callback)
+		return
+	if object_name
+		url = "/api/odata/v4/#{spaceId}/#{object_name}"
+		store = new DevExpress.data.ODataStore({
+			type: "odata"
+			version: 4
+			url: Steedos.absoluteUrl(url)
+			withCredentials: false
+			beforeSend: (request) ->
+				request.headers['X-User-Id'] = Meteor.userId()
+				request.headers['X-Space-Id'] = Steedos.spaceId()
+				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+			errorHandler: (error) ->
+				if error.httpStatus == 404 || error.httpStatus == 400
+					error.message = t "creator_odata_api_not_found"
+				else if error.httpStatus == 401
+					error.message = t "creator_odata_unexpected_character"
+				else if error.httpStatus == 403
+					error.message = t "creator_odata_user_privileges"
+				else if error.httpStatus == 500
+					if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
+						error.message = t "creator_odata_unexpected_character"
+				toastr.error(error.message)
+			fieldTypes: {
+				'_id': 'String'
+			}
+		})
+		store.totalCount(options)
+			.done((count) ->
+				callback(count)
+			)
+			.fail((error) ->
+				console.error error
+				if error.reason
+					toastr?.error?(TAPi18n.__(error.reason))
+				else if error.message
+					toastr?.error?(TAPi18n.__(error.message))
+				else
+					toastr?.error?(error)
+				callback(false, error)
+			)
 
 Creator.odata.delete = (object_name,record_id,callback)->
 	spaceId = Steedos.spaceId()
