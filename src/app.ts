@@ -17,8 +17,9 @@ export const AppManager = {
             let _id = getString(json, "_id") || getString(json, "name") ;
             if (_id) {
                 Apps[_id] = json
-                if (Creator && Creator.Objects)
+                if ((typeof Creator !== "undefined") && Creator.Apps) {
                     Creator.Apps[_id] = json;
+                }
             }
         }
     },

@@ -13,6 +13,10 @@ let reportFolderName = 'reports';
 
 export const Module = {
 
+    loadObject: obj.ObjectManager.loadFile,
+    loadApp: app.AppManager.loadFile,
+    loadReport: report.ReportManager.loadFile,
+
     load(srcDirectory:String) {
         if(!fs.existsSync(srcDirectory) || !fs.statSync(srcDirectory).isDirectory())
             console.error("Module folder not found：" + srcDirectory);
@@ -22,7 +26,7 @@ export const Module = {
         //读取 app
         let appFilePath = path.join(srcDirectory, appFileName);
         if(fs.existsSync(appFilePath)){
-            app.AppManager.loadFile(appFilePath);
+            Module.loadApp(appFilePath);
         }
 
         //读取 object
@@ -30,7 +34,7 @@ export const Module = {
         if(fs.existsSync(objectFolderPath)){
             let objectFiles = fs.readdirSync(objectFolderPath)
             _.each(objectFiles, (aof:String)=>{
-                obj.ObjectManager.loadFile(path.join(objectFolderPath, aof));
+                Module.loadObject(path.join(objectFolderPath, aof));
             })
         }
 
@@ -48,8 +52,9 @@ export const Module = {
         if (fs.existsSync(reportFolderPath)) {
             let reportFiles = fs.readdirSync(reportFolderPath)
             _.each(reportFiles, (rf:String)=>{
-                report.ReportManager.loadFile(path.join(reportFolderPath, rf));
+                Module.loadReport(path.join(reportFolderPath, rf));
             })
         }
-    }
+    }, 
+
 }

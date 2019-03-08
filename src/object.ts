@@ -18,7 +18,7 @@ export const ObjectManager = {
             let _id = getString(json, "_id") || getString(json, "name") ;
             if (_id){
                 Objects[_id] = json
-                if (Creator && Creator.Objects) {
+                if ((typeof Creator !== "undefined") && Creator.Objects) {
                     Creator.Objects[_id] = json;
                     Creator.fiberLoadObjects(json);
                 }
