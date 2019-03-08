@@ -5,9 +5,10 @@ Creator.Objects.meetingroom =
 	enable_search: true
 	fields:
 		name:
-			label:'会议室'
+			label:'名称'
 			type:'text'
 			is_wide:true
+			required: true
 		# number:
 		#     label:'编号'
 		# 	type:'text'
