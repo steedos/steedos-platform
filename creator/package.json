@@ -66,6 +66,7 @@
     "jquery-ui-sortable": "^1.0.0",
     "simplemde": "^1.11.2",
     "summernote": "^0.8.11",
-    "xlsx": "0.10.6"
+    "xlsx": "0.10.6",
+    "bootstrap-tagsinput": "^0.7.1"
   }
 }

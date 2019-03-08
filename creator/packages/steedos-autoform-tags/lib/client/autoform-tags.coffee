@@ -17,6 +17,8 @@ Template.autoformTags.created = ->
 			self._stopInterceptValue = true
 
 Template.autoformTags.rendered = ->
+	require('bootstrap-tagsinput');
+	
 	self = @$ '.js-input'
 
 	self.closest('form').on 'reset', ->
