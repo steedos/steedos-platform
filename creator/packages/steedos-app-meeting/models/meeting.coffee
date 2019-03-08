@@ -138,6 +138,7 @@ Creator.Objects.meeting =
 			label: "日历"
 			columns: ["name", "start","end"]
 			filter_scope: "space"
+			type: 'calendar'
 		
 	permission_set:
 		user:
