@@ -138,6 +138,7 @@ Creator.Objects.meeting =
 			label: "日历"
 			columns: ["name", "start","end"]
 			filter_scope: "space"
+			type: 'calendar' #注意这里，只是为了视图列表菜单中能正确识别为日历类型，最后走的不是 type: 'calendar'功能，而是calendar视图单独的功能
 		
 	permission_set:
 		user:
