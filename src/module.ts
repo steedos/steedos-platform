@@ -1,8 +1,8 @@
 const _ = require("underscore");
 const fs = require("fs");
 const path = require("path");
-const app = require("./app");
-const obj = require("./object");
+import {AppManager} from "./app";
+import {ObjectManager} from "./object";
 const trigger = require("./trigger");
 const report = require("./report");
 
@@ -13,8 +13,8 @@ let reportFolderName = 'reports';
 
 export const Module = {
 
-    loadObject: obj.ObjectManager.loadFile,
-    loadApp: app.AppManager.loadFile,
+    loadObject: ObjectManager.loadFile,
+    loadApp: AppManager.loadFile,
     loadReport: report.ReportManager.loadFile,
 
     load(srcDirectory:String) {
