@@ -1,1 +1,24 @@
-xxx
+"$schema": http://json-schema.org/draft-04/schema#
+id: steedosObjectSchema
+type: object
+title: Steedos Object
+description: The properties and shape of the Steedos Object
+properties:
+  _id:
+    type: string
+  name:
+    type: string
+  
+  fields:
+    type: object
+    patternProperties:
+      "^[a-zA-Z0-9]*$":
+        type: object
+        properties: 
+          _id:
+            type: string
+          name:
+            type: string
+        additionalProperties: false
+    additionalProperties: false
+additionalProperties: false
