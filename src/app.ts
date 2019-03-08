@@ -7,7 +7,7 @@ declare var Creator: any;
 export const Apps: Dictionary<JsonMap> = {}
 export const AppManager = {
     
-    loadFile: (filePath: String)=>{
+    loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return AppManager.loadJSON(json);
     },
@@ -32,7 +32,7 @@ export const AppManager = {
             return false
     },
 
-    remove(name: String) {
+    remove(name: string) {
         if (Apps.name)
             delete Apps.name
     },

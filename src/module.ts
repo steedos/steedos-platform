@@ -17,7 +17,7 @@ export const Module = {
     loadApp: AppManager.loadFile,
     loadReport: report.ReportManager.loadFile,
 
-    load(srcDirectory:String) {
+    load(srcDirectory:string) {
         if(!fs.existsSync(srcDirectory) || !fs.statSync(srcDirectory).isDirectory())
             console.error("Module folder not found：" + srcDirectory);
         
@@ -33,7 +33,7 @@ export const Module = {
         let objectFolderPath = path.join(srcDirectory, objectFolderName);
         if(fs.existsSync(objectFolderPath)){
             let objectFiles = fs.readdirSync(objectFolderPath)
-            _.each(objectFiles, (aof:String)=>{
+            _.each(objectFiles, (aof:string)=>{
                 Module.loadObject(path.join(objectFolderPath, aof));
             })
         }
@@ -42,7 +42,7 @@ export const Module = {
         let triggerFolderPath = path.join(srcDirectory, triggerFolderName);
         if (fs.existsSync(triggerFolderPath)) {
             let triggerFiles = fs.readdirSync(triggerFolderPath)
-            _.each(triggerFiles, (tf:String)=>{
+            _.each(triggerFiles, (tf:string)=>{
                 trigger.TriggerManager.loadFile(path.join(triggerFolderPath, tf));
             })
         }
@@ -51,7 +51,7 @@ export const Module = {
         let reportFolderPath = path.join(srcDirectory, reportFolderName);
         if (fs.existsSync(reportFolderPath)) {
             let reportFiles = fs.readdirSync(reportFolderPath)
-            _.each(reportFiles, (rf:String)=>{
+            _.each(reportFiles, (rf:string)=>{
                 Module.loadReport(path.join(reportFolderPath, rf));
             })
         }

@@ -8,7 +8,7 @@ declare var Creator: any;
 export const Objects: Dictionary<JsonMap> = {}
 export const ObjectManager = {
     
-    loadFile: (filePath: String)=>{
+    loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return ObjectManager.loadJSON(json);
     },
@@ -24,6 +24,7 @@ export const ObjectManager = {
                 }
             }
         }
+        return json;
     },
     
     validate(json: JsonMap): boolean {
@@ -34,7 +35,7 @@ export const ObjectManager = {
             return false
     },
 
-    remove(name: String) {
+    remove(name: string) {
         if (Objects.name)
             delete Objects.name
     },

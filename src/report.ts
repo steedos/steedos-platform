@@ -5,7 +5,7 @@ import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 export const Reports: Dictionary<JsonMap> = {}
 export const ReportManager = {
     
-    loadFile: (filePath: String)=>{
+    loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return ReportManager.loadJSON(json);
     },
@@ -26,7 +26,7 @@ export const ReportManager = {
             return false
     },
 
-    remove(name: String) {
+    remove(name: string) {
         if (Reports.name)
             delete Reports.name
     },

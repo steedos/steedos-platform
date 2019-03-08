@@ -7,7 +7,7 @@ import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 export const Schemas: Dictionary<JsonMap> = {}
 export const SchemaManager = {
     
-    loadFile: (filePath: String)=>{
+    loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return SchemaManager.loadJSON(json);
     },
@@ -29,7 +29,7 @@ export const SchemaManager = {
             return false
     },
 
-    remove(name: String) {
+    remove(name: string) {
         if (Schemas.name)
             delete Schemas.name
     }

@@ -5,12 +5,13 @@ import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 export const Triggers: Dictionary<JsonMap> = {}
 export const TriggerManager = {
     
-    loadFile: (filePath: String)=>{
+    loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return TriggerManager.loadJSON(json);
     },
 
     loadJSON(json: JsonMap) {
+        console.log('TriggerManager loadJSON', json);
         if (TriggerManager.validate(json)){
             let name = getString(json, "name");
             if (name)
@@ -26,7 +27,7 @@ export const TriggerManager = {
             return false
     },
 
-    remove(name: String) {
+    remove(name: string) {
         if (Triggers.name)
             delete Triggers.name
     },
