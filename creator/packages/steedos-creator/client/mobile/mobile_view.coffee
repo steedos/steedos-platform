@@ -2,6 +2,7 @@ Template.mobileView.onCreated ->
 	this.action_collection = new ReactiveVar()
 	this.action_collection_name = new ReactiveVar()
 	this.action_fields = new ReactiveVar()
+	this.recordsTotal = new ReactiveVar({})
 
 Template.mobileView.onRendered ->
 	self = this
@@ -9,11 +10,22 @@ Template.mobileView.onRendered ->
 	self.$(".mobile-view").removeClass "hidden"
 	self.$(".mobile-view").animateCss "fadeInRight", ->
 
-		self.autorun ->
-			object_name = self.data.object_name
-			record_id = self.data.record_id
-			if object_name and record_id
-				Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], {}
+	self.autorun ->
+		object_name = self.data.object_name
+		record_id = self.data.record_id
+		if object_name and record_id
+			relatedList = Creator.getRelatedList(object_name, record_id)
+			relatedList.forEach (relatedObject)->
+				filters = Creator.getODataRelatedFilter(object_name, relatedObject.object_name, record_id)
+				options =
+					select:'_id',
+					filter: filters
+					pageSize: 1
+				Creator.odata.query relatedObject.object_name, options, false, (result, args)->
+					if result and args
+						recordsTotal = self.recordsTotal.get()
+						recordsTotal[relatedObject.object_name] = args.totalCount
+						self.recordsTotal.set recordsTotal
 
 
 	# 此处不使用method而是使用订阅去获取相关object的record，避免添加数据之后，前台获取的数据条数没有发生变化
@@ -133,27 +145,10 @@ Template.mobileView.helpers
 		return Creator.getRelatedList(object_name, record_id)
 
 	related_records_counts: (related_object_name, related_field_name)->
-		object_name = Template.instance().data.object_name
-		record_id = Template.instance().data.record_id
-		spaceId = Steedos.spaceId()
-		userId = Meteor.userId()
-		if related_object_name == "cfs.files.filerecord"
-			selector = {"metadata.space": spaceId}
-		else
-			selector = {space: spaceId}
-		
-		if related_object_name == "cms_files"
-			# 附件的关联搜索条件是定死的
-			selector["parent.o"] = object_name
-			selector["parent.ids"] = [record_id]
-		else
-			selector[related_field_name] = record_id
-
-		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
-		if !permissions.viewAllRecords and permissions.allowRead
-			selector.owner = userId
-
-		return Creator.getCollection(related_object_name).find(selector).count()
+		if related_object_name
+			recordsTotal = Template.instance().recordsTotal.get()
+			if !_.isEmpty(recordsTotal) and related_object_name
+				return recordsTotal[related_object_name]
 
 	related_object_url: (related_object_name)->
 		app_id = Template.instance().data.app_id
