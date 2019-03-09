@@ -33,6 +33,7 @@ export const ObjectManager = {
     validate(json: JsonMap): boolean {
         var validate = Validators.steedosObjectSchema;
         if (!validate) {
+            console.log('缺少steedosObjectSchema');
             return false;
         }
         if (validate(json)) {

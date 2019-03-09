@@ -27,6 +27,7 @@ export const ValidatorManager = {
     },
 
     loadCoreValidators() {
-        ValidatorManager.loadFile(path.resolve(__dirname, "../standard/schemas/object.yml"))
+        ValidatorManager.loadFile(path.resolve(__dirname, "../standard/schemas/object.yml"));
+        ValidatorManager.loadFile(path.resolve(__dirname, "../standard/schemas/report.yml"));
     }
 }

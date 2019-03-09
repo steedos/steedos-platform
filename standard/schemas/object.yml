@@ -244,14 +244,13 @@ properties:
                     operation:
                       type: string
                       title: 运算符
+                      pattern: =|<>|<|>|<=|>=|contains|notcontains|startswith|between
                     value:
                       type: string
                       title: 值
                 -
                   type: array
                   title: 过滤条件
-                  items:
-                    type: string
           filter_logic:
             type: string
             title: 过滤逻辑
