@@ -1,12 +1,13 @@
 var util = require("./util");
 
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
+import { Validators } from './validator';
 
 declare var Creator: any;
 
 export const Apps: Dictionary<JsonMap> = {}
 export const AppManager = {
-    
+
     loadFile: (filePath: string)=>{
         let json:JsonMap = util.loadFile(filePath);
         return AppManager.loadJSON(json);
@@ -22,14 +23,22 @@ export const AppManager = {
                 }
             }
         }
+        return json;
     },
-    
+
     validate(json: JsonMap): boolean {
-        let name = getString(json, "name");
-        if (name)
-            return true
-        else
-            return false
+        var validate = Validators.steedosAppSchema;
+        if (!validate) {
+            console.log('缺少steedosAppSchema');
+            return false;
+        }
+        if (validate(json)) {
+            return true;
+        } else {
+            console.log(json);
+            console.log(validate.errors);
+            throw new Error('数据校验未通过,请查看打印信息')
+        }
     },
 
     remove(name: string) {

@@ -231,31 +231,31 @@ list_views:
       - - _id
         - =
         - '{userId}'
-triggers:
-  before.update.server.user:
-    'on': server
-    when: before.update
-    todo: !!js/function |
-      function (userId, doc, fieldNames, modifier, options) {
-              var profileAvatar, ref, user;
-              profileAvatar = ((ref = modifier.$set.profile) != null ? ref.avatar : void 0) || modifier.$set["profile.avatar"];
+# triggers:
+#   before.update.server.user:
+#     'on': server
+#     when: before.update
+#     todo: !!js/function |
+#       function (userId, doc, fieldNames, modifier, options) {
+#               var profileAvatar, ref, user;
+#               profileAvatar = ((ref = modifier.$set.profile) != null ? ref.avatar : void 0) || modifier.$set["profile.avatar"];
 
-              if (modifier.$set.avatar) {
-                return modifier.$set.avatarUrl = "/api/files/avatars/" + modifier.$set.avatar;
-              } else if (profileAvatar) {
-                user = Creator.getCollection("users").findOne({
-                  _id: userId
-                }, {
-                  fields: {
-                    avatarUrl: 1
-                  }
-                });
+#               if (modifier.$set.avatar) {
+#                 return modifier.$set.avatarUrl = "/api/files/avatars/" + modifier.$set.avatar;
+#               } else if (profileAvatar) {
+#                 user = Creator.getCollection("users").findOne({
+#                   _id: userId
+#                 }, {
+#                   fields: {
+#                     avatarUrl: 1
+#                   }
+#                 });
 
-                if (!user.avatarUrl) {
-                  return modifier.$set.avatarUrl = profileAvatar;
-                }
-              }
-            }
+#                 if (!user.avatarUrl) {
+#                   return modifier.$set.avatarUrl = profileAvatar;
+#                 }
+#               }
+#             }
 permission_set:
   guest:
     allowCreate: false
