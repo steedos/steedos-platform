@@ -90,22 +90,7 @@ properties:
           type:
             type: string
             title: 字段类型
-            anyOf:
-              - text
-              - textarea
-              - html
-              - select
-              - boolean
-              - date
-              - datetime
-              - number
-              - currency
-              - password
-              - lookup
-              - master_detail
-              - grid
-              - url
-              - email
+            # pattern: text|textarea|html|select|boolean|date|datetime|number|currency|password|lookup|master_detail|grid|url|email|object|array|avatar|image|audio|video|location
           sort_no:
             type: number
             title: 排序号
@@ -216,9 +201,7 @@ properties:
           filter_scope:
             type: string
             title: 过滤范围
-            anyOf:
-              - mine
-              - space
+            pattern: mine|space|all
           columns:
             type: array
             title: 需要显示的列
@@ -245,9 +228,7 @@ properties:
                 order:
                   type: string
                   title: 排序方式
-                  anyOf:
-                    - asc
-                    - desc
+                  pattern: asc|desc
           filters:
             type: array
             title: 过滤器
@@ -308,9 +289,7 @@ properties:
           on:
             type: string
             title: 显示位置
-            anyOf:
-              - list
-              - record
+            pattern: list|record
           todo:
             type: string
             title: 执行的脚本
