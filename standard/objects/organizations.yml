@@ -72,6 +72,19 @@ fields:
   company_id:
     label: 所属单位
     group: 系统
+    type: lookup
+    reference_to: organizations
+    sortable: true
+    index: true
+    is_company_only: true
+    defaultValue: |
+      function(){
+        if (Meteor.isClient) {
+          return Session.get('user_company_id')
+        }
+      }
+    omit: true
+    hidden: true
   is_company:
     label: 公司级
     type: boolean
@@ -110,7 +123,7 @@ actions:
     todo: standard_query
   addSubOrganization:
     label: 添加子部门
-    visible: !!js/function |
+    visible: |
       function () {
               var permissions;
               permissions = Creator.getPermissions();
@@ -120,7 +133,7 @@ actions:
               }
             }
     'on': record
-    todo: !!js/function |
+    todo: |
       function (object_name, record_id) {
               var record;
 

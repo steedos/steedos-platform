@@ -25,9 +25,9 @@ fields:
     reference_to: organizations
     multiple: true
     index: true
-    defaultValue: !!js/function |
+    defaultValue: |
       function () {
-              return Session.get("grid_sidebar_selected");
+              return Session.get('grid_sidebar_selected');
             }
     required: true
     name: organizations
@@ -42,6 +42,17 @@ fields:
     filterable: true
   company_id:
     label: 主单位
+    type: lookup
+    reference_to: organizations
+    sortable: true
+    index: true
+    is_company_only: true
+    defaultValue: |
+      function(){
+        if (Meteor.isClient) {
+          return Session.get('user_company_id')
+        }
+      }
     hidden: false
     readonly: true
   company_ids:
@@ -159,44 +170,44 @@ actions:
   import:
     label: 导入
     'on': list
-    visible: !!js/function |
+    visible: |
       function (object_name, record_id, record_permissions) {
             return Creator.isSpaceAdmin();
           }
-    todo: !!js/function |
+    todo: |
       function () {
             if (!Steedos.isPaidSpace()) {
               Steedos.spaceUpgradedModal();
               return;
             }
 
-            return Modal.show("import_users_modal");
+            return Modal.show('import_users_modal');
           }
   export:
     label: 导出
     'on': list
-    visible: !!js/function |
+    visible: |
       function (object_name, record_id, record_permissions) {
             return Creator.isSpaceAdmin();
           }
-    todo: !!js/function |
+    todo: |
       function () {
             var orgId, ref, spaceId, uobj, url;
-            spaceId = Session.get("spaceId");
-            orgId = (ref = Session.get("grid_sidebar_selected")) != null ? ref[0] : void 0;
+            spaceId = Session.get('spaceId');
+            orgId = (ref = Session.get('grid_sidebar_selected')) != null ? ref[0] : void 0;
 
             if (spaceId && orgId) {
               uobj = {};
-              uobj["X-User-Id"] = Meteor.userId();
-              uobj["X-Auth-Token"] = Accounts._storedLoginToken();
+              uobj['X-User-Id'] = Meteor.userId();
+              uobj['X-Auth-Token'] = Accounts._storedLoginToken();
               uobj.space_id = spaceId;
               uobj.org_id = orgId;
-              url = Steedos.absoluteUrl() + "api/export/space_users?" + $.param(uobj);
+              url = Steedos.absoluteUrl() + 'api/export/space_users?' + $.param(uobj);
               return window.open(url, '_parent', 'EnableViewPortScale=yes');
             } else {
               return swal({
-                title: "左侧未选中任何组织",
-                text: "请在左侧组织机构树中选中一个组织后再执行导出操作",
+                title: '左侧未选中任何组织',
+                text: '请在左侧组织机构树中选中一个组织后再执行导出操作',
                 html: true,
                 type: 'warning',
                 confirmButtonText: TAPi18n.__('OK')

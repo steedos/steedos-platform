@@ -128,7 +128,8 @@ list_views:
       - name
     filter_scope: all
     filters:
-      - - _id
+      -
+        - _id
         - =
         - '{spaceId}'
 actions:
@@ -136,7 +137,7 @@ actions:
     label: 订单
     'on': record
     visible: true
-    todo: !!js/function |
+    todo: |
       function () {
               var url;
               url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
@@ -146,7 +147,7 @@ actions:
     label: 升级
     'on': record
     visible: true
-    todo: !!js/function |
+    todo: |
       function () {
               return Modal.show('space_recharge_modal');
             }

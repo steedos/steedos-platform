@@ -2,25 +2,26 @@ var path = require("path");
 var util = require("./util");
 
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
+import { Validators } from './validator';
 
 declare var Creator: any;
 
 export const Objects: Dictionary<JsonMap> = {}
 export const ObjectManager = {
-    
-    loadFile: (filePath: string)=>{
-        let json:JsonMap = util.loadFile(filePath);
+
+    loadFile: (filePath: string) => {
+        let json: JsonMap = util.loadFile(filePath);
         return ObjectManager.loadJSON(json);
     },
 
     loadJSON(json: JsonMap) {
-        if (ObjectManager.validate(json)){
-            let _id = getString(json, "_id") || getString(json, "name") ;
-            if (_id){
+        if (ObjectManager.validate(json)) {
+            let _id = getString(json, "_id") || getString(json, "name");
+            if (_id) {
                 Objects[_id] = json
                 if ((typeof Creator !== "undefined") && Creator.Objects) {
                     Creator.Objects[_id] = json;
-                    if(typeof Creator.fiberLoadObjects == 'function'){
+                    if (typeof Creator.fiberLoadObjects == 'function') {
                         Creator.fiberLoadObjects(json);
                     }
                 }
@@ -28,13 +29,19 @@ export const ObjectManager = {
         }
         return json;
     },
-    
+
     validate(json: JsonMap): boolean {
-        let name = getString(json, "name");
-        if (name)
-            return true
-        else
-            return false
+        var validate = Validators.steedosObjectSchema;
+        if (!validate) {
+            return false;
+        }
+        if (validate(json)) {
+            return true;
+        } else {
+            console.log(json);
+            console.log(validate.errors);
+            throw new Error('数据校验未通过,请查看打印信息')
+        }
     },
 
     remove(name: string) {
