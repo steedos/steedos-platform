@@ -180,7 +180,6 @@ properties:
             type: string
             title: 帮助说明
         required:
-          - type
     additionalProperties: false
   list_views:
     type: object
