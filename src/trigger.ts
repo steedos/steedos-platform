@@ -1,45 +1,46 @@
 var util = require("./util");
 var _ = require("underscore");
 
-import {Objects, ObjectManager} from './object';
+import { Objects, ObjectManager } from './object';
 
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
+import { Validators } from './validator';
 
 export const Triggers: Dictionary<JsonMap> = {}
 export const TriggerManager = {
-    
-    loadFile: (filePath: string)=>{
-        let json:JsonMap = util.loadFile(filePath);
+
+    loadFile: (filePath: string) => {
+        let json: JsonMap = util.loadFile(filePath);
         return TriggerManager.loadJSON(json);
     },
 
     loadJSON(trigger: JsonMap) {
-        if (TriggerManager.validate(trigger)){
+        if (TriggerManager.validate(trigger)) {
             let name = getString(trigger, "name");
             if (name)
                 Triggers[name] = trigger
 
             var object_name: any = trigger.object_name
-            if(!object_name){
+            if (!object_name) {
                 console.error(`load trigger error：Missing attribute 'object_name' /r ${name}`)
                 return
             }
 
             let object: any = Objects[object_name]
-            if(!object){
+            if (!object) {
                 console.error(`load trigger error：Invalid 'object_name' /r ${name}`)
                 return
             }
 
-            if(!object.triggers){
+            if (!object.triggers) {
                 object.triggers = {}
             }
 
-            _.each(trigger, (attr: any, key: string)=>{
+            _.each(trigger, (attr: any, key: string) => {
                 let tm = triggerMapping[key]
-                if(!_.isEmpty(tm)){
+                if (!_.isEmpty(tm)) {
                     let tkey: string = `_${key}`.toLocaleUpperCase();
-                    object.triggers[tkey] = _.extend({name: `_${trigger.type}_${tkey}`, object: object_name}, tm, {
+                    object.triggers[tkey] = _.extend({ name: `_${trigger.type}_${tkey}`, object: object_name }, tm, {
                         todo: attr
                     })
                 }
@@ -47,14 +48,31 @@ export const TriggerManager = {
             ObjectManager.loadJSON(object)
         }
     },
-    
-    //TODO 处理格式校验
+
+    _convertFunctionToString(obj: JsonMap) {
+        var objStr = JSON.stringify(obj, function (key, val) {
+            if (typeof val === 'function') {
+                return val + '';
+            }
+            return val;
+        })
+        return JSON.parse(objStr);
+    },
+
     validate(json: JsonMap): boolean {
-        let name = getString(json, "object_name");
-        if (name)
-            return true
-        else
-            return false
+        var newJson = TriggerManager._convertFunctionToString(json);
+        var validate = Validators.steedosTriggerSchema;
+        if (!validate) {
+            console.log('缺少steedosTriggerSchema');
+            return false;
+        }
+        if (validate(newJson)) {
+            return true;
+        } else {
+            console.log(newJson);
+            console.log(validate.errors);
+            throw new Error('数据校验未通过,请查看打印信息')
+        }
     },
 
     remove(name: string) {

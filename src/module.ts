@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 import { AppManager } from "./app";
 import { ObjectManager } from "./object";
-const trigger = require("./trigger");
+import { TriggerManager } from "./trigger";
 import { ReportManager } from "./report";
 
 
@@ -17,6 +17,7 @@ export const Module = {
     loadObject: ObjectManager.loadFile,
     loadApp: AppManager.loadFile,
     loadReport: ReportManager.loadFile,
+    loadTrigger: TriggerManager.loadFile,
 
     load(srcDirectory: string) {
         if (!fs.existsSync(srcDirectory) || !fs.statSync(srcDirectory).isDirectory())
@@ -44,7 +45,7 @@ export const Module = {
         if (fs.existsSync(triggerFolderPath)) {
             let triggerFiles = fs.readdirSync(triggerFolderPath)
             _.each(triggerFiles, (tf: string) => {
-                trigger.TriggerManager.loadFile(path.join(triggerFolderPath, tf));
+                Module.loadTrigger(path.join(triggerFolderPath, tf));
             })
         }
 
