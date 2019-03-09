@@ -12,9 +12,9 @@ export const ReportManager = {
 
     loadJSON(json: JsonMap) {
         if (ReportManager.validate(json)){
-            let name = getString(json, "name");
-            if (name)
-                Reports[name] = json
+            let _id = getString(json, "_id");
+            if (_id)
+                Reports[_id] = json
         }
     },
     
@@ -26,9 +26,9 @@ export const ReportManager = {
             return false
     },
 
-    remove(name: string) {
-        if (Reports.name)
-            delete Reports.name
+    remove(_id: string) {
+        if (Reports[_id])
+            delete Reports[_id]
     },
 
     loadStandardReports() {

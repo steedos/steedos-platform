@@ -20,7 +20,9 @@ export const ObjectManager = {
                 Objects[_id] = json
                 if ((typeof Creator !== "undefined") && Creator.Objects) {
                     Creator.Objects[_id] = json;
-                    Creator.fiberLoadObjects(json);
+                    if(typeof Creator.fiberLoadObjects == 'function'){
+                        Creator.fiberLoadObjects(json);
+                    }
                 }
             }
         }
