@@ -7,6 +7,3 @@ export { Validators, ValidatorManager } from './validator';
 export * from "./module";
 
 require('./validator').ValidatorManager.loadCoreValidators();
-
-
-exports.data = require("../data/mongodb");
