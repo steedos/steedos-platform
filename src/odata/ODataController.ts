@@ -2,14 +2,19 @@
 import {Controller, Req, Res, Param, Body, Get, Post, Put, Delete} from "routing-controllers";
 import { getConnection } from "../";
 
+/* 
+  https://github.com/typestack/routing-controllers 
+*/
 @Controller()
 export class ODataController {
 
     @Get("/api/odata/v4/:spaceId/:objectName")
     async getAll(@Req() request: any, @Res() response: any) {
        
-      // const spaceId = request.params.spaceId;
+      const spaceId = request.params.spaceId;
       const entityName = request.params.objectName;
+      console.log(spaceId);
+      
       // get a repository
       const repository = getConnection().getRepository(entityName);
 
