@@ -13,5 +13,5 @@
 **/.vscode
 **/docs
 
-yarn.lock
-settings.yml
+**/yarn.lock
+**/settings.yml
