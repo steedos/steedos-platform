@@ -384,7 +384,9 @@ renderTabularReport = (reportObject)->
 			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
-
+	if Steedos.isMobile()
+		# 手机上不需要导出按钮
+		delete dxOptions.export
 	datagrid = null
 	module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 		DevExpress.ui.dxDataGrid = dxDataGrid;
@@ -579,6 +581,9 @@ renderSummaryReport = (reportObject)->
 			mode: "virtual"
 		columns: reportColumns
 		summary: reportSummary
+	if Steedos.isMobile()
+		# 手机上不需要导出按钮
+		delete dxOptions.export
 	datagrid = null
 	module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 		DevExpress.ui.dxDataGrid = dxDataGrid;
@@ -821,6 +826,9 @@ renderMatrixReport = (reportObject)->
 	drillDownDataSource = {}
 	salesPopup = null
 	pivotGrid = null
+	if Steedos.isMobile()
+		# 手机上不需要导出按钮
+		delete dxOptions.export
 	module.dynamicImport('devextreme/ui/popup').then (dxPopup)->
 		DevExpress.ui.dxPopup = dxPopup;
 		salesPopup = $('#drill-down-popup').dxPopup(
