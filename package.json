@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/**/*Test.ts",
     "publish": "npm publish --registry https://registry.npmjs.org"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/ts-types": "^1.1.1",
     "@types/node": "^11.10.4",
+    "chai": "^4.2.0",
     "fibers": "^3.1.1",
     "js-yaml": "3.12.2",
     "jsen": "^0.6.6",
@@ -20,9 +21,10 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
+    "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.1.4",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.3333"
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6"
   },
   "publishConfig": {
     "access": "public"
