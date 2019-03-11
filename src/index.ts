@@ -24,3 +24,5 @@ require('./validator').ValidatorManager.loadCoreValidators();
 export function getObjectSchemaManager(): ObjectSchemaManager {
     return getFromContainer(ObjectSchemaManager);
 }
+
+export { Module } from "./module";
