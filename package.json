@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "compile": "tsc",
-    "test": "mocha test/**/*Test.ts",
+    "test": "mocha test/**/*.ts",
     "publish": "npm publish --registry https://registry.npmjs.org"
   },
   "author": "",
@@ -13,12 +13,13 @@
   "dependencies": {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/ts-types": "^1.1.1",
+    "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
-    "chai": "^4.2.0",
     "fibers": "^3.1.1",
     "js-yaml": "3.12.2",
     "jsen": "^0.6.6",
-    "simpl-schema": "^1.5.5",
+    "mongodb": "^3.1.13",
+    "pg": "^7.8.2",
     "typeorm": "^0.2.14",
     "underscore": "1.5.2"
   },
@@ -27,7 +28,10 @@
     "@steedos/meteor-bundle-runner": "^1.1.4",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
-    "@types/mocha": "^5.2.6"
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "sinon-chai": "^3.3.0"
   },
   "publishConfig": {
     "access": "public"

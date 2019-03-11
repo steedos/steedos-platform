@@ -1,7 +1,10 @@
 {   
     "extends": "./node_modules/@salesforce/dev-config/tsconfig-strict",
     "compilerOptions": {
-        "outDir": "./lib"
+        "outDir": "./lib",
+        "strict": false,
+        "noUnusedLocals": true,
+        "experimentalDecorators": true
     },
     "include": [
       "./src/**/*"
