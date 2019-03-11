@@ -423,6 +423,13 @@ renderSummaryReport = (reportObject)->
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[item], itemField.options
+		else if itemField.type == "date"
+			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
+			field.dataType = "date"
+		else if itemField.type == "datetime"
+			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
+			field.dataType = "datetime"
+
 		if sorts[item]
 			field.sortOrder = sorts[item]
 		if columnWidths[item]
@@ -448,6 +455,13 @@ renderSummaryReport = (reportObject)->
 		if groupField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[group], groupField.options
+		else if groupField.type == "date"
+			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
+			field.dataType = "date"
+		else if groupField.type == "datetime"
+			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
+			field.dataType = "datetime"
+	
 		if sorts[group]
 			field.sortOrder = sorts[group]
 		if columnWidths[group]
