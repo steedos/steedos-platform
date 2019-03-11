@@ -20,17 +20,17 @@ describe("entity schemas > basic functionality", () => {
     after(() => closeTestingConnections(connections));
 
     it("connection should return mongo repository when requested", () => Promise.all(connections.map(async connection => {
-        const postRepository = connection.getMongoRepository(Post);
+        const postRepository = connection.getRepository(Post);
         postRepository.should.be.instanceOf(MongoRepository);
     })));
 
     it("entity manager should return mongo repository when requested", () => Promise.all(connections.map(async connection => {
-        const postRepository = connection.manager.getMongoRepository(Post);
+        const postRepository = connection.manager.getRepository(Post);
         postRepository.should.be.instanceOf(MongoRepository);
     })));
 
     it("should perform basic operations with entity", () => Promise.all(connections.map(async connection => {
-        const postRepository = connection.getMongoRepository(Post);
+        const postRepository = connection.getRepository(Post);
 
         // save few posts
         const firstPost = new Post();
@@ -43,7 +43,15 @@ describe("entity schemas > basic functionality", () => {
         secondPost.text = "Everything about post #2";
         await postRepository.save(secondPost);
 
-        const cursor = postRepository.createEntityCursor({
+        const categoryRepository = connection.getMongoRepository(CategoryEntity);
+        const category = categoryRepository.create({
+            name: "First Category"
+        });
+        await categoryRepository.save(category);
+
+
+        const postMongoRepository = connection.getMongoRepository(Post);
+        const cursor = postMongoRepository.createEntityCursor({
             title: "Post #1"
         });
 
@@ -54,12 +62,7 @@ describe("entity schemas > basic functionality", () => {
         loadedPosts[0].title.should.be.equal("Post #1");
         loadedPosts[0].text.should.be.equal("Everything about post #1");
 
-        const categoryRepository = connection.getMongoRepository(CategoryEntity);
-        const category = categoryRepository.create({
-            name: "First Category"
-        });
-        await categoryRepository.save(category);
 
     })));
-    
+
 });
