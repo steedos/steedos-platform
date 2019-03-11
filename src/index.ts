@@ -1,3 +1,10 @@
+import "reflect-metadata";
+export { Connection, getConnection, createConnection } from "typeorm";
+export { ConnectionManager, getConnectionManager } from "typeorm";
+
+import { getFromContainer } from "./container";
+import { ObjectSchemaManager } from "./object/ObjectSchemaManager";
+
 export { Objects, ObjectManager } from './object';
 export { Apps, AppManager } from './app';
 export { Reports, ReportManager } from './report';
@@ -7,3 +14,12 @@ export { Validators, ValidatorManager } from './validator';
 export * from "./module";
 
 require('./validator').ValidatorManager.loadCoreValidators();
+
+
+
+/**
+ * Gets a ObjectSchemaManager which creates object schema.
+ */
+export function getObjectSchemaManager(): ObjectSchemaManager {
+    return getFromContainer(ObjectSchemaManager);
+}

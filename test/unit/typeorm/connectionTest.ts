@@ -1,6 +1,6 @@
 import {expect} from "chai";
-import {getConnectionManager} from "typeorm";
-import {Connection} from "typeorm/connection/Connection";
+import {getConnectionManager} from "../../../src";
+import {Connection} from "../../../src";
 import {EntityManager} from "typeorm/entity-manager/EntityManager";
 
 import {closeTestingConnections, createTestingConnections, setupSingleTestingConnection} from "../../utils/test-utils";
