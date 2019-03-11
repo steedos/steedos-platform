@@ -70,9 +70,9 @@ export class ObjectSchemaManager {
         this.registerCreator(options);
 
         return objectSchema;
-    }
+    };
 
-    createFromFile(filePath: string):ObjectSchema {
+    createFromFile(filePath: string): ObjectSchema {
         let json: ObjectSchemaOptions = util.loadFile(filePath);
         return this.create(json);
     };
