@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "compile": "tsc",
     "test": "mocha test/**/*Test.ts",
     "publish": "npm publish --registry https://registry.npmjs.org"
   },
@@ -18,12 +19,14 @@
     "js-yaml": "3.12.2",
     "jsen": "^0.6.6",
     "simpl-schema": "^1.5.5",
+    "typeorm": "^0.2.14",
     "underscore": "1.5.2"
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.1.4",
     "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "7.1.0",
     "@types/mocha": "^5.2.6"
   },
   "publishConfig": {
