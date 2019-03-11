@@ -2,9 +2,9 @@ const _ = require("underscore");
 const fs = require("fs");
 const path = require("path");
 import { AppManager } from "./app";
-import { ObjectManager } from "./object";
 import { TriggerManager } from "./trigger";
 import { ReportManager } from "./report";
+import { getObjectSchemaManager } from "./index";
 
 
 let appFileName = 'app.yml';
@@ -14,7 +14,6 @@ let reportFolderName = 'reports';
 
 export const Module = {
 
-    loadObject: ObjectManager.loadFile,
     loadApp: AppManager.loadFile,
     loadReport: ReportManager.loadFile,
     loadTrigger: TriggerManager.loadFile,
@@ -36,7 +35,7 @@ export const Module = {
         if (fs.existsSync(objectFolderPath)) {
             let objectFiles = fs.readdirSync(objectFolderPath)
             _.each(objectFiles, (aof: string) => {
-                Module.loadObject(path.join(objectFolderPath, aof));
+                getObjectSchemaManager().createFromFile(path.join(objectFolderPath, aof));
             })
         }
 

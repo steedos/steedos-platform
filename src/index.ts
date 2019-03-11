@@ -5,13 +5,14 @@ export { ConnectionManager, getConnectionManager } from "typeorm";
 import { getFromContainer } from "./container";
 import { ObjectSchemaManager } from "./object/ObjectSchemaManager";
 
-export { Objects, ObjectManager } from './object';
+export { ObjectSchema } from './object/ObjectSchema';
+export { ObjectSchemaManager } from './object/ObjectSchemaManager';
+export { ObjectSchemaOptions } from './object/ObjectSchemaOptions';
+
 export { Apps, AppManager } from './app';
 export { Reports, ReportManager } from './report';
 export { Triggers, TriggerManager } from './trigger';
 export { Validators, ValidatorManager } from './validator';
-
-export * from "./module";
 
 require('./validator').ValidatorManager.loadCoreValidators();
 

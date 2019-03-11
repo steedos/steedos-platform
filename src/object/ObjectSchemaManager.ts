@@ -1,3 +1,4 @@
+var path = require("path");
 var util = require("../util");
 
 import {ObjectSchema} from "./ObjectSchema";
@@ -40,11 +41,11 @@ export class ObjectSchemaManager {
      * Throws error if connection with the given name was not found.
      */
     get(name: string = "default"): ObjectSchema {
-        const connection = this.objectSchemas.find(object => object.name === name);
-        if (!connection)
+        const objectSchema = this.objectSchemas.find(object => object.name === name);
+        if (!objectSchema)
             throw new Error(name);
 
-        return connection;
+        return objectSchema;
     };
 
     /**
@@ -99,6 +100,15 @@ export class ObjectSchemaManager {
             // if its registered but closed then simply remove it from the manager
             this.objectSchemas.splice(this.objectSchemas.indexOf(existSchema), 1);
         }
+    };
+    
+    loadStandardObjects() {
+        this.createFromFile(path.resolve(__dirname, "../standard/objects/spaces.yml"))
+        this.createFromFile(path.resolve(__dirname, "../standard/objects/users.yml"))
+        this.createFromFile(path.resolve(__dirname, "../standard/objects/organizations.yml"))
+        this.createFromFile(path.resolve(__dirname, "../standard/objects/space_users.yml"))
+        this.createFromFile(path.resolve(__dirname, "../standard/objects/apps.yml"))
     }
+
 
 }

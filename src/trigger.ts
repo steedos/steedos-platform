@@ -1,10 +1,9 @@
 var util = require("./util");
 var _ = require("underscore");
 
-import { Objects, ObjectManager } from './object';
-
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from './validator';
+import { getObjectSchemaManager } from "./index";
 
 export const Triggers: Dictionary<JsonMap> = {}
 export const TriggerManager = {
@@ -26,26 +25,26 @@ export const TriggerManager = {
                 return
             }
 
-            let object: any = Objects[object_name]
-            if (!object) {
+            let options: any = getObjectSchemaManager().get(object_name).options
+            if (!options) {
                 console.error(`load trigger error：Invalid 'object_name' /r ${name}`)
                 return
             }
 
-            if (!object.triggers) {
-                object.triggers = {}
+            if (!options.triggers) {
+                options.triggers = {}
             }
 
             _.each(trigger, (attr: any, key: string) => {
                 let tm = triggerMapping[key]
                 if (!_.isEmpty(tm)) {
                     let tkey: string = `_${key}`.toLocaleUpperCase();
-                    object.triggers[tkey] = _.extend({ name: `_${trigger.type}_${tkey}`, object: object_name }, tm, {
+                    options.triggers[tkey] = _.extend({ name: `_${trigger.type}_${tkey}`, object: object_name }, tm, {
                         todo: attr
                     })
                 }
             })
-            ObjectManager.loadJSON(object)
+            getObjectSchemaManager().registerCreator(options)
         }
     },
 
