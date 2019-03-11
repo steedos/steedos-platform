@@ -5,7 +5,9 @@ export const PostEntity = new EntitySchema<Post>({
     name: "post",
     columns: {
         id: {
-            type: String
+            type: String,
+            objectId: true,
+            primary: true
         },
         title: {
             type: String
