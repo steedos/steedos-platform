@@ -4,7 +4,9 @@
         "outDir": "./lib",
         "strict": false,
         "noUnusedLocals": true,
-        "experimentalDecorators": true
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true
     },
     "include": [
       "./src/**/*"
