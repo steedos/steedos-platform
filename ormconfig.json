@@ -40,11 +40,11 @@
   },
   {
     "skip": false,
-    "name": "mongodb",
+    "name": "default",
     "type": "mongodb",
     "host": "localhost",
     "database": "test",
-    "logging": false,
+    "logging": true,
     "useNewUrlParser": true
   }
 ]

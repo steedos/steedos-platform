@@ -1,7 +1,12 @@
 import * as bodyParser from "body-parser";
 import "reflect-metadata"; // this shim is required
+import { createConnection } from "typeorm";
+
 import {createExpressServer} from "routing-controllers";
 import {ODataController} from "./ODataController";
+
+createConnection("default").then(connection => {
+});
 
 // creates express app, registers all controller routes and returns you express app instance
 const app = createExpressServer({

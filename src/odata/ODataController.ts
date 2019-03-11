@@ -1,6 +1,6 @@
 
 import {Controller, Req, Res, Param, Body, Get, Post, Put, Delete} from "routing-controllers";
-import { getConnection } from "../";
+import { getConnection } from "typeorm";
 
 /* 
   https://github.com/typestack/routing-controllers 
@@ -14,7 +14,7 @@ export class ODataController {
       const spaceId = request.params.spaceId;
       const entityName = request.params.objectName;
       console.log(spaceId);
-      
+
       // get a repository
       const repository = getConnection().getRepository(entityName);
 
