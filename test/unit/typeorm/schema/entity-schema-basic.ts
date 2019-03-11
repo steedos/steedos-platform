@@ -34,16 +34,17 @@ describe("entity schemas > basic functionality", () => {
         const postRepository = connection.getRepository(PostEntity);
 
         // save few posts
-        const firstPost = {
+        const firstPost = postRepository.create({
             title: "Post #1",
             text: "Everything about post #1"
-        };
+        });
         await postRepository.save(firstPost);
 
         // save few posts
         const secondPost = {
-            title: "Post #2",
-            text: "Everything about post #2"
+            title2: "Post #2",
+            text: "Everything about post #2",
+            tags: ["a","b"]
         };
         await postRepository.save(secondPost);
 
@@ -62,7 +63,7 @@ describe("entity schemas > basic functionality", () => {
         const loadedPosts = await cursor.toArray();
         loadedPosts.length.should.be.equal(1);
         //loadedPosts[0].should.be.instanceOf(Post);
-        //loadedPosts[0].id.should.be.eql(firstPost.id);
+        loadedPosts[0].id.should.be.eql(firstPost.id);
         loadedPosts[0].title.should.be.equal("Post #1");
         loadedPosts[0].text.should.be.equal("Everything about post #1");
 
