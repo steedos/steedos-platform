@@ -12,6 +12,10 @@ Template.reportView.onRendered ->
 	self.$(".report-view").animateCss "fadeInRight"
 
 Template.reportView.helpers
+	reportObject: ->
+		record_id = Session.get "record_id"
+		return Creator.Reports[record_id] or Creator.getObjectRecord()
+
 	report_content_params: ()->
 		return {
 			is_chart_open: Template.instance().is_chart_open
