@@ -51,7 +51,9 @@ export class ObjectSchemaManager {
      * Creates a new connection based on the given connection options and registers it in the manager.
      * Connection won't be established, you'll need to manually call connect method to establish connection.
      */
-    register(options: ObjectSchemaOptions): ObjectSchema {
+    create(options: ObjectSchemaOptions): ObjectSchema {
+
+        this.validate(options);
 
         // check if such connection is already registered
         const existSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.name || "default"));
@@ -61,47 +63,34 @@ export class ObjectSchemaManager {
                 throw new Error("Object schema exists, do you want to extend?");
         }
 
-        // create a new connection
+        // create a new objectSchema
         const objectSchema = new ObjectSchema(options);
         this.objectSchemas.push(objectSchema);
+
+        this.registerCreator(options);
+
         return objectSchema;
     }
 
-    loadFile(filePath: string):JsonMap {
-        let json: JsonMap = util.loadFile(filePath);
-        return this.loadJSON(json);
+    createFromFile(filePath: string):ObjectSchema {
+        let json: ObjectSchemaOptions = util.loadFile(filePath);
+        return this.create(json);
     };
 
-    loadJSON(json: JsonMap):JsonMap {
-        if (this.validate(json)) {
-            let _id = getString(json, "_id") || getString(json, "name");
-            if (_id) {
-                this.objectSchemas[_id] = json
-                if ((typeof Creator !== "undefined") && Creator.Objects) {
-                    Creator.Objects[_id] = json;
-                    if (typeof Creator.fiberLoadObjects == 'function') {
-                        Creator.fiberLoadObjects(json);
-                    }
+    registerCreator(json: JsonMap) {
+        let _id = getString(json, "_id") || getString(json, "name");
+        if (_id) {
+            if ((typeof Creator !== "undefined") && Creator.Objects) {
+                Creator.Objects[_id] = json;
+                if (typeof Creator.fiberLoadObjects == 'function') {
+                    Creator.fiberLoadObjects(json);
                 }
             }
         }
-        return json;
     };
-
     
-    validate(json: JsonMap): boolean {
-        var validate = Validators.steedosObjectSchema;
-        if (!validate) {
-            console.log('缺少steedosObjectSchema');
-            return false;
-        }
-        if (validate(json)) {
-            return true;
-        } else {
-            console.log(json);
-            console.log(validate.errors);
-            throw new Error('数据校验未通过,请查看打印信息')
-        }
+    validate(options: ObjectSchemaOptions): boolean {
+        return Validators.steedosObjectSchema(options);
     };
 
     remove(name: string) {
