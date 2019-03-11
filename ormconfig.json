@@ -1,53 +1,20 @@
-[{
-    "skip": true,
-    "name": "sqlite",
-    "type": "sqlite",
-    "database": "temp/sqlitedb.db",
-    "logging": false
-  },
-  {
-    "skip": true,
-    "name": "mssql",
-    "type": "mssql",
-    "host": "localhost",
-    "username": "sa",
-    "password": "Admin12345",
-    "database": "tempdb",
-    "logging": false
-  },
-  {
-    "skip": true,
-    "name": "oracle",
-    "type": "oracle",
-    "host": "localhost",
-    "username": "system",
-    "password": "oracle",
-    "port": 1521,
-    "sid": "xe.oracle.docker",
-    "logging": false
-  },
-  {
-    "skip": false,
-    "disabledIfNotEnabledImplicitly": true,
-    "name": "mongodb",
-    "type": "mongodb",
-    "database": "test",
-    "useNewUrlParser": true,
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-      "src/entity/**/*.ts"
-    ],
-    "migrations": [
-      "src/migration/**/*.ts"
-    ],
-    "subscribers": [
-      "src/subscriber/**/*.ts"
-    ],
-    "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-    }
+{
+  "type": "mongodb",
+  "database": "test",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+     "src/entity/**/*.ts"
+  ],
+  "migrations": [
+     "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+     "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+     "entitiesDir": "src/entity",
+     "migrationsDir": "src/migration",
+     "subscribersDir": "src/subscriber"
   }
-]
+}
