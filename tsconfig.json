@@ -1,9 +1,19 @@
-{   
-    "extends": "./node_modules/@salesforce/dev-config/tsconfig-strict",
-    "compilerOptions": {
-        "outDir": "./lib"
-    },
-    "include": [
-      "./src/**/*"
-    ]
-  }
+{
+  "extends": "./node_modules/@salesforce/dev-config/tsconfig-strict",
+  "compilerOptions": {
+    "lib": [
+      "es5",
+      "es6"
+    ],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./lib",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

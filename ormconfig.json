@@ -1,5 +1,4 @@
-[
-  {
+[{
     "skip": true,
     "name": "sqlite",
     "type": "sqlite",
@@ -33,7 +32,22 @@
     "name": "mongodb",
     "type": "mongodb",
     "database": "test",
+    "useNewUrlParser": true,
+    "synchronize": true,
     "logging": false,
-    "useNewUrlParser": true
+    "entities": [
+      "src/entity/**/*.ts"
+    ],
+    "migrations": [
+      "src/migration/**/*.ts"
+    ],
+    "subscribers": [
+      "src/subscriber/**/*.ts"
+    ],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    }
   }
 ]
