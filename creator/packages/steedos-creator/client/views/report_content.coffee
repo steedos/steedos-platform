@@ -215,8 +215,10 @@ renderChart = (self)->
 				if isSelectType
 					dsi.key = getSelectFieldLabel dsi.key, objectGroupField.options
 				else if isDateType
+					# 如果不加这个转换语句，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 					dsi.key = DevExpress.localization.formatDate(dsi.key, 'yyyy-MM-dd')
 				else if isDatetimeType
+					# 如果不加这个转换语句，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 					dsi.key = DevExpress.localization.formatDate(dsi.key, 'yyyy-MM-dd hh:mm:ss')
 		dataSourceItems = dataSourceItems.sort(Creator.sortingMethod.bind({key:"key"}))
 		aggregateSeeds = []
@@ -331,6 +333,13 @@ renderTabularReport = (reportObject)->
 		if itemField.type == "select"
 			field.calculateDisplayValue = (rowData)->
 				return getSelectFieldLabel rowData[item], itemField.options
+		else if itemField.type == "date"
+			# 如果不加这个转换语句，则datetime会显示为2019年 2月 28日这种格式，未显示时间值
+			field.dataType = "date"
+		else if itemField.type == "datetime"
+			# 如果不加这个转换语句，则datetime会显示为2019年 2月 28日这种格式，未显示时间值
+			field.dataType = "datetime"
+
 		if sorts[item]
 			field.sortOrder = sorts[item]
 		if columnWidths[item]
