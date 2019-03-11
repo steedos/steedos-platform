@@ -207,9 +207,17 @@ renderChart = (self)->
 			return
 		dataSourceItems = DevExpress.data.query(gridLoadedArray).groupBy(firstRowField.dataField).toArray()
 		objectGroupField = objectFields[firstRowField.dataField]
-		if objectGroupField?.type == "select"
+		isSelectType = objectGroupField?.type == "select"
+		isDateType = objectGroupField?.type == "date"
+		isDatetimeType = objectGroupField?.type == "datetime"
+		if isSelectType or isDateType or isDatetimeType
 			_.each dataSourceItems, (dsi)->
-				dsi.key = getSelectFieldLabel dsi.key, objectGroupField.options
+				if isSelectType
+					dsi.key = getSelectFieldLabel dsi.key, objectGroupField.options
+				else if isDateType
+					dsi.key = DevExpress.localization.formatDate(dsi.key, 'yyyy-MM-dd')
+				else if isDatetimeType
+					dsi.key = DevExpress.localization.formatDate(dsi.key, 'yyyy-MM-dd hh:mm:ss')
 		dataSourceItems = dataSourceItems.sort(Creator.sortingMethod.bind({key:"key"}))
 		aggregateSeeds = []
 		aggregateKeys = []
