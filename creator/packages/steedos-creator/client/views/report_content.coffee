@@ -167,6 +167,19 @@ getSelectFieldLabel = (value, options)->
 getBooleanFieldLabel = (value, caption)->
 	return "#{caption}: #{value}"
 
+getSummaryTypeLabel = (type)->
+	switch type
+		when "sum"
+			caption = "总和"
+			break
+		when "count"
+			caption = "计数"
+			break
+		else
+			caption = "计数"
+			break
+	return caption
+
 pivotGridChart = null
 gridLoadedArray = null
 maxLoadCount = 10000
@@ -231,7 +244,8 @@ renderChart = (self)->
 			tempSummaryType = gs.summaryType
 			tempPaneName = "#{gs.column}_#{tempSummaryType}"
 			chartPanes.push name: tempPaneName
-			tempAxisText = if tempSummaryType == "count" then "计数" else "总和"
+			tempSummaryTypeLabel = getSummaryTypeLabel tempSummaryType
+			tempAxisText = tempSummaryTypeLabel
 			unless gs.column == "_id"
 				fieldName = objectFields[gs.column]?.label
 				unless fieldName
@@ -244,7 +258,7 @@ renderChart = (self)->
 				chartItem[tempKey] = if dsi.key then dsi.key else "--"
 				chartItem[tempSummaryType] = dsi.aggregates[index1]
 				chartData.push chartItem
-				chartSeries.push pane: tempPaneName, valueField: tempSummaryType, name: "#{dsi.key} #{tempSummaryType}", argumentField: tempKey
+				chartSeries.push pane: tempPaneName, valueField: tempSummaryType, name: "#{dsi.key} #{tempSummaryTypeLabel}", argumentField: tempKey
 		dxOptions = 
 			dataSource: chartData, 
 			commonSeriesSettings: {
@@ -516,13 +530,7 @@ renderSummaryReport = (reportObject)->
 					relate_valueField = relate_object_Fields[value.split(".")[1]]
 					if relate_valueField?.type == "number" or relate_valueField?.type == "currency"
 						operation = "sum"
-			switch operation
-				when "sum"
-					caption = "总和: {0}"
-					break
-				when "count"
-					caption = "计数: {0}"
-					break
+			caption = "#{getSummaryTypeLabel operation}: {0}"
 			summaryItem = 
 				displayFormat: caption
 				column: value
@@ -737,13 +745,7 @@ renderMatrixReport = (reportObject)->
 			caption = valueField.label
 			unless caption
 				caption = objectName + "_" + value
-			switch operation
-				when "sum"
-					caption = "总和 #{caption}"
-					break
-				when "count"
-					caption = "计数 #{caption}"
-					break
+			caption = "#{getSummaryTypeLabel operation} #{caption}"
 			reportFields.push 
 				caption: caption
 				dataField: value
