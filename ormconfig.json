@@ -43,7 +43,7 @@
     "name": "default",
     "type": "mongodb",
     "host": "localhost",
-    "database": "test",
+    "database": "steedos",
     "logging": true,
     "useNewUrlParser": true
   }

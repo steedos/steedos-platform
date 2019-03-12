@@ -17,6 +17,7 @@ export { Validators, ValidatorManager } from './validator';
 
 require('./validator').ValidatorManager.loadCoreValidators();
 
+require('./odata/server');
 
 
 /**

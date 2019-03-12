@@ -1,48 +1,42 @@
 
-import {Controller, Req, Res, Param, Body, Get, Post, Put, Delete} from "routing-controllers";
-import { getConnection } from "typeorm";
+import { Controller, Param, Body, Get, Post, Put, Delete } from "routing-controllers";
+import { getCreator } from "../index";
 
-/* 
-  https://github.com/typestack/routing-controllers 
+/*
+  https://github.com/typestack/routing-controllers
 */
 @Controller()
 export class ODataController {
 
-    @Get("/api/odata/v4/:spaceId/:objectName")
-    async getAll(@Req() request: any, @Res() response: any) {
-       
-      const spaceId = request.params.spaceId;
-      const entityName = request.params.objectName;
+   @Get("/api/odata/v4/:spaceId/:objectName")
+   async getAll(@Param("spaceId") spaceId: string, @Param("objectName") objectName: string) {
+
       console.log(spaceId);
+      console.log(objectName);
+      var collection = getCreator().getCollection(objectName, spaceId);
 
-      // get a repository
-      const repository = getConnection().getRepository(entityName);
+      var records = collection.find({}).fetch();
+      return records
+   }
 
-      // load records
-      const records = await repository.find();
+   @Get("/api/odata/v4/:spaceId/:objectName/:id")
+   getOne(@Param("id") id: number) {
+      return "This action returns record #" + id;
+   }
 
-      // return loaded records
-      response.send(records);
-    }
+   @Post("/api/odata/v4/:spaceId/:objectName")
+   post(@Body() user: any) {
+      return "Saving record...";
+   }
 
-    @Get("/api/odata/v4/:spaceId/:objectName/:id")
-    getOne(@Param("id") id: number) {
-       return "This action returns record #" + id;
-    }
+   @Put("/api/odata/v4/:spaceId/:objectName/:id")
+   put(@Param("id") id: number, @Body() user: any) {
+      return "Updating a record...";
+   }
 
-    @Post("/api/odata/v4/:spaceId/:objectName")
-    post(@Body() user: any) {
-       return "Saving record...";
-    }
-
-    @Put("/api/odata/v4/:spaceId/:objectName/:id")
-    put(@Param("id") id: number, @Body() user: any) {
-       return "Updating a record...";
-    }
-
-    @Delete("/api/odata/v4/:spaceId/:objectName/:id")
-    remove(@Param("id") id: number) {
-       return "Removing record...";
-    }
+   @Delete("/api/odata/v4/:spaceId/:objectName/:id")
+   remove(@Param("id") id: number) {
+      return "Removing record...";
+   }
 
 }

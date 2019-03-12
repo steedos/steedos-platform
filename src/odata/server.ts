@@ -14,5 +14,6 @@ const app = createExpressServer({
 });
 app.use(bodyParser.json());
 
-// run express application on port 3000
-app.listen(3000);
+app.listen(3001);
+
+console.log("Express application is up and running on port 3001");
