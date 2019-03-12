@@ -1,4 +1,4 @@
-import {ObjectSchemaOptions} from "./ObjectSchemaOptions";
+import { ObjectSchemaOptions } from "./ObjectSchemaOptions";
 
 /**
  * Connection is a single database ORM connection to a specific database.
@@ -18,7 +18,7 @@ export class ObjectSchema {
     constructor(options: ObjectSchemaOptions) {
         this.name = options.name;
         this.schema = options;
-        this.options[0] = options; 
+        this.options[0] = options;
     }
 
     // -------------------------------------------------------------------------
@@ -32,6 +32,6 @@ export class ObjectSchema {
     /**
      * ObjectSchema options.
      */
-    readonly options: ObjectSchemaOptions[];
+    readonly options: ObjectSchemaOptions[] = [];
     readonly schema: ObjectSchemaOptions;
 }
