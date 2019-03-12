@@ -4,6 +4,7 @@ export { ConnectionManager, getConnectionManager } from "typeorm";
 
 import { getFromContainer } from "./container";
 import { ObjectSchemaManager } from "./object/ObjectSchemaManager";
+import { CreatorManager } from "./creator/CreatorManager";
 
 export { ObjectSchema } from './object/ObjectSchema';
 export { ObjectSchemaManager } from './object/ObjectSchemaManager';
@@ -23,6 +24,13 @@ require('./validator').ValidatorManager.loadCoreValidators();
  */
 export function getObjectSchemaManager(): ObjectSchemaManager {
     return getFromContainer(ObjectSchemaManager);
+}
+
+/**
+ * Gets a ObjectSchemaManager which creates object schema.
+ */
+export function getCreator(): CreatorManager{
+    return getFromContainer(CreatorManager);
 }
 
 export { Module } from "./module";

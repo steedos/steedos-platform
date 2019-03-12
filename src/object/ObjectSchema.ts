@@ -7,19 +7,23 @@ import {ObjectSchemaOptions} from "./ObjectSchemaOptions";
  */
 export class ObjectSchema {
 
+    extend(options: ObjectSchemaOptions) {
+
+    }
+
     // -------------------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------------------
 
     constructor(options: ObjectSchemaOptions) {
         this.name = options.name;
-        this.options = options;
+        this.schema = options;
+        this.options[0] = options; 
     }
 
     // -------------------------------------------------------------------------
     // Public Readonly Properties
     // -------------------------------------------------------------------------
-
     /**
      * Connection name.
      */
@@ -28,5 +32,6 @@ export class ObjectSchema {
     /**
      * ObjectSchema options.
      */
-    readonly options: ObjectSchemaOptions;
+    readonly options: ObjectSchemaOptions[];
+    readonly schema: ObjectSchemaOptions;
 }

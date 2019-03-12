@@ -62,20 +62,22 @@ export class ObjectSchemaManager {
             // if its registered but closed then simply remove it from the manager
             if (!options.extend)
                 throw new Error("Object schema exists, do you want to extend?");
+            else
+                existSchema.extend(options);
         }
 
         // create a new objectSchema
         const objectSchema = new ObjectSchema(options);
         this.objectSchemas.push(objectSchema);
 
-        this.registerCreator(options);
+        this.registerCreator(objectSchema.schema);
 
         return objectSchema;
     };
 
     createFromFile(filePath: string): ObjectSchema {
-        let json: ObjectSchemaOptions = util.loadFile(filePath);
-        return this.create(json);
+        let options: ObjectSchemaOptions = util.loadFile(filePath);
+        return this.create(options);
     };
 
     registerCreator(json: JsonMap) {
