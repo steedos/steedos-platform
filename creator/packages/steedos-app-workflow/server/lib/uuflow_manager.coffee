@@ -629,7 +629,7 @@ uuflowManager.getApproveValues = (approve_values, permissions, form_id, form_ver
 		)
 	return approve_values
 
-uuflowManager.workflow_engine = (approve_from_client, current_user_info, current_user)->
+uuflowManager.workflow_engine = (approve_from_client, current_user_info, current_user, auto_submitted)->
 	instance_id = approve_from_client["instance"]
 	trace_id = approve_from_client["trace"]
 	approve_id = approve_from_client["_id"]
@@ -742,11 +742,11 @@ uuflowManager.workflow_engine = (approve_from_client, current_user_info, current
 				checkSpaceUser = uuflowManager.getSpaceUser(space_id, next_step_user)
 
 		if step_type is "start" or step_type is "submit" or step_type is "condition"
-			updateObj = uuflowManager.engine_step_type_is_start_or_submit_or_condition(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info)
+			updateObj = uuflowManager.engine_step_type_is_start_or_submit_or_condition(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted)
 		else if step_type is "sign"
-			updateObj = uuflowManager.engine_step_type_is_sign(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, description)
+			updateObj = uuflowManager.engine_step_type_is_sign(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, description, auto_submitted)
 		else if step_type is "counterSign"
-			updateObj = uuflowManager.engine_step_type_is_counterSign(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info)
+			updateObj = uuflowManager.engine_step_type_is_counterSign(instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted)
 		else if step_type is "end"
 			throw new Meteor.Error('error!', 'end结点出现approve，服务器错误')
 
@@ -809,7 +809,7 @@ uuflowManager.workflow_engine = (approve_from_client, current_user_info, current
 	return instance
 
 
-uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info) ->
+uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted) ->
 	setObj = new Object
 	space_id = instance.space
 	# 验证next_steps.step是否合法
@@ -849,6 +849,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 						# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
 						# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
 						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+						instance_traces[i].approves[h].auto_submitted = true
 					h++
 			i++
 
@@ -927,6 +928,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 									# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
 									# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
 									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+									instance_traces[i].approves[h].auto_submitted = true
 								h++
 						i++
 
@@ -1009,7 +1011,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 
 	return setObj
 
-uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, description) ->
+uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, description, auto_submitted) ->
 	setObj = new Object
 	space_id = instance.space
 	# 验证approve的judge是否为空
@@ -1054,6 +1056,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 								instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 								instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+								instance_traces[i].approves[h].auto_submitted = true
 							h++
 					i++
 
@@ -1133,6 +1136,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 											instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 											instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 											instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+											instance_traces[i].approves[h].auto_submitted = true
 										h++
 								i++
 
@@ -1257,6 +1261,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 									instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 									instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+									instance_traces[i].approves[h].auto_submitted = true
 								h++
 						i++
 
@@ -1336,6 +1341,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 												instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 												instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 												instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+												instance_traces[i].approves[h].auto_submitted = true
 											h++
 									i++
 
@@ -1426,7 +1432,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 
 	return setObj
 
-uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info) ->
+uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted) ->
 	setObj = new Object
 	space_id = instance.space
 	# 验证approve的judge是否为空
@@ -1459,6 +1465,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 						instance_traces[i].approves[h].is_finished = true
 						instance_traces[i].approves[h].finish_date = new Date
 						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
+						instance_traces[i].approves[h].auto_submitted = true
 
 					if instance_traces[i].approves[h].is_finished is false and instance_traces[i].approves[h].type isnt 'cc' and instance_traces[i].approves[h].type isnt 'distribute'
 						isAllApproveFinished = false
@@ -2774,7 +2781,7 @@ uuflowManager.timeoutAutoSubmit = (ins_id)->
 			_.each trace.approves, (a)->
 				approve_from_client._id = a._id
 				current_user_info = db.users.findOne(a.handler, { services: 0 })
-				updatedInstance = uuflowManager.workflow_engine(approve_from_client, current_user_info, current_user_info._id)
+				updatedInstance = uuflowManager.workflow_engine(approve_from_client, current_user_info, current_user_info._id, true)
 
 				# 满足超时自动提交条件后，则将申请单提交至下一步骤，并发送提示给当前步骤处理人
 				pushManager.send_instance_notification("auto_submit_pending_inbox", updatedInstance, "", current_user_info)

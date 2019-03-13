@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:app-workflow',
-	version: '0.0.11',
+	version: '0.0.12',
 	summary: 'Creator workflow',
 	git: '',
 	documentation: null
