@@ -6,5 +6,6 @@ checkNpmVersions({
 	'basic-auth': '^2.0.1',
 	'odata-v4-service-metadata': "^0.1.6",
 	"odata-v4-service-document": "^0.0.3",
-	'odata-v4-mongodb': "^0.1.12"
+	'odata-v4-mongodb': "^0.1.12",
+	cookies: "^0.6.1",
 }, 'steedos:odata');

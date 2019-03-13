@@ -1,4 +1,5 @@
 basicAuth = require('basic-auth')
+Cookies = require("cookies")
 
 class @OdataRestivus
 
@@ -13,17 +14,21 @@ class @OdataRestivus
 			auth:
 				token: 'services.resume.loginTokens.hashedToken'
 				user: ->
-					if @request.headers['x-auth-token']
-						token = Accounts._hashLoginToken @request.headers['x-auth-token']
+					cookies = new Cookies( @request, @response )
+					userId = @request.headers['x-user-id'] || cookies.get("X-User-Id")
+					authToken = @request.headers['x-auth-token'] || cookies.get("X-Auth-Token")
+					spaceId = @request.headers['x-space-id'] || @urlParams['spaceId']
+					if authToken
+						token = Accounts._hashLoginToken authToken
 					if @request.userId
 						_user = db.users.findOne({_id: @request.userId})
 						user: _user
-						userId: @request.headers['x-user-id']
-						spaceId: @request.headers['x-space-id'] || @urlParams['spaceId']
+						userId: userId
+						spaceId: spaceId
 						token: token
 					else
-						userId: @request.headers['x-user-id']
-						spaceId: @request.headers['x-space-id'] || @urlParams['spaceId']
+						userId: userId
+						spaceId: spaceId
 						token: token
 			defaultHeaders:
 				'Content-Type': 'application/json'
