@@ -17,7 +17,7 @@ export class ODataController {
   async getAll(@CurrentUser({ required: true }) user: { _id: string }, @Params() urlParams: any, @QueryParams() queryParams: any) {
     try {
       let userId = user._id;
-      let key = urlParams.object_name;
+      let key = urlParams.objectName;
       let spaceId = urlParams.spaceId;
       let object = getCreator().getObject(key, spaceId);
       let setErrorMessage = getODataManager().setErrorMessage;
@@ -37,9 +37,17 @@ export class ODataController {
       }
 
       getODataManager().removeInvalidMethod(queryParams);
-
       let qs = decodeURIComponent(querystring.stringify(queryParams));
-      let createQuery = odataV4Mongodb.createQuery(qs);
+      if (qs) {
+        var createQuery = odataV4Mongodb.createQuery(qs);
+      } else {
+        var createQuery: any = {
+          query: {},
+          sort: undefined,
+          projection: {},
+          includes: []
+        };
+      }
       let permissions = getCreator().getObjectPermissions(spaceId, userId, key);
 
       if (permissions.viewAllRecords || (permissions.viewCompanyRecords && getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, createQuery.query)) || (permissions.allowRead && userId)) {
