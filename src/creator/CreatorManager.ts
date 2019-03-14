@@ -61,8 +61,12 @@ export class CreatorManager {
     return SteedosOData.getODataNextLinkPath(spaceId, objectName);
   }
 
-  hashLoginToken(authToken: string|string[]) {
+  hashLoginToken(authToken: string | string[]) {
     return Accounts._hashLoginToken(authToken);
+  }
+
+  getMetaDataPath(spaceId: string) {
+    return SteedosOData.getMetaDataPath(spaceId);
   }
 
 

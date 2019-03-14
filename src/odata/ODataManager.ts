@@ -3,7 +3,6 @@ import _ = require('underscore');
 import { Request, Response } from "express";
 
 var Cookies = require("cookies");
-var Fiber = require('fibers');
 
 export class ODataManager {
   setErrorMessage(statusCode: number, collection: string = '', key: string = '', action: string = '') {
@@ -79,7 +78,7 @@ export class ODataManager {
     }
   }
 
-  isSameCompany(spaceId: string, userId: string, companyId: string, query: any) {
+  isSameCompany(spaceId: string, userId: string, companyId: string, query: any = null) {
     let su = getCreator().getCollection("space_users").findOne({ space: spaceId, user: userId }, { fields: { company_id: 1, company_ids: 1 } });
     if (!companyId && query) {
       companyId = su.company_id;
@@ -251,18 +250,28 @@ export class ODataManager {
     };
   }
 
-  auth(request: Request, response: Response) {
+  async auth(request: Request, response: Response) {
     let cookies = new Cookies(request, response);
     let userId: string | string[] = request.headers['x-user-id'] || cookies.get("X-User-Id");
     let authToken: string | string[] = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
     let collection = getCreator().getCollection('users');
     let searchQuery = { _id: userId };
     searchQuery['services.resume.loginTokens.hashedToken'] = getCreator().hashLoginToken(authToken);
-    let user = null;
-    Fiber(function () {
-      user = collection.findOne(searchQuery, { services: 0 })
-    }).run();
+    let user = {};
+    user = await collection.rawCollection().findOne(searchQuery, { projection: { services: 0 } });
     return user;
+  }
+
+  // 修改、删除时，如果 doc.space = "global"，报错
+  checkGlobalRecord(collection: any, id: string, object: any) {
+    if (object.enable_space_global && collection.find({ _id: id, space: 'global' }).count()) {
+      throw new Error("不能修改或者删除标准对象");
+    }
+  }
+
+  setHeaders(response: Response) {
+    response.setHeader('Content-Type', 'application/json;odata.metadata=minimal;charset=utf-8');
+    response.setHeader('OData-Version', getCreator().VERSION);
   }
 
 }
