@@ -64,15 +64,15 @@ export class ObjectSchemaManager {
                 throw new Error("Object schema exists, do you want to extend?");
             else
                 existSchema.extend(options);
+                this.registerCreator(existSchema.schema);
+        }else{
+            // create a new objectSchema
+            const objectSchema = new ObjectSchema(options);
+            this.objectSchemas.push(objectSchema);
+            this.registerCreator(objectSchema.schema);
+
+            return objectSchema;
         }
-
-        // create a new objectSchema
-        const objectSchema = new ObjectSchema(options);
-        this.objectSchemas.push(objectSchema);
-
-        this.registerCreator(objectSchema.schema);
-
-        return objectSchema;
     };
 
     createFromFile(filePath: string): ObjectSchema {
@@ -105,11 +105,11 @@ export class ObjectSchemaManager {
     };
     
     loadStandardObjects() {
-        this.createFromFile(path.resolve(__dirname, "../standard/objects/spaces.yml"))
-        this.createFromFile(path.resolve(__dirname, "../standard/objects/users.yml"))
-        this.createFromFile(path.resolve(__dirname, "../standard/objects/organizations.yml"))
-        this.createFromFile(path.resolve(__dirname, "../standard/objects/space_users.yml"))
-        this.createFromFile(path.resolve(__dirname, "../standard/objects/apps.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../standard/objects/spaces.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../standard/objects/users.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../standard/objects/organizations.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../standard/objects/space_users.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../standard/objects/apps.yml"))
     }
 
 

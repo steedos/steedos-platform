@@ -1,7 +1,8 @@
 const yaml = require('js-yaml');
 const fs = require("fs");
 const path = require("path");
-import { JsonMap } from '@salesforce/ts-types';
+const _ = require("underscore");
+import { JsonMap, isJsonMap, has, getJsonMap } from '@salesforce/ts-types';
 
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
@@ -26,3 +27,20 @@ exports.loadFile = (filePath: string)=>{
     }
     return json;
 };
+
+exports.extend = (destination: JsonMap, sources: JsonMap)=>{
+    _.each(sources, (v:never, k: string)=>{
+        if(!has(destination, k)){
+            destination[k] = v
+        }else if(isJsonMap(v)){
+            let _d = getJsonMap(destination, k);
+            if(isJsonMap(_d)){
+                this.extend(_d, v)
+            }else{
+                destination[k] = v
+            }
+        }else{
+            destination[k] = v
+        }
+    })
+}

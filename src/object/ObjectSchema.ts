@@ -1,5 +1,5 @@
 import { ObjectSchemaOptions } from "./ObjectSchemaOptions";
-
+var util = require("../util");
 /**
  * Connection is a single database ORM connection to a specific database.
  * Its not required to be a database connection, depend on database type it can create connection pool.
@@ -8,7 +8,7 @@ import { ObjectSchemaOptions } from "./ObjectSchemaOptions";
 export class ObjectSchema {
 
     extend(options: ObjectSchemaOptions) {
-
+        util.extend(this.schema, options);
     }
 
     // -------------------------------------------------------------------------
@@ -18,7 +18,7 @@ export class ObjectSchema {
     constructor(options: ObjectSchemaOptions) {
         this.name = options.name;
         this.schema = options;
-        this.options[0] = options;
+        this.options.push(options);
     }
 
     // -------------------------------------------------------------------------
