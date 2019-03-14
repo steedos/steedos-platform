@@ -27,7 +27,7 @@ const app = createExpressServer({
       // demo code:
       // const token = action.request.headers["authorization"];
       // return getEntityManager().findOneByToken(User, token);
-      return { _id: 'hwJJbdc2WmFriMzb6' };
+      return getODataManager().auth(action.request, action.response);
    }
 });
 app.use(bodyParser.json());

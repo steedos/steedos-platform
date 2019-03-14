@@ -3,6 +3,7 @@ declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;
 declare var SteedosOData: any;
+declare var Accounts: any;
 
 /**
  * ConnectionManager is used to store and manage multiple orm connections.
@@ -58,6 +59,10 @@ export class CreatorManager {
 
   getODataNextLinkPath(spaceId: string, objectName: string) {
     return SteedosOData.getODataNextLinkPath(spaceId, objectName);
+  }
+
+  hashLoginToken(authToken: string|string[]) {
+    return Accounts._hashLoginToken(authToken);
   }
 
 

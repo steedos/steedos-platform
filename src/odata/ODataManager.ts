@@ -1,5 +1,9 @@
 import { getCreator } from "../index";
 import _ = require('underscore');
+import { Request, Response } from "express";
+
+var Cookies = require("cookies");
+var Fiber = require('fibers');
 
 export class ODataManager {
   setErrorMessage(statusCode: number, collection: string = '', key: string = '', action: string = '') {
@@ -245,6 +249,20 @@ export class ODataManager {
       statusCode: statusCode,
       body: body
     };
+  }
+
+  auth(request: Request, response: Response) {
+    let cookies = new Cookies(request, response);
+    let userId: string | string[] = request.headers['x-user-id'] || cookies.get("X-User-Id");
+    let authToken: string | string[] = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
+    let collection = getCreator().getCollection('users');
+    let searchQuery = { _id: userId };
+    searchQuery['services.resume.loginTokens.hashedToken'] = getCreator().hashLoginToken(authToken);
+    let user = null;
+    Fiber(function () {
+      user = collection.findOne(searchQuery, { services: 0 })
+    }).run();
+    return user;
   }
 
 }

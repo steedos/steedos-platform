@@ -19,6 +19,7 @@
     "@types/underscore": "^1.8.13",
     "body-parser": "^1.18.1",
     "chai": "^4.2.0",
+    "cookies": "^0.6.1",
     "express": "^4.15.4",
     "fibers": "^3.1.1",
     "js-yaml": "3.12.2",

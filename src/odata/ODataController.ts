@@ -16,6 +16,7 @@ export class ODataController {
   @Get("/api/odata/v4/:spaceId/:objectName")
   async getAll(@CurrentUser({ required: true }) user: { _id: string }, @Params() urlParams: any, @QueryParams() queryParams: any) {
     try {
+      console.log(user);
       let userId = user._id;
       let key = urlParams.objectName;
       let spaceId = urlParams.spaceId;
