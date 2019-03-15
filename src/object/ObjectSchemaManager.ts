@@ -7,8 +7,7 @@ import {ObjectSchemaOptions} from "./ObjectSchemaOptions";
 import { JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from '../validator';
 
-declare var Creator: any;
-
+import { getCreator } from '../index';
 /**
  * ConnectionManager is used to store and manage multiple orm connections.
  * It also provides useful factory methods to simplify connection creation.
@@ -63,7 +62,6 @@ export class ObjectSchemaManager {
             if(extendSchema){
                 let objectSchema = new ObjectSchema(options);
                 objectSchema.extend(extendSchema.schema)
-                console.log('objectSchema.schema---------------------->',objectSchema.schema);
                 this.objectSchemas.push(objectSchema);
                 this.registerCreator(objectSchema.schema);
             }else{
@@ -94,6 +92,7 @@ export class ObjectSchemaManager {
     registerCreator(json: JsonMap) {
         let _id = getString(json, "_id") || getString(json, "name");
         if (_id) {
+            let Creator = getCreator();
             if ((typeof Creator !== "undefined") && Creator.Objects) {
                 Creator.Objects[_id] = json;
                 if (typeof Creator.fiberLoadObjects == 'function') {

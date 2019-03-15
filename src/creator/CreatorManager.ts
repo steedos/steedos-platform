@@ -11,6 +11,12 @@ declare var Accounts: any;
  */
 export class CreatorManager {
 
+  Objects: [] = [];
+
+  constructor(){
+    this.Objects = Creator.Objects
+  }
+
   getCollection(objectName: string, spaceId: string = '') {
     return Creator.getCollection(objectName, spaceId);
   }
@@ -69,5 +75,8 @@ export class CreatorManager {
     return SteedosOData.getMetaDataPath(spaceId);
   }
 
+  fiberLoadObjects(object){
+    return Creator.fiberLoadObjects(object);
+  }
 
 }
