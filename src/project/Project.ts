@@ -1,5 +1,9 @@
 import { resolveProjectPath } from '../util/internal';
 import ProjectJson from './ProjectJson';
+import { defaults } from '@salesforce/kit';
+import { JsonMap } from '@salesforce/ts-types';
+
+import { ConfigAggregator } from '../config/configAggregator';
 
 
 export default class Project {
@@ -46,8 +50,8 @@ export default class Project {
   private projectConfig: any; // tslint:disable-line:no-any
 
   // Dynamically referenced in retrieveSfdxProjectJson
-  private sfdxProjectJson!: SfdxProjectJson;
-  private sfdxProjectJsonGlobal!: SfdxProjectJson;
+  private sfdxProjectJson!: ProjectJson;
+  private sfdxProjectJsonGlobal!: ProjectJson;
 
 
   /**
