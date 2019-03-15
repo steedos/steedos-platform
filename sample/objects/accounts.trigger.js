@@ -1,23 +1,30 @@
-var accountTriggers = {
-    object_name: "accounts",
-    beforeInsert: function(){
+import Trigger from "@steedos/core"
 
-    },
-    beforeUpdate: function(){
+class accountTriggers extends Trigger {
 
-    },
-    beforeDelete: function(){
+	name = "foo";
+    object_name = "accounts";
 
-    },
-    afterInsert: function(){
+    beforeInsert(userId, doc) {
 
-    },
-    afterUpdate: function(){
+	}
 
-    },
-    afterDelete: function(){
+    beforeUpdate(userId, doc, fieldNames, modifier, options) {
 
-    },
+	}
+
+    beforeDelete(userId, doc) {
+
+	}
+
+    afterInsert(userId, doc) {
+	}
+
+    afterUpdate(userId, doc, fieldNames, modifier, options) {
+	}
+    
+    afterDelete(userId, doc) {
+	}
 }
 
 export default accountTriggers;
