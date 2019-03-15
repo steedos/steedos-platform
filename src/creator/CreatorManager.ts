@@ -61,7 +61,7 @@ export class CreatorManager {
     return SteedosOData.getODataContextPath(spaceId, objectName);
   }
 
-  VERSION: string = SteedosOData.VERSION;
+  VERSION: string = '4.0';
 
   getODataNextLinkPath(spaceId: string, objectName: string) {
     return SteedosOData.getODataNextLinkPath(spaceId, objectName);
