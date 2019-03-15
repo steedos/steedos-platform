@@ -1,5 +1,6 @@
 import { ObjectSchemaOptions } from "./ObjectSchemaOptions";
 var util = require("../util");
+var clone = require("clone")
 /**
  * Connection is a single database ORM connection to a specific database.
  * Its not required to be a database connection, depend on database type it can create connection pool.
@@ -8,7 +9,9 @@ var util = require("../util");
 export class ObjectSchema {
 
     extend(options: ObjectSchemaOptions) {
-        util.extend(this.schema, options);
+        let destination = clone(options);
+        util.extend(destination, this.schema);
+        this.schema = destination;
     }
 
     // -------------------------------------------------------------------------
@@ -33,5 +36,5 @@ export class ObjectSchema {
      * ObjectSchema options.
      */
     readonly options: ObjectSchemaOptions[] = [];
-    readonly schema: ObjectSchemaOptions;
+    schema: ObjectSchemaOptions;
 }

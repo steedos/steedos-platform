@@ -57,20 +57,31 @@ export class ObjectSchemaManager {
         this.validate(options);
 
         // check if such connection is already registered
-        const existSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.name || "default"));
-        if (existSchema) {
+        let existSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.name || "default"));
+        if(options.extend){
+            let extendSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.extend || "default"));
+            if(extendSchema){
+                let objectSchema = new ObjectSchema(options);
+                objectSchema.extend(extendSchema.schema)
+                console.log('objectSchema.schema---------------------->',objectSchema.schema);
+                this.objectSchemas.push(objectSchema);
+                this.registerCreator(objectSchema.schema);
+            }else{
+                throw new Error("Object schema not exists");
+            }
+        }else if (existSchema) {
             // if its registered but closed then simply remove it from the manager
             if (!options.extend)
                 throw new Error("Object schema exists, do you want to extend?");
-            else
-                existSchema.extend(options);
-                this.registerCreator(existSchema.schema);
+            // else{
+            //     existSchema.extend(options);
+            //     this.registerCreator(existSchema.schema);
+            // }
         }else{
             // create a new objectSchema
-            const objectSchema = new ObjectSchema(options);
+            let objectSchema = new ObjectSchema(options);
             this.objectSchemas.push(objectSchema);
             this.registerCreator(objectSchema.schema);
-
             return objectSchema;
         }
     };
