@@ -257,7 +257,7 @@ export class ODataManager {
     let collection = getCreator().getCollection('users');
     let searchQuery = { _id: userId };
     searchQuery['services.resume.loginTokens.hashedToken'] = getCreator().hashLoginToken(authToken);
-    let user = {};
+    let user = null;
     user = await collection.rawCollection().findOne(searchQuery, { projection: { services: 0 } });
     return user;
   }

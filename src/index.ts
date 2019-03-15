@@ -22,3 +22,4 @@ export function getCreator(): CreatorManager{
 }
 
 export { Module } from "./module";
+exports.ODataRouter = require('./odata/ODataRouter');
