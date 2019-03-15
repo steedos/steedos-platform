@@ -449,7 +449,6 @@ Meteor.startup ->
 							body: setErrorMessage(404,collection,key,'get')
 						}
 				else
-					console.error e
 					return{
 						statusCode: 403
 						body: setErrorMessage(403,collection,key,'get')
