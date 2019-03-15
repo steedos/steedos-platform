@@ -1,7 +1,10 @@
-import Steedos from "../../";
+var Steedos = require("../../");
 
 class AccountSchema extends Steedos.Object {
-    name = "accounts";
+
+    constructor() {
+        this.name = "accounts"
+    }
 
     checkExists() {
 
@@ -9,4 +12,4 @@ class AccountSchema extends Steedos.Object {
 }
 
 
-export default AccountSchema;
+// module.exports = AccountSchema;

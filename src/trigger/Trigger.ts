@@ -13,16 +13,17 @@ export abstract class Trigger {
     // -------------------------------------------------------------------------
 
     constructor(options: JsonMap) {
+        if (!this.listenTo())
+            throw new Error("You must specify listenTo() for this trigger.")
     }
+
+	listenTo(){
+        return null
+    };
 
     // -------------------------------------------------------------------------
     // Public Readonly Properties
     // -------------------------------------------------------------------------
-    
-    /**
-     * Trigger name.
-     */
-    readonly name: string; 
     
     /**
     * Object name.
@@ -33,6 +34,7 @@ export abstract class Trigger {
 
 	}
 
+    
     /* 
     Fired before the doc is updated.
 
