@@ -1,4 +1,4 @@
-import { ObjectSchemaOptions } from "./ObjectSchemaOptions";
+import ObjectSchemaOptions from "./ObjectSchemaOptions";
 var util = require("../util");
 var clone = require("clone")
 /**
@@ -6,7 +6,7 @@ var clone = require("clone")
  * Its not required to be a database connection, depend on database type it can create connection pool.
  * You can have multiple connections to multiple databases in your application.
  */
-export class ObjectSchema {
+export default class ObjectSchema {
 
     extend(options: ObjectSchemaOptions) {
         let destination = clone(options);

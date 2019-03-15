@@ -1,6 +1,6 @@
-import Trigger from "@steedos/core"
+import Steedos from "../../";
 
-class accountTriggers extends Trigger {
+class accountTriggers extends Steedos.Trigger {
 
 	name = "foo";
     object_name = "accounts";

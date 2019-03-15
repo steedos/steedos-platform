@@ -1,6 +1,6 @@
-import {ObjectSchema} from "../../src";
+import Steedos from "../../";
 
-class AccountSchema extends ObjectSchema {
+class AccountSchema extends Steedos.Object {
     name = "accounts";
 
     checkExists() {

@@ -1,8 +1,10 @@
 var path = require("path");
 var util = require("../util");
+import { getFromContainer } from "../container";
 
-import {ObjectSchema} from "./ObjectSchema";
-import {ObjectSchemaOptions} from "./ObjectSchemaOptions";
+
+import ObjectSchema from "./ObjectSchema";
+import ObjectSchemaOptions from "./ObjectSchemaOptions";
 
 import { JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from '../validator';
@@ -12,7 +14,7 @@ import { getCreator } from '../index';
  * ConnectionManager is used to store and manage multiple orm connections.
  * It also provides useful factory methods to simplify connection creation.
  */
-export class ObjectSchemaManager {
+export default class ObjectSchemaManager {
 
     // -------------------------------------------------------------------------
     // Protected Properties
@@ -121,4 +123,13 @@ export class ObjectSchemaManager {
     }
 
 
+}
+
+
+
+/**
+ * Gets a ObjectSchemaManager which creates object schema.
+ */
+export function getObjectSchemaManager(): ObjectSchemaManager {
+    return getFromContainer(ObjectSchemaManager);
 }
