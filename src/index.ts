@@ -10,7 +10,7 @@ export { ObjectSchemaOptions } from './object/ObjectSchemaOptions';
 
 export { Apps, AppManager } from './app';
 export { Reports, ReportManager } from './report';
-export { Triggers, TriggerManager } from './trigger';
+export { Trigger } from './trigger/Trigger';
 export { Validators, ValidatorManager } from './validator';
 
 require('./validator').ValidatorManager.loadCoreValidators();
