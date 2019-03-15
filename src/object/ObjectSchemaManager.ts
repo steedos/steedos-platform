@@ -95,9 +95,7 @@ export class ObjectSchemaManager {
             let Creator = getCreator();
             if ((typeof Creator !== "undefined") && Creator.Objects) {
                 Creator.Objects[_id] = json;
-                if (typeof Creator.fiberLoadObjects == 'function') {
-                    Creator.fiberLoadObjects(json);
-                }
+                Creator.fiberLoadObjects(json);
             }
         }
     };

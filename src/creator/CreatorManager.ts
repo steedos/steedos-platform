@@ -1,4 +1,4 @@
-
+import { JsonMap } from '@salesforce/ts-types';
 declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;
@@ -11,7 +11,7 @@ declare var Accounts: any;
  */
 export class CreatorManager {
 
-  Objects: [] = [];
+  Objects: JsonMap = {};
 
   constructor(){
     this.Objects = Creator.Objects
@@ -76,7 +76,9 @@ export class CreatorManager {
   }
 
   fiberLoadObjects(object){
-    return Creator.fiberLoadObjects(object);
+    if (typeof Creator.fiberLoadObjects == 'function') {
+      return Creator.fiberLoadObjects(object);
+    }
   }
 
 }
