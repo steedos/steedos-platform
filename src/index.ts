@@ -1,6 +1,4 @@
 import "reflect-metadata";
-export { Connection, getConnection, createConnection } from "typeorm";
-export { ConnectionManager, getConnectionManager } from "typeorm";
 
 import { getFromContainer } from "./container";
 import { ObjectSchemaManager } from "./object/ObjectSchemaManager";

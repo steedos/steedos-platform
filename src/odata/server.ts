@@ -1,6 +1,6 @@
 import * as bodyParser from "body-parser";
 import "reflect-metadata"; // this shim is required
-import { createConnection } from "typeorm";
+// import { createConnection } from "typeorm";
 
 import { createExpressServer, Action } from "routing-controllers";
 import { ODataController } from "./ODataController";
@@ -15,8 +15,8 @@ export function getODataManager(): ODataManager {
    return getFromContainer(ODataManager);
 }
 
-createConnection("default").then(connection => {
-});
+// createConnection("default").then(connection => {
+// });
 
 // creates express app, registers all controller routes and returns you express app instance
 const app = createExpressServer({
