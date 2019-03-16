@@ -5,6 +5,10 @@
     "packages/*",
     "apps/*"
   ],
+  "scripts": {
+    "start": "npx lerna bootstrap",
+    "publish": "npx lerna publish --registry https://registry.npmjs.org"
+  },
   "devDependencies": {
     "lerna": "^3.13.1"
   }
