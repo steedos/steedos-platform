@@ -1,1 +1,1 @@
-require('@steedos/core').Module.load(__dirname);
+require('@steedos/core').Project.load(__dirname);
