@@ -36,9 +36,6 @@ router.get('/:spaceId/:objectName', function (req: Request, res: Response) {
     let userId = req.user._id;
     let urlParams = req.params;
     let queryParams = req.query;
-    console.log('userId: ', userId);
-    console.log('urlParams: ', urlParams);
-    console.log('queryParams: ', queryParams);
 
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
@@ -232,7 +229,6 @@ router.get('/:spaceId/:objectName/recent', function (req: Request, res: Response
     let userId = req.user._id;
     let urlParams = req.params;
     let queryParams = req.query;
-    console.log('get=>/:spaceId/:objectName/recent');
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
     let object = getCreator().getObject(key, spaceId);
@@ -363,7 +359,6 @@ router.post('/:spaceId/:objectName', function (req: Request, res: Response) {
     let userId = req.user._id;
     let urlParams = req.params;
     let bodyParams = req.body;
-    console.log('post=>/:spaceId/:objectName');
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
     let object = getCreator().getObject(key, spaceId);
@@ -409,18 +404,18 @@ router.post('/:spaceId/:objectName', function (req: Request, res: Response) {
     res.send(getODataManager().handleError(error));
   }
 })
-router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
+router.get('/:spaceId/:objectName/:_id', function (req: Request, res: Response) {
   let userId = req.user._id;
   let urlParams = req.params;
   let queryParams = req.query;
-  console.log('get=>/:spaceId/:objectName/:id');
   let key = urlParams.objectName;
   let spaceId = urlParams.spaceId;
+  let recordId = urlParams._id;
   let setErrorMessage = getODataManager().setErrorMessage;
   if (key.indexOf("(") > -1) {
     let body = {};
     let collectionInfo = key;
-    let fieldName = urlParams._id.split('_expand')[0];
+    let fieldName = recordId.split('_expand')[0];
     let collectionInfoSplit = collectionInfo.split('(');
     let collectionName = collectionInfoSplit[0];
     let id = collectionInfoSplit[1].split('\'')[1];
@@ -464,7 +459,7 @@ router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
           return values.push(obj);
         });
         body['value'] = values;
-        body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + urlParams._id);
+        body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       } else {
         body = lookupCollection.findOne({
           _id: fieldValue
@@ -477,7 +472,7 @@ router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
         body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + field.reference_to + "/$entity");
       }
     } else {
-      body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + urlParams._id);
+      body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       body['value'] = fieldValue;
     }
     getODataManager().setHeaders(res);
@@ -513,7 +508,7 @@ router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
             includes: []
           };
         }
-        createQuery.query._id = urlParams._id;
+        createQuery.query._id = recordId;
         if (key === 'cfs.files.filerecord') {
           createQuery.query['metadata.space'] = spaceId;
         } else if (key !== 'spaces') {
@@ -553,7 +548,7 @@ router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
               }
             });
             isAllowed = collection.findOne({
-              _id: urlParams._id,
+              _id: recordId,
               "$or": shares
             }, {
                 fields: {
@@ -593,14 +588,14 @@ router.get('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
     }
   }
 })
-router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
+router.put('/:spaceId/:objectName/:_id', function (req: Request, res: Response) {
   try {
     let userId = req.user._id;
     let urlParams = req.params;
     let bodyParams = req.body;
-    console.log('put=>/:spaceId/:objectName/:id');
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
+    let recordId = urlParams._id;
     let object = getCreator().getObject(key, spaceId);
     let setErrorMessage = getODataManager().setErrorMessage;
     if (!(object != null ? object.enable_api : void 0)) {
@@ -609,7 +604,7 @@ router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
         body: setErrorMessage(401)
       });
     }
-    let collection = getCreator().getCollection(key, urlParams.spaceId);
+    let collection = getCreator().getCollection(key, spaceId);
     if (!collection) {
       res.send({
         statusCode: 404,
@@ -618,11 +613,11 @@ router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
     }
     let permissions = getCreator().getObjectPermissions(spaceId, userId, key);
     if (key === "users") {
-      var record_owner = urlParams._id;
+      var record_owner = recordId;
     } else {
       let ref = null;
       var record_owner = (ref = collection.findOne({
-        _id: urlParams._id
+        _id: recordId
       }, {
           fields: {
             owner: 1
@@ -631,7 +626,7 @@ router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
     }
     let ref1 = null;
     let companyId = (ref1 = collection.findOne({
-      _id: urlParams._id
+      _id: recordId
     }, {
         fields: {
           company_id: 1
@@ -641,9 +636,9 @@ router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
     let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner === userId) || (permissions.modifyCompanyRecords && getODataManager().isSameCompany(spaceId, userId, companyId));
 
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, urlParams._id, object);
+      getODataManager().checkGlobalRecord(collection, recordId, object);
       let selector = {
-        _id: urlParams._id,
+        _id: recordId,
         space: spaceId
       };
       if (spaceId === 'guest' || spaceId === 'common' || key === "users") {
@@ -685,13 +680,13 @@ router.put('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
     res.send(getODataManager().handleError(error));
   }
 })
-router.delete('/:spaceId/:objectName/:id', function (req: Request, res: Response) {
+router.delete('/:spaceId/:objectName/:_id', function (req: Request, res: Response) {
   try {
     let userId = req.user._id;
     let urlParams = req.params;
     let key = urlParams.objectName;
-    console.log('delete=>/:spaceId/:objectName/:id');
     let spaceId = urlParams.spaceId;
+    let recordId = urlParams._id;
     let object = getCreator().getObject(key, spaceId);
     let setErrorMessage = getODataManager().setErrorMessage;
     if (!(object != null ? object.enable_api : void 0)) {
@@ -700,16 +695,16 @@ router.delete('/:spaceId/:objectName/:id', function (req: Request, res: Response
         body: setErrorMessage(401)
       });
     }
-    let collection = getCreator().getCollection(key, urlParams.spaceId);
+    let collection = getCreator().getCollection(key, spaceId);
     if (!collection) {
       res.send({
         statusCode: 404,
         body: setErrorMessage(404, collection, key)
       });
     }
-    let permissions = getCreator().getObjectPermissions(urlParams.spaceId, userId, key);
+    let permissions = getCreator().getObjectPermissions(spaceId, userId, key);
     let recordData = collection.findOne({
-      _id: urlParams._id
+      _id: recordId
     }, {
         fields: {
           owner: 1,
@@ -720,9 +715,9 @@ router.delete('/:spaceId/:objectName/:id', function (req: Request, res: Response
     let companyId = recordData != null ? recordData.company_id : void 0;
     let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, urlParams._id, object);
+      getODataManager().checkGlobalRecord(collection, recordId, object);
       let selector = {
-        _id: urlParams._id,
+        _id: recordId,
         space: spaceId
       };
       if (spaceId === 'guest') {
