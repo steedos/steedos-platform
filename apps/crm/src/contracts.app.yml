@@ -1,7 +1,6 @@
 _id: contracts
 name: 合同
-description: Contracts App
-icon_slds: metrics
+description: 合同、付款、任务、统计
 is_creator: true
 objects: 
   - contracts
