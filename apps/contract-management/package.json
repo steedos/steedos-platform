@@ -1,0 +1,25 @@
+{
+  "name": "@steedos-app/steedos-contracts-app",
+  "version": "1.0.0",
+  "description": "contract-management-system",
+  "main": "steedos-app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steedos/steedos-contracts-app.git"
+  },
+  "author": "Jack Zhuang",
+  "license": "ISC",
+  "dependencies": {
+    "@steedos/core": "^0.0.6",
+    "@steedos/meteor-bundle-runner": "^1.1.4",
+    "@steedos/steedos-crm-app": "^1.1.0"
+  },
+  "devDependencies": {},
+  "bugs": {
+    "url": "https://github.com/steedos/steedos-contracts-app/issues"
+  },
+  "homepage": "https://github.com/steedos/steedos-contracts-app#readme"
+}
