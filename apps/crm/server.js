@@ -4,7 +4,8 @@ server.Fiber(function () {
     server.Profile.run("Server startup", function () {
         server.loadServerBundles();
         server.callStartupHooks();
-        require("@steedos/steedos-crm-app");
+        require("@steedos/object-accounts");
+        require("@steedos/object-contracts");
         require("./src");
         server.runMain();
     });

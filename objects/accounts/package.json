@@ -1,0 +1,28 @@
+{
+  "name": "@steedos/object-accounts",
+  "version": "0.0.1",
+  "description": "CRM app sample",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steedos/steedos-crm-app.git"
+  },
+  "author": "Jack Zhuang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steedos/steedos-crm-app/issues"
+  },
+  "dependencies": {
+    "@steedos/core": "^0.0.6"
+  },
+  "homepage": "https://github.com/steedos/steedos-crm-app#readme",
+  "steedos": {
+    "plugins": []
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

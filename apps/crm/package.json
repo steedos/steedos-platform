@@ -1,8 +1,8 @@
 {
-  "name": "@steedos-app/steedos-contracts-app",
+  "name": "@steedos/app-contracts",
   "version": "1.0.0",
   "description": "contract-management-system",
-  "main": "steedos-app/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +15,8 @@
   "dependencies": {
     "@steedos/core": "^0.0.6",
     "@steedos/meteor-bundle-runner": "^1.1.4",
-    "@steedos/steedos-crm-app": "^1.1.0"
+    "@steedos/object-accounts": "^0.0.1",
+    "@steedos/object-contracts": "^0.0.1"
   },
   "devDependencies": {},
   "bugs": {

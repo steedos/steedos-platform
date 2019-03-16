@@ -3,10 +3,11 @@
   "private": true,
   "workspaces": [
     "packages/*",
+    "objects/*",
     "apps/*"
   ],
   "scripts": {
-    "start": "npx lerna bootstrap",
+    "bootstrap": "npx lerna bootstrap",
     "publish": "npx lerna publish --registry https://registry.npmjs.org"
   },
   "devDependencies": {

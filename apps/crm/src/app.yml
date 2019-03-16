@@ -1,0 +1,11 @@
+_id: crm
+name: 客户管理
+description: 客户、联系人、任务、备忘
+icon_slds: event
+is_creator: true
+objects: 
+  - accounts
+  - contacts
+  - tasks
+  - events
+  - reports
