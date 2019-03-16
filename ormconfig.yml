@@ -1,4 +1,0 @@
-default: # default connection
-    host: "localhost"
-    database: "test"
-    type: "mongodb"
