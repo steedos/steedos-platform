@@ -48,7 +48,8 @@
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "bunyan-sfdx-no-dtrace": "^1.8.2"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

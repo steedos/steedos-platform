@@ -2,11 +2,15 @@ import { resolveProjectPath } from '../util/internal';
 import ProjectJson from './ProjectJson';
 import { defaults } from '@salesforce/kit';
 import { JsonMap } from '@salesforce/ts-types';
-
+import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
+import {AppManager, getObjectSchemaManager} from '..';
 
-export default class Project {
+import fs = require("fs");
+import path = require("path");
+
+class Project {
   /**
    * Get a Project from a given path or from the working directory.
    * @param path The path of the project.
@@ -112,4 +116,66 @@ export default class Project {
 
     return this.projectConfig;
   }
+
+  /**
+   * 1 加载 .app.yml 文件
+   * 2 加载 .object.yml 文件
+   * 3 加载 .trigger.js 文件
+   * @param {string} directoryPath 项目文件夹路径
+   * @memberof Project
+   */
+  public load(directoryPath: string): void{
+    console.log('project load', directoryPath);
+    let fileStorage: any = {
+      appFilesPath: [],
+      objectFilesPath: [],
+      triggerFilesPath: []
+    }
+    this.scanFiles(fileStorage, directoryPath)
+
+    fileStorage.appFilesPath.forEach((path: string) => {
+      AppManager.loadFile(path)
+    });
+
+    
+    let objectSchemaManager = getObjectSchemaManager()
+    fileStorage.objectFilesPath.forEach((path: string) => {
+      objectSchemaManager.createFromFile(path)
+    });
+
+    //TODO 处理trigger
+
+    console.log('fileStorage', fileStorage);
+  }
+
+  /**
+   * 通过递归方式扫描{directoryPath}下的文件，将所有的.app.yml，.object.yml，.trigger.js文件路径写入storage对象
+   * @private
+   * @param {*} storage 文件存储对象
+   * @param {string} directoryPath 项目文件夹路径
+   * @memberof Project
+   */
+  private scanFiles(storage: any, directoryPath: string): void{
+    if (!fs.existsSync(directoryPath) || !fs.statSync(directoryPath).isDirectory())
+      throw new Error("Module folder not found：" + directoryPath);
+    let sub: string[] = fs.readdirSync(directoryPath)
+    sub.forEach((s)=>{
+      let subDirectory = path.join(directoryPath, s)
+      if (fs.statSync(subDirectory).isDirectory()){
+        this.scanFiles(storage, subDirectory);
+      }else{
+        if(s.endsWith('.app.yml')){
+          storage.appFilesPath.push(subDirectory)
+        }else if(s.endsWith('.object.yml')){
+          storage.objectFilesPath.push(subDirectory)
+        }else if(s.endsWith('.trigger.js')){
+          storage.triggerFilesPath.push(subDirectory)
+        }else{
+          console.warn('Unloaded file', subDirectory)
+        }
+      }
+    })
+  }
 }
+
+export default getFromContainer(Project)

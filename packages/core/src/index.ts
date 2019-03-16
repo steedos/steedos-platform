@@ -12,6 +12,8 @@ export { Reports, ReportManager } from './report';
 export { Trigger } from './trigger/Trigger';
 export { Validators, ValidatorManager } from './validator';
 
+export { default as Project } from './project/Project';
+
 require('./validator').ValidatorManager.loadCoreValidators();
 
 /**
