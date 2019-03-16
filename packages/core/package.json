@@ -8,8 +8,9 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "debug": "nodemon --inspect server.js",
+    "start": "ts-node server.ts",
+    "dev": "nodemon server.ts",
+    "debug": "nodemon --inspect server.ts",
     "compile": "tsc",
     "test": "mocha test/**/*.ts",
     "publish": "npm publish --registry https://registry.npmjs.org"
