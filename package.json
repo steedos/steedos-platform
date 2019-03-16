@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "compile": "tsc",
     "test": "mocha test/**/*.ts",
     "publish": "npm publish --registry https://registry.npmjs.org"
