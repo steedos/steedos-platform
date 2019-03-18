@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Reporter from '../../reporter';
 
 class ReportDesigner extends Component {
     render() {
@@ -20,8 +21,9 @@ class ReportDesigner extends Component {
 
         console.log('Load report from url');
         // report.loadFile('reports/SimpleList.mrh');
-        report.loadFile('/api/v2/reports/test');
-
+        // report.loadFile('/api/v2/reports/test');
+        let simpleList = Reporter.getSimpleList();
+        report.load(simpleList);
 
         console.log('Edit report template in the designer');
         designer.report = report;  
