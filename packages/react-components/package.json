@@ -1,7 +1,7 @@
 {
-  "name": "@steedos/report-components",
+  "name": "@steedos/react-components",
   "version": "0.0.1",
-  "description": "Report components for steedos",
+  "description": "React components for steedos",
   "main": "lib/index.js",
   "scripts": {
     "start": "razzle start",
@@ -17,14 +17,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/steedos/steedos-stimulsoft-reports.git"
+    "url": "git+https://github.com/steedos/steedos-core.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/steedos/steedos-stimulsoft-reports/issues"
+    "url": "https://github.com/steedos/steedos-core/issues"
   },
-  "homepage": "https://github.com/steedos/steedos-stimulsoft-reports#readme",
+  "homepage": "https://github.com/steedos/steedos-core#readme",
   "dependencies": {
     "@salesforce-ux/design-system": "^2.8.3",
     "@salesforce/design-system-react": "^0.9.6",
