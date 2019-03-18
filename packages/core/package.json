@@ -39,7 +39,8 @@
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
     "simpl-schema": "^1.5.5",
-    "underscore": "1.5.2"
+    "underscore": "1.5.2",
+    "@steedos/stimulsoft": "file:../stimulsoft"
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
