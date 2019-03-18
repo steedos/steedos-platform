@@ -8,6 +8,7 @@ server.Fiber(function () {
         Project.load(__dirname + "/../../objects/accounts/src");
         Project.load(__dirname + "/../../objects/contracts/src");
         Project.load(__dirname + "/../../apps/crm/src");
+        Project.load(__dirname + "/../standard-objects"); 
 
         //require("../../apps/crm/src")
         server.runMain();
