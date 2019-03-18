@@ -1,0 +1,32 @@
+{
+  "name": "NodejsDataAdapters",
+  "version": "0.0.2",
+  "description": "NodejsDataAdapters",
+  "main": "app.js",
+  "author": "Stimulsoft (http://www.stimulsoft.com)",
+  "dependencies": {
+    "mssql": "^4.1.0",
+    "mysql": "^2.15.0",
+    "node-firebird": "^0.8.4",
+    "pg": "^4.5.1"
+  },
+  "maintainers": [
+    {
+      "name": "Stimulsoft",
+      "email": "info@stimulsoft.com",
+      "url": "http://www.stimulsoft.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Stimulsoft",
+      "email": "info@stimulsoft.com",
+      "url": "http://www.stimulsoft.com"
+    }
+  ],
+  "license": "Closed Source",
+  "bugs": {
+    "url": "https://github.com/stimulsoft/Reports.JS/issues"
+  },
+  "homepage": "https://github.com/stimulsoft/Reports.JS#readme"
+}
