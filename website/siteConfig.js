@@ -38,8 +38,12 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'README', label: 'Docs'},
-    {blog: true, label: 'Blog'},
+    {doc: 'README', label: '快速开始'},
+    {blog: true, label: 'Blog'},,
+    {
+      href: 'https://github.com/steedos/steedos-core',
+      label: 'GitHub',
+    },
   ],
 
   // If you have users set above, you add it here:
