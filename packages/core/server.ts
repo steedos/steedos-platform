@@ -5,11 +5,15 @@ server.Fiber(function () {
     server.Profile.run("Server startup", function () {
         server.loadServerBundles();
         server.callStartupHooks();
-        Project.load(__dirname + "/../../objects/accounts/src");
-        Project.load(__dirname + "/../../objects/contracts/src");
-        Project.load(__dirname + "/../../apps/crm/src");
-        Project.load(__dirname + "/../standard-objects"); 
-
+        try {
+            Project.load(__dirname + "/../../objects/accounts/src");
+            Project.load(__dirname + "/../../objects/contracts/src");
+            Project.load(__dirname + "/../../apps/crm/src");
+            Project.load(__dirname + "/../standard-objects");
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
         //require("../../apps/crm/src")
         server.runMain();
     });
