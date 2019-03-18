@@ -1,4 +1,4 @@
-import express from 'express';
+var express = require('express');
 
 var router = express.Router();
 
@@ -810,4 +810,4 @@ router.get('/:report_id', function (req, res) {
   res.send(simpleList);
 })
 
-export default router;
+module.exports = router;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Reporter from '../../reporter';
 
+
 class ReportDesigner extends Component {
     render() {
         return <div id="report-designer"></div>;
