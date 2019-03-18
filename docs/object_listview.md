@@ -46,4 +46,4 @@ list_views:
 - 用户可以拖拉调整字段宽度或字段显示的先后顺序
 - 用户可以在过滤器中，基于过滤字段（默认和自定义的）来设置筛选条件，显示过滤后的对象记录
 
-![电脑、手机界面展示](images/mac_ipad_iphone_list.png)
+![电脑、手机界面展示](assets/mac_ipad_iphone_list.png)

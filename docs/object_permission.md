@@ -45,4 +45,4 @@ if po.modifyCompanyRecords
 - 禁用关联对象unrelated_objects： 用户在记录相关列表中，看不到对应的子表
 - 禁用操作disabled_actions: 用户在记录显示页面中，看不到对应的操作按钮
 
-![对象权限设置页面](images/permission_objects.png)
+![对象权限设置页面](assets/permission_objects.png)

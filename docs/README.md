@@ -38,7 +38,7 @@ Creator把这些共性需求标准化，通过配置的业务表单、配置业�
 - [修改历史](record_history.md): 自动记录用户对业务数据的修改历史。
 - [假删除](record_trash.md): 通过设置，删除某些对象时，并非在数据库里真删除、而是打上已删除的标记，这样误删除的记录有恢复的可能。
 
-![电脑、手机界面展示](images/mac_ipad_iphone_home.png)
+![电脑、手机界面展示](assets/mac_ipad_iphone_home.png)
 
 ### 自动生成各种客户端
 除了用电脑操作Creator中的业务数据，您还可以随时通过手机、平板、甚至Excel访问Creator中的业务数据。
@@ -85,13 +85,13 @@ Creator把这些共性需求标准化，通过配置的业务表单、配置业�
 - [界面规范](https://www.lightningdesignsystem.com/guidelines/overview/)
 
 ### 记录显示
-![电脑、手机记录显示界面展示](images/mac_mobile_view.jpg)
+![电脑、手机记录显示界面展示](assets/mac_mobile_view.jpg)
 
 ### 编辑记录
-![电脑、手机编辑记录界面展示](images/ipad_iphone_edit.jpg)
+![电脑、手机编辑记录界面展示](assets/ipad_iphone_edit.jpg)
 
 ### 搜索
-![电脑、手机搜索界面展示](images/mac_mobile_search.jpg)
+![电脑、手机搜索界面展示](assets/mac_mobile_search.jpg)
 
 ### 报表
-![电脑、手机报表界面展示](images/mac_mobile_report.jpg)
+![电脑、手机报表界面展示](assets/mac_mobile_report.jpg)

@@ -20,16 +20,16 @@
 - 报表显示页面
 
 ### 应用主界面
-![电脑、手机界面展示](images/mac_mobile_list.png)
+![电脑、手机界面展示](assets/mac_mobile_list.png)
 
 ### 记录显示
-![电脑、手机记录显示界面展示](images/mac_mobile_view.jpg)
+![电脑、手机记录显示界面展示](assets/mac_mobile_view.jpg)
 
 ### 编辑记录
-![电脑、手机编辑记录界面展示](images/ipad_iphone_edit.jpg)
+![电脑、手机编辑记录界面展示](assets/ipad_iphone_edit.jpg)
 
 ### 搜索
-![电脑、手机搜索界面展示](images/mac_mobile_search.jpg)
+![电脑、手机搜索界面展示](assets/mac_mobile_search.jpg)
 
 ### 报表
-![电脑、手机报表界面展示](images/mac_mobile_report.jpg)
+![电脑、手机报表界面展示](assets/mac_mobile_report.jpg)

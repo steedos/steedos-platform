@@ -5,7 +5,7 @@ Creator默认提供了很多功能，可以用于客户、合同、服务等。�
 
 对象可以看作数据库中的表，在对象管理界面可以创建自定义对象。无论是标准的对象还是自定义对象，Creator都为它们提供完整的操作界面，帮助用户进行新建、编辑、存储、浏览。
 
-![电脑、手机界面展示](images/car_object.png)
+![电脑、手机界面展示](assets/car_object.png)
 
 ### 定义对象
 您可以创建 {object_name}.object.yml 文件，定义对象。您可以参考Steedos定义的 [标准对象](../packages/standard-objects)。

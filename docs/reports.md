@@ -5,7 +5,7 @@ Creator内置功能强大的报表统计与分析功能。通过简单设定，�
 - 列表
 - 分组报表
 - 二维表
-![电脑、手机界面展示](images/mac_mobile_report.jpg)
+![电脑、手机界面展示](assets/mac_mobile_report.jpg)
 
 ### 报表基本属性
 - 报表名称
@@ -41,4 +41,4 @@ Creator内置功能强大的报表统计与分析功能。通过简单设定，�
 - 统计字段：选中的字段显示在中间统计区域中
 
 ### 编辑报表参数
-![电脑、手机界面展示](images/mac_ipad_report.jpg)
+![电脑、手机界面展示](assets/mac_ipad_report.jpg)

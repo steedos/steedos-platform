@@ -13,7 +13,7 @@
 
 筛选系统查询选项的 OData 规格描述了用于创建要在筛选器中计算的表达式的运算符。Microsoft Dynamics 365 使用所有逻辑运算符和可用函数的子集，但是不支持使用算术运算符。 筛选器可以使用用括号指示的分组条件。 时间值的比较必须使用以下格式：datetime’<time value>’，例如 datetime'2010-07-15' 或 datetime'2010-07-15T16:19:54Z'。
 以下列出 odata query支持的运算符。
-	![](images/filter.png)
+	![](assets/filter.png)
 
 ### $orderby
 确定使用哪些值对记录集合进行排序。 默认情况下，顺序为升序。 使用 desc 使顺序反向或使用 asc 显式设置默认值。

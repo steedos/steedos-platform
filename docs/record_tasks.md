@@ -5,4 +5,4 @@
 
 用户可以在统一的界面中查看自己所有的待办任务。
 
-![电脑、手机界面展示](images/car_object.png)
+![电脑、手机界面展示](assets/car_object.png)

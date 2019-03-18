@@ -19,6 +19,6 @@
 - 记录删除
 - 报表显示页面
 
-![电脑、手机界面展示](images/mac_ipad_report.jpg)
+![电脑、手机界面展示](assets/mac_ipad_report.jpg)
 
-![电脑、手机编辑记录界面展示](images/ipad_iphone_edit.jpg)
+![电脑、手机编辑记录界面展示](assets/ipad_iphone_edit.jpg)

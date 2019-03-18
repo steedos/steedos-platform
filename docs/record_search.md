@@ -8,5 +8,5 @@ Creator提供简单易用的搜索界面，帮助用户快速检索业务数据�
 ### 全局检索
 在页面顶部的全局搜索框中，输入查询条件后并按回车，Creator会自动在所有对象中检索业务数据，并将检索结果按对象分类展示给用户。
 
-![电脑、手机界面展示](images/mac_mobile_search.jpg)
+![电脑、手机界面展示](assets/mac_mobile_search.jpg)
 

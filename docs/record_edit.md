@@ -13,7 +13,7 @@
 - 可配置字段公式
 
 电脑编辑记录
-![电脑、手机界面展示](images/mac_ipad_report.jpg)
+![电脑、手机界面展示](assets/mac_ipad_report.jpg)
 
 手机编辑记录
-![电脑、手机编辑记录界面展示](images/ipad_iphone_edit.jpg)
+![电脑、手机编辑记录界面展示](assets/ipad_iphone_edit.jpg)
