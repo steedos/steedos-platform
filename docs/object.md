@@ -33,7 +33,7 @@ Creator默认提供了很多功能，可以用于客户、合同、服务等。�
 
 ### 引用对象
 使用以下语法将对象加载到项目中。
-```
+```javascript
 var steedos=require("@steedos/core")
 
 // 加载单个对象
