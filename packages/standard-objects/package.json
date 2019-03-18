@@ -1,0 +1,7 @@
+{
+  "name": "@steedos/standard-objects",
+  "version": "0.0.1",
+  "description": "Standard objects for steedos",
+  "main": "index.js",
+  "license": "MIT"
+}
