@@ -30,10 +30,7 @@ export abstract class Trigger {
     */
     readonly object_name: string;
 
-    beforeInsert(userId: string, doc: JsonMap) {
-
-	}
-
+    abstract beforeInsert(userId: string, doc: JsonMap): any
     
     /* 
     Fired before the doc is updated.
@@ -41,20 +38,13 @@ export abstract class Trigger {
     Allows you to to change the modifier as needed, or run additional functionality.
     - this.transform() obtains transformed version of document, if a transform was defined.
     */
-    beforeUpdate(userId: string, doc: JsonMap, fieldNames:string[], modifier: JsonMap, options: JsonMap) {
+    abstract beforeUpdate(userId: string, doc: JsonMap, fieldNames:string[], modifier: JsonMap, options: JsonMap): any
 
-	}
+    abstract beforeDelete(userId: string, doc: JsonMap): any
 
-    beforeDelete(userId: string, doc: JsonMap) {
+    abstract afterInsert(userId: string, doc: JsonMap): any
 
-	}
-
-    afterInsert(userId: string, doc: JsonMap) {
-	}
-
-    afterUpdate(userId: string, doc: JsonMap, fieldNames:string[], modifier: JsonMap, options: JsonMap) {
-	}
+    abstract afterUpdate(userId: string, doc: JsonMap, fieldNames:string[], modifier: JsonMap, options: JsonMap): any
     
-    afterDelete(userId: string, doc: JsonMap) {
-	}
+    abstract afterDelete(userId: string, doc: JsonMap): any
 }

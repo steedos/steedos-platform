@@ -5,7 +5,7 @@ import { JsonMap } from '@salesforce/ts-types';
 import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
-import {AppManager, getObjectSchemaManager} from '..';
+import {AppManager, getObjectSchemaManager, TriggerManager} from '..';
 
 import fs = require("fs");
 import path = require("path");
@@ -143,9 +143,9 @@ class Project {
       objectSchemaManager.createFromFile(path)
     });
 
-    //TODO 处理trigger
-
-    console.log('fileStorage', fileStorage);
+    fileStorage.triggerFilesPath.forEach((path: string)=>{
+      TriggerManager.loadFile(path);
+    })
   }
 
   /**
