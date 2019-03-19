@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://steedos.github.io/schemas/app/schema.json": "/*.app.yml",
+        "https://steedos.github.io/schemas/object/schema.json": "/*.object.yml"
+    }
+}
