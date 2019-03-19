@@ -188,6 +188,12 @@ For more information about the navigation bar, click [here](https://docusaurus.i
 
 For more information about custom pages, click [here](https://docusaurus.io/docs/en/custom-pages).
 
+## Publish to steedos.github.io
+```
+yarn publish-gh-pages
+```
+
+
 # Full Documentation
 
 Full documentation can be found on the [website](https://docusaurus.io/).
