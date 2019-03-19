@@ -36,11 +36,12 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
+// 对于同一个对象，优先加载 .yml 文件，如果没有则加载.json文件。
+// 
 steedos.use("./xxx.object.yml");
 steedos.use("./xxx.object.js");
-steedos.use("./xxx.object.json");
-steedos.use("./src/xxx.object.json");
-steedos.use(__dirname + "/src/xxx.object.json");
+steedos.use("./src/xxx.object.yml");
+steedos.use(__dirname + "/src/xxx.object.yml");
 steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
 
 // 加载应用
