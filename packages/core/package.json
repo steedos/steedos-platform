@@ -1,10 +1,7 @@
 {
   "name": "@steedos/core",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "version": "0.0.6",
+  "private": false,
+  "version": "1.1.8",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +37,8 @@
     "routing-controllers": "^0.7.7",
     "simpl-schema": "^1.5.5",
     "underscore": "1.5.2",
-    "@steedos/stimulsoft-report": "file:../stimulsoft-report"
+    "bunyan-sfdx-no-dtrace": "^1.8.2",
+    "@steedos/stimulsoft-report": "@steedos/stimulsoft-report"
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
@@ -50,8 +48,7 @@
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "sinon-chai": "^3.3.0",
-    "bunyan-sfdx-no-dtrace": "^1.8.2"
+    "sinon-chai": "^3.3.0"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

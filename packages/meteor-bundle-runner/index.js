@@ -8,14 +8,20 @@ var yaml = require("js-yaml")
 var getServerDir = function(){
   var serverDir = process.env.SERVER_DIR;  
   if (!serverDir) {
+    try {
+      serverDir = path.dirname(require.resolve("steedos-server"));
+      serverDir = path.join(serverDir, "bundle", "programs", "server");
+    } catch (e) {
+      console.error(e);
       process.env.NODE_OPTIONS="";
       var npmRoot = require('child_process').execSync('npm root -g').toString().trim()
       try {
           serverDir = path.join(npmRoot, "steedos-server", "bundle", "programs", "server")
       } catch (err) {
-          console.error(`Install steedos server globally first with: npm install -g steedos-server`)
+          console.error(`Install steedos server first with: yarn`)
           process.exit(1)
       }
+    }
   } else {
       serverDir = path.join(serverDir, "bundle", "programs", "server");
   }
@@ -23,7 +29,7 @@ var getServerDir = function(){
   if (!fs.existsSync(serverDir))
   {
       console.error(`serverDir not found: ${serverDir}`);
-      console.error(`Install steedos server globally first with: npm install -g steedos-server`)
+      console.error(`Install steedos server first with: yarn`)
       process.exit(1)
   }  
   return serverDir;

@@ -1,6 +1,6 @@
 {
-  "name": "steedos-cli",
-  "version": "1.1.0",
+  "name": "@steedos/cli",
+  "version": "1.1.5",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "src/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/meteor-bundle-runner": "^1.0.9",
+    "@steedos/meteor-bundle-runner": "^1.1.5",
     "js-yaml": "^3.12.2"
   },
   "devDependencies": {

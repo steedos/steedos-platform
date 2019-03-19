@@ -4,7 +4,8 @@
   "description": "contract-management-system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "steedos run",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,8 +17,9 @@
   "dependencies": {
     "@steedos/core": "^0.0.6",
     "@steedos/meteor-bundle-runner": "^1.1.4",
-    "@steedos/object-accounts": "^0.0.1",
-    "@steedos/object-contracts": "^0.0.1"
+    "@steedos/standard-objects": "^0.0.1",
+    "@steedos/cli": "^1.1.5",
+    "steedos-server": "^1.0.9"
   },
   "devDependencies": {},
   "bugs": {
