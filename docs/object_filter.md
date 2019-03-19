@@ -62,7 +62,7 @@
 - "{userId}"：当前登录用户id
 - "{spaceId}"：当前当前所在工作区
 - "{user.xxx}"：当前登录用户信息，如user.name,user.mobile,user.email,user.company_id等
-- 其他所有Creator.USER_CONTEXT中能取到的变量值
+- 其他所有Steedos.USER_CONTEXT中能取到的变量值
 
 实例：
 - [["assignees", "=", "{userId}"]]

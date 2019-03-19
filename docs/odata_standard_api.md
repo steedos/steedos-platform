@@ -1,6 +1,6 @@
 ## 提供给用户使用的odata标准函数
 ### 查询一条记录
- - api:Creator.odata.get(object_name, id, field_name)
+ - api:Steedos.odata.get(object_name, id, field_name)
  - 参数介绍：
  	- object_name:对象名/表名
  	- id:要查询记录的id
@@ -8,7 +8,7 @@
  - 实例：
  	- 无field_name:
  		```
- 		调用：Creator.odata.get("qhd_informations","pKLcEGHsWXD5YmhY8")
+ 		调用：Steedos.odata.get("qhd_informations","pKLcEGHsWXD5YmhY8")
  		返回：{
 			"_id": "pKLcEGHsWXD5YmhY8",
 			"title": "九公司紧密结合铁路集中修，完成70项设备维修改造工作，为生产运行提供强大支撑",
@@ -25,7 +25,7 @@
 		```
 	- 有field_name:
 		```
-		调用：Creator.odata.get("qhd_informations","pKLcEGHsWXD5YmhY8","title,company")
+		调用：Steedos.odata.get("qhd_informations","pKLcEGHsWXD5YmhY8","title,company")
 		返回：{
 			"_id": "pKLcEGHsWXD5YmhY8",
 			"title": "九公司紧密结合铁路集中修，完成70项设备维修改造工作，为生产运行提供强大支撑",
@@ -33,7 +33,7 @@
 			}
 		```	
 ### 查询多条记录
- - api:Creator.odata.query("qhd_informations", options)
+ - api:Steedos.odata.query("qhd_informations", options)
  - 参数介绍：
  	- object_name:对象名/表名
  	- options:查询选项（包括要查询的记录数，要查询的字段，查询条件等）
@@ -51,7 +51,7 @@
 				    ],
 				    filter: [["company", "=", '二公司']]
 				}
-		调用：Creator.odata.query(object_name, options)
+		调用：Steedos.odata.query(object_name, options)
 		返回：{
 		{
 	      "_id": "oKBpn3mjpASADkNg4",
@@ -89,7 +89,7 @@
 		}
 		```
 ### 新增记录
- - api :Creator.odata.insert(object_name, doc)
+ - api :Steedos.odata.insert(object_name, doc)
  - 参数介绍：
  	- object_name:对象名/表名
  	- doc:插入的数据
@@ -100,7 +100,7 @@
  		"company":"一公司"，
  		"content":"一公司一季度人事调动"
  		}
- 		调用：Creator.odata.insert("qhd_informations", doc)
+ 		调用：Steedos.odata.insert("qhd_informations", doc)
 	 	返回：{
 	      "_id": "kXcYfS6yRd8GDwzhz",
 	      "title": "abc",
@@ -115,7 +115,7 @@
 	    }
 		```
 ### 修改一条记录
- - api :Creator.odata.update(object_name, id, doc)
+ - api :Steedos.odata.update(object_name, id, doc)
  - 参数介绍：
  	- object_name:对象名/表名
  	- doc:插入的数据
@@ -126,14 +126,14 @@
  		"company":"二公司"，
  		"content":"二公司一季度人事调动"
  		}
- 		调用：Creator.odata.update("qhd_informations","kXcYfS6yRd8GDwzhz" doc)
+ 		调用：Steedos.odata.update("qhd_informations","kXcYfS6yRd8GDwzhz" doc)
 		```
 ### 删除一条记录
- - api : Creator.odata.delete(object_name, id)
+ - api : Steedos.odata.delete(object_name, id)
  - 参数介绍：
  	- object_name:对象名/表名
  	- id:要删除数据的id
  	- 实例：
  		```
- 		调用：Creator.odata.delete("qhd_informations","kXcYfS6yRd8GDwzhz")
+ 		调用：Steedos.odata.delete("qhd_informations","kXcYfS6yRd8GDwzhz")
  		```

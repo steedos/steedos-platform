@@ -1,11 +1,15 @@
 {
-  "docs": {
-    "快速开始": ["README", "object", "object_field", "app"],
-    "自动生成界面": ["app_mobile", "app_ipad", "record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task"],
-    "权限": ["permission_set", "object_permission", "permission_share","organization","space_user"],
-    "API": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete"]
+  "开发": {
+    "安装": ["installation"],
+    "配置": ["object", "object_field", "app"]
   },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+  "功能": {
+    "简介": ["README"],
+    "用户界面": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task"],
+    "管理界面": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
+    "移动设备访问": ["app_mobile", "app_ipad"]
+  },
+  "API":{
+    "ODATA": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete"]
   }
 }

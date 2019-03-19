@@ -18,7 +18,7 @@
         methods:
           # 可通过this获取到object_name, record_id, space_id, user_id; params为request的body
           confirmReceipt: (params) ->
-            return Creator.getCollection('vip_order').findOne({ _id: this.record_id, owner: this.user_id, status: 'delivered' })
+            return Steedos.getCollection('vip_order').findOne({ _id: this.record_id, owner: this.user_id, status: 'delivered' })
       ```
 
  - 请求参数说明：

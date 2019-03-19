@@ -30,7 +30,7 @@ OData服务是一种自描述服务，它公开定义实体集，关系，实体
 		<?xml version="1.0" encoding="UTF-8"?>
 		<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
     	<edmx:DataServices>
-        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="CreatorEntities">
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SteedosEntities">
             <EntityType Name="object_recent_viewed">
                 <Key>
                     <PropertyRef Name="_id"/>
@@ -45,17 +45,17 @@ OData服务是一种自描述服务，它公开定义实体集，关系，实体
                 <Property Name="modified_by" Type="Edm.String"/>
                 <Property Name="is_deleted" Type="Edm.Boolean"/>
                 <Property Name="sharing" Type="Edm.String"/>
-                <NavigationProperty Name="space_expand" Type="CreatorEntities.spaces" Partner="object_recent_viewed">
+                <NavigationProperty Name="space_expand" Type="SteedosEntities.spaces" Partner="object_recent_viewed">
                     <ReferentialConstraint Property="space" ReferencedProperty="_id"/>
           
                 </NavigationProperty>
-                <NavigationProperty Name="owner_expand" Type="CreatorEntities.users" Partner="object_recent_viewed">
+                <NavigationProperty Name="owner_expand" Type="SteedosEntities.users" Partner="object_recent_viewed">
                     <ReferentialConstraint Property="owner" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="created_by_expand" Type="CreatorEntities.users" Partner="object_recent_viewed">
+                <NavigationProperty Name="created_by_expand" Type="SteedosEntities.users" Partner="object_recent_viewed">
                     <ReferentialConstraint Property="created_by" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="modified_by_expand" Type="CreatorEntities.users" Partner="object_recent_viewed">
+                <NavigationProperty Name="modified_by_expand" Type="SteedosEntities.users" Partner="object_recent_viewed">
                     <ReferentialConstraint Property="modified_by" ReferencedProperty="_id"/>
                 </NavigationProperty>
             </EntityType>
@@ -82,19 +82,19 @@ OData服务是一种自描述服务，它公开定义实体集，关系，实体
                 <Property Name="modified_by" Type="Edm.String"/>
                 <Property Name="is_deleted" Type="Edm.Boolean"/>
                 <Property Name="sharing" Type="Edm.String"/>
-                <NavigationProperty Name="object_name_expand" Type="CreatorEntities.objects" Partner="object_listviews">
+                <NavigationProperty Name="object_name_expand" Type="SteedosEntities.objects" Partner="object_listviews">
                     <ReferentialConstraint Property="object_name" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="owner_expand" Type="CreatorEntities.users" Partner="object_listviews">
+                <NavigationProperty Name="owner_expand" Type="SteedosEntities.users" Partner="object_listviews">
                     <ReferentialConstraint Property="owner" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="space_expand" Type="CreatorEntities.spaces" Partner="object_listviews">
+                <NavigationProperty Name="space_expand" Type="SteedosEntities.spaces" Partner="object_listviews">
                     <ReferentialConstraint Property="space" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="created_by_expand" Type="CreatorEntities.users" Partner="object_listviews">
+                <NavigationProperty Name="created_by_expand" Type="SteedosEntities.users" Partner="object_listviews">
                     <ReferentialConstraint Property="created_by" ReferencedProperty="_id"/>
                 </NavigationProperty>
-                <NavigationProperty Name="modified_by_expand" Type="CreatorEntities.users" Partner="object_listviews">
+                <NavigationProperty Name="modified_by_expand" Type="SteedosEntities.users" Partner="object_listviews">
                     <ReferentialConstraint Property="modified_by" ReferencedProperty="_id"/>
                 </NavigationProperty>
             </EntityType>

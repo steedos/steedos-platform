@@ -60,13 +60,13 @@ class HomeSplash extends React.Component {
 
     return (
       <SplashContainer>
-        <Logo img_src={`${baseUrl}img/docusaurus.svg`} />
+        <Logo img_src={`${baseUrl}img/icon_blue.png`} />
         <div className="inner">
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
-            <Button href="#try">Try It Out</Button>
-            <Button href={docUrl('doc1.html')}>Example Link</Button>
-            <Button href={docUrl('doc2.html')}>Example Link 2</Button>
+            {/* <Button href="#try">Try It Out</Button> */}
+            <Button href={docUrl('README.html')}>功能</Button>
+            <Button href={docUrl('installation.html')}>快速开始</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -96,8 +96,9 @@ class Index extends React.Component {
       <div
         className="productShowcaseSection paddingBottom"
         style={{textAlign: 'center'}}>
-        <h2>Feature Callout</h2>
-        <MarkdownBlock>These are features of this project</MarkdownBlock>
+        <h2>简介</h2>
+        <MarkdownBlock>
+        </MarkdownBlock>
       </div>
     );
 
@@ -106,7 +107,7 @@ class Index extends React.Component {
         {[
           {
             content: 'Talk about trying this out',
-            image: `${baseUrl}img/docusaurus.svg`,
+            image: `${baseUrl}docs/assets/mac_ipad_iphone_home.png`,
             imageAlign: 'left',
             title: 'Try it Out',
           },
@@ -118,11 +119,10 @@ class Index extends React.Component {
       <Block background="dark">
         {[
           {
-            content:
-              'This is another description of how this project is useful',
-            image: `${baseUrl}img/docusaurus.svg`,
+            content:"Steedos根据配置的对象，自动生成面向业务人员的操作界面和面向开发人员的API接口。熟练的配置人员只需一天，甚至一小时，即可配置出一套手机、平板、电脑三合一的业务系统。",
+            image: `${baseUrl}docs/assets/mac_ipad_iphone_home.png`,
             imageAlign: 'right',
-            title: 'Description',
+            title: '运行 Steedos 对象服务器',
           },
         ]}
       </Block>
@@ -133,7 +133,7 @@ class Index extends React.Component {
         {[
           {
             content: 'Talk about learning how to use this',
-            image: `${baseUrl}img/docusaurus.svg`,
+            image: `${baseUrl}docs/assets/mac_ipad_iphone_home.png`,
             imageAlign: 'right',
             title: 'Learn How',
           },
@@ -145,16 +145,16 @@ class Index extends React.Component {
       <Block layout="fourColumn">
         {[
           {
-            content: 'This is the content of my feature',
-            image: `${baseUrl}img/docusaurus.svg`,
+            content: '对象、关系、字段、视图、触发器、报表',
+            image: `${baseUrl}docs/assets/mac_ipad_iphone_home.png`,
             imageAlign: 'top',
-            title: 'Feature One',
+            title: '配置业务对象',
           },
           {
-            content: 'The content of my second feature',
-            image: `${baseUrl}img/docusaurus.svg`,
+            content: '组织机构、用户、对象级权限、记录级权限、单位级权限',
+            image: `${baseUrl}docs/assets/mac_ipad_iphone_home.png`,
             imageAlign: 'top',
-            title: 'Feature Two',
+            title: '管理业务对象',
           },
         ]}
       </Block>
@@ -194,11 +194,11 @@ class Index extends React.Component {
         <HomeSplash siteConfig={siteConfig} language={language} />
         <div className="mainContainer">
           <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
+          {/* <FeatureCallout /> */}
+          {/* <LearnHow />
+          <TryOut /> */}
           <Description />
-          <Showcase />
+          {/* <Showcase /> */}
         </div>
       </div>
     );
