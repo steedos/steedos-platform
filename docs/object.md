@@ -45,6 +45,7 @@ app.use("./xxx.app.yml");
 
 // 加载文件夹和所有子文件夹中的对象、触发器、报表等等
 app.use("./src");
+app.use("../src");
 app.use(__dirname);
 
 // 加载node_modules中的对象
