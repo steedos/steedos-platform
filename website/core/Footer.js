@@ -62,9 +62,9 @@ class Footer extends React.Component {
           <div>
             <h5>更多</h5>
             <a href={`${this.props.config.baseUrl}blog`}>动态</a>
-            <a href="https://github.com/steedos/object-server/">GitHub</a>
+            <a href={`${this.props.config.repoUrl}`}>GitHub</a>
             <a
-              href="http://stackoverflow.com/questions/tagged/"
+              href="http://stackoverflow.com/questions/tagged/steedos"
               target="_blank"
               rel="noreferrer noopener">
               Stack Overflow

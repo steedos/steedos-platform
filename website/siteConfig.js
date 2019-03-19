@@ -77,7 +77,7 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} Your Name or Your Company Name`,
+  copyright: `Copyright © ${new Date().getFullYear()} 上海华炎软件科技有限公司`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
@@ -104,7 +104,7 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/steedos/object-server',
 };
 
 module.exports = siteConfig;
