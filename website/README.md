@@ -13,6 +13,8 @@ This website was created with [Docusaurus](https://docusaurus.io/).
 1. Make sure all the dependencies for the website are installed:
 
 ```sh
+npm i yarn -g
+npm config set registry http://registry.npm.taobao.org/
 # Install dependencies
 $ yarn
 ```
