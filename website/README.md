@@ -13,7 +13,9 @@ This website was created with [Docusaurus](https://docusaurus.io/).
 1. Make sure all the dependencies for the website are installed:
 
 ```sh
+# Install yarn
 npm i yarn -g
+# Use taobao npm registry in china
 npm config set registry http://registry.npm.taobao.org/
 # Install dependencies
 $ yarn
