@@ -194,6 +194,8 @@ For more information about custom pages, click [here](https://docusaurus.io/docs
 
 ## Publish to steedos.github.io
 ```
+git config --global credential.helper wincred
+SET GIT_USER=xxx
 yarn publish-gh-pages
 ```
 

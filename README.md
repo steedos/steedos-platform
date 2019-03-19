@@ -2,7 +2,7 @@
 
 Steedos 是华炎公司整合近20年的业务系统开发经验，推出的一套极简开发工具。IT人员的核心任务不再是编码，而是转变为和业务人员沟通业务需求，并配置业务对象。只需要业务对象确定了，Steedos即可自动生成手机、平板、电脑三合一的业务系统，包含完整的数据浏览、管理、统计分析功能。
 
-![界面效果图](https://www.steedos.com/cn/help/creator/images/mac_ipad_iphone_home.png)
+![界面效果图](https://steedos.github.io/docs/assets/mac_ipad_iphone_home.png)
 
 最重要的是，当业务人员提出需求变更时，也只需简单的调整业务模型即可完成，不再需要繁重的编码、调试、测试、发布等一整套复杂的流程。
 
