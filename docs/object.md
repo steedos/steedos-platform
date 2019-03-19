@@ -33,13 +33,19 @@ title: 对象
 ### 引用对象
 使用以下语法将对象加载到项目中。
 ```javascript
-var app=require("@steedos/core")
+var steedos=require("@steedos/core")
 
 // 加载单个对象
-app.use("./xxx.object.yml");
+steedos.use("./xxx.object.yml");
+steedos.use("./xxx.object.js");
+steedos.use("./xxx.object.json");
 
-// 加载文件夹和所有子文件夹中的对象 
-app.use(__dirname)
+// 加载应用
+app.use("./xxx.app.yml");
+
+// 加载文件夹和所有子文件夹中的对象、触发器、报表等等
+app.use("./src");
+app.use(__dirname);
 
 // 加载node_modules中的对象
 app.use("@steedos/standard-objects");
