@@ -39,6 +39,8 @@ var steedos=require("@steedos/core")
 steedos.use("./xxx.object.yml");
 steedos.use("./xxx.object.js");
 steedos.use("./xxx.object.json");
+steedos.use("./src/xxx.object.json");
+steedos.use(__dirname + "/src/xxx.object.json");
 
 // 加载应用
 app.use("./xxx.app.yml");
