@@ -10,6 +10,7 @@
     "移动设备访问": ["app_mobile", "app_ipad"]
   },
   "API":{
-    "ODATA": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete"]
+    "ODATA": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete", "odata_functions"],
+    "GraphQL": ["graphql"]
   }
 }
