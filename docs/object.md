@@ -41,6 +41,7 @@ steedos.use("./xxx.object.js");
 steedos.use("./xxx.object.json");
 steedos.use("./src/xxx.object.json");
 steedos.use(__dirname + "/src/xxx.object.json");
+steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
 
 // 加载应用
 app.use("./xxx.app.yml");
