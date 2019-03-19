@@ -36,21 +36,26 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
-// 对于同一个对象，优先加载 .yml 文件，如果没有则加载.json文件。
-// 
+// 对于同一个对象，如果同时定义 .yml .json 和 .js 文件，按照以下优先顺序只加载第一个 .js .json .yml
 steedos.use("./xxx.object.yml");
 steedos.use("./xxx.object.js");
 steedos.use("./src/xxx.object.yml");
 steedos.use(__dirname + "/src/xxx.object.yml");
 steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
 
+// 加载触发器
+steedos.use("./xxx.trigger.js");
+
+// 加载报表
+steedos.use("./xxx.report.yml");
+
 // 加载应用
-app.use("./xxx.app.yml");
+steedos.use("./xxx.app.yml");
 
 // 加载文件夹和所有子文件夹中的配置文件，依次加载对象、触发器、报表、应用
-app.use("./src");
-app.use("../src");
-app.use(__dirname);
+steedos.use("./src");
+steedos.use("../src");
+steedos.use(__dirname);
 
 // 加载node_modules中的对象
 app.use("@steedos/standard-objects");
