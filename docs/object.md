@@ -48,6 +48,7 @@ steedos.use("./xxx.trigger.js");
 
 // 加载报表
 steedos.use("./xxx.report.yml");
+steedos.use("./xxx.report.js");
 
 // 加载应用
 steedos.use("./xxx.app.yml");
