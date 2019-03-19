@@ -45,7 +45,7 @@ steedos.use(__dirname + "/src/xxx.object.json");
 // 加载应用
 app.use("./xxx.app.yml");
 
-// 加载文件夹和所有子文件夹中的对象、触发器、报表等等
+// 加载文件夹和所有子文件夹中的配置文件，依次加载对象、触发器、报表、应用
 app.use("./src");
 app.use("../src");
 app.use(__dirname);
