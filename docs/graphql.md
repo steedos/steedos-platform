@@ -2,9 +2,11 @@
 title: GraphQL API
 ---
 
+（即将发布）
+
 [GraphQL](http://www.graphql.org/) is a new API standard that provides a more efficient, powerful and flexible alternative to REST. It was developed and [open-sourced by Facebook](https://facebook.github.io/react/blog/2015/02/20/introducing-relay-and-graphql.html) and is now maintained by a large community of companies and individuals from all over the world.
 
-当你在 Steedos 中配置了对象以后，Steedos 为你自动生成 GraphQL API。（即将发布）
+当你在 Steedos 中配置了对象以后，Steedos 为你自动生成 GraphQL API。
 
 例如你定义了对象 Post
 
@@ -15,10 +17,12 @@ fields:
     type: String
   description:
     type: String
-  is_publised:
+  isPublished:
     type: Boolean
-  user:
-    type: User
+  owner:
+    label: Author
+    type: master_detail
+    reference_to: User
 ```
 
 Steedos 自动生成以下 GraphQL Schama
