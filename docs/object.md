@@ -36,7 +36,7 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
-// 对于同一个对象，如果同时定义 .yml .json 和 .js 文件，按照以下优先顺序只加载第一个 .js .json .yml
+// 对于同一个对象，如果同时定义 .yml 和 .js 文件，会全部加载并合并属性。
 steedos.use("./xxx.object.yml");
 steedos.use("./xxx.object.js");
 steedos.use("./src/xxx.object.yml");
