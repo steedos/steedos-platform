@@ -1,0 +1,7 @@
+{
+  "name": "@steedos/stimulsoft-report",
+  "version": "0.0.1",
+  "description": "Stimulsoft report and dashboard lib for steedos",
+  "main": "index.js",
+  "license": "MIT"
+}

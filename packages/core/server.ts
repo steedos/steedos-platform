@@ -13,19 +13,19 @@ server.Fiber(function () {
             Project.load(__dirname + "/../../objects/contracts/src");
             Project.load(__dirname + "/../../apps/crm/src");
             Project.load(__dirname + "/../standard-objects");
+
+            let express = require('express');
+            let app = express();
+            app
+                .use('/api/odata/v2', ODataRouter)
+                .disable('x-powered-by')
+                .use('/assets/stimulsoft-report/', express.static(__dirname + '/node_modules/@steedos/stimulsoft-report/assets/'))
+            WebApp.connectHandlers.use(app);
         } catch (error) {
             console.error(error)
             throw error
         }
         //require("../../apps/crm/src")
-
-        let express = require('express');
-        let app = express();
-        app
-            .disable('x-powered-by')
-            .use('/api/odata/v2', ODataRouter)
-            .use('/assets/stimulsoft/', express.static(__dirname + '/node_modules/@steedos/stimulsoft/assets/'))
-        WebApp.connectHandlers.use(app);
         server.runMain();
     });
 }).run();
