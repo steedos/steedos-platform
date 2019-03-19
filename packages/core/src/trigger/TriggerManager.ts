@@ -39,7 +39,7 @@ class TirggerManager{
 
     
     /**
-     * 设置数据持久化时间
+     * 设置数据持久化事件
      * @private
      * @param {*} collection： 当前collection需要meteor的matb33:collection-hooks支持
      * @param {Function} todo： 执行的脚本
