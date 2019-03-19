@@ -9,10 +9,10 @@ server.Fiber(function () {
         server.loadServerBundles();
         server.callStartupHooks();
         try {
+            Project.load(__dirname + "/../standard-objects");
             Project.load(__dirname + "/../../objects/accounts/src");
             Project.load(__dirname + "/../../objects/contracts/src");
             Project.load(__dirname + "/../../apps/crm/src");
-            Project.load(__dirname + "/../standard-objects");
 
             let express = require('express');
             let app = express();
