@@ -36,11 +36,11 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
-steedos.require("./xxx.object.yml");
+steedos.use("./xxx.object.yml");
 
 // 加载文件夹和所有子文件夹中的对象 
-steedos.require(__dirname)
+steedos.use(__dirname)
 
 // 加载node_modules中的对象
-steedos.require("@steedos/standard-objects");
+steedos.use("@steedos/standard-objects");
 ```
