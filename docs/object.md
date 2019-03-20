@@ -1,10 +1,13 @@
 ---
-title: 对象 Object
+title: Steedos Object
 ---
 
-对象可以理解为传统数据库中的表，Steedos对象服务器支持同时连接到不同的数据源。数据源可以是传统的数据库，也可以是类似Salesforce、SAP等API接口返回的JSON数据。
+### 基本概念
 
-传统的ORM比如hibernate、typeorm等只是数据访问层的协议，而Steedos可以定义Object生命周期中的更多内容，包括字段、关系、校验、触发器、视图、权限、报表，甚至审批流程。
+- Steedos Datasource Schema 是一种数据源描述语法，数据源可以是传统的数据库，也可以是类似Salesforce、SAP等API接口返回的JSON数据。
+- Steedos Object Schema 是一套对象描述语法，用于定义业务对象的字段、关系、校验、触发器、视图、权限、报表等内容。把Steedos Object关联到数据源之后，Steedos对象服务器即可生成标准的API接口和用户界面。
+- Steedos Filter Language 是一种过滤条件描述语法，让最终用户可以按照统一的标准编写复杂的过滤条件。Steedos提供标准函数把用户的Steedos Filter转换为SQL数据库或是MongoDB的查询条件。
+
 
 ### 定义对象
 您可以创建 {object_name}.object.yml 文件，定义对象。

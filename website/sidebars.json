@@ -1,10 +1,10 @@
 {
-  "开发": {
-    "安装": ["installation"],
-    "配置": ["object", "object_field", "app"]
+  "快速开始": {
+    "简介": ["introduction"],
+    "语法": ["object", "object_field", "object_listview", "object_permission", "object_trigger", "object_action", "object_workflow"]
   },
-  "功能": {
-    "简介": ["README"],
+  "服务端": {
+    "简介": ["server", "installation"],
     "用户界面": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task"],
     "管理界面": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "移动设备访问": ["app_mobile", "app_ipad"]
