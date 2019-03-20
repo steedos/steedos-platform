@@ -38,7 +38,7 @@
     "simpl-schema": "^1.5.5",
     "underscore": "1.5.2",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
-    "@steedos/stimulsoft-report": "@steedos/stimulsoft-report"
+    "@steedos/stimulsoft-report": "^0.0.1"
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
