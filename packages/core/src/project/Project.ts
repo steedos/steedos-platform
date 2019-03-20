@@ -125,7 +125,6 @@ class Project {
    * @memberof Project
    */
   public load(directoryPath: string): void{
-    console.log('project load', directoryPath);
     let fileStorage: any = {
       appFilesPath: [],
       objectFilesPath: [],

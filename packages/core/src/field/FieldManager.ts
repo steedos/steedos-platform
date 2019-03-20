@@ -9,7 +9,6 @@ var util = require("../util");
 class FieldManager{
     public loadFile(filePath: string): void{
         let field: Field = util.loadFile(filePath);
-        console.log('field', field);
         this.loadField(field);
     }
 
