@@ -5,7 +5,7 @@ import { JsonMap } from '@salesforce/ts-types';
 import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
-import {AppManager, getObjectSchemaManager, TriggerManager} from '..';
+import {AppManager, getObjectSchemaManager, TriggerManager, FieldManager} from '..';
 
 import fs = require("fs");
 import path = require("path");
@@ -125,27 +125,30 @@ class Project {
    * @memberof Project
    */
   public load(directoryPath: string): void{
-    console.log('project load', directoryPath);
     let fileStorage: any = {
       appFilesPath: [],
       objectFilesPath: [],
-      triggerFilesPath: []
+      triggerFilesPath: [],
+      fieldFilesPath: []
     }
     this.scanFiles(fileStorage, directoryPath)
 
-    fileStorage.appFilesPath.forEach((path: string) => {
-      AppManager.loadFile(path)
-    });
-
-    
     let objectSchemaManager = getObjectSchemaManager()
     fileStorage.objectFilesPath.forEach((path: string) => {
       objectSchemaManager.createFromFile(path)
     });
 
+    fileStorage.fieldFilesPath.forEach((path: string)=>{
+      FieldManager.loadFile(path);
+    })
+
     fileStorage.triggerFilesPath.forEach((path: string)=>{
       TriggerManager.loadFile(path);
     })
+
+    fileStorage.appFilesPath.forEach((path: string) => {
+      AppManager.loadFile(path)
+    });
   }
 
   /**
@@ -166,10 +169,12 @@ class Project {
       }else{
         if(s.endsWith('.app.yml')){
           storage.appFilesPath.push(subDirectory)
-        }else if(s.endsWith('.object.yml')){
+        }else if(s.endsWith('.object.yml') || s.endsWith('.object.js')){
           storage.objectFilesPath.push(subDirectory)
         }else if(s.endsWith('.trigger.js')){
           storage.triggerFilesPath.push(subDirectory)
+        }else if(s.endsWith('.field.js')){
+          storage.fieldFilesPath.push(subDirectory)
         }else{
           console.warn('Unloaded file', subDirectory)
         }
