@@ -1,4 +1,4 @@
-# Steedos 对象服务
+# Steedos Object Schema
 
 
 Steedos Object Schema 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
