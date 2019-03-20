@@ -21,8 +21,8 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Steedos 对象服务', // Title for your website.
-  tagline: '配置和管理你的业务对象',
+  title: 'Steedos Object Schema', // Title for your website.
+  tagline: '跨平台、跨语言的对象描述语法',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
