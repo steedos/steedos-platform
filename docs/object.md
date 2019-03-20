@@ -36,11 +36,32 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
-steedos.require("./xxx.object.yml");
+// 如果同时定义 .yml 和 .js 文件，会全部加载并合并属性。
+steedos.use("./xxx.object.yml");
+steedos.use("./xxx.object.js");
+steedos.use("./src/xxx.object.yml");
+steedos.use(__dirname + "/src/xxx.object.yml");
+steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
 
-// 加载文件夹和所有子文件夹中的对象 
-steedos.require(__dirname)
+// 加载字段，可用于为对象新增或修改字段
+steedos.use("./xxx.field.yml");
+steedos.use("./xxx.field.js");
+
+// 加载触发器
+steedos.use("./xxx.trigger.js");
+
+// 加载报表
+steedos.use("./xxx.report.yml");
+steedos.use("./xxx.report.js");
+
+// 加载应用
+steedos.use("./xxx.app.yml");
+
+// 加载文件夹和所有子文件夹中的配置文件，依次加载对象、触发器、报表、应用
+steedos.use("./src");
+steedos.use("../src");
+steedos.use(__dirname);
 
 // 加载node_modules中的对象
-steedos.require("@steedos/standard-objects");
+app.use("@steedos/standard-objects");
 ```

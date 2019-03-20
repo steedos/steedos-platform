@@ -1,6 +1,19 @@
+import { ODataClient } from '@steedos/client';
 
 const Reporter = {
-  getReport() {
+  spaceId: "jYgTB7xC3ScqmXYdW",
+  getReport(id, callback) {
+    debugger;
+    let options = {
+      filter: [
+        ["_id", "=", id]
+      ]
+    };
+    ODataClient.query("reports",{
+      space_id: this.spaceId,
+      options: options,
+      callback: callback
+    });
     return {
       "_id": "sHd9WBbPfxwxm8akZ",
       "name": "按优先级统计数量",
@@ -241,8 +254,10 @@ const Reporter = {
       }
     };
   },
-  getSimpleList() {
-    let report = this.getReport();
+  getSimpleList(report_id) {
+    let report = this.getReport(report_id, ()=>{
+      // 请求成功后逻辑
+    });
     let object = this.getObject(report.object_name);
     let databases = this.getDatabases(report, object);
     let dataSources = this.getDataSources(report, object);
