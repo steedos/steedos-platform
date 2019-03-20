@@ -22,6 +22,11 @@ let ODataClient = {
             version: 4,
             url: url,
             withCredentials: false,
+            beforeSend: function(request) {
+                request.headers['X-User-Id'] = "97zjiueTefx5aKnco";
+                request.headers['X-Space-Id'] = space_id;
+                request.headers['X-Auth-Token'] = "qhJgFasUzYQcw7CYQ__g2Dv-Ydzw8MVIwepwllQtQ21";
+            },
             errorHandler: function (error) {
                 console.error(error);
             },
