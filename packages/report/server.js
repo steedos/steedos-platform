@@ -4,13 +4,11 @@ var ReportRouter = require('./router');
 
 const port = 3600;
 const server = express();
-var stimulsoftPath = require.resolve("@steedos/stimulsoft-report");
-stimulsoftPath = path.dirname(stimulsoftPath);
-console.log('stimulsoftPath=1==== ', stimulsoftPath);
-stimulsoftPath += "\\assets\\";
-console.log('stimulsoftPath=2==== ', stimulsoftPath);
+
+stimulsoftAssets = path.join(path.dirname(require.resolve("@steedos/stimulsoft-report")), "assets");
+
 server
   .disable('x-powered-by')
-  .use('/assets/stimulsoft-report/', express.static(stimulsoftPath))
+  .use('/assets/stimulsoft-report/', express.static(stimulsoftAssets))
   .use('/api', ReportRouter.routes)
-  .listen(port, () => console.log('static server listening on port ' + port))
+  .listen(port, () => console.log('report server listening on port ' + port))
