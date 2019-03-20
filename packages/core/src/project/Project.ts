@@ -149,6 +149,8 @@ class Project {
     fileStorage.appFilesPath.forEach((path: string) => {
       AppManager.loadFile(path)
     });
+
+    //TODO load report
   }
 
   /**
