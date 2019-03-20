@@ -125,6 +125,7 @@ class Project {
    * @memberof Project
    */
   public load(directoryPath: string): void{
+    console.log('directoryPath', directoryPath);
     let fileStorage: any = {
       appFilesPath: [],
       objectFilesPath: [],
@@ -175,7 +176,7 @@ class Project {
           storage.objectFilesPath.push(subDirectory)
         }else if(s.endsWith('.trigger.js')){
           storage.triggerFilesPath.push(subDirectory)
-        }else if(s.endsWith('.field.js')){
+        }else if(s.endsWith('.field.yml') || s.endsWith('.field.js')){
           storage.fieldFilesPath.push(subDirectory)
         }else{
           console.warn('Unloaded file', subDirectory)
