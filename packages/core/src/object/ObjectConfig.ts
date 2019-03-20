@@ -21,20 +21,21 @@ export default class ObjectConfig {
     constructor(options: ObjectConfigOptions) {
         this.name = options.name;
         this.config = options;
-        this.options.push(options);
+        this.configOptions.push(options);
     }
 
     // -------------------------------------------------------------------------
     // Public Readonly Properties
     // -------------------------------------------------------------------------
     /**
-     * Connection name.
+     * object name.
      */
     readonly name: string;
 
     /**
      * ObjectSchema options.
      */
-    readonly options: ObjectConfigOptions[] = [];
+    readonly configOptions: ObjectConfigOptions[] = [];
     config: ObjectConfigOptions;
+    
 }

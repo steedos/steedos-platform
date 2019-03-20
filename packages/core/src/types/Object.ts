@@ -3,11 +3,11 @@ import { ObjectConfig } from "..";
 
 export default class SteedosObject {
     
-    schema: ObjectConfig;
+    config: ObjectConfig;
     datasource: DataSource;
     
-    constructor(schema: ObjectConfig, datasource: DataSource){
-        this.schema = schema;
+    constructor(config: ObjectConfig, datasource: DataSource){
+        this.config = config;
         if (datasource)
             this.datasource = datasource;
         else
