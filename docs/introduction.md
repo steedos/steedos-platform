@@ -52,7 +52,7 @@ permission_set:
     viewAllRecords: true
 ```
 
-Steedos Object Server 是 Steedos Object 服务端运行环境。
+Steedos Object Server 是 Steedos Object 服务端运行环境。您可以把您定义的一组对象组成一个App，Steedos 自动生成符合 [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/) 界面规范的用户操作界面。
 - 根据定义的对象视图，生成数据浏览和查询界面。可设定列表字段、过滤条件、排序规则。所有的数据均按照设定的对象权限进行过滤，确保最终用户只能看到授权的数据。
 - 根据用户权限，进行增删改操作；
 - 根据定义的对象报表，展示统计分析结果；
@@ -64,9 +64,9 @@ Steedos Object Server 是 Steedos Object 服务端运行环境。
 - 使用 [ODATA API](http://odata.org) 协议访问所有业务数据
 - 使用 [GraphQL API](http://graphql.org) 协议访问所有业务数据 (即将上线)
 
-Steedos Object Server 设计的目的是为了连接到任何数据源，包括SQL或MongoDB数据库，也可以是类似Salesforce、SAP等API接口。
+Steedos Object Server 设计的目的是为了连接到任何数据源，包括SQL或MongoDB数据库，也可以是类似Salesforce、SAP等API接口。目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库。连接SQL数据库的版本也正在紧锣密鼓的开发中。
 
-目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库。连接SQL数据库的版本也正在紧锣密鼓的开发中。
+Steedos Object Cloud 即将上线，您设计的Apps不经可以内部使用，还可以租用给客户使用。
 
 Steedos Object Schema 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
