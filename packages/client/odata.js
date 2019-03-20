@@ -2,8 +2,6 @@ import DevExpress from './devextreme';
 
 let ODataClient = {
     query(object_name, {space_id, options, callback}) {
-        debugger;
-        console.log("ODataClient==============object_name==========", object_name);
         if (!space_id) {
             return;
         }

@@ -24,13 +24,12 @@ class ReportDesigner extends Component {
         // report.loadFile('reports/SimpleList.mrh');
         // report.loadFile('/api/v2/reports/test');
         let reportId = "sHd9WBbPfxwxm8akZ";
-        let simpleList = Reporter.getSimpleList(reportId);
-        report.load(simpleList);
-
-        console.log('Edit report template in the designer');
-        designer.report = report;  
-        
-        designer.renderHtml("report-designer");
+        Reporter.getSimpleList(reportId, (simpleList) => {
+            report.load(simpleList);
+            console.log('Edit report template in the designer');
+            designer.report = report;
+            designer.renderHtml("report-designer");
+        });
     }
 }
 
