@@ -2,7 +2,7 @@ import { getFromContainer } from "../container";
 import { Field } from './Field'
 import { getCreator } from '../index';
 
-import { getObjectSchemaManager } from '..';
+import { getObjectConfigManager } from '..';
 
 var util = require("../util");
 
@@ -28,7 +28,7 @@ class FieldManager{
             throw new Error(`not find object ${field.object_name}`);
         }
 
-        let objectSchemaManager = getObjectSchemaManager()
+        let objectConfigManager = getObjectConfigManager()
         let obj = {
             name: field.object_name,
             extend: field.object_name,
@@ -37,7 +37,7 @@ class FieldManager{
 
         obj.fields[field.name] = field
         
-        objectSchemaManager.create(obj)
+        objectConfigManager.create(obj)
     }
 }
 

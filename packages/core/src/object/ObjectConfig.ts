@@ -1,21 +1,40 @@
-import { JsonMap } from '@salesforce/ts-types';
-
+import ObjectConfigOptions from "./ObjectConfigOptions";
+var util = require("../util");
+var clone = require("clone")
 /**
- * BaseConnectionOptions is set of connection options shared by all database types.
+ * Connection is a single database ORM connection to a specific database.
+ * Its not required to be a database connection, depend on database type it can create connection pool.
+ * You can have multiple connections to multiple databases in your application.
  */
-export default interface ObjectConfig extends JsonMap {
+export default class ObjectConfig {
 
+    extend(options: ObjectConfigOptions) {
+        let destination = clone(options);
+        util.extend(destination, this.config);
+        this.config = destination;
+    }
 
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+
+    constructor(options: ObjectConfigOptions) {
+        this.name = options.name;
+        this.config = options;
+        this.options.push(options);
+    }
+
+    // -------------------------------------------------------------------------
+    // Public Readonly Properties
+    // -------------------------------------------------------------------------
     /**
-     * Schema name.
-     * Different schemas must have different names.
+     * Connection name.
      */
     readonly name: string;
-    
+
     /**
-     * Schema extended from.
-     * Steedos will merge properties with parent schema(s).
+     * ObjectSchema options.
      */
-    readonly extend: string;
-    
+    readonly options: ObjectConfigOptions[] = [];
+    config: ObjectConfigOptions;
 }

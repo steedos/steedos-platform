@@ -4,7 +4,7 @@ const path = require("path");
 import { AppManager } from "./app";
 import { TriggerManager } from "./trigger";
 import { ReportManager } from "./report";
-import { getObjectSchemaManager } from "./index";
+import { getObjectConfigManager } from "./index";
 
 
 let appFileName = 'app.yml';
@@ -35,7 +35,7 @@ export const Module = {
         if (fs.existsSync(objectFolderPath)) {
             let objectFiles = fs.readdirSync(objectFolderPath)
             _.each(objectFiles, (aof: string) => {
-                getObjectSchemaManager().createFromFile(path.join(objectFolderPath, aof));
+                getObjectConfigManager().createFromFile(path.join(objectFolderPath, aof));
             })
         }
 

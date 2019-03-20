@@ -1,3 +1,5 @@
+import { JsonMap } from "@salesforce/ts-types";
+
 type DataSourceConfig = {
     name: String
     type: String
@@ -15,6 +17,23 @@ export default class DataSource {
     static getDefaultDataSource() {
         return defaultDataSource
     }
+    
+    find(filters: [[String]], fields: [String], options: JsonMap){
+
+    }
+
+    insert(doc: JsonMap){
+
+    }
+
+    update(id:string|number, doc: JsonMap){
+
+    }
+
+    delete(id:string|number){
+
+    }
+
 }
 
 let defaultDataSource = new DataSource( {

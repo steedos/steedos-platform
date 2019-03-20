@@ -5,7 +5,7 @@ import { JsonMap } from '@salesforce/ts-types';
 import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
-import {AppManager, getObjectSchemaManager, TriggerManager, FieldManager} from '..';
+import {AppManager, getObjectConfigManager, TriggerManager, FieldManager} from '..';
 
 import fs = require("fs");
 import path = require("path");
@@ -133,9 +133,9 @@ class Project {
     }
     this.scanFiles(fileStorage, directoryPath)
 
-    let objectSchemaManager = getObjectSchemaManager()
+    let objectConfigManager = getObjectConfigManager()
     fileStorage.objectFilesPath.forEach((path: string) => {
-      objectSchemaManager.createFromFile(path)
+      objectConfigManager.createFromFile(path)
     });
 
     fileStorage.fieldFilesPath.forEach((path: string)=>{
