@@ -1,15 +1,37 @@
 ---
-title: 对象
+title: 对象 Object
 ---
 
-对象可以看作数据库中的表，Steedos内置了一些基本对象，您也可以使用配置文件配置自定义对象。无论是标准的对象还是自定义对象，Steedos都为它们提供完整的操作界面，帮助用户进行新建、编辑、存储、浏览。
+对象可以理解为传统数据库中的表，Steedos对象服务器支持同时连接到不同的数据源。数据源可以是传统的数据库，也可以是类似Salesforce、SAP等API接口返回的JSON数据。
 
-![电脑、手机界面展示](assets/car_object.png)
+传统的ORM比如hibernate、typeorm等只是数据访问层的协议，而Steedos可以定义Object生命周期中的更多内容，包括字段、关系、校验、触发器、视图、权限、报表，甚至审批流程。
 
 ### 定义对象
-您可以创建 {object_name}.object.yml 文件，定义对象。您可以参考Steedos定义的 [标准对象](../packages/standard-objects)。
+您可以创建 {object_name}.object.yml 文件，定义对象。
+
+post.object.yml
+```yaml
+name: Post
+label: 文章
+description: 用户发布的文章
+fields:
+  name: 
+    type: String
+    label: 标题 
+  description:
+    type: String
+    label: 正文
+  isPublished:
+    type: Boolean
+    label: 已发布
+  owner:
+    label: 作者
+    type: master_detail
+    reference_to: User
+```
 
 ### 对象属性
+定义对象时，可以使用以下属性：
 - 对象名(object_name)： 必填，是对象的唯一名称，也是对象保存在数据库中的数据表名称。只能是英文、下划线和数字组成，不可重复。通过代码、API接口调用对象时，也需要使用此名称。
 - 显示名称(label)： 必填，在界面上的显示名称，最终用户看到的是此名称。
 - 图标(icon)： 必填，对象的显示图标名称，对应 [LIGHTNING DESIGN SYSTEM 中的Standard Icons图标](https://www.lightningdesignsystem.com/icons/#standard)
@@ -65,3 +87,6 @@ steedos.use(__dirname);
 // 加载node_modules中的对象
 app.use("@steedos/standard-objects");
 ```
+
+### 参考
+- [Steedos 标准对象](https://github.com/steedos/object-server/tree/develop/packages/standard-objects)。
