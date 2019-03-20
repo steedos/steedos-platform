@@ -5,7 +5,7 @@ import { CreatorManager } from "./creator/CreatorManager";
 
 export {default as Object, default as ObjectSchema} from './object/ObjectSchema';
 export {default as ObjectSchemaManager, getObjectSchemaManager} from './object/ObjectSchemaManager';
-export {default as ObjectSchemaOptions} from './object/ObjectSchemaOptions';
+export {default as ObjectConfig} from './object/ObjectConfig';
 
 export { Apps, AppManager } from './app';
 export { Reports, ReportManager } from './report';

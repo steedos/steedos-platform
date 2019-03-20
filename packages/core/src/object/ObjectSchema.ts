@@ -1,4 +1,4 @@
-import ObjectSchemaOptions from "./ObjectSchemaOptions";
+import ObjectConfig from "./ObjectConfig";
 var util = require("../util");
 var clone = require("clone")
 /**
@@ -8,7 +8,7 @@ var clone = require("clone")
  */
 export default class ObjectSchema {
 
-    extend(options: ObjectSchemaOptions) {
+    extend(options: ObjectConfig) {
         let destination = clone(options);
         util.extend(destination, this.schema);
         this.schema = destination;
@@ -18,7 +18,7 @@ export default class ObjectSchema {
     // Constructor
     // -------------------------------------------------------------------------
 
-    constructor(options: ObjectSchemaOptions) {
+    constructor(options: ObjectConfig) {
         this.name = options.name;
         this.schema = options;
         this.options.push(options);
@@ -35,6 +35,6 @@ export default class ObjectSchema {
     /**
      * ObjectSchema options.
      */
-    readonly options: ObjectSchemaOptions[] = [];
-    schema: ObjectSchemaOptions;
+    readonly options: ObjectConfig[] = [];
+    schema: ObjectConfig;
 }

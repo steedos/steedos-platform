@@ -4,7 +4,7 @@ import { getFromContainer } from "../container";
 
 
 import ObjectSchema from "./ObjectSchema";
-import ObjectSchemaOptions from "./ObjectSchemaOptions";
+import ObjectConfig from "./ObjectConfig";
 
 import { JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from '../validator';
@@ -53,7 +53,7 @@ export default class ObjectSchemaManager {
      * Creates a new connection based on the given connection options and registers it in the manager.
      * Connection won't be established, you'll need to manually call connect method to establish connection.
      */
-    create(options: ObjectSchemaOptions): ObjectSchema {
+    create(options: ObjectConfig): ObjectSchema {
 
         this.validate(options);
 
@@ -88,7 +88,7 @@ export default class ObjectSchemaManager {
     };
 
     createFromFile(filePath: string): ObjectSchema {
-        let options: ObjectSchemaOptions = util.loadFile(filePath);
+        let options: ObjectConfig = util.loadFile(filePath);
         return this.create(options);
     };
 
@@ -103,7 +103,7 @@ export default class ObjectSchemaManager {
         }
     };
     
-    validate(options: ObjectSchemaOptions): boolean {
+    validate(options: ObjectConfig): boolean {
         return Validators.steedosObjectSchema(options);
     };
 
