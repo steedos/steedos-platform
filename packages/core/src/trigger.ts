@@ -25,7 +25,7 @@ export const TriggerManager = {
                 return
             }
 
-            let options: any = getObjectConfigManager().get(object_name).config
+            let options: any = getObjectConfigManager().get(object_name).configOptions
             if (!options) {
                 console.error(`load trigger error：Invalid 'object_name' /r ${name}`)
                 return
