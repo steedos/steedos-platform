@@ -66,7 +66,7 @@ Steedos Object Server 是 Steedos Object 服务端运行环境。您可以把您
 
 Steedos Object Server 设计的目的是为了连接到任何数据源，包括SQL或MongoDB数据库，也可以是类似Salesforce、SAP等API接口。目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库。连接SQL数据库的版本也正在紧锣密鼓的开发中。
 
-Steedos Object Cloud 即将上线，您设计的Apps不经可以内部使用，还可以租用给客户使用。
+Steedos Object Cloud 即将上线，您设计的Apps不仅可以内部使用，还可以成为SAAS服务租用给客户使用。
 
 Steedos Object Schema 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
