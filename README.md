@@ -1,4 +1,4 @@
-# Steedos 对象服务
+# Steedos Object Schema
 
 
 Steedos Object Schema 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
@@ -57,7 +57,7 @@ Steedos Object Server 是 Steedos Object 服务端运行环境。您可以把您
 - 根据定义的对象报表，展示统计分析结果；
 - 管理界面，可以设定组织结构、用户、权限、系统参数；
 
-![电脑、手机界面展示](assets/mac_ipad_iphone_home.png)
+![电脑、手机界面展示](docs/assets/mac_ipad_iphone_home.png)
 
 想要开发自己的客户端或是手机App吗？Steedos Object Server立刻华丽转身成为你的API服务器。
 - 使用 [ODATA API](http://odata.org) 协议访问所有业务数据

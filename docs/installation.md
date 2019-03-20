@@ -1,8 +1,8 @@
 ---
-title: 安装 Steedos 对象服务器
+title: 开始开发
 ---
 
-安装和运行 Steedos Object Server 非常简单。您可以在 Windows、Mac 或 Linux 环境中运行以下安装指令。
+开发和运行 Steedos Object 非常简单。您可以在 Windows、Mac 或 Linux 环境中运行以下安装指令。
 
 ### 安装运行环境
 - 安装NodeJS [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
@@ -20,12 +20,13 @@ npm i yarn -g
 npm config set registry http://registry.npm.taobao.org/
 ```
 
-### 克隆我们的示例项目
+### 我们的示例项目
 - [合同管理](https://github.com/steedos/steedos-contracts-app)
 - [会议管理](https://github.com/steedos/steedos-meeting-app)
 
-### 进入项目文件夹
+### 克隆示例项目
 ```shell
+git clone https://github.com/steedos/steedos-contracts-app
 cd steedos-contracts-app
 ```
 
