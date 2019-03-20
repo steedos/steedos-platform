@@ -32,7 +32,12 @@ class TirggerManager{
         _TRIGGERKEYS.forEach((key)=>{
             let event = trigger[key];
             if(_.isFunction(event)){
-                this.setCollectionHook(collection, event);
+                let todoWrapper = function(){
+                    this.object_name = object_name
+                    Object.setPrototypeOf(this, Object.getPrototypeOf(trigger))
+                    return event.apply(this, arguments)
+                }
+                this.setCollectionHook(collection, event.name, todoWrapper);
             }
         })
     }
@@ -46,11 +51,10 @@ class TirggerManager{
      * @returns {boolean}：true: 设置Hook成功; false 设置Hook失败
      * @memberof TirggerManager
      */
-    private setCollectionHook(collection: any, todo: Function): boolean{
+    private setCollectionHook(collection: any, when: string, todo: Function): boolean{
         if(!todo){
             return false;
         }
-        let when = todo.name;
         switch (when) {
             case 'beforeInsert':
                 collection.before.insert(todo);
