@@ -20,6 +20,36 @@ fields:
     label: 所有人
     type: lookup
     reference_to: User
+list_views:
+  recent:
+    label: 最近查看
+  all:
+    label: 所有单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_fields:
+      - priority
+  high_priority:
+    label: 重点关注
+    filters: ["priority", "=", "high"]
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
 ```
 
 Steedos Object Server 是 Steedos Object 服务端运行环境。
@@ -31,16 +61,12 @@ Steedos Object Server 是 Steedos Object 服务端运行环境。
 ![电脑、手机界面展示](assets/mac_ipad_iphone_home.png)
 
 想要开发自己的客户端或是手机App吗？Steedos Object Server立刻华丽转身成为你的API服务器。
-- 使用 [ODATA API](http://odata.org) 协议访问所有对象数据
-- 使用 [GraphQL API](http://graphql.org) 协议访问所有对象数据 (即将上线)
-
-为了简化用户开发，我们正在开发以下控件库：
-- 使用 [React Components](https://reactjs.org/) 开发网页端界面 (即将上线)
-- 使用 [React Native Components](https://facebook.github.io/react-native/) 开发手机端端界面 (即将上线)
+- 使用 [ODATA API](http://odata.org) 协议访问所有业务数据
+- 使用 [GraphQL API](http://graphql.org) 协议访问所有业务数据 (即将上线)
 
 Steedos Object Server 设计的目的是为了连接到任何数据源，包括SQL或MongoDB数据库，也可以是类似Salesforce、SAP等API接口。
 
-目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库，连接SQL数据库的版本也正在紧锣密鼓的开发中。
+目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库。连接SQL数据库的版本也正在紧锣密鼓的开发中。
 
 Steedos Object Schema 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
