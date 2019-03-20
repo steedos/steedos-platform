@@ -75,6 +75,12 @@ export class CreatorManager {
     return SteedosOData.getMetaDataPath(spaceId);
   }
 
+  loadObjects(object){
+    if (typeof Creator.loadObjects == 'function') {
+      return Creator.loadObjects(object);
+    }
+  }
+
   fiberLoadObjects(object){
     if (typeof Creator.fiberLoadObjects == 'function') {
       return Creator.fiberLoadObjects(object);

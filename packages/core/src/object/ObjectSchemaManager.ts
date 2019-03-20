@@ -66,6 +66,7 @@ export default class ObjectSchemaManager {
                 objectSchema.extend(extendSchema.schema)
                 this.objectSchemas.push(objectSchema);
                 this.registerCreator(objectSchema.schema);
+                return objectSchema;
             }else{
                 throw new Error("Object schema not exists");
             }
@@ -97,7 +98,7 @@ export default class ObjectSchemaManager {
             let Creator = getCreator();
             if ((typeof Creator !== "undefined") && Creator.Objects) {
                 Creator.Objects[_id] = json;
-                Creator.fiberLoadObjects(json);
+                Creator.loadObjects(json)
             }
         }
     };

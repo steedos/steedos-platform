@@ -163,11 +163,11 @@ function resolve(id) {
     throw res;
   }
 
-  resolveCache[id] =
-    resolveInLocalBuild(id) ||
-    resolveInProjectNodeModules(id) ||
-    resolveInServerNodeModules(id) ||
+  resolveCache[id] = 
     resolveInDevBundle(id) ||
+    resolveInLocalBuild(id) ||
+    //resolveInProjectNodeModules(id) ||
+    resolveInServerNodeModules(id) ||
     null;
 
   return resolve(id);
@@ -227,7 +227,12 @@ function resolveInProjectNodeModules(id) {
 
 function resolveInDevBundle(id) {
   // Fall back to dev_bundle/lib/node_modules and built-in modules.
-  return topLevelIdPattern.test(id) && tryResolve(id);
+  //return topLevelIdPattern.test(id) && tryResolve(id);
+  var ids = id.split("node_modules/")
+  if (ids.length>1) {
+    id = ids[ids.length-1];
+  }
+  return  tryResolve(id);
 }
 
 function tryResolve(id) {

@@ -21,8 +21,8 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Steedos 对象服务器', // Title for your website.
-  tagline: '配置和管理你的业务对象',
+  title: 'Steedos Object Schema', // Title for your website.
+  tagline: '跨平台、跨语言的对象描述语法',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -38,8 +38,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'README', label: '功能'},
-    {doc: 'installation', label: '快速开始'},
+    {doc: 'introduction', label: '学习'},
+    {doc: 'server', label: '服务端'},
     {doc: 'odata_auth', label: 'API'},
     {blog: true, label: '动态'},
     {

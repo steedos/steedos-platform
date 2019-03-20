@@ -10,7 +10,7 @@
 
 **/lib
 
-**/.vscode
+**/.vscode/launch.*
 
 **/yarn.lock
 settings.yml

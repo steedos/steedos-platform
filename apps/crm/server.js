@@ -4,7 +4,7 @@ server.Fiber(function () {
     server.Profile.run("Server startup", function () {
         server.loadServerBundles();
         server.callStartupHooks();
-        require("./src");
+        require("./index");
         server.runMain();
     });
 }).run();

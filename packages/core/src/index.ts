@@ -10,7 +10,10 @@ export {default as ObjectSchemaOptions} from './object/ObjectSchemaOptions';
 export { Apps, AppManager } from './app';
 export { Reports, ReportManager } from './report';
 export { Trigger } from './trigger/Trigger';
+export { default as TriggerManager } from './trigger/TriggerManager'
 export { Validators, ValidatorManager } from './validator';
+
+export {default as FieldManager} from './field/FieldManager'
 
 export { default as Project } from './project/Project';
 

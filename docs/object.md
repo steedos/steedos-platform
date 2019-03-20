@@ -2,14 +2,39 @@
 title: 对象
 ---
 
-对象可以看作数据库中的表，Steedos内置了一些基本对象，您也可以使用配置文件配置自定义对象。无论是标准的对象还是自定义对象，Steedos都为它们提供完整的操作界面，帮助用户进行新建、编辑、存储、浏览。
+### 基本概念
 
-![电脑、手机界面展示](assets/car_object.png)
+- Steedos Datasource Schema 是一种数据源描述语法，数据源可以是传统的数据库，也可以是类似Salesforce、SAP等API接口返回的JSON数据。
+- Steedos Object Schema 是一套对象描述语法，用于定义业务对象的字段、关系、校验、触发器、视图、权限、报表等内容。把Steedos Object关联到数据源之后，Steedos对象服务器即可生成标准的API接口和用户界面。
+- Steedos Filter Language 是一种过滤条件描述语法，让最终用户可以按照统一的标准编写复杂的过滤条件。Steedos提供标准函数把用户的Steedos Filter转换为SQL数据库或是MongoDB的查询条件。
+
 
 ### 定义对象
-您可以创建 {object_name}.object.yml 文件，定义对象。您可以参考Steedos定义的 [标准对象](../packages/standard-objects)。
+您可以创建 {object_name}.object.yml 文件，定义对象。
+
+post.object.yml
+```yaml
+name: Post
+label: 文章
+description: 用户发布的文章
+fields:
+  name: 
+    type: String
+    label: 标题 
+  description:
+    type: String
+    label: 正文
+  isPublished:
+    type: Boolean
+    label: 已发布
+  owner:
+    label: 作者
+    type: master_detail
+    reference_to: User
+```
 
 ### 对象属性
+定义对象时，可以使用以下属性：
 - 对象名(object_name)： 必填，是对象的唯一名称，也是对象保存在数据库中的数据表名称。只能是英文、下划线和数字组成，不可重复。通过代码、API接口调用对象时，也需要使用此名称。
 - 显示名称(label)： 必填，在界面上的显示名称，最终用户看到的是此名称。
 - 图标(icon)： 必填，对象的显示图标名称，对应 [LIGHTNING DESIGN SYSTEM 中的Standard Icons图标](https://www.lightningdesignsystem.com/icons/#standard)
@@ -36,11 +61,35 @@ title: 对象
 var steedos=require("@steedos/core")
 
 // 加载单个对象
-steedos.require("./xxx.object.yml");
+// 如果同时定义 .yml 和 .js 文件，会全部加载并合并属性。
+steedos.use("./xxx.object.yml");
+steedos.use("./xxx.object.js");
+steedos.use("./src/xxx.object.yml");
+steedos.use(__dirname + "/src/xxx.object.yml");
+steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
 
-// 加载文件夹和所有子文件夹中的对象 
-steedos.require(__dirname)
+// 加载字段，可用于为对象新增或修改字段
+steedos.use("./xxx.field.yml");
+steedos.use("./xxx.field.js");
+
+// 加载触发器
+steedos.use("./xxx.trigger.js");
+
+// 加载报表
+steedos.use("./xxx.report.yml");
+steedos.use("./xxx.report.js");
+
+// 加载应用
+steedos.use("./xxx.app.yml");
+
+// 加载文件夹和所有子文件夹中的配置文件，依次加载对象、触发器、报表、应用
+steedos.use("./src");
+steedos.use("../src");
+steedos.use(__dirname);
 
 // 加载node_modules中的对象
-steedos.require("@steedos/standard-objects");
+app.use("@steedos/standard-objects");
 ```
+
+### 参考
+- [Steedos 标准对象](https://github.com/steedos/object-server/tree/develop/packages/standard-objects)。
