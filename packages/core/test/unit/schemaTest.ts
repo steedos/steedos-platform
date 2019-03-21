@@ -19,11 +19,11 @@ describe('自动生成字段名', () => {
     
     let object = schema._objects["post"]
     //console.log(object)
-    
+
     let field = object._fields["title"]
-    //console.log(field)
+    console.log(field)
     
-    expect(field._name).to.equal("title");
+    expect(field.name).to.equal("title");
 
   });
 });

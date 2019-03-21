@@ -10,10 +10,12 @@ export interface SteedosFieldTypeConfig extends JsonMap {
 
 export class SteedosFieldType implements Dictionary {
     _object: SteedosObjectType
-    _name: string
+    name: string
+    type: string
 
     constructor(name: string, object: SteedosObjectType, config: SteedosFieldTypeConfig){
         this._object = object
-        this._name = name
+        this.name = name
+        this.type = config.type
     }
 }
