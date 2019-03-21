@@ -1,4 +1,4 @@
-import DataSource from "../object/DataSource";
+import DataSource from "../datasource/DataSource";
 import { ObjectConfig } from "..";
 
 export default class SteedosObject {
