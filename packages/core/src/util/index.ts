@@ -153,3 +153,19 @@ exports.extend = (destination: JsonMap, sources: JsonMap)=>{
         }
     })
 }
+
+exports.isObjectFile = (filePath: string)=>{
+  return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.object.yml') || filePath.endsWith('.object.js'))
+}
+
+exports.isAppFile = (filePath: string)=>{
+  return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.app.yml')
+}
+
+exports.isTriggerFile = (filePath: string)=>{
+  return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.trigger.js')
+}
+
+exports.isFieldFile = (filePath: string)=>{
+  return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.field.yml') || filePath.endsWith('.field.js'))
+}

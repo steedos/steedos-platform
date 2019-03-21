@@ -10,6 +10,8 @@ import {AppManager, getObjectConfigManager, TriggerManager, FieldManager} from '
 import fs = require("fs");
 import path = require("path");
 
+var util = require("../util");
+
 class Project {
   /**
    * Get a Project from a given path or from the working directory.
@@ -165,18 +167,18 @@ class Project {
     if (!fs.existsSync(directoryPath) || !fs.statSync(directoryPath).isDirectory())
       throw new Error("Module folder not found：" + directoryPath);
     let sub: string[] = fs.readdirSync(directoryPath)
-    sub.forEach((s)=>{
+    sub.forEach((s: string)=>{
       let subDirectory = path.join(directoryPath, s)
       if (fs.statSync(subDirectory).isDirectory()){
         this.scanFiles(storage, subDirectory);
       }else{
-        if(s.endsWith('.app.yml')){
+        if(util.isAppFile(path.join(subDirectory))){
           storage.appFilesPath.push(subDirectory)
-        }else if(s.endsWith('.object.yml') || s.endsWith('.object.js')){
+        }else if(util.isObjectFile(subDirectory)){
           storage.objectFilesPath.push(subDirectory)
-        }else if(s.endsWith('.trigger.js')){
+        }else if(util.isTriggerFile(subDirectory)){
           storage.triggerFilesPath.push(subDirectory)
-        }else if(s.endsWith('.field.yml') || s.endsWith('.field.js')){
+        }else if(util.isFieldFile(subDirectory)){
           storage.fieldFilesPath.push(subDirectory)
         }else{
           console.warn('Unloaded file', subDirectory)
