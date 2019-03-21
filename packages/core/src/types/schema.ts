@@ -1,27 +1,28 @@
-import { SteedosDataSource, SteedosTrigger, SteedosAction } from ".";
-import ObjectConfig from "../object/ObjectConfig"
+import { Dictionary } from "@salesforce/ts-types";
+import { SteedosObjectType } from ".";
 
 export type SteedosSchemaConfig = {
-    datasources: SteedosDataSource[]
-    objects: ObjectConfig[]
-    actions: SteedosAction[]
-    triggers: SteedosTrigger[]
+    object: Dictionary<SteedosObjectType>
 }
 
 export class SteedosSchema {
-    _datasources: SteedosDataSource[]
-    _objects: ObjectConfig[]
-    _actions: SteedosAction[]
-    _triggers: SteedosTrigger[]
+    _object: Dictionary<SteedosObjectType>
 
     constructor(config: SteedosSchemaConfig) {
-        this._datasources = config.datasources
-        this._objects = config.objects
-        this._actions = config.actions
-        this._triggers = config.triggers
+        this._object = config.object
     }
 
-    addObject(object: ObjectConfig) {
+    getObject(name: string) {
+        return this._object[name]
     }
+
+    setObject(name: string, object: SteedosObjectType) {
+        this._object[name] = object;
+    }
+
+    removeObject(name: string) {
+        delete this._object[name]
+    }
+
 
 }

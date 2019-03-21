@@ -1,4 +1,13 @@
-export class SteedosAction {
+import { Dictionary } from "@salesforce/ts-types";
+
+export class SteedosObjectType {
+
+    name: String
+    fields: Dictionary<SteedosObjectType>
+
+}
+
+export type SteedosAction = {
     
 }
 
