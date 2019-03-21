@@ -1,3 +1,3 @@
-export default class SteedosField {
+export class SteedosField {
 
 }

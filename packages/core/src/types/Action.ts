@@ -1,3 +1,3 @@
-export default class SteedosAction {
+export class SteedosAction {
     
 }
