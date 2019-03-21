@@ -35,6 +35,7 @@
     "js-yaml": "3.12.2",
     "jsen": "^0.6.6",
     "mongodb": "^3.0.8",
+    "mongoose": "^5.4.19",
     "odata-v4-mongodb": "^0.1.12",
     "pg": "^7.8.2",
     "reflect-metadata": "^0.1.10",

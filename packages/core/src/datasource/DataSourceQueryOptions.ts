@@ -8,16 +8,16 @@ export default interface DataSourceQueryOptions extends JsonMap {
     /**
      * Query options for top, fetch only the top number of data
      */
-    readonly top: number;
+    readonly top?: number;
 
     /**
      * Query options for skip, fetch only the data after skip count
      */
-    readonly skip: number;
+    readonly skip?: number;
 
     /**
      * Query options for orderby, the sort of data for fetch
      */
-    readonly orderby: string;
+    readonly orderby?: string;
     
 }
