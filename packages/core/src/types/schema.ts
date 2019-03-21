@@ -2,27 +2,26 @@ import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType } from ".";
 
 export type SteedosSchemaConfig = {
-    object: Dictionary<SteedosObjectType>
+    objects: Dictionary<SteedosObjectType>
 }
 
 export class SteedosSchema {
-    _object: Dictionary<SteedosObjectType>
+    _objects: Dictionary<SteedosObjectType>
 
     constructor(config: SteedosSchemaConfig) {
-        this._object = config.object
+        this._objects = config.objects
     }
 
     getObject(name: string) {
-        return this._object[name]
+        return this._objects[name]
     }
 
     setObject(name: string, object: SteedosObjectType) {
-        this._object[name] = object;
+        this._objects[name] = object;
     }
 
     removeObject(name: string) {
-        delete this._object[name]
+        delete this._objects[name]
     }
-
 
 }
