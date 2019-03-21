@@ -1,44 +1,17 @@
 import { JsonMap } from "@salesforce/ts-types";
+import DataSourceConfig from "./DataSourceConfig";
 
-type DataSourceConfig = {
-    name: String
-    type: String
-    connectionUri: String
-}
-
-export default class DataSource {
+export default abstract class DataSource {
     config: DataSourceConfig;
     connected: boolean;
     
     constructor(config: DataSourceConfig){
         this.config = config;
     }
-
-    static getDefaultDataSource() {
-        return defaultDataSource
-    }
     
-    find(filters: [[String]], fields: [String], options: JsonMap){
-
-    }
-
-    insert(doc: JsonMap){
-
-    }
-
-    update(id:string|number, doc: JsonMap){
-
-    }
-
-    delete(id:string|number){
-
-    }
-
+    abstract find(filters: [[String]], fields: [String], options: JsonMap): any;
+    abstract insert(doc: JsonMap): any;
+    abstract update(id: string | number, doc: JsonMap): any;
+    abstract delete(id: string | number): any;
 }
-
-let defaultDataSource = new DataSource( {
-    name: "default", 
-    type: "mongodb", 
-    connectionUri: "mongodb://127.0.0.1/steedos"
-});
 

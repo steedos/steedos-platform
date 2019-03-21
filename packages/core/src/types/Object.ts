@@ -8,9 +8,6 @@ export default class SteedosObject {
     
     constructor(config: ObjectConfig, datasource: DataSource){
         this.config = config;
-        if (datasource)
-            this.datasource = datasource;
-        else
-            this.datasource = DataSource.getDefaultDataSource();
+        this.datasource = datasource;
     }
 }
