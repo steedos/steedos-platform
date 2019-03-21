@@ -20,6 +20,10 @@ export class MongoDataSource extends DataSource {
 
     }
 
+    findOne(id: string | number, fields: [String]) {
+
+    }
+
     insert(doc: JsonMap){
 
     }
