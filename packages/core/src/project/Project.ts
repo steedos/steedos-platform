@@ -5,7 +5,7 @@ import { JsonMap } from '@salesforce/ts-types';
 import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
-import {AppManager, getObjectConfigManager, TriggerManager, FieldManager} from '..';
+import {AppManager, getObjectConfigManager, TriggerManager, FieldManager, ReportManager} from '..';
 
 import fs = require("fs");
 import path = require("path");
@@ -132,7 +132,8 @@ class Project {
       appFilesPath: [],
       objectFilesPath: [],
       triggerFilesPath: [],
-      fieldFilesPath: []
+      fieldFilesPath: [],
+      reportFilesPath: []
     }
     this.scanFiles(fileStorage, directoryPath)
 
@@ -149,11 +150,16 @@ class Project {
       TriggerManager.loadFile(path);
     })
 
+    fileStorage.reportFilesPath.forEach((path: string) => {
+      ReportManager.loadFile(path)
+    });
+    
     fileStorage.appFilesPath.forEach((path: string) => {
       AppManager.loadFile(path)
     });
 
-    //TODO load report
+    
+    
   }
 
   /**
@@ -180,6 +186,8 @@ class Project {
           storage.triggerFilesPath.push(subDirectory)
         }else if(util.isFieldFile(subDirectory)){
           storage.fieldFilesPath.push(subDirectory)
+        }else if(util.isReportFile(subDirectory)){
+          storage.reportFilesPath.push(subDirectory)
         }else{
           console.warn('Unloaded file', subDirectory)
         }

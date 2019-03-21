@@ -169,3 +169,7 @@ exports.isTriggerFile = (filePath: string)=>{
 exports.isFieldFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.field.yml') || filePath.endsWith('.field.js'))
 }
+
+exports.isReportFile = (filePath: string)=>{
+  return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.report.yml') || filePath.endsWith('.report.js'))
+}
