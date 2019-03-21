@@ -1,5 +1,6 @@
 import { JsonMap } from "@salesforce/ts-types";
 import DataSourceConfig from "./DataSourceConfig";
+import DataSourceQueryOptions from "./DataSourceQueryOptions";
 
 export default abstract class DataSource {
     config: DataSourceConfig;
@@ -9,7 +10,7 @@ export default abstract class DataSource {
         this.config = config;
     }
     
-    abstract find(filters: [[String]], fields: [String], options: JsonMap): any;
+    abstract find(filters: [[String]], fields: [String], options: DataSourceQueryOptions): any;
     abstract insert(doc: JsonMap): any;
     abstract update(id: string | number, doc: JsonMap): any;
     abstract delete(id: string | number): any;

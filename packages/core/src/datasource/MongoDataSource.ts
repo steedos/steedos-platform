@@ -1,6 +1,7 @@
 import { JsonMap } from "@salesforce/ts-types";
 import DataSource from "./DataSource";
 import DataSourceConfig from "./DataSourceConfig";
+import DataSourceQueryOptions from "./DataSourceQueryOptions";
 
 export class MongoDataSource extends DataSource {
     config: DataSourceConfig;
@@ -15,7 +16,7 @@ export class MongoDataSource extends DataSource {
     //     return defaultDataSource
     // }
     
-    find(filters: [[String]], fields: [String], options: JsonMap){
+    find(filters: [[String]], fields: [String], options: DataSourceQueryOptions){
 
     }
 
