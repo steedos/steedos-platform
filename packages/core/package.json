@@ -49,6 +49,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "sinon-chai": "^3.3.0",
+    "nodemon": "^1.18.10",
     "typescript": "^3.3.4000"
   },
   "types": "lib/index.d.ts",
