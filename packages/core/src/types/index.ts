@@ -1,6 +1,17 @@
-export { SteedosObjectType } from "./object_type";
-export { SteedosField } from "./field";
-export { SteedosAction } from "./action";
-export { SteedosTrigger } from "./trigger";
-export { SteedosDataSource } from "./dataSource";
+export class SteedosAction {
+    
+}
+
+export class SteedosDataSource {
+    
+}
+
+export class SteedosTrigger {
+    
+}
+
+export class SteedosField {
+    
+}
+
 export { SteedosSchema } from "./schema";
