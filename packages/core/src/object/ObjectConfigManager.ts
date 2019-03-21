@@ -3,8 +3,8 @@ var util = require("../util");
 import { getFromContainer } from "../container";
 
 
-import ObjectSchema from "./ObjectSchema";
-import ObjectSchemaOptions from "./ObjectSchemaOptions";
+import ObjectConfig from "./ObjectConfig";
+import ObjectConfigOptions from "./ObjectConfigOptions";
 
 import { JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from '../validator';
@@ -14,7 +14,7 @@ import { getCreator } from '../index';
  * ConnectionManager is used to store and manage multiple orm connections.
  * It also provides useful factory methods to simplify connection creation.
  */
-export default class ObjectSchemaManager {
+export default class ObjectConfigManager {
 
     // -------------------------------------------------------------------------
     // Protected Properties
@@ -23,7 +23,7 @@ export default class ObjectSchemaManager {
     /**
      * List of connections registered in this connection manager.
      */
-    public readonly objectSchemas: ObjectSchema[] = [];
+    public readonly objectConfigs: ObjectConfig[] = [];
 
     // -------------------------------------------------------------------------
     // Public Methods
@@ -33,7 +33,7 @@ export default class ObjectSchemaManager {
      * Checks if connection with the given name exist in the manager.
      */
     has(name: string): boolean {
-        return !!this.objectSchemas.find(object => object.name === name);
+        return !!this.objectConfigs.find(object => object.name === name);
     }
 
     /**
@@ -41,54 +41,54 @@ export default class ObjectSchemaManager {
      * If connection name is not given then it will get a default connection.
      * Throws error if connection with the given name was not found.
      */
-    get(name: string = "default"): ObjectSchema {
-        const objectSchema = this.objectSchemas.find(object => object.name === name);
-        if (!objectSchema)
+    get(name: string = "default"): ObjectConfig {
+        const objectConfig = this.objectConfigs.find(object => object.name === name);
+        if (!objectConfig)
             throw new Error(name);
 
-        return objectSchema;
+        return objectConfig;
     };
 
     /**
      * Creates a new connection based on the given connection options and registers it in the manager.
      * Connection won't be established, you'll need to manually call connect method to establish connection.
      */
-    create(options: ObjectSchemaOptions): ObjectSchema {
+    create(options: ObjectConfigOptions): ObjectConfig {
 
         this.validate(options);
 
         // check if such connection is already registered
-        let existSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.name || "default"));
+        let existConfig = this.objectConfigs.find(objectConfig => objectConfig.name === (options.name || "default"));
         if(options.extend){
-            let extendSchema = this.objectSchemas.find(objectSchema => objectSchema.name === (options.extend || "default"));
-            if(extendSchema){
-                let objectSchema = new ObjectSchema(options);
-                objectSchema.extend(extendSchema.schema)
-                this.objectSchemas.push(objectSchema);
-                this.registerCreator(objectSchema.schema);
-                return objectSchema;
+            let extendConfig = this.objectConfigs.find(objectConfig => objectConfig.name === (options.extend || "default"));
+            if(extendConfig){
+                let objectConfig = new ObjectConfig(options);
+                objectConfig.extend(extendConfig.config)
+                this.objectConfigs.push(objectConfig);
+                this.registerCreator(objectConfig.config);
+                return objectConfig;
             }else{
-                throw new Error("Object schema not exists");
+                throw new Error("Object config not exists");
             }
-        }else if (existSchema) {
+        }else if (existConfig) {
             // if its registered but closed then simply remove it from the manager
             if (!options.extend)
-                throw new Error("Object schema exists, do you want to extend?");
+                throw new Error("Object config exists, do you want to extend?");
             // else{
-            //     existSchema.extend(options);
-            //     this.registerCreator(existSchema.schema);
+            //     existConfig.extend(options);
+            //     this.registerCreator(existConfig.config);
             // }
         }else{
-            // create a new objectSchema
-            let objectSchema = new ObjectSchema(options);
-            this.objectSchemas.push(objectSchema);
-            this.registerCreator(objectSchema.schema);
-            return objectSchema;
+            // create a new objectConfig
+            let objectConfig = new ObjectConfig(options);
+            this.objectConfigs.push(objectConfig);
+            this.registerCreator(objectConfig.config);
+            return objectConfig;
         }
     };
 
-    createFromFile(filePath: string): ObjectSchema {
-        let options: ObjectSchemaOptions = util.loadFile(filePath);
+    createFromFile(filePath: string): ObjectConfig {
+        let options: ObjectConfigOptions = util.loadFile(filePath);
         return this.create(options);
     };
 
@@ -103,15 +103,15 @@ export default class ObjectSchemaManager {
         }
     };
     
-    validate(options: ObjectSchemaOptions): boolean {
-        return Validators.steedosObjectSchema(options);
+    validate(options: ObjectConfigOptions): boolean {
+        return Validators.steedosObjectConfig(options);
     };
 
     remove(name: string) {
-        const existSchema = this.objectSchemas.find(objectSchema => objectSchema.name === name);
-        if (existSchema) {
+        const existConfig = this.objectConfigs.find(objectConfig => objectConfig.name === name);
+        if (existConfig) {
             // if its registered but closed then simply remove it from the manager
-            this.objectSchemas.splice(this.objectSchemas.indexOf(existSchema), 1);
+            this.objectConfigs.splice(this.objectConfigs.indexOf(existConfig), 1);
         }
     };
     
@@ -129,8 +129,8 @@ export default class ObjectSchemaManager {
 
 
 /**
- * Gets a ObjectSchemaManager which creates object schema.
+ * Gets a ObjectConfigManager which creates object config.
  */
-export function getObjectSchemaManager(): ObjectSchemaManager {
-    return getFromContainer(ObjectSchemaManager);
+export function getObjectConfigManager(): ObjectConfigManager {
+    return getFromContainer(ObjectConfigManager);
 }

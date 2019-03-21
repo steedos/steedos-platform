@@ -3,8 +3,7 @@ import { JsonMap } from '@salesforce/ts-types';
 /**
  * BaseConnectionOptions is set of connection options shared by all database types.
  */
-export default interface ObjectSchemaOptions extends JsonMap {
-
+export default interface ObjectConfigOptions extends JsonMap {
 
     /**
      * Schema name.

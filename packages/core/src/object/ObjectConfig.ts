@@ -1,4 +1,4 @@
-import ObjectSchemaOptions from "./ObjectSchemaOptions";
+import ObjectConfigOptions from "./ObjectConfigOptions";
 var util = require("../util");
 var clone = require("clone")
 /**
@@ -6,35 +6,36 @@ var clone = require("clone")
  * Its not required to be a database connection, depend on database type it can create connection pool.
  * You can have multiple connections to multiple databases in your application.
  */
-export default class ObjectSchema {
+export default class ObjectConfig {
 
-    extend(options: ObjectSchemaOptions) {
+    extend(options: ObjectConfigOptions) {
         let destination = clone(options);
-        util.extend(destination, this.schema);
-        this.schema = destination;
+        util.extend(destination, this.config);
+        this.config = destination;
     }
 
     // -------------------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------------------
 
-    constructor(options: ObjectSchemaOptions) {
+    constructor(options: ObjectConfigOptions) {
         this.name = options.name;
-        this.schema = options;
-        this.options.push(options);
+        this.config = options;
+        this.configOptions.push(options);
     }
 
     // -------------------------------------------------------------------------
     // Public Readonly Properties
     // -------------------------------------------------------------------------
     /**
-     * Connection name.
+     * object name.
      */
     readonly name: string;
 
     /**
      * ObjectSchema options.
      */
-    readonly options: ObjectSchemaOptions[] = [];
-    schema: ObjectSchemaOptions;
+    readonly configOptions: ObjectConfigOptions[] = [];
+    config: ObjectConfigOptions;
+    
 }

@@ -3,7 +3,7 @@ var _ = require("underscore");
 
 import { Dictionary, JsonMap, getString } from '@salesforce/ts-types';
 import { Validators } from './validator';
-import { getObjectSchemaManager } from "./index";
+import { getObjectConfigManager } from "./index";
 
 export const Triggers: Dictionary<JsonMap> = {}
 export const TriggerManager = {
@@ -25,7 +25,7 @@ export const TriggerManager = {
                 return
             }
 
-            let options: any = getObjectSchemaManager().get(object_name).options
+            let options: any = getObjectConfigManager().get(object_name).configOptions
             if (!options) {
                 console.error(`load trigger error：Invalid 'object_name' /r ${name}`)
                 return
@@ -44,7 +44,7 @@ export const TriggerManager = {
                     })
                 }
             })
-            getObjectSchemaManager().registerCreator(options)
+            getObjectConfigManager().registerCreator(options)
         }
     },
 
@@ -60,9 +60,9 @@ export const TriggerManager = {
 
     validate(json: JsonMap): boolean {
         var newJson = TriggerManager._convertFunctionToString(json);
-        var validate = Validators.steedosTriggerSchema;
+        var validate = Validators.steedosTriggerConfig;
         if (!validate) {
-            console.log('缺少steedosTriggerSchema');
+            console.log('缺少steedosTriggerConfig');
             return false;
         }
         if (validate(newJson)) {
