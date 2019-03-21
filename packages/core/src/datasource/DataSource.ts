@@ -10,10 +10,10 @@ export default abstract class DataSource {
         this.config = config;
     }
     
-    abstract find(filters: [[String]], fields: [String], options: DataSourceQueryOptions): any;
-    abstract findOne(id: string | number, fields: [String]): any;
-    abstract insert(doc: JsonMap): any;
-    abstract update(id: string | number, doc: JsonMap): any;
-    abstract delete(id: string | number): any;
+    abstract find(tableName: string, filters: [[String]], fields: [String], options: DataSourceQueryOptions): any;
+    abstract findOne(tableName: string, id: string | number, fields: [String]): any;
+    abstract insert(tableName: string, doc: JsonMap): any;
+    abstract update(tableName: string, id: string | number, doc: JsonMap): any;
+    abstract delete(tableName: string, id: string | number): any;
 }
 

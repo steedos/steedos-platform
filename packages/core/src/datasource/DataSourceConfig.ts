@@ -1,7 +1,7 @@
 type DataSourceConfig = {
-    name: String
-    type: String
-    connectionUri: String
+    name: string
+    type: string
+    connectionUri: string
 }
 
 export default DataSourceConfig;
