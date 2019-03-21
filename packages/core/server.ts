@@ -1,7 +1,6 @@
 var server = require('@steedos/meteor-bundle-runner');
-import { default as Project } from "./src/project/Project";
-import { ODataRouter } from '.';
-
+// import { default as Project } from "./src/project/Project";
+import { ODataRouter, use} from '.';
 declare var WebApp: any;
 
 server.Fiber(function () {
@@ -9,8 +8,9 @@ server.Fiber(function () {
         server.loadServerBundles();
         server.callStartupHooks();
         try {
-            Project.load(__dirname + "/../standard-objects");
-            Project.load(__dirname + "/../../apps/crm/src");
+            use(__dirname + "/../standard-objects");
+            use(__dirname + "/../../apps/crm/src");
+            // use(__dirname + "/../../apps/app-meeting");
 
             let express = require('express');
             let app = express();
