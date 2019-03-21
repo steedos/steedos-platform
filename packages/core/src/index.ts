@@ -28,3 +28,4 @@ export function getCreator(): CreatorManager{
 
 export { Module } from "./module";
 export { default as ODataRouter } from './odata/ODataRouter'
+export {use} from './use'
