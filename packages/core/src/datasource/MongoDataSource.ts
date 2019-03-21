@@ -3,7 +3,6 @@ import DataSource from "./DataSource";
 import DataSourceConfig from "./DataSourceConfig";
 import DataSourceQueryOptions from "./DataSourceQueryOptions";
 import { MongoClient, Db } from "mongodb";
-import assert = require('assert');
 
 export default class MongoDataSource extends DataSource {
     config: DataSourceConfig;
@@ -15,43 +14,47 @@ export default class MongoDataSource extends DataSource {
         super(config);
         this.config = config;
         this.client = new MongoClient(config.connectionUri);
-        this.client.connect((err) => {
-            assert.equal(null, err);
-            console.log("Connected successfully to server===1");
-            this.connected = true;
-            // this.db = this.client.db(this.config.name);
-            this.client.close();
-            this.connected = false;
+        console.log(`Connecting Mongodb for ${this.config.name}...`);
+        this.client.connect().then((error) => {
+            if(error){
+                console.error(`Connected Mongodb failed for ${this.config.name}, the error is:`, error);
+            }
+            else {
+                this.connected = true;
+                this.client.close();
+                this.connected = false;
+                console.log(`Connected Mongodb for ${this.config.name} successfully`);
+            }
         });
     }
 
-    private findDocuments(tableName: string, filters: [[string]], fields: [string], options: DataSourceQueryOptions, callback: any){
+    private async findDocuments(tableName: string, filters: [[string]], fields: [string], options: DataSourceQueryOptions){
         this.db = this.client.db(this.config.name);
         const collection = this.db.collection(tableName);
-        collection.find({}).toArray((err, docs)=> {
-            console.log("==findDocuments======err====", err);
-            assert.equal(err, null);
-            console.log("Found the following records");
-            console.log(docs)
-            callback(docs);
-        });
+        let result = await collection.find({}).toArray();
+        console.log("Found the following records");
+        console.log(result)
+        return result;
     }
 
     // static getDefaultDataSource() {
     //     return defaultDataSource
     // }
     
-    find(tableName: string, filters: [[string]], fields: [string], options: DataSourceQueryOptions){
-        console.log("find==============");
-        this.client.connect((err)=> {
-            assert.equal(null, err);
-            console.log("Connected successfully to server===2");
+    async find(tableName: string, filters: [[string]], fields: [string], options: DataSourceQueryOptions){
+        try {
+            console.log(`Connecting Mongodb for ${this.config.name}...`);
+            await this.client.connect();
+            console.log(`Connected Mongodb for ${this.config.name} successfully`);
             this.connected = true;
-            this.findDocuments(tableName, filters, fields, options, ()=> {
-                console.log("==callback===============");
-                this.client.close();
-            });
-        });
+            let result = await this.findDocuments(tableName, filters, fields, options);
+            this.client.close();
+            this.connected = false;
+            return result;
+        }
+        catch (err) {
+            console.error(`Connected Mongodb failed for ${this.config.name}, the error is:`, err);
+        }
     }
 
     findOne(tableName: string, id: string | number, fields: [string]) {
