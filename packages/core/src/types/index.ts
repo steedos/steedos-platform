@@ -1,26 +1,17 @@
-import { Dictionary } from "@salesforce/ts-types";
+import { Dictionary } from '@salesforce/ts-types';
 
-export class SteedosObjectType {
-
-    name: String
-    fields: Dictionary<SteedosObjectType>
-
+export class SteedosDataSourceType implements Dictionary {
+    name: string
 }
 
-export type SteedosAction = {
-    
+export class SteedosTriggerType implements Dictionary {
+    name: string
 }
 
-export class SteedosDataSource {
-    
+export class SteedosActionType implements Dictionary {
+    name: string
 }
 
-export class SteedosTrigger {
-    
-}
-
-export class SteedosField {
-    
-}
-
+export { SteedosObjectType } from "./object";
+export { SteedosFieldType } from "./field";
 export { SteedosSchema } from "./schema";

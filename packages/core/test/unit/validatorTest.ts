@@ -3,10 +3,10 @@ import { expect } from 'chai';
 // if you used the '@types/mocha' method to install mocha type definitions, uncomment the following line
 // import 'mocha';
 
-describe('Validate bad schema function', () => {
+describe('Validate bad object config function', () => {
   it('should return false', () => {
     ValidatorManager.loadCoreValidators();
-    var result = Validators.steedosObjectSchema({namex: "aaa"})
+    var result = Validators.steedosObjectConfig({namex: "aaa"})
     expect(result).to.equal(false);
   });
 });
