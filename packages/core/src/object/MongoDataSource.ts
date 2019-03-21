@@ -1,11 +1,13 @@
 import { JsonMap } from "@salesforce/ts-types";
+import DataSource from "./DataSource";
 import DataSourceConfig from "./DataSourceConfig";
 
-export class MongoDataSource {
+export class MongoDataSource extends DataSource {
     config: DataSourceConfig;
     connected: boolean;
     
     constructor(config: DataSourceConfig){
+        super(config);
         this.config = config;
     }
 
