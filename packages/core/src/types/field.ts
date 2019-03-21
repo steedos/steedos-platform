@@ -18,4 +18,8 @@ export class SteedosFieldType implements Dictionary {
         this.name = name
         this.type = config.type
     }
+
+    getObject() {
+        return this._object
+    }
 }

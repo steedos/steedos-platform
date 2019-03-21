@@ -2,10 +2,11 @@ import { Dictionary } from "@salesforce/ts-types";
 import { SteedosDataSourceType, SteedosActionType, SteedosTriggerType, SteedosFieldType } from ".";
 import _ = require("underscore");
 import { SteedosFieldTypeConfig } from "./field";
+import { SteedosSchema } from "./schema";
 
 
 export type SteedosObjectTypeConfig = {
-    name: String
+    name?: String
     datasource?: SteedosDataSourceType
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
@@ -14,15 +15,14 @@ export type SteedosObjectTypeConfig = {
 
 export class SteedosObjectType {
 
+    _schema: SteedosSchema
     _name: String
-    _datasource: SteedosDataSourceType
     _fields: Dictionary<SteedosFieldType> = {}
     _actions: Dictionary<SteedosActionType> = {}
     _triggers: Dictionary<SteedosTriggerType> = {}
 
-    constructor(config: SteedosObjectTypeConfig) {
-        this._name = config.name
-        this._datasource = config.datasource
+    constructor(object_name: string, schema: SteedosSchema, config: SteedosObjectTypeConfig) {
+        this._name = object_name
 
         _.each(config.fields, (field, field_name) =>{
             this.setField(field_name, field)
@@ -40,10 +40,6 @@ export class SteedosObjectType {
     extend(config: SteedosObjectTypeConfig){
         if (this._name != config.name)
             throw new Error("You can not extend on different object");
-        
-        // override datasource
-        if (config.datasource)
-            this._datasource = config.datasource;
 
         // override each fields
         _.each(config.fields, (field, field_name) =>{
@@ -63,5 +59,13 @@ export class SteedosObjectType {
                 this._triggers[trigger.name] = trigger
             }) 
         }
+    }
+
+    getSchema() {
+        return this._schema;
+    }
+
+    getRepository() {
+        
     }
 }

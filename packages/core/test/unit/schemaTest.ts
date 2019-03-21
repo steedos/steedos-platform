@@ -1,4 +1,4 @@
-import { SteedosSchema, SteedosObjectType } from '../../src/types';
+import { SteedosSchema } from '../../src/types';
 import { expect } from 'chai';
 
 
@@ -6,22 +6,25 @@ describe('自动生成字段名', () => {
   it('should return true', () => {
     let schema = new SteedosSchema({
         objects: {
-            post: new SteedosObjectType({
-                name: "post",
+            post: {
                 fields: {
                     title: {
                         type: "string"
                     }
                 }
-            })
+            }
         },
+        datasource: {
+            type: "mongo",
+            url: "mongodb://127.0.0.1/steedos"
+        }
     })
     
     let object = schema._objects["post"]
-    //console.log(object)
+    // console.log(object)
 
     let field = object._fields["title"]
-    console.log(field)
+    // console.log(field)
     
     expect(field.name).to.equal("title");
 
