@@ -17,7 +17,7 @@ server.Fiber(function () {
         app
             .disable('x-powered-by')
             .use('/assets/stimulsoft-report/', express.static(stimulsoftAssets))
-            .use('/api', ReportRouter.routes)
+            .use('/api/report', ReportRouter.routes)
             WebApp.connectHandlers.use(app);
 
         server.runMain();
