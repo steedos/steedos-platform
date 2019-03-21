@@ -16,7 +16,14 @@ describe('自动生成字段名', () => {
             })
         },
     })
-    expect(schema._objects.post._fields.title._name).to.equal("title");
+    
+    let object = schema._objects["post"]
+    //console.log(object)
+    
+    let field = object._fields["title"]
+    //console.log(field)
+    
+    expect(field._name).to.equal("title");
 
   });
 });
