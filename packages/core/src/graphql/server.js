@@ -16,7 +16,7 @@ const customerObject = {
   }
 }
 
-const MyGraphQLSchema = utils.getSchema(customerObject)
+const MyGraphQLSchema = utils.makeSchema(customerObject)
 
 console.log(graphql.printSchema(MyGraphQLSchema));
 
