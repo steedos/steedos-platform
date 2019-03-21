@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-04/schema#
-id: steedosObjectSchema
+id: steedosObjectConfig
 type: object
 title: Steedos Object
 description: The properties and shape of the Steedos Object
