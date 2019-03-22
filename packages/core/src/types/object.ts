@@ -14,34 +14,37 @@ export type SteedosObjectTypeConfig = {
 
 export class SteedosObjectType {
 
-    _schema: SteedosSchema
-    _name: String
+    private _schema: SteedosSchema;
+    private _name: String;
     private _fields: Dictionary<SteedosFieldType> = {};
     private _actions: Dictionary<SteedosActionType> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};
 
     constructor(object_name: string, schema: SteedosSchema, config: SteedosObjectTypeConfig) {
         this._name = object_name
+        this._schema = schema
 
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
 
+       
         this._actions = config.actions
-        this._triggers = config.triggers
+        this._actions = config.triggers
+
     }
 
     setField(field_name: string, fieldConfig: SteedosFieldTypeConfig) {
         let field = new SteedosFieldType(field_name, this, fieldConfig)
-        this._fields[field_name] = field
+        this.fields[field_name] = field
     }
 
     getField(field_name: string) {
-        return this._fields[field_name]
+        return this.fields[field_name]
     }
 
     extend(config: SteedosObjectTypeConfig) {
-        if (this._name != config.name)
+        if (this.name != config.name)
             throw new Error("You can not extend on different object");
 
         // override each fields
@@ -52,45 +55,41 @@ export class SteedosObjectType {
         // override each actions
         if (config.actions) {
             _.each(config.actions, (action) => {
-                this._actions[action.name] = action
+                this.actions[action.name] = action
             })
         }
 
         // override each triggers
         if (config.triggers) {
             _.each(config.triggers, (trigger) => {
-                this._triggers[trigger.name] = trigger
+                this.triggers[trigger.name] = trigger
             })
         }
-    }
-
-    getSchema() {
-        return this._schema;
     }
 
     getRepository() {
 
     }
-    
+
     /***** get/set *****/
+    public get schema(): SteedosSchema {
+        return this._schema;
+    }
+
+    public get name(): String {
+        return this._name;
+    }
+    
+
     public get fields(): Dictionary<SteedosFieldType> {
         return this._fields;
-    }
-    public set fields(value: Dictionary<SteedosFieldType>) {
-        this._fields = value;
     }
     
     public get actions(): Dictionary<SteedosActionType> {
         return this._actions;
     }
-    public set actions(value: Dictionary<SteedosActionType>) {
-        this._actions = value;
-    }
     
     public get triggers(): Dictionary<SteedosTriggerType> {
         return this._triggers;
-    }
-    public set triggers(value: Dictionary<SteedosTriggerType>) {
-        this._triggers = value;
     }
 }
