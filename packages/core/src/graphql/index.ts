@@ -1,8 +1,13 @@
+import { GraphQLSchema, GraphQLSchemaConfig } from "graphql";
 import { SteedosSchema } from "../types";
-import { GraphQLSchema } from "graphql";
 
-export class ObjectQL {
-    getGraphQLSchema(schema: SteedosSchema): GraphQLSchema {
+export class ObjectQLSchema extends GraphQLSchema{
+    constructor(steedosSchema: SteedosSchema){
+        //...
+        let config = new GraphQLSchemaConfig({
+
+        })
         
+        super(config)
     }
 }
