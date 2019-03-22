@@ -3,18 +3,18 @@ import { SteedosDriver, SteedosDriverConfig, SteedosDriverFindOptions } from "./
 import { MongoClient, Db } from "mongodb";
 
 export class SteedosMongoDriver implements SteedosDriver {
-    config: SteedosDriverConfig;
+    _connectionUri: SteedosDriverConfig;
     connected: boolean;
     private client: MongoClient;
     private db: Db;
     
-    constructor(config: SteedosDriverConfig){
-        this.config = config;
-        this.client = new MongoClient(config.connectionUri);
+    constructor(connectionUri: string){
+        this._connectionUri = connectionUri;
+        this.client = new MongoClient(connectionUri);
     }
 
     private async findDocuments(tableName: string, filters: [[string]], fields: [string], options: SteedosDriverFindOptions){
-        this.db = this.client.db(this.config.name);
+        this.db = this.client.db();
         const collection = this.db.collection(tableName);
         let result = await collection.find({}).toArray();
         return result;

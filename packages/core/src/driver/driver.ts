@@ -1,11 +1,5 @@
 import { JsonMap } from "@salesforce/ts-types";
 
-export type SteedosDriverConfig = {
-    name: string
-    type: string
-    connectionUri: string
-}
-
 /**
  * FindOptions is set of connection options shared by all database types.
  */
