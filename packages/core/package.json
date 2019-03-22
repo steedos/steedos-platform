@@ -9,7 +9,7 @@
     "dev": "nodemon server.ts",
     "debug": "tsc & nodemon  --inspect lib/server.js",
     "compile": "tsc",
-    "test": "mocha test/**/*.ts",
+    "test": "mocha test/**/*.ts"
   },
   "author": "",
   "license": "ISC",
