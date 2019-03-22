@@ -19,10 +19,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         return {_id: -1}
     }
 
-    async mongoFind(tableName: string, mongoFilters: JsonMap){
-       
-    }
-
     async find(tableName: string, query: SteedosQueryOptions){
        
         let client = await this.connect();
