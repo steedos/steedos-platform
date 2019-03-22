@@ -10,7 +10,6 @@ describe('Test connection', () => {
             filters: ["_id", "=", "-10"]
         };
         let result = await driver.find("users", queryOptions);
-        console.log(result)
         expect(result).to.be.length(0);
   
     });

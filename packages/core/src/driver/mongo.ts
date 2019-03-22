@@ -30,8 +30,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
-
-
     findOne(tableName: string, id: string | number, fields: [string]) {
 
     }
