@@ -4,29 +4,35 @@ import { MongoClient } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 
 export class SteedosMongoDriver implements SteedosDriver {
-    _connectionUri: SteedosDriverConfig;
-    connected: boolean;
-    private client: MongoClient;
+    _url: SteedosDriverConfig;
     
-    constructor(connectionUri: string){
-        this._connectionUri = connectionUri;
-        this.client = new MongoClient(connectionUri);
+    constructor(url: string){
+        this._url = url;
+    }
+
+
+    connect(){
+        return MongoClient.connect(this._url, {useNewUrlParser: true})
     }
 
     getMongoFilters(filters: SteedosQueryFilters){
         return {_id: -1}
     }
 
+    async mongoFind(tableName: string, mongoFilters: JsonMap){
+       
+    }
+
     async find(tableName: string, query: SteedosQueryOptions){
        
-        await this.client.connect();
-        this.connected = true;
-        let db = this.client.db();
+        let client = await this.connect();
+        let db = client.db();
         let collection = db.collection(tableName);
+
         let mongoFilters = this.getMongoFilters(query.filters);
         let result = await collection.find(mongoFilters).toArray();
-        this.client.close();
-        this.connected = false;
+
+        client.close();
         return result;
     }
 
