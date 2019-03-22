@@ -20,10 +20,10 @@ describe('自动生成字段名', () => {
         }
     })
     
-    let object = schema._objects["post"]
+    let object = schema.objects["post"]
     // console.log(object)
 
-    let field = object._fields["title"]
+    let field = object.fields["title"]
     // console.log(field)
     
     expect(field.name).to.equal("title");
