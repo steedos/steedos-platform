@@ -4,10 +4,13 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLFloat,
-    GraphQLBoolean
+    GraphQLBoolean,
+    isInputType
 } from 'graphql';
+// import GraphQLJSON from 'graphql-type-json';
 var _ = require("underscore");
 import { MongoClient } from 'mongodb';
+var GraphQLJSON = require('graphql-type-json');
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -34,53 +37,46 @@ export const connectToDatabase = async () => {
     return DB;
 };
 
-
 function convertFields(fields) {
     let objTypeFields = {};
     _.each(fields, function (v, k) {
-        if (v.type == 'lookup') {
-            objTypeFields[k] = { type: v.reference_to };
+        if (k.indexOf('.') > -1) {
+            return;
         }
-        else if (v.type == 'master_detail') {
-            if (v.multiple) {
-                objTypeFields[k] = { type: [v.reference_to] };
-            } else {
-                objTypeFields[k] = { type: v.reference_to };
-            }
+
+        if (!v.type) {
+            console.error(`The field ${k} has no type property.`);
+            return;
         }
-        // basic?
-        else if (BASIC_TYPE_MAPPING[v.type]) {
+
+        if (BASIC_TYPE_MAPPING[v.type]) {
             objTypeFields[k] = { type: BASIC_TYPE_MAPPING[v.type] }
         }
         else {
-            console.error(`The type ${v.type} on property ${k} is unknown.`);
+            objTypeFields[k] = { type: GraphQLJSON };
         }
     })
 
+    console.log(objTypeFields);
     return objTypeFields
 }
 
 export function makeSchema(customObj: any | any[]) {
+    console.log('GraphQLJSON isInputType : ', isInputType(GraphQLJSON));
     let customObjArray = toArray(customObj);
     let rootQueryfields = {};
     _.each(customObjArray, function (obj) {
-        let objName = obj.name;
+        let objName = correctName(obj.name);
+        console.log('GraphqlQueryType::::::> ', objName);
         rootQueryfields[objName] = {
             type: new GraphQLList(new GraphQLObjectType({ name: objName, fields: convertFields(obj.fields) })),
-            args: { 'selector': ({ type: GraphQLString }) },
+            args: { 'selector': ({ type: GraphQLJSON }), 'options': ({ type: GraphQLJSON }) },
             resolve: async function (source, args, context, info) {
-                // console.log('source: ');
-                // console.log(source);
-                console.log('args: ');
-                console.log(args);
-                // console.log('context: ');
-                // console.log(context);
-                // console.log('info: ');
-                // console.log(info);
-                // console.log(DB);
-                // let selector = JSON.parse(args['selector']);
-                let selector = {};
-                let Collection = DB.collection(info.fieldName);
+                console.log('args: ', args);
+                var selector = args['selector'] || {};
+                console.log('selector: ', selector);
+                let db = context.db;
+                let Collection = db.collection(info.fieldName);
                 let cursor = Collection.find(selector);
                 // if (skip) cursor = cursor.skip(skip);
                 // if (limit) cursor = cursor.limit(limit);
@@ -96,7 +92,6 @@ export function makeSchema(customObj: any | any[]) {
             }
         }
     })
-
     var schema = new GraphQLSchema({
         query: new GraphQLObjectType({
             name: 'RootQueryType',
@@ -111,4 +106,8 @@ function toArray(x: any | any[]): any[] {
     return x instanceof Array
         ? x // already array
         : [x] // single item -> array
+}
+
+function correctName(name: string) {
+    return name.replace(/\./g, '_');
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const graphql = require('graphql');
 const graphqlHTTP = require('express-graphql');
-const utils = require('../../lib/graphql/utils');
+const utils = require('./utils');
 
 
 const customerObject = {
@@ -12,6 +12,10 @@ const customerObject = {
     },
     report_type: {
       type: 'text'
+    },
+    space: {
+      type: 'lookup',
+      reference_to: 'spaces'
     }
   }
 }
