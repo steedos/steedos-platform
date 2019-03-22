@@ -23,7 +23,7 @@ const users = [
 const siteConfig = {
   title: 'ObjectQL', // Title for your website.
   tagline: 'Build GraphQL API for your business objects.',
-  url: 'https://www.objectql.org/', // Your website URL
+  url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
