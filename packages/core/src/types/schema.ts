@@ -16,7 +16,8 @@ export class SteedosSchema {
     constructor(config: SteedosSchemaConfig) {
         _.each(config.objects, (object, object_name) =>{
             this.setObject(object_name, object)
-        }) 
+        })
+        this.setDataSource(config.datasource)
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
@@ -30,6 +31,10 @@ export class SteedosSchema {
     
     removeObject(name: string) {
         delete this._objects[name]
+    }
+
+    setDataSource(datasourceConfig: SteedosDataSourceTypeConfig){
+        this._datasource = new SteedosDataSourceType(datasourceConfig)
     }
 
     getDataSource() {
