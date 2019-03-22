@@ -1,7 +1,7 @@
-# Steedos Object Schema
+# Steedos ObjectQL
 
 
-Steedos Object Schema 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
+Steedos ObjectQL 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
 
 比如你可以这样定义对象 account.object.yml
 ```yaml
@@ -51,7 +51,7 @@ permission_set:
     viewAllRecords: true
 ```
 
-Steedos Object Server 是 Steedos Object 服务端运行环境。您可以把您定义的一组对象组成一个App，Steedos 自动生成符合 [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/) 界面规范的用户操作界面。
+Steedos Object Server 是 ObjectQL 服务端运行环境。您可以把您定义的一组对象组成一个App，Steedos 自动生成符合 [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/) 界面规范的用户操作界面。
 - 根据定义的对象视图，生成数据浏览和查询界面。可设定列表字段、过滤条件、排序规则。所有的数据均按照设定的对象权限进行过滤，确保最终用户只能看到授权的数据。
 - 根据用户权限，进行增删改操作；
 - 根据定义的对象报表，展示统计分析结果；
@@ -67,9 +67,10 @@ Steedos Object Server 设计的目的是为了连接到任何数据源，包括S
 
 Steedos Object Cloud 即将上线，您设计的Apps不仅可以内部使用，还可以成为SAAS服务租用给客户使用。
 
-Steedos Object Schema 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
+Steedos ObjectQL 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
 - [Salesforce Lightning Design System in React ](https://react.lightningdesignsystem.com/)
+- [GraphQL](https://graphql.org/
 
 [了解更多](https://steedos.github.io/)
 
