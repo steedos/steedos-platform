@@ -22,8 +22,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     async find(tableName: string, query: SteedosQueryOptions){
        
         let client = await this.connect();
-        let db = client.db();
-        let collection = db.collection(tableName);
+        let collection = client.db().collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
         let result = await collection.find(mongoFilters).toArray();
