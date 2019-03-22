@@ -1,7 +1,5 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType } from ".";
-import { SteedosDataSourceTypeConfig } from "./datasource";
-import { SteedosObjectTypeConfig } from "./object";
+import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
 import _ = require("underscore");
 
 export type SteedosSchemaConfig = {

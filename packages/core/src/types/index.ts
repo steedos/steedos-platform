@@ -8,7 +8,7 @@ export class SteedosActionType implements Dictionary {
     name: string
 }
 
-export { SteedosDataSourceType } from "./datasource";
-export { SteedosObjectType } from "./object";
-export { SteedosFieldType } from "./field";
+export { SteedosDataSourceType, SteedosDataSourceTypeConfig } from "./datasource";
+export { SteedosObjectType, SteedosObjectTypeConfig } from "./object";
+export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosSchema } from "./schema";

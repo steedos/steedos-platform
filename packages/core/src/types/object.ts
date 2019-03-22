@@ -1,8 +1,6 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType } from ".";
+import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema } from ".";
 import _ = require("underscore");
-import { SteedosFieldTypeConfig } from "./field";
-import { SteedosSchema } from "./schema";
 
 
 export type SteedosObjectTypeConfig = {
