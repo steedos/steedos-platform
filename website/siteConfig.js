@@ -21,9 +21,9 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Steedos Object Schema', // Title for your website.
-  tagline: '跨平台、跨语言的对象描述语法',
-  url: 'https://steedos.github.io/', // Your website URL
+  title: 'ObjectQL', // Title for your website.
+  tagline: 'Build GraphQL API for your business objects.',
+  url: 'https://www.objectql.org/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
@@ -38,10 +38,10 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'introduction', label: '学习'},
-    {doc: 'server', label: '服务端'},
+    {doc: 'introduction', label: 'Learn'},
+    {doc: 'server', label: 'Server'},
     {doc: 'odata_auth', label: 'API'},
-    {blog: true, label: '动态'},
+    //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/object-server',
       label: 'GitHub',
