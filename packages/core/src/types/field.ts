@@ -80,8 +80,8 @@ export class SteedosFieldType extends SteedosFieldProperty implements Dictionary
     constructor(name: string, object: SteedosObjectType, config: SteedosFieldTypeConfig){
         super();
         this._object = object
-        _.each(config, (v, k)=>{
-            this[k] = v
+        _.each(config, (value: any, key: string)=>{
+            this[key] = value
         })
         this.name = name
     }
