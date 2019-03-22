@@ -70,7 +70,7 @@ Steedos Object Cloud 即将上线，您设计的Apps不仅可以内部使用，�
 ObjectQL 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
 - [Salesforce Lightning Design System in React ](https://react.lightningdesignsystem.com/)
-- [GraphQL](https://graphql.org/
+- [GraphQL](https://graphql.org/)
 
 [了解更多](https://steedos.github.io/)
 
