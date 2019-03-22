@@ -12,3 +12,5 @@ export { SteedosDataSourceType, SteedosDataSourceTypeConfig } from "./datasource
 export { SteedosObjectType, SteedosObjectTypeConfig } from "./object";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosSchema } from "./schema";
+
+export { SteedosIDType } from  "./field_types";

@@ -1,3 +1,3 @@
-export { SteedosDriver, SteedosDriverConfig, SteedosDriverFindOptions } from "./driver"
+export { SteedosDriver } from "./driver"
 
 export { SteedosMongoDriver } from "./mongo"
