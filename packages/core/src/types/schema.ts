@@ -10,11 +10,11 @@ export type SteedosSchemaConfig = {
 }
 
 export class SteedosSchema {
-    _objects: Dictionary<SteedosObjectType> = {}
-    _datasource: SteedosDataSourceType
+    private _objects: Dictionary<SteedosObjectType> = {};
+    private _datasource: SteedosDataSourceType;
 
     constructor(config: SteedosSchemaConfig) {
-        _.each(config.objects, (object, object_name) =>{
+        _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
         })
         this.setDataSource(config.datasource)
@@ -28,16 +28,30 @@ export class SteedosSchema {
     getObject(name: string) {
         return this._objects[name]
     }
-    
+
     removeObject(name: string) {
         delete this._objects[name]
     }
 
-    setDataSource(datasourceConfig: SteedosDataSourceTypeConfig){
+    setDataSource(datasourceConfig: SteedosDataSourceTypeConfig) {
         this._datasource = new SteedosDataSourceType(datasourceConfig)
     }
 
     getDataSource() {
         return this._datasource
+    }
+
+    public get objects(): Dictionary<SteedosObjectType> {
+        return this._objects;
+    }
+    public set objects(value: Dictionary<SteedosObjectType>) {
+        this._objects = value;
+    }
+
+    public get datasource(): SteedosDataSourceType {
+        return this._datasource;
+    }
+    public set datasource(value: SteedosDataSourceType) {
+        this._datasource = value;
     }
 }
