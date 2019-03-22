@@ -38,8 +38,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'introduction', label: 'Learn'},
-    {doc: 'server', label: 'Server'},
+    {doc: 'introduction', label: '学习'},
+    {doc: 'server', label: '服务端'},
     {doc: 'odata_auth', label: 'API'},
     //{blog: true, label: '动态'},
     {
