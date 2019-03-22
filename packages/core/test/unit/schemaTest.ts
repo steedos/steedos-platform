@@ -15,7 +15,7 @@ describe('自动生成字段名', () => {
             }
         },
         datasource: {
-            type: "mongo",
+            driver: "mongo",
             url: "mongodb://127.0.0.1/steedos"
         }
     })
