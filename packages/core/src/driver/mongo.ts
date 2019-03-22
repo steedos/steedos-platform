@@ -16,10 +16,12 @@ export class SteedosMongoDriver implements SteedosDriver {
         return MongoClient.connect(this._url, {useNewUrlParser: true})
     }
 
+    /* TODO： */
     getMongoFilters(filters: SteedosQueryFilters){
         return {_id: -1}
     }
 
+    /* TODO： */
     getMongoOptions(filters: SteedosQueryOptions){
         return {
             projection: {_id: 1}
