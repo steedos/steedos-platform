@@ -1,5 +1,3 @@
-import { JsonMap } from "@salesforce/ts-types";
-
 export type SteedosQueryFilters = Array<string> | Array<Array<string>>
 
 /**
