@@ -4,10 +4,8 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLFloat,
-    GraphQLBoolean,
-    isInputType
+    GraphQLBoolean
 } from 'graphql';
-// import GraphQLJSON from 'graphql-type-json';
 var _ = require("underscore");
 import { MongoClient } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
@@ -37,7 +35,7 @@ export const connectToDatabase = async () => {
     return DB;
 };
 
-function convertFields(fields) {
+function convertFields(fields, knownTypes) {
     let objTypeFields = {};
     _.each(fields, function (v, k) {
         if (k.indexOf('.') > -1) {
@@ -52,35 +50,74 @@ function convertFields(fields) {
         if (BASIC_TYPE_MAPPING[v.type]) {
             objTypeFields[k] = { type: BASIC_TYPE_MAPPING[v.type] }
         }
+
+        else if ((v.type == 'lookup' || v.type == 'master_detail') && v.reference_to && _.isString(v.reference_to)) {
+            let reference_to = v.reference_to;
+            objTypeFields[k] = {
+                type: knownTypes[reference_to],
+                args: { 'reference_to': { type: GraphQLString, defaultValue: v.reference_to } },
+                resolve: async function (source, args, context, info) {
+                    let db = context.db;
+                    let Collection = db.collection(args.reference_to);
+                    let recordPromise = Collection.findOne({ _id: source[info.fieldName] });
+                    return recordPromise
+                        .then(data => {
+                            return data;
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                }
+            };
+            if (v.type == 'lookup' && v.multiple) {
+                objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
+                objTypeFields[k].resolve = async function (source, args, context, info) {
+                    let db = context.db;
+                    let Collection = db.collection(args.reference_to);
+                    let selector = { _id: { $in: source[info.fieldName] } };
+                    let cursor = Collection.find(selector);
+                    return cursor
+                        .toArray()
+                        .then(data => {
+                            return data;
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                }
+            }
+        }
         else {
-            objTypeFields[k] = { type: GraphQLJSON };
+            objTypeFields[k] = {
+                type: GraphQLJSON,
+
+            };
         }
     })
 
-    console.log(objTypeFields);
     return objTypeFields
 }
 
 export function makeSchema(customObj: any | any[]) {
-    console.log('GraphQLJSON isInputType : ', isInputType(GraphQLJSON));
     let customObjArray = toArray(customObj);
     let rootQueryfields = {};
+    let knownTypes = {};
     _.each(customObjArray, function (obj) {
         let objName = correctName(obj.name);
-        console.log('GraphqlQueryType::::::> ', objName);
+        knownTypes[objName] = new GraphQLObjectType({
+            name: objName, fields: function () {
+                return convertFields(obj.fields, knownTypes);
+            }
+        })
+        console.log(knownTypes[objName]);
         rootQueryfields[objName] = {
-            type: new GraphQLList(new GraphQLObjectType({ name: objName, fields: convertFields(obj.fields) })),
+            type: new GraphQLList(knownTypes[objName]),
             args: { 'selector': ({ type: GraphQLJSON }), 'options': ({ type: GraphQLJSON }) },
             resolve: async function (source, args, context, info) {
-                console.log('args: ', args);
                 var selector = args['selector'] || {};
-                console.log('selector: ', selector);
                 let db = context.db;
                 let Collection = db.collection(info.fieldName);
                 let cursor = Collection.find(selector);
-                // if (skip) cursor = cursor.skip(skip);
-                // if (limit) cursor = cursor.limit(limit);
-                // if (sort) cursor = cursor.sort(sort);
                 return cursor
                     .toArray()
                     .then(data => {
@@ -103,9 +140,7 @@ export function makeSchema(customObj: any | any[]) {
 }
 
 function toArray(x: any | any[]): any[] {
-    return x instanceof Array
-        ? x // already array
-        : [x] // single item -> array
+    return x instanceof Array ? x : [x]
 }
 
 function correctName(name: string) {
