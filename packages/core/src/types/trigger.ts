@@ -3,10 +3,10 @@ import { Dictionary } from "@salesforce/ts-types";
 import _ = require('underscore')
 
 export type SteedosTriggerTypeConfig = {
-    name?: string,
+    name: string,
     on?: string,
-    when?: string,
-    todo?: Function
+    when: string,
+    todo: Function
 }
 
 const ENUM_ON = ["client","server"]
