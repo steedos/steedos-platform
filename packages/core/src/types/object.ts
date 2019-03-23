@@ -4,7 +4,7 @@ import _ = require("underscore");
 
 
 export type SteedosObjectTypeConfig = {
-    name?: String
+    name?: string
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
     triggers?: Dictionary<SteedosTriggerType>
@@ -13,7 +13,7 @@ export type SteedosObjectTypeConfig = {
 export class SteedosObjectType {
 
     private _schema: SteedosSchema;
-    private _name: String;
+    private _name: string;
     private _fields: Dictionary<SteedosFieldType> = {};
     private _actions: Dictionary<SteedosActionType> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};

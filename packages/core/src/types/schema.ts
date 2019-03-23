@@ -1,12 +1,22 @@
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
+import { Project, AppManager, TriggerManager, ReportManager } from '../..'
 import _ = require("underscore");
+import path = require("path")
+import fs = require('fs');
+import { SteedosFieldTypeConfig } from "./field";
+var util = require('../util')
 
 export type SteedosSchemaConfig = {
     objects: Dictionary<SteedosObjectTypeConfig>
     datasource: SteedosDataSourceTypeConfig
 }
 
+/**
+ * schema = new SteedosSchema({datasource: {}})
+ * schema.use('xxxx/src')
+ * schema.use('xxxx/meeting.object.js')
+ */
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
@@ -16,6 +26,64 @@ export class SteedosSchema {
             this.setObject(object_name, object)
         })
         this.setDataSource(config.datasource)
+    }
+
+    private useFilePath(filePath: string){
+        if(!path.isAbsolute(filePath)){
+            filePath = path.resolve(filePath)
+        }
+    
+        if(!fs.existsSync(filePath)){
+            throw new Error(`${filePath} not exist`);
+        }
+    
+        if(fs.statSync(filePath).isDirectory()){
+            Project.load(filePath)
+        }
+    
+        if(util.isAppFile(filePath)){
+            AppManager.loadFile(filePath)
+        }else if(util.isObjectFile(filePath)){
+            let objectConfig:SteedosObjectTypeConfig = util.loadFile(filePath);
+            this.setObject(objectConfig.name, objectConfig)
+        }else if(util.isTriggerFile(filePath)){
+            TriggerManager.loadFile(filePath)
+        }else if(util.isFieldFile(filePath)){
+            let fieldConfig: SteedosFieldTypeConfig = util.loadFile(filePath);
+            
+            if(!fieldConfig.name){
+                throw new Error('Missing name attribute');
+            }
+            
+            if(!fieldConfig.object_name){
+                throw new Error('Missing object_name attribute');
+            }
+            
+            let object = this.getObject(fieldConfig.object_name);
+            
+            if(!object){
+                throw new Error(`not find object ${fieldConfig.object_name}`);
+            }
+            
+            object.setField(fieldConfig.name, fieldConfig)
+
+        }else if(util.isReportFile(filePath)){
+            ReportManager.loadFile(filePath)
+        }
+    }
+
+    //TODO
+    use(filePath: string | []){
+        if(_.isArray(filePath)){
+            filePath.forEach((element) => {
+                this.useFilePath(element)
+            });
+        }else if(_.isString(filePath)){
+            this.useFilePath(filePath)
+        }else{
+            throw new Error('filePath can only be a string or array')
+        }
+        return true
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {

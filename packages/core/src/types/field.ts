@@ -32,6 +32,7 @@ const FIELDTYPES = [
 ]
 
 abstract class SteedosFieldProperty{
+    object_name?: string
     name?: string
     type?: string
     label?: string
