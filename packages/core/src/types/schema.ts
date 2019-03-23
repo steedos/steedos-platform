@@ -38,7 +38,7 @@ export class SteedosSchema {
         }
     
         if(fs.statSync(filePath).isDirectory()){
-            Project.load(filePath)
+            Project.load(filePath, this)
         }
     
         if(util.isAppFile(filePath)){

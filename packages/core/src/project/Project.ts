@@ -9,6 +9,7 @@ import {AppManager, getObjectConfigManager, TriggerManager, FieldManager, Report
 
 import fs = require("fs");
 import path = require("path");
+import { SteedosSchema } from '../types';
 
 var util = require("../util");
 
@@ -126,7 +127,7 @@ class Project {
    * @param {string} directoryPath 项目文件夹路径
    * @memberof Project
    */
-  public load(directoryPath: string): void{
+  public load(directoryPath: string, steedosSchema?: SteedosSchema): void{
     let fileStorage: any = {
       appFilesPath: [],
       objectFilesPath: [],
@@ -138,23 +139,43 @@ class Project {
 
     let objectConfigManager = getObjectConfigManager()
     fileStorage.objectFilesPath.forEach((path: string) => {
-      objectConfigManager.createFromFile(path)
+      if(steedosSchema){
+        steedosSchema.use(path)
+      }else{
+        objectConfigManager.createFromFile(path)
+      }
     });
 
     fileStorage.fieldFilesPath.forEach((path: string)=>{
-      FieldManager.loadFile(path);
+      if(steedosSchema){
+        steedosSchema.use(path)
+      }else{
+        FieldManager.loadFile(path);
+      }
     })
 
     fileStorage.triggerFilesPath.forEach((path: string)=>{
-      TriggerManager.loadFile(path);
+      if(steedosSchema){
+        steedosSchema.use(path)
+      }else{
+        TriggerManager.loadFile(path);
+      }
     })
 
     fileStorage.reportFilesPath.forEach((path: string) => {
-      ReportManager.loadFile(path)
+      if(steedosSchema && false){
+        steedosSchema.use(path)
+      }else{
+        ReportManager.loadFile(path)
+      }
     });
     
     fileStorage.appFilesPath.forEach((path: string) => {
-      AppManager.loadFile(path)
+      if(steedosSchema && false){
+        steedosSchema.use(path)
+      }else{
+        AppManager.loadFile(path)
+      }
     });
 
     

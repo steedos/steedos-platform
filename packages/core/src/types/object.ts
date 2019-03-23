@@ -69,13 +69,21 @@ export class SteedosObjectType {
     toConfig(){
         let config: JsonMap = {
             name: this.name,
-            fields: {},
-            triggers: {}
+            fields: {}
+        }
+        if(this.fields){
+            config.fields = {}
+            _.each(this.fields, (field: SteedosFieldType, key: string)=>{
+                config.fields[key] = field.toConfig();
+            })
         }
 
-        _.each(this.fields, (field: SteedosFieldType)=>{
-            
-        })
+        // if(this.triggers){
+        //     config.triggers = {}
+        //     _.each(this.fields, (field: SteedosFieldType, key: string)=>{
+        //         config.fields[key] = field.toConfig();
+        //     })
+        // }
 
         return config
     }

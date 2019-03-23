@@ -31,7 +31,7 @@ const FIELDTYPES = [
     "audio"
 ]
 
-abstract class SteedosFieldProperty{
+abstract class SteedosFieldProperties{
     object_name?: string
     name?: string
     type?: string
@@ -69,22 +69,33 @@ abstract class SteedosFieldProperty{
     system?: string;
 }
 
-export interface SteedosFieldTypeConfig extends SteedosFieldProperty{
+export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
 
 }
 
 
-export class SteedosFieldType extends SteedosFieldProperty implements Dictionary {
+export class SteedosFieldType extends SteedosFieldProperties implements Dictionary {
     private _object: SteedosObjectType;
     private _type: string;
+
+    private properties: string[] = ['name']
 
     constructor(name: string, object: SteedosObjectType, config: SteedosFieldTypeConfig){
         super();
         this._object = object
         _.each(config, (value: any, key: string)=>{
             this[key] = value
+            this.properties.push(key)
         })
         this.name = name
+    }
+
+    toConfig(){
+        let config = {}
+        this.properties.forEach((property)=>{
+            config[property] = this[property]
+        })
+        return config
     }
 
     public get object(): SteedosObjectType {

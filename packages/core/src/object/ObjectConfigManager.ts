@@ -53,7 +53,7 @@ export default class ObjectConfigManager {
      * Creates a new connection based on the given connection options and registers it in the manager.
      * Connection won't be established, you'll need to manually call connect method to establish connection.
      */
-    create(options: ObjectConfigOptions): ObjectConfig {
+    create(options: any): ObjectConfig {
 
         this.validate(options);
 
