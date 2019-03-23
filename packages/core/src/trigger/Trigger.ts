@@ -7,11 +7,6 @@ import { JsonMap } from '@salesforce/ts-types';
  */
 export abstract class Trigger {
 
-
-    // -------------------------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------------------------
-
     constructor(options: JsonMap) {
         if (!this.listenTo())
             throw new Error("You must specify listenTo() for this trigger.")
@@ -20,24 +15,11 @@ export abstract class Trigger {
 	listenTo(){
         return null
     };
-
-    // -------------------------------------------------------------------------
-    // Public Readonly Properties
-    // -------------------------------------------------------------------------
     
-    /**
-    * Object name.
-    */
     readonly object_name: string;
 
     abstract beforeInsert(userId: string, doc: JsonMap): any
-    
-    /* 
-    Fired before the doc is updated.
 
-    Allows you to to change the modifier as needed, or run additional functionality.
-    - this.transform() obtains transformed version of document, if a transform was defined.
-    */
     abstract beforeUpdate(userId: string, doc: JsonMap, fieldNames:string[], modifier: JsonMap, options: JsonMap): any
 
     abstract beforeDelete(userId: string, doc: JsonMap): any
