@@ -37,6 +37,10 @@ export const connectToDatabase = async () => {
 
 function convertFields(fields, knownTypes) {
     let objTypeFields = {};
+    objTypeFields["_id"] = {
+        type: GraphQLString
+    }
+
     _.each(fields, function (v, k) {
         if (k.indexOf('.') > -1) {
             return;

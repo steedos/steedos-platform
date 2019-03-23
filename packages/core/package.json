@@ -42,9 +42,9 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "@steedos/stimulsoft-report": "^0.0.1",
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.1.4",
+    "@steedos/stimulsoft-report": "^0.0.1",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
     "@types/mocha": "^5.2.6",
@@ -52,6 +52,7 @@
     "chai-as-promised": "^7.1.1",
     "nodemon": "^1.18.10",
     "sinon-chai": "^3.3.0",
+    "ts-node": "^8.0.3",
     "typescript": "^3.3.4000"
   },
   "types": "lib/index.d.ts",
