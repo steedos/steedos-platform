@@ -8,6 +8,7 @@ describe('load object file', () => {
         var isSuccess = mySchema.use(path.resolve(__dirname, "./load/meeting.object.yml"))
         expect(isSuccess).to.equal(true);
         var meeting = mySchema.getObject('meeting');
+        // console.log('meeting', meeting.toConfig())
         expect(meeting.name).to.equal('meeting');
     });
 });
