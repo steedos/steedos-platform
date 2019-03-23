@@ -28,7 +28,7 @@ export class SteedosSchema {
         this.setDataSource(config.datasource)
     }
 
-    private useFilePath(filePath: string){
+    private useFile(filePath: string){
         if(!path.isAbsolute(filePath)){
             filePath = path.resolve(filePath)
         }
@@ -76,10 +76,10 @@ export class SteedosSchema {
     use(filePath: string | []){
         if(_.isArray(filePath)){
             filePath.forEach((element) => {
-                this.useFilePath(element)
+                this.useFile(element)
             });
         }else if(_.isString(filePath)){
-            this.useFilePath(filePath)
+            this.useFile(filePath)
         }else{
             throw new Error('filePath can only be a string or array')
         }
@@ -110,6 +110,7 @@ export class SteedosSchema {
     public get objects(): Dictionary<SteedosObjectType> {
         return this._objects;
     }
+
     public set objects(value: Dictionary<SteedosObjectType>) {
         this._objects = value;
     }
