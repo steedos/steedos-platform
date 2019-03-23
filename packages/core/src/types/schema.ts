@@ -1,6 +1,6 @@
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
-import { Project, AppManager, TriggerManager, ReportManager } from '../..'
+import { Project, AppManager, TriggerManager, ReportManager } from '../index'
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
