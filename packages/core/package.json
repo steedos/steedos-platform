@@ -5,9 +5,9 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "start": "tsc --watch",
-    "dev": "nodemon server.ts",
-    "debug": "tsc & nodemon  --inspect lib/server.js",
+    "start": "nodemon server.js",
+    "watch": "tsc --watch",
+    "debug": "nodemon --inspect server.js",
     "compile": "tsc",
     "test": "mocha test/**/*.ts"
   },
