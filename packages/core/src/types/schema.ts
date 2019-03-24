@@ -78,12 +78,12 @@ export class SteedosSchema {
             filePath.forEach((element) => {
                 this.useFile(element)
             });
+            return
         }else if(_.isString(filePath)){
             this.useFile(filePath)
-        }else{
-            throw new Error('filePath can only be a string or array')
+            return
         }
-        return true
+        throw new Error('filePath can only be a string or array')
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
@@ -93,6 +93,10 @@ export class SteedosSchema {
 
     getObject(name: string) {
         return this._objects[name]
+    }
+
+    getObjects(){
+        return this._objects;
     }
 
     removeObject(name: string) {
