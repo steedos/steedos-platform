@@ -5,7 +5,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "start": "ts-node server.ts",
+    "start": "tsc --watch",
     "dev": "nodemon server.ts",
     "debug": "tsc & nodemon  --inspect lib/server.js",
     "compile": "tsc",
