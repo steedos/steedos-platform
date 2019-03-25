@@ -75,6 +75,9 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     /* TODO： */
     getMongoFilters(filters: SteedosQueryFilters): JsonMap {
+        if (_.isUndefined(filters)){
+            return {}
+        }
         if (_.isString(filters))
             return createFilter(filters)
         let mongoFilters: JsonMap = this.formatFiltersToMongo(filters);

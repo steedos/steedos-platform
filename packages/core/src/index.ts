@@ -31,3 +31,5 @@ export { default as ODataRouter } from './odata/ODataRouter'
 export {use} from './use'
 
 export * from "./types"
+
+export { buildGraphQLSchema } from "./graphql";
