@@ -1,4 +1,4 @@
-export type SteedosQueryFilters = Array<string> | Array<Array<string>>
+export type SteedosQueryFilters = any
 
 /**
  * FindOptions is set of connection options shared by all database types.

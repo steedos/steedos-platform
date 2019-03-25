@@ -4,6 +4,8 @@ import { MongoClient } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
+import { createFilter } from 'odata-v4-mongodb'
+const _ = require("underscore");
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
@@ -73,6 +75,8 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     /* TODO： */
     getMongoFilters(filters: SteedosQueryFilters): JsonMap {
+        if (_.isString(filters))
+            return createFilter(filters)
         let mongoFilters: JsonMap = this.formatFiltersToMongo(filters);
         return mongoFilters
     }
