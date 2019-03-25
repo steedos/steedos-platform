@@ -10,7 +10,7 @@ describe('Test db', () => {
 
         mySchema.use(path.resolve(__dirname, "./load/meeting.object.yml"))
 
-        await mySchema.datasource.connect()
+        await mySchema.connect()
   
         let meeting = mySchema.getObject('meeting')
         

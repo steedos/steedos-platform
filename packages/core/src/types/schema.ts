@@ -73,6 +73,10 @@ export class SteedosSchema {
         }
     }
 
+    async connect(){
+        await this.datasource.connect()
+    }
+
     //TODO
     use(filePath: string | []){
         if(_.isArray(filePath)){
