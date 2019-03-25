@@ -10,12 +10,21 @@ server.Fiber(function () {
         server.loadServerBundles();
         server.callStartupHooks();
         try {
-            steedos.use(__dirname + "/../standard-objects");
-            steedos.use(__dirname + "/../../apps/crm/src");
+            let SteedosSchema = require('@steedos/core/lib/types').SteedosSchema;
+            let mySchema = new SteedosSchema({
+                objects: {},
+                datasource: {
+                    driver: 'mongo',
+                    url: 'mongodb://127.0.0.1/steedos'
+                }
+            })
+
+            mySchema.use(__dirname + "/../standard-objects");
+            mySchema.use(__dirname + "/../../apps/crm/src");
 
             // 生成graphql schema
-            let utils = require('@steedos/core/lib/graphql/utils');
-            let MyGraphQLSchema = utils.makeSchema(_.values(Creator.Objects));
+            let ObjectQLSchema = require('@steedos/core/lib/graphql').ObjectQLSchema;
+            let MyObjectQLSchema = new ObjectQLSchema(mySchema);
 
             let express = require('express');
             let app = express();
@@ -24,16 +33,18 @@ server.Fiber(function () {
                 .disable('x-powered-by')
                 .use('/assets/stimulsoft-report/', express.static(__dirname + '/node_modules/@steedos/stimulsoft-report/assets/'))
             app.use('/graphql', graphqlHTTP({
-                schema: MyGraphQLSchema,
+                schema: MyObjectQLSchema,
                 graphiql: true,
-                context: { db: Creator.getCollection('users').rawDatabase() }
+                context: {
+                    steedosSchema: MyObjectQLSchema.steedosSchema
+                }
             }));
             WebApp.connectHandlers.use(app);
         } catch (error) {
             console.error(error)
             throw error
         }
-        
+
         server.runMain();
     });
 }).run();

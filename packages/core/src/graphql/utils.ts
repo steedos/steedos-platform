@@ -4,7 +4,8 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLFloat,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLNonNull
 } from 'graphql';
 var _ = require("underscore");
 import { ObjectId } from 'mongodb';
@@ -51,33 +52,18 @@ function convertFields(fields, knownTypes) {
                 type: knownTypes[reference_to],
                 args: {},
                 resolve: async function (source, args, context, info) {
-                    let db = context.db;
-                    let Collection = db.collection(reference_to);
-                    let recordPromise = Collection.findOne({ _id: source[reference_to] });
-                    return recordPromise
-                        .then(result => {
-                            return result;
-                        })
-                        .catch(e => {
-                            console.log(e);
-                        });
+                    let steedosSchema = context.steedosSchema;
+                    let object = steedosSchema.getObject(reference_to);
+                    return object.findOne(source[reference_to]);
                 }
             };
             if (v.type == 'lookup' && v.multiple) {
                 objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
-                    let db = context.db;
-                    let Collection = db.collection(reference_to);
+                    let steedosSchema = context.steedosSchema;
+                    let object = steedosSchema.getObject(reference_to);
                     let selector = { _id: { $in: source[reference_to] } };
-                    let cursor = Collection.find(selector);
-                    return cursor
-                        .toArray()
-                        .then(result => {
-                            return result;
-                        })
-                        .catch(e => {
-                            console.log(e);
-                        });
+                    return object.find(selector);
                 }
             }
         }
@@ -105,6 +91,9 @@ export function makeGraphQLSchemaConfig(customObj: any | any[]) {
     let rootQueryfields = {};
     let knownTypes = {};
     _.each(customObjArray, function (obj) {
+        if (!obj.name) {
+            return;
+        }
         let objName = correctName(obj.name);
         knownTypes[objName] = new GraphQLObjectType({
             name: objName, fields: function () {
@@ -114,20 +103,13 @@ export function makeGraphQLSchemaConfig(customObj: any | any[]) {
         console.log(knownTypes[objName]);
         rootQueryfields[objName] = {
             type: new GraphQLList(knownTypes[objName]),
-            args: { 'selector': ({ type: GraphQLJSON }), 'options': ({ type: GraphQLJSON }) },
+            args: { 'selector': { type: GraphQLJSON }, 'options': { type: GraphQLJSON } },
             resolve: async function (source, args, context, info) {
                 var selector = args['selector'] || {};
-                let db = context.db;
-                let Collection = db.collection(obj.name);
-                let cursor = Collection.find(selector);
-                return cursor
-                    .toArray()
-                    .then(result => {
-                        return result;
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                let steedosSchema = context.steedosSchema;
+                let object = steedosSchema.getObject(obj.name);
+                console.log('graphql.find: ');
+                return object.find(selector);
             }
         }
     })
@@ -136,58 +118,37 @@ export function makeGraphQLSchemaConfig(customObj: any | any[]) {
     _.each(knownTypes, function (type, objName) {
         rootMutationfields[objName + '_INSERT_ONE'] = {
             type: GraphQLJSON,
-            args: { 'data': ({ type: GraphQLJSON }) },
+            args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
                 var data = args['data'];
                 data._id = data._id || new ObjectId().toHexString();
-                let db = context.db;
-                let Collection = db.collection(type.name);
-                let resultPromise = Collection.insertOne(data);
-                return resultPromise
-                    .then(result => {
-                        return _.head(result.ops);
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                let steedosSchema = context.steedosSchema;
+                let object = steedosSchema.getObject(type.name);
+                return object.insert(data);
             }
         }
         rootMutationfields[objName + '_UPDATE_ONE'] = {
             type: GraphQLJSON,
-            args: { 'selector': ({ type: GraphQLJSON }), 'data': ({ type: GraphQLJSON }) },
+            args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON }, 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
                 let data = args['data'];
-                let selector = args['selector'];
-                let db = context.db;
-                let Collection = db.collection(type.name);
-                let resultPromise = Collection.updateOne(selector, { $set: data });
-                return resultPromise
-                    .then(result => {
-                        return result;
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                let _id = args['_id'];
+                let steedosSchema = context.steedosSchema;
+                let object = steedosSchema.getObject(type.name);
+                return object.update(_id, data);
             }
         }
         rootMutationfields[objName + '_DELETE_ONE'] = {
             type: GraphQLJSON,
-            args: { 'selector': ({ type: GraphQLJSON }) },
+            args: { '_id': { type: new GraphQLNonNull(GraphQLString) }, 'selector': { type: GraphQLJSON } },
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
-                let selector = args['selector'];
-                let db = context.db;
-                let Collection = db.collection(type.name);
-                let resultPromise = Collection.deleteOne(selector);
-                return resultPromise
-                    .then(result => {
-                        return result;
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                let _id = args['_id'];
+                let steedosSchema = context.steedosSchema;
+                let object = steedosSchema.getObject(type.name);
+                return object.delete(_id);
             }
         }
     })

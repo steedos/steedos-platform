@@ -1,7 +1,7 @@
 import { GraphQLSchema } from "graphql";
 import { SteedosSchema } from "../types";
 import { makeGraphQLSchemaConfig } from './utils';
-
+var _ = require("underscore");
 
 /*
     var query = '{  }';
@@ -17,7 +17,7 @@ export class ObjectQLSchema extends GraphQLSchema {
 
     constructor(steedosSchema: SteedosSchema) {
 
-        super(makeGraphQLSchemaConfig(steedosSchema.objects));
+        super(makeGraphQLSchemaConfig(_.values(steedosSchema.objects)));
 
         this._steedosSchema = steedosSchema;
     }
