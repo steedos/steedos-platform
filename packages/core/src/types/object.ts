@@ -125,6 +125,16 @@ export class SteedosObjectType {
 
     }
 
+    async findOne(id, query){
+        return await this.schema.datasource.findOne(this.name,  id, query)
+    }
+
+    async findOne2(id, ...args){
+        return await this.schema.datasource.callAdapter('findOne', this.name, id, ...args);
+    }
+
+
+
     /***** get/set *****/
     public get schema(): SteedosSchema {
         return this._schema;

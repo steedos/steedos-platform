@@ -22,10 +22,11 @@ export class SteedosSchema {
     private _datasource: SteedosDataSourceType;
 
     constructor(config: SteedosSchemaConfig) {
+        this.setDataSource(config.datasource)
+
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
         })
-        this.setDataSource(config.datasource)
     }
 
     private useFile(filePath: string){

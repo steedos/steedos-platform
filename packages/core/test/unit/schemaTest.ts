@@ -28,8 +28,10 @@ describe('自动生成字段名', () => {
             }
         },
         datasource: {
-            driver: "mongo",
-            url: "mongodb://127.0.0.1/steedos"
+            driver: "mongodb",
+            settings: {
+                url: 'mongodb://127.0.0.1:27017/steedos'
+            }
         }
     })
 

@@ -9,9 +9,9 @@ export class SteedosMongoDriver implements SteedosDriver {
     _client: any;
     _collections: Dictionary<any>;
     
-    constructor(url: string){
+    constructor(settings: any){
         this._collections = {};
-        this._url = url;
+        this._url = settings.url;
     }
 
     async connect(){
@@ -53,7 +53,6 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
-
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
 
