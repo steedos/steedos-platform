@@ -3,15 +3,16 @@ import { SteedosDriver } from "./index"
 import { MongoClient } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
+import { SteedosDriverConfig } from "./driver";
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
     _collections: Dictionary<any>;
     
-    constructor(settings: any){
+    constructor(config: SteedosDriverConfig){
         this._collections = {};
-        this._url = settings.url;
+        this._url = config.url;
     }
 
     async connect(){
