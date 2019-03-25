@@ -125,9 +125,28 @@ export class SteedosObjectType {
 
     }
 
+    async find(query){
+        return await this.schema.datasource.find(this.name, query)
+    }
+
     async findOne(id, query){
         return await this.schema.datasource.findOne(this.name,  id, query)
     }
+
+    async insert(doc){
+        return await this.schema.datasource.insert(this.name, doc)
+    }
+
+    async update(id, query){
+        return await this.schema.datasource.update(this.name,  id, query)
+    }
+
+    async delete(id){
+        return await this.schema.datasource.delete(this.name,  id)
+    }
+
+
+    
 
     /***** get/set *****/
     public get schema(): SteedosSchema {
