@@ -13,24 +13,17 @@ export type SteedosDataSourceTypeConfig = {
 export class SteedosDataSourceType implements Dictionary {
     private _driver: string | SteedosDriver;
     private _settings: Object;
-    
     private _adapter: any;
-    public get adapter(): any {
-        return this._adapter;
-    }
-    public set adapter(value: any) {
-        this._adapter = value;
-    }
 
     constructor(config: SteedosDataSourceTypeConfig) {
         this._driver = config.driver;
         this._settings = config.settings
         if(_.isString(this._driver)){
             if(this._driver == 'mongo'){
-                this.adapter = new SteedosMongoDriver(this.settings);
+                this._adapter = new SteedosMongoDriver(this.settings);
             }
         }else{
-            this.adapter = config.driver
+            this._adapter = config.driver
         }
     }
 
@@ -79,5 +72,9 @@ export class SteedosDataSourceType implements Dictionary {
     }
     public set settings(value: Object) {
         this._settings = value;
+    }
+
+    public get adapter(): any {
+        return this._adapter;
     }
 }

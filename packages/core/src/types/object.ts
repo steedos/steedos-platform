@@ -137,8 +137,8 @@ export class SteedosObjectType {
         return await this.schema.datasource.insert(this.name, doc)
     }
 
-    async update(id, query){
-        return await this.schema.datasource.update(this.name,  id, query)
+    async update(id, doc){
+        return await this.schema.datasource.update(this.name,  id, doc)
     }
 
     async delete(id){
