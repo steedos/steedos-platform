@@ -12,11 +12,6 @@ export type SteedosSchemaConfig = {
     datasource: SteedosDataSourceTypeConfig
 }
 
-/**
- * schema = new SteedosSchema({datasource: {}})
- * schema.use('xxxx/src')
- * schema.use('xxxx/meeting.object.js')
- */
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
