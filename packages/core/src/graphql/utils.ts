@@ -7,7 +7,7 @@ import {
     GraphQLBoolean
 } from 'graphql';
 var _ = require("underscore");
-import { MongoClient } from 'mongodb';
+import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
 
 /** Maps basic creator field types to basic GraphQL types */
@@ -24,16 +24,6 @@ const BASIC_TYPE_MAPPING = {
     'currency': GraphQLFloat,
     'boolean': GraphQLBoolean
 }
-
-let DB = null;
-export const connectToDatabase = async () => {
-    const client = await MongoClient.connect('mongodb://localhost:27017', {
-        useNewUrlParser: true,
-    });
-    DB = client.db('steedos');
-    console.log('connectted db!!');
-    return DB;
-};
 
 function convertFields(fields, knownTypes) {
     let objTypeFields = {};
@@ -59,14 +49,14 @@ function convertFields(fields, knownTypes) {
             let reference_to = v.reference_to;
             objTypeFields[k] = {
                 type: knownTypes[reference_to],
-                args: { 'reference_to': { type: GraphQLString, defaultValue: v.reference_to } },
+                args: {},
                 resolve: async function (source, args, context, info) {
                     let db = context.db;
-                    let Collection = db.collection(args.reference_to);
+                    let Collection = db.collection(reference_to);
                     let recordPromise = Collection.findOne({ _id: source[info.fieldName] });
                     return recordPromise
-                        .then(data => {
-                            return data;
+                        .then(result => {
+                            return result;
                         })
                         .catch(e => {
                             console.log(e);
@@ -77,13 +67,13 @@ function convertFields(fields, knownTypes) {
                 objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let db = context.db;
-                    let Collection = db.collection(args.reference_to);
+                    let Collection = db.collection(reference_to);
                     let selector = { _id: { $in: source[info.fieldName] } };
                     let cursor = Collection.find(selector);
                     return cursor
                         .toArray()
-                        .then(data => {
-                            return data;
+                        .then(result => {
+                            return result;
                         })
                         .catch(e => {
                             console.log(e);
@@ -120,12 +110,12 @@ export function makeSchema(customObj: any | any[]) {
             resolve: async function (source, args, context, info) {
                 var selector = args['selector'] || {};
                 let db = context.db;
-                let Collection = db.collection(info.fieldName);
+                let Collection = db.collection(obj.name);
                 let cursor = Collection.find(selector);
                 return cursor
                     .toArray()
-                    .then(data => {
-                        return data;
+                    .then(result => {
+                        return result;
                     })
                     .catch(e => {
                         console.log(e);
@@ -133,10 +123,77 @@ export function makeSchema(customObj: any | any[]) {
             }
         }
     })
+
+    let rootMutationfields = {};
+    _.each(knownTypes, function (type, objName) {
+        rootMutationfields[objName + '_INSERT_ONE'] = {
+            type: GraphQLJSON,
+            args: { 'data': ({ type: GraphQLJSON }) },
+            resolve: async function (source, args, context, info) {
+                console.log('args: ', args);
+                var data = args['data'];
+                data._id = data._id || new ObjectId().toHexString();
+                let db = context.db;
+                let Collection = db.collection(type.name);
+                let resultPromise = Collection.insertOne(data);
+                return resultPromise
+                    .then(result => {
+                        return _.head(result.ops);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+        }
+        rootMutationfields[objName + '_UPDATE_ONE'] = {
+            type: GraphQLJSON,
+            args: { 'selector': ({ type: GraphQLJSON }), 'data': ({ type: GraphQLJSON }) },
+            resolve: async function (source, args, context, info) {
+                console.log('args: ', args);
+                let data = args['data'];
+                let selector = args['selector'];
+                let db = context.db;
+                let Collection = db.collection(type.name);
+                let resultPromise = Collection.updateOne(selector, { $set: data });
+                return resultPromise
+                    .then(result => {
+                        return result;
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+        }
+        rootMutationfields[objName + '_DELETE_ONE'] = {
+            type: GraphQLJSON,
+            args: { 'selector': ({ type: GraphQLJSON }) },
+            resolve: async function (source, args, context, info) {
+                console.log('args: ', args);
+                let selector = args['selector'];
+                let db = context.db;
+                let Collection = db.collection(type.name);
+                let resultPromise = Collection.deleteOne(selector);
+                return resultPromise
+                    .then(result => {
+                        return result;
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+        }
+    })
+
+
+
     var schema = new GraphQLSchema({
         query: new GraphQLObjectType({
             name: 'RootQueryType',
             fields: rootQueryfields
+        }),
+        mutation: new GraphQLObjectType({
+            name: 'MutationRootType',
+            fields: rootMutationfields
         })
     });
 
