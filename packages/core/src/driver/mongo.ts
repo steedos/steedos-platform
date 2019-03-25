@@ -87,7 +87,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     /* TODO： */
     getMongoOptions(filters: SteedosQueryOptions){
         return {
-            projection: {_id: 1}
+            //projection: {_id: 1}
         }
     }
 
@@ -99,11 +99,10 @@ export class SteedosMongoDriver implements SteedosDriver {
     };
 
     async find(tableName: string, query: SteedosQueryOptions){
-       
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
-        let mongoOptions = {} //this.getMongoOptions(query);
+        let mongoOptions = this.getMongoOptions(query);
         let result = await collection.find(mongoFilters, mongoOptions).toArray();
 
         return result;

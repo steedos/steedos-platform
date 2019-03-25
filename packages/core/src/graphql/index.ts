@@ -54,15 +54,21 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
-                    return object.findOne(source[reference_to]);
+                    console.log(info)
+                    console.log('graphql.reference_to: ' + reference_to + "," + source[info.fieldName]);
+                    let record = await object.findOne(source[info.fieldName], {});
+                    console.log(record)
+                    return record;
                 }
             };
             if (v.type == 'lookup' && v.multiple) {
                 objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
-                    let selector = { _id: { $in: source[reference_to] } };
-                    return object.find(selector);
+                    console.log('graphql.reference_to multiple: ');
+                    return await object.find({
+                        filters: "_id eq '" + source[info.fieldName] + "'"
+                    });
                 }
             }
         }
