@@ -1,5 +1,6 @@
-import { GraphQLSchema, GraphQLSchemaConfig } from "graphql";
+import { GraphQLSchema } from "graphql";
 import { SteedosSchema } from "../types";
+import { makeGraphQLSchemaConfig } from './utils';
 
 
 /*
@@ -11,13 +12,24 @@ import { SteedosSchema } from "../types";
     });
 
 */
-export class ObjectQLSchema extends GraphQLSchema{
-    constructor(steedosSchema: SteedosSchema){
-        //...
-        let config = new GraphQLSchemaConfig({
+export class ObjectQLSchema extends GraphQLSchema {
+    private _steedosSchema: SteedosSchema;
 
-        })
-        
-        super(config)
+    constructor(steedosSchema: SteedosSchema) {
+
+        super(makeGraphQLSchemaConfig(steedosSchema.objects));
+
+        this._steedosSchema = steedosSchema;
     }
+
+    public get steedosSchema(): SteedosSchema {
+        return this._steedosSchema;
+    }
+    public set steedosSchema(value: SteedosSchema) {
+        this._steedosSchema = value;
+    }
+
+
+
+
 }

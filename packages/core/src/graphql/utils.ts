@@ -53,7 +53,7 @@ function convertFields(fields, knownTypes) {
                 resolve: async function (source, args, context, info) {
                     let db = context.db;
                     let Collection = db.collection(reference_to);
-                    let recordPromise = Collection.findOne({ _id: source[info.fieldName] });
+                    let recordPromise = Collection.findOne({ _id: source[reference_to] });
                     return recordPromise
                         .then(result => {
                             return result;
@@ -68,7 +68,7 @@ function convertFields(fields, knownTypes) {
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let db = context.db;
                     let Collection = db.collection(reference_to);
-                    let selector = { _id: { $in: source[info.fieldName] } };
+                    let selector = { _id: { $in: source[reference_to] } };
                     let cursor = Collection.find(selector);
                     return cursor
                         .toArray()
@@ -92,7 +92,15 @@ function convertFields(fields, knownTypes) {
     return objTypeFields
 }
 
-export function makeSchema(customObj: any | any[]) {
+function toArray(x: any | any[]): any[] {
+    return x instanceof Array ? x : [x]
+}
+
+function correctName(name: string) {
+    return name.replace(/\./g, '_');
+}
+
+export function makeGraphQLSchemaConfig(customObj: any | any[]) {
     let customObjArray = toArray(customObj);
     let rootQueryfields = {};
     let knownTypes = {};
@@ -184,9 +192,7 @@ export function makeSchema(customObj: any | any[]) {
         }
     })
 
-
-
-    var schema = new GraphQLSchema({
+    var schemaConfig = {
         query: new GraphQLObjectType({
             name: 'RootQueryType',
             fields: rootQueryfields
@@ -195,15 +201,11 @@ export function makeSchema(customObj: any | any[]) {
             name: 'MutationRootType',
             fields: rootMutationfields
         })
-    });
+    };
 
-    return schema;
+    return schemaConfig;
 }
 
-function toArray(x: any | any[]): any[] {
-    return x instanceof Array ? x : [x]
-}
-
-function correctName(name: string) {
-    return name.replace(/\./g, '_');
+export function makeSchema(customObj: any | any[]) {
+    return new GraphQLSchema(makeGraphQLSchemaConfig(customObj));
 }
