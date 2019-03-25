@@ -13,9 +13,13 @@ describe('Test db', () => {
         await mySchema.connect()
   
         let meeting = mySchema.getObject('meeting')
+
+        await meeting.insert({_id: "test_meeting", name: "test"})
         
-        let result = await meeting.findOne('33LRd2KenssCqFznE', {})
-        expect(result._id).to.equal('33LRd2KenssCqFznE')
+        let result = await meeting.findOne('test_meeting', {})
+        expect(result._id).to.equal('test_meeting')
+
+        await meeting.delete("test_meeting")
 
     });
   });
