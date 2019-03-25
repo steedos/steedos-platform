@@ -22,9 +22,58 @@ export class SteedosMongoDriver implements SteedosDriver {
         return this._client.disconnect();
     }
 
+    formatFiltersToDev(filters: SteedosQueryFilters) {
+        return filters;
+    }
+
+    formatFiltersToMongo(filters: any): JsonMap {
+        let query: JsonMap;
+        let selector: Array<JsonMap> = [];
+        if (!filters.length) {
+            return;
+        }
+        filters.forEach((filter: any) => {
+            let field: string, option: string, reg: RegExp, sub_selector: JsonMap, value: any;
+            field = filter[0];
+            option = filter[1];
+            value = filter[2];
+            sub_selector = {};
+            sub_selector[field] = {};
+            if (option === "=") {
+                sub_selector[field]["$eq"] = value;
+            } else if (option === "<>") {
+                sub_selector[field]["$ne"] = value;
+            } else if (option === ">") {
+                sub_selector[field]["$gt"] = value;
+            } else if (option === ">=") {
+                sub_selector[field]["$gte"] = value;
+            } else if (option === "<") {
+                sub_selector[field]["$lt"] = value;
+            } else if (option === "<=") {
+                sub_selector[field]["$lte"] = value;
+            } else if (option === "startswith") {
+                reg = new RegExp("^" + value, "i");
+                sub_selector[field]["$regex"] = reg;
+            } else if (option === "contains") {
+                reg = new RegExp(value, "i");
+                sub_selector[field]["$regex"] = reg;
+            } else if (option === "notcontains") {
+                reg = new RegExp("^((?!" + value + ").)*$", "i");
+                sub_selector[field]["$regex"] = reg;
+            }
+            return selector.push(sub_selector);
+        });
+        selector.forEach((item) => {
+            query = { ...item, ...query }
+        });
+
+        return query;
+    }
+
     /* TODO： */
-    getMongoFilters(filters: SteedosQueryFilters){
-        return {_id: -1}
+    getMongoFilters(filters: SteedosQueryFilters): JsonMap {
+        let mongoFilters: JsonMap = this.formatFiltersToMongo(filters);
+        return mongoFilters
     }
 
     /* TODO： */
