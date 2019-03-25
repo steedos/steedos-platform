@@ -1,10 +1,45 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig } from ".";
+import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosObjectPermissionSetTypeConfig, SteedosObjectPermissionSetType } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig } from "./trigger";
 
 
-export type SteedosObjectTypeConfig = {
+abstract class SteedosObjectProperties{
+    name?: string
+    // extend?: string
+    label?: string
+    icon?: string
+    enable_search?: boolean
+    is_enable?: boolean
+    enable_files?: boolean
+    enable_tasks?: boolean
+    enable_notes?: boolean
+    enable_events?: boolean
+    enable_api?: boolean
+    enable_share?: boolean
+    enable_instances?: boolean
+    enable_chatter?: boolean
+    enable_audit?: boolean
+    enable_trash?: boolean
+    enable_space_global?: boolean
+    enable_tree?: boolean
+    is_view?: boolean
+    hidden?: boolean
+    description?: string
+    custom?: boolean
+    owner?: string
+    // triggers?: object
+    sidebar?: object //TODO
+    calendar?: object //TODO
+    actions?: Dictionary<SteedosActionType> //TODO
+    fields?: Dictionary<SteedosFieldTypeConfig>
+    listeners?: Dictionary<SteedosListenerConfig>
+    list_views?: Dictionary<SteedosObjectListViewTypeConfig>
+    permission_set?: Dictionary<SteedosObjectPermissionSetTypeConfig>
+}
+
+
+export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     name?: string
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
@@ -13,7 +48,7 @@ export type SteedosObjectTypeConfig = {
 
 const _TRIGGERKEYS = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
 
-export class SteedosObjectType {
+export class SteedosObjectType extends SteedosObjectProperties {
 
     private _schema: SteedosSchema;
     private _name: string;
@@ -21,21 +56,34 @@ export class SteedosObjectType {
     private _actions: Dictionary<SteedosActionType> = {};
     private _listeners: Dictionary<SteedosListenerConfig> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};
+    private _list_views: Dictionary<SteedosObjectListViewType> = {};
+    private _permission_set: Dictionary<SteedosObjectPermissionSetType> = {};
     
+    public get permission_set(): Dictionary<SteedosObjectPermissionSetType> {
+        return this._permission_set;
+    }
 
     constructor(object_name: string, schema: SteedosSchema, config: SteedosObjectTypeConfig) {
+        super();
         this._name = object_name
         this._schema = schema
 
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
-
         
         this._actions = config.actions
 
         _.each(config.listeners, (listener, listener_name) => {
             this.setListener(listener_name, listener)
+        })
+
+        _.each(config.list_views, (list_view, name) => {
+            this.setListView(name, list_view)
+        })
+
+        _.each(config.permission_set, (permission_set, name) => {
+            this.setPermissionSet(name, permission_set)
         })
     }
 
@@ -97,6 +145,14 @@ export class SteedosObjectType {
         return this.fields[field_name]
     }
 
+    setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig){
+        this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
+    }
+
+    setPermissionSet(permission_set_name: string, config: SteedosObjectPermissionSetTypeConfig){
+        this.permission_set[permission_set_name] = new SteedosObjectPermissionSetType(permission_set_name, this, config)
+    }
+
     extend(config: SteedosObjectTypeConfig) {
         if (this.name != config.name)
             throw new Error("You can not extend on different object");
@@ -156,7 +212,6 @@ export class SteedosObjectType {
     public get name(): string {
         return this._name;
     }
-    
 
     public get fields(): Dictionary<SteedosFieldType> {
         return this._fields;
@@ -175,5 +230,9 @@ export class SteedosObjectType {
     }
     public set listeners(value: Dictionary<SteedosListenerConfig>) {
         this._listeners = value;
+    }
+
+    public get list_views(): Dictionary<SteedosObjectListViewType> {
+        return this._list_views;
     }
 }

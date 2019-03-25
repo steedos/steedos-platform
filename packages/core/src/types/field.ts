@@ -1,7 +1,6 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosObjectType } from '.';
-
-var _ = require('underscore')
+import _ = require('underscore')
 
 const FIELDTYPES = [
     "text",
