@@ -16,7 +16,6 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     async connect(){
         this._client = await MongoClient.connect(this._url, {useNewUrlParser: true})
-        console.log(this._client)
     }
 
     disconnect(){
