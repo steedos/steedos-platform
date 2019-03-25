@@ -16,7 +16,7 @@ steedosSchema.use(__dirname + "/../../apps/crm/src");
 steedosSchema.connect().then(function(){
 
     // 生成graphql schema
-    let graphqlSchema = steedos.buildGraphQLSchema(steedosSchema)
+    let graphqlSchema = steedosSchema.buildGraphQLSchema()
 
     let express = require('express');
     let app = express();

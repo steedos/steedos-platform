@@ -1,6 +1,7 @@
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
 import { Project, AppManager, TriggerManager, ReportManager } from '../index'
+import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
@@ -124,5 +125,9 @@ export class SteedosSchema {
     }
     public set datasource(value: SteedosDataSourceType) {
         this._datasource = value;
+    }
+
+    buildGraphQLSchema(){
+        return buildGraphQLSchema(this);
     }
 }
