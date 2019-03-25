@@ -21,3 +21,14 @@ describe('load field file', () => {
         expect(field.name).to.equal('room') && expect(field.type).to.equal('lookup')
     });
 });
+
+
+describe('load folder', () => {
+    it('should return true', () => {
+        let mySchema = new SteedosSchema({objects: {}, datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'}})
+        mySchema.use(path.resolve(__dirname, "../../../standard-objects"));
+        mySchema.use(path.resolve(__dirname, "../../../../apps/crm/src"));
+        var field = mySchema.getObject('contracts').getField('no')
+        expect(field.name).to.equal('no') && expect(field.type).to.equal('text')
+    });
+});
