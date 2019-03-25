@@ -1,7 +1,9 @@
-import { Dictionary } from '@salesforce/ts-types';
+import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosDriver, SteedosMongoDriver } from '../driver';
 
 import _ = require('underscore');
+import { SteedosQueryOptions } from './query';
+import { SteedosIDType } from '.';
 
 export type SteedosDataSourceTypeConfig = {
     driver: string | SteedosDriver
@@ -36,19 +38,34 @@ export class SteedosDataSourceType implements Dictionary {
         await this.adapter.connect()
     }
     
-
-    async findOne(tableName: string, id, query){
+    async find(tableName: string, query: SteedosQueryOptions){
+        return await this.adapter.find(tableName, query)
+    }
+    
+    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions){
         return await this.adapter.findOne(tableName, id, query)
     }
 
+    async insert(tableName: string, doc: JsonMap){
+        return await this.adapter.insert(tableName, doc)
+    }
+
+    async update(tableName: string, id: SteedosIDType, doc: JsonMap){
+        return await this.adapter.update(tableName, id, doc)
+    }
+
+    async delete(tableName: string, id: SteedosIDType){
+        return await this.adapter.delete(tableName, id)
+    }
+
     
-    async callAdapter(method, ...args) {
-        const adapterMethod = this.adapter[method];
-        if (typeof adapterMethod !== 'function') {
-            throw new Error('Adapted does not support "' + method + '" method');
-        }
-        return await adapterMethod.apply(this.adapter, args);
-    };
+    // async callAdapter(method, ...args) {
+    //     const adapterMethod = this.adapter[method];
+    //     if (typeof adapterMethod !== 'function') {
+    //         throw new Error('Adapted does not support "' + method + '" method');
+    //     }
+    //     return await adapterMethod.apply(this.adapter, args);
+    // };
 
     public get driver(): string | SteedosDriver {
         return this._driver;
