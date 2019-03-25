@@ -2,6 +2,12 @@ import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryOptions } from "../types/query";
 import { SteedosIDType } from "../types";
 
+export type SteedosDriverConfig = {
+    url: string
+    username: string
+    pasword: string
+    options: any
+};
 
 export interface SteedosDriver {
     
