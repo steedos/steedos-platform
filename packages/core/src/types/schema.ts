@@ -5,16 +5,20 @@ import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
+import { SteedosUser } from "./user";
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
     objects: Dictionary<SteedosObjectTypeConfig>
     datasource: SteedosDataSourceTypeConfig
+    permission_sets: [string]
+    //object_permissions: 
 }
 
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
+    private _users: Dictionary<SteedosUser>;
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
@@ -69,7 +73,7 @@ export class SteedosSchema {
     }
 
     async connect(){
-        await this.datasource.connect()
+        await this.getDataSource().connect()
     }
 
     //TODO
@@ -111,22 +115,17 @@ export class SteedosSchema {
         return this._datasource
     }
 
-    public get objects(): Dictionary<SteedosObjectType> {
-        return this._objects;
-    }
-
-    public set objects(value: Dictionary<SteedosObjectType>) {
-        this._objects = value;
-    }
-
-    public get datasource(): SteedosDataSourceType {
-        return this._datasource;
-    }
-    public set datasource(value: SteedosDataSourceType) {
-        this._datasource = value;
-    }
-
     buildGraphQLSchema(){
         return buildGraphQLSchema(this);
+    }
+
+    getUser(userId: string){
+        if  (_.isUndefined(this._users[userId]))
+            return this._users[userId]
+        // else new 
+    }
+
+    getUserObject(userId: string, objectName: string){
+
     }
 }
