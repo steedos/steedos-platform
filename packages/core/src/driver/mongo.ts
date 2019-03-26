@@ -4,8 +4,9 @@ import { MongoClient } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
-import { createFilter } from 'odata-v4-mongodb'
-const _ = require("underscore");
+import { formatFiltersToODataQuery } from "./filter";
+import { createFilter } from 'odata-v4-mongodb';
+import _ = require("underscore");
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
@@ -29,47 +30,50 @@ export class SteedosMongoDriver implements SteedosDriver {
         return filters;
     }
 
-    formatFiltersToMongo(filters: any): JsonMap {
-        let query: JsonMap;
-        let selector: Array<JsonMap> = [];
-        if (!filters.length) {
-            return;
-        }
-        filters.forEach((filter: any) => {
-            let field: string, option: string, reg: RegExp, sub_selector: JsonMap, value: any;
-            field = filter[0];
-            option = filter[1];
-            value = filter[2];
-            sub_selector = {};
-            sub_selector[field] = {};
-            if (option === "=") {
-                sub_selector[field]["$eq"] = value;
-            } else if (option === "<>") {
-                sub_selector[field]["$ne"] = value;
-            } else if (option === ">") {
-                sub_selector[field]["$gt"] = value;
-            } else if (option === ">=") {
-                sub_selector[field]["$gte"] = value;
-            } else if (option === "<") {
-                sub_selector[field]["$lt"] = value;
-            } else if (option === "<=") {
-                sub_selector[field]["$lte"] = value;
-            } else if (option === "startswith") {
-                reg = new RegExp("^" + value, "i");
-                sub_selector[field]["$regex"] = reg;
-            } else if (option === "contains") {
-                reg = new RegExp(value, "i");
-                sub_selector[field]["$regex"] = reg;
-            } else if (option === "notcontains") {
-                reg = new RegExp("^((?!" + value + ").)*$", "i");
-                sub_selector[field]["$regex"] = reg;
-            }
-            return selector.push(sub_selector);
-        });
-        selector.forEach((item) => {
-            query = { ...item, ...query }
-        });
-
+    formatFiltersToMongoQuery(filters: any): JsonMap {
+        console.log("formatFiltersToMongoQuery==filters====", filters);
+        // let query: JsonMap;
+        // let selector: Array<JsonMap> = [];
+        // if (!filters.length) {
+        //     return;
+        // }
+        // filters.forEach((filter: any) => {
+        //     let field: string, option: string, reg: RegExp, sub_selector: JsonMap, value: any;
+        //     field = filter[0];
+        //     option = filter[1];
+        //     value = filter[2];
+        //     sub_selector = {};
+        //     sub_selector[field] = {};
+        //     if (option === "=") {
+        //         sub_selector[field]["$eq"] = value;
+        //     } else if (option === "<>") {
+        //         sub_selector[field]["$ne"] = value;
+        //     } else if (option === ">") {
+        //         sub_selector[field]["$gt"] = value;
+        //     } else if (option === ">=") {
+        //         sub_selector[field]["$gte"] = value;
+        //     } else if (option === "<") {
+        //         sub_selector[field]["$lt"] = value;
+        //     } else if (option === "<=") {
+        //         sub_selector[field]["$lte"] = value;
+        //     } else if (option === "startswith") {
+        //         reg = new RegExp("^" + value, "i");
+        //         sub_selector[field]["$regex"] = reg;
+        //     } else if (option === "contains") {
+        //         reg = new RegExp(value, "i");
+        //         sub_selector[field]["$regex"] = reg;
+        //     } else if (option === "notcontains") {
+        //         reg = new RegExp("^((?!" + value + ").)*$", "i");
+        //         sub_selector[field]["$regex"] = reg;
+        //     }
+        //     return selector.push(sub_selector);
+        // });
+        // selector.forEach((item) => {
+        //     query = { ...item, ...query }
+        // });
+        let odataQuery: string = formatFiltersToODataQuery(filters)
+        let query: JsonMap = createFilter(odataQuery)
+        console.log("formatFiltersToMongoQuery==query====", query);
         return query;
     }
 
@@ -80,7 +84,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
         if (_.isString(filters))
             return createFilter(filters)
-        let mongoFilters: JsonMap = this.formatFiltersToMongo(filters);
+        let mongoFilters: JsonMap = this.formatFiltersToMongoQuery(filters);
         return mongoFilters
     }
 
