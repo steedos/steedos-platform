@@ -1,7 +1,8 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
+import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType, SteedosIDType } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig } from "./trigger";
+import { SteedosQueryOptions } from "./query";
 
 
 abstract class SteedosObjectProperties{
@@ -44,6 +45,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
     listeners?: Dictionary<SteedosListenerConfig>
+    permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
 const _TRIGGERKEYS = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
@@ -58,10 +60,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _triggers: Dictionary<SteedosTriggerType> = {};
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
     private _permissions: Dictionary<SteedosObjectPermissionType> = {};
-    
-    public get permission_set(): Dictionary<SteedosObjectPermissionType> {
-        return this._permissions;
-    }
 
     constructor(object_name: string, schema: SteedosSchema, config: SteedosObjectTypeConfig) {
         super();
@@ -85,6 +83,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _.each(config.permissions, (permission_set, name) => {
             this.setPermissionSet(name, permission_set)
         })
+
+        //TODO remove ; 目前为了兼容现有object的定义保留
+        _.each(config.permission_set, (permission_set, name) => {
+            this.setPermissionSet(name, permission_set)
+        })
+    }
+
+    getPermission(permission_name: string): SteedosObjectPermissionType{
+        return this._permissions[permission_name]
+    }
+    
+    getPermissions(): Dictionary<SteedosObjectPermissionType> {
+        return this._permissions;
     }
 
     setListener(listener_name: string, config: SteedosListenerConfig){
@@ -150,7 +161,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     setPermissionSet(permission_set_name: string, config: SteedosObjectPermissionTypeConfig){
-        this.permission_set[permission_set_name] = new SteedosObjectPermissionType(permission_set_name, this, config)
+        this._permissions[permission_set_name] = new SteedosObjectPermissionType(permission_set_name, this, config)
     }
 
     extend(config: SteedosObjectTypeConfig) {
@@ -181,23 +192,23 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     }
 
-    async find(query){
+    async find(query: SteedosQueryOptions){
         return await this.schema.getDataSource().find(this.name, query)
     }
 
-    async findOne(id, query){
+    async findOne(id: SteedosIDType, query: SteedosQueryOptions){
         return await this.schema.getDataSource().findOne(this.name,  id, query)
     }
 
-    async insert(doc){
+    async insert(doc: JsonMap){
         return await this.schema.getDataSource().insert(this.name, doc)
     }
 
-    async update(id, doc){
+    async update(id: SteedosIDType, doc: JsonMap){
         return await this.schema.getDataSource().update(this.name,  id, doc)
     }
 
-    async delete(id){
+    async delete(id: SteedosIDType){
         return await this.schema.getDataSource().delete(this.name,  id)
     }
 

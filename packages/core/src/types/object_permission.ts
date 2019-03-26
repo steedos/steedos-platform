@@ -1,7 +1,7 @@
 import { SteedosObjectType } from ".";
 import _ = require('underscore')
 
-export type SteedosObjectPermissionTypeConfig = {
+abstract class SteedosObjectPermissionTypeProperties {
     name?: string
     allowRead?: boolean
     allowCreate?: boolean
@@ -18,28 +18,62 @@ export type SteedosObjectPermissionTypeConfig = {
     unrelated_objects?: []
 }
 
-export class SteedosObjectPermissionType{
+export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissionTypeProperties { }
+
+export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProperties {
     private _name: string;
-    
+
     private _object: SteedosObjectType;
 
     private properties: string[] = ['name']
-    
-    constructor(name: string, object: SteedosObjectType, config: SteedosObjectPermissionTypeConfig){
-        
+
+    constructor(name: string, object: SteedosObjectType, config: SteedosObjectPermissionTypeConfig) {
+        super()
+        if (!name) {
+            throw new Error('name is required');
+        }
+
         this.object = object
-        
-        _.each(config, (value: any, key: string)=>{
+
+        _.each(config, (value: any, key: string) => {
             this[key] = value
             this.properties.push(key)
         })
-
+        
+        if (this.allowCreate) {
+            this.allowRead = true;
+        }
+        if (this.allowEdit) {
+            this.allowRead = true;
+        }
+        if (this.allowDelete) {
+            this.allowEdit = true;
+            this.allowRead = true;
+        }
+        if (this.viewAllRecords) {
+            this.allowRead = true;
+        }
+        if (this.modifyAllRecords) {
+            this.allowRead = true;
+            this.allowEdit = true;
+            this.allowDelete = true;
+            this.viewAllRecords = true;
+        }
+        if (this.viewCompanyRecords) {
+            this.allowRead = true;
+        }
+        if (this.modifyCompanyRecords) {
+            this.allowRead = true;
+            this.allowEdit = true;
+            this.allowDelete = true;
+            this.viewCompanyRecords = true;
+        }
         this.name = name
     }
 
-    toConfig(){
+    toConfig() {
         let config = {}
-        this.properties.forEach((property)=>{
+        this.properties.forEach((property) => {
             config[property] = this[property]
         })
         return config

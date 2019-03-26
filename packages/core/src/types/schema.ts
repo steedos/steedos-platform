@@ -1,24 +1,25 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosFieldTypeConfig } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosFieldTypeConfig, SteedosUserType } from ".";
 import { Project, AppManager, TriggerManager, ReportManager } from '../index'
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
-import { SteedosUser } from "./user";
+import { SteedosUserObjectType } from "./user_object";
+
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
     objects: Dictionary<SteedosObjectTypeConfig>
     datasource: SteedosDataSourceTypeConfig
-    permission_sets: [string]
+    permission_sets: string[]
     //object_permissions: 
 }
 
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
-    private _users: Dictionary<SteedosUser>;
+    private _users: Dictionary<SteedosUserType> = {};
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
@@ -120,12 +121,13 @@ export class SteedosSchema {
     }
 
     getUser(userId: string){
-        if  (_.isUndefined(this._users[userId]))
-            return this._users[userId]
-        // else new 
+        if(_.isUndefined(this._users[userId])){
+            this._users[userId] = new SteedosUserType(userId, this)
+        }
+        return this._users[userId]
     }
 
     getUserObject(userId: string, objectName: string){
-
+        return new SteedosUserObjectType(this.getUser(userId), this.getObject(objectName))
     }
 }

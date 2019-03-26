@@ -1,7 +1,7 @@
 import { SteedosObjectType } from ".";
 import _ = require('underscore')
 
-export type SteedosObjectListViewTypeConfig = {
+abstract class SteedosObjectListViewTypeProperties{
     name?: string
     label?: string
     type?: string
@@ -12,7 +12,9 @@ export type SteedosObjectListViewTypeConfig = {
     sort?: []
 }
 
-export class SteedosObjectListViewType{
+export interface SteedosObjectListViewTypeConfig extends SteedosObjectListViewTypeProperties{}
+
+export class SteedosObjectListViewType extends SteedosObjectListViewTypeProperties{
     private _name: string;
     
     private _object: SteedosObjectType;
@@ -20,6 +22,7 @@ export class SteedosObjectListViewType{
     private properties: string[] = ['name']
 
     constructor(name: string, object: SteedosObjectType, config: SteedosObjectListViewTypeConfig){
+        super()
         this.object = object
         
         _.each(config, (value: any, key: string)=>{
