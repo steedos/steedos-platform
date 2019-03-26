@@ -1,11 +1,10 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosFieldTypeConfig } from ".";
 import { Project, AppManager, TriggerManager, ReportManager } from '../index'
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
-import { SteedosFieldTypeConfig } from "./field";
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
