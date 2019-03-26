@@ -63,12 +63,12 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
-                    let filterStr = [];
+                    let filters = [];
                     _.each(source[info.fieldName], function (f) {
-                        filterStr.push(`(_id eq '${f}')`);
+                        filters.push(`(_id eq '${f}')`);
                     })
                     return await object.find({
-                        filters: filterStr.join(' or ')
+                        filters: filters.join(' or ')
                     });
                 }
             }
