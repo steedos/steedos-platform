@@ -30,10 +30,11 @@ describe('自动生成字段名', () => {
         datasource: {
             driver: "mongo",
             url: 'mongodb://127.0.0.1:27017/steedos'
-        }
+        }, 
+        permission_sets:["admin"]
     })
 
-    let object = schema.objects["post"]
+    let object = schema.getObject("post")
     // console.log(object)
 
     // let f1 = object.getField('title');

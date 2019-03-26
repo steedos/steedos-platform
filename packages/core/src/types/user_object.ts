@@ -1,4 +1,3 @@
-import { SteedosSchema } from "./schema";
 import { SteedosUser } from "./user";
 import { SteedosObjectType } from ".";
 

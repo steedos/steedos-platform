@@ -1,7 +1,7 @@
 import { SteedosObjectType } from ".";
 import _ = require('underscore')
 
-export type SteedosObjectPermissionSetTypeConfig = {
+export type SteedosObjectPermissionTypeConfig = {
     name?: string
     allowRead?: boolean
     allowCreate?: boolean
@@ -18,14 +18,14 @@ export type SteedosObjectPermissionSetTypeConfig = {
     unrelated_objects?: []
 }
 
-export class SteedosObjectPermissionSetType{
+export class SteedosObjectPermissionType{
     private _name: string;
     
     private _object: SteedosObjectType;
 
     private properties: string[] = ['name']
     
-    constructor(name: string, object: SteedosObjectType, config: SteedosObjectPermissionSetTypeConfig){
+    constructor(name: string, object: SteedosObjectType, config: SteedosObjectPermissionTypeConfig){
         
         this.object = object
         

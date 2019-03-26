@@ -1,4 +1,3 @@
-import { SteedosSchema } from ".";
 
 export type SteedosUserConfig = {
     _id,
