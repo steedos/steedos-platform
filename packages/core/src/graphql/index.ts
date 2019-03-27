@@ -55,7 +55,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
                     console.log('graphql.reference_to: ' + reference_to + "," + source[info.fieldName]);
-                    let record = await object.findOne(source[info.fieldName], {});
+                    let record = await object.findOne(source[info.fieldName], { fields: [] });
                     return record;
                 }
             };
@@ -68,7 +68,8 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                         filters.push(`(_id eq '${f}')`);
                     })
                     return await object.find({
-                        filters: filters.join(' or ')
+                        filters: filters.join(' or '),
+                        fields: []
                     });
                 }
             }
