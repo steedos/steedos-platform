@@ -4,17 +4,12 @@ import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
 import fs = require('fs');
-import { SteedosUserObjectType } from "./user_object";
-
-// import async = require('async')
 
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
     objects: Dictionary<SteedosObjectTypeConfig>
     datasource: SteedosDataSourceTypeConfig
-    permission_sets: string[]
-    //object_permissions: 
 }
 
 export class SteedosSchema {
@@ -24,14 +19,6 @@ export class SteedosSchema {
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
-
-        // async.waterfall([async ()=>{
-        //     await this.connect();
-        // }], function(err){
-        //     if(err){
-        //         throw new Error(err)
-        //     }
-        // })
 
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
@@ -98,16 +85,5 @@ export class SteedosSchema {
 
     buildGraphQLSchema(){
         return buildGraphQLSchema(this);
-    }
-
-    getUser(userId: string){
-        if(_.isUndefined(this._users[userId])){
-            this._users[userId] = new SteedosUserType(userId, this)
-        }
-        return this._users[userId]
-    }
-
-    getUserObject(userId: string, objectName: string){
-        return new SteedosUserObjectType(this.getUser(userId), this.getObject(objectName))
     }
 }
