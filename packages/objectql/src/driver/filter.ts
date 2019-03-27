@@ -48,7 +48,7 @@ import DevExpressData = require("devextreme/bundles/modules/data");
 //     }
 // };
 
-DevExpressData.isUnaryOperation = (crit: any[]): boolean => {
+DevExpressData.utils.isUnaryOperation = (crit: any[]): boolean => {
     return crit[0] === "!" && Array.isArray(crit[1]);
 }
 
@@ -98,6 +98,9 @@ const DevExpressOData = {
             }).join(",") + "]";
         }
         return this.serializeValueV2(value);
+    }, 
+    serializeString(value: string): string {
+        return "'" + value.replace(/'/g, "''") + "'";
     },
     serializeDate(value: any, serializationFormat?: any): any {
         if (!serializationFormat) {
@@ -154,7 +157,8 @@ const DevExpressOData = {
 console.log("===================11=====34=====33===");
 // console.log(DevExpress.data.utils);
 // console.log(DevExpress.default.data.utils.odata);
-console.log(DevExpress.localization);
+// console.log(DevExpressData);
+// console.log(DevExpressData.utils.isUnaryOperation);
 
 class SteedosDriverFilter {
 
@@ -375,7 +379,7 @@ class SteedosDriverFilter {
                 groupOperator = nextGroupOperator;
                 nextGroupOperator = "and";
             } else {
-                nextGroupOperator = DevExpressData.isConjunctiveOperator(criterion) ? "and" : "or";
+                nextGroupOperator = DevExpressData.utils.isConjunctiveOperator(criterion) ? "and" : "or";
             }
         })
 
@@ -383,7 +387,7 @@ class SteedosDriverFilter {
     }
 
     private compileBinary(criteria: any[]): string {
-        criteria = DevExpressData.normalizeBinaryCriterion(criteria);
+        criteria = DevExpressData.utils.normalizeBinaryCriterion(criteria);
 
         var op = criteria[1],
             formatters = this.protocolVersion === 4
@@ -409,7 +413,7 @@ class SteedosDriverFilter {
             return this.compileGroup(criteria);
         }
 
-        if (DevExpressData.isUnaryOperation(criteria)) {
+        if (DevExpressData.utils.isUnaryOperation(criteria)) {
             return this.compileUnary(criteria);
         }
 
@@ -420,10 +424,9 @@ class SteedosDriverFilter {
         // 转换filters为odata串
         let filters = this.filters;
         console.log("formatFiltersToODataQuery=========", filters);
-        // let query = this.compileCore(filters);
-        // console.log("formatFiltersToODataQuery====query=====", query);
-        // return query;
-        return "(name eq 'ptr') and (title eq 'PTR')";
+        let query = this.compileCore(filters);
+        console.log("formatFiltersToODataQuery====query=====", query);
+        return query;
     }
 }
 
