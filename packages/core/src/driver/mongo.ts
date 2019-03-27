@@ -112,6 +112,16 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
+    async count(tableName: string, query: SteedosQueryOptions) {
+        let collection = this.collection(tableName);
+
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let mongoOptions = this.getMongoOptions(query);
+        let result = await collection.find(mongoFilters, mongoOptions).count();
+
+        return result;
+    }
+
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
