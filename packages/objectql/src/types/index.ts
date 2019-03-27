@@ -11,6 +11,4 @@ export { SteedosSchema } from "./schema";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'
 export { SteedosObjectListViewTypeConfig, SteedosObjectListViewType } from "./list_view";
-export { SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from "./object_permission";
-export { SteedosUserType } from "./user";
 export { SteedosIDType } from  "./field_types";

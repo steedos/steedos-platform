@@ -1,5 +1,5 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosUserType } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import path = require("path")
@@ -15,7 +15,6 @@ export type SteedosSchemaConfig = {
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
-    private _users: Dictionary<SteedosUserType> = {};
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)

@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType, SteedosIDType } from ".";
+import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
@@ -36,7 +36,6 @@ abstract class SteedosObjectProperties{
     fields?: Dictionary<SteedosFieldTypeConfig>
     listeners?: Dictionary<SteedosListenerConfig>
     list_views?: Dictionary<SteedosObjectListViewTypeConfig>
-    permissions?: Dictionary<SteedosObjectPermissionTypeConfig>
 }
 
 
@@ -45,7 +44,6 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
     listeners?: Dictionary<SteedosListenerConfig>
-    permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
 const _TRIGGERKEYS = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
@@ -59,7 +57,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _listeners: Dictionary<SteedosListenerConfig> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
-    private _permissions: Dictionary<SteedosObjectPermissionType> = {};
 
     constructor(object_name: string, schema: SteedosSchema, config: SteedosObjectTypeConfig) {
         super();
@@ -80,22 +77,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this.setListView(name, list_view)
         })
 
-        _.each(config.permissions, (permission, name) => {
-            this.setPermission(name, permission)
-        })
-
-        //TODO remove ; 目前为了兼容现有object的定义保留
-        _.each(config.permission_set, (permission, name) => {
-            this.setPermission(name, permission)
-        })
-    }
-
-    getPermission(permission_name: string): SteedosObjectPermissionType{
-        return this._permissions[permission_name]
-    }
-    
-    getPermissions(): Dictionary<SteedosObjectPermissionType> {
-        return this._permissions;
     }
 
     setListener(listener_name: string, config: SteedosListenerConfig){
@@ -158,10 +139,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig){
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
-    }
-
-    setPermission(permission_name: string, config: SteedosObjectPermissionTypeConfig){
-        this._permissions[permission_name] = new SteedosObjectPermissionType(permission_name, this, config)
     }
 
     extend(config: SteedosObjectTypeConfig) {
