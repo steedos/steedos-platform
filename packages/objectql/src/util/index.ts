@@ -12,6 +12,7 @@ const yaml = require('js-yaml');
 const fs = require("fs");
 const path = require("path");
 const _ = require("underscore");
+const globby = require("globby");
 import { has, getJsonMap } from '@salesforce/ts-types';
 
 exports.loadJSONFile = (filePath: string)=>{
@@ -22,7 +23,7 @@ exports.loadYmlFile = (filePath: string)=>{
     return yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 
-exports.loadFile = (filePath: string)=>{
+let loadFile = (filePath: string)=>{
     let json:JsonMap = {}
     try {
         let extname = path.extname(filePath);
@@ -37,6 +38,23 @@ exports.loadFile = (filePath: string)=>{
     }
     return json;
 };
+exports.loadFile = loadFile;
+
+exports.loadObjects = (filePath: string) => {
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.object.yml"),
+        path.join(filePath, "*.object.json"),
+        path.join(filePath, "*.object.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    console.log(matchedPaths)
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        results.push(json)
+    })
+    return results
+}
 
 exports.extend = (destination: JsonMap, sources: JsonMap)=>{
     _.each(sources, (v:never, k: string)=>{

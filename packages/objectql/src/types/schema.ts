@@ -2,8 +2,6 @@ import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
-import path = require("path")
-import fs = require('fs');
 
 var util = require('../util')
 
@@ -28,33 +26,11 @@ export class SteedosSchema {
         await this.getDataSource().connect()
     }
 
-    //TODO
-    use(filePath: string | []){
-        if(_.isArray(filePath)){
-            filePath.forEach((element) => {
-                this.useFile(element)
-            });
-            return
-        }else if(_.isString(filePath)){
-            this.useFile(filePath)
-            return
-        }
-        throw new Error('filePath can only be a string or array')
-    }
-
-    private useFile(filePath: string){
-        if(!path.isAbsolute(filePath)){
-            filePath = path.resolve(filePath)
-        }
-    
-        if(!fs.existsSync(filePath)){
-            throw new Error(`${filePath} not exist`);
-        }
-    
-        if(util.isObjectFile(filePath)){
-            let objectConfig:SteedosObjectTypeConfig = util.loadFile(filePath);
-            this.setObject(objectConfig.name, objectConfig)
-        }
+    async use(filePath){
+       let jsons = util.loadObjects(filePath)
+       _.each(jsons, (json:SteedosObjectTypeConfig)=>{
+            this.setObject(json.name, json)
+       })
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
