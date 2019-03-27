@@ -416,13 +416,13 @@ class SteedosDriverFilter {
         return this.compileBinary(criteria);
     }
     
-
-
     formatFiltersToODataQuery(): string {
+        // 转换filters为odata串
         let filters = this.filters;
         console.log("formatFiltersToODataQuery=========", filters);
-        // 转换filters为odata串
-        return "(name eq 'ptr') and (title eq 'PTR')";
+        let query = this.compileCore(filters);
+        console.log("formatFiltersToODataQuery====query=====", query);
+        return query;
     }
 }
 
