@@ -87,7 +87,8 @@ export class SteedosSchema {
         await this.getDataSource().connect()
     }
 
-    async loadObjectsPermissionsFromDB(){
+    async loadPermissionsFromDB(){
+        // load objects permissions
         var permissions = await this.getObject("permission_objects").find({fields:['_id', 'permission_set_id', 'object_name', 'name', "allowRead", "allowCreate", "allowEdit", "allowDelete", "viewAllRecords", "modifyAllRecords", "viewCompanyRecords", "modifyCompanyRecords", "disabled_list_views", "disabled_actions", "unreadable_fields", "uneditable_fields", "unrelated_objects"]})
         _.each(permissions, (permission: any)=>{
             if(permission && permission.object_name){

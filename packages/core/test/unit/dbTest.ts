@@ -11,7 +11,7 @@ describe('Test db', () => {
 
         await mySchema.connect()
 
-        await mySchema.loadObjectsPermissionsFromDB()
+        await mySchema.loadPermissionsFromDB()
   
         let meeting = mySchema.getObject('meeting')
 
