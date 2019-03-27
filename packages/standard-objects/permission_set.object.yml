@@ -1,0 +1,106 @@
+name: permission_set
+label: 权限组
+icon: groups
+fields:
+  name:
+    label: 名称
+    type: text
+    searchable: true
+    index: true
+    name: name
+  assigned_apps:
+    label: 授权应用
+    type: lookup
+    reference_to: apps
+    multiple: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Apps, function (o, k) {
+                return _options.push({
+                  label: o.name,
+                  value: k,
+                  icon: o.icon_slds
+                });
+              });
+
+              return _options;
+            }
+    name: assigned_apps
+    filterable: true
+  users:
+    label: 成员
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    name: users
+    filterable: true
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - users
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+triggers:
+  beforeInsertServerCheck:
+    'on': server
+    when: before.insert
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (userId, doc) {
+              var newName;
+              console.log("before.insert.server.check,doc:", doc);
+              newName = doc != null ? doc.name : void 0;
+
+              if (newName && Creator.getCollection("permission_set").findOne({
+                space: doc.space,
+                name: newName
+              }, {
+                fields: {
+                  name: 1
+                }
+              })) {
+                throw new Meteor.Error(500, "对象名称不能重复");
+              }
+            }
+  beforeUpdateServerCheck:
+    'on': server
+    when: before.update
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (userId, doc, fieldNames, modifier, options) {
+              var newName, ref;
+              newName = (ref = modifier.$set) != null ? ref.name : void 0;
+
+              if (newName && Creator.getCollection("permission_set").findOne({
+                space: doc.space,
+                name: newName,
+                _id: {
+                  $ne: doc._id
+                }
+              }, {
+                fields: {
+                  name: 1
+                }
+              })) {
+                throw new Meteor.Error(500, "对象名称不能重复");
+              }
+            }

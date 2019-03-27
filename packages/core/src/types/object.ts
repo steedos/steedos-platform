@@ -80,13 +80,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this.setListView(name, list_view)
         })
 
-        _.each(config.permissions, (permission_set, name) => {
-            this.setPermissionSet(name, permission_set)
+        _.each(config.permissions, (permission, name) => {
+            this.setPermission(name, permission)
         })
 
         //TODO remove ; 目前为了兼容现有object的定义保留
-        _.each(config.permission_set, (permission_set, name) => {
-            this.setPermissionSet(name, permission_set)
+        _.each(config.permission_set, (permission, name) => {
+            this.setPermission(name, permission)
         })
     }
 
@@ -160,8 +160,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
     }
 
-    setPermissionSet(permission_set_name: string, config: SteedosObjectPermissionTypeConfig){
-        this._permissions[permission_set_name] = new SteedosObjectPermissionType(permission_set_name, this, config)
+    setPermission(permission_name: string, config: SteedosObjectPermissionTypeConfig){
+        this._permissions[permission_name] = new SteedosObjectPermissionType(permission_name, this, config)
     }
 
     extend(config: SteedosObjectTypeConfig) {

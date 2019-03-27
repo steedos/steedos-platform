@@ -15,9 +15,6 @@ export class SteedosUserType {
         this._userId = userId
 
         this._schema = schema;
-        if(this._schema.getObject("permission_set")){
-            this._schema.getObject("permission_set").find({filters: ["user", "eq", userId], fields: ['_id']})
-        }
 
         this._permissionSets = ["user"]
     }
@@ -27,8 +24,12 @@ export class SteedosUserType {
         return this._userId
     }
 
-    getPermissionSets(){
-       return this._permissionSets;
+    async getPermissionSets(){
+        if(this._permissionSets){
+            return this._permissionSets
+        }else{
+            return await this._schema.getObject("permission_set").find({filters: ["user", "eq", this._userId], fields: ['_id']})
+        }
     }
 
     getUserId(){

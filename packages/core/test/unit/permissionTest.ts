@@ -8,9 +8,9 @@ describe('test permission', () => {
         mySchema.use(path.resolve(__dirname, "./load/meeting.object.yml"))
         var meeting = mySchema.getObject('meeting');
         
-        var userMeeting = mySchema.getUserObject('1', 'meeting')
+        // var userMeeting = mySchema.getUserObject('1', 'meeting')
 
-        userMeeting.find({name: '1111'});
+        // userMeeting.find({name: '1111'});
 
         expect(meeting.name).to.equal('meeting');
     });

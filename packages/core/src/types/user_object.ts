@@ -18,7 +18,7 @@ export class SteedosUserObjectType {
     this._object = object
   }
 
-  private getUserObjectPermission(){
+  private async getUserObjectPermission(){
     let userObjectPermission = {
       allowRead: false,
       allowCreate: false,
@@ -34,7 +34,8 @@ export class SteedosUserObjectType {
       uneditable_fields: [],
       unrelated_objects: []
     }
-    let userPermissionSets: string[] = this.user.getPermissionSets();
+    
+    let userPermissionSets: string[] = await this.user.getPermissionSets();
 
     if(_.isEmpty(userPermissionSets)){
       throw new Error('not find user permission');
@@ -58,11 +59,11 @@ export class SteedosUserObjectType {
   }
 
   /**
-   * 计算权限
+   * 计算用户权限
    */
-  find(query: SteedosQueryOptions) {
+  async find(query: SteedosQueryOptions) {
     // 计算权限, 如果没有权限就报错
-    let userObjectPermission = this.getUserObjectPermission()
+    let userObjectPermission = await this.getUserObjectPermission()
 
     console.log('userObjectPermission', userObjectPermission);
 

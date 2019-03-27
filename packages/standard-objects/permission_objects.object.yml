@@ -1,0 +1,279 @@
+name: permission_objects
+label: 对象权限
+icon: user
+fields:
+  name:
+    label: 名称
+    type: text
+    searchable: true
+    index: true
+    required: true
+    name: name
+  permission_set_id:
+    label: 权限组
+    type: master_detail
+    required: true
+    reference_to: permission_set
+    index: true
+    name: permission_set_id
+    filterable: true
+  object_name:
+    label: 对象
+    type: master_detail
+    index: true
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                if (!o.hidden) {
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
+              });
+
+              return _options;
+            }
+    name: object_name
+    filterable: true
+  allowRead:
+    type: boolean
+    label: 允许查看
+    name: allowRead
+  allowCreate:
+    label: 允许创建
+    type: boolean
+    name: allowCreate
+  allowEdit:
+    label: 允许编辑
+    type: boolean
+    name: allowEdit
+  allowDelete:
+    label: 允许删除
+    type: boolean
+    name: allowDelete
+  viewAllRecords:
+    type: boolean
+    label: 查看所有记录
+    name: viewAllRecords
+  modifyAllRecords:
+    type: boolean
+    label: 修改所有记录
+    name: modifyAllRecords
+  viewCompanyRecords:
+    type: boolean
+    label: 查看本单位
+    name: viewCompanyRecords
+  modifyCompanyRecords:
+    type: boolean
+    label: 修改本单位
+    name: modifyCompanyRecords
+  disabled_list_views:
+    type: lookup
+    label: 禁用列表视图
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: lead_list
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var _object, _options, list_views;
+
+              _options = [];
+              _object = Creator.getObject(values.object_name);
+              list_views = _object.list_views;
+
+              _.forEach(list_views, function (f, k) {
+                if (k !== "default" && (!_.has(f, "shared") || f.shared)) {
+                  return _options.push({
+                    label: f.label || f.name || k,
+                    value: f._id
+                  });
+                }
+              });
+
+              return _options;
+            }
+    name: disabled_list_views
+    filterable: true
+  disabled_actions:
+    type: lookup
+    label: 禁用操作
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: marketing_actions
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var _object, _options, actions;
+
+              _options = [];
+              _object = Creator.getObject(values.object_name);
+              actions = _object.actions;
+
+              _.forEach(actions, function (f, k) {
+                if (["standard_new", "standard_edit", "standard_delete"].indexOf(k) < 0) {
+                  return _options.push({
+                    label: f.label || k,
+                    value: k
+                  });
+                }
+              });
+
+              return _options;
+            }
+    name: disabled_actions
+    filterable: true
+  unreadable_fields:
+    type: lookup
+    label: 不可见字段
+    multiple: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var _object, _options, fields, icon, object_name;
+
+              object_name = values.object_name;
+
+              if (!object_name) {
+                return [];
+              }
+
+              _options = [];
+              _object = Creator.getObject(object_name);
+              fields = _object.fields;
+              icon = _object.icon;
+
+              _.forEach(fields, function (f, k) {
+                return _options.push({
+                  label: f.label || k,
+                  value: k,
+                  icon: icon
+                });
+              });
+
+              return _options;
+            }
+    name: unreadable_fields
+    filterable: true
+  uneditable_fields:
+    type: lookup
+    label: 不可编辑字段
+    multiple: true
+    depend_on:
+      - object_name
+      - unreadable_fields
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var _object, _options, fields, icon, object_name;
+
+              object_name = values.object_name;
+
+              if (!object_name) {
+                return [];
+              }
+
+              _options = [];
+              _object = Creator.getObject(object_name);
+              fields = _object.fields;
+              icon = _object.icon;
+
+              _.forEach(fields, function (f, k) {
+                if (!f.omit) {
+                  if (_.indexOf(values.unreadable_fields, k) < 0) {
+                    return _options.push({
+                      label: f.label || k,
+                      value: k,
+                      icon: icon
+                    });
+                  }
+                }
+              });
+
+              return _options;
+            }
+    name: uneditable_fields
+    filterable: true
+  unrelated_objects:
+    type: lookup
+    label: 禁用关联对象
+    multiple: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var _options, related_object_names, related_objects;
+
+              _options = [];
+              related_objects = Creator.getObject(values.object_name).related_objects;
+              related_object_names = _.uniq(_.pluck(related_objects, "object_name"));
+
+              _.forEach(related_object_names, function (i) {
+                var _object;
+
+                _object = Creator.getObject(i);
+                return _options.push({
+                  label: _object.label || i,
+                  value: i,
+                  icon: _object.icon
+                });
+              });
+
+              return _options;
+            }
+    name: unrelated_objects
+    filterable: true
+list_views:
+  all:
+    label: 全部
+    columns:
+      - name
+      - permission_set_id
+      - object_name
+      - allowCreate
+      - allowDelete
+      - allowEdit
+      - allowRead
+      - modifyAllRecords
+      - viewAllRecords
+      - modifyCompanyRecords
+      - viewCompanyRecords
+    filter_scope: space
+triggers:
+  beforeInsertServerProcess:
+    'on': server
+    when: before.insert
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (userId, doc) {
+              return Creator.processPermissions(doc);
+            }
+  beforeUpdateServerProcess:
+    'on': server
+    when: before.update
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (userId, doc, fieldNames, modifier, options) {
+              return Creator.processPermissions(modifier.$set);
+            }
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

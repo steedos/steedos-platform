@@ -7,6 +7,8 @@ import path = require("path")
 import fs = require('fs');
 import { SteedosUserObjectType } from "./user_object";
 
+// import async = require('async')
+
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
@@ -23,6 +25,14 @@ export class SteedosSchema {
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
+
+        // async.waterfall([async ()=>{
+        //     await this.connect();
+        // }], function(err){
+        //     if(err){
+        //         throw new Error(err)
+        //     }
+        // })
 
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
@@ -75,6 +85,18 @@ export class SteedosSchema {
 
     async connect(){
         await this.getDataSource().connect()
+    }
+
+    async loadObjectsPermissionsFromDB(){
+        var permissions = await this.getObject("permission_objects").find({fields:['_id', 'permission_set_id', 'object_name', 'name', "allowRead", "allowCreate", "allowEdit", "allowDelete", "viewAllRecords", "modifyAllRecords", "viewCompanyRecords", "modifyCompanyRecords", "disabled_list_views", "disabled_actions", "unreadable_fields", "uneditable_fields", "unrelated_objects"]})
+        _.each(permissions, (permission: any)=>{
+            if(permission && permission.object_name){
+                let object = this.getObject(permission.object_name)
+                if(object){
+                    object.setPermission(permission.permission_set_id, permission)
+                }
+            }
+        })
     }
 
     //TODO
