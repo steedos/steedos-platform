@@ -1,4 +1,4 @@
-var Steedos = require('../../../packages/core')
+var Steedos = require('@steedos/objectql')
 
 class MeetingTriggers extends Steedos.Trigger{
 
