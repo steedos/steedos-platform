@@ -212,7 +212,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.schema.getDataSource().delete(this.name,  id)
     }
 
-
+    async count(query: SteedosQueryOptions){
+        return await this.schema.getDataSource().count(this.name, query)
+    }
     
 
     /***** get/set *****/

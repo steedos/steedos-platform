@@ -18,6 +18,6 @@ export interface SteedosDriver {
     insert(tableName: string, doc: JsonMap): any;
     update(tableName: string, id: SteedosIDType, doc: JsonMap): any;
     delete(tableName: string, id: SteedosIDType): any;
-
+    count(tableName: string, query: SteedosQueryOptions): any;
 }
 

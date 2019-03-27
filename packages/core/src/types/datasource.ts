@@ -71,6 +71,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this.adapter.delete(tableName, id)
     }
 
+    async count(tableName: string, query: SteedosQueryOptions){
+        return await this.adapter.count(tableName, query)
+    }
+
     
     // async callAdapter(method, ...args) {
     //     const adapterMethod = this.adapter[method];
