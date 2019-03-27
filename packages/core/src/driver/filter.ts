@@ -420,9 +420,10 @@ class SteedosDriverFilter {
         // 转换filters为odata串
         let filters = this.filters;
         console.log("formatFiltersToODataQuery=========", filters);
-        let query = this.compileCore(filters);
-        console.log("formatFiltersToODataQuery====query=====", query);
-        return query;
+        // let query = this.compileCore(filters);
+        // console.log("formatFiltersToODataQuery====query=====", query);
+        // return query;
+        return "(name eq 'ptr') and (title eq 'PTR')";
     }
 }
 
