@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
-import { formatFiltersToODataQuery } from "./filter";
+// import { formatFiltersToODataQuery } from "./filter";
 import { createFilter } from 'odata-v4-mongodb';
 import _ = require("underscore");
 
@@ -12,7 +12,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
     _collections: Dictionary<any>;
-    
+
     constructor(config: SteedosDriverConfig){
         this._collections = {};
         this._url = config.url;
@@ -71,10 +71,11 @@ export class SteedosMongoDriver implements SteedosDriver {
         // selector.forEach((item) => {
         //     query = { ...item, ...query }
         // });
-        let odataQuery: string = formatFiltersToODataQuery(filters)
-        let query: JsonMap = createFilter(odataQuery)
-        console.log("formatFiltersToMongoQuery==query====", query);
-        return query;
+        // let odataQuery: string = formatFiltersToODataQuery(filters)
+        // let query: JsonMap = createFilter(odataQuery)
+        // console.log("formatFiltersToMongoQuery==query====", query);
+        // return query;
+        return {};
     }
 
     /* TODO： */
