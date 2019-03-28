@@ -1,6 +1,5 @@
-import { SteedosObjectType, SteedosUserType, SteedosObjectPermissionType } from ".";
-import _ = require("underscore");
-import { SteedosQueryOptions } from "./query";
+import { SteedosObjectType, SteedosQueryOptions } from "@steedos/objectql";
+import { SteedosUserType } from "./user";
 
 export class SteedosUserObjectType {
   private _user: SteedosUserType;
@@ -18,58 +17,58 @@ export class SteedosUserObjectType {
     this._object = object
   }
 
-  private async getUserObjectPermission(){
-    let userObjectPermission = {
-      allowRead: false,
-      allowCreate: false,
-      allowEdit: false,
-      allowDelete: false,
-      viewAllRecords: false,
-      modifyAllRecords: false,
-      viewCompanyRecords: false,
-      modifyCompanyRecords: false,
-      disabled_list_views: [],
-      disabled_actions: [],
-      unreadable_fields: [],
-      uneditable_fields: [],
-      unrelated_objects: []
-    }
+  // private async getUserObjectPermission(){
+  //   let userObjectPermission = {
+  //     allowRead: false,
+  //     allowCreate: false,
+  //     allowEdit: false,
+  //     allowDelete: false,
+  //     viewAllRecords: false,
+  //     modifyAllRecords: false,
+  //     viewCompanyRecords: false,
+  //     modifyCompanyRecords: false,
+  //     disabled_list_views: [],
+  //     disabled_actions: [],
+  //     unreadable_fields: [],
+  //     uneditable_fields: [],
+  //     unrelated_objects: []
+  //   }
     
-    let userPermissionSets: string[] = await this.user.getPermissionSets();
+  //   let userPermissionSets: string[] = await this.user.getPermissionSets();
 
-    if(_.isEmpty(userPermissionSets)){
-      throw new Error('not find user permission');
-    }
+  //   if(_.isEmpty(userPermissionSets)){
+  //     throw new Error('not find user permission');
+  //   }
     
-    userPermissionSets.forEach((userPermissionSet)=>{
-      let objectPermissions: SteedosObjectPermissionType = this.object.getPermission(userPermissionSet)
-      _.each(userObjectPermission, (v, k)=>{
-        let _v = objectPermissions[k]
-        if(_.isBoolean(v)){
-          if(v === false && _v === true){
-            userObjectPermission[k] = _v
-          }
-        }else if(_.isArray(v) && _.isArray(_v)){
-          userObjectPermission[k] = _.union(v, _v)
-        }
-      })
-    })
+  //   userPermissionSets.forEach((userPermissionSet)=>{
+  //     let objectPermissions: SteedosObjectPermissionType = this.object.getPermission(userPermissionSet)
+  //     _.each(userObjectPermission, (v, k)=>{
+  //       let _v = objectPermissions[k]
+  //       if(_.isBoolean(v)){
+  //         if(v === false && _v === true){
+  //           userObjectPermission[k] = _v
+  //         }
+  //       }else if(_.isArray(v) && _.isArray(_v)){
+  //         userObjectPermission[k] = _.union(v, _v)
+  //       }
+  //     })
+  //   })
     
-    return userObjectPermission;
-  }
+  //   return userObjectPermission;
+  // }
 
   /**
    * 计算用户权限
    */
   async find(query: SteedosQueryOptions) {
-    // 计算权限, 如果没有权限就报错
-    let userObjectPermission = await this.getUserObjectPermission()
+    // // 计算权限, 如果没有权限就报错
+    // let userObjectPermission = await this.getUserObjectPermission()
 
-    console.log('userObjectPermission', userObjectPermission);
+    // console.log('userObjectPermission', userObjectPermission);
 
-    query.fields
+    // query.fields
 
-    console.log('query', query);
-    // object.find()   
+    // console.log('query', query);
+    // // object.find()   
   }
 }

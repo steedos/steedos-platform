@@ -1,4 +1,4 @@
-import { SteedosIDType, SteedosSchema } from ".";
+import { SteedosIDType, SteedosSchema } from "@steedos/objectql";
 
 export type SteedosUserTypeConfig = {
     _id,

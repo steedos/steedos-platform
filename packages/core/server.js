@@ -1,4 +1,4 @@
-var steedos = require("@steedos/core")
+var steedos = require("@steedos/objectql")
 var _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
 
