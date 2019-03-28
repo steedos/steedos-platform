@@ -62,6 +62,9 @@ export class SteedosMongoDriver implements SteedosDriver {
             projection[field] = 1;
         });
         result.projection = projection;
+        result.limit = options.top;
+        result.skip = options.skip;
+        result.sort = options.sort;
         return result;
     }
 

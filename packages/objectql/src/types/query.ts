@@ -22,6 +22,6 @@ export type SteedosQueryOptions = {
     /**
      * Query options for orderby, the sort of data for fetch
      */
-    readonly orderBy?: string;
+    readonly sort?: string;
     
 }
