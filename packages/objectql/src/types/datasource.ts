@@ -4,7 +4,7 @@ import { SteedosDriver, SteedosMongoDriver } from '../driver';
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
 import { SteedosIDType } from '.';
-import { SteedosDriverConfig } from '../driver/driver';
+import { SteedosDriverConfig } from '../driver';
 
 export type SteedosDataSourceTypeConfig = {
     driver: string | SteedosDriver
@@ -15,8 +15,7 @@ export type SteedosDataSourceTypeConfig = {
 }
 
 export class SteedosDataSourceType implements Dictionary {
-    private _driver: string | SteedosDriver;
-    private _adapter: any;
+    private _adapter: SteedosDriver;
 
     private _url: string;
     private _username?: string;
@@ -28,7 +27,6 @@ export class SteedosDataSourceType implements Dictionary {
 
     constructor(config: SteedosDataSourceTypeConfig) {
         this._isConnected = false;
-        this._driver = config.driver;
         this._url = config.url
         this._username = config.username
         this._pasword = config.pasword
@@ -41,8 +39,8 @@ export class SteedosDataSourceType implements Dictionary {
             options: this._options
         }
 
-        if(_.isString(this._driver)){
-            if(this._driver == 'mongo'){
+        if(_.isString(config.driver)){
+            if(config.driver == 'mongo'){
                 this._adapter = new SteedosMongoDriver(driverConfig);
             }
         }else{

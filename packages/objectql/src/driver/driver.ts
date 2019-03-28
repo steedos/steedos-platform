@@ -13,6 +13,8 @@ export interface SteedosDriver {
     
     //constructor(url:string): any;
     // new(config: SteedosDriverConfig): any;
+    connect();
+    disconnect();
     find(tableName: string, query: SteedosQueryOptions): any;
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions): any;
     insert(tableName: string, doc: JsonMap): any;
