@@ -169,27 +169,51 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     }
 
-    async find(query: SteedosQueryOptions){
+    async find(query: SteedosQueryOptions, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().find(this.name, query)
     }
 
-    async findOne(id: SteedosIDType, query: SteedosQueryOptions){
+    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().findOne(this.name,  id, query)
     }
 
-    async insert(doc: JsonMap){
+    async insert(doc: JsonMap, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().insert(this.name, doc)
     }
 
-    async update(id: SteedosIDType, doc: JsonMap){
+    async update(id: SteedosIDType, doc: JsonMap, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().update(this.name,  id, doc)
     }
 
-    async delete(id: SteedosIDType){
+    async delete(id: SteedosIDType, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().delete(this.name,  id)
     }
 
-    async count(query: SteedosQueryOptions){
+    async count(query: SteedosQueryOptions, userId: string){
+        let roles = this.schema.getRoles(userId)
+        if(roles){
+            //TODO 权限
+        }
         return await this.schema.getDataSource().count(this.name, query)
     }
     

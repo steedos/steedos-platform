@@ -20,6 +20,9 @@ steedosSchema.connect().then(function(){
 
     let express = require('express');
     let app = express();
+    app.use(function(req, res, next){
+        //TODO 处理userId
+    })
     app.use('/graphql', graphqlHTTP({
         schema: graphqlSchema,
         graphiql: true
