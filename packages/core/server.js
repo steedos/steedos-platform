@@ -1,8 +1,8 @@
-var steedos = require("@steedos/objectql")
+var SteedosSchema = require("@steedos/objectql").SteedosSchema
 var _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
 
-let steedosSchema = new steedos.SteedosSchema({
+let steedosSchema = new SteedosSchema({
     objects: {},
     datasource: {
         driver: 'mongo',
