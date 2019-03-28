@@ -1,18 +1,25 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
+import { SteedosIDType } from "./field_types";
+
 
 var util = require('../util')
 
 export type SteedosSchemaConfig = {
     objects: Dictionary<SteedosObjectTypeConfig>
-    datasource: SteedosDataSourceTypeConfig
+    datasource: SteedosDataSourceTypeConfig,
+    roles?: string[],
+    object_permissions?: Dictionary<SteedosObjectPermissionTypeConfig>,
+    getRoles?: Function
 }
 
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasource: SteedosDataSourceType;
+    private _object_permissions: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
+    private _getRoles: Function;
 
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
@@ -20,6 +27,22 @@ export class SteedosSchema {
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
         })
+    }
+
+    getRoles(userId: SteedosIDType){
+        if(this._getRoles){
+            return this._getRoles()
+        }else{
+            return ['admin']
+        }
+    }
+
+    setObjectPermission(object_permission: SteedosObjectPermissionTypeConfig){
+        let objectPermissions = this._object_permissions[object_permission.object_name]
+        if(!objectPermissions){
+            this._object_permissions[object_permission.object_name] = {}
+        }
+        this._object_permissions[object_permission.object_name][object_permission.name] = new SteedosObjectPermissionType(object_permission)
     }
 
     async connect(){
