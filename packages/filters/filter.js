@@ -111,10 +111,10 @@ const DevExpressOData = {
 
 class SteedosFilter {
 
-    constructor(filters, odataProtocolVersion, forceLowerCase){
+    constructor(filters, odataProtocolVersion = 4, forceLowerCase = true){
         this.filters = filters || [];
-        this.protocolVersion = odataProtocolVersion || 4;
-        this.forceLowerCase = forceLowerCase || true;
+        this.protocolVersion = odataProtocolVersion;
+        this.forceLowerCase = forceLowerCase;
         this.formatters = {
             "=": this.createBinaryOperationFormatter("eq"),
             "<>": this.createBinaryOperationFormatter("ne"),
