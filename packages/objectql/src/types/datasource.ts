@@ -22,20 +22,23 @@ export class SteedosDataSourceType implements Dictionary {
     private _username?: string;
     private _pasword?: string;
     private _options?: any;
+
+    private _isConnected: boolean;
     
 
     constructor(config: SteedosDataSourceTypeConfig) {
+        this._isConnected = false;
         this._driver = config.driver;
-        this.url = config.url
-        this.username = config.username
-        this.pasword = config.pasword
-        this.options = config.options
+        this._url = config.url
+        this._username = config.username
+        this._pasword = config.pasword
+        this._options = config.options
 
         let driverConfig: SteedosDriverConfig = {
-            url: this.url,
-            username: this.username,
-            pasword: this.pasword,
-            options: this.options
+            url: this._url,
+            username: this._username,
+            pasword: this._pasword,
+            options: this._options
         }
 
         if(_.isString(this._driver)){
@@ -48,79 +51,40 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async connect(){
-        await this.adapter.connect()
+        if (this._isConnected)
+            return
+        await this._adapter.connect()
+        this._isConnected = true;
     }
     
     async find(tableName: string, query: SteedosQueryOptions){
-        return await this.adapter.find(tableName, query)
+        await this.connect();
+        return await this._adapter.find(tableName, query)
     }
     
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions){
-        return await this.adapter.findOne(tableName, id, query)
+        await this.connect();
+        return await this._adapter.findOne(tableName, id, query)
     }
 
     async insert(tableName: string, doc: JsonMap){
-        return await this.adapter.insert(tableName, doc)
+        await this.connect();
+        return await this._adapter.insert(tableName, doc)
     }
 
     async update(tableName: string, id: SteedosIDType, doc: JsonMap){
-        return await this.adapter.update(tableName, id, doc)
+        await this.connect();
+        return await this._adapter.update(tableName, id, doc)
     }
 
     async delete(tableName: string, id: SteedosIDType){
-        return await this.adapter.delete(tableName, id)
+        await this.connect();
+        return await this._adapter.delete(tableName, id)
     }
 
     async count(tableName: string, query: SteedosQueryOptions){
-        return await this.adapter.count(tableName, query)
+        await this.connect();
+        return await this._adapter.count(tableName, query)
     }
 
-    
-    // async callAdapter(method, ...args) {
-    //     const adapterMethod = this.adapter[method];
-    //     if (typeof adapterMethod !== 'function') {
-    //         throw new Error('Adapted does not support "' + method + '" method');
-    //     }
-    //     return await adapterMethod.apply(this.adapter, args);
-    // };
-
-    public get driver(): string | SteedosDriver {
-        return this._driver;
-    }
-    public set driver(value: string | SteedosDriver) {
-        this._driver = value;
-    }
-
-    public get adapter(): any {
-        return this._adapter;
-    }
-
-    public get url(): string {
-        return this._url;
-    }
-    public set url(value: string) {
-        this._url = value;
-    }
-
-    
-    public get username(): string {
-        return this._username;
-    }
-    public set username(value: string) {
-        this._username = value;
-    }
-    
-    public get pasword(): string {
-        return this._pasword;
-    }
-    public set pasword(value: string) {
-        this._pasword = value;
-    }
-    
-    public get options(): any {
-        return this._options;
-    }
-    public set options(value: any) {
-        this._options = value;
-    }
 }

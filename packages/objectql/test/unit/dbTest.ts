@@ -7,18 +7,16 @@ describe('Test db', () => {
         let mySchema = new SteedosSchema({objects: {}, datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'}})
         mySchema.use(path.resolve(__dirname, "../../../standard-objects"))
 
-        mySchema.use(path.resolve(__dirname, "./load/meeting.object.yml"))
-
-        await mySchema.connect()
+        //await mySchema.connect()
   
-        let meeting = mySchema.getObject('meeting')
+        let users = mySchema.getObject('users')
 
-        await meeting.insert({_id: "test_meeting", name: "test"})
+        await users.insert({_id: "test_users", name: "test"}, "-1")
         
-        let result = await meeting.findOne('test_meeting', {fields: ['_id']})
-        expect(result._id).to.equal('test_meeting')
+        let result = await users.findOne('test_users', {fields: ['_id']}, "-1")
+        expect(result._id).to.equal('test_users')
 
-        await meeting.delete("test_meeting")
+        await users.delete("test_users", "-1")
 
     });
   });

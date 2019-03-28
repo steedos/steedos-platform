@@ -13,20 +13,17 @@ let steedosSchema = new objectql.SteedosSchema({
 steedosSchema.use(__dirname + "/../standard-objects");
 steedosSchema.use(__dirname + "/../../apps/crm/src");
 
-steedosSchema.connect().then(function(){
+// 生成graphql schema
+let graphqlSchema = steedosSchema.buildGraphQLSchema()
 
-    // 生成graphql schema
-    let graphqlSchema = steedosSchema.buildGraphQLSchema()
-
-    let express = require('express');
-    let app = express();
-    app.use(function(req, res, next){
-        //TODO 处理userId
-    })
-    app.use('/graphql', graphqlHTTP({
-        schema: graphqlSchema,
-        graphiql: true
-    }));
-    app.listen(process.env.PORT || 3000)
-
-});
+let express = require('express');
+let app = express();
+app.use(function(req, res, next){
+    //TODO 处理userId
+    next();
+})
+app.use('/graphql', graphqlHTTP({
+    schema: graphqlSchema,
+    graphiql: true
+}));
+app.listen(process.env.PORT || 3000)

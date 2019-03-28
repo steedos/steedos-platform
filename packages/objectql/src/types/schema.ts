@@ -2,7 +2,7 @@ import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
-import { SteedosIDType } from "./field_types";
+import { SteedosIDType } from ".";
 
 
 var util = require('../util')
@@ -31,7 +31,7 @@ export class SteedosSchema {
 
     getRoles(userId: SteedosIDType){
         if(this._getRoles){
-            return this._getRoles()
+            return this._getRoles(userId)
         }else{
             return ['admin']
         }
