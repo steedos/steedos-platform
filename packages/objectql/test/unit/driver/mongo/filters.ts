@@ -1,4 +1,4 @@
-import { SteedosMongoDriver } from "../../src/driver";
+import { SteedosMongoDriver } from "../../../../src/driver";
 import { expect } from 'chai';
 
 describe('filter records with simple filters', () => {
