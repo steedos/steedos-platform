@@ -9,7 +9,7 @@ import {AppManager, getObjectConfigManager, TriggerManager, FieldManager, Report
 
 import fs = require("fs");
 import path = require("path");
-import { SteedosSchema } from '../types';
+import { SteedosSchema } from '@steedos/objectql';
 
 var util = require("../util");
 

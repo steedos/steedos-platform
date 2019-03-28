@@ -1,8 +1,8 @@
+import { SteedosObjectType } from ".";
 import _ = require('underscore')
 
 abstract class SteedosObjectPermissionTypeProperties {
     name?: string
-    object_name: string
     allowRead?: boolean
     allowCreate?: boolean
     allowEdit?: boolean
@@ -23,15 +23,17 @@ export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissi
 export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProperties {
     private _name: string;
 
-    private _object_name: string;
-    
-    private properties: string[] = []
+    private _object: SteedosObjectType;
 
-    constructor(config: SteedosObjectPermissionTypeConfig) {
+    private properties: string[] = ['name']
+
+    constructor(name: string, object: SteedosObjectType, config: SteedosObjectPermissionTypeConfig) {
         super()
-        if (!config.name) {
+        if (!name) {
             throw new Error('name is required');
         }
+
+        this.object = object
 
         _.each(config, (value: any, key: string) => {
             this[key] = value
@@ -66,6 +68,7 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
             this.allowDelete = true;
             this.viewCompanyRecords = true;
         }
+        this.name = name
     }
 
     toConfig() {
@@ -83,10 +86,10 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
         this._name = value;
     }
 
-    public get object_name(): string {
-        return this._object_name;
+    public get object(): SteedosObjectType {
+        return this._object;
     }
-    public set object_name(value: string) {
-        this._object_name = value;
+    public set object(value: SteedosObjectType) {
+        this._object = value;
     }
 }
