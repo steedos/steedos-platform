@@ -117,7 +117,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 let object = steedosSchema.getObject(obj.name);
                 console.log('graphql.find: ');
                 //TODO userID
-                return object.find(selector, '-1');
+                return object.find(selector, context.userId);
             }
         }
     })
@@ -133,7 +133,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(type.name);
                 //TODO userID
-                return object.insert(data, '-1');
+                return object.insert(data, context.userId);
             }
         }
         rootMutationfields[objName + '_UPDATE_ONE'] = {
@@ -145,7 +145,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(type.name);
                 //TODO userID
-                return object.update(_id, data, '-1');
+                return object.update(_id, data, context.userId);
             }
         }
         rootMutationfields[objName + '_DELETE_ONE'] = {
@@ -156,7 +156,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(type.name);
                 //TODO userID
-                return object.delete(_id, '-1');
+                return object.delete(_id, context.userId);
             }
         }
     })
