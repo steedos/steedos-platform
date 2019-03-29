@@ -76,7 +76,15 @@ export class SteedosMongoDriver implements SteedosDriver {
         });
         let sort: JsonMap = undefined;
         if (options.sort && typeof options.sort === "string") {
-            sort = createQuery(`$orderby=${options.sort}`).sort;
+            let arraySort: string[] = options.sort.split(",").map((n) => { return n.trim(); });
+            let stringSort: string = "";
+            arraySort.forEach((n) => {
+                if (n) {
+                    stringSort += `${n},`
+                }
+            });
+            stringSort = stringSort.replace(/,$/g, "");
+            sort = createQuery(`$orderby=${stringSort}`).sort;
         }
         result.projection = projection;
         result.limit = options.top;
