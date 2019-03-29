@@ -1,6 +1,6 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index"
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
@@ -12,18 +12,25 @@ export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
     _collections: Dictionary<any>;
-    
-    constructor(config: SteedosDriverConfig){
+
+    constructor(config: SteedosDriverConfig) {
         this._collections = {};
         this._url = config.url;
     }
 
-    async connect(){
-        this._client = await MongoClient.connect(this._url, {useNewUrlParser: true})
+    async connect() {
+        if (!this._client) {
+            this._client = await MongoClient.connect(this._url, { useNewUrlParser: true });
+            return true;
+        }
     }
 
-    async disconnect(){
-        return await this._client.disconnect();
+    async disconnect() {
+        if (this._client) {
+            await this._client.disconnect();
+            this._client = null;
+            return true;
+        }
     }
 
     formatFiltersToDev(filters: SteedosQueryFilters) {
@@ -38,7 +45,7 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     /* TODO： */
     getMongoFilters(filters: SteedosQueryFilters): JsonMap {
-        if (_.isUndefined(filters)){
+        if (_.isUndefined(filters)) {
             return {}
         }
         if (_.isString(filters))
@@ -74,7 +81,8 @@ export class SteedosMongoDriver implements SteedosDriver {
         return this._collections[name];
     };
 
-    async find(tableName: string, query: SteedosQueryOptions){
+    async find(tableName: string, query: SteedosQueryOptions) {
+        this.connect();
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
@@ -85,6 +93,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
+        this.connect();
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
@@ -95,28 +104,35 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
+        this.connect();
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
 
-        let result = await collection.findOne({_id: id}, mongoOptions);
+        let result = await collection.findOne({ _id: id }, mongoOptions);
 
         return result;
     }
 
-    async insert(tableName: string, data: JsonMap){
-
+    async insert(tableName: string, data: JsonMap) {
+        this.connect();
+        data._id = data._id || new ObjectId().toHexString();
         let collection = this.collection(tableName);
-        return await collection.insert(data);
+        let result = await collection.insertOne(data);
+        return result.ops[0];
     }
 
-    async update(tableName: string, id: SteedosIDType, data: JsonMap){
+    async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+        this.connect();
         let collection = this.collection(tableName);
-        return await collection.upset({_id: id}, data)
+        let result = await collection.updateOne({ _id: id }, data);
+        return result.result.ok;
     }
 
-    async delete(tableName: string, id: SteedosIDType){
+    async delete(tableName: string, id: SteedosIDType) {
+        this.connect();
         let collection = this.collection(tableName);
-        return await collection.remove({_id: id})
+        let result = await collection.deleteOne({ _id: id })
+        return result.deletedCount;
     }
 
 }
