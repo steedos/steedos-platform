@@ -48,7 +48,47 @@ exports.loadObjects = (filePath: string) => {
         path.join(filePath, "*.object.js")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
-    console.log(matchedPaths)
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        results.push(json)
+    })
+    return results
+}
+
+exports.loadTriggers = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.trigger.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        results.push(json)
+    })
+    return results
+}
+
+exports.loadFields = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.field.yml"),
+        path.join(filePath, "*.field.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        results.push(json)
+    })
+    return results
+}
+
+exports.loadReports = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.report.yml"),
+        path.join(filePath, "*.report.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         results.push(json)

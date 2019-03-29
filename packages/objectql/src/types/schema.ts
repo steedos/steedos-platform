@@ -3,6 +3,8 @@ import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, Stee
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import { SteedosIDType } from ".";
+import { SteedosFieldTypeConfig } from "./field";
+import { SteedosListenerConfig } from "./listeners";
 
 
 var util = require('../util')
@@ -24,7 +26,7 @@ export class SteedosSchema {
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
 
-        if(config.getRoles && !_.isFunction(config.getRoles)){
+        if (config.getRoles && !_.isFunction(config.getRoles)) {
             throw new Error('getRoles must be a function')
         }
 
@@ -35,35 +37,78 @@ export class SteedosSchema {
         })
     }
 
-    async getRoles(userId: SteedosIDType){
-        if(this._getRoles){
+    async getRoles(userId: SteedosIDType) {
+        if (this._getRoles) {
             return await this._getRoles(userId)
-        }else{
+        } else {
             return ['admin']
         }
     }
 
-    setObjectPermission(object_name: string , object_permission: SteedosObjectPermissionTypeConfig){
+    setObjectPermission(object_name: string, object_permission: SteedosObjectPermissionTypeConfig) {
         let objectPermissions = this._object_permissions[object_name]
-        if(!objectPermissions){
+        if (!objectPermissions) {
             this._object_permissions[object_name] = {}
         }
         this._object_permissions[object_name][object_permission.name] = new SteedosObjectPermissionType(object_name, object_permission)
     }
 
-    getObjectPermissions(object_name: string): Dictionary<SteedosObjectPermissionType>{
+    getObjectPermissions(object_name: string): Dictionary<SteedosObjectPermissionType> {
         return this._object_permissions[object_name]
     }
 
-    async connect(){
+    async connect() {
         await this.getDataSource().connect()
     }
 
-    async use(filePath){
-       let jsons = util.loadObjects(filePath)
-       _.each(jsons, (json:SteedosObjectTypeConfig)=>{
+    async use(filePath) {
+        let objectJsons = util.loadObjects(filePath)
+        _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
             this.setObject(json.name, json)
-       })
+        })
+
+        let fieldJsons = util.loadFields(filePath)
+        _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
+            if (!json.object_name) {
+                throw new Error('missing attribute object_name')
+            }
+            let object = this.getObject(json.object_name);
+            if (object) {
+                object.setField(json.name, json)
+            } else {
+                throw new Error(`not find object: ${json.object_name}`);
+            }
+        })
+
+        let triggerJsons = util.loadTriggers(filePath)
+        _.each(triggerJsons, (json: SteedosListenerConfig) => {
+            if (!json.listenTo) {
+                throw new Error('missing attribute listenTo')
+            }
+
+            if(!_.isString(json.listenTo) && !_.isFunction(json.listenTo)){
+                throw new Error('listenTo must be a function or string')
+            }
+
+            let object_name = '';
+
+            if(_.isString(json.listenTo)){
+                object_name = json.listenTo
+            }else if(_.isFunction(json.listenTo)){
+                object_name = json.listenTo()
+            }
+            
+            let object = this.getObject(object_name);
+            if (object) {
+                object.setListener(json.name || '', json)
+            } else {
+                throw new Error(`not find object: ${object_name}`);
+            }
+        })
+
+        //TODO load reports
+
+        //TODO load actions
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
@@ -75,7 +120,7 @@ export class SteedosSchema {
         return this._objects[name]
     }
 
-    getObjects(){
+    getObjects() {
         return this._objects;
     }
 
@@ -91,7 +136,7 @@ export class SteedosSchema {
         return this._datasource
     }
 
-    buildGraphQLSchema(){
+    buildGraphQLSchema() {
         return buildGraphQLSchema(this);
     }
 }
