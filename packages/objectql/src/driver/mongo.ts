@@ -34,10 +34,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
     }
 
-    formatFiltersToDev(filters: SteedosQueryFilters) {
-        return filters;
-    }
-
     formatFiltersToMongoQuery(filters: any): JsonMap {
         let odataQuery: string = formatFiltersToODataQuery(filters)
         let query: JsonMap = createFilter(odataQuery)
@@ -55,14 +51,8 @@ export class SteedosMongoDriver implements SteedosDriver {
         return mongoFilters
     }
 
-    /* TODO： */
-    getMongoOptions(options: SteedosQueryOptions): JsonMap {
-        if (_.isUndefined(options)) {
-            return {};
-        }
-        let result: JsonMap = {};
-        let fields: string[] | string = options.fields;
-        if (typeof fields == "string"){
+    getMongoFieldsOptions(fields: string[] | string): JsonMap {
+        if (typeof fields == "string") {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
         }
         if (!(fields && fields.length)) {
@@ -70,13 +60,17 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
         let projection: JsonMap = {};
         (<string[]>fields).forEach((field) => {
-            if (field){
+            if (field) {
                 projection[field] = 1;
             }
         });
-        let sort: JsonMap = undefined;
-        if (options.sort && typeof options.sort === "string") {
-            let arraySort: string[] = options.sort.split(",").map((n) => { return n.trim(); });
+        return projection;
+    }
+
+    getMongoSortOptions(sort: string): JsonMap {
+        let result: JsonMap = undefined;
+        if (sort && typeof sort === "string") {
+            let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
             let stringSort: string = "";
             arraySort.forEach((n) => {
                 if (n) {
@@ -84,12 +78,23 @@ export class SteedosMongoDriver implements SteedosDriver {
                 }
             });
             stringSort = stringSort.replace(/,$/g, "");
-            sort = createQuery(`$orderby=${stringSort}`).sort;
+            result = createQuery(`$orderby=${stringSort}`).sort;
         }
+        return result;
+    }
+
+    /* TODO： */
+    getMongoOptions(options: SteedosQueryOptions): JsonMap {
+        if (_.isUndefined(options)) {
+            return {};
+        }
+        let result: JsonMap = {};
+        let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
+        let sort: JsonMap = this.getMongoSortOptions(options.sort);
         result.projection = projection;
+        result.sort = sort;
         result.limit = options.top;
         result.skip = options.skip;
-        result.sort = sort;
         return result;
     }
 

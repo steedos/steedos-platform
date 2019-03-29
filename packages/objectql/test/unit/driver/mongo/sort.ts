@@ -87,7 +87,7 @@ describe('fetch records with sort arguments as a string that comply with odata-v
         expect(result[3]._id).to.be.eq("cnpc1");
     });
 
-    it.only('multi sort error correction', async () => {
+    it('multi sort error correction', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();
