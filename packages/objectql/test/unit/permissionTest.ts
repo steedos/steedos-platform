@@ -3,25 +3,30 @@ import { SteedosSchema, SteedosIDType } from '../../src';
 var path = require('path')
 
 describe('Test Permission', () => {
-    it('guest: 权限测试', async () => {
-        
-        let mySchema = new SteedosSchema({
-            objects: {}, 
-            datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
-            getRoles: function(userId: SteedosIDType){
-                if(userId == '0'){
-                    return ['guest']
-                }
+    let mySchema = new SteedosSchema({
+        objects: {}, 
+        datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
+        getRoles: function(userId: SteedosIDType){
+            if(userId == '0'){
+                return ['guest']
+            }else if(userId == '1'){
+                return ['user']
+            }else if(userId == '2'){
+                return ['admin']
+            }else if(userId == '3'){
+                return ['user', 'admin']
             }
-        })
-        
-        mySchema.use(path.resolve(__dirname, "./load"))
-        // permission_test 的 guest role没有任何权限
-        let permissionTest = mySchema.getObject('permission_test')
+        }
+    })
+    
+    mySchema.use(path.resolve(__dirname, "./load"))
 
+    it('guest: 权限测试', async () => {
+        let userId = '0';
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
-        let userId = '0';
+        // permission_test 的 guest role没有任何权限
+        let permissionTest = mySchema.getObject('permission_test')
 
         try {
             await permissionTest.insert({_id: 'test', name: 'test'}, userId)
@@ -60,21 +65,9 @@ describe('Test Permission', () => {
     });
 
     it('user: 权限测试', async () => {
-        let mySchema = new SteedosSchema({
-            objects: {}, 
-            datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
-            getRoles: function(userId: SteedosIDType){
-                if(userId == '1'){
-                    return ['user']
-                }
-            }
-        })
-        
+        let userId = '1'
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
-        let userId = '1'
-
-        mySchema.use(path.resolve(__dirname, "./load"))
         // permission_test 的 user role 只有查看权限
         let permissionTest = mySchema.getObject('permission_test')
 
@@ -114,22 +107,9 @@ describe('Test Permission', () => {
     });
 
     it('admin: 权限测试', async () => {
-        let mySchema = new SteedosSchema({
-            objects: {}, 
-            datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
-            getRoles: function(userId: SteedosIDType){
-                if(userId == '2'){
-                    return ['admin']
-                }
-            }
-        })
-        mySchema.use(path.resolve(__dirname, "./load"))
-
+        let userId = '2'
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
-        let userId = '2'
-
-        mySchema.use(path.resolve(__dirname, "./load"))
         // permission_test 的 admin role 有所有权限
         let permissionTest = mySchema.getObject('permission_test')
 
@@ -170,22 +150,9 @@ describe('Test Permission', () => {
     });
 
     it('user && admin: 权限测试', async () => {
-        let mySchema = new SteedosSchema({
-            objects: {}, 
-            datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
-            getRoles: function(userId: SteedosIDType){
-                if(userId == '3'){
-                    return ['user', 'admin']
-                }
-            }
-        })
-        mySchema.use(path.resolve(__dirname, "./load"))
-
+        let userId = '3'
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
-        let userId = '3'
-
-        mySchema.use(path.resolve(__dirname, "./load"))
         // permission_test 的 user只有查看权限， admin 有所有权限
         let permissionTest = mySchema.getObject('permission_test')
 
