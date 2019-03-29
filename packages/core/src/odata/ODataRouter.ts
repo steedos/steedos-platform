@@ -2,8 +2,8 @@
 import { getCreator } from '../index';
 import { getODataManager } from './server';
 
-// import querystring = require('querystring');
-// import odataV4Mongodb = require('odata-v4-mongodb');
+import querystring = require('querystring');
+import odataV4Mongodb = require('odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express';
 
@@ -60,17 +60,17 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
     // }
 
     getODataManager().removeInvalidMethod(queryParams);
-    // let qs = decodeURIComponent(querystring.stringify(queryParams));
-    // if (qs) {
-    //   var createQuery = odataV4Mongodb.createQuery(qs);
-    // } else {
-    //   var createQuery: any = {
-    //     query: {},
-    //     sort: undefined,
-    //     projection: {},
-    //     includes: []
-    //   };
-    // }
+    let qs = decodeURIComponent(querystring.stringify(queryParams));
+    if (qs) {
+      var createQuery = odataV4Mongodb.createQuery(qs);
+    } else {
+      var createQuery: any = {
+        query: {},
+        sort: undefined,
+        projection: {},
+        includes: []
+      };
+    }
     // let permissions = getCreator().getObjectPermissions(spaceId, userId, key);
 
     // if (permissions.viewAllRecords || (permissions.viewCompanyRecords && getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, createQuery.query)) || (permissions.allowRead && userId)) {
@@ -220,11 +220,13 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       }
       let scannedCount = await collection.count({ filters: filters, fields: ['_id'] });
       if (entities) {
-        // getODataManager().dealWithExpand(createQuery, entities, key, spaceId);
+        entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId);
+        console.log('entities: ', entities);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = scannedCount;
         let entities_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
+        console.log('entities_OdataProperties: ', entities_OdataProperties)
         body['value'] = entities_OdataProperties;
         getODataManager().setHeaders(res);
         res.send(body);
