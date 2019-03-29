@@ -38,6 +38,7 @@ describe('fetch records width specific fields', () => {
         await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC" })
 
         let queryOptions = {
+            fields: []
         };
         let result = await mongo.find(tableName, queryOptions);
         console.log("fetch records width specific fields result:");

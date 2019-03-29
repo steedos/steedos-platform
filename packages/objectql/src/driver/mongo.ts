@@ -50,18 +50,17 @@ export class SteedosMongoDriver implements SteedosDriver {
     /* TODO： */
     getMongoOptions(options: SteedosQueryOptions): JsonMap {
         if (_.isUndefined(options)) {
-            return {}
-        }
-        let fields: string[] = options.fields;
-        if (_.isUndefined(fields)) {
-            return {}
+            return {};
         }
         let result: JsonMap = {};
-        let projection: JsonMap = {};
-        fields.forEach((field)=>{
-            projection[field] = 1;
-        });
-        result.projection = projection;
+        let fields: string[] = options.fields;
+        if (!_.isUndefined(fields)) {
+            let projection: JsonMap = {};
+            fields.forEach((field) => {
+                projection[field] = 1;
+            });
+            result.projection = projection;
+        }
         result.limit = options.top;
         result.skip = options.skip;
         result.sort = options.sort;
