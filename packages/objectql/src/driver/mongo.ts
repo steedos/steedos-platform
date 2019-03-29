@@ -54,13 +54,14 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
         let result: JsonMap = {};
         let fields: string[] = options.fields;
-        if (!_.isUndefined(fields)) {
-            let projection: JsonMap = {};
-            fields.forEach((field) => {
-                projection[field] = 1;
-            });
-            result.projection = projection;
+        if (!(fields && fields.length)) {
+            throw new Error("fields must not be undefined or empty");
         }
+        let projection: JsonMap = {};
+        fields.forEach((field) => {
+            projection[field] = 1;
+        });
+        result.projection = projection;
         result.limit = options.top;
         result.skip = options.skip;
         result.sort = options.sort;

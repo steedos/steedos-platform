@@ -30,24 +30,23 @@ describe('fetch records width specific fields', () => {
         expect(result[0].name).to.be.eq("ptr");
         expect(result[0].title).to.be.eq(undefined);
     });
-    it('fetch all fields', async () => {
+    it('fields must not be undefined or empty', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();
-        await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR" })
-        await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC" })
 
         let queryOptions = {
             fields: []
         };
-        let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records width specific fields result:");
-        console.log(result);
-
-        await mongo.delete(tableName, "ptr");
-        await mongo.delete(tableName, "cnpc");
-        expect(result).to.be.length(2);
-        expect(result[0].name).to.be.eq("ptr");
-        expect(result[0].title).to.be.eq("PTR");
+        let result = "";
+        try {
+            result = await mongo.find(tableName, queryOptions);
+            console.log("fetch records width specific fields result:");
+            console.log(result);
+        }
+        catch (ex) {
+            result = "error";
+        }
+        expect(result).to.be.eq("error");
     });
 });
