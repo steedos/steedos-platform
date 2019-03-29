@@ -25,7 +25,7 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
 
     private properties: string[] = ['name']
 
-    constructor(config: SteedosObjectPermissionTypeConfig) {
+    constructor(object_name: string, config: SteedosObjectPermissionTypeConfig) {
         super()
         if (!config.name) {
             throw new Error('name is required');
@@ -55,15 +55,17 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
             this.allowDelete = true;
             this.viewAllRecords = true;
         }
-        if (this.viewCompanyRecords) {
-            this.allowRead = true;
-        }
         if (this.modifyCompanyRecords) {
             this.allowRead = true;
             this.allowEdit = true;
             this.allowDelete = true;
             this.viewCompanyRecords = true;
         }
+        if (this.viewCompanyRecords) {
+            this.allowRead = true;
+        }
+
+        this.object_name = object_name
     }
 
     toConfig() {

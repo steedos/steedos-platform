@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType } from ".";
+import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
@@ -36,6 +36,7 @@ abstract class SteedosObjectProperties{
     fields?: Dictionary<SteedosFieldTypeConfig>
     listeners?: Dictionary<SteedosListenerConfig>
     list_views?: Dictionary<SteedosObjectListViewTypeConfig>
+    permissions?: Dictionary<SteedosObjectPermissionTypeConfig>
 }
 
 
@@ -44,6 +45,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     fields: Dictionary<SteedosFieldTypeConfig>
     actions?: Dictionary<SteedosActionType>
     listeners?: Dictionary<SteedosListenerConfig>
+    permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
 const _TRIGGERKEYS = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
@@ -77,6 +79,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this.setListView(name, list_view)
         })
 
+        _.each(config.permissions, (permission, name) => {
+            permission.name =name
+            this.setPermission(permission)
+        })
+
+        //TODO remove ; 目前为了兼容现有object的定义保留
+        _.each(config.permission_set, (permission, name) => {
+            permission.name =name
+            this.setPermission(permission)
+        })
+    }
+
+    setPermission(config: SteedosObjectPermissionTypeConfig){
+        this._schema.setObjectPermission(this._name, config)
     }
 
     setListener(listener_name: string, config: SteedosListenerConfig){
@@ -168,51 +184,141 @@ export class SteedosObjectType extends SteedosObjectProperties {
     getRepository() {
 
     }
+    
+    getObjectPermissions(){
+        return this._schema.getObjectPermissions(this._name)
+    }
 
-    async find(query: SteedosQueryOptions, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async getUserObjectPermission(userId: SteedosIDType){
+        let roles = await this.schema.getRoles(userId)
+        let objectPermissions = this.getObjectPermissions()
+
+        let userObjectPermission = {
+            allowRead: false,
+            allowCreate: false,
+            allowEdit: false,
+            allowDelete: false,
+            viewAllRecords: false,
+            modifyAllRecords: false,
+            viewCompanyRecords: false,
+            modifyCompanyRecords: false,
+            disabled_list_views: [],
+            disabled_actions: [],
+            unreadable_fields: [],
+            uneditable_fields: [],
+            unrelated_objects: []
+          }
+      
+          if(_.isEmpty(roles)){
+            throw new Error('not find user permission');
+          }
+          
+          roles.forEach((role)=>{
+            let rolePermission = objectPermissions[role]
+            if(rolePermission){
+                _.each(userObjectPermission, (v, k)=>{
+                    let _v = rolePermission[k]
+                    if(_.isBoolean(v)){
+                      if(v === false && _v === true){
+                        userObjectPermission[k] = _v
+                      }
+                    }else if(_.isArray(v) && _.isArray(_v)){
+                      userObjectPermission[k] = _.union(v, _v)
+                    }
+                  })
+            }
+          })
+          return userObjectPermission;
+    }
+
+    private async allowFind(userId: SteedosIDType){
+        if(!userId)
+            return true
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        if(userObjectPermission.allowRead){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    private async allowInsert(userId: SteedosIDType){
+        if(!userId)
+            return true
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        if(userObjectPermission.allowCreate){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    private async allowUpdate(userId: SteedosIDType){
+        if(!userId)
+            return true
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        if(userObjectPermission.allowEdit){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    private async allowDelete(userId: SteedosIDType){
+        if(!userId)
+            return true
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        if(userObjectPermission.allowDelete){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    async find(query: SteedosQueryOptions, userId?: SteedosIDType){
+        let allowFind = await this.allowFind(userId)
+        if(!allowFind){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().find(this.name, query)
     }
 
-    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
+        let allowFind = await this.allowFind(userId)
+        if(!allowFind){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().findOne(this.name,  id, query)
     }
 
-    async insert(doc: JsonMap, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async insert(doc: JsonMap, userId?: SteedosIDType){
+        let allowInsert = await this.allowInsert(userId)
+        if(!allowInsert){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().insert(this.name, doc)
     }
 
-    async update(id: SteedosIDType, doc: JsonMap, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
+        let allowUpdate = await this.allowUpdate(userId)
+        if(!allowUpdate){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().update(this.name,  id, doc)
     }
 
-    async delete(id: SteedosIDType, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async delete(id: SteedosIDType, userId?: SteedosIDType){
+        let allowDelete = await this.allowDelete(userId)
+        if(!allowDelete){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().delete(this.name,  id)
     }
 
-    async count(query: SteedosQueryOptions, userId?: string){
-        let roles = this.schema.getRoles(userId)
-        if(roles){
-            //TODO 权限
+    async count(query: SteedosQueryOptions, userId?: SteedosIDType){
+        let allowFind = await this.allowFind(userId)
+        if(!allowFind){
+            throw new Error('not find permission')
         }
         return await this.schema.getDataSource().count(this.name, query)
     }

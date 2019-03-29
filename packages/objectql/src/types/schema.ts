@@ -24,25 +24,35 @@ export class SteedosSchema {
     constructor(config: SteedosSchemaConfig) {
         this.setDataSource(config.datasource)
 
+        if(config.getRoles && !_.isFunction(config.getRoles)){
+            throw new Error('getRoles must be a function')
+        }
+
+        this._getRoles = config.getRoles
+
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
         })
     }
 
-    getRoles(userId: SteedosIDType){
+    async getRoles(userId: SteedosIDType){
         if(this._getRoles){
-            return this._getRoles(userId)
+            return await this._getRoles(userId)
         }else{
             return ['admin']
         }
     }
 
-    setObjectPermission(object_permission: SteedosObjectPermissionTypeConfig){
-        let objectPermissions = this._object_permissions[object_permission.object_name]
+    setObjectPermission(object_name: string , object_permission: SteedosObjectPermissionTypeConfig){
+        let objectPermissions = this._object_permissions[object_name]
         if(!objectPermissions){
-            this._object_permissions[object_permission.object_name] = {}
+            this._object_permissions[object_name] = {}
         }
-        this._object_permissions[object_permission.object_name][object_permission.name] = new SteedosObjectPermissionType(object_permission)
+        this._object_permissions[object_name][object_permission.name] = new SteedosObjectPermissionType(object_name, object_permission)
+    }
+
+    getObjectPermissions(object_name: string): Dictionary<SteedosObjectPermissionType>{
+        return this._object_permissions[object_name]
     }
 
     async connect(){
