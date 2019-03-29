@@ -1,17 +1,17 @@
 var Steedos = require('@steedos/objectql')
 
-class MeetingTriggers extends Steedos.Trigger{
+module.exports = {
 
-  listenTo(){
-    return 'meeting'
-  }
+  name: 'clashRemind',
 
-  clashRemind(_id,room,start,end){
+  listenTo: 'meeting',
+
+  clashRemind: function(_id,room,start,end){
     var meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,$or: [{start:{$lte:start},end:{$gt:start}},{start:{$lt:end},end:{$gte:end}},{start:{$gte:start},end:{$lte:end}}]}).fetch()
     return meetings.length
-  }
+  },
 
-  beforeInsert(userId, doc){
+  beforeInsert: function(userId, doc){
     var clashs;
 
     if (doc.end <= doc.start) {
@@ -23,9 +23,9 @@ class MeetingTriggers extends Steedos.Trigger{
     if (clashs) {
         throw new Meteor.Error(500, "该时间段的此会议室已被占用");
     }
-  }
+  },
 
-  beforeUpdate(userId, doc, fieldNames, modifier, options){
+  beforeUpdate: function(userId, doc, fieldNames, modifier, options){
     var clashs, end, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, room, start;
 
     if ((modifier != null ? (ref = modifier.$set) != null ? ref.start : void 0 : void 0) || (modifier != null ? (ref1 = modifier.$set) != null ? ref1.end : void 0 : void 0)) {
@@ -57,7 +57,4 @@ class MeetingTriggers extends Steedos.Trigger{
       throw new Meteor.Error(500, "该时间段的此会议室已被占用");
     }
   }
-
 }
-
-module.exports = MeetingTriggers
