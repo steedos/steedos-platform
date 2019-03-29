@@ -113,55 +113,43 @@ export class ODataManager {
   }
 
   async dealWithExpand(createQuery: any, entities: Array<any>, key: string, spaceId: string) {
-    console.log('createQuery: ', createQuery)
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
-    console.log('createQuery.includes: ', createQuery.includes)
     let obj = steedosSchema.getObject(key);
 
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
       let field = obj.fields[navigationProperty].toConfig();
-      console.log('field: ', field)
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
-        console.log(1)
         if (_.isFunction(field.reference_to)) {
           field.reference_to = field.reference_to();
         }
         if (field.reference_to) {
-          console.log(2)
           let queryOptions = { fields: [] };
           if (createQuery.includes[i].projection) {
             queryOptions.fields = _.keys(createQuery.includes[i].projection);
           }
 
           if (_.isString(field.reference_to)) {
-            console.log(3)
             let ref: any;
             let referenceToCollection = steedosSchema.getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = steedosSchema.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
             // _.each(entities, async function (entity, idx) {
             for (let idx = 0; idx < entities.length; idx++) {
-              console.log(4)
               if (entities[idx][navigationProperty]) {
-                console.log(5)
                 if (field.multiple) {
-                  console.log(6)
                   let originalData = _.clone(entities[idx][navigationProperty]);
                   let filters = [];
                   _.each(entities[idx][navigationProperty], function (f) {
                     filters.push(`(_id eq '${f}')`);
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
-                  console.log(7)
-                  console.log('multiQuery: ', multiQuery)
                   entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery);
                   if (!entities[idx][navigationProperty].length) {
                     entities[idx][navigationProperty] = originalData;
                   }
                   entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], originalData);
-                  console.log('entities[idx][navigationProperty]: ', entities[idx][navigationProperty])
                   entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
                     o['reference_to.o'] = referenceToCollection._name;
                     o['reference_to._o'] = field.reference_to;
