@@ -20,7 +20,7 @@ export type SteedosQueryOptions = {
     readonly skip?: number;
 
     /**
-     * Query options for orderby, the sort of data for fetch
+     * Query options for sort, the sort of data for fetch
      */
     readonly sort?: string;
     

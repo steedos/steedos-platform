@@ -6,6 +6,7 @@ import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter } from 'odata-v4-mongodb';
+import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 
 export class SteedosMongoDriver implements SteedosDriver {
@@ -73,10 +74,14 @@ export class SteedosMongoDriver implements SteedosDriver {
                 projection[field] = 1;
             }
         });
+        let sort: JsonMap = undefined;
+        if (options.sort && typeof options.sort === "string") {
+            sort = createQuery(`$orderby=${options.sort}`).sort;
+        }
         result.projection = projection;
         result.limit = options.top;
         result.skip = options.skip;
-        result.sort = options.sort;
+        result.sort = sort;
         return result;
     }
 
