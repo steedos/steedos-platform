@@ -60,13 +60,18 @@ export class SteedosMongoDriver implements SteedosDriver {
             return {};
         }
         let result: JsonMap = {};
-        let fields: string[] = options.fields;
+        let fields: string[] | string = options.fields;
+        if (typeof fields == "string"){
+            fields = (<string>fields).split(",").map((n) => { return n.trim(); });
+        }
         if (!(fields && fields.length)) {
             throw new Error("fields must not be undefined or empty");
         }
         let projection: JsonMap = {};
-        fields.forEach((field) => {
-            projection[field] = 1;
+        (<string[]>fields).forEach((field) => {
+            if (field){
+                projection[field] = 1;
+            }
         });
         result.projection = projection;
         result.limit = options.top;

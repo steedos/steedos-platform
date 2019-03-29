@@ -10,7 +10,7 @@ describe('fetch records width specific fields', () => {
         await mongo.collection(tableName).deleteMany()
     });
 
-    it('fetch only some specific fields', async () => {
+    it('fields arguments is a array', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();
@@ -29,6 +29,28 @@ describe('fetch records width specific fields', () => {
         expect(result).to.be.length(2);
         expect(result[0].name).to.be.eq("ptr");
         expect(result[0].title).to.be.eq(undefined);
+    });
+
+    it('fields arguments is a string', async () => {
+
+        let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
+        await mongo.connect();
+        await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR", tag: "one" })
+        await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" })
+
+        let queryOptions = {
+            fields: "name, title, "
+        };
+        let result = await mongo.find(tableName, queryOptions);
+        console.log("fetch records width specific fields result:");
+        console.log(result);
+
+        await mongo.delete(tableName, "ptr");
+        await mongo.delete(tableName, "cnpc");
+        expect(result).to.be.length(2);
+        expect(result[0].name).to.be.eq("ptr");
+        expect(result[0].title).to.be.eq("PTR");
+        expect(result[0].tag).to.be.eq(undefined);
     });
     it('fields must not be undefined or empty', async () => {
 

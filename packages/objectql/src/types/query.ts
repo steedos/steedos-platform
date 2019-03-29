@@ -5,7 +5,7 @@ export type SteedosQueryFilters = any
  */
 export type SteedosQueryOptions = {
 
-    readonly fields: Array<string>;
+    readonly fields: Array<string> | string;
 
     readonly filters?: SteedosQueryFilters;
 
