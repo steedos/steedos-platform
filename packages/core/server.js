@@ -30,24 +30,21 @@ let steedosSchema = new SteedosSchema({
 steedosSchema.use(__dirname + "/../standard-objects");
 steedosSchema.use(__dirname + "/../../apps/crm/src");
 
-steedosSchema.connect().then(function(){
 
-    // 生成graphql schema
-    let graphqlSchema = steedosSchema.buildGraphQLSchema()
+// 生成graphql schema
+let graphqlSchema = steedosSchema.buildGraphQLSchema()
 
-    let express = require('express');
-    let app = express();
+let express = require('express');
+let app = express();
 
-    app.use(function(req, res, next){
-        //TODO 处理userId
-        // req.userId = '5199da558e296a4ba0000001'
-        next();
-    })
+app.use(function(req, res, next){
+    //TODO 处理userId
+    // req.userId = '5199da558e296a4ba0000001'
+    next();
+})
 
-    app.use('/graphql', graphqlHTTP({
-        schema: graphqlSchema,
-        graphiql: true
-    }));
-    app.listen(process.env.PORT || 3000)
-
-});
+app.use('/graphql', graphqlHTTP({
+    schema: graphqlSchema,
+    graphiql: true
+}));
+app.listen(process.env.PORT || 3000)
