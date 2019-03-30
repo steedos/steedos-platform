@@ -135,7 +135,7 @@ export class ODataManager {
             let ref: any;
             let referenceToCollection = steedosSchema.getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = steedosSchema.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
-            // _.each(entities, async function (entity, idx) {
+            queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
             for (let idx = 0; idx < entities.length; idx++) {
               if (entities[idx][navigationProperty]) {
                 if (field.multiple) {
@@ -178,6 +178,9 @@ export class ODataManager {
                   queryOptions.fields.push(_ro_NAME_FIELD_KEY);
                 }
                 let referenceToCollection = steedosSchema.getObject(entities[idx][navigationProperty].o);
+                if (queryOptions.fields.length == 0) {
+                  queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
+                }
                 if (referenceToCollection) {
                   if (field.multiple) {
                     let _ids = _.clone(entities[idx][navigationProperty].ids);

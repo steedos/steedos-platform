@@ -339,7 +339,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           };
         }
 
-        let entity = await collection.findOne(recordId, { fields: [] });
+        let entity = await collection.findOne(recordId, { fields: _.keys(collection.toConfig().fields) });
         let entities = [];
         if (entity) {
           let isAllowed = true;

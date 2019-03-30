@@ -54,9 +54,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
-                    console.log('graphql.reference_to: ' + reference_to + "," + source[info.fieldName]);
-                    //TODO userID
-                    let record = await object.findOne(source[info.fieldName], { fields: _.keys(object.toConfig().fields) }, '-1');
+                    let record = await object.findOne(source[info.fieldName], { fields: _.keys(object.toConfig().fields) }, context.userId);
                     return record;
                 }
             };
@@ -68,11 +66,10 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                     _.each(source[info.fieldName], function (f) {
                         filters.push(`(_id eq '${f}')`);
                     })
-                    //TODO userID
                     return await object.find({
                         filters: filters.join(' or '),
                         fields: _.keys(object.toConfig().fields)
-                    }, '-1');
+                    }, context.userId);
                 }
             }
         }
@@ -118,8 +115,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 if (!selector.fields) {
                     selector.fields = _.keys(object.toConfig().fields);
                 }
-                console.log('graphql.find: ');
-                //TODO userID
+                console.log('context.userId: ', context.userId);
                 return object.find(selector, context.userId);
             }
         }
@@ -135,7 +131,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 var data = args['data'];
                 data._id = data._id || new ObjectId().toHexString();
                 let object = steedosSchema.getObject(type.name);
-                //TODO userID
                 return object.insert(data, context.userId);
             }
         }
@@ -147,7 +142,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 let data = args['data'];
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(type.name);
-                //TODO userID
                 return object.update(_id, data, context.userId);
             }
         }
@@ -158,7 +152,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema 
                 console.log('args: ', args);
                 let _id = args['_id'];
                 let object = steedosSchema.getObject(type.name);
-                //TODO userID
                 return object.delete(_id, context.userId);
             }
         }
