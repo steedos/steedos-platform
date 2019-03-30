@@ -1,0 +1,13 @@
+{
+  "name": "@steedos/auth0",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Jack Zhuang",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "auth0-js": "^9.10.1",
+    "auth0-lock": "^11.14.1",
+    "express": "^4.16.4"
+  }
+}
