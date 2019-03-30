@@ -7,9 +7,9 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/steedos/auth0/1.0.0
 info:
-  description: Partial of Auth0 for login
+  description: 
   version: "1.0.0"
-  title: Auth0 Server API
+  title: Auth0 Provider
   contact:
     email: zhuangjianguo@hotoa.com
   license:
@@ -59,9 +59,32 @@ paths:
                     type: string
                   
         '400':
-          description: bad input parameter
+          description: login failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          examples:
+            invalid_user_password:
+              application/json:
+                name: ValidationError
+                code: invalid_user_password
+                description: Wrong email or password.
+                statusCode: 400
+
 components:
   schemas:
+    Error: 
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        desription:
+          type: string
+        statusCode: 
+          type: string
     User:
       type: object
       required:
