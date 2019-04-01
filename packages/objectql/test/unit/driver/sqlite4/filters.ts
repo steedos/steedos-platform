@@ -5,7 +5,7 @@ let databaseUrl = "./sqlite-test.db";
 // let databaseUrl = ':memory:';
 let tableName = "TestFiltersForSqlite4";
 
-describe.only('filters for sqlite3 database', () => {
+describe('filters for sqlite3 database', () => {
     before(async () => {
         let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await sqlite3.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
