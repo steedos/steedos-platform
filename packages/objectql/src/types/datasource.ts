@@ -3,8 +3,10 @@ import { SteedosDriver, SteedosMongoDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
-import { SteedosIDType } from '.';
+import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosFieldTypeConfig, SteedosListenerConfig } from '.';
 import { SteedosDriverConfig } from '../driver';
+
+var util = require('../util')
 
 export type SteedosDataSourceTypeConfig = {
     driver: string | SteedosDriver
@@ -12,6 +14,8 @@ export type SteedosDataSourceTypeConfig = {
     username?: string
     pasword?: string
     options?: any
+    objects?: Dictionary<SteedosObjectTypeConfig>
+    objectFiles?: string[]
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -21,16 +25,31 @@ export class SteedosDataSourceType implements Dictionary {
     private _username?: string;
     private _pasword?: string;
     private _options?: any;
-
     private _isConnected: boolean;
+    private _schema: SteedosSchema;
+    private _objects: Dictionary<SteedosObjectType> = {};
     
+    getObjects(){
+        return this._objects
+    }
 
-    constructor(config: SteedosDataSourceTypeConfig) {
+    getObject(name: string) {
+        return this._objects[name]
+    }
+
+    setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
+        let object = new SteedosObjectType(object_name, this, objectConfig)
+        this._objects[object_name] = object;
+        this._schema.setObject(object_name, object)
+    }
+
+    constructor(config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
         this._isConnected = false;
         this._url = config.url
         this._username = config.username
         this._pasword = config.pasword
         this._options = config.options
+        this._schema = schema
 
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
@@ -46,6 +65,14 @@ export class SteedosDataSourceType implements Dictionary {
         }else{
             this._adapter = config.driver
         }
+
+        _.each(config.objects, (object, object_name) => {
+            this.setObject(object_name, object)
+        })
+
+        _.each(config.objectFiles, (objectFiles)=>{
+            this.use(objectFiles)
+        })
     }
 
     async connect(){
@@ -83,6 +110,61 @@ export class SteedosDataSourceType implements Dictionary {
     async count(tableName: string, query: SteedosQueryOptions){
         await this.connect();
         return await this._adapter.count(tableName, query)
+    }
+
+    public get schema(): SteedosSchema {
+        return this._schema;
+    }
+
+    async use(filePath) {
+        console.log('use', filePath);
+        let objectJsons = util.loadObjects(filePath)
+        _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
+            this.setObject(json.name, json)
+        })
+
+        let fieldJsons = util.loadFields(filePath)
+        _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
+            if (!json.object_name) {
+                throw new Error('missing attribute object_name')
+            }
+            let object = this.getObject(json.object_name);
+            if (object) {
+                object.setField(json.name, json)
+            } else {
+                throw new Error(`not find object: ${json.object_name}`);
+            }
+        })
+
+        let triggerJsons = util.loadTriggers(filePath)
+        _.each(triggerJsons, (json: SteedosListenerConfig) => {
+            if (!json.listenTo) {
+                throw new Error('missing attribute listenTo')
+            }
+
+            if(!_.isString(json.listenTo) && !_.isFunction(json.listenTo)){
+                throw new Error('listenTo must be a function or string')
+            }
+
+            let object_name = '';
+
+            if(_.isString(json.listenTo)){
+                object_name = json.listenTo
+            }else if(_.isFunction(json.listenTo)){
+                object_name = json.listenTo()
+            }
+            
+            let object = this.getObject(object_name);
+            if (object) {
+                object.setListener(json.name || '', json)
+            } else {
+                throw new Error(`not find object: ${object_name}`);
+            }
+        })
+
+        //TODO load reports
+
+        //TODO load actions
     }
 
 }

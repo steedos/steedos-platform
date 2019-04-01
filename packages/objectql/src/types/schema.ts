@@ -1,39 +1,38 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosObjectTypeConfig, SteedosDataSourceTypeConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosDataSourceTypeConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import { SteedosIDType } from ".";
-import { SteedosFieldTypeConfig } from "./field";
-import { SteedosListenerConfig } from "./listeners";
-
-
-var util = require('../util')
 
 export type SteedosSchemaConfig = {
-    objects: Dictionary<SteedosObjectTypeConfig>
-    datasource: SteedosDataSourceTypeConfig,
+    datasources: Dictionary<SteedosDataSourceTypeConfig>,
     roles?: string[],
-    object_permissions?: Dictionary<SteedosObjectPermissionTypeConfig>,
+    object_permissions?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>,
     getRoles?: Function
 }
 
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
-    private _datasource: SteedosDataSourceType;
+    private _datasources: Dictionary<SteedosDataSourceType> = {};
     private _object_permissions: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
     private _getRoles: Function;
 
     constructor(config: SteedosSchemaConfig) {
-        this.setDataSource(config.datasource)
 
         if (config.getRoles && !_.isFunction(config.getRoles)) {
             throw new Error('getRoles must be a function')
         }
 
         this._getRoles = config.getRoles
+        _.each(config.datasources, (datasource, datasource_name) => {
+            this.setDataSource(datasource_name, datasource)
+        })
 
-        _.each(config.objects, (object, object_name) => {
-            this.setObject(object_name, object)
+        _.each(config.object_permissions, (object_permissions, object_name) => {
+            _.each(object_permissions, (object_permission, object_permission_name)=>{
+                object_permission.name = object_permission_name
+                this.setObjectPermission(object_name, object_permission)
+            })
         })
     }
 
@@ -57,63 +56,8 @@ export class SteedosSchema {
         return this._object_permissions[object_name]
     }
 
-    async connect() {
-        await this.getDataSource().connect()
-    }
-
-    async use(filePath) {
-        let objectJsons = util.loadObjects(filePath)
-        _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-            this.setObject(json.name, json)
-        })
-
-        let fieldJsons = util.loadFields(filePath)
-        _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
-            if (!json.object_name) {
-                throw new Error('missing attribute object_name')
-            }
-            let object = this.getObject(json.object_name);
-            if (object) {
-                object.setField(json.name, json)
-            } else {
-                throw new Error(`not find object: ${json.object_name}`);
-            }
-        })
-
-        let triggerJsons = util.loadTriggers(filePath)
-        _.each(triggerJsons, (json: SteedosListenerConfig) => {
-            if (!json.listenTo) {
-                throw new Error('missing attribute listenTo')
-            }
-
-            if(!_.isString(json.listenTo) && !_.isFunction(json.listenTo)){
-                throw new Error('listenTo must be a function or string')
-            }
-
-            let object_name = '';
-
-            if(_.isString(json.listenTo)){
-                object_name = json.listenTo
-            }else if(_.isFunction(json.listenTo)){
-                object_name = json.listenTo()
-            }
-            
-            let object = this.getObject(object_name);
-            if (object) {
-                object.setListener(json.name || '', json)
-            } else {
-                throw new Error(`not find object: ${object_name}`);
-            }
-        })
-
-        //TODO load reports
-
-        //TODO load actions
-    }
-
-    setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        let object = new SteedosObjectType(object_name, this, objectConfig)
-        this._objects[object_name] = object;
+    setObject(name: string , object: SteedosObjectType){
+        this._objects[name] = object
     }
 
     getObject(name: string) {
@@ -128,12 +72,16 @@ export class SteedosSchema {
         delete this._objects[name]
     }
 
-    setDataSource(datasourceConfig: SteedosDataSourceTypeConfig) {
-        this._datasource = new SteedosDataSourceType(datasourceConfig)
+    setDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
+        this._datasources[datasource_name] = new SteedosDataSourceType(datasourceConfig, this)
     }
 
-    getDataSource() {
-        return this._datasource
+    getDataSource(datasource_name: string) {
+        return this._datasources[datasource_name]
+    }
+
+    getDataSources(){
+        return this._datasources
     }
 
     buildGraphQLSchema() {
