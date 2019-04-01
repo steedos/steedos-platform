@@ -2,6 +2,8 @@ var objectql = require("@steedos/objectql")
 var _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
 
+// const schemaConfig = require(process.cwd() + '/steedos.config.js')
+
 let steedosSchema = new objectql.SteedosSchema({
     datasources: {
         localMongo: {
