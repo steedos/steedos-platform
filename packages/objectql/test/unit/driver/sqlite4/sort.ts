@@ -6,7 +6,7 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestSortForSqlite4";
 
-describe.only('fetch records with sort arguments as a string that comply with odata-v4 protocol', () => {
+describe('fetch records for sqlite4 with sort arguments as a string that comply with odata-v4 protocol', () => {
     before(async () => {
         let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await sqlite3.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
@@ -128,24 +128,4 @@ describe.only('fetch records with sort arguments as a string that comply with od
         expect(result[2].id).to.be.eq("cnpc2");
         expect(result[3].id).to.be.eq("cnpc1");
     });
-
-    // it('filter records with filters', async () => {
-
-    //     let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-    //     await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
-    //     await sqlite3.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
-
-    //     let queryOptions = {
-    //         fields: ["id", "name"],
-    //         filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
-    //     };
-    //     let result = await sqlite3.find(tableName, queryOptions);
-    //     console.log("filter records with simple filters result:");
-    //     console.log(result);
-
-    //     await sqlite3.delete(tableName, "ptr");
-    //     await sqlite3.delete(tableName, "cnpc");
-    //     expect(result).to.be.length(1);
-
-    // });
 });

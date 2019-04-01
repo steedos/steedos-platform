@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 let tableName = "mongo-driver-test-sort";
 
-describe('fetch records with sort arguments as a string that comply with odata-v4 protocol', () => {
+describe('fetch records for mongodb with sort arguments as a string that comply with odata-v4 protocol', () => {
     before(async ()=>{
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();
