@@ -149,8 +149,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     //TODO:
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
-        let sql = `select ${projection} from ${tableName} where id = '${id}'`;
-        return await this.get(sql);
+        return await this.get(`select ${projection} from ${tableName} where id=?;`, id);
     }
 
     async run(sql: string, param?: any) {
@@ -197,22 +196,25 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     async insert(tableName: string, data: JsonMap) {
         let fields: string = Object.keys(data).join(",");
-        let values: string = Object.values(data).map((n)=>{return `'${n}'`;}).join(",");
+        let placeholders: string = Object.keys(data).map((n) => { return `?`; }).join(",");
+        let values: any[] = Object.values(data);
 
-        return await this.run(`INSERT INTO ${tableName}(${fields}) VALUES(${values})`);
+        return await this.run(`INSERT INTO ${tableName}(${fields}) VALUES(${placeholders})`, values);
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
         let fields: any[] = Object.keys(data);
-        let values: any[] = Object.values(data).map((n) => { return `'${n}'`; });
-        let sets: string = fields.map((n,i)=>{
-            return `${n}=${values[i]}`;
+        let values: any[] = Object.values(data);
+        let sets: string = fields.map((n)=>{
+            return `${n}=?`;
         }).join(",");
 
-        return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id='${id}';`);
+        values.push(id);
+
+        return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id=?;`, values);
     }
 
     async delete(tableName: string, id: SteedosIDType) {
-        return await this.run(`DELETE FROM ${tableName} WHERE id='${id}';`);
+        return await this.run(`DELETE FROM ${tableName} WHERE id=?;`, id);
     }
 }
