@@ -28,6 +28,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _isConnected: boolean;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
+    private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     
     getObjects(){
         return this._objects
@@ -37,8 +38,13 @@ export class SteedosDataSourceType implements Dictionary {
         return this._objects[name]
     }
 
+    getObjectsConfig(){
+        return this._objectsConfig;
+    }
+
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
         let object = new SteedosObjectType(object_name, this, objectConfig)
+        this._objectsConfig[object_name] = objectConfig;
         this._objects[object_name] = object;
         this._schema.setObject(object_name, object)
     }
