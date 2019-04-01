@@ -9,7 +9,7 @@ import { SteedosDataSourceType } from "./datasource";
 abstract class SteedosObjectProperties{
     name?: string
     // extend?: string
-    table_name?: string
+    tableName?: string
     label?: string
     icon?: string
     enable_search?: boolean
@@ -62,7 +62,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _listeners: Dictionary<SteedosListenerConfig> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
-    private _table_name: string;
+    private _tableName: string;
 
     constructor(object_name: string, datasource: SteedosDataSourceType, config: SteedosObjectTypeConfig) {
         super();
@@ -74,10 +74,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set table_name');
         }
 
-        if(config.table_name){
-            this._table_name = config.table_name
+        if(config.tableName){
+            this._tableName = config.tableName
         }else{
-            this._table_name = this._name
+            this._tableName = this._name
         }
 
         _.each(config.fields, (field, field_name) => {
@@ -303,7 +303,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowFind){
             throw new Error('not find permission')
         }
-        return await this._datasource.findOne(this.table_name,  id, query)
+        return await this._datasource.findOne(this.tableName,  id, query)
     }
 
     async insert(doc: JsonMap, userId?: SteedosIDType){
@@ -311,7 +311,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowInsert){
             throw new Error('not find permission')
         }
-        return await this._datasource.insert(this.table_name, doc)
+        return await this._datasource.insert(this.tableName, doc)
     }
 
     async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
@@ -319,7 +319,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowUpdate){
             throw new Error('not find permission')
         }
-        return await this._datasource.update(this.table_name,  id, doc)
+        return await this._datasource.update(this.tableName,  id, doc)
     }
 
     async delete(id: SteedosIDType, userId?: SteedosIDType){
@@ -327,7 +327,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowDelete){
             throw new Error('not find permission')
         }
-        return await this._datasource.delete(this.table_name,  id)
+        return await this._datasource.delete(this.tableName,  id)
     }
 
     async count(query: SteedosQueryOptions, userId?: SteedosIDType){
@@ -335,7 +335,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowFind){
             throw new Error('not find permission')
         }
-        return await this._datasource.count(this.table_name, query)
+        return await this._datasource.count(this.tableName, query)
     }
     
 
@@ -371,7 +371,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._list_views;
     }
 
-    public get table_name(): string {
-        return this._table_name;
+    public get tableName(): string {
+        return this.tableName;
     }
 }

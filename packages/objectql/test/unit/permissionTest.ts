@@ -12,7 +12,7 @@ describe('Test Permission', () => {
                 objects: {
                     test2: {
                         label: 'Test2',
-                        table_name: 'test2.cccccc',
+                        tableName: 'test2.cccccc',
                         fields: {
                             name: {
                                 label: '名称',
