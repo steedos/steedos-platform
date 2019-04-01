@@ -188,13 +188,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     }
     
-    getObjectPermissions(){
+    getObjectRolesPermission(){
         return this._schema.getObjectPermissions(this._name)
     }
 
     async getUserObjectPermission(userId: SteedosIDType){
         let roles = await this.schema.getRoles(userId)
-        let objectPermissions = this.getObjectPermissions()
+        let objectRolesPermission = this.getObjectRolesPermission()
 
         let userObjectPermission = {
             allowRead: false,
@@ -217,7 +217,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
           }
           
           roles.forEach((role)=>{
-            let rolePermission = objectPermissions[role]
+            let rolePermission = objectRolesPermission[role]
             if(rolePermission){
                 _.each(userObjectPermission, (v, k)=>{
                     let _v = rolePermission[k]
