@@ -1,5 +1,5 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosDataSourceTypeConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from ".";
+import { SteedosObjectType, SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import { SteedosIDType } from ".";
@@ -7,14 +7,12 @@ import { SteedosIDType } from ".";
 export type SteedosSchemaConfig = {
     datasources: Dictionary<SteedosDataSourceTypeConfig>,
     roles?: string[],
-    object_permissions?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>,
     getRoles?: Function
 }
 
 export class SteedosSchema {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    private _object_permissions: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
     private _getRoles: Function;
 
     constructor(config: SteedosSchemaConfig) {
@@ -27,13 +25,6 @@ export class SteedosSchema {
         _.each(config.datasources, (datasource, datasource_name) => {
             this.setDataSource(datasource_name, datasource)
         })
-
-        _.each(config.object_permissions, (object_permissions, object_name) => {
-            _.each(object_permissions, (object_permission, object_permission_name)=>{
-                object_permission.name = object_permission_name
-                this.setObjectPermission(object_name, object_permission)
-            })
-        })
     }
 
     async getRoles(userId: SteedosIDType) {
@@ -42,18 +33,6 @@ export class SteedosSchema {
         } else {
             return ['admin']
         }
-    }
-
-    setObjectPermission(object_name: string, object_permission: SteedosObjectPermissionTypeConfig) {
-        let objectPermissions = this._object_permissions[object_name]
-        if (!objectPermissions) {
-            this._object_permissions[object_name] = {}
-        }
-        this._object_permissions[object_name][object_permission.name] = new SteedosObjectPermissionType(object_name, object_permission)
-    }
-
-    getObjectPermissions(object_name: string): Dictionary<SteedosObjectPermissionType> {
-        return this._object_permissions[object_name]
     }
 
     setObject(name: string , object: SteedosObjectType){

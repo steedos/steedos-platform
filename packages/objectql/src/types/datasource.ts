@@ -3,7 +3,7 @@ import { SteedosDriver, SteedosMongoDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
-import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosFieldTypeConfig, SteedosListenerConfig } from '.';
+import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosFieldTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from '.';
 import { SteedosDriverConfig } from '../driver';
 
 var util = require('../util')
@@ -16,6 +16,7 @@ export type SteedosDataSourceTypeConfig = {
     options?: any
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
+    objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -29,6 +30,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
+    private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
     
     getObjects(){
         return this._objects
@@ -79,6 +81,25 @@ export class SteedosDataSourceType implements Dictionary {
         _.each(config.objectFiles, (objectFiles)=>{
             this.use(objectFiles)
         })
+
+        _.each(config.objectsRolesPermission, (objectRolesPermission, object_name) => {
+            _.each(objectRolesPermission, (objectRolePermission, role_name)=>{
+                objectRolePermission.name = role_name
+                this.setObjectPermission(object_name, objectRolePermission)
+            })
+        })
+    }
+
+    setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
+        let objectPermissions = this._objectsRolesPermission[object_name]
+        if (!objectPermissions) {
+            this._objectsRolesPermission[object_name] = {}
+        }
+        this._objectsRolesPermission[object_name][objectRolePermission.name] = new SteedosObjectPermissionType(object_name, objectRolePermission)
+    }
+
+    getObjectRolesPermission(object_name: string){
+        return this._objectsRolesPermission[object_name]
     }
 
     async connect(){

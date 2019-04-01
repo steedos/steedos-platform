@@ -95,7 +95,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig){
-        this._schema.setObjectPermission(this._name, config)
+        this._datasource.setObjectPermission(this._name, config)
     }
 
     setListener(listener_name: string, config: SteedosListenerConfig){
@@ -189,7 +189,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
     
     getObjectRolesPermission(){
-        return this._schema.getObjectPermissions(this._name)
+        return this._datasource.getObjectRolesPermission(this._name)
     }
 
     async getUserObjectPermission(userId: SteedosIDType){
