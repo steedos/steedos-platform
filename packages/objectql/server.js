@@ -3,15 +3,14 @@ var _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
 
 let steedosSchema = new objectql.SteedosSchema({
-    objects: {},
-    datasource: {
-        driver: 'mongo',
-        url: 'mongodb://127.0.0.1/steedos'
-    }
+    datasources: {
+        localMongo: {
+            driver: 'mongo',
+            url: 'mongodb://127.0.0.1/steedos',
+            objectFiles: [__dirname + "/../standard-objects", __dirname + "/../../apps/crm/src"]
+        }
+    },
 })
-
-steedosSchema.use(__dirname + "/../standard-objects");
-steedosSchema.use(__dirname + "/../../apps/crm/src");
 
 // 生成graphql schema
 let graphqlSchema = steedosSchema.buildGraphQLSchema()
