@@ -13,18 +13,19 @@ let steedosSchema = new objectql.SteedosSchema({
         }
     },
 })
-
-// 生成graphql schema
-let graphqlSchema = steedosSchema.buildGraphQLSchema()
-
 let express = require('express');
 let app = express();
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     //TODO 处理userId
     next();
 })
-app.use('/graphql', graphqlHTTP({
-    schema: graphqlSchema,
-    graphiql: true
-}));
+
+_.each(steedosSchema.getDataSources(), function (datasource, name) {
+    app.use(`/graphql/${name}`, graphqlHTTP({
+        schema: datasource.buildGraphQLSchema(),
+        graphiql: true
+    }));
+})
+
+
 app.listen(process.env.PORT || 3000)

@@ -1,6 +1,5 @@
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
-import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import { SteedosIDType } from ".";
 
@@ -59,7 +58,7 @@ export class SteedosSchema {
         }
 
         let datasource = this.getDataSource(datasource_name)
-        
+
         if(!datasource){
             throw new Error(`not find datasource ${datasource_name}`);
         }
@@ -79,7 +78,4 @@ export class SteedosSchema {
         return this._datasources
     }
 
-    buildGraphQLSchema() {
-        return buildGraphQLSchema(this);
-    }
 }

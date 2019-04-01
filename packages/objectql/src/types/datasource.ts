@@ -5,6 +5,7 @@ import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
 import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosFieldTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from '.';
 import { SteedosDriverConfig } from '../driver';
+import { buildGraphQLSchema } from '../graphql';
 
 var util = require('../util')
 
@@ -194,6 +195,10 @@ export class SteedosDataSourceType implements Dictionary {
         //TODO load reports
 
         //TODO load actions
+    }
+
+    buildGraphQLSchema() {
+        return buildGraphQLSchema(this._schema, this);
     }
 
 }

@@ -1,4 +1,4 @@
-import { SteedosSchema } from "../types";
+import { SteedosSchema, SteedosDataSourceType } from "../types";
 import {
     GraphQLList,
     GraphQLSchema,
@@ -90,18 +90,18 @@ function correctName(name: string) {
 }
 
 
-export function buildGraphQLSchema(steedosSchema: SteedosSchema): GraphQLSchema {
+export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: SteedosDataSourceType): GraphQLSchema {
 
     let rootQueryfields = {};
     let knownTypes = {};
 
-    _.each(steedosSchema.getObjects(), function (obj, object_name) {
+    _.each(datasource.getObjects(), function (obj, object_name) {
         if (!obj.name) {
             return;
         }
         let objName = correctName(obj.name);
         knownTypes[objName] = new GraphQLObjectType({
-            name: objName, fields: function () {
+            name: '$'+objName, fields: function () {
                 return convertFields(steedosSchema, obj.fields, knownTypes);
             }
         })
