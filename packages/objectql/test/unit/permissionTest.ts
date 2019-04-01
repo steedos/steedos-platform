@@ -12,6 +12,7 @@ describe('Test Permission', () => {
                 objects: {
                     test2: {
                         label: 'Test2',
+                        table_name: 'test2.cccccc',
                         fields: {
                             name: {
                                 label: '名称',
@@ -227,7 +228,7 @@ describe('Test Permission', () => {
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 user只有查看权限， admin 有所有权限
-        let permissionTest = mySchema.getObject('permission_test')
+        let permissionTest = mySchema.getObject('test2')
 
         try {
             await permissionTest.insert({_id: 'test2', name: 'test2'}, userId)
