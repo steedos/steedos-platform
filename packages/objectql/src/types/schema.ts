@@ -6,7 +6,6 @@ import { SteedosIDType } from ".";
 
 export type SteedosSchemaConfig = {
     datasources: Dictionary<SteedosDataSourceTypeConfig>,
-    roles?: string[],
     getRoles?: Function
 }
 
