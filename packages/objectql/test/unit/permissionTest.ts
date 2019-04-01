@@ -8,7 +8,34 @@ describe('Test Permission', () => {
             mongo1: {
                 driver: 'mongo', 
                 url: 'mongodb://127.0.0.1/steedos',
-                objectFiles: [path.resolve(__dirname, "./load")]
+                objectFiles: [path.resolve(__dirname, "./load")],
+                objects: {
+                    test2: {
+                        label: 'Test2',
+                        fields: {
+                            name: {
+                                label: '名称',
+                                type: 'text'
+                            }
+                        }
+                    }
+                },
+                objectsRolesPermission: {
+                    test2: {
+                        user: {
+                            allowCreate: false,
+                            allowRead: true,
+                            allowEdit: false,
+                            allowDelete: false
+                        },
+                        admin: {
+                            allowCreate: true,
+                            allowRead: true,
+                            allowEdit: true,
+                            allowDelete: true
+                        }
+                    }
+                }
             }
         },
         getRoles: function(userId: SteedosIDType){
@@ -192,6 +219,49 @@ describe('Test Permission', () => {
         }
 
         expect(insertOK && updateOK &&  deleteOK && findOk).to.equal(true)
+
+    });
+
+    it('schema.datasource.objects -> user 权限测试', async () => {
+        let userId = '1'
+        let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
+
+        // permission_test 的 user只有查看权限， admin 有所有权限
+        let permissionTest = mySchema.getObject('permission_test')
+
+        try {
+            await permissionTest.insert({_id: 'test2', name: 'test2'}, userId)
+        } catch (error) {
+            if(error.message == 'not find permission'){
+                insertOK = false
+            }
+        }
+
+        try {
+            await permissionTest.update('-1', {_id: 'test2', name: 'test2'}, userId)
+        } catch (error) {
+            if(error.message == 'not find permission'){
+                updateOK = false
+            }
+        }
+
+        try {
+            await permissionTest.find({fields: ['_id']}, userId)
+        } catch (error) {
+            if(error.message == 'not find permission'){
+                findOk = false
+            }
+        }
+
+        try {
+            await permissionTest.delete('test2', userId)
+        } catch (error) {
+            if(error.message == 'not find permission'){
+                deleteOK = false
+            }
+        }
+
+        expect(findOk).to.equal(true) && expect(insertOK || updateOK ||  deleteOK).to.equal(false)
 
     });
   });
