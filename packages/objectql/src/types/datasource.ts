@@ -49,7 +49,6 @@ export class SteedosDataSourceType implements Dictionary {
         let object = new SteedosObjectType(object_name, this, objectConfig)
         this._objectsConfig[object_name] = objectConfig;
         this._objects[object_name] = object;
-        this._schema.setObject(object_name, object)
     }
 
     constructor(config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {

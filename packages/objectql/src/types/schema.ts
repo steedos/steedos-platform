@@ -1,8 +1,10 @@
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
+import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
 import { buildGraphQLSchema } from "../graphql"
 import _ = require("underscore");
 import { SteedosIDType } from ".";
+
+const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
     datasources: Dictionary<SteedosDataSourceTypeConfig>,
@@ -10,7 +12,6 @@ export type SteedosSchemaConfig = {
 }
 
 export class SteedosSchema {
-    private _objects: Dictionary<SteedosObjectType> = {};
     private _datasources: Dictionary<SteedosDataSourceType> = {};
     private _getRoles: Function;
 
@@ -21,9 +22,14 @@ export class SteedosSchema {
         }
 
         this._getRoles = config.getRoles
+
         _.each(config.datasources, (datasource, datasource_name) => {
             this.setDataSource(datasource_name, datasource)
         })
+
+        if(!this.getDataSource(defaultDatasourceName)){
+            throw new Error('missing default database');
+        }
     }
 
     async getRoles(userId: SteedosIDType) {
@@ -34,20 +40,31 @@ export class SteedosSchema {
         }
     }
 
-    setObject(name: string , object: SteedosObjectType){
-        this._objects[name] = object
-    }
-
+    /**
+     * 获取对象
+     * @param {string} name : {datacource_name}.{object_name} ，如果没有${datacource_name}部分，则默认为default
+     * @returns
+     * @memberof SteedosSchema
+     */
     getObject(name: string) {
-        return this._objects[name]
-    }
+        let datasource_name: string, object_name: string;
+        let args = name.split('.')
+        if(args.length == 1){
+            datasource_name = defaultDatasourceName
+            object_name = args[0]
+        }
+        if(args.length > 1){
+            datasource_name = args[0]
+            object_name = _.rest(args).join('.')
+        }
 
-    getObjects() {
-        return this._objects;
-    }
+        let datasource = this.getDataSource(datasource_name)
+        
+        if(!datasource){
+            throw new Error(`not find datasource ${datasource_name}`);
+        }
 
-    removeObject(name: string) {
-        delete this._objects[name]
+        return datasource.getObject(object_name)
     }
 
     setDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
