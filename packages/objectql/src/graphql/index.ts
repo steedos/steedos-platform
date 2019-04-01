@@ -101,7 +101,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
         }
         let objName = correctName(obj.name);
         knownTypes[objName] = new GraphQLObjectType({
-            name: '$'+objName, fields: function () {
+            name: objName, fields: function () {
                 return convertFields(steedosSchema, obj.fields, knownTypes);
             }
         })
