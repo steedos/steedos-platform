@@ -86,23 +86,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     //TODO:
     getSqlite3SortOptions(sort: string): string {
-        // let result: string = "";
-        // if (sort && typeof sort === "string") {
-        //     let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
-        //     let stringSort: string = "";
-        //     arraySort.forEach((n) => {
-        //         if (n) {
-        //             stringSort += `${n},`
-        //         }
-        //     });
-        //     stringSort = stringSort.replace(/,$/g, "");
-        //     if (stringSort){
-        //         result = `ORDER BY ${stringSort}`;
-        //     }
-        // }
-        // return result;
-
-
         let result: string = "";
         if (sort && typeof sort === "string") {
             let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });

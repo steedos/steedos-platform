@@ -7,13 +7,13 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 let tableName = "TestCrudForSqlite4";
 
 describe('crud for sqlite3 database', () => {
-    before(async ()=>{
+    before(async () => {
         let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await sqlite3.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
         console.log("insert data to sqlite3 database before check table count result:");
         console.log(result);
         expect(result.count).to.be.not.eq(undefined);
-        if (result.count){
+        if (result.count) {
             await sqlite3.run(`DROP TABLE ${tableName}`);
         }
         await sqlite3.run(`
@@ -28,7 +28,7 @@ describe('crud for sqlite3 database', () => {
 
     it('create one record', async () => {
         let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        let result:any = await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 46 })
+        let result: any = await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 46 })
 
         console.log("crud for sqlite3 database result:");
         console.log(result);
@@ -66,3 +66,4 @@ describe('crud for sqlite3 database', () => {
         expect(result.changes).to.be.eq(1);
     });
 });
+
