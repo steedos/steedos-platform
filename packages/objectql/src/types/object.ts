@@ -372,6 +372,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     public get tableName(): string {
-        return this.tableName;
+        return this._tableName;
     }
 }
