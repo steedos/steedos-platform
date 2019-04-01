@@ -4,9 +4,11 @@ import Sqlite3Client = require("sqlite3");
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
-// import { formatFiltersToODataQuery } from "@steedos/filters";
+import { formatFiltersToODataQuery } from "@steedos/filters";
 // import { createFilter } from 'odata-v4-mongodb';
 // import { createQuery } from 'odata-v4-mongodb';
+import { createFilter } from 'odata-v4-sql'
+
 import _ = require("underscore");
 
 export class SteedosSqlite3Driver implements SteedosDriver {
@@ -38,111 +40,107 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     //TODO:
     formatFiltersToSqlite3Query(filters: any): JsonMap {
-        return {};
-        // let odataQuery: string = formatFiltersToODataQuery(filters)
-        // let query: JsonMap = createFilter(odataQuery)
-        // return query;
+        let query: any;
+        let odataQuery: string = "";
+        if (_.isString(filters)){
+            odataQuery = filters;
+        }
+        else{
+            odataQuery = formatFiltersToODataQuery(filters)
+        }
+        query = createFilter(odataQuery);
+        let parameters: any[] = [];
+        query.parameters.forEach((param: any)=>{
+            parameters.push(param);
+        });
+        return {
+            where: query.where,
+            parameters: parameters
+        }
     }
 
     //TODO:
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
-        // if (_.isUndefined(filters)) {
-        //     return {}
-        // }
-        // if (_.isString(filters))
-        //     return createFilter(filters)
+        if (_.isUndefined(filters)) {
+            return {}
+        }
         let mongoFilters: JsonMap = this.formatFiltersToSqlite3Query(filters);
         return mongoFilters
     }
 
     //TODO:
-    getSqlite3FieldsOptions(fields: string[] | string): JsonMap {
+    getSqlite3FieldsOptions(fields: string[] | string): string {
         if (typeof fields == "string") {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
         }
         if (!(fields && fields.length)) {
             throw new Error("fields must not be undefined or empty");
         }
-        let projection: JsonMap = {};
+        let projection: string = "";
         (<string[]>fields).forEach((field) => {
             if (field) {
-                projection[field] = 1;
+                projection += `${field},`
             }
         });
+        projection = projection.replace(/,$/g, "");
         return projection;
     }
 
     //TODO:
-    getSqlite3SortOptions(sort: string): JsonMap {
-        let result: JsonMap = undefined;
-        // if (sort && typeof sort === "string") {
-        //     let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
-        //     let stringSort: string = "";
-        //     arraySort.forEach((n) => {
-        //         if (n) {
-        //             stringSort += `${n},`
-        //         }
-        //     });
-        //     stringSort = stringSort.replace(/,$/g, "");
-        //     result = createQuery(`$orderby=${stringSort}`).sort;
-        // }
-        return result;
-    }
-
-    //TODO:
-    getSqlite3Options(options: SteedosQueryOptions): JsonMap {
-        if (_.isUndefined(options)) {
-            return {};
+    getSqlite3SortOptions(sort: string): string {
+        let result: string = "";
+        if (sort && typeof sort === "string") {
+            let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
+            let stringSort: string = "";
+            arraySort.forEach((n) => {
+                if (n) {
+                    stringSort += `${n},`
+                }
+            });
+            stringSort = stringSort.replace(/,$/g, "");
+            if (stringSort){
+                result = `ORDER BY ${stringSort}`;
+            }
         }
-        let result: JsonMap = {};
-        let projection: JsonMap = this.getSqlite3FieldsOptions(options.fields);
-        let sort: JsonMap = this.getSqlite3SortOptions(options.sort);
-        result.projection = projection;
-        result.sort = sort;
-        result.limit = options.top;
-        result.skip = options.skip;
         return result;
     }
 
     //TODO:
     async find(tableName: string, query: SteedosQueryOptions) {
-        // let collection = this.collection(tableName);
-
-        // let mongoFilters = this.getSqlite3Filters(query.filters);
-        // let mongoOptions = this.getSqlite3Options(query);
-        // let result = await collection.find(mongoFilters, mongoOptions).toArray();
-
-        // return result;
+        let projection: string = this.getSqlite3FieldsOptions(query.fields);
+        let sort: string = this.getSqlite3SortOptions(query.sort);
+        let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
+        let where: string = <string>filterQuery.where;
+        if(where){
+            where = `where ${where}`;
+        }
+        let sql = `select ${projection} from ${tableName} ${where} ${sort}`;
+        return await this.all(sql, filterQuery.parameters);
     }
 
     //TODO:
     async count(tableName: string, query: SteedosQueryOptions) {
-        // let collection = this.collection(tableName);
-
-        // let mongoFilters = this.getSqlite3Filters(query.filters);
-        // let mongoOptions = this.getSqlite3Options(query);
-        // let result = await collection.find(mongoFilters, mongoOptions).count();
-
-        // return result;
+        let sort: string = this.getSqlite3SortOptions(query.sort);
+        let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
+        let where: string = <string>filterQuery.where;
+        if (where) {
+            where = `where ${where}`;
+        }
+        let sql = `select count(*) as count from ${tableName} ${where} ${sort}`;
+        let result: any = await this.get(sql, filterQuery.parameters);
+        return result ? result.count : 0
     }
 
     //TODO:
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
-        // let collection = this.collection(tableName);
-        // let mongoOptions = this.getSqlite3Options(query);
-
-        // let result = await collection.findOne({ _id: id }, mongoOptions);
-
-        // return result;
-
-        let sql = `select * from ${tableName} where id = '${id}'`;
+        let projection: string = this.getSqlite3FieldsOptions(query.fields);
+        let sql = `select ${projection} from ${tableName} where id = '${id}'`;
         return await this.get(sql);
     }
 
-    async run(sql: string) {
-        console.log("runing sql...", sql);
+    async run(sql: string, param?: any) {
         return await new Promise((resolve, reject) => {
-            this._client.run(sql, function(error:any) {
+            this._client.run(sql, param, function(error:any) {
                 if (error) {
                     reject(error);
                 }
@@ -156,15 +154,27 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         });
     }
 
-    async get(sql: string) {
-        console.log("geting sql...", sql);
+    async get(sql: string, param?: any) {
         return await new Promise((resolve, reject)=> {
-            this._client.get(sql, (error:any, row:any)=> {
+            this._client.get(sql, param, (error:any, row:any)=> {
                 if (error){
                     reject(error);
                 }
                 else{
                     resolve(row); 
+                }
+            });
+        });
+    }
+
+    async all(sql: string, param?: any) {
+        return await new Promise((resolve, reject) => {
+            this._client.all(sql, param, (error: any, row: any) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(row);
                 }
             });
         });

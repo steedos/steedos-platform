@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@evancarey/odata-v4-sql": "^0.1.2",
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
@@ -38,6 +37,7 @@
     "jsen": "^0.6.6",
     "mongodb": "^3.0.8",
     "odata-v4-mongodb": "^0.1.12",
+    "odata-v4-sql": "^0.1.2",
     "pg": "^7.8.2",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
