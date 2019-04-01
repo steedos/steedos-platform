@@ -1,7 +1,8 @@
 import { SteedosSqlite3Driver } from "../../../../src/driver";
 import { expect } from 'chai';
+import path = require("path");
 
-let databaseUrl = "./sqlite-test.db";
+let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestFiltersForSqlite4";
 
