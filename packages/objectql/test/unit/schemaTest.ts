@@ -5,7 +5,7 @@ describe('自动生成字段名', () => {
   it('should return true', () => {
     let schema = new SteedosSchema({
         datasources: {
-            m1: {
+            default: {
                 driver: "mongo",
                 url: 'mongodb://127.0.0.1:27017/steedos',
                 objects: {

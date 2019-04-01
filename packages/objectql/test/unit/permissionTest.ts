@@ -5,7 +5,7 @@ var path = require('path')
 describe('Test Permission', () => {
     let mySchema = new SteedosSchema({
         datasources: {
-            mongo1: {
+            default: {
                 driver: 'mongo', 
                 url: 'mongodb://127.0.0.1/steedos',
                 objectFiles: [path.resolve(__dirname, "./load")],
