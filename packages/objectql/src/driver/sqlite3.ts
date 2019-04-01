@@ -5,9 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-// import { createFilter } from 'odata-v4-mongodb';
-// import { createQuery } from 'odata-v4-mongodb';
-import { createFilter } from 'odata-v4-sql'
+import { createFilter, createQuery } from 'odata-v4-sql'
 
 import _ = require("underscore");
 
@@ -88,6 +86,23 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     //TODO:
     getSqlite3SortOptions(sort: string): string {
+        // let result: string = "";
+        // if (sort && typeof sort === "string") {
+        //     let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
+        //     let stringSort: string = "";
+        //     arraySort.forEach((n) => {
+        //         if (n) {
+        //             stringSort += `${n},`
+        //         }
+        //     });
+        //     stringSort = stringSort.replace(/,$/g, "");
+        //     if (stringSort){
+        //         result = `ORDER BY ${stringSort}`;
+        //     }
+        // }
+        // return result;
+
+
         let result: string = "";
         if (sort && typeof sort === "string") {
             let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
@@ -99,7 +114,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
             });
             stringSort = stringSort.replace(/,$/g, "");
             if (stringSort){
-                result = `ORDER BY ${stringSort}`;
+                result = `ORDER BY ${createQuery(`$orderby=${stringSort}`).orderby}`;
             }
         }
         return result;

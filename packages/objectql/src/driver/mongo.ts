@@ -5,8 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { createFilter } from 'odata-v4-mongodb';
-import { createQuery } from 'odata-v4-mongodb';
+import { createFilter, createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 
 export class SteedosMongoDriver implements SteedosDriver {
