@@ -4,32 +4,34 @@ import { expect } from 'chai';
 describe('自动生成字段名', () => {
   it('should return true', () => {
     let schema = new SteedosSchema({
-        objects: {
-            post: {
-                fields: {
-                    title: {
-                        type: "text",
-                        inlineHelpText: "fsdafas",
-                        optionsFunction: function(){
-                            console.log('22222222222222222');
-                        }
-                    }
-                },
-                listeners: {
-                    'default': {
-                        beforeInsert: function(){
-                           console.log('beforeInsert......................');
+        datasources: {
+            m1: {
+                driver: "mongo",
+                url: 'mongodb://127.0.0.1:27017/steedos',
+                objects: {
+                    post: {
+                        fields: {
+                            title: {
+                                type: "text",
+                                inlineHelpText: "fsdafas",
+                                optionsFunction: function(){
+                                    console.log('22222222222222222');
+                                }
+                            }
                         },
-                        beforeUpdate: function(){
-                            console.log('beforeUpdate......................');
+                        listeners: {
+                            'default': {
+                                beforeInsert: function(){
+                                   console.log('beforeInsert......................');
+                                },
+                                beforeUpdate: function(){
+                                    console.log('beforeUpdate......................');
+                                }
+                            }
                         }
                     }
                 }
             }
-        },
-        datasource: {
-            driver: "mongo",
-            url: 'mongodb://127.0.0.1:27017/steedos'
         }
     })
 

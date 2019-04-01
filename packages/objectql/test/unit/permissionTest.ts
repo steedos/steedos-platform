@@ -4,8 +4,13 @@ var path = require('path')
 
 describe('Test Permission', () => {
     let mySchema = new SteedosSchema({
-        objects: {}, 
-        datasource: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos'},
+        datasources: {
+            mongo1: {
+                driver: 'mongo', 
+                url: 'mongodb://127.0.0.1/steedos',
+                objectFiles: [path.resolve(__dirname, "./load")]
+            }
+        },
         getRoles: function(userId: SteedosIDType){
             if(userId == '0'){
                 return ['guest']
@@ -18,8 +23,6 @@ describe('Test Permission', () => {
             }
         }
     })
-    
-    mySchema.use(path.resolve(__dirname, "./load"))
 
     it('guest: 权限测试', async () => {
         let userId = '0';
