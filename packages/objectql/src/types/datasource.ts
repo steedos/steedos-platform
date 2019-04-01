@@ -31,7 +31,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
-    
+
     getObjects(){
         return this._objects
     }
@@ -45,6 +45,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
+        objectConfig.name = object_name
         let object = new SteedosObjectType(object_name, this, objectConfig)
         this._objectsConfig[object_name] = objectConfig;
         this._objects[object_name] = object;
