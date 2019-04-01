@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -29,7 +29,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
-    
+
     getObjects(){
         return this._objects
     }
@@ -67,6 +67,8 @@ export class SteedosDataSourceType implements Dictionary {
         if(_.isString(config.driver)){
             if(config.driver == 'mongo'){
                 this._adapter = new SteedosMongoDriver(driverConfig);
+            } else if (config.driver == 'meteor-mongo') {
+                this._adapter = new SteedosMeteorMongoDriver(driverConfig);
             }
         }else{
             this._adapter = config.driver
@@ -87,12 +89,12 @@ export class SteedosDataSourceType implements Dictionary {
         await this._adapter.connect()
         this._isConnected = true;
     }
-    
+
     async find(tableName: string, query: SteedosQueryOptions){
         await this.connect();
         return await this._adapter.find(tableName, query)
     }
-    
+
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions){
         await this.connect();
         return await this._adapter.findOne(tableName, id, query)
@@ -159,7 +161,7 @@ export class SteedosDataSourceType implements Dictionary {
             }else if(_.isFunction(json.listenTo)){
                 object_name = json.listenTo()
             }
-            
+
             let object = this.getObject(object_name);
             if (object) {
                 object.setListener(json.name || '', json)
