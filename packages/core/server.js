@@ -19,16 +19,15 @@ let getRolesfromCreator = async (userId)=>{
 }
 
 let steedosSchema = new SteedosSchema({
-    objects: {},
-    datasource: {
-        driver: 'mongo',
-        url: 'mongodb://127.0.0.1/steedos'
+    datasources: {
+        localMongo: {
+            driver: 'mongo',
+            url: 'mongodb://127.0.0.1/steedos',
+            objectFiles: [__dirname + "/../standard-objects", __dirname + "/../../apps/crm/src"]
+        }
     },
     getRoles: getRolesfromCreator
 })
-
-steedosSchema.use(__dirname + "/../standard-objects");
-steedosSchema.use(__dirname + "/../../apps/crm/src");
 
 
 // 生成graphql schema
