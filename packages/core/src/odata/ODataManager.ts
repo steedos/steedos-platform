@@ -4,8 +4,6 @@ import { Request, Response } from "express";
 
 var Cookies = require("cookies");
 
-declare var steedosSchema: any;
-
 export class ODataManager {
   setErrorMessage(statusCode: number, collection: string = '', key: string = '', action: string = '') {
     let body = {};
@@ -116,7 +114,7 @@ export class ODataManager {
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
-    let obj = steedosSchema.getObject(key);
+    let obj = getCreator().getSteedosSchema().getObject(key);
 
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
@@ -133,8 +131,8 @@ export class ODataManager {
 
           if (_.isString(field.reference_to)) {
             let ref: any;
-            let referenceToCollection = steedosSchema.getObject(field.reference_to);
-            let _ro_NAME_FIELD_KEY = (ref = steedosSchema.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+            let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
+            let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
             queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
             for (let idx = 0; idx < entities.length; idx++) {
               if (entities[idx][navigationProperty]) {
@@ -173,11 +171,11 @@ export class ODataManager {
               let ref2: any;
               if ((ref1 = entities[idx][navigationProperty]) != null ? ref1.ids : void 0) {
                 let _o = entities[idx][navigationProperty].o;
-                let _ro_NAME_FIELD_KEY = (ref2 = steedosSchema.getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
+                let _ro_NAME_FIELD_KEY = (ref2 = getCreator().getSteedosSchema().getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
                 if ((queryOptions != null ? queryOptions.fields : void 0) && _ro_NAME_FIELD_KEY) {
                   queryOptions.fields.push(_ro_NAME_FIELD_KEY);
                 }
-                let referenceToCollection = steedosSchema.getObject(entities[idx][navigationProperty].o);
+                let referenceToCollection = getCreator().getSteedosSchema().getObject(entities[idx][navigationProperty].o);
                 if (queryOptions.fields.length == 0) {
                   queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
                 }

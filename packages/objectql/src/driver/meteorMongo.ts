@@ -9,6 +9,8 @@ import { createFilter } from 'odata-v4-mongodb';
 import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 
+var Fiber = require('fibers');
+
 declare var Creator: any;
 
 export class SteedosMeteorMongoDriver implements SteedosDriver {
@@ -77,7 +79,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         let result: JsonMap = {};
         let projection: JsonMap = this.getMongoFieldsOptions(options.fields);
         let sort: JsonMap = this.getMongoSortOptions(options.sort);
-        result.projection = projection;
+        result.fields = projection;
         result.sort = sort;
         result.limit = options.top;
         result.skip = options.skip;
@@ -93,28 +95,34 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
 
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
-        let result = collection.find(mongoFilters, mongoOptions).fetch();
 
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                resolve(collection.find(mongoFilters, mongoOptions).fetch());
+            }).run()
+        });
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
         let collection = this.collection(tableName);
-
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
-        let result = collection.find(mongoFilters, mongoOptions).count();
-
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                resolve(collection.find(mongoFilters, mongoOptions).count());
+            }).run()
+        });
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
 
-        let result = collection.findOne({ _id: id }, mongoOptions);
-
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                resolve(collection.findOne({ _id: id }, mongoOptions));
+            }).run()
+        });
     }
 
     async insert(tableName: string, data: JsonMap) {

@@ -27,7 +27,14 @@ const FIELDTYPES = [
     "[grid]",
     "[text]",
     "selectCity",
-    "audio"
+    "audio",
+    "filesize",
+    "file",
+    "string",
+    "function Object() { [native code] }",
+    "function String() { [native code] }",
+    "code",
+    "Object"
 ]
 
 abstract class SteedosFieldProperties{
@@ -75,7 +82,7 @@ export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
 
 export class SteedosFieldType extends SteedosFieldProperties implements Dictionary {
     private _object: SteedosObjectType;
-    private _type: string;
+    private _type: any;
 
     private properties: string[] = ['name']
 
@@ -101,13 +108,14 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         return this._object;
     }
 
-    public get type(): string {
+    public get type(): any {
         return this._type;
     }
 
-    public set type(value: string) {
-        if(!_.contains(FIELDTYPES, value)){
-            throw new Error(`not find field type ${value}`)
+    public set type(value: any) {
+        let valueStr = String(value)
+        if(!_.contains(FIELDTYPES, valueStr)){
+            throw new Error(`not find field type ${valueStr}`)
         }
         this._type = value;
     }

@@ -13,7 +13,7 @@ export class CreatorManager {
 
   Objects: JsonMap = {};
 
-  constructor(){
+  constructor() {
     this.Objects = Creator.Objects
   }
 
@@ -75,16 +75,20 @@ export class CreatorManager {
     return SteedosOData.getMetaDataPath(spaceId);
   }
 
-  loadObjects(object){
+  loadObjects(object) {
     if (typeof Creator.loadObjects == 'function') {
       return Creator.loadObjects(object);
     }
   }
 
-  fiberLoadObjects(object){
+  fiberLoadObjects(object) {
     if (typeof Creator.fiberLoadObjects == 'function') {
       return Creator.fiberLoadObjects(object);
     }
+  }
+
+  getSteedosSchema() {
+    return Creator.steedosSchema
   }
 
 }

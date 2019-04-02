@@ -15,8 +15,6 @@ interface Request extends core.Request {
   user: any;
 }
 
-declare var steedosSchema: any;
-
 // middleware that is specific to this router
 router.use(function auth(req: Request, res: Response, next: () => void) {
   getODataManager().auth(req, res).then(function (result) {
@@ -41,7 +39,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
 
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = steedosSchema.getObject(key);
+    let collection = getCreator().getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -81,7 +79,9 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         }
         entities = await collection.find(query);
       }
+      console.log('entities: ', entities)
       let scannedCount = await collection.count({ filters: filters, fields: ['_id'] });
+      console.log('scannedCount: ', scannedCount)
       if (entities) {
         entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId);
         let body = {};
@@ -115,7 +115,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     let queryParams = req.query;
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = steedosSchema.getObject(key);
+    let collection = getCreator().getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -218,7 +218,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
     let bodyParams = req.body;
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = steedosSchema.getObject(key);
+    let collection = getCreator().getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -268,7 +268,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let collectionInfoSplit = collectionInfo.split('(');
     let collectionName = collectionInfoSplit[0];
     let id = collectionInfoSplit[1].split('\'')[1];
-    let collection = steedosSchema.getObject(collectionName)
+    let collection = getCreator().getSteedosSchema().getObject(collectionName)
     let entity = collection.findOne(id, {
       fields: [fieldName]
     });
@@ -278,7 +278,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     }
     let field = collection.fields[fieldName];
     if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
-      let lookupCollection = steedosSchema.getObject(field.reference_to);
+      let lookupCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
       let fields = [];
       let readable_fields = getCreator().getFields(field.reference_to, spaceId, userId);
       _.each(readable_fields, function (f: string) {
@@ -322,7 +322,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     res.send(body);
   } else {
     try {
-      let collection = steedosSchema.getObject(key)
+      let collection = getCreator().getSteedosSchema().getObject(key)
       if (!collection) {
         res.send({
           statusCode: 404,
@@ -390,7 +390,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
 
-    let collection = steedosSchema.getObject(key)
+    let collection = getCreator().getSteedosSchema().getObject(key)
     if (!collection) {
       res.send({
         statusCode: 404,
@@ -441,7 +441,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
 
-    let collection = steedosSchema.getObject(key);
+    let collection = getCreator().getSteedosSchema().getObject(key);
     if (!collection) {
       res.send({
         statusCode: 404,
