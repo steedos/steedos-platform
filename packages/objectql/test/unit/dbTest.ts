@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { SteedosSchema, SteedosDatabaseType } from '../../src';
+import { SteedosSchema, SteedosDatabaseDriverType } from '../../src';
 var path = require('path')
 
 describe('Test db', () => {
@@ -7,7 +7,7 @@ describe('Test db', () => {
         let mySchema = new SteedosSchema({
             datasources: {
                 default: {
-                    driver: SteedosDatabaseType.Mongo, 
+                    driver: SteedosDatabaseDriverType.Mongo, 
                     url: 'mongodb://127.0.0.1/steedos',
                     objectFiles: [path.resolve(__dirname, "../../../standard-objects")]
                 }

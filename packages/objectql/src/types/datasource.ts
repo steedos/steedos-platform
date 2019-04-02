@@ -9,14 +9,14 @@ import { buildGraphQLSchema } from '../graphql';
 
 var util = require('../util')
 
-export enum SteedosDatabaseType {
+export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
     Sqlite = 'sqlite' 
 }
 
 export type SteedosDataSourceTypeConfig = {
-    driver: SteedosDatabaseType | string | SteedosDriver
+    driver: SteedosDatabaseDriverType | string | SteedosDriver
     url: string
     username?: string
     password?: string
@@ -74,12 +74,18 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         if(_.isString(config.driver)){
-            if(config.driver == SteedosDatabaseType.Mongo){
-                this._adapter = new SteedosMongoDriver(driverConfig);
-            } else if (config.driver == SteedosDatabaseType.MeteorMongo) {
-                this._adapter = new SteedosMeteorMongoDriver(driverConfig);
-            } else if (config.driver == SteedosDatabaseType.Sqlite) {
-                this._adapter = new SteedosSqlite3Driver(driverConfig);
+            switch (config.driver) {
+                case SteedosDatabaseDriverType.Mongo:
+                    this._adapter = new SteedosMongoDriver(driverConfig);
+                    break;
+                case SteedosDatabaseDriverType.MeteorMongo:
+                    this._adapter = new SteedosMeteorMongoDriver(driverConfig);
+                    break;
+                case SteedosDatabaseDriverType.Sqlite:
+                    this._adapter = new SteedosSqlite3Driver(driverConfig);
+                    break;    
+                default:
+                    break;
             }
         }else{
             this._adapter = config.driver
