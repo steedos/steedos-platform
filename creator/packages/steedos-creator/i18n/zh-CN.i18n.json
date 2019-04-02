@@ -78,6 +78,7 @@
 	"creator_filter_operation_between_next_60_days": "未来60天",
 	"creator_filter_operation_between_next_90_days": "未来90天",
 	"creator_filter_operation_between_next_120_days": "未来120天",
+	"creator_filter_close_filter_panel": "关闭过滤面板",
 
 	"creator_app_launcher": "应用程序启动器",
 	"creator_app_launcher_all_apps": "所有应用程序",
