@@ -5,7 +5,7 @@ import { SteedosIDType } from "../types";
 export type SteedosDriverConfig = {
     url: string
     username?: string
-    pasword?: string
+    password?: string
     options?: any
 };
 

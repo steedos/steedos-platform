@@ -19,7 +19,7 @@ export type SteedosDataSourceTypeConfig = {
     driver: SteedosDatabaseType | string | SteedosDriver
     url: string
     username?: string
-    pasword?: string
+    password?: string
     options?: any
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
@@ -31,7 +31,7 @@ export class SteedosDataSourceType implements Dictionary {
 
     private _url: string;
     private _username?: string;
-    private _pasword?: string;
+    private _password?: string;
     private _options?: any;
     private _isConnected: boolean;
     private _schema: SteedosSchema;
@@ -62,14 +62,14 @@ export class SteedosDataSourceType implements Dictionary {
         this._isConnected = false;
         this._url = config.url
         this._username = config.username
-        this._pasword = config.pasword
+        this._password = config.password
         this._options = config.options
         this._schema = schema
 
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             username: this._username,
-            pasword: this._pasword,
+            password: this._password,
             options: this._options
         }
 
