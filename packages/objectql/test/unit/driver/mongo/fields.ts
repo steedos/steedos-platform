@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 let tableName = "mongo-driver-test-fields";
 
-describe('fetch records width specific fields', () => {
+describe('fetch records width specific fields for mongo database', () => {
     before(async ()=>{
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();
@@ -52,6 +52,7 @@ describe('fetch records width specific fields', () => {
         expect(result[0].title).to.be.eq("PTR");
         expect(result[0].tag).to.be.eq(undefined);
     });
+    
     it('fields must not be undefined or empty', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
