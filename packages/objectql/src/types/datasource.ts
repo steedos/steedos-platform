@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -9,8 +9,14 @@ import { buildGraphQLSchema } from '../graphql';
 
 var util = require('../util')
 
+export enum SteedosDatabaseType {
+    Mongo = 'mongo',
+    MeteorMongo = 'meteor-mongo',
+    Sqlite = 'sqlite' 
+}
+
 export type SteedosDataSourceTypeConfig = {
-    driver: string | SteedosDriver
+    driver: SteedosDatabaseType | string | SteedosDriver
     url: string
     username?: string
     pasword?: string
@@ -68,10 +74,12 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         if(_.isString(config.driver)){
-            if(config.driver == 'mongo'){
+            if(config.driver == SteedosDatabaseType.Mongo){
                 this._adapter = new SteedosMongoDriver(driverConfig);
-            } else if (config.driver == 'meteor-mongo') {
+            } else if (config.driver == SteedosDatabaseType.MeteorMongo) {
                 this._adapter = new SteedosMeteorMongoDriver(driverConfig);
+            } else if (config.driver == SteedosDatabaseType.Sqlite) {
+                this._adapter = new SteedosSqlite3Driver(driverConfig);
             }
         }else{
             this._adapter = config.driver
