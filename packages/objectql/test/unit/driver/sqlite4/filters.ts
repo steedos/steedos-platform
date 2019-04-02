@@ -8,15 +8,15 @@ let tableName = "TestFiltersForSqlite4";
 
 describe('filters for sqlite3 database', () => {
     before(async () => {
-        let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        let result: any = await sqlite3.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
+        let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+        let result: any = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
         console.log("insert data to sqlite3 database before check table count result:");
         console.log(result);
         expect(result.count).to.be.not.eq(undefined);
         if (result.count) {
-            await sqlite3.run(`DROP TABLE ${tableName}`);
+            await driver.run(`DROP TABLE ${tableName}`);
         }
-        await sqlite3.run(`
+        await driver.run(`
             CREATE TABLE ${tableName}(
                 [id] TEXT primary key,
                 [name] TEXT,
@@ -28,54 +28,54 @@ describe('filters for sqlite3 database', () => {
 
     it('filter records with filters', async () => {
 
-        let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
-        await sqlite3.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
+        let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
 
         let queryOptions = {
             fields: ["id", "name"],
             filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
         };
-        let result = await sqlite3.find(tableName, queryOptions);
+        let result = await driver.find(tableName, queryOptions);
         console.log("filter records with simple filters result:");
         console.log(result);
 
-        await sqlite3.delete(tableName, "ptr");
-        await sqlite3.delete(tableName, "cnpc");
+        await driver.delete(tableName, "ptr");
+        await driver.delete(tableName, "cnpc");
         expect(result).to.be.length(1);
 
     });
 
     it('filter records with odata query string', async () => {
 
-        let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
-        await sqlite3.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
+        let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
 
         let queryOptions = {
             fields: ["id", "name"],
             filters: "(name eq 'ptr') and (title eq 'PTR')"
         };
-        let result = await sqlite3.find(tableName, queryOptions);
+        let result = await driver.find(tableName, queryOptions);
         console.log("filter records with simple filters result:");
         console.log(result);
 
-        await sqlite3.delete(tableName, "ptr");
-        await sqlite3.delete(tableName, "cnpc");
+        await driver.delete(tableName, "ptr");
+        await driver.delete(tableName, "cnpc");
         expect(result).to.be.length(1);
     });
 
     it('filter records count with filters or odata query string', async () => {
 
-        let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        await sqlite3.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
-        await sqlite3.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
+        let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
 
         let queryOptions1 = {
             fields: ["id", "name"],
             filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
         };
-        let result1 = await sqlite3.count(tableName, queryOptions1);
+        let result1 = await driver.count(tableName, queryOptions1);
         console.log("filter records with simple filters result:");
         console.log(result1);
 
@@ -83,10 +83,10 @@ describe('filters for sqlite3 database', () => {
             fields: ["id", "name"],
             filters: "(name eq 'ptr') and (title eq 'PTR')"
         };
-        let result2 = await sqlite3.count(tableName, queryOptions2);
+        let result2 = await driver.count(tableName, queryOptions2);
 
-        await sqlite3.delete(tableName, "ptr");
-        await sqlite3.delete(tableName, "cnpc");
+        await driver.delete(tableName, "ptr");
+        await driver.delete(tableName, "cnpc");
         expect(result1).to.be.eq(1);
         expect(result1).to.be.eq(result2);
 
