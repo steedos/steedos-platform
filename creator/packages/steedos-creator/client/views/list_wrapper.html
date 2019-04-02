@@ -85,7 +85,7 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-bottom">
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
-								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls" data-toggle="dropdown">
+								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="{{_ "creator_list_view_controls"}}" data-toggle="dropdown">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
@@ -95,41 +95,41 @@
 											<span class="slds-text-title--caps">{{_ "creator_list_view_controls"}}</span>
 										</li>
 										<li class="slds-dropdown__item add-list-view" role="presentation">
-											<a href="javascript:void(0);" title="new" class="" role="option" tabindex="-1">
+											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 												<span>{{_ "creator_list_new_list_view"}}</span>
 											</a>
 										</li>
 										<li class="slds-dropdown__item export-data-grid {{#if isTree}}hidden{{/if}}" role="presentation">
-											<a href="javascript:void(0);" title="export" class="" role="option" tabindex="-1">
+											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 												<span>{{_ "creator_list_export_list_view"}}</span>
 											</a>
 										</li>
 										<li class="slds-dropdown__item copy-list-view {{#if isTree}}hidden{{/if}}" role="presentation">
-											<a href="javascript:void(0);" title="{{_ "creator_list_copy_list_view"}}" class="" role="option" tabindex="-1">
+											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 												<span>{{_ "creator_list_copy_list_view"}}</span>
 											</a>
 										</li>
 										{{#if is_custom_list_view}}
 											{{#if is_view_owner}}
 												<li class="slds-dropdown__item edit-list-view" role="presentation">
-													<a href="javascript:void(0);" title="edit list view" class="" role="option" tabindex="-1">
+													<a href="javascript:void(0);" title="{{_ "creator_list_edit"}}" class="" role="option" tabindex="-1">
 														<span>{{_ "creator_list_edit"}}</span>
 													</a>
 												</li>
 												<li class="slds-dropdown__item select-fields-to-display" role="presentation">
-													<a href="javascript:void(0);" title="select fields to display" class="" role="option" tabindex="-1">
+													<a href="javascript:void(0);" title="{{_ "creator_list_select_fields"}}" class="" role="option" tabindex="-1">
 														<span>{{_ "creator_list_select_fields"}}</span>
 													</a>
 												</li>
 												<li class="slds-dropdown__item delete-list-view" role="presentation">
-													<a href="javascript:void(0);" title="delete" class="" role="option" tabindex="-1">
+													<a href="javascript:void(0);" title="{{_ "creator_list_delete_list_view"}}" class="" role="option" tabindex="-1">
 														<span>{{_ "creator_list_delete_list_view"}}</span>
 													</a>
 												</li>
 											{{/if}}
 										{{/if}}
 										<li class="slds-dropdown__item reset-column-width" role="presentation">
-											<a href="javascript:void(0);" title="reset column width" class="" role="option" tabindex="-1">
+											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
 												<span>{{_ "reset_column_width"}}</span>
 											</a>
 										</li>
@@ -137,24 +137,24 @@
 								</div>
 							</div>
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
-								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="Change view" disabled>
+								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="{{_ "creator_change_view"}}" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="table"}}
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
 							</div>
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="Edit List" disabled>
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="{{_ "creator_edit_list"}}" disabled>
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
 							</button>
 							{{#if isRefreshable}}
-								<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="Refresh">
+								<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "creator_refresh"}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 								</button>
 							{{/if}}
 							<div class="slds-button-group" role="group">
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts" disabled>
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="{{_ "creator_charts"}}" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 								</button>
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list" title="Filters">
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list" title="{{_ "creator_filters"}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 								</button>
 							</div>

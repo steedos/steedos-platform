@@ -94,6 +94,12 @@
 	"creator_detail_related": "RELATED",
 	"creator_new": "New",
 
+	"creator_change_view": "Change view",
+	"creator_edit_list": "Edit List",
+	"creator_refresh": "Refresh",
+	"creator_charts": "Charts",
+	"creator_filters": "Filters",
+
 	"true": "YES",
 	"false": "NO"
 }

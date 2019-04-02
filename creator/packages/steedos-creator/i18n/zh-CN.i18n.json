@@ -96,6 +96,12 @@
 	"creator_detail_related": "相关",
 	"creator_new": "新建",
 
+	"creator_change_view": "修改视图",
+	"creator_edit_list": "编辑列表",
+	"creator_refresh": "刷新",
+	"creator_charts": "图表",
+	"creator_filters": "过滤器",
+
 	"true": "是",
 	"false": "否"
 
