@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 let tableName = "mongo-driver-test-page";
 
-describe('fetch records by paging', () => {
+describe('fetch records by paging for mongo database', () => {
     before(async ()=>{
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
         await mongo.connect();

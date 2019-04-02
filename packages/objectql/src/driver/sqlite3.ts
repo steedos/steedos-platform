@@ -51,8 +51,15 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         query.parameters.forEach((param: any)=>{
             parameters.push(param);
         });
+        let where: string = <string>query.where;
+        if (where) {
+            where = `WHERE ${where}`;
+        }
+        else{
+            where = "";
+        }
         return {
-            where: query.where,
+            where: where,
             parameters: parameters
         }
     }
@@ -60,7 +67,10 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     //TODO:
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
         if (_.isUndefined(filters)) {
-            return {}
+            return {
+                where: "",
+                parameters: undefined
+            }
         }
         let mongoFilters: JsonMap = this.formatFiltersToSqlite3Query(filters);
         return mongoFilters
@@ -81,6 +91,9 @@ export class SteedosSqlite3Driver implements SteedosDriver {
             }
         });
         projection = projection.replace(/,$/g, "");
+        if (projection) {
+            projection = `${createQuery(`$select=${projection}`).select}`;
+        }
         return projection;
     }
 
@@ -104,15 +117,30 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     //TODO:
+    getSqlite3TopAndSkipOptions(top: number = 0, skip: number = 0): string {
+        let result: string = "";
+        let options: string[] = [];
+        if (top > 0){
+            options.push(`limit ${top}`);
+        }
+        if (skip > 0) {
+            if (top == 0){
+                throw new Error("top must not be empty for skip");
+            }
+            options.push(`offset ${skip}`);
+        }
+        result = options.join(" ");
+        return result;
+    }
+
+    //TODO:
     async find(tableName: string, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
         let sort: string = this.getSqlite3SortOptions(query.sort);
         let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
         let where: string = <string>filterQuery.where;
-        if(where){
-            where = `where ${where}`;
-        }
-        let sql = `select ${projection} from ${tableName} ${where} ${sort}`;
+        let limitAndOffset: string = this.getSqlite3TopAndSkipOptions(query.top, query.skip);
+        let sql = `SELECT ${projection} FROM ${tableName} ${where} ${sort} ${limitAndOffset}`;
         return await this.all(sql, filterQuery.parameters);
     }
 
@@ -121,10 +149,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let sort: string = this.getSqlite3SortOptions(query.sort);
         let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
         let where: string = <string>filterQuery.where;
-        if (where) {
-            where = `where ${where}`;
-        }
-        let sql = `select count(*) as count from ${tableName} ${where} ${sort}`;
+        let sql = `SELECT count(*) as count FROM ${tableName} ${where} ${sort}`;
         let result: any = await this.get(sql, filterQuery.parameters);
         return result ? result.count : 0
     }
@@ -132,10 +157,11 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     //TODO:
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
-        return await this.get(`select ${projection} from ${tableName} where id=?;`, id);
+        return await this.get(`SELECT ${projection} FROM ${tableName} WHERE id=?;`, id);
     }
 
     async run(sql: string, param?: any) {
+        console.log("runing sqlite4 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.run(sql, param, function(error:any) {
                 if (error) {
@@ -152,6 +178,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async get(sql: string, param?: any) {
+        console.log("geting sqlite4 sql...", sql);
         return await new Promise((resolve, reject)=> {
             this._client.get(sql, param, (error:any, row:any)=> {
                 if (error){
@@ -165,6 +192,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async all(sql: string, param?: any) {
+        console.log("alling sqlite4 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.all(sql, param, (error: any, row: any) => {
                 if (error) {
@@ -178,20 +206,22 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async insert(tableName: string, data: JsonMap) {
-        let fields: string = Object.keys(data).join(",");
+        let fields: any[] = Object.keys(data);
+        let projection: string = this.getSqlite3FieldsOptions(fields);
         let placeholders: string = Object.keys(data).map((n) => { return `?`; }).join(",");
         let values: any[] = Object.values(data);
 
-        return await this.run(`INSERT INTO ${tableName}(${fields}) VALUES(${placeholders})`, values);
+        return await this.run(`INSERT INTO ${tableName}(${projection}) VALUES(${placeholders})`, values);
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
         let fields: any[] = Object.keys(data);
-        let values: any[] = Object.values(data);
-        let sets: string = fields.map((n)=>{
+        let projection: string = this.getSqlite3FieldsOptions(fields);
+        let sets: string = projection.split(",").map((n)=>{
             return `${n}=?`;
         }).join(",");
 
+        let values: any[] = Object.values(data);
         values.push(id);
 
         return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id=?;`, values);

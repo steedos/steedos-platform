@@ -6,7 +6,7 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestFieldsForSqlite4";
 
-describe.only('fetch records width specific fields for sqlite3 database', () => {
+describe('fetch records width specific fields for sqlite3 database', () => {
     before(async () => {
         let sqlite3 = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await sqlite3.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
