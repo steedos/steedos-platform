@@ -370,7 +370,7 @@ CFDataManager.handerOrganizationModalValueLabel = function () {
 					var cf_org_jstree_self = $("#cf_organizations_tree_self").jstree();
 
 					var org_node = cf_org_jstree.get_node(el.dataset.value);
-					var org_node_self = cf_org_jstree_self.get_node(el.dataset.value);
+					var org_node_self = cf_org_jstree_self.get_node ? cf_org_jstree_self.get_node(el.dataset.value) : null;
 
 					if(org_node || org_node_self){
 						if(org_node && org_node.state.selected){
