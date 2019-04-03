@@ -13,7 +13,6 @@ describe('fetch records by paging for mongo database', () => {
     it('top', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc1", name: "cnpc", title: "CNPC", index: 1 });
         await mongo.insert(tableName, { _id: "cnpc2", name: "cnpc", title: "CNPC", index: 2 });
         await mongo.insert(tableName, { _id: "ptr1", name: "ptr", title: "PTR", index: 3 });
@@ -35,7 +34,6 @@ describe('fetch records by paging for mongo database', () => {
     it('skip', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc1", name: "cnpc", title: "CNPC", index: 1 });
         await mongo.insert(tableName, { _id: "cnpc2", name: "cnpc", title: "CNPC", index: 2 });
         await mongo.insert(tableName, { _id: "ptr1", name: "ptr", title: "PTR", index: 3 });
@@ -59,7 +57,6 @@ describe('fetch records by paging for mongo database', () => {
     it('top and skip for paging', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc1", name: "cnpc", title: "CNPC", index: 1 });
         await mongo.insert(tableName, { _id: "cnpc2", name: "cnpc", title: "CNPC", index: 2 });
         await mongo.insert(tableName, { _id: "ptr1", name: "ptr", title: "PTR", index: 3 });

@@ -13,7 +13,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
     it('sort asc as default', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR" })
         await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC" })
 
@@ -38,7 +37,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
     it('sort desc', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC" })
         await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR" })
 
@@ -58,7 +56,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
     it('multi sort', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc1", name: "cnpc", title: "CNPC", count: 68 })
         await mongo.insert(tableName, { _id: "cnpc2", name: "cnpc", title: "CNPC", count: 30 })
         await mongo.insert(tableName, { _id: "ptr1", name: "ptr", title: "PTR", count: 32 })
@@ -84,7 +81,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
     it('multi sort error correction', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "cnpc1", name: "cnpc", title: "CNPC", count: 68 })
         await mongo.insert(tableName, { _id: "cnpc2", name: "cnpc", title: "CNPC", count: 30 })
         await mongo.insert(tableName, { _id: "ptr1", name: "ptr", title: "PTR", count: 32 })

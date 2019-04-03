@@ -5,7 +5,6 @@ describe('filter records with simple filters', () => {
     it('filter records with simple filters', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert("apps", { _id: "ptr", name: "ptr", title: "PTR" })
         await mongo.insert("apps", { _id: "cnpc", name: "cnpc", title: "CNPC" })
 
@@ -26,7 +25,6 @@ describe('filter records with odata query string', () => {
     it('filter records with odata query string', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert("apps", { _id: "ptr", name: "ptr", title: "PTR" })
         await mongo.insert("apps", { _id: "cnpc", name: "cnpc", title: "CNPC" })
 

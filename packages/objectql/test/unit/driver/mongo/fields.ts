@@ -13,7 +13,6 @@ describe('fetch records width specific fields for mongo database', () => {
     it('fields arguments is a array', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR" })
         await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC" })
 
@@ -32,7 +31,6 @@ describe('fetch records width specific fields for mongo database', () => {
     it('fields arguments is a string', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
         await mongo.insert(tableName, { _id: "ptr", name: "ptr", title: "PTR", tag: "one" })
         await mongo.insert(tableName, { _id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" })
 
@@ -54,7 +52,6 @@ describe('fetch records width specific fields for mongo database', () => {
     it('fields must not be undefined or empty', async () => {
 
         let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
-        await mongo.connect();
 
         let queryOptions = {
             fields: []

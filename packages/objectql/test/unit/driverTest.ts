@@ -5,7 +5,6 @@ describe('Test connection', () => {
     it('should return true', async () => {
       
         let mongo = new SteedosMongoDriver( {url: "mongodb://127.0.0.1/steedos"} );
-        await mongo.connect();
         let queryOptions = {
             fields: ["_id"],
             filters: ["_id", "=", "-10"]
