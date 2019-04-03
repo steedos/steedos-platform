@@ -36,7 +36,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         }
     }
 
-    //TODO:
     formatFiltersToSqlite3Query(filters: any): JsonMap {
         let query: any;
         let odataQuery: string = "";
@@ -64,7 +63,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         }
     }
 
-    //TODO:
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
         if (_.isUndefined(filters)) {
             return {
@@ -76,7 +74,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return mongoFilters
     }
 
-    //TODO:
     getSqlite3FieldsOptions(fields: string[] | string): string {
         if (typeof fields == "string") {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
@@ -97,7 +94,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return projection;
     }
 
-    //TODO:
     getSqlite3SortOptions(sort: string): string {
         let result: string = "";
         if (sort && typeof sort === "string") {
@@ -116,7 +112,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return result;
     }
 
-    //TODO:
     getSqlite3TopAndSkipOptions(top: number = 0, skip: number = 0): string {
         let result: string = "";
         let options: string[] = [];
@@ -133,7 +128,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return result;
     }
 
-    //TODO:
     async find(tableName: string, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
         let sort: string = this.getSqlite3SortOptions(query.sort);
@@ -144,7 +138,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return await this.all(sql, filterQuery.parameters);
     }
 
-    //TODO:
     async count(tableName: string, query: SteedosQueryOptions) {
         let sort: string = this.getSqlite3SortOptions(query.sort);
         let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
@@ -154,7 +147,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return result ? result.count : 0
     }
 
-    //TODO:
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
         return await this.get(`SELECT ${projection} FROM ${tableName} WHERE id=?;`, id);

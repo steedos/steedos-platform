@@ -39,7 +39,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         return query;
     }
 
-    /* TODO： */
     getMongoFilters(filters: SteedosQueryFilters): JsonMap {
         if (_.isUndefined(filters)) {
             return {}
@@ -82,7 +81,6 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
-    /* TODO： */
     getMongoOptions(options: SteedosQueryOptions): JsonMap {
         if (_.isUndefined(options)) {
             return {};
