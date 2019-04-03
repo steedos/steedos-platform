@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -81,9 +81,9 @@ export class SteedosDataSourceType implements Dictionary {
                 case SteedosDatabaseDriverType.MeteorMongo:
                     this._adapter = new SteedosMeteorMongoDriver(driverConfig);
                     break;
-                // case SteedosDatabaseDriverType.Sqlite:
-                //     this._adapter = new SteedosSqlite3Driver(driverConfig);
-                //     break;
+                case SteedosDatabaseDriverType.Sqlite:
+                    this._adapter = new SteedosSqlite3Driver(driverConfig);
+                    break;
                 default:
                     break;
             }

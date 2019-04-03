@@ -103,7 +103,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     };
 
     async find(tableName: string, query: SteedosQueryOptions) {
-        this.connect();
+        await this.connect();
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
@@ -114,7 +114,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
-        this.connect();
+        await this.connect();
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
@@ -125,7 +125,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
-        this.connect();
+        await this.connect();
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
 
@@ -135,7 +135,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async insert(tableName: string, data: JsonMap) {
-        this.connect();
+        await this.connect();
         data._id = data._id || new ObjectId().toHexString();
         let collection = this.collection(tableName);
         let result = await collection.insertOne(data);
@@ -143,14 +143,14 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
-        this.connect();
+        await this.connect();
         let collection = this.collection(tableName);
         let result = await collection.updateOne({ _id: id }, data);
         return result.result.ok;
     }
 
     async delete(tableName: string, id: SteedosIDType) {
-        this.connect();
+        await this.connect();
         let collection = this.collection(tableName);
         let result = await collection.deleteOne({ _id: id })
         return result.deletedCount;
