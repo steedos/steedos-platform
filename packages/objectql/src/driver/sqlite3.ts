@@ -153,7 +153,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async run(sql: string, param?: any) {
-        console.log("runing sqlite4 sql...", sql);
+        // console.log("runing sqlite4 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.run(sql, param, function(error:any) {
                 if (error) {
@@ -170,7 +170,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async get(sql: string, param?: any) {
-        console.log("geting sqlite4 sql...", sql);
+        // console.log("geting sqlite4 sql...", sql);
         return await new Promise((resolve, reject)=> {
             this._client.get(sql, param, (error:any, row:any)=> {
                 if (error){
@@ -184,7 +184,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async all(sql: string, param?: any) {
-        console.log("alling sqlite4 sql...", sql);
+        // console.log("alling sqlite4 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.all(sql, param, (error: any, row: any) => {
                 if (error) {
