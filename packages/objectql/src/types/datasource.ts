@@ -33,7 +33,6 @@ export class SteedosDataSourceType implements Dictionary {
     private _username?: string;
     private _password?: string;
     private _options?: any;
-    private _isConnected: boolean;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
@@ -59,7 +58,6 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     constructor(config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
-        this._isConnected = false;
         this._url = config.url
         this._username = config.username
         this._password = config.password
@@ -119,40 +117,27 @@ export class SteedosDataSourceType implements Dictionary {
         return this._objectsRolesPermission[object_name]
     }
 
-    async connect(){
-        if (this._isConnected)
-            return
-        await this._adapter.connect()
-        this._isConnected = true;
-    }
-
     async find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.find(tableName, query, userId)
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.findOne(tableName, id, query, userId)
     }
 
     async insert(tableName: string, doc: JsonMap, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.insert(tableName, doc, userId)
     }
 
     async update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.update(tableName, id, doc, userId)
     }
 
     async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.delete(tableName, id, userId)
     }
 
     async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType){
-        await this.connect();
         return await this._adapter.count(tableName, query, userId)
     }
 
