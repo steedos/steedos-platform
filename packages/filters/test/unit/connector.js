@@ -78,6 +78,16 @@ describe('format filters to odata query with connector "and" or "or" or "!"', ()
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("not ((name eq 'ptr') or (title eq 'PTR'))");
     });
+    it('null and undefined', async () => {
+        let filters = [
+            ["name", "=", undefined],
+            "or",
+            ["title", "=", null]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("(name eq null) or (title eq null)");
+    });
     it('complex', async () => {
         let filters = [
             [
