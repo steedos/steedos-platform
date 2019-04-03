@@ -10,8 +10,7 @@ describe('crud for sqlite3 database', () => {
     before(async () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        console.log("insert data to sqlite3 database before check table count result:");
-        console.log(result);
+
         expect(result.count).to.be.not.eq(undefined);
         if (result.count) {
             await driver.run(`DROP TABLE ${tableName}`);
@@ -30,8 +29,6 @@ describe('crud for sqlite3 database', () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 46 })
 
-        console.log("crud for sqlite3 database result:");
-        console.log(result);
         expect(result.changes).to.be.eq(1);
     });
 
@@ -39,8 +36,6 @@ describe('crud for sqlite3 database', () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.update(tableName, "ptr", { name: "ptr-", title: "PTR-", count: 460 })
 
-        console.log("crud for sqlite3 database result:");
-        console.log(result);
         expect(result.changes).to.be.eq(1);
     });
 
@@ -51,8 +46,6 @@ describe('crud for sqlite3 database', () => {
         };
         let result: any = await driver.findOne(tableName, "ptr", queryOptions);
 
-        console.log("crud for sqlite3 database result:");
-        console.log(result);
         expect(result.name).to.be.eq("ptr-");
         expect(result.count).to.be.eq(460);
     });
@@ -61,8 +54,6 @@ describe('crud for sqlite3 database', () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.delete(tableName, "ptr");
 
-        console.log("crud for sqlite3 database result:");
-        console.log(result);
         expect(result.changes).to.be.eq(1);
     });
 });

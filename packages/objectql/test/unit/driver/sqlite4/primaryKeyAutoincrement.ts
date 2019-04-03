@@ -74,8 +74,6 @@ describe('primary key autoincrement test for sqlite3 database', () => {
 
     before(async () => {
         result = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        console.log("insert data to sqlite3 database before check table count result:");
-        console.log(result);
         expect(result.count).to.be.not.eq(undefined);
         if (result.count) {
             await driver.run(`DROP TABLE ${tableName}`);
@@ -113,8 +111,6 @@ describe('primary key autoincrement test for sqlite3 database', () => {
         else if (insertData) {
             result = await driver.insert(tableName, insertData);
         }
-        console.log(`${tests[testIndex].title} result:`);
-        console.log(result);
     });
 
     tests.forEach((test) => {

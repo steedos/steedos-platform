@@ -14,8 +14,6 @@ describe('filter records with simple filters', () => {
             filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
         };
         let result = await mongo.find("apps", queryOptions);
-        console.log("filter records with simple filters result:");
-        console.log(result);
 
         await mongo.delete("apps", "ptr");
         await mongo.delete("apps", "cnpc");
@@ -37,8 +35,6 @@ describe('filter records with odata query string', () => {
             filters: "(name eq 'ptr') and (title eq 'PTR')"
         };
         let result = await mongo.find("apps", queryOptions);
-        console.log("filter records with odata query string result:");
-        console.log(result);
 
         await mongo.delete("apps", "ptr");
         await mongo.delete("apps", "cnpc");
@@ -60,8 +56,6 @@ describe('filter records count with odata query string', () => {
             filters: "(name eq 'ptr') and (title eq 'PTR')"
         };
         let result = await mongo.count("apps", queryOptions);
-        console.log("filter records count with odata query string result:");
-        console.log(result);
 
         await mongo.delete("apps", "ptr");
         await mongo.delete("apps", "cnpc");

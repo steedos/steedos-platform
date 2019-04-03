@@ -22,8 +22,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
             sort: 'name'
         };
         let result1 = await mongo.find(tableName, queryOptions);
-        console.log("fetch records with sort arguments result:");
-        console.log(result1);
 
         queryOptions.sort = 'name asc'
         let result2 = await mongo.find(tableName, queryOptions);
@@ -49,8 +47,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
             sort: 'name desc'
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records with sort arguments result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr");
         await mongo.delete(tableName, "cnpc");
@@ -73,8 +69,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
             sort: 'name desc,count'
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records with sort arguments result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr1");
         await mongo.delete(tableName, "cnpc1");
@@ -101,8 +95,6 @@ describe('fetch records for mongodb with sort arguments as a string that comply 
             sort: 'name desc, count ,,'
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records with sort arguments result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr1");
         await mongo.delete(tableName, "cnpc1");

@@ -24,8 +24,6 @@ describe('fetch records by paging for mongo database', () => {
             top: 2
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records by paging result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr1");
         await mongo.delete(tableName, "cnpc1");
@@ -49,8 +47,6 @@ describe('fetch records by paging for mongo database', () => {
             skip: 2
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records by paging result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr1");
         await mongo.delete(tableName, "cnpc1");
@@ -76,8 +72,6 @@ describe('fetch records by paging for mongo database', () => {
             skip: 3
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records by paging result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr1");
         await mongo.delete(tableName, "cnpc1");

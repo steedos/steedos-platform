@@ -73,8 +73,6 @@ describe('fetch records for sqlite4 with sort arguments as a string that comply 
 
     before(async () => {
         result = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        console.log("insert data to sqlite3 database before check table count result:");
-        console.log(result);
         expect(result.count).to.be.not.eq(undefined);
         if (result.count) {
             await driver.run(`DROP TABLE ${tableName}`);
@@ -98,8 +96,6 @@ describe('fetch records for sqlite4 with sort arguments as a string that comply 
         let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;
         result = await driver.find(tableName, queryOptions);
-        console.log(`${tests[testIndex].title} result:`);
-        console.log(result);
     });
 
     afterEach(async () => {
