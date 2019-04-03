@@ -25,3 +25,4 @@ website/yarn.lock
 website/node_modules
 website/i18n/*
 packages/objectql/test/unit/driver/sqlite4/sqlite-test.db
+packages/objectql/test/unit/driver/sqlite4/sqlite-test.db-journal
