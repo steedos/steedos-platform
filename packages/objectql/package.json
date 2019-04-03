@@ -17,7 +17,7 @@
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/filters": "^0.0.1",
+    "@steedos/filters": "file:../filters",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -45,6 +45,7 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
+    "@steedos/meteor-bundle-runner": "^1.1.4",
     "@salesforce/dev-scripts": "0.3.12",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",

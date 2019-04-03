@@ -22,11 +22,7 @@ router.use(function auth(req: Request, res: Response, next: () => void) {
       req.user = result;
       next();
     } else {
-      let err = {
-        statusCode: 401,
-        body: { status: 'error', message: 'You must be logged in to do this.' }
-      }
-      res.send(err);
+      res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
     }
   })
 })
@@ -43,10 +39,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
-      res.send({
-        statusCode: 401,
-        body: setErrorMessage(404, collection, key)
-      })
+      res.status(401).send(setErrorMessage(404, collection, key))
     }
 
     getODataManager().removeInvalidMethod(queryParams);
@@ -77,13 +70,11 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         if (queryParams.hasOwnProperty('$skip')) {
           query['skip'] = Number(queryParams.$skip);
         }
-        entities = await collection.find(query);
+        entities = await collection.find(query, userId);
       }
-      console.log('entities: ', entities)
-      let scannedCount = await collection.count({ filters: filters, fields: ['_id'] });
-      console.log('scannedCount: ', scannedCount)
+      let scannedCount = await collection.count({ filters: filters, fields: ['_id'] }, userId);
       if (entities) {
-        entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId);
+        entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = scannedCount;
@@ -92,19 +83,14 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         getODataManager().setHeaders(res);
         res.send(body);
       } else {
-        res.send({
-          statusCode: 404,
-          body: setErrorMessage(404, collection, key)
-        });
+        res.status(404).send(setErrorMessage(404, collection, key))
       }
     } else {
-      res.send({
-        statusCode: 403,
-        body: setErrorMessage(403, collection, key, 'get')
-      })
+      res.status(403).send(setErrorMessage(403, collection, key, 'get'))
     }
   } catch (error) {
-    res.send(getODataManager().handleError(error));
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body)
   }
 })
 
@@ -119,10 +105,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
-      res.send({
-        statusCode: 401,
-        body: setErrorMessage(404, collection, key)
-      })
+      res.status(401).send(setErrorMessage(404, collection, key));
     }
 
     if (userId) {
@@ -171,7 +154,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         if (queryParams.hasOwnProperty('$skip')) {
           query['skip'] = Number(queryParams.$skip);
         }
-        entities = await collection.find(query);
+        entities = await collection.find(query, userId, userId);
       }
       let entities_ids = _.pluck(entities, '_id');
       let sort_entities = [];
@@ -187,7 +170,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         sort_entities = entities;
       }
       if (sort_entities) {
-        getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId);
+        getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userId);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = sort_entities.length;
@@ -196,19 +179,14 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         getODataManager().setHeaders(res);
         res.send(body);
       } else {
-        res.send({
-          statusCode: 404,
-          body: setErrorMessage(404, collection, key, 'get')
-        });
+        res.status(404).send(setErrorMessage(404, collection, key, 'get'));
       }
     } else {
-      res.send({
-        statusCode: 403,
-        body: setErrorMessage(403, collection, key, 'get')
-      });
+      res.status(403).send(setErrorMessage(403, collection, key, 'get'));
     }
   } catch (error) {
-    res.send(getODataManager().handleError(error));
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body);
   }
 })
 router.post('/:spaceId/:objectName', async function (req: Request, res: Response) {
@@ -222,17 +200,15 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
-      res.send({
-        statusCode: 401,
-        body: setErrorMessage(404, collection, key)
-      })
+      res.status(401).send(setErrorMessage(404, collection, key));
     }
     if (userId) {
       bodyParams.space = spaceId;
       if (spaceId == 'guest') {
         delete bodyParams.space;
       }
-      let entity = await collection.insert(bodyParams);
+      let entity = await collection.insert(bodyParams, userId);
+      console.log('entity: ', entity)
       let entities = [];
       if (entity) {
         let body = {};
@@ -244,13 +220,11 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
         res.send(body);
       }
     } else {
-      res.send({
-        statusCode: 403,
-        body: setErrorMessage(403, collection, key, 'post')
-      })
+      res.status(403).send(setErrorMessage(403, collection, key, 'post'));
     }
   } catch (error) {
-    res.send(getODataManager().handleError(error));
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body);
   }
 })
 router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
@@ -295,7 +269,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         await lookupCollection.find({
           filters: filters.join(' or '),
           fields: fields
-        }).forEach(function (obj) {
+        }, userId).forEach(function (obj) {
           _.each(obj, function (v, k) {
             if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
               return obj[k] = JSON.stringify(v);
@@ -324,10 +298,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     try {
       let collection = getCreator().getSteedosSchema().getObject(key)
       if (!collection) {
-        res.send({
-          statusCode: 404,
-          body: setErrorMessage(404, collection, key)
-        });
+        res.status(404).send(setErrorMessage(404, collection, key));
       }
       if (userId) {
         getODataManager().removeInvalidMethod(queryParams);
@@ -343,7 +314,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           };
         }
 
-        let entity = await collection.findOne(recordId, { fields: _.keys(collection.toConfig().fields) });
+        let entity = await collection.findOne(recordId, { fields: _.keys(collection.toConfig().fields) }, userId);
         let entities = [];
         if (entity) {
           let isAllowed = true;
@@ -351,38 +322,30 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           if (isAllowed) {
             let body = {};
             entities.push(entity);
-            getODataManager().dealWithExpand(createQuery, entities, key, spaceId);
+            getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
             body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
             let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
             _.extend(body, entity_OdataProperties[0]);
             getODataManager().setHeaders(res);
             res.send(body);
           } else {
-            res.send({
-              statusCode: 403,
-              body: setErrorMessage(403, collection, key, 'get')
-            });
+            res.status(403).send(setErrorMessage(403, collection, key, 'get'));
           }
         } else {
-          res.send({
-            statusCode: 404,
-            body: setErrorMessage(404, collection, key, 'get')
-          });
+          res.status(404).send(setErrorMessage(404, collection, key, 'get'));
         }
       } else {
-        res.send({
-          statusCode: 403,
-          body: setErrorMessage(403, collection, key, 'get')
-        });
+        res.status(403).send(setErrorMessage(403, collection, key, 'get'));
       }
     } catch (error) {
-      res.send(getODataManager().handleError(error));
+      let handleError = getODataManager().handleError(error);
+      res.status(handleError.statusCode).send(handleError.body);
     }
   }
 })
 router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
   try {
-    // let userId = req.user._id;
+    let userId = req.user._id;
     let urlParams = req.params;
     let bodyParams = req.body;
     let key = urlParams.objectName;
@@ -392,10 +355,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
     let collection = getCreator().getSteedosSchema().getObject(key)
     if (!collection) {
-      res.send({
-        statusCode: 404,
-        body: setErrorMessage(404, collection, key)
-      });
+      res.status(404).send(setErrorMessage(404, collection, key));
     }
 
     let isAllowed = true;
@@ -406,30 +366,22 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
       if (fields_editable) {
 
-        let entityIsUpdated = await collection.update(recordId, bodyParams);
+        let entityIsUpdated = await collection.update(recordId, bodyParams, userId);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
         } else {
-          res.send({
-            statusCode: 404,
-            body: setErrorMessage(404, collection, key)
-          });
+          res.status(404).send(setErrorMessage(404, collection, key));
         }
       } else {
-        res.send({
-          statusCode: 403,
-          body: setErrorMessage(403, collection, key, 'put')
-        });
+        res.status(403).send(setErrorMessage(403, collection, key, 'put'));
       }
     } else {
-      res.send({
-        statusCode: 403,
-        body: setErrorMessage(403, collection, key, 'put')
-      });
+      res.status(403).send(setErrorMessage(403, collection, key, 'put'));
     }
   } catch (error) {
-    res.send(getODataManager().handleError(error));
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body);
   }
 })
 router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
@@ -443,10 +395,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
 
     let collection = getCreator().getSteedosSchema().getObject(key);
     if (!collection) {
-      res.send({
-        statusCode: 404,
-        body: setErrorMessage(404, collection, key)
-      });
+      res.status(404).send(setErrorMessage(404, collection, key));
     }
     let isAllowed = true
     if (isAllowed) {
@@ -457,35 +406,27 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
           is_deleted: true,
           deleted: new Date(),
           deleted_by: userId
-        });
+        }, userId);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
         } else {
-          res.send({
-            statusCode: 404,
-            body: setErrorMessage(404, collection, key)
-          });
+          res.status(404).send(setErrorMessage(404, collection, key));
         }
       } else {
-        if (await collection.delete(recordId)) {
+        if (await collection.delete(recordId, userId)) {
           getODataManager().setHeaders(res);
           res.send({});
         } else {
-          res.send({
-            statusCode: 404,
-            body: setErrorMessage(404, collection, key)
-          });
+          res.status(404).send(setErrorMessage(404, collection, key));
         }
       }
     } else {
-      res.send({
-        statusCode: 403,
-        body: setErrorMessage(403, collection, key)
-      });
+      res.status(403).send(setErrorMessage(403, collection, key));
     }
   } catch (error) {
-    res.send(getODataManager().handleError(error));
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body);
   }
 })
 

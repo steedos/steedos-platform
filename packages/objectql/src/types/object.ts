@@ -83,7 +83,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
-        
+
         this._actions = config.actions
 
         _.each(config.listeners, (listener, listener_name) => {
@@ -199,7 +199,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     getRepository() {
 
     }
-    
+
     getObjectRolesPermission(){
         return this._datasource.getObjectRolesPermission(this._name)
     }
@@ -223,11 +223,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             uneditable_fields: [],
             unrelated_objects: []
           }
-      
+
           if(_.isEmpty(roles)){
             throw new Error('not find user permission');
           }
-          
+
           roles.forEach((role)=>{
             let rolePermission = objectRolesPermission[role]
             if(rolePermission){
@@ -295,7 +295,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowFind){
             throw new Error('not find permission')
         }
-        return await this._datasource.find(this.name, query)
+        return await this._datasource.find(this.name, query, userId)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
@@ -303,7 +303,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowFind){
             throw new Error('not find permission')
         }
-        return await this._datasource.findOne(this.tableName,  id, query)
+        return await this._datasource.findOne(this.tableName,  id, query, userId)
     }
 
     async insert(doc: JsonMap, userId?: SteedosIDType){
@@ -311,7 +311,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowInsert){
             throw new Error('not find permission')
         }
-        return await this._datasource.insert(this.tableName, doc)
+        return await this._datasource.insert(this.tableName, doc, userId)
     }
 
     async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
@@ -319,7 +319,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowUpdate){
             throw new Error('not find permission')
         }
-        return await this._datasource.update(this.tableName,  id, doc)
+        return await this._datasource.update(this.tableName,  id, doc, userId)
     }
 
     async delete(id: SteedosIDType, userId?: SteedosIDType){
@@ -327,7 +327,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowDelete){
             throw new Error('not find permission')
         }
-        return await this._datasource.delete(this.tableName,  id)
+        return await this._datasource.delete(this.tableName,  id, userId)
     }
 
     async count(query: SteedosQueryOptions, userId?: SteedosIDType){
@@ -335,9 +335,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!allowFind){
             throw new Error('not find permission')
         }
-        return await this._datasource.count(this.tableName, query)
+        return await this._datasource.count(this.tableName, query, userId)
     }
-    
+
 
     /***** get/set *****/
     public get schema(): SteedosSchema {
@@ -351,11 +351,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     public get fields(): Dictionary<SteedosFieldType> {
         return this._fields;
     }
-    
+
     public get actions(): Dictionary<SteedosActionType> {
         return this._actions;
     }
-    
+
     public get triggers(): Dictionary<SteedosTriggerType> {
         return this._triggers;
     }

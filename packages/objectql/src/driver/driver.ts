@@ -10,16 +10,16 @@ export type SteedosDriverConfig = {
 };
 
 export interface SteedosDriver {
-    
+
     //constructor(url:string): any;
     // new(config: SteedosDriverConfig): any;
     connect();
     disconnect();
-    find(tableName: string, query: SteedosQueryOptions): any;
-    findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions): any;
-    insert(tableName: string, doc: JsonMap): any;
-    update(tableName: string, id: SteedosIDType, doc: JsonMap): any;
-    delete(tableName: string, id: SteedosIDType): any;
-    count(tableName: string, query: SteedosQueryOptions): any;
+    find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
+    findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;
+    insert(tableName: string, doc: JsonMap, userId?: SteedosIDType): any;
+    update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType): any;
+    delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
+    count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
 }
 

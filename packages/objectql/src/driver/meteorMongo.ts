@@ -1,6 +1,5 @@
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index"
-import { ObjectId } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
 import { SteedosDriverConfig } from "./driver";
@@ -12,6 +11,8 @@ import _ = require("underscore");
 var Fiber = require('fibers');
 
 declare var Creator: any;
+declare var DDP: any;
+declare var DDPCommon: any;
 
 export class SteedosMeteorMongoDriver implements SteedosDriver {
     connect() {
@@ -90,7 +91,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         return Creator.Collections[name];
     };
 
-    async find(tableName: string, query: SteedosQueryOptions) {
+    async find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
 
         let mongoFilters = this.getMongoFilters(query.filters);
@@ -98,50 +99,139 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
 
         return await new Promise((resolve, reject) => {
             Fiber(function () {
-                resolve(collection.find(mongoFilters, mongoOptions).fetch());
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.find(mongoFilters, mongoOptions).fetch();
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
             }).run()
         });
     }
 
-    async count(tableName: string, query: SteedosQueryOptions) {
+    async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
         return await new Promise((resolve, reject) => {
             Fiber(function () {
-                resolve(collection.find(mongoFilters, mongoOptions).count());
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.find(mongoFilters, mongoOptions).count();
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
             }).run()
         });
     }
 
-    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
+    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
-
         return await new Promise((resolve, reject) => {
             Fiber(function () {
-                resolve(collection.findOne({ _id: id }, mongoOptions));
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.findOne({ _id: id }, mongoOptions);
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
             }).run()
         });
     }
 
-    async insert(tableName: string, data: JsonMap) {
-        data._id = data._id || new ObjectId().toHexString();
+    async insert(tableName: string, data: JsonMap, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
-        let result = collection.insertOne(data);
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    data._id = data._id || collection._makeNewID();
+
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        let recordId = collection.insert(data);
+                        return collection.findOne({ _id: recordId });
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+
+            }).run()
+        });
     }
 
-    async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+    async update(tableName: string, id: SteedosIDType, data: JsonMap, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
-        let result = collection.update({ _id: id }, data);
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.update({ _id: id }, data);
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
     }
 
-    async delete(tableName: string, id: SteedosIDType) {
+    async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
-        let result = collection.delete({ _id: id })
-        return result;
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.remove({ _id: id });
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
     }
 
 }

@@ -23,17 +23,19 @@ server.Fiber(function () {
 				}
 			})
 			var obj = steedosSchema.getObject('organizations')
-			var aw = await obj.count({
+			var count = await obj.count({
 				fields: ['_id']
 			})
-			console.log('aw: ', aw)
-			console.log('f: ', await obj.find({
+			console.log('count: ', count)
+			let find = await obj.find({
 				fields: ['_id']
-			}))
+			})
+			console.log('find: ', find)
+			let insert = await obj.insert({"name":"b","parent":"2CXyaFdiBAtJbtpAe","sort_no":100,"is_company":false,"is_group":false,"hidden":false,"space":"YjYpjXZeSAzq6Y8ba"})
+			console.log('insert: ', insert)
 
 		} catch (error) {
-			console.error(error)
-			throw error
+			console.log(error)
 		}
 		server.Fiber(function () {
 			server.runMain();

@@ -110,7 +110,7 @@ export class ODataManager {
     }
   }
 
-  async dealWithExpand(createQuery: any, entities: Array<any>, key: string, spaceId: string) {
+  async dealWithExpand(createQuery: any, entities: Array<any>, key: string, spaceId: string, userId: string) {
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
@@ -143,7 +143,7 @@ export class ODataManager {
                     filters.push(`(_id eq '${f}')`);
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
-                  entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery);
+                  entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery, userId);
                   if (!entities[idx][navigationProperty].length) {
                     entities[idx][navigationProperty] = originalData;
                   }
@@ -155,7 +155,7 @@ export class ODataManager {
                     return o;
                   });
                 } else {
-                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions) || entities[idx][navigationProperty];
+                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId) || entities[idx][navigationProperty];
                   if (entities[idx][navigationProperty]) {
                     entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                     entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
@@ -187,7 +187,7 @@ export class ODataManager {
                       filters.push(`(_id eq '${f}')`);
                     })
                     let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
-                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery), function (o) {
+                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userId), function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
@@ -195,7 +195,7 @@ export class ODataManager {
                     });
                     entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], _ids);
                   } else {
-                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], queryOptions);
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], queryOptions, userId);
                     if (entities[idx][navigationProperty]) {
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
@@ -232,7 +232,7 @@ export class ODataManager {
   }
 
   handleError(e: any) {
-    console.error(e.stack);
+    console.error('handleError: ', e);
     let body = {};
     let error = {};
     error['message'] = e.message;

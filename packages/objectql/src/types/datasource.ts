@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -12,7 +12,7 @@ var util = require('../util')
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
-    Sqlite = 'sqlite' 
+    Sqlite = 'sqlite'
 }
 
 export type SteedosDataSourceTypeConfig = {
@@ -81,9 +81,9 @@ export class SteedosDataSourceType implements Dictionary {
                 case SteedosDatabaseDriverType.MeteorMongo:
                     this._adapter = new SteedosMeteorMongoDriver(driverConfig);
                     break;
-                case SteedosDatabaseDriverType.Sqlite:
-                    this._adapter = new SteedosSqlite3Driver(driverConfig);
-                    break;    
+                // case SteedosDatabaseDriverType.Sqlite:
+                //     this._adapter = new SteedosSqlite3Driver(driverConfig);
+                //     break;
                 default:
                     break;
             }
@@ -126,34 +126,34 @@ export class SteedosDataSourceType implements Dictionary {
         this._isConnected = true;
     }
 
-    async find(tableName: string, query: SteedosQueryOptions){
+    async find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.find(tableName, query)
+        return await this._adapter.find(tableName, query, userId)
     }
 
-    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions){
+    async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.findOne(tableName, id, query)
+        return await this._adapter.findOne(tableName, id, query, userId)
     }
 
-    async insert(tableName: string, doc: JsonMap){
+    async insert(tableName: string, doc: JsonMap, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.insert(tableName, doc)
+        return await this._adapter.insert(tableName, doc, userId)
     }
 
-    async update(tableName: string, id: SteedosIDType, doc: JsonMap){
+    async update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.update(tableName, id, doc)
+        return await this._adapter.update(tableName, id, doc, userId)
     }
 
-    async delete(tableName: string, id: SteedosIDType){
+    async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.delete(tableName, id)
+        return await this._adapter.delete(tableName, id, userId)
     }
 
-    async count(tableName: string, query: SteedosQueryOptions){
+    async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType){
         await this.connect();
-        return await this._adapter.count(tableName, query)
+        return await this._adapter.count(tableName, query, userId)
     }
 
     public get schema(): SteedosSchema {
