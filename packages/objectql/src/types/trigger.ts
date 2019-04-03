@@ -1,6 +1,14 @@
-import { Dictionary } from "@salesforce/ts-types";
+import { Dictionary, JsonMap } from "@salesforce/ts-types";
 
 import _ = require('underscore')
+import { SteedosIDType } from "./field_types";
+import { SteedosQueryOptions } from ".";
+
+export type SteedosTriggerContextConfig = {
+    userId: SteedosIDType,
+    doc?: JsonMap, 
+    query?: SteedosQueryOptions
+}
 
 export type SteedosTriggerTypeConfig = {
     name: string,

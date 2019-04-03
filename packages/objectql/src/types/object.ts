@@ -1,7 +1,7 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig } from ".";
 import _ = require("underscore");
-import { SteedosTriggerTypeConfig } from "./trigger";
+import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
 import { SteedosDataSourceType } from "./datasource";
 
@@ -63,6 +63,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _triggers: Dictionary<SteedosTriggerType> = {};
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
     private _tableName: string;
+    private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
 
     constructor(object_name: string, datasource: SteedosDataSourceType, config: SteedosObjectTypeConfig) {
         super();
@@ -83,7 +84,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
-
+        
         this._actions = config.actions
 
         _.each(config.listeners, (listener, listener_name) => {
@@ -112,29 +113,62 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     setListener(listener_name: string, config: SteedosListenerConfig){
         this.listeners[listener_name] = config
-        let object_name = this.name
         _TRIGGERKEYS.forEach((key)=>{
             let event = config[key];
             if(_.isFunction(event)){
-                let todoWrapper = function(){
-                    this.object_name = object_name
-                    Object.setPrototypeOf(this, Object.getPrototypeOf(config))
-                    return event.apply(this, arguments)
-                }
-                this.setTrigger(`${listener_name}_${event.name}`, event.name ,todoWrapper);
+                this.setTrigger(`${listener_name}_${event.name}`, event.name ,event);
             }
         })
     }
 
-    private setTrigger(name: string, when: string , todo: Function,on= 'server'){
+    private setTrigger(name: string, when: string , todo: Function, on= 'server'){
         let triggerConfig: SteedosTriggerTypeConfig = {
             name: name,
             on: on,
             when: when,
-            todo: todo
+            todo: todo,
         }
         let trigger = new SteedosTriggerType(triggerConfig)
         this.triggers[name] = trigger
+        this.registerTrigger(trigger)
+    }
+
+
+    /**
+     * TODO 如果是meteor mongo 则将trigger 直接放到collection的对应hooks中
+     * @param {SteedosTriggerType} trigger
+     * @memberof SteedosObjectType
+     */
+    registerTrigger(trigger: SteedosTriggerType){
+        if(!this._triggersQueue[trigger.when]){
+            this._triggersQueue[trigger.when] = {}
+        }
+        this._triggersQueue[trigger.when][trigger.name] = trigger
+    }
+
+    unregisterTrigger(trigger: SteedosTriggerType){
+        delete this._triggersQueue[trigger.when][trigger.name]
+    }
+
+    private runTirgger(trigger: SteedosTriggerType, context: SteedosTriggerContextConfig){
+        let object_name = this.name
+        let event = trigger.todo
+        let todoWrapper = function(){
+            // Object.setPrototypeOf(thisArg, Object.getPrototypeOf(trigger))
+            return event.apply(thisArg, arguments)
+        }
+        let thisArg = {userId: context.userId, object_name: object_name, getObject: (object_name: string)=>{
+            return this._schema.getObject(object_name)
+        }}
+        console.log('thisArg', thisArg);
+        todoWrapper.call(thisArg, context.userId, context.doc)
+    }
+
+    runTriggers(when: string, context: SteedosTriggerContextConfig){
+        let triggers = this._triggersQueue[when]
+        _.each(triggers, (trigger)=>{
+            this.runTirgger(trigger, context)
+        })
     }
 
     toConfig(){
@@ -172,6 +206,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
     }
 
+    //TODO 处理对象继承
     extend(config: SteedosObjectTypeConfig) {
         if (this.name != config.name)
             throw new Error("You can not extend on different object");
@@ -194,10 +229,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         //         this.triggers[trigger.name] = trigger
         //     })
         // }
-    }
-
-    getRepository() {
-
     }
 
     getObjectRolesPermission(){
@@ -223,11 +254,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             uneditable_fields: [],
             unrelated_objects: []
           }
-
+      
           if(_.isEmpty(roles)){
             throw new Error('not find user permission');
           }
-
+          
           roles.forEach((role)=>{
             let rolePermission = objectRolesPermission[role]
             if(rolePermission){
@@ -291,53 +322,58 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async find(query: SteedosQueryOptions, userId?: SteedosIDType){
-        let allowFind = await this.allowFind(userId)
-        if(!allowFind){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.find(this.name, query, userId)
+        return await this.callAdapter('find', this.name, query, userId)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
-        let allowFind = await this.allowFind(userId)
-        if(!allowFind){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.findOne(this.tableName,  id, query, userId)
+        return await this.callAdapter('findOne', this.tableName, id, query, userId)
     }
 
     async insert(doc: JsonMap, userId?: SteedosIDType){
-        let allowInsert = await this.allowInsert(userId)
-        if(!allowInsert){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.insert(this.tableName, doc, userId)
+        // this.runTriggers('beforeInsert', {userId, doc});
+        return await this.callAdapter('insert', this.tableName, doc, userId)
     }
 
     async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
-        let allowUpdate = await this.allowUpdate(userId)
-        if(!allowUpdate){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.update(this.tableName,  id, doc, userId)
+        return await this.callAdapter('update', this.tableName,  id, doc, userId)
     }
 
     async delete(id: SteedosIDType, userId?: SteedosIDType){
-        let allowDelete = await this.allowDelete(userId)
-        if(!allowDelete){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.delete(this.tableName,  id, userId)
+        return await this.callAdapter('delete', this.tableName, id, userId)
     }
 
     async count(query: SteedosQueryOptions, userId?: SteedosIDType){
-        let allowFind = await this.allowFind(userId)
-        if(!allowFind){
-            throw new Error('not find permission')
-        }
-        return await this._datasource.count(this.tableName, query, userId)
+        return await this.callAdapter('count', this.tableName, query, userId)
     }
 
+    private async allow(method: string, userId: SteedosIDType){
+        if(_.isNull(userId) || _.isUndefined(userId)){
+            return true
+        }
+        if(method === 'find' || method === 'findOne' || method === 'count'){
+            return await this.allowFind(userId)
+        }else if(method === 'insert'){
+            return await this.allowInsert(userId)
+        }else if(method === 'update'){
+            return await this.allowUpdate(userId)
+        }else if(method === 'delete'){
+            return await this.allowDelete(userId)
+        }
+    }
+
+
+    private async callAdapter(method: string, ...args: any[]) {
+        const adapterMethod = this._datasource[method];
+        if (typeof adapterMethod !== 'function') {
+            throw new Error('Adapted does not support "' + method + '" method');
+        }
+        let allow = await this.allow(method, args[args.length - 1])
+        if(!allow){
+            throw new Error('not find permission')
+        }
+        return await adapterMethod.apply(this._datasource, args);
+    };
+    
 
     /***** get/set *****/
     public get schema(): SteedosSchema {
@@ -351,11 +387,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     public get fields(): Dictionary<SteedosFieldType> {
         return this._fields;
     }
-
+    
     public get actions(): Dictionary<SteedosActionType> {
         return this._actions;
     }
-
+    
     public get triggers(): Dictionary<SteedosTriggerType> {
         return this._triggers;
     }
