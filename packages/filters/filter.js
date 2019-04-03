@@ -15,6 +15,11 @@ const DevExpressOData = {
         return propName.replace(/\./g, "/");
     },
     serializeValue(value, protocolVersion) {
+        if(value === undefined){
+            // 解决value为undefined的时候解析异常，需要返回null值
+            // 有可能serializeValueV4函数中if (value instanceof Guid)逻辑被注释掉造成的，放开应该就会自动返回null
+            return null;
+        }
         switch (protocolVersion) {
             case 2:
                 return this.serializeValueV2(value);
