@@ -264,5 +264,17 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
-  admin: {}
-  user: {}
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
