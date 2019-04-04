@@ -5,9 +5,11 @@ import { SteedosIDType } from "./field_types";
 import { SteedosQueryOptions } from ".";
 
 export type SteedosTriggerContextConfig = {
+    id?: SteedosIDType,
     userId: SteedosIDType,
     doc?: JsonMap, 
-    query?: SteedosQueryOptions
+    previousDoc?: JsonMap,
+    query?: SteedosQueryOptions,
 }
 
 export type SteedosTriggerTypeConfig = {

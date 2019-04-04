@@ -6,7 +6,7 @@ import { SteedosQueryOptions } from "./query";
 import { SteedosDataSourceType } from "./datasource";
 
 
-abstract class SteedosObjectProperties{
+abstract class SteedosObjectProperties {
     name?: string
     // extend?: string
     tableName?: string
@@ -50,7 +50,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
+const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -71,20 +71,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this._datasource = datasource
         this._schema = datasource.schema
 
-        if(/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true){
+        if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true) {
             throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set table_name');
         }
 
-        if(config.tableName){
+        if (config.tableName) {
             this._tableName = config.tableName
-        }else{
+        } else {
             this._tableName = this._name
         }
 
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
-        
+
         this._actions = config.actions
 
         _.each(config.listeners, (listener, listener_name) => {
@@ -96,32 +96,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
 
         _.each(config.permissions, (permission, name) => {
-            permission.name =name
+            permission.name = name
             this.setPermission(permission)
         })
 
         //TODO remove ; 目前为了兼容现有object的定义保留
         _.each(config.permission_set, (permission, name) => {
-            permission.name =name
+            permission.name = name
             this.setPermission(permission)
         })
     }
 
-    setPermission(config: SteedosObjectPermissionTypeConfig){
+    setPermission(config: SteedosObjectPermissionTypeConfig) {
         this._datasource.setObjectPermission(this._name, config)
     }
 
-    setListener(listener_name: string, config: SteedosListenerConfig){
+    setListener(listener_name: string, config: SteedosListenerConfig) {
         this.listeners[listener_name] = config
-        _TRIGGERKEYS.forEach((key)=>{
+        _TRIGGERKEYS.forEach((key) => {
             let event = config[key];
-            if(_.isFunction(event)){
-                this.setTrigger(`${listener_name}_${event.name}`, event.name ,event);
+            if (_.isFunction(event)) {
+                this.setTrigger(`${listener_name}_${event.name}`, event.name, event);
             }
         })
     }
 
-    private setTrigger(name: string, when: string , todo: Function, on= 'server'){
+    private setTrigger(name: string, when: string, todo: Function, on = 'server') {
         let triggerConfig: SteedosTriggerTypeConfig = {
             name: name,
             on: on,
@@ -139,46 +139,55 @@ export class SteedosObjectType extends SteedosObjectProperties {
      * @param {SteedosTriggerType} trigger
      * @memberof SteedosObjectType
      */
-    registerTrigger(trigger: SteedosTriggerType){
-        if(!this._triggersQueue[trigger.when]){
+    registerTrigger(trigger: SteedosTriggerType) {
+        if (!this._triggersQueue[trigger.when]) {
             this._triggersQueue[trigger.when] = {}
         }
         this._triggersQueue[trigger.when][trigger.name] = trigger
     }
 
-    unregisterTrigger(trigger: SteedosTriggerType){
+    unregisterTrigger(trigger: SteedosTriggerType) {
         delete this._triggersQueue[trigger.when][trigger.name]
     }
 
-    private runTirgger(trigger: SteedosTriggerType, context: SteedosTriggerContextConfig){
+    private async runTirgger(trigger: SteedosTriggerType, context: SteedosTriggerContextConfig) {
         let object_name = this.name
         let event = trigger.todo
-        let todoWrapper = function(){
+        let todoWrapper = async function () {
             // Object.setPrototypeOf(thisArg, Object.getPrototypeOf(trigger))
-            return event.apply(thisArg, arguments)
+            return await event.apply(thisArg, arguments)
         }
-        let thisArg = {userId: context.userId, object_name: object_name, getObject: (object_name: string)=>{
-            return this._schema.getObject(object_name)
-        }}
-        console.log('thisArg', thisArg);
-        todoWrapper.call(thisArg, context.userId, context.doc)
+        let thisArg = {
+            userId: context.userId, object_name: object_name, getObject: (object_name: string) => {
+                return this._schema.getObject(object_name)
+            }
+        }
+
+        return await todoWrapper.call(thisArg, context.userId, context)
     }
 
-    runTriggers(when: string, context: SteedosTriggerContextConfig){
+    async runTriggers(when: string, context: SteedosTriggerContextConfig) {
         let triggers = this._triggersQueue[when]
-        _.each(triggers, (trigger)=>{
-            this.runTirgger(trigger, context)
-        })
+        if(!triggers){
+            return ;
+        }
+
+        let triggerKeys = _.keys(triggers)
+
+        for (let index = 0; index < triggerKeys.length; index++) {
+            let trigger = triggers[triggerKeys[index]];
+            await this.runTirgger(trigger, context)
+        }
     }
 
-    toConfig(){
+    toConfig() {
         let config: JsonMap = {
             name: this.name,
             fields: {}
         }
-        if(this.fields){
+        if (this.fields) {
             config.fields = {}
-            _.each(this.fields, (field: SteedosFieldType, key: string)=>{
+            _.each(this.fields, (field: SteedosFieldType, key: string) => {
                 config.fields[key] = field.toConfig();
             })
         }
@@ -202,7 +211,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this.fields[field_name]
     }
 
-    setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig){
+    setListView(list_view_name: string, config: SteedosObjectListViewTypeConfig) {
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
     }
 
@@ -231,11 +240,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         // }
     }
 
-    getObjectRolesPermission(){
+    getObjectRolesPermission() {
         return this._datasource.getObjectRolesPermission(this._name)
     }
 
-    async getUserObjectPermission(userId: SteedosIDType){
+    async getUserObjectPermission(userId: SteedosIDType) {
         let roles = await this.schema.getRoles(userId)
         let objectRolesPermission = this.getObjectRolesPermission()
 
@@ -253,112 +262,144 @@ export class SteedosObjectType extends SteedosObjectProperties {
             unreadable_fields: [],
             uneditable_fields: [],
             unrelated_objects: []
-          }
-      
-          if(_.isEmpty(roles)){
+        }
+
+        if (_.isEmpty(roles)) {
             throw new Error('not find user permission');
-          }
-          
-          roles.forEach((role)=>{
+        }
+
+        roles.forEach((role) => {
             let rolePermission = objectRolesPermission[role]
-            if(rolePermission){
-                _.each(userObjectPermission, (v, k)=>{
+            if (rolePermission) {
+                _.each(userObjectPermission, (v, k) => {
                     let _v = rolePermission[k]
-                    if(_.isBoolean(v)){
-                      if(v === false && _v === true){
-                        userObjectPermission[k] = _v
-                      }
-                    }else if(_.isArray(v) && _.isArray(_v)){
-                      userObjectPermission[k] = _.union(v, _v)
+                    if (_.isBoolean(v)) {
+                        if (v === false && _v === true) {
+                            userObjectPermission[k] = _v
+                        }
+                    } else if (_.isArray(v) && _.isArray(_v)) {
+                        userObjectPermission[k] = _.union(v, _v)
                     }
-                  })
+                })
             }
-          })
-          return userObjectPermission;
+        })
+        return userObjectPermission;
     }
 
-    private async allowFind(userId: SteedosIDType){
-        if(!userId)
+    private async allowFind(userId: SteedosIDType) {
+        if (!userId)
             return true
         let userObjectPermission = await this.getUserObjectPermission(userId)
-        if(userObjectPermission.allowRead){
+        if (userObjectPermission.allowRead) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
-    private async allowInsert(userId: SteedosIDType){
-        if(!userId)
+    private async allowInsert(userId: SteedosIDType) {
+        if (!userId)
             return true
         let userObjectPermission = await this.getUserObjectPermission(userId)
-        if(userObjectPermission.allowCreate){
+        if (userObjectPermission.allowCreate) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
-    private async allowUpdate(userId: SteedosIDType){
-        if(!userId)
+    private async allowUpdate(userId: SteedosIDType) {
+        if (!userId)
             return true
         let userObjectPermission = await this.getUserObjectPermission(userId)
-        if(userObjectPermission.allowEdit){
+        if (userObjectPermission.allowEdit) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
-    private async allowDelete(userId: SteedosIDType){
-        if(!userId)
+    private async allowDelete(userId: SteedosIDType) {
+        if (!userId)
             return true
         let userObjectPermission = await this.getUserObjectPermission(userId)
-        if(userObjectPermission.allowDelete){
+        if (userObjectPermission.allowDelete) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
-    async find(query: SteedosQueryOptions, userId?: SteedosIDType){
+    async find(query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this.callAdapter('find', this.name, query, userId)
     }
 
-    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType){
+    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this.callAdapter('findOne', this.tableName, id, query, userId)
     }
 
-    async insert(doc: JsonMap, userId?: SteedosIDType){
-        // this.runTriggers('beforeInsert', {userId, doc});
+    async insert(doc: JsonMap, userId?: SteedosIDType) {
         return await this.callAdapter('insert', this.tableName, doc, userId)
     }
 
-    async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
-        return await this.callAdapter('update', this.tableName,  id, doc, userId)
+    async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType) {
+        return await this.callAdapter('update', this.tableName, id, doc, userId)
     }
 
-    async delete(id: SteedosIDType, userId?: SteedosIDType){
+    async delete(id: SteedosIDType, userId?: SteedosIDType) {
         return await this.callAdapter('delete', this.tableName, id, userId)
     }
 
-    async count(query: SteedosQueryOptions, userId?: SteedosIDType){
+    async count(query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this.callAdapter('count', this.tableName, query, userId)
     }
 
-    private async allow(method: string, userId: SteedosIDType){
-        if(_.isNull(userId) || _.isUndefined(userId)){
+    private async allow(method: string, userId: SteedosIDType) {
+        if (_.isNull(userId) || _.isUndefined(userId)) {
             return true
         }
-        if(method === 'find' || method === 'findOne' || method === 'count'){
+        if (method === 'find' || method === 'findOne' || method === 'count') {
             return await this.allowFind(userId)
-        }else if(method === 'insert'){
+        } else if (method === 'insert') {
             return await this.allowInsert(userId)
-        }else if(method === 'update'){
+        } else if (method === 'update') {
             return await this.allowUpdate(userId)
-        }else if(method === 'delete'){
+        } else if (method === 'delete') {
             return await this.allowDelete(userId)
         }
+    }
+
+    private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
+        let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        return await this.runTriggers(when, context)
+    }
+
+    private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig){
+        let when = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
+        return await this.runTriggers(when, context)
+    }
+
+    private getTriggerContext(when: string, method: string, args: any[]): SteedosTriggerContextConfig {
+
+        let context: SteedosTriggerContextConfig = { userId: args[args.length - 1] }
+
+        if (method === 'find' || method === 'findOne' || method === 'count') {
+            context.query = args[args.length - 2]
+        }
+
+        if (method === 'findOne' || method === 'update' || method === 'delete') {
+            context.id = args[1]
+        }
+
+        if (method === 'insert' || method === 'update') {
+            context.doc = args[args.length - 2]
+        }
+
+        if(when === 'after'){
+            // context.previousDoc = 
+        }
+
+        return context
     }
 
 
@@ -368,12 +409,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('Adapted does not support "' + method + '" method');
         }
         let allow = await this.allow(method, args[args.length - 1])
-        if(!allow){
+        if (!allow) {
             throw new Error('not find permission')
         }
-        return await adapterMethod.apply(this._datasource, args);
+        
+        await this.runBeforeTriggers(method, this.getTriggerContext('before', method, args))
+
+        let returnValue = await adapterMethod.apply(this._datasource, args);
+        // TODO 处理after中的previous doc
+        await this.runAfterTriggers(method, this.getTriggerContext('after', method, args))
+
+        return returnValue
     };
-    
+
 
     /***** get/set *****/
     public get schema(): SteedosSchema {
@@ -387,11 +435,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     public get fields(): Dictionary<SteedosFieldType> {
         return this._fields;
     }
-    
+
     public get actions(): Dictionary<SteedosActionType> {
         return this._actions;
     }
-    
+
     public get triggers(): Dictionary<SteedosTriggerType> {
         return this._triggers;
     }

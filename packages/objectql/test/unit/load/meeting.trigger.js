@@ -6,55 +6,109 @@ module.exports = {
 
   listenTo: 'meeting',
 
-  clashRemind: function(_id,room,start,end){
-    var meetings = Creator.getCollection("meeting").find({_id:{ $ne:_id},room:room,$or: [{start:{$lte:start},end:{$gt:start}},{start:{$lt:end},end:{$gte:end}},{start:{$gte:start},end:{$lte:end}}]}).fetch()
-    return meetings.length
-  },
-
-  beforeInsert: function(userId, doc){
+  beforeInsert: async function(userId, context){
     var clashs;
+    var doc = context.doc
 
     if (doc.end <= doc.start) {
-        throw new Meteor.Error(500, "开始时间需小于结束时间");
+        throw new Error("开始时间需小于结束时间");
     }
 
-    clashs = this.clashRemind(doc._id, doc.room, doc.start, doc.end);
+    var getObject = this.getObject
+
+    var clashRemind = async function(_id,room,start,end){
+      var meetings = await getObject("meeting").find({
+        filters: [
+          [
+            ['_id', '<>', _id],
+            ['room', '=', room]
+          ], 
+          'and' ,  
+          [
+            [
+              ['start', '<=', start], 'and', ['end', '>', start]
+            ], 'or',
+            [
+              ['start', '<', end], 'and', ['end', '>=', end]
+            ], 'or',
+            [
+              ['start', '>=', start], 'and', ['end', '<=', end]
+            ]
+          ]
+        ],
+        fields: ["_id"]
+      })
+      console.log('meetings', meetings)
+      return meetings.length
+    }
+
+    clashs = await clashRemind(context.id, doc.room, doc.start, doc.end);
+
+    /* from base code */
+    doc.created = new Date();
+    doc.modified = new Date();
+    if(userId){
+      doc.owner = userId
+      doc.created_by = userId;
+      doc.modified_by = userId; 
+    }
 
     if (clashs) {
-        throw new Meteor.Error(500, "该时间段的此会议室已被占用");
+        throw new Error("该时间段的此会议室已被占用");
     }
   },
 
-  beforeUpdate: function(userId, doc, fieldNames, modifier, options){
-    var clashs, end, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, room, start;
+  beforeUpdate: async function(userId, context){
+    var doc = context.doc
+    var clashs, room, start, end;
 
-    if ((modifier != null ? (ref = modifier.$set) != null ? ref.start : void 0 : void 0) || (modifier != null ? (ref1 = modifier.$set) != null ? ref1.end : void 0 : void 0)) {
-      start = modifier != null ? (ref2 = modifier.$set) != null ? ref2.start : void 0 : void 0;
-      end = modifier != null ? (ref3 = modifier.$set) != null ? ref3.end : void 0 : void 0;
-    }
+    if(doc.start || doc.end){
 
-    if (!(modifier != null ? (ref4 = modifier.$set) != null ? ref4.start : void 0 : void 0)) {
-      start = doc.start;
-    }
+      var currentDoc = await this.getObject('meeting').findOne(context.id, {fields: ['room', 'start', 'end']})
 
-    if (!(modifier != null ? (ref5 = modifier.$set) != null ? ref5.end : void 0 : void 0)) {
-      end = doc.end;
-    }
+      room = doc.room || currentDoc.room
+      start = doc.start || currentDoc.start
+      end = doc.end || currentDoc.end
 
-    if (end <= start) {
-      throw new Meteor.Error(500, "开始时间不能大于结束时间");
-    }
+      if (end <= start) {
+        throw new Error("开始时间不能大于结束时间");
+      }
+  
+      var getObject = this.getObject
+  
+      var clashRemind = async function(_id,room,start,end){
+        var meetings = await getObject("meeting").find({
+          filters: [
+            [
+              ['_id', '<>', _id],
+              ['room', '=', room]
+            ], 
+            'and' ,  
+            [
+              [
+                ['start', '<=', start], 'and', ['end', '>', start]
+              ], 'or',
+              [
+                ['start', '<', end], 'and', ['end', '>=', end]
+              ], 'or',
+              [
+                ['start', '>=', start], 'and', ['end', '<=', end]
+              ]
+            ]
+          ],
+          fields: ["_id"]
+        })
+        console.log('meetings', meetings, meetings.length)
+        return meetings.length
+      }
+  
+      clashs = await clashRemind(context.id, room, start, end);
 
-    if (modifier != null ? (ref6 = modifier.$set) != null ? ref6.room : void 0 : void 0) {
-      room = modifier != null ? (ref7 = modifier.$set) != null ? ref7.room : void 0 : void 0;
-    } else {
-      room = doc.room;
-    }
-
-    clashs = this.clashRemind(doc._id, room, start, end);
-
-    if (clashs) {
-      throw new Meteor.Error(500, "该时间段的此会议室已被占用");
+      doc.modified = new Date();
+  
+      if (clashs) {
+        throw new Error("该时间段的此会议室已被占用");
+      }
     }
   }
 }
