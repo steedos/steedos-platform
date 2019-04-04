@@ -145,7 +145,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
         await this.connect();
         let collection = this.collection(tableName);
-        let result = await collection.updateOne({ _id: id }, data);
+        let result = await collection.updateOne({ _id: id }, {$set: data});
         return result.result.ok;
     }
 
