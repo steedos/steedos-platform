@@ -200,4 +200,8 @@ export class SteedosDataSourceType implements Dictionary {
         return buildGraphQLSchema(this._schema, this);
     }
 
+    async buildDatabase() {
+        return this._adapter.buildDatabase(this._objects);
+    }
+
 }

@@ -1,6 +1,6 @@
-import { JsonMap } from "@salesforce/ts-types";
+import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosQueryOptions } from "../types/query";
-import { SteedosIDType } from "../types";
+import { SteedosIDType, SteedosObjectType } from "../types";
 
 export type SteedosDriverConfig = {
     url: string
@@ -21,5 +21,6 @@ export interface SteedosDriver {
     update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType): any;
     delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
+    buildDatabase?(objects: Dictionary<SteedosObjectType>): any;
 }
 

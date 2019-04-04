@@ -2,7 +2,7 @@ import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index";
 import Sqlite3Client = require("sqlite3");
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
-import { SteedosIDType } from "../types";
+import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-sql'
@@ -221,5 +221,9 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     async delete(tableName: string, id: SteedosIDType) {
         return await this.run(`DELETE FROM ${tableName} WHERE id=?;`, id);
+    }
+
+    //TODO:引用typeorm，使用queryRunner.createTable函数，根据传入的objects，生成各个表结构
+    async buildDatabase(objects: Dictionary<SteedosObjectType>) {
     }
 }

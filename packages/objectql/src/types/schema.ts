@@ -78,4 +78,9 @@ export class SteedosSchema {
         return this._datasources
     }
 
+    buildDataSources() {
+        _.each(this._datasources, (datasource) => {
+            datasource.buildDatabase();
+        })
+    }
 }
