@@ -62,7 +62,9 @@ describe('crud for schema with splite4 datasource', () => {
     beforeEach(async () => {
         // let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
-        return expected;
+        result = testObject.insert
+        result = expected;
+        // 调用insert函数插入数据到数据库
         // try {
         //     result = await testObject.insert(data)
         // }
