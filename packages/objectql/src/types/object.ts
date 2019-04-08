@@ -379,7 +379,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggers(when, context)
     }
 
-    private getTriggerContext(when: string, method: string, args: any[]): SteedosTriggerContextConfig {
+    private async getTriggerContext(when: string, method: string, args: any[]) {
 
         let context: SteedosTriggerContextConfig = { userId: args[args.length - 1] }
 
@@ -395,8 +395,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             context.doc = args[args.length - 2]
         }
 
-        if(when === 'after'){
-            // context.previousDoc = 
+        if(when === 'after' && (method === 'update' || method === 'delete')){
+            context.previousDoc = await this.findOne(context.id, {}, context.userId)
         }
 
         return context
@@ -413,11 +413,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find permission')
         }
         
-        await this.runBeforeTriggers(method, this.getTriggerContext('before', method, args))
+        let beforeTriggerContext = await this.getTriggerContext('before', method, args)
+        await this.runBeforeTriggers(method, beforeTriggerContext)
+
+        let afterTriggerContext = await this.getTriggerContext('after', method, args)
 
         let returnValue = await adapterMethod.apply(this._datasource, args);
-        // TODO 处理after中的previous doc
-        await this.runAfterTriggers(method, this.getTriggerContext('after', method, args))
+
+        await this.runAfterTriggers(method, afterTriggerContext)
 
         return returnValue
     };

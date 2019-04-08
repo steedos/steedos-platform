@@ -38,7 +38,6 @@ module.exports = {
         ],
         fields: ["_id"]
       })
-      console.log('meetings', meetings)
       return meetings.length
     }
 
@@ -98,7 +97,6 @@ module.exports = {
           ],
           fields: ["_id"]
         })
-        console.log('meetings', meetings, meetings.length)
         return meetings.length
       }
   
@@ -110,5 +108,11 @@ module.exports = {
         throw new Error("该时间段的此会议室已被占用");
       }
     }
+  },
+  afterUpdate: async function(userId, context){
+    console.log('afterUpdate', userId, context);
+  },
+  afterDelete: async function(userId, context){
+    console.log('afterDelete', userId, context);
   }
 }

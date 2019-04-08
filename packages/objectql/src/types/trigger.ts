@@ -8,7 +8,7 @@ export type SteedosTriggerContextConfig = {
     id?: SteedosIDType,
     userId: SteedosIDType,
     doc?: JsonMap, 
-    previousDoc?: JsonMap,
+    previousDoc?: JsonMap,  //仅afterUpdate, afterDelete时存在此属性
     query?: SteedosQueryOptions,
 }
 

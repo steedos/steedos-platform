@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { SteedosSchema } from '../../src';
 var path = require('path')
 
-describe('Test object triggers', () => {
+describe.only('Test object triggers', () => {
     let mySchema = new SteedosSchema({datasources: {default: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos', objectFiles: [path.resolve(__dirname, "./load")]}}})
     it('beforeInsert', async () => {
         let meeting = mySchema.getObject('meeting');
