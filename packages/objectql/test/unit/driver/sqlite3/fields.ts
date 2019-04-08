@@ -42,15 +42,15 @@ describe('fetch records width specific fields for sqlite3 database', () => {
                 }
             }
         },
-        {
-            title: "fields must not be undefined or empty",
-            options: {
-                fields: []
-            },
-            expected: {
-                error: 'fields must not be undefined or empty'
-            }
-        }
+        // {
+        //     title: "fields must not be undefined or empty",
+        //     options: {
+        //         fields: []
+        //     },
+        //     expected: {
+        //         error: 'fields must not be undefined or empty'
+        //     }
+        // }
     ];
 
     before(async () => {

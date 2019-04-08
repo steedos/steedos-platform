@@ -49,22 +49,22 @@ describe('fetch records width specific fields for mongo database', () => {
         expect(result[0].tag).to.be.eq(undefined);
     });
     
-    it('fields must not be undefined or empty', async () => {
+    // it('fields must not be undefined or empty', async () => {
 
-        let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
+    //     let mongo = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
 
-        let queryOptions = {
-            fields: []
-        };
-        let result = "";
-        try {
-            result = await mongo.find(tableName, queryOptions);
-            console.log("fetch records width specific fields result:");
-            console.log(result);
-        }
-        catch (ex) {
-            result = "error";
-        }
-        expect(result).to.be.eq("error");
-    });
+    //     let queryOptions = {
+    //         fields: []
+    //     };
+    //     let result = "";
+    //     try {
+    //         result = await mongo.find(tableName, queryOptions);
+    //         console.log("fetch records width specific fields result:");
+    //         console.log(result);
+    //     }
+    //     catch (ex) {
+    //         result = "error";
+    //     }
+    //     expect(result).to.be.eq("error");
+    // });
 });

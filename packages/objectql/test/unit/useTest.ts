@@ -19,7 +19,7 @@ describe('Test use file', () => {
     it('use trigger file', async () => {
         let meeting = mySchema.getObject('meeting');
         let triggers = meeting.triggers
-        expect(Object.keys(triggers).length).to.equal(2) 
+        expect(Object.keys(triggers).length).to.gt(0)
 
     });
   });
