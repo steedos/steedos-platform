@@ -3,7 +3,7 @@ import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTy
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
-import { SteedosDataSourceType } from "./datasource";
+import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 
 
 abstract class SteedosObjectProperties {
@@ -134,16 +134,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
 
-    /**
-     * TODO 如果是meteor mongo 则将trigger 直接放到collection的对应hooks中
-     * @param {SteedosTriggerType} trigger
-     * @memberof SteedosObjectType
-     */
     registerTrigger(trigger: SteedosTriggerType) {
-        if (!this._triggersQueue[trigger.when]) {
-            this._triggersQueue[trigger.when] = {}
+        //如果是meteor mongo 则不做任何处理
+        if(!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            if (!this._triggersQueue[trigger.when]) {
+                this._triggersQueue[trigger.when] = {}
+            }
+            this._triggersQueue[trigger.when][trigger.name] = trigger
         }
-        this._triggersQueue[trigger.when][trigger.name] = trigger
     }
 
     unregisterTrigger(trigger: SteedosTriggerType) {

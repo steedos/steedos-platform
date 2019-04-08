@@ -36,8 +36,12 @@ export class SteedosDataSourceType implements Dictionary {
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
-    private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {}
-
+    private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
+    private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
+    public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
+        return this._driver;
+    }
+   
     getObjects(){
         return this._objects
     }
@@ -63,6 +67,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._password = config.password
         this._options = config.options
         this._schema = schema
+        this._driver = config.driver
 
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
