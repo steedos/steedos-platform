@@ -79,7 +79,8 @@ export class SteedosSqlite3Driver implements SteedosDriver {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
         }
         if (!(fields && fields.length)) {
-            throw new Error("fields must not be undefined or empty");
+            // throw new Error("fields must not be undefined or empty");
+            return '*'
         }
         let projection: string = "";
         (<string[]>fields).forEach((field) => {

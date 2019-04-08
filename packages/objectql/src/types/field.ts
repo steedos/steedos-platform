@@ -90,8 +90,10 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         super();
         this._object = object
         _.each(config, (value: any, key: string)=>{
-            this[key] = value
-            this.properties.push(key)
+            if(key != 'object'){
+                this[key] = value
+                this.properties.push(key)
+            }
         })
         this.name = name
     }

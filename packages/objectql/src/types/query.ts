@@ -5,7 +5,7 @@ export type SteedosQueryFilters = any
  */
 export type SteedosQueryOptions = {
 
-    readonly fields: Array<string> | string;
+    readonly fields?: Array<string> | string;
 
     readonly filters?: SteedosQueryFilters;
 
@@ -23,5 +23,8 @@ export type SteedosQueryOptions = {
      * Query options for sort, the sort of data for fetch
      */
     readonly sort?: string;
+
+    //TODO 各数据库驱动实现：update 操作需要返回指定的字段值
+    //readonly returnFields?: string[]
     
 }
