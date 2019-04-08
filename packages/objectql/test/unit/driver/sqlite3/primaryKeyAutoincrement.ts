@@ -4,7 +4,7 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
-let tableName = "TestPrimaryKeyForSqlite4";
+let tableName = "TestPrimaryKeyForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
 describe('primary key autoincrement test for sqlite3 database', () => {

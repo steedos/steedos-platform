@@ -4,7 +4,7 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
-let tableName = "TestCrudForSqlite4";
+let tableName = "TestCrudForSqlite3";
 
 describe('crud for sqlite3 database', () => {
     before(async () => {

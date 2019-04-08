@@ -5,68 +5,55 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
-let tableName = "TestSortForSqlite4";
+let tableName = "TestFiltersForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe('fetch records for sqlite4 with sort arguments as a string that comply with odata-v4 protocol', () => {
+describe('filters for sqlite3 database', () => {
     let result: any;
     let expected: any;
     let testIndex: number = 0;
-    
+
     let tests = [
         {
-            title: "sort asc as default",
+            title: "filter records with filters",
             options: {
                 fields: ["id", "name"],
-                sort: 'name'
+                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
             },
-            expected:{
-                length: 4,
-                firstRecordId: "cnpc1"
+            expected: {
+                length: 1
             }
         },
         {
-            title: "sort asc",
+            title: "filter records with odata query string",
             options: {
                 fields: ["id", "name"],
-                sort: 'name asc'
+                filters: "(name eq 'ptr') and (title eq 'PTR')"
             },
             expected: {
-                length: 4,
-                firstRecordId: "cnpc1"
+                length: 1
             }
         },
         {
-            title: "sort desc",
+            title: "records count with filters",
+            function: "count",
             options: {
                 fields: ["id", "name"],
-                sort: 'name desc'
+                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
             },
             expected: {
-                length: 4,
-                firstRecordId: "ptr1"
+                eq: 1
             }
         },
         {
-            title: "multi sort",
+            title: "records count with odata query string",
+            function: "count",
             options: {
                 fields: ["id", "name"],
-                sort: 'name,count desc'
+                filters: "(name eq 'ptr') and (title eq 'PTR')"
             },
             expected: {
-                length: 4,
-                firstRecordId: "cnpc2"
-            }
-        },
-        {
-            title: "multi sort error correction",
-            options: {
-                fields: ["id", "name"],
-                sort: 'name, count desc,, '
-            },
-            expected: {
-                length: 4,
-                firstRecordId: "cnpc2"
+                eq: 1
             }
         }
     ];
@@ -88,28 +75,43 @@ describe('fetch records for sqlite4 with sort arguments as a string that comply 
     });
 
     beforeEach(async () => {
-        await driver.insert(tableName, { id: "cnpc1", name: "cnpc", title: "CNPC", count: 68 });
-        await driver.insert(tableName, { id: "cnpc2", name: "cnpc", title: "CNPC", count: 130 });
-        await driver.insert(tableName, { id: "ptr1", name: "ptr", title: "PTR", count: 32 });
-        await driver.insert(tableName, { id: "ptr2", name: "ptr", title: "PTR", count: 96 });
-        
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
+
         let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;
-        result = await driver.find(tableName, queryOptions);
+        let functionName: string = tests[testIndex].function;
+        try {
+            if (functionName){
+                result = await driver[functionName](tableName, queryOptions);
+            }
+            else{
+                result = await driver.find(tableName, queryOptions);
+            }
+        }
+        catch (ex) {
+            result = ex;
+        }
     });
 
     afterEach(async () => {
-        await driver.delete(tableName, "cnpc1");
-        await driver.delete(tableName, "cnpc2");
-        await driver.delete(tableName, "ptr1");
-        await driver.delete(tableName, "ptr2");
+        await driver.delete(tableName, "ptr");
+        await driver.delete(tableName, "cnpc");
     });
 
     tests.forEach(async (test) => {
         it(`arguments:${JSON.stringify(test)}`, async () => {
             testIndex++;
-            expect(result).to.be.length(expected.length);
-            expect(result[0].id).to.be.eq(expected.firstRecordId);
+            if (expected.error !== undefined) {
+                expect(result.message).to.be.eq(expected.error);
+            }
+            if (expected.length !== undefined) {
+                expect(result).to.be.length(expected.length);
+            }
+            if (expected.eq !== undefined) {
+                expect(result).to.be.eq(expected.eq);
+            }
         });
     });
 });
+
