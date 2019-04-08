@@ -23,11 +23,13 @@ export class SteedosObjectListViewType extends SteedosObjectListViewTypeProperti
 
     constructor(name: string, object: SteedosObjectType, config: SteedosObjectListViewTypeConfig){
         super()
-        this.object = object
+        this._object = object
         
         _.each(config, (value: any, key: string)=>{
-            this[key] = value
-            this.properties.push(key)
+            if(key != 'object'){
+                this[key] = value
+                this.properties.push(key)
+            }
         })
 
         this.name = name
@@ -46,12 +48,5 @@ export class SteedosObjectListViewType extends SteedosObjectListViewTypeProperti
     }
     public set name(value: string) {
         this._name = value;
-    }
-
-    public get object(): SteedosObjectType {
-        return this._object;
-    }
-    public set object(value: SteedosObjectType) {
-        this._object = value;
     }
 }
