@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
-let tableName = "TestSchemaForSqlite4";
+let tableName = "TestSchemaForSqlite3";
 let mySchema: SteedosSchema;
 let testObject: SteedosObjectType;
 
@@ -30,7 +30,7 @@ describe('crud for schema with splite4 datasource', () => {
                     url: databaseUrl,
                     objects: {
                         test: {
-                            label: 'Sqlite4 Schema',
+                            label: 'Sqlite3 Schema',
                             tableName: tableName,
                             fields: {
                                 id: {

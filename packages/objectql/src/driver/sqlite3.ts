@@ -5,7 +5,8 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { createFilter, createQuery } from 'odata-v4-sql'
+import { createFilter, createQuery } from 'odata-v4-sql';
+// import { createConnection } from "typeorm";
 
 import _ = require("underscore");
 
@@ -153,7 +154,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async run(sql: string, param?: any) {
-        // console.log("runing sqlite4 sql...", sql);
+        // console.log("runing sqlite3 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.run(sql, param, function(error:any) {
                 if (error) {
@@ -170,7 +171,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async get(sql: string, param?: any) {
-        // console.log("geting sqlite4 sql...", sql);
+        // console.log("geting sqlite3 sql...", sql);
         return await new Promise((resolve, reject)=> {
             this._client.get(sql, param, (error:any, row:any)=> {
                 if (error){
@@ -184,7 +185,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async all(sql: string, param?: any) {
-        // console.log("alling sqlite4 sql...", sql);
+        // console.log("alling sqlite3 sql...", sql);
         return await new Promise((resolve, reject) => {
             this._client.all(sql, param, (error: any, row: any) => {
                 if (error) {
@@ -225,5 +226,10 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     //TODO:引用typeorm，使用queryRunner.createTable函数，根据传入的objects，生成各个表结构
     async buildDatabase(objects: Dictionary<SteedosObjectType>) {
+        // const connection = await createConnection({
+        //     type: "sqlite",
+        //     database: "TestSchemaForSqlite3"
+        // });
+
     }
 }

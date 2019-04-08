@@ -5,55 +5,50 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
-let tableName = "TestFiltersForSqlite4";
+let tableName = "TestFieldsForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe('filters for sqlite3 database', () => {
+describe('fetch records width specific fields for sqlite3 database', () => {
     let result: any;
     let expected: any;
     let testIndex: number = 0;
 
     let tests = [
         {
-            title: "filter records with filters",
+            title: "fields arguments is a array",
             options: {
-                fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                fields: ["name", "title"]
             },
             expected: {
-                length: 1
+                length: 2,
+                firstRecord:{
+                    name: "ptr",
+                    title: "PTR",
+                    tag: undefined
+                }
             }
         },
         {
-            title: "filter records with odata query string",
+            title: "fields arguments is a string",
             options: {
-                fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
+                fields: "name, title, "
             },
             expected: {
-                length: 1
+                length: 2,
+                firstRecord: {
+                    name: "ptr",
+                    title: "PTR",
+                    tag: undefined
+                }
             }
         },
         {
-            title: "records count with filters",
-            function: "count",
+            title: "fields must not be undefined or empty",
             options: {
-                fields: ["id", "name"],
-                filters: [["name", "=", "ptr"], ["title", "=", "PTR"]]
+                fields: []
             },
             expected: {
-                eq: 1
-            }
-        },
-        {
-            title: "records count with odata query string",
-            function: "count",
-            options: {
-                fields: ["id", "name"],
-                filters: "(name eq 'ptr') and (title eq 'PTR')"
-            },
-            expected: {
-                eq: 1
+                error: 'fields must not be undefined or empty'
             }
         }
     ];
@@ -69,25 +64,19 @@ describe('filters for sqlite3 database', () => {
                 [id] TEXT primary key,
                 [name] TEXT,
                 [title] TEXT,
-                [count] INTEGER
+                [tag] TEXT
             );
         `);
     });
 
     beforeEach(async () => {
-        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR" });
-        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC" });
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", tag: "one" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" });
 
         let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;
-        let functionName: string = tests[testIndex].function;
         try {
-            if (functionName){
-                result = await driver[functionName](tableName, queryOptions);
-            }
-            else{
-                result = await driver.find(tableName, queryOptions);
-            }
+            result = await driver.find(tableName, queryOptions);
         }
         catch (ex) {
             result = ex;
@@ -108,10 +97,11 @@ describe('filters for sqlite3 database', () => {
             if (expected.length !== undefined) {
                 expect(result).to.be.length(expected.length);
             }
-            if (expected.eq !== undefined) {
-                expect(result).to.be.eq(expected.eq);
+            if (expected.firstRecord !== undefined) {
+                Object.keys(expected.firstRecord).forEach((key) => {
+                    expect(result[0][key]).to.be.eq(expected.firstRecord[key]);
+                });
             }
         });
     });
 });
-
