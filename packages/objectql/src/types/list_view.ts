@@ -49,4 +49,8 @@ export class SteedosObjectListViewType extends SteedosObjectListViewTypeProperti
     public set name(value: string) {
         this._name = value;
     }
+
+    public get object(): SteedosObjectType {
+        return this._object;
+    }
 }
