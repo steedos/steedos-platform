@@ -1,5 +1,3 @@
-var Steedos = require('@steedos/objectql')
-
 module.exports = {
 
   name: 'clashRemind',

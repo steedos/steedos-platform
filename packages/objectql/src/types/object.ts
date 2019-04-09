@@ -5,7 +5,6 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 
-
 abstract class SteedosObjectProperties {
     name?: string
     // extend?: string
@@ -42,6 +41,7 @@ abstract class SteedosObjectProperties {
 }
 
 
+
 export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     name?: string
     fields: Dictionary<SteedosFieldTypeConfig>
@@ -51,6 +51,8 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 }
 
 const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
+
+const properties = ['label','icon','enable_search','is_enable','enable_files','enable_tasks','enable_notes','enable_events','enable_api','enable_share','enable_instances','enable_chatter','enable_audit','enable_trash','enable_space_global','enable_tree','is_view','hidden','description','custom','owner']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -80,6 +82,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } else {
             this._tableName = this._name
         }
+
+        _.each(properties, (property)=>{
+            if(_.has(config, property)){
+                this[property] = config[property]
+            }
+        })
 
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
@@ -183,6 +191,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             name: this.name,
             fields: {}
         }
+
+        _.each(properties, (property)=>{
+            if(this[property] != null && this[property] != undefined){
+                config[property] = this[property]
+            }
+        })
+
         if (this.fields) {
             config.fields = {}
             _.each(this.fields, (field: SteedosFieldType, key: string) => {
@@ -190,12 +205,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
-        // if(this.triggers){
-        //     config.triggers = {}
-        //     _.each(this.fields, (field: SteedosFieldType, key: string)=>{
-        //         config.fields[key] = field.toConfig();
-        //     })
-        // }
+        if(this.triggers){
+            config.triggers = {}
+            _.each(this.triggers, (trigger: SteedosTriggerType, key: string)=>{
+                config.triggers[key] = trigger.toConfig();
+            })
+        }
 
         return config
     }

@@ -38,6 +38,15 @@ export class SteedosTriggerType implements Dictionary {
         this.todo = config.todo
     }
 
+    toConfig(){
+        let config = {
+            on: this.on,
+            when: this.when,
+            todo: this.todo
+        }
+        return config;
+    }
+
     public get name(): string {
         return this._name;
     }

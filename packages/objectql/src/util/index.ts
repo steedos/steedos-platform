@@ -96,21 +96,25 @@ exports.loadReports = (filePath: string)=>{
     return results
 }
 
-exports.extend = (destination: JsonMap, sources: JsonMap)=>{
-    _.each(sources, (v:never, k: string)=>{
-        if(!has(destination, k)){
-            destination[k] = v
-        }else if(isJsonMap(v)){
-            let _d = getJsonMap(destination, k);
-            if(isJsonMap(_d)){
-                this.extend(_d, v)
+exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
+    _.each(sources, (source: JsonMap)=>{
+        _.each(source, (v:never, k: string)=>{
+            if(!has(destination, k)){
+                destination[k] = v
+            }else if(isJsonMap(v)){
+                let _d = getJsonMap(destination, k);
+                if(isJsonMap(_d)){
+                    this.extend(_d, v)
+                }else{
+                    destination[k] = v
+                }
             }else{
                 destination[k] = v
             }
-        }else{
-            destination[k] = v
-        }
+        })
     })
+
+    return destination
 }
 
 exports.isObjectFile = (filePath: string)=>{

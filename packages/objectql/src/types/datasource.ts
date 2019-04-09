@@ -3,11 +3,12 @@ import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSql
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
-import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosFieldTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from '.';
+import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 
 var util = require('../util')
+var path = require('path')
 
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
@@ -56,8 +57,18 @@ export class SteedosDataSourceType implements Dictionary {
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
         objectConfig.name = object_name
-        let object = new SteedosObjectType(object_name, this, objectConfig)
-        this._objectsConfig[object_name] = objectConfig;
+        let config: SteedosObjectTypeConfig = {fields: {}}
+        let baseObject = this.getObject('base');
+        console.log(this.driver === SteedosDatabaseDriverType.MeteorMongo);
+        if(this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject){
+            let {triggers: baseTriggers, fields: basefields} = baseObject.toConfig()
+            console.log('basefields', basefields)
+            config = util.extend(config, {triggers: baseTriggers}, objectConfig, {fields: basefields}, objectConfig)
+        }else{
+            config = objectConfig
+        }
+        let object = new SteedosObjectType(object_name, this, config)
+        this._objectsConfig[object_name] = config;
         this._objects[object_name] = object;
     }
 
@@ -92,6 +103,16 @@ export class SteedosDataSourceType implements Dictionary {
             }
         }else{
             this._adapter = config.driver
+        }
+
+        if(config.driver === SteedosDatabaseDriverType.MeteorMongo){
+            let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
+            if(standardObjectsDir){
+                let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
+                this.setObject(baseObject.name, baseObject)
+                let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
+                this.setObjectListener(baseObjectTrigger)
+            }
         }
 
         _.each(config.objects, (object, object_name) => {
@@ -151,54 +172,71 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async use(filePath) {
-        console.log('use', filePath);
         let objectJsons = util.loadObjects(filePath)
+        let fieldJsons = util.loadFields(filePath)
         _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-            this.setObject(json.name, json)
+            let objectFieldsJson = fieldJsons.filter(fieldJson => fieldJson.object_name === json.name)
+            let objectJson: SteedosObjectTypeConfig = {fields: {}}
+            if(objectFieldsJson.length > 0){
+                let objectFields = objectFieldsJson.map(fj =>{ 
+                    delete fj.object_name
+                    let f = {fields: {}}
+                    f.fields[fj.name] = fj
+                    return f
+                })
+                objectJson = util.extend({}, json, ...objectFields)
+            }else{
+                objectJson = json
+            }
+            this.setObject(objectJson.name, objectJson)
         })
 
-        let fieldJsons = util.loadFields(filePath)
-        _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
-            if (!json.object_name) {
-                throw new Error('missing attribute object_name')
-            }
-            let object = this.getObject(json.object_name);
-            if (object) {
-                object.setField(json.name, json)
-            } else {
-                throw new Error(`not find object: ${json.object_name}`);
-            }
-        })
+        // let fieldJsons = util.loadFields(filePath)
+        // _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
+        //     if (!json.object_name) {
+        //         throw new Error('missing attribute object_name')
+        //     }
+        //     let object = this.getObject(json.object_name);
+        //     if (object) {
+        //         object.setField(json.name, json)
+        //     } else {
+        //         throw new Error(`not find object: ${json.object_name}`);
+        //     }
+        // })
 
         let triggerJsons = util.loadTriggers(filePath)
         _.each(triggerJsons, (json: SteedosListenerConfig) => {
-            if (!json.listenTo) {
-                throw new Error('missing attribute listenTo')
-            }
-
-            if(!_.isString(json.listenTo) && !_.isFunction(json.listenTo)){
-                throw new Error('listenTo must be a function or string')
-            }
-
-            let object_name = '';
-
-            if(_.isString(json.listenTo)){
-                object_name = json.listenTo
-            }else if(_.isFunction(json.listenTo)){
-                object_name = json.listenTo()
-            }
-
-            let object = this.getObject(object_name);
-            if (object) {
-                object.setListener(json.name || '', json)
-            } else {
-                throw new Error(`not find object: ${object_name}`);
-            }
+            this.setObjectListener(json);
         })
 
         //TODO load reports
 
         //TODO load actions
+    }
+
+    private setObjectListener(json: SteedosListenerConfig){
+        if (!json.listenTo) {
+            throw new Error('missing attribute listenTo')
+        }
+
+        if(!_.isString(json.listenTo) && !_.isFunction(json.listenTo)){
+            throw new Error('listenTo must be a function or string')
+        }
+
+        let object_name = '';
+
+        if(_.isString(json.listenTo)){
+            object_name = json.listenTo
+        }else if(_.isFunction(json.listenTo)){
+            object_name = json.listenTo()
+        }
+
+        let object = this.getObject(object_name);
+        if (object) {
+            object.setListener(json.name || '', json)
+        } else {
+            throw new Error(`not find object: ${object_name}`);
+        }
     }
 
     buildGraphQLSchema() {
