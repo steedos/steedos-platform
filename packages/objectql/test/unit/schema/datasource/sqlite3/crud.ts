@@ -1,4 +1,4 @@
-import { SteedosSchema, SteedosDatabaseDriverType, SteedosObjectType } from '../../../../src';
+import { SteedosSchema, SteedosDatabaseDriverType, SteedosObjectType } from '../../../../../src';
 import { expect } from 'chai';
 import path = require("path");
 
