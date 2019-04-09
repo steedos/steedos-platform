@@ -21,6 +21,9 @@ export interface SteedosDriver {
     update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType): any;
     delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
-    buildDatabase?(objects: Dictionary<SteedosObjectType>): any;
+    createTable?(object: SteedosObjectType): any;
+    createTables?(objects: Dictionary<SteedosObjectType>): any;
+    dropTable?(tableName: string): any;
+    dropTables?(objects: Dictionary<SteedosObjectType>): any;
 }
 

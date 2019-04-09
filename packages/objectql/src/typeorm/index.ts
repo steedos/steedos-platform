@@ -33,17 +33,42 @@ export function getTableColumnsByFields(fields: Dictionary<SteedosFieldTypeConfi
     return columns;
 }
 
-
-//TODO:引用typeorm，使用queryRunner.createTable函数，根据传入的objects，生成各个表结构
-export default async function buildDatabase(options: any, objects: Dictionary<SteedosObjectType>) {
+export async function dropTable(options: any, tableName: string) {
     const connection = await createConnection(options);
     const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
-    for (let objectName in objects){
+    await queryRunner.dropTable(tableName, true);
+}
+
+export async function dropTables(options: any, objects: Dictionary<SteedosObjectType>) {
+    const connection = await createConnection(options);
+    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+    for (let objectName in objects) {
+        let currentObject = objects[objectName];
+        let tableName = currentObject.tableName;
+        await queryRunner.dropTable(tableName, true);
+    }
+}
+
+export async function createTable(options: any, object: SteedosObjectType) {
+    const connection = await createConnection(options);
+    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+    let tableName = object.tableName;
+    let fields = object.fields;
+    let columns: any[] = this.getTableColumnsByFields(fields);
+    await queryRunner.createTable(new Table({
+        name: tableName,
+        columns: columns
+    }), true);
+}
+
+export async function createTables(options: any, objects: Dictionary<SteedosObjectType>) {
+    const connection = await createConnection(options);
+    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+    for (let objectName in objects) {
         let currentObject = objects[objectName];
         let tableName = currentObject.tableName;
         let fields = currentObject.fields;
         let columns: any[] = this.getTableColumnsByFields(fields);
-        await queryRunner.dropTable(tableName, true);
         await queryRunner.createTable(new Table({
             name: tableName,
             columns: columns

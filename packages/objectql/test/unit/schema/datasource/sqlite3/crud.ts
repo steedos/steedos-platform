@@ -7,7 +7,7 @@ let tableName = "TestSchemaForSqlite3";
 let mySchema: SteedosSchema;
 let testObject: SteedosObjectType;
 
-describe('crud for schema with splite4 datasource', () => {
+describe.only('crud for schema with splite4 datasource', () => {
     let result: any;
     let expected: any;
     let testIndex: number = 0;
@@ -89,7 +89,11 @@ describe('crud for schema with splite4 datasource', () => {
                 }
             }
         });
-        await mySchema.buildDataSources();
+        const datasources = mySchema.getDataSources();
+        for (let name in datasources) {
+            // await datasources[name].dropTables();
+            await datasources[name].createTables();
+        }
         testObject = mySchema.getObject('test');
     });
 

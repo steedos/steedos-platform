@@ -6,7 +6,7 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-sql';
-import buildDatabase from "../typeorm";
+import { createTable, createTables, dropTable, dropTables} from "../typeorm";
 
 import _ = require("underscore");
 
@@ -14,6 +14,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     _url: string;
     _client: any;
     _collections: Dictionary<any>;
+    _type: string = "sqlite";
 
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
@@ -225,10 +226,30 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return await this.run(`DELETE FROM ${tableName} WHERE id=?;`, id);
     }
 
-    //TODO:引用typeorm，使用queryRunner.createTable函数，根据传入的objects，生成各个表结构
-    async buildDatabase(objects: Dictionary<SteedosObjectType>) {
-        await buildDatabase({
-            type: "sqlite",
+    async createTable(object: SteedosObjectType) {
+        await createTable({
+            type: this._type,
+            database: this._url
+        }, object);
+    }
+
+    async createTables(objects: Dictionary<SteedosObjectType>) {
+        await createTables({
+            type: this._type,
+            database: this._url
+        }, objects);
+    }
+
+    async dropTable(tableName: string) {
+        await dropTable({
+            type: this._type,
+            database: this._url
+        }, tableName);
+    }
+
+    async dropTables(objects: Dictionary<SteedosObjectType>) {
+        await dropTables({
+            type: this._type,
             database: this._url
         }, objects);
     }
