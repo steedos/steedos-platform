@@ -24,7 +24,5 @@ export type SteedosQueryOptions = {
      */
     readonly sort?: string;
 
-    //TODO 各数据库驱动实现：update 操作需要返回指定的字段值
-    //readonly returnFields?: string[]
     
 }
