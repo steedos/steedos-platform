@@ -59,11 +59,9 @@ export class SteedosDataSourceType implements Dictionary {
         objectConfig.name = object_name
         let config: SteedosObjectTypeConfig = {fields: {}}
         let baseObject = this.getObject('base');
-        console.log(this.driver === SteedosDatabaseDriverType.MeteorMongo);
         if(this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject){
-            let {triggers: baseTriggers, fields: basefields} = baseObject.toConfig()
-            console.log('basefields', basefields)
-            config = util.extend(config, {triggers: baseTriggers}, objectConfig, {fields: basefields}, objectConfig)
+            let {triggers: baseTriggers, fields: basefields, permission_set} = baseObject.toConfig()
+            config = util.extend(config, {triggers: baseTriggers}, {permission_set: permission_set},objectConfig, {fields: basefields}, objectConfig)
         }else{
             config = objectConfig
         }

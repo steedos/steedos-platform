@@ -7,6 +7,7 @@ describe('Test use file', () => {
 
     it('use Object file', async () => {
         let object = mySchema.getObject("test")
+        // console.log('object', object.toConfig());
         expect(object.name).to.equal("test")
     });
 

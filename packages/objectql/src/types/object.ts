@@ -212,6 +212,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        let rolePermission = this.getObjectRolesPermission()
+        if(rolePermission){
+            config.permission_set = {}
+            _.each(rolePermission, (v, k)=>{
+                config.permission_set[k] = v
+            })
+        }
+
         return config
     }
 
