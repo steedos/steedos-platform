@@ -15,7 +15,36 @@ describe('crud for schema with splite4 datasource', () => {
     let tests = [
         {
             title: "create one record",
-            data: { id: "ptr", name: "ptr", title: "PTR", count: 46 },
+            method: "insert",
+            data: { id: "ptr", name: "ptr", title: "PTR", count: 46, amount: 198.4 },
+            expected: {
+                changes: 1
+            }
+        },
+        {
+            title: "update one record",
+            method: "update",
+            id: "ptr",
+            data: { name: "ptr-", title: "PTR-", count: 460 },
+            expected: {
+                changes: 1
+            }
+        },
+        {
+            title: "read one record",
+            method: "findOne",
+            id: "ptr",
+            queryOptions: {
+                fields: ["name", "count"]
+            },
+            expected: {
+                findOneResult: { name: "ptr-", title: undefined, count: 460}
+            }
+        },
+        {
+            title: "delete one record",
+            method: "delete",
+            id: "ptr",
             expected: {
                 changes: 1
             }
@@ -48,6 +77,11 @@ describe('crud for schema with splite4 datasource', () => {
                                 count: {
                                     label: '数量',
                                     type: 'number'
+                                },
+                                amount: {
+                                    label: '金额',
+                                    type: 'number',
+                                    scale: 2
                                 }
                             }
                         }
@@ -55,22 +89,27 @@ describe('crud for schema with splite4 datasource', () => {
                 }
             }
         });
+        await mySchema.buildDataSources();
         testObject = mySchema.getObject('test');
     });
 
-    // TODO:
     beforeEach(async () => {
-        // let data = tests[testIndex].data;
+        let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
-        result = testObject.insert
-        result = expected;
-        // 调用insert函数插入数据到数据库
-        // try {
-        //     result = await testObject.insert(data)
-        // }
-        // catch (ex) {
-        //     result = ex;
-        // }
+        let method = tests[testIndex].method;
+        let id = tests[testIndex].id;
+        let queryOptions = tests[testIndex].queryOptions;
+        try {
+            if(id){
+                result = await testObject[method](id, data || queryOptions);
+            }
+            else {
+                result = await testObject[method](data);
+            }
+        }
+        catch (ex) {
+            result = ex;
+        }
     });
 
     tests.forEach(async (test) => {
@@ -82,9 +121,9 @@ describe('crud for schema with splite4 datasource', () => {
             if (expected.changes !== undefined) {
                 expect(result.changes).to.be.eq(expected.changes);
             }
-            if (expected.firstRecord !== undefined) {
-                Object.keys(expected.firstRecord).forEach((key) => {
-                    expect(result[0][key]).to.be.eq(expected.firstRecord[key]);
+            if (expected.findOneResult !== undefined) {
+                Object.keys(expected.findOneResult).forEach((key) => {
+                    expect(result[key]).to.be.eq(expected.findOneResult[key]);
                 });
             }
         });

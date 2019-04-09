@@ -6,7 +6,7 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-sql';
-// import { createConnection } from "typeorm";
+import buildDatabase from "../typeorm";
 
 import _ = require("underscore");
 
@@ -227,10 +227,9 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     //TODO:引用typeorm，使用queryRunner.createTable函数，根据传入的objects，生成各个表结构
     async buildDatabase(objects: Dictionary<SteedosObjectType>) {
-        // const connection = await createConnection({
-        //     type: "sqlite",
-        //     database: "TestSchemaForSqlite3"
-        // });
-
+        await buildDatabase({
+            type: "sqlite",
+            database: this._url
+        }, objects);
     }
 }

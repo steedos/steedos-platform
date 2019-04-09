@@ -78,9 +78,9 @@ export class SteedosSchema {
         return this._datasources
     }
 
-    buildDataSources() {
-        _.each(this._datasources, (datasource) => {
-            datasource.buildDatabase();
-        })
+    async buildDataSources() {
+        for (let name in this._datasources) {
+            await this._datasources[name].buildDatabase();
+        }
     }
 }

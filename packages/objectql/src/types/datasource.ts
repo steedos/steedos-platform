@@ -206,7 +206,9 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async buildDatabase() {
-        return this._adapter.buildDatabase(this._objects);
+        if (this._adapter.buildDatabase){
+            return await this._adapter.buildDatabase(this._objects);
+        }
     }
 
 }
