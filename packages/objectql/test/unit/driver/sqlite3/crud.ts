@@ -9,10 +9,10 @@ let tableName = "TestCrudForSqlite3";
 describe('crud for sqlite3 database', () => {
     before(async () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-        let result: any = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
+        let result: any = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
 
-        expect(result.count).to.be.not.eq(undefined);
-        if (result.count) {
+        expect(result[0].count).to.be.not.eq(undefined);
+        if (result[0].count) {
             await driver.run(`DROP TABLE ${tableName}`);
         }
         await driver.run(`
@@ -29,14 +29,14 @@ describe('crud for sqlite3 database', () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 46 })
 
-        expect(result.changes).to.be.eq(1);
+        expect(result).to.be.gt(0);
     });
 
     it('update one record', async () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.update(tableName, "ptr", { name: "ptr-", title: "PTR-", count: 460 })
 
-        expect(result.changes).to.be.eq(1);
+        expect(result).to.be.length(0);
     });
 
     it('read one record', async () => {
@@ -54,7 +54,7 @@ describe('crud for sqlite3 database', () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.delete(tableName, "ptr");
 
-        expect(result.changes).to.be.eq(1);
+        expect(result).to.be.length(0);
     });
 });
 

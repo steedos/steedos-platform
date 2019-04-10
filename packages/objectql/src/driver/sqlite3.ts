@@ -1,6 +1,6 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index";
-import Sqlite3Client = require("sqlite3");
+import { createConnection, QueryRunner } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
@@ -13,19 +13,20 @@ import _ = require("underscore");
 export class SteedosSqlite3Driver implements SteedosDriver {
     _url: string;
     _client: any;
-    _collections: Dictionary<any>;
-    _type: string = "sqlite";
+    
+    _queryRunner: QueryRunner;
 
     constructor(config: SteedosDriverConfig) {
-        this._collections = {};
         this._url = config.url;
-        this.connect();
     }
 
     async connect() {
         if (!this._client) {
-            let sqlite3 = Sqlite3Client.verbose();
-            this._client = new sqlite3.Database(this._url);
+            this._client = await createConnection({
+                type: "sqlite",
+                database: this._url,
+                name: (new Date()).getTime().toString()
+            });
             return true;
         }
     }
@@ -34,8 +35,20 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         if (this._client) {
             await this._client.close();
             this._client = null;
+            this._queryRunner = null;
             return true;
         }
+    }
+
+    async createQueryRunner() {
+        if (this._queryRunner){
+            return this._queryRunner;
+        }
+        if (!this._client) {
+            await this.connect();
+        }
+        this._queryRunner = await this._client.driver.createQueryRunner("master");
+        return this._queryRunner;
     }
 
     formatFiltersToSqlite3Query(filters: any): JsonMap {
@@ -138,7 +151,7 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let where: string = <string>filterQuery.where;
         let limitAndOffset: string = this.getSqlite3TopAndSkipOptions(query.top, query.skip);
         let sql = `SELECT ${projection} FROM ${tableName} ${where} ${sort} ${limitAndOffset}`;
-        return await this.all(sql, filterQuery.parameters);
+        return await this.run(sql, filterQuery.parameters);
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
@@ -146,58 +159,19 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
         let where: string = <string>filterQuery.where;
         let sql = `SELECT count(*) as count FROM ${tableName} ${where} ${sort}`;
-        let result: any = await this.get(sql, filterQuery.parameters);
-        return result ? result.count : 0
+        let result: any = await this.run(sql, filterQuery.parameters);
+        return result ? result[0].count : 0;
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
         let projection: string = this.getSqlite3FieldsOptions(query.fields);
-        return await this.get(`SELECT ${projection} FROM ${tableName} WHERE id=?;`, id);
+        let result: any = await this.run(`SELECT ${projection} FROM ${tableName} WHERE id=?;`, id);
+        return result ? result[0] : null;
     }
 
     async run(sql: string, param?: any) {
-        // console.log("runing sqlite3 sql...", sql);
-        return await new Promise((resolve, reject) => {
-            this._client.run(sql, param, function(error:any) {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve({
-                        changes: this.changes, 
-                        lastID: this.lastID
-                    });
-                }
-            });
-        });
-    }
-
-    async get(sql: string, param?: any) {
-        // console.log("geting sqlite3 sql...", sql);
-        return await new Promise((resolve, reject)=> {
-            this._client.get(sql, param, (error:any, row:any)=> {
-                if (error){
-                    reject(error);
-                }
-                else{
-                    resolve(row); 
-                }
-            });
-        });
-    }
-
-    async all(sql: string, param?: any) {
-        // console.log("alling sqlite3 sql...", sql);
-        return await new Promise((resolve, reject) => {
-            this._client.all(sql, param, (error: any, row: any) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve(row);
-                }
-            });
-        });
+        const runner: QueryRunner = await this.createQueryRunner();
+        return runner.query(sql, param);
     }
 
     async insert(tableName: string, data: JsonMap) {
@@ -227,30 +201,22 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async createTable(object: SteedosObjectType) {
-        await createTable({
-            type: this._type,
-            database: this._url
-        }, object);
+        const runner: QueryRunner = await this.createQueryRunner();
+        await createTable(runner, object);
     }
 
     async createTables(objects: Dictionary<SteedosObjectType>) {
-        await createTables({
-            type: this._type,
-            database: this._url
-        }, objects);
+        const runner: QueryRunner = await this.createQueryRunner();
+        await createTables(runner, objects);
     }
 
     async dropTable(tableName: string) {
-        await dropTable({
-            type: this._type,
-            database: this._url
-        }, tableName);
+        const runner: QueryRunner = await this.createQueryRunner();
+        await dropTable(runner, tableName);
     }
 
     async dropTables(objects: Dictionary<SteedosObjectType>) {
-        await dropTables({
-            type: this._type,
-            database: this._url
-        }, objects);
+        const runner: QueryRunner = await this.createQueryRunner();
+        await dropTables(runner, objects);
     }
 }

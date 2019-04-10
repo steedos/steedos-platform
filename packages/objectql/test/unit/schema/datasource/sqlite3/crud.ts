@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
-let tableName = "TestSchemaForSqlite3";
+let tableName = "TestSchemaCRUDForSqlite3";
 let mySchema: SteedosSchema;
 let testObject: SteedosObjectType;
 
-describe.only('crud for schema with splite4 datasource', () => {
+describe('crud for schema with splite3 datasource', () => {
     let result: any;
     let expected: any;
     let testIndex: number = 0;
@@ -18,7 +18,7 @@ describe.only('crud for schema with splite4 datasource', () => {
             method: "insert",
             data: { id: "ptr", name: "ptr", title: "PTR", count: 46, amount: 198.4 },
             expected: {
-                changes: 1
+                gt: 0
             }
         },
         {
@@ -27,7 +27,7 @@ describe.only('crud for schema with splite4 datasource', () => {
             id: "ptr",
             data: { name: "ptr-", title: "PTR-", count: 460 },
             expected: {
-                changes: 1
+                length: 0
             }
         },
         {
@@ -46,7 +46,7 @@ describe.only('crud for schema with splite4 datasource', () => {
             method: "delete",
             id: "ptr",
             expected: {
-                changes: 1
+                length: 0
             }
         }
     ];
@@ -103,16 +103,11 @@ describe.only('crud for schema with splite4 datasource', () => {
         let method = tests[testIndex].method;
         let id = tests[testIndex].id;
         let queryOptions = tests[testIndex].queryOptions;
-        try {
-            if(id){
-                result = await testObject[method](id, data || queryOptions);
-            }
-            else {
-                result = await testObject[method](data);
-            }
+        if (id) {
+            result = await testObject[method](id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
         }
-        catch (ex) {
-            result = ex;
+        else {
+            result = await testObject[method](data).catch((ex: any) => { console.error(ex); return false; });
         }
     });
 
@@ -122,8 +117,11 @@ describe.only('crud for schema with splite4 datasource', () => {
             if (expected.error !== undefined) {
                 expect(result.message).to.be.eq(expected.error);
             }
-            if (expected.changes !== undefined) {
-                expect(result.changes).to.be.eq(expected.changes);
+            if (expected.length !== undefined) {
+                expect(result).to.be.length(expected.length);
+            }
+            if (expected.gt !== undefined) {
+                expect(result).to.be.gt(expected.gt);
             }
             if (expected.findOneResult !== undefined) {
                 Object.keys(expected.findOneResult).forEach((key) => {

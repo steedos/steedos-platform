@@ -17,7 +17,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             title: "create the first record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 1
+                eq: 1
             }
         },
         {
@@ -25,57 +25,57 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             runSql: "",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 2
+                eq: 2
             }
         },
         {
             title: "create the third record with id value",
             insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 5
+                eq: 5
             }
         },
         {
             title: "create the fourth record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 6
+                eq: 6
             }
         },
         {
             title: "delete all records from the table",
             runSql: `DELETE FROM ${tableName}`,
             expected: {
-                lastID: 0
+                length: 0
             }
         },
         {
             title: "recreate the first record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 7
+                eq: 7
             }
         },
         {
             title: "truncate the table",
             runSqls: [`DELETE FROM ${tableName}`, `DELETE FROM sqlite_sequence WHERE name='${tableName}'`],
             expected: {
-                lastID: 0
+                length: 0
             }
         },
         {
             title: "recreate the first record again",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                lastID: 1
+                eq: 1
             }
         }
     ];
 
     before(async () => {
-        result = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        expect(result.count).to.be.not.eq(undefined);
-        if (result.count) {
+        result = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
+        expect(result[0].count).to.be.not.eq(undefined);
+        if (result[0].count) {
             await driver.run(`DROP TABLE ${tableName}`);
         }
         await driver.run(`
@@ -100,10 +100,6 @@ describe('primary key autoincrement test for sqlite3 database', () => {
         }
         else if (runSqls) {
             driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-            // 这时不能直接用runSqls.forEach，只能用for
-            // runSqls.forEach(async (sql)=>{
-            //     result = await driver.run(sql);
-            // });
             for (let i = 0; i < runSqls.length;i++){
                 result = await driver.run(runSqls[i]);
             }
@@ -116,7 +112,12 @@ describe('primary key autoincrement test for sqlite3 database', () => {
     tests.forEach((test) => {
         it(`arguments:${JSON.stringify(test)}`, async () => {
             testIndex++;
-            expect(result.lastID).to.be.eq(expected.lastID);
+            if (expected.length !== undefined) {
+                expect(result).to.be.length(expected.length);
+            }
+            if (expected.eq !== undefined) {
+                expect(result).to.be.eq(expected.eq);
+            }
         });
     });
 });

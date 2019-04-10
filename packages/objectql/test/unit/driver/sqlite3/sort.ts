@@ -72,9 +72,9 @@ describe('fetch records for sqlite4 with sort arguments as a string that comply 
     ];
 
     before(async () => {
-        result = await driver.get(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        expect(result.count).to.be.not.eq(undefined);
-        if (result.count) {
+        result = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
+        expect(result[0].count).to.be.not.eq(undefined);
+        if (result[0].count) {
             await driver.run(`DROP TABLE ${tableName}`);
         }
         await driver.run(`

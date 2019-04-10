@@ -1,4 +1,4 @@
-import { createConnection, QueryRunner, Table } from "typeorm";
+import { QueryRunner, Table } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosFieldTypeConfig } from "../types";
 
@@ -33,15 +33,11 @@ export function getTableColumnsByFields(fields: Dictionary<SteedosFieldTypeConfi
     return columns;
 }
 
-export async function dropTable(options: any, tableName: string) {
-    const connection = await createConnection(options);
-    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+export async function dropTable(queryRunner: QueryRunner, tableName: string) {
     await queryRunner.dropTable(tableName, true);
 }
 
-export async function dropTables(options: any, objects: Dictionary<SteedosObjectType>) {
-    const connection = await createConnection(options);
-    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectType>) {
     for (let objectName in objects) {
         let currentObject = objects[objectName];
         let tableName = currentObject.tableName;
@@ -49,9 +45,7 @@ export async function dropTables(options: any, objects: Dictionary<SteedosObject
     }
 }
 
-export async function createTable(options: any, object: SteedosObjectType) {
-    const connection = await createConnection(options);
-    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+export async function createTable(queryRunner: QueryRunner, object: SteedosObjectType) {
     let tableName = object.tableName;
     let fields = object.fields;
     let columns: any[] = this.getTableColumnsByFields(fields);
@@ -61,9 +55,7 @@ export async function createTable(options: any, object: SteedosObjectType) {
     }), true);
 }
 
-export async function createTables(options: any, objects: Dictionary<SteedosObjectType>) {
-    const connection = await createConnection(options);
-    const queryRunner: QueryRunner = await connection.driver.createQueryRunner("master");
+export async function createTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectType>) {
     for (let objectName in objects) {
         let currentObject = objects[objectName];
         let tableName = currentObject.tableName;
