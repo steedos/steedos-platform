@@ -24,7 +24,10 @@ describe('crud for schema with splite3 datasource', () => {
             method: "insert",
             data: { id: "ptr", name: "ptr", title: "PTR", count: 46, amount: 198.4 },
             expected: {
-                gt: 0
+                insertResult: {
+                    id: "ptr",
+                    name: "ptr"
+                }
             }
         },
         {
@@ -69,7 +72,7 @@ describe('crud for schema with splite3 datasource', () => {
                             tableName: tableName,
                             fields: {
                                 id: {
-                                    label: '主键',
+                                    label: '编号',
                                     type: 'text'
                                 },
                                 name: {
@@ -132,6 +135,11 @@ describe('crud for schema with splite3 datasource', () => {
             if (expected.findOneResult !== undefined) {
                 Object.keys(expected.findOneResult).forEach((key) => {
                     expect(result[key]).to.be.eq(expected.findOneResult[key]);
+                });
+            }
+            if (expected.insertResult !== undefined) {
+                Object.keys(expected.insertResult).forEach((key) => {
+                    expect(result[key]).to.be.eq(expected.insertResult[key]);
                 });
             }
         });

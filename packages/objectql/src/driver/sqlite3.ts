@@ -180,7 +180,11 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let placeholders: string = Object.keys(data).map((n) => { return `?`; }).join(",");
         let values: any[] = Object.values(data);
 
-        return await this.run(`INSERT INTO ${tableName}(${projection}) VALUES(${placeholders})`, values);
+        let id = await this.run(`INSERT INTO ${tableName}(${projection}) VALUES(${placeholders})`, values);
+        let results = await this.run(`SELECT * FROM ${tableName} WHERE rowid=?;`, id);
+        if (results){
+            return results[0];
+        }
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {

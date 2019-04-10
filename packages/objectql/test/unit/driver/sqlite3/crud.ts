@@ -34,8 +34,7 @@ describe('crud for sqlite3 database', () => {
     it('create one record', async () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", count: 46 })
-
-        expect(result).to.be.gt(0);
+        expect(result.id).to.be.eq("ptr");
     });
 
     it('update one record', async () => {

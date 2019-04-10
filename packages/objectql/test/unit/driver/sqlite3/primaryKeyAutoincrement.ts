@@ -23,7 +23,10 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             title: "create the first record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 1
+                insertResult: {
+                    id: 1,
+                    name: "ptr"
+                }
             }
         },
         {
@@ -31,21 +34,30 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             runSql: "",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 2
+                insertResult: {
+                    id: 2,
+                    name: "ptr"
+                }
             }
         },
         {
             title: "create the third record with id value",
             insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 5
+                insertResult: {
+                    id: 5,
+                    name: "ptr"
+                }
             }
         },
         {
             title: "create the fourth record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 6
+                insertResult: {
+                    id: 6,
+                    name: "ptr"
+                }
             }
         },
         {
@@ -59,7 +71,10 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             title: "recreate the first record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 7
+                insertResult: {
+                    id: 7,
+                    name: "ptr"
+                }
             }
         },
         {
@@ -73,7 +88,10 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             title: "recreate the first record again",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
-                eq: 1
+                insertResult: {
+                    id: 1,
+                    name: "ptr"
+                }
             }
         }
     ];
@@ -123,6 +141,11 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             }
             if (expected.eq !== undefined) {
                 expect(result).to.be.eq(expected.eq);
+            }
+            if (expected.insertResult !== undefined) {
+                Object.keys(expected.insertResult).forEach((key) => {
+                    expect(result[key]).to.be.eq(expected.insertResult[key]);
+                });
             }
         });
     });
