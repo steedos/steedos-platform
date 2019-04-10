@@ -91,7 +91,7 @@ describe('crud for schema with splite3 datasource', () => {
         });
         const datasources = mySchema.getDataSources();
         for (let name in datasources) {
-            // await datasources[name].dropTables();
+            await datasources[name].dropTables();
             await datasources[name].createTables();
         }
         testObject = mySchema.getObject('test');
