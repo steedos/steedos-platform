@@ -365,7 +365,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async find(query: SteedosQueryOptions, userId?: SteedosIDType) {
         await this.processUnreadableField(userId, query);
-        return await this.callAdapter('find', this.name, query, userId)
+        return await this.callAdapter('find', this.tableName, query, userId)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
@@ -453,7 +453,18 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 queryFields = query.fields.split(',')
             }
 
-            query.fields = _.difference(queryFields, userObjectUnreadableFields).join(',')
+            queryFields = _.difference(queryFields, userObjectUnreadableFields)
+
+            if(queryFields.length < 1){
+                queryFields.push()
+            }
+
+            if(this.idFieldName){
+                queryFields.unshift(this.idFieldName)
+                queryFields = _.compact(_.uniq(queryFields))
+            }
+
+            query.fields = queryFields.join(',')
         }
     }
 

@@ -13,9 +13,9 @@ abstract class SteedosObjectPermissionTypeProperties {
     modifyCompanyRecords?: boolean
     disabled_list_views?: []
     disabled_actions?: []
-    unreadable_fields?: []
-    uneditable_fields?: []
-    unrelated_objects?: []
+    unreadable_fields?: string[]
+    uneditable_fields?: string[]
+    unrelated_objects?: string[]
 }
 
 export interface SteedosObjectPermissionTypeConfig extends SteedosObjectPermissionTypeProperties { }

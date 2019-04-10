@@ -17,6 +17,10 @@ describe('Test Permission', () => {
                             name: {
                                 label: '名称',
                                 type: 'text'
+                            },
+                            no: {
+                                label: '编号',
+                                type: 'number'
                             }
                         }
                     }
@@ -27,7 +31,8 @@ describe('Test Permission', () => {
                             allowCreate: false,
                             allowRead: true,
                             allowEdit: false,
-                            allowDelete: false
+                            allowDelete: false,
+                            unreadable_fields: ['name']
                         },
                         admin: {
                             allowCreate: true,
@@ -265,4 +270,15 @@ describe('Test Permission', () => {
         expect(findOk).to.equal(true) && expect(insertOK || updateOK ||  deleteOK).to.equal(false)
 
     });
+
+    it('unreadable_fields：不可见字段权限测试', async()=>{
+        let test = mySchema.getObject('test2');
+        test.insert({_id:'test2019', name: 'test2019 name', no: 666}, '2')
+        let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '1')
+        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, '2')
+        await test.delete('test2019', '2')
+        expect(userDoc.name).to.undefined && expect(adminDoc.name).to.equal('test2019 name')
+    })
+
+    
   });
