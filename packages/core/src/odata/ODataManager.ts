@@ -87,8 +87,8 @@ export class ODataManager {
     return su.company_ids.includes(companyId);
   }
 
-  excludeDeleted(query: any) {
-    query.is_deleted = { $ne: true };
+  excludeDeleted(filters: string) {
+    filters = `(${filters}) and (is_deleted ne true)`;
   }
 
   visitorParser(visitor: any) {
@@ -133,7 +133,6 @@ export class ODataManager {
             let ref: any;
             let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
-            queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
             for (let idx = 0; idx < entities.length; idx++) {
               if (entities[idx][navigationProperty]) {
                 if (field.multiple) {
@@ -176,9 +175,6 @@ export class ODataManager {
                   queryOptions.fields.push(_ro_NAME_FIELD_KEY);
                 }
                 let referenceToCollection = getCreator().getSteedosSchema().getObject(entities[idx][navigationProperty].o);
-                if (queryOptions.fields.length == 0) {
-                  queryOptions = { fields: _.keys(referenceToCollection.toConfig().fields) };
-                }
                 if (referenceToCollection) {
                   if (field.multiple) {
                     let _ids = _.clone(entities[idx][navigationProperty].ids);
@@ -232,7 +228,6 @@ export class ODataManager {
   }
 
   handleError(e: any) {
-    console.error('handleError: ', e);
     let body = {};
     let error = {};
     error['message'] = e.message;
