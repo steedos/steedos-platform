@@ -71,7 +71,20 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       if (queryParams.$select) {
         fields = queryParams.$select.split(',');
       }
-
+      if (!permissions.viewAllRecords && !permissions.viewCompanyRecords) {
+        if (collection.enable_share) {
+          // # 满足共享规则中的记录也要搜索出来
+          // delete createQuery.query.owner
+          // shares = []
+          // orgs = Steedos.getUserOrganizations(spaceId, @userId, true)
+          // shares.push {"owner": @userId}
+          // shares.push { "sharing.u": @userId }
+          // shares.push { "sharing.o": { $in: orgs } }
+          // createQuery.query["$or"] = shares
+        } else {
+          filters = `(${filters}) and (owner eq \'${userId}\')`;
+        }
+      }
       getODataManager().excludeDeleted(filters)
 
       if (queryParams.$top !== '0') {
@@ -148,7 +161,6 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         };
       }
 
-      // getODataManager().excludeDeleted(createQuery.query);
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
@@ -156,6 +168,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       if (queryParams.$select) {
         fields = queryParams.$select.split(',');
       }
+      getODataManager().excludeDeleted(filters)
       if (queryParams.$top !== '0') {
         let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
         if (queryParams.hasOwnProperty('$skip')) {
