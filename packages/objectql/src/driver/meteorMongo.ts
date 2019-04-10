@@ -203,7 +203,8 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        return collection.update({ _id: id }, data);
+                        collection.update({ _id: id }, data);
+                        return collection.findOne({ _id: id });
                     })
                     resolve(result);
                 } catch (error) {
