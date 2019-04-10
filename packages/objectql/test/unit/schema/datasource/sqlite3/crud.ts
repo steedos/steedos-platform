@@ -8,6 +8,12 @@ let mySchema: SteedosSchema;
 let testObject: SteedosObjectType;
 
 describe('crud for schema with splite3 datasource', () => {
+    try{
+        require("sqlite3");
+    }
+    catch(ex){
+        return true;
+    }
     let result: any;
     let expected: any;
     let testIndex: number = 0;

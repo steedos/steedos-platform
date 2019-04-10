@@ -7,6 +7,12 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 let tableName = "TestCrudForSqlite3";
 
 describe('crud for sqlite3 database', () => {
+    try {
+        require("sqlite3");
+    }
+    catch (ex) {
+        return true;
+    }
     before(async () => {
         let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
         let result: any = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);

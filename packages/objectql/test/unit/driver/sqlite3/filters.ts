@@ -9,6 +9,12 @@ let tableName = "TestFiltersForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
 describe('filters for sqlite3 database', () => {
+    try {
+        require("sqlite3");
+    }
+    catch (ex) {
+        return true;
+    }
     let result: any;
     let expected: any;
     let testIndex: number = 0;
