@@ -66,10 +66,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
     private _tableName: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
-    private _idField: SteedosFieldType;
+    private _idFieldName: string;
 
-    public get idField(): SteedosFieldType {
-        return this._idField;
+    public get idFieldName(): string {
+        return this._idFieldName;
     }
 
     constructor(object_name: string, datasource: SteedosDataSourceType, config: SteedosObjectTypeConfig) {
@@ -118,6 +118,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             permission.name = name
             this.setPermission(permission)
         })
+
+        if(this._datasource.driver == SteedosDatabaseDriverType.Mongo || this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo){
+            this._idFieldName = '_id'
+        }
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig) {
@@ -232,7 +236,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.fields[field_name] = field
 
         if(field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
-            this._idField = field
+            this._idFieldName = field.name
         }
     }
 

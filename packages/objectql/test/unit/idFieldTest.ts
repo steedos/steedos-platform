@@ -39,6 +39,6 @@ describe('Test idField', () => {
   
         let test = mySchema.getObject('sqlite.test');
         
-        expect(users.idField).to.undefined && expect(test.idField.name).to.equal('id')
+        expect(users.idFieldName).to.equal('_id') && expect(test.idFieldName).to.equal('id')
     });
   });
