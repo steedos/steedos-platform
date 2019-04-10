@@ -383,6 +383,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType) {
+        await this.processUneditableFields(userId, doc)
         return await this.callAdapter('update', this.tableName, id, doc, userId)
     }
 
@@ -474,6 +475,24 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
             query.fields = queryFields.join(',')
         }
+    }
+
+    private async processUneditableFields(userId: SteedosIDType, doc: JsonMap){
+        if(!userId){
+            return 
+        }
+
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectUneditableFields = userObjectPermission.uneditable_fields
+
+        let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
+        if(intersection.length > 0){
+            throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
+        }
+
+        // _.each(userObjectUneditableFields, (name: string)=>{
+        //     delete doc[name]
+        // })
     }
 
     private async callAdapter(method: string, ...args: any[]) {

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { SteedosSchema, SteedosIDType } from '../../src';
 var path = require('path')
 
-describe('Test Permission', () => {
+describe.only('Test Permission', () => {
     let mySchema = new SteedosSchema({
         datasources: {
             default: {
@@ -34,11 +34,19 @@ describe('Test Permission', () => {
                             allowDelete: false,
                             unreadable_fields: ['name']
                         },
+                        user2: {
+                            allowCreate: false,
+                            allowRead: true,
+                            allowEdit: true,
+                            allowDelete: false,
+                            uneditable_fields: ['no']
+                        },
                         admin: {
                             allowCreate: true,
                             allowRead: true,
                             allowEdit: true,
-                            allowDelete: true
+                            allowDelete: true,
+                            
                         }
                     }
                 }
@@ -53,6 +61,8 @@ describe('Test Permission', () => {
                 return ['admin']
             }else if(userId == '3'){
                 return ['user', 'admin']
+            }else if(userId == '4'){
+                return ['user2']
             }
         }
     })
@@ -273,12 +283,39 @@ describe('Test Permission', () => {
 
     it('unreadable_fields：不可见字段权限测试', async()=>{
         let test = mySchema.getObject('test2');
-        test.insert({_id:'test2019', name: 'test2019 name', no: 666}, '2')
+        await test.insert({_id:'test2019', name: 'test2019 name', no: 666}, '2')
+        
         let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '1')
+        
         let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, '2')
+        
         await test.delete('test2019', '2')
+        
         expect(userDoc.name).to.undefined && expect(adminDoc.name).to.equal('test2019 name')
     })
 
-    
+    it('uneditable_fields：不可编辑字段权限测试', async()=>{
+        let test = mySchema.getObject('test2');
+        await test.insert({_id:'test2019', name: 'test2019 name', no: 666})
+        
+        let userUpdateOK = false
+
+        try {
+            await test.update('test2019', {no: 111, name: 'N111'}, '4')
+        } catch (error) {
+            if(error.message === 'no permissions to edit fields no'){
+                userUpdateOK = true
+            }
+        }
+        
+        // let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '4')
+        
+        await test.update('test2019', {no: 222, name: 'N222'}, '2')
+        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, '2')
+        
+        await test.delete('test2019')
+        
+        expect(userUpdateOK).to.equal(userUpdateOK) && expect(adminDoc.no).to.equal(222)
+    })
+
   });
