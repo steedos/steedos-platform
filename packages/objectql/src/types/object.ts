@@ -66,6 +66,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
     private _tableName: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
+    private _idField: SteedosFieldType;
+
+    public get idField(): SteedosFieldType {
+        return this._idField;
+    }
 
     constructor(object_name: string, datasource: SteedosDataSourceType, config: SteedosObjectTypeConfig) {
         super();
@@ -140,7 +145,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.triggers[name] = trigger
         this.registerTrigger(trigger)
     }
-
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
@@ -226,6 +230,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     setField(field_name: string, fieldConfig: SteedosFieldTypeConfig) {
         let field = new SteedosFieldType(field_name, this, fieldConfig)
         this.fields[field_name] = field
+
+        if(field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            this._idField = field
+        }
     }
 
     getField(field_name: string) {
@@ -352,10 +360,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async find(query: SteedosQueryOptions, userId?: SteedosIDType) {
+        await this.processUnreadableField(userId, query);
         return await this.callAdapter('find', this.name, query, userId)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
+        await this.processUnreadableField(userId, query);
         return await this.callAdapter('findOne', this.tableName, id, query, userId)
     }
 
@@ -423,8 +433,28 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return context
     }
 
+    private async processUnreadableField(userId: SteedosIDType, query: SteedosQueryOptions){
+        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectUnreadableFields = userObjectPermission.unreadable_fields
+        if(userObjectUnreadableFields.length > 0){
+            let queryFields = [];
+
+            if(!(query.fields && query.fields.length)){
+                queryFields = _.keys(this.toConfig().fields)
+            }
+            
+            if(_.isArray(query.fields)){
+                queryFields = query.fields
+            }else if(_.isString(query.fields)){
+                queryFields = query.fields.split(',')
+            }
+
+            query.fields = _.difference(queryFields, userObjectUnreadableFields).join(',')
+        }
+    }
 
     private async callAdapter(method: string, ...args: any[]) {
+        
         const adapterMethod = this._datasource[method];
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');

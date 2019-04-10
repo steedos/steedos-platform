@@ -41,6 +41,8 @@ abstract class SteedosFieldProperties{
     object_name?: string
     name?: string
     type?: string
+    primary?: boolean
+    generated?: boolean
     label?: string
     is_name?: boolean
     sort_no?: number

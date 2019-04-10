@@ -5,7 +5,7 @@ export type SteedosQueryFilters = any
  */
 export type SteedosQueryOptions = {
 
-    readonly fields?: Array<string> | string;
+    fields?: Array<string> | string; //['字段名1', '字段名2'] || '字段名1, 字段名2'
 
     readonly filters?: SteedosQueryFilters;
 
