@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { SteedosSchema, SteedosIDType } from '../../src';
 var path = require('path')
 
-describe.only('Test Permission', () => {
+describe('Test Permission', () => {
     let mySchema = new SteedosSchema({
         datasources: {
             default: {
