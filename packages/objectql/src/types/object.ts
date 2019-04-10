@@ -278,6 +278,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async getUserObjectPermission(userId: SteedosIDType) {
+
+        if(!userId){
+            throw new Error('userId is required')
+        }
+
         let roles = await this.schema.getRoles(userId)
         let objectRolesPermission = this.getObjectRolesPermission()
 
@@ -438,6 +443,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async processUnreadableField(userId: SteedosIDType, query: SteedosQueryOptions){
+        if(!userId){
+            return 
+        }
         let userObjectPermission = await this.getUserObjectPermission(userId)
         let userObjectUnreadableFields = userObjectPermission.unreadable_fields
         if(userObjectUnreadableFields.length > 0){
