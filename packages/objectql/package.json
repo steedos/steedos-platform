@@ -21,7 +21,6 @@
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
-    "@types/sqlite3": "^3.1.5",
     "@types/underscore": "^1.8.13",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
@@ -41,7 +40,6 @@
     "pg": "^7.8.2",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
-    "sqlite3": "^4.0.6",
     "typeorm": "^0.2.16",
     "underscore": "1.5.2"
   },
