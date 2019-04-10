@@ -9,6 +9,12 @@ let tableName = "TestFieldsForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
 describe('fetch records width specific fields for sqlite3 database', () => {
+    try {
+        require("sqlite3");
+    }
+    catch (ex) {
+        return true;
+    }
     let result: any;
     let expected: any;
     let testIndex: number = 0;

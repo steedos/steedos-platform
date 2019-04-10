@@ -8,7 +8,13 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 let tableName = "TestPageForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe('fetch records by paging for sqlite4 database', () => {
+describe('fetch records by paging for sqlite3 database', () => {
+    try {
+        require("sqlite3");
+    }
+    catch (ex) {
+        return true;
+    }
     let result: any;
     let expected: any;
     let testIndex: number = 0;

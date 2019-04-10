@@ -8,7 +8,13 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 let tableName = "TestSortForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe('fetch records for sqlite4 with sort arguments as a string that comply with odata-v4 protocol', () => {
+describe('fetch records for sqlite3 with sort arguments as a string that comply with odata-v4 protocol', () => {
+    try {
+        require("sqlite3");
+    }
+    catch (ex) {
+        return true;
+    }
     let result: any;
     let expected: any;
     let testIndex: number = 0;
