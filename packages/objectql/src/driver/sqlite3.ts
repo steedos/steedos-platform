@@ -196,6 +196,9 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
         let fields: any[] = Object.keys(data);
+        if (!fields.length){
+            throw new Error("the params 'data' must not be empty");
+        }
         let projection: string = this.getSqlite3FieldsOptions(fields);
         let sets: string = projection.split(",").map((n)=>{
             return `${n}=?`;
