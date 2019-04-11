@@ -41,6 +41,26 @@ describe('filters for sqlite3 database', () => {
             }
         },
         {
+            title: "filter records with empty array",
+            options: {
+                fields: ["id", "name"],
+                filters: []
+            },
+            expected: {
+                length: 2
+            }
+        },
+        {
+            title: "filter records with empty string",
+            options: {
+                fields: ["id", "name"],
+                filters: ""
+            },
+            expected: {
+                length: 2
+            }
+        },
+        {
             title: "records count with filters",
             function: "count",
             options: {

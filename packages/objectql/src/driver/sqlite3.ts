@@ -79,11 +79,18 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
+        let emptyFilters = {
+            where: "",
+            parameters: undefined
+        };
         if (_.isUndefined(filters)) {
-            return {
-                where: "",
-                parameters: undefined
-            }
+            return emptyFilters;
+        }
+        if (_.isString(filters) && !filters.length) {
+            return emptyFilters
+        }
+        if (_.isArray(filters) && !filters.length) {
+            return emptyFilters
         }
         let mongoFilters: JsonMap = this.formatFiltersToSqlite3Query(filters);
         return mongoFilters
