@@ -54,7 +54,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(reference_to);
-                    let record = await object.findOne(source[info.fieldName], { fields: _.keys(object.toConfig().fields) }, context.userId);
+                    let record = await object.findOne(source[info.fieldName], {}, context.userId);
                     return record;
                 }
             };
@@ -66,9 +66,11 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
                     _.each(source[info.fieldName], function (f) {
                         filters.push(`(_id eq '${f}')`);
                     })
+                    if (filters.length === 0) {
+                        return null;
+                    }
                     return await object.find({
-                        filters: filters.join(' or '),
-                        fields: _.keys(object.toConfig().fields)
+                        filters: filters.join(' or ')
                     }, context.userId);
                 }
             }
@@ -112,9 +114,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
             resolve: async function (source, args, context, info) {
                 let object = steedosSchema.getObject(obj.name);
                 let selector = args['selector'] || {};
-                if (!selector.fields) {
-                    selector.fields = _.keys(object.toConfig().fields);
-                }
                 console.log('context.userId: ', context.userId);
                 return object.find(selector, context.userId);
             }
