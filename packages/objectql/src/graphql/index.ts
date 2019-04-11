@@ -6,7 +6,8 @@ import {
     GraphQLString,
     GraphQLFloat,
     GraphQLBoolean,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLInt
 } from 'graphql';
 var _ = require("underscore");
 import { ObjectId } from 'mongodb';
@@ -77,8 +78,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
         }
         else {
             objTypeFields[k] = {
-                type: GraphQLJSON,
-
+                type: GraphQLJSON
             };
         }
     })
@@ -110,12 +110,11 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
         console.log(knownTypes[objName]);
         rootQueryfields[objName] = {
             type: new GraphQLList(knownTypes[objName]),
-            args: { 'selector': { type: GraphQLJSON }, 'options': { type: GraphQLJSON } },
+            args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
             resolve: async function (source, args, context, info) {
                 let object = steedosSchema.getObject(obj.name);
-                let selector = args['selector'] || {};
                 console.log('context.userId: ', context.userId);
-                return object.find(selector, context.userId);
+                return object.find(args, context.userId);
             }
         }
     })
