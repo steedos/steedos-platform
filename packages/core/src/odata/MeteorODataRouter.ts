@@ -466,4 +466,42 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
   }
 })
 
+router.post('/:objectName/:_id/:methodName', async function (req: Request, res: Response) {
+  try {
+    let userId = req.user._id;
+    let urlParams = req.params;
+    let bodyParams = req.body;
+    let key = urlParams.objectName;
+    let spaceId = urlParams.spaceId;
+    let collection = getCreator().getSteedosSchema().getObject(key);
+    let setErrorMessage = getODataManager().setErrorMessage;
+
+    if (!collection) {
+      res.status(401).send(setErrorMessage(404, collection, key));
+    }
+    let permissions = await collection.getUserObjectPermission(userId);
+    if (permissions.allowRead) {
+      let methodName = urlParams.methodName;
+      let methods = collection.methods || {};
+      if (methods.hasOwnProperty(methodName)) {
+        let thisObj = {
+          object_name: key,
+          record_id: urlParams._id,
+          space_id: spaceId,
+          user_id: userId,
+          permissions: permissions
+        }
+        res.send(methods[methodName].apply(thisObj, [bodyParams]) || {})
+      } else {
+        res.status(404).send(setErrorMessage(404, collection, key));
+      }
+    } else {
+      res.status(403).send(setErrorMessage(403, collection, key, 'post'));
+    }
+  } catch (error) {
+    let handleError = getODataManager().handleError(error);
+    res.status(handleError.statusCode).send(handleError.body);
+  }
+})
+
 export default router
