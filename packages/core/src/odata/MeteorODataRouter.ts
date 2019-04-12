@@ -131,7 +131,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     }
     let permissions = await collection.getUserObjectPermission(userId);
     if (permissions.allowRead) {
-      let recent_view_collection = getCreator().getCollection('object_recent_viewed', spaceId);
+      let recent_view_collection = getCreator().getSteedosSchema().getObject('object_recent_viewed');
       let recent_view_selector = {
         'record.o': key,
         created_by: userId
@@ -143,7 +143,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       recent_view_options.fields = {
         record: 1
       };
-      let recent_view_records = recent_view_collection.find(recent_view_selector, recent_view_options).fetch();
+      let recent_view_records = await recent_view_collection.find(recent_view_selector, recent_view_options);
       let recent_view_records_ids: any = _.pluck(recent_view_records, 'record');
       recent_view_records_ids = recent_view_records_ids.getProperty('ids');
       recent_view_records_ids = _.flatten(recent_view_records_ids);

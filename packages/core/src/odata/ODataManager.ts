@@ -228,6 +228,7 @@ export class ODataManager {
   }
 
   handleError(e: any) {
+    console.log(e)
     let body = {};
     let error = {};
     error['message'] = e.message;
