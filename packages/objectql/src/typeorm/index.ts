@@ -1,6 +1,6 @@
-import { QueryRunner, Table } from "typeorm";
+import { QueryRunner, Table, EntitySchema } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosFieldTypeConfig } from "../types";
+import { SteedosObjectTypeConfig, SteedosFieldTypeConfig } from "../types";
 
 export function getTableColumnTypeByField(field: SteedosFieldTypeConfig): string {
     let fieldType: string = field.type;
@@ -17,27 +17,61 @@ export function getTableColumnTypeByField(field: SteedosFieldTypeConfig): string
     return "varchar";
 };
 
-
-export function getTableColumnsByFields(fields: Dictionary<SteedosFieldTypeConfig>): any[] {
-    let columns: any[] = [];
+export function getTableColumnsByFields(fields: Dictionary<SteedosFieldTypeConfig>): any {
+    let columns: any = {};
     for (let fieldName in fields) {
         let field = fields[fieldName];
         let fieldType: string = getTableColumnTypeByField(field);
         let nullable = field.required ? false : true;
-        columns.push({
-            name: fieldName,
+        columns[fieldName] = {
             type: fieldType,
-            nullable: nullable
-        });
+            nullable: nullable,
+            primary: field.primary,
+            generated: field.generated
+        };
     }
     return columns;
+}
+
+export function getEntity(object: SteedosObjectTypeConfig): EntitySchema {
+    let tableName = object.tableName;
+    let fields = object.fields;
+    let columns: any = getTableColumnsByFields(fields);
+    return new EntitySchema({
+        name: tableName,
+        columns: columns
+    });
+}
+
+export function getEntities(objects: Dictionary<SteedosObjectTypeConfig>): Dictionary<EntitySchema> {
+    let entities: Dictionary<EntitySchema> = {};
+    for (let name in objects) {
+        let object = objects[name];
+        entities[object.tableName] = getEntity(object);
+    }
+    return entities;
+}
+
+export function getTableColumnOptions(entitySchemaOptions: any): any[]{
+    let options = [];
+    for (let name in entitySchemaOptions) {
+        let option = entitySchemaOptions[name];
+        options.push({
+            name: name,
+            type: option.type,
+            nullable: option.nullable,
+            primary: option.primary,
+            generated: option.generated
+        });
+    }
+    return options;
 }
 
 export async function dropTable(queryRunner: QueryRunner, tableName: string) {
     await queryRunner.dropTable(tableName, true);
 }
 
-export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectType>) {
+export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectTypeConfig>) {
     for (let objectName in objects) {
         let currentObject = objects[objectName];
         let tableName = currentObject.tableName;
@@ -45,25 +79,23 @@ export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<S
     }
 }
 
-export async function createTable(queryRunner: QueryRunner, object: SteedosObjectType) {
-    let tableName = object.tableName;
-    let fields = object.fields;
-    let columns: any[] = this.getTableColumnsByFields(fields);
+export async function createTable(queryRunner: QueryRunner, object: EntitySchema | SteedosObjectTypeConfig) {
+    let entity: EntitySchema;
+    if (object instanceof EntitySchema){
+        entity = <EntitySchema>object;
+    }
+    else{
+        entity = getEntity(<SteedosObjectTypeConfig>object);
+    }
+    const columns: any[] = getTableColumnOptions(entity.options.columns);
     await queryRunner.createTable(new Table({
-        name: tableName,
+        name: entity.options.name,
         columns: columns
     }), true);
 }
 
-export async function createTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectType>) {
-    for (let objectName in objects) {
-        let currentObject = objects[objectName];
-        let tableName = currentObject.tableName;
-        let fields = currentObject.fields;
-        let columns: any[] = this.getTableColumnsByFields(fields);
-        await queryRunner.createTable(new Table({
-            name: tableName,
-            columns: columns
-        }), true);
+export async function createTables(queryRunner: QueryRunner, objects: Dictionary<EntitySchema> | Dictionary<SteedosObjectTypeConfig>) {
+    for (let name in objects) {
+        await createTable(queryRunner, objects[name]);
     }
 }

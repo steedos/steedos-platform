@@ -1,12 +1,12 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver, SteedosColumnType } from "./index";
-import { createConnection, QueryRunner } from "typeorm";
+import { createConnection, QueryRunner, EntitySchema } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
-import { SteedosIDType, SteedosObjectType } from "../types";
+import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-sql';
-import { createTable, createTables, dropTable, dropTables} from "../typeorm";
+import { createTable, createTables, dropTable, dropTables, getEntities } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -23,17 +23,22 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     _client: any;
     
     _queryRunner: QueryRunner;
+    _entities: Dictionary<EntitySchema>;
 
     constructor(config: SteedosDriverConfig) {
         this._url = config.url;
     }
 
     async connect() {
+        if (!this._entities) {
+            throw new Error("Entities must be registered before connect");
+        }
         if (!this._client) {
             this._client = await createConnection({
                 type: "sqlite",
                 database: this._url,
-                name: (new Date()).getTime().toString()
+                name: (new Date()).getTime().toString(),
+                entities: Object.values(this._entities)
             });
             return true;
         }
@@ -179,9 +184,26 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
-        let projection: string = this.getSqlite3FieldsOptions(query.fields);
-        let result: any = await this.run(`SELECT ${projection} FROM ${tableName} WHERE id=?;`, id);
-        return result ? result[0] : null;
+        let entity = this._entities[tableName];
+        if (!entity) {
+            throw new Error(`${tableName} is not exist or not registered in the connect`);
+        }
+        let fields:string[] = [];
+        if (typeof query.fields == "string") {
+            fields = (<string>query.fields).split(",").map((n) => { return n.trim(); });
+        }
+        else{
+            fields = <string[]>query.fields;
+        }
+        if (fields && fields.length === 0){
+            // fields为空时返回所有数据
+            fields = null;
+        }
+        let repository = this._client.getRepository(entity);
+        let result: any = await repository.findOne(id,{
+            select: fields
+        });
+        return result;
     }
 
     async run(sql: string, param?: any) {
@@ -190,36 +212,57 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async insert(tableName: string, data: JsonMap) {
-        let fields: any[] = Object.keys(data);
-        let projection: string = this.getSqlite3FieldsOptions(fields);
-        let placeholders: string = Object.keys(data).map((n) => { return `?`; }).join(",");
-        let values: any[] = Object.values(data);
-
-        let id = await this.run(`INSERT INTO ${tableName}(${projection}) VALUES(${placeholders})`, values);
-        let results = await this.run(`SELECT * FROM ${tableName} WHERE rowid=?;`, id);
-        if (results){
-            return results[0];
+        let entity = this._entities[tableName];
+        if (!entity){
+            throw new Error(`${tableName} is not exist or not registered in the connect`);
+        }
+        let repository = this._client.getRepository(entity);
+        let result = await repository.insert(data);
+        if (result.identifiers && result.identifiers.length){
+            let primaryColumns: any = repository.metadata.primaryColumns;
+            let primaryKey: string;
+            if (primaryColumns && primaryColumns.length){
+                primaryKey = primaryColumns[0].propertyPath;
+            }
+            let id = primaryKey && result.identifiers[0][primaryKey];
+            if(id){
+                return await repository.findOne(id);
+            }
         }
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+        let entity = this._entities[tableName];
+        if (!entity) {
+            throw new Error(`${tableName} is not exist or not registered in the connect`);
+        }
         let fields: any[] = Object.keys(data);
         if (!fields.length){
             throw new Error("the params 'data' must not be empty");
         }
-        let projection: string = this.getSqlite3FieldsOptions(fields);
-        let sets: string = projection.split(",").map((n)=>{
-            return `${n}=?`;
-        }).join(",");
+        // let projection: string = this.getSqlite3FieldsOptions(fields);
+        // let sets: string = projection.split(",").map((n)=>{
+        //     return `${n}=?`;
+        // }).join(",");
 
-        let values: any[] = Object.values(data);
-        values.push(id);
+        // let values: any[] = Object.values(data);
+        // values.push(id);
 
-        return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id=?;`, values);
+        // return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id=?;`, values);
+
+        let repository = this._client.getRepository(entity);
+        let result = await repository.update(id, data);
+        result = await repository.findOne(id);
+        return result;
     }
 
     async delete(tableName: string, id: SteedosIDType) {
-        return await this.run(`DELETE FROM ${tableName} WHERE id=?;`, id);
+        let entity = this._entities[tableName];
+        if (!entity) {
+            throw new Error(`${tableName} is not exist or not registered in the connect`);
+        }
+        let repository = this._client.getRepository(entity);
+        await repository.delete(id);
     }
 
     async createTable(object: SteedosObjectType) {
@@ -227,9 +270,12 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         await createTable(runner, object);
     }
 
-    async createTables(objects: Dictionary<SteedosObjectType>) {
+    async createTables(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>) {
+        if (!this._entities) {
+            this._entities = getEntities(objects);
+        }
         const runner: QueryRunner = await this.createQueryRunner();
-        await createTables(runner, objects);
+        await createTables(runner, this._entities);
     }
 
     async dropTable(tableName: string) {

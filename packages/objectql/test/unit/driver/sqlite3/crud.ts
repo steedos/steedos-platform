@@ -4,10 +4,11 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
+// let tableName = "test_crud_for_sqlite3";
 let tableName = "TestCrudForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe('crud for sqlite3 database', () => {
+describe.only('crud for sqlite3 database', () => {
     try {
         require("sqlite3");
     }
@@ -33,7 +34,7 @@ describe('crud for sqlite3 database', () => {
             id: "ptr",
             data: { name: "ptr-", title: "PTR-", count: 460 },
             expected: {
-                length: 0
+                returnRecord: { id: "ptr", name: "ptr-", title: "PTR-", count: 460 }
             }
         },
         {
@@ -52,25 +53,37 @@ describe('crud for sqlite3 database', () => {
             method: "delete",
             id: "ptr",
             expected: {
-                length: 0
+                eq: undefined
             }
         }
     ];
 
     before(async () => {
-        result = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        expect(result[0].count).to.be.not.eq(undefined);
-        if (result[0].count) {
-            await driver.run(`DROP TABLE ${tableName}`);
-        }
-        await driver.run(`
-            CREATE TABLE ${tableName}(
-                [id] TEXT primary key,
-                [name] TEXT,
-                [title] TEXT,
-                [count] INTEGER
-            );
-        `);
+        await driver.createTables({
+            test: {
+                label: 'Sqlite3 Schema',
+                tableName: tableName,
+                fields: {
+                    id: {
+                        label: '主键',
+                        type: 'text',
+                        primary: true
+                    },
+                    name: {
+                        label: '名称',
+                        type: 'text'
+                    },
+                    title: {
+                        label: '标题',
+                        type: 'text'
+                    },
+                    count: {
+                        label: '数量',
+                        type: 'number'
+                    }
+                }
+            }
+        });
     });
 
     beforeEach(async () => {
@@ -99,9 +112,15 @@ describe('crud for sqlite3 database', () => {
             if (expected.gt !== undefined) {
                 expect(result).to.be.gt(expected.gt);
             }
+            if (expected.eq !== undefined) {
+                expect(result).to.be.eq(expected.eq);
+            }
             if (expected.returnRecord !== undefined) {
                 Object.keys(expected.returnRecord).forEach((key) => {
-                    expect(result[key]).to.be.eq(expected.returnRecord[key]);
+                    expect(result).to.be.not.eq(undefined);
+                    if (result){
+                        expect(result[key]).to.be.eq(expected.returnRecord[key]);
+                    }
                 });
             }
         });

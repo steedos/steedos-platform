@@ -38,9 +38,11 @@
     "mongodb": "^3.0.8",
     "odata-v4-mongodb": "^0.1.12",
     "odata-v4-sql": "^0.1.2",
+    "odata-v4-typeorm": "^0.0.11",
     "pg": "^7.8.2",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
+    "sqlite3": "^4.0.6",
     "typeorm": "^0.2.16",
     "underscore": "1.5.2"
   },
