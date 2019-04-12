@@ -1,13 +1,10 @@
-import { SteedosSqlite3Driver } from "../../../../src/driver";
+import { SteedosMongoDriver } from "../../../../src/driver";
 import { expect } from 'chai';
-import path = require("path");
 
-let databaseUrl = path.join(__dirname, "sqlite-test.db");
-// let databaseUrl = ':memory:';
-let tableName = "TestCrudForSqlite3";
-let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+let tableName = "mongo-driver-test-crud";
+let driver = new SteedosMongoDriver({ url: "mongodb://127.0.0.1/steedos" });
 
-describe('crud for sqlite3 database', () => {
+describe('crud for mongo database', () => {
     try {
         require("sqlite3");
     }
@@ -22,24 +19,24 @@ describe('crud for sqlite3 database', () => {
         {
             title: "create one record",
             method: "insert",
-            data: { id: "ptr", name: "ptr", title: "PTR", count: 46 },
+            data: { _id: "ptr", name: "ptr", title: "PTR", count: 46 },
             expected: {
-                returnRecord: { id: "ptr", name: "ptr", title: "PTR", count: 46 }
+                returnRecord: { _id: "ptr", name: "ptr", title: "PTR", count: 46 }
             }
         },
         {
             title: "update one record",
             method: "update",
-            id: "ptr",
+            _id: "ptr",
             data: { name: "ptr-", title: "PTR-", count: 460 },
             expected: {
-                length: 0
+                eq: 1
             }
         },
         {
             title: "read one record",
             method: "findOne",
-            id: "ptr",
+            _id: "ptr",
             queryOptions: {
                 fields: ["name", "count"]
             },
@@ -50,37 +47,21 @@ describe('crud for sqlite3 database', () => {
         {
             title: "delete one record",
             method: "delete",
-            id: "ptr",
+            _id: "ptr",
             expected: {
-                length: 0
+                eq: 1
             }
         }
     ];
-
-    before(async () => {
-        result = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        expect(result[0].count).to.be.not.eq(undefined);
-        if (result[0].count) {
-            await driver.run(`DROP TABLE ${tableName}`);
-        }
-        await driver.run(`
-            CREATE TABLE ${tableName}(
-                [id] TEXT primary key,
-                [name] TEXT,
-                [title] TEXT,
-                [count] INTEGER
-            );
-        `);
-    });
 
     beforeEach(async () => {
         let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
-        let id = tests[testIndex].id;
+        let _id = tests[testIndex]._id;
         let queryOptions = tests[testIndex].queryOptions;
-        if (id) {
-            result = await driver[method](tableName, id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
+        if (_id) {
+            result = await driver[method](tableName, _id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
         }
         else {
             result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
@@ -95,6 +76,9 @@ describe('crud for sqlite3 database', () => {
             }
             if (expected.length !== undefined) {
                 expect(result).to.be.length(expected.length);
+            }
+            if (expected.eq !== undefined) {
+                expect(result).to.be.eq(expected.eq);
             }
             if (expected.gt !== undefined) {
                 expect(result).to.be.gt(expected.gt);

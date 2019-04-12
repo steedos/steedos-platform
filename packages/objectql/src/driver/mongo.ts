@@ -52,17 +52,28 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     formatFiltersToMongoQuery(filters: any): JsonMap {
-        let odataQuery: string = formatFiltersToODataQuery(filters)
+        let odataQuery: string = "";
+        if (_.isString(filters)) {
+            odataQuery = filters;
+        }
+        else {
+            odataQuery = formatFiltersToODataQuery(filters)
+        }
         let query: JsonMap = createFilter(odataQuery)
         return query;
     }
 
     getMongoFilters(filters: SteedosQueryFilters): JsonMap {
+        let emptyFilters = {};
         if (_.isUndefined(filters)) {
-            return {}
+            return emptyFilters;
         }
-        if (_.isString(filters))
-            return createFilter(filters)
+        if (_.isString(filters) && !filters.length) {
+            return emptyFilters
+        }
+        if (_.isArray(filters) && !filters.length) {
+            return emptyFilters
+        }
         let mongoFilters: JsonMap = this.formatFiltersToMongoQuery(filters);
         return mongoFilters
     }
@@ -162,6 +173,9 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+        if (_.isEmpty(data)){
+            throw new Error("the params 'data' must not be empty");
+        }
         await this.connect();
         let collection = this.collection(tableName);
         let result = await collection.updateOne({ _id: id }, {$set: data});

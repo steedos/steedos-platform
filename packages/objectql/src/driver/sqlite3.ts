@@ -87,11 +87,18 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
+        let emptyFilters = {
+            where: "",
+            parameters: undefined
+        };
         if (_.isUndefined(filters)) {
-            return {
-                where: "",
-                parameters: undefined
-            }
+            return emptyFilters;
+        }
+        if (_.isString(filters) && !filters.length) {
+            return emptyFilters
+        }
+        if (_.isArray(filters) && !filters.length) {
+            return emptyFilters
         }
         let mongoFilters: JsonMap = this.formatFiltersToSqlite3Query(filters);
         return mongoFilters
@@ -197,6 +204,9 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
         let fields: any[] = Object.keys(data);
+        if (!fields.length){
+            throw new Error("the params 'data' must not be empty");
+        }
         let projection: string = this.getSqlite3FieldsOptions(fields);
         let sets: string = projection.split(",").map((n)=>{
             return `${n}=?`;
