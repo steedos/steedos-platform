@@ -136,6 +136,8 @@ fields:
   owner:
     name: owner
     hidden: true
+    type: lookup
+    reference_to: users
 calendar:
   textExpr: name
   startDateExpr: start

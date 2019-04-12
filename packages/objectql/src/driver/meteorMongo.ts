@@ -7,6 +7,7 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter } from 'odata-v4-mongodb';
 import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
+import { SteedosColumnType } from "./columnType";
 
 var Fiber = require('fibers');
 
@@ -15,6 +16,25 @@ declare var DDP: any;
 declare var DDPCommon: any;
 
 export class SteedosMeteorMongoDriver implements SteedosDriver {
+    
+    getSupportedColumnTypes() {
+        return [
+            SteedosColumnType.varchar, 
+            SteedosColumnType.text, 
+            SteedosColumnType.number,
+            SteedosColumnType.money,
+            SteedosColumnType.boolean,
+            SteedosColumnType.date,
+            SteedosColumnType.dateTime,
+            SteedosColumnType.json,
+            SteedosColumnType.array,
+            SteedosColumnType.oneToOne,
+            SteedosColumnType.oneToMany,
+            SteedosColumnType.manyToOne,
+            SteedosColumnType.manyToMany
+        ]
+    }
+
     connect() {
     }
     disconnect() {

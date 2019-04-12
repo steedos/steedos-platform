@@ -1,6 +1,7 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosObjectType } from '.';
 import _ = require('underscore')
+import { SteedosColumnType } from '../driver';
 
 const FIELDTYPES = [
     "text",
@@ -13,24 +14,24 @@ const FIELDTYPES = [
     "number",
     "currency",
     "password",
-    "lookup",
+    "lookup",  // "id": 一对一, ["id0","id1"]: 一对多， 需要新增关系表（p, m）, {o:'object_name', ids: ['', '']}：新增关系表(p, o, m)
     "master_detail",
-    "grid",
+    "grid", // [{},{}] ： 一对多
     "url",
     "email",
-    "avatar",
-    "location",
-    "image",
-    "object",
-    "[object]",
+    "avatar", //TODO
+    "location", //TODO
+    "image", //TODO
+    "object", // {}：一对一
+    "[object]", 
     "[Object]",
-    "[grid]",
-    "[text]",
-    "selectCity",
-    "audio",
-    "filesize",
-    "file",
-    "string",
+    "[grid]", //TODO
+    "[text]", // ['string','sring1']
+    "selectCity", //TODO
+    "audio", //TODO
+    "filesize", //TODO
+    "file", //TODO
+    "string", 
     "function Object() { [native code] }",
     "function String() { [native code] }",
     "code",
@@ -60,7 +61,7 @@ abstract class SteedosFieldProperties{
     sortable?: boolean
     precision?: number
     scale?: number
-    reference_to?: string | []
+    reference_to?: string | [] | Function
     rows?: number
     options?: string | []
     description?: string
@@ -85,6 +86,10 @@ export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
 export class SteedosFieldType extends SteedosFieldProperties implements Dictionary {
     private _object: SteedosObjectType;
     private _type: any;
+    private _columnType: SteedosColumnType;
+    public get columnType(): SteedosColumnType {
+        return this._columnType;
+    }
 
     private properties: string[] = ['name']
 
@@ -97,7 +102,15 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this.properties.push(key)
             }
         })
+
+        if(!this.type && this.blackbox){
+            this.type = 'object'
+        }
+
         this.name = name
+
+        this.setColumnType()
+
     }
 
     toConfig(){
@@ -106,6 +119,128 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             config[property] = this[property]
         })
         return config
+    }
+
+    private setColumnType(){
+         switch (this.type) {
+             case 'text':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'textarea':
+                this._columnType = SteedosColumnType.text
+                break;
+            case 'select':
+                if(this.multiple){
+                    this._columnType = SteedosColumnType.array
+                }else{
+                    this._columnType = SteedosColumnType.varchar
+                }
+                break;
+            case 'boolean':
+                this._columnType = SteedosColumnType.boolean
+                break;
+            case 'date':
+                this._columnType = SteedosColumnType.date
+                break;
+            case 'datetime':
+                this._columnType = SteedosColumnType.dateTime
+                break;
+            case 'number':
+                this._columnType = SteedosColumnType.number
+                break;
+            case 'currency':
+                this._columnType = SteedosColumnType.money
+                break;
+            case 'password':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'lookup':
+                let reference_to = this.reference_to
+                if(_.isFunction(this.reference_to)){
+                    reference_to = this.reference_to()
+                }
+
+                if(_.isArray(reference_to)){
+                    this._columnType = SteedosColumnType.manyToMany
+                }else{
+                    if(this.multiple){
+                        this._columnType = SteedosColumnType.oneToMany
+                    }else{
+                        this._columnType = SteedosColumnType.oneToOne
+                    }
+                }
+                break;
+            case 'master_detail':
+                this._columnType = SteedosColumnType.oneToMany
+                break;
+            case 'grid':
+                this._columnType = SteedosColumnType.array
+                break;
+            case 'url':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'email':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'avatar':
+                this._columnType = SteedosColumnType.oneToOne
+                break;
+            case 'location':
+                this._columnType = SteedosColumnType.json
+                break;
+            case 'image':
+                this._columnType = SteedosColumnType.oneToOne
+                break;
+            case 'object':
+                this._columnType = SteedosColumnType.json
+                break;
+                case 'url':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case '[object]':
+                this._columnType = SteedosColumnType.array
+                break;
+            case '[Object]':
+                this._columnType = SteedosColumnType.array
+                break;
+            case '[grid]':
+                this._columnType = SteedosColumnType.array
+                break;
+            case '[text]':
+                this._columnType = SteedosColumnType.array
+                break;
+            case 'selectCity':
+                this._columnType = SteedosColumnType.json
+                break;
+            case 'audio':
+                this._columnType = SteedosColumnType.oneToOne
+                break;
+            case 'filesize':
+                this._columnType = SteedosColumnType.number
+                break;
+            case 'file':
+                this._columnType = SteedosColumnType.oneToOne
+                break;
+            case 'string':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'code':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'function Object() { [native code] }':
+                this._columnType = SteedosColumnType.json
+                break;
+            case 'function String() { [native code] }':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case 'Object':
+                this._columnType = SteedosColumnType.json
+                break;
+            default:
+                console.log('this', this)
+                throw new Error(`${this.name} invalid field type ${this.type}`)
+                break;
+         }
     }
 
     public get object(): SteedosObjectType {

@@ -1,5 +1,5 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
-import { SteedosDriver } from "./index";
+import { SteedosDriver, SteedosColumnType } from "./index";
 import { createConnection, QueryRunner } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
@@ -11,6 +11,14 @@ import { createTable, createTables, dropTable, dropTables} from "../typeorm";
 import _ = require("underscore");
 
 export class SteedosSqlite3Driver implements SteedosDriver {
+    getSupportedColumnTypes() {
+        return [
+            SteedosColumnType.varchar, 
+            SteedosColumnType.text, 
+            SteedosColumnType.number,
+            SteedosColumnType.oneToOne
+        ]
+    }
     _url: string;
     _client: any;
     

@@ -1,5 +1,5 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
-import { SteedosDriver } from "./index"
+import { SteedosDriver, SteedosColumnType } from "./index"
 import { MongoClient, ObjectId } from "mongodb";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
@@ -16,6 +16,24 @@ export class SteedosMongoDriver implements SteedosDriver {
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
         this._url = config.url;
+    }
+
+    getSupportedColumnTypes() {
+        return [
+            SteedosColumnType.varchar, 
+            SteedosColumnType.text, 
+            SteedosColumnType.number,
+            SteedosColumnType.money,
+            SteedosColumnType.boolean,
+            SteedosColumnType.date,
+            SteedosColumnType.dateTime,
+            SteedosColumnType.json,
+            SteedosColumnType.array,
+            SteedosColumnType.oneToOne,
+            SteedosColumnType.oneToMany,
+            SteedosColumnType.manyToOne,
+            SteedosColumnType.manyToMany
+        ]
     }
 
     async connect() {

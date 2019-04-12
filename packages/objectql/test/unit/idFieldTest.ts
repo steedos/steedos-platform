@@ -27,6 +27,10 @@ describe('Test idField', () => {
                                 name: {
                                     type: 'text',
                                     label: '名称'
+                                },
+                                u: {
+                                    type: "lookup",
+                                    reference_to: 'users'
                                 }
                             }
                         }

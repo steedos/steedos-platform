@@ -29,6 +29,9 @@ export type SteedosDataSourceTypeConfig = {
 
 export class SteedosDataSourceType implements Dictionary {
     private _adapter: SteedosDriver;
+    public get adapter(): SteedosDriver {
+        return this._adapter;
+    }
 
     private _url: string;
     private _username?: string;

@@ -72,6 +72,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._idFieldName;
     }
 
+    private checkField(){
+        let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
+        _.each(this.fields, (field: SteedosFieldType, key: string) => {
+            if(!driverSupportedColumnTypes.includes(field.columnType)){
+                throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
+            }
+        })
+    }
+
     constructor(object_name: string, datasource: SteedosDataSourceType, config: SteedosObjectTypeConfig) {
         super();
         this._name = object_name
@@ -97,6 +106,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _.each(config.fields, (field, field_name) => {
             this.setField(field_name, field)
         })
+
+        this.checkField()
 
         this._actions = config.actions
 
