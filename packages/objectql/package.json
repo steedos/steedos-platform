@@ -18,6 +18,7 @@
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
     "@steedos/filters": "file:../filters",
+    "@steedos/standard-objects": "file:../standard-objects",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
