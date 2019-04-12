@@ -1,5 +1,6 @@
 import { SteedosSchema } from '../../src/types';
 import { expect } from 'chai';
+var path = require('path')
 
 describe('自动生成字段名', () => {
   it('should return true', () => {
@@ -30,7 +31,8 @@ describe('自动生成字段名', () => {
                             }
                         }
                     }
-                }
+                }, 
+                objectFiles: [path.resolve(__dirname, "./load")]
             }
         }
     })
@@ -43,8 +45,10 @@ describe('自动生成字段名', () => {
 
     let field = object.fields["title"]
     // console.log(field)
+
+    let meeting = schema.getObject('meeting')
     
-    expect(field.name).to.equal("title");
+    expect(field.name).to.equal("title") && expect(meeting.methods.test != undefined).to.equal(true)
 
   });
 });

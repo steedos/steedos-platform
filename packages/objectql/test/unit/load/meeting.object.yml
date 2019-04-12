@@ -144,6 +144,11 @@ calendar:
   endDateExpr: end
   groups:
     - room
+methods:
+  test: !!js/function |
+    function(){
+      console.log(222);
+    }
 list_views:
   all:
     label: 列表

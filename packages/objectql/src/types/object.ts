@@ -38,6 +38,7 @@ abstract class SteedosObjectProperties {
     listeners?: Dictionary<SteedosListenerConfig>
     list_views?: Dictionary<SteedosObjectListViewTypeConfig>
     permissions?: Dictionary<SteedosObjectPermissionTypeConfig>
+    methods?: Dictionary<Function>
 }
 
 
@@ -52,7 +53,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
 
-const properties = ['label','icon','enable_search','is_enable','enable_files','enable_tasks','enable_notes','enable_events','enable_api','enable_share','enable_instances','enable_chatter','enable_audit','enable_trash','enable_space_global','enable_tree','is_view','hidden','description','custom','owner']
+const properties = ['label','icon','enable_search','is_enable','enable_files','enable_tasks','enable_notes','enable_events','enable_api','enable_share','enable_instances','enable_chatter','enable_audit','enable_trash','enable_space_global','enable_tree','is_view','hidden','description','custom','owner', 'methods']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -67,6 +68,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _tableName: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
+
+    getMethod(method_name: string){
+        return this.methods[method_name]
+    }
 
     public get idFieldName(): string {
         return this._idFieldName;
