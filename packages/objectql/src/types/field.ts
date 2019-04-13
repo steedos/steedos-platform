@@ -171,7 +171,20 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 }
                 break;
             case 'master_detail':
-                this._columnType = SteedosColumnType.oneToMany
+                let reference_to2 = this.reference_to
+                if(_.isFunction(this.reference_to)){
+                    reference_to2 = this.reference_to()
+                }
+
+                if(_.isArray(reference_to2)){
+                    this._columnType = SteedosColumnType.manyToMany
+                }else{
+                    if(this.multiple){
+                        this._columnType = SteedosColumnType.manyToOne
+                    }else{
+                        this._columnType = SteedosColumnType.oneToOne
+                    }
+                }
                 break;
             case 'grid':
                 this._columnType = SteedosColumnType.array
