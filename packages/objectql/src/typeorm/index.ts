@@ -39,6 +39,7 @@ export function getEntity(object: SteedosObjectTypeConfig): EntitySchema {
     let columns: any = getTableColumnsByFields(fields);
     return new EntitySchema({
         name: tableName,
+        tableName: tableName,
         columns: columns
     });
 }
