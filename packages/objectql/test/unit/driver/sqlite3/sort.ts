@@ -78,19 +78,33 @@ describe('fetch records for sqlite3 with sort arguments as a string that comply 
     ];
 
     before(async () => {
-        result = await driver.run(`select count(*) as count from sqlite_master where type = 'table' and name = '${tableName}'`);
-        expect(result[0].count).to.be.not.eq(undefined);
-        if (result[0].count) {
-            await driver.run(`DROP TABLE ${tableName}`);
-        }
-        await driver.run(`
-            CREATE TABLE ${tableName}(
-                [id] TEXT primary key,
-                [name] TEXT,
-                [title] TEXT,
-                [count] INTEGER
-            );
-        `);
+        let objects = {
+            test: {
+                label: 'Sqlite3 Schema',
+                tableName: tableName,
+                fields: {
+                    id: {
+                        label: '主键',
+                        type: 'text',
+                        primary: true
+                    },
+                    name: {
+                        label: '名称',
+                        type: 'text'
+                    },
+                    title: {
+                        label: '标题',
+                        type: 'text'
+                    },
+                    count: {
+                        label: '数量',
+                        type: 'number'
+                    }
+                }
+            }
+        };
+        await driver.dropTables(objects);
+        await driver.createTables(objects);
     });
 
     beforeEach(async () => {

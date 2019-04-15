@@ -2,7 +2,7 @@ import { SteedosSchema } from '../../src/types';
 import { expect } from 'chai';
 var path = require('path')
 
-describe.only('自动生成字段名', () => {
+describe('自动生成字段名', () => {
     let schema = new SteedosSchema({
         datasources: {
             default: {

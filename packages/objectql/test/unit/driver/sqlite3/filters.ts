@@ -8,7 +8,7 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 let tableName = "TestFiltersForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
-describe.only('filters for sqlite3 database', () => {
+describe('filters for sqlite3 database', () => {
     try {
         require("sqlite3");
     }
