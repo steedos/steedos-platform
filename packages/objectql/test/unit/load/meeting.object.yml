@@ -198,3 +198,10 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+
+actions:
+  standard_query:
+    label: 查找
+    visible: true
+    'on': list
+    todo: standard_query
