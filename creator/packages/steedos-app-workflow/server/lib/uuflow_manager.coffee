@@ -849,7 +849,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 						# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
 						# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
 						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-						instance_traces[i].approves[h].auto_submitted = true
+						instance_traces[i].approves[h].auto_submitted = auto_submitted
 					h++
 			i++
 
@@ -928,7 +928,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 									# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
 									# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
 									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-									instance_traces[i].approves[h].auto_submitted = true
+									instance_traces[i].approves[h].auto_submitted = auto_submitted
 								h++
 						i++
 
@@ -1056,7 +1056,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 								instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 								instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-								instance_traces[i].approves[h].auto_submitted = true
+								instance_traces[i].approves[h].auto_submitted = auto_submitted
 							h++
 					i++
 
@@ -1136,7 +1136,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 											instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 											instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 											instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-											instance_traces[i].approves[h].auto_submitted = true
+											instance_traces[i].approves[h].auto_submitted = auto_submitted
 										h++
 								i++
 
@@ -1261,7 +1261,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 									instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 									instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-									instance_traces[i].approves[h].auto_submitted = true
+									instance_traces[i].approves[h].auto_submitted = auto_submitted
 								h++
 						i++
 
@@ -1341,7 +1341,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 												instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
 												instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
 												instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-												instance_traces[i].approves[h].auto_submitted = true
+												instance_traces[i].approves[h].auto_submitted = auto_submitted
 											h++
 									i++
 
@@ -1465,7 +1465,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 						instance_traces[i].approves[h].is_finished = true
 						instance_traces[i].approves[h].finish_date = new Date
 						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-						instance_traces[i].approves[h].auto_submitted = true
+						instance_traces[i].approves[h].auto_submitted = auto_submitted
 
 					if instance_traces[i].approves[h].is_finished is false and instance_traces[i].approves[h].type isnt 'cc' and instance_traces[i].approves[h].type isnt 'distribute'
 						isAllApproveFinished = false
