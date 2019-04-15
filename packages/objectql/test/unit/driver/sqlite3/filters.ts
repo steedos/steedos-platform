@@ -126,7 +126,7 @@ describe.only('filters for sqlite3 database', () => {
                 result = await driver[functionName](tableName, queryOptions);
             }
             else{
-                result = await driver.find(tableName, queryOptions);
+                result = await driver.find(tableName, queryOptions).catch((ex: any) => { console.error(ex); return false; });
             }
         }
         catch (ex) {
