@@ -7,7 +7,7 @@ const graphqlHTTP = require('express-graphql');
 let steedosSchema = new objectql.SteedosSchema({
     datasources: {
         default: {
-            driver: 'mongo',
+            driver: 'meteor-mongo',
             url: 'mongodb://127.0.0.1/steedos',
             objectFiles: [__dirname + "/../standard-objects", __dirname + "/../../apps/crm/src"]
         }
