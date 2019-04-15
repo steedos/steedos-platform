@@ -189,7 +189,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let repository = this._client.getRepository(entity);
         const queryBuilder = repository.createQueryBuilder(tableName);
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection, sort, topAndSkip), { alias: tableName });
-        console.log("find======result=======", result);
         return result;
     }
 
@@ -202,7 +201,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         let repository = this._client.getRepository(entity);
         const queryBuilder = repository.createQueryBuilder(tableName).select([]);
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, { $count: true }), { alias: tableName });
-        console.log("find======result=======", result);
         return result.count;
     }
 
@@ -312,5 +310,13 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         }
         const runner: QueryRunner = await this.createQueryRunner();
         await dropTables(runner, this._entities);
+    }
+
+    async registerEntities(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>, dropBeforeSync: boolean = false) {
+        if (!this._entities) {
+            this._entities = getEntities(objects);
+            await this.connect();
+            await this._client.synchronize(dropBeforeSync);
+        }
     }
 }

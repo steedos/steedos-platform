@@ -6,8 +6,9 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestPrimaryKeyForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+let objects = {};
 
-describe('primary key autoincrement test for sqlite3 database', () => {
+describe.only('primary key autoincrement test for sqlite3 database', () => {
     try {
         require("sqlite3");
     }
@@ -45,7 +46,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 5,
+                    id: 3,
                     name: "ptr"
                 }
             }
@@ -55,7 +56,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 6,
+                    id: 4,
                     name: "ptr"
                 }
             }
@@ -72,7 +73,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 7,
+                    id: 5,
                     name: "ptr"
                 }
             }
@@ -97,14 +98,14 @@ describe('primary key autoincrement test for sqlite3 database', () => {
     ];
 
     before(async () => {
-        let objects = {
+        objects = {
             test: {
                 label: 'Sqlite3 Schema',
                 tableName: tableName,
                 fields: {
                     id: {
                         label: '主键',
-                        type: 'text',
+                        type: 'number',
                         primary: true,
                         generated: true
                     },
@@ -123,8 +124,12 @@ describe('primary key autoincrement test for sqlite3 database', () => {
                 }
             }
         };
-        await driver.dropTables(objects);
-        await driver.createTables(objects);
+        await driver.registerEntities(objects);
+    });
+
+    after(async () => {
+        await driver.run(`DELETE FROM ${tableName}`);
+        await driver.run(`DELETE FROM sqlite_sequence WHERE name='${tableName}'`);
     });
 
     beforeEach(async () => {
@@ -135,10 +140,12 @@ describe('primary key autoincrement test for sqlite3 database', () => {
         result = {};
         if (runSql) {
             driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+            await driver.registerEntities(objects);
             result = await driver.run(runSql);
         }
         else if (runSqls) {
             driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+            await driver.registerEntities(objects);
             for (let i = 0; i < runSqls.length;i++){
                 result = await driver.run(runSqls[i]);
             }
