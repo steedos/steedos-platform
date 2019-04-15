@@ -180,7 +180,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                     this._columnType = SteedosColumnType.manyToMany
                 }else{
                     if(this.multiple){
-                        this._columnType = SteedosColumnType.manyToOne
+                        this._columnType = SteedosColumnType.manyToOne //TODO
                     }else{
                         this._columnType = SteedosColumnType.oneToOne
                     }

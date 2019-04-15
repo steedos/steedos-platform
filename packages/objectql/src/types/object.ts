@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosActionType, SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig } from ".";
+import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
@@ -33,7 +33,7 @@ abstract class SteedosObjectProperties {
     // triggers?: object
     sidebar?: object //TODO
     calendar?: object //TODO
-    actions?: Dictionary<SteedosActionType> //TODO
+    actions?: Dictionary<SteedosActionTypeConfig>
     fields?: Dictionary<SteedosFieldTypeConfig>
     listeners?: Dictionary<SteedosListenerConfig>
     list_views?: Dictionary<SteedosObjectListViewTypeConfig>
@@ -46,7 +46,7 @@ abstract class SteedosObjectProperties {
 export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     name?: string
     fields: Dictionary<SteedosFieldTypeConfig>
-    actions?: Dictionary<SteedosActionType>
+    actions?: Dictionary<SteedosActionTypeConfig>
     listeners?: Dictionary<SteedosListenerConfig>
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
@@ -114,7 +114,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         this.checkField()
 
-        this._actions = config.actions
+        _.each(config.actions, (action, action_name)=>{
+            this.setAction(action_name, action)
+        })
 
         _.each(config.listeners, (listener, listener_name) => {
             this.setListener(listener_name, listener)
@@ -229,6 +231,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
+        if(this.list_views){
+            config.list_views = {}
+            _.each(this.list_views, (list_view: SteedosObjectListViewType, key: string)=>{
+                config.list_views[key] = list_view.toConfig()
+            })
+        }
+
+        if(this.actions){
+            config.actions = {}
+            _.each(this.actions, (action: SteedosActionType, key: string)=>{
+                config.actions[key] = action.toConfig()
+            })
+        }
+
         if(this.triggers){
             config.triggers = {}
             _.each(this.triggers, (trigger: SteedosTriggerType, key: string)=>{
@@ -239,7 +255,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let rolePermission = this.getObjectRolesPermission()
         if(rolePermission){
             config.permission_set = {}
-            _.each(rolePermission, (v, k)=>{
+            _.each(rolePermission, (v, k)=>{ 
                 config.permission_set[k] = v
             })
         }
@@ -264,6 +280,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
     }
 
+    setAction(action_name: string, actionConfig: SteedosActionTypeConfig){
+        this._actions[action_name] = new SteedosActionType(action_name, this, actionConfig)
+    }
+
+    getAction(action_name: string){
+        return this._actions[action_name]
+    }
+
     //TODO 处理对象继承
     extend(config: SteedosObjectTypeConfig) {
         if (this.name != config.name)
@@ -275,11 +299,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
 
         // override each actions
-        if (config.actions) {
-            _.each(config.actions, (action) => {
-                this.actions[action.name] = action
-            })
-        }
+        // if (config.actions) {
+        //     _.each(config.actions, (action) => {
+        //         this.actions[action.name] = action
+        //     })
+        // }
 
         // override each triggers
         // if (config.triggers) {
