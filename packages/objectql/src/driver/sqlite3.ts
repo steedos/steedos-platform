@@ -283,8 +283,11 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         await dropTable(runner, tableName);
     }
 
-    async dropTables(objects: Dictionary<SteedosObjectType>) {
+    async dropTables(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>) {
+        if (!this._entities) {
+            this._entities = getEntities(objects);
+        }
         const runner: QueryRunner = await this.createQueryRunner();
-        await dropTables(runner, objects);
+        await dropTables(runner, this._entities);
     }
 }

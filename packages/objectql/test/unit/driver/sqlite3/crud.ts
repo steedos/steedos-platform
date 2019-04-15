@@ -4,8 +4,8 @@ import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
-// let tableName = "test_crud_for_sqlite3";
-let tableName = "TestCrudForSqlite3";
+let tableName = "test_crud_for_sqlite3";
+// let tableName = "TestCrudForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
 
 describe.only('crud for sqlite3 database', () => {
@@ -59,7 +59,7 @@ describe.only('crud for sqlite3 database', () => {
     ];
 
     before(async () => {
-        await driver.createTables({
+        let objects = {
             test: {
                 label: 'Sqlite3 Schema',
                 tableName: tableName,
@@ -83,7 +83,9 @@ describe.only('crud for sqlite3 database', () => {
                     }
                 }
             }
-        });
+        };
+        await driver.dropTables(objects);
+        await driver.createTables(objects);
     });
 
     beforeEach(async () => {

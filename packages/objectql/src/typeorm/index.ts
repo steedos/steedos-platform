@@ -67,15 +67,23 @@ export function getTableColumnOptions(entitySchemaOptions: any): any[]{
     return options;
 }
 
-export async function dropTable(queryRunner: QueryRunner, tableName: string) {
+export async function dropTable(queryRunner: QueryRunner, object: EntitySchema | SteedosObjectTypeConfig | string) {
+    let tableName: string;
+    if (object instanceof EntitySchema) {
+        tableName = object.options.name;
+    }
+    else if (typeof object == "string") {
+        tableName = object;
+    }
+    else{
+        tableName = object.tableName;
+    }
     await queryRunner.dropTable(tableName, true);
 }
 
-export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<SteedosObjectTypeConfig>) {
-    for (let objectName in objects) {
-        let currentObject = objects[objectName];
-        let tableName = currentObject.tableName;
-        await queryRunner.dropTable(tableName, true);
+export async function dropTables(queryRunner: QueryRunner, objects: Dictionary<EntitySchema> | Dictionary<SteedosObjectTypeConfig>) {
+    for (let name in objects) {
+        await dropTable(queryRunner, objects[name]);
     }
 }
 
