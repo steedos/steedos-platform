@@ -1,12 +1,11 @@
-import { SteedosSqlite3Driver } from "../../../../src/driver";
-import { SteedosQueryOptions } from "../../../../src/types/query";
+import { SteedosSchema, SteedosSqlite3Driver, SteedosQueryOptions, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 import path = require("path");
 
 let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestFiltersForSqlite3";
-let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
+let driver: SteedosSqlite3Driver;
 
 describe('filters for sqlite3 database', () => {
     try {
@@ -85,32 +84,42 @@ describe('filters for sqlite3 database', () => {
     ];
 
     before(async () => {
-        let objects = {
-            test: {
-                label: 'Sqlite3 Schema',
-                tableName: tableName,
-                fields: {
-                    id: {
-                        label: '主键',
-                        type: 'text',
-                        primary: true
-                    },
-                    name: {
-                        label: '名称',
-                        type: 'text'
-                    },
-                    title: {
-                        label: '标题',
-                        type: 'text'
-                    },
-                    count: {
-                        label: '数量',
-                        type: 'number'
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: {
+                    driver: SteedosDatabaseDriverType.Sqlite,
+                    url: databaseUrl,
+                    objects: {
+                        test: {
+                            label: 'Sqlite3 Schema',
+                            tableName: tableName,
+                            fields: {
+                                id: {
+                                    label: '主键',
+                                    type: 'text',
+                                    primary: true
+                                },
+                                name: {
+                                    label: '名称',
+                                    type: 'text'
+                                },
+                                title: {
+                                    label: '标题',
+                                    type: 'text'
+                                },
+                                count: {
+                                    label: '数量',
+                                    type: 'number'
+                                }
+                            }
+                        }
                     }
                 }
             }
-        };
-        await driver.registerEntities(objects);
+        });
+        const datasource = mySchema.getDataSource("default");
+        await datasource.registerEntities();
+        driver = <SteedosSqlite3Driver>datasource.adapter;
     });
 
     beforeEach(async () => {

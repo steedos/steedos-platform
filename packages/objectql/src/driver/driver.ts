@@ -24,6 +24,6 @@ export interface SteedosDriver {
     delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;
-    registerEntities?(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>): any;
+    registerEntities?(objects: Dictionary<SteedosObjectType>): any;
 }
 

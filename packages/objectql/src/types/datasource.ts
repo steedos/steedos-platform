@@ -252,7 +252,7 @@ export class SteedosDataSourceType implements Dictionary {
 
     async registerEntities() {
         if (this._adapter.registerEntities) {
-            return await this._adapter.registerEntities(this._objectsConfig);
+            return await this._adapter.registerEntities(this._objects);
         }
     }
 }

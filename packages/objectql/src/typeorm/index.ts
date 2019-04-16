@@ -1,23 +1,26 @@
 import { EntitySchema } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectTypeConfig, SteedosFieldTypeConfig } from "../types";
+import { SteedosObjectType, SteedosFieldType } from "../types";
+import { SteedosColumnType } from "../driver";
 
-export function getTableColumnType(field: SteedosFieldTypeConfig): string {
-    let fieldType: string = field.type;
+export function getTableColumnType(field: SteedosFieldType): string {
+    let fieldType: SteedosColumnType = field.columnType;
     switch (fieldType) {
-        case "text":
+        case SteedosColumnType.text:
             return "varchar";
-        case "number":
+        case SteedosColumnType.number:
             let scale = field.scale === undefined ? 0 : field.scale;
             if (scale === 0){
                 return "int";
             }
             return "double";
+        case SteedosColumnType.varchar:
+            return "varchar";
     }
-    return "varchar";
+    return null;
 };
 
-export function getTableColumns(fields: Dictionary<SteedosFieldTypeConfig>): any {
+export function getTableColumns(fields: Dictionary<SteedosFieldType>): any {
     let columns: any = {};
     for (let fieldName in fields) {
         let field = fields[fieldName];
@@ -33,7 +36,7 @@ export function getTableColumns(fields: Dictionary<SteedosFieldTypeConfig>): any
     return columns;
 }
 
-export function getEntity(object: SteedosObjectTypeConfig): EntitySchema {
+export function getEntity(object: SteedosObjectType): EntitySchema {
     let tableName = object.tableName;
     let fields = object.fields;
     let columns: any = getTableColumns(fields);
@@ -44,7 +47,7 @@ export function getEntity(object: SteedosObjectTypeConfig): EntitySchema {
     });
 }
 
-export function getEntities(objects: Dictionary<SteedosObjectTypeConfig>): Dictionary<EntitySchema> {
+export function getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
     let entities: Dictionary<EntitySchema> = {};
     for (let name in objects) {
         let object = objects[name];
