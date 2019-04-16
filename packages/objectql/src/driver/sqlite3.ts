@@ -66,7 +66,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     formatFiltersToSqlite3Query(filters: any): JsonMap {
-        // let query: any;
         let odataQuery: string = "";
         if (_.isString(filters)){
             odataQuery = filters;
@@ -77,24 +76,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         return {
             $filter: odataQuery
         };
-        // console.log("formatFiltersToSqlite3Query====createFilter=before=====", odataQuery);
-        // query = createFilter(odataQuery, { alias: "a"});
-        // console.log("formatFiltersToSqlite3Query====createFilter=after=====", query);
-        // // let parameters: any[] = [];
-        // // query.parameters.forEach((param: any)=>{
-        // //     parameters.push(param);
-        // // });
-        // let where: string = <string>query.where;
-        // if (where) {
-        //     where = `WHERE ${where}`;
-        // }
-        // else{
-        //     where = "";
-        // }
-        // return {
-        //     where: where,
-        //     parameters: query.parameters
-        // }
     }
 
     getSqlite3Filters(filters: SteedosQueryFilters): JsonMap {
@@ -170,14 +151,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
     }
 
     async find(tableName: string, query: SteedosQueryOptions) {
-        // // let projection: string = this.getSqlite3FieldsOptions(query.fields);
-        // // let sort: string = this.getSqlite3SortOptions(query.sort);
-        // let filterQuery: JsonMap = this.getSqlite3Filters(query.filters);
-        // let where: string = <string>filterQuery.where;
-        // // let limitAndOffset: string = this.getSqlite3TopAndSkipOptions(query.top, query.skip);
-        // // let sql = `SELECT ${projection} FROM ${tableName} ${where} ${sort} ${limitAndOffset}`;
-        // let sql = `SELECT * FROM ${tableName} a ${where}`;
-        // return await this.run(sql, filterQuery.parameters);
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -261,16 +234,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         if (!fields.length){
             throw new Error("the params 'data' must not be empty");
         }
-        // let projection: string = this.getSqlite3FieldsOptions(fields);
-        // let sets: string = projection.split(",").map((n)=>{
-        //     return `${n}=?`;
-        // }).join(",");
-
-        // let values: any[] = Object.values(data);
-        // values.push(id);
-
-        // return await this.run(`UPDATE ${tableName} SET ${sets} WHERE id=?;`, values);
-
         let repository = this._client.getRepository(entity);
         let result = await repository.update(id, data);
         result = await repository.findOne(id);
