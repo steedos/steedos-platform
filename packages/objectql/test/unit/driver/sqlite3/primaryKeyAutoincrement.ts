@@ -6,9 +6,8 @@ let databaseUrl = path.join(__dirname, "sqlite-test.db");
 // let databaseUrl = ':memory:';
 let tableName = "TestPrimaryKeyForSqlite3";
 let driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-let objects = {};
 
-describe.only('primary key autoincrement test for sqlite3 database', () => {
+describe('primary key autoincrement test for sqlite3 database', () => {
     try {
         require("sqlite3");
     }
@@ -98,7 +97,7 @@ describe.only('primary key autoincrement test for sqlite3 database', () => {
     ];
 
     before(async () => {
-        objects = {
+        let objects = {
             test: {
                 label: 'Sqlite3 Schema',
                 tableName: tableName,
@@ -139,13 +138,9 @@ describe.only('primary key autoincrement test for sqlite3 database', () => {
         expected = tests[testIndex].expected;
         result = {};
         if (runSql) {
-            driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-            await driver.registerEntities(objects);
             result = await driver.run(runSql);
         }
         else if (runSqls) {
-            driver = new SteedosSqlite3Driver({ url: `${databaseUrl}` });
-            await driver.registerEntities(objects);
             for (let i = 0; i < runSqls.length;i++){
                 result = await driver.run(runSqls[i]);
             }

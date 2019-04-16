@@ -24,7 +24,7 @@ describe('crud for schema with splite3 datasource', () => {
             method: "insert",
             data: { id: "ptr", name: "ptr", title: "PTR", count: 46, amount: 198.4 },
             expected: {
-                insertResult: {
+                returnResult: {
                     id: "ptr",
                     name: "ptr"
                 }
@@ -36,7 +36,12 @@ describe('crud for schema with splite3 datasource', () => {
             id: "ptr",
             data: { name: "ptr-", title: "PTR-", count: 460 },
             expected: {
-                length: 0
+                returnResult: {
+                    name: "ptr-",
+                    title: "PTR-",
+                    count: 460,
+                    amount: 198.4
+                }
             }
         },
         {
@@ -47,7 +52,7 @@ describe('crud for schema with splite3 datasource', () => {
                 fields: ["name", "count"]
             },
             expected: {
-                findOneResult: { name: "ptr-", title: undefined, count: 460}
+                returnResult: { name: "ptr-", title: undefined, count: 460}
             }
         },
         {
@@ -55,7 +60,7 @@ describe('crud for schema with splite3 datasource', () => {
             method: "delete",
             id: "ptr",
             expected: {
-                length: 0
+                eq: undefined
             }
         }
     ];
@@ -72,8 +77,9 @@ describe('crud for schema with splite3 datasource', () => {
                             tableName: tableName,
                             fields: {
                                 id: {
-                                    label: '编号',
-                                    type: 'text'
+                                    label: '主键',
+                                    type: 'text',
+                                    primary: true
                                 },
                                 name: {
                                     label: '名称',
@@ -100,8 +106,7 @@ describe('crud for schema with splite3 datasource', () => {
         });
         const datasources = mySchema.getDataSources();
         for (let name in datasources) {
-            await datasources[name].dropTables();
-            await datasources[name].createTables();
+            await datasources[name].registerEntities();
         }
         testObject = mySchema.getObject('test');
     });
@@ -132,14 +137,12 @@ describe('crud for schema with splite3 datasource', () => {
             if (expected.gt !== undefined) {
                 expect(result).to.be.gt(expected.gt);
             }
-            if (expected.findOneResult !== undefined) {
-                Object.keys(expected.findOneResult).forEach((key) => {
-                    expect(result[key]).to.be.eq(expected.findOneResult[key]);
-                });
+            if (expected.eq !== undefined) {
+                expect(result).to.be.eq(expected.eq);
             }
-            if (expected.insertResult !== undefined) {
-                Object.keys(expected.insertResult).forEach((key) => {
-                    expect(result[key]).to.be.eq(expected.insertResult[key]);
+            if (expected.returnResult !== undefined) {
+                Object.keys(expected.returnResult).forEach((key) => {
+                    expect(result[key]).to.be.eq(expected.returnResult[key]);
                 });
             }
         });

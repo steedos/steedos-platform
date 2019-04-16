@@ -267,4 +267,10 @@ export class SteedosDataSourceType implements Dictionary {
             return await this._adapter.dropTables(objects ? objects : this._objects);
         }
     }
+
+    async registerEntities(dropBeforeSync: boolean = false) {
+        if (this._adapter.registerEntities) {
+            return await this._adapter.registerEntities(this._objects, dropBeforeSync);
+        }
+    }
 }

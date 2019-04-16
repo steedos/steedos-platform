@@ -103,8 +103,7 @@ describe('fetch records for sqlite3 with sort arguments as a string that comply 
                 }
             }
         };
-        await driver.dropTables(objects);
-        await driver.createTables(objects);
+        await driver.registerEntities(objects);
     });
 
     beforeEach(async () => {

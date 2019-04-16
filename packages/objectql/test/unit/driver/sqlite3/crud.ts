@@ -83,8 +83,7 @@ describe('crud for sqlite3 database', () => {
                 }
             }
         };
-        await driver.dropTables(objects);
-        await driver.createTables(objects);
+        await driver.registerEntities(objects);
     });
 
     beforeEach(async () => {
