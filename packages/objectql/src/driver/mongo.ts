@@ -179,14 +179,16 @@ export class SteedosMongoDriver implements SteedosDriver {
         await this.connect();
         let collection = this.collection(tableName);
         let result = await collection.updateOne({ _id: id }, {$set: data});
-        return result.result.ok;
+        if (result.result.ok) {
+            result = await collection.findOne({ _id: id });
+            return result;
+        }
     }
 
     async delete(tableName: string, id: SteedosIDType) {
         await this.connect();
         let collection = this.collection(tableName);
-        let result = await collection.deleteOne({ _id: id })
-        return result.deletedCount;
+        await collection.deleteOne({ _id: id });
     }
 
 }

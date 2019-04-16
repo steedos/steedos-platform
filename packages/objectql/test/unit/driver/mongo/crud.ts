@@ -30,7 +30,7 @@ describe('crud for mongo database', () => {
             _id: "ptr",
             data: { name: "ptr-", title: "PTR-", count: 460 },
             expected: {
-                eq: 1
+                returnRecord: { _id: 'ptr', name: 'ptr-', title: 'PTR-', count: 460 }
             }
         },
         {
@@ -49,7 +49,7 @@ describe('crud for mongo database', () => {
             method: "delete",
             _id: "ptr",
             expected: {
-                eq: 1
+                eq: undefined
             }
         }
     ];
