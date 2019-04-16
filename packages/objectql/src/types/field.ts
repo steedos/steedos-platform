@@ -43,7 +43,7 @@ abstract class SteedosFieldProperties{
     name?: string
     type?: string
     primary?: boolean
-    generated?: boolean
+    generated?: true | "increment" | "uuid" | "rowid";
     label?: string
     is_name?: boolean
     sort_no?: number
