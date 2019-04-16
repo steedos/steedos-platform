@@ -244,33 +244,15 @@ export class SteedosDataSourceType implements Dictionary {
         return buildGraphQLSchema(this._schema, this);
     }
 
-    async createTable(object: SteedosObjectType) {
-        if (this._adapter.createTable) {
-            return await this._adapter.createTable(object);
+    async dropEntities() {
+        if (this._adapter.dropEntities) {
+            return await this._adapter.dropEntities();
         }
     }
 
-    async createTables(objects?: Dictionary<SteedosObjectType>) {
-        if (this._adapter.createTables) {
-            return await this._adapter.createTables(objects ? objects: this._objects);
-        }
-    }
-
-    async dropTable(tableName: string) {
-        if (this._adapter.dropTable) {
-            return await this._adapter.dropTable(tableName);
-        }
-    }
-
-    async dropTables(objects?: Dictionary<SteedosObjectType>) {
-        if (this._adapter.dropTables) {
-            return await this._adapter.dropTables(objects ? objects : this._objects);
-        }
-    }
-
-    async registerEntities(dropBeforeSync: boolean = false) {
+    async registerEntities() {
         if (this._adapter.registerEntities) {
-            return await this._adapter.registerEntities(this._objectsConfig, dropBeforeSync);
+            return await this._adapter.registerEntities(this._objectsConfig);
         }
     }
 }

@@ -23,10 +23,7 @@ export interface SteedosDriver {
     update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType): any;
     delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
-    createTable?(object: SteedosObjectType): any;
-    createTables?(objects: Dictionary<SteedosObjectType>): any;
-    dropTable?(tableName: string): any;
-    dropTables?(objects: Dictionary<SteedosObjectType>): any;
-    registerEntities?(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>, dropBeforeSync?: boolean): any;
+    dropEntities?(): any;
+    registerEntities?(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>): any;
 }
 

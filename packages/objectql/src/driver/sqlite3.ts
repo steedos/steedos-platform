@@ -286,11 +286,21 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         await repository.delete(id);
     }
 
-    async registerEntities(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>, dropBeforeSync: boolean = false) {
+    async dropEntities() {
+        let objects = {};
+        if (this._entities) {
+            this._entities = getEntities(objects);
+            await this.connect();
+            await this._client.synchronize(true);
+            this._entities = null;
+        }
+    }
+
+    async registerEntities(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>) {
         if (!this._entities) {
             this._entities = getEntities(objects);
             await this.connect();
-            await this._client.synchronize(dropBeforeSync);
+            await this._client.synchronize();
         }
     }
 }
