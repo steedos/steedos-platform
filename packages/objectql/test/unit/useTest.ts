@@ -22,6 +22,18 @@ describe('Test use file', () => {
         let meeting = mySchema.getObject('meeting');
         let triggers = meeting.triggers
         expect(Object.keys(triggers).length).to.gt(0)
-
     });
+
+    it('test actions', async () => {
+        let test = mySchema.getObject('test');
+        let actions = test.actions
+        expect(Object.keys(actions).length).to.gt(0)
+    });
+
+    it('test listViews', async () => {
+        let test = mySchema.getObject('test');
+        let listViews = test.list_views
+        expect(Object.keys(listViews).length).to.eq(0)
+    });
+
   });
