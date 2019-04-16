@@ -7,7 +7,7 @@ import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 // import { createFilter, createQuery } from 'odata-v4-sql';
 import { executeQuery } from 'odata-v4-typeorm';
-import { createTable, createTables, dropTable, dropTables, getEntities } from "../typeorm";
+import { getEntities } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -284,32 +284,6 @@ export class SteedosSqlite3Driver implements SteedosDriver {
         }
         let repository = this._client.getRepository(entity);
         await repository.delete(id);
-    }
-
-    async createTable(object: SteedosObjectType) {
-        const runner: QueryRunner = await this.createQueryRunner();
-        await createTable(runner, object);
-    }
-
-    async createTables(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>) {
-        if (!this._entities) {
-            this._entities = getEntities(objects);
-        }
-        const runner: QueryRunner = await this.createQueryRunner();
-        await createTables(runner, this._entities);
-    }
-
-    async dropTable(tableName: string) {
-        const runner: QueryRunner = await this.createQueryRunner();
-        await dropTable(runner, tableName);
-    }
-
-    async dropTables(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>) {
-        if (!this._entities) {
-            this._entities = getEntities(objects);
-        }
-        const runner: QueryRunner = await this.createQueryRunner();
-        await dropTables(runner, this._entities);
     }
 
     async registerEntities(objects: Dictionary<SteedosObjectType | SteedosObjectTypeConfig>, dropBeforeSync: boolean = false) {
