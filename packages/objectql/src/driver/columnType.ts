@@ -2,7 +2,6 @@ export enum SteedosColumnType {
     varchar,
     text,
     number,
-    money,
     boolean,
     date,
     dateTime,

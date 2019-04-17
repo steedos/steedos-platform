@@ -3,6 +3,7 @@ import { SteedosObjectType } from '.';
 import _ = require('underscore')
 import { SteedosColumnType } from '../driver';
 
+//TODO 整理字段类型
 const FIELDTYPES = [
     "text",
     "textarea",
@@ -149,7 +150,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this._columnType = SteedosColumnType.number
                 break;
             case 'currency':
-                this._columnType = SteedosColumnType.money
+                this._columnType = SteedosColumnType.number
                 break;
             case 'password':
                 this._columnType = SteedosColumnType.varchar

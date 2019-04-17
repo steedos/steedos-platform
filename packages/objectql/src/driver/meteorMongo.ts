@@ -22,7 +22,6 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
             SteedosColumnType.varchar, 
             SteedosColumnType.text, 
             SteedosColumnType.number,
-            SteedosColumnType.money,
             SteedosColumnType.boolean,
             SteedosColumnType.date,
             SteedosColumnType.dateTime,
