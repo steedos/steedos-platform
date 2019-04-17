@@ -8,7 +8,7 @@ let tableNamePost = "TestOneToOnePostForSqlite3";
 let tableNameCategory = "TestOneToOneCategoryForSqlite3";
 let driver: SteedosSqlite3Driver;
 
-describe.only('one to one for sqlite3 database', () => {
+describe('one to one for sqlite3 database', () => {
     try {
         require("sqlite3");
     }
