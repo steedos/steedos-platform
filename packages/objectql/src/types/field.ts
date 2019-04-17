@@ -243,7 +243,13 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             case 'function Object() { [native code] }':
                 this._columnType = SteedosColumnType.json
                 break;
+            case Object:
+                this._columnType = SteedosColumnType.json
+                break;
             case 'function String() { [native code] }':
+                this._columnType = SteedosColumnType.varchar
+                break;
+            case String:
                 this._columnType = SteedosColumnType.varchar
                 break;
             case 'Object':
