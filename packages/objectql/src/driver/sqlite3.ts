@@ -17,6 +17,8 @@ export class SteedosSqlite3Driver implements SteedosDriver {
             SteedosColumnType.varchar, 
             SteedosColumnType.text, 
             SteedosColumnType.number,
+            SteedosColumnType.date,
+            SteedosColumnType.dateTime,
             SteedosColumnType.oneToOne
         ]
     }

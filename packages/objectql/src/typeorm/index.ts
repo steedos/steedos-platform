@@ -15,16 +15,20 @@ export type RelationType = "one-to-one" | "one-to-many" | "many-to-one" | "many-
 export function getTableColumnType(field: SteedosFieldType, schema: SteedosSchema): ColumnType {
     let columnType: SteedosColumnType = field.columnType;
     switch (columnType) {
-        case SteedosColumnType.text:
+        case SteedosColumnType.varchar:
             return "varchar";
+        case SteedosColumnType.text:
+            return "text";
         case SteedosColumnType.number:
             let scale = field.scale === undefined ? 0 : field.scale;
             if (scale === 0){
                 return "int";
             }
             return "double";
-        case SteedosColumnType.varchar:
-            return "varchar";
+        case SteedosColumnType.dateTime:
+            return "datetime";
+        case SteedosColumnType.date:
+            return "date";
         case SteedosColumnType.oneToOne:
             let referenceTo = <string>field.reference_to;
             let referenceToObject = schema.getObject(referenceTo);
