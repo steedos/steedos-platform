@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosQueryOptions } from "../types/query";
-import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig } from "../types";
+import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosColumnType } from './columnType';
 
 export type SteedosDriverConfig = {
