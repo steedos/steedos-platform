@@ -2,7 +2,7 @@ import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver, SteedosColumnType } from "./index";
 import { createConnection, QueryRunner, EntitySchema } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
-import { SteedosIDType, SteedosObjectType, SteedosSchema } from "../types";
+import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 // import { createFilter, createQuery } from 'odata-v4-sql';
@@ -253,16 +253,16 @@ export class SteedosSqlite3Driver implements SteedosDriver {
 
     async dropEntities() {
         let objects = {};
-        this._entities = getEntities(objects, null);
+        this._entities = getEntities(objects);
         await this.connect();
         await this._client.synchronize(true);
         await this.disconnect();
         this._entities = null;
     }
 
-    async registerEntities(objects: Dictionary<SteedosObjectType>, schema: SteedosSchema) {
+    async registerEntities(objects: Dictionary<SteedosObjectType>) {
         if (!this._entities) {
-            this._entities = getEntities(objects, schema);
+            this._entities = getEntities(objects);
             await this.connect();
             await this._client.synchronize();
         }
