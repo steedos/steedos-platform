@@ -70,6 +70,18 @@ describe('one to one for sqlite3 database', () => {
             }
         },
         {
+            title: "read the category record",
+            table: tableNameCategory,
+            method: "findOne",
+            id: 1,
+            queryOptions: {
+                fields: ["name"]
+            },
+            expected: {
+                returnRecord: { name: "C1" }
+            }
+        },
+        {
             title: "delete one record",
             table: tableNamePost,
             method: "delete",
