@@ -1,5 +1,6 @@
 {
   "name": "@steedos/filters",
+  "private": false,
   "version": "0.0.1",
   "description": "filters lib for steedos",
   "main": "index.js",
@@ -16,5 +17,8 @@
     "chai-as-promised": "^7.1.1",
     "jslint": "^0.12.1",
     "sinon-chai": "^3.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
