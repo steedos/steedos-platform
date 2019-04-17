@@ -594,4 +594,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     public get tableName(): string {
         return this._tableName;
     }
+
+    public get primaryField(): SteedosFieldType {
+        return this._fields[this._idFieldName];
+    }
 }

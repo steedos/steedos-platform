@@ -1,6 +1,6 @@
 import { EntitySchema, ColumnType, EntitySchemaColumnOptions, EntitySchemaRelationOptions } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
-import { SteedosObjectType, SteedosFieldType } from "../types";
+import { SteedosObjectType, SteedosFieldType, SteedosSchema } from "../types";
 import { SteedosColumnType } from "../driver";
 
 export interface EntitySchemaColumnDictionary {
@@ -12,7 +12,7 @@ export interface EntitySchemaRelationDictionary {
 
 export type RelationType = "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 
-export function getTableColumnType(field: SteedosFieldType): ColumnType {
+export function getTableColumnType(field: SteedosFieldType, schema: SteedosSchema): ColumnType {
     let columnType: SteedosColumnType = field.columnType;
     switch (columnType) {
         case SteedosColumnType.text:
@@ -26,7 +26,21 @@ export function getTableColumnType(field: SteedosFieldType): ColumnType {
         case SteedosColumnType.varchar:
             return "varchar";
         case SteedosColumnType.oneToOne:
-            return null;
+            let referenceTo = <string>field.reference_to;
+            let referenceToObject = schema.getObject(referenceTo);
+            if (!referenceToObject){
+                throw new Error(`Can not find the object reference to ${referenceTo}`);
+            }
+            let referenceToPrimaryField = referenceToObject.primaryField;
+            if (referenceToPrimaryField){
+                if (referenceToPrimaryField.type === "number"){
+                    return "int";
+                }
+                return "varchar";
+            }
+            else{
+                throw new Error(`Can not find the primaryField of the object reference to ${referenceTo}`);
+            }
         case SteedosColumnType.oneToMany:
             return null;
         case SteedosColumnType.manyToOne:
@@ -53,11 +67,11 @@ export function getTableRelationType(field: SteedosFieldType): RelationType {
     return null;
 };
 
-export function getTableColumns(fields: Dictionary<SteedosFieldType>): EntitySchemaColumnDictionary {
+export function getTableColumns(fields: Dictionary<SteedosFieldType>, schema: SteedosSchema): EntitySchemaColumnDictionary {
     let columns: EntitySchemaColumnDictionary = {};
     for (let fieldName in fields) {
         let field = fields[fieldName];
-        let fieldType: ColumnType = getTableColumnType(field);
+        let fieldType: ColumnType = getTableColumnType(field, schema);
         if (!fieldType){
             continue;
         }
@@ -72,43 +86,22 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>): EntitySch
     return columns;
 }
 
-// TODO:
-export function getTableRelations(fields: Dictionary<SteedosFieldType>): EntitySchemaRelationDictionary {
-    let relations: EntitySchemaRelationDictionary = {};
-    for (let fieldName in fields) {
-        let field = fields[fieldName];
-        let relationType: RelationType = getTableRelationType(field);
-        if (!relationType) {
-            continue;
-        }
-        // let reference_to = field.reference_to;
-        // let target = reference_to;
-        relations[fieldName] = {
-            type: relationType,
-            target: null
-        };
-    }
-    return relations;
-}
-
-export function getEntity(object: SteedosObjectType): EntitySchema {
+export function getEntity(object: SteedosObjectType, schema: SteedosSchema): EntitySchema {
     let tableName = object.tableName;
     let fields = object.fields;
-    let columns: EntitySchemaColumnDictionary = getTableColumns(fields);
-    let relations: EntitySchemaRelationDictionary = getTableRelations(fields);
+    let columns: EntitySchemaColumnDictionary = getTableColumns(fields, schema);
     return new EntitySchema({
         name: tableName,
         tableName: tableName,
-        columns: columns,
-        relations: relations
+        columns: columns
     });
 }
 
-export function getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
+export function getEntities(objects: Dictionary<SteedosObjectType>, schema: SteedosSchema): Dictionary<EntitySchema> {
     let entities: Dictionary<EntitySchema> = {};
     for (let name in objects) {
         let object = objects[name];
-        entities[object.tableName] = getEntity(object);
+        entities[object.tableName] = getEntity(object, schema);
     }
     return entities;
 }
