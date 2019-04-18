@@ -1,5 +1,5 @@
 import { SteedosColumnType } from "./index";
-import { createConnection, ConnectionOptions } from "typeorm";
+import { ConnectionOptions } from "typeorm";
 import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver } from "../typeorm";
 
@@ -28,29 +28,6 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
             username: this.config.username,
             password: this.config.password,
             database: this.config.database
-            // username: "sa",
-            // password: "hotoainc.",
-            // database: "test"
-
-            // type: "mssql",
-            // host: "localhost",
-            // port: 3306,
-            // username: "test",
-            // password: "test",
-            // database: "test"
         };
-    }
-
-    async connect() {
-        console.log("=======connect====2=");
-        if (!this._entities) {
-            throw new Error("Entities must be registered before connect");
-        }
-        if (!this._client) {
-            let options = this.getConnectionOptions()
-            console.log("connecting sql server ... ", options);
-            this._client = await createConnection(options);
-            return true;
-        }
     }
 }

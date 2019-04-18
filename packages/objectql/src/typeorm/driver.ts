@@ -1,6 +1,6 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver, SteedosColumnType, SteedosDriverConfig } from "../driver";
-import { createConnection, QueryRunner, EntitySchema } from "typeorm";
+import { createConnection, QueryRunner, EntitySchema, ConnectionOptions } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
@@ -9,7 +9,7 @@ import { getEntities } from "../typeorm";
 
 import _ = require("underscore");
 
-export class SteedosTypeormDriver implements SteedosDriver {
+export abstract class SteedosTypeormDriver implements SteedosDriver {
     getSupportedColumnTypes() {
         return [
             SteedosColumnType.varchar,
@@ -37,18 +37,14 @@ export class SteedosTypeormDriver implements SteedosDriver {
         this._url = config.url;
     }
 
+    abstract getConnectionOptions(): ConnectionOptions;
+
     async connect() {
-        console.log("=======connect============SteedosTypeormDriver=========");
         if (!this._entities) {
             throw new Error("Entities must be registered before connect");
         }
         if (!this._client) {
-            this._client = await createConnection({
-                type: "sqlite",
-                database: this._url,
-                name: (new Date()).getTime().toString(),
-                entities: Object.values(this._entities)
-            });
+            this._client = await createConnection(this.getConnectionOptions());
             return true;
         }
     }
@@ -214,7 +210,6 @@ export class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async insert(tableName: string, data: JsonMap) {
-        console.log(`inserting to ${tableName},data:`, data);
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -271,7 +266,7 @@ export class SteedosTypeormDriver implements SteedosDriver {
         if (!this._entities) {
             this._entities = getEntities(objects);
             await this.connect();
-            // await this._client.synchronize();
+            await this._client.synchronize();
         }
     }
 }
