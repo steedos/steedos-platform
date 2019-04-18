@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -13,14 +13,16 @@ var path = require('path')
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
-    Sqlite = 'sqlite'
+    Sqlite = 'sqlite',
+    SqlServer = 'sqlserver'
 }
 
 export type SteedosDataSourceTypeConfig = {
     driver: SteedosDatabaseDriverType | string | SteedosDriver
     url: string
     username?: string
-    password?: string
+    password?: string,
+    database?: string,
     options?: any
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
@@ -37,6 +39,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _url: string;
     private _username?: string;
     private _password?: string;
+    private _database?: string;
     private _options?: any;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
@@ -78,6 +81,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._url = config.url
         this._username = config.username
         this._password = config.password
+        this._database = config.database
         this._options = config.options
         this._schema = schema
         this._driver = config.driver
@@ -86,6 +90,7 @@ export class SteedosDataSourceType implements Dictionary {
             url: this._url,
             username: this._username,
             password: this._password,
+            database: this._database,
             options: this._options
         }
 
@@ -100,8 +105,11 @@ export class SteedosDataSourceType implements Dictionary {
                 case SteedosDatabaseDriverType.Sqlite:
                     this._adapter = new SteedosSqlite3Driver(driverConfig);
                     break;
-                default:
+                case SteedosDatabaseDriverType.SqlServer:
+                    this._adapter = new SteedosSqlServerDriver(driverConfig);
                     break;
+                default:
+                    throw new Error(`the driver ${config.driver} is not supported`)
             }
         }else{
             this._adapter = config.driver

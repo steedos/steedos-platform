@@ -4,16 +4,48 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosColumnType } from './columnType';
 
 export type SteedosDriverConfig = {
-    url: string
-    username?: string
-    password?: string
-    options?: any
+    /**
+     * Connection url where perform connection to.
+     */
+    readonly url?: string;
+    /**
+     * Database host.
+     */
+    readonly host?: string;
+    /**
+     * Database host port.
+     */
+    readonly port?: number;
+    /**
+     * Database username.
+     */
+    readonly username?: string;
+    /**
+     * Database password.
+     */
+    readonly password?: string;
+    /**
+     * Database name to connect to.
+     */
+    readonly database?: string;
+    /**
+     * Once you set domain, driver will connect to SQL Server using domain login.
+     */
+    readonly domain?: string;
+    /**
+     * Database options.
+     */
+    readonly options?: any
 };
+
+
+
 
 export interface SteedosDriver {
 
     //constructor(url:string): any;
     // new(config: SteedosDriverConfig): any;
+    config?: SteedosDriverConfig;
     connect();
     disconnect();
     getSupportedColumnTypes(): SteedosColumnType[];
