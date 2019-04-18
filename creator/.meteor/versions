@@ -138,7 +138,7 @@ steedos:app-chat@0.0.1
 steedos:app-crm@0.0.1
 steedos:app-meeting@0.0.1
 steedos:app-projects@0.0.1
-steedos:app-workflow@0.0.12
+steedos:app-workflow@0.0.13
 steedos:application-package@0.0.1
 steedos:audit@0.0.1
 steedos:autoform@0.0.19
@@ -195,6 +195,9 @@ steedos:objects-billing@0.0.1
 steedos:objects-core@0.0.9
 steedos:odata@0.0.7
 steedos:qcloud-smsqueue@0.0.5
+steedos:qhd-archive@0.0.5
+steedos:qhd-archive-sync@0.0.1
+steedos:qhd-archive-xml@0.0.1
 steedos:smsqueue@0.0.4
 steedos:sso@0.0.4
 steedos:theme@0.0.30

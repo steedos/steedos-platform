@@ -32,7 +32,7 @@ Package.onUse(function (api) {
 	api.use('steedos:objects');
 
 	api.use('steedos:app-workflow');
-	api.use('steedos:app-archive');
+	api.use('steedos:qhd-archive');
 
 	// api.addFiles('server/lib/records_xml.coffee', 'server');
 	api.addFiles('server/router.coffee', 'server');

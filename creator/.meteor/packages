@@ -143,9 +143,9 @@ steedos:mailqueue
 
 
 # 档案系统相关
-# steedos:app-archive
-# steedos:qhd-archive-sync
-# steedos:qhd-archive-xml
+steedos:qhd-archive
+steedos:qhd-archive-sync
+steedos:qhd-archive-xml
 
 # steedos:vip-card
 # steedos:vip-post

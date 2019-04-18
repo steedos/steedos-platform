@@ -272,16 +272,30 @@ _columns = (object_name, columns, list_view_id, is_related)->
 					cellOption["full_screen"] = true
 				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 
-		# if !is_related
-		# 	if column_width_settings
-		# 		width = column_width_settings[n]
-		# 		if width
-		# 			columnItem.width = width
-		# 		else
-		# 			columnItem.width = defaultWidth
-		# 	else
-		# 		columnItem.width = defaultWidth
+		if field?.default_width
+			columnItem.width = field?.default_width
 
+		list_view = Creator.getListView(object_name, list_view_id)
+
+		list_view_sort = Creator.transformSortToDX(list_view?.sort)
+
+		if column_sort_settings and column_sort_settings.length > 0
+			console.log("settings sort...")
+			_.each column_sort_settings, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
+		else if !_.isEmpty(list_view_sort)
+			console.log("view sort...")
+			_.each list_view_sort, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
+		else
+			console.log("default sort...")
+			#默认读取default view的sort配置
+			_.each column_default_sort, (sort)->
+				if sort[0] == n
+					columnItem.sortOrder = sort[1]
+		
 		unless field.sortable
 			columnItem.allowSorting = false
 		return columnItem

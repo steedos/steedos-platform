@@ -1,0 +1,3 @@
+.creator-auotform-modals .slds-modal__container .slds-modal__content, .creator-object-modals .slds-modal__container .slds-modal__content {
+    min-height: 460px;
+}
