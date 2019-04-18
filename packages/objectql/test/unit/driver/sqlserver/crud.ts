@@ -8,7 +8,7 @@ let username = "sa";
 let password = "hotoainc.";
 let driver: SteedosSqlServerDriver;
 
-describe.only('crud for sqlserver database', () => {
+describe('crud for sqlserver database', () => {
     try {
         require("mssql");
     }
