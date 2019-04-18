@@ -4,9 +4,10 @@ module.exports = {
 
   listenTo: 'meeting',
 
-  beforeInsert: async function(userId, context){
+  beforeInsert: async function(){
     var clashs;
-    var doc = context.doc
+    var doc = this.doc
+    var userId = this.userId
 
     if (doc.end <= doc.start) {
         throw new Error("开始时间需小于结束时间");
@@ -39,7 +40,7 @@ module.exports = {
       return meetings.length
     }
 
-    clashs = await clashRemind(context.id, doc.room, doc.start, doc.end);
+    clashs = await clashRemind(this.id, doc.room, doc.start, doc.end);
 
     /* from base code */
     doc.created = new Date();
@@ -55,13 +56,13 @@ module.exports = {
     }
   },
 
-  beforeUpdate: async function(userId, context){
-    var doc = context.doc
+  beforeUpdate: async function(){
+    var doc = this.doc
     var clashs, room, start, end;
 
     if(doc.start || doc.end){
 
-      var currentDoc = await this.getObject('meeting').findOne(context.id, {fields: ['room', 'start', 'end']})
+      var currentDoc = await this.getObject('meeting').findOne(this.id, {fields: ['room', 'start', 'end']})
 
       room = doc.room || currentDoc.room
       start = doc.start || currentDoc.start
@@ -98,7 +99,7 @@ module.exports = {
         return meetings.length
       }
   
-      clashs = await clashRemind(context.id, room, start, end);
+      clashs = await clashRemind(this.id, room, start, end);
 
       doc.modified = new Date();
   
@@ -107,10 +108,10 @@ module.exports = {
       }
     }
   },
-  afterUpdate: async function(userId, context){
-    console.log('afterUpdate', userId, context);
+  afterUpdate: async function(){
+    console.log('afterUpdate', this);
   },
-  afterDelete: async function(userId, context){
-    console.log('afterDelete', userId, context);
+  afterDelete: async function(){
+    console.log('afterDelete', this);
   }
 }

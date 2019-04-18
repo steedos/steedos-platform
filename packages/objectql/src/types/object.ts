@@ -190,12 +190,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return await event.apply(thisArg, arguments)
         }
         let thisArg = {
-            userId: context.userId, object_name: object_name, getObject: (object_name: string) => {
+            ...context,
+            object_name: object_name, 
+            getObject: (object_name: string) => {
                 return this._schema.getObject(object_name)
             }
         }
 
-        return await todoWrapper.call(thisArg, context.userId, context)
+        return await todoWrapper.call(thisArg)
     }
 
     async runTriggers(when: string, context: SteedosTriggerContextConfig) {
