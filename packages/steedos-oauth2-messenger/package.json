@@ -1,0 +1,19 @@
+{
+  "name": "@steedos/oauth2-messenger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookies": "^0.7.3",
+    "express": "^4.16.4",
+    "mattermost-redux": "^5.10.0",
+    "node-fetch": "^2.3.0",
+    "passport": "^0.4.0",
+    "passport-oauth2": "^1.5.0"
+  }
+}
