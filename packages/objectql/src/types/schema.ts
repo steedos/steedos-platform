@@ -5,20 +5,22 @@ import _ = require("underscore");
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
-    datasources: Dictionary<SteedosDataSourceTypeConfig>
+    datasources?: Dictionary<SteedosDataSourceTypeConfig>
 }
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
     
 
-    constructor(config: SteedosSchemaConfig) {
-        _.each(config.datasources, (datasource, datasource_name) => {
-            this.setDataSource(datasource_name, datasource)
-        })
+    constructor(config?: SteedosSchemaConfig) {
+        if(config){
+            _.each(config.datasources, (datasource, datasource_name) => {
+                this.addDataSource(datasource_name, datasource)
+            })
 
-        if(!this.getDataSource(defaultDatasourceName)){
-            throw new Error('missing default database');
+            if(!this.getDataSource(defaultDatasourceName)){
+                throw new Error('missing default database');
+            }
         }
     }
 
@@ -49,7 +51,7 @@ export class SteedosSchema {
         return datasource.getObject(object_name)
     }
 
-    setDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
+    addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
         this._datasources[datasource_name] = new SteedosDataSourceType(datasourceConfig, this)
     }
 
