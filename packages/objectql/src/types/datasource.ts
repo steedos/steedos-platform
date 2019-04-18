@@ -25,6 +25,7 @@ export type SteedosDataSourceTypeConfig = {
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
+    getRoles?: Function
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -32,7 +33,7 @@ export class SteedosDataSourceType implements Dictionary {
     public get adapter(): SteedosDriver {
         return this._adapter;
     }
-
+    private _getRoles: Function;
     private _url: string;
     private _username?: string;
     private _password?: string;
@@ -116,6 +117,12 @@ export class SteedosDataSourceType implements Dictionary {
             }
         }
 
+        if (config.getRoles && !_.isFunction(config.getRoles)) {
+            throw new Error('getRoles must be a function')
+        }
+
+        this._getRoles = config.getRoles
+
         _.each(config.objects, (object, object_name) => {
             this.setObject(object_name, object)
         })
@@ -142,6 +149,14 @@ export class SteedosDataSourceType implements Dictionary {
 
     getObjectRolesPermission(object_name: string){
         return this._objectsRolesPermission[object_name]
+    }
+
+    async getRoles(userId: SteedosIDType) {
+        if (this._getRoles) {
+            return await this._getRoles(userId)
+        } else {
+            return ['admin']
+        }
     }
 
     async find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType){

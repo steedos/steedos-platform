@@ -1,41 +1,24 @@
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
 import _ = require("underscore");
-import { SteedosIDType } from ".";
 
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
-    datasources: Dictionary<SteedosDataSourceTypeConfig>,
-    getRoles?: Function
+    datasources: Dictionary<SteedosDataSourceTypeConfig>
 }
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    private _getRoles: Function;
+    
 
     constructor(config: SteedosSchemaConfig) {
-
-        if (config.getRoles && !_.isFunction(config.getRoles)) {
-            throw new Error('getRoles must be a function')
-        }
-
-        this._getRoles = config.getRoles
-
         _.each(config.datasources, (datasource, datasource_name) => {
             this.setDataSource(datasource_name, datasource)
         })
 
         if(!this.getDataSource(defaultDatasourceName)){
             throw new Error('missing default database');
-        }
-    }
-
-    async getRoles(userId: SteedosIDType) {
-        if (this._getRoles) {
-            return await this._getRoles(userId)
-        } else {
-            return ['admin']
         }
     }
 

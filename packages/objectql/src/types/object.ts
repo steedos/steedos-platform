@@ -323,7 +323,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('userId is required')
         }
 
-        let roles = await this.schema.getRoles(userId)
+        let roles = await this._datasource.getRoles(userId)
         let objectRolesPermission = this.getObjectRolesPermission()
 
         let userObjectPermission = {

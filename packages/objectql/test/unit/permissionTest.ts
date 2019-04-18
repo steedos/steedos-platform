@@ -49,20 +49,20 @@ describe('Test Permission', () => {
                             
                         }
                     }
+                },
+                getRoles: function(userId: SteedosIDType){
+                    if(userId == '0'){
+                        return ['guest']
+                    }else if(userId == '1'){
+                        return ['user']
+                    }else if(userId == '2'){
+                        return ['admin']
+                    }else if(userId == '3'){
+                        return ['user', 'admin']
+                    }else if(userId == '4'){
+                        return ['user2']
+                    }
                 }
-            }
-        },
-        getRoles: function(userId: SteedosIDType){
-            if(userId == '0'){
-                return ['guest']
-            }else if(userId == '1'){
-                return ['user']
-            }else if(userId == '2'){
-                return ['admin']
-            }else if(userId == '3'){
-                return ['user', 'admin']
-            }else if(userId == '4'){
-                return ['user2']
             }
         }
     })
