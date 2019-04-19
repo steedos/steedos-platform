@@ -5,7 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery } from 'odata-v4-typeorm';
-import { getEntities } from "../typeorm";
+import { getEntities, getPrimaryKey } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -94,8 +94,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         if (_.isArray(filters) && !filters.length) {
             return emptyFilters
         }
-        let mongoFilters: JsonMap = this.formatFiltersToTypeormQuery(filters);
-        return mongoFilters
+        let typeormFilters: JsonMap = this.formatFiltersToTypeormQuery(filters);
+        return typeormFilters
     }
 
     getTypeormFieldsOptions(fields: string[] | string): JsonMap {
@@ -186,22 +186,15 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
         }
-        let fields: string[] = [];
-        if (typeof query.fields == "string") {
-            fields = (<string>query.fields).split(",").map((n) => { return n.trim(); });
-        }
-        else {
-            fields = <string[]>query.fields;
-        }
-        if (fields && fields.length === 0) {
-            // fields为空时返回所有数据
-            fields = null;
-        }
         let repository = this._client.getRepository(entity);
-        let result: any = await repository.findOne(id, {
-            select: fields
-        });
-        return result;
+        let primaryKey: string = getPrimaryKey(repository);
+        let filterQuery: JsonMap = this.getTypeormFilters([[primaryKey, "=", id]]);
+        let projection: JsonMap = this.getTypeormFieldsOptions(query.fields);
+        const queryBuilder = repository.createQueryBuilder(tableName);
+        // 这里不可以用repository.findOne，也不可以用repository.createQueryBuilder(tableName).select(...).where(...).getOne();
+        // 因为sqlserver/sqlite3不兼容
+        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName });
+        return result ? result[0] : null;
     }
 
     async run(sql: string, param?: any) {
@@ -217,14 +210,13 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let repository = this._client.getRepository(entity);
         let result = await repository.insert(data);
         if (result.identifiers && result.identifiers.length) {
-            let primaryColumns: any = repository.metadata.primaryColumns;
-            let primaryKey: string;
-            if (primaryColumns && primaryColumns.length) {
-                primaryKey = primaryColumns[0].propertyPath;
-            }
+            let primaryKey: string = getPrimaryKey(repository);
             let id = primaryKey && result.identifiers[0][primaryKey];
             if (id) {
-                return await repository.findOne(id);
+                let queryWhere: string = `${tableName}.${primaryKey} = :${primaryKey}`;
+                let queryParms: JsonMap = {};
+                queryParms[primaryKey] = id;
+                return await repository.createQueryBuilder(tableName).where(queryWhere, queryParms).getOne();
             }
         }
     }
@@ -239,9 +231,12 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error("the params 'data' must not be empty");
         }
         let repository = this._client.getRepository(entity);
-        let result = await repository.update(id, data);
-        result = await repository.findOne(id);
-        return result;
+        await repository.update(id, data);
+        let primaryKey: string = getPrimaryKey(repository);
+        let queryWhere: string = `${tableName}.${primaryKey} = :${primaryKey}`;
+        let queryParms: JsonMap = {};
+        queryParms[primaryKey] = id;
+        return await repository.createQueryBuilder(tableName).where(queryWhere, queryParms).getOne();
     }
 
     async delete(tableName: string, id: SteedosIDType) {
