@@ -96,7 +96,7 @@
 //             }
 //         });
 //         const datasource = mySchema.getDataSource("default");
-//         await datasource.registerEntities();
+//         await datasource.createTables();
 //         driver = <SteedosSqlServerDriver>datasource.adapter;
 //     });
 

@@ -132,7 +132,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.registerEntities();
+        await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;
     });
 

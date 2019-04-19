@@ -141,7 +141,7 @@
 //         });
 //         const datasource = mySchema.getDataSource("default");
 //         await datasource.dropEntities();
-//         await datasource.registerEntities();
+//         await datasource.createTables();
 //         driver = <SteedosSqlite3Driver>datasource.adapter;
 //     });
 

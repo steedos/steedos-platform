@@ -57,5 +57,7 @@ export interface SteedosDriver {
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;
+    dropTables?(): any;
+    createTables?(objects: Dictionary<SteedosObjectType>): any;
 }
 

@@ -257,11 +257,19 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         this._entities = null;
     }
 
-    async registerEntities(objects: Dictionary<SteedosObjectType>) {
+    registerEntities(objects: Dictionary<SteedosObjectType>) {
         if (!this._entities) {
             this._entities = getEntities(objects);
-            await this.connect();
-            await this._client.synchronize();
         }
+    }
+
+    async dropTables() {
+        await this.dropEntities();
+    }
+
+    async createTables(objects: Dictionary<SteedosObjectType>) {
+        this.registerEntities(objects);
+        await this.connect();
+        await this._client.synchronize();
     }
 }

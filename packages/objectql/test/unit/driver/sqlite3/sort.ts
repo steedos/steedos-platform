@@ -111,7 +111,7 @@ describe('fetch records for sqlite3 with sort arguments as a string that comply 
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.registerEntities();
+        await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;
     });
 
