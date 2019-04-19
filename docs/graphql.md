@@ -52,7 +52,7 @@ type Mutation {
 }
 ```
 
-### 创建graphql接口
+### 运行一个graphql服务器
 - 使用`@steedos/objectql`包提供的方法`getSteedosSchema`获取到schema对象
 - 使用schema对象的`addDataSource`方法添加数据源
 - 添加好数据源之后调用`@steedos/objectql`包提供的`getGraphQLRoutes`方法获取`express.Router()`对象, 示例如下：
