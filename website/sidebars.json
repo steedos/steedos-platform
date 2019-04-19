@@ -11,6 +11,6 @@
   },
   "API":{
     "ODATA": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete", "odata_functions"],
-    "GraphQL": ["graphql"]
+    "GraphQL": ["graphql", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete", "graphql_auth"]
   }
 }
