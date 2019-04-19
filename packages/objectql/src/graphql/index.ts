@@ -12,6 +12,8 @@ import {
 var _ = require("underscore");
 import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
+import express = require('express');
+import graphqlHTTP = require('express-graphql');
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -167,4 +169,13 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
     };
 
     return new GraphQLSchema(schemaConfig);;
+}
+
+export function getGraphQLRoutes(datasource: SteedosDataSourceType) {
+    let router = express.Router();
+    router.use(`/${datasource.name}`, graphqlHTTP({
+        schema: datasource.buildGraphQLSchema(),
+        graphiql: true
+    }))
+    return router;
 }
