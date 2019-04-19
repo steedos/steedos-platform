@@ -265,7 +265,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let collectionName = collectionInfoSplit[0];
     let id = collectionInfoSplit[1].split('\'')[1];
     let collection = getCreator().getSteedosSchema().getObject(collectionName)
-    let entity = collection.findOne(id, {
+    let entity = await collection.findOne(id, {
       fields: [fieldName]
     });
     let fieldValue = null;
@@ -430,7 +430,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
       res.status(404).send(setErrorMessage(404, collection, key));
     }
     let permissions = await collection.getUserObjectPermission(userId);
-    let recordData = collection.findOne(recordId, { fields: ['owner', 'company_id'] });
+    let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] });
     let record_owner = recordData.owner;
     let companyId = recordData.company_id;
     let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
