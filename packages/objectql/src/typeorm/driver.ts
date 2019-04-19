@@ -166,7 +166,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let topAndSkip: JsonMap = this.getTypeormTopAndSkipOptions(query.top, query.skip);
         let repository = this._client.getRepository(entity);
         const queryBuilder = repository.createQueryBuilder(tableName);
-        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection, sort, topAndSkip), { alias: tableName });
+        let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
+        let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName });
         return result;
     }
 

@@ -1,13 +1,11 @@
-import { SteedosSchema, SteedosSqlServerDriver, SteedosDatabaseDriverType } from '../../../../src';
+import { SteedosSchema, SteedosSqlServerDriver, SteedosQueryOptions, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
 let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
-let tableName = "TestCrudForSqlserver";
+let tableName = "TestFieldsForSqlserver";
 let driver: SteedosSqlServerDriver;
-describe('crud for sqlserver database', () => {
-    if (!url){
-        return true;
-    }
+
+describe('fetch records width specific fields for sqlserver database', () => {
     try {
         require("mssql");
     }
@@ -20,39 +18,46 @@ describe('crud for sqlserver database', () => {
 
     let tests = [
         {
-            title: "create one record",
-            method: "insert",
-            data: { id: "ptr", name: "ptr", title: "PTR", count: 46 },
-            expected: {
-                returnRecord: { id: "ptr", name: "ptr", title: "PTR", count: 46 }
-            }
-        },
-        {
-            title: "update one record",
-            method: "update",
-            id: "ptr",
-            data: { name: "ptr-", title: "PTR-", count: 460 },
-            expected: {
-                returnRecord: { id: "ptr", name: "ptr-", title: "PTR-", count: 460 }
-            }
-        },
-        {
-            title: "read one record",
-            method: "findOne",
-            id: "ptr",
-            queryOptions: {
-                fields: ["name", "count"]
+            title: "fields arguments is a array",
+            options: {
+                fields: ["name", "title"]
             },
             expected: {
-                returnRecord: { name: "ptr-", title: undefined, count: 460 }
+                length: 2,
+                firstRecord:{
+                    tag: undefined
+                }
             }
         },
         {
-            title: "delete one record",
-            method: "delete",
-            id: "ptr",
+            title: "fields arguments is a string",
+            options: {
+                fields: "name, title, "
+            },
             expected: {
-                eq: undefined
+                length: 2,
+                firstRecord: {
+                    tag: undefined
+                }
+            }
+        },
+        {
+            title: "fields arguments is a empty array",
+            options: {
+                fields: []
+            },
+            expected: {
+                length: 2,
+                firstRecord: { id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" }
+            }
+        },
+        {
+            title: "fields arguments is empty",
+            options: {
+            },
+            expected: {
+                length: 2,
+                firstRecord: { id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" }
             }
         }
     ];
@@ -81,9 +86,9 @@ describe('crud for sqlserver database', () => {
                                     label: '标题',
                                     type: 'text'
                                 },
-                                count: {
+                                tag: {
                                     label: '数量',
-                                    type: 'number'
+                                    type: 'text'
                                 }
                             }
                         }
@@ -97,17 +102,23 @@ describe('crud for sqlserver database', () => {
     });
 
     beforeEach(async () => {
-        let data = tests[testIndex].data;
+        await driver.run(`delete from ${tableName}`);
+        await driver.insert(tableName, { id: "ptr", name: "ptr", title: "PTR", tag: "one" });
+        await driver.insert(tableName, { id: "cnpc", name: "cnpc", title: "CNPC", tag: "one" });
+
+        let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;
-        let method = tests[testIndex].method;
-        let id = tests[testIndex].id;
-        let queryOptions = tests[testIndex].queryOptions;
-        if (id) {
-            result = await driver[method](tableName, id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
+        try {
+            result = await driver.find(tableName, queryOptions);
         }
-        else {
-            result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
+        catch (ex) {
+            result = ex;
         }
+    });
+
+    afterEach(async () => {
+        await driver.delete(tableName, "ptr");
+        await driver.delete(tableName, "cnpc");
     });
 
     tests.forEach(async (test) => {
@@ -119,18 +130,9 @@ describe('crud for sqlserver database', () => {
             if (expected.length !== undefined) {
                 expect(result).to.be.length(expected.length);
             }
-            if (expected.gt !== undefined) {
-                expect(result).to.be.gt(expected.gt);
-            }
-            if (expected.eq !== undefined) {
-                expect(result).to.be.eq(expected.eq);
-            }
-            if (expected.returnRecord !== undefined) {
-                Object.keys(expected.returnRecord).forEach((key) => {
-                    expect(result).to.be.not.eq(undefined);
-                    if (result){
-                        expect(result[key]).to.be.eq(expected.returnRecord[key]);
-                    }
+            if (expected.firstRecord !== undefined) {
+                Object.keys(expected.firstRecord).forEach((key) => {
+                    expect(result[0][key]).to.be.eq(expected.firstRecord[key]);
                 });
             }
         });
