@@ -4,7 +4,7 @@ import { createConnection, QueryRunner, EntitySchema, ConnectionOptions } from "
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { executeQuery } from 'odata-v4-typeorm';
+import { executeQuery } from '@steedos/odata-v4-typeorm';
 import { getEntities, getPrimaryKey } from "../typeorm";
 
 import _ = require("underscore");

@@ -26,3 +26,4 @@ website/node_modules
 website/i18n/*
 packages/objectql/test/**/*.db
 packages/objectql/test/**/*.db-journal
+packages/odata-v4-typeorm/
