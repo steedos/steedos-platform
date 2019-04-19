@@ -18,6 +18,7 @@ export enum SteedosDatabaseDriverType {
 }
 
 export type SteedosDataSourceTypeConfig = {
+    name?: string
     driver: SteedosDatabaseDriverType | string | SteedosDriver
     url: string
     username?: string
@@ -31,6 +32,10 @@ export type SteedosDataSourceTypeConfig = {
 }
 
 export class SteedosDataSourceType implements Dictionary {
+    private _name: string;
+    public get name(): string {
+        return this._name;
+    }
     private _adapter: SteedosDriver;
     public get adapter(): SteedosDriver {
         return this._adapter;
@@ -77,7 +82,8 @@ export class SteedosDataSourceType implements Dictionary {
         this._objects[object_name] = object;
     }
 
-    constructor(config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
+    constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
+        this._name = datasource_name
         this._url = config.url
         this._username = config.username
         this._password = config.password

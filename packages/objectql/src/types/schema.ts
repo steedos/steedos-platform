@@ -52,7 +52,7 @@ export class SteedosSchema {
     }
 
     addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
-        this._datasources[datasource_name] = new SteedosDataSourceType(datasourceConfig, this)
+        this._datasources[datasource_name] = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
     }
 
     getDataSource(datasource_name: string) {
