@@ -35,7 +35,7 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
 
     async createTables(objects: Dictionary<SteedosObjectType>) {
         this.registerEntities(objects);
-        // await this.connect();
+        await this.connect();
         // await this._client.synchronize();
     }
 }
