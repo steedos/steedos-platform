@@ -49,11 +49,13 @@ Template.list_tree_modal.events
 
 Template.list_tree_modal.onRendered ->
 	$("#creator_list_tree_modal").on('select_node.jstree', (e, data) ->
-		localStorage.setItem("listTreeCompany", data.node.data.filter)
-		if (data.node.data.filter)
-			Session.set('listTreeCompany', data.node.data.filter);
-		else
-			Session.set('listTreeCompany', "-1");
+		# localStorage.setItem("listTreeCompany", data.node.data.filter)
+		# if (data.node.data.filter)
+		# 	Session.set('listTreeCompany', data.node.data.filter);
+		# else
+		# 	Session.set('listTreeCompany', "-1");
+		localStorage.setItem("listTreeCompany", "xZXy9x8o6qykf2ZAf")
+		Session.set('listTreeCompany', "xZXy9x8o6qykf2ZAf");
 	).jstree
 		core:
 			multiple:false,

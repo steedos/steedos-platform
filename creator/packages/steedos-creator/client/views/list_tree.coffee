@@ -46,8 +46,10 @@ Template.listTree.helpers
 
 Template.listTree.onRendered ->
 	$("#creator_list_tree").on('select_node.jstree', (e, data) ->
-		localStorage.setItem("listTreeCompany", data.node.data.filter)
-		Session.set('listTreeCompany', data.node.data.filter)
+		# localStorage.setItem("listTreeCompany", data.node.data.filter)
+		# Session.set('listTreeCompany', data.node.data.filter)
+		localStorage.setItem("listTreeCompany", "xZXy9x8o6qykf2ZAf")
+		Session.set('listTreeCompany', "xZXy9x8o6qykf2ZAf")
 	).jstree
 		core:
 			multiple:false,
