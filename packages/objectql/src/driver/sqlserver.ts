@@ -24,7 +24,7 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
     getConnectionOptions(): ConnectionOptions {
         return  {
             type: "mssql",
-            host: this._url,
+            url: this._url,
             name: (new Date()).getTime().toString(),
             entities: Object.values(this._entities),
             username: this.config.username,

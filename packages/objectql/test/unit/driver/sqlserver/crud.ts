@@ -1,11 +1,8 @@
 import { SteedosSchema, SteedosSqlServerDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-let url = "";//不提供url值时不运行单元测试
-let databaseName = "driver-test";
+let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
 let tableName = "TestCrudForSqlserver";
-let username = "sa";
-let password = "hotoainc.";
 let driver: SteedosSqlServerDriver;
 describe.only('crud for sqlserver database', () => {
     if (!url){
@@ -66,9 +63,6 @@ describe.only('crud for sqlserver database', () => {
                 default: {
                     url: url,
                     driver: SteedosDatabaseDriverType.SqlServer,
-                    username: username,
-                    password: password,
-                    database: databaseName,
                     objects: {
                         test: {
                             label: 'SqlServer Schema',
