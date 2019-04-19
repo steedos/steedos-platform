@@ -357,8 +357,8 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
       let fields_editable = true;
 
       if (fields_editable) {
-
-        let entityIsUpdated = await collection.update(recordId, bodyParams, userId);
+        let data = bodyParams.$set ? bodyParams.$set : bodyParams
+        let entityIsUpdated = await collection.update(recordId, data, userId);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
