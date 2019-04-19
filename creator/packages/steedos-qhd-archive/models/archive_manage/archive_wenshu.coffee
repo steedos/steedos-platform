@@ -751,7 +751,7 @@ Creator.Objects.archive_wenshu =
 		archive_destroy_id:
 			type:"master_detail"
 			label:"销毁单"
-			filters:[["destroy_state", "$eq", "未销毁"]]
+			filters:[["destroy_state", "eq", "未销毁"]]
 			depend_on:["destroy_state"]
 			reference_to:"archive_destroy"
 			group:"销毁"
