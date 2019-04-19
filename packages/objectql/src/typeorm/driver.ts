@@ -155,6 +155,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async find(tableName: string, query: SteedosQueryOptions) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -170,6 +171,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -182,6 +184,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -203,6 +206,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async insert(tableName: string, data: JsonMap) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -222,6 +226,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
@@ -240,6 +245,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async delete(tableName: string, id: SteedosIDType) {
+        await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
