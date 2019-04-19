@@ -8,7 +8,7 @@
 // let password = "hotoainc.";
 // let driver: SteedosSqlServerDriver;
 
-// describe('crud for sqlserver database', () => {
+// describe.only('crud for sqlserver database', () => {
 //     try {
 //         require("mssql");
 //     }
@@ -130,6 +130,7 @@
 //                 expect(result).to.be.eq(expected.eq);
 //             }
 //             if (expected.returnRecord !== undefined) {
+//                 console.log(expected.returnRecord);
 //                 Object.keys(expected.returnRecord).forEach((key) => {
 //                     expect(result).to.be.not.eq(undefined);
 //                     if (result){

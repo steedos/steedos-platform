@@ -1,4 +1,4 @@
-import { EntitySchema, ColumnType, EntitySchemaColumnOptions, EntitySchemaRelationOptions } from "typeorm";
+import { EntitySchema, ColumnType, EntitySchemaColumnOptions, EntitySchemaRelationOptions, Repository } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosFieldType } from "../types";
 import { SteedosColumnType } from "../driver";
@@ -86,4 +86,13 @@ export function getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<
         entities[object.tableName] = getEntity(object);
     }
     return entities;
+}
+
+export function getPrimaryKey(repository: Repository<any>): string {
+    let primaryColumns: any = repository.metadata.primaryColumns;
+    let primaryKey: string;
+    if (primaryColumns && primaryColumns.length) {
+        primaryKey = primaryColumns[0].propertyPath;
+    }
+    return primaryKey;
 }
