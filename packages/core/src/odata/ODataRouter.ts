@@ -59,7 +59,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      filters = `(${filters}) and (space eq \'${spaceId}\')`;
+      // filters = `(${filters}) and (space eq \'${spaceId}\')`;
       if (queryParams.$select) {
         fields = queryParams.$select.split(',');
       } else {
@@ -143,7 +143,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      filters = `(${filters}) and (space eq \'${spaceId}\')`;
+      // filters = `(${filters}) and (space eq \'${spaceId}\')`;
       if (queryParams.$select) {
         fields = queryParams.$select.split(',');
       } else {
@@ -203,7 +203,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
       res.status(401).send(setErrorMessage(404, collection, key));
     }
     if (userId) {
-      bodyParams.space = spaceId;
+      // bodyParams.space = spaceId;
       if (spaceId == 'guest') {
         delete bodyParams.space;
       }
@@ -253,13 +253,6 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let field = collection.fields[fieldName];
     if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
       let lookupCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
-      let fields = [];
-      let readable_fields = getCreator().getFields(field.reference_to, spaceId, userId);
-      _.each(readable_fields, function (f: string) {
-        if (f.indexOf('$') < 0) {
-          return fields.push(f)
-        }
-      });
       if (field.multiple) {
         let values = [];
         let filters = [];
@@ -267,8 +260,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           filters.push(`(_id eq '${f}')`);
         })
         await lookupCollection.find({
-          filters: filters.join(' or '),
-          fields: fields
+          filters: filters.join(' or ')
         }, userId).forEach(function (obj) {
           _.each(obj, function (v, k) {
             if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
@@ -280,7 +272,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         body['value'] = values;
         body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       } else {
-        body = await lookupCollection.findOne(fieldValue, { fields: fields }) || {};
+        body = await lookupCollection.findOne(fieldValue) || {};
         _.each(body, function (v, k) {
           if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
             return body[k] = JSON.stringify(v);
@@ -314,7 +306,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           };
         }
 
-        let entity = await collection.findOne(recordId, { fields: _.keys(collection.toConfig().fields) }, userId);
+        let entity = await collection.findOne(recordId, userId);
         let entities = [];
         if (entity) {
           let isAllowed = true;
