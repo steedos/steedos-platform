@@ -99,7 +99,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     getTypeormFieldsOptions(fields: string[] | string, primaryKey: string): JsonMap {
-        if (typeof fields == "string") {
+        if (typeof fields === "string") {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
         }
         if (!(fields && fields.length)) {
@@ -148,7 +148,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             result.$top = top;
         }
         if (skip > 0) {
-            if (top == 0) {
+            if (top === 0) {
                 throw new Error("top must not be empty for skip");
             }
             result.$skip = skip;
@@ -172,7 +172,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
         let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName });
         return result.map((item:any)=>{
-            item['_id'] == item[primaryKey];
+            item['_id'] = item[primaryKey];
             return item;
         });
     }
@@ -205,7 +205,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         // 因为sqlserver/sqlite3不兼容
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName });
         if (result && result[0]){
-            result[0]['_id'] == result[0][primaryKey];
+            result[0]['_id'] = result[0][primaryKey];
             return result[0];
         }
         else{
