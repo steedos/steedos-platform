@@ -47,6 +47,8 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
+    "sqlite3": "^4.0.6",
+    "mssql": "^5.1.0",
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.1.4",
     "@types/chai": "^4.1.7",

@@ -6,6 +6,9 @@ let tableName = "TestFiltersForSqlserver";
 let driver: SteedosSqlServerDriver;
 
 describe('filters for sqlserver database', () => {
+    if (!url) {
+        return true;
+    }
     try {
         require("mssql");
     }

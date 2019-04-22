@@ -6,4 +6,4 @@
  */
 const path = require('path');
 process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
-process.env.DRIVER_SQLSERVER_URL = "mssql://sa:hotoainc.@192.168.0.190/driver-test";
+// process.env.DRIVER_SQLSERVER_URL = "mssql://sa:hotoainc.@192.168.0.190/driver-test";

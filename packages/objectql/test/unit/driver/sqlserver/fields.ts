@@ -6,6 +6,9 @@ let tableName = "TestFieldsForSqlserver";
 let driver: SteedosSqlServerDriver;
 
 describe('fetch records width specific fields for sqlserver database', () => {
+    if (!url) {
+        return true;
+    }
     try {
         require("mssql");
     }

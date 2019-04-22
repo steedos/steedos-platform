@@ -6,6 +6,9 @@
 // let driver: SteedosSqlServerDriver;
 
 // describe.only('fetch records by paging for sqlserver database', () => {
+// if (!url) {
+//     return true;
+// }
 //     try {
 //         require("mssql");
 //     }
