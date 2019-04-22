@@ -47,8 +47,6 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "sqlite3": "^4.0.6",
-    "mssql": "^5.1.0",
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.1.4",
     "@types/chai": "^4.1.7",
@@ -57,8 +55,10 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "jslint": "^0.12.1",
+    "mssql": "^5.1.0",
     "nodemon": "^1.18.10",
     "sinon-chai": "^3.3.0",
+    "sqlite3": "^4.0.6",
     "ts-node": "^8.0.3",
     "typescript": "^3.3.4000"
   },
