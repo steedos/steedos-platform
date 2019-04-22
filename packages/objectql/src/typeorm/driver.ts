@@ -172,7 +172,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
         let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName });
         return result.map((item:any)=>{
-            item['_id'] = item[primaryKey];
+            item['_id'] = item[primaryKey] ? item[primaryKey].toString() : "";
             return item;
         });
     }
@@ -205,7 +205,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         // 因为sqlserver/sqlite3不兼容
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName });
         if (result && result[0]){
-            result[0]['_id'] = result[0][primaryKey];
+            result[0]['_id'] = result[0][primaryKey] ? result[0][primaryKey].toString() : "";
             return result[0];
         }
         else{
