@@ -12,6 +12,8 @@ export { SteedosIDType } from  "./field_types";
 export { SteedosQueryOptions } from "./query";
 export { SteedosObjectPermissionType, SteedosObjectPermissionTypeConfig } from "./object_permission";
 export { SteedosActionType, SteedosActionTypeConfig} from './action'
+export { SteedosAppType, SteedosAppTypeConfig} from './app'
+
 export function getSteedosSchema(): SteedosSchema {
     return getFromContainer(SteedosSchema);
 }

@@ -96,6 +96,20 @@ exports.loadReports = (filePath: string)=>{
     return results
 }
 
+exports.loadApps = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.app.yml"),
+        path.join(filePath, "*.app.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        results.push(json)
+    })
+    return results
+}
+
 exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
     _.each(sources, (source: JsonMap)=>{
         _.each(source, (v:never, k: string)=>{

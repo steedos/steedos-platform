@@ -1,26 +1,37 @@
-import { Dictionary } from "@salesforce/ts-types";
-import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
+import { Dictionary, JsonMap } from '@salesforce/ts-types';
+import { SteedosDataSourceType, SteedosDataSourceTypeConfig, SteedosAppTypeConfig, SteedosAppType } from ".";
 import _ = require("underscore");
+var util = require('../util')
 
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
+    apps?: Dictionary<SteedosAppTypeConfig>
+    appFiles?: string[]
 }
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    
+    private _apps: Dictionary<SteedosAppType> = {}
 
     constructor(config?: SteedosSchemaConfig) {
         if(config){
-            _.each(config.datasources, (datasource, datasource_name) => {
-                this.addDataSource(datasource_name, datasource)
+            _.each(config.datasources, (datasourceConfig, datasource_name) => {
+                this.addDataSource(datasource_name, datasourceConfig)
             })
 
             if(!this.getDataSource(defaultDatasourceName)){
                 throw new Error('missing default database');
             }
+
+            _.each(config.apps, (appConfig, app_id)=>{
+                this.addApp(app_id, appConfig)
+            })
+
+            _.each(config.appFiles, (appFile)=>{
+                this.use(appFile)
+            })
         }
     }
 
@@ -61,5 +72,32 @@ export class SteedosSchema {
 
     getDataSources(){
         return this._datasources
+    }
+
+    addApp(app_id: string, config: SteedosAppTypeConfig){
+        this._apps[config._id] = new SteedosAppType(config, this)
+    }
+
+    getApp(app_id: string){
+        return this._apps[app_id]
+    }
+
+    getApps(){
+        return this._apps
+    }
+
+    getAppsConfig(){
+        let appsConfig:JsonMap = {}
+        _.each(this._apps, (app: SteedosAppType, _id: string)=>{
+            appsConfig[_id] = app.toConfig()
+        })
+        return appsConfig
+    }
+
+    private use(filePath: string){
+        let appJsons = util.loadApps(filePath)
+        _.each(appJsons, (json: SteedosAppTypeConfig) => {
+            this.addApp(json._id, json)
+        })
     }
 }
