@@ -75,6 +75,7 @@ export class SteedosSchema {
     }
 
     addApp(app_id: string, config: SteedosAppTypeConfig){
+        config._id = app_id
         this._apps[config._id] = new SteedosAppType(config, this)
     }
 
