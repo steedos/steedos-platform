@@ -161,7 +161,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
     });
 
     tests.forEach((test) => {
-        it(`arguments:${JSON.stringify(test)}`, async () => {
+        it(`${test.title}`, async () => {
             testIndex++;
             if (expected.length !== undefined) {
                 expect(result).to.be.length(expected.length);

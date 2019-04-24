@@ -134,7 +134,7 @@ describe('fetch records for sqlite3 with sort arguments as a string that comply 
     });
 
     tests.forEach(async (test) => {
-        it(`arguments:${JSON.stringify(test)}`, async () => {
+        it(`${test.title}`, async () => {
             testIndex++;
             expect(result).to.be.length(expected.length);
             expect(result[0].id).to.be.eq(expected.firstRecordId);

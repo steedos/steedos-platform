@@ -161,7 +161,7 @@
 //     });
 
 //     tests.forEach(async (test) => {
-//         it(`arguments:${JSON.stringify(test)}`, async () => {
+//         it(`${test.title}`, async () => {
 //             testIndex++;
 //             if (expected.error !== undefined) {
 //                 expect(result.message).to.be.eq(expected.error);
