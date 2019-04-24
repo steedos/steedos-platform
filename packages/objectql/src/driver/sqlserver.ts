@@ -4,6 +4,7 @@ import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver } from "../typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType } from "../types";
+import { SQLLang } from 'odata-v4-sql';
 
 export class SteedosSqlServerDriver extends SteedosTypeormDriver {
     getSupportedColumnTypes() {
@@ -17,6 +18,8 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
         ]
     }
 
+    sqlLang: SQLLang = SQLLang.MsSql;
+
     constructor(config: SteedosDriverConfig) {
         super(config);
     }
@@ -29,7 +32,8 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
             entities: Object.values(this._entities),
             username: this.config.username,
             password: this.config.password,
-            database: this.config.database
+            database: this.config.database,
+            options: this.config.options
         };
     }
 

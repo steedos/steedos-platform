@@ -5,6 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery } from '@steedos/odata-v4-typeorm';
+import { SQLLang } from 'odata-v4-sql';
 import { getEntities, getPrimaryKey } from "../typeorm";
 
 import _ = require("underscore");
@@ -31,6 +32,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     _queryRunner: QueryRunner;
     _entities: Dictionary<EntitySchema>;
+
+    abstract readonly sqlLang: SQLLang;
 
     constructor(config: SteedosDriverConfig) {
         this._config = config;
@@ -107,7 +110,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
         let projection: string = "";
         (<string[]>fields).forEach((field) => {
-            if (field) {
+            if (field && field !== primaryKey) {
                 projection += `${field},`
             }
         });
@@ -120,22 +123,28 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         };
     }
 
-    getTypeormSortOptions(sort: string): JsonMap {
+    getTypeormSortOptions(sort: string, defaultSort?: string): JsonMap {
         let result: JsonMap = {};
-        if (sort && typeof sort === "string") {
-            let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
-            let stringSort: string = "";
-            arraySort.forEach((n) => {
-                if (n) {
-                    stringSort += `${n},`
-                }
-            });
-            stringSort = stringSort.replace(/,$/g, "");
-            if (stringSort) {
-                result = {
-                    $orderby: stringSort
-                };
+        if (!(sort && typeof sort === "string" && sort.length)) {
+            if (defaultSort){
+                sort = defaultSort;
             }
+            else{
+                return result;
+            }
+        }
+        let arraySort: string[] = sort.split(",").map((n) => { return n.trim(); });
+        let stringSort: string = "";
+        arraySort.forEach((n) => {
+            if (n) {
+                stringSort += `${n},`
+            }
+        });
+        stringSort = stringSort.replace(/,$/g, "");
+        if (stringSort) {
+            result = {
+                $orderby: stringSort
+            };
         }
         return result;
     }
@@ -170,7 +179,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let topAndSkip: JsonMap = this.getTypeormTopAndSkipOptions(query.top, query.skip);
         const queryBuilder = repository.createQueryBuilder(tableName);
         let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
-        let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName });
+        let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName, type: this.sqlLang });
         return result.map((item:any)=>{
             item['_id'] = item[primaryKey] ? item[primaryKey].toString() : "";
             return item;
@@ -186,7 +195,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let filterQuery: JsonMap = this.getTypeormFilters(query.filters);
         let repository = this._client.getRepository(entity);
         const queryBuilder = repository.createQueryBuilder(tableName).select([]);
-        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, { $count: true }), { alias: tableName });
+        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, { $count: true }), { alias: tableName, type: this.sqlLang });
         return result.count;
     }
 
@@ -203,7 +212,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         const queryBuilder = repository.createQueryBuilder(tableName);
         // 这里不可以用repository.findOne，也不可以用repository.createQueryBuilder(tableName).select(...).where(...).getOne();
         // 因为sqlserver/sqlite3不兼容
-        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName });
+        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName, type: this.sqlLang });
         if (result && result[0]){
             result[0]['_id'] = result[0][primaryKey] ? result[0][primaryKey].toString() : "";
             return result[0];
