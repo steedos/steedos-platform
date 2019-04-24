@@ -30,7 +30,7 @@ export class SteedosSchema {
             })
 
             _.each(config.appFiles, (appFile)=>{
-                this.useApp(appFile)
+                this.useAppFile(appFile)
             })
         }
     }
@@ -79,7 +79,14 @@ export class SteedosSchema {
         this._apps[config._id] = new SteedosAppType(config, this)
     }
 
-    useApp(filePath: string){
+    useAppFiles(appFiles: string[]){
+        _.each(appFiles, (appFile)=>{
+            this.useAppFile(appFile)
+        })
+        
+    }
+
+    useAppFile(filePath: string){
         let appJsons = util.loadApps(filePath)
         _.each(appJsons, (json: SteedosAppTypeConfig) => {
             this.addApp(json._id, json)
