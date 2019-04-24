@@ -30,7 +30,7 @@ export class SteedosSchema {
             })
 
             _.each(config.appFiles, (appFile)=>{
-                this.use(appFile)
+                this.useApp(appFile)
             })
         }
     }
@@ -79,6 +79,13 @@ export class SteedosSchema {
         this._apps[config._id] = new SteedosAppType(config, this)
     }
 
+    useApp(filePath: string){
+        let appJsons = util.loadApps(filePath)
+        _.each(appJsons, (json: SteedosAppTypeConfig) => {
+            this.addApp(json._id, json)
+        })
+    }
+
     getApp(app_id: string){
         return this._apps[app_id]
     }
@@ -93,12 +100,5 @@ export class SteedosSchema {
             appsConfig[_id] = app.toConfig()
         })
         return appsConfig
-    }
-
-    private use(filePath: string){
-        let appJsons = util.loadApps(filePath)
-        _.each(appJsons, (json: SteedosAppTypeConfig) => {
-            this.addApp(json._id, json)
-        })
     }
 }
