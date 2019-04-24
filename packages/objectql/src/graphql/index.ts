@@ -133,7 +133,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 console.log('args: ', args);
                 var data = args['data'];
                 data._id = data._id || new ObjectId().toHexString();
-                let object = steedosSchema.getObject(type.name);
+                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
                 return object.insert(data, context.userId);
             }
         }
@@ -144,7 +144,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 console.log('args: ', args);
                 let data = args['data'];
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(type.name);
+                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
                 return object.update(_id, data, context.userId);
             }
         }
@@ -154,7 +154,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(type.name);
+                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
                 return object.delete(_id, context.userId);
             }
         }
