@@ -1,15 +1,16 @@
-import { SteedosSchema, SteedosSqlite3Driver, SteedosDatabaseDriverType } from '../../../../src';
+import { SteedosSchema, SteedosSqlServerDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
-import path = require("path");
 
-let databaseUrl = path.join(__dirname, "sqlite-test.db");
-// let databaseUrl = ':memory:';
-let tableName = "TestFieldTypesForSqlite3";
-let driver: SteedosSqlite3Driver;
+let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
+let tableName = "TestFieldTypesForSqlserver";
+let driver: SteedosSqlServerDriver;
 
-describe('basic field types for sqlite3 database', () => {
+describe('basic field types for sqlserver database', () => {
+    if (!url) {
+        return true;
+    }
     try {
-        require("sqlite3");
+        require("mssql");
     }
     catch (ex) {
         return true;
@@ -44,11 +45,11 @@ describe('basic field types for sqlite3 database', () => {
         let mySchema = new SteedosSchema({
             datasources: {
                 default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
+                    url: url,
+                    driver: SteedosDatabaseDriverType.SqlServer,
                     objects: {
                         test: {
-                            label: 'Sqlite3 Schema',
+                            label: 'SqlServer Schema',
                             tableName: tableName,
                             fields: {
                                 id: {
@@ -76,7 +77,7 @@ describe('basic field types for sqlite3 database', () => {
                                 },
                                 date: {
                                     label: '日期',
-                                    type: 'date'
+                                    type: 'datetime'
                                 },
                                 datetime: {
                                     label: '创建时间',
@@ -93,9 +94,8 @@ describe('basic field types for sqlite3 database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.dropTables();
         await datasource.createTables();
-        driver = <SteedosSqlite3Driver>datasource.adapter;
+        driver = <SteedosSqlServerDriver>datasource.adapter;
     });
 
     beforeEach(async () => {
@@ -130,7 +130,7 @@ describe('basic field types for sqlite3 database', () => {
             if (expected.returnRecord !== undefined) {
                 Object.keys(expected.returnRecord).forEach((key) => {
                     expect(result).to.be.not.eq(undefined);
-                    if (result){
+                    if (result) {
                         expect(result[key]).to.be.eq(expected.returnRecord[key]);
                     }
                 });

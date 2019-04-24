@@ -1,10 +1,11 @@
 import { SteedosColumnType } from "./index";
-import { ConnectionOptions } from "typeorm";
+import { ConnectionOptions, EntitySchema } from "typeorm";
 import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver } from "../typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType } from "../types";
 import { SQLLang } from 'odata-v4-sql';
+import { getEntities } from "../typeorm";
 
 export class SteedosSqlServerDriver extends SteedosTypeormDriver {
     getSupportedColumnTypes() {
@@ -12,6 +13,7 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
             SteedosColumnType.varchar,
             SteedosColumnType.text,
             SteedosColumnType.number,
+            SteedosColumnType.boolean,
             SteedosColumnType.date,
             SteedosColumnType.dateTime,
             SteedosColumnType.oneToOne
@@ -41,5 +43,9 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
         this.registerEntities(objects);
         await this.connect();
         // await this._client.synchronize();
+    }
+
+    getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
+        return getEntities(objects, "mssql");
     }
 }

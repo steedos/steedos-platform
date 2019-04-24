@@ -6,7 +6,7 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery } from '@steedos/odata-v4-typeorm';
 import { SQLLang } from 'odata-v4-sql';
-import { getEntities, getPrimaryKey } from "../typeorm";
+import { getPrimaryKey } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -271,7 +271,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     async dropEntities() {
         let objects = {};
-        this._entities = getEntities(objects);
+        this._entities = this.getEntities(objects);
         await this.connect();
         await this._client.synchronize(true);
         await this.disconnect();
@@ -280,7 +280,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     registerEntities(objects: Dictionary<SteedosObjectType>) {
         if (!this._entities) {
-            this._entities = getEntities(objects);
+            this._entities = this.getEntities(objects);
         }
     }
 
@@ -293,4 +293,6 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         await this.connect();
         await this._client.synchronize();
     }
+
+    abstract getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema>;
 }
