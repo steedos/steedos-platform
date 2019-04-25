@@ -9,7 +9,7 @@ describe('advanced arguments for the filter function', () => {
         let result1 = formatFiltersToODataQuery(filters);
         let result2 = formatFiltersToODataQuery(filters, 4);
         console.log("odata filters query result1:", result1);
-        expect(result1).to.be.eq("(contains(tolower(name),'ptr'))");
+        expect(result1).to.be.eq("(contains(name,'ptr'))");
         expect(result1).to.be.eq(result2);
     });
     it('odata protocol version for 2', async () => {
@@ -18,7 +18,7 @@ describe('advanced arguments for the filter function', () => {
         ];
         let result = formatFiltersToODataQuery(filters, 2);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(substringof('ptr',tolower(name)))");
+        expect(result).to.be.eq("(substringof('ptr',name))");
     });
     it('forceLowerCase for defalut value true', async () => {
         let filters = [
@@ -27,7 +27,7 @@ describe('advanced arguments for the filter function', () => {
         let result1 = formatFiltersToODataQuery(filters, 4);
         let result2 = formatFiltersToODataQuery(filters, 4, true);
         console.log("odata filters query result:", result1);
-        expect(result1).to.be.eq("(contains(tolower(title),'ptr'))");
+        expect(result1).to.be.eq("(contains(title,'ptr'))");
         expect(result1).to.be.eq(result2);
     });
     it('forceLowerCase for false', async () => {

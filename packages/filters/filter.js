@@ -154,7 +154,8 @@ class SteedosFilter {
             var bag = [op, "("];
 
             if (this.forceLowerCase) {
-                prop = prop.indexOf("tolower(") === -1 ? "tolower(" + prop + ")" : prop;
+                // prop = prop.indexOf("tolower(") === -1 ? "tolower(" + prop + ")" : prop;
+                // forceLowerCase时不需要在prop外面增加tolower(..)，因为odata-v4-mongodb等包不支持
                 val = val.toLowerCase();
             }
 

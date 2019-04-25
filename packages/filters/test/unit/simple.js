@@ -55,7 +55,7 @@ describe('format filters to a simple odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(startswith(tolower(name),'ptr'))");
+        expect(result).to.be.eq("(startswith(name,'ptr'))");
     });
     it('endswith endswith', async () => {
         let filters = [
@@ -63,7 +63,7 @@ describe('format filters to a simple odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(endswith(tolower(name),'ptr'))");
+        expect(result).to.be.eq("(endswith(name,'ptr'))");
     });
     it('contains contains', async () => {
         let filters = [
@@ -71,7 +71,7 @@ describe('format filters to a simple odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(contains(tolower(name),'ptr'))");
+        expect(result).to.be.eq("(contains(name,'ptr'))");
     });
     it('notcontains notcontains', async () => {
         let filters = [
@@ -79,7 +79,7 @@ describe('format filters to a simple odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("(not contains(tolower(name),'ptr'))");
+        expect(result).to.be.eq("(not contains(name,'ptr'))");
     });
     it('mixin above', async () => {
         let filters = [
@@ -94,6 +94,6 @@ describe('format filters to a simple odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((startswith(tolower(name),'ptr')) or (endswith(tolower(title),'ptr'))) and (count ge 100) and (count le 100) and (tag ne 'one')");
+        expect(result).to.be.eq("((startswith(name,'ptr')) or (endswith(title,'ptr'))) and (count ge 100) and (count le 100) and (tag ne 'one')");
     });
 });
