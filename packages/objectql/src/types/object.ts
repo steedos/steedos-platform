@@ -68,6 +68,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _tableName: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
+    private _NAME_FIELD_KEY: string;
+    public get NAME_FIELD_KEY(): string {
+        return this._NAME_FIELD_KEY;
+    }
 
     getMethod(method_name: string){
         return this.methods[method_name]
@@ -271,6 +275,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         if(field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
             this._idFieldName = field.name
+        }
+
+        if(field_name == 'name' || field.is_name){
+            this._NAME_FIELD_KEY = field_name
         }
     }
 
