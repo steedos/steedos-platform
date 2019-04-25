@@ -38,8 +38,6 @@ describe('fetch records width specific fields for mongo database', () => {
             fields: "name, title, "
         };
         let result = await mongo.find(tableName, queryOptions);
-        console.log("fetch records width specific fields result:");
-        console.log(result);
 
         await mongo.delete(tableName, "ptr");
         await mongo.delete(tableName, "cnpc");
