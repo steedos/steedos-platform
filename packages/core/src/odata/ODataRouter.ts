@@ -170,7 +170,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         sort_entities = entities;
       }
       if (sort_entities) {
-        getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userId);
+        await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userId);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = sort_entities.length;
@@ -314,7 +314,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           if (isAllowed) {
             let body = {};
             entities.push(entity);
-            getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
+            await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
             body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
             let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
             _.extend(body, entity_OdataProperties[0]);
