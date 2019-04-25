@@ -138,7 +138,9 @@ class SteedosFilter {
         this.formattersV4 = {
             ...this.formatters, ...{
                 "contains": this.createStringFuncFormatter("contains"),
-                "notcontains": this.createStringFuncFormatter("not contains")
+                "notcontains": this.createStringFuncFormatter("not contains"),
+                "notstartswith": this.createStringFuncFormatter("not startswith"),
+                "notendswith": this.createStringFuncFormatter("not endswith")
             }
         };
     }
