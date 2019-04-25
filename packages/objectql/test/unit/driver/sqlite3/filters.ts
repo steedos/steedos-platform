@@ -60,6 +60,86 @@ describe('filters for sqlite3 database', () => {
             }
         },
         {
+            title: "filter records with operator: >",
+            options: {
+                fields: ["id", "name"],
+                filters: [["count", ">", 20]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: >=",
+            options: {
+                fields: ["id", "name"],
+                filters: [["count", ">=", 120]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: <",
+            options: {
+                fields: ["id", "name"],
+                filters: [["count", "<", 100]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: <=",
+            options: {
+                fields: ["id", "name"],
+                filters: [["count", "<=", 18]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        // {
+        //     title: "filter records with operator: between",
+        //     options: {
+        //         fields: ["id", "name"],
+        //         filters: [["count", "between", [10, 100]]]
+        //     },
+        //     expected: {
+        //         length: 1
+        //     }
+        // },
+        {
+            title: "filter records with operator: startswith",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "startswith", "cn"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: contains",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "contains", "p"]]
+            },
+            expected: {
+                length: 2
+            }
+        },
+        // {
+        //     title: "filter records with operator: notcontains",
+        //     options: {
+        //         fields: ["id", "name"],
+        //         filters: [["name", "notcontains", "cn"]]
+        //     },
+        //     expected: {
+        //         length: 1
+        //     }
+        // },
+        {
             title: "records count with filters",
             function: "count",
             options: {
