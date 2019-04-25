@@ -120,6 +120,36 @@ describe('filters for sqlite3 database', () => {
             }
         },
         {
+            title: "filter records with operator: notstartswith",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "notstartswith", "cn"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: endswith",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "endswith", "pc"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
+            title: "filter records with operator: notendswith",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "notendswith", "pc"]]
+            },
+            expected: {
+                length: 1
+            }
+        },
+        {
             title: "filter records with operator: contains",
             options: {
                 fields: ["id", "name"],
@@ -127,6 +157,16 @@ describe('filters for sqlite3 database', () => {
             },
             expected: {
                 length: 2
+            }
+        },
+        {
+            title: "filter records with operator: notcontains",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "notcontains", "cn"]]
+            },
+            expected: {
+                length: 1
             }
         },
         {
