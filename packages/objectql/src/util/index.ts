@@ -13,6 +13,7 @@ const fs = require("fs");
 const path = require("path");
 const _ = require("underscore");
 const globby = require("globby");
+var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
 
 exports.loadJSONFile = (filePath: string)=>{
@@ -32,7 +33,7 @@ let loadFile = (filePath: string)=>{
         else if(extname.toLocaleLowerCase() == '.yml')
             json = yaml.load(fs.readFileSync(filePath, 'utf8'));
         else if(extname.toLocaleLowerCase() == '.js')
-            json = require(filePath);
+            json = clone(require(filePath));
     } catch (error) {
         console.error('loadFile error', filePath, error);
     }
@@ -118,7 +119,7 @@ exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
             }else if(isJsonMap(v)){
                 let _d = getJsonMap(destination, k);
                 if(isJsonMap(_d)){
-                    this.extend(_d, v)
+                    destination[k] = this.extend(clone(_d), v)
                 }else{
                     destination[k] = v
                 }

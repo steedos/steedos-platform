@@ -43,7 +43,7 @@ describe('Test use file', () => {
 
     it('test apps', ()=>{
         let meetingApp = mySchema.getApps()
-        console.log('meetingApp', meetingApp['meeting'].toConfig())
+        // console.log('meetingApp', meetingApp['meeting'].toConfig())
         expect(Object.keys(meetingApp).length).to.gt(0)
     })
 

@@ -109,9 +109,9 @@ module.exports = {
     }
   },
   afterUpdate: async function(){
-    console.log('afterUpdate', this);
+    // console.log('afterUpdate', this);
   },
   afterDelete: async function(){
-    console.log('afterDelete', this);
+    // console.log('afterDelete', this);
   }
 }
