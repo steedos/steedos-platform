@@ -1,3 +1,4 @@
+//TODO client trigger
 module.exports = {
 
     name: 'baseClientTrigger',

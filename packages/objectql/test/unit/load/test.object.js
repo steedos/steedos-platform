@@ -11,6 +11,12 @@ module.exports = {
         _obj: {
             type: 'lookup',
             reference_to: 'meetingroom'
+        },
+        company_id: {
+            required: true,
+            type: 'lookup',
+			omit: false,
+			hidden: false,
         }
     }
 }
