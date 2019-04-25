@@ -156,36 +156,38 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this._columnType = SteedosColumnType.varchar
                 break;
             case 'lookup':
-                let reference_to = this.reference_to
-                if(_.isFunction(this.reference_to)){
-                    reference_to = this.reference_to()
-                }
+                // let reference_to = this.reference_to
+                // if(_.isFunction(this.reference_to)){
+                //     reference_to = this.reference_to()
+                // }
 
-                if(_.isArray(reference_to)){
-                    this._columnType = SteedosColumnType.manyToMany
-                }else{
-                    if(this.multiple){
-                        this._columnType = SteedosColumnType.oneToMany
-                    }else{
-                        this._columnType = SteedosColumnType.oneToOne
-                    }
-                }
+                // if(_.isArray(reference_to)){
+                //     this._columnType = SteedosColumnType.manyToMany
+                // }else{
+                //     if(this.multiple){
+                //         this._columnType = SteedosColumnType.oneToMany
+                //     }else{
+                //         this._columnType = SteedosColumnType.oneToOne
+                //     }
+                // }
+                this._columnType = SteedosColumnType.varchar
                 break;
             case 'master_detail':
-                let reference_to2 = this.reference_to
-                if(_.isFunction(this.reference_to)){
-                    reference_to2 = this.reference_to()
-                }
+                // let reference_to2 = this.reference_to
+                // if(_.isFunction(this.reference_to)){
+                //     reference_to2 = this.reference_to()
+                // }
 
-                if(_.isArray(reference_to2)){
-                    this._columnType = SteedosColumnType.manyToMany
-                }else{
-                    if(this.multiple){
-                        this._columnType = SteedosColumnType.manyToOne //TODO
-                    }else{
-                        this._columnType = SteedosColumnType.oneToOne
-                    }
-                }
+                // if(_.isArray(reference_to2)){
+                //     this._columnType = SteedosColumnType.manyToMany
+                // }else{
+                //     if(this.multiple){
+                //         this._columnType = SteedosColumnType.manyToOne //TODO
+                //     }else{
+                //         this._columnType = SteedosColumnType.oneToOne
+                //     }
+                // }
+                this._columnType = SteedosColumnType.varchar
                 break;
             case 'grid':
                 this._columnType = SteedosColumnType.array
@@ -257,8 +259,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this._columnType = SteedosColumnType.json
                 break;
             default:
-                console.log('this', this)
-                throw new Error(`${this.name} invalid field type ${this.type}`)
+                throw new Error(`${this._object.name}.${this.name} invalid field type ${this.type}`)
                 break;
          }
     }
