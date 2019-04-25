@@ -130,16 +130,6 @@ describe('filters for sqlserver database', () => {
         //         length: 2
         //     }
         // },
-        // {
-        //     title: "filter records with operator: notcontains",
-        //     options: {
-        //         fields: ["id", "name"],
-        //         filters: [["name", "notcontains", "cn"]]
-        //     },
-        //     expected: {
-        //         length: 1
-        //     }
-        // },
         {
             title: "records count with filters",
             function: "count",
