@@ -55,7 +55,7 @@ title: 过滤条件
 > between只支持数值及日期时间类型，且过滤值必须是两个元素的数组格式
 
 其他情况一律自动按"or"裂变连接成多个过滤条件
-- [["tag", "contains", ["start","end"]]] 等效于 [ [ "tag", "contains", "start" ], "and", [ "tag", "contains", "end" ] ]
+- [["tag", "contains", ["start","end"]]] 等效于 [ [ "tag", "contains", "start" ], "or", [ "tag", "contains", "end" ] ]
 
 ### 公式字段支持
 
