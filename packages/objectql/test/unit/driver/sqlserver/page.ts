@@ -50,7 +50,12 @@ describe('fetch records by paging for sqlserver database', () => {
                 top: 2
             },
             expected: {
-                error: 'orderby must not be empty for sql server when paging'
+                tds74:{
+                    length: 2
+                },
+                tds72:{
+                    error: 'orderby must not be empty for sql server when paging'
+                }
             }
         },
         {
@@ -136,6 +141,14 @@ describe('fetch records by paging for sqlserver database', () => {
     tests.forEach(async (test) => {
         it(`${test.title}`, async () => {
             testIndex++;
+            if (expected.tds74 || expected.tds72){
+                if (tdsVersion == "7_4" || !tdsVersion){
+                    expected = expected.tds74;
+                }
+                else if(tdsVersion == "7_2"){
+                    expected = expected.tds72;
+                }
+            }
             if (expected.error !== undefined) {
                 expect(result.message).to.be.eq(expected.error);
             }
