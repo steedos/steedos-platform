@@ -1,6 +1,7 @@
 import { getCreator } from "../index";
 import _ = require('underscore');
 import { Request, Response } from "express";
+import { JsonMap } from '@salesforce/ts-types';
 
 var Cookies = require("cookies");
 
@@ -142,6 +143,10 @@ export class ODataManager {
                     filters.push(`(_id eq '${f}')`);
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
+                  let queryFields = _.clone(queryOptions.fields)
+                  if(_.isEmpty(queryFields)){
+                    multiQuery.fields = [_ro_NAME_FIELD_KEY]
+                  }
                   entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery, userId);
                   if (!entities[idx][navigationProperty].length) {
                     entities[idx][navigationProperty] = originalData;
@@ -151,14 +156,25 @@ export class ODataManager {
                     o['reference_to.o'] = referenceToCollection._name;
                     o['reference_to._o'] = field.reference_to;
                     o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                    if(_.isEmpty(queryFields)){
+
+                      delete o[_ro_NAME_FIELD_KEY]
+                    }
                     return o;
                   });
                 } else {
+                  let queryFields = _.clone(queryOptions.fields)
+                  if(_.isEmpty(queryFields)){
+                    queryOptions.fields = [_ro_NAME_FIELD_KEY]
+                  }
                   entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId) || entities[idx][navigationProperty];
                   if (entities[idx][navigationProperty]) {
                     entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                     entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
                     entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                    if(_.isEmpty(queryFields)){
+                      delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                    }
                   }
                 }
               }
@@ -171,9 +187,9 @@ export class ODataManager {
               if ((ref1 = entities[idx][navigationProperty]) != null ? ref1.ids : void 0) {
                 let _o = entities[idx][navigationProperty].o;
                 let _ro_NAME_FIELD_KEY = (ref2 = getCreator().getSteedosSchema().getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
-                if ((queryOptions != null ? queryOptions.fields : void 0) && _ro_NAME_FIELD_KEY) {
-                  queryOptions.fields.push(_ro_NAME_FIELD_KEY);
-                }
+                // if ((queryOptions != null ? queryOptions.fields : void 0) && _ro_NAME_FIELD_KEY) {
+                //   queryOptions.fields.push(_ro_NAME_FIELD_KEY);
+                // }
                 let referenceToCollection = getCreator().getSteedosSchema().getObject(entities[idx][navigationProperty].o);
                 if (referenceToCollection) {
                   if (field.multiple) {
@@ -183,19 +199,36 @@ export class ODataManager {
                       filters.push(`(_id eq '${f}')`);
                     })
                     let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
+                    let queryFields = _.clone(queryOptions.fields)
+                    if(_.isEmpty(queryFields)){
+                      multiQuery.fields = [_ro_NAME_FIELD_KEY]
+                    }
                     entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userId), function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                      if(_.isEmpty(queryFields)){
+                        delete o[_ro_NAME_FIELD_KEY]
+                      }
                       return o;
                     });
                     entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], _ids);
                   } else {
-                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], queryOptions, userId);
+                    let queryFields = _.clone(queryOptions.fields)
+                    let query:JsonMap = {}
+                    if(_.isEmpty(queryFields)){
+                      query.fields = [_ro_NAME_FIELD_KEY]
+                    }else{
+                      query.fields = queryFields
+                    }
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query, userId);
                     if (entities[idx][navigationProperty]) {
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
                       entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      if(_.isEmpty(queryFields)){
+                        delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                      }
                     }
                   }
                 }
