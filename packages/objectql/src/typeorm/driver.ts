@@ -196,7 +196,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let repository = this._client.getRepository(entity);
         const queryBuilder = repository.createQueryBuilder(tableName);
         let result = await executeCountQuery(queryBuilder, filterQuery, { alias: tableName, type: this.sqlLang });
-        return result.count;
+        return result;
     }
 
     async findOne(tableName: string, id: SteedosIDType, query?: SteedosQueryOptions) {
