@@ -177,6 +177,9 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         if (queryParams.hasOwnProperty('$skip')) {
           query['skip'] = Number(queryParams.$skip);
         }
+        if (queryParams.$orderby) {
+          query['sort'] = queryParams.$orderby;
+        }
         entities = await collection.find(query, userId, userId);
       }
       let entities_ids = _.pluck(entities, '_id');
