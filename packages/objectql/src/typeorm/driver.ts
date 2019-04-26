@@ -4,7 +4,7 @@ import { createConnection, QueryRunner, EntitySchema, ConnectionOptions } from "
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { executeQuery } from '@steedos/odata-v4-typeorm';
+import { executeQuery, executeCountQuery } from '@steedos/odata-v4-typeorm';
 import { SQLLang } from 'odata-v4-sql';
 import { getPrimaryKey } from "../typeorm";
 
@@ -194,8 +194,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
         let filterQuery: JsonMap = this.getTypeormFilters(query.filters);
         let repository = this._client.getRepository(entity);
-        const queryBuilder = repository.createQueryBuilder(tableName).select([]);
-        let result = await executeQuery(queryBuilder, Object.assign(filterQuery, { $count: true }), { alias: tableName, type: this.sqlLang });
+        const queryBuilder = repository.createQueryBuilder(tableName);
+        let result = await executeCountQuery(queryBuilder, filterQuery, { alias: tableName, type: this.sqlLang });
         return result.count;
     }
 
