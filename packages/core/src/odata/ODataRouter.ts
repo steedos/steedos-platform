@@ -70,6 +70,9 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         if (queryParams.hasOwnProperty('$skip')) {
           query['skip'] = Number(queryParams.$skip);
         }
+        if (queryParams.$orderby) {
+          query['sort'] = queryParams.$orderby;
+        }
         entities = await collection.find(query, userId);
       }
       let scannedCount = await collection.count({ filters: filters, fields: ['_id'] }, userId);
