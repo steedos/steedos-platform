@@ -50,12 +50,7 @@ describe('fetch records by paging for sqlserver database', () => {
                 top: 2
             },
             expected: {
-                tds74:{
-                    length: 2
-                },
-                tds72:{
-                    error: 'orderby must not be empty for sql server when paging'
-                }
+                length: 2
             }
         },
         {
