@@ -20,6 +20,7 @@ export enum SteedosDatabaseDriverType {
 export type SteedosDataSourceTypeConfig = {
     name?: string
     driver: SteedosDatabaseDriverType | string | SteedosDriver
+    logging?: boolean
     url: string
     username?: string
     password?: string,
@@ -51,6 +52,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
+    private _logging: boolean;
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
@@ -91,13 +93,15 @@ export class SteedosDataSourceType implements Dictionary {
         this._options = config.options
         this._schema = schema
         this._driver = config.driver
+        this._logging = config.logging
 
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             username: this._username,
             password: this._password,
             database: this._database,
-            options: this._options
+            options: this._options,
+            logging: this._logging
         }
 
         if(_.isString(config.driver)){

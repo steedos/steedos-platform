@@ -30,7 +30,8 @@ export class SteedosSqlite3Driver extends SteedosTypeormDriver {
             type: "sqlite",
             database: this._url,
             name: (new Date()).getTime().toString(),
-            entities: Object.values(this._entities)
+            entities: Object.values(this._entities),
+            logging: this.config.logging
         };
     }
 
