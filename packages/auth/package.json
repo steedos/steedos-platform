@@ -8,7 +8,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "file:C:\\Users\\dell\\Documents\\GitHub\\object-server\\packages\\objectql",
+    "@steedos/objectql": "file:../objectql",
     "crypto": "^1.0.1"
   }
 }
