@@ -144,27 +144,29 @@ export class ODataManager {
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
                   let queryFields = _.clone(queryOptions.fields)
-                  if(_.isEmpty(queryFields)){
+                  if (_.isEmpty(queryFields)) {
                     multiQuery.fields = [_ro_NAME_FIELD_KEY]
                   }
                   entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery, userId);
                   if (!entities[idx][navigationProperty].length) {
                     entities[idx][navigationProperty] = originalData;
-                  }
-                  entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], originalData);
-                  entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
-                    o['reference_to.o'] = referenceToCollection._name;
-                    o['reference_to._o'] = field.reference_to;
-                    o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
-                    if(_.isEmpty(queryFields)){
+                  } else {
+                    entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], originalData);
+                    entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
+                      o['reference_to.o'] = referenceToCollection._name;
+                      o['reference_to._o'] = field.reference_to;
+                      o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                      if (_.isEmpty(queryFields)) {
 
-                      delete o[_ro_NAME_FIELD_KEY]
-                    }
-                    return o;
-                  });
+                        delete o[_ro_NAME_FIELD_KEY]
+                      }
+                      return o;
+                    });
+                  }
+
                 } else {
                   let queryFields = _.clone(queryOptions.fields)
-                  if(_.isEmpty(queryFields)){
+                  if (_.isEmpty(queryFields)) {
                     queryOptions.fields = [_ro_NAME_FIELD_KEY]
                   }
                   entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId) || entities[idx][navigationProperty];
@@ -172,7 +174,7 @@ export class ODataManager {
                     entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                     entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
                     entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
-                    if(_.isEmpty(queryFields)){
+                    if (_.isEmpty(queryFields)) {
                       delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
                     }
                   }
@@ -200,14 +202,14 @@ export class ODataManager {
                     })
                     let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
                     let queryFields = _.clone(queryOptions.fields)
-                    if(_.isEmpty(queryFields)){
+                    if (_.isEmpty(queryFields)) {
                       multiQuery.fields = [_ro_NAME_FIELD_KEY]
                     }
                     entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userId), function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
-                      if(_.isEmpty(queryFields)){
+                      if (_.isEmpty(queryFields)) {
                         delete o[_ro_NAME_FIELD_KEY]
                       }
                       return o;
@@ -215,10 +217,10 @@ export class ODataManager {
                     entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], _ids);
                   } else {
                     let queryFields = _.clone(queryOptions.fields)
-                    let query:JsonMap = {}
-                    if(_.isEmpty(queryFields)){
+                    let query: JsonMap = {}
+                    if (_.isEmpty(queryFields)) {
                       query.fields = [_ro_NAME_FIELD_KEY]
-                    }else{
+                    } else {
                       query.fields = queryFields
                     }
                     entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query, userId);
@@ -226,7 +228,7 @@ export class ODataManager {
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
                       entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
-                      if(_.isEmpty(queryFields)){
+                      if (_.isEmpty(queryFields)) {
                         delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
                       }
                     }
