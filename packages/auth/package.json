@@ -6,5 +6,9 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@steedos/objectql": "file:C:\\Users\\dell\\Documents\\GitHub\\object-server\\packages\\objectql",
+    "crypto": "^1.0.1"
   }
 }
