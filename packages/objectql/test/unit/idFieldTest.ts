@@ -26,7 +26,8 @@ describe('Test idField', () => {
                                 },
                                 name: {
                                     type: 'text',
-                                    label: '名称'
+                                    label: '名称',
+                                    fieldDBType: 'text'
                                 },
                                 u: {
                                     type: "lookup",
@@ -43,6 +44,6 @@ describe('Test idField', () => {
   
         let test = mySchema.getObject('sqlite.test');
         
-        expect(users.idFieldName).to.equal('_id') && expect(test.idFieldName).to.equal('id')
+        expect(users.idFieldName).to.equal('_id') && expect(test.idFieldName).to.equal('id') && expect(test.getField('name').fieldDBType).to.equal('text')
     });
   });

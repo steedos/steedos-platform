@@ -1,5 +1,5 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
-import { SteedosDriver, SteedosColumnType, SteedosDriverConfig } from "../driver";
+import { SteedosDriver, SteedosFieldDBType, SteedosDriverConfig } from "../driver";
 import { createConnection, QueryRunner, EntitySchema, ConnectionOptions } from "typeorm";
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
@@ -13,12 +13,11 @@ import _ = require("underscore");
 export abstract class SteedosTypeormDriver implements SteedosDriver {
     getSupportedColumnTypes() {
         return [
-            SteedosColumnType.varchar,
-            SteedosColumnType.text,
-            SteedosColumnType.number,
-            SteedosColumnType.date,
-            SteedosColumnType.dateTime,
-            SteedosColumnType.oneToOne
+            SteedosFieldDBType.varchar,
+            SteedosFieldDBType.text,
+            SteedosFieldDBType.number,
+            SteedosFieldDBType.date,
+            SteedosFieldDBType.dateTime
         ]
     }
     _url: string;

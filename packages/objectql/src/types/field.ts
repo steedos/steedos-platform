@@ -1,7 +1,7 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosObjectType } from '.';
 import _ = require('underscore')
-import { SteedosColumnType } from '../driver';
+import { SteedosFieldDBType } from '../driver';
 
 //TODO 整理字段类型
 const FIELDTYPES = [
@@ -77,6 +77,7 @@ abstract class SteedosFieldProperties{
     reference_limit?: number
     is_company_only?: boolean
     system?: string;
+    fieldDBType?: SteedosFieldDBType | string
 }
 
 export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
@@ -87,9 +88,12 @@ export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
 export class SteedosFieldType extends SteedosFieldProperties implements Dictionary {
     private _object: SteedosObjectType;
     private _type: any;
-    private _columnType: SteedosColumnType;
-    public get columnType(): SteedosColumnType {
-        return this._columnType;
+    private _fieldDBType: SteedosFieldDBType;
+    public get fieldDBType(): SteedosFieldDBType {
+        return this._fieldDBType;
+    }
+    public set fieldDBType(value: SteedosFieldDBType) {
+        this._fieldDBType = value;
     }
 
     private properties: string[] = ['name']
@@ -110,7 +114,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
 
         this.name = name
 
-        this.setColumnType()
+        this.setDBType()
 
     }
 
@@ -122,38 +126,41 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         return config
     }
 
-    private setColumnType(){
+    private setDBType(){
+        if(this.fieldDBType){
+            return;
+        }
          switch (this.type) {
              case 'text':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'textarea':
-                this._columnType = SteedosColumnType.text
+                this._fieldDBType = SteedosFieldDBType.text
                 break;
             case 'select':
                 if(this.multiple){
-                    this._columnType = SteedosColumnType.array
+                    this._fieldDBType = SteedosFieldDBType.array
                 }else{
-                    this._columnType = SteedosColumnType.varchar
+                    this._fieldDBType = SteedosFieldDBType.varchar
                 }
                 break;
             case 'boolean':
-                this._columnType = SteedosColumnType.boolean
+                this._fieldDBType = SteedosFieldDBType.boolean
                 break;
             case 'date':
-                this._columnType = SteedosColumnType.date
+                this._fieldDBType = SteedosFieldDBType.date
                 break;
             case 'datetime':
-                this._columnType = SteedosColumnType.dateTime
+                this._fieldDBType = SteedosFieldDBType.dateTime
                 break;
             case 'number':
-                this._columnType = SteedosColumnType.number
+                this._fieldDBType = SteedosFieldDBType.number
                 break;
             case 'currency':
-                this._columnType = SteedosColumnType.number
+                this._fieldDBType = SteedosFieldDBType.number
                 break;
             case 'password':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'lookup':
                 // let reference_to = this.reference_to
@@ -170,7 +177,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 //         this._columnType = SteedosColumnType.oneToOne
                 //     }
                 // }
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'master_detail':
                 // let reference_to2 = this.reference_to
@@ -187,76 +194,76 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 //         this._columnType = SteedosColumnType.oneToOne
                 //     }
                 // }
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'grid':
-                this._columnType = SteedosColumnType.array
+                this._fieldDBType = SteedosFieldDBType.array
                 break;
             case 'url':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'email':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'avatar':
-                this._columnType = SteedosColumnType.oneToOne
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'location':
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
             case 'image':
-                this._columnType = SteedosColumnType.oneToOne
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'object':
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
                 case 'url':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case '[object]':
-                this._columnType = SteedosColumnType.array
+                this._fieldDBType = SteedosFieldDBType.array
                 break;
             case '[Object]':
-                this._columnType = SteedosColumnType.array
+                this._fieldDBType = SteedosFieldDBType.array
                 break;
             case '[grid]':
-                this._columnType = SteedosColumnType.array
+                this._fieldDBType = SteedosFieldDBType.array
                 break;
             case '[text]':
-                this._columnType = SteedosColumnType.array
+                this._fieldDBType = SteedosFieldDBType.array
                 break;
             case 'selectCity':
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
             case 'audio':
-                this._columnType = SteedosColumnType.oneToOne
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'filesize':
-                this._columnType = SteedosColumnType.number
+                this._fieldDBType = SteedosFieldDBType.number
                 break;
             case 'file':
-                this._columnType = SteedosColumnType.oneToOne
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'string':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'code':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'function Object() { [native code] }':
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
             case Object:
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
             case 'function String() { [native code] }':
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case String:
-                this._columnType = SteedosColumnType.varchar
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             case 'Object':
-                this._columnType = SteedosColumnType.json
+                this._fieldDBType = SteedosFieldDBType.json
                 break;
             default:
                 throw new Error(`${this._object.name}.${this.name} invalid field type ${this.type}`)

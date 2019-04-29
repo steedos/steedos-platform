@@ -1,4 +1,4 @@
-import { SteedosColumnType } from "./index";
+import { SteedosFieldDBType } from "./index";
 import { ConnectionOptions, EntitySchema } from "typeorm";
 import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver, getEntities } from "../typeorm";
@@ -9,13 +9,12 @@ import { SteedosObjectType } from "../types";
 export class SteedosSqlite3Driver extends SteedosTypeormDriver {
     getSupportedColumnTypes() {
         return [
-            SteedosColumnType.varchar, 
-            SteedosColumnType.text, 
-            SteedosColumnType.number,
-            SteedosColumnType.boolean,
-            SteedosColumnType.date,
-            SteedosColumnType.dateTime,
-            SteedosColumnType.oneToOne
+            SteedosFieldDBType.varchar, 
+            SteedosFieldDBType.text, 
+            SteedosFieldDBType.number,
+            SteedosFieldDBType.boolean,
+            SteedosFieldDBType.date,
+            SteedosFieldDBType.dateTime
         ]
     }
     

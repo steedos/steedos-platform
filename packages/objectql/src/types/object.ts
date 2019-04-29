@@ -84,7 +84,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private checkField(){
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
-            if(!driverSupportedColumnTypes.includes(field.columnType)){
+            if(!driverSupportedColumnTypes.includes(field.fieldDBType)){
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
             }
         })

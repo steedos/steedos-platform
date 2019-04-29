@@ -1,7 +1,7 @@
 import { EntitySchema, ColumnType, EntitySchemaColumnOptions, EntitySchemaRelationOptions, Repository, DatabaseType } from "typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType, SteedosFieldType } from "../types";
-import { SteedosColumnType } from "../driver";
+import { SteedosFieldDBType } from "../driver";
 
 export interface EntitySchemaColumnDictionary {
     [x: string]: EntitySchemaColumnOptions;
@@ -13,45 +13,29 @@ export interface EntitySchemaRelationDictionary {
 export type RelationType = "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 
 export function getTableColumnType(field: SteedosFieldType, databaseType: DatabaseType): ColumnType {
-    let columnType: SteedosColumnType = field.columnType;
+    let columnType: SteedosFieldDBType = field.fieldDBType;
     switch (columnType) {
-        case SteedosColumnType.varchar:
+        case SteedosFieldDBType.varchar:
             return String;
-        case SteedosColumnType.text:
+        case SteedosFieldDBType.text:
             if (databaseType === "oracle"){
                 return "blob";
             }
             return "text";
-        case SteedosColumnType.number:
+        case SteedosFieldDBType.number:
             let scale = field.scale === undefined ? 0 : field.scale;
             if (scale === 0){
                 return "int";
             }
             return "decimal";
-        case SteedosColumnType.dateTime:
+        case SteedosFieldDBType.dateTime:
             return Date;
-        case SteedosColumnType.date:
+        case SteedosFieldDBType.date:
             return Date;
-        case SteedosColumnType.boolean:
+        case SteedosFieldDBType.boolean:
             return Boolean;
     }
     return String;
-};
-
-
-export function getTableRelationType(field: SteedosFieldType): RelationType {
-    let columnType: SteedosColumnType = field.columnType;
-    switch (columnType) {
-        case SteedosColumnType.oneToOne:
-            return "one-to-one";
-        // case SteedosColumnType.oneToMany:
-        //     return "one-to-many";
-        // case SteedosColumnType.manyToOne:
-        //     return "many-to-one";
-        // case SteedosColumnType.manyToMany:
-        //     return "many-to-many";
-    }
-    return null;
 };
 
 export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseType: DatabaseType): EntitySchemaColumnDictionary {
