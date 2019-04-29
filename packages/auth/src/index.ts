@@ -34,15 +34,18 @@ export function getSessionFromCache(token: string) {
 }
 
 export async function getSession(userId: any, token: string, sessionCacheInMinutes: number = 10) {
-  if (getSessionFromCache(token)) {
-    return getSessionFromCache(token);
+  let session = getSessionFromCache(token)
+  if (session) {
+    return session;
   } else {
     let hashedToken = _hashLoginToken(token);
     let filters = `(_id eq '${userId}') and ('services.resume.loginTokens.hashedToken' eq '${hashedToken}')`;
     let user = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'steedos_id', 'email'] });
     console.log('user[0]: ', user[0])
-    let session = { name: user[0].name, userId: user[0]._id, steedos_id: user[0].steedos_id, email: user[0].email, token: token, expiredAt: new Date().getTime() + sessionCacheInMinutes * 60 * 1000 };
-    addSessionToCache(token, session)
+    if (user && user.length > 0) {
+      session = { name: user[0].name, userId: user[0]._id, steedos_id: user[0].steedos_id, email: user[0].email, token: token, expiredAt: new Date().getTime() + sessionCacheInMinutes * 60 * 1000 };
+      addSessionToCache(token, session)
+    }
     return session
   }
 

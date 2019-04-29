@@ -214,7 +214,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
         delete bodyParams.space;
       }
       let entity = await collection.insert(bodyParams, userId);
-      console.log('entity: ', entity)
+
       let entities = [];
       if (entity) {
         let body = {};
@@ -264,10 +264,10 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         let filters = [];
         _.each(fieldValue, function (f) {
           filters.push(`(_id eq '${f}')`);
-        })
-        await lookupCollection.find({
+        });
+        (await lookupCollection.find({
           filters: filters.join(' or ')
-        }, userId).forEach(function (obj) {
+        }, userId)).forEach(function (obj) {
           _.each(obj, function (v, k) {
             if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
               return obj[k] = JSON.stringify(v);
@@ -278,7 +278,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         body['value'] = values;
         body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       } else {
-        body = await lookupCollection.findOne(fieldValue) || {};
+        body = (await lookupCollection.findOne(fieldValue)) || {};
         _.each(body, function (v, k) {
           if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
             return body[k] = JSON.stringify(v);

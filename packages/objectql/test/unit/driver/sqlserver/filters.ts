@@ -221,7 +221,6 @@ describe('filters for sqlserver database', () => {
         catch (ex) {
             result = ex;
         }
-        console.log("result======================", result);
     });
 
     afterEach(async () => {
