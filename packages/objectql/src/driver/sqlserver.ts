@@ -15,8 +15,7 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
             SteedosColumnType.number,
             SteedosColumnType.boolean,
             SteedosColumnType.date,
-            SteedosColumnType.dateTime,
-            SteedosColumnType.oneToOne
+            SteedosColumnType.dateTime
         ]
     }
 
