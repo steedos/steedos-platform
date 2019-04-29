@@ -169,8 +169,11 @@ export class ODataManager {
                   if (_.isEmpty(queryFields)) {
                     queryOptions.fields = [_ro_NAME_FIELD_KEY]
                   }
-                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId) || entities[idx][navigationProperty];
-                  if (entities[idx][navigationProperty]) {
+                  let originalData = _.clone(entities[idx][navigationProperty]);
+                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId);
+                  if (!entities[idx][navigationProperty].length) {
+                    entities[idx][navigationProperty] = originalData;
+                  } else {
                     entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                     entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
                     entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
