@@ -382,7 +382,6 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let spaceId = urlParams.spaceId;
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
-
     let collection = getCreator().getSteedosSchema().getObject(key)
     if (!collection) {
       res.status(404).send(setErrorMessage(404, collection, key));
@@ -391,7 +390,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     if (key == "users") {
       var record_owner = recordId;
     } else {
-      var record_owner = await collection.findOne(recordId, { fields: ['owner'] }).owner
+      var record_owner = (await collection.findOne(recordId, { fields: ['owner'] })).owner
     }
     let companyId = await collection.findOne(recordId, { fields: ['company_id'] }).company_id
 
