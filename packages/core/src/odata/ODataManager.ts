@@ -171,7 +171,7 @@ export class ODataManager {
                   }
                   let originalData = _.clone(entities[idx][navigationProperty]);
                   entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId);
-                  if (!entities[idx][navigationProperty].length) {
+                  if (!entities[idx][navigationProperty]) {
                     entities[idx][navigationProperty] = originalData;
                   } else {
                     entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
