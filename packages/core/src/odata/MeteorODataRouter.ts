@@ -293,11 +293,11 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         let filters = [];
         _.each(fieldValue, function (f) {
           filters.push(`(_id eq '${f}')`);
-        })
-        await lookupCollection.find({
+        });
+        (await lookupCollection.find({
           filters: filters.join(' or '),
           fields: fields
-        }, userId).forEach(function (obj) {
+        }, userId)).forEach(function (obj) {
           _.each(obj, function (v, k) {
             if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
               return obj[k] = JSON.stringify(v);
@@ -308,7 +308,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         body['value'] = values;
         body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       } else {
-        body = await lookupCollection.findOne(fieldValue, { fields: fields }) || {};
+        body = (await lookupCollection.findOne(fieldValue, { fields: fields })) || {};
         _.each(body, function (v, k) {
           if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
             return body[k] = JSON.stringify(v);
@@ -382,6 +382,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let spaceId = urlParams.spaceId;
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
+
     let collection = getCreator().getSteedosSchema().getObject(key)
     if (!collection) {
       res.status(404).send(setErrorMessage(404, collection, key));
@@ -392,7 +393,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     } else {
       var record_owner = (await collection.findOne(recordId, { fields: ['owner'] })).owner
     }
-    let companyId = await collection.findOne(recordId, { fields: ['company_id'] }).company_id
+    let companyId = (await collection.findOne(recordId, { fields: ['company_id'] })).company_id
 
     let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords && getODataManager().isSameCompany(spaceId, userId, companyId));
     if (isAllowed) {
@@ -455,12 +456,8 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
           res.status(404).send(setErrorMessage(404, collection, key));
         }
       } else {
-        if (await collection.delete(recordId, userId)) {
-          getODataManager().setHeaders(res);
-          res.send({});
-        } else {
-          res.status(404).send(setErrorMessage(404, collection, key));
-        }
+        getODataManager().setHeaders(res);
+        res.send({});
       }
     } else {
       res.status(403).send(setErrorMessage(403, collection, key));
