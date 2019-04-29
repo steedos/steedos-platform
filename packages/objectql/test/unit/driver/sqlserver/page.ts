@@ -65,6 +65,33 @@ describe('fetch records by paging for sqlserver database', () => {
                 length: 1,
                 firstRecordId: "ptr2"
             }
+        },
+        {
+            title: "multi sort for paging",
+            options: {
+                fields: ["id", "name"],
+                sort: 'name desc,index',
+                top: 2,
+                skip: 1
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "ptr2"
+            }
+        },
+        {
+            title: "filter for paging",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "endswith", "pc"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "cnpc2"
+            }
         }
     ];
 
