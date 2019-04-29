@@ -92,6 +92,20 @@ describe('fetch records by paging for sqlserver database', () => {
                 length: 2,
                 firstRecordId: "cnpc2"
             }
+        },
+        {
+            title: "filter for paging again",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "notcontains", "pc"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "ptr2"
+            }
         }
     ];
 
