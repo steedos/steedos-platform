@@ -2,6 +2,8 @@ import crypto = require('crypto');
 import { getSteedosSchema } from '@steedos/objectql';
 
 const sessions = {};
+const size = 35000;
+const tokens = [];
 
 function _hashLoginToken(token: string) {
   const hash = crypto.createHash('sha256');
@@ -17,11 +19,15 @@ function reovkeSessionFromCache(token: string) {
   return delete sessions[token];
 }
 
-export function addSessionToCache(token: string, session: object) {
+function addSessionToCache(token: string, session: object) {
   sessions[token] = session;
+  tokens.push(token);
+  if (tokens.length > size) {
+    reovkeSessionFromCache(tokens.shift());
+  }
 }
 
-export function getSessionFromCache(token: string) {
+function getSessionFromCache(token: string) {
   let session = sessions[token];
   if (!session) {
     return null;
