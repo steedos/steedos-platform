@@ -1,13 +1,13 @@
 {
   "name": "@steedos/auth",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@steedos/objectql": "file:../objectql"
+    "@steedos/objectql": "^0.0.3"
   }
 }
