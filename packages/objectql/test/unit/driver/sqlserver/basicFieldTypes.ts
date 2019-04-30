@@ -23,9 +23,9 @@ describe('basic field types for sqlserver database', () => {
         {
             title: "create one record",
             method: "insert",
-            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date(), datetime: new Date(), bool: true },
+            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true },
             expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, bool: true }
+                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
         },
         {
@@ -33,7 +33,7 @@ describe('basic field types for sqlserver database', () => {
             method: "findOne",
             id: 1,
             queryOptions: {
-                fields: ["text", "textarea", "int", "float", "date", "bool"]
+                fields: ["text", "textarea", "int", "float", "date", "datetime", "bool"]
             },
             expected: {
                 returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, bool: true }
@@ -131,7 +131,12 @@ describe('basic field types for sqlserver database', () => {
                 Object.keys(expected.returnRecord).forEach((key) => {
                     expect(result).to.be.not.eq(undefined);
                     if (result) {
-                        expect(result[key]).to.be.eq(expected.returnRecord[key]);
+                        if (result[key] instanceof Date){
+                            expect(result[key].getTime()).to.be.eq(expected.returnRecord[key].getTime());
+                        }
+                        else{
+                            expect(result[key]).to.be.eq(expected.returnRecord[key]);
+                        }
                     }
                 });
             }
