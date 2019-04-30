@@ -120,6 +120,7 @@ export class ODataManager {
 
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
+      navigationProperty = navigationProperty.replace('/', '.')
       let field = obj.fields[navigationProperty].toConfig();
       if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
         if (_.isFunction(field.reference_to)) {
@@ -136,11 +137,12 @@ export class ODataManager {
             let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
             for (let idx = 0; idx < entities.length; idx++) {
-              if (entities[idx][navigationProperty]) {
+              let entityValues = navigationProperty.split('.').reduce(function(o, x){if(o){return o[x]}}, entities[idx])
+              if (entityValues) {
                 if (field.multiple) {
-                  let originalData = _.clone(entities[idx][navigationProperty]);
+                  let originalData = _.clone(entityValues);
                   let filters = [];
-                  _.each(entities[idx][navigationProperty], function (f) {
+                  _.each(entityValues, function (f) {
                     filters.push(`(_id eq '${f}')`);
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
@@ -148,12 +150,12 @@ export class ODataManager {
                   if (_.isEmpty(queryFields)) {
                     multiQuery.fields = [_ro_NAME_FIELD_KEY]
                   }
-                  entities[idx][navigationProperty] = await referenceToCollection.find(multiQuery, userId);
-                  if (!entities[idx][navigationProperty].length) {
+                  let entityValuesRecord = await referenceToCollection.find(multiQuery, userId);
+                  if (!entityValuesRecord.length) {
                     entities[idx][navigationProperty] = originalData;
                   } else {
-                    entities[idx][navigationProperty] = getCreator().getOrderlySetByIds(entities[idx][navigationProperty], originalData);
-                    entities[idx][navigationProperty] = _.map(entities[idx][navigationProperty], function (o) {
+                    entityValuesRecord = getCreator().getOrderlySetByIds(entityValuesRecord, originalData);
+                    entityValuesRecord = _.map(entityValuesRecord, function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = field.reference_to;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
@@ -163,6 +165,7 @@ export class ODataManager {
                       }
                       return o;
                     });
+                    entityValues.splice(0, entityValues.length, ...entityValuesRecord)
                   }
 
                 } else {
