@@ -1,15 +1,16 @@
-import { SteedosSchema, SteedosSqlite3Driver, SteedosDatabaseDriverType } from '../../../../src';
+import { SteedosSchema, SteedosSqlServerDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
-import path = require("path");
 
-let databaseUrl = path.join(__dirname, "sqlite-test.db");
-// let databaseUrl = ':memory:';
-let tableName = "TestFieldTypesForSqlite3";
-let driver: SteedosSqlite3Driver;
+let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
+let tableName = "TestFieldTypesForSqlserver";
+let driver: SteedosSqlServerDriver;
 
-describe('basic field types for sqlite3 database', () => {
+describe('utc of datetime/date for sqlserver database', () => {
+    if (!url) {
+        return true;
+    }
     try {
-        require("sqlite3");
+        require("mssql");
     }
     catch (ex) {
         return true;
@@ -26,17 +27,6 @@ describe('basic field types for sqlite3 database', () => {
             expected: {
                 returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
-        },
-        {
-            title: "read one record",
-            method: "findOne",
-            id: 1,
-            queryOptions: {
-                fields: ["text", "textarea", "int", "float", "date", "datetime", "bool"]
-            },
-            expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, bool: true }
-            }
         }
     ];
 
@@ -44,11 +34,14 @@ describe('basic field types for sqlite3 database', () => {
         let mySchema = new SteedosSchema({
             datasources: {
                 default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
+                    url: url,
+                    driver: SteedosDatabaseDriverType.SqlServer,
+                    options: {
+                        useUTC: true
+                    },
                     objects: {
                         test: {
-                            label: 'Sqlite3 Schema',
+                            label: 'SqlServer Schema',
                             tableName: tableName,
                             fields: {
                                 id: {
@@ -76,7 +69,7 @@ describe('basic field types for sqlite3 database', () => {
                                 },
                                 date: {
                                     label: '日期',
-                                    type: 'date'
+                                    type: 'datetime'
                                 },
                                 datetime: {
                                     label: '创建时间',
@@ -93,23 +86,15 @@ describe('basic field types for sqlite3 database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.dropTables();
         await datasource.createTables();
-        driver = <SteedosSqlite3Driver>datasource.adapter;
+        driver = <SteedosSqlServerDriver>datasource.adapter;
     });
 
     beforeEach(async () => {
         let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
-        let id = tests[testIndex].id;
-        let queryOptions = tests[testIndex].queryOptions;
-        if (id) {
-            result = await driver[method](tableName, id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
-        }
-        else {
-            result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
-        }
+        result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
     });
 
     tests.forEach(async (test) => {
@@ -131,10 +116,10 @@ describe('basic field types for sqlite3 database', () => {
                 Object.keys(expected.returnRecord).forEach((key) => {
                     expect(result).to.be.not.eq(undefined);
                     if (result) {
-                        if (result[key] instanceof Date) {
+                        if (result[key] instanceof Date){
                             expect(result[key].getTime()).to.be.eq(expected.returnRecord[key].getTime());
                         }
-                        else {
+                        else{
                             expect(result[key]).to.be.eq(expected.returnRecord[key]);
                         }
                     }
