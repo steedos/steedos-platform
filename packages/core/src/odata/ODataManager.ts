@@ -2,6 +2,7 @@ import { getCreator } from "../index";
 import _ = require('underscore');
 import { Request, Response } from "express";
 import { JsonMap } from '@salesforce/ts-types';
+import { getSession } from '@steedos/auth';
 
 var Cookies = require("cookies");
 
@@ -287,13 +288,9 @@ export class ODataManager {
 
   async auth(request: Request, response: Response) {
     let cookies = new Cookies(request, response);
-    let userId: string | string[] = request.headers['x-user-id'] || cookies.get("X-User-Id");
-    let authToken: string | string[] = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
-    let collection = getCreator().getCollection('users');
-    let searchQuery = { _id: userId };
-    searchQuery['services.resume.loginTokens.hashedToken'] = getCreator().hashLoginToken(authToken);
-    let user = null;
-    user = await collection.rawCollection().findOne(searchQuery, { projection: { services: 0 } });
+    let userId = request.headers['x-user-id'] || cookies.get("X-User-Id");
+    let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
+    let user = await getSession(userId, authToken);
     return user;
   }
 

@@ -37,7 +37,7 @@ router.use(function auth(req: Request, res: Response, next: () => void) {
 
 router.get('/:spaceId/:objectName', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let queryParams = req.query;
 
@@ -121,7 +121,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
 
 router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let queryParams = req.query;
     let key = urlParams.objectName;
@@ -218,7 +218,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
 
 router.post('/:spaceId/:objectName', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let bodyParams = req.body;
     let key = urlParams.objectName;
@@ -256,7 +256,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
 })
 
 router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
-  let userId = req.user._id;
+  let userId = req.user.userId;
   let urlParams = req.params;
   let queryParams = req.query;
   let key = urlParams.objectName;
@@ -375,7 +375,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
 router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let bodyParams = req.body;
     let key = urlParams.objectName;
@@ -424,7 +424,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
 router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
@@ -470,7 +470,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
 
 router.post('/:objectName/:_id/:methodName', async function (req: Request, res: Response) {
   try {
-    let userId = req.user._id;
+    let userId = req.user.userId;
     let urlParams = req.params;
     let bodyParams = req.body;
     let key = urlParams.objectName;
