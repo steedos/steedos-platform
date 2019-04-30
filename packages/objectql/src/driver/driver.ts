@@ -39,7 +39,7 @@ export type SteedosDriverConfig = {
     /**
      * Print sql log for driver.
      */
-    readonly logging?: boolean
+    readonly logging?: boolean | Array<any>
 };
 
 
