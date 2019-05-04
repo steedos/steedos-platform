@@ -1,0 +1,15 @@
+{
+  "name": "steedos-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/sqlserver.js",
+  "scripts": {
+    "start": "tsc && node lib/sqlserver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@steedos/objectql": "file:../objectql"
+  }
+}
