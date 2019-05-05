@@ -67,7 +67,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      filters = `(${filters}) and (space eq \'${spaceId}\')`;
+      filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
       if (queryParams.$select) {
         fields = queryParams.$select.split(',');
       }
