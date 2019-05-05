@@ -13,6 +13,7 @@ export { SteedosQueryOptions } from "./query";
 export { SteedosObjectPermissionType, SteedosObjectPermissionTypeConfig } from "./object_permission";
 export { SteedosActionType, SteedosActionTypeConfig} from './action'
 export { SteedosAppType, SteedosAppTypeConfig} from './app'
+export { SteedosUserSession} from './userSession';
 
 export function getSteedosSchema(): SteedosSchema {
     return getFromContainer(SteedosSchema);
