@@ -137,7 +137,7 @@ export class ODataManager {
             let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
             for (let idx = 0; idx < entities.length; idx++) {
-              let entityValues = navigationProperty.split('.').reduce(function(o, x){if(o){return o[x]}}, entities[idx])
+              let entityValues = navigationProperty.split('.').reduce(function (o, x) { if (o) { return o[x] } }, entities[idx])
               if (entityValues) {
                 if (field.multiple) {
                   let originalData = _.clone(entityValues);
@@ -291,9 +291,11 @@ export class ODataManager {
 
   async auth(request: Request, response: Response) {
     let cookies = new Cookies(request, response);
-    let userId = request.headers['x-user-id'] || cookies.get("X-User-Id");
     let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
-    let user = await getSession(userId, authToken);
+    if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
+      authToken = request.headers.authorization.split(' ')[1]
+    }
+    let user = await getSession(authToken);
     return user;
   }
 
