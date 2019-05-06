@@ -115,7 +115,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
 
     if (userId) {
       let recent_view_collection = getCreator().getSteedosSchema().getObject('object_recent_viewed');
-      let filterstr = `(record/o eq ${key}) and (created_by eq ${userId})`;
+      let filterstr = `(record/o eq '${key}') and (created_by eq '${userId}')`;
       let recent_view_options: any = { filters: filterstr, fields: ['record'], sort: 'created desc' };
       let recent_view_records = await recent_view_collection.find(recent_view_options, userSession);
       let recent_view_records_ids: any = _.pluck(recent_view_records, 'record');

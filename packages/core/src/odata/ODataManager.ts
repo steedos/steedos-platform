@@ -80,8 +80,9 @@ export class ODataManager {
     }
   }
 
-  isSameCompany(spaceId: string, userId: string, companyId: string, query: any = null) {
-    let su = getCreator().getCollection("space_users").findOne({ space: spaceId, user: userId }, { fields: { company_id: 1, company_ids: 1 } });
+  async isSameCompany(spaceId: string, userId: string, companyId: string, query: any = null) {
+    let sus = await getCreator().getSteedosSchema().getObject("space_users").find({ filters: `(space eq '${spaceId}') and (user eq '${userId}')`, fields: ['company_id', 'company_ids'] });
+    let su = sus[0];
     if (!companyId && query) {
       companyId = su.company_id;
       query.company_id = { $in: su.company_ids };

@@ -64,7 +64,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       };
     }
     let permissions = await collection.getUserObjectPermission(userSession);
-    if (permissions.viewAllRecords || (permissions.viewCompanyRecords && getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, createQuery.query)) || (permissions.allowRead && userId)) {
+    if (permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, createQuery.query)) || (permissions.allowRead && userId)) {
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
@@ -137,7 +137,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     let permissions = await collection.getUserObjectPermission(userSession);
     if (permissions.allowRead) {
       let recent_view_collection = getCreator().getSteedosSchema().getObject('object_recent_viewed');
-      let filterstr = `(record/o eq ${key}) and (created_by eq ${userId})`;
+      let filterstr = `(record/o eq '${key}') and (created_by eq '${userId}')`;
       let recent_view_options: any = { filters: filterstr, fields: ['record'], sort: 'created desc' };
       let recent_view_records = await recent_view_collection.find(recent_view_options, userSession);
       let recent_view_records_ids: any = _.pluck(recent_view_records, 'record');
@@ -341,7 +341,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         let entity = await collection.findOne(recordId, {}, userSession);
         let entities = [];
         if (entity) {
-          let isAllowed = (entity.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && getODataManager().isSameCompany(spaceId, userId, entity.company_id));
+          let isAllowed = (entity.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, entity.company_id));
 
           if (isAllowed) {
             let body = {};
@@ -391,7 +391,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     }
     let companyId = (await collection.findOne(recordId, { fields: ['company_id'] })).company_id
 
-    let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords && getODataManager().isSameCompany(spaceId, userId, companyId));
+    let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, companyId));
     if (isAllowed) {
       getODataManager().checkGlobalRecord(collection, recordId, collection);
 
@@ -436,7 +436,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
     let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] });
     let record_owner = recordData.owner;
     let companyId = recordData.company_id;
-    let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
+    let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && await getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
     if (isAllowed) {
       getODataManager().checkGlobalRecord(collection, recordId, collection);
 
