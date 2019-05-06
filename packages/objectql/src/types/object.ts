@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig } from ".";
+import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
@@ -327,13 +327,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._datasource.getObjectRolesPermission(this._name)
     }
 
-    async getUserObjectPermission(userId: SteedosIDType) {
+    async getUserObjectPermission(userSession: SteedosUserSession) {
 
-        if(!userId){
-            throw new Error('userId is required')
+        if(!userSession){
+            throw new Error('userSession is required')
         }
 
-        let roles = await this._datasource.getRoles(userId)
+        let roles = userSession.roles
         let objectRolesPermission = this.getObjectRolesPermission()
 
         let userObjectPermission = {
@@ -374,10 +374,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return userObjectPermission;
     }
 
-    private async allowFind(userId: SteedosIDType) {
-        if (!userId)
+    private async allowFind(userSession: SteedosUserSession) {
+        if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         if (userObjectPermission.allowRead) {
             return true
         } else {
@@ -385,10 +385,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowInsert(userId: SteedosIDType) {
-        if (!userId)
+    private async allowInsert(userSession: SteedosUserSession) {
+        if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         if (userObjectPermission.allowCreate) {
             return true
         } else {
@@ -396,10 +396,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowUpdate(userId: SteedosIDType) {
-        if (!userId)
+    private async allowUpdate(userSession: SteedosUserSession) {
+        if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         if (userObjectPermission.allowEdit) {
             return true
         } else {
@@ -407,10 +407,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowDelete(userId: SteedosIDType) {
-        if (!userId)
+    private async allowDelete(userSession: SteedosUserSession) {
+        if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         if (userObjectPermission.allowDelete) {
             return true
         } else {
@@ -418,45 +418,45 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    async find(query: SteedosQueryOptions, userId?: SteedosIDType) {
-        await this.processUnreadableField(userId, query);
-        return await this.callAdapter('find', this.tableName, query, userId)
+    async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
+        await this.processUnreadableField(userSession, query);
+        return await this.callAdapter('find', this.tableName, query, userSession)
     }
 
-    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
-        await this.processUnreadableField(userId, query);
-        return await this.callAdapter('findOne', this.tableName, id, query, userId)
+    async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
+        await this.processUnreadableField(userSession, query);
+        return await this.callAdapter('findOne', this.tableName, id, query, userSession)
     }
 
-    async insert(doc: JsonMap, userId?: SteedosIDType) {
-        return await this.callAdapter('insert', this.tableName, doc, userId)
+    async insert(doc: JsonMap, userSession?: SteedosUserSession) {
+        return await this.callAdapter('insert', this.tableName, doc, userSession)
     }
 
-    async update(id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType) {
-        await this.processUneditableFields(userId, doc)
-        return await this.callAdapter('update', this.tableName, id, doc, userId)
+    async update(id: SteedosIDType, doc: JsonMap, userSession?: SteedosUserSession) {
+        await this.processUneditableFields(userSession, doc)
+        return await this.callAdapter('update', this.tableName, id, doc, userSession)
     }
 
-    async delete(id: SteedosIDType, userId?: SteedosIDType) {
-        return await this.callAdapter('delete', this.tableName, id, userId)
+    async delete(id: SteedosIDType, userSession?: SteedosUserSession) {
+        return await this.callAdapter('delete', this.tableName, id, userSession)
     }
 
-    async count(query: SteedosQueryOptions, userId?: SteedosIDType) {
-        return await this.callAdapter('count', this.tableName, query, userId)
+    async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
+        return await this.callAdapter('count', this.tableName, query, userSession)
     }
 
-    private async allow(method: string, userId: SteedosIDType) {
-        if (_.isNull(userId) || _.isUndefined(userId)) {
+    private async allow(method: string, userSession: SteedosUserSession) {
+        if (_.isNull(userSession) || _.isUndefined(userSession)) {
             return true
         }
         if (method === 'find' || method === 'findOne' || method === 'count') {
-            return await this.allowFind(userId)
+            return await this.allowFind(userSession)
         } else if (method === 'insert') {
-            return await this.allowInsert(userId)
+            return await this.allowInsert(userSession)
         } else if (method === 'update') {
-            return await this.allowUpdate(userId)
+            return await this.allowUpdate(userSession)
         } else if (method === 'delete') {
-            return await this.allowDelete(userId)
+            return await this.allowDelete(userSession)
         }
     }
 
@@ -472,7 +472,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private async getTriggerContext(when: string, method: string, args: any[]) {
 
-        let context: SteedosTriggerContextConfig = { userId: args[args.length - 1] }
+        let userSession = args[args.length - 1]
+
+        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined}
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
@@ -487,17 +489,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         if(when === 'after' && (method === 'update' || method === 'delete')){
-            context.previousDoc = await this.findOne(context.id, {}, context.userId)
+            context.previousDoc = await this.findOne(context.id, {}, userSession)
         }
 
         return context
     }
 
-    private async processUnreadableField(userId: SteedosIDType, query: SteedosQueryOptions){
-        if(!userId){
+    private async processUnreadableField(userSession: SteedosUserSession, query: SteedosQueryOptions){
+        if(!userSession){
             return 
         }
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         let userObjectUnreadableFields = userObjectPermission.unreadable_fields
         if(userObjectUnreadableFields.length > 0){
             let queryFields = [];
@@ -527,12 +529,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async processUneditableFields(userId: SteedosIDType, doc: JsonMap){
-        if(!userId){
+    private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap){
+        if(!userSession){
             return 
         }
 
-        let userObjectPermission = await this.getUserObjectPermission(userId)
+        let userObjectPermission = await this.getUserObjectPermission(userSession)
         let userObjectUneditableFields = userObjectPermission.uneditable_fields
 
         let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
@@ -561,6 +563,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let afterTriggerContext = await this.getTriggerContext('after', method, args)
 
+        let userSession = args[args.length - 1]
+        args.splice(args.length-1, 1, userSession ? userSession.userId : undefined)
         let returnValue = await adapterMethod.apply(this._datasource, args);
 
         await this.runAfterTriggers(method, afterTriggerContext)

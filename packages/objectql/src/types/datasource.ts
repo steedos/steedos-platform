@@ -29,7 +29,7 @@ export type SteedosDataSourceTypeConfig = {
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
-    getRoles?: Function
+    getRoles?: Function //TODO 尚未开放此功能
 }
 
 export class SteedosDataSourceType implements Dictionary {

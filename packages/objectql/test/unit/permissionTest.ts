@@ -1,8 +1,48 @@
 import { expect } from 'chai';
-import { SteedosSchema, SteedosIDType } from '../../src';
+import { SteedosSchema } from '../../src';
+import { SteedosUserSession } from '../../src/types/userSession';
+import { Dictionary } from '@salesforce/ts-types';
 var path = require('path')
 
 describe('Test Permission', () => {
+
+    let userSessionStorage: Dictionary<SteedosUserSession> = {}
+
+    userSessionStorage['0'] = {
+        userId: 0,
+        spaceId: 'XXX',
+        roles: ['guest'],
+        name: '游客'
+    }
+
+    userSessionStorage['1'] = {
+        userId: 1,
+        spaceId: 'XXX',
+        roles: ['user'],
+        name: '用户'
+    }
+
+    userSessionStorage['2'] = {
+        userId: 2,
+        spaceId: 'XXX',
+        roles: ['admin'],
+        name: '管理员'
+    }
+
+    userSessionStorage['3'] = {
+        userId: 3,
+        spaceId: 'XXX',
+        roles: ['user', 'admin'],
+        name: "用户&游客"
+    }
+
+    userSessionStorage['4'] = {
+        userId: 4,
+        spaceId: 'XXX',
+        roles: ['user2'],
+        name: "用户2"
+    }
+
     let mySchema = new SteedosSchema({
         datasources: {
             default: {
@@ -49,33 +89,20 @@ describe('Test Permission', () => {
                             
                         }
                     }
-                },
-                getRoles: function(userId: SteedosIDType){
-                    if(userId == '0'){
-                        return ['guest']
-                    }else if(userId == '1'){
-                        return ['user']
-                    }else if(userId == '2'){
-                        return ['admin']
-                    }else if(userId == '3'){
-                        return ['user', 'admin']
-                    }else if(userId == '4'){
-                        return ['user2']
-                    }
                 }
             }
         }
     })
 
     it('guest: 权限测试', async () => {
-        let userId = '0';
+        let userSession = userSessionStorage['0'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 guest role没有任何权限
         let permissionTest = mySchema.getObject('permission_test')
 
         try {
-            await permissionTest.insert({_id: 'test', name: 'test'}, userId)
+            await permissionTest.insert({_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 insertOK = false
@@ -83,7 +110,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userId)
+            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 updateOK = false
@@ -91,7 +118,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.find({fields: ['_id']}, userId)
+            await permissionTest.find({fields: ['_id']}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 findOk = false
@@ -99,7 +126,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.delete('-1', userId)
+            await permissionTest.delete('-1', userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 deleteOK = false
@@ -111,14 +138,14 @@ describe('Test Permission', () => {
     });
 
     it('user: 权限测试', async () => {
-        let userId = '1'
+        let userSession = userSessionStorage['1'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 user role 只有查看权限
         let permissionTest = mySchema.getObject('permission_test')
 
         try {
-            await permissionTest.insert({_id: 'test', name: 'test'}, userId)
+            await permissionTest.insert({_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 insertOK = false
@@ -126,7 +153,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userId)
+            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 updateOK = false
@@ -134,7 +161,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.find({fields: ['_id']}, userId)
+            await permissionTest.find({fields: ['_id']}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 findOk = false
@@ -142,7 +169,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.delete('-1', userId)
+            await permissionTest.delete('-1', userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 deleteOK = false
@@ -153,14 +180,14 @@ describe('Test Permission', () => {
     });
 
     it('admin: 权限测试', async () => {
-        let userId = '2'
+        let userSession = userSessionStorage['2'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 admin role 有所有权限
         let permissionTest = mySchema.getObject('permission_test')
 
         try {
-            await permissionTest.insert({_id: 'test', name: 'test'}, userId)
+            await permissionTest.insert({_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 insertOK = false
@@ -168,7 +195,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userId)
+            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 updateOK = false
@@ -176,7 +203,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.find({fields: ['_id']}, userId)
+            await permissionTest.find({fields: ['_id']}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 findOk = false
@@ -184,7 +211,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.delete('test', userId)
+            await permissionTest.delete('test', userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 deleteOK = false
@@ -196,14 +223,14 @@ describe('Test Permission', () => {
     });
 
     it('user && admin: 权限测试', async () => {
-        let userId = '3'
+        let userSession = userSessionStorage['3'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 user只有查看权限， admin 有所有权限
         let permissionTest = mySchema.getObject('permission_test')
 
         try {
-            await permissionTest.insert({_id: 'test', name: 'test'}, userId)
+            await permissionTest.insert({_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 insertOK = false
@@ -211,7 +238,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userId)
+            await permissionTest.update('-1', {_id: 'test', name: 'test'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 updateOK = false
@@ -219,7 +246,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.find({fields: ['_id']}, userId)
+            await permissionTest.find({fields: ['_id']}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 findOk = false
@@ -227,7 +254,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.delete('test', userId)
+            await permissionTest.delete('test', userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 deleteOK = false
@@ -239,14 +266,14 @@ describe('Test Permission', () => {
     });
 
     it('schema.datasource.objects -> user 权限测试', async () => {
-        let userId = '1'
+        let userSession = userSessionStorage['1'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
 
         // permission_test 的 user只有查看权限， admin 有所有权限
         let permissionTest = mySchema.getObject('test2')
 
         try {
-            await permissionTest.insert({_id: 'test2', name: 'test2'}, userId)
+            await permissionTest.insert({_id: 'test2', name: 'test2'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 insertOK = false
@@ -254,7 +281,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.update('-1', {_id: 'test2', name: 'test2'}, userId)
+            await permissionTest.update('-1', {_id: 'test2', name: 'test2'}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 updateOK = false
@@ -262,7 +289,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.find({fields: ['_id']}, userId)
+            await permissionTest.find({fields: ['_id']}, userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 findOk = false
@@ -270,7 +297,7 @@ describe('Test Permission', () => {
         }
 
         try {
-            await permissionTest.delete('test2', userId)
+            await permissionTest.delete('test2', userSession)
         } catch (error) {
             if(error.message == 'not find permission'){
                 deleteOK = false
@@ -282,26 +309,30 @@ describe('Test Permission', () => {
     });
 
     it('unreadable_fields：不可见字段权限测试', async()=>{
+        let userSession1 = userSessionStorage['1'];
+        let userSession2 = userSessionStorage['2'];
         let test = mySchema.getObject('test2');
-        await test.insert({_id:'test2019', name: 'test2019 name', no: 666}, '2')
+        await test.insert({_id:'test2019', name: 'test2019 name', no: 666}, userSession2)
         
-        let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '1')
+        let userDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession1)
         
-        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, '2')
+        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession2)
         
-        await test.delete('test2019', '2')
+        await test.delete('test2019', userSession2)
         
         expect(userDoc.name).to.undefined && expect(adminDoc.name).to.equal('test2019 name')
     })
 
     it('uneditable_fields：不可编辑字段权限测试', async()=>{
+        let userSession4 = userSessionStorage['4'];
+        let userSession2 = userSessionStorage['2'];
         let test = mySchema.getObject('test2');
         await test.insert({_id:'test2019', name: 'test2019 name', no: 666})
         
         let userUpdateOK = false
 
         try {
-            await test.update('test2019', {no: 111, name: 'N111'}, '4')
+            await test.update('test2019', {no: 111, name: 'N111'}, userSession4)
         } catch (error) {
             if(error.message === 'no permissions to edit fields no'){
                 userUpdateOK = true
@@ -310,12 +341,12 @@ describe('Test Permission', () => {
         
         // let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '4')
         
-        await test.update('test2019', {no: 222, name: 'N222'}, '2')
-        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, '2')
+        await test.update('test2019', {no: 222, name: 'N222'}, userSession2)
+        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession2)
         
         await test.delete('test2019')
         
-        expect(userUpdateOK).to.equal(userUpdateOK) && expect(adminDoc.no).to.equal(222)
+        expect(userUpdateOK).to.equal(true) && expect(adminDoc.no).to.equal(222)
     })
 
   });
