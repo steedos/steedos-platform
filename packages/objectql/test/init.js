@@ -6,9 +6,12 @@
  */
 const path = require('path');
 process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
+//// SqlServer 2005单元测试连接串，test/unit/driver/sqlserver/*
 // process.env.DRIVER_SQLSERVER_URL = "mssql://user:password@192.168.0.190/driver-test";
-// process.env.DRIVER_SQLSERVER_URL = "mssql://user:password@192.168.0.78/driver-test";
 // process.env.DRIVER_SQLSERVER_TDS = "7_2";//7_2为2005,7_4为2012+,默认为7_4
+//// SqlServer 2012+单元测试连接串，test/unit/driver/sqlserver/*
+// process.env.DRIVER_SQLSERVER_URL = "mssql://user:password@192.168.0.78/driver-test";
+//// postgresql单元测试连接串，test/unit/driver/postgres/*
 // process.env.DRIVER_POSTGRESQL_URL = "postgresql://user:password@192.168.0.195/driver-test";
 
 
