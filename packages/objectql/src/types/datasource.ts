@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver, SteedosPostgresDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -14,7 +14,8 @@ export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
     MeteorMongo = 'meteor-mongo',
     Sqlite = 'sqlite',
-    SqlServer = 'sqlserver'
+    SqlServer = 'sqlserver',
+    Postgres = 'postgres'
 }
 
 export type SteedosDataSourceTypeConfig = {
@@ -117,6 +118,9 @@ export class SteedosDataSourceType implements Dictionary {
                     break;
                 case SteedosDatabaseDriverType.SqlServer:
                     this._adapter = new SteedosSqlServerDriver(driverConfig);
+                    break;
+                case SteedosDatabaseDriverType.Postgres:
+                    this._adapter = new SteedosPostgresDriver(driverConfig);
                     break;
                 default:
                     throw new Error(`the driver ${config.driver} is not supported`)
