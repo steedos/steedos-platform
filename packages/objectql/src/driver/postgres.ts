@@ -19,7 +19,7 @@ export class SteedosPostgresDriver extends SteedosTypeormDriver {
         ]
     }
 
-    sqlLang: SQLLang = SQLLang.MsSql;
+    sqlLang: SQLLang = SQLLang.PostgreSql;
 
     constructor(config: SteedosDriverConfig) {
         super(config);
