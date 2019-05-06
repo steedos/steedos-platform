@@ -1,6 +1,6 @@
 // import { SteedosSchema, SteedosDatabaseDriverType } from '../../../src';
 
-// let url = "mssql://sa:hotoainc.@192.168.0.190/hotoa_main_stock";//不提供url值时不运行单元测试
+// let url = "mssql://user:password.@192.168.0.190/hotoa_main_stock";//不提供url值时不运行单元测试
 // let tdsVersion = "7_2";//不提供TDS值时默认取7_4表示2012+
 // let tableName = "SimulateStockInfo";
 
