@@ -112,7 +112,7 @@ export class ODataManager {
     }
   }
 
-  async dealWithExpand(createQuery: any, entities: Array<any>, key: string, spaceId: string, userId: string) {
+  async dealWithExpand(createQuery: any, entities: Array<any>, key: string, spaceId: string, userSession: object) {
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
@@ -137,7 +137,9 @@ export class ODataManager {
             let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
             let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
             for (let idx = 0; idx < entities.length; idx++) {
-              let entityValues = navigationProperty.split('.').reduce(function (o, x) { if (o) { return o[x] } }, entities[idx])
+              let entityValues = navigationProperty.split('.').reduce(function (o, x) {
+                if (o) { return o[x] }
+              }, entities[idx])
               if (entityValues) {
                 if (field.multiple) {
                   let originalData = _.clone(entityValues);
@@ -150,7 +152,7 @@ export class ODataManager {
                   if (_.isEmpty(queryFields)) {
                     multiQuery.fields = [_ro_NAME_FIELD_KEY]
                   }
-                  let entityValuesRecord = await referenceToCollection.find(multiQuery, userId);
+                  let entityValuesRecord = await referenceToCollection.find(multiQuery, userSession);
                   if (!entityValuesRecord.length) {
                     entities[idx][navigationProperty] = originalData;
                   } else {
@@ -174,7 +176,7 @@ export class ODataManager {
                     queryOptions.fields = [_ro_NAME_FIELD_KEY]
                   }
                   let originalData = _.clone(entities[idx][navigationProperty]);
-                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userId);
+                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userSession);
                   if (!entities[idx][navigationProperty]) {
                     entities[idx][navigationProperty] = originalData;
                   } else {
@@ -212,7 +214,7 @@ export class ODataManager {
                     if (_.isEmpty(queryFields)) {
                       multiQuery.fields = [_ro_NAME_FIELD_KEY]
                     }
-                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userId), function (o) {
+                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userSession), function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
@@ -230,7 +232,7 @@ export class ODataManager {
                     } else {
                       query.fields = queryFields
                     }
-                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query, userId);
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query, userSession);
                     if (entities[idx][navigationProperty]) {
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
@@ -295,7 +297,8 @@ export class ODataManager {
     if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
       authToken = request.headers.authorization.split(' ')[1]
     }
-    let user = await getSession(authToken);
+    let spaceId: string = String(request.headers['x-space-id']);
+    let user = await getSession(authToken, spaceId);
     return user;
   }
 

@@ -4,6 +4,9 @@ import { getSteedosSchema } from '@steedos/objectql';
 const sessions = {};
 const size = 35000;
 const tokens = [];
+const spaceSessions = {};
+const spacetokens = [];
+const sessionCacheInMinutes = 10;
 
 function _hashLoginToken(token: string) {
   const hash = crypto.createHash('sha256');
@@ -33,26 +36,89 @@ export function getSessionFromCache(token: string) {
     return null;
   }
   if (isExpried(session.expiredAt)) {
-    reovkeSessionFromCache(session.token);
+    reovkeSessionFromCache(token);
     return null;
   }
   return session;
 }
 
-export async function getSession(token: string, sessionCacheInMinutes: number = 10) {
-  let session = getSessionFromCache(token)
-  if (session) {
-    return session;
-  } else {
-    let hashedToken = _hashLoginToken(token).replace(/\//g, '%2F');
-    let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;
-    let user = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'steedos_id', 'email'] });
-    console.log('user.length: ', user.length)
-    if (user && user.length > 0) {
-      session = { name: user[0].name, userId: user[0]._id, steedos_id: user[0].steedos_id, email: user[0].email, token: token, expiredAt: new Date().getTime() + sessionCacheInMinutes * 60 * 1000 };
-      addSessionToCache(token, session)
+async function getUser(token: string) {
+  let hashedToken = _hashLoginToken(token).replace(/\//g, '%2F');
+  let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;
+  let users = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'steedos_id', 'email'] });
+  return users[0];
+}
+
+async function getUserRoles(userId: string, spaceId: string) {
+  let roles = ['user'];
+  let space = await getSteedosSchema().getObject('spaces').findOne(spaceId, { fields: ['admins'] });
+  if (space && space.admins.includes(userId)) {
+    roles = ['admin'];
+  }
+  return roles;
+}
+
+function assignSession(spaceId, userSession, spaceSession) {
+  let result = Object.assign({ spaceId: spaceId }, userSession, spaceSession);
+  return reviseSession(result);
+}
+
+function reviseSession(session) {
+  if (session){
+    delete session.expiredAt;
+  }
+  return session
+}
+
+function reovkeSpaceSessionFromCache(key: string) {
+  return delete spaceSessions[key];
+}
+
+export function addSpaceSessionToCache(token: string, spaceId: string, spaceSession: object) {
+  let key = `${token}-${spaceId}`;
+  spaceSessions[key] = spaceSession;
+  spacetokens.push(key);
+  if (spacetokens.length > size) {
+    reovkeSpaceSessionFromCache(spacetokens.shift());
+  }
+}
+
+export function getSpaceSessionFromCache(token: string, spaceId: string) {
+  let key = `${token}-${spaceId}`;
+  let spaceSession = spaceSessions[key];
+  if (!spaceSession) {
+    return null;
+  }
+  if (isExpried(spaceSession.expiredAt)) {
+    reovkeSpaceSessionFromCache(key);
+    return null;
+  }
+  return spaceSession;
+}
+
+export async function getSession(token: string, spaceId?: string) {
+  let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
+  let session = getSessionFromCache(token);
+  if (!session) {
+    let user = await getUser(token);
+    if (user) {
+      session = { name: user.name, userId: user._id, steedos_id: user.steedos_id, email: user.email, expiredAt: expiredAt };
+      addSessionToCache(token, session);
     }
-    return session
+  }
+  if (spaceId) {
+    let spaceSession = getSpaceSessionFromCache(token, spaceId);
+    if (!spaceSession) {
+      let user = await getUser(token);
+      if (user) {
+        let roles = await getUserRoles(user._id, spaceId);
+        spaceSession = { roles: roles, expiredAt: expiredAt };
+        addSpaceSessionToCache(token, spaceId, spaceSession);
+      }
+    }
+    return assignSession(spaceId, session, spaceSession);
+  } else {
+    return reviseSession(session)
   }
 
 }
