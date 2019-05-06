@@ -9,7 +9,7 @@ describe('Test db', () => {
                 default: {
                     driver: SteedosDatabaseDriverType.Mongo, 
                     url: 'mongodb://127.0.0.1/steedos',
-                    objectFiles: [path.resolve(__dirname, "../../../standard-objects")]
+                    objectFiles: [path.resolve(__dirname, "./load")]
                 }
             }
         })

@@ -17,7 +17,7 @@ abstract class SteedosObjectProperties {
     enable_tasks?: boolean
     enable_notes?: boolean
     enable_events?: boolean
-    enable_api?: boolean
+    enable_api?: boolean  //TODO 未开放功能
     enable_share?: boolean
     enable_instances?: boolean
     enable_chatter?: boolean
@@ -69,6 +69,51 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
     private _NAME_FIELD_KEY: string;
+
+    private _enable_audit: boolean;
+    public get enable_audit(): boolean {
+        return this._enable_audit;
+    }
+    public set enable_audit(value: boolean) {
+        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            throw new Error(`not support, please set ${this._name}.enable_audit to false or remove the enable_audit attribute`)
+        }
+        this._enable_audit = value;
+    }
+
+    private _enable_instances: boolean;
+    public get enable_instances(): boolean {
+        return this._enable_instances;
+    }
+    public set enable_instances(value: boolean) {
+        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            throw new Error(`not support, please set ${this._name}.enable_instances to false or remove the enable_instances attribute`)
+        }
+        this._enable_instances = value;
+    }
+    
+    private _enable_trash: boolean;
+    public get enable_trash(): boolean {
+        return this._enable_trash;
+    }
+    public set enable_trash(value: boolean) {
+        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            throw new Error(`not support, please set ${this._name}.enable_trash to false or remove the enable_trash attribute`)
+        }
+        this._enable_trash = value;
+    }
+    
+    private _enable_share: boolean = false;
+    public get enable_share(): boolean {
+        return this._enable_share;
+    }
+    public set enable_share(value: boolean) {
+        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+            throw new Error(`not support, please set ${this._name}.enable_share to false or remove the enable_share attribute`)
+        }
+        this._enable_share = value;
+    }
+
     public get NAME_FIELD_KEY(): string {
         return this._NAME_FIELD_KEY;
     }
