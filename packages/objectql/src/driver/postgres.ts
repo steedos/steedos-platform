@@ -45,6 +45,6 @@ export class SteedosPostgresDriver extends SteedosTypeormDriver {
     }
 
     getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
-        return getEntities(objects, "mssql");
+        return getEntities(objects, "postgres");
     }
 }

@@ -31,6 +31,10 @@ export function getTableColumnType(field: SteedosFieldType, databaseType: Databa
         case SteedosFieldDBType.dateTime:
             return Date;
         case SteedosFieldDBType.date:
+            if (databaseType === "postgres") {
+                // postgres数据库日期类型返回的最终是字符串，类似于：2019-04-30
+                return "date";
+            }
             return Date;
         case SteedosFieldDBType.boolean:
             return Boolean;
