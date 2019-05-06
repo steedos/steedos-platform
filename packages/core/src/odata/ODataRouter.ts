@@ -29,6 +29,7 @@ router.use(function auth(req: Request, res: Response, next: () => void) {
 
 router.get('/:spaceId/:objectName', async function (req: Request, res: Response) {
   try {
+    let userSession = req.user;
     let userId = req.user.userId;
     let urlParams = req.params;
     let queryParams = req.query;
@@ -73,11 +74,11 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         if (queryParams.$orderby) {
           query['sort'] = queryParams.$orderby;
         }
-        entities = await collection.find(query, userId);
+        entities = await collection.find(query, userSession);
       }
-      let scannedCount = await collection.count({ filters: filters, fields: ['_id'] }, userId);
+      let scannedCount = await collection.count({ filters: filters, fields: ['_id'] }, userSession);
       if (entities) {
-        entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
+        entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = scannedCount;
@@ -99,6 +100,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
 
 router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Response) {
   try {
+    let userSession = req.user;
     let userId = req.user.userId;
     let urlParams = req.params;
     let queryParams = req.query;
@@ -112,7 +114,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     }
 
     if (userId) {
-      let recent_view_collection = getCreator().getCollection('object_recent_viewed', spaceId);
+      let recent_view_collection = getCreator().getSteedosSchema().getObject('object_recent_viewed');
       let recent_view_selector = {
         'record.o': key,
         created_by: userId
@@ -124,7 +126,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       recent_view_options.fields = {
         record: 1
       };
-      let recent_view_records = recent_view_collection.find(recent_view_selector, recent_view_options).fetch();
+      let recent_view_records = await recent_view_collection.find(recent_view_selector, recent_view_options, userSession);
       let recent_view_records_ids: any = _.pluck(recent_view_records, 'record');
       recent_view_records_ids = recent_view_records_ids.getProperty('ids');
       recent_view_records_ids = _.flatten(recent_view_records_ids);
@@ -160,7 +162,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         if (queryParams.$orderby) {
           query['sort'] = queryParams.$orderby;
         }
-        entities = await collection.find(query, userId, userId);
+        entities = await collection.find(query, userSession);
       }
       let entities_ids = _.pluck(entities, '_id');
       let sort_entities = [];
@@ -176,7 +178,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         sort_entities = entities;
       }
       if (sort_entities) {
-        await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userId);
+        await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userSession);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = sort_entities.length;
@@ -197,6 +199,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
 })
 router.post('/:spaceId/:objectName', async function (req: Request, res: Response) {
   try {
+    let userSession = req.user;
     let userId = req.user.userId;
     let urlParams = req.params;
     let bodyParams = req.body;
@@ -213,7 +216,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
       if (spaceId == 'guest') {
         delete bodyParams.space;
       }
-      let entity = await collection.insert(bodyParams, userId);
+      let entity = await collection.insert(bodyParams, userSession);
 
       let entities = [];
       if (entity) {
@@ -234,6 +237,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
   }
 })
 router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
+  let userSession = req.user;
   let userId = req.user.userId;
   let urlParams = req.params;
   let queryParams = req.query;
@@ -267,7 +271,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         });
         (await lookupCollection.find({
           filters: filters.join(' or ')
-        }, userId)).forEach(function (obj) {
+        }, userSession)).forEach(function (obj) {
           _.each(obj, function (v, k) {
             if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
               return obj[k] = JSON.stringify(v);
@@ -312,7 +316,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           };
         }
 
-        let entity = await collection.findOne(recordId, userId);
+        let entity = await collection.findOne(recordId, userSession);
         let entities = [];
         if (entity) {
           let isAllowed = true;
@@ -320,7 +324,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           if (isAllowed) {
             let body = {};
             entities.push(entity);
-            await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userId);
+            await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
             body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
             let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
             _.extend(body, entity_OdataProperties[0]);
@@ -343,7 +347,8 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 })
 router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
   try {
-    let userId = req.user.userId;
+    let userSession = req.user;
+    // let userId = req.user.userId;
     let urlParams = req.params;
     let bodyParams = req.body;
     let key = urlParams.objectName;
@@ -364,7 +369,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
       if (fields_editable) {
         let data = bodyParams.$set ? bodyParams.$set : bodyParams
-        let entityIsUpdated = await collection.update(recordId, data, userId);
+        let entityIsUpdated = await collection.update(recordId, data, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
@@ -384,6 +389,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 })
 router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: Response) {
   try {
+    let userSession = req.user;
     let userId = req.user.userId;
     let urlParams = req.params;
     let key = urlParams.objectName;
@@ -404,7 +410,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
           is_deleted: true,
           deleted: new Date(),
           deleted_by: userId
-        }, userId);
+        }, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
@@ -412,7 +418,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
           res.status(404).send(setErrorMessage(404, collection, key));
         }
       } else {
-        await collection.delete(recordId, userId)
+        await collection.delete(recordId, userSession)
         getODataManager().setHeaders(res);
         res.send({});
       }
