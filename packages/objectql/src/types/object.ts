@@ -103,7 +103,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this._enable_trash = value;
     }
     
-    private _enable_share: boolean = false;
+    private _enable_share;
     public get enable_share(): boolean {
         return this._enable_share;
     }
@@ -140,6 +140,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this._name = object_name
         this._datasource = datasource
         this._schema = datasource.schema
+        if(this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo)
+            this._enable_share = false
 
         if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true) {
             throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set table_name');
