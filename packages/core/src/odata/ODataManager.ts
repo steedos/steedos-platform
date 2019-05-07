@@ -298,7 +298,7 @@ export class ODataManager {
     if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
       authToken = request.headers.authorization.split(' ')[1]
     }
-    let spaceId: string = String(request.headers['x-space-id']);
+    let spaceId: string = (request.params ? request.params.spaceId : null) || String(request.headers['x-space-id']);
     let user = await getSession(authToken, spaceId);
     return user;
   }
