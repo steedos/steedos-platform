@@ -315,4 +315,29 @@ export class ODataManager {
     response.setHeader('OData-Version', getCreator().VERSION);
   }
 
+  async getUserOrganizations(spaceId: string, userId: string, isIncludeParents: boolean) {
+    let space_users = await getCreator().getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${userId}') and (space eq '${spaceId}')`, fields: ['organizations'] });
+    if (!space_users || !space_users) {
+      return []
+    }
+    let organizations = space_users[0].organizations;
+    if (!organizations) {
+      return []
+    }
+    if (isIncludeParents) {
+      let filters = _.map(organizations, function (org) {
+        return `(_id eq '${org}')`
+      }).join(' or ')
+
+      console.log('getUserOrganizations, filters: ', filters)
+
+      let parentsOrganizations = await getCreator().getSteedosSchema().getObject('organizations').find({ filters: filters, fields: ['parents'] })
+      let parents = _.flatten(_.pluck(parentsOrganizations, "parents"))
+      return _.union(organizations, parents)
+    } else {
+      return organizations
+    }
+
+  }
+
 }

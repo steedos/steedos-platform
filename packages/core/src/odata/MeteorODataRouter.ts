@@ -82,10 +82,14 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
           // shares.push { "sharing.u": @userId }
           // shares.push { "sharing.o": { $in: orgs } }
           // createQuery.query["$or"] = shares
-          // let orgs = getCreator().getUserOrganizations(spaceId, userId, true)
-          // let or = `owner eq '${userId}' or sharing/u eq '${userId}' or sharing/o in (${orgs})`
-          // filters = `(${filters}) and (${or})`;
-          // console.log('enable_share filters: ', filters)
+          filters = filters.replace(`(owner eq '${userId}')`, '').replace(` and (owner eq '${userId}')`, '').replace(`(owner eq '${userId}') and `, '').replace(`() and `, '')
+          let orgs = await getODataManager().getUserOrganizations(spaceId, userId, true)
+          let orgsFilters = _.map(orgs, function (orgId) {
+            return `(sharing/o eq '${orgId}')`
+          }).join(' or ')
+          let or = `(owner eq '${userId}') or (sharing/u eq '${userId}') or ${orgsFilters}`
+          filters = filters ? `(${filters}) and (${or})` : `(${or})`;
+          console.log('enable_share filters: ', filters)
         } else {
           filters = `(${filters}) and (owner eq \'${userId}\')`;
         }
@@ -352,14 +356,17 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           //   shares.push { "sharing.u": @userId }
           //   shares.push { "sharing.o": { $in: orgs } }
           //   isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
-          // if (collection.enable_share && !isAllowed) {
-          //   let orgs = getCreator().getUserOrganizations(spaceId, userId, true);
-          //   let or = `sharing/u eq '${userId}' or sharing/o in (${orgs})`;
-          //   let filters = `(_id eq '${recordId}')`;
-          //   filters = `(${filters}) and (${or})`;
-          //   console.log('enable_share filters: ', filters)
-          //   isAllowed = await collection.count({ filters: filters, fields: ['_id'] }, userSession)
-          // }
+          if (collection.enable_share && !isAllowed) {
+            let orgs = await getODataManager().getUserOrganizations(spaceId, userId, true);
+            let orgsFilters = _.map(orgs, function (orgId) {
+              return `(sharing/o eq '${orgId}')`
+            }).join(' or ')
+            let or = `sharing/u eq '${userId}' or ${orgsFilters}`;
+            let filters = `(_id eq '${recordId}')`;
+            filters = `(${filters}) and (${or})`;
+            console.log('enable_share filters: ', filters)
+            isAllowed = await collection.count({ filters: filters, fields: ['_id'] }, userSession)
+          }
           if (isAllowed) {
             let body = {};
             entities.push(entity);
