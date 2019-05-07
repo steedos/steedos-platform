@@ -16,7 +16,7 @@ interface Request extends core.Request {
 }
 
 // middleware that is specific to this router
-router.use(function auth(req: Request, res: Response, next: () => void) {
+router.use('/:spaceId', function auth(req: Request, res: Response, next: () => void) {
   getODataManager().auth(req, res).then(function (result) {
     if (result) {
       req.user = result;

@@ -16,7 +16,7 @@ interface Request extends core.Request {
 }
 
 // middleware that is specific to this router
-router.use(function auth(req: Request, res: Response, next: () => void) {
+router.use('/:spaceId', function auth(req: Request, res: Response, next: () => void) {
   getODataManager().auth(req, res).then(function (result) {
     if (result) {
       req.user = result;
@@ -74,7 +74,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       }
       if (!permissions.viewAllRecords && !permissions.viewCompanyRecords) {
         if (collection.enable_share) {
-          // # 满足共享规则中的记录也要搜索出来
+          // 满足共享规则中的记录也要搜索出来
           // delete createQuery.query.owner
           // shares = []
           // orgs = Steedos.getUserOrganizations(spaceId, @userId, true)
@@ -82,6 +82,10 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
           // shares.push { "sharing.u": @userId }
           // shares.push { "sharing.o": { $in: orgs } }
           // createQuery.query["$or"] = shares
+          // let orgs = getCreator().getUserOrganizations(spaceId, userId, true)
+          // let or = `owner eq '${userId}' or sharing/u eq '${userId}' or sharing/o in (${orgs})`
+          // filters = `(${filters}) and (${or})`;
+          // console.log('enable_share filters: ', filters)
         } else {
           filters = `(${filters}) and (owner eq \'${userId}\')`;
         }
@@ -342,7 +346,20 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         let entities = [];
         if (entity) {
           let isAllowed = (entity.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, entity.company_id));
-
+          // if object.enable_share and !isAllowed
+          //   shares = []
+          //   orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
+          //   shares.push { "sharing.u": @userId }
+          //   shares.push { "sharing.o": { $in: orgs } }
+          //   isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
+          // if (collection.enable_share && !isAllowed) {
+          //   let orgs = getCreator().getUserOrganizations(spaceId, userId, true);
+          //   let or = `sharing/u eq '${userId}' or sharing/o in (${orgs})`;
+          //   let filters = `(_id eq '${recordId}')`;
+          //   filters = `(${filters}) and (${or})`;
+          //   console.log('enable_share filters: ', filters)
+          //   isAllowed = await collection.count({ filters: filters, fields: ['_id'] }, userSession)
+          // }
           if (isAllowed) {
             let body = {};
             entities.push(entity);
@@ -465,7 +482,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
   }
 })
 
-router.post('/:objectName/:_id/:methodName', async function (req: Request, res: Response) {
+router.post('/:spaceId/:objectName/:_id/:methodName', async function (req: Request, res: Response) {
   try {
     let userSession = req.user;
     let userId = req.user.userId;
