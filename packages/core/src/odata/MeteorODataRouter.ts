@@ -417,7 +417,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
     let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, companyId));
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, recordId, collection);
+      await getODataManager().checkGlobalRecord(collection, recordId, collection);
 
       let fields_editable = true;
 
@@ -462,7 +462,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
     let companyId = recordData.company_id;
     let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && await getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, recordId, collection);
+      await getODataManager().checkGlobalRecord(collection, recordId, collection);
 
       if (collection != null ? collection.enable_trash : void 0) {
         let entityIsUpdated = await collection.update(recordId, {

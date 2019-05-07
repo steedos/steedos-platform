@@ -354,7 +354,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
     let isAllowed = true;
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, recordId, collection);
+      await getODataManager().checkGlobalRecord(collection, recordId, collection);
 
       let fields_editable = true;
 
@@ -394,7 +394,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
     }
     let isAllowed = true
     if (isAllowed) {
-      getODataManager().checkGlobalRecord(collection, recordId, collection);
+      await getODataManager().checkGlobalRecord(collection, recordId, collection);
 
       if (collection != null ? collection.enable_trash : void 0) {
         let entityIsUpdated = await collection.update(recordId, {

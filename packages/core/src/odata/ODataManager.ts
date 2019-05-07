@@ -304,8 +304,8 @@ export class ODataManager {
   }
 
   // 修改、删除时，如果 doc.space = "global"，报错
-  checkGlobalRecord(collection: any, id: string, object: any) {
-    if (object.enable_space_global && collection.find({ _id: id, space: 'global' }).count()) {
+  async checkGlobalRecord(collection: any, id: string, object: any) {
+    if (object.enable_space_global && await collection.count({ filters: `(_id eq '${id}') and (space eq 'global')` })) {
       throw new Error("不能修改或者删除标准对象");
     }
   }
