@@ -26,17 +26,6 @@ describe('basic field types for sqlite3 database', () => {
             expected: {
                 returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
-        },
-        {
-            title: "read one record",
-            method: "findOne",
-            id: 1,
-            queryOptions: {
-                fields: ["text", "textarea", "int", "float", "date", "datetime", "bool"]
-            },
-            expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, bool: true }
-            }
         }
     ];
 
@@ -102,14 +91,7 @@ describe('basic field types for sqlite3 database', () => {
         let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
-        let id = tests[testIndex].id;
-        let queryOptions = tests[testIndex].queryOptions;
-        if (id) {
-            result = await driver[method](tableName, id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
-        }
-        else {
-            result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
-        }
+        result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
     });
 
     tests.forEach(async (test) => {

@@ -23,20 +23,9 @@ describe('basic field types for postgres database', () => {
         {
             title: "create one record",
             method: "insert",
-            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T00:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true },
+            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T00:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), datetime2: new Date('2019-04-30T09:00:00.000Z'), bool: true },
             expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date:'2019-04-30', datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
-            }
-        },
-        {
-            title: "read one record",
-            method: "findOne",
-            id: 1,
-            queryOptions: {
-                fields: ["text", "textarea", "int", "float", "date", "datetime", "bool"]
-            },
-            expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, bool: true }
+                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: '2019-04-30', datetime: new Date('2019-04-30T09:00:00.000Z'), datetime2: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
         }
     ];
@@ -106,14 +95,7 @@ describe('basic field types for postgres database', () => {
         let data = tests[testIndex].data;
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
-        let id = tests[testIndex].id;
-        let queryOptions = tests[testIndex].queryOptions;
-        if (id) {
-            result = await driver[method](tableName, id, data || queryOptions).catch((ex: any) => { console.error(ex); return false; });
-        }
-        else {
-            result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
-        }
+        result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
     });
 
     tests.forEach(async (test) => {
