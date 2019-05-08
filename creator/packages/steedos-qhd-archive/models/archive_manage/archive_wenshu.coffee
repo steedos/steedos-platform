@@ -41,7 +41,7 @@ set_retention = (doc)->
 		Creator.Collections["archive_wenshu"].direct.update(doc._id,
 		{
 			$set:{
-				retention: retention,
+				retention_peroid: retention._id,
 				destroy_date: destroy_date,
 				destroy_date_timestamp: destroy_date_timestamp
 			}
