@@ -227,7 +227,7 @@ Creator.Objects.archive_wenshu =
 			is_name:true
 			required:true
 			searchable:true
-			default_width: 200
+			default_width: 400
 			group:"内容描述"
 
 		retention_peroid:
@@ -236,7 +236,7 @@ Creator.Objects.archive_wenshu =
 			reference_to:"archive_retention"
 			sortable:true
 			searchable:true
-			default_width: 85
+			default_width: 70
 			group:"档号"
 		
 		organizational_structure:
@@ -326,7 +326,7 @@ Creator.Objects.archive_wenshu =
 			type:"text"
 			label:"责任者"
 			searchable:true
-			default_width: 115
+			default_width: 135
 			group:"内容描述"
 		
 		document_date:
@@ -335,7 +335,7 @@ Creator.Objects.archive_wenshu =
 			format:"YYYYMMDD"
 			sortable:true
 			searchable:true
-			default_width: 118
+			default_width: 120
 			group:"内容描述"
 		
 		prinpipal_receiver:
@@ -797,7 +797,7 @@ Creator.Objects.archive_wenshu =
 			filter_scope: "space"
 			filters: [["is_received", "=", true],["is_destroyed", "=", false]]
 			columns:[
-				"year","retention_peroid","organizational_structure","item_number",
+				"year","retention_peroid","item_number",
 				"title","document_number","document_date",
 				"archive_dept","author"]
 # 		borrow:
@@ -810,7 +810,7 @@ Creator.Objects.archive_wenshu =
 			filter_scope: "space"
 			filters: [["is_received", "=", false]]
 			columns:[
-				"year","retention_peroid","organizational_structure","item_number",
+				"year","retention_peroid","item_number",
 				"title","document_number","document_date",
 				"archive_dept","author"]
 		# 已移交功能去掉===============
