@@ -244,7 +244,7 @@ Creator.Objects.archive_wenshu =
 			label:"机构"
 			reference_to: "archive_organization"
 			searchable:true
-			default_width: 115
+			default_width: 260
 			group:"档号"
 		
 		category_code:
@@ -319,14 +319,14 @@ Creator.Objects.archive_wenshu =
 			type:"text"
 			label:"文件编号"
 			searchable:true
-			default_width: 135
+			default_width:260
 			group:"内容描述"
 		
 		author:
 			type:"text"
 			label:"责任者"
 			searchable:true
-			default_width: 135
+			default_width: 200
 			group:"内容描述"
 		
 		document_date:
@@ -798,8 +798,8 @@ Creator.Objects.archive_wenshu =
 			filters: [["is_received", "=", true],["is_destroyed", "=", false]]
 			columns:[
 				"year","retention_peroid","item_number",
-				"title","document_number","document_date",
-				"archive_dept","author"]
+				"title","document_date",
+				"archive_dept","author","document_number","organizational_structure"]
 # 		borrow:
 #             label:"查看"
 #             filter_scope: "space"
@@ -811,8 +811,8 @@ Creator.Objects.archive_wenshu =
 			filters: [["is_received", "=", false]]
 			columns:[
 				"year","retention_peroid","item_number",
-				"title","document_number","document_date",
-				"archive_dept","author"]
+				"title","document_date",
+				"archive_dept","author","document_number","organizational_structure"]
 		# 已移交功能去掉===============
 		# transfered:
 		# 	label:"已移交"
