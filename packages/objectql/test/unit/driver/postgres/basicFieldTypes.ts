@@ -83,6 +83,10 @@ describe('basic field types for postgres database', () => {
                                     label: '创建时间',
                                     type: 'datetime'
                                 },
+                                datetime2: {
+                                    label: '创建时间WithTimeZone',
+                                    type: 'datetime'
+                                },
                                 bool: {
                                     label: '是否',
                                     type: 'boolean'
