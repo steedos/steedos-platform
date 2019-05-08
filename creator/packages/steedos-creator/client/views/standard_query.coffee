@@ -36,6 +36,8 @@ Template.standard_query_modal.helpers
 			schema[field] = obj_schema[field]
 			if !(object_fields[field].searchable || object_fields[field].filterable)
 				schema[field].autoform.group = '高级'
+			if object_fields[field].searchable || object_fields[field].filterable
+				delete schema[field].autoform.group
 			if ["lookup", "master_detail", "select", "checkbox"].includes(object_fields[field].type)
 				schema[field].autoform.multiple = true
 				schema[field].type = [String]
