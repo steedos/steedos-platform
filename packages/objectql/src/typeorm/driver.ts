@@ -150,15 +150,10 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     getTypeormTopAndSkipOptions(top: number = 0, skip: number = 0): JsonMap {
         let result: JsonMap = {};
-        let options: string[] = [];
         if (top > 0) {
-            options.push(`limit ${top}`);
             result.$top = top;
         }
         if (skip > 0) {
-            if (top === 0) {
-                throw new Error("top must not be empty for skip");
-            }
             result.$skip = skip;
         }
         return result;

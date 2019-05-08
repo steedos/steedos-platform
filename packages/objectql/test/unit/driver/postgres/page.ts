@@ -39,17 +39,27 @@ describe('fetch records by paging for postgres database', () => {
                 skip: 2
             },
             expected: {
-                error: 'top must not be empty for skip'
+                length: 2
             }
         },
         {
-            title: "top without sort",
+            title: "top without skip",
             options: {
                 fields: ["name"],
                 top: 2
             },
             expected: {
                 length: 2
+            }
+        },
+        {
+            title: "skip without top",
+            options: {
+                fields: ["name"],
+                skip: 3
+            },
+            expected: {
+                length: 1
             }
         },
         {
@@ -79,7 +89,7 @@ describe('fetch records by paging for postgres database', () => {
             }
         },
         {
-            title: "filter for paging",
+            title: "filter for paging with endswith",
             options: {
                 fields: ["id", "name"],
                 filters: [["name", "endswith", "pc"]],
@@ -93,7 +103,7 @@ describe('fetch records by paging for postgres database', () => {
             }
         },
         {
-            title: "filter for paging again",
+            title: "filter for paging with notcontains",
             options: {
                 fields: ["id", "name"],
                 filters: [["name", "notcontains", "pc"]],
@@ -104,6 +114,19 @@ describe('fetch records by paging for postgres database', () => {
             expected: {
                 length: 2,
                 firstRecordId: "ptr2"
+            }
+        },
+        {
+            title: "filter for paging with multi equal",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "=", "cnpc"], ["title", "=", "CNPC"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2
             }
         }
     ];

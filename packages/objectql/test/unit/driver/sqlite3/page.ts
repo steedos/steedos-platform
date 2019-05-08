@@ -23,6 +23,7 @@ describe('fetch records by paging for sqlite3 database', () => {
             title: "top",
             options: {
                 fields: ["name"],
+                sort: 'index',
                 top: 2
             },
             expected: {
@@ -37,7 +38,27 @@ describe('fetch records by paging for sqlite3 database', () => {
                 skip: 2
             },
             expected: {
-                error: 'top must not be empty for skip'
+                length: 2
+            }
+        },
+        {
+            title: "top without skip",
+            options: {
+                fields: ["name"],
+                top: 2
+            },
+            expected: {
+                length: 2
+            }
+        },
+        {
+            title: "skip without top",
+            options: {
+                fields: ["name"],
+                skip: 3
+            },
+            expected: {
+                length: 1
             }
         },
         {
@@ -51,6 +72,60 @@ describe('fetch records by paging for sqlite3 database', () => {
             expected: {
                 length: 1,
                 firstRecordId: "ptr2"
+            }
+        },
+        {
+            title: "multi sort for paging",
+            options: {
+                fields: ["id", "name"],
+                sort: 'name desc,index',
+                top: 2,
+                skip: 1
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "ptr2"
+            }
+        },
+        {
+            title: "filter for paging with endswith",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "endswith", "pc"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "cnpc2"
+            }
+        },
+        {
+            title: "filter for paging with notcontains",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "notcontains", "pc"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2,
+                firstRecordId: "ptr2"
+            }
+        },
+        {
+            title: "filter for paging with multi equal",
+            options: {
+                fields: ["id", "name"],
+                filters: [["name", "=", "cnpc"], ["title", "=", "CNPC"]],
+                sort: 'id desc,index',
+                top: 2,
+                skip: 0
+            },
+            expected: {
+                length: 2
             }
         }
     ];
