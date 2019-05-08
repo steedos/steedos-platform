@@ -928,7 +928,9 @@ Creator.Objects.archive_wenshu =
 				if init_num
 					Meteor.call("archive_item_number",object_name,Creator.TabularSelectedIds?[object_name],init_num,
 						(error, result)->
-							if result
+							if result							
+								dxDataGridInstance = $(".gridContainer").dxDataGrid().dxDataGrid('instance')
+								Template.creator_grid.refresh(dxDataGridInstance)
 								# text = "编号已更新到" + result + "号"
 								text = "编号已更新"
 								swal(text)
