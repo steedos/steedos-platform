@@ -1,7 +1,7 @@
 {
-  "name": "@steedos/auth",
+  "name": "@steedos/auth-utils",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
@@ -13,10 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth-utils": "file:../auth-utils",
-    "@steedos/objectql": "file:../objectql",
-    "express": "^4.16.4",
-    "express-jwt": "^5.3.1"
+    "@steedos/objectql": "file:../objectql"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
