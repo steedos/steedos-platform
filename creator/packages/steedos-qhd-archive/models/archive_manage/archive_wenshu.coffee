@@ -897,37 +897,37 @@ Creator.Objects.archive_wenshu =
 				set_audit(doc?._id, doc?.space, userId)
 
 	actions:
-		standard_new:
-			visible: ()->
-				if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
-					return ;
-				permissions = Creator.getPermissions()
-				if permissions
-					return permissions["allowCreate"]
+		# standard_new:
+		# 	visible: ()->
+		# 		if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
+		# 			return ;
+		# 		permissions = Creator.getPermissions()
+		# 		if permissions
+		# 			return permissions["allowCreate"]
 
-		standard_edit:
-			visible: (object_name, record_id, record_permissions)->
-				if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
-					return ;
-				if record_permissions
-					return record_permissions["allowEdit"]
-				else
-					record = Creator.Collections[object_name].findOne record_id
-					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
-					if record_permissions
-						return record_permissions["allowEdit"]
+		# standard_edit:
+		# 	visible: (object_name, record_id, record_permissions)->
+		# 		if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
+		# 			return ;
+		# 		if record_permissions
+		# 			return record_permissions["allowEdit"]
+		# 		else
+		# 			record = Creator.Collections[object_name].findOne record_id
+		# 			record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+		# 			if record_permissions
+		# 				return record_permissions["allowEdit"]
 
-		standard_delete:
-			visible: (object_name, record_id, record_permissions)->
-				if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
-					return ;
-				if record_permissions
-					return record_permissions["allowDelete"]
-				else
-					record = Creator.Collections[object_name].findOne record_id
-					record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
-					if record_permissions
-						return record_permissions["allowDelete"]
+		# standard_delete:
+		# 	visible: (object_name, record_id, record_permissions)->
+		# 		if db.space_users.findOne({_id: Meteor.userId})?.company != Session.get("listTreeCompany") && !Steedos.isSpaceAdmin()
+		# 			return ;
+		# 		if record_permissions
+		# 			return record_permissions["allowDelete"]
+		# 		else
+		# 			record = Creator.Collections[object_name].findOne record_id
+		# 			record_permissions = Creator.getRecordPermissions object_name, record, Meteor.userId()
+		# 			if record_permissions
+		# 				return record_permissions["allowDelete"]
 
 		number_adjuct:
 			label:'编号调整'
