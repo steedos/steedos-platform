@@ -193,6 +193,7 @@ Creator.Objects.archive_wenshu =
 				{label:"案卷",value:"案卷"},
 				{label:"文件",value:"文件"}],
 			allowedValues:["案卷","文件"]
+			filterable:false
 		
 		electronic_record_code:
 			type: "text"
@@ -251,8 +252,9 @@ Creator.Objects.archive_wenshu =
 			type:"master_detail"
 			label:"类别号"
 			reference_to: "archive_classification"
-			searchable:true
+			searchable:false
 			group:"档号"
+			filterable:false
 		
 		item_number:
 			type: "number"
@@ -398,8 +400,9 @@ Creator.Objects.archive_wenshu =
 		reference:
 			type: "text"
 			label:"参见"
-			searchable:true
+			searchable:false
 			group:"内容描述"
+			filterable:false
 		
 		destroy_date:
 			type:"date"
@@ -430,6 +433,7 @@ Creator.Objects.archive_wenshu =
 			],
 			allowedValues:["单件","组合文件"],			
 			group:"形式特征"
+			filterable:false
 		
 		total_number_of_pages:
 			type:"number"
@@ -445,8 +449,9 @@ Creator.Objects.archive_wenshu =
 		document_type:
 			type:"text"
 			label:"文件类型"
-			searchable:true
+			searchable:false
 			group:"形式特征"
+			filterable:false
 		
 		produce_flag:
 			type:"select",
@@ -461,6 +466,7 @@ Creator.Objects.archive_wenshu =
 			],
 			allowedValues:["在档","暂存","移出","销毁","出借"],		
 			group:"形式特征"
+			filterable:false
 		
 		orignal_document_creation_way:
 			type:"text"
@@ -486,6 +492,7 @@ Creator.Objects.archive_wenshu =
 			]
 			allowedValues:["不归档","电子归档","待归档","暂存","实物归档"]
 			group:"形式特征"
+			filterable:false
 				
 		archive_dept:
 			type:"text"
@@ -633,6 +640,7 @@ Creator.Objects.archive_wenshu =
 			],
 			allowedValues:["开放","控制"],
 			group:"权限管理"
+			filterable:false
 
 		authorized_agent:
 			type: "text"
@@ -650,6 +658,7 @@ Creator.Objects.archive_wenshu =
 			],
 			allowedValues:["公布","复制","浏览","解密"],
 			group:"权限管理"
+			filterable:false
 		
 		agent_type:
 			type: "select"
@@ -662,6 +671,7 @@ Creator.Objects.archive_wenshu =
 			],
 			allowedValues:["单位","部门","个人"],		
 			group:"机构人员"
+			filterable:false
 
 		agent_name:
 			type: "text"
@@ -685,6 +695,7 @@ Creator.Objects.archive_wenshu =
 			multiple:true
 			is_wide:true
 			group:"关联文件"
+			filterable:false
 		
 		old_id:
 			type:"text"
@@ -732,6 +743,7 @@ Creator.Objects.archive_wenshu =
 			label:"移交单"
 			reference_to:"archive_transfer"
 			group:"移交"
+			filterable:false
 		
 		# 是否销毁，默认是不存在，在“全部”视图下点击销毁，进入“待销毁”视图，此时is_destroy=false
 		# 审核通过之后，is_transfer = true
@@ -755,6 +767,7 @@ Creator.Objects.archive_wenshu =
 			depend_on:["destroy_state"]
 			reference_to:"archive_destroy"
 			group:"销毁"
+			filterable:false
 		
 		# 是否借阅
 		is_borrowed:
