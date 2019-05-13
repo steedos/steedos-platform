@@ -8,6 +8,19 @@ const spaceSessions = {};
 const spacetokens = [];
 const sessionCacheInMinutes = 10;
 
+interface Session {
+  name: string;
+  userId: string;
+  steedos_id?: string;
+  email?: string;
+  expiredAt: number;
+}
+
+interface SpaceSession {
+  roles: string[];
+  expiredAt: number;
+}
+
 function _hashLoginToken(token: string) {
   const hash = crypto.createHash('sha256');
   hash.update(token);
@@ -22,7 +35,7 @@ function reovkeSessionFromCache(token: string) {
   return delete sessions[token];
 }
 
-export function addSessionToCache(token: string, session: object) {
+export function addSessionToCache(token: string, session: Session) {
   sessions[token] = session;
   tokens.push(token);
   if (tokens.length > size) {
@@ -83,7 +96,7 @@ function reovkeSpaceSessionFromCache(key: string) {
   return delete spaceSessions[key];
 }
 
-export function addSpaceSessionToCache(token: string, spaceId: string, spaceSession: object) {
+export function addSpaceSessionToCache(token: string, spaceId: string, spaceSession: SpaceSession) {
   let key = `${token}-${spaceId}`;
   spaceSessions[key] = spaceSession;
   spacetokens.push(key);
