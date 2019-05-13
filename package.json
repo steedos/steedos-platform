@@ -8,7 +8,7 @@
   "scripts": {
     "bootstrap": "npx lerna bootstrap",
     "publish": "npx lerna publish --registry https://registry.npmjs.org",
-    "tsc": "cd packages && cd objectql && tsc && cd ../core && tsc && cd ../auth-utils && tsc && cd ../auth && tsc"
+    "tsc": "cd packages && cd objectql && tsc && tsc && cd ../auth-utils && tsc && cd ../auth && tsc && cd ../core "
   },
   "devDependencies": {
     "lerna": "^3.13.1"
