@@ -55,6 +55,15 @@ async function getUserRoles(userId: string, spaceId: string) {
   if (space && space.admins.includes(userId)) {
     roles = ['admin'];
   }
+
+  let filters = `(space eq '${spaceId}') and (users eq '${userId}')`;
+  let permission_sets = await getSteedosSchema().getObject('permission_set').find({ filters: filters, fields: ['name'] });
+  permission_sets.forEach(p => {
+    roles.push(p.name);
+  });
+
+  console.log('roles：', roles)
+
   return roles;
 }
 
