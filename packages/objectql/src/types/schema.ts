@@ -66,7 +66,7 @@ export class SteedosSchema {
         this._datasources[datasource_name] = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
     }
 
-    getDataSource(datasource_name: string) {
+    getDataSource(datasource_name: string = defaultDatasourceName) {
         return this._datasources[datasource_name]
     }
 
