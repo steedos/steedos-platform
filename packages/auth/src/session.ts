@@ -1,5 +1,5 @@
 import crypto = require('crypto');
-import { getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema, SteedosUserSession, SteedosIDType } from '@steedos/objectql';
 
 const sessions = {};
 const size = 35000;
@@ -10,10 +10,17 @@ const sessionCacheInMinutes = 10;
 
 interface Session {
   name: string;
-  userId: string;
+  userId: SteedosIDType;
   steedos_id?: string;
   email?: string;
   expiredAt: number;
+}
+
+interface ResultSession {
+  name: string;
+  userId: SteedosIDType;
+  steedos_id?: string;
+  email?: string;
 }
 
 interface SpaceSession {
@@ -86,7 +93,7 @@ function assignSession(spaceId, userSession, spaceSession) {
 }
 
 function reviseSession(session) {
-  if (session){
+  if (session) {
     delete session.expiredAt;
   }
   return session
@@ -118,7 +125,9 @@ export function getSpaceSessionFromCache(token: string, spaceId: string) {
   return spaceSession;
 }
 
-export async function getSession(token: string, spaceId?: string) {
+export async function getSession(token: string, spaceId: string): Promise<SteedosUserSession>;
+export async function getSession(token: string): Promise<ResultSession>;
+export async function getSession(token: string, spaceId?: string): Promise<any> {
   let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
   let session = getSessionFromCache(token);
   if (!session) {
