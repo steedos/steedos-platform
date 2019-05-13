@@ -144,7 +144,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this._enable_share = false
 
         if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true) {
-            throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set table_name');
+            throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set tableName');
         }
 
         if (config.tableName) {
