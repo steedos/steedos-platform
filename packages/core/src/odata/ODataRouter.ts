@@ -62,7 +62,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let fields = [];
       // filters = `(${filters}) and (space eq \'${spaceId}\')`;
       if (queryParams.$select) {
-        fields = queryParams.$select.split(',');
+        fields = _.keys(createQuery.projection)
       } else {
         fields = _.keys(collection.toConfig().fields);
       }
@@ -141,7 +141,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       let fields = [];
       // filters = `(${filters}) and (space eq \'${spaceId}\')`;
       if (queryParams.$select) {
-        fields = queryParams.$select.split(',');
+        fields = _.keys(createQuery.projection)
       } else {
         fields = _.keys(collection.toConfig().fields);
       }

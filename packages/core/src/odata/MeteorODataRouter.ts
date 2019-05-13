@@ -68,9 +68,14 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
+      if (collection.tableName === 'cfs.files.filerecord') {
+        filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
+      } else {
+        filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
+      }
+
       if (queryParams.$select) {
-        fields = queryParams.$select.split(',');
+        fields = _.keys(createQuery.projection)
       }
       if (!permissions.viewAllRecords && !permissions.viewCompanyRecords) {
         if (collection.enable_share) {
@@ -170,7 +175,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       let fields = [];
       filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
       if (queryParams.$select) {
-        fields = queryParams.$select.split(',');
+        fields = _.keys(createQuery.projection)
       }
       getODataManager().excludeDeleted(filters)
       if (queryParams.$top !== '0') {
