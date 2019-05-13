@@ -931,7 +931,11 @@ Creator.Objects.archive_wenshu =
 
 		number_adjuct:
 			label:'编号调整'
-			visible:true
+			# visible:true
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return permissions["allowCreate"]
 			on:'list'
 			todo:(object_name)->
 				if Creator.TabularSelectedIds?[object_name].length == 0
@@ -952,7 +956,11 @@ Creator.Objects.archive_wenshu =
 		
 		receive:
 			label: "接收"
-			visible: true
+			# visible: true
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return permissions["allowCreate"]
 			on: "list"
 			todo:(object_name)->
 				if Session.get("list_view_id")== "receive"
@@ -982,7 +990,11 @@ Creator.Objects.archive_wenshu =
 
 		borrow:
 			label:"借阅"
-			visible:true
+			visible:true					
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return !permissions["allowCreate"]
 			on: "record"
 			todo:(object_name, record_id, fields)->
 				borrower = Creator.Collections[object_name].findOne({_id:record_id})?.borrowed_by
@@ -994,7 +1006,11 @@ Creator.Objects.archive_wenshu =
 		
 		viewxml:
 			label:"查看XML"
-			visible:true
+			# visible:true			
+			visible: ()->
+				permissions = Creator.getPermissions()
+				if permissions
+					return permissions["allowCreate"]
 			on: "record"
 			todo:(object_name, record_id, fields)->
 				has_xml = Creator.Collections[object_name].findOne({_id:record_id})?.has_xml
