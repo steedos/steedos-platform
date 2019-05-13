@@ -89,7 +89,6 @@ describe('fetch records for oracle with sort arguments as a string that comply w
                     password: password,
                     database: database,
                     driver: SteedosDatabaseDriverType.Oracle,
-                    logging: ["query", "error", "schema", "warn", "info", "log"],
                     objects: {
                         test: {
                             label: 'Oracle Schema',

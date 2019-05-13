@@ -1,15 +1,20 @@
-import { SteedosSchema, SteedosSqlite3Driver, SteedosDatabaseDriverType } from '../../../../src';
+import { SteedosSchema, SteedosOracleDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
-import path = require("path");
 
-let databaseUrl = path.join(__dirname, "sqlite-test.db");
-// let databaseUrl = ':memory:';
-let tableName = "TestPrimaryKeyForSqlite3";
-let driver: SteedosSqlite3Driver;
+const connectString = process.env.DRIVER_ORACLE_ConnectString;//不提供connectString值时不运行单元测试
+const username = process.env.DRIVER_ORACLE_Username;
+const password = process.env.DRIVER_ORACLE_Password;
+const database = process.env.DRIVER_ORACLE_Database;
+let tableName = "TestPrimaryKeyForOracle";
+let sequenceName = "SU_TESTPRIMARYKEYFORORACLE";
+let driver: SteedosOracleDriver;
 
-describe('primary key autoincrement test for sqlite3 database', () => {
+describe('primary key autoincrement test for oracle database', () => {
+    if (!connectString) {
+        return true;
+    }
     try {
-        require("sqlite3");
+        require("oracledb");
     }
     catch (ex) {
         return true;
@@ -45,7 +50,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 3,
+                    id: 5,
                     name: "ptr"
                 }
             }
@@ -55,16 +60,16 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 4,
+                    id: 3,
                     name: "ptr"
                 }
             }
         },
         {
             title: "delete all records from the table",
-            runSql: `DELETE FROM ${tableName}`,
+            runSql: `DELETE FROM "${tableName}"`,
             expected: {
-                length: 0
+                eq: undefined
             }
         },
         {
@@ -72,16 +77,16 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 5,
+                    id: 4,
                     name: "ptr"
                 }
             }
         },
         {
             title: "truncate the table",
-            runSqls: [`DELETE FROM ${tableName}`, `DELETE FROM sqlite_sequence WHERE name='${tableName}'`],
+            runSqls: [`DROP SEQUENCE ${sequenceName}`, `CREATE SEQUENCE ${sequenceName} INCREMENT BY 1 START WITH 1 NOMAXvalue NOCYCLE ORDER CACHE 20`],
             expected: {
-                length: 0
+                eq: undefined
             }
         },
         {
@@ -100,11 +105,14 @@ describe('primary key autoincrement test for sqlite3 database', () => {
         let mySchema = new SteedosSchema({
             datasources: {
                 default: {
-                    driver: SteedosDatabaseDriverType.Sqlite,
-                    url: databaseUrl,
+                    connectString: connectString,
+                    username: username,
+                    password: password,
+                    database: database,
+                    driver: SteedosDatabaseDriverType.Oracle,
                     objects: {
                         test: {
-                            label: 'Sqlite3 Schema',
+                            label: 'Oracle Schema',
                             tableName: tableName,
                             fields: {
                                 id: {
@@ -133,14 +141,19 @@ describe('primary key autoincrement test for sqlite3 database', () => {
         });
         const datasource = mySchema.getDataSource("default");
         await datasource.createTables();
-        driver = <SteedosSqlite3Driver>datasource.adapter;
+        driver = <SteedosOracleDriver>datasource.adapter;
+
         // 删除重置主键自增队列
-        await driver.run(`DELETE FROM sqlite_sequence WHERE name='${tableName}'`);
+        await driver.run(`DELETE FROM "${tableName}"`);
+        await driver.run(`DROP SEQUENCE ${sequenceName}`);
+        await driver.run(`CREATE SEQUENCE ${sequenceName} INCREMENT BY 1 START WITH 1 NOMAXvalue NOCYCLE ORDER CACHE 20`);
     });
 
     after(async () => {
         // 删除重置主键自增队列
-        await driver.run(`DELETE FROM sqlite_sequence WHERE name='${tableName}'`);
+        await driver.run(`DELETE FROM "${tableName}"`);
+        await driver.run(`DROP SEQUENCE ${sequenceName}`);
+        await driver.run(`CREATE SEQUENCE ${sequenceName} INCREMENT BY 1 START WITH 1 NOMAXvalue NOCYCLE ORDER CACHE 20`);
     });
 
     beforeEach(async () => {

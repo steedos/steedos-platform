@@ -135,10 +135,12 @@ describe('primary key autoincrement test for sqlserver database', () => {
         const datasource = mySchema.getDataSource("default");
         await datasource.createTables();
         driver = <SteedosSqlServerDriver>datasource.adapter;
+        // 删除重置主键自增队列
+        await driver.run(`TRUNCATE TABLE ${tableName}`);
     });
 
     after(async () => {
-        await driver.run(`DELETE FROM ${tableName}`);
+        // 删除重置主键自增队列
         await driver.run(`TRUNCATE TABLE ${tableName}`);
     });
 
