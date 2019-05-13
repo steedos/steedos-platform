@@ -13,5 +13,9 @@ process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
 // process.env.DRIVER_SQLSERVER_URL = "mssql://user:password@192.168.0.78/driver-test";
 //// postgresql单元测试连接串，test/unit/driver/postgres/*
 // process.env.DRIVER_POSTGRESQL_URL = "postgresql://user:password@192.168.0.195/driver-test";
-
+//// Oracle数据库单元测试连接串，test/unit/driver/oracle/*
+// process.env.DRIVER_ORACLE_ConnectString = "192.168.0.237:1521/server_name";
+// process.env.DRIVER_ORACLE_Username = "user";
+// process.env.DRIVER_ORACLE_Password = "password";
+// process.env.DRIVER_ORACLE_Database = "db_name";
 
