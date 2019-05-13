@@ -813,6 +813,7 @@ Creator.Objects.archive_wenshu =
 				"year","retention_peroid","item_number",
 				"title","document_date",
 				"archive_dept","author","document_number","organizational_structure"]
+			filter_fields: ["year","title","document_date","document_number"]
 # 		borrow:
 #             label:"查看"
 #             filter_scope: "space"
@@ -826,6 +827,7 @@ Creator.Objects.archive_wenshu =
 				"year","retention_peroid","item_number",
 				"title","document_date",
 				"archive_dept","author","document_number","organizational_structure"]
+			filter_fields: ["year","title","document_date","document_number"]
 		# 已移交功能去掉===============
 		# transfered:
 		# 	label:"已移交"
@@ -837,6 +839,7 @@ Creator.Objects.archive_wenshu =
 			filter_scope: "space"
 			filters: [["is_received", "=", true],["destroy_date_timestamp", "<=", new Date().getTime()],["is_destroyed", "=", false]]
 			columns:["year","title","document_date","destroy_date","archive_destroy_id"]
+			filter_fields: ["year","title","document_date","document_number"]
 		
 	permission_set:
 		user:
