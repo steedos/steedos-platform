@@ -808,7 +808,7 @@ Creator.Objects.archive_wenshu =
 		all:
 			label: "已归档"
 			filter_scope: "space"
-			filters: [["is_received", "=", true],["is_destroyed", "=", false]]
+			filters: [["is_received", "=", true],["is_destroyed", "<>", true]]
 			columns:[
 				"year","retention_peroid","item_number",
 				"title","document_date",
@@ -957,10 +957,11 @@ Creator.Objects.archive_wenshu =
 		receive:
 			label: "接收"
 			# visible: true
-			visible: ()->
-				permissions = Creator.getPermissions()
-				if permissions
-					return permissions["allowCreate"]
+			visible: ()->				
+				if Session.get("list_view_id")== "receive"
+					permissions = Creator.getPermissions()
+					if permissions
+						return permissions["allowCreate"]
 			on: "list"
 			todo:(object_name)->
 				if Session.get("list_view_id")== "receive"
@@ -971,7 +972,10 @@ Creator.Objects.archive_wenshu =
 					Meteor.call("archive_receive",object_name,Creator.TabularSelectedIds?[object_name],space,
 						(error,result) ->
 							if result
-								text = "共接收"+result[0]+"条,"+"成功"+result[1]+"条"
+								dxDataGridInstance = $(".gridContainer").dxDataGrid().dxDataGrid('instance')
+								Template.creator_grid.refresh(dxDataGridInstance)
+								# text = "共接收"+result[0]+"条,"+"成功"+result[1]+"条"
+								text = "档案已接收"
 								swal(text)
 							)
 							
