@@ -16,8 +16,8 @@
 
 1.1 大致步骤
 - 下载安装Visual Studio 2010完整开发工具（在64位机上下载32位的工具经测试是没问题的）
-- 下载Visual Studio 2010 Service Pack 1（安装程序）
-- 下载Microsoft Visual C ++ 2010 Service Pack 1可再发行组件包MFC安全更新。
+- 下载安装Visual Studio 2010 Service Pack 1（安装程序）
+- 下载安装Microsoft Visual C ++ 2010 Service Pack 1可再发行组件包MFC安全更新（安装程序）。
 - 适用于Microsoft Windows（x64）64位的即时客户端（使用版本12.1.0.2.0 ）下载
   - instantclient-basic-windows.x64-12.1.0.2.0.zip （72,416,242字节）
   - instantclient-sdk-windows.x64-12.1.0.2.0.zip （2,748,874字节）
@@ -32,6 +32,13 @@
 1.3 参考博客
 - [NodeJs连接Oracle数据库](http://www.cnblogs.com/stone_w/p/4794747.html)
 - [nodejs 使用官方oracledb库连接数据库 教程](https://www.cnblogs.com/rysinal/p/7779055.html)
+
+1.4 关于环境变量设置
+- 根据相关博客中的说明设置OCI_INC_DIR、OCI_LIB_DIR及OCI_VERSION环境变量发现是没有用的
+- 按官方说明，运行node --server跑服务或yarn test跑单元测试前，先在cmd命令行设置环境变量`SET PATH=C:\oracle\instantclient_12_1;%PATH%`是有用的
+- 按官方说明，可以把解压缩的Instant Client文件移动到`\node_modules\oracledb\build\Release`以便DLL和其他文件与oracledb*.node二进制文件位于同一目录中。如果这样做，则在cmd命令行设置环境变量就不再需要了
+- 官网中关于环境变量设置说明：https://oracle.github.io/node-oracledb/INSTALL.html#364-install-the-free-oracle-instant-client-zip https://oracle.github.io/odpi/doc/installation.html#id1
+
 
 
 
