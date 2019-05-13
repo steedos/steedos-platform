@@ -46,7 +46,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error("Entities must be registered before connect");
         }
         if (!this._client) {
-            this._client = await createConnection(this.getConnectionOptions());
+            let options = this.getConnectionOptions();
+            this._client = await createConnection(options);
             return true;
         }
     }

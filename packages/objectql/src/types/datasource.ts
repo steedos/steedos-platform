@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver, SteedosPostgresDriver } from '../driver';
+import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver, SteedosPostgresDriver, SteedosOracleDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
@@ -15,17 +15,19 @@ export enum SteedosDatabaseDriverType {
     MeteorMongo = 'meteor-mongo',
     Sqlite = 'sqlite',
     SqlServer = 'sqlserver',
-    Postgres = 'postgres'
+    Postgres = 'postgres',
+    Oracle = 'oracle'
 }
 
 export type SteedosDataSourceTypeConfig = {
     name?: string
     driver: SteedosDatabaseDriverType | string | SteedosDriver
     logging?: boolean | Array<any>
-    url: string
+    url?: string
     username?: string
     password?: string,
     database?: string,
+    connectString?: string,
     options?: any
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
@@ -47,6 +49,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _username?: string;
     private _password?: string;
     private _database?: string;
+    private _connectString?: string;
     private _options?: any;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
@@ -91,6 +94,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._username = config.username
         this._password = config.password
         this._database = config.database
+        this._connectString = config.connectString
         this._options = config.options
         this._schema = schema
         this._driver = config.driver
@@ -101,6 +105,7 @@ export class SteedosDataSourceType implements Dictionary {
             username: this._username,
             password: this._password,
             database: this._database,
+            connectString: this._connectString,
             options: this._options,
             logging: this._logging
         }
@@ -121,6 +126,9 @@ export class SteedosDataSourceType implements Dictionary {
                     break;
                 case SteedosDatabaseDriverType.Postgres:
                     this._adapter = new SteedosPostgresDriver(driverConfig);
+                    break;
+                case SteedosDatabaseDriverType.Oracle:
+                    this._adapter = new SteedosOracleDriver(driverConfig);
                     break;
                 default:
                     throw new Error(`the driver ${config.driver} is not supported`)

@@ -35,11 +35,15 @@ export type SteedosDriverConfig = {
     /**
      * Database options.
      */
-    readonly options?: any
+    readonly connectString?: string;
+    /**
+     * Database options.
+     */
+    readonly options?: any;
     /**
      * Print sql log for driver.
      */
-    readonly logging?: boolean | Array<any>
+    readonly logging?: boolean | Array<any>;
 };
 
 
