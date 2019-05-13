@@ -712,7 +712,8 @@ Creator.Objects.archive_wenshu =
 			type:"boolean"
 			label:"是否接收"
 			defaultValue:false
-			hidden: true
+			# hidden: true
+			readonly:true
 		received:
 			type:"datetime"
 			label:"接收时间"
