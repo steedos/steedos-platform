@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth-utils": "file:../auth-utils",
+    "@steedos/auth-utils": "^1.0.0",
     "@steedos/objectql": "file:../objectql",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1"
