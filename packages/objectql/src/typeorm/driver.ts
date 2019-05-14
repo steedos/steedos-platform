@@ -4,7 +4,7 @@ import { createConnection, QueryRunner, EntitySchema, ConnectionOptions } from "
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { executeQuery, executeCountQuery } from '@steedos/odata-v4-typeorm';
+import { executeQuery, executeCountQuery, SqlOptions } from '@steedos/odata-v4-typeorm';
 import { SQLLang } from 'odata-v4-sql';
 import { getPrimaryKey } from "../typeorm";
 
@@ -22,6 +22,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
     _url: string;
     _client: any;
+    databaseVersion?: string;
 
     private _config: SteedosDriverConfig;
 
@@ -48,6 +49,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         if (!this._client) {
             let options = this.getConnectionOptions();
             this._client = await createConnection(options);
+            this.databaseVersion = await this.getDatabaseVersion();
             return true;
         }
     }
@@ -174,7 +176,8 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let topAndSkip: JsonMap = this.getTypeormTopAndSkipOptions(query.top, query.skip);
         const queryBuilder = repository.createQueryBuilder(tableName);
         let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
-        let result = await executeQuery(queryBuilder, queryOptions, { alias: tableName, type: this.sqlLang });
+        let sqlOptions: SqlOptions = { alias: tableName, type: this.sqlLang, version: this.databaseVersion };
+        let result = await executeQuery(queryBuilder, queryOptions, sqlOptions);
         return result.map((item:any)=>{
             item['_id'] = item[primaryKey] ? item[primaryKey].toString() : "";
             return item;
@@ -218,8 +221,20 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     async run(sql: string, param?: any) {
-        const runner: QueryRunner = await this.createQueryRunner();
-        return runner.query(sql, param);
+        const queryRunner: QueryRunner = await this.createQueryRunner();
+        try {
+            return queryRunner.query(sql, param);
+        } finally {
+            // release函数会根据不同的数据为类型执行不同的操作，比如close数据库
+            if (queryRunner !== this._queryRunner) {
+                await queryRunner.release();
+            }
+            if (this._client.driver.options.type === "sqljs") {
+                // driver instanceof SqljsDriver
+                // SqljsDriver is not export from typeorm,so we user driver.options.type to check the SqljsDriver instance
+                await this._client.driver.autoSave();
+            }
+        }
     }
 
     async insert(tableName: string, data: JsonMap) {
@@ -262,6 +277,11 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
         let repository = this._client.getRepository(entity);
         await repository.delete(id);
+    }
+
+    async getDatabaseVersion() {
+        // 各个driver层可以通过重写该函数来设置databaseVersion值
+        return "";
     }
 
     async dropEntities() {

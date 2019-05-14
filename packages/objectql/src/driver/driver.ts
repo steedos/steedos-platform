@@ -53,6 +53,7 @@ export interface SteedosDriver {
 
     //constructor(url:string): any;
     // new(config: SteedosDriverConfig): any;
+    databaseVersion?: string;
     config?: SteedosDriverConfig;
     connect();
     disconnect();

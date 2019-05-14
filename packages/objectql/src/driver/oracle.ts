@@ -48,4 +48,9 @@ export class SteedosOracleDriver extends SteedosTypeormDriver {
     getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
         return getEntities(objects, "oracle");
     }
+
+    async getDatabaseVersion() {
+        let result = await this.run(`select version from sys.product_component_version where product like '%Oracle%'`);
+        return result.length && result[0] && result[0].VERSION;
+    }
 }
