@@ -3,7 +3,7 @@ import { getSteedosSchema } from '@steedos/objectql'
 let express = require('express');
 let jwt = require('express-jwt')
 
-let app = express()
+let router = express.Router();
 
 let secretCallback = function (req, payload, done) {
   let issuer = payload.iss
@@ -17,7 +17,7 @@ let secretCallback = function (req, payload, done) {
   })
 }
 
-app.get('/api/jwt/sso', jwt({ secret: secretCallback }), async function (req, res) {
+router.get('/jwt/sso', jwt({ secret: secretCallback }), async function (req, res) {
   let payload = req.user
   let data = { userId: '', authToken: '' }
   let userObj = getSteedosSchema().getObject('users')
@@ -44,6 +44,6 @@ app.get('/api/jwt/sso', jwt({ secret: secretCallback }), async function (req, re
   res.send(data)
 })
 
-export let jwtApp = app
+export let jwtRouter = router
 
 
