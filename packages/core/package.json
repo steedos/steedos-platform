@@ -9,7 +9,8 @@
     "watch": "tsc --watch",
     "debug": "nodemon --inspect server.js",
     "compile": "tsc",
-    "test": "mocha test/**/*.ts"
+    "test": "mocha test/**/*.ts",
+    "prepare": "tsc"
   },
   "author": "",
   "license": "ISC",

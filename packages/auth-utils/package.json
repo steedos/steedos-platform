@@ -6,7 +6,8 @@
   "scripts": {
     "watch": "tsc --watch",
     "compile": "tsc",
-    "test": "mocha test/**/*.ts"
+    "test": "mocha test/**/*.ts",
+    "prepare": "tsc"
   },
   "license": "MIT",
   "publishConfig": {
