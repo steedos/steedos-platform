@@ -26,9 +26,9 @@ describe('basic field types for oracle database', () => {
         {
             title: "create one record",
             method: "insert",
-            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T00:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), datetime2: new Date('2019-04-30T09:00:00.000Z'), bool: true },
+            data: { text: "text", textarea: "textarea", int: 10, floatnumber: 46.25, datefield: new Date('2019-04-30T00:00:00.000Z'), datetimefield: new Date('2019-04-30T09:00:00.000Z'), datetimefield2: new Date('2019-04-30T09:00:00.000Z'), datetimefield3: new Date('2019-04-30T09:00:00.000Z'), bool: true },
             expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: '2019-04-30', datetime: new Date('2019-04-30T09:00:00.000Z'), datetime2: new Date('2019-04-30T09:00:00.000Z'), bool: true }
+                returnRecord: { text: "text", textarea: "textarea", int: 10, floatnumber: 46.25, datefield: new Date('2019-04-30T00:00:00.000Z'), datetimefield: new Date('2019-04-30T09:00:00.000Z'), datetimefield2: new Date('2019-04-30T09:00:00.000Z'), datetimefield3: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
         }
     ];
@@ -65,21 +65,25 @@ describe('basic field types for oracle database', () => {
                                     label: '数量',
                                     type: 'number'
                                 },
-                                float: {
+                                floatnumber: {
                                     label: '小数',
                                     type: 'number',
                                     scale: 4
                                 },
-                                date: {
+                                datefield: {
                                     label: '日期',
                                     type: 'date'
                                 },
-                                datetime: {
+                                datetimefield: {
                                     label: '创建时间',
                                     type: 'datetime'
                                 },
-                                datetime2: {
-                                    label: '创建时间WithTimeZone',
+                                datetimefield2: {
+                                    label: '创建时间TIMEZONE',
+                                    type: 'datetime'
+                                },
+                                datetimefield3: {
+                                    label: '创建时间LOCALTIMEZONE',
                                     type: 'datetime'
                                 },
                                 bool: {

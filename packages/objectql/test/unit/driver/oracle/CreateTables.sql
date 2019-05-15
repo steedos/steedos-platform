@@ -34,6 +34,8 @@ CREATE TABLE "QHD170411"."TestFieldTypesForOracle"(
 	"floatnumber" float NULL,
 	"datefield" date NULL,
 	"datetimefield" timestamp NULL,
+	"datetimefield2" TIMESTAMP WITH TIME ZONE NULL,
+	"datetimefield3" TIMESTAMP WITH LOCAL TIME ZONE NULL,
 	"bool" number(1) NULL
 )
 LOGGING

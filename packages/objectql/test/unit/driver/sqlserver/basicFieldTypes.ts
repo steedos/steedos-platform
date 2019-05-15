@@ -23,9 +23,9 @@ describe('basic field types for sqlserver database', () => {
         {
             title: "create one record",
             method: "insert",
-            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true },
+            data: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T00:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true },
             expected: {
-                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T09:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
+                returnRecord: { text: "text", textarea: "textarea", int: 10, float: 46.25, date: new Date('2019-04-30T00:00:00.000Z'), datetime: new Date('2019-04-30T09:00:00.000Z'), bool: true }
             }
         }
     ];
