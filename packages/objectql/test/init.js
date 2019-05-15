@@ -14,6 +14,8 @@ process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
 //// postgresql单元测试连接串，test/unit/driver/postgres/*
 // process.env.DRIVER_POSTGRESQL_URL = "postgresql://user:password@192.168.0.195/driver-test";
 //// Oracle数据库单元测试连接串，test/unit/driver/oracle/*
+// 同一个命令行窗口执行yarn test前需要执行一次：SET PATH=C:\oracle\instantclient_12_1;%PATH%
+// 参考:test/unit/driver/oracle/README.md
 // process.env.DRIVER_ORACLE_ConnectString = "192.168.0.237:1521/server_name";
 // process.env.DRIVER_ORACLE_Username = "user";
 // process.env.DRIVER_ORACLE_Password = "password";

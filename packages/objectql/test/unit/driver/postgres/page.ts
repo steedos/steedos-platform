@@ -168,14 +168,14 @@ describe('fetch records by paging for postgres database', () => {
         const datasource = mySchema.getDataSource("default");
         await datasource.createTables();
         driver = <SteedosPostgresDriver>datasource.adapter;
-    });
-
-    beforeEach(async () => {
+        await driver.run(`DELETE FROM "${tableName}"`);
         await driver.insert(tableName, { id: "cnpc1", name: "cnpc", title: "CNPC", index: 1 });
         await driver.insert(tableName, { id: "cnpc2", name: "cnpc", title: "CNPC", index: 2 });
         await driver.insert(tableName, { id: "ptr1", name: "ptr", title: "PTR", index: 3 });
         await driver.insert(tableName, { id: "ptr2", name: "ptr", title: "PTR", index: 4 });
+    });
 
+    beforeEach(async () => {
         let queryOptions: SteedosQueryOptions = tests[testIndex].options;
         expected = tests[testIndex].expected;
         try {
@@ -184,13 +184,6 @@ describe('fetch records by paging for postgres database', () => {
         catch(ex){
             result = ex;
         }
-    });
-
-    afterEach(async () => {
-        await driver.delete(tableName, "cnpc1");
-        await driver.delete(tableName, "cnpc2");
-        await driver.delete(tableName, "ptr1");
-        await driver.delete(tableName, "ptr2");
     });
 
     tests.forEach(async (test) => {
