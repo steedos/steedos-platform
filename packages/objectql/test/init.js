@@ -20,4 +20,8 @@ process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
 // process.env.DRIVER_ORACLE_Username = "user";
 // process.env.DRIVER_ORACLE_Password = "password";
 // process.env.DRIVER_ORACLE_Database = "db_name";
-
+// // mysql单元测试连接串，test/unit/driver/mysql/*
+// process.env.DRIVER_MYSQL_Host = "192.168.0.195";
+// process.env.DRIVER_MYSQL_Username = "user";
+// process.env.DRIVER_MYSQL_Password = "password";
+// process.env.DRIVER_MYSQL_Database = "driver-test";
