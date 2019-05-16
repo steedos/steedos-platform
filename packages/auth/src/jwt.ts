@@ -1,4 +1,4 @@
-import { utils } from '@steedos/auth-utils';
+import { utils } from './utils';
 import { getSteedosSchema } from '@steedos/objectql'
 let express = require('express');
 let jwt = require('express-jwt')
