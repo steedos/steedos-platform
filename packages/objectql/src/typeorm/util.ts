@@ -51,6 +51,9 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseTy
             continue;
         }
         let nullable = field.required ? false : true;
+        if (field.primary){
+            nullable = false;
+        }
         columns[fieldName] = {
             type: fieldType,
             nullable: nullable,

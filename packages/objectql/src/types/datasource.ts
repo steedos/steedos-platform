@@ -1,9 +1,22 @@
 import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDriver, SteedosMongoDriver, SteedosMeteorMongoDriver, SteedosSqlite3Driver, SteedosSqlServerDriver, SteedosPostgresDriver, SteedosOracleDriver } from '../driver';
+import { SteedosDriver, 
+    SteedosMongoDriver, 
+    SteedosMeteorMongoDriver, 
+    SteedosSqlite3Driver, 
+    SteedosSqlServerDriver, 
+    SteedosPostgresDriver, 
+    SteedosOracleDriver, 
+    SteedosMySqlDriver } from '../driver';
 
 import _ = require('underscore');
 import { SteedosQueryOptions } from './query';
-import { SteedosIDType, SteedosObjectType, SteedosObjectTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, SteedosObjectPermissionType } from '.';
+import { SteedosIDType, 
+    SteedosObjectType, 
+    SteedosObjectTypeConfig, 
+    SteedosSchema, 
+    SteedosListenerConfig, 
+    SteedosObjectPermissionTypeConfig, 
+    SteedosObjectPermissionType } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 
@@ -16,7 +29,8 @@ export enum SteedosDatabaseDriverType {
     Sqlite = 'sqlite',
     SqlServer = 'sqlserver',
     Postgres = 'postgres',
-    Oracle = 'oracle'
+    Oracle = 'oracle',
+    MySql = 'mysql'
 }
 
 export type SteedosDataSourceTypeConfig = {
@@ -24,6 +38,7 @@ export type SteedosDataSourceTypeConfig = {
     driver: SteedosDatabaseDriverType | string | SteedosDriver
     logging?: boolean | Array<any>
     url?: string
+    host?: string,
     username?: string
     password?: string,
     database?: string,
@@ -45,6 +60,7 @@ export class SteedosDataSourceType implements Dictionary {
         return this._adapter;
     }
     private _getRoles: Function;
+    private _host: string;
     private _url: string;
     private _username?: string;
     private _password?: string;
@@ -90,6 +106,7 @@ export class SteedosDataSourceType implements Dictionary {
 
     constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
         this._name = datasource_name
+        this._host = config.host
         this._url = config.url
         this._username = config.username
         this._password = config.password
@@ -102,6 +119,7 @@ export class SteedosDataSourceType implements Dictionary {
 
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
+            host: this._host,
             username: this._username,
             password: this._password,
             database: this._database,
@@ -129,6 +147,9 @@ export class SteedosDataSourceType implements Dictionary {
                     break;
                 case SteedosDatabaseDriverType.Oracle:
                     this._adapter = new SteedosOracleDriver(driverConfig);
+                    break;
+                case SteedosDatabaseDriverType.MySql:
+                    this._adapter = new SteedosMySqlDriver(driverConfig);
                     break;
                 default:
                     throw new Error(`the driver ${config.driver} is not supported`)
