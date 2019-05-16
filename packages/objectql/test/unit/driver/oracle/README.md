@@ -35,7 +35,7 @@
 
 1.4 关于环境变量设置
 - 根据相关博客中的说明设置OCI_INC_DIR、OCI_LIB_DIR及OCI_VERSION环境变量发现是没有用的
-- 按官方说明，运行node --server跑服务或yarn test跑单元测试前，先在cmd命令行设置环境变量`SET PATH=C:\oracle\instantclient_12_1;%PATH%`是有用的
+- 按官方说明，运行node --server跑服务或yarn test跑单元测试前，先在cmd命令行设置环境变量`SET PATH=C:\oracle\instantclient_12_1;%PATH%`是有用的（系统的全局变量直接加上这个PATH也是有效果的，我试过也没影响电脑上本身的Oracle客户端连接服务器）
 - 按官方说明，可以把解压缩的Instant Client文件移动到`\node_modules\oracledb\build\Release`以便DLL和其他文件与oracledb*.node二进制文件位于同一目录中。如果这样做，则在cmd命令行设置环境变量就不再需要了
 - 官网中关于环境变量设置说明：https://oracle.github.io/node-oracledb/INSTALL.html#364-install-the-free-oracle-instant-client-zip https://oracle.github.io/odpi/doc/installation.html#id1
 
