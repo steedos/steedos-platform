@@ -23,6 +23,10 @@ export class SteedosOracleDriver extends SteedosTypeormDriver {
 
     constructor(config: SteedosDriverConfig) {
         super(config);
+        if (!process.env.ORA_SDTZ) {
+            // 设置日期/时间字段默认时区为UTC
+            process.env.ORA_SDTZ = 'UTC';
+        }
     }
 
     getConnectionOptions(): ConnectionOptions {
