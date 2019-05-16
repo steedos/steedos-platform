@@ -14,7 +14,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth-utils": "^1.0.1",
     "@steedos/objectql": "^0.0.4",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1"
