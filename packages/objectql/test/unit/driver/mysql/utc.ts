@@ -8,7 +8,7 @@ const database = process.env.DRIVER_MYSQL_Database;
 let tableName = "TestFieldTypesForMySql";
 let driver: SteedosMySqlDriver;
 
-describe('basic field types for mysql database', () => {
+describe('utc of datetime/date for mysql database', () => {
     if (!host) {
         return true;
     }
@@ -41,7 +41,9 @@ describe('basic field types for mysql database', () => {
                     username: username,
                     password: password,
                     database: database,
+                    timezone: 'Z',
                     driver: SteedosDatabaseDriverType.MySql,
+                    logging: true,
                     objects: {
                         test: {
                             label: 'MySql Schema',
@@ -102,6 +104,7 @@ describe('basic field types for mysql database', () => {
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
         result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
+        console.log("======result=======", result);
     });
 
     tests.forEach(async (test) => {
@@ -123,18 +126,8 @@ describe('basic field types for mysql database', () => {
                 Object.keys(expected.returnRecord).forEach((key) => {
                     expect(result).to.be.not.eq(undefined);
                     if (result) {
-                        // mysql中未设置时区的情况下，日期字段类型返回值有时差
                         if (result[key] instanceof Date) {
-                            if (key === "datefield"){
-                                var offset = new Date().getTimezoneOffset() * 60 * 1000;
-                                //算出现在的时间：
-                                var expectedDate = expected.returnRecord[key].getTime();
-                                //算出对应的格林位置时间
-                                var gmtExpectedDate = new Date(expectedDate + offset);
-                                expect(result[key].getTime()).to.be.eq(gmtExpectedDate.getTime());
-                            }else{
-                                expect(result[key].getTime()).to.be.eq(expected.returnRecord[key].getTime());
-                            }
+                            expect(result[key].getTime()).to.be.eq(expected.returnRecord[key].getTime());
                         }
                         else {
                             expect(result[key]).to.be.eq(expected.returnRecord[key]);

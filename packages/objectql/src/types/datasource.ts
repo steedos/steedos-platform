@@ -43,6 +43,7 @@ export type SteedosDataSourceTypeConfig = {
     password?: string,
     database?: string,
     connectString?: string,
+    timezone?: string,
     options?: any
     objects?: Dictionary<SteedosObjectTypeConfig>
     objectFiles?: string[]
@@ -66,6 +67,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _password?: string;
     private _database?: string;
     private _connectString?: string;
+    private _timezone?: string;
     private _options?: any;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
@@ -112,6 +114,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._password = config.password
         this._database = config.database
         this._connectString = config.connectString
+        this._timezone = config.timezone
         this._options = config.options
         this._schema = schema
         this._driver = config.driver
@@ -124,6 +127,7 @@ export class SteedosDataSourceType implements Dictionary {
             password: this._password,
             database: this._database,
             connectString: this._connectString,
+            timezone: this._timezone,
             options: this._options,
             logging: this._logging
         }

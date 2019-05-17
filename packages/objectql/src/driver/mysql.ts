@@ -34,6 +34,7 @@ export class SteedosMySqlDriver extends SteedosTypeormDriver {
             username: this.config.username,
             password: this.config.password,
             database: this.config.database,
+            timezone: this.config.timezone,
             logging: this.config.logging
         };
     }
