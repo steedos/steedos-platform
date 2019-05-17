@@ -2,7 +2,6 @@ import { SteedosSchema, SteedosSqlServerDriver, SteedosQueryOptions, SteedosData
 import { expect } from 'chai';
 
 let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
-let tdsVersion = process.env.DRIVER_SQLSERVER_TDS;//不提供TDS值时默认取7_4表示2012+
 let tableName = "TestPageForSqlserver";
 let driver: SteedosSqlServerDriver;
 
@@ -138,9 +137,6 @@ describe('fetch records by paging for sqlserver database', () => {
                 default: {
                     url: url,
                     driver: SteedosDatabaseDriverType.SqlServer,
-                    options: {
-                        tdsVersion: tdsVersion
-                    },
                     objects: {
                         test: {
                             label: 'SqlServer Schema',
@@ -193,14 +189,6 @@ describe('fetch records by paging for sqlserver database', () => {
     tests.forEach(async (test) => {
         it(`${test.title}`, async () => {
             testIndex++;
-            if (expected.tds74 || expected.tds72){
-                if (tdsVersion == "7_4" || !tdsVersion){
-                    expected = expected.tds74;
-                }
-                else if(tdsVersion == "7_2"){
-                    expected = expected.tds72;
-                }
-            }
             if (expected.error !== undefined) {
                 expect(result.message).to.be.eq(expected.error);
             }
