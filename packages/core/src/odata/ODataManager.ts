@@ -7,7 +7,10 @@ import { getSession } from '@steedos/auth';
 var Cookies = require("cookies");
 
 export class ODataManager {
-  setErrorMessage(statusCode: number, collection: string = '', key: string = '', action: string = '') {
+  private METADATA_PATH = '$metadata';
+  private VERSION = '4.0';
+
+  setErrorMessage(statusCode: number, collection: any, key: string = '', action: string = '') {
     let body = {};
 
     let error = {};
@@ -257,12 +260,13 @@ export class ODataManager {
   }
 
   setOdataProperty(entities: any[], space: string, key: string) {
+    let that = this;
     let entities_OdataProperties = [];
 
     _.each(entities, function (entity, idx) {
       let entity_OdataProperties = {};
       let id = entities[idx]["_id"];
-      entity_OdataProperties['@odata.id'] = getCreator().getODataNextLinkPath(space, key) + '(\'' + ("" + id) + '\')';
+      entity_OdataProperties['@odata.id'] = that.getODataNextLinkPath(space, key) + '(\'' + ("" + id) + '\')';
       entity_OdataProperties['@odata.etag'] = "W/\"08D589720BBB3DB1\"";
       entity_OdataProperties['@odata.editLink'] = entity_OdataProperties['@odata.id'];
       _.extend(entity_OdataProperties, entity);
@@ -312,7 +316,7 @@ export class ODataManager {
 
   setHeaders(response: Response) {
     response.setHeader('Content-Type', 'application/json;odata.metadata=minimal;charset=utf-8');
-    response.setHeader('OData-Version', getCreator().VERSION);
+    response.setHeader('OData-Version', this.VERSION);
   }
 
   async getUserOrganizations(spaceId: string, userId: string, isIncludeParents: boolean) {
@@ -338,6 +342,22 @@ export class ODataManager {
       return organizations
     }
 
+  }
+
+  getRootPath(spaceId: string) {
+    return '/api/odata/v4/' + spaceId;
+  }
+
+  getMetaDataPath(spaceId: string) {
+    return this.getRootPath(spaceId) + `/${this.METADATA_PATH}`;
+  }
+
+  getODataContextPath(spaceId: string, objectName: string) {
+    return this.getMetaDataPath(spaceId) + `#${objectName}`;
+  }
+
+  getODataNextLinkPath(spaceId: string, objectName: string) {
+    return this.getRootPath(spaceId) + `/${objectName}`;
   }
 
 }

@@ -1,4 +1,5 @@
 import { JsonMap } from '@salesforce/ts-types';
+import _ = require('underscore');
 declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;
@@ -91,4 +92,20 @@ export class CreatorManager {
     return Creator.steedosSchema
   }
 
+  setOdataProperty(entities: any[], space: string, key: string) {
+    let that = this;
+    let entities_OdataProperties = [];
+
+    _.each(entities, function (entity, idx) {
+      let entity_OdataProperties = {};
+      let id = entities[idx]["_id"];
+      entity_OdataProperties['@odata.id'] = that.getODataNextLinkPath(space, key) + '(\'' + ("" + id) + '\')';
+      entity_OdataProperties['@odata.etag'] = "W/\"08D589720BBB3DB1\"";
+      entity_OdataProperties['@odata.editLink'] = entity_OdataProperties['@odata.id'];
+      _.extend(entity_OdataProperties, entity);
+      return entities_OdataProperties.push(entity_OdataProperties);
+    });
+
+    return entities_OdataProperties;
+  }
 }

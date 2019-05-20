@@ -117,7 +117,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = scannedCount;
-        let entities_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
+        let entities_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
         body['value'] = entities_OdataProperties;
         getODataManager().setHeaders(res);
         res.send(body);
@@ -206,7 +206,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
         body['@odata.count'] = sort_entities.length;
-        let entities_OdataProperties = getODataManager().setOdataProperty(sort_entities, spaceId, key);
+        let entities_OdataProperties = getCreator().setOdataProperty(sort_entities, spaceId, key);
         body['value'] = entities_OdataProperties;
         getODataManager().setHeaders(res);
         res.send(body);
@@ -248,7 +248,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
         let body = {};
         entities.push(entity);
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
-        let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
+        let entity_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
         body['value'] = entity_OdataProperties;
         getODataManager().setHeaders(res);
         res.send(body);
@@ -377,7 +377,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
             entities.push(entity);
             await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
             body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
-            let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
+            let entity_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
             _.extend(body, entity_OdataProperties[0]);
             getODataManager().setHeaders(res);
             res.send(body);

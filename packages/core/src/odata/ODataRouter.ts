@@ -1,11 +1,12 @@
 
-import { getCreator } from '../index';
 import { getODataManager } from './server';
 
 import querystring = require('querystring');
 import odataV4Mongodb = require('odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express';
+
+import { getSteedosSchema } from '@steedos/objectql';
 
 var express = require('express');
 var router = express.Router();
@@ -36,7 +37,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
 
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = getCreator().getSteedosSchema().getObject(key);
+    let collection = getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -80,7 +81,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       if (entities) {
         entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
         let body = {};
-        body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
+        body['@odata.context'] = getODataManager().getODataContextPath(spaceId, key);
         body['@odata.count'] = scannedCount;
         let entities_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
         body['value'] = entities_OdataProperties;
@@ -106,7 +107,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     let queryParams = req.query;
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = getCreator().getSteedosSchema().getObject(key);
+    let collection = getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -114,7 +115,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
     }
 
     if (userId) {
-      let recent_view_collection = getCreator().getSteedosSchema().getObject('object_recent_viewed');
+      let recent_view_collection = getSteedosSchema().getObject('object_recent_viewed');
       let filterstr = `(record/o eq '${key}') and (created_by eq '${userId}')`;
       let recent_view_options: any = { filters: filterstr, fields: ['record'], sort: 'created desc' };
       let recent_view_records = await recent_view_collection.find(recent_view_options, userSession);
@@ -171,7 +172,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       if (sort_entities) {
         await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userSession);
         let body = {};
-        body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
+        body['@odata.context'] = getODataManager().getODataContextPath(spaceId, key);
         body['@odata.count'] = sort_entities.length;
         let entities_OdataProperties = getODataManager().setOdataProperty(sort_entities, spaceId, key);
         body['value'] = entities_OdataProperties;
@@ -196,7 +197,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
     let bodyParams = req.body;
     let key = urlParams.objectName;
     let spaceId = urlParams.spaceId;
-    let collection = getCreator().getSteedosSchema().getObject(key);
+    let collection = getSteedosSchema().getObject(key);
     let setErrorMessage = getODataManager().setErrorMessage;
 
     if (!collection) {
@@ -213,7 +214,7 @@ router.post('/:spaceId/:objectName', async function (req: Request, res: Response
       if (entity) {
         let body = {};
         entities.push(entity);
-        body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
+        body['@odata.context'] = getODataManager().getODataContextPath(spaceId, key) + '/$entity';
         let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
         body['value'] = entity_OdataProperties;
         getODataManager().setHeaders(res);
@@ -243,7 +244,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let collectionInfoSplit = collectionInfo.split('(');
     let collectionName = collectionInfoSplit[0];
     let id = collectionInfoSplit[1].split('\'')[1];
-    let collection = getCreator().getSteedosSchema().getObject(collectionName)
+    let collection = getSteedosSchema().getObject(collectionName)
     let entity = collection.findOne(id, {
       fields: [fieldName]
     });
@@ -253,7 +254,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     }
     let field = collection.fields[fieldName];
     if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
-      let lookupCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
+      let lookupCollection = getSteedosSchema().getObject(String(field.reference_to));
       if (field.multiple) {
         let values = [];
         let filters = [];
@@ -271,25 +272,25 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           return values.push(obj);
         });
         body['value'] = values;
-        body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
+        body['@odata.context'] = getODataManager().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       } else {
-        body = (await lookupCollection.findOne(fieldValue)) || {};
+        body = (await lookupCollection.findOne(fieldValue, {})) || {};
         _.each(body, function (v, k) {
           if (_.isArray(v) || (_.isObject(v) && !_.isDate(v))) {
             return body[k] = JSON.stringify(v);
           }
         });
-        body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + field.reference_to + "/$entity");
+        body['@odata.context'] = getODataManager().getMetaDataPath(spaceId) + ("#" + field.reference_to + "/$entity");
       }
     } else {
-      body['@odata.context'] = getCreator().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
+      body['@odata.context'] = getODataManager().getMetaDataPath(spaceId) + ("#" + collectionInfo + "/" + recordId);
       body['value'] = fieldValue;
     }
     getODataManager().setHeaders(res);
     res.send(body);
   } else {
     try {
-      let collection = getCreator().getSteedosSchema().getObject(key)
+      let collection = getSteedosSchema().getObject(key)
       if (!collection) {
         res.status(404).send(setErrorMessage(404, collection, key));
       }
@@ -316,7 +317,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
             let body = {};
             entities.push(entity);
             await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
-            body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
+            body['@odata.context'] = getODataManager().getODataContextPath(spaceId, key) + '/$entity';
             let entity_OdataProperties = getODataManager().setOdataProperty(entities, spaceId, key);
             _.extend(body, entity_OdataProperties[0]);
             getODataManager().setHeaders(res);
@@ -347,7 +348,7 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
 
-    let collection = getCreator().getSteedosSchema().getObject(key)
+    let collection = getSteedosSchema().getObject(key)
     if (!collection) {
       res.status(404).send(setErrorMessage(404, collection, key));
     }
@@ -388,7 +389,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
 
-    let collection = getCreator().getSteedosSchema().getObject(key);
+    let collection = getSteedosSchema().getObject(key);
     if (!collection) {
       res.status(404).send(setErrorMessage(404, collection, key));
     }
