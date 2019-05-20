@@ -112,7 +112,7 @@ describe('fetch records for postgres with sort arguments as a string that comply
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosPostgresDriver>datasource.adapter;
     });
 

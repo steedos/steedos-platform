@@ -205,7 +205,7 @@ describe('filters for mysql database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosMySqlDriver>datasource.adapter;
         await driver.run(`SET SQL_SAFE_UPDATES = 0`);
         await driver.run(`delete from ${tableName}`);

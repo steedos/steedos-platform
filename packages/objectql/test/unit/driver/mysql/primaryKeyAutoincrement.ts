@@ -139,7 +139,7 @@ describe('primary key autoincrement test for mysql database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosMySqlDriver>datasource.adapter;
 
         // 删除重置主键自增队列

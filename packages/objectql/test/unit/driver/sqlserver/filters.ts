@@ -199,7 +199,7 @@ describe('filters for sqlserver database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosSqlServerDriver>datasource.adapter;
     });
 

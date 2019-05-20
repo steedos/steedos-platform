@@ -140,7 +140,7 @@ describe('primary key autoincrement test for oracle database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
 
         // 删除重置主键自增队列

@@ -118,7 +118,7 @@ describe('fetch records for mysql with sort arguments as a string that comply wi
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosMySqlDriver>datasource.adapter;
     });
 

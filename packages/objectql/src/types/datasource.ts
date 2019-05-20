@@ -337,4 +337,10 @@ export class SteedosDataSourceType implements Dictionary {
             return await this._adapter.createTables(this._objects);
         }
     }
+
+    async init() {
+        if (this._adapter.init) {
+            return await this._adapter.init(this._objects);
+        }
+    }
 }

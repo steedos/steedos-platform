@@ -39,12 +39,6 @@ export class SteedosMySqlDriver extends SteedosTypeormDriver {
         };
     }
 
-    async createTables(objects: Dictionary<SteedosObjectType>) {
-        this.registerEntities(objects);
-        await this.connect();
-        // await this._client.synchronize();
-    }
-
     getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema> {
         return getEntities(objects, "mssql");
     }

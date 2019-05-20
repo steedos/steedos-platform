@@ -98,7 +98,7 @@ describe('fetch records width specific fields for Postgres database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosPostgresDriver>datasource.adapter;
     });
 

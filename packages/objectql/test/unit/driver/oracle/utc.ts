@@ -99,7 +99,7 @@ describe('utc of datetime/date for oracle database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
     });
 

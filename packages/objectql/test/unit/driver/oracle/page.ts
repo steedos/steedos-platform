@@ -172,7 +172,7 @@ describe('fetch records by paging for oracle database', function() {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
         await driver.run(`DELETE FROM "${tableName}"`);
         await driver.insert(tableName, { id: "cnpc1", name: "cnpc", title: "CNPC", index: 1 });

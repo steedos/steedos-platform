@@ -97,7 +97,7 @@ describe('basic field types for oracle database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
     });
 

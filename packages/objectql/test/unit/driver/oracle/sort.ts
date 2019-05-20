@@ -118,7 +118,7 @@ describe('fetch records for oracle with sort arguments as a string that comply w
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
     });
 

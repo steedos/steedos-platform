@@ -92,7 +92,7 @@ describe('crud for postgres database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosPostgresDriver>datasource.adapter;
     });
 

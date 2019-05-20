@@ -112,7 +112,7 @@ describe('fetch records for sqlserver with sort arguments as a string that compl
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosSqlServerDriver>datasource.adapter;
     });
 

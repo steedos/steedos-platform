@@ -95,7 +95,7 @@ describe('utc of datetime/date for mysql database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
-        await datasource.createTables();
+        await datasource.init();
         driver = <SteedosMySqlDriver>datasource.adapter;
     });
 
