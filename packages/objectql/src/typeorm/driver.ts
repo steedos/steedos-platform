@@ -237,7 +237,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
     }
 
-    async insert(tableName: string, data: JsonMap) {
+    async insert(tableName: string, data: Dictionary<any>) {
         await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {
@@ -254,7 +254,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
     }
 
-    async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+    async update(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
         await this.connect();
         let entity = this._entities[tableName];
         if (!entity) {

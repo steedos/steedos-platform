@@ -475,11 +475,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('findOne', this.tableName, id, query, userSession)
     }
 
-    async insert(doc: JsonMap, userSession?: SteedosUserSession) {
+    async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
         return await this.callAdapter('insert', this.tableName, doc, userSession)
     }
 
-    async update(id: SteedosIDType, doc: JsonMap, userSession?: SteedosUserSession) {
+    async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         await this.processUneditableFields(userSession, doc)
         return await this.callAdapter('update', this.tableName, id, doc, userSession)
     }

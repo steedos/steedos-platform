@@ -1,4 +1,4 @@
-import { JsonMap } from "@salesforce/ts-types";
+import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index"
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType } from "../types";
@@ -180,7 +180,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async insert(tableName: string, data: JsonMap, userId?: SteedosIDType) {
+    async insert(tableName: string, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         return await new Promise((resolve, reject) => {
             Fiber(function () {
@@ -206,7 +206,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async update(tableName: string, id: SteedosIDType, data: JsonMap, userId?: SteedosIDType) {
+    async update(tableName: string, id: SteedosIDType, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         return await new Promise((resolve, reject) => {
             Fiber(function () {

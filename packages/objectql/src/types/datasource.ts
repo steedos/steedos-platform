@@ -1,4 +1,4 @@
-import { Dictionary, JsonMap } from '@salesforce/ts-types';
+import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDriver, 
     SteedosMongoDriver, 
     SteedosMeteorMongoDriver, 
@@ -222,11 +222,11 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.findOne(tableName, id, query, userId)
     }
 
-    async insert(tableName: string, doc: JsonMap, userId?: SteedosIDType){
+    async insert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType){
         return await this._adapter.insert(tableName, doc, userId)
     }
 
-    async update(tableName: string, id: SteedosIDType, doc: JsonMap, userId?: SteedosIDType){
+    async update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType){
         return await this._adapter.update(tableName, id, doc, userId)
     }
 

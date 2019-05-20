@@ -159,7 +159,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result;
     }
 
-    async insert(tableName: string, data: JsonMap) {
+    async insert(tableName: string, data: Dictionary<any>) {
         await this.connect();
         data._id = data._id || new ObjectId().toHexString();
         let collection = this.collection(tableName);
@@ -167,7 +167,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result.ops[0];
     }
 
-    async update(tableName: string, id: SteedosIDType, data: JsonMap) {
+    async update(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
         if (_.isEmpty(data)){
             throw new Error("the params 'data' must not be empty");
         }
