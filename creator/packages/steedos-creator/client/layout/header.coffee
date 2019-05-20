@@ -61,3 +61,12 @@ Template.creatorHeader.events
 	'click .current-user-link': (e, t)->
 		url = "/app/admin/users/view/#{Steedos.userId()}"
 		FlowRouter.go(url)
+
+	'click .history-back': ()->
+		history.back()
+
+	'click .history-forward': ()->
+		history.forward()
+
+	'click .refresh': ()->
+		location.reload()

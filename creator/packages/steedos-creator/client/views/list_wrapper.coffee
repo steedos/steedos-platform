@@ -1,14 +1,16 @@
 
 Template.creator_list_wrapper.onRendered ->
 	self = this
+	self.rendered = false
 	self.autorun ->
 		if Session.get("list_view_id")
 			self.$(".btn-filter-list").removeClass("slds-is-selected")
 			self.$(".filter-list-container").addClass("slds-hide")
-			self.$("#grid-search").val('')
+			if self.rendered
+				self.$("#grid-search").val('')
 
 	self.autorun ->
-		if Session.get("list_view_id")
+		if Session.get("list_view_id") && self.rendered
 			Session.set("standard_query", null)
 			list_view_obj = Creator.Collections.object_listviews.findOne(Session.get("list_view_id"))
 			if list_view_obj
@@ -23,6 +25,7 @@ Template.creator_list_wrapper.onRendered ->
 			else
 				Session.set("filter_scope", null)
 				Session.set("filter_items", null)
+	self.rendered = true
 
 
 Template.creator_list_wrapper.helpers Creator.helpers
@@ -166,6 +169,15 @@ Template.creator_list_wrapper.helpers
 		object = Creator.getObject(objectName)
 		return object.enable_tree
 
+	search_text: ()->
+		search_text = Tracker.nonreactive ()->
+			standard_query = Session.get("standard_query")
+			if standard_query && standard_query.is_mini && standard_query.object_name == Session.get("object_name") && standard_query.search_text
+				return standard_query.search_text
+		if search_text
+			return search_text
+		else
+			return ''
 transformFilters = (filters)->
 	_filters = []
 	_.each filters, (f)->
@@ -315,14 +327,13 @@ Template.creator_list_wrapper.events
 					_.each obj_fields, (field,field_name)->
 						if field.searchable || field_name == obj.NAME_FIELD_KEY
 							query[field_name] = searchKey
-					standard_query = object_name: object_name, query: query, is_mini: true
+					standard_query = object_name: object_name, query: query, is_mini: true, search_text: searchKey
 					Session.set 'standard_query', standard_query
 			else
 				if obj.enable_tree
 					$(".gridContainer").dxTreeList({}).dxTreeList('instance').searchByText()
 				else
 					Session.set 'standard_query', null
-
 
 Template.creator_list_wrapper.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)

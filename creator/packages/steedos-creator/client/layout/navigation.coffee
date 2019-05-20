@@ -72,3 +72,7 @@ Template.creatorNavigation.events
 	
 	'click .header-refresh': (event)->
 		window.location.reload(true)
+
+	'click .slds-context-bar__item>a': (event, template)->
+		if this.name != Session.get("list_view_id")
+			Session.set("grid_paging", null)

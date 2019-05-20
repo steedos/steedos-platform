@@ -54,11 +54,12 @@ Creator.Objects.contract_payments =
 			hidden: false
 
 	list_views:
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
 		all:
 			label: "所有"
+			columns: ["name", "amount", "contract", "due_date", "is_closed"]
+			filter_scope: "space"
+		recent:
+			label: "最近查看"
 			columns: ["name", "amount", "contract", "due_date", "is_closed"]
 			filter_scope: "space"
 

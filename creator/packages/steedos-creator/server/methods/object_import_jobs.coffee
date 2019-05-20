@@ -17,13 +17,13 @@ converterDate = (field_name, dataCell,jsonObj)->
 	else
 		date_error = "#{dataCell}不是日期类型数据"
 	return date_error
-converteInt = (field_name, dataCell,jsonObj)->
+converteNum = (field_name, dataCell,jsonObj)->
 	number_error = ""
-	number = parseInt(dataCell)
+	number = parseFloat(dataCell)
 	if !isNaN(number)
 		jsonObj[field_name] = number
 	else
-		number_error =  "#{dataCell}不是数值类型数据"
+		number_error = "#{dataCell}不是数值类型数据"
 	return number_error
 converterSelect = (objectName,field_name, dataCell,jsonObj)->
 	select_error = ""
@@ -74,7 +74,7 @@ insertRow = (dataRow,objectName,field_mapping,space)->
 				noField = false
 				switch field?.type
 					when "date","datetime" then error = converterDate field_name,dataCell,jsonObj
-					when "number" then error = converteInt field_name,dataCell,jsonObj
+					when "number" then error = converteNum field_name,dataCell,jsonObj
 					when "boolean" then error = converterBool field_name,dataCell,jsonObj
 					when "select" then error = converterSelect objectName,field_name,dataCell,jsonObj
 					when "lookup" then error = converterLookup objectName,field_name,dataCell,jsonObj
@@ -111,7 +111,7 @@ importObject = (importObj,space) ->
 		objectName = importObj?.object_name
 		field_mapping = importObj?.field_mapping
 		stream.on 'data', (chunk) ->
-			chunks.push chunk 
+			chunks.push chunk
 
 		stream.on 'end', Meteor.bindEnvironment(() ->
 			workbook = xlsx.parse(Buffer.concat(chunks), {cellDates: true})

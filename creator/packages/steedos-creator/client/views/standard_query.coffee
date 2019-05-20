@@ -1,10 +1,10 @@
 Template.standard_query_modal.onCreated ->
 	this.modalValue = new ReactiveVar()
-	standard_query = Session.get("standard_query")
-	if standard_query and standard_query.object_name == Session.get("object_name")
-		standard_query.query = {}
-		Session.set "standard_query", standard_query
-		this.modalValue.set(standard_query.query)
+#	standard_query = Session.get("standard_query")
+#	if standard_query and standard_query.object_name == Session.get("object_name")
+#		standard_query.query = {}
+#		Session.set "standard_query", standard_query
+	this.modalValue.set(Session.get("standard_query")?.query)
 
 Template.standard_query_modal.onRendered ->
 	this.$("input[type='number']").val("")
@@ -66,6 +66,7 @@ Template.standard_query_modal.helpers
 					schema[field + "_endLine"].autoform.disabled = false
 					schema[field + "_endLine"].autoform.omit = false
 					schema[field + "_endLine"].autoform.is_range = false
+					schema[field + "_endLine"].autoform.label = '至'
 
 					if object_fields[field].type == 'date'
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';

@@ -44,12 +44,12 @@ Creator.Objects.contract_acceptances =
 			hidden: false
 
 	list_views:
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
 		all:
 			label: "所有"
 			columns: ["name", "contract","account", "due_date", "accept_date"]
+			filter_scope: "space"
+		recent:
+			label: "最近查看"
 			filter_scope: "space"
 
 	permission_set:

@@ -65,15 +65,17 @@ Creator.Objects.accounts =
 			hidden: false
 
 	list_views:
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
 		all:
 			label: "所有单位"
 			columns: ["name", "priority", "owner", "modified", "company_id"]
 			filter_scope: "space"
+		recent:
+			label: "最近查看"
+			columns: ["name", "priority", "owner", "modified", "company_id"]
+			filter_scope: "space"
 		mine:
 			label: "我的单位"
+			columns: ["name", "priority", "owner", "modified", "company_id"]
 			filter_scope: "mine"
 
 

@@ -101,6 +101,7 @@ Package.onUse(function(api) {
 	// api.addFiles('client/coreform/inputTypes/coreform-autosizearea/autosize-area.coffee', 'client');
 
 	api.addFiles('client/coreform/components/slds-quickForm/slds-quickForm.html', 'client');
+	api.addFiles('client/coreform/components/slds-quickForm/slds-quickForm.less', 'client');
 	api.addFiles('client/coreform/components/slds-quickForm/slds-quickForm.coffee', 'client');
 
 	api.addFiles('client/coreform/inputTypes/coreform-typeahead/typeahead.js/bloodhound.js', 'client');

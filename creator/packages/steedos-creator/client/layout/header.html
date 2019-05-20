@@ -1,79 +1,109 @@
 <template name="creatorHeader">
 
-<header class="slds-global-header_container creatorHeader"><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Main Content</a>
-  <div class="slds-global-header slds-grid slds-grid_align-spread">
-    <div class="slds-global-header__item">
-      <div class="slds-global-header__logo">
-        <img src="{{logoUrl}}" alt="" />
-      </div>
-    </div>
-    {{> headerSearch}}
-    <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
-		{{#if showShopping}}
-		<li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-			<button class="creator-button-shopping slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled" title="Global Actions">
-				{{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="shopping_bag"}}
-			</button>
-		</li>
-		{{/if}}
-      <li class="slds-hide slds-grid">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites slds-is-disabled" aria-pressed="false" title="Toggle Favorites">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="favorite"}}
-        </button>
-        <span class="slds-dropdown-trigger slds-dropdown-trigger_click">
-          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none slds-is-disabled" title="View Favorites">
-          {{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevrondown"}}
-          </button>
+	<header class="slds-global-header_container creatorHeader"><a href="javascript:void(0);"
+																  class="slds-assistive-text slds-assistive-text_focus">Skip
+		to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to
+		Main Content</a>
+		<div class="slds-global-header slds-grid slds-grid_align-spread">
+			<div class="slds-global-header__item">
+				<div class="slds-global-header__logo">
+					<img src="{{logoUrl}}" alt=""/>
+				</div>
+			</div>
+			{{> headerSearch}}
+			<ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+				{{#if showShopping}}
+					<li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="creator-button-shopping slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled">
+							{{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="shopping_bag"}}
+						</button>
+					</li>
+				{{/if}}
+				<li class="slds-hide slds-grid">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites slds-is-disabled"
+							aria-pressed="false" title="Toggle Favorites">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="favorite"}}
+					</button>
+					<span class="slds-dropdown-trigger slds-dropdown-trigger_click">
+          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none slds-is-disabled"
+				  title="View Favorites">
+			  {{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevrondown"}}
+		  </button>
         </span>
-      </li>
-      <li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled" title="Global Actions">
-          {{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="add"}}
-        </button>
-      </li>
-      {{#if showSwitchOrganization }}
-      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-          <button class="creator-button-toggle slds-button" title="Toggle Company">
-            切换单位
-          </button>
-      </li>
-      {{/if}}
-      <li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
-        <button class="creator-button-help slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="Help and Training">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question"}}
-        </button>
-      </li>
-      <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-        <button class="creator-button-setup slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon" title="设置">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup" title="Setup"}}
-        </button>
-      </li>
-      <li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
-        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-is-disabled" title="Notifications">
-          {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="notification" title="Notifications"}}
-        </button>
-      </li>
-      <li class="slds-dropdown-trigger slds-m-left_x-small">
-        <button class="slds-button current-user-link" title="person name" aria-haspopup="true" data-toggle="dropdown">
+				</li>
+				<li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small slds-is-disabled"
+							title="Global Actions">
+						{{> steedos_button_icon class="slds-icon slds-icon--x-small" source="utility-sprite" name="add"}}
+					</button>
+				</li>
+				{{#if showSwitchOrganization }}
+					<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+						<button class="creator-button-toggle slds-button" title="Toggle Company">
+							切换单位
+						</button>
+					</li>
+				{{/if}}
+				{{#if isNode}}
+					<li class="history-back slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="点击可后退">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="back"}}
+						</button>
+					</li>
+					<li class="history-forward slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="点击可前进">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="forward"}}
+						</button>
+					</li>
+					<li class="refresh slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
+						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+								title="重新加载此页面">
+							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="refresh"}}
+						</button>
+					</li>
+				{{/if}}
+				<li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
+					<button class="creator-button-help slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+							title="Help and Training">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question"}}
+					</button>
+				</li>
+				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
+					<button class="creator-button-setup slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+							title="设置">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup" title="Setup"}}
+					</button>
+				</li>
+				<li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-is-disabled"
+							title="Notifications">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="notification" title="Notifications"}}
+					</button>
+				</li>
+				<li class="slds-dropdown-trigger slds-m-left_x-small">
+					<button class="slds-button current-user-link" title="person name" aria-haspopup="true"
+							data-toggle="dropdown">
           <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
             <img src="{{avatarURL}}" title="{{displayName}}" style="height: 100%"/>
           </span>
-        </button>
-        <div class="slds-dropdown slds-dropdown_right" style="right: 8px">
-          <ul class="slds-dropdown__list" role="menu">
-            <li class="slds-dropdown__item" role="presentation">
-              <a href="{{signOutUrl}}" role="menuitem" tabindex="-1">
-                <span class="slds-truncate">{{_ "Sign out"}}</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
-  
-  <div class="bBottom">
-        {{> creatorNavigation}}
-  </div>
-</header>
+					</button>
+					<div class="slds-dropdown slds-dropdown_right" style="right: 8px">
+						<ul class="slds-dropdown__list" role="menu">
+							<li class="slds-dropdown__item" role="presentation">
+								<a href="{{signOutUrl}}" role="menuitem" tabindex="-1">
+									<span class="slds-truncate">{{_ "Sign out"}}</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="bBottom">
+			{{> creatorNavigation}}
+		</div>
+	</header>
 </template>

@@ -56,16 +56,17 @@ Creator.Objects.contacts =
 			is_wide: true
 
 	list_views:
-		recent:
-			label: "最近查看"
-			filter_scope: "space"
 		all:
 			label: "所有联系人"
 			columns: ["name", "account", "email", "phone"]
 			filter_scope: "space"
-			columns: ["name", "account", "email", "phone", "owner"]
+		recent:
+			label: "最近查看"
+			columns: ["name", "account", "email", "phone"]
+			filter_scope: "space"
 		mine:
 			label: "我的联系人"
+			columns: ["name", "account", "email", "phone"]
 			filter_scope: "mine"
 
 	permission_set:

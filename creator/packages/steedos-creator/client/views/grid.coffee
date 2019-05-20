@@ -340,7 +340,11 @@ Template.creator_grid.onRendered ->
 
 		if !creator_obj
 			return
-
+		if !is_related
+			grid_paging = Tracker.nonreactive ()->
+							_grid_paging = Session.get('grid_paging')
+							if _grid_paging?.object_name == object_name && _grid_paging.list_view_id == list_view_id
+								return _grid_paging
 		related_object_name = self.data.related_object_name
 		curObjectName = if is_related then related_object_name else object_name
 		curObject = Creator.getObject(curObjectName)
@@ -464,6 +468,9 @@ Template.creator_grid.onRendered ->
 				else
 					return 0
 
+			if grid_paging
+				pageIndex = grid_paging.pageIndex
+
 			extra_columns = ["owner", "company_id", "locked"]
 			if !is_related and curObject.enable_tree
 				extra_columns.push("parent")
@@ -553,7 +560,10 @@ Template.creator_grid.onRendered ->
 			if is_related
 				pageSize = 5
 			else
-				pageSize = 50
+				if grid_paging
+					pageSize = grid_paging.pageSize
+				else
+					pageSize = 50
 				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
 
 			# 对于a.b的字段，发送odata请求时需要转换为a/b
@@ -730,11 +740,15 @@ Template.creator_grid.onRendered ->
 				module.dynamicImport('devextreme/ui/tree_list').then (dxTreeList)->
 					DevExpress.ui.dxTreeList = dxTreeList;
 					self.dxDataGridInstance = self.$(".gridContainer").dxTreeList(dxOptions).dxTreeList('instance')
+					if !is_related && self.$(".gridContainer").length > 0
+						Session.set("grid_paging", null)
 			else
 				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 					DevExpress.ui.dxDataGrid = dxDataGrid;
 					# console.log("dxOptions.dataSource.filter=======", dxOptions.dataSource.filter);
 					self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
+					if !is_related && self.$(".gridContainer").length > 0
+						Session.set("grid_paging", null)
 					# self.dxDataGridInstance.pageSize(pageSize)
 
 Template.creator_grid.helpers Creator.helpers
@@ -807,6 +821,7 @@ Template.creator_grid.events
 
 Template.creator_grid.onCreated ->
 	self = this
+	self.list_view_id = Session.get("list_view_id")
 	AutoForm.hooks creatorAddForm:
 		onSuccess: (formType,result)->
 			self.dxDataGridInstance?.refresh().done (result)->
@@ -857,5 +872,16 @@ Template.creator_grid.onCreated ->
 
 
 Template.creator_grid.refresh = (dxDataGridInstance)->
+	is_related = this.data.is_related
+	if !is_related
+		Session.set("grid_paging", null)
 	dxDataGridInstance.refresh().done (result)->
 		Creator.remainCheckboxState(dxDataGridInstance.$element())
+
+Template.creator_grid.onDestroyed ->
+	is_related = this.data.is_related
+	if !is_related && this.list_view_id == Session.get("list_view_id")
+		paging = this.dxDataGridInstance.option().paging
+		paging.object_name = this.data.object_name
+		paging.list_view_id = this.list_view_id
+		Session.set("grid_paging", paging)

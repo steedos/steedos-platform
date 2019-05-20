@@ -1,24 +1,28 @@
 <template name="quickForm_slds">
-	<div class="quickForm_slds">
+	<div class="quickForm_slds {{#if horizontal}}horizontal{{/if}}">
 	{{#autoForm qfAutoFormContext}}
 		{{#if schemaFields.grouplessFields}}
 			{{#each schemaFields.grouplessFields}}
-				<div class="slds-grid view-page-section-row">
+				<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{/if}}">
 					{{#each this}}
-						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
 							<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
 								{{#if this}}
 									{{#if hasInlineHelpText this}}
 										<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
 									{{/if}}
 									{{#unless isDisabled this}}
-										{{> afQuickField name=this class="form-control"}}
+										{{#if horizontal}}
+											{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+										{{else}}
+											{{> afQuickField name=this class="form-control"}}
+										{{/if}}
 									{{/unless}}
 								{{/if}}
 							</div>
 						</div>
 						{{#if is_range this}}
-							<span class="to">到</span>
+							<span class="to"></span>
 						{{/if}}
 					{{/each}}
 				</div>
@@ -37,22 +41,26 @@
 						</h3>
 						<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 							{{#each this.fields}}
-								<div class="slds-grid view-page-section-row">
+								<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{/if}}">
 									{{#each this}}
-										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
 											<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
 												{{#if this}}
 													{{#if hasInlineHelpText this}}
 														<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
 													{{/if}}
 													{{#unless isDisabled this}}
-														{{> afQuickField name=this class="form-control"}}
+														{{#if horizontal}}
+															{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+														{{else}}
+															{{> afQuickField name=this class="form-control"}}
+														{{/if}}
 													{{/unless}}
 												{{/if}}
 											</div>
 										</div>
 										{{#if is_range this}}
-											<span class="to">到</span>
+											<span class="to"></span>
 										{{/if}}
 									{{/each}}
 								</div>
@@ -69,7 +77,11 @@
 					{{#each schemaFields.hiddenFields}}
 						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 							{{#if this}}
-								{{> afQuickField name=this class="form-control"}}
+								{{#if horizontal}}
+									{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+								{{else}}
+									{{> afQuickField name=this class="form-control"}}
+								{{/if}}
 							{{/if}}
 						</div>
 					{{/each}}
@@ -83,7 +95,11 @@
 					{{#each schemaFields.disabledFields}}
 						<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput">
 							{{#if this}}
-								{{> afQuickField name=this disabled=false readonly=true class="form-control"}}
+								{{#if horizontal}}
+									{{> afQuickField name=this disabled=false readonly=true class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+								{{else}}
+									{{> afQuickField name=this disabled=false readonly=true class="form-control"}}
+								{{/if}}
 							{{/if}}
 						</div>
 					{{/each}}
