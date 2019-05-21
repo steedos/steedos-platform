@@ -382,6 +382,5 @@ let formatFiltersToODataQuery = (filters, odataProtocolVersion, forceLowerCase)=
     return new SteedosFilter(filters, odataProtocolVersion, forceLowerCase).formatFiltersToODataQuery();
 }
 
+module.exports = SteedosFilter;
 
-exports.SteedosFilter = SteedosFilter;
-exports.formatFiltersToODataQuery = formatFiltersToODataQuery;

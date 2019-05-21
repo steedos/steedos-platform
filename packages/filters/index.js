@@ -1,5 +1,6 @@
 
-const filter = require('./filter');
+const SteedosFilter = require("./filter");
+const format = require('./format');
 
-exports.formatFiltersToODataQuery = filter.formatFiltersToODataQuery;
-exports.SteedosFilter = filter.SteedosFilter;
+exports.SteedosFilter = SteedosFilter;
+exports.formatFiltersToODataQuery = format.formatFiltersToODataQuery;

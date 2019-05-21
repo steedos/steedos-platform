@@ -9,7 +9,6 @@ let objectsDir = path.resolve('./objects')
 objectql.getSteedosSchema().addDataSource('default', {
     driver: 'mongo',
     url: 'mongodb://192.168.0.21/fssh20190329',
-    // objectFiles: [__dirname + "/../standard-objects"]
     objectFiles: [objectsDir]
 })
 let express = require('express');
