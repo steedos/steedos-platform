@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.15.4",
     "path": "^0.12.7",
+    "@steedos/objectql": "^0.0.4",
     "@steedos/stimulsoft-report": "^0.0.1"
   },
   "devDependencies": {}

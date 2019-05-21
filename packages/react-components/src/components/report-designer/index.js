@@ -20,9 +20,8 @@ class ReportDesigner extends Component {
         var report = new window.Stimulsoft.Report.StiReport();
 
         console.log('Load report from url');
-        // report.loadFile('/reports/SimpleList.mrh');
-        debugger;
-        report.loadFile('/api/report/mrt/xxx');
+        var reportId = "vzmoS6iSDYueCMn5H";
+        report.loadFile(`/api/report/mrt/${reportId}`);
         console.log('Edit report template in the designer');
         designer.report = report;
         designer.renderHtml("report-designer");
