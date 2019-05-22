@@ -3,7 +3,7 @@
 	{{#autoForm qfAutoFormContext}}
 		{{#if schemaFields.grouplessFields}}
 			{{#each schemaFields.grouplessFields}}
-				<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{/if}}">
+				<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{else}}{{#if has_wide_field this}}wide-fields{{/if}}{{/if}}">
 					{{#each this}}
 						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
 							<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
@@ -41,7 +41,7 @@
 						</h3>
 						<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 							{{#each this.fields}}
-								<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{/if}}">
+								<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{else}}{{#if has_wide_field this}}wide-fields{{/if}}{{/if}}">
 									{{#each this}}
 										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
 											<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">

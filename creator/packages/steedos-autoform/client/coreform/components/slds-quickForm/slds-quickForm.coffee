@@ -76,6 +76,10 @@ Template.quickForm_slds.helpers
 		if fields?.length > 0 && fields[0]
 			return Template.instance()?.data?.qfAutoFormContext.schema._schema[fields[0]]?.autoform?.is_range
 
+	has_wide_field: (fields)->
+		if fields?.length > 0 && fields[0]
+			return Template.instance()?.data?.qfAutoFormContext.schema._schema[fields[0]]?.autoform?.is_wide
+
 Template.quickForm_slds.events
 	'click .group-section-control': (event, template) ->
 		event.preventDefault()
