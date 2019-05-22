@@ -1,0 +1,279 @@
+name: reports
+label: 报表
+icon: report
+fields:
+  name:
+    label: 名称
+    type: text
+    required: true
+    searchable: true
+    index: true
+    name: name
+  report_type:
+    label: 报表类型
+    type: select
+    defaultValue: tabular
+    options:
+      - label: 表格
+        value: tabular
+      - label: 摘要
+        value: summary
+      - label: 矩阵
+        value: matrix
+    name: report_type
+    filterable: true
+  object_name:
+    label: 对象名
+    type: lookup
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Objects, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+    required: true
+    _optionsFunction: |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Objects, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+    name: object_name
+    filterable: true
+  filter_scope:
+    label: 过虑范围
+    type: select
+    defaultValue: space
+    hidden: true
+    options:
+      - label: 所有
+        value: space
+      - label: 与我相关
+        value: mine
+    name: filter_scope
+    filterable: true
+  filters:
+    label: 过滤条件
+    type: '[Object]'
+    omit: true
+    name: filters
+  filters.$:
+    label: 过滤器
+    blackbox: true
+    omit: true
+    hidden: true
+    name: filters.$
+  filters.$.field:
+    label: 字段名
+    type: text
+    name: filters.$.field
+  filters.$.operation:
+    label: 操作符
+    type: select
+    defaultValue: =
+    options: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return Creator.getFieldOperation();
+            }
+    _options: |-
+      function () {
+              return Creator.getFieldOperation();
+            }
+    name: filters.$.operation
+    filterable: true
+  filters.$.value:
+    label: 字段值
+    blackbox: true
+    name: filters.$.value
+  filter_logic:
+    label: 过滤逻辑
+    type: text
+    omit: true
+    name: filter_logic
+  fields:
+    label: 字段
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    _optionsFunction: |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: fields
+    filterable: true
+  rows:
+    label: 行
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    _optionsFunction: |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: rows
+    filterable: true
+  columns:
+    label: 列
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    _optionsFunction: |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: columns
+    filterable: true
+  values:
+    label: 统计
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    _optionsFunction: |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    name: values
+    filterable: true
+  filter_fields:
+    label: 默认过虑字段
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
+            }
+    _optionsFunction: |-
+      function (values) {
+              return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
+            }
+    name: filter_fields
+    filterable: true
+  options:
+    label: 操作
+    omit: true
+    blackbox: true
+    name: options
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+    name: description
+  charting:
+    label: 显示图表
+    type: boolean
+    defaultValue: true
+    name: charting
+  grouping:
+    label: 显示小计
+    type: boolean
+    defaultValue: true
+    name: grouping
+  totaling:
+    label: 显示总计
+    type: boolean
+    defaultValue: true
+    name: totaling
+  counting:
+    label: 显示记录计数
+    type: boolean
+    defaultValue: true
+    name: counting
+list_views:
+  default:
+    columns:
+      - name
+      - report_type
+      - object_name
+  all:
+    label: 所有报表
+    filter_scope: space
+    filter_fields:
+      - report_type
+      - created
+  application:
+    label: 应用报表
+    filter_scope: space
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var object_names;
+              object_names = Creator.getAppObjectNames();
+              return [["object_name", "=", object_names]];
+            }
+    filter_fields:
+      - report_type
+      - created
+    _filters: |-
+      function () {
+              var object_names;
+              object_names = Creator.getAppObjectNames();
+              return [["object_name", "=", object_names]];
+            }
+  mine:
+    label: 我的报表
+    filter_scope: mine
+    filter_fields:
+      - report_type
+      - created
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    disabled_list_views:
+      - all
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

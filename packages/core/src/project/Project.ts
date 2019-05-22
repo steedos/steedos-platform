@@ -5,10 +5,12 @@ import { JsonMap } from '@salesforce/ts-types';
 import { getFromContainer } from "../container";
 import { ConfigAggregator } from '../config/configAggregator';
 
-import {AppManager, getObjectConfigManager, TriggerManager, FieldManager} from '..';
+import {AppManager, getObjectConfigManager, TriggerManager, FieldManager, ReportManager} from '..';
 
 import fs = require("fs");
 import path = require("path");
+
+var util = require("../util");
 
 class Project {
   /**
@@ -129,7 +131,8 @@ class Project {
       appFilesPath: [],
       objectFilesPath: [],
       triggerFilesPath: [],
-      fieldFilesPath: []
+      fieldFilesPath: [],
+      reportFilesPath: []
     }
     this.scanFiles(fileStorage, directoryPath)
 
@@ -146,9 +149,16 @@ class Project {
       TriggerManager.loadFile(path);
     })
 
+    fileStorage.reportFilesPath.forEach((path: string) => {
+      ReportManager.loadFile(path)
+    });
+    
     fileStorage.appFilesPath.forEach((path: string) => {
       AppManager.loadFile(path)
     });
+
+    
+    
   }
 
   /**
@@ -162,19 +172,21 @@ class Project {
     if (!fs.existsSync(directoryPath) || !fs.statSync(directoryPath).isDirectory())
       throw new Error("Module folder not found：" + directoryPath);
     let sub: string[] = fs.readdirSync(directoryPath)
-    sub.forEach((s)=>{
+    sub.forEach((s: string)=>{
       let subDirectory = path.join(directoryPath, s)
       if (fs.statSync(subDirectory).isDirectory()){
         this.scanFiles(storage, subDirectory);
       }else{
-        if(s.endsWith('.app.yml')){
+        if(util.isAppFile(path.join(subDirectory))){
           storage.appFilesPath.push(subDirectory)
-        }else if(s.endsWith('.object.yml') || s.endsWith('.object.js')){
+        }else if(util.isObjectFile(subDirectory)){
           storage.objectFilesPath.push(subDirectory)
-        }else if(s.endsWith('.trigger.js')){
+        }else if(util.isTriggerFile(subDirectory)){
           storage.triggerFilesPath.push(subDirectory)
-        }else if(s.endsWith('.field.js')){
+        }else if(util.isFieldFile(subDirectory)){
           storage.fieldFilesPath.push(subDirectory)
+        }else if(util.isReportFile(subDirectory)){
+          storage.reportFilesPath.push(subDirectory)
         }else{
           console.warn('Unloaded file', subDirectory)
         }

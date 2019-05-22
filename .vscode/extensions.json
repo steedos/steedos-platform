@@ -1,5 +1,5 @@
 {
     "recommendations": [
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml", "gruntfuggly.todo-tree", "Arjun.swagger-viewer"
     ]
 }

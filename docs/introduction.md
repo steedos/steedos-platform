@@ -2,7 +2,7 @@
 title: 简介
 ---
 
-Steedos Object Schema 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
+Steedos ObjectQL 是一套跨平台、跨语言的对象描述语法。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
 
 比如你可以这样定义对象 account.object.yml
 ```yaml
@@ -68,6 +68,6 @@ Steedos Object Server 设计的目的是为了连接到任何数据源，包括S
 
 Steedos Object Cloud 即将上线，您设计的Apps不仅可以内部使用，还可以成为SAAS服务租用给客户使用。
 
-Steedos Object Schema 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
+Steedos ObjectQL 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
 - [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
 - [Salesforce Lightning Design System in React ](https://react.lightningdesignsystem.com/)

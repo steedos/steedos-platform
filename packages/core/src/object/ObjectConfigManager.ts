@@ -28,7 +28,7 @@ export default class ObjectConfigManager {
     // -------------------------------------------------------------------------
     // Public Methods
     // -------------------------------------------------------------------------
-    
+
     /**
      * Checks if connection with the given name exist in the manager.
      */
@@ -53,7 +53,7 @@ export default class ObjectConfigManager {
      * Creates a new connection based on the given connection options and registers it in the manager.
      * Connection won't be established, you'll need to manually call connect method to establish connection.
      */
-    create(options: ObjectConfigOptions): ObjectConfig {
+    create(options: any): ObjectConfig {
 
         this.validate(options);
 
@@ -102,7 +102,7 @@ export default class ObjectConfigManager {
             }
         }
     };
-    
+
     validate(options: ObjectConfigOptions): boolean {
         return Validators.steedosObjectConfig(options);
     };
@@ -114,13 +114,13 @@ export default class ObjectConfigManager {
             this.objectConfigs.splice(this.objectConfigs.indexOf(existConfig), 1);
         }
     };
-    
+
     loadStandardObjects() {
-        this.createFromFile(path.resolve(__dirname, "../../standard/objects/spaces.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../standard/objects/users.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../standard/objects/organizations.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../standard/objects/space_users.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../standard/objects/apps.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/spaces.object.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/users.object.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/organizations.object.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/space_users.object.yml"))
+        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/apps.object.yml"))
     }
 
 

@@ -1,0 +1,32 @@
+{
+  "name": "@steedos/auth",
+  "private": false,
+  "version": "1.0.3",
+  "main": "lib/index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "compile": "tsc",
+    "test": "mocha test/**/*.ts",
+    "prepare": "tsc"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@steedos/objectql": "^0.0.4",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "7.1.0",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "jslint": "^0.12.1",
+    "sinon-chai": "^3.3.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.4000"
+  }
+}

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Reporter from '../../reporter';
 
 
 class ReportDesigner extends Component {
@@ -21,15 +20,11 @@ class ReportDesigner extends Component {
         var report = new window.Stimulsoft.Report.StiReport();
 
         console.log('Load report from url');
-        // report.loadFile('reports/SimpleList.mrh');
-        // report.loadFile('/api/v2/reports/test');
-        let reportId = "sHd9WBbPfxwxm8akZ";
-        Reporter.getSimpleList(reportId, (simpleList) => {
-            report.load(simpleList);
-            console.log('Edit report template in the designer');
-            designer.report = report;
-            designer.renderHtml("report-designer");
-        });
+        var reportId = "vzmoS6iSDYueCMn5H";
+        report.loadFile(`/api/report/mrt/${reportId}`);
+        console.log('Edit report template in the designer');
+        designer.report = report;
+        designer.renderHtml("report-designer");
     }
 }
 

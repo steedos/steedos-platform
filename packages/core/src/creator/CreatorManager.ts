@@ -1,4 +1,5 @@
 import { JsonMap } from '@salesforce/ts-types';
+import _ = require('underscore');
 declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;
@@ -13,7 +14,7 @@ export class CreatorManager {
 
   Objects: JsonMap = {};
 
-  constructor(){
+  constructor() {
     this.Objects = Creator.Objects
   }
 
@@ -75,16 +76,36 @@ export class CreatorManager {
     return SteedosOData.getMetaDataPath(spaceId);
   }
 
-  loadObjects(object){
+  loadObjects(object) {
     if (typeof Creator.loadObjects == 'function') {
       return Creator.loadObjects(object);
     }
   }
 
-  fiberLoadObjects(object){
+  fiberLoadObjects(object) {
     if (typeof Creator.fiberLoadObjects == 'function') {
       return Creator.fiberLoadObjects(object);
     }
   }
 
+  getSteedosSchema() {
+    return Creator.steedosSchema
+  }
+
+  setOdataProperty(entities: any[], space: string, key: string) {
+    let that = this;
+    let entities_OdataProperties = [];
+
+    _.each(entities, function (entity, idx) {
+      let entity_OdataProperties = {};
+      let id = entities[idx]["_id"];
+      entity_OdataProperties['@odata.id'] = that.getODataNextLinkPath(space, key) + '(\'' + ("" + id) + '\')';
+      entity_OdataProperties['@odata.etag'] = "W/\"08D589720BBB3DB1\"";
+      entity_OdataProperties['@odata.editLink'] = entity_OdataProperties['@odata.id'];
+      _.extend(entity_OdataProperties, entity);
+      return entities_OdataProperties.push(entity_OdataProperties);
+    });
+
+    return entities_OdataProperties;
+  }
 }

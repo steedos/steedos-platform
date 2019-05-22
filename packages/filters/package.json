@@ -1,0 +1,26 @@
+{
+  "name": "@steedos/filters",
+  "private": false,
+  "version": "0.0.3",
+  "description": "filters lib for steedos",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test/**/*.js"
+  },
+  "dependencies": {
+    "devextreme": "^18.2.6",
+    "moment": "^2.24.0",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "jslint": "^0.12.1",
+    "mocha": "^5.2.0",
+    "sinon-chai": "^3.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

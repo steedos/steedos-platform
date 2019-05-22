@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-04/schema#
-id: steedosObjectSchema
+id: steedosObjectConfig
 type: object
 title: Steedos Object
 description: The properties and shape of the Steedos Object
@@ -7,7 +7,7 @@ properties:
   name:
     type: string
     title: 对象名
-    pattern: ^[a-zA-Z_][a-zA-Z0-9_]*$
+    pattern: ^[_a-zA-Z][_a-zA-Z0-9]*$
   label:
     type: string
     title: 显示名称

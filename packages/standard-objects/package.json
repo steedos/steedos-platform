@@ -1,7 +1,11 @@
 {
   "name": "@steedos/standard-objects",
+  "private": false,
   "version": "0.0.1",
   "description": "Standard objects for steedos",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
