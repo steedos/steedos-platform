@@ -9,13 +9,15 @@
     "test": "mocha test/**/*.js"
   },
   "dependencies": {
-    "devextreme": "^18.2.6"
+    "devextreme": "^18.2.6",
+    "moment": "^2.24.0",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "mocha": "^5.2.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "jslint": "^0.12.1",
+    "mocha": "^5.2.0",
     "sinon-chai": "^3.3.0"
   },
   "publishConfig": {
