@@ -100,7 +100,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
     let rootQueryfields = {};
     let knownTypes = {};
     let datasourceName = datasource.name;
-    console.log('datasourceName: ', datasourceName);
 
     _.each(datasource.getObjects(), function (obj, object_name) {
         if (!obj.name) {
@@ -112,7 +111,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
             }
         })
-        console.log(knownTypes[objName]);
         rootQueryfields[objName] = {
             type: new GraphQLList(knownTypes[objName]),
             args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
