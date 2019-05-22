@@ -92,27 +92,27 @@ describe('advanced format filter to odata query', () => {
     });
     it('between array<date,date>', async () => {
         let filters = [
-            ["age", "between", [new Date('2019-05-22T09:00:00.000Z'), new Date('2019-05-22T18:00:00.000Z')]]
+            ["created", "between", [new Date('2019-05-22T09:00:00.000Z'), new Date('2019-05-22T18:00:00.000Z')]]
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((age ge 2019-05-22T17:00:00Z) and (age le 2019-05-23T02:00:00Z))");
+        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z) and (created le 2019-05-23T02:00:00Z))");
     });
     it('between array<null,date>', async () => {
         let filters = [
-            ["age", "between", [null, new Date('2019-05-22T18:00:00.000Z')]]
+            ["created", "between", [null, new Date('2019-05-22T18:00:00.000Z')]]
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((age le 2019-05-23T02:00:00Z))");
+        expect(result).to.be.eq("((created le 2019-05-23T02:00:00Z))");
     });
     it('between array<date,null>', async () => {
         let filters = [
-            ["age", "between", [new Date('2019-05-22T09:00:00.000Z'), null]]
+            ["created", "between", [new Date('2019-05-22T09:00:00.000Z'), null]]
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((age ge 2019-05-22T17:00:00Z))");
+        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z))");
     });
     it('filter is a function', async () => {
         let filters = function () {
