@@ -11,6 +11,16 @@ DevExpressData.utils.isUnaryOperation = (crit) => {
 const defaultDateNames = DevExpress.localization.date;
 
 const DevExpressOData = {
+    pad(text, length, right) {
+        text = String(text);
+        while (text.length < length) {
+            text = right ? (text + "0") : ("0" + text);
+        }
+        return text;
+    },
+    padLeft2(text) {
+        return this.pad(text, 2);
+    },
     serializePropName(propName) {
         return propName.replace(/\./g, "/");
     },

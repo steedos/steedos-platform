@@ -5,7 +5,7 @@ const utils = require("./utils");
 
 let formatFiltersToDev = (filters) => {
     var filtersLooper, selector;
-    if (!filters.length) {
+    if (!_.isFunction(filters) && !filters.length) {
         return;
     }
     selector = [];
@@ -106,7 +106,7 @@ let formatFiltersToDev = (filters) => {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "or");
                             });
-                        } else if (option === "<>") {
+                        } else if (["<>", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1) {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");
                             });
