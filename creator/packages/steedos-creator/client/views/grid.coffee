@@ -872,7 +872,7 @@ Template.creator_grid.onCreated ->
 
 
 Template.creator_grid.refresh = (dxDataGridInstance)->
-	is_related = this.data.is_related
+	is_related = this.data?.is_related || false
 	if !is_related
 		Session.set("grid_paging", null)
 	dxDataGridInstance.refresh().done (result)->
