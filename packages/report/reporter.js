@@ -652,8 +652,7 @@ let reporter = {
   async getData(report) {
     let object = objectql.getSteedosSchema().getObject(report.object_name);
     let dataResult = await object.find({
-      filters: [],
-      top: 2
+      filters: report.filters
     });
     let result = {};
     result[`${report.object_name}`] = dataResult;
@@ -661,4 +660,4 @@ let reporter = {
   }
 };
 
-module.exports.core = reporter;
+module.exports = reporter;
