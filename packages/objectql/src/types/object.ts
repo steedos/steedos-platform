@@ -75,7 +75,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_audit;
     }
     public set enable_audit(value: boolean) {
-        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
             throw new Error(`not support, please set ${this._name}.enable_audit to false or remove the enable_audit attribute`)
         }
         this._enable_audit = value;
@@ -86,7 +86,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_instances;
     }
     public set enable_instances(value: boolean) {
-        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
             throw new Error(`not support, please set ${this._name}.enable_instances to false or remove the enable_instances attribute`)
         }
         this._enable_instances = value;
@@ -97,7 +97,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_trash;
     }
     public set enable_trash(value: boolean) {
-        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
             throw new Error(`not support, please set ${this._name}.enable_trash to false or remove the enable_trash attribute`)
         }
         this._enable_trash = value;
@@ -108,7 +108,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_share;
     }
     public set enable_share(value: boolean) {
-        if(value && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
             throw new Error(`not support, please set ${this._name}.enable_share to false or remove the enable_share attribute`)
         }
         this._enable_share = value;
