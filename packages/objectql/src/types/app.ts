@@ -1,5 +1,6 @@
 import { JsonMap } from '@salesforce/ts-types';
-import { SteedosSchema } from './schema';
+import { SteedosDataSourceType } from '.';
+import _ = require('underscore');
 export type SteedosAppTypeConfig = {
     _id: string,
     name: string,
@@ -9,6 +10,10 @@ export type SteedosAppTypeConfig = {
 }
 
 export class SteedosAppType{
+    private _datasource: SteedosDataSourceType;
+    public get datasource(): SteedosDataSourceType {
+        return this._datasource;
+    }
     private __id: string;
     public get _id(): string {
         return this.__id;
@@ -49,14 +54,9 @@ export class SteedosAppType{
     public get is_creator(): boolean {
         return this._is_creator;
     }
-
-    private _schema: SteedosSchema;
-    public get schema(): SteedosSchema {
-        return this._schema;
-    }
     
-    constructor(config: SteedosAppTypeConfig, schema: SteedosSchema){
-        this._schema = schema
+    constructor(config: SteedosAppTypeConfig, datasource: SteedosDataSourceType){
+        this._datasource = datasource
         this._is_creator = true
         this._id = config._id
         this.name = config.name
@@ -74,5 +74,29 @@ export class SteedosAppType{
         config.objects = this.objects
         config.is_creator = this.is_creator
         return config
+    }
+
+    private transformReferenceTo(reference_to: string, datasource: SteedosDataSourceType): string{
+        if(_.isString(reference_to)){
+            if(reference_to.split('.').length = 1){
+                if(datasource.getObject(reference_to)){
+                    return `${datasource.name}.${reference_to}`
+                }
+            }
+        }
+        return reference_to
+    }
+
+    transformReferenceOfObject(){
+        let datasource = this._datasource;
+        if(datasource.name != 'default'){
+            if(_.isArray(this.objects)){
+                let objects: string[] = []
+                _.each(this.objects, (object_name)=>{
+                    objects.push(this.transformReferenceTo(object_name, datasource))
+                })
+                this.objects = objects;
+            }
+        }
     }
 }

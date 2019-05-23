@@ -1,4 +1,4 @@
-import { Dictionary } from '@salesforce/ts-types';
+import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosDriver, 
     SteedosMongoDriver, 
     SteedosMeteorMongoDriver, 
@@ -16,7 +16,9 @@ import { SteedosIDType,
     SteedosSchema, 
     SteedosListenerConfig, 
     SteedosObjectPermissionTypeConfig, 
-    SteedosObjectPermissionType } from '.';
+    SteedosObjectPermissionType, 
+    SteedosAppTypeConfig,
+    SteedosAppType} from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 
@@ -49,6 +51,8 @@ export type SteedosDataSourceTypeConfig = {
     objectFiles?: string[]
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
     getRoles?: Function //TODO 尚未开放此功能
+    apps?: Dictionary<SteedosAppTypeConfig>
+    appFiles?: string[]
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -78,6 +82,8 @@ export class SteedosDataSourceType implements Dictionary {
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
+
+    private _apps: Dictionary<SteedosAppType> = {}
    
     getObjects(){
         return this._objects
@@ -192,6 +198,52 @@ export class SteedosDataSourceType implements Dictionary {
                 this.setObjectPermission(object_name, objectRolePermission)
             })
         })
+
+
+        _.each(config.apps, (appConfig, app_id)=>{
+            this.addApp(app_id, appConfig)
+        })
+
+        _.each(config.appFiles, (appFile)=>{
+            this.useAppFile(appFile)
+        })
+    }
+
+
+    /**apps */
+    addApp(app_id: string, config: SteedosAppTypeConfig){
+        config._id = app_id
+        this._apps[config._id] = new SteedosAppType(config, this)
+    }
+
+    useAppFiles(appFiles: string[]){
+        _.each(appFiles, (appFile)=>{
+            this.useAppFile(appFile)
+        })
+        
+    }
+
+    useAppFile(filePath: string){
+        let appJsons = util.loadApps(filePath)
+        _.each(appJsons, (json: SteedosAppTypeConfig) => {
+            this.addApp(json._id, json)
+        })
+    }
+
+    getApp(app_id: string){
+        return this._apps[app_id]
+    }
+
+    getApps(){
+        return this._apps
+    }
+
+    getAppsConfig(){
+        let appsConfig:JsonMap = {}
+        _.each(this._apps, (app: SteedosAppType, _id: string)=>{
+            appsConfig[_id] = app.toConfig()
+        })
+        return appsConfig
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {

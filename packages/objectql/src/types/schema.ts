@@ -1,20 +1,16 @@
-import { Dictionary, JsonMap } from '@salesforce/ts-types';
-import { SteedosDataSourceType, SteedosDataSourceTypeConfig, SteedosAppTypeConfig, SteedosAppType } from ".";
+import { Dictionary } from '@salesforce/ts-types';
+import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
 import _ = require("underscore");
-var util = require('../util')
 
 const defaultDatasourceName = 'default';
 
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
-    apps?: Dictionary<SteedosAppTypeConfig>
-    appFiles?: string[]
 }
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
-    private _apps: Dictionary<SteedosAppType> = {}
-
+    
     constructor(config?: SteedosSchemaConfig) {
         if(config){
             _.each(config.datasources, (datasourceConfig, datasource_name) => {
@@ -24,14 +20,6 @@ export class SteedosSchema {
             if(!this.getDataSource(defaultDatasourceName)){
                 throw new Error('missing default database');
             }
-
-            _.each(config.apps, (appConfig, app_id)=>{
-                this.addApp(app_id, appConfig)
-            })
-
-            _.each(config.appFiles, (appFile)=>{
-                this.useAppFile(appFile)
-            })
         }
     }
 
@@ -63,7 +51,35 @@ export class SteedosSchema {
     }
 
     addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
-        this._datasources[datasource_name] = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
+        if(this._datasources[datasource_name]){
+            throw new Error(`datasource ${datasource_name} existed`);
+        }
+        let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
+        this._datasources[datasource_name] = datasource
+        this.transformReferenceOfObject(datasource)
+    }
+
+    /**
+     * 转换对象的引用
+     * 包括：app.objects 及 object 的字段有 reference_to 属性的
+     * @private
+     * @param {SteedosDataSourceType} datasource
+     * @memberof SteedosSchema
+     * TODO 处理reference_to 为function的情况
+     */
+    private transformReferenceOfObject(datasource: SteedosDataSourceType): void{
+        let objects = datasource.getObjects();
+        _.each(objects, (object, object_name) => {
+            _.each(object.fields, (field, field_name)=>{
+                field.transformReferenceOfObject()
+            })
+        })
+
+        let apps = datasource.getApps()
+
+        _.each(apps, (app, app_name)=>{
+            app.transformReferenceOfObject()
+        })
     }
 
     getDataSource(datasource_name: string = defaultDatasourceName) {
@@ -72,40 +88,5 @@ export class SteedosSchema {
 
     getDataSources(){
         return this._datasources
-    }
-
-    addApp(app_id: string, config: SteedosAppTypeConfig){
-        config._id = app_id
-        this._apps[config._id] = new SteedosAppType(config, this)
-    }
-
-    useAppFiles(appFiles: string[]){
-        _.each(appFiles, (appFile)=>{
-            this.useAppFile(appFile)
-        })
-        
-    }
-
-    useAppFile(filePath: string){
-        let appJsons = util.loadApps(filePath)
-        _.each(appJsons, (json: SteedosAppTypeConfig) => {
-            this.addApp(json._id, json)
-        })
-    }
-
-    getApp(app_id: string){
-        return this._apps[app_id]
-    }
-
-    getApps(){
-        return this._apps
-    }
-
-    getAppsConfig(){
-        let appsConfig:JsonMap = {}
-        _.each(this._apps, (app: SteedosAppType, _id: string)=>{
-            appsConfig[_id] = app.toConfig()
-        })
-        return appsConfig
     }
 }

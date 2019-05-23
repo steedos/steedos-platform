@@ -2,6 +2,7 @@ import { Dictionary, JsonMap } from '@salesforce/ts-types';
 import { SteedosObjectType } from '.';
 import _ = require('underscore')
 import { SteedosFieldDBType } from '../driver';
+import { SteedosDataSourceType } from './datasource';
 
 //TODO 整理字段类型
 const FIELDTYPES = [
@@ -62,7 +63,7 @@ abstract class SteedosFieldProperties{
     sortable?: boolean
     precision?: number
     scale?: number
-    reference_to?: string | [] | Function
+    reference_to?: string | string[] | Function
     rows?: number
     options?: string | []
     description?: string
@@ -119,6 +120,36 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         if(this.generated){
             this.omit = true
             this.properties.push('omit')
+        }
+    }
+
+    private transformReferenceTo(reference_to: string, datasource: SteedosDataSourceType): string{
+        if(_.isString(reference_to)){
+            if(reference_to.split('.').length = 1){
+                if(datasource.getObject(reference_to)){
+                    return `${datasource.name}.${reference_to}`
+                }
+            }
+        }
+        return reference_to
+    }
+
+    transformReferenceOfObject(){
+        if(this.reference_to){
+            let datasource = this._object.datasource
+            if(datasource.name != 'default'){
+                if(_.isString(this.reference_to)){
+                    this.reference_to = this.transformReferenceTo(this.reference_to, datasource)
+                }else if(_.isArray(this.reference_to)){
+                    let reference_to: string[] = []
+                    _.each(this.reference_to, (_reference_to)=>{
+                        reference_to.push(this.transformReferenceTo(_reference_to, datasource))
+                    })
+                    this.reference_to = reference_to
+                }else if(_.isFunction(this.reference_to)){
+                    //TODO
+                }
+            }
         }
     }
 

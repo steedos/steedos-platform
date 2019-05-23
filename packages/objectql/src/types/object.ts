@@ -59,6 +59,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private _schema: SteedosSchema;
     private _datasource: SteedosDataSourceType;
+    public get datasource(): SteedosDataSourceType {
+        return this._datasource;
+    }
     private _name: string;
     private _fields: Dictionary<SteedosFieldType> = {};
     private _actions: Dictionary<SteedosActionType> = {};
