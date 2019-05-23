@@ -203,14 +203,16 @@ Creator.Objects.archive_wenshu =
 		archival_code:
 			type:"text"
 			label:"档号"
-			is_wide:true
 			omit:true
+			searchable:true
 			group:"档号"
 		
 		fonds_name:
 			type:"master_detail"
 			label:"全宗名称"
 			reference_to:"archive_fonds"
+			searchable:false
+			filterable:false
 			group:"档号"
 
 		year:
@@ -252,7 +254,7 @@ Creator.Objects.archive_wenshu =
 			type:"master_detail"
 			label:"类别号"
 			reference_to: "archive_classification"
-			searchable:false
+			searchable:true
 			group:"档号"
 			filterable:false
 		
@@ -344,7 +346,6 @@ Creator.Objects.archive_wenshu =
 			type:"text",
 			label:"主送",
 			searchable:true
-			is_wide:true
 			group:"内容描述"
 		
 		other_receivers:
@@ -382,7 +383,9 @@ Creator.Objects.archive_wenshu =
 				{label: "20年", value: "20年"},
 				{label: "30年", value: "30年"}
 			],
-			allowedValues:["10年","20年","30年"],			
+			allowedValues:["10年","20年","30年"],				
+			searchable:false
+			filterable:false		
 			group:"内容描述"
 		
 		applicant_organization_name:
@@ -400,7 +403,7 @@ Creator.Objects.archive_wenshu =
 		reference:
 			type: "text"
 			label:"参见"
-			searchable:false
+			searchable:true
 			group:"内容描述"
 			filterable:false
 		
@@ -449,7 +452,7 @@ Creator.Objects.archive_wenshu =
 		document_type:
 			type:"text"
 			label:"文件类型"
-			searchable:false
+			searchable:true
 			group:"形式特征"
 			filterable:false
 		
@@ -503,6 +506,7 @@ Creator.Objects.archive_wenshu =
 		archive_date:
 			type:"date"
 			label:"归档日期"
+			searchable:true
 			group:"形式特征"
 		
 		signature_rules:
