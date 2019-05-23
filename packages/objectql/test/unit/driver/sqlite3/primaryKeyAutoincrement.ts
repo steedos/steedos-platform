@@ -40,22 +40,22 @@ describe('primary key autoincrement test for sqlite3 database', () => {
                 }
             }
         },
+        // {
+        //     title: "create the third record with id value",
+        //     insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
+        //     expected: {
+        //         insertResult: {
+        //             id: 3,
+        //             name: "ptr"
+        //         }
+        //     }
+        // },
         {
-            title: "create the third record with id value",
-            insertData: { id: 5, name: "ptr", title: "PTR", count: 46 },
-            expected: {
-                insertResult: {
-                    id: 3,
-                    name: "ptr"
-                }
-            }
-        },
-        {
-            title: "create the fourth record",
+            title: "create the third record",
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 4,
+                    id: 3,
                     name: "ptr"
                 }
             }
@@ -72,7 +72,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             insertData: { name: "ptr", title: "PTR", count: 46 },
             expected: {
                 insertResult: {
-                    id: 5,
+                    id: 4,
                     name: "ptr"
                 }
             }
