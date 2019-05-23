@@ -18,6 +18,22 @@ describe('advanced format filter to odata query', () => {
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("((status ne 'closed') and (status ne 'open'))");
     });
+    it('in array', async () => {
+        let filters = [
+            ["status", "in", ["closed", "open"]]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("((status eq 'closed') or (status eq 'open'))");
+    });
+    it('notin array', async () => {
+        let filters = [
+            ["status", "notin", ["closed", "open"]]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("((status ne 'closed') and (status ne 'open'))");
+    });
     it('contains array', async () => {
         let filters = [
             ["tag", "contains", ["start", "end"]]

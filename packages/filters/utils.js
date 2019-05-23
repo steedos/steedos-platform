@@ -322,43 +322,8 @@ let getBetweenBuiltinValueItem = (key) => {
     return getBetweenTimeBuiltinValueItem(key);
 };
 
-// let getBetweenTimeBuiltinValues = (is_check_only) => {
-//   return {
-//       "between_time_last_year": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_year"),
-//       "between_time_this_year": is_check_only ? true : getBetweenTimeBuiltinValueItem("this_year"),
-//       "between_time_next_year": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_year"),
-//       "between_time_last_quarter": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_quarter"),
-//       "between_time_this_quarter": is_check_only ? true : getBetweenTimeBuiltinValueItem("this_quarter"),
-//       "between_time_next_quarter": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_quarter"),
-//       "between_time_last_month": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_month"),
-//       "between_time_this_month": is_check_only ? true : getBetweenTimeBuiltinValueItem("this_month"),
-//       "between_time_next_month": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_month"),
-//       "between_time_last_week": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_week"),
-//       "between_time_this_week": is_check_only ? true : getBetweenTimeBuiltinValueItem("this_week"),
-//       "between_time_next_week": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_week"),
-//       "between_time_yestday": is_check_only ? true : getBetweenTimeBuiltinValueItem("yestday"),
-//       "between_time_today": is_check_only ? true : getBetweenTimeBuiltinValueItem("today"),
-//       "between_time_tomorrow": is_check_only ? true : getBetweenTimeBuiltinValueItem("tomorrow"),
-//       "between_time_last_7_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_7_days"),
-//       "between_time_last_30_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_30_days"),
-//       "between_time_last_60_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_60_days"),
-//       "between_time_last_90_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_90_days"),
-//       "between_time_last_120_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("last_120_days"),
-//       "between_time_next_7_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_7_days"),
-//       "between_time_next_30_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_30_days"),
-//       "between_time_next_60_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_60_days"),
-//       "between_time_next_90_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_90_days"),
-//       "between_time_next_120_days": is_check_only ? true : getBetweenTimeBuiltinValueItem("next_120_days")
-//   };
-// };
-
 let isBetweenFilterOperation = (operation) => {
     return operation === "between";
-    // if (operation === "between"){
-    //     return true;
-    // }
-    // let buildinValues = getBetweenTimeBuiltinValues(true);
-    // return !!(buildinValues ? buildinValues[operation] : false)
 }
 
 exports.getBetweenBuiltinValueItem = getBetweenBuiltinValueItem;

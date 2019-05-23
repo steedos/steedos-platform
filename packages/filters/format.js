@@ -102,11 +102,15 @@ let formatFiltersToDev = (filters) => {
                         //         }
                         //     });
                         // }
-                        if (option === "=") {
+                        if (["=", "in"].indexOf(option) > -1) {
                             _.each(value, function (v) {
-                                return sub_selector.push([field, option, v], "or");
+                                return sub_selector.push([field, "=", v], "or");
                             });
-                        } else if (["<>", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1) {
+                        } else if (["<>", "notin"].indexOf(option) > -1) {
+                            _.each(value, function (v) {
+                                return sub_selector.push([field, "<>", v], "and");
+                            });
+                        } else if (["notcontains", "notstartswith", "notendswith"].indexOf(option) > -1) {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");
                             });
