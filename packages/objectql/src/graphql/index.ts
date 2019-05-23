@@ -105,7 +105,11 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
         if (!obj.name) {
             return;
         }
-        let objName = correctName(obj.name);
+        if (datasourceName === 'default') {
+            var objName = correctName(obj.name);
+        } else {
+            var objName = correctName(datasourceName + '.' + obj.name);
+        }
         knownTypes[objName] = new GraphQLObjectType({
             name: objName, fields: function () {
                 return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
@@ -169,7 +173,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
         })
     };
 
-    return new GraphQLSchema(schemaConfig);;
+    return new GraphQLSchema(schemaConfig);
 }
 
 export function getGraphQLRoutes(datasource: SteedosDataSourceType) {
