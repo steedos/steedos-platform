@@ -4,14 +4,14 @@ var reporter = require('./reporter');
 var routes = express();
 
 routes.get('/mrt/:report_id', async (req, res)=> {
-  let report = await reporter.core.getReport(req.params.report_id);
-  let simpleList = reporter.core.getReportMrt(report);
+  let report = await reporter.getReport(req.params.report_id);
+  let simpleList = reporter.getReportMrt(report);
   res.send(simpleList);
 });
 
 routes.get('/data/:report_id', async (req, res) => {
-  let report = await reporter.core.getReport(req.params.report_id);
-  let data = await reporter.core.getData(report);
+  let report = await reporter.getReport(req.params.report_id);
+  let data = await reporter.getData(report);
   res.send(data);
 });
 
