@@ -54,7 +54,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
             let reference_to = v.reference_to;
             let objectName = reference_to.indexOf('.') > -1 ? reference_to : `${datasourceName}.${reference_to}`;
             objTypeFields[k] = {
-                type: knownTypes[reference_to],
+                type: knownTypes[correctName(reference_to)],
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
@@ -63,7 +63,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
                 }
             };
             if (v.type == 'lookup' && v.multiple) {
-                objTypeFields[k].type = new GraphQLList(knownTypes[reference_to]);
+                objTypeFields[k].type = new GraphQLList(knownTypes[correctName(reference_to)]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
                     let filters = [];
