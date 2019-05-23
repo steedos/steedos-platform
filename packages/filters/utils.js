@@ -44,11 +44,13 @@ let getLastMonthFirstDay = (year, month) => {
     if (!month) {
         month = new Date().getMonth();
     }
+	// 月份为0代表本年的第一月
     if (month === 0) {
         month = 11;
         year--;
         return new Date(year, month, 1);
     }
+    // 否则,只减去月份
     month--;
     return new Date(year, month, 1);
 }
@@ -91,24 +93,36 @@ let getBetweenTimeBuiltinValueItem = (key) => {
     // 过滤器between运算符，现算日期/日期时间类型字段的values值
     var currentMonth, currentYear, endValue, firstDay, label, lastDay, lastMonday, lastMonthFinalDay, lastMonthFirstDay, lastQuarterEndDay, lastQuarterStartDay, lastSunday, last_120_days, last_30_days, last_60_days, last_7_days, last_90_days, millisecond, minusDay, monday, month, nextMonday, nextMonthFinalDay, nextMonthFirstDay, nextQuarterEndDay, nextQuarterStartDay, nextSunday, nextYear, next_120_days, next_30_days, next_60_days, next_7_days, next_90_days, now, previousYear, startValue, strEndDay, strFirstDay, strLastDay, strMonday, strStartDay, strSunday, strToday, strTomorrow, strYestday, sunday, thisQuarterEndDay, thisQuarterStartDay, tomorrow, values, week, year, yestday;
     now = new Date();
+    // 一天的毫秒数
     millisecond = 1000 * 60 * 60 * 24;
     yestday = new Date(now.getTime() - millisecond);
     tomorrow = new Date(now.getTime() + millisecond);
+    // 一周中的某一天
     week = now.getDay();
+    // 减去的天数
     minusDay = week !== 0 ? week - 1 : 6;
     monday = new Date(now.getTime() - (minusDay * millisecond));
     sunday = new Date(monday.getTime() + (6 * millisecond));
+    // 上周日
     lastSunday = new Date(monday.getTime() - millisecond);
+    // 上周一
     lastMonday = new Date(lastSunday.getTime() - (millisecond * 6));
+    // 下周一
     nextMonday = new Date(sunday.getTime() + millisecond);
+    // 下周日
     nextSunday = new Date(nextMonday.getTime() + (millisecond * 6));
     currentYear = now.getFullYear();
     previousYear = currentYear - 1;
     nextYear = currentYear + 1;
+    // 当前月份
     currentMonth = now.getMonth();
+    // 计数年、月
     year = now.getFullYear();
     month = now.getMonth();
+    // 本月第一天
     firstDay = new Date(currentYear, currentMonth, 1);
+	// 当为12月的时候年份需要加1
+	// 月份需要更新为0 也就是下一年的第一个月
     if (currentMonth === 11) {
         year++;
         month++;
@@ -138,21 +152,25 @@ let getBetweenTimeBuiltinValueItem = (key) => {
     next_120_days = new Date(now.getTime() + (119 * millisecond));
     switch (key) {
         case "last_year":
+            // 去年
             label = t("creator_filter_operation_between_last_year");
             startValue = new Date(previousYear + "-01-01T00:00:00Z");
             endValue = new Date(previousYear + "-12-31T23:59:59Z");
             break;
         case "this_year":
+            // 今年
             label = t("creator_filter_operation_between_this_year");
             startValue = new Date(currentYear + "-01-01T00:00:00Z");
             endValue = new Date(currentYear + "-12-31T23:59:59Z");
             break;
         case "next_year":
+            // 明年
             label = t("creator_filter_operation_between_next_year");
             startValue = new Date(nextYear + "-01-01T00:00:00Z");
             endValue = new Date(nextYear + "-12-31T23:59:59Z");
             break;
         case "last_quarter":
+            // 上季度
             strFirstDay = moment(lastQuarterStartDay).format("YYYY-MM-DD");
             strLastDay = moment(lastQuarterEndDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_quarter");
@@ -160,6 +178,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "this_quarter":
+            // 本季度
             strFirstDay = moment(thisQuarterStartDay).format("YYYY-MM-DD");
             strLastDay = moment(thisQuarterEndDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_this_quarter");
@@ -167,6 +186,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "next_quarter":
+            // 下季度
             strFirstDay = moment(nextQuarterStartDay).format("YYYY-MM-DD");
             strLastDay = moment(nextQuarterEndDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_quarter");
@@ -174,6 +194,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "last_month":
+            // 上月
             strFirstDay = moment(lastMonthFirstDay).format("YYYY-MM-DD");
             strLastDay = moment(lastMonthFinalDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_month");
@@ -181,6 +202,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "this_month":
+            // 本月
             strFirstDay = moment(firstDay).format("YYYY-MM-DD");
             strLastDay = moment(lastDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_this_month");
@@ -188,6 +210,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "next_month":
+            // 下月
             strFirstDay = moment(nextMonthFirstDay).format("YYYY-MM-DD");
             strLastDay = moment(nextMonthFinalDay).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_month");
@@ -195,6 +218,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strLastDay + "T23:59:59Z");
             break;
         case "last_week":
+            // 上周
             strMonday = moment(lastMonday).format("YYYY-MM-DD");
             strSunday = moment(lastSunday).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_week");
@@ -202,6 +226,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strSunday + "T23:59:59Z");
             break;
         case "this_week":
+            // 本周
             strMonday = moment(monday).format("YYYY-MM-DD");
             strSunday = moment(sunday).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_this_week");
@@ -209,6 +234,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strSunday + "T23:59:59Z");
             break;
         case "next_week":
+            // 下周
             strMonday = moment(nextMonday).format("YYYY-MM-DD");
             strSunday = moment(nextSunday).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_week");
@@ -216,24 +242,28 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strSunday + "T23:59:59Z");
             break;
         case "yestday":
+            // 昨天
             strYestday = moment(yestday).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_yestday");
             startValue = new Date(strYestday + "T00:00:00Z");
             endValue = new Date(strYestday + "T23:59:59Z");
             break;
         case "today":
+            // 今天
             strToday = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_today");
             startValue = new Date(strToday + "T00:00:00Z");
             endValue = new Date(strToday + "T23:59:59Z");
             break;
         case "tomorrow":
+            // 明天
             strTomorrow = moment(tomorrow).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_tomorrow");
             startValue = new Date(strTomorrow + "T00:00:00Z");
             endValue = new Date(strTomorrow + "T23:59:59Z");
             break;
         case "last_7_days":
+            // 过去7天
             strStartDay = moment(last_7_days).format("YYYY-MM-DD");
             strEndDay = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_7_days");
@@ -241,6 +271,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "last_30_days":
+            // 过去30天
             strStartDay = moment(last_30_days).format("YYYY-MM-DD");
             strEndDay = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_30_days");
@@ -248,6 +279,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "last_60_days":
+            // 过去60天
             strStartDay = moment(last_60_days).format("YYYY-MM-DD");
             strEndDay = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_60_days");
@@ -255,6 +287,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "last_90_days":
+            // 过去90天
             strStartDay = moment(last_90_days).format("YYYY-MM-DD");
             strEndDay = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_90_days");
@@ -262,6 +295,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "last_120_days":
+            // 过去120天
             strStartDay = moment(last_120_days).format("YYYY-MM-DD");
             strEndDay = moment(now).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_last_120_days");
@@ -269,6 +303,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "next_7_days":
+            // 未来7天
             strStartDay = moment(now).format("YYYY-MM-DD");
             strEndDay = moment(next_7_days).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_7_days");
@@ -276,6 +311,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "next_30_days":
+            // 未来30天
             strStartDay = moment(now).format("YYYY-MM-DD");
             strEndDay = moment(next_30_days).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_30_days");
@@ -283,6 +319,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "next_60_days":
+            // 未来60天
             strStartDay = moment(now).format("YYYY-MM-DD");
             strEndDay = moment(next_60_days).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_60_days");
@@ -290,6 +327,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "next_90_days":
+            // 未来90天
             strStartDay = moment(now).format("YYYY-MM-DD");
             strEndDay = moment(next_90_days).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_90_days");
@@ -297,6 +335,7 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
             break;
         case "next_120_days":
+            // 未来120天
             strStartDay = moment(now).format("YYYY-MM-DD");
             strEndDay = moment(next_120_days).format("YYYY-MM-DD");
             label = t("creator_filter_operation_between_next_120_days");
@@ -305,6 +344,9 @@ let getBetweenTimeBuiltinValueItem = (key) => {
     }
     values = [startValue, endValue];
     // if (field_type === "datetime") {
+	// 	// 时间类型字段，内置时间范围应该考虑偏移时区值，否则过滤数据存在偏差
+	// 	// 非内置时间范围时，用户通过时间控件选择的范围，会自动处理时区偏差情况
+	// 	// 日期类型字段，数据库本来就存的是UTC的0点，不存在偏差
     //     _.forEach(values, function (fv) {
     //         if (fv) {
     //             return fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60);
@@ -326,6 +368,11 @@ let isBetweenFilterOperation = (operation) => {
     return operation === "between";
 }
 
+exports.getMonthDays = getMonthDays;
+exports.getQuarterStartMonth = getQuarterStartMonth;
+exports.getLastMonthFirstDay = getLastMonthFirstDay;
+exports.getLastQuarterFirstDay = getLastQuarterFirstDay;
+exports.getNextQuarterFirstDay = getNextQuarterFirstDay;
 exports.getBetweenBuiltinValueItem = getBetweenBuiltinValueItem;
 exports.getBetweenTimeBuiltinValueItem = getBetweenTimeBuiltinValueItem;
 exports.isBetweenFilterOperation = isBetweenFilterOperation;
