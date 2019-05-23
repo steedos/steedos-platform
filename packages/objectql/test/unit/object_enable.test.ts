@@ -31,7 +31,7 @@ describe('Test Object.enable_xxx', () => {
             }
         }
 
-        expect(hasError).to.equal(true)
+        expect(hasError).to.equal(false)
     });
     it('Object.enable_instances cannot be true', async () => {
         let hasError = false
@@ -62,7 +62,7 @@ describe('Test Object.enable_xxx', () => {
             }
         }
 
-        expect(hasError).to.equal(true)
+        expect(hasError).to.equal(false)
     });
     it('Object.enable_trash cannot be true', async () => {
         let hasError = false
@@ -93,7 +93,7 @@ describe('Test Object.enable_xxx', () => {
             }
         }
 
-        expect(hasError).to.equal(true)
+        expect(hasError).to.equal(false)
     });
     it('Object.enable_share cannot be true', async () => {
         let hasError = false
@@ -124,7 +124,7 @@ describe('Test Object.enable_xxx', () => {
             }
         }
 
-        expect(hasError).to.equal(true)
+        expect(hasError).to.equal(false)
     });
 
     it('Object.enable_share default is false', async () => {
