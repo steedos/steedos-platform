@@ -4,8 +4,8 @@ Creator.Apps.archive_manage =
 	icon_slds: "document"
 	is_creator:true
 	objects: [
-		"archive_chuantong",
 		"archive_wenshu",
+		"archive_chuantong",
 		"archive_keji",
 		"archive_kejiditu",
 		"archive_kuaiji",
