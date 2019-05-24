@@ -8,9 +8,9 @@ let stimulsoftAssets = path.join(path.dirname(require.resolve("@steedos/stimulso
 let objectsDir = path.resolve('./objects')
 objectql.getSteedosSchema().addDataSource('default', {
     driver: 'mongo',
-    url: 'mongodb://192.168.0.21/fssh20190329',
+    url: 'mongodb://192.168.0.77/qhd-beta',
     objectFiles: [objectsDir]
-})
+});
 let express = require('express');
 let app = express();
 app.use(function (req, res, next) {

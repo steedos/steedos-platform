@@ -1,0 +1,261 @@
+name: contracts
+label: 合同
+icon: contract
+enable_files: true
+enable_search: true
+fields:
+  no:
+    type: text
+    label: 合同编号
+    required: true
+    sortable: true
+    filterable: true
+    name: 'no'
+  name:
+    label: 名称
+    type: text
+    required: true
+    searchable: true
+    index: true
+    name: name
+  amount:
+    label: 金额
+    type: number
+    scale: 2
+    required: true
+    sortable: true
+    name: amount
+  signed_date:
+    label: 签订日期
+    type: date
+    sortable: true
+    filterable: true
+    name: signed_date
+  account:
+    label: 对方单位
+    type: master_detail
+    reference_to: accounts
+    name: account
+    filterable: true
+  customer_contact:
+    label: 联系人
+    type: master_detail
+    reference_to: contacts
+    filterable: false
+    name: customer_contact
+  start_date:
+    label: 开始日期
+    type: date
+    sortable: true
+    filterable: true
+    name: start_date
+  end_date:
+    label: 结束日期
+    type: date
+    sortable: true
+    filterable: true
+    name: end_date
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+    name: description
+  subject:
+    type: textarea
+    label: 合同内容
+    is_wide: true
+    name: subject
+  project:
+    type: text
+    label: 计划编号
+    filterable: true
+    name: project
+  othercompany:
+    type: text
+    label: 对方单位名称
+    name: othercompany
+  registered_capital:
+    type: number
+    label: 注册资金
+    scale: 2
+    hidden: true
+    name: registered_capital
+  otherperson:
+    type: text
+    label: 对方联系人
+    name: otherperson
+  is_important:
+    type: boolean
+    label: 是否重大合同
+    defaultValue: false
+    name: is_important
+  is_bidding:
+    type: boolean
+    label: 是否招投标
+    defaultValue: false
+    name: is_bidding
+  is_connected_transaction:
+    type: boolean
+    label: 是否关联交易
+    defaultValue: false
+    name: is_connected_transaction
+  is_solid_investment:
+    type: boolean
+    label: 是否固投项目
+    defaultValue: false
+    name: is_solid_investment
+  contract_type:
+    type: lookup
+    label: 合同分类
+    reference_to: contract_types
+    required: true
+    name: contract_type
+    filterable: true
+  pretax_amount:
+    type: number
+    label: 合同税前金额
+    scale: 2
+    name: pretax_amount
+  tax:
+    type: number
+    label: 合同税
+    scale: 2
+    name: tax
+  advance_amount:
+    type: number
+    label: 预付款金额
+    scale: 2
+    name: advance_amount
+  outstanding_amount:
+    type: number
+    label: 未结金额
+    scale: 2
+    name: outstanding_amount
+  quality_bond:
+    type: number
+    label: 质量保证金
+    scale: 2
+    name: quality_bond
+  quality_proportion:
+    type: text
+    label: 质保比例
+    name: quality_proportion
+  shelf_life:
+    type: text
+    label: 质保期
+    name: shelf_life
+  yinhuashuilv:
+    type: number
+    label: 印花税率
+    scale: 4
+    name: yinhuashuilv
+  stamp_duty:
+    type: number
+    label: 印花税额
+    scale: 2
+    name: stamp_duty
+  contract_state:
+    type: select
+    label: 合同履行状态
+    options:
+      - label: 未签订
+        value: 未签订
+      - label: 进行中
+        value: 进行中
+      - label: 解除
+        value: 解除
+      - label: 异常
+        value: 异常
+      - label: 已验收
+        value: 已验收
+      - label: 完毕
+        value: 完毕
+      - label: 违约但继续履行
+        value: 违约但继续履行
+    allowedValues:
+      - 未签订
+      - 进行中
+      - 解除
+      - 异常
+      - 已验收
+      - 完毕
+      - 违约但继续履行
+    defaultValue: 未签订
+    required: true
+    name: contract_state
+    filterable: true
+  fileid:
+    type: text
+    label: 申请单id
+    hidden: true
+    name: fileid
+  chengbankeshi:
+    type: text
+    label: 承办科室
+    name: chengbankeshi
+  chengbanren:
+    type: text
+    label: 承办人
+    name: chengbanren
+  b_signed:
+    type: text
+    label: 对方签署人
+    name: b_signed
+  a_signed:
+    type: text
+    label: 己方签署人
+    name: a_signed
+  bop:
+    type: select
+    label: 收支类别
+    defaultValue: 收入
+    options:
+      - label: 收入
+        value: 收入
+      - label: 支出
+        value: 支出
+    allowedValues:
+      - 收入
+      - 支出
+    required: true
+    name: bop
+    filterable: true
+list_views:
+  recent:
+    label: 最近查看
+    filter_scope: space
+  all:
+    label: 所有合同
+    columns:
+      - 'no'
+      - name
+      - account
+      - company_id
+      - amount
+      - signed_date
+      - contract_state
+    filter_scope: space
+    filter_fields:
+      - company_id
+      - contract_type
+      - signed_date
+      - account
+      - contract_state
+  mine:
+    label: 我的合同
+    filter_scope: mine
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

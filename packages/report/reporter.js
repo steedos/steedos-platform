@@ -8,7 +8,7 @@ let reporter = {
   },
   getObject(object_name) {
     let object = objectql.getSteedosSchema().getObject(object_name);
-    return object.toConfig();
+    return object ? object.toConfig() : null;
   },
   formatObjectFields(object) {
     let fields = object.fields;
@@ -69,6 +69,9 @@ let reporter = {
     }
   },
   getDatabases(report, object) {
+    if (!(report && object)){
+      return {};
+    }
     let dataUrl = `/api/report/data/${report._id}`;
     return {
       "0": {
@@ -80,6 +83,9 @@ let reporter = {
     };
   },
   getDataSources(report, object) {
+    if (!(report && object)) {
+      return {};
+    }
     let columns = this.formatObjectFields(object);
     return {
       "0": {
@@ -96,123 +102,72 @@ let reporter = {
     let databases = this.getDatabases(report, object);
     let dataSources = this.getDataSources(report, object);
     return {
-      "ReportVersion": "2015.1.13",
-      "ReportGuid": "e124555e3a994d7c894fecd805a15efd",
-      "ReportName": "Report",
-      "ReportAlias": "Simple List",
+      "ReportVersion": "2019.2.1",
+      "ReportGuid": "448559cd48188338031dcb6edae3a534",
+      "ReportName": "TableSimpleTable",
+      "ReportAlias": "TableSimpleTable",
+      "ReportFile": "kJ4ay8atFMvhdt3oa.mrt",
       "ReportAuthor": "Stimulsoft",
-      "ReportDescription": "This sample demonstrates how to create a simple list report.",
-      "ReportCreated": "/Date(1085817540000+0300)/",
-      "ReportChanged": "/Date(1437976152612+0300)/",
+      "ReportDescription": "This sample demontrates how to create a simple report using the Table component.",
+      "ReportCreated": "/Date(-28800000+0800)/",
+      "ReportChanged": "/Date(-28800000+0800)/",
       "EngineVersion": "EngineV2",
-      "PreviewMode": "StandardAndDotMatrix",
-      "PreviewSettings": 33538047,
+      "CalculationMode": "Interpretation",
+      "ReportUnit": "HundredthsOfInch",
+      "PreviewSettings": 268435455,
       "Styles": {
         "0": {
-          "Ident": "StiStyle",
-          "Name": "Title1",
-          "HorAlignment": "Right",
-          "VertAlignment": "Center",
-          "Font": ";19;;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:193,152,89",
-          "AllowUseBorderSides": false
-        },
-        "1": {
-          "Ident": "StiStyle",
-          "Name": "Title2",
-          "VertAlignment": "Center",
-          "Font": ";9;;",
-          "Border": ";102,77,38;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:102,77,38",
-          "AllowUseBorderSides": false
-        },
-        "2": {
-          "Ident": "StiStyle",
-          "Name": "Header1",
-          "VertAlignment": "Center",
-          "Font": ";19;;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:193,152,89",
-          "AllowUseBorderSides": false
-        },
-        "3": {
           "Ident": "StiStyle",
           "Name": "Header2",
           "HorAlignment": "Center",
           "VertAlignment": "Center",
-          "Font": ";12;Bold;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:193,152,89",
-          "AllowUseBorderSides": false
+          "Font": "Segoe UI;21.75;Bold;",
+          "Border": "Bottom;158,158,158;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "TextBrush": "solid:158,158,158",
+          "NegativeTextBrush": "solid:Red"
         },
-        "4": {
+        "1": {
           "Ident": "StiStyle",
           "Name": "Header3",
           "HorAlignment": "Center",
           "VertAlignment": "Center",
-          "Font": ";9;Bold;",
-          "Border": "All;193,152,89;;;;;;solid:Black",
-          "Brush": "solid:242,234,221",
-          "TextBrush": "solid:193,152,89",
-          "AllowUseBorderSides": false
+          "Font": "Segoe UI;12;Bold;",
+          "Border": "Left, Right;White;;;;;;solid:Black",
+          "Brush": "solid:77,182,172",
+          "TextBrush": "solid:255,255,255",
+          "NegativeTextBrush": "solid:Red",
+          "AllowUseBorderFormatting": false
         },
-        "5": {
+        "2": {
           "Ident": "StiStyle",
           "Name": "Data1",
           "VertAlignment": "Center",
-          "Font": ";9;;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:102,77,38",
-          "AllowUseBorderSides": false
+          "Font": "Segoe UI;9.75;;",
+          "Border": ";182,182,182;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "TextBrush": "solid:74,74,74",
+          "NegativeTextBrush": "solid:Red"
         },
-        "6": {
+        "3": {
           "Ident": "StiStyle",
           "Name": "Data2",
-          "Font": ";9;;",
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:240,237,232",
-          "TextBrush": "solid:Black",
-          "AllowUseFont": false,
-          "AllowUseBorderFormatting": false,
-          "AllowUseBorderSides": false,
-          "AllowUseTextBrush": false,
-          "AllowUseTextOptions": false
+          "Font": "Segoe UI;9.75;;",
+          "Border": ";255,255,255;;;;;;solid:Black",
+          "Brush": "solid:224,242,241",
+          "TextBrush": "solid:74,74,74",
+          "NegativeTextBrush": "solid:Red"
         },
-        "7": {
-          "Ident": "StiStyle",
-          "Name": "Data3",
-          "VertAlignment": "Center",
-          "Font": ";9;;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:240,237,232",
-          "TextBrush": "solid:102,77,38",
-          "AllowUseBorderSides": false
-        },
-        "8": {
-          "Ident": "StiStyle",
-          "Name": "Footer1",
-          "VertAlignment": "Center",
-          "Font": ";9;;",
-          "Border": "Top;193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:102,77,38",
-          "AllowUseBorderSides": false
-        },
-        "9": {
+        "4": {
           "Ident": "StiStyle",
           "Name": "Footer2",
           "HorAlignment": "Right",
           "VertAlignment": "Center",
-          "Font": ";12;Bold;",
-          "Border": ";193,152,89;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:193,152,89",
+          "Font": "Segoe UI;9.75;;",
+          "Border": ";58,78,94;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "TextBrush": "solid:158,158,158",
+          "NegativeTextBrush": "solid:Red",
           "AllowUseBorderSides": false
         }
       },
@@ -229,25 +184,25 @@ let reporter = {
             "Ident": "StiInteraction"
           },
           "Border": ";;2;;;;;solid:Black",
-          "Brush": "solid:",
+          "Brush": "solid:Transparent",
           "Components": {
             "0": {
               "Ident": "StiPageFooterBand",
               "Name": "PageFooterBand1",
-              "ClientRectangle": "0,27.3,19,0.4",
+              "Guid": "65d14e4c881f4419af82952eafb5e35b",
+              "ClientRectangle": "0,1070.92,749,20.08",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
+              "Brush": "solid:Transparent",
               "Components": {
                 "0": {
                   "Ident": "StiText",
                   "Name": "Text6",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "6.8,0,12.2,0.4",
-                  "ComponentStyle": "Footer1",
+                  "Guid": "152b4606b3ad456eb6534b3f6776a52e",
+                  "ClientRectangle": "0,0,749,20",
+                  "ComponentStyle": "Footer2",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
@@ -256,32 +211,30 @@ let reporter = {
                   },
                   "HorAlignment": "Right",
                   "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": ";193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38"
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";58,78,94;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:158,158,158"
                 }
               }
             },
             "1": {
               "Ident": "StiReportTitleBand",
               "Name": "ReportTitleBand2",
-              "Guid": "0e78e53250ce4a74baab882ac9d3f6e0",
-              "ClientRectangle": "0,0.4,19,2",
+              "Guid": "4487651d81cd4e7b97418fe7e3c0262a",
+              "ClientRectangle": "0,20,749,79.92",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
+              "Brush": "solid:Transparent",
               "Components": {
                 "0": {
                   "Ident": "StiText",
                   "Name": "Text20",
-                  "Guid": "426e9ac30a6840e7b47553f34723b8df",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "9.4,0,9.6,0.8",
-                  "ComponentStyle": "Title1",
+                  "Guid": "5ddce253f9a040ef98fddf01946d86b5",
+                  "ClientRectangle": "570,0,179,40",
+                  "ComponentStyle": "Header2",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
@@ -290,52 +243,48 @@ let reporter = {
                   },
                   "HorAlignment": "Right",
                   "VertAlignment": "Center",
-                  "Font": ";19;;",
-                  "Border": "Bottom;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:193,152,89",
+                  "Font": "Segoe UI;21.75;Bold;",
+                  "Border": "Bottom;158,158,158;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:158,158,158",
                   "Type": "Expression"
                 },
                 "1": {
                   "Ident": "StiText",
                   "Name": "Text23",
-                  "Guid": "1bc08e78ae20472481fe55b04ade5b6a",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0,0,9.4,0.8",
-                  "ComponentStyle": "Title1",
+                  "Guid": "2d21d1beb899446db49e8d3ec10cfe1b",
+                  "ClientRectangle": "0,0,570.08,40.16",
+                  "ComponentStyle": "Header2",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
                   "Text": {
-                    "Value": "Simple List"
+                    "Value": "Simple Table"
                   },
                   "VertAlignment": "Center",
-                  "Font": ";19;;",
-                  "Border": "Bottom;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:193,152,89",
+                  "Font": "Segoe UI;21.75;Bold;",
+                  "Border": "Bottom;158,158,158;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:158,158,158",
                   "Type": "Expression"
                 },
                 "2": {
                   "Ident": "StiText",
                   "Name": "Text17",
-                  "Guid": "75b851754174412ab8c478e5c8479f92",
+                  "Guid": "1cd4561011064eb39b3ce1d18847fc9e",
                   "CanGrow": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0,1,14.6,0.8",
-                  "ComponentStyle": "Title2",
+                  "ClientRectangle": "0,40.16,570.08,19.68",
+                  "ComponentStyle": "Footer2",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
                   "Text": {
                     "Value": "{ReportDescription}"
                   },
-                  "Font": ";9;;",
-                  "Border": ";102,77,38;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";58,78,94;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:158,158,158",
                   "TextOptions": {
                     "WordWrap": true
                   },
@@ -344,12 +293,10 @@ let reporter = {
                 "3": {
                   "Ident": "StiText",
                   "Name": "Text18",
-                  "Guid": "65f5c368912b4240a21d18c95400ea00",
+                  "Guid": "cf920a323ee34ffd8125f674c88833b8",
                   "CanGrow": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "14.6,1,4.4,0.8",
-                  "ComponentStyle": "Title2",
+                  "ClientRectangle": "570,40,179,20",
+                  "ComponentStyle": "Footer2",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
@@ -357,10 +304,10 @@ let reporter = {
                     "Value": "Date: {Today.ToString(\"Y\")}"
                   },
                   "HorAlignment": "Right",
-                  "Font": ";9;;",
-                  "Border": ";102,77,38;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";58,78,94;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:158,158,158",
                   "TextOptions": {
                     "WordWrap": true
                   },
@@ -369,285 +316,308 @@ let reporter = {
               }
             },
             "2": {
-              "Ident": "StiHeaderBand",
-              "Name": "HeaderBand1",
-              "ClientRectangle": "0,3.2,19,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "Components": {
-                "0": {
-                  "Ident": "StiText",
-                  "Name": "Text11",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "6.8,0,5.2,0.6",
-                  "ComponentStyle": "Header3",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Address"
-                  },
-                  "HorAlignment": "Center",
-                  "VertAlignment": "Center",
-                  "Font": ";9;Bold;",
-                  "Border": "All;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:242,234,221",
-                  "TextBrush": "solid:193,152,89"
-                },
-                "1": {
-                  "Ident": "StiText",
-                  "Name": "Text12",
-                  "ShiftMode": "DecreasingSize, OnlyInWidthOfComponent",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "12,0,3,0.6",
-                  "ComponentStyle": "Header3",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Phone"
-                  },
-                  "HorAlignment": "Center",
-                  "VertAlignment": "Center",
-                  "Font": ";9;Bold;",
-                  "Border": "All;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:242,234,221",
-                  "TextBrush": "solid:193,152,89"
-                },
-                "2": {
-                  "Ident": "StiText",
-                  "Name": "Text13",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "15,0,4,0.6",
-                  "ComponentStyle": "Header3",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Contact"
-                  },
-                  "HorAlignment": "Center",
-                  "VertAlignment": "Center",
-                  "Font": ";9;Bold;",
-                  "Border": "All;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:242,234,221",
-                  "TextBrush": "solid:193,152,89"
-                },
-                "3": {
-                  "Ident": "StiText",
-                  "Name": "Text10",
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0,0,6.8,0.6",
-                  "ComponentStyle": "Header3",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Company"
-                  },
-                  "HorAlignment": "Center",
-                  "VertAlignment": "Center",
-                  "Font": ";9;Bold;",
-                  "Border": "All;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:242,234,221",
-                  "TextBrush": "solid:193,152,89"
-                }
-              },
-              "PrintIfEmpty": true
-            },
-            "3": {
-              "Ident": "StiDataBand",
-              "Name": "DataBand1",
-              "ClientRectangle": "0,4.6,19,0.6",
+              "Ident": "StiTable",
+              "Name": "TableCustomers",
+              "ClientRectangle": "0,139.92,749,50",
               "Interaction": {
                 "Ident": "StiBandInteraction"
               },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
+              "Border": ";Red;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
               "Components": {
                 "0": {
-                  "Ident": "StiText",
-                  "Name": "Text4",
-                  "CanGrow": true,
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell1",
+                  "Guid": "7993b60eab670ee2b2604ca77cb35687",
                   "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "12,0,3,0.6",
-                  "ComponentStyle": "Data1",
+                  "ClientRectangle": "0,0,187,30",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Header3",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
                   "Text": {
-                    "Value": "{Customers.Phone}"
-                  },
-                  "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Left;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
-                  "TextOptions": {
-                    "WordWrap": true
-                  }
-                },
-                "1": {
-                  "Ident": "StiText",
-                  "Name": "Text3",
-                  "CanGrow": true,
-                  "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "15,0,4,0.6",
-                  "ComponentStyle": "Data1",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "{Customers.ContactTitle}"
-                  },
-                  "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Left, Right;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
-                  "TextOptions": {
-                    "WordWrap": true
-                  }
-                },
-                "2": {
-                  "Ident": "StiText",
-                  "Name": "Text1",
-                  "CanGrow": true,
-                  "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0.6,0,6.2,0.6",
-                  "ComponentStyle": "Data1",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "{Customers.CompanyName}"
-                  },
-                  "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Left;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
-                  "TextOptions": {
-                    "WordWrap": true
-                  },
-                  "Type": "Expression"
-                },
-                "3": {
-                  "Ident": "StiText",
-                  "Name": "Text2",
-                  "CanGrow": true,
-                  "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "6.8,0,5.2,0.6",
-                  "ComponentStyle": "Data1",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "{Customers.Address}"
-                  },
-                  "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Left;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
-                  "TextOptions": {
-                    "WordWrap": true
-                  }
-                },
-                "4": {
-                  "Ident": "StiText",
-                  "Name": "Text7",
-                  "Guid": "5b832677f467498487ebd4777d80e7b0",
-                  "CanGrow": true,
-                  "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0,0,0.6,0.6",
-                  "ComponentStyle": "Data1",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "{Line}"
+                    "Value": "合同编号"
                   },
                   "HorAlignment": "Center",
                   "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Left;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
-                  "Type": "Expression"
-                }
-              },
-              "DataSourceName": "Customers",
-              "EvenStyle": "Data2"
-            },
-            "4": {
-              "Ident": "StiFooterBand",
-              "Name": "FooterBand1",
-              "ClientRectangle": "0,6,19,0.2",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "Components": {
-                "0": {
-                  "Ident": "StiText",
-                  "Name": "Text8",
-                  "Guid": "dcc6258185da48c0bee4c3c0395fb37d",
-                  "CanGrow": true,
+                  "Font": "Segoe UI;12;Bold;",
+                  "Border": "Left, Right;White;;;;;;solid:Black",
+                  "Brush": "solid:77,182,172",
+                  "TextBrush": "solid:255,255,255",
+                  "Type": "Expression",
+                  "ID": 0
+                },
+                "1": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell2",
+                  "Guid": "890bda1f0d83971249c50f32f4634934",
                   "GrowToHeight": true,
-                  "MinSize": "0,0",
-                  "MaxSize": "0,0",
-                  "ClientRectangle": "0,0,19,0.2",
-                  "ComponentStyle": "Data1",
+                  "ClientRectangle": "187,0,187,30",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Header3",
                   "Interaction": {
                     "Ident": "StiInteraction"
                   },
+                  "Text": {
+                    "Value": "合同名称"
+                  },
+                  "HorAlignment": "Center",
                   "VertAlignment": "Center",
-                  "Font": ";9;;",
-                  "Border": "Top;193,152,89;;;;;;solid:Black",
-                  "Brush": "solid:",
-                  "TextBrush": "solid:102,77,38",
+                  "Font": "Segoe UI;12;Bold;",
+                  "Border": "Left, Right;White;;;;;;solid:Black",
+                  "Brush": "solid:77,182,172",
+                  "TextBrush": "solid:255,255,255",
+                  "Type": "Expression",
+                  "ID": 1
+                },
+                "2": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell3",
+                  "Guid": "74e89e03b6f962547cc1d057d8c9fb4e",
+                  "GrowToHeight": true,
+                  "ClientRectangle": "374,0,187,30",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Header3",
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "合同金额"
+                  },
+                  "HorAlignment": "Center",
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;12;Bold;",
+                  "Border": "Left, Right;White;;;;;;solid:Black",
+                  "Brush": "solid:77,182,172",
+                  "TextBrush": "solid:255,255,255",
+                  "Type": "Expression",
+                  "ID": 2
+                },
+                "3": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell4",
+                  "Guid": "9d32cf3b557216e2acf1ea0330447919",
+                  "GrowToHeight": true,
+                  "ClientRectangle": "561,0,188,30",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Header3",
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "签订日期"
+                  },
+                  "HorAlignment": "Center",
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;12;Bold;",
+                  "Border": "Left, Right;White;;;;;;solid:Black",
+                  "Brush": "solid:77,182,172",
+                  "TextBrush": "solid:255,255,255",
+                  "Type": "Expression",
+                  "ID": 3
+                },
+                "4": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell5",
+                  "Guid": "69c90ef6dba459351daadf7dad742401",
+                  "CanGrow": true,
+                  "GrowToHeight": true,
+                  "ClientRectangle": "0,30,187,20",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Data1",
+                  "Conditions": {
+                    "0": {
+                      "Ident": "StiCondition",
+                      "Item": "Expression",
+                      "Expression": {
+                        "Value": "{(Line % 2) != 1}"
+                      },
+                      "TextColor": "Black",
+                      "BackColor": "Bisque",
+                      "Font": ";9;;",
+                      "Style": "Data2",
+                      "BorderSides": "None"
+                    }
+                  },
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "{contracts.no}"
+                  },
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";182,182,182;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:74,74,74",
                   "TextOptions": {
-                    "WordWrap": true
-                  }
+                    "Trimming": "Character"
+                  },
+                  "Margins": {
+                    "Left": 3,
+                    "Right": 3,
+                    "Top": 3,
+                    "Bottom": 3
+                  },
+                  "Type": "DataColumn",
+                  "ID": 4
+                },
+                "5": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell6",
+                  "Guid": "9fefd30b82901457521fe2c703bffe3f",
+                  "CanGrow": true,
+                  "GrowToHeight": true,
+                  "ClientRectangle": "187,30,187,20",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Data1",
+                  "Conditions": {
+                    "0": {
+                      "Ident": "StiCondition",
+                      "Item": "Expression",
+                      "Expression": {
+                        "Value": "{(Line % 2) != 1}"
+                      },
+                      "TextColor": "Black",
+                      "BackColor": "Bisque",
+                      "Font": ";9;;",
+                      "Style": "Data2",
+                      "BorderSides": "None"
+                    }
+                  },
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "{contracts.name}"
+                  },
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";182,182,182;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:74,74,74",
+                  "TextOptions": {
+                    "Trimming": "Character"
+                  },
+                  "Margins": {
+                    "Left": 3,
+                    "Right": 3,
+                    "Top": 3,
+                    "Bottom": 3
+                  },
+                  "Type": "DataColumn",
+                  "ID": 5
+                },
+                "6": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell7",
+                  "Guid": "2fed5ffaf25f3a2b826424e239381513",
+                  "CanGrow": true,
+                  "GrowToHeight": true,
+                  "ClientRectangle": "374,30,187,20",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Data1",
+                  "Conditions": {
+                    "0": {
+                      "Ident": "StiCondition",
+                      "Item": "Expression",
+                      "Expression": {
+                        "Value": "{(Line % 2) != 1}"
+                      },
+                      "TextColor": "Black",
+                      "BackColor": "Bisque",
+                      "Font": ";9;;",
+                      "Style": "Data2",
+                      "BorderSides": "None"
+                    }
+                  },
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "{contracts.amount}"
+                  },
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";182,182,182;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:74,74,74",
+                  "TextOptions": {
+                    "Trimming": "Character"
+                  },
+                  "Margins": {
+                    "Left": 3,
+                    "Right": 3,
+                    "Top": 3,
+                    "Bottom": 3
+                  },
+                  "Type": "DataColumn",
+                  "ID": 6
+                },
+                "7": {
+                  "Ident": "StiTableCell",
+                  "Name": "TableCustomers_Cell8",
+                  "Guid": "90c152ecc152c90cff3a5bea6674449a",
+                  "CanGrow": true,
+                  "GrowToHeight": true,
+                  "ClientRectangle": "561,30,188,20",
+                  "Restrictions": "AllowMove, AllowSelect, AllowChange",
+                  "ComponentStyle": "Data1",
+                  "Conditions": {
+                    "0": {
+                      "Ident": "StiCondition",
+                      "Item": "Expression",
+                      "Expression": {
+                        "Value": "{(Line % 2) != 1}"
+                      },
+                      "TextColor": "Black",
+                      "BackColor": "Bisque",
+                      "Font": ";9;;",
+                      "Style": "Data2",
+                      "BorderSides": "None"
+                    }
+                  },
+                  "Interaction": {
+                    "Ident": "StiInteraction"
+                  },
+                  "Text": {
+                    "Value": "{contracts.signed_date}"
+                  },
+                  "VertAlignment": "Center",
+                  "Font": "Segoe UI;9.75;;",
+                  "Border": ";182,182,182;;;;;;solid:Black",
+                  "Brush": "solid:Transparent",
+                  "TextBrush": "solid:74,74,74",
+                  "TextOptions": {
+                    "Trimming": "Character"
+                  },
+                  "Margins": {
+                    "Left": 3,
+                    "Right": 3,
+                    "Top": 3,
+                    "Bottom": 3
+                  },
+                  "Type": "DataColumn",
+                  "ID": 7
                 }
               },
-              "PrintOnAllPages": true
+              "MinHeight": 0.4,
+              "DataSourceName": "contracts",
+              "RowCount": 2,
+              "ColumnCount": 4,
+              "HeaderRowsCount": 1,
+              "NumberID": 16
             }
           },
-          "PageWidth": 21.0,
-          "PageHeight": 29.7,
+          "PaperSize": "A4",
           "Watermark": {
             "Font": ";;Bold;",
             "TextBrush": "solid:50,0,0,0"
-          },
-          "Margins": {
-            "Left": 1.0,
-            "Right": 1.0,
-            "Top": 1.0,
-            "Bottom": 1.0
           }
         }
       }
-    };
+    }
   },
   async getData(report) {
     let object = objectql.getSteedosSchema().getObject(report.object_name);
