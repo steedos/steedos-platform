@@ -41,7 +41,7 @@ let loadFile = (filePath: string)=>{
 };
 exports.loadFile = loadFile;
 
-exports.loadObjects = (filePath: string) => {
+let loadObjects = (filePath: string) => {
     let results = []
     const filePatten = [
         path.join(filePath, "*.object.yml"),
@@ -55,6 +55,8 @@ exports.loadObjects = (filePath: string) => {
     })
     return results
 }
+
+exports.loadObjects = loadObjects
 
 exports.loadTriggers = (filePath: string)=>{
     let results = []
@@ -97,7 +99,7 @@ exports.loadReports = (filePath: string)=>{
     return results
 }
 
-exports.loadApps = (filePath: string)=>{
+let loadApps = (filePath: string)=>{
     let results = []
     const filePatten = [
         path.join(filePath, "*.app.yml"),
@@ -110,6 +112,8 @@ exports.loadApps = (filePath: string)=>{
     })
     return results
 }
+
+exports.loadApps = loadApps
 
 exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
     _.each(sources, (source: JsonMap)=>{
@@ -150,4 +154,12 @@ exports.isFieldFile = (filePath: string)=>{
 
 exports.isReportFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.report.yml') || filePath.endsWith('.report.js'))
+}
+
+export function loadObjectFiles(filePath: string) {
+    return loadObjects(filePath);
+}
+
+export function loadAppFiles(filePath: string) {
+    return loadApps(filePath);
 }
