@@ -144,7 +144,7 @@ export class ODataManager {
               let entityValues = navigationProperty.split('.').reduce(function (o, x) {
                 if (o) { return o[x] }
               }, entities[idx])
-              if (entityValues) {
+              if (!_.isEmpty(entityValues)) {
                 if (field.multiple) {
                   let originalData = _.clone(entityValues);
                   let filters = [];
