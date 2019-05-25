@@ -24,6 +24,7 @@ import { buildGraphQLSchema } from '../graphql';
 
 var util = require('../util')
 var path = require('path')
+var clone = require('clone')
 
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
@@ -102,7 +103,7 @@ export class SteedosDataSourceType implements Dictionary {
         let config: SteedosObjectTypeConfig = {fields: {}}
         let baseObject = this.getObject('base');
         if(this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject){
-            let {triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews} = baseObject.toConfig()
+            let {triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews} = clone(baseObject.toConfig())
             config = util.extend(config, {triggers: baseTriggers}, {actions: baseActions} ,{actions: baseListViews} ,{permission_set: permission_set},objectConfig, {fields: basefields}, objectConfig)
         }else{
             config = objectConfig
