@@ -1,7 +1,7 @@
 {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
     "@steedos/auth": "^1.0.4",
-    "@steedos/objectql": "^0.0.6",
+    "@steedos/objectql": "^0.0.10",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
