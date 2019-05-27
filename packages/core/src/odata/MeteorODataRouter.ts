@@ -482,6 +482,7 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
           res.status(404).send(setErrorMessage(404, collection, key));
         }
       } else {
+        await collection.delete(recordId, userSession)
         getODataManager().setHeaders(res);
         res.send({});
       }
