@@ -1,106 +1,15 @@
-var objectql = require('@steedos/objectql');
+const utils = require('./utils');
 
 let reporter = {
   async getReport(id) {
-    let object = objectql.getSteedosSchema().getObject('reports');
+    let object = utils.getObject('reports');
     let report = await object.findOne(id);
     return report;
   },
-  getObject(object_name) {
-    let object = objectql.getSteedosSchema().getObject(object_name);
-    return object ? object.toConfig() : null;
-  },
-  formatObjectFields(object) {
-    let fields = object.fields;
-    let tempField, tempFieldType, result, index = 0;
-    result = {};
-    for (let key in fields) {
-      tempField = fields[key];
-      tempFieldType = this.convertFieldType(tempField);
-      if (tempFieldType) {
-        result[index] = {
-          "Name": key,
-          "Index": -1,
-          "NameInSource": key,
-          "Alias": tempField.label ? tempField.label : key,
-          "Type": tempFieldType
-        };
-        index++;
-      }
-    }
-    return result;
-  },
-  convertFieldType(tempField) {
-    let type = tempField.type;
-    if(!type){
-      return null;
-    }
-    if (tempField.multiple) {
-      // 忽略所有数组字段类型
-      return null;
-    }
-    let ignoreTypes = ["[text]", "[phone]", "password", "[Object]", "checkbox", "grid"];
-    if(ignoreTypes.includes(type)){
-      // 忽略这些字段类型
-      return null;
-    }
-    let defaultType = "System.String";
-    switch(type){
-      case "date":
-        return "System.DateTime"
-      case "datetime":
-        return "System.DateTime"
-      case "currency":
-        return "System.Double"
-      case "number":
-        return "System.Double"
-      case "boolean":
-        return "System.Boolean"
-      case "filesize":
-        return "System.Double"
-      case "Object":
-        return "System.Object"
-      case "object":
-        return "System.Object"
-      case "location":
-        return "System.Object"
-      default:
-        return defaultType
-    }
-  },
-  getDatabases(report, object) {
-    if (!(report && object)){
-      return {};
-    }
-    let dataUrl = `/api/report/data/${report._id}`;
-    return {
-      "0": {
-        "Ident": "StiJsonDatabase",
-        "Name": report.name,
-        "Alias": report.name,
-        "PathData": dataUrl
-      }
-    };
-  },
-  getDataSources(report, object) {
-    if (!(report && object)) {
-      return {};
-    }
-    let columns = this.formatObjectFields(object);
-    return {
-      "0": {
-        "Ident": "StiDataTableSource",
-        "Name": object.name,
-        "Alias": object.label,
-        "Columns": columns,
-        "NameInSource": `${report.name}.${object.name}`
-      }
-    };
-  },
   getReportMrt(report) {
-    let object = this.getObject(report.object_name);
-    let databases = this.getDatabases(report, object);
-    let dataSources = this.getDataSources(report, object);
+    let objectConfig = utils.getObjectConfig(report.object_name);
+    let databases = utils.getDatabases(report, objectConfig);
+    let dataSources = utils.getDataSources(report, objectConfig);
     return {
       "ReportVersion": "2019.2.1",
       "ReportGuid": "448559cd48188338031dcb6edae3a534",
@@ -219,106 +128,9 @@ let reporter = {
               }
             },
             "1": {
-              "Ident": "StiReportTitleBand",
-              "Name": "ReportTitleBand2",
-              "Guid": "4487651d81cd4e7b97418fe7e3c0262a",
-              "ClientRectangle": "0,20,749,79.92",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:Transparent",
-              "Components": {
-                "0": {
-                  "Ident": "StiText",
-                  "Name": "Text20",
-                  "Guid": "5ddce253f9a040ef98fddf01946d86b5",
-                  "ClientRectangle": "570,0,179,40",
-                  "ComponentStyle": "Header2",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Stimulsoft"
-                  },
-                  "HorAlignment": "Right",
-                  "VertAlignment": "Center",
-                  "Font": "Segoe UI;21.75;Bold;",
-                  "Border": "Bottom;158,158,158;;;;;;solid:Black",
-                  "Brush": "solid:Transparent",
-                  "TextBrush": "solid:158,158,158",
-                  "Type": "Expression"
-                },
-                "1": {
-                  "Ident": "StiText",
-                  "Name": "Text23",
-                  "Guid": "2d21d1beb899446db49e8d3ec10cfe1b",
-                  "ClientRectangle": "0,0,570.08,40.16",
-                  "ComponentStyle": "Header2",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Simple Table"
-                  },
-                  "VertAlignment": "Center",
-                  "Font": "Segoe UI;21.75;Bold;",
-                  "Border": "Bottom;158,158,158;;;;;;solid:Black",
-                  "Brush": "solid:Transparent",
-                  "TextBrush": "solid:158,158,158",
-                  "Type": "Expression"
-                },
-                "2": {
-                  "Ident": "StiText",
-                  "Name": "Text17",
-                  "Guid": "1cd4561011064eb39b3ce1d18847fc9e",
-                  "CanGrow": true,
-                  "ClientRectangle": "0,40.16,570.08,19.68",
-                  "ComponentStyle": "Footer2",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "{ReportDescription}"
-                  },
-                  "Font": "Segoe UI;9.75;;",
-                  "Border": ";58,78,94;;;;;;solid:Black",
-                  "Brush": "solid:Transparent",
-                  "TextBrush": "solid:158,158,158",
-                  "TextOptions": {
-                    "WordWrap": true
-                  },
-                  "Type": "Expression"
-                },
-                "3": {
-                  "Ident": "StiText",
-                  "Name": "Text18",
-                  "Guid": "cf920a323ee34ffd8125f674c88833b8",
-                  "CanGrow": true,
-                  "ClientRectangle": "570,40,179,20",
-                  "ComponentStyle": "Footer2",
-                  "Interaction": {
-                    "Ident": "StiInteraction"
-                  },
-                  "Text": {
-                    "Value": "Date: {Today.ToString(\"Y\")}"
-                  },
-                  "HorAlignment": "Right",
-                  "Font": "Segoe UI;9.75;;",
-                  "Border": ";58,78,94;;;;;;solid:Black",
-                  "Brush": "solid:Transparent",
-                  "TextBrush": "solid:158,158,158",
-                  "TextOptions": {
-                    "WordWrap": true
-                  },
-                  "Type": "Expression"
-                }
-              }
-            },
-            "2": {
               "Ident": "StiTable",
               "Name": "TableCustomers",
-              "ClientRectangle": "0,139.92,749,50",
+              "ClientRectangle": "0,20,749,50",
               "Interaction": {
                 "Ident": "StiBandInteraction"
               },
@@ -620,8 +432,9 @@ let reporter = {
     }
   },
   async getData(report) {
-    let object = objectql.getSteedosSchema().getObject(report.object_name);
+    let object = utils.getObject(report.object_name);
     let dataResult = await object.find({
+      fields: report.columns,
       filters: report.filters
     });
     let result = {};
