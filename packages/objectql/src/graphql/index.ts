@@ -111,7 +111,7 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName) 
     } else {
         var corName = correctName(datasourceName + '.' + obj.name);
     }
-    console.log('corName: ', corName)
+
     return new GraphQLObjectType({
         name: corName, fields: function () {
             return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
@@ -122,9 +122,8 @@ function buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName) 
 export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: SteedosDataSourceType): GraphQLSchema {
     let rootQueryfields = {};
     let datasourceName = datasource.name;
-    console.log('datasoruce: ', datasourceName);
+
     _.each(datasource.getObjects(), function (obj, object_name) {
-        console.log('obj.name: ', obj.name);
 
         if (!obj.name) {
             return;
