@@ -25,6 +25,7 @@
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
     "@types/underscore": "^1.8.13",
+    "app-root-path": "^2.2.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "chai": "^4.2.0",
