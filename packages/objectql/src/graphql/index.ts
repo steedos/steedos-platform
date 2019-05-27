@@ -30,6 +30,8 @@ const BASIC_TYPE_MAPPING = {
     'boolean': GraphQLBoolean
 }
 
+const knownTypes = {};
+
 function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasourceName) {
     let objTypeFields = {};
     objTypeFields["_id"] = {
@@ -53,8 +55,17 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
         else if ((v.type == 'lookup' || v.type == 'master_detail') && v.reference_to && _.isString(v.reference_to)) {
             let reference_to = v.reference_to;
             let objectName = reference_to.indexOf('.') > -1 ? reference_to : `${datasourceName}.${reference_to}`;
+            let corName = correctName(reference_to);
+            if (reference_to.indexOf('.') > -1 && !knownTypes[corName]) {
+                let refDatasourceName = reference_to.split('.')[0]
+                let object = steedosSchema.getObject(reference_to);
+                if (object) {
+                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes, refDatasourceName)
+                }
+            }
+
             objTypeFields[k] = {
-                type: knownTypes[correctName(reference_to)],
+                type: knownTypes[corName],
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
@@ -63,7 +74,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
                 }
             };
             if (v.type == 'lookup' && v.multiple) {
-                objTypeFields[k].type = new GraphQLList(knownTypes[correctName(reference_to)]);
+                objTypeFields[k].type = new GraphQLList(knownTypes[corName]);
                 objTypeFields[k].resolve = async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
                     let filters = [];
@@ -89,32 +100,45 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
     return objTypeFields
 }
 
-
 function correctName(name: string) {
     return name.replace(/\./g, '_');
 }
 
+function buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName) {
+
+    if (datasourceName === 'default') {
+        var corName = correctName(obj.name);
+    } else {
+        var corName = correctName(datasourceName + '.' + obj.name);
+    }
+    console.log('corName: ', corName)
+    return new GraphQLObjectType({
+        name: corName, fields: function () {
+            return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
+        }
+    })
+}
 
 export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: SteedosDataSourceType): GraphQLSchema {
-
     let rootQueryfields = {};
-    let knownTypes = {};
     let datasourceName = datasource.name;
-
+    console.log('datasoruce: ', datasourceName);
     _.each(datasource.getObjects(), function (obj, object_name) {
+        console.log('obj.name: ', obj.name);
+
         if (!obj.name) {
             return;
         }
         if (datasourceName === 'default') {
-            var objName = correctName(obj.name);
+            var objName: string = correctName(obj.name);
         } else {
-            var objName = correctName(datasourceName + '.' + obj.name);
+            var objName: string = correctName(datasourceName + '.' + obj.name);
         }
-        knownTypes[objName] = new GraphQLObjectType({
-            name: objName, fields: function () {
-                return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
-            }
-        })
+
+        if (!knownTypes[objName]) {
+            knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName)
+        }
+
         rootQueryfields[objName] = {
             type: new GraphQLList(knownTypes[objName]),
             args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
