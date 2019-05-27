@@ -101,15 +101,19 @@ exports.loadReports = (filePath: string)=>{
 
 let loadApps = (filePath: string)=>{
     let results = []
-    const filePatten = [
-        path.join(filePath, "*.app.yml"),
-        path.join(filePath, "*.app.js")
-    ]
-    const matchedPaths:[string] = globby.sync(filePatten);
-    _.each(matchedPaths, (matchedPath:string)=>{
-        let json = loadFile(matchedPath);
-        results.push(json)
-    })
+    if(isAppFile(filePath)){
+        results.push(loadFile(filePath))
+    }else{
+        const filePatten = [
+            path.join(filePath, "*.app.yml"),
+            path.join(filePath, "*.app.js")
+        ]
+        const matchedPaths:[string] = globby.sync(filePatten);
+        _.each(matchedPaths, (matchedPath:string)=>{
+            let json = loadFile(matchedPath);
+            results.push(json)
+        })
+    }
     return results
 }
 
@@ -139,10 +143,10 @@ exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
 exports.isObjectFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.object.yml') || filePath.endsWith('.object.js'))
 }
-
-exports.isAppFile = (filePath: string)=>{
-  return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.app.yml')
+let isAppFile = (filePath: string)=>{
+    return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.app.yml') || filePath.endsWith('.app.js'))
 }
+exports.isAppFile = isAppFile
 
 exports.isTriggerFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.trigger.js')
@@ -162,4 +166,8 @@ export function loadObjectFiles(filePath: string) {
 
 export function loadAppFiles(filePath: string) {
     return loadApps(filePath);
+}
+
+export function getBaseDirectory(){
+    return require('app-root-path').path
 }
