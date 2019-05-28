@@ -1,9 +1,9 @@
-var objectql = require("@steedos/objectql");
-var _ = require('underscore');
+const objectql = require("@steedos/objectql");
+const _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
-var path = require('path');
-var ReportRouter = require('./router');
-var getBlankMrt = require('./index').getBlankMrt;
+const path = require('path');
+const ReportRouter = require('./router');
+const report = require('./index');
 
 let stimulsoftAssets = path.join(path.dirname(require.resolve("@steedos/stimulsoft-report")), "assets");
 let objectsDir = path.resolve('./objects')
@@ -23,11 +23,7 @@ app.use(function (req, res, next) {
 })
 
 _.each(objectql.getSteedosSchema().getDataSources(), function (datasource, name) {
-    _.forEach(datasource.getReports(),(report) => {
-        let mrt = getBlankMrt(report);
-        console.log(mrt);
-        // TODO:生成mrt文件
-    });
+    report.initMrts(datasource.getReports(), reportsDir);
 
     app.use(`/graphql/${name}`, graphqlHTTP({
         schema: datasource.buildGraphQLSchema(),

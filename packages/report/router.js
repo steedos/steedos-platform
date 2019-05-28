@@ -1,14 +1,14 @@
-var express = require('express');
-var reporter = require('./reporter');
-var objectql = require("@steedos/objectql");
-
-var routes = express();
+const express = require('express');
+const reporter = require('./reporter');
+const objectql = require("@steedos/objectql");
+const mrt = require('./mrt');
+const routes = express();
 
 routes.get('/mrt/:report_id', async (req, res)=> {
   let datasource = objectql.getSteedosSchema().getDataSource();
   let report = datasource.getReport("temp");
-  let mrt = reporter.getBlankMrt(report);
-  res.send(mrt);
+  let mrtContent = mrt.getMrtContent(report);
+  res.send(mrtContent);
 });
 
 routes.get('/data/:report_id', async (req, res) => {
