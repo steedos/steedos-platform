@@ -18,7 +18,9 @@ import { SteedosIDType,
     SteedosObjectPermissionTypeConfig, 
     SteedosObjectPermissionType, 
     SteedosAppTypeConfig,
-    SteedosAppType} from '.';
+    SteedosAppType,
+    SteedosReportTypeConfig,
+    SteedosReportType} from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 
@@ -54,6 +56,8 @@ export type SteedosDataSourceTypeConfig = {
     getRoles?: Function //TODO 尚未开放此功能
     apps?: Dictionary<SteedosAppTypeConfig>
     appFiles?: string[]
+    reports?: Dictionary<SteedosReportTypeConfig>
+    reportFiles?: string[]
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -85,6 +89,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     private _apps: Dictionary<SteedosAppType> = {}
+    private _reports: Dictionary<SteedosReportType> = {}
    
     getObjects(){
         return this._objects
@@ -208,6 +213,14 @@ export class SteedosDataSourceType implements Dictionary {
         _.each(config.appFiles, (appFile)=>{
             this.useAppFile(appFile)
         })
+
+        _.each(config.reports, (reportConfig, report_id) => {
+            this.addReport(report_id, reportConfig)
+        })
+
+        _.each(config.reportFiles, (reportFile) => {
+            this.useReportFile(reportFile)
+        })
     }
 
 
@@ -245,6 +258,42 @@ export class SteedosDataSourceType implements Dictionary {
             appsConfig[_id] = app.toConfig()
         })
         return appsConfig
+    }
+
+    /**reports */
+    addReport(report_id: string, config: SteedosReportTypeConfig) {
+        config._id = report_id
+        this._reports[config._id] = new SteedosReportType(config, this)
+    }
+
+    useReportFiles(reportFiles: string[]) {
+        _.each(reportFiles, (reportFile) => {
+            this.useReportFile(reportFile)
+        })
+
+    }
+
+    useReportFile(filePath: string) {
+        let reportJsons = util.loadReports(filePath)
+        _.each(reportJsons, (json: SteedosReportTypeConfig) => {
+            this.addReport(json._id, json)
+        })
+    }
+
+    getReport(report_id: string) {
+        return this._reports[report_id]
+    }
+
+    getReports() {
+        return this._reports
+    }
+
+    getReportsConfig() {
+        let reportsConfig: JsonMap = {}
+        _.each(this._reports, (report: SteedosReportType, _id: string) => {
+            reportsConfig[_id] = report.toConfig()
+        })
+        return reportsConfig
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
