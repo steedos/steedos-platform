@@ -1,3 +1,3 @@
 const reporter = require('./reporter');
 
-module.exports.getReportMrt = reporter.getReportMrt;
+module.exports.getBlankMrt = reporter.getBlankMrt;

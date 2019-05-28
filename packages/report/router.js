@@ -7,7 +7,7 @@ var routes = express();
 routes.get('/mrt/:report_id', async (req, res)=> {
   let datasource = objectql.getSteedosSchema().getDataSource();
   let report = datasource.getReport("temp");
-  let mrt = reporter.getReportMrt(report);
+  let mrt = reporter.getBlankMrt(report);
   res.send(mrt);
 });
 

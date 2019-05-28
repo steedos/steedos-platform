@@ -3,7 +3,7 @@ var _ = require('underscore');
 const graphqlHTTP = require('express-graphql');
 var path = require('path');
 var ReportRouter = require('./router');
-var getReportMrt = require('./index').getReportMrt;
+var getBlankMrt = require('./index').getBlankMrt;
 
 let stimulsoftAssets = path.join(path.dirname(require.resolve("@steedos/stimulsoft-report")), "assets");
 let objectsDir = path.resolve('./objects')
@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 
 _.each(objectql.getSteedosSchema().getDataSources(), function (datasource, name) {
     _.forEach(datasource.getReports(),(report) => {
-        let mrt = getReportMrt(report);
+        let mrt = getBlankMrt(report);
         console.log(mrt);
         // TODO:生成mrt文件
     });
