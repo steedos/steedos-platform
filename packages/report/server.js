@@ -10,7 +10,8 @@ let objectsDir = path.resolve('./objects')
 let reportsDir = path.resolve('./reports')
 objectql.getSteedosSchema().addDataSource('default', {
     driver: 'mongo',
-    url: 'mongodb://192.168.0.77/qhd-beta',
+    // url: 'mongodb://192.168.0.77/qhd-beta',
+    url: 'mongodb://192.168.0.21/fssh20190329',
     objectFiles: [objectsDir],
     reportFiles: [reportsDir]
 });
@@ -22,12 +23,10 @@ app.use(function (req, res, next) {
 })
 
 _.each(objectql.getSteedosSchema().getDataSources(), function (datasource, name) {
-    console.log(`====${name}=reports===`);
-    console.log(datasource.getReports());
     _.forEach(datasource.getReports(),(report) => {
         let mrt = getReportMrt(report);
-        console.log(`====${name}=mrt===`);
         console.log(mrt);
+        // TODO:生成mrt文件
     });
 
     app.use(`/graphql/${name}`, graphqlHTTP({

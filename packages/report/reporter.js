@@ -434,7 +434,7 @@ let reporter = {
   async getData(report) {
     let object = utils.getObject(report.object_name);
     let dataResult = await object.find({
-      fields: report.columns,
+      fields: report.fields,
       filters: report.filters
     });
     let result = {};

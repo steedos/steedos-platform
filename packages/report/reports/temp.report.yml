@@ -1,7 +1,7 @@
 
-_id : test,
+_id : temp
 name: 问题按类型统计报表
-object_name : project_issues,
+object_name : project_issues
 fields:
   - name
   - category
