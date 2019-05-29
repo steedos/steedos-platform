@@ -192,6 +192,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this._fieldDBType = SteedosFieldDBType.number
                 break;
             case 'currency':
+                if(!this.scale && this.scale != 0){
+                    this.scale = 2 
+                }
                 this._fieldDBType = SteedosFieldDBType.number
                 break;
             case 'password':
