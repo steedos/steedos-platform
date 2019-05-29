@@ -308,7 +308,12 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
           };
         }
 
-        let entity = await collection.findOne(recordId, userSession);
+        let fields = [];
+        if (queryParams.$select) {
+          fields = _.keys(createQuery.projection)
+        }
+
+        let entity = await collection.findOne(recordId, { fields: fields }, userSession);
         let entities = [];
         if (entity) {
           let isAllowed = true;
