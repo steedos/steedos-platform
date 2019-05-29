@@ -118,7 +118,12 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         });
         projection = projection.replace(/,$/g, "");
         if (primaryKey){
-            projection = `${primaryKey},${projection}`;
+            if (projection){
+                projection = `${primaryKey},${projection}`;
+            }
+            else{
+                projection = primaryKey;
+            }
         }
         return {
             $select: projection

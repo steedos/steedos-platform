@@ -60,6 +60,15 @@ describe('fetch records width specific fields for Postgres database', () => {
             expected: {
                 length: 2
             }
+        },
+        {
+            title: "fields arguments is a array and it has a undefined item",
+            options: {
+                fields: [undefined]
+            },
+            expected: {
+                length: 2
+            }
         }
     ];
 
