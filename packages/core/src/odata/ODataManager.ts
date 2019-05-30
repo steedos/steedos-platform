@@ -84,7 +84,7 @@ export class ODataManager {
   }
 
   async isSameCompany(spaceId: string, userId: string, companyId: string, query: any = null) {
-    let sus = await getCreator().getSteedosSchema().getObject("space_users").find({ filters: `(space eq '${spaceId}') and (user eq '${userId}')`, fields: ['company_id', 'company_ids'] });
+    let sus = await this.getObject("space_users").find({ filters: `(space eq '${spaceId}') and (user eq '${userId}')`, fields: ['company_id', 'company_ids'] });
     let su = sus[0];
     if (!companyId && query) {
       companyId = su.company_id;
@@ -120,7 +120,7 @@ export class ODataManager {
     if (_.isEmpty(createQuery.includes)) {
       return entities;
     }
-    let obj = getCreator().getSteedosSchema().getObject(key);
+    let obj = this.getObject(key);
 
     for (let i = 0; i < createQuery.includes.length; i++) {
       let navigationProperty = createQuery.includes[i].navigationProperty;
@@ -137,9 +137,7 @@ export class ODataManager {
           }
 
           if (_.isString(field.reference_to)) {
-            let ref: any;
-            let referenceToCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
-            let _ro_NAME_FIELD_KEY = (ref = getCreator().getSteedosSchema().getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+
             for (let idx = 0; idx < entities.length; idx++) {
               let entityValues = navigationProperty.split('.').reduce(function (o, x) {
                 if (o) { return o[x] }
@@ -152,45 +150,64 @@ export class ODataManager {
                     filters.push(`(_id eq '${f}')`);
                   })
                   let multiQuery = { filters: filters.join(' or '), fields: queryOptions.fields };
-                  let queryFields = _.clone(queryOptions.fields)
-                  if (_.isEmpty(queryFields)) {
-                    multiQuery.fields = [_ro_NAME_FIELD_KEY]
-                  }
-                  let entityValuesRecord = await referenceToCollection.find(multiQuery, userSession);
-                  if (!entityValuesRecord.length) {
-                    entities[idx][navigationProperty] = originalData;
-                  } else {
-                    entityValuesRecord = getCreator().getOrderlySetByIds(entityValuesRecord, originalData);
-                    entityValuesRecord = _.map(entityValuesRecord, function (o) {
-                      o['reference_to.o'] = referenceToCollection._name;
-                      o['reference_to._o'] = field.reference_to;
-                      o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
-                      if (_.isEmpty(queryFields)) {
+                  try {
+                    let ref: any;
+                    let referenceToCollection = this.getObject(field.reference_to);
+                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
 
-                        delete o[_ro_NAME_FIELD_KEY]
-                      }
-                      return o;
-                    });
-                    entityValues.splice(0, entityValues.length, ...entityValuesRecord)
+                    let queryFields = _.clone(queryOptions.fields)
+                    if (_.isEmpty(queryFields)) {
+                      multiQuery.fields = [_ro_NAME_FIELD_KEY]
+                    }
+                    let entityValuesRecord = await referenceToCollection.find(multiQuery, userSession);
+                    if (!entityValuesRecord.length) {
+                      entities[idx][navigationProperty] = originalData;
+                    } else {
+                      entityValuesRecord = getCreator().getOrderlySetByIds(entityValuesRecord, originalData);
+                      entityValuesRecord = _.map(entityValuesRecord, function (o) {
+                        o['reference_to.o'] = referenceToCollection._name;
+                        o['reference_to._o'] = field.reference_to;
+                        o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
+                        if (_.isEmpty(queryFields)) {
+                          delete o[_ro_NAME_FIELD_KEY]
+                        }
+                        return o;
+                      });
+                      entityValues.splice(0, entityValues.length, ...entityValuesRecord)
+                    }
+                  } catch (error) {
+                    console.error(error)
+                    entities[idx][navigationProperty] = originalData;
                   }
 
                 } else {
-                  let queryFields = _.clone(queryOptions.fields)
-                  if (_.isEmpty(queryFields)) {
-                    queryOptions.fields = [_ro_NAME_FIELD_KEY]
-                  }
                   let originalData = _.clone(entities[idx][navigationProperty]);
-                  entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userSession);
-                  if (!entities[idx][navigationProperty]) {
-                    entities[idx][navigationProperty] = originalData;
-                  } else {
-                    entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
-                    entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
-                    entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                  try {
+                    let ref: any;
+                    let referenceToCollection = this.getObject(field.reference_to);
+                    let _ro_NAME_FIELD_KEY = (ref = this.getObject(field.reference_to)) != null ? ref.NAME_FIELD_KEY : void 0;
+
+                    let queryFields = _.clone(queryOptions.fields)
                     if (_.isEmpty(queryFields)) {
-                      delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                      queryOptions.fields = [_ro_NAME_FIELD_KEY]
                     }
+
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userSession);
+                    if (!entities[idx][navigationProperty]) {
+                      entities[idx][navigationProperty] = originalData;
+                    } else {
+                      entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
+                      entities[idx][navigationProperty]['reference_to._o'] = field.reference_to;
+                      entities[idx][navigationProperty]['_NAME_FIELD_VALUE'] = entities[idx][navigationProperty][_ro_NAME_FIELD_KEY];
+                      if (_.isEmpty(queryFields)) {
+                        delete entities[idx][navigationProperty][_ro_NAME_FIELD_KEY]
+                      }
+                    }
+                  } catch (error) {
+                    console.error(error)
+                    entities[idx][navigationProperty] = originalData;
                   }
+
                 }
               }
             };
@@ -201,11 +218,11 @@ export class ODataManager {
               let ref2: any;
               if ((ref1 = entities[idx][navigationProperty]) != null ? ref1.ids : void 0) {
                 let _o = entities[idx][navigationProperty].o;
-                let _ro_NAME_FIELD_KEY = (ref2 = getCreator().getSteedosSchema().getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
+                let _ro_NAME_FIELD_KEY = (ref2 = this.getObject(_o)) != null ? ref2.NAME_FIELD_KEY : void 0;
                 // if ((queryOptions != null ? queryOptions.fields : void 0) && _ro_NAME_FIELD_KEY) {
                 //   queryOptions.fields.push(_ro_NAME_FIELD_KEY);
                 // }
-                let referenceToCollection = getCreator().getSteedosSchema().getObject(entities[idx][navigationProperty].o);
+                let referenceToCollection = this.getObject(entities[idx][navigationProperty].o);
                 if (referenceToCollection) {
                   if (field.multiple) {
                     let _ids = _.clone(entities[idx][navigationProperty].ids);
@@ -320,7 +337,7 @@ export class ODataManager {
   }
 
   async getUserOrganizations(spaceId: string, userId: string, isIncludeParents: boolean) {
-    let space_users = await getCreator().getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${userId}') and (space eq '${spaceId}')`, fields: ['organizations'] });
+    let space_users = await this.getObject('space_users').find({ filters: `(user eq '${userId}') and (space eq '${spaceId}')`, fields: ['organizations'] });
     if (!space_users || !space_users) {
       return []
     }
@@ -335,7 +352,7 @@ export class ODataManager {
 
       console.log('getUserOrganizations, filters: ', filters)
 
-      let parentsOrganizations = await getCreator().getSteedosSchema().getObject('organizations').find({ filters: filters, fields: ['parents'] })
+      let parentsOrganizations = await this.getObject('organizations').find({ filters: filters, fields: ['parents'] })
       let parents = _.flatten(_.pluck(parentsOrganizations, "parents"))
       return _.union(organizations, parents)
     } else {
@@ -358,6 +375,16 @@ export class ODataManager {
 
   getODataNextLinkPath(spaceId: string, objectName: string) {
     return this.getRootPath(spaceId) + `/${objectName}`;
+  }
+
+  getObject(name) {
+    try {
+      return getCreator().getSteedosSchema().getObject(name);
+    } catch (error) {
+      console.error(error)
+      return undefined
+    }
+
   }
 
 }
