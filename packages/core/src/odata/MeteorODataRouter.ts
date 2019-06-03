@@ -64,7 +64,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       };
     }
     let permissions = await collection.getUserObjectPermission(userSession);
-    if (permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, createQuery.query)) || (permissions.allowRead && userId)) {
+    if (permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, queryParams)) || (permissions.allowRead && userId)) {
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
