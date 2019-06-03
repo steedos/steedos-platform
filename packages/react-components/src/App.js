@@ -8,9 +8,9 @@ import './App.css';
 const App = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={ReportDesigner} />
-      <Route exact path="/designer" component={ReportDesigner} />
-      <Route exact path="/viewer" component={ReportViewer} />
+      <Route exact path="/:id" component={ReportDesigner} />
+      <Route exact path="/designer/:id" component={ReportDesigner} />
+      <Route exact path="/viewer/:id" component={ReportViewer} />
     </Switch>
   </BrowserRouter>
 );
