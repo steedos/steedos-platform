@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'whatwg-fetch';
 
 
 class ReportDesigner extends Component {
@@ -25,6 +26,17 @@ class ReportDesigner extends Component {
         console.log('Edit report template in the designer');
         designer.report = report;
         designer.renderHtml("report-designer");
+        designer.onSaveReport = async function (args) {
+            let jsonReport = args.report.saveToJsonString();
+            let response = await fetch('/api/report/mrt/temp/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonReport
+            });
+            let data = await response.json();
+        }
     }
 }
 

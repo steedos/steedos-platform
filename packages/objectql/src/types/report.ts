@@ -7,7 +7,8 @@ export type SteedosReportTypeConfig = {
     object_name: string,
     fields: Array<string>,
     filters: SteedosQueryFilters,
-    description: string
+    description: string,
+    mrt_file: string
 }
 
 export class SteedosReportType{
@@ -63,6 +64,14 @@ export class SteedosReportType{
     public set description(value: string) {
         this._description = value;
     }
+
+    private _mrt_file: string;
+    public get mrt_file(): string {
+        return this._mrt_file;
+    }
+    public set mrt_file(value: string) {
+        this._mrt_file = value;
+    }
     
     constructor(config: SteedosReportTypeConfig, datasource: SteedosDataSourceType){
         this._datasource = datasource
@@ -72,6 +81,7 @@ export class SteedosReportType{
         this.fields = config.fields
         this.filters = config.filters
         this.description = config.description
+        this.mrt_file = config.mrt_file
     }
 
     toConfig(){
@@ -82,6 +92,7 @@ export class SteedosReportType{
         config.fields = this.fields
         config.filters = this.filters
         config.description = this.description
+        config.mrt_file = this.mrt_file
         return config
     }
 }

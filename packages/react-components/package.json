@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@steedos/core": "file:../core",
     "eslint": "5.12.0",
     "http-proxy-middleware": "^0.19.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "@steedos/core": "file:../core",
-    "@steedos/client": "file:../client"
+    "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
     "server": "node server",
