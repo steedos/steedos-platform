@@ -55,12 +55,12 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
         else if ((v.type == 'lookup' || v.type == 'master_detail') && v.reference_to && _.isString(v.reference_to)) {
             let reference_to = v.reference_to;
             let objectName = reference_to.indexOf('.') > -1 ? reference_to : `${datasourceName}.${reference_to}`;
-            let corName = correctName(reference_to);
+            let corName = correctName(objectName);
             if (reference_to.indexOf('.') > -1 && !knownTypes[corName]) {
                 let refDatasourceName = reference_to.split('.')[0]
                 let object = steedosSchema.getObject(reference_to);
                 if (object) {
-                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes, refDatasourceName)
+                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes, datasourceName, refDatasourceName)
                 }
             }
 
@@ -104,17 +104,16 @@ function correctName(name: string) {
     return name.replace(/\./g, '_');
 }
 
-function buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName) {
+function buildGraphQLObjectType(obj, steedosSchema, knownTypes, thisDatasourceName, refDatasourceName?) {
 
-    if (datasourceName === 'default') {
-        var corName = correctName(obj.name);
-    } else {
-        var corName = correctName(datasourceName + '.' + obj.name);
+    let corName = correctName(obj.name);
+    if (refDatasourceName && refDatasourceName != thisDatasourceName) {
+        corName = correctName(refDatasourceName + '.' + obj.name);
     }
 
     return new GraphQLObjectType({
         name: corName, fields: function () {
-            return convertFields(steedosSchema, obj.fields, knownTypes, datasourceName);
+            return convertFields(steedosSchema, obj.fields, knownTypes, thisDatasourceName);
         }
     })
 }
@@ -128,17 +127,15 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
         if (!obj.name) {
             return;
         }
-        if (datasourceName === 'default') {
-            var objName: string = correctName(obj.name);
-        } else {
-            var objName: string = correctName(datasourceName + '.' + obj.name);
-        }
+
+        let corName = correctName(obj.name);
+        let objName: string = correctName(datasourceName + '.' + obj.name);
 
         if (!knownTypes[objName]) {
             knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName)
         }
 
-        rootQueryfields[objName] = {
+        rootQueryfields[corName] = {
             type: new GraphQLList(knownTypes[objName]),
             args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
             resolve: async function (source, args, context, info) {
@@ -150,7 +147,7 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
     })
 
     let rootMutationfields = {};
-    _.each(knownTypes, function (type, objName) {
+    _.each(rootQueryfields, function (type, objName) {
         rootMutationfields[objName + '_INSERT_ONE'] = {
             type: GraphQLJSON,
             args: { 'data': { type: new GraphQLNonNull(GraphQLJSON) } },
