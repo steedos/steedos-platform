@@ -476,9 +476,11 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
 
       if (collection != null ? collection.enable_trash : void 0) {
         let entityIsUpdated = await collection.update(recordId, {
-          is_deleted: true,
-          deleted: new Date(),
-          deleted_by: userId
+          $set: {
+            is_deleted: true,
+            deleted: new Date(),
+            deleted_by: userId
+          }
         }, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
