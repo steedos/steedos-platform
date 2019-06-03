@@ -83,12 +83,15 @@ export class ODataManager {
     }
   }
 
-  async isSameCompany(spaceId: string, userId: string, companyId: string, query: any = null) {
+  async isSameCompany(spaceId: string, userId: string, companyId: string, queryParams: any = null) {
     let sus = await this.getObject("space_users").find({ filters: `(space eq '${spaceId}') and (user eq '${userId}')`, fields: ['company_id', 'company_ids'] });
     let su = sus[0];
-    if (!companyId && query) {
+    if (!companyId && queryParams) {
       companyId = su.company_id;
-      query.company_id = { $in: su.company_ids };
+      let companyFilters = _.map(su.company_ids, function (cid) {
+        return `(company_id eq '${cid}')`
+      }).join(' or ')
+      queryParams.$filter = queryParams.$filter ? `(${queryParams.$filter} and (${companyFilters}))` : `(${companyFilters})`;
     }
     return su.company_ids.includes(companyId);
   }
