@@ -16,11 +16,11 @@ declare var DDP: any;
 declare var DDPCommon: any;
 
 export class SteedosMeteorMongoDriver implements SteedosDriver {
-    
+
     getSupportedColumnTypes() {
         return [
-            SteedosFieldDBType.varchar, 
-            SteedosFieldDBType.text, 
+            SteedosFieldDBType.varchar,
+            SteedosFieldDBType.text,
             SteedosFieldDBType.number,
             SteedosFieldDBType.boolean,
             SteedosFieldDBType.date,
@@ -229,7 +229,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update({ _id: id }, data);
+                        collection.update({ _id: id }, { $set: data });
                         return collection.findOne({ _id: id });
                     })
                     resolve(result);

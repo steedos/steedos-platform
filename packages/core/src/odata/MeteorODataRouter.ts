@@ -432,8 +432,8 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
       let fields_editable = true;
 
       if (fields_editable) {
-
-        let entityIsUpdated = await collection.update(recordId, bodyParams, userSession);
+        let data = bodyParams.$set ? bodyParams.$set : bodyParams
+        let entityIsUpdated = await collection.update(recordId, data, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
           res.send({});
@@ -476,11 +476,9 @@ router.delete('/:spaceId/:objectName/:_id', async function (req: Request, res: R
 
       if (collection != null ? collection.enable_trash : void 0) {
         let entityIsUpdated = await collection.update(recordId, {
-          $set: {
-            is_deleted: true,
-            deleted: new Date(),
-            deleted_by: userId
-          }
+          is_deleted: true,
+          deleted: new Date(),
+          deleted_by: userId
         }, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
