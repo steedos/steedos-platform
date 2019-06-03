@@ -8,34 +8,27 @@ class ReportDesigner extends Component {
     }
 
     componentDidMount(){
-        console.log('Loading Designer view');
-
-        console.log('Set full screen mode for the designer');
-        var options = new window.Stimulsoft.Designer.StiDesignerOptions();
+        let options = new window.Stimulsoft.Designer.StiDesignerOptions();
         options.appearance.fullScreenMode = false;
-
-        console.log('Create the report designer with specified options');
-        var designer = new window.Stimulsoft.Designer.StiDesigner(options, 'StiDesigner', false);
-
-        console.log('Create a new report instance');
-        var report = new window.Stimulsoft.Report.StiReport();
-
-        console.log('Load report from url');
-        var reportId = "kJ4ay8atFMvhdt3oa";
+        let designer = new window.Stimulsoft.Designer.StiDesigner(options, 'StiDesigner', false);
+        let report = new window.Stimulsoft.Report.StiReport();
+        let reportId = "temp";
         report.loadFile(`/api/report/mrt/${reportId}`);
-        console.log('Edit report template in the designer');
         designer.report = report;
         designer.renderHtml("report-designer");
         designer.onSaveReport = async function (args) {
+            // 保存报表模板
             let jsonReport = args.report.saveToJsonString();
-            let response = await fetch('/api/report/mrt/temp/', {
+            let response = await fetch(`/api/report/mrt/${reportId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: jsonReport
             });
-            let data = await response.json();
+            if (!response.ok){
+                window.Stimulsoft.System.StiError.showError("保存失败", true);
+            }
         }
     }
 }
