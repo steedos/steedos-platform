@@ -6,22 +6,15 @@ class ReportViewer extends Component {
     }          
 
     componentDidMount(){
-        console.log('Loading Viewer view');
-
-        console.log('Creating the report viewer with default options');
-        var viewer = new window.Stimulsoft.Viewer.StiViewer(null, 'StiViewer', false);
-
-        console.log('Creating a new report instance');
-        var report = new window.Stimulsoft.Report.StiReport();
-
-        console.log('Load report from url');
-        report.loadFile('/reports/SimpleList.mrt');
-
-        console.log('Assigning report to the viewer, the report will be built automatically after rendering the viewer');
+        let viewer = new window.Stimulsoft.Viewer.StiViewer(null, 'StiViewer', false);
+        let report = new window.Stimulsoft.Report.StiReport();
+        let reportId = this.props.match.params.id;
+        report.loadFile(`/api/report/mrt/${reportId}`);
         viewer.report = report;
-
-        console.log('Rendering the viewer to selected element');
-        viewer.renderHtml('report-viewer');
+        viewer.renderHtml("report-viewer");
+        if (!report.getDictionary().dataSources.count) {
+            window.Stimulsoft.System.StiError.showError("未找到报表", true);
+        }
     }
 }
 
