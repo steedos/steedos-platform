@@ -136,7 +136,6 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         };
       }
 
-      // getODataManager().excludeDeleted(createQuery.query);
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
@@ -146,6 +145,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
       } else {
         fields = _.keys(collection.toConfig().fields);
       }
+      filters = getODataManager().excludeDeleted(filters);
       if (queryParams.$top !== '0') {
         let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
         if (queryParams.hasOwnProperty('$skip')) {

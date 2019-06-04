@@ -97,7 +97,7 @@ export class ODataManager {
   }
 
   excludeDeleted(filters: string) {
-    filters = `(${filters}) and (is_deleted ne true)`;
+    return `(${filters}) and (is_deleted ne true)`;
   }
 
   visitorParser(visitor: any) {

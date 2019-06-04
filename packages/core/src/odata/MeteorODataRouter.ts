@@ -99,7 +99,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
           filters = `(${filters}) and (owner eq \'${userId}\')`;
         }
       }
-      getODataManager().excludeDeleted(filters)
+      filters = getODataManager().excludeDeleted(filters);
 
       if (queryParams.$top !== '0') {
         let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
