@@ -10,10 +10,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.4",
-    "path": "^0.12.7",
     "@steedos/objectql": "^0.0.4",
-    "@steedos/stimulsoft-report": "^0.0.1"
+    "@steedos/stimulsoft-report": "^0.0.1",
+    "express": "^4.15.4",
+    "graphql-request": "^1.8.2",
+    "path": "^0.12.7"
   },
   "devDependencies": {}
 }

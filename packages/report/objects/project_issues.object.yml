@@ -17,12 +17,12 @@ fields:
     is_wide: true
     rows: 4
     name: description
-  category:
-    label: 问题类型
-    type: master_detail
-    reference_to: projects
-    filterable: true
-    name: category
+  # category:
+  #   label: 问题类型
+  #   type: master_detail
+  #   reference_to: projects
+  #   filterable: true
+  #   name: category
   priority:
     label: 处理优先级
     type: select
@@ -36,28 +36,28 @@ fields:
     defaultValue: medium
     filterable: true
     name: priority
-  organization:
-    label: 提报部门
-    type: lookup
-    reference_to: organizations
-    filterable: true
-    name: organization
-  owner_organization:
-    label: 受理部门
-    type: lookup
-    reference_to: organizations
-    name: owner_organization
-    filterable: true
+  # organization:
+  #   label: 提报部门
+  #   type: lookup
+  #   reference_to: organizations
+  #   filterable: true
+  #   name: organization
+  # owner_organization:
+  #   label: 受理部门
+  #   type: lookup
+  #   reference_to: organizations
+  #   name: owner_organization
+  #   filterable: true
   deadline:
     label: 截止时间
     type: date
     name: deadline
-  end_organization:
-    label: 办结部门
-    type: lookup
-    reference_to: organizations
-    name: end_organization
-    filterable: true
+  # end_organization:
+  #   label: 办结部门
+  #   type: lookup
+  #   reference_to: organizations
+  #   name: end_organization
+  #   filterable: true
   enddate:
     label: 办结时间
     type: date

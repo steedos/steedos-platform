@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const request = require('graphql-request').request;
 
 let reporter = {
   async getReport(id) {
@@ -7,14 +8,20 @@ let reporter = {
     return report;
   },
   async getData(report) {
-    let object = utils.getObject(report.object_name);
-    let dataResult = await object.find({
-      fields: report.fields,
-      filters: report.filters
-    });
-    let result = {};
-    result[`${report.object_name}`] = dataResult;
-    return result;
+    if (report.graphql){
+      let dataResult = await request("http://localhost:3600/graphql/default/", report.graphql);
+      return dataResult;
+    }
+    else {
+      let object = utils.getObject(report.object_name);
+      let dataResult = await object.find({
+        fields: report.fields,
+        filters: report.filters
+      });
+      let result = {};
+      result[`${report.object_name}`] = dataResult;
+      return result;
+    }
   }
 };
 

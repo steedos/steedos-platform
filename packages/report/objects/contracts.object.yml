@@ -31,18 +31,18 @@ fields:
     sortable: true
     filterable: true
     name: signed_date
-  account:
-    label: 对方单位
-    type: master_detail
-    reference_to: accounts
-    name: account
-    filterable: true
-  customer_contact:
-    label: 联系人
-    type: master_detail
-    reference_to: contacts
-    filterable: false
-    name: customer_contact
+  # account:
+  #   label: 对方单位
+  #   type: master_detail
+  #   reference_to: accounts
+  #   name: account
+  #   filterable: true
+  # customer_contact:
+  #   label: 联系人
+  #   type: master_detail
+  #   reference_to: contacts
+  #   filterable: false
+  #   name: customer_contact
   start_date:
     label: 开始日期
     type: date
@@ -104,13 +104,13 @@ fields:
     label: 是否固投项目
     defaultValue: false
     name: is_solid_investment
-  contract_type:
-    type: lookup
-    label: 合同分类
-    reference_to: contract_types
-    required: true
-    name: contract_type
-    filterable: true
+  # contract_type:
+  #   type: lookup
+  #   label: 合同分类
+  #   reference_to: contract_types
+  #   required: true
+  #   name: contract_type
+  #   filterable: true
   pretax_amount:
     type: number
     label: 合同税前金额

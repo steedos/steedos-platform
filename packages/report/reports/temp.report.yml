@@ -6,3 +6,16 @@ fields:
   - name
   - category
   - priority
+  - organization.name.adf
+filters:
+  - 
+    - organization
+    - =
+    - BjL6atTqmicf3hutF
+graphql: |
+  query {
+    project_issues(filters: "organization eq P7XMJMjKoSz4yaK49", fields: ["name"]) {
+      _id
+      name
+    }
+  }

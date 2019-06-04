@@ -8,7 +8,8 @@ export type SteedosReportTypeConfig = {
     fields: Array<string>,
     filters: SteedosQueryFilters,
     description: string,
-    mrt_file: string
+    mrt_file: string,
+    graphql: string
 }
 
 export class SteedosReportType{
@@ -72,6 +73,14 @@ export class SteedosReportType{
     public set mrt_file(value: string) {
         this._mrt_file = value;
     }
+
+    private _graphql: string;
+    public get graphql(): string {
+        return this._graphql;
+    }
+    public set graphql(value: string) {
+        this._graphql = value;
+    }
     
     constructor(config: SteedosReportTypeConfig, datasource: SteedosDataSourceType){
         this._datasource = datasource
@@ -82,6 +91,7 @@ export class SteedosReportType{
         this.filters = config.filters
         this.description = config.description
         this.mrt_file = config.mrt_file
+        this.graphql = config.graphql
     }
 
     toConfig(){
@@ -93,6 +103,7 @@ export class SteedosReportType{
         config.filters = this.filters
         config.description = this.description
         config.mrt_file = this.mrt_file
+        config.graphql = this.graphql
         return config
     }
 }
