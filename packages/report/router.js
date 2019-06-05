@@ -34,4 +34,11 @@ routes.get('/data/:report_id', async (req, res) => {
   res.send(data);
 });
 
+// 获取报表列表
+routes.get('/list', async (req, res) => {
+  let datasource = objectql.getSteedosSchema().getDataSource();
+  let report = datasource.getReportsConfig();
+  res.send(report);
+});
+
 module.exports.routes = routes;
