@@ -1,0 +1,31 @@
+{
+  "name": "@steedos/app-meeting",
+  "version": "1.0.0",
+  "description": "Meeting room booking",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steedos/app-meeting.git"
+  },
+  "author": "Jack Zhuang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steedos/app-meeting/issues"
+  },
+  "homepage": "https://github.com/steedos/app-meeting#readme",
+  "dependencies": {
+    "@steedos/meteor-bundle-runner": "^1.1.6",
+    "@steedos/objectql": "^0.0.11",
+    "steedos-server": "^1.2.5"
+  },
+  "resolutions": {
+    "graphql": "^14.1.1",
+    "@steedos/objectql": "^0.0.11",
+    "@steedos/core": "^1.1.15",
+    "@steedos/auth": "^1.0.4"
+  }
+}
