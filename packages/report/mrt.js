@@ -12,9 +12,8 @@ const getMrtDictionary = (report) => {
         return {
         }
     }
-    let objectConfig = utils.getObjectConfig(report.object_name);
-    let databases = utils.getDatabases(report, objectConfig);
-    let dataSources = utils.getDataSources(report, objectConfig);
+    let databases = utils.getDatabases(report);
+    let dataSources = utils.getDataSources(report);
     return {
         "DataSources": dataSources,
         "Databases": databases

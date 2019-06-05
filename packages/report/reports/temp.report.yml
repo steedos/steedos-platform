@@ -4,9 +4,7 @@ name: 问题按类型统计报表
 object_name : project_issues
 fields:
   - name
-  - category
-  - priority
-  - organization
+  - organization.name
 filters:
   - 
     - organization

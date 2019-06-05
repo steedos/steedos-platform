@@ -9,23 +9,44 @@ const getObjectConfig = (object_name)=> {
     return object ? object.toConfig() : null;
 }
 
-const formatObjectFields = (objectConfig) => {
-    let fields = objectConfig.fields;
-    let tempField, tempFieldType, result, index = 0;
+const formatObjectFields = (report, objectConfig) => {
+    let reportFields = report.fields;
+    let objectFields = objectConfig.fields;
+    let tempField, tempFieldType, tempFieldAlias, result, index = 0,
+        keys, prevKey, tempObjectConfig, tempReferenceTo;
     result = {};
-    for (let key in fields) {
-        tempField = fields[key];
-        tempFieldType = convertFieldType(tempField);
-        if (tempFieldType) {
-            result[index] = {
-                "Name": key,
-                "Index": -1,
-                "NameInSource": key,
-                "Alias": tempField.label ? tempField.label : key,
-                "Type": tempFieldType
-            };
-            index++;
-        }
+    if (reportFields && reportFields.length) {
+        reportFields.forEach((key) => {
+            keys = key.split(".");
+            if (keys.length > 1) {
+                tempFieldAlias = keys.map((k) => {
+                    if (prevKey) {
+                        tempReferenceTo = tempField.reference_to
+                        tempObjectConfig = getObjectConfig(tempReferenceTo);
+                        tempField = tempObjectConfig.fields[k];
+                    } else {
+                        tempField = objectFields[k];
+                        prevKey = k;
+                    }
+                    return tempField.label ? tempField.label : key;
+                }).join(".");
+            }
+            else {
+                tempField = objectFields[key];
+                tempFieldAlias = tempField.label ? tempField.label : key;
+            }
+            tempFieldType = convertFieldType(tempField);
+            if (tempFieldType) {
+                result[index] = {
+                    "Name": key,
+                    "Index": -1,
+                    "NameInSource": key,
+                    "Alias": tempFieldAlias,
+                    "Type": tempFieldType
+                };
+                index++;
+            }
+        });
     }
     return result;
 }
@@ -69,8 +90,8 @@ const convertFieldType = (tempField)=> {
     }
 }
 
-const getDatabases = (report, objectConfig)=> {
-    if (!(report && objectConfig)) {
+const getDatabases = (report)=> {
+    if (!report) {
         return {};
     }
     let dataUrl = `/api/report/data/${report._id}`;
@@ -83,11 +104,12 @@ const getDatabases = (report, objectConfig)=> {
         }
     };
 }
-const getDataSources = (report, objectConfig)=> {
-    if (!(report && objectConfig)) {
+const getDataSources = (report)=> {
+    if (!report) {
         return {};
     }
-    let columns = formatObjectFields(objectConfig);
+    let objectConfig = getObjectConfig(report.object_name);
+    let columns = formatObjectFields(report, objectConfig);
     return {
         "0": {
             "Ident": "StiDataTableSource",
