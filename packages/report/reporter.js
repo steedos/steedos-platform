@@ -37,9 +37,17 @@ let reporter = {
                 "organization.name": "组织A"
               }]
             }
+            支持无限层递归
             */
           for(let k in object){
-            item[`${parentKey}.${k}`] = object[k];
+            let childKey = `${parentKey}.${k}`;
+            let childValue = object[k];
+            if (typeof childValue === "object") {
+              processChildren(item, childKey, childValue);
+            }
+            else{
+              item[childKey] = childValue;
+            }
           }
         }
         items.forEach((item) => {

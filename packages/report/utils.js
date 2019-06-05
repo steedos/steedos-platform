@@ -20,6 +20,7 @@ const formatObjectFields = (report, objectConfig) => {
             keys = key.split(".");
             if (keys.length > 1) {
                 // a.b或a.b.c的字段情况
+                prevKey = null;
                 tempFieldAlias = keys.map((k) => {
                     if (prevKey) {
                         tempReferenceTo = tempField.reference_to

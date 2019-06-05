@@ -5,6 +5,7 @@ object_name : project_issues
 fields:
   - name
   - organization.name
+  - organization.parent.name
 filters:
   - 
     - organization
@@ -13,11 +14,12 @@ filters:
 graphql: |
   query {
     project_issues(filters:"organization eq 'P7XMJMjKoSz4yaK49'") {
-      _id
       name
       organization {
-        _id
         name
+        parent{
+          name
+        }
       }
     }
   }
