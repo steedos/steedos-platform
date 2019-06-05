@@ -12,7 +12,32 @@ let reporter = {
       let dataResult = await request("http://localhost:3600/graphql/default/", report.graphql);
       let items = dataResult[`${report.object_name}`];
       if (items && items.length) {
-        let processChildren = (item,parentKey,object)=>{
+        let processChildren = (item, parentKey, object) => {
+          /**
+            把{
+              "object_name": [{
+                "_id": "R9HquKmR5fHbDqdWq",
+                "name": "测试1",
+                "organization": {
+                  "_id": "P7XMJMjKoSz4yaK49",
+                  "name": "组织A"
+                }
+              }]
+            }
+            中的organization转成 "organization._id", "organization.name"，
+            转换后结果： {
+              "object_name": [{
+                "_id": "R9HquKmR5fHbDqdWq",
+                "name": "测试1",
+                "organization": {
+                  "_id": "P7XMJMjKoSz4yaK49",
+                  "name": "组织A"
+                },
+                "organization._id": "P7XMJMjKoSz4yaK49",
+                "organization.name": "组织A"
+              }]
+            }
+            */
           for(let k in object){
             item[`${parentKey}.${k}`] = object[k];
           }

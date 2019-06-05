@@ -19,21 +19,40 @@ const formatObjectFields = (report, objectConfig) => {
         reportFields.forEach((key) => {
             keys = key.split(".");
             if (keys.length > 1) {
+                // a.b或a.b.c的字段情况
                 tempFieldAlias = keys.map((k) => {
                     if (prevKey) {
                         tempReferenceTo = tempField.reference_to
+                        if (!tempReferenceTo){
+                            throw new Error(`can't find the reference_to property for the field ${prevKey} in the object ${objectConfig.name}`);
+                        }
                         tempObjectConfig = getObjectConfig(tempReferenceTo);
                         tempField = tempObjectConfig.fields[k];
+                        if (tempField) {
+                            return tempField.label ? tempField.label : k;
+                        } else {
+                            throw new Error(`can't find the field ${k} in parent field ${prevKey} of the object ${objectConfig.name}`);
+                        }
                     } else {
                         tempField = objectFields[k];
                         prevKey = k;
+                        if (tempField) {
+                            return tempField.label ? tempField.label : k;
+                        } else {
+                            throw new Error(`can't find the field:${objectConfig.name}.${k}`);
+                        }
                     }
-                    return tempField.label ? tempField.label : key;
                 }).join(".");
             }
             else {
+                // 普通的不带.连接符的字段
                 tempField = objectFields[key];
-                tempFieldAlias = tempField.label ? tempField.label : key;
+                if (tempField){
+                    tempFieldAlias = tempField.label ? tempField.label : key;
+                }
+                else{
+                    throw new Error(`can't find the field:${objectConfig.name}.${key}`);
+                }
             }
             tempFieldType = convertFieldType(tempField);
             if (tempFieldType) {
