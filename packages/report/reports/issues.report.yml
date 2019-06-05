@@ -1,5 +1,5 @@
 
-_id : temp
+_id : issues
 name: 问题按类型统计报表
 object_name : project_issues
 fields:

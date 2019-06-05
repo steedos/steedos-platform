@@ -1,0 +1,48 @@
+name: contract_types
+icon: record
+label: 合同分类
+fields:
+  name:
+    type: text
+    label: 名称
+    name: name
+    searchable: true
+  remarks:
+    type: text
+    label: 备注
+    name: remarks
+  yinhuashuilv:
+    type: number
+    label: 印花税率
+    scale: 4
+    name: yinhuashuilv
+  owner:
+    label: 所属用户
+    type: lookup
+    reference_to: users
+    name: owner
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: true
+    name: user
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+    name: admin
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - remarks
+      - yinhuashuilv

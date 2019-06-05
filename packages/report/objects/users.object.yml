@@ -1,0 +1,258 @@
+name: users
+label: 用户
+icon: user
+enable_api: true
+fields:
+  avatar:
+    label: 头像
+    type: avatar
+    group: '-'
+    name: avatar
+  avatarUrl:
+    label: 头像URL
+    type: text
+    omit: true
+    name: avatarUrl
+  name:
+    label: 姓名
+    type: text
+    required: true
+    searchable: true
+    index: true
+    name: name
+  company:
+    type: text
+    label: 公司
+    required: true
+    name: company
+  position:
+    type: text
+    label: 职务
+    required: true
+    name: position
+  mobile:
+    type: text
+    label: 手机
+    group: '-'
+    required: true
+    readonly: true
+    name: mobile
+  mobile2:
+    type: text
+    label: 手机
+    required: true
+    hidden: true
+    group: '-'
+    name: mobile2
+  wechat:
+    type: text
+    label: 微信号
+    name: wechat
+  work_phone:
+    type: text
+    label: 座机
+    name: work_phone
+  email:
+    type: text
+    label: 邮件
+    name: email
+  email2:
+    type: text
+    label: 邮件
+    required: true
+    name: email2
+  location:
+    label: 地址
+    type: location
+    system: gcj02
+    required: true
+    name: location
+  voice:
+    label: 语音介绍
+    type: audio
+    group: '-'
+    name: voice
+  self_introduction:
+    type: textarea
+    is_wide: true
+    label: 个人简介
+    group: '-'
+    name: self_introduction
+  photos:
+    label: 照片
+    type: image
+    multiple: true
+    max: 9
+    group: '-'
+    name: photos
+  card_published:
+    label: 名片已发布
+    type: boolean
+    omit: true
+    name: card_published
+  profile:
+    type: '[Object]'
+    label: 用户信息
+    omit: true
+    name: profile
+  profile.sex:
+    type: select
+    label: 性别
+    options:
+      - label: 男
+        value: 男
+      - label: 女
+        value: 女
+    group: '-'
+    name: profile.sex
+    filterable: true
+  profile.birthdate:
+    type: date
+    label: 生日
+    name: profile.birthdate
+  profile.avatar:
+    type: text
+    label: 头像
+    group: '-'
+    name: profile.avatar
+  qrcode:
+    type: image
+    label: 二维码
+    name: qrcode
+  sex:
+    type: select
+    label: 性别
+    options:
+      - label: 男
+        value: 男
+      - label: 女
+        value: 女
+    group: '-'
+    name: sex
+    filterable: true
+  birthday:
+    type: date
+    label: 生日
+    name: birthday
+  live:
+    type: selectCity
+    label: 现居地
+    name: live
+  hometown:
+    type: selectCity
+    label: 家乡
+    name: hometown
+  age:
+    type: number
+    label: 年龄
+    hidden: true
+    name: age
+  zodiac:
+    type: text
+    label: 生肖
+    hidden: true
+    name: zodiac
+  constellation:
+    type: text
+    label: 星座
+    hidden: true
+    name: constellation
+  friends_count:
+    label: 好友个数
+    type: number
+    omit: true
+    name: friends_count
+  heart_count:
+    label: 点赞数
+    type: number
+    omit: true
+    name: heart_count
+  tags:
+    label: 好友标签
+    type: text
+    multiple: true
+    omit: true
+    name: tags
+  username:
+    type: text
+    unique: true
+    omit: true
+    name: username
+  steedos_id:
+    type: text
+    unique: true
+    readonly: true
+    omit: true
+    name: steedos_id
+  locale:
+    label: 语言
+    type: select
+    allowedValues:
+      - en-us
+      - zh-cn
+    options:
+      - label: 简体中文
+        value: zh-cn
+      - label: English
+        value: en-us
+    name: locale
+    filterable: true
+  email_notification:
+    label: 接收邮件通知
+    type: boolean
+    name: email_notification
+  primary_email_verified:
+    type: boolean
+    omit: true
+    hidden: true
+    name: primary_email_verified
+  last_logon:
+    type: date
+    omit: true
+    hidden: true
+    name: last_logon
+  is_cloudadmin:
+    type: boolean
+    omit: true
+    hidden: true
+    name: is_cloudadmin
+  is_deleted:
+    type: boolean
+    omit: true
+    hidden: true
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - username
+    filter_scope: all
+    filters:
+      - - _id
+        - =
+        - '{userId}'
+permission_set:
+  guest:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    name: guest
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    name: user
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+    name: admin
