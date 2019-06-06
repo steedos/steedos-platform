@@ -39,7 +39,7 @@ export function getTableColumnType(field: SteedosFieldType, databaseType: Databa
         case SteedosFieldDBType.boolean:
             return Boolean;
     }
-    return String;
+    return columnType || String;
 };
 
 export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseType: DatabaseType): EntitySchemaColumnDictionary {
