@@ -1,10 +1,17 @@
 {
-  "mssql": {
+  "--mssql": {
     "--url": "mssql://sa:password@192.168.0.190:1433/driver-test",
     "host": "192.168.0.190",
     "port": 1433,
     "username":"sa",
     "password":"password",
     "database":"driver-test"
+  },
+  "--oracle": {
+    "host": "192.168.0.237",
+    "port": 1521,
+    "username": "qhd170411",
+    "password": "password",
+    "database": "ORCL"
   }
 }

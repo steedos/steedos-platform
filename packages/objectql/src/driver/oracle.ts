@@ -30,6 +30,10 @@ export class SteedosOracleDriver extends SteedosTypeormDriver {
     }
 
     getConnectionOptions(): ConnectionOptions {
+        let connectString = this.config.connectString;
+        if (!connectString){
+            connectString = `${this.config.host}:${this.config.port}/${this.config.database}`;
+        }
         return  {
             type: "oracle",
             url: this._url,
@@ -40,7 +44,7 @@ export class SteedosOracleDriver extends SteedosTypeormDriver {
             username: this.config.username,
             password: this.config.password,
             database: this.config.database,
-            connectString: this.config.connectString ,
+            connectString: connectString,
             logging: this.config.logging
         };
     }
