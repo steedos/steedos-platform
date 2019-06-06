@@ -1,0 +1,5 @@
+{
+  "mssql": {
+    "url": "mssql://user:pwd@192.168.0.190:1433/driver-test"
+  }
+}

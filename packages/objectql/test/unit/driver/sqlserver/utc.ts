@@ -1,12 +1,12 @@
 import { SteedosSchema, SteedosSqlServerDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-let url = process.env.DRIVER_SQLSERVER_URL;//不提供url值时不运行单元测试
+const connectConfig = require('../../../../test/connection.json').mssql;//不提供connectConfig值时不运行单元测试
 let tableName = "TestFieldTypesForSqlserver";
 let driver: SteedosSqlServerDriver;
 
 describe('utc of datetime/date for sqlserver database', () => {
-    if (!url) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -31,58 +31,59 @@ describe('utc of datetime/date for sqlserver database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    url: url,
-                    driver: SteedosDatabaseDriverType.SqlServer,
-                    options: {
-                        useUTC: true
-                    },
-                    objects: {
-                        test: {
-                            label: 'SqlServer Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'number',
-                                    primary: true,
-                                    generated: true
-                                },
-                                text: {
-                                    label: '文本',
-                                    type: 'text'
-                                },
-                                textarea: {
-                                    label: '长文本',
-                                    type: 'textarea'
-                                },
-                                int: {
-                                    label: '数量',
-                                    type: 'number'
-                                },
-                                float: {
-                                    label: '小数',
-                                    type: 'number',
-                                    scale: 4
-                                },
-                                date: {
-                                    label: '日期',
-                                    type: 'datetime'
-                                },
-                                datetime: {
-                                    label: '创建时间',
-                                    type: 'datetime'
-                                },
-                                bool: {
-                                    label: '是否',
-                                    type: 'boolean'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.SqlServer,
+            options: {
+                useUTC: true
+            },
+            objects: {
+                test: {
+                    label: 'SqlServer Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'number',
+                            primary: true,
+                            generated: true
+                        },
+                        text: {
+                            label: '文本',
+                            type: 'text'
+                        },
+                        textarea: {
+                            label: '长文本',
+                            type: 'textarea'
+                        },
+                        int: {
+                            label: '数量',
+                            type: 'number'
+                        },
+                        float: {
+                            label: '小数',
+                            type: 'number',
+                            scale: 4
+                        },
+                        date: {
+                            label: '日期',
+                            type: 'datetime'
+                        },
+                        datetime: {
+                            label: '创建时间',
+                            type: 'datetime'
+                        },
+                        bool: {
+                            label: '是否',
+                            type: 'boolean'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");
