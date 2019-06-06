@@ -35,6 +35,8 @@ export class SteedosOracleDriver extends SteedosTypeormDriver {
             url: this._url,
             name: (new Date()).getTime().toString(),
             entities: Object.values(this._entities),
+            host: this.config.host,
+            port: this.config.port,
             username: this.config.username,
             password: this.config.password,
             database: this.config.database,

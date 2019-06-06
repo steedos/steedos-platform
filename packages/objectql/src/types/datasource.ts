@@ -44,6 +44,7 @@ export type SteedosDataSourceTypeConfig = {
     logging?: boolean | Array<any>
     url?: string
     host?: string,
+    port?: number,
     username?: string
     password?: string,
     database?: string,
@@ -70,8 +71,9 @@ export class SteedosDataSourceType implements Dictionary {
         return this._adapter;
     }
     private _getRoles: Function;
-    private _host: string;
     private _url: string;
+    private _host: string;
+    private _port: number;
     private _username?: string;
     private _password?: string;
     private _database?: string;
@@ -120,8 +122,9 @@ export class SteedosDataSourceType implements Dictionary {
 
     constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
         this._name = datasource_name
-        this._host = config.host
         this._url = config.url
+        this._host = config.host
+        this._port = config.port
         this._username = config.username
         this._password = config.password
         this._database = config.database
@@ -135,6 +138,7 @@ export class SteedosDataSourceType implements Dictionary {
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             host: this._host,
+            port: this._port,
             username: this._username,
             password: this._password,
             database: this._database,
