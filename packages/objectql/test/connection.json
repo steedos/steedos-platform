@@ -1,5 +1,10 @@
 {
   "mssql": {
-    "url": "mssql://user:pwd@192.168.0.190:1433/driver-test"
+    "--url": "mssql://sa:password@192.168.0.190:1433/driver-test",
+    "host": "192.168.0.190",
+    "port": 1433,
+    "username":"sa",
+    "password":"password",
+    "database":"driver-test"
   }
 }
