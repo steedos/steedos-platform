@@ -12,9 +12,10 @@ class ReportList extends Component {
         let list = this.state.list;
         var items = list.map(function (item) {
             return (
-                <a className="report-list-item" key={item._id} href={item._id}>
-                    {item.name}
-                </a>
+                <div className="report-list-item" key={item._id}>
+                    <a href={item._id}>{item.name}</a>
+                    <a href={"/designer/" + item._id}>编辑</a>
+                </div>
             );
         }, this);
         return (
