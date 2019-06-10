@@ -1,0 +1,39 @@
+// 单元测试数据库连接串配置，注意目标数据库需要执行test/unit/driver/{drivername}文件夹下sql语句来生成相关数据库表结构
+// driver层提供支持的配置功能都可以在这里直接配置，比如url/host/port/username/password/database等
+{
+  // mysql单元测试连接串，test/unit/driver/mysql/*
+  "mysql": {
+    "host": "192.168.0.195",
+    "username": "admin",
+    "password": "password",
+    "database": "driver-test"
+  },
+  // oracle数据库单元测试连接串，test/unit/driver/oracle/*
+  // 同一个命令行窗口执行yarn test前需要执行一次：SET PATH=C:\oracle\instantclient_12_1;%PATH%
+  // 参考:test/unit/driver/oracle/README.md，如果已经正确设置了环境变量则不需要执行上面的SET PATH
+  "oracle": {
+    "host": "192.168.0.237",
+    "port": 1521,
+    "username": "qhd170411",
+    "password": "123456",
+    "database": "ORCL"
+  },
+  // postgresql单元测试连接串，test/unit/driver/postgres/*
+  "postgres": {
+    "--url": "postgresql://postgres:password@192.168.0.195/driver-test",
+    "host": "192.168.0.195",
+    "username": "postgres",
+    "password": "password",
+    "database": "driver-test"
+  },
+  // SqlServer单元测试连接串，test/unit/driver/sqlserver/*
+  "mssql": {
+    "--url": "mssql://sa:password@192.168.0.190:1433/driver-test", // 2005
+    "---url": "mssql://sa:password@192.168.0.78/driver-test", // 2012
+    "host": "192.168.0.190",
+    "port": 1433,
+    "username":"sa",
+    "password": "password",
+    "database":"driver-test"
+  }
+}
