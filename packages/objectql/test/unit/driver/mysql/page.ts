@@ -1,15 +1,12 @@
 import { SteedosSchema, SteedosMySqlDriver, SteedosQueryOptions, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-const host = process.env.DRIVER_MYSQL_Host;//不提供host值时不运行单元测试
-const username = process.env.DRIVER_MYSQL_Username;
-const password = process.env.DRIVER_MYSQL_Password;
-const database = process.env.DRIVER_MYSQL_Database;
+const connectConfig = require('../../../../test/connection.json').mysql;//不提供connectConfig值时不运行单元测试
 let tableName = "TestPageForMySql";
 let driver: SteedosMySqlDriver;
 
 describe('fetch records by paging for mysql database', function() {
-    if (!host) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -114,40 +111,38 @@ describe('fetch records by paging for mysql database', function() {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    host: host,
-                    username: username,
-                    password: password,
-                    database: database,
-                    driver: SteedosDatabaseDriverType.MySql,
-                    objects: {
-                        test: {
-                            label: 'MySql Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'text',
-                                    primary: true
-                                },
-                                name: {
-                                    label: '名称',
-                                    type: 'text'
-                                },
-                                title: {
-                                    label: '标题',
-                                    type: 'text'
-                                },
-                                index: {
-                                    label: '序号',
-                                    type: 'number'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.MySql,
+            objects: {
+                test: {
+                    label: 'MySql Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'text',
+                            primary: true
+                        },
+                        name: {
+                            label: '名称',
+                            type: 'text'
+                        },
+                        title: {
+                            label: '标题',
+                            type: 'text'
+                        },
+                        index: {
+                            label: '序号',
+                            type: 'number'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");

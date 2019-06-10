@@ -1,12 +1,12 @@
 import { SteedosSchema, SteedosPostgresDriver, SteedosQueryOptions, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-let url = process.env.DRIVER_POSTGRESQL_URL;//不提供url值时不运行单元测试
+const connectConfig = require('../../../../test/connection.json').postgres;//不提供connectConfig值时不运行单元测试
 let tableName = "TestFieldsForPostgres";
 let driver: SteedosPostgresDriver;
 
 describe('fetch records width specific fields for Postgres database', () => {
-    if (!url) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -73,37 +73,38 @@ describe('fetch records width specific fields for Postgres database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    url: url,
-                    driver: SteedosDatabaseDriverType.Postgres,
-                    objects: {
-                        test: {
-                            label: 'Postgres Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'text',
-                                    primary: true
-                                },
-                                name: {
-                                    label: '名称',
-                                    type: 'text'
-                                },
-                                title: {
-                                    label: '标题',
-                                    type: 'text'
-                                },
-                                tag: {
-                                    label: '数量',
-                                    type: 'text'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Postgres,
+            objects: {
+                test: {
+                    label: 'Postgres Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'text',
+                            primary: true
+                        },
+                        name: {
+                            label: '名称',
+                            type: 'text'
+                        },
+                        title: {
+                            label: '标题',
+                            type: 'text'
+                        },
+                        tag: {
+                            label: '数量',
+                            type: 'text'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");

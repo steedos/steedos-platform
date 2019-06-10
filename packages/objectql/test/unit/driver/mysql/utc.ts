@@ -1,15 +1,12 @@
 import { SteedosSchema, SteedosMySqlDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-const host = process.env.DRIVER_MYSQL_Host;//不提供host值时不运行单元测试
-const username = process.env.DRIVER_MYSQL_Username;
-const password = process.env.DRIVER_MYSQL_Password;
-const database = process.env.DRIVER_MYSQL_Database;
+const connectConfig = require('../../../../test/connection.json').mysql;//不提供connectConfig值时不运行单元测试
 let tableName = "TestFieldTypesForMySql";
 let driver: SteedosMySqlDriver;
 
 describe('utc of datetime/date for mysql database', () => {
-    if (!host) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -34,64 +31,62 @@ describe('utc of datetime/date for mysql database', () => {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    host: host,
-                    username: username,
-                    password: password,
-                    database: database,
-                    timezone: 'Z',
-                    driver: SteedosDatabaseDriverType.MySql,
-                    logging: true,
-                    objects: {
-                        test: {
-                            label: 'MySql Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'number',
-                                    primary: true,
-                                    generated: true
-                                },
-                                text: {
-                                    label: '文本',
-                                    type: 'text'
-                                },
-                                textarea: {
-                                    label: '长文本',
-                                    type: 'textarea'
-                                },
-                                int: {
-                                    label: '数量',
-                                    type: 'number'
-                                },
-                                floatnumber: {
-                                    label: '小数',
-                                    type: 'number',
-                                    scale: 4
-                                },
-                                datefield: {
-                                    label: '日期',
-                                    type: 'date'
-                                },
-                                datetimefield: {
-                                    label: '创建时间',
-                                    type: 'datetime'
-                                },
-                                timestampfield: {
-                                    label: '时间戳',
-                                    type: 'datetime'
-                                },
-                                bool: {
-                                    label: '是否',
-                                    type: 'boolean'
-                                }
-                            }
+        let datasourceDefault: any = {
+            timezone: 'Z',
+            driver: SteedosDatabaseDriverType.MySql,
+            logging: true,
+            objects: {
+                test: {
+                    label: 'MySql Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'number',
+                            primary: true,
+                            generated: true
+                        },
+                        text: {
+                            label: '文本',
+                            type: 'text'
+                        },
+                        textarea: {
+                            label: '长文本',
+                            type: 'textarea'
+                        },
+                        int: {
+                            label: '数量',
+                            type: 'number'
+                        },
+                        floatnumber: {
+                            label: '小数',
+                            type: 'number',
+                            scale: 4
+                        },
+                        datefield: {
+                            label: '日期',
+                            type: 'date'
+                        },
+                        datetimefield: {
+                            label: '创建时间',
+                            type: 'datetime'
+                        },
+                        timestampfield: {
+                            label: '时间戳',
+                            type: 'datetime'
+                        },
+                        bool: {
+                            label: '是否',
+                            type: 'boolean'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");
