@@ -1,15 +1,12 @@
 import { SteedosSchema, SteedosOracleDriver, SteedosQueryOptions, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-const connectString = process.env.DRIVER_ORACLE_ConnectString;//不提供connectString值时不运行单元测试
-const username = process.env.DRIVER_ORACLE_Username;
-const password = process.env.DRIVER_ORACLE_Password;
-const database = process.env.DRIVER_ORACLE_Database;
+const connectConfig = require('../../../../test/connection.json').oracle;//不提供connectConfig值时不运行单元测试
 let tableName = "TestPageForOracle";
 let driver: SteedosOracleDriver;
 
 describe('fetch records by paging for oracle database', function() {
-    if (!connectString) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -135,40 +132,38 @@ describe('fetch records by paging for oracle database', function() {
     ];
 
     before(async () => {
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    connectString: connectString,
-                    username: username,
-                    password: password,
-                    database: database,
-                    driver: SteedosDatabaseDriverType.Oracle,
-                    objects: {
-                        test: {
-                            label: 'Oracle Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'text',
-                                    primary: true
-                                },
-                                name: {
-                                    label: '名称',
-                                    type: 'text'
-                                },
-                                title: {
-                                    label: '标题',
-                                    type: 'text'
-                                },
-                                index: {
-                                    label: '序号',
-                                    type: 'number'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Oracle,
+            objects: {
+                test: {
+                    label: 'Oracle Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'text',
+                            primary: true
+                        },
+                        name: {
+                            label: '名称',
+                            type: 'text'
+                        },
+                        title: {
+                            label: '标题',
+                            type: 'text'
+                        },
+                        index: {
+                            label: '序号',
+                            type: 'number'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");

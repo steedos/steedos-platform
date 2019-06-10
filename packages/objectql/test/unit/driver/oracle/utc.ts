@@ -1,15 +1,12 @@
 import { SteedosSchema, SteedosOracleDriver, SteedosDatabaseDriverType } from '../../../../src';
 import { expect } from 'chai';
 
-const connectString = process.env.DRIVER_ORACLE_ConnectString;//不提供connectString值时不运行单元测试
-const username = process.env.DRIVER_ORACLE_Username;
-const password = process.env.DRIVER_ORACLE_Password;
-const database = process.env.DRIVER_ORACLE_Database;
+const connectConfig = require('../../../../test/connection.json').oracle;//不提供connectConfig值时不运行单元测试
 let tableName = "TestFieldTypesForOracle";
 let driver: SteedosOracleDriver;
 
 describe('utc of datetime/date for oracle database', () => {
-    if (!connectString) {
+    if (!connectConfig) {
         return true;
     }
     try {
@@ -36,66 +33,64 @@ describe('utc of datetime/date for oracle database', () => {
     before(async () => {
         // 设置日期/时间字段时区为UTC，默认值为UTC
         process.env.ORA_SDTZ = 'UTC';
-        let mySchema = new SteedosSchema({
-            datasources: {
-                default: {
-                    connectString: connectString,
-                    username: username,
-                    password: password,
-                    database: database,
-                    driver: SteedosDatabaseDriverType.Oracle,
-                    objects: {
-                        test: {
-                            label: 'Oracle Schema',
-                            tableName: tableName,
-                            fields: {
-                                id: {
-                                    label: '主键',
-                                    type: 'number',
-                                    primary: true,
-                                    generated: true
-                                },
-                                text: {
-                                    label: '文本',
-                                    type: 'text'
-                                },
-                                textarea: {
-                                    label: '长文本',
-                                    type: 'textarea'
-                                },
-                                int: {
-                                    label: '数量',
-                                    type: 'number'
-                                },
-                                floatnumber: {
-                                    label: '小数',
-                                    type: 'number',
-                                    scale: 4
-                                },
-                                datefield: {
-                                    label: '日期',
-                                    type: 'date'
-                                },
-                                datetimefield: {
-                                    label: '创建时间',
-                                    type: 'datetime'
-                                },
-                                datetimefield2: {
-                                    label: '创建时间TIMEZONE',
-                                    type: 'datetime'
-                                },
-                                datetimefield3: {
-                                    label: '创建时间LOCALTIMEZONE',
-                                    type: 'datetime'
-                                },
-                                bool: {
-                                    label: '是否',
-                                    type: 'boolean'
-                                }
-                            }
+        let datasourceDefault: any = {
+            driver: SteedosDatabaseDriverType.Oracle,
+            objects: {
+                test: {
+                    label: 'Oracle Schema',
+                    tableName: tableName,
+                    fields: {
+                        id: {
+                            label: '主键',
+                            type: 'number',
+                            primary: true,
+                            generated: true
+                        },
+                        text: {
+                            label: '文本',
+                            type: 'text'
+                        },
+                        textarea: {
+                            label: '长文本',
+                            type: 'textarea'
+                        },
+                        int: {
+                            label: '数量',
+                            type: 'number'
+                        },
+                        floatnumber: {
+                            label: '小数',
+                            type: 'number',
+                            scale: 4
+                        },
+                        datefield: {
+                            label: '日期',
+                            type: 'date'
+                        },
+                        datetimefield: {
+                            label: '创建时间',
+                            type: 'datetime'
+                        },
+                        datetimefield2: {
+                            label: '创建时间TIMEZONE',
+                            type: 'datetime'
+                        },
+                        datetimefield3: {
+                            label: '创建时间LOCALTIMEZONE',
+                            type: 'datetime'
+                        },
+                        bool: {
+                            label: '是否',
+                            type: 'boolean'
                         }
                     }
                 }
+            }
+        };
+        datasourceDefault = { ...datasourceDefault, ...connectConfig };
+        let mySchema = new SteedosSchema({
+            datasources: {
+                default: datasourceDefault
             }
         });
         const datasource = mySchema.getDataSource("default");
