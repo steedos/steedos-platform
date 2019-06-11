@@ -4,6 +4,7 @@ import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
+import { SteedosFieldDBType } from '../driver/fieldDBType';
 
 abstract class SteedosObjectProperties {
     name?: string
@@ -132,7 +133,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private checkField(){
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
-            if(!driverSupportedColumnTypes.includes(field.fieldDBType)){
+            if(SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)){
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
             }
         })
