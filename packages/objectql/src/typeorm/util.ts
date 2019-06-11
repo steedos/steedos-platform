@@ -75,10 +75,16 @@ export function getEntity(object: SteedosObjectType, databaseType: DatabaseType)
     let tableName = object.tableName;
     let fields = object.fields;
     let columns: EntitySchemaColumnDictionary = getTableColumns(fields, object, databaseType);
+    // typeorm支持对象类型:"regular" | "view" | "junction" | "closure" | "closure-junction" | "entity-child";
+    let type: any = "regular";
+    if (object.is_view){
+        type = "view";
+    }
     return new EntitySchema({
         name: tableName,
         tableName: tableName,
-        columns: columns
+        columns: columns,
+        type: type
     });
 }
 
