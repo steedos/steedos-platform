@@ -42,8 +42,9 @@ export function getTableColumnType(field: SteedosFieldType, databaseType: Databa
     return columnType || String;
 };
 
-export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseType: DatabaseType): EntitySchemaColumnDictionary {
+export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: SteedosObjectType, databaseType: DatabaseType): EntitySchemaColumnDictionary {
     let columns: EntitySchemaColumnDictionary = {};
+    let primaryColumnCount = 0;
     for (let fieldName in fields) {
         let field = fields[fieldName];
         let fieldType: ColumnType = getTableColumnType(field, databaseType);
@@ -53,6 +54,7 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseTy
         let nullable = field.required ? false : true;
         if (field.primary){
             nullable = false;
+            primaryColumnCount++;
         }
         columns[fieldName] = {
             type: fieldType,
@@ -63,13 +65,16 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, databaseTy
             scale: field.scale
         };
     }
+    if (!primaryColumnCount){
+        console.error(`Table "${object.tableName}" does not have a primary column. Primary column is not required in DB, but is required in yml object file.`);
+    }
     return columns;
 }
 
 export function getEntity(object: SteedosObjectType, databaseType: DatabaseType): EntitySchema {
     let tableName = object.tableName;
     let fields = object.fields;
-    let columns: EntitySchemaColumnDictionary = getTableColumns(fields, databaseType);
+    let columns: EntitySchemaColumnDictionary = getTableColumns(fields, object, databaseType);
     return new EntitySchema({
         name: tableName,
         tableName: tableName,
