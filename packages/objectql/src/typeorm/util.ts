@@ -66,7 +66,7 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
         };
     }
     if (!primaryColumnCount){
-        console.error(`Table "${object.tableName}" does not have a primary column. Primary column is not required in DB, but is required in yml object file.`);
+        return null;
     }
     return columns;
 }
@@ -75,6 +75,9 @@ export function getEntity(object: SteedosObjectType, databaseType: DatabaseType)
     let tableName = object.tableName;
     let fields = object.fields;
     let columns: EntitySchemaColumnDictionary = getTableColumns(fields, object, databaseType);
+    if (!columns){
+        return null;
+    }
     // typeorm支持对象类型:"regular" | "view" | "junction" | "closure" | "closure-junction" | "entity-child";
     let type: any = "regular";
     if (object.is_view){
@@ -90,10 +93,18 @@ export function getEntity(object: SteedosObjectType, databaseType: DatabaseType)
 
 export function getEntities(objects: Dictionary<SteedosObjectType>, databaseType: DatabaseType): Dictionary<EntitySchema> {
     let entities: Dictionary<EntitySchema> = {};
+    let primaryColumnErrorTables = [];
     for (let name in objects) {
         let object = objects[name];
-        entities[object.tableName] = getEntity(object, databaseType);
+        let entitySchema = getEntity(object, databaseType);
+        if (entitySchema){
+            entities[object.tableName] = entitySchema;
+        }
+        else{
+            primaryColumnErrorTables.push(object.tableName);
+        }
     }
+    console.error(`These tables: "${primaryColumnErrorTables.join(",")}" does not have a primary column. Primary column is not required in DB, but is required in yml object file.`);
     return entities;
 }
 

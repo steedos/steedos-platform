@@ -113,6 +113,7 @@ describe('basic field types for sqlserver database', () => {
             if (expected.returnRecord !== undefined) {
                 Object.keys(expected.returnRecord).forEach((key) => {
                     expect(result).to.be.not.eq(undefined);
+                    expect(result).to.be.not.eq(false);
                     if (result) {
                         if (result[key] instanceof Date){
                             expect(result[key].getTime()).to.be.eq(expected.returnRecord[key].getTime());
