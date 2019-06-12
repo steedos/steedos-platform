@@ -72,6 +72,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _tableName: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
+    private _idFieldNames: string[] = [];
     private _NAME_FIELD_KEY: string;
 
     private _enable_audit: boolean;
@@ -128,6 +129,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     public get idFieldName(): string {
         return this._idFieldName;
+    }
+
+    public get idFieldNames(): string[] {
+        return this._idFieldNames;
     }
 
     private checkField(){
@@ -326,6 +331,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         if(field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
             this._idFieldName = field.name
+            if (this._idFieldNames.indexOf(field.name) < 0){
+                this._idFieldNames.push(field.name);
+            }
         }
 
         if(field_name == 'name' || field.is_name){
@@ -662,5 +670,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     public get primaryField(): SteedosFieldType {
         return this._fields[this._idFieldName];
+    }
+
+    public get primaryFields(): SteedosFieldType[] {
+        return this._idFieldNames.map((fieldName)=>{
+            return this._fields[fieldName]
+        });
     }
 }
