@@ -6,7 +6,7 @@ import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery, executeCountQuery, SqlOptions } from '@steedos/odata-v4-typeorm';
 import { SQLLang } from 'odata-v4-sql';
-import { getPrimaryKey } from "../typeorm";
+import { getPrimaryKeys } from "../typeorm";
 
 import _ = require("underscore");
 
@@ -103,7 +103,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         return typeormFilters
     }
 
-    getTypeormFieldsOptions(fields: string[] | string, primaryKey: string): JsonMap {
+    getTypeormFieldsOptions(fields: string[] | string, primaryKeys: string[]): JsonMap {
         if (typeof fields === "string") {
             fields = (<string>fields).split(",").map((n) => { return n.trim(); });
         }
@@ -112,17 +112,17 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
         let projection: string = "";
         (<string[]>fields).forEach((field) => {
-            if (field && field !== primaryKey) {
+            if (field && primaryKeys.indexOf(field) < 0) {
                 projection += `${field},`
             }
         });
         projection = projection.replace(/,$/g, "");
-        if (primaryKey){
+        if (primaryKeys && primaryKeys.length){
             if (projection){
-                projection = `${primaryKey},${projection}`;
+                projection = `${primaryKeys.join(",")},${projection}`;
             }
             else{
-                projection = primaryKey;
+                projection = primaryKeys.join(",");
             }
         }
         return {
@@ -174,9 +174,9 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
         }
         let repository = this._client.getRepository(entity);
-        let primaryKey: string = getPrimaryKey(repository);
+        let primaryKeys: string[] = getPrimaryKeys(repository);
         let filterQuery: JsonMap = this.getTypeormFilters(query.filters);
-        let projection: JsonMap = this.getTypeormFieldsOptions(query.fields, primaryKey);
+        let projection: JsonMap = this.getTypeormFieldsOptions(query.fields, primaryKeys);
         let sort: JsonMap = this.getTypeormSortOptions(query.sort);
         let topAndSkip: JsonMap = this.getTypeormTopAndSkipOptions(query.top, query.skip);
         const queryBuilder = repository.createQueryBuilder(tableName);
@@ -184,7 +184,18 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let sqlOptions: SqlOptions = { alias: tableName, type: this.sqlLang, version: this.databaseVersion };
         let result = await executeQuery(queryBuilder, queryOptions, sqlOptions);
         return result.map((item:any)=>{
-            item['_id'] = item[primaryKey] ? item[primaryKey].toString() : "";
+            if (primaryKeys){
+                if (primaryKeys.length === 1){
+                    let key = primaryKeys[0];
+                    item['_id'] = item[key] ? item[key].toString() : "";
+                }
+                else if (primaryKeys.length > 1){
+                    item['_ids'] = {};
+                    primaryKeys.forEach((key) => {
+                        item['_ids'][key] = item[key] ? item[key].toString() : "";
+                    });
+                }
+            }
             return item;
         });
     }
@@ -209,15 +220,27 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
             throw new Error(`${tableName} is not exist or not registered in the connect`);
         }
         let repository = this._client.getRepository(entity);
-        let primaryKey: string = getPrimaryKey(repository);
-        let filterQuery: JsonMap = this.getTypeormFilters([[primaryKey, "=", id]]);
-        let projection: JsonMap = this.getTypeormFieldsOptions(query ? query.fields : [], primaryKey);
+        let primaryKeys: string[] = getPrimaryKeys(repository);
+        let filterQuery: JsonMap = this.getTypeormFilters([[primaryKeys[0], "=", id]]);
+        let projection: JsonMap = this.getTypeormFieldsOptions(query ? query.fields : [], primaryKeys);
         const queryBuilder = repository.createQueryBuilder(tableName);
         // 这里不可以用repository.findOne，也不可以用repository.createQueryBuilder(tableName).select(...).where(...).getOne();
         // 因为sqlserver/sqlite3不兼容
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName, type: this.sqlLang });
         if (result && result[0]){
-            result[0]['_id'] = result[0][primaryKey] ? result[0][primaryKey].toString() : "";
+            // result[0]['_id'] = result[0][primaryKey] ? result[0][primaryKey].toString() : "";
+            if (primaryKeys){
+                if (primaryKeys.length === 1){
+                    let key = primaryKeys[0];
+                    result[0]['_id'] = result[0][key] ? result[0][key].toString() : "";
+                }
+                else if (primaryKeys.length > 1){
+                    result[0]['_ids'] = {};
+                    primaryKeys.forEach((key) => {
+                        result[0]['_ids'][key] = result[0][key] ? result[0][key].toString() : "";
+                    });
+                }
+            }
             return result[0];
         }
         else{
@@ -251,10 +274,12 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let repository = this._client.getRepository(entity);
         let result = await repository.insert(data);
         if (result.identifiers && result.identifiers.length) {
-            let primaryKey: string = getPrimaryKey(repository);
-            let id = primaryKey && result.identifiers[0][primaryKey];
-            if (id) {
-                return await this.findOne(tableName, id);
+            let primaryKeys: string[] = getPrimaryKeys(repository);
+            if (primaryKeys && primaryKeys.length === 1) {
+                let id = primaryKeys[0] && result.identifiers[0][primaryKeys[0]];
+                if (id) {
+                    return await this.findOne(tableName, id);
+                }
             }
         }
     }

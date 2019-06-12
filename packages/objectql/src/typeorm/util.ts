@@ -108,11 +108,13 @@ export function getEntities(objects: Dictionary<SteedosObjectType>, databaseType
     return entities;
 }
 
-export function getPrimaryKey(repository: Repository<any>): string {
+export function getPrimaryKeys(repository: Repository<any>): Array<string> {
     let primaryColumns: any = repository.metadata.primaryColumns;
-    let primaryKey: string;
+    let primaryKeys: [] = [];
     if (primaryColumns && primaryColumns.length) {
-        primaryKey = primaryColumns[0].propertyPath;
+        primaryKeys = primaryColumns.map((item)=>{
+            return item.propertyPath;
+        });
     }
-    return primaryKey;
+    return primaryKeys;
 }
