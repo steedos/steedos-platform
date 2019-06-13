@@ -59,18 +59,18 @@ export default class ObjectConfigManager {
 
         // check if such connection is already registered
         let existConfig = this.objectConfigs.find(objectConfig => objectConfig.name === (options.name || "default"));
-        if(options.extend){
+        if (options.extend) {
             let extendConfig = this.objectConfigs.find(objectConfig => objectConfig.name === (options.extend || "default"));
-            if(extendConfig){
+            if (extendConfig) {
                 let objectConfig = new ObjectConfig(options);
                 objectConfig.extend(extendConfig.config)
                 this.objectConfigs.push(objectConfig);
                 this.registerCreator(objectConfig.config);
                 return objectConfig;
-            }else{
+            } else {
                 throw new Error("Object config not exists");
             }
-        }else if (existConfig) {
+        } else if (existConfig) {
             // if its registered but closed then simply remove it from the manager
             if (!options.extend)
                 throw new Error("Object config exists, do you want to extend?");
@@ -78,7 +78,7 @@ export default class ObjectConfigManager {
             //     existConfig.extend(options);
             //     this.registerCreator(existConfig.config);
             // }
-        }else{
+        } else {
             // create a new objectConfig
             let objectConfig = new ObjectConfig(options);
             this.objectConfigs.push(objectConfig);
@@ -116,11 +116,16 @@ export default class ObjectConfigManager {
     };
 
     loadStandardObjects() {
-        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/spaces.object.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/users.object.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/organizations.object.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/space_users.object.yml"))
-        this.createFromFile(path.resolve(__dirname, "../../../standard-objects/apps.object.yml"))
+        let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
+        if (standardObjectsDir) {
+            this.createFromFile(path.join(standardObjectsDir, "spaces.object.yml"))
+            this.createFromFile(path.join(standardObjectsDir, "users.object.yml"))
+            this.createFromFile(path.join(standardObjectsDir, "organizations.object.yml"))
+            this.createFromFile(path.join(standardObjectsDir, "space_users.object.yml"))
+            this.createFromFile(path.join(standardObjectsDir, "apps.object.yml"))
+            this.createFromFile(path.join(standardObjectsDir, "object_webhooks.object.yml"))
+        }
+
     }
 
 
