@@ -819,7 +819,8 @@ Creator.Objects.archive_wenshu =
 				"year","retention_peroid","item_number",
 				"title","document_date",
 				"archive_dept","author","document_number","organizational_structure"]
-			filter_fields: ["year","title","document_date","document_number"]
+			filter_fields: ["year","title","document_date","document_number"]			
+			sort: [["year", "desc"],["retention_peroid", "asc"],["archive_dept", "asc"],["organizational_structure", "asc"],["item_number", "asc"]]
 # 		borrow:
 #             label:"查看"
 #             filter_scope: "space"
@@ -833,7 +834,8 @@ Creator.Objects.archive_wenshu =
 				"year","retention_peroid","item_number",
 				"title","document_date",
 				"archive_dept","author","document_number","organizational_structure"]
-			filter_fields: ["year","title","document_date","document_number"]
+			filter_fields: ["year","title","document_date","document_number"]			
+			sort: [["year", "desc"],["document_number", "asc"]]
 		# 已移交功能去掉===============
 		# transfered:
 		# 	label:"已移交"
