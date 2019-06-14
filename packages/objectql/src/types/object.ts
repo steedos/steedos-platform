@@ -252,6 +252,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let thisArg = {
             ...context,
             object_name: object_name, 
+            datasource_name: this._datasource.name,
             getObject: (object_name: string) => {
                 return this._schema.getObject(object_name)
             }
