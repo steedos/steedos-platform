@@ -222,16 +222,6 @@ Creator.Objects.archive_wenshu =
 			searchable:true
 			default_width: 80
 			group:"档号"
-		
-		title:
-			type:"text"
-			label:"题名"
-			is_wide:true
-			is_name:true
-			required:true
-			searchable:true
-			default_width: 400
-			group:"内容描述"
 
 		retention_peroid:
 			type:"master_detail"
@@ -250,14 +240,6 @@ Creator.Objects.archive_wenshu =
 			default_width: 260
 			group:"档号"
 		
-		category_code:
-			type:"master_detail"
-			label:"类别号"
-			reference_to: "archive_classification"
-			searchable:true
-			group:"档号"
-			filterable:false
-		
 		item_number:
 			type: "number"
 			label:"件号"
@@ -265,6 +247,40 @@ Creator.Objects.archive_wenshu =
 			searchable:true
 			default_width: 70
 			group:"档号"
+		
+		title:
+			type:"text"
+			label:"题名"
+			is_wide:true
+			is_name:true
+			required:true
+			searchable:true
+			default_width: 400
+			group:"内容描述"
+		
+		document_number:
+			type:"text"
+			label:"文号"
+			searchable:true
+			default_width:260
+			group:"内容描述"
+		
+		document_date:
+			type:"date"
+			label:"文件日期"
+			format:"YYYYMMDD"
+			sortable:true
+			searchable:true
+			default_width: 120
+			group:"内容描述"
+		
+		category_code:
+			type:"master_detail"
+			label:"类别号"
+			reference_to: "archive_classification"
+			searchable:true
+			group:"档号"
+			filterable:false
 		
 		document_sequence_number:
 			type: "number"
@@ -319,27 +335,11 @@ Creator.Objects.archive_wenshu =
 			searchable:true
 			group:"内容描述"
 		
-		document_number:
-			type:"text"
-			label:"文件编号"
-			searchable:true
-			default_width:260
-			group:"内容描述"
-		
 		author:
 			type:"text"
 			label:"责任者"
 			searchable:true
 			default_width: 200
-			group:"内容描述"
-		
-		document_date:
-			type:"date"
-			label:"文件日期"
-			format:"YYYYMMDD"
-			sortable:true
-			searchable:true
-			default_width: 120
 			group:"内容描述"
 		
 		prinpipal_receiver:
