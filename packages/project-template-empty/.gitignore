@@ -13,5 +13,3 @@
 **/.vscode/launch.*
 
 **/yarn.lock
-
-#steedos-config.yml
