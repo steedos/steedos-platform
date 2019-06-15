@@ -18,6 +18,10 @@ export class SteedosMongoDriver implements SteedosDriver {
         this._url = config.url;
     }
 
+    init(){
+        
+    }
+
     getSupportedColumnTypes() {
         return [
             SteedosFieldDBType.varchar, 

@@ -74,6 +74,6 @@ export interface SteedosDriver {
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;
     dropTables?(): any;
     createTables?(objects: Dictionary<SteedosObjectType>): any;
-    init?(objects: Dictionary<SteedosObjectType>): any;
+    init(objects: Dictionary<SteedosObjectType>): any;
 }
 
