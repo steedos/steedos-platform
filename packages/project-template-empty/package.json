@@ -1,0 +1,16 @@
+{
+  "name": "@steedos/project-template-empty",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steedos/object-server.git"
+  },
+  "author": "Jack Zhuang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steedos/object-server/issues"
+  },
+  "homepage": "https://github.com/steedos/object-server#readme"
+}
