@@ -1,9 +1,8 @@
 const {Command, flags} = require('@oclif/command')
-path = require("path")
-fs = require("fs")
-os = require("os")
-const yaml = require('js-yaml');
-
+import path = require("path")
+import fs = require("fs");
+import os = require("os")
+import yaml = require('js-yaml');
 class RunCommand extends Command {
   async run() {
     const {flags} = this.parse(RunCommand)
