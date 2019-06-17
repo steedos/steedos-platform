@@ -433,6 +433,10 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
 
       if (fields_editable) {
         let data = bodyParams.$set ? bodyParams.$set : bodyParams
+        let unsetData = bodyParams.$unset ? bodyParams.$unset : {}
+        _.each(unsetData, function (v, k) {
+          data[k] = null;
+        })
         let entityIsUpdated = await collection.update(recordId, data, userSession);
         if (entityIsUpdated) {
           getODataManager().setHeaders(res);
