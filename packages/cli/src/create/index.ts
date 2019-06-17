@@ -6,6 +6,7 @@ import { IProjectOptions } from "./IProjectOptions";
 const spinner = new (require('@geek/spinner'))();
 const templateProject = "@steedos/project-template-empty"
 const projectConfigName = 'package.template.json'
+const colors = require('colors/safe');
 
 export async function CliLogic() {
     const args = GetUtilParametersByArgs()
@@ -55,6 +56,11 @@ async function createProject(retVal){
             data = data + '\r\n' + 'steedos-config.yml'
             fs.outputFileSync(gitignorePath, data)
             spinner.succeed()
+            // spinner.info(`Please execute the command: cd ${retVal.projectOptions.name} && yarn && yarn start`);
+            console.info('We suggest that you begin by typing:')
+            console.info(`    ${colors.cyan('cd')} ${retVal.projectOptions.name}`)
+            console.info(`    ${colors.cyan('yarn')}`)
+            console.info(`    ${colors.cyan('yarn start')}`)
         })
         .catch(err => {
             spinner.fail(err);
