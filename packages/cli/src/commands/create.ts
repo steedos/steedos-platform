@@ -16,4 +16,6 @@ CreateCommand.args = [
 	}
 ];
 
+CreateCommand.description = `Create steedos project`
+
 module.exports = CreateCommand
