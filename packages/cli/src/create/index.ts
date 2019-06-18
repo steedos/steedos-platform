@@ -52,9 +52,11 @@ async function createProject(retVal){
             fs.outputJsonSync(path.join(projectDir, 'package.json'), projectConfig, {spaces: 4, EOL: '\r\n'})
             fs.removeSync(path.join(projectDir, projectConfigName))
             const gitignorePath = path.join(projectDir, '.gitignore')
-            let data = fs.readFileSync(gitignorePath, 'utf8')
-            data = data + '\r\n' + 'steedos-config.yml'
-            fs.outputFileSync(gitignorePath, data)
+            if(fs.existsSync(gitignorePath)){
+                let data = fs.readFileSync(gitignorePath, 'utf8')
+                data = data + '\r\n' + 'steedos-config.yml'
+                fs.outputFileSync(gitignorePath, data)
+            }
             spinner.succeed()
             // spinner.info(`Please execute the command: cd ${retVal.projectOptions.name} && yarn && yarn start`);
             console.info('We suggest that you begin by typing:')
