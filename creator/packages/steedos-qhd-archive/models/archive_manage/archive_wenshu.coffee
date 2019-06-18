@@ -816,9 +816,9 @@ Creator.Objects.archive_wenshu =
 			filter_scope: "space"
 			filters: [["is_received", "=", true],["is_destroyed", "<>", true]]
 			columns:[
-				"year","retention_peroid","item_number",
-				"title","document_date",
-				"archive_dept","author","document_number","organizational_structure"]
+				"year","retention_peroid","organizational_structure","item_number",
+				"title","document_number","document_date","author","security_classification",
+				"archive_dept","document_type"]
 			filter_fields: ["year","title","document_date","document_number"]			
 			sort: [["year", "desc"],["retention_peroid", "asc"],["archive_dept", "asc"],["organizational_structure", "asc"],["item_number", "asc"]]
 # 		borrow:
@@ -831,9 +831,9 @@ Creator.Objects.archive_wenshu =
 			filter_scope: "space"
 			filters: [["is_received", "=", false]]
 			columns:[
-				"year","retention_peroid","item_number",
-				"title","document_date",
-				"archive_dept","author","document_number","organizational_structure"]
+				"year","retention_peroid","organizational_structure","item_number",
+				"title","document_number","document_date","author","security_classification",
+				"archive_dept","document_type"]
 			filter_fields: ["year","title","document_date","document_number"]			
 			sort: [["year", "desc"],["document_number", "asc"]]
 		# 已移交功能去掉===============
