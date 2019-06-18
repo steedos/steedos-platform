@@ -18,6 +18,10 @@ Creator.Objects.archive_rules =
 			type:"master_detail"
 			label:"保管期限"
 			reference_to:"archive_retention"
+		sort_no:
+			type: "number"
+			label:'排序号'
+			defaultValue:100
 	permission_set:
 		user:
 			allowCreate: true
@@ -37,5 +41,5 @@ Creator.Objects.archive_rules =
 		all:
 			label:"全部"
 			filter_scope: "space"
-			columns:["fieldname","keywords","retention"]
+			columns:["fieldname","keywords","retention","sort_no"]
 

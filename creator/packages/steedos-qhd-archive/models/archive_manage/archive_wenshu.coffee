@@ -1,6 +1,6 @@
 # 设置保管期限
 set_retention = (doc)->
-	rules = Creator.Collections["archive_rules"].find({ fieldname: 'title'},{ fields:{ keywords: 1,retention:1 } } ).fetch()
+	rules = Creator.Collections["archive_rules"].find({ fieldname: 'title'},{ fields:{ keywords: 1,retention:1 },sort:{sort_no:-1} } ).fetch(retention:1)
 	if rules
 		rules_keywords = _.pluck rules, "keywords"
 	else
