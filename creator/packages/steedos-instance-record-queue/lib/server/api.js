@@ -177,7 +177,7 @@ InstanceRecordQueue.Configure = function (options) {
 		if (form.current._id === ins.form_version) {
 			formFields = form.current.fields || [];
 		} else {
-			var formVersion = _.find(ins.historys, function (h) {
+			var formVersion = _.find(form.historys, function (h) {
 				return h._id === ins.form_version;
 			})
 			formFields = formVersion ? formVersion.fields : [];
@@ -221,6 +221,9 @@ InstanceRecordQueue.Configure = function (options) {
 				var oField = objectFields[fm.object_field];
 
 				if (oField) {
+					if (!wField) {
+						console.log('fm.workflow_field: ', fm.workflow_field)
+					}
 					// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
 					if (!wField.is_multiselect && ['user', 'group'].includes(wField.type) && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
 						obj[fm.object_field] = values[fm.workflow_field]['id'];

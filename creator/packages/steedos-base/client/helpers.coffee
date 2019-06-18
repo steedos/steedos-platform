@@ -138,7 +138,7 @@ Steedos.Helpers =
 			return false
 		
 		isUrl = if typeof app is "string" then true else false
-		current_app_id = Session.get("current_app_id")
+		current_app_id = Steedos.getCurrentAppId()
 		if !isUrl and current_app_id
 			return current_app_id == app._id
 		
@@ -454,6 +454,22 @@ TemplateHelpers =
 		if badge
 			return badge
 
+	getWorkflowCategoriesBadge: (workflow_categories, spaceId)->
+		count = 0
+		$.ajax
+			url: Steedos.absoluteUrl('/api/workflow/open/pending?limit=0&spaceId=' + spaceId + "&workflow_categories=" + workflow_categories.join(','))
+			type: 'get'
+			async: false
+			dataType: 'json'
+			success: (responseText, status)->
+				if (responseText.errors)
+					toastr.error(responseText.errors);
+					return;
+				count = responseText.count;
+			error: (xhr, msg, ex) ->
+				toastr.error(msg);
+		if count
+			return count
 
 	locale: (isI18n)->
 		locale = Steedos.getLocale()

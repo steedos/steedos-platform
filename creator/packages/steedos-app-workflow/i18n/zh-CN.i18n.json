@@ -4,5 +4,11 @@
 	"categories_in_use": "分类在使用中，不能删除",
 
 	"process_delegation_rules_start_must_lt_end": "开始时间应小于结束时间",
-	"process_delegation_rules_only_one": "您已设置委托规则，修改即可"
+	"process_delegation_rules_only_one": "您已设置委托规则，修改即可",
+	"distribute_edit_flow_select_users": "流程被分发时分发对象选择范围",
+	"distribute_edit_flow_select_flows": "搜索此步骤可分发流程",
+	"flow_list_title_set_distribute": "设置分发",
+	"distribute_to_self": "分发时可分发给自己",
+	"distribute_end_notification": "分发结束后提醒发起人",
+	"instance_approve_modal_modificationsave": "您的修改保存成功"
 }

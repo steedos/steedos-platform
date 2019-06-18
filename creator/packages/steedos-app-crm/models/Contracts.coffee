@@ -160,24 +160,40 @@ Creator.Objects.contracts =
 		# 新增字段：重大合同，
 		# 待处理：按规则自动赋值
 		is_important:
-			type:"boolean"
+			type: "select"
 			label:"是否重大合同"
-			defaultValue:false
+			defaultValue: "否"
+			options:[
+				{label:"是重大合同",value: "是"},
+				{label:"不是重大合同",value: "否"}],
+			allowedValues:["是","否"]
 			# group:"合同标记"
 		is_bidding:
-			type:"boolean"
+			type: "select"
 			label:"是否招投标"
-			defaultValue:false
+			defaultValue: "否"
+			options:[
+				{label:"是",value: "是"},
+				{label:"否",value: "否"}],
+			allowedValues:["是","否"]
 			# group:"合同标记"
 		is_connected_transaction:
-			type:"boolean"
+			type: "select"
 			label:"是否关联交易"
-			defaultValue: false
+			defaultValue: "否"
+			options:[
+				{label:"是",value: "是"},
+				{label:"否",value: "否"}],
+			allowedValues:["是","否"]
 			# group:"合同标记"
 		is_solid_investment:
-			type:"boolean"
+			type: "select"
 			label:"是否固投项目"
-			defaultValue: false
+			defaultValue: "否"
+			options:[
+				{label:"是",value: "是"},
+				{label:"否",value: "否"}],
+			allowedValues:["是","否"]
 			# group:"合同标记"
 		
 
@@ -234,14 +250,15 @@ Creator.Objects.contracts =
 			label: "质保期"
 			# group:"合同金额"
 
-
-
 		fileid:
 			type: "text"
 			label: "申请单id"
 			hidden: true
 
-		
+		contract_id:
+			type: "text"
+			label: "老合同id"
+			hidden: true
 
 #		st:
 #			type: 'summary'

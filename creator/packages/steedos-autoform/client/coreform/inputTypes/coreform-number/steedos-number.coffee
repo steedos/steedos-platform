@@ -79,8 +79,3 @@ Template.afSteedosNumber.events
 		else if !/\d/.test(e.key) and !_.include([8,46,37,38,39,40,27],e.keyCode)
 			# 只能输入数字或退格、删除、方向键、esc
 			return false
-		scaleMatch = currentValue.match(/\..+/)?[0]
-		if scaleMatch and scaleMatch.length > scale
-			# 小数位后只能输入scale个小数
-			if /\d/.test(e.key)
-				return false

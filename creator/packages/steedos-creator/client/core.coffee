@@ -156,7 +156,12 @@ if Meteor.isClient
 			# 限制查看本单位时另外加过虑条件
 			if selector.length > 0
 				selector.push "and"
-			selector.push ["company_id", "=", Creator.getUserCompanyId() || -1]
+			userCompanyIds = Creator.getUserCompanyIds()
+			if userCompanyIds && userCompanyIds.length
+				companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], object_name)
+				selector.push companyIdsFilters
+			else 
+				selector.push ["company_id", "=", -1]
 		else if permissions.allowRead
 			# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
 			if selector.length > 0
@@ -262,7 +267,12 @@ if Meteor.isClient
 			# 限制查看本单位时另外加过虑条件
 			if selector.length > 0
 				selector.push "and"
-			selector.push ["company_id", "=", Creator.getUserCompanyId() || -1]
+			userCompanyIds = Creator.getUserCompanyIds()
+			if userCompanyIds && userCompanyIds.length
+				companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], related_object_name)
+				selector.push companyIdsFilters
+			else 
+				selector.push ["company_id", "=", -1]
 		else if permissions.allowRead
 			# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
 			if selector.length > 0

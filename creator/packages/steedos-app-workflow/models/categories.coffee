@@ -13,11 +13,21 @@ Creator.Objects.categories =
 			label: "排序号"
 			type: "number"
 
+		app:
+			label: "所属应用"
+			type: "lookup"
+			reference_to: "apps"
+			optionsFunction: ()->
+				_options = []
+				_.forEach Creator.Apps, (o, k)->
+					_options.push {label: o.name, value: k, icon: o.icon_slds}
+				return _options
+
 	list_views:
 		all:
 			label: "所有"
 			filter_scope: "space"
-			columns: ["name"]
+			columns: ["name", "sort_no", "app"]
 
 	permission_set:
 		user:

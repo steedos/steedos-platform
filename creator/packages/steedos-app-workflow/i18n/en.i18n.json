@@ -4,5 +4,11 @@
 	"categories_in_use": "Category is in use and cannot be deleted",
 
 	"process_delegation_rules_start_must_lt_end": "Strat time must less than end time",
-	"process_delegation_rules_only_one": "You already set process delegation rule"
+	"process_delegation_rules_only_one": "You already set process delegation rule",
+	"distribute_edit_flow_select_users": "users options",
+	"distribute_edit_flow_select_flows": "flows options",
+	"flow_list_title_set_distribute": "Set Distribute",
+	"distribute_to_self": "can distribute to self",
+	"distribute_end_notification": "notificate user after distributed end",
+	"instance_approve_modal_modificationsave": "saved"
 }

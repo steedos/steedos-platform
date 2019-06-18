@@ -548,10 +548,15 @@ renderSummaryReport = (reportObject)->
 					if relate_valueField?.type == "number" or relate_valueField?.type == "currency"
 						operation = "sum"
 			caption = "#{getSummaryTypeLabel operation}: {0}"
+			if operation != "count"
+				format = 
+					type: "fixedPoint"
+					precision: 2
 			summaryItem = 
 				displayFormat: caption
 				column: value
 				summaryType: operation
+				valueFormat: format
 			# sum统计统一设置为在分组统计中按列对齐，其他比如计数统计向左对齐
 			if ["sum"].indexOf(operation) > -1
 				summaryItem.alignByColumn = true
@@ -763,11 +768,16 @@ renderMatrixReport = (reportObject)->
 			unless caption
 				caption = objectName + "_" + value
 			caption = "#{getSummaryTypeLabel operation} #{caption}"
+			if operation != "count"
+				format = 
+					type: "fixedPoint"
+					precision: 2
 			reportFields.push 
 				caption: caption
 				dataField: value
 				# dataType: valueField.type
 				summaryType: operation
+				format: format
 				area: 'data'
 	_.each reportObject.fields, (item)->
 		# itemFieldKey = item.replace(/\./g,"*%*")
@@ -994,3 +1004,8 @@ Template.creator_report_content.onCreated ->
 		self.is_chart_open.set(false)
 	Template.creator_report_content.getReportContent = getReportContent.bind(this.data)
 	Template.creator_report_content.renderReport = renderReport.bind(this.data)
+
+Template.creator_report_content.onDestroyed ->
+	# 离开报表详细界面时清除过滤条件，以防止返回列表后条件不变
+	Session.set("filter_scope", null)
+	Session.set("filter_items", null)

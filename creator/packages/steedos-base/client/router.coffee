@@ -2,6 +2,10 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		Steedos.redirectToSignIn()
 
+FlowRouter.triggers.enter (context, redirect, stop)->
+	if context?.queryParams?.app_id
+		Session.set('current_app_id', context.queryParams.app_id)
+
 FlowRouter.route '/steedos/logout',
 	action: (params, queryParams)->
 		#AccountsTemplates.logout();

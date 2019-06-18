@@ -159,11 +159,13 @@ Creator.Objects.flows =
 			label: "允许修改附件"
 			type: "boolean"
 			readonly: true
-#		'current.steps.$.distribute_optional_flows':
-#			label: "此步骤分发时可选的流程范围"
-#			type: "lookup"
-#			reference_to: "flows"
-#			multiple: true
+		'current.steps.$.distribute_optional_flows':
+			label: "此步骤分发时可选的流程范围"
+			type: "lookup"
+			reference_to: "flows"
+			multiple: true
+			omit: true
+			hidden: true
 		'current.steps.$.cc_must_finished':
 			label: "必须等待传阅完成"
 			type: "boolean"
@@ -264,16 +266,20 @@ Creator.Objects.flows =
 			group: "脚本"
 		distribute_optional_users:
 			type: "lookup"
-			label: "分发者"
+			label: "流程被分发时分发对象选择范围"
 			reference_to: "users"
 			multiple: true
 			is_wide: true
 			group: "分发"
 			blackbox: true
+			omit: true
+			hidden: true
 		distribute_to_self:
 			label:"分发给自己"
 			type: "boolean"
 			group: "分发"
+			omit: true
+			hidden: true
 
 		name_formula:
 			label:"标题公式"
@@ -466,6 +472,12 @@ Creator.Objects.flows =
 						if flows.length > 0
 							FlowRouter.go("/app/admin/flows/view/#{flows[0]}")
 				}
+		distributeAdmin:
+			label: "设置分发"
+			visible: true
+			on: "record"
+			todo: (object_name, record_id, fields)->
+				Modal.show("distribute_edit_flow_modal", { flow: this.record })
 
 	permission_set:
 		user:

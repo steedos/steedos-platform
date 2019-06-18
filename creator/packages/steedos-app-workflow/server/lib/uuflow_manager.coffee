@@ -1897,13 +1897,6 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 
 	ins_obj.current_step_name = start_step.name
 
-	# 新建申请单时，instances记录流程名称、流程分类名称 #1313
-	ins_obj.flow_name = flow.name
-	if form.category
-		category = uuflowManager.getCategory(form.category)
-		if category
-			ins_obj.category_name = category.name
-
 	if flow.auto_remind is true
 		ins_obj.auto_remind = true
 
@@ -1913,6 +1906,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 		category = uuflowManager.getCategory(form.category)
 		if category
 			ins_obj.category_name = category.name
+			ins_obj.category = category._id
 
 	new_ins_id = db.instances.insert(ins_obj)
 

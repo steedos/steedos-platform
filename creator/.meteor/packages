@@ -61,6 +61,8 @@ q42:autoform-markdown
 steedos:markdown@0.0.1
 steedos:autoform-dx-date-box
 
+vazco:universe-autoform-select
+
 steedos:devexpress
 
 gwendall:simple-schema-i18n

@@ -266,10 +266,10 @@ Template.search_result_list.onCreated ->
 	if Template.instance().data.record_ids and Template.instance().data.record_ids.length == 5
 		self.showMoreRecords.set(true)
 		
-	AutoForm.hooks creatorAddForm:
-		onSuccess: (formType,result)->
-			self.dxSearchGridInstance.refresh()
-	,false
+#	AutoForm.hooks creatorAddForm:
+#		onSuccess: (formType,result)->
+#			self.dxSearchGridInstance.refresh()
+#	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			self.dxSearchGridInstance.refresh()
@@ -281,10 +281,10 @@ Template.search_result_list.onCreated ->
 
 Template.search_result_list.onDestroyed ->
 	#离开界面时，清除hooks为空函数
-	AutoForm.hooks creatorAddForm:
-		onSuccess: ()->
-			$('#afModal').modal 'hide'
-	,true
+#	AutoForm.hooks creatorAddForm:
+#		onSuccess: ()->
+#			$('#afModal').modal 'hide'
+#	,true
 	AutoForm.hooks creatorEditForm:
 		onSuccess: ()->
 			$('#afModal').modal 'hide'

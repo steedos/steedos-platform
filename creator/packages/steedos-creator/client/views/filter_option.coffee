@@ -242,11 +242,15 @@ Template.filter_option.onCreated ->
 
 		key = filter_item.field
 		key_obj = Creator.getSchema(object_name)._schema[key]
+		object_fields = Creator.getObject(object_name).fields
+		filter_field_type = object_fields[key]?.type
 
 		operation = filter_item.operation
+		unless operation
+			# operation不存在时根据filter_field_type获取默认过滤器运算符
+			operation = Creator.getFieldDefaultOperation(filter_field_type)
+		
 		if operation == "between"
-			object_fields = Creator.getObject(object_name).fields
-			filter_field_type = object_fields[key]?.type
 			# 根据过滤器的过滤值，获取对应的内置运算符
 			# 比如value为last_year，返回between_time_last_year
 			builtinOperation = Creator.getBetweenBuiltinOperation(filter_field_type, filter_item.value)

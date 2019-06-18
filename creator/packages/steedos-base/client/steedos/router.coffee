@@ -32,8 +32,6 @@ FlowRouter.triggers.enter [
 
 FlowRouter.triggers.exit [
 	()-> 
-		# 变更路由时清除current_app_id值
-		Session.set("current_app_id", null)
 ]
 
 

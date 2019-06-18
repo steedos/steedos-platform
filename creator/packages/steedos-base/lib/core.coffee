@@ -257,7 +257,11 @@ if Meteor.isClient
 		else
 			Steedos.openAppWithToken(app_id)
 		
-		Session.set("current_app_id", app_id)
+		
+		if !app.is_new_window && !Steedos.isMobile() && !Steedos.isCordova() && !app.is_use_ie && !on_click
+			# 需要选中当前app时，on_click函数里要单独加上Session.set("current_app_id", app_id)
+			Session.set("current_app_id", app_id)
+		
 
 	Steedos.checkSpaceBalance = (spaceId)->
 		unless spaceId
@@ -857,3 +861,15 @@ Creator.getDBApps = (space_id)->
 
 	return dbApps
 
+if Meteor.isClient
+	Meteor.autorun ()->
+		if Session.get('current_app_id')
+			sessionStorage.setItem('current_app_id', Session.get('current_app_id'))
+#		else
+#			console.log('remove current_app_id...');
+#			sessionStorage.removeItem('current_app_id')
+	Steedos.getCurrentAppId = ()->
+		if Session.get('current_app_id')
+			return Session.get('current_app_id')
+		else
+			return sessionStorage.getItem('current_app_id');

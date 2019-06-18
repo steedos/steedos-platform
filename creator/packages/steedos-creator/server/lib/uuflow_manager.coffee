@@ -186,6 +186,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 		category = uuflowManager.getCategory(form.category)
 		if category
 			ins_obj.category_name = category.name
+			ins_obj.category = category._id
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
 

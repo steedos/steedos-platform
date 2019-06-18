@@ -1,17 +1,24 @@
 Template.steedosHeader.helpers
 	appBadge: (appId)->
+		workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')
+
 		if appId == "workflow"
+			if workflow_categories.length > 0
+				return ''
+#				return Steedos.getWorkflowCategoriesBadge(workflow_categories, Steedos.getSpaceId())
 			return Steedos.getBadge("workflow")
 		else if appId == "cms"
 			return Steedos.getBadge("cms")
-		
+
 		appUrl = db.apps.findOne(appId).url
 		if appUrl == "/calendar"
 			return Steedos.getBadge(appId)
 		else if /^\/?workflow\b/.test(appUrl)
 			# 如果appId不为workflow，但是url为/workflow格式则按workflow这个app来显示badge
+			if workflow_categories.length > 0
+				return ''
+#				return Steedos.getWorkflowCategoriesBadge(workflow_categories, Steedos.getSpaceId())
 			return Steedos.getBadge("workflow")
-
 		return ""
 
 	subsReady: ->
@@ -61,6 +68,9 @@ Template.steedosHeader.onRendered ()->
 		db.steedos_keyvalues.findOne({user:Steedos.userId(),key:"zoom"})
 		Session.get("base_each_apps_end")
 		Template.steedosHeader.displayControl()
+	this.autorun ()->
+		Steedos.getCurrentAppId()
+		Meteor.defer(Template.steedosHeader.displayControl)
 	$('[data-toggle="offcanvas"]').on "click", ()->
 		#绑定offcanvas click事件，由于offcanvas过程有300毫秒的动作，此处延时调用header displayControl函数
 		setTimeout ()->
