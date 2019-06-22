@@ -290,7 +290,7 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
     if (field && fieldValue && (field.type === 'lookup' || field.type === 'master_detail')) {
       let lookupCollection = getCreator().getSteedosSchema().getObject(field.reference_to);
       let fields = [];
-      let readable_fields = getCreator().getFields(field.reference_to, spaceId, userId);
+      let readable_fields: any = await getCreator().getFields(field.reference_to, spaceId, userId);
       _.each(readable_fields, function (f: string) {
         if (f.indexOf('$') < 0) {
           return fields.push(f)

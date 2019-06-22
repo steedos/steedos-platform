@@ -1,5 +1,6 @@
 import { JsonMap } from '@salesforce/ts-types';
 import _ = require('underscore');
+import Fiber = require('fibers');
 declare var Creator: any;
 declare var t: any;
 declare var Steedos: any;
@@ -46,8 +47,16 @@ export class CreatorManager {
     return Steedos.isLegalVersion(spaceId, appVersion);
   }
 
-  getFields(objectName: string, spaceId: string, userId: string) {
-    return Creator.getFields(objectName, spaceId, userId);
+  async getFields(objectName: string, spaceId: string, userId: string) {
+    return await new Promise((resolve, reject) => {
+      Fiber(function () {
+          try {
+              resolve(Creator.getFields(objectName, spaceId, userId));
+          } catch (error) {
+              reject(error)
+          }
+      }).run()
+  });
   }
 
   getUserOrganizations(spaceId: string, userId: string, isIncludeParents: boolean) {
