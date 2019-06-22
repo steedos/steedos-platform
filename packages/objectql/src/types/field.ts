@@ -25,7 +25,7 @@ const FIELDTYPES = [
     "location", //TODO
     "image", //TODO
     "object", // {}：一对一
-    "[object]", 
+    "[object]",
     "[Object]",
     "[grid]", //TODO
     "[text]", // ['string','sring1']
@@ -33,7 +33,7 @@ const FIELDTYPES = [
     "audio", //TODO
     "filesize", //TODO
     "file", //TODO
-    "string", 
+    "string",
     "function Object() { [native code] }",
     "function String() { [native code] }",
     "code",
@@ -87,6 +87,7 @@ export interface SteedosFieldTypeConfig extends SteedosFieldProperties{
 
 
 export class SteedosFieldType extends SteedosFieldProperties implements Dictionary {
+    [key: string]: unknown;
     private _object: SteedosObjectType;
     private _type: any;
     private _fieldDBType: SteedosFieldDBType;
@@ -193,7 +194,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 break;
             case 'currency':
                 if(!this.scale && this.scale != 0){
-                    this.scale = 2 
+                    this.scale = 2
                 }
                 this._fieldDBType = SteedosFieldDBType.number
                 break;

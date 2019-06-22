@@ -1,3 +1,8 @@
+0.0.19 / 2019-06-22
+===================
+
+  * fix `Class 'SteedosDataSourceType' incorrectly implements interface 'Dictionary<unknown>'.`
+
 0.0.16 / 2019-06-13
 ===================
 

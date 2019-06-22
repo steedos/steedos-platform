@@ -7,7 +7,7 @@ import { SteedosQueryOptions } from ".";
 export type SteedosTriggerContextConfig = {
     id?: SteedosIDType,
     userId: SteedosIDType,
-    doc?: JsonMap, 
+    doc?: JsonMap,
     previousDoc?: JsonMap,  //仅afterUpdate, afterDelete时存在此属性
     query?: SteedosQueryOptions,
     newDoc?: JsonMap, //仅afterUpdate, afterInsert时存在此属性
@@ -24,14 +24,15 @@ const ENUM_ON = ["client","server"]
 const ENUM_WHEN = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
 
 export class SteedosTriggerType implements Dictionary {
+    [key: string]: unknown;
     private _name: string;
-    
+
     private _on: string;
-    
+
     private _when: string;
-    
+
     private _todo: Function;
-    
+
     constructor(config: SteedosTriggerTypeConfig) {
         this.name = config.name
         this.on = config.on
@@ -75,7 +76,7 @@ export class SteedosTriggerType implements Dictionary {
             throw new Error(`on must be a ${ENUM_WHEN.join(' or ')}.`)
         this._when = value;
     }
-    
+
     public get todo(): Function {
         return this._todo;
     }

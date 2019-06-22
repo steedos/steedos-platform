@@ -66,6 +66,7 @@ export type SteedosDataSourceTypeConfig = {
 }
 
 export class SteedosDataSourceType implements Dictionary {
+    [key: string]: unknown;
     private _name: string;
     public get name(): string {
         return this._name;
