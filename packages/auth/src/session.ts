@@ -128,6 +128,9 @@ export function getSpaceSessionFromCache(token: string, spaceId: string) {
 export async function getSession(token: string, spaceId: string): Promise<SteedosUserSession>;
 export async function getSession(token: string): Promise<ResultSession>;
 export async function getSession(token: string, spaceId?: string): Promise<any> {
+  if (!token) {
+    return
+  }
   let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
   let session = getSessionFromCache(token);
   if (!session) {
