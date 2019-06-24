@@ -820,7 +820,7 @@ Creator.Objects.archive_wenshu =
 				"title","document_number","document_date","author","security_classification",
 				"archive_dept","document_type"]
 			filter_fields: ["year","title","document_date","document_number"]			
-			sort: [["year", "desc"],["retention_peroid", "asc"],["archive_dept", "asc"],["organizational_structure", "asc"],["item_number", "asc"]]
+			sort: [["year", "desc"],["retention_peroid", "asc"],["organizational_structure", "asc"],["author", "asc"],["item_number", "asc"]]
 # 		borrow:
 #             label:"查看"
 #             filter_scope: "space"
