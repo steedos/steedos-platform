@@ -127,6 +127,8 @@ Template.CreatorAutoformModals.rendered = ->
 		$(window).unbind 'keyup', onEscKey
 
 		doc = Session.get 'cmDoc'
+		# “保存并新建”操作中自动打开的新窗口中需要用到的doc
+		cmShowAgainDoc = Session.get 'cmShowAgainDoc'
 
 		sessionKeys = [
 			'cmCollection',
@@ -152,7 +154,8 @@ Template.CreatorAutoformModals.rendered = ->
 			'cmIsMultipleUpdate',
 			'cmTargetIds',
 			'cmEditSingleField',
-			'cmFullScreen'
+			'cmFullScreen',
+			'cmShowAgainDoc'
 		]
 		delete Session.keys[key] for key in sessionKeys
 
@@ -167,8 +170,18 @@ Template.CreatorAutoformModals.rendered = ->
 			keyPress = Session.get 'cmPressKey'
 			keyPress = '.' + keyPress.replace(/\s+/ig, '.')
 			Meteor.defer ()->
-				Session.set 'cmDoc', doc
+				# cmShowAgain的新窗口中如果有cmShowAgainDuplicated为true时复制过来的doc则用之，反之保持原来的doc不变
+				if cmShowAgainDoc
+					Session.set 'cmDoc', cmShowAgainDoc
+				else
+					# 增加cmShowAgainDuplicated逻辑前的代码，可以保持新建窗口时的默认值不变，而不是被清空
+					Session.set 'cmDoc', doc
 				$(keyPress).click()
+		else
+			# 窗口关闭时，如果不要求再次打开，则应该重置再次打开窗口时的相关参数
+			Session.set "cmShowAgainDoc", null
+			Session.set "cmShowAgainDuplicated", false
+
 
 
 Template.CreatorAutoformModals.events
@@ -222,6 +235,12 @@ Template.CreatorAutoformModals.events
 		formId = Session.get('cmFormId') or defaultFormId
 		$("#"+formId, "#afModal").submit()
 		Session.set 'cmShowAgain', true
+		# 是否需要在打开新窗口时复制当前窗口doc内容到下次自动打开的窗口中
+		showAgainDuplicated = Session.get "cmShowAgainDuplicated"
+		if showAgainDuplicated
+			insertDoc = AutoForm.getFormValues(formId).insertDoc
+			# 把当前doc内容设置到自动打开的新窗口中需要用到的doc
+			Session.set("cmShowAgainDoc", insertDoc)
 
 	'click .group-section-control': (event, template) ->
 		event.preventDefault()

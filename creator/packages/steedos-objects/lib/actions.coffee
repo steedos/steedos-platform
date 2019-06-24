@@ -37,6 +37,13 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 			
 		"standard_new": (object_name, record_id, fields)->
+			ids = Creator.TabularSelectedIds[object_name]
+			if ids?.length
+				record_id = ids[0]
+				doc = Creator.odata.get(object_name, record_id)
+				Session.set 'cmDoc', doc
+				# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+				Session.set 'cmShowAgainDuplicated', true
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 
