@@ -53,7 +53,8 @@ Creator.Objects.object_workflows =
 					]
 				form_fields = []
 				if values?.flow_id
-					res_flow = Creator.odata.get("flows",values.flow_id,"form")
+					flowId = if _.isObject(values.flow_id) then values.flow_id._id else values.flow_id
+					res_flow = Creator.odata.get("flows",flowId,"form")
 					if res_flow?.form
 						form_id = res_flow?.form
 						res_form = Creator.odata.get("forms",form_id,"current")
@@ -116,7 +117,8 @@ Creator.Objects.object_workflows =
 					]
 				form_fields = []
 				if values?.flow_id
-					res_flow = Creator.odata.get("flows",values.flow_id,"form")
+					flowId = if _.isObject(values.flow_id) then values.flow_id._id else values.flow_id
+					res_flow = Creator.odata.get("flows",flowId,"form")
 					if res_flow?.form
 						form_id = res_flow?.form
 						res_form = Creator.odata.get("forms",form_id,"current")

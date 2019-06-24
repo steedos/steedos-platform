@@ -1,16 +1,15 @@
 
 Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完成后调用， 否则获取到的object不全
 
+Creator.formatObjectName = (object_name)->
+	if object_name.startsWith('cfs.files.')
+		object_name = object_name.replace(new RegExp('\\.', 'g'), '_')
+	return object_name
+
 Creator.Object = (options)->
 	self = this
 	if (!options.name)
 		throw new Error('Creator.Object options must specify name');
-	unless options.permission_set
-		options.permission_set = {}
-	if !(options.permission_set?.admin)
-		options.permission_set.admin = {}
-	if !(options.permission_set?.user)
-		options.permission_set.user = {}
 
 	self._id = options._id || options.name
 	self.space = options.space
@@ -41,6 +40,9 @@ Creator.Object = (options)->
 	self.enable_chatter = options.enable_chatter
 	self.enable_trash = options.enable_trash
 	self.enable_space_global = options.enable_space_global
+	self.idFieldName = '_id'
+	if options.database_name
+		self.database_name = options.database_name
 	if (!options.fields)
 		throw new Error('Creator.Object options must specify name');
 
@@ -49,11 +51,14 @@ Creator.Object = (options)->
 	_.each self.fields, (field, field_name)->
 		if field_name == 'name' || field.is_name
 			self.NAME_FIELD_KEY = field_name
+		if field.primary
+			self.idFieldName = field_name
 
-	_.each Creator.baseObject.fields, (field, field_name)->
-		if !self.fields[field_name]
-			self.fields[field_name] = {}
-		self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
+	if !options.database_name || options.database_name == 'meteor-mongo'
+		_.each Creator.baseObject.fields, (field, field_name)->
+			if !self.fields[field_name]
+				self.fields[field_name] = {}
+			self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
 
 	self.list_views = {}
 	defaultColumns = Creator.getObjectDefaultColumns(self.name)
@@ -106,7 +111,12 @@ Creator.Object = (options)->
 	# 	if self.fields
 	# 		self.permission_set[item_name].readable_fields = defaultReadableFields
 	# 		self.permission_set[item_name].editable_fields = defaultEditableFields
-
+	unless options.permission_set
+		options.permission_set = {}
+	if !(options.permission_set?.admin)
+		options.permission_set.admin = _.clone(self.permission_set["admin"])
+	if !(options.permission_set?.user)
+		options.permission_set.user = _.clone(self.permission_set["user"])
 	_.each options.permission_set, (item, item_name)->
 		if !self.permission_set[item_name]
 			self.permission_set[item_name] = {}
@@ -195,6 +205,13 @@ Creator.Object.prototype.i18n = ()->
 		else
 			item.label = t(i18n_key)
 
+
+Creator.getObjectODataRouterPrefix = (object)->
+	if object
+		if !object.database_name || object.database_name == 'meteor-mongo'
+			return "/api/odata/v4"
+		else
+			return "/api/odata/#{object.database_name}"
 
 if Meteor.isClient
 

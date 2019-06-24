@@ -262,6 +262,25 @@ Creator.baseObject =
 				obj = Creator.getObject(object_name)
 				if obj.enable_audit
 					Creator.AuditRecords?.add('insert', userId, this.object_name, doc)
+
+		"after.insert.server.objectwebhooks":
+			"on": "server"
+			when: "after.insert"
+			todo: (userId, doc)->
+				Creator.objectWebhooksPreSend(userId, doc, this.object_name, 'create')
+
+		"after.update.server.objectwebhooks":
+			"on": "server"
+			when: "after.update"
+			todo: (userId, doc, fieldNames, modifier, options)->
+				Creator.objectWebhooksPreSend(userId, doc, this.object_name, 'update')
+
+		"after.delete.server.objectwebhooks":
+			"on": "server"
+			when: "after.remove"
+			todo: (userId, doc)->
+				Creator.objectWebhooksPreSend(userId, doc, this.object_name, 'delete')
+
 	actions:
 
 		standard_query:
@@ -398,3 +417,56 @@ Creator.baseObject =
 
 
 
+if Meteor.isServer
+	Creator.objectWebhooksPreSend = (userId, doc, object_name, action)->
+		if !ObjectWebhooksQueue
+			console.error('not found ObjectWebhooksQueue')
+			return
+
+		owCollection = Creator.getCollection('object_webhooks')
+		if !owCollection
+			console.error('not found collection object_webhooks')
+			return
+
+		obj = Creator.getObject(object_name)
+		actionUserInfo = Creator.getCollection('users').findOne(userId, { fields: { name: 1 } })
+
+
+		redirectUrl = Steedos.absoluteUrl(Creator.getObjectUrl(object_name, doc._id, object_name))
+
+		owCollection.find({
+			object_name: object_name,
+			active: true,
+			events: action
+		}).forEach (oh)->
+			data = {}
+			if _.isEmpty(oh.fields)
+				data = doc
+			else
+				_.each oh.fields, (fieldName)->
+					objField = obj.fields[fieldName]
+					if objField.type == 'lookup' && _.isString(objField.reference_to) && !objField.multiple
+						refCollection = Creator.getCollection(objField.reference_to)
+						refObj = Creator.getObject(objField.reference_to)
+						if refCollection && refObj
+							refNameFieldKey = refObj.NAME_FIELD_KEY
+							refFilterFields = {}
+							refFilterFields[refNameFieldKey] = 1
+							refRecord = refCollection.findOne(doc[fieldName], refFilterFields)
+							if refRecord
+								data[fieldName] = refRecord[refNameFieldKey]
+					else
+						data[fieldName] = doc[fieldName]
+			ObjectWebhooksQueue.send({
+				data: data,
+				payload_url: oh.payload_url,
+				content_type: oh.content_type,
+				action: action,
+				actionUserInfo: actionUserInfo,
+				objectName: object_name,
+				objectDisplayName: obj.label,
+				nameFieldKey: obj.NAME_FIELD_KEY,
+				redirectUrl: redirectUrl
+			});
+
+		return

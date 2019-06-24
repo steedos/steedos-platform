@@ -1,0 +1,212 @@
+name: mongo_apps
+label: 应用
+icon: apps
+fields:
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    index: true
+    name: name
+  url:
+    label: 链接
+    type: url
+    required: true
+    name: url
+  icon:
+    label: 图标
+    type: text
+    required: true
+    defaultValue: ion-ios-color-filter-outline
+    name: icon
+  icon_slds:
+    label: 图标
+    type: lookup
+    optionsFunction: !!js/function |
+      function () {
+        var options;
+        options = [];
+
+        _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+          return options.push({
+            value: svg,
+            label: svg,
+            icon: svg
+          });
+        });
+
+        return options;
+      }
+    name: icon_slds
+    filterable: true
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+    name: description
+  objects:
+    label: 对象
+    type: lookup
+    required: true
+    multiple: true
+    optionsFunction: !!js/function |
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, object_name) {
+                return _options.push({
+                  label: o.label,
+                  value: o.name,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+    name: objects
+    filterable: true
+  visible:
+    label: 是否可见
+    type: boolean
+    name: visible
+  sort:
+    label: 排序
+    type: number
+    defaultValue: 9100
+    name: sort
+  is_creator:
+    type: boolean
+    label: creator应用
+    defaultValue: true
+    name: is_creator
+  unique_id:
+    type: text
+    hidden: true
+    name: unique_id
+  version:
+    type: text
+    hidden: true
+    name: version
+  from:
+    type: select
+    options:
+      - label: 默认
+        value: '0'
+      - label: 定制
+        value: '1'
+      - label: 商城
+        value: '2'
+    hidden: true
+    name: from
+    filterable: true
+  auth_name:
+    label: 验证域名
+    type: text
+    name: auth_name
+  secret:
+    label: API 密钥
+    type: text
+    max: 16
+    min: 16
+    is_wide: true
+    name: secret
+  mobile:
+    type: boolean
+    label: 在移动应用中显示
+    defaultValue: false
+    name: mobile
+  is_use_ie:
+    type: boolean
+    label: 使用IE打开(需使用Steedos桌面客户端)
+    defaultValue: false
+    name: is_use_ie
+  is_use_iframe:
+    type: boolean
+    label: 使用iframe打开
+    defaultValue: false
+    name: is_use_iframe
+  is_new_window:
+    type: boolean
+    label: 新窗口打开
+    defaultValue: false
+    name: is_new_window
+  on_click:
+    type: textarea
+    label: 链接脚本
+    rows: 10
+    is_wide: true
+    name: on_click
+  members:
+    type: object
+    label: 授权对象
+    is_wide: true
+    name: members
+  members.users:
+    type: lookup
+    label: 授权人员
+    reference_to: users
+    multiple: true
+    name: members.users
+    filterable: true
+  members.organizations:
+    type: lookup
+    label: 授权部门
+    reference_to: organizations
+    multiple: true
+    name: members.organizations
+    filterable: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - objects
+      - visible
+      - sort
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+# triggers:
+#   before.insert.server.apps:
+#     'on': server
+#     when: before.insert
+#     todo: !!js/function |
+#       function (userId, doc) {
+#               return doc.icon = doc.icon_slds;
+#             }
+#   after.update.server.apps:
+#     'on': server
+#     when: after.update
+#     todo: !!js/function |
+#       function (userId, doc, fieldNames, modifier, options) {
+#               var ref;
+
+#               if (modifier != null ? (ref = modifier.$set) != null ? ref.icon_slds : void 0 : void 0) {
+#                 return Creator.getCollection("apps").direct.update({
+#                   _id: doc._id
+#                 }, {
+#                   $set: {
+#                     icon: modifier.$set.icon_slds
+#                   }
+#                 });
+#               }
+#             }

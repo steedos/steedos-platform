@@ -1,7 +1,7 @@
-
-Template.switchSpace.onRendered ->
-	this.$("#switch_space").removeClass "hidden"	
-	this.$("#switch_space").animateCss "fadeInRight"
+#
+#Template.switchSpace.onRendered ->
+#	this.$("#switch_space").removeClass "hidden"
+#	this.$("#switch_space").animateCss "fadeInRight"
 
 Template.switchSpace.helpers 
 	spaces: ->

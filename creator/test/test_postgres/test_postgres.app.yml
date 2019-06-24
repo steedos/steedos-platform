@@ -1,0 +1,8 @@
+_id: test_postgres
+name: Postgres单元测试
+description: Postgres单元测试
+icon_slds: thanks
+is_creator: true
+objects: 
+  - test_postgres.crud
+  - test_postgres.field_type

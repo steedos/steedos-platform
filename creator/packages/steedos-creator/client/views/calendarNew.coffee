@@ -23,12 +23,7 @@ getExpand = (options)->
 	_.forEach options.title, (fname)->
 		f = objectFields[fname]
 		if (f.type == 'lookup' || f.type == 'master_detail')
-			if _.isString(f.reference_to)
-				re_object_name_field = Creator.getObject(f.reference_to)?.NAME_FIELD_KEY
-				if re_object_name_field
-					expand.push("#{fname}($select=#{re_object_name_field})")
-			else
-				expand.push("#{fname}($select=name)")
+				expand.push("#{fname}")
 	if expand.length < 1
 		return
 	return expand;
@@ -508,5 +503,8 @@ Template.creator_calendarNew.onRendered ->
 			module.dynamicImport("devextreme/ui/scheduler").then (dxScheduler)->
 				DevExpress.ui.dxScheduler = dxScheduler;
 				dxSchedulerInstance =  $("#creator-scheduler").dxScheduler(dxSchedulerConfig).dxScheduler("instance")
+
+			module.dynamicImport("devextreme/ui/context_menu").then (dxContextMenu)->
+				DevExpress.ui.dxContextMenu = dxContextMenu;
 
 			window.dxSchedulerInstance = dxSchedulerInstance;

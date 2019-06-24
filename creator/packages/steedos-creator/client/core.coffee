@@ -4,7 +4,7 @@ Creator.getLayout = (app_id)->
 	if app_id == "steedos"
 		return "steedosLayout"
 	else
-		if Steedos.isMobile()
+		if Steedos.isMobile() && false
 			return "creatorMobileLayout"
 		else
 			return "creatorLayout"
@@ -183,6 +183,10 @@ if Meteor.isClient
 		related_lists = Creator.getRelatedList(object_name, record_id)
 		related_field_name = ""
 		selector = []
+		addSelector = (select)->
+			if selector.length > 0
+				selector.push('and')
+			selector.push(select)
 		_.each related_lists, (obj)->
 			if obj.object_name == related_object_name
 				related_field_name = obj.related_field_name
@@ -197,14 +201,9 @@ if Meteor.isClient
 
 				if filter_logic
 					format_logic = Creator.formatLogicFiltersToDev(filters, filter_logic)
-					if selector.length
-						selector.push("and", format_logic)
-					else
-						selector.push(format_logic)
+					addSelector(format_logic)
 				else
 					if filters and filters.length > 0
-						if selector.length > 0
-							selector.push "and"
 						filters = _.map filters, (obj)->
 							if _.isObject(obj) && !_.isArray(obj)
 								if Meteor.isClient
@@ -215,21 +214,17 @@ if Meteor.isClient
 								return obj
 						filters = Creator.formatFiltersToDev(filters, related_object_name)
 						_.each filters, (filter)->
-							selector.push filter
-		if selector.length > 0
-			selector.push "and"
+							addSelector filter
 
 		if related_object_name == "cfs.files.filerecord"
-			selector.push(["metadata/space", "=", spaceId])
-		else
-			selector.push(["space", "=", spaceId])
+			addSelector(["metadata/space", "=", spaceId])
 
 		if related_object_name == "cms_files"
-			selector.push("and", ["parent/o", "=", object_name])
-			selector.push("and", ["parent/ids", "=", record_id])
+			addSelector(["parent/o", "=", object_name])
+			addSelector(["parent/ids", "=", record_id])
 		else if object_name == "objects"
 			record_object_name = Creator.getObjectRecord().name
-			selector.push("and", [related_field_name, "=", record_object_name])
+			addSelector([related_field_name, "=", record_object_name])
 		else
 
 			related_object_fields = Creator.getObject(related_object_name)?.fields
@@ -240,25 +235,23 @@ if Meteor.isClient
 			if related_field && (related_field.type == 'master_detail' or related_field.type == 'lookup')
 				if _.isFunction(related_field.reference_to)
 					if _.isArray(related_field.reference_to())
-						selector.push("and", ["#{related_field_name}.ids", "=", record_id])
+						addSelector(["#{related_field_name}.ids", "=", record_id])
 					else
-						selector.push("and", [related_field_name, "=", record_id])
+						addSelector([related_field_name, "=", record_id])
 
 				else if _.isArray(related_field.reference_to)
-					selector.push("and", ["#{related_field_name}.ids", "=", record_id])
+					addSelector(["#{related_field_name}.ids", "=", record_id])
 				else
-					selector.push("and", [related_field_name, "=", record_id])
+					addSelector([related_field_name, "=", record_id])
 			else if related_field && (related_field.type == 'grid')
-				selector.push("and", ["#{related_field_name}.o", "=", object_name])
-				selector.push("and", ["#{related_field_name}.ids", "=", record_id])
+				addSelector(["#{related_field_name}.o", "=", object_name])
+				addSelector(["#{related_field_name}.ids", "=", record_id])
 			else
-				selector.push("and", [related_field_name, "=", record_id])
+				addSelector([related_field_name, "=", record_id])
 
 		# 指定过虑条件为mine时要额外加上相关过虑条件
 		if filter_scope == "mine"
-			if selector.length > 0
-				selector.push "and"
-			selector.push ["owner", "=", userId]
+			addSelector ["owner", "=", userId]
 			
 		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
 		if permissions.viewAllRecords
@@ -270,19 +263,15 @@ if Meteor.isClient
 			userCompanyIds = Creator.getUserCompanyIds()
 			if userCompanyIds && userCompanyIds.length
 				companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], related_object_name)
-				selector.push companyIdsFilters
-			else 
-				selector.push ["company_id", "=", -1]
+				addSelector companyIdsFilters
+			else
+				addSelector ["company_id", "=",-1]
 		else if permissions.allowRead
 			# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
-			if selector.length > 0
-				selector.push "and"
-			selector.push ["owner", "=", userId]
+			addSelector ["owner", "=", userId]
 		else
 			# 没有权限时不应该显示任何记录
-			if selector.length > 0
-				selector.push "and"
-			selector.push ["id", "=", "-1"]
+			addSelector ["1", "=", "-1"]
 
 		if selector.length == 0
 			return undefined

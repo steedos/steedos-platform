@@ -27,7 +27,8 @@ Template.creator_table_cell.onRendered ->
 		object_name = self.data.object_name
 		this_object = Creator.getObject(object_name)
 		record_id = self.data._id
-		record = Creator.getCollection(object_name).findOne(record_id)
+#		record = Creator.getCollection(object_name).findOne(record_id)
+		record = self.data.doc
 		if record
 			if  _field?.type == "grid"
 				val = _field.name.split('.').reduce (o, x) ->
@@ -86,6 +87,8 @@ Template.creator_table_cell.helpers Creator.helpers
 
 Template.creator_table_cell.helpers
 	openWindow: ()->
+		if Steedos.isMobile()
+			return false
 		if Template.instance().data?.open_window || Template.instance().data?.is_related
 			return true
 		object_name = this.object_name
@@ -155,10 +158,9 @@ Template.creator_table_cell.helpers
 					if !_.isArray(val)
 						val = if val then [val] else []
 					_.each val, (v)->
-						reference_to = v["reference_to.o"] || reference_to
-						reference_to_object_name_field_key = Creator.getObject(reference_to)?.NAME_FIELD_KEY
+						reference_to = v["reference_to._o"] || reference_to
 						href = Creator.getObjectUrl(reference_to, v._id)
-						data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
+						data.push {reference_to: reference_to, rid: v._id, value: v['_NAME_FIELD_VALUE'], href: href, id: this._id}
 
 				else
 					if _.isArray(reference_to) && _.isObject(val)
@@ -240,14 +242,25 @@ Template.creator_table_cell.helpers
 				val = val.replace(/ /g, '&nbsp;');
 			data.push {value: val, id: this._id, type: _field.type}
 		else
-			if (val instanceof Date)
+			if (val && ["datetime", "date"].indexOf(_field.type) >= 0)
 				if this.agreement == "odata"
 					# 老的datatable列表界面，现在没有在用了，都用DevExtreme的grid列表代替了
 					if _field.type == "datetime"
-						utcOffset = moment().utcOffset() / 60
-						val = moment(this.val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
+						if typeof this.val == "string" and /\d+Z$/.test(this.val)
+							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
+							val = moment(this.val).format('YYYY-MM-DD H:mm')
+						else
+							# DevExtreme的grid列表中this.val是Date类型，需要add offset
+							utcOffset = moment().utcOffset() / 60
+							val = moment(this.val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
 					else if _field.type == "date"
-						val = moment(this.val).format('YYYY-MM-DD')
+						if typeof this.val == "string" and /\d+Z$/.test(this.val)
+							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
+							# 日期字段类型统一存储为utc的0点，所以显示的时候也需要按utc时间直接显示
+							val = moment.utc(this.val).format('YYYY-MM-DD')
+						else
+							# DevExtreme的grid列表中this.val是Date类型，本身已经做了时区转换，所以不能用utc时间显示
+							val = moment(this.val).format('YYYY-MM-DD')
 				else
 					if _field.type == "datetime"
 						val = moment(this.val).format('YYYY-MM-DD H:mm')
@@ -328,5 +341,5 @@ Template.creator_table_cell.helpers
 		return this.type is type
 
 	isExtraField: () ->
-		fieldName = this.field.name
+		fieldName = this.field?.name
 		return fieldName == "created_by" or fieldName == "modified_by"

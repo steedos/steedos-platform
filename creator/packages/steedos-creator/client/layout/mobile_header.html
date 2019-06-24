@@ -1,0 +1,80 @@
+<template name="creatorMobileHeader">
+	<div class="creator-mobile-header">
+		<div class="row header">
+			<div id="navbar">
+				<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+					<div class="container-fluid theme">
+						<div class="navbar-header">
+							{{#if isInDetail}}
+								<button type="button" class="navbar-toggle sidebar-collapse" id="sidebarCollapse">
+									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevronleft"}}
+								</button>
+								<div class="navbar-brand">
+									<div class="MenuWrapper detail-title">
+										<a>
+											<span class="heading">{{_ headerTitle}}</span>
+										</a>
+									</div>
+								</div>
+							{{else}}
+								<button type="button" class="navbar-toggle sidebar-show">
+									{{!--
+									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="rows"}}
+									--}}
+									{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="chevronleft"}}
+								</button>
+								<div class="navbar-brand">
+									<div class="MenuWrapper ">
+										<a>
+											<span class="heading">{{_ object.label}}</span>
+										</a>
+									</div>
+								</div>
+								<div class="navbar-brand">
+									<div class="MenuWrapper ">
+										<div class="slds-text-color--default slds-p-right--x-small crm-header-title"
+											 style="text-align: right;position: absolute;left: 70px;right: 60px;">
+											<div class="triggerLink slds-button--reset forceListViewPicker" role="button"
+												 data-toggle="dropdown">
+												<div class="triggerLinkTextAndIconWrapper">
+											<span class="triggerLinkText selectedListView uiOutputText"
+												  style="color: #ffffff">{{list_view_label list_view}}</span>
+													<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+												<span class="lightningPrimitiveIcon">
+													<span class="fa fa-angle-down header-dropdown__icon"
+														  style="color: #ffffff"></span>
+												</span>
+											</span>
+												</div>
+											</div>
+											<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu" style="right: 0px;">
+												<ul class="slds-dropdown__list slds-show">
+													{{#each list_views}}
+														<li class="slds-dropdown__item crm-header-menu-item"
+															role="presentation">
+															<a role="option" tabindex="-1" class="list-view-switch"
+															   href="{{list_view_url this}}">
+																<span class="">{{list_view_label this}}</span>
+															</a>
+														</li>
+													{{/each}}
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{#if allowCreate}}
+									<button class="navbar-toggle navbar-right__icon navbar-info-button pull-right creator-add-object-record">
+							<span class="icon icon__info" aria-hidden="true">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="add"}}
+							</span>
+									</button>
+								{{/if}}
+							{{/if}}
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</template>

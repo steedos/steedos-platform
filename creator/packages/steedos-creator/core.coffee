@@ -104,12 +104,24 @@ Creator.getObjectFilterFieldOptions = (object_name)->
 
 	return _options
 
-Creator.getObjectRecord = (object_name, record_id)->
+Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
+
+	if !object_name
+		object_name = Session.get("object_name")
+
 	if !record_id
 		record_id = Session.get("record_id")
+	if Meteor.isClient
+		if object_name == Session.get("object_name") &&  record_id == Session.get("record_id")
+			if Template.instance()?.record
+				return Template.instance()?.record?.get()
+		else
+			return Creator.odata.get(object_name, record_id, select_fields, expand)
+
 	collection = Creator.getCollection(object_name)
 	if collection
-		return collection.findOne(record_id)
+		record = collection.findOne(record_id)
+		return record
 
 Creator.getApp = (app_id)->
 	if !app_id
@@ -224,7 +236,7 @@ options参数：
 extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
 ###
 Creator.formatFiltersToMongo = (filters, options)->
-	unless filters.length
+	unless filters?.length
 		return
 	# 当filters不是[Array]类型而是[Object]类型时，进行格式转换
 	unless filters[0] instanceof Array
@@ -348,7 +360,7 @@ Creator.formatFiltersToDev = (filters, object_name, options)->
 			logicTempFilters.push("or")
 		logicTempFilters.pop()
 		filters = logicTempFilters
-	
+
 	object_fields = Creator.getObject(object_name).fields
 
 	selector = []
@@ -366,7 +378,7 @@ Creator.formatFiltersToDev = (filters, object_name, options)->
 					return null
 			else
 				return null
-		
+
 		if filters_loop.length == 1
 			# 只有一个元素，进一步解析其内容
 			tempLooperResult = filtersLooper(filters_loop[0])
@@ -595,6 +607,10 @@ Creator.getActions = (object_name, spaceId, userId)->
 	permissions = Creator.getPermissions(object_name, spaceId, userId)
 	disabled_actions = permissions.disabled_actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
+
+	_.each actions, (action)->
+		if Steedos.isMobile() && action.on == "record" && action.name != 'standard_edit'
+			action.on = 'record_more'
 
 	actions = _.filter actions, (action)->
 		return _.indexOf(disabled_actions, action.name) < 0

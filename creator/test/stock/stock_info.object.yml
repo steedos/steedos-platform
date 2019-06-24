@@ -1,0 +1,55 @@
+name: stock_info
+label: 证券基本信息
+icon: macros
+tableName: SimulateStockInfo
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: true
+enable_events: true
+enable_api: true
+fields:
+  stockCode: 
+    type: text
+    primary: true
+    searchable: true
+    sortable: true
+    label: 股票代码
+  stockName:
+    type: text
+    label: 名称
+    searchable: true
+    sortable: true
+    is_name: true
+  jysmc:
+    type: text
+    label: 交易所名称
+    searchable: true
+    sortable: true
+list_views:
+  all:
+    label: 全部
+    columns:
+      - stockCode
+      - stockName
+      - jysmc
+    filter_scope: space
+    sort:
+      - 
+       - stockName
+       - asc
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

@@ -1,0 +1,48 @@
+name: users
+label: 用户
+icon: orders
+tableName: SYSTEMUSERS
+fields:
+  USERID: 
+    type: number
+    primary: true
+    generated: true
+  USERNAME:
+    type: text
+    label: 用户名
+    sortable: true
+  FULLNAME:
+    type: text
+    label: 全名
+    is_name: true
+    sortable: true
+  COMPANY:
+    type: text
+    label: 公司
+  LASTLOGON:
+    type: datetime
+    label: 最后一次登录时间
+    sortable: true
+list_views:
+  all:
+    label: 全部
+    columns:
+      - USERNAME
+      - FULLNAME
+      - LASTLOGON
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

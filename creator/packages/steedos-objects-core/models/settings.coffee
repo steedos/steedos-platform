@@ -5,6 +5,7 @@ Creator.Objects.settings =
 	fields: 
 		type: 
 			label: "类型"
+			type: "text"
 			allowedValues: ["user", "space", "cloud"]
 		object_name: 
 			label: "对象名"

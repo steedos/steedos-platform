@@ -1,0 +1,12 @@
+_id: pdrq_contracts
+name: 合同系统
+description: 浦东燃气合同系统
+icon_slds: thanks
+is_creator: true
+objects: 
+  - pdrq_contracts
+  - contractCompany
+  - contractState
+  - type
+  - typeDetail
+  - emails

@@ -1,4 +1,4 @@
-Phone = Npm.require('phone')
+Phone = require('phone')
 
 Meteor.methods joinSpaceFromLogin: (options) ->
 	check options, Object

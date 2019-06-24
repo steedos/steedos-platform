@@ -36,7 +36,8 @@ actions =
 					confirmButtonText: TAPi18n.__('OK')
 
 
-unless Creator.Objects.space_users?.actions
-	Creator.Objects.space_users.actions = {}
+Meteor.startup ()->
+	unless Creator.Objects.space_users?.actions
+		Creator.Objects.space_users.actions = {}
 
-_.extend(Creator.Objects.space_users.actions, actions);
+	_.extend(Creator.Objects.space_users.actions, actions);

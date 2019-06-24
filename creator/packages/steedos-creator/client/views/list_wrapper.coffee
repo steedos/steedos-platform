@@ -357,7 +357,7 @@ Template.creator_list_wrapper.events
 					obj_fields = obj.fields
 					query = {}
 					_.each obj_fields, (field,field_name)->
-						if field.searchable || field_name == obj.NAME_FIELD_KEY
+						if (field.searchable || field_name == obj.NAME_FIELD_KEY) && field.type != 'number'
 							query[field_name] = searchKey
 					standard_query = object_name: object_name, query: query, is_mini: true, search_text: searchKey
 					Session.set 'standard_query', standard_query

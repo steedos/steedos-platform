@@ -43,6 +43,8 @@ Package.onUse(function(api) {
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 
 	api.addFiles('core.coffee');
+	api.addFiles('loadStandardObjects.coffee', 'server');
+	api.addFiles('coreSupport.coffee');
 	api.addFiles('client/odata.coffee', 'client');
 	api.addFiles('client/helpers.coffee', 'client');
 	api.addFiles('client/steedos_icon.html','client');

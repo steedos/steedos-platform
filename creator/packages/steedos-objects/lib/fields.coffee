@@ -124,7 +124,7 @@ Creator.getObjectSchema = (obj) ->
 									fs.createFunction = (lookup_field)->
 										Modal.show("CreatorObjectModal", {
 											collection: "Creator.Collections.#{Creator.getCollection(field.reference_to)._name}",
-											formId: "new#{field.reference_to}",
+											formId: "new#{field.reference_to.replace('.','_')}",
 											object_name: "#{field.reference_to}",
 											operation: "insert",
 											onSuccess: (operation, result)->
@@ -279,6 +279,14 @@ Creator.getObjectSchema = (obj) ->
 				fs.autoform.firstOption = ""
 		else if field.type == "currency"
 			fs.type = Number
+			fs.autoform.type = "steedosNumber"
+			fs.autoform.precision = field.precision || 18
+			if field?.scale
+				fs.autoform.scale = field.scale
+				fs.decimal = true
+			else if field?.scale != 0
+				fs.autoform.scale = 2
+				fs.decimal = true
 		else if field.type == "number"
 			fs.type = Number
 			fs.autoform.type = "steedosNumber"

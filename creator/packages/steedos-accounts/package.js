@@ -41,6 +41,7 @@ Package.onUse(function(api) {
 
 	api.use('steedos:base@0.1.4');
 
+	api.use('ecmascript');
 
 
 	//api.add_files("package-tap.i18n", ["client", "server"]);
@@ -48,15 +49,17 @@ Package.onUse(function(api) {
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
 	api.addFiles(tapi18nFiles, ['client', 'server']);
 
+	api.addFiles('checkNpm.js', "server");
+
 	api.addFiles('lib/URI.js');
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/force_bind_phone.coffee');
 	api.addFiles('lib/accounts.coffee');
 
 	api.addFiles('routes/setup.coffee', 'server');
-	
-    api.addFiles('password_server.js', 'server');
-    api.addFiles('password_client.js', 'client');
+
+	api.addFiles('password_server.js', 'server');
+	api.addFiles('password_client.js', 'client');
 
 	api.addFiles('server/methods/update_phone.coffee', 'server');
 	api.addFiles('server/methods/disable_phone.coffee', 'server');

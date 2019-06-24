@@ -1,0 +1,59 @@
+name: field_type
+label: 基本字段类型
+icon: product
+tableName: TestFieldTypesForMySql
+fields:
+  id: 
+    type: number
+    primary: true
+    generated: true
+  text:
+    type: text
+    label: 文本
+  textarea:
+    type: textarea
+    label: 长文本
+  int:
+    type: number
+    label: 数量
+  floatnumber:
+    label: 小数
+    type: number
+    scale: 4
+  datefield:
+    type: date
+    label: 日期
+  datetimefield: 
+    label: 创建时间
+    type: datetime
+  timestampfield: 
+    label: 时间戳
+    type: datetime
+  bool: 
+    label: 是否
+    type: boolean
+list_views:
+  all:
+    label: 全部
+    columns:
+      - text
+      - datefield
+      - datetimefield
+      - timestampfield
+      - bool
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

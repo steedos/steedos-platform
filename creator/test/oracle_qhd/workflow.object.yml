@@ -1,0 +1,34 @@
+name: workflow
+label: 流程
+icon: product
+tableName: WORKFLOW
+fields:
+  FLOWID: 
+    type: number
+    primary: true
+    generated: true
+  FLOWNAME:
+    type: text
+    label: 流程名称
+    is_name: true
+list_views:
+  all:
+    label: 全部
+    columns:
+      - FLOWNAME
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

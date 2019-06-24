@@ -16,4 +16,5 @@ start.bat
 .vscode/*
 
 .steedos
+package-lock.json
 my_start.bat

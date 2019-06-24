@@ -1,0 +1,58 @@
+<template name="creatorSidebarLeft">
+	<div class="creator-sidebar-left">
+		<div class="sidebar--left" id="sidebar-left"><span><span></span></span>
+			<div id="teamHeader" class="SidebarHeader team__header theme">
+				<div class="MenuWrapper ">
+					<div class="SidebarHeaderDropdownButton" id="sidebarHeaderDropdownButton">
+						<div id="headerInfo" class="header__info">
+							<h1 id="headerTeamName" class="team__name">{{spaceName}}</h1>
+							<!--<div id="headerUsername" class="user__name"></div>-->
+							<span class="sidebar-header-dropdown__icon settings-btn">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="setup"}}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sidebar--left__icons"></div>
+			<div class="sidebar--left__list">
+				<div style="position: absolute; overflow: hidden; width: 100%; height: 100%;">
+					<div class="scrollbar--view"
+						 style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow: scroll; margin-right: -8px; margin-bottom: -8px;">
+						<div id="sidebarChannelContainer" class="nav-pills__container">
+							<ul class="nav nav-pills nav-stacked">
+								<li><h4 id="favoriteChannel"><span>{{app_name}}</span></h4></li>
+								{{#unless hideObjects}}
+									{{#each app_objects}}
+										<li class="{{#if isActive this}}active{{/if}}">
+											<a id="sidebarItem_town-square" class="sidebar-item"
+											   href="{{object_url}}">
+												<span class="icon icon__globe">
+													{{> steedos_icon class="extraSmall slds-icon" source="standard-sprite" name=object_i.icon}}
+													<span>{{_ object_i.label}}</span>
+												</span>
+											</a>
+										</li>
+									{{/each}}
+								{{/unless}}
+
+							</ul>
+						</div>
+					</div>
+					<div style="position: absolute; height: 6px; transition: opacity 500ms ease 0s; opacity: 0; right: 2px; bottom: 2px; left: 2px; border-radius: 3px;">
+						<div class="scrollbar--horizontal"
+							 style="position: relative; display: block; height: 100%; width: 0px;"></div>
+					</div>
+					<div style="position: absolute; width: 6px; transition: opacity 500ms ease 0s; opacity: 0; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+						<div class="scrollbar--vertical"
+							 style="position: relative; display: block; width: 100%; height: 226px; transform: translateY(0px);"></div>
+					</div>
+				</div>
+			</div>
+			<div class="sidebar__switcher">
+				<button id="sidebarSwitcherButton" class="btn btn-link"><span>切换应用</span><span
+						class="switch__shortcut hidden-xs"><span>- CTRL+K</span></span></button>
+			</div>
+		</div>
+	</div>
+</template>

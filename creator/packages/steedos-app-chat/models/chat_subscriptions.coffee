@@ -21,6 +21,7 @@ Creator.Objects.chat_subscriptions = {
 
 		unread:
 			label: '未读数'
+			type: 'number'
 
 	list_views:
 		all:

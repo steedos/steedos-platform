@@ -49,7 +49,7 @@ Template.objectMenu.helpers
 
 Template.objectMenu.events
     'click .show-object-list': (event, template)->
-        $('#object_list_modal').modal 'show'
+        $('#mobile_apps_modal').modal 'show'
 
     'click .go-admin-menu': (event, template)->
         FlowRouter.go '/admin'

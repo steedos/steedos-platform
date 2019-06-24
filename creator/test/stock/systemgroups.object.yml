@@ -1,0 +1,58 @@
+name: systemgroups
+label: 部门基本信息
+icon: macros
+tableName: systemgroupsViews
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: true
+enable_events: true
+enable_api: true
+enable_tree: true
+fields:
+  groupId: 
+    type: number
+    primary: true
+    searchable: true
+    sortable: true
+    label: 部门Id
+  groupName:
+    type: text
+    label: 部门名称
+    searchable: true
+    sortable: true
+    is_name: true
+  groupFullname:
+    type: text
+    label: 部门名称
+    searchable: true
+    sortable: true
+  parent:
+    type: number
+    label: 父部门ID
+  children:
+    type: text
+list_views:
+  all:
+    label: 全部
+    columns:
+      - groupId
+      - groupName
+      - groupFullname
+      - parent
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

@@ -1,4 +1,4 @@
-Phone = Npm.require('phone')
+Phone = require('phone')
 
 Meteor.methods updatePhone: (options) ->
 	check options, Object

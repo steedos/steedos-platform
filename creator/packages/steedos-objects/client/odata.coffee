@@ -1,16 +1,19 @@
 Creator.odata = {}
-Creator.odata.get = (object_name, record_id, select_fields, callback)->
+Creator.odata.get = (object_name, record_id, select_fields, expand, callback)->
+	_object_name = Creator.formatObjectName(object_name)
 	result = null
 	isAsync = callback and _.isFunction(callback)
 	spaceId = Steedos.spaceId()
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "/api/odata/v4/#{spaceId}/#{object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
 		request_data = {}
 		if select_fields
-			request_data = 
+			request_data =
 				"$select": select_fields
+		if expand
+			request_data["$expand"] = expand
 		$.ajax
 			type: "get"
 			url: url
@@ -21,6 +24,7 @@ Creator.odata.get = (object_name, record_id, select_fields, callback)->
 			beforeSend: (request) ->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+				request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 			success: (data) ->
 				result = data
 				if isAsync
@@ -43,12 +47,13 @@ Creator.odata.get = (object_name, record_id, select_fields, callback)->
 					toastr?.error?("未找到记录")
 				if isAsync
 					callback(false, error)
-				
+
 	else
 		toastr.error("未找到记录")
 	return result
 
 Creator.odata.query = (object_name, options, is_ajax, callback)->
+	_object_name = Creator.formatObjectName(object_name)
 	result = null
 	spaceId = Steedos.spaceId()
 	unless spaceId
@@ -56,7 +61,7 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 	isAsync = callback and _.isFunction(callback)
 	if is_ajax
 		if object_name
-			url = Steedos.absoluteUrl "/api/odata/v4/#{spaceId}/#{object_name}"
+			url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
 			$.ajax
 				type: "get"
 				url: url
@@ -67,6 +72,7 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 				beforeSend: (request) ->
 					request.setRequestHeader('X-User-Id', Meteor.userId())
 					request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+					request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 				error: (jqXHR, textStatus, errorThrown) ->
 					error = jqXHR.responseJSON
 					console.error error
@@ -85,7 +91,7 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 		return result
 	else
 		if object_name
-			url = "/api/odata/v4/#{spaceId}/#{object_name}"
+			url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
 			options.store = new DevExpress.data.ODataStore({
 				type: "odata"
 				version: 4
@@ -127,9 +133,10 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 					if isAsync
 						callback(false, error)
 				)
-	
+
 
 Creator.odata.queryCount = (object_name, options, callback)->
+	_object_name = Creator.formatObjectName(object_name)
 	result = null
 	spaceId = Steedos.spaceId()
 	unless spaceId
@@ -137,7 +144,7 @@ Creator.odata.queryCount = (object_name, options, callback)->
 	unless callback and _.isFunction(callback)
 		return
 	if object_name
-		url = "/api/odata/v4/#{spaceId}/#{object_name}"
+		url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
 		store = new DevExpress.data.ODataStore({
 			type: "odata"
 			version: 4
@@ -178,11 +185,13 @@ Creator.odata.queryCount = (object_name, options, callback)->
 			)
 
 Creator.odata.delete = (object_name,record_id,callback)->
+	_object_name = Creator.formatObjectName(object_name)
+	console.log('odata.delete...');
 	spaceId = Steedos.spaceId()
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "/api/odata/v4/#{spaceId}/#{object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
 		$.ajax
 			type: "delete"
 			url: url
@@ -191,6 +200,7 @@ Creator.odata.delete = (object_name,record_id,callback)->
 			beforeSend: (request) ->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+				request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 
 			success: (data) ->
 				if callback and typeof callback == "function"
@@ -212,11 +222,12 @@ Creator.odata.delete = (object_name,record_id,callback)->
 					toastr?.error?(error)
 
 Creator.odata.update = (object_name,record_id,doc,callback)->
+	_object_name = Creator.formatObjectName(object_name)
 	spaceId = Steedos.spaceId()
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "/api/odata/v4/#{spaceId}/#{object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
 		data = {}
 		data['$set'] = doc
 		$.ajax
@@ -229,6 +240,7 @@ Creator.odata.update = (object_name,record_id,doc,callback)->
 			beforeSend: (request) ->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+				request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 
 			success: (data) ->
 				if callback and typeof callback == "function"
@@ -246,11 +258,12 @@ Creator.odata.update = (object_name,record_id,doc,callback)->
 				else
 					toastr?.error?(error)
 Creator.odata.insert = (object_name,doc)->
+	_object_name = Creator.formatObjectName(object_name)
 	spaceId = Steedos.spaceId()
 	unless spaceId
 		return
 	if object_name
-		url = Steedos.absoluteUrl "/api/odata/v4/#{spaceId}/#{object_name}"
+		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
 		$.ajax
 			type: "post"
 			url: url
@@ -261,6 +274,7 @@ Creator.odata.insert = (object_name,doc)->
 			beforeSend: (request) ->
 				request.setRequestHeader('X-User-Id', Meteor.userId())
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
+				request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 
 			# success: (data) ->
 			# 	if callback and typeof callback == "function"

@@ -310,6 +310,7 @@ renderTabularReport = (reportObject)->
 	selectColumns = []
 	expandFields = {}
 	objectName = reportObject.object_name
+	object = Creator.getObject(objectName)
 	objectFields = Creator.getObject(objectName)?.fields
 	if _.isEmpty objectFields
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
@@ -369,7 +370,7 @@ renderTabularReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
+	url = "#{Creator.getObjectODataRouterPrefix(object)}/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->
@@ -431,7 +432,8 @@ renderSummaryReport = (reportObject)->
 	selectColumns = []
 	expandFields = {}
 	objectName = reportObject.object_name
-	objectFields = Creator.getObject(objectName)?.fields
+	object = Creator.getObject(objectName)
+	objectFields = object?.fields
 	if _.isEmpty objectFields
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
@@ -572,7 +574,7 @@ renderSummaryReport = (reportObject)->
 	_.every reportColumns, (n)->
 		n.sortingMethod = Creator.sortingMethod
 
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
+	url = "#{Creator.getObjectODataRouterPrefix(object)}/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->
@@ -663,7 +665,8 @@ renderMatrixReport = (reportObject)->
 	selectColumns = []
 	expandFields = {}
 	objectName = reportObject.object_name
-	objectFields = Creator.getObject(objectName)?.fields
+	object = Creator.getObject(objectName)
+	objectFields = object?.fields
 	if _.isEmpty objectFields
 		toastr.error "未找到对象#{objectName}，请确认该报表指定的对象名是否正确"
 		return
@@ -806,7 +809,7 @@ renderMatrixReport = (reportObject)->
 	_.every reportFields, (n)->
 		n.sortingMethod = Creator.sortingMethod.bind({key:"value"})
 	
-	url = "/api/odata/v4/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
+	url = "#{Creator.getObjectODataRouterPrefix(object)}/#{spaceId}/#{objectName}?$top=#{maxLoadCount}&$count=true"
 	selectColumns = _.uniq selectColumns
 	expands = []
 	_.each expandFields, (v,k)->

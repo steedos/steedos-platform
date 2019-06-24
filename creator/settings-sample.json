@@ -17,7 +17,8 @@
         "is_group_company": true // 是否开启集团功能
     },
     "cron": {
-        "instancerecordqueue_interval": 10000 // creator同步instance到record队列执行间隔
+        "instancerecordqueue_interval": 10000, // creator同步instance到record队列执行间隔
+        "objectwebhooksqueue_interval": 10000 // creator发推送到mattermost队列执行间隔
     },
     "cfs": {
         "aliyun": {
@@ -125,5 +126,14 @@
     },
     "email": {
         "from": "Steedos <noreply@message.steedos.com>"
+    },
+    "oauth2": {
+        // 使用mattermost账户登陆进client_url
+        "mattermost": {
+            "mattermost_url": "http://192.168.1.150",
+            "client_url": "http://192.168.1.4:3333",
+            "client_id": "4e1bmtawsf89fquf8pb1btjadr",
+            "client_secret": "hjx5dwp6m38mt89g44s6fguhho"
+        }
     }
 }

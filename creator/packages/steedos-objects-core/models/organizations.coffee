@@ -1,7 +1,7 @@
 db.organizations = new Meteor.Collection('organizations')
 
 #db.organizations._simpleSchema = new SimpleSchema
-
+###
 Creator.Objects.organizations =
 	name: "organizations"
 	label: "部门"
@@ -146,6 +146,7 @@ Creator.Objects.organizations =
 			allowRead: true
 			modifyCompanyRecords: true
 			viewAllRecords: true
+###
 
 if Meteor.isServer
 	Meteor.publish "subCompany", (space_id)->

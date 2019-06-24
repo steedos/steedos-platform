@@ -44,7 +44,7 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 		actionSheetOption.itemTemplate = (itemData, itemIndex, itemElement)->
 			itemElement.html "<span class='text-muted'>#{itemData.text}</span>"
 
-	actionSheet = $(".action-sheet").dxActionSheet(actionSheetOption).dxActionSheet("instance")
+	actionSheet = $(".action-sheet-#{object_name.replace(/./g, '-')}").dxActionSheet(actionSheetOption).dxActionSheet("instance")
 	
 	actionSheet.option("target", e.event.target);
 	actionSheet.option("visible", true);
@@ -72,6 +72,22 @@ _filter = (record_ids) ->
 		filter.push ["_id", "=", id]
 	return filter
 
+_objectfilter = (object_name, searchText)->
+
+	object = Creator.getObject(object_name)
+
+	object_name_key = object?.NAME_FIELD_KEY
+
+	filters = []
+
+	search_Keywords = searchText.split(" ")
+
+	search_Keywords.forEach (keyword)->
+		if filters.length > 0
+			filters.push "and"
+		filters.push([object_name_key, "contains", encodeURIComponent(Creator.convertSpecialCharacter(keyword.trim()))])
+	return filters
+
 _select = (object_name) ->
 	obj = Creator.getObject(object_name)
 	if !obj
@@ -79,7 +95,7 @@ _select = (object_name) ->
 	default_columns = Creator.getObjectDefaultColumns(object_name) || [obj.NAME_FIELD_KEY]
 	fields = obj.fields
 	default_columns = _.map default_columns, (column) ->
-		if fields[column].type and !fields[column].hidden
+		if fields[column]?.type and !fields[column].hidden
 			return column
 		else
 			return undefined
@@ -132,8 +148,8 @@ Template.search_result_list.onRendered ->
 		object_name = Template.instance().data.object_name
 		record_ids = Template.instance().data.record_ids
 
-		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
-		filter = _filter(record_ids)
+		url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{Steedos.spaceId()}/#{object_name}"
+		filter = _objectfilter(object_name, Session.get("search_text"))
 		select = _select(object_name)
 		columns = _columns(object_name, select)
 		expand_fields = _expandFields(object_name, select)
@@ -188,21 +204,31 @@ Template.search_result_list.onRendered ->
 						request.headers['X-Space-Id'] = Steedos.spaceId()
 						request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
 					errorHandler: (error) ->
+						console.log('error', error);
 						if error.httpStatus == 404 || error.httpStatus == 400
 							error.message = t "creator_odata_api_not_found"
 				select: select
-				filter: filter
+				filter: if filter.length > 0 then filter else undefined
 				expand: expand_fields
 			columns: columns
 			onCellClick: (e)->
 				if e.column?.dataField ==  "_id_actions"
 					_itemClick(e, object_name, self.dxSearchGridInstance)
-
-		self.dxSearchGridInstance = self.$(".search-gridContainer-#{object_name}").dxDataGrid(dxOptions).dxDataGrid('instance')
+			onContentReady: (e)->
+				self.recordsTotal.set(self.dxSearchGridInstance.totalCount())
+				if self.data.objectsRecordsTotal
+					objectsRecordsTotal = self.data.objectsRecordsTotal.get()
+					objectsRecordsTotal[object_name] = self.dxSearchGridInstance.totalCount()
+					self.data.objectsRecordsTotal.set objectsRecordsTotal
+		module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+			DevExpress.ui.dxDataGrid = dxDataGrid;
+			self.dxSearchGridInstance = self.$(".search-gridContainer-#{object_name.replace(/./g, '-')}").dxDataGrid(dxOptions).dxDataGrid('instance')
 
 Template.search_result_list.helpers 
 	object_name: ()->
 		return Template.instance().data.object_name
+	div_unique_glag: ()->
+		return Template.instance().data.object_name.replace(/./g, "-")
 
 	object_label: ()->
 		object_name = Template.instance().data.object_name
@@ -214,6 +240,13 @@ Template.search_result_list.helpers
 		 
 	show_more_records: ()->
 		return Template.instance().showMoreRecords.get()
+
+	hideGridContent: ()->
+		recordsTotal = Template.instance().recordsTotal.get()
+		if recordsTotal == 0
+			return true
+		else
+			return false
 
 Template.search_result_list.events 
 	"dbclick .results-item": (event, template) ->
@@ -262,6 +295,7 @@ Template.search_result_list.events
 
 Template.search_result_list.onCreated ->
 	self = this
+	self.recordsTotal = new ReactiveVar(-1)
 	self.showMoreRecords = new ReactiveVar(false)
 	if Template.instance().data.record_ids and Template.instance().data.record_ids.length == 5
 		self.showMoreRecords.set(true)

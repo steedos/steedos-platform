@@ -1,0 +1,325 @@
+name: mongo_object_workflows
+label: 对象流程
+icon: apps
+fields:
+  name:
+    label: 名称
+    type: text
+    required: true
+    name: name
+    searchable: true
+  object_name:
+    label: 对象
+    type: master_detail
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+    _optionsFunction: |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+    name: object_name
+    filterable: true
+  flow_id:
+    label: 流程
+    type: lookup
+    required: true
+    reference_to: flows
+    name: flow_id
+    filterable: true
+  field_map:
+    label: 字段映射关系（对象至表单）
+    type: grid
+    is_wide: true
+    depend_on:
+      - object_name
+      - flow_id
+    name: field_map
+  field_map.$.workflow_field:
+    label: 表单字段
+    type: lookup
+    depend_on:
+      - flow_id
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var fields, form_fields, form_id, instance_fields, options, res_flow, res_form;
+              instance_fields = [{
+                value: "instance.name",
+                label: "申请单名称"
+              }, {
+                value: "instance.submitter_name",
+                label: "提交人姓名"
+              }, {
+                value: "instance.applicant_name",
+                label: "申请人姓名"
+              }, {
+                value: "instance.applicant_company",
+                label: "申请人所属单位"
+              }, {
+                value: "instance.applicant_organization",
+                label: "申请人所属组织"
+              }, {
+                value: "instance.applicant_organization_name",
+                label: "申请人所属组织名称"
+              }, {
+                value: "instance.applicant_organization_fullname",
+                label: "申请人所属组织全名"
+              }, {
+                value: "instance.state",
+                label: "申请单状态"
+              }, {
+                value: "instance.current_step_name",
+                label: "申请单当前步骤名称"
+              }, {
+                value: "instance.flow_name",
+                label: "流程名称"
+              }, {
+                value: "instance.category_name",
+                label: "分类名称"
+              }, {
+                value: "instance.submit_date",
+                label: "提交时间"
+              }, {
+                value: "instance.finish_date",
+                label: "结束时间"
+              }, {
+                value: "instance.final_decision",
+                label: "最终意见"
+              }];
+              form_fields = [];
+
+              if (values != null ? values.flow_id : void 0) {
+                var flowId = values.flow_id
+                if(_.isObject(values.flow_id)){
+                  flowId = values.flow_id._id
+                }
+                res_flow = Creator.odata.get("flows", flowId, "form");
+
+                if (res_flow != null ? res_flow.form : void 0) {
+                  form_id = res_flow != null ? res_flow.form : void 0;
+                  res_form = Creator.odata.get("forms", form_id, "current");
+
+                  if (res_form != null ? res_form.current : void 0) {
+                    fields = (res_form != null ? res_form.current.fields : void 0) || [];
+                    fields.forEach(function (f) {
+                      if (f.type === 'section') {
+                        if (f.fields) {
+                          return f.fields.forEach(function (ff) {
+                            return form_fields.push({
+                              'label': ff.name || ff.code,
+                              'value': ff.code
+                            });
+                          });
+                        }
+                      } else {
+                        return form_fields.push({
+                          'label': f.name || f.code,
+                          'value': f.code
+                        });
+                      }
+                    });
+                  }
+                }
+              }
+
+              options = _.union(instance_fields, form_fields);
+              return options;
+            }
+    filterable: true
+  field_map.$.object_field:
+    label: 对象字段
+    type: lookup
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
+            }
+    filterable: true
+  field_map_back:
+    label: 字段映射关系（表单至对象）
+    type: grid
+    is_wide: true
+    depend_on:
+      - object_name
+      - flow_id
+    name: field_map_back
+  field_map_back.$.object_field:
+    label: 对象字段
+    type: lookup
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
+            }
+    filterable: true
+  field_map_back.$.workflow_field:
+    label: 表单字段
+    type: lookup
+    depend_on:
+      - flow_id
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var fields, form_fields, form_id, instance_fields, options, res_flow, res_form;
+              instance_fields = [{
+                value: "instance.name",
+                label: "申请单名称"
+              }, {
+                value: "instance.submitter_name",
+                label: "提交人姓名"
+              }, {
+                value: "instance.applicant_name",
+                label: "申请人姓名"
+              }, {
+                value: "instance.applicant_company",
+                label: "申请人所属单位"
+              }, {
+                value: "instance.applicant_organization",
+                label: "申请人所属组织"
+              }, {
+                value: "instance.applicant_organization_name",
+                label: "申请人所属组织名称"
+              }, {
+                value: "instance.applicant_organization_fullname",
+                label: "申请人所属组织全名"
+              }, {
+                value: "instance.state",
+                label: "申请单状态"
+              }, {
+                value: "instance.current_step_name",
+                label: "申请单当前步骤名称"
+              }, {
+                value: "instance.flow_name",
+                label: "流程名称"
+              }, {
+                value: "instance.category_name",
+                label: "分类名称"
+              }, {
+                value: "instance.submit_date",
+                label: "提交时间"
+              }, {
+                value: "instance.finish_date",
+                label: "结束时间"
+              }, {
+                value: "instance.final_decision",
+                label: "最终意见"
+              }];
+              form_fields = [];
+
+              if (values != null ? values.flow_id : void 0) {
+                var flowId = values.flow_id
+               if(_.isObject(values.flow_id)){
+                 flowId = values.flow_id._id
+               }
+                res_flow = Creator.odata.get("flows", flowId, "form");
+
+                if (res_flow != null ? res_flow.form : void 0) {
+                  form_id = res_flow != null ? res_flow.form : void 0;
+                  res_form = Creator.odata.get("forms", form_id, "current");
+
+                  if (res_form != null ? res_form.current : void 0) {
+                    fields = (res_form != null ? res_form.current.fields : void 0) || [];
+                    fields.forEach(function (f) {
+                      if (f.type === 'section') {
+                        if (f.fields) {
+                          return f.fields.forEach(function (ff) {
+                            return form_fields.push({
+                              'label': ff.name || ff.code,
+                              'value': ff.code
+                            });
+                          });
+                        }
+                      } else {
+                        return form_fields.push({
+                          'label': f.name || f.code,
+                          'value': f.code
+                        });
+                      }
+                    });
+                  }
+                }
+              }
+
+              options = _.union(instance_fields, form_fields);
+              return options;
+            }
+    filterable: true
+  field_map_script:
+    label: 对象至表单
+    type: textarea
+    is_wide: true
+    group: 脚本
+    name: field_map_script
+  field_map_back_script:
+    label: 表单至对象
+    type: textarea
+    is_wide: true
+    group: 脚本
+    name: field_map_back_script
+  sync_attachment:
+    label: 附件同步方式
+    type: select
+    options:
+      - label: 不同步
+        value: 'null'
+      - label: 同步最新版本
+        value: lastest
+      - label: 同步所有版本
+        value: all
+    required: true
+    name: sync_attachment
+    filterable: true
+list_views:
+  default:
+    columns:
+      - name
+      - object_name
+      - flow_id
+  all:
+    label: 全部
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

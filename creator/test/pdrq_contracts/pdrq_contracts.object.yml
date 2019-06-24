@@ -1,0 +1,131 @@
+name: pdrq_contracts
+label: 合同信息
+icon: macros
+tableName: contracts
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: true
+enable_events: true
+enable_api: true
+fields:
+  recid:
+    type: number
+    label: 合同Id
+    primary: true
+    generated: true
+#    omit: true
+  id:
+    type: text
+    label: 合同编号
+  projectid:
+    type: text
+    label: 项目编号
+  name:
+    type: text
+    label: 合同名称
+    is_name: true
+  primaryCoverage:
+    type: text
+    label: 主要内容 
+  otherCompany:
+    type: text
+    label: 对方单位名称
+  otherPerson:
+    type: text
+    label: 对方联系人
+  telephone:
+    type: text
+    label: 对方电话
+  isBidding:
+    type: select
+    options: '是,否'
+    label: 是否招投标
+  contractTypedetail:
+    type: lookup
+    reference_to: typeDetail
+    label: 合同性质
+  contractType:
+    type: lookup
+    reference_to: type
+    label: 合同类型
+  startDate:
+    type: date
+    label: 合同开始日期
+  overDate:
+    type: date
+    label: 合同终止日期
+  contractAmount:
+    type: currency
+    label: 合同标的
+  advanceAmount:
+    type: currency
+    label: 预付款金额
+  outstandingAmount:
+    type: currency
+    label: 未结金额
+  contractState:
+    type: lookup
+    reference_to: contractState
+    label: 合同履行状态
+  remarks:
+    type: textarea
+    label: 备注
+  company:
+    type: lookup
+    reference_to: contractCompany
+    label: 所属部门
+  signedDate:
+    type: date
+    label: 签订日期
+  chengBanRen:
+    type: text
+    label: 经办人
+  tanPanRen:
+    type: text
+    label: 谈判人
+  piZhunRen:
+    type: text
+    label: 批准人
+  fileId:
+    type: text
+    label: 申请单ID
+  settlementMethod:
+    type: text
+    label: 合同结算方式
+  stock:
+    type: lookup
+    label: 股票信息
+    reference_to: 'stock.stock_info'
+list_views:
+  all:
+    label: 全部
+    columns:
+      - id
+      - name
+      - primaryCoverage
+      - settlementMethod
+      - contractAmount
+      - signedDate
+      - otherCompany
+      - chengbanren
+      - company
+      - tanpanren
+      - pizhunren
+      - fileId
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

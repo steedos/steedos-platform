@@ -1,5 +1,5 @@
-<template name="object_list_modal">
-	<div class="modal fade creator-modal object-list-modal" id="object_list_modal" role="dialog">
+<template name="mobile_apps_modal">
+	<div class="modal fade creator-modal object-list-modal creator-auotform-modals" id="mobile_apps_modal" role="dialog">
 		<div class="modal-dialog slds-modal slds-fade-in-open">
 			<div class="slds-modal__container">
 				<header class="slds-modal__header">
@@ -14,7 +14,7 @@
 				<div class="slds-modal__content slds-p-around_medium">
 					<div class="weui-grids">
 						{{#each apps}}
-							<a class="weui-grid app-item" href="{{app_url}}">
+							<a class="weui-grid app-item {{#if isActive}}grid-active{{/if}}" href="{{app_url}}">
 								<div class="weui-grid__icon">
 									{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=this.icon_slds}}
 								</div>

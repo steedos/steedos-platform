@@ -1,43 +1,44 @@
-Cookies = Npm.require("cookies")
+Cookies = require("cookies")
 bcrypt = NpmModuleBcrypt;
 bcryptHash = Meteor.wrapAsync(bcrypt.hash);
 bcryptCompare = Meteor.wrapAsync(bcrypt.compare);
-SHA256 = Npm.require("sha256")
+SHA256 = require("sha256")
+steedosAuth = require("@steedos/auth");
 
 
 Setup.clearAuthCookies = (req, res) ->
-		cookies = new Cookies( req, res );
-		cookies.set("X-User-Id")
-		cookies.set("X-Auth-Token")
+	cookies = new Cookies( req, res );
+	cookies.set("X-User-Id")
+	cookies.set("X-Auth-Token")
 
-		# 额外清除老的domain下的cookie
-		if req.headers.origin
-			uri = new URI(req.headers.origin)
-		else if req.headers.referer
-			uri = new URI(req.headers.referer)
+	# 额外清除老的domain下的cookie
+	if req.headers.origin
+		uri = new URI(req.headers.origin)
+	else if req.headers.referer
+		uri = new URI(req.headers.referer)
 
-		cookies.set "X-User-Id", "", 
-			domain: uri?.domain(),
-			overwrite: true
-		cookies.set "X-Auth-Token", "", 
-			domain: uri?.domain(),
-			overwrite: true
+	cookies.set "X-User-Id", "",
+		domain: uri?.domain(),
+		overwrite: true
+	cookies.set "X-Auth-Token", "",
+		domain: uri?.domain(),
+		overwrite: true
 
 Setup.setAuthCookies = (req, res, userId, authToken) ->
-		cookies = new Cookies( req, res );
-		# set cookie to response
-		# maxAge 3 month
-		# uri = new URI(req.headers.origin);
-		cookies.set "X-User-Id", userId, 
-			# domain: uri.domain(),
-			maxAge: 90*60*60*24*1000,
-			httpOnly: false
-			overwrite: true
-		cookies.set "X-Auth-Token", authToken, 
-			# domain: uri.domain(),
-			maxAge: 90*60*60*24*1000,
-			httpOnly: false
-			overwrite: true
+	cookies = new Cookies( req, res );
+	# set cookie to response
+	# maxAge 3 month
+	# uri = new URI(req.headers.origin);
+	cookies.set "X-User-Id", userId,
+		# domain: uri.domain(),
+		maxAge: 90*60*60*24*1000,
+		httpOnly: false
+		overwrite: true
+	cookies.set "X-Auth-Token", authToken,
+		# domain: uri.domain(),
+		maxAge: 90*60*60*24*1000,
+		httpOnly: false
+		overwrite: true
 
 
 
@@ -46,29 +47,29 @@ JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 
 	# first check request body
 	if req.body
-		userId = req.body["X-User-Id"]
 		authToken = req.body["X-Auth-Token"]
 
 	# then check cookie
-	if !userId or !authToken
-		userId = cookies.get("X-User-Id")
+	if !authToken
 		authToken = cookies.get("X-Auth-Token")
 
-	if userId and authToken
-		hashedToken = Accounts._hashLoginToken(authToken)
-		user = Meteor.users.findOne
-			_id: userId,
-			"services.resume.loginTokens.hashedToken": hashedToken
-		if user
-			Setup.setAuthCookies(req, res, userId, authToken)
+	if authToken
 
-			JsonRoutes.sendResult res, 
-				data: 
-					userId: user._id
+		user = Meteor.wrapAsync((authToken, cb)->
+			steedosAuth.getSession(authToken).then (resolve, reject)->
+				cb(reject, resolve)
+		)(authToken)
+
+		if user
+			Setup.setAuthCookies(req, res, user.userId, authToken)
+
+			JsonRoutes.sendResult res,
+				data:
+					userId: user.userId
 					authToken: authToken
 					apps: []
-					dsInfo: 
-						dsid: user._id
+					dsInfo:
+						dsid: user.userId
 						steedosId: user.steedos_id
 						name: user.name
 						primaryEmail: user.email
@@ -84,11 +85,11 @@ JsonRoutes.add "post", "/api/setup/validate", (req, res, next) ->
 			return
 
 
-	JsonRoutes.sendResult res, 
+	JsonRoutes.sendResult res,
 		code: 401,
-		data: 
-			"error": "Validate Request -- Missing X-Auth-Token", 
-			"instance": "1329598861", 
+		data:
+			"error": "Validate Request -- Missing X-Auth-Token",
+			"instance": "1329598861",
 			"success": false
 
 
@@ -119,7 +120,7 @@ JsonRoutes.add "post", "/api/setup/login", (req, res, next) ->
 		res.end();
 		return
 
-	if (!bcryptCompare(bcryptPassword, user.services.password.bcrypt)) 
+	if (!bcryptCompare(bcryptPassword, user.services.password.bcrypt))
 		res.statusCode = 401;
 		res.end();
 		return
@@ -147,12 +148,12 @@ JsonRoutes.add "post", "/api/setup/login", (req, res, next) ->
 	# maxAge 3 month
 	Setup.setAuthCookies(req, res, user._id, token)
 
-	JsonRoutes.sendResult res, 
-		data: 
+	JsonRoutes.sendResult res,
+		data:
 			userId: user._id
 			authToken: token
 			apps: []
-			dsInfo: 
+			dsInfo:
 				dsid: user._id
 				steedosId: user.steedos_id
 				name: user.name

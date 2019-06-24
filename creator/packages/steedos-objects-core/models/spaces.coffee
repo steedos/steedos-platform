@@ -1,6 +1,6 @@
 db.spaces = new Meteor.Collection('spaces')
 
-
+###
 Creator.Objects.spaces =
 	name: "spaces"
 	label: "工作区"
@@ -164,7 +164,7 @@ Creator.Objects.spaces =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
-
+###
 
 
 db.spaces.helpers

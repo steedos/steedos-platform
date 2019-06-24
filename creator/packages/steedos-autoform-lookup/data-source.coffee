@@ -17,6 +17,7 @@ var searchVal = {
 DataSource.Odata.lookup_options = (options)->
 	object = Creator.getObject(options.params.reference_to, options.params.space)
 	name_field_key = object.NAME_FIELD_KEY
+	idFieldName = object.idFieldName
 	query = {}
 	if options.params.space
 		query.space = options.params.space
@@ -44,21 +45,23 @@ DataSource.Odata.lookup_options = (options)->
 
 		if options?.values?.length
 			_.each options.values, (item)->
-				valueFilter.push("(_id eq '#{item}')")
+				valueFilter.push("(#{idFieldName} eq '#{item}')")
 			filters.push "(#{valueFilter.join(' or ')})"
 		else
 			if selected.length > 0
 				_.each selected, (item)->
-					selectedFilter.push("(_id ne '#{item}')")
+					selectedFilter.push("(#{idFieldName} ne '#{item}')")
 				filters.push "(#{selectedFilter.join(' and ')})"
 			if searchFilter
 				filters.push searchFilter
 
 		odataOptions = {
 			$top: options_limit,
-			$orderby: 'created desc',
 			$select: "#{name_field_key}"
 		};
+
+		if !object.database_name || object.database_name == 'meteor-mongo'
+			odataOptions.$orderby = 'created desc'
 
 		orderby = []
 		if sort && _.isObject(sort)

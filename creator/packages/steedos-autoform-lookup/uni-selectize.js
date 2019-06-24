@@ -553,18 +553,41 @@ UniSelectize.prototype.getOptionsFromMethod = function (values) {
 	// self.loading.set(true);
 
 	if(self.dataSourceType != 'method'){
+
+		if(_.isNumber(values)){
+			values = values.toString()
+		}
+
+		if(_.isString(values)){
+			values = [values]
+		}
+
+		if(_.isArray(values)){
+			values.map( function(v){
+				if(_.isNumber(values)){
+					return v.toString()
+				}else{
+					return v
+				}
+			})
+		}
+
+		searchVal.values = values || [];
+
 		var options = DataSource.Odata.lookup_options(searchVal);
 		if (params) {
 			self.removeUnusedItems(options);
 		}
+
 		self.addItems(options, values);
 		Meteor.setTimeout(function () {
 			self.initialized.set(1);
 		}, 1);
 		if(searchVal.values.length > 0){
-			DataSource.Method.lookup_options(methodName, {params: searchVal.params, values: searchVal.values}, function (err, valueOptions) {
-				self.addItems(valueOptions, values);
-			});
+			// DataSource.Method.lookup_options(methodName, {params: searchVal.params, values: searchVal.values}, function (err, valueOptions) {
+			// 	self.addItems(valueOptions, values);
+			// });
+			self.addItems(options, values);
 		}
 
 	}else{

@@ -10,6 +10,7 @@ Creator.Objects.audit_login =
 
 		login_time:
 			label:"登录时间"
+			type: "datetime"
 
 		source_ip:
 			label: "IP地址"

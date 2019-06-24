@@ -10,7 +10,7 @@ search_object = (object_name, searchText)->
 
 	filters = []
 
-	search_Keywords = searchText.split(" ")
+	search_Keywords = searchText.replace(/'/g, "''").split(" ")
 
 	search_Keywords.forEach (keyword)->
 		filters.push "(contains(tolower(#{object_name_key}),'#{encodeURIComponent(Creator.convertSpecialCharacter(keyword.trim()))}'))"
@@ -56,6 +56,8 @@ Template.headerSearch.onCreated ()->
 					object_record = search_object(_object.name, searchText)
 					searchData = searchData.concat(object_record)
 			self.searchItems.set(searchData)
+			self.is_searching.set(false)
+		else
 			self.is_searching.set(false)
 
 	this.clearSearchItems = ()->
@@ -137,10 +139,13 @@ Template.headerSearch.events
 
 		Meteor.clearTimeout(t.search_timeoutId);
 
+		t.is_searching.set(true);
+
 		t.searchText.set(searchText)
+
 		t.search_timeoutId = Meteor.setTimeout ()->
 			t.search()
-		, 300
+		, 1000
 
 	'click #option-00,#option-01': (e, t)->
 		app_id = Session.get "app_id"

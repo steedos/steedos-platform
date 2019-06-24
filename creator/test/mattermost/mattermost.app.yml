@@ -1,0 +1,9 @@
+_id: mattermost
+name: 华信
+description: Mattermost App
+icon_slds: thanks
+is_creator: true
+objects: 
+  - mattermost.teams
+  - mattermost.users
+  - mattermost.posts

@@ -14,7 +14,7 @@
 								</a>
 							</li>
 							{{#each sidebar_list}}
-							<li class="{{#if is_selected this}}slds-is-active selected{{/if}} object-li">
+							<li class="{{#if is_selected this}}slds-is-active selected{{/if}} object-li {{#unless show_object_item this}}hidden{{/unless}}">
 								<a href="" class="slds-navigation-list--vertical__action slds-text-link--reset object-item">
 									{{label this}}
 								</a>
@@ -28,10 +28,10 @@
 				<div class="slds-grid slds-grid--vertical slds-m-bottom_small">
 					{{#if show_grid}}
 						{{#if select_object}}
-							{{> search_result_list object_name=(select_object) record_ids=(calc_result_ids select_object)}}
+							{{> search_result_list objectsRecordsTotal=objectsRecordsTotal object_name=(select_object) record_ids=(calc_result_ids select_object)}}
 						{{else}}
 							{{#each sidebar_list}}
-								{{> search_result_list object_name=this record_ids=(calc_result_ids this)}}
+								{{> search_result_list objectsRecordsTotal=objectsRecordsTotal object_name=this record_ids=(calc_result_ids this)}}
 							{{/each}}	
 						{{/if}}
 					{{/if}}

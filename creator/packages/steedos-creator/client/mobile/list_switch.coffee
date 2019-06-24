@@ -1,11 +1,14 @@
 displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self)->
+
+	object = Creator.getObject(object_name)
+
 	if self.dxListInstance
 		self.dxListInstance.dispose()
 
 	if list_view_id == "recent"
-		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/recent"
+		url = "#{Creator.getObjectODataRouterPrefix(object)}/#{Steedos.spaceId()}/#{object_name}/recent"
 	else
-		url = "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}"
+		url = "#{Creator.getObjectODataRouterPrefix(object)}/#{Steedos.spaceId()}/#{object_name}"
 	filter = Creator.getODataFilter(list_view_id, object_name)
 	DevExpress.ui.setTemplateEngine("underscore");
 	list_options = 
@@ -23,7 +26,7 @@ displayListGrid = (object_name, app_id, list_view_id, name_field_key, icon, self
 					return
 			},
 			select: [
-				name_field_key, "_id"
+				name_field_key
 			],
 			filter: filter
 		},

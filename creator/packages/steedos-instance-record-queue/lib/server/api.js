@@ -266,7 +266,7 @@ InstanceRecordQueue.Configure = function (options) {
 							var oField = objectFields[objField];
 							if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
 								var oCollection = Creator.getCollection(oField.reference_to, spaceId)
-								if (oCollection && record[objField]) {
+								if (oCollection && record && record[objField]) {
 									var referSetObj = {};
 									referSetObj[referObjField] = values[fm.workflow_field];
 									oCollection.update(record[objField], {
@@ -292,7 +292,7 @@ InstanceRecordQueue.Configure = function (options) {
 								var oField = objectFields[objField];
 								if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
 									var oCollection = Creator.getCollection(oField.reference_to, spaceId)
-									if (oCollection && record[objField]) {
+									if (oCollection && record && record[objField]) {
 										var referSetObj = {};
 										referSetObj[referObjField] = ins[insField];
 										oCollection.update(record[objField], {
@@ -385,7 +385,7 @@ InstanceRecordQueue.Configure = function (options) {
 		var values = ins.values,
 			spaceId = ins.space;
 
-		if (records) {
+		if (records && !_.isEmpty(records)) {
 			// 此情况属于从creator中发起审批
 			var objectName = records[0].o;
 			var ow = Creator.getCollection('object_workflows').findOne({
@@ -500,6 +500,9 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 							}
 						})
+						// workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
+						var record = objectCollection.findOne(newRecordId);
+						self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
 					}
 
 					// 附件同步

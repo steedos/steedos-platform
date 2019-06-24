@@ -1,0 +1,32 @@
+name: delivery
+label: 配送方式
+icon: macros
+fields:
+  id: 
+    type: number
+    primary: true
+    generated: true
+  name:
+    type: text
+    label: 名称
+list_views:
+  all:
+    label: 全部
+    columns:
+      - name
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

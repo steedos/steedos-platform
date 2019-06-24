@@ -1,0 +1,46 @@
+name: fieldcontroller
+label: 字段控制
+icon: orders
+tableName: FLOWFIELDCONTROL
+fields:
+  ID: 
+    type: number
+    primary: true
+    generated: true
+  FLOWID:
+    label: 流程
+    type: master_detail
+    reference_to: oracle_qhd.workflow
+  COLUMNTYPE:
+    type: text
+    label: 字段类型
+  COLUMNNUM:
+    type: text
+    label: 字段编号
+  STEPS:
+    type: text
+    label: 关联步骤
+list_views:
+  all:
+    label: 全部
+    columns:
+      - FLOWID
+      - COLUMNTYPE
+      - COLUMNNUM
+      - STEPS
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

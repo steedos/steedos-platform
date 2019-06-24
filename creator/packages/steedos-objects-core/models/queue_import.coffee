@@ -83,10 +83,11 @@ Creator.Objects.queue_import =
 		state:
 			label:"状态"
 			#allowvalue: 待导入、导入中、导入成功、导入失败
+			type: 'select'
 			omit:true
 		error:
 			label:"错误信息"
-			type:["text"]
+			type:"[text]"
 			omit:true
 	list_views:
 		all:

@@ -1,0 +1,48 @@
+name: bookmarks
+label: 书签
+icon: orders
+tableName: BOOKMARKS
+fields:
+  BOOKMARKID: 
+    type: number
+    primary: true
+    generated: true
+  BOOKMARKNAME:
+    type: text
+    label: 名称
+    is_name: true
+  BOOKMARKURL:
+    type: text
+    label: 地址
+  CREATEDATE:
+    type: date
+    label: 创建日期
+  POSITION:
+    type: text
+    label: 位置
+  VISIBLE:
+    type: boolean
+    label: 是否显示
+list_views:
+  all:
+    label: 全部
+    columns:
+      - BOOKMARKNAME
+      - CREATEDATE
+      - VISIBLE
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

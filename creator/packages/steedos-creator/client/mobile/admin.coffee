@@ -1,7 +1,7 @@
 
-Template.adminMenu.onRendered ->
-	this.$("#admin_menu").removeClass "hidden"	
-	this.$("#admin_menu").animateCss "fadeInRight"
+#Template.adminMenu.onRendered ->
+#	this.$("#admin_menu").removeClass "hidden"
+#	this.$("#admin_menu").animateCss "fadeInRight"
 
 Template.adminMenu.helpers 
 	avatarURL: (avatar,w,h,fs) ->
@@ -38,14 +38,14 @@ Template.adminMenu.events
 				FlowRouter.go '/app'
 	
 	'click .btn-switch-space': (event, template)->
-		FlowRouter.go '/admin/switchspace'
+		FlowRouter.go '/user_settings/switchspace'
 
 	'click .btn-change-password': (event, template)->
-		$("#reset_password_modal").modal "show"
+		Modal.show("reset_password_modal")
 
 	'click .btn-change-avatar': (event, template)->
 		template.$("#mobile-avator-upload").click()
-	
+
 	'change #mobile-avator-upload': (event, template)->
 		file = event.target.files[0];
 		unless file

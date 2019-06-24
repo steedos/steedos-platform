@@ -1,7 +1,7 @@
 db.space_users = new Meteor.Collection('space_users')
 
 db.space_users._simpleSchema = new SimpleSchema
-
+###
 Creator.Objects.space_users =
 	name: "space_users"
 	label: "人员"
@@ -139,7 +139,7 @@ Creator.Objects.space_users =
 			allowRead: true
 			modifyCompanyRecords: true
 			viewAllRecords: true
-
+###
 
 Meteor.startup ()->
 	if Meteor.isClient

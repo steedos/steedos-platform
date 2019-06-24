@@ -3,6 +3,7 @@ Template.record_search_list.onCreated ()->
 	this.searchResult = new ReactiveVar()
 	this.selectObject = new ReactiveVar()
 	this.showGrid = new ReactiveVar(true)
+	this.objectsRecordsTotal = new ReactiveVar({})
 
 Template.record_search_list.onRendered ->
 	self = this
@@ -10,15 +11,21 @@ Template.record_search_list.onRendered ->
 		searchText = Session.get("search_text")
 		self.showGrid.set(false)
 		self.selectObject.set(null)
-		Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
-			if error
-				console.error('object_record_search method error:', error);
-			if result
-				searchResult = _.groupBy(result, "_object_name")
-				sidebarList = _.keys(searchResult)
-				self.searchResult.set(searchResult)			
-				self.sidebarList.set(sidebarList)
-			self.showGrid.set(true)
+
+		sidebarList = _.pluck(_.filter(Creator.objectsByName, (obj)->
+			return obj.enable_search && obj.NAME_FIELD_KEY
+		), 'name');
+		self.sidebarList.set(sidebarList)
+		self.showGrid.set(true)
+#		Meteor.call 'object_record_search', {searchText: searchText, space: Session.get("spaceId")}, (error, result)->
+#			if error
+#				console.error('object_record_search method error:', error);
+#			if result
+#				searchResult = _.groupBy(result, "_object_name")
+#				sidebarList = _.keys(searchResult)
+#				self.searchResult.set(searchResult)
+#				self.sidebarList.set(sidebarList)
+#			self.showGrid.set(true)
 
 
 Template.record_search_list.helpers 
@@ -45,6 +52,8 @@ Template.record_search_list.helpers
 		return Template.instance().selectObject.get()
 
 	calc_result_ids: (object_name)->
+		if true
+			return []
 		search_result = Template.instance().searchResult.get()
 		obj = _.pick(search_result, object_name)
 		if obj[object_name]
@@ -58,6 +67,14 @@ Template.record_search_list.helpers
 	
 	show_grid: ()->
 		return Template.instance().showGrid.get()
+
+	objectsRecordsTotal: ()->
+		return Template.instance().objectsRecordsTotal
+
+	show_object_item: (object_name)->
+		objectsRecordsTotal = Template.instance().objectsRecordsTotal.get()
+		if !_.isEmpty(objectsRecordsTotal) and object_name
+			return objectsRecordsTotal[object_name] > 0
 
 Template.record_search_list.events 
 	"click .object-li": (event, template) -> 

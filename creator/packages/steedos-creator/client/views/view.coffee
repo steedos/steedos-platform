@@ -1,6 +1,92 @@
+_expandFields = (object_name, columns)->
+	expand_fields = []
+	fields = Creator.getObject(object_name).fields
+	_.each columns, (n)->
+		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
+			if fields[n].reference_to
+				ref = fields[n].reference_to
+				if _.isFunction(ref)
+					ref = ref()
+			else
+				ref = fields[n].optionsFunction({}).getProperty("value")
+
+			if !_.isArray(ref)
+				ref = [ref]
+
+			ref = _.map ref, (o)->
+				key = Creator.getObject(o)?.NAME_FIELD_KEY || "name"
+				return key
+
+			ref = _.compact(ref)
+
+			ref = _.uniq(ref)
+
+			ref = ref.join(",")
+			if ref && n.indexOf("$") < 0
+				if n.indexOf(".") < 0
+					expand_fields.push(n)
+				else
+					expand_fields.push(n.replace('.', '/'))
+#		else if fields[n].type == 'grid'
+#			expand_fields.push(n)
+	return expand_fields
+
+loadRecordFromOdata = (template, object_name, record_id)->
+	object = Creator.getObject(object_name)
+
+	_fields = object.fields
+
+	_keys = _.keys(_fields)
+	_keys = _keys.filter (k)->
+		if k.indexOf(".") < 0
+			return true
+		else
+			return false
+	expand = _expandFields(object_name, _.keys(_fields))
+	record = Creator.odata.get(object_name, record_id, _keys.join(","), expand.join(","))
+	template.record.set(record)
+
+
 Template.creator_view.onCreated ->
 	this.recordsTotal = new ReactiveVar({})
+	this.recordLoad = new ReactiveVar(false)
+	this.record = new ReactiveVar()
+	this.agreement = new ReactiveVar()
+	object_name = Session.get "object_name"
+	object = Creator.getObject(object_name)
+	template = Template.instance()
+	this.onEditSuccess = onEditSuccess = (formType,result)->
+		loadRecordFromOdata(template, Session.get("object_name"), Session.get("record_id"))
+		$('#afModal').modal('hide')
+	this.agreement.set('odata')
+	AutoForm.hooks creatorEditForm:
+		onSuccess: onEditSuccess
+	,false
+#	if object.database_name && object.database_name != 'meteor-mongo'
+#		this.agreement.set('odata')
+#		AutoForm.hooks creatorEditForm:
+#			onSuccess: onEditSuccess
+#		,false
+#	else
+#		this.agreement.set('subscribe')
 
+loadRecord = ()->
+	object_name = Session.get "object_name"
+	record_id = Session.get "record_id"
+	object = Creator.getObject(object_name)
+	object_fields = object.fields
+#	if object_name and record_id
+#		if !object.database_name || !object.database_name == 'meteor-mongo'
+#			fields = Creator.getFields(object_name)
+#			ref_fields = {}
+#			_.each fields, (f)->
+#				if f.indexOf(".")  < 0
+#					ref_fields[f] = 1
+#			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields, Session.get("spaceId")
+#		else
+#			loadRecordFromOdata(Template.instance(), object_name, record_id)
+	if object_name and record_id
+		loadRecordFromOdata(Template.instance(), object_name, record_id)
 Template.creator_view.onRendered ->
 	this.autorun ->
 		record_id = Session.get("record_id")
@@ -14,17 +100,17 @@ Template.creator_view.onRendered ->
 			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
 			$("#creator-quick-form").addClass("slds-show")
 
+	if Steedos.isMobile()
+		this.autorun ->
+			loadRecord()
+	else
+		this.autorun ->
+			if Session.get("record_id")
+				Tracker.nonreactive(loadRecord)
+
 	this.autorun ->
-		object_name = Session.get "object_name"
-		record_id = Session.get "record_id"
-		object_fields = Creator.getObject(object_name).fields
-		if object_name and record_id
-			fields = Creator.getFields(object_name)
-			ref_fields = {}
-			_.each fields, (f)->
-				if f.indexOf(".")  < 0
-					ref_fields[f] = 1
-			Creator.subs["Creator"].subscribe "steedos_object_tabular", "creator_" + object_name, [record_id], ref_fields, Session.get("spaceId")
+		if Creator.subs["Creator"].ready()
+			Template.instance().recordLoad.set(true)
 
 Template.creator_view.helpers Creator.helpers
 
@@ -44,15 +130,16 @@ Template.creator_view.helpers
 				if !fieldKey
 					return
 				field = _object.fields[fieldKey]
-				if _object.schema._schema[fieldKey]?.type.name != 'Object'
-					r = true;
-				if field.type == 'lookup' || field.type == 'master_detail'
-					reference_to = field.reference_to
-					if _.isFunction(reference_to)
-						reference_to = reference_to()
-					if _.isArray(reference_to)
+				if field
+					if _object.schema._schema[fieldKey]?.type.name != 'Object'
 						r = true;
-				return r;
+					if field.type == 'lookup' || field.type == 'master_detail'
+						reference_to = field.reference_to
+						if _.isFunction(reference_to)
+							reference_to = reference_to()
+						if _.isArray(reference_to)
+							r = true;
+					return r;
 		return r;
 
 	isObjectField: (fieldKey)->
@@ -252,7 +339,7 @@ Template.creator_view.helpers
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
 			return true
 		record = Creator.getObjectRecord()
-		return !record.locked
+		return !record?.locked
 
 	detail_info_visible: ()->
 		return Session.get("detail_info_visible")
@@ -327,15 +414,22 @@ Template.creator_view.helpers
 		return Creator.getObject(Session.get("object_name"))?.enable_chatter
 
 	show_chatter: ()->
-		return Creator.subs["Creator"].ready() && Creator.getObjectRecord()
+		return Template.instance().recordLoad.get() && Creator.getObjectRecord()
+
+	agreement: ()->
+		return Template.instance().agreement.get()
+
+	showEditIcon: ()->
+		return Steedos.isMobile() && this.name == 'standard_edit'
 
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
+		console.log('click action');
 		record = Creator.getObjectRecord()
-		recordId = record._id
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
+		recordId = record._id
 		collection_name = object.label
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", "Creator.Collections.#{object._collection_name}")
@@ -343,7 +437,7 @@ Template.creator_view.events
 		Session.set("action_save_and_insert", true)
 		if this.todo == "standard_delete"
 			action_record_title = record[object.NAME_FIELD_KEY]
-			Creator.executeAction objectName, this, recordId, action_record_title
+			Creator.executeAction objectName, this, recordId, action_record_title, Session.get("list_view_id")
 		else
 			Creator.executeAction objectName, this, recordId, $(event.currentTarget)
 
@@ -457,16 +551,32 @@ Template.creator_view.events
 			field = field.join(",")
 		object_name = this.object_name
 		collection_name = Creator.getObject(object_name).label
-		doc = this.doc
-
+		doc = Creator.odata.get(object_name, Session.get("record_id"))
 		if doc
 			Session.set("cmFullScreen", full_screen)
 			Session.set("action_fields", field)
 			Session.set("action_collection", "Creator.Collections.#{Creator.getObject(object_name)._collection_name}")
 			Session.set("action_collection_name", collection_name)
 			Session.set("action_save_and_insert", false)
+#			cmDoc = {}
+#			objectFields = Creator.getObject(object_name).fields
+#			_.each doc, (v, k)->
+#				if template.agreement.get() == 'subscribe'
+#					cmDoc[k] =v
+#				else
+#					if (objectFields[k]?.type == 'lookup' || objectFields[k]?.type == 'master_detail') && objectFields[k]?.reference_to
+#						if objectFields[k].multiple
+#							cmDoc[k] =  _.pluck(doc[k], "_id")
+#						else
+#							cmDoc[k] = doc[k]?._id
+#					else if( v && _.keys(v).length > 0 && !_.isArray(v) && _.isObject(v))
+#						cmDoc[k] = {}
+#						_.each _.keys(v), (_sk)->
+#							cmDoc[k][_sk] = _.pluck(doc[k][_sk], "_id")
+#					else
+#						cmDoc[k] =v
+#			Session.set 'cmDoc', cmDoc
 			Session.set 'cmDoc', doc
-
 			Meteor.defer ()->
 				$(".btn.creator-edit").click()
 
@@ -534,3 +644,10 @@ Template.creator_view.events
 					return
 			i++
 		$(event.target).val("")
+
+Template.creator_view.onDestroyed ()->
+	self = this
+	_.each(AutoForm._hooks.creatorEditForm.onSuccess, (fn, index)->
+		if fn == self.onEditSuccess
+			delete AutoForm._hooks.creatorEditForm.onSuccess[index]
+	)

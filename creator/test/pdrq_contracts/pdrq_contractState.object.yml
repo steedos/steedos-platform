@@ -1,0 +1,53 @@
+name: contractState
+label: 合同履行状态
+icon: macros
+fields:
+  recid: 
+    type: number
+    primary: true
+    generated: true
+    searchable: true
+    sortable: true
+    label: Id
+#    omit: true
+  id:
+    type: text
+    label: 编号
+    searchable: true
+    sortable: true
+  name:
+    type: text
+    label: 名称
+    searchable: true
+    sortable: true
+    is_name: true
+  addDate:
+    type: datetime
+    label: 添加日期
+  updateDate:
+    type: datetime
+    label: 修改日期
+list_views:
+  all:
+    label: 全部
+    columns:
+      - id
+      - name
+      - addDate
+      - updateDate
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

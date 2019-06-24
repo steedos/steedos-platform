@@ -1,7 +1,7 @@
 db.apps = new Meteor.Collection('apps')
 
 # db.apps._simpleSchema = new SimpleSchema
-
+###
 Creator.Objects.apps = 
 	name: "apps"
 	label: "应用"
@@ -147,7 +147,7 @@ Creator.Objects.apps =
 			todo: (userId, doc, fieldNames, modifier, options)->
 				if modifier?.$set?.icon_slds
 					Creator.getCollection("apps").direct.update({_id: doc._id}, {$set:	{icon:modifier.$set.icon_slds}}) 
-
+###
 
 
 # if Meteor.isClient

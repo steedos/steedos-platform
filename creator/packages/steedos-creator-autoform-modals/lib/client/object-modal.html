@@ -30,7 +30,7 @@
 				</header>
 
 				<div class="slds-modal__content slds-p-around_medium">
-					{{#autoForm title=this.title id=this.formId collection=this.collection doc=this.doc buttonContent=false meteormethod=this.meteormethod type=this.type template="bootstrap3-horizontal"}}
+					{{#autoForm title=this.title id=this.formId schema=schema doc=this.doc buttonContent=false meteormethod=this.meteormethod type=this.type template="bootstrap3-horizontal"}}
 						{{>CreatorObjectFields schemaFields=objectSchema fields=fields}}
 					{{/autoForm}}
 				</div>

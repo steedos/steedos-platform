@@ -14,10 +14,11 @@
 (function (root, factory) {
   'use strict';
   // https://github.com/umdjs/umd/blob/master/returnExports.js
-  if (typeof exports === 'object') {
-    // Node
-    module.exports = factory(require('./punycode'), require('./IPv6'), require('./SecondLevelDomains'));
-  } else if (typeof define === 'function' && define.amd) {
+  // if (typeof exports === 'object') {
+  //   // Node
+  //   module.exports = factory(require('./punycode'), require('./IPv6'), require('./SecondLevelDomains'));
+  // } else
+  if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['./punycode', './IPv6', './SecondLevelDomains'], factory);
   } else {

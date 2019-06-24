@@ -2,7 +2,7 @@ Meteor.startup ->
 	Tracker.autorun ->
 		spaceId = Session.get("spaceId")
 		userId = Meteor.userId()
-		if spaceId and userId
+		if spaceId and userId and Creator.bootstrapLoaded.get()
 			options =
 				$filter: "user eq '#{userId}'",
 				$select:'company_id,company_ids'

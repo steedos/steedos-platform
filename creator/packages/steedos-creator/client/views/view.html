@@ -41,7 +41,11 @@
 												{{this.label}}
 												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}" data-target-object-name="cfs-files-filerecord">
 											{{else}}
-												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+												{{#if showEditIcon}}
+													{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
+												{{else}}
+													<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+												{{/if}}
 											{{/if}}
 										</a>
 									</li>
@@ -89,16 +93,16 @@
 																</h3>
 																<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 																	{{#each this.fields}}
-																		<div class="slds-grid slds-grid slds-gutters_small">
+																		<div class="slds-grid slds-grid slds-gutters_small slds-wrap">
 																			{{#each this}}
 																				{{#if this}}
-																					<div class="slds-col slds-has-flexi-truncate slds-grid">
+																					<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid">
 																						<div class="slds-form-element slds-form-element_readonly  {{#if is_wide this}} slds-form-element_stacked {{/if}} slds-hint-parent">
 
 																								<span class="slds-form-element__label">{{label this}}</span>
 																								<div class="slds-form-element__control">
 																						<span class="test-id__field-value slds-form-element__static slds-grow">
-																							{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
+																							{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
 																						</span>
 																								</div>
 
@@ -114,16 +118,16 @@
 													{{/if}}
 												{{/each}}
 												{{#if hasUnObjectField this}}
-												<div class="slds-grid slds-gutters_small">
+												<div class="slds-grid slds-gutters_small slds-wrap">
 													{{#each this}}
 														{{#unless isObjectField this}}
-															<div class="slds-col slds-has-flexi-truncate slds-grid">
+															<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid">
 																{{#if this}}
 																<div class="slds-form-element {{#if is_wide this}} slds-form-element_stacked {{/if}} slds-form-element_readonly slds-hint-parent">
 																		<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
 																		<div class="slds-form-element__control">
 																		<span class="test-id__field-value slds-form-element__static slds-grow">
-																			{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
+																			{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
 																		</span>
 																		</div>
 																</div>
@@ -141,7 +145,7 @@
 												{{#if this.fields}}
 													<div class="slds-section group-section">
 														<h3 class="slds-section__title group-section-control">
-															<button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+															<button type="button" aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
 															{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
 															<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
 															</button>
@@ -158,7 +162,7 @@
 																					</div>
 																					<div class="slds-form-element__control itemBody">
 																						<span class="test-id__field-value slds-form-element__static slds-grow ">
-																							{{> creator_table_cell _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
+																							{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
 																						</span>
 																					</div>
 																			</div>

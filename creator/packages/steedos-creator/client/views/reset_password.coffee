@@ -41,13 +41,13 @@ Template.reset_password_modal.events
 		new_pwd = doc.new_pwd
 		confirm_pwd = doc.confirm_pwd
 
+		if !old_pwd or !new_pwd or !confirm_pwd
+			toastr.error t('旧密码或新密码为空')
+			return
+
 		result = Steedos.validatePassword new_pwd
 		if result.error
 			toastr.error result.error.reason
-			return
-
-		if !old_pwd or !new_pwd or !confirm_pwd
-			toastr.error t('旧密码或新密码为空')
 			return
 
 		else if new_pwd == confirm_pwd

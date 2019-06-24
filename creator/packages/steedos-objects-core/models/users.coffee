@@ -5,7 +5,7 @@ db.users.allow
 	update: (userId, doc, fields, modifier) ->
 		if userId == doc._id
 			return true
-
+###
 Creator.Objects.users =
 	name: "users"
 	label: "用户"
@@ -255,7 +255,7 @@ Creator.Objects.users =
 			allowRead: true
 			modifyAllRecords: false
 			viewAllRecords: true
-
+###
 
 db.users.helpers
 	spaces: ->

@@ -52,7 +52,7 @@ Creator.Objects.permission_set =
 			on: "server"
 			when: "before.insert"
 			todo: (userId, doc)->
-				console.log "before.insert.server.check,doc:", doc
+#				console.log "before.insert.server.check,doc:", doc
 				newName = doc?.name
 				if newName and Creator.getCollection("permission_set").findOne({space:doc.space, name:newName},{fields:{name:1}})
 					throw new Meteor.Error 500, "对象名称不能重复"

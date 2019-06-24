@@ -7,7 +7,7 @@ if Meteor.isClient
 		_.each actions, (todo, action_name)->
 			Creator.actionsByName[action_name] = todo 
 
-	Creator.executeAction = (object_name, action, record_id, item_element, record)->
+	Creator.executeAction = (object_name, action, record_id, item_element, list_view_id, record)->
 		obj = Creator.getObject(object_name)
 		if action?.todo
 			if typeof action.todo == "string"
@@ -20,7 +20,7 @@ if Meteor.isClient
 				# item_element为空时应该设置默认值（对象的name字段），否则moreArgs拿到的后续参数位置就不对
 				item_element = if item_element then item_element else ""
 				moreArgs = Array.prototype.slice.call(arguments, 3)
-				todoArgs = _.union [object_name, record_id], moreArgs
+				todoArgs = [object_name, record_id].concat(moreArgs)
 				todo.apply {
 					object_name: object_name
 					record_id: record_id
@@ -43,10 +43,14 @@ if Meteor.isClient
 
 		"standard_edit": (object_name, record_id, fields)->
 			if record_id
-				if Steedos.isMobile()
-					record = Creator.getObjectRecord(object_name, record_id)
-					Session.set 'cmDoc', record
-					Session.set 'reload_dxlist', false
+				if Steedos.isMobile() && false
+#					record = Creator.getObjectRecord(object_name, record_id)
+#					Session.set 'cmDoc', record
+#					Session.set 'reload_dxlist', false
+					Session.set 'action_object_name', object_name
+					Session.set 'action_record_id', record_id
+					if this.record
+						Session.set 'cmDoc', this.record
 					Meteor.defer ()->
 						$(".btn-edit-record").click()
 				else

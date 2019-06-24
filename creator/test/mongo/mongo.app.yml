@@ -1,0 +1,8 @@
+_id: mongo
+name: mongo 驱动测试
+description: mongo 驱动测试
+icon_slds: thanks
+is_creator: true
+objects:
+  - mongo.mongo_apps
+  - mongo.mongo_object_workflows

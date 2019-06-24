@@ -205,7 +205,7 @@ if Meteor.isClient
 		if !app
 			FlowRouter.go("/")
 			return
-		
+
 		# creatorSettings = Meteor.settings.public?.webservices?.creator
 		# if app._id == "admin" and creatorSettings?.status == "active"
 		# 	url = creatorSettings.url
@@ -256,12 +256,10 @@ if Meteor.isClient
 				console.error "#{e.message}\r\n#{e.stack}"
 		else
 			Steedos.openAppWithToken(app_id)
-		
-		
+
 		if !app.is_new_window && !Steedos.isMobile() && !Steedos.isCordova() && !app.is_use_ie && !on_click
 			# 需要选中当前app时，on_click函数里要单独加上Session.set("current_app_id", app_id)
 			Session.set("current_app_id", app_id)
-		
 
 	Steedos.checkSpaceBalance = (spaceId)->
 		unless spaceId
@@ -860,6 +858,15 @@ Creator.getDBApps = (space_id)->
 		dbApps[app._id] = app
 
 	return dbApps
+
+if Meteor.isServer
+	Cookies = require("cookies")
+	Steedos.getAuthToken = (req, res)->
+		cookies = new Cookies(req, res)
+		authToken = req.headers['x-auth-token'] || cookies.get("X-Auth-Token")
+		if !authToken && req.headers.authorization && req.headers.authorization.split(' ')[0] == 'Bearer'
+			authToken = req.headers.authorization.split(' ')[1]
+		return authToken
 
 if Meteor.isClient
 	Meteor.autorun ()->
