@@ -12,9 +12,11 @@ Creator.formBuilder.validateFormFields = (fields)->
 				throw new Meteor.Error('500', "#{field.name}字段名重复")
 
 			if ['table', 'section'].includes(field.type)
-				Creator.formBuilder.validateFormFields field.fields
+				_validate = Creator.formBuilder.validateFormFields field.fields
+			else
+				_validate = Creator.formBuilder.validateForFmield(field, fields)
 
-			validate = Creator.formBuilder.validateForFmield field, fields
+			validate = _validate && validate
 		catch e
 			console.error('validateFormFields', e);
 			validate = false
@@ -32,7 +34,17 @@ Creator.formBuilder.validateForFmield = (field, fields)->
 			optionsValid(field)
 		when 'table'
 			tableValid(field)
+		when 'odata'
+			odataValid(field)
 	return hasFormulaFieldValid(field, fields)
+
+odataValid = (field)->
+	if _.isEmpty(field.url)
+		throw new Meteor.Error('500', "请填写#{field.name}的Odata API")
+	if _.isEmpty(field.search_field)
+		throw new Meteor.Error('500', "请填写#{field.name}的可搜索字段")
+	if _.isEmpty(field.formula)
+		throw new Meteor.Error('500', "请填写#{field.name}的公式")
 
 ########private function#########
 optionsValid = (field)->
@@ -153,3 +165,4 @@ _fieldFormulaValid = (formula_codes, formulas_by_code, fields_has_formula, this_
 					p--
 				return _fieldFormulaValid(formula_codes, fs_by_code, fields_has_formula, this_code)
 		i--
+	return true

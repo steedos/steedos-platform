@@ -85,6 +85,9 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 				field.fields = JSON.stringify(field.fields)
 				delete field.className
 				fields.push field
+			when 'odata'
+				field.type = 'odata'
+				fields.push field
 			else
 				console.log(f.code, f.name, f.type)
 

@@ -3,7 +3,8 @@ FORMBUILDERFIELDTYPES = ["autocomplete", "paragraph", "header", "select",
 	"checkbox-group", "radio-group", "checkbox", "text", "file",
 	"date", "number", "textarea",
 	"dateTime", "dateNew", "checkboxBoolean", "email", "url", "password", "user", "group",
-	"table", "section"]
+	"table", "section",
+	"odata"]
 
 # 定义 禁用 的字段类型
 DISABLEFIELDS = ['button', 'file', 'paragraph', 'autocomplete', 'hidden', 'date', 'header']
@@ -17,7 +18,7 @@ DISABLEDATTRS = ['description', 'maxlength', 'placeholder', "access", "value", '
 
 # 定义字段类型排序
 CONTROLORDER = ['table', 'section', 'text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', 'checkboxBoolean',
-	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group"]
+	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "odata"]
 
 # 获取各字段类型禁用的字段属性
 #TYPEUSERDISABLEDATTRS = (()->
@@ -71,6 +72,14 @@ FORMULAUSERATTRS = {
 	formula: {
 		label: '公式',
 		type: 'textarea'
+	}
+}
+
+FORMULAUSERATTRS_REQUIRED = {
+	formula: {
+		label: '公式',
+		type: 'textarea',
+		required: 'true'
 	}
 }
 
@@ -159,6 +168,28 @@ getTypeUserAttrs = ()->
 						label: '字段'
 					}
 				}
+			when 'odata'
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, {
+#					related_object: {
+#						label: '相关对象'
+#						type: 'lookup'
+#					},
+					url: {
+						label: 'Odata API',
+						type: 'textarea',
+						required: 'true'
+					}
+					filters: {
+						label: '过滤条件',
+						type: 'textarea'
+					},
+					search_field: {
+						label: '可搜索字段'
+						type: 'input'
+						placeholder: '多个请用英文逗号(,)分隔',
+						required: 'true'
+					}
+				}, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display'), FORMULAUSERATTRS_REQUIRED
 			else
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS, FORMULAUSERATTRS
 	return typeUserAttrs
@@ -294,6 +325,13 @@ getFields = ()->
 				type: "section"
 			}
 			icon: "S"
+		},
+		{
+			label: "Odata"
+			attrs: {
+				type: "odata"
+			}
+			icon: "OD"
 		}
 	]
 
@@ -361,7 +399,7 @@ getFieldTemplates = ()->
 					_scope.off 'click', ".toggle-form", subFieldOnEdit
 					_scope.on 'click', ".toggle-form", {fid: fieldData.name}, subFieldOnEdit
 					Meteor.setTimeout ()->
-						liDataFields = $("#"+fieldData.name).parent().parent().parent().data('fields')
+						liDataFields = $("#" + fieldData.name).parent().parent().parent().data('fields')
 						tableFB = $("##{fieldData.name}").formBuilder(Creator.formBuilder.optionsForFormFields(true))
 						Meteor.defer ()->
 							Creator.formBuilder.stickyControls($("##{fieldData.name}"))
@@ -387,7 +425,7 @@ getFieldTemplates = ()->
 					_scope.off 'click', ".toggle-form", subFieldOnEdit
 					_scope.on 'click', ".toggle-form", {fid: fieldData.name}, subFieldOnEdit
 					Meteor.setTimeout ()->
-						liDataFields = $("#"+fieldData.name).parent().parent().parent().data('fields')
+						liDataFields = $("#" + fieldData.name).parent().parent().parent().data('fields')
 						sectionFB = $("##{fieldData.name}").formBuilder(Creator.formBuilder.optionsForFormFields(true))
 						Meteor.defer ()->
 							Creator.formBuilder.stickyControls($("##{fieldData.name}"))
@@ -403,6 +441,15 @@ getFieldTemplates = ()->
 									sectionFormBuilder.actions.setData(sectionFields)
 								, 100
 					, 100
+			};
+		odata: (fieldData)->
+			if !fieldData.className
+				fieldData.className = 'form-control'
+			return {
+				field: "<div id='#{fieldData.name}' type='text' readonly #{Creator.formBuilder.utils.attrString(fieldData)}>",
+#				onRender: (a, b, c)->
+#					console.log(a, b, c);
+#					console.log('this', this);
 			};
 	}
 
@@ -424,17 +471,49 @@ Creator.formBuilder.optionsForFormFields = (is_sub)->
 						$('#' + fieldId + ' .prev-holder .form-control').val($('#' + "default_value-" + fieldId).val())
 				, 400
 		onAddField: (fieldId, field)->
-			field.label = field.label.replace('\r','')
+			field.label = field.label.replace('\r', '')
 			formFields = Creator.formBuilder.transformFormFieldsOut(fb.actions.getData())
 			fieldsCode = Creator.formBuilder.getFieldsCode(formFields) || []
 			fieldCode = getFieldCode(fieldsCode, field.label)
 			field.label = field.code = fieldCode
 			Meteor.defer ()->
-				$("#"+fieldId).attr('contentEditable', 'true')
+				$("#" + fieldId).attr('contentEditable', 'true')
 		disabledFieldButtons: {
 			table: ['copy'],
 			section: ['copy']
 		}
+		onOpenFieldEdit: (editPanel)->
+			lookups = $("[type='lookup']", editPanel)
+			lookups.each (lookup)->
+				parent = this.parentNode
+				className = this.className
+				this.remove()
+				schema = {}
+				schema['related_object'] = {
+					label: "相关对象",
+					type: String
+					autoform: {
+						id: this.id
+						class: this.class
+						reference_to: "objects",
+						create: false,
+						type: "steedosLookups"
+					},
+					optionsFunction: ()->
+						_options = []
+						_.forEach Creator.objectsByName, (o, k)->
+							if !o.hidden
+								_options.push {label: o.label, value: k, icon: o.icon}
+						return _options
+				}
+
+				Blaze.renderWithData Template.quickForm, {
+					id: 'fbEditorForm',
+					buttonContent: false,
+					schema: new SimpleSchema(schema),
+					doc: {}
+				}, parent
+				$('[name="related_object"]', parent).addClass(className).hide()
 	};
 
 	options.typeUserAttrs = getTypeUserAttrs()

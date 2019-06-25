@@ -15,6 +15,15 @@
 		}
 	}
 
+	[type="odata"]{
+		.code-wrap, .url-wrap, .search_field-wrap, .formula-wrap{
+			label:after{
+				content: " *";
+				color: red;
+			}
+		}
+	}
+
 	.form-wrap.form-builder .frmb .prev-holder input[type=number]{
 		width: 100%;
 	}
@@ -25,6 +34,14 @@
 
 	.form-wrap.form-builder .frmb .sortable-options input[type=text]{
 		width: calc(89% - 17px) !important;
+	}
+
+	#fbEditorForm{
+		.form-group{
+			.control-label{
+				display: none !important;
+			}
+		}
 	}
 }
 
@@ -44,5 +61,11 @@
 	.form-group {
 		margin-left: 0 !important;
 		margin-bottom: 15px !important;
+	}
+}
+
+.flow-modal{
+	.modal-lg{
+		width: 992px;
 	}
 }
