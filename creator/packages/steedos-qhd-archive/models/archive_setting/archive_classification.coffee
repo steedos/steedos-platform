@@ -5,7 +5,7 @@ Creator.Objects.archive_classification =
 	enable_search: true
 	fields:
 		sort_no:
-			type:'Number'
+			type:'number'
 			label:"排序号"
 			index:true
 		name:
