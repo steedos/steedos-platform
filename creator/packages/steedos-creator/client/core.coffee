@@ -178,6 +178,9 @@ if Meteor.isClient
 		return selector
 
 	Creator.getODataRelatedFilter = (object_name, related_object_name, record_id, list_view_id)->
+		unless record_id
+			# record_id为空说明不是在记录详细界面，不存在相关列表
+			return undefined
 		spaceId = Steedos.spaceId()
 		userId = Meteor.userId()
 		related_lists = Creator.getRelatedList(object_name, record_id)

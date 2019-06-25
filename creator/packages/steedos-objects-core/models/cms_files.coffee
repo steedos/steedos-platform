@@ -74,6 +74,10 @@ Creator.Objects.cms_files =
 			label: "新建"
 			visible: false
 
+		standard_open_view:
+			label: "查看"
+			visible: true
+
 		standard_edit:
 			label: "编辑"
 			sort: 0
@@ -138,6 +142,7 @@ Creator.Objects.cms_files =
 				return perms["allowEdit"]
 			on: "record_more"
 			todo: "standard_delete"
+		
 		download:
 			label: "下载"
 			visible: (object_name, record_id, record_permissions)->

@@ -495,18 +495,28 @@ Template.creator_view.events
 		object_name = event.currentTarget.dataset.objectName
 		collection_name = Creator.getObject(object_name).label
 		collection = "Creator.Collections.#{Creator.getObject(object_name)._collection_name}"
+		current_object_name = Session.get("object_name")
 
 		relatedKey = ""
 		relatedValue = Session.get("record_id")
-		Creator.getRelatedList(Session.get("object_name"), Session.get("record_id")).forEach (related_obj) ->
+		Creator.getRelatedList(current_object_name, relatedValue).forEach (related_obj) ->
 			if object_name == related_obj.object_name
 				relatedKey = related_obj.related_field_name
-
-		if  Session.get("object_name") == "objects"
+		
+		ids = Creator.TabularSelectedIds[object_name]
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			record_id = ids[0]
+			doc = Creator.odata.get(object_name, record_id)
+			Session.set 'cmDoc', doc
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else if current_object_name == "objects"
 			recordObjectName = Creator.getObjectRecord().name
 			Session.set 'cmDoc', {"#{relatedKey}": recordObjectName}
 		else if relatedKey
-			Session.set 'cmDoc', {"#{relatedKey}": {o: Session.get("object_name"), ids: [relatedValue]}}
+			Session.set 'cmDoc', {"#{relatedKey}": {o: current_object_name, ids: [relatedValue]}}
 
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)

@@ -298,6 +298,14 @@ Creator.baseObject =
 			on: "list"
 			todo: "standard_new"
 
+		# 弹出新窗口查看详细
+		standard_open_view:
+			label: "查看"
+			visible: false
+			on: "record"
+			only_list_item: true
+			todo: "standard_open_view"
+
 		standard_edit:
 			label: "编辑"
 			sort: 0

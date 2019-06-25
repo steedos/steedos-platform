@@ -40,10 +40,22 @@ Template.related_object_list.events
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
 		action_collection_name = Creator.getObject(related_object_name).label
-		related_lists = Creator.getRelatedList(object_name, record_id)
-		related_field_name = _.findWhere(related_lists, {object_name: related_object_name}).related_field_name
-		if related_field_name
-			Session.set 'cmDoc', {"#{related_field_name}": record_id}
+		
+		ids = Creator.TabularSelectedIds[related_object_name]
+		if ids?.length
+			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
+			# 这的第一个指的是第一次勾选的选中项，而不是列表中已勾选的第一项
+			record_id = ids[0]
+			doc = Creator.odata.get(related_object_name, record_id)
+			Session.set 'cmDoc', doc
+			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
+			Session.set 'cmShowAgainDuplicated', true
+		else 
+			related_lists = Creator.getRelatedList(object_name, record_id)
+			related_field_name = _.findWhere(related_lists, {object_name: related_object_name}).related_field_name
+			if related_field_name
+				Session.set 'cmDoc', {"#{related_field_name}": record_id}
+		
 		Session.set "action_collection", "Creator.Collections.#{related_object_name}"
 		Session.set "action_collection_name", action_collection_name
 		Meteor.defer ->

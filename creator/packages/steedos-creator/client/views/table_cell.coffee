@@ -97,7 +97,17 @@ Template.creator_table_cell.helpers
 			return true
 		else
 			return false
-
+	
+	itemActionName: ()->
+		data = Template.instance().data
+		unless data
+			return null
+		object_name = data.object_name
+		isFieldName = data.field_name == Creator.getObject(object_name).NAME_FIELD_KEY
+		if object_name == "cms_files" and isFieldName
+			return "download"
+		else
+			return null
 
 	cellData: ()->
 		data = []
@@ -343,3 +353,20 @@ Template.creator_table_cell.helpers
 	isExtraField: () ->
 		fieldName = this.field?.name
 		return fieldName == "created_by" or fieldName == "modified_by"
+
+
+Template.creator_table_cell.events
+
+	'click .list-item-link-action': (event, template) ->
+		data = template.data
+		unless data
+			return false
+		objectName = data.object_name
+		recordId = data._id
+		# name字段链接点击时执行相应action，而不是默认的进入详细界面
+		actionName = event.currentTarget.dataset.actionName
+		action = Creator.getActions(objectName).find (n)->
+			return n.name == actionName
+		unless action
+			return false
+		Creator.executeAction(objectName, action, recordId)
