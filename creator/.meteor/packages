@@ -145,7 +145,6 @@ steedos:mailqueue
 
 
 # 档案系统相关
-steedos:qhd-archive
 steedos:qhd-archive-sync
 steedos:qhd-archive-xml
 
@@ -189,6 +188,7 @@ steedos:app-admin
 steedos:app-crm
 steedos:app-meeting
 steedos:app-projects
+steedos:qhd-archive
 
 steedos:oauth2-messenger
 
