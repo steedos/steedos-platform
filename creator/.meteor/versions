@@ -197,7 +197,6 @@ steedos:objects-billing@0.0.1
 steedos:objects-core@0.0.9
 steedos:odata@0.0.7
 steedos:qcloud-smsqueue@0.0.5
-steedos:qhd-archive@0.0.5
 steedos:qhd-archive-sync@0.0.1
 steedos:qhd-archive-xml@0.0.1
 steedos:smsqueue@0.0.4
