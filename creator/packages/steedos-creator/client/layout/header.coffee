@@ -4,10 +4,14 @@ Template.creatorHeader.helpers
 	logoUrl: ()->
 		logo_main_custome = Meteor?.settings?.public?.theme?.logo_main_custome
 		if logo_main_custome
-			logo_url = logo_main_custome
+			return Creator.getRelativeUrl(logo_main_custome)
 		else
-			logo_url = "/packages/steedos_creator/assets/logo.png"
-		return Creator.getRelativeUrl(logo_url)
+			avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_dark
+			if avatar
+				return Creator.getRelativeUrl("/api/files/avatars/#{avatar}")
+			else
+				logo_url = "/packages/steedos_creator/assets/logo.png"
+				return Creator.getRelativeUrl(logo_url)
 	
 	currentUserUser: ()->
 		url = "app/admin/users/view/#{Steedos.userId()}"

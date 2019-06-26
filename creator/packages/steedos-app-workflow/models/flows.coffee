@@ -445,8 +445,12 @@ Creator.Objects.flows =
 			on: "record"
 			todo: (object_name, record_id, fields)->
 				console.log("exportFlow", object_name, record_id, fields);
-				if this.record?.form?._id
-					window.open("/api/workflow/export/form?form=#{this.record.form._id}", '_blank')
+				if _.isString(this.record?.form)
+					form_id = this.record.form
+				else if this.record?.form?._id
+					form_id = this.record.form._id
+				if form_id
+					window.open("/api/workflow/export/form?form=#{form_id}", '_blank')
 				else
 					flow = Creator.getCollection(object_name).findOne(record_id)
 					if flow
