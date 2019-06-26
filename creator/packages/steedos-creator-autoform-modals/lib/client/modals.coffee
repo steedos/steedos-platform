@@ -183,7 +183,6 @@ Template.CreatorAutoformModals.rendered = ->
 			Session.set "cmShowAgainDuplicated", false
 
 
-
 Template.CreatorAutoformModals.events
 
 	'click button.btn-insert': (event,template) ->
@@ -241,7 +240,7 @@ Template.CreatorAutoformModals.events
 			insertDoc = AutoForm.getFormValues(formId).insertDoc
 			# 把当前doc内容设置到自动打开的新窗口中需要用到的doc
 			Session.set("cmShowAgainDoc", insertDoc)
-
+	
 	'click .group-section-control': (event, template) ->
 		event.preventDefault()
 		event.stopPropagation()
