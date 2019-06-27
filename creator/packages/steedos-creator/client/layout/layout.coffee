@@ -23,7 +23,14 @@ Template.creatorLayout.helpers
 		return Session.get("action_record_id")
 
 	saveAndInsert: ()->
-		return Session.get("action_save_and_insert")
+		allowSaveAndInsert = Session.get("action_save_and_insert")
+		if allowSaveAndInsert
+			collectionName = Session.get("action_collection")
+			objectName = collectionName.replace(/Creator.Collections./, "")
+			# 只有有新建权限的情况下显示“保存并新建”按钮
+			return Creator.getPermissions(objectName)?.allowCreate
+		else
+			return false
 
 	split: ()->
 		app = Creator.getApp()
