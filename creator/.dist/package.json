@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
