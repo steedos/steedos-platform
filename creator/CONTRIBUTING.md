@@ -4,8 +4,9 @@
 - [安装Meteor](https://www.meteor.com/install)
 - [安装yarn](https://yarnpkg.com/zh-Hant/)
 - 将项目克隆到本地
+- 进入项目文件夹
 - 执行 yarn ，安装依赖包。
-- 进入项目文件夹，执行 meteor
+- 执行 meteor
 - 使用浏览器访问 https://localhost:3000
 - 点击创建企业，注册企业账户
 
@@ -22,7 +23,6 @@ export MONGO_URL=mongodb://127.0.0.1/steedos
 export TOOL_NODE_FLAGS="--max-old-space-size=3800"
 yarn run build
 cd .dist
-yarn
 yarn start
 ```
 
