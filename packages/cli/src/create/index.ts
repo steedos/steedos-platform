@@ -35,8 +35,19 @@ async function createProject(retVal){
 
     if(fs.existsSync(projectDir)){
         // console.error(`${projectDir} already exists`);
-        spinner.fail(`${projectDir} already exists`);
-        return 
+        const existsAndContinue = ((await inquirer.prompt([
+            {
+                default: false,
+                message: `${projectDir} already exists. Do you want to continue?`,
+                name: "continue",
+                type: "confirm"
+            }
+        ])) as any).continue;
+
+        if(!existsAndContinue){
+            spinner.fail(`${projectDir} already exists`);
+            return 
+        }
     }
 
     const filterFunction = function(src: string, dest){
@@ -48,7 +59,7 @@ async function createProject(retVal){
 
     if(templateProjectDir){
         spinner.start(`Create project ${retVal.projectOptions.name}`);
-        fs.copy(templateProjectDir, projectDir, {overwrite: false, filter: filterFunction, errorOnExist: true}).then(() => {
+        fs.copy(templateProjectDir, projectDir, {overwrite: true, filter: filterFunction, errorOnExist: true}).then(() => {
             const projectConfig = fs.readJsonSync(path.join(projectDir, projectConfigName))
             projectConfig.name = retVal.projectOptions.name
             fs.outputJsonSync(path.join(projectDir, 'package.json'), projectConfig, {spaces: 4, EOL: '\r\n'})
