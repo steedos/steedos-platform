@@ -1,6 +1,6 @@
 {
   "name": "@steedos/cli",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -43,6 +43,7 @@
     "fs-extra": "^7.0.1",
     "inquirer": "^6.2.2",
     "js-yaml": "^3.12.2",
+    "latest-version": "^5.1.0",
     "reflect-metadata": "^0.1.13",
     "typescript": "^3.3.3333",
     "yargs": "^13.2.1",

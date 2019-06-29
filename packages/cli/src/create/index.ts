@@ -8,6 +8,8 @@ const templateProject = "@steedos/project-template-empty"
 const projectConfigName = 'package.template.json'
 const colors = require('colors/safe');
 
+import {utils} from './utils'
+
 export async function CliLogic() {
     const args = GetUtilParametersByArgs()
     const retVal = await GetUtilParametersByInquirer(args);
@@ -15,20 +17,20 @@ export async function CliLogic() {
 }
 
 async function createProject(retVal){
-    spinner.start('Check template project');
-    let templateProjectDir = ''
-    try {
-        templateProjectDir = path.dirname(require.resolve(templateProject))
-    } catch (error) {
-        spinner.fail(error);
-    }
+    let {version: version, templateProjectDir: templateProjectDir} = utils.getLocalTemplateProjectInfo()
 
-    if(!templateProjectDir){
-        spinner.fail(`not find template project ${templateProject}`);
-        return 
-    }else{
+    let lastTemplateProjectVersion = await utils.getTemplateProjectLatestVersion();
+    if(version != lastTemplateProjectVersion){
+        spinner.start(`upgrade template project version.`);
+        try {
+            await utils.upgradeTemplateProject(path.join(__dirname, '../../'), lastTemplateProjectVersion)
+        } catch (error) {
+            spinner.fail(error);
+            return ;
+        }
         spinner.succeed()
     }
+
     let projectDir = path.join(process.cwd(), retVal.projectOptions.name)
 
     if(fs.existsSync(projectDir)){
@@ -56,6 +58,8 @@ async function createProject(retVal){
                 let data = fs.readFileSync(gitignorePath, 'utf8')
                 data = data + '\r\n' + 'steedos-config.yml'
                 fs.outputFileSync(gitignorePath, data)
+            }else{
+                fs.outputFileSync(gitignorePath, 'steedos-config.yml')
             }
             spinner.succeed()
             // spinner.info(`Please execute the command: cd ${retVal.projectOptions.name} && yarn && yarn start`);
