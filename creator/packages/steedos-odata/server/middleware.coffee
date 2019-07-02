@@ -10,10 +10,9 @@ JsonRoutes.Middleware.use '/api/odata/v4/', (req, res, next)->
 			# oauth2验证
 			if req?.query?.access_token
 				console.log 'OAuth2: ', req.query.access_token
-				access_token = db.OAuth2AccessTokens.findOne({'accessToken':req.query.access_token})
-				# 有效期内使用token
-				if access_token?.expires > new Date()
-					user = Meteor.users.findOne({_id: access_token?.userId})
+				userId = Steedos.getUserIdFromAccessToken(req.query.access_token)
+				if userId
+					user = Meteor.users.findOne({_id: userId})
 					if user
 						isAuthed = true
 			# basic验证

@@ -71,6 +71,7 @@ matb33:collection-hooks@0.9.0-rc.4
 mdg:validation-error@0.2.0
 meteor@1.9.2
 meteor-base@1.4.0
+meteorhacks:async@1.0.0
 meteorhacks:meteorx@1.0.2
 meteorhacks:ssr@2.2.0
 meteorhacks:subs-manager@1.6.4
@@ -190,6 +191,7 @@ steedos:logger@0.0.4
 steedos:mailqueue@0.0.1
 steedos:markdown@0.0.1
 steedos:oauth2-messenger@0.0.1
+steedos:oauth2-server@0.0.7
 steedos:object-database@0.0.2
 steedos:object-webhooks-queue@0.0.1
 steedos:objects@0.0.15
