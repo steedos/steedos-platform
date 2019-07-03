@@ -30,6 +30,7 @@ yarn start
 **版本发布前准备**
 - 需先修改 .dist/package.json 中的版本号。
 - 因为要发布空的steedos-server，需先修改 .meteor/packages，注释app相关的package
+- 新增的meteor package 项目，如果有Npm.depends部分，需要将node package添加到package.json及.dist/package.json
 
 **发布脚本**
 ```
