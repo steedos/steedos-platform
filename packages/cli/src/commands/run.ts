@@ -15,7 +15,9 @@ class RunCommand extends Command {
     if (flags.mongoUrl)
       process.env.MONGO_URL = flags.mongoUrl
 
-    var meteor = require('@steedos/meteor-bundle-runner');
+    // 定位到项目文件夹下的 meteor-bundle-runner
+    var bundleRunnder = require.resolve('@steedos/meteor-bundle-runner', {paths: [process.cwd()]});
+    var meteor = require(bundleRunnder);
     meteor.run();
 
   }
