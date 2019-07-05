@@ -99,7 +99,6 @@ describe('utc of datetime/date for mysql database', () => {
         expected = tests[testIndex].expected;
         let method = tests[testIndex].method;
         result = await driver[method](tableName, data).catch((ex: any) => { console.error(ex); return false; });
-        console.log("======result=======", result);
     });
 
     tests.forEach(async (test) => {

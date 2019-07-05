@@ -312,13 +312,15 @@ describe('Test Permission', () => {
         let userSession1 = userSessionStorage['1'];
         let userSession2 = userSessionStorage['2'];
         let test = mySchema.getObject('test2');
-        await test.insert({_id:'test2019', name: 'test2019 name', no: 666}, userSession2)
+        let random = new Date().getTime();
+        let id = `test2019_${random}`;
+        await test.insert({_id: id, name: 'test2019 name', no: 666}, userSession2)
         
-        let userDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession1)
+        let userDoc = await test.findOne(id, {fields: ['name','no']}, userSession1)
         
-        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession2)
+        let adminDoc = await test.findOne(id, {fields: ['name','no']}, userSession2)
         
-        await test.delete('test2019', userSession2)
+        await test.delete(id, userSession2)
         
         expect(userDoc.name).to.undefined && expect(adminDoc.name).to.equal('test2019 name')
     })
@@ -327,24 +329,26 @@ describe('Test Permission', () => {
         let userSession4 = userSessionStorage['4'];
         let userSession2 = userSessionStorage['2'];
         let test = mySchema.getObject('test2');
-        await test.insert({_id:'test2019', name: 'test2019 name', no: 666})
+        let random = new Date().getTime();
+        let id = `test2019_${random}`;
+        await test.insert({_id:id, name: 'test2019 name', no: 666})
         
         let userUpdateOK = false
 
         try {
-            await test.update('test2019', {no: 111, name: 'N111'}, userSession4)
+            await test.update(id, {no: 111, name: 'N111'}, userSession4)
         } catch (error) {
             if(error.message === 'no permissions to edit fields no'){
                 userUpdateOK = true
             }
         }
         
-        // let userDoc = await test.findOne('test2019', {fields: ['name','no']}, '4')
+        // let userDoc = await test.findOne(id, {fields: ['name','no']}, '4')
         
-        await test.update('test2019', {no: 222, name: 'N222'}, userSession2)
-        let adminDoc = await test.findOne('test2019', {fields: ['name','no']}, userSession2)
+        await test.update(id, {no: 222, name: 'N222'}, userSession2)
+        let adminDoc = await test.findOne(id, {fields: ['name','no']}, userSession2)
         
-        await test.delete('test2019')
+        await test.delete(id)
         
         expect(userUpdateOK).to.equal(true) && expect(adminDoc.no).to.equal(222)
     })

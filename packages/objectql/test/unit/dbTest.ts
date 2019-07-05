@@ -15,14 +15,16 @@ describe('Test db', () => {
         })
 
         let users = mySchema.getObject('users')
-        await users.insert({_id: "test_users", name: "test", steedos_id: 'test_users@test.com'})
-        let result = await users.findOne('test_users', {fields: ['_id']})
-        await users.delete("test_users")
+        let random = new Date().getTime();
+        let id = `test_users_${random}`;
+        await users.insert({ _id: id, name: "test", steedos_id: `${id}@test.com`})
+        let result = await users.findOne(id, {fields: ['_id']})
+        await users.delete(id)
 
         // let apps = mySchema.getObject("apps")
         // console.log('apps', typeof apps.getField('objects').optionsFunction, typeof function(a,b){console.log('1111')});
 
-        expect(result._id).to.equal('test_users')
+        expect(result._id).to.equal(id)
 
     });
   });
