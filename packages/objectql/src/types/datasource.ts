@@ -299,6 +299,7 @@ export class SteedosDataSourceType implements Dictionary {
     useReportFile(filePath: string) {
         let reportJsons = util.loadReports(filePath)
         _.each(reportJsons, (json: SteedosReportTypeConfig) => {
+            json.mrt_file = path.join(filePath, `${json._id}.mrt`)
             this.addReport(json._id, json)
         })
     }
