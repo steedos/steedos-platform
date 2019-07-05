@@ -6,14 +6,14 @@ module.exports = {
 
     afterInsert: async function () {
 
-        if (!ObjectWebhooksQueue) {
-            console.error('not found ObjectWebhooksQueue');
+        if (typeof ObjectWebhooksQueue === "undefined") {
+            console.warn('not found ObjectWebhooksQueue');
             return;
         }
 
         let owCollection = this.getObject('object_webhooks');
         if (!owCollection) {
-            console.error('not found collection object_webhooks');
+            console.warn('not found collection object_webhooks');
             return;
         }
 
@@ -80,14 +80,14 @@ module.exports = {
         }
     },
     afterUpdate: async function () {
-        if (!ObjectWebhooksQueue) {
-            console.error('not found ObjectWebhooksQueue');
+        if (typeof ObjectWebhooksQueue === "undefined") {
+            console.warn('not found ObjectWebhooksQueue');
             return;
         }
 
         let owCollection = this.getObject('object_webhooks');
         if (!owCollection) {
-            console.error('not found collection object_webhooks');
+            console.warn('not found collection object_webhooks');
             return;
         }
 
@@ -155,14 +155,14 @@ module.exports = {
     },
     afterDelete: async function () {
 
-        if (!ObjectWebhooksQueue) {
-            console.error('not found ObjectWebhooksQueue');
+        if (typeof ObjectWebhooksQueue === "undefined") {
+            console.warn('not found ObjectWebhooksQueue');
             return;
         }
 
         let owCollection = this.getObject('object_webhooks');
         if (!owCollection) {
-            console.error('not found collection object_webhooks');
+            console.warn('not found collection object_webhooks');
             return;
         }
 
