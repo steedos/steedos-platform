@@ -2,6 +2,8 @@ Fiber = require('fibers')
 
 basicAuth = require('basic-auth')
 
+authorizationCache = {}
+
 JsonRoutes.Middleware.use '/api/odata/v4/', (req, res, next)->
 
 	Fiber(()->
@@ -17,14 +19,20 @@ JsonRoutes.Middleware.use '/api/odata/v4/', (req, res, next)->
 						isAuthed = true
 			# basic验证
 			if req.headers['authorization']
-				console.log 'basicAuth: ', basicAuth.parse(req.headers['authorization'])
 				auth = basicAuth.parse(req.headers['authorization'])
 				if auth
-					user = Meteor.users.findOne({username: auth.name})
+					user = Meteor.users.findOne({username: auth.name}, { fields: { 'services': 1 } })
 					if user
-						result = Accounts._checkPassword user, auth.pass
-						if !result.error
+						if authorizationCache[auth.name] == auth.pass
 							isAuthed = true
+						else
+							result = Accounts._checkPassword user, auth.pass
+							
+							if !result.error
+								isAuthed = true
+								if _.keys(authorizationCache).length > 100
+									authorizationCache = {}
+								authorizationCache[auth.name] = auth.pass
 			if isAuthed
 				req.headers['x-user-id'] = user._id
 				token = null
