@@ -27,6 +27,7 @@ import {
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
+import { GraphQLSchema } from 'graphql';
 
 var util = require('../util')
 var path = require('path')
@@ -91,6 +92,8 @@ export class SteedosDataSourceType implements Dictionary {
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
+    private _graphQLSchema: GraphQLSchema;
+    
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
@@ -437,6 +440,14 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     buildGraphQLSchema() {
+        this._graphQLSchema = buildGraphQLSchema(this._schema, this);
+        return this._graphQLSchema;
+    }
+
+    getGraphQLSchema() {
+        if (this._graphQLSchema){
+            return this._graphQLSchema;
+        }
         return buildGraphQLSchema(this._schema, this);
     }
 
