@@ -1,7 +1,7 @@
 {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
