@@ -36,27 +36,27 @@ class Footer extends React.Component {
             )}
           </a>
           <div>
-            <h5>功能</h5>
-            <a href={this.docUrl('README.html', this.props.language)}>
-              简介
+            <h5>“低代码”开发平台</h5>
+            <a href={this.docUrl('introduction', this.props.language)}>
+              快速向导
             </a>
-            <a href={this.docUrl('record_list', this.props.language)}>
-              桌面客户端
+            <a href={this.docUrl('server', this.props.language)}>
+              文档
             </a>
-            <a href={this.docUrl('app_mobile.html', this.props.language)}>
-              手机客户端
+            <a href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4" target="_blank">
+              视频演示
             </a>
           </div>
           <div>
-            <h5>快速开始</h5>
-            <a href={this.docUrl('installation', this.props.language)}>
-              安装            
+            <h5>案例</h5>
+            <a href="https://github.com/steedos/steedos-contracts-app" target="_blank">
+              合同管理            
             </a>
-            <a href={this.docUrl('object', this.props.language)}>
-              配置对象            
+            <a href="https://github.com/steedos/steedos-meeting-app" target="_blank">
+              会议管理            
             </a>
-            <a href={this.docUrl('field', this.props.language)}>
-              配置字段           
+            <a href="https://github.com/steedos/steedos-records-app" target="_blank">
+              档案管理           
             </a>
           </div>
           <div>
