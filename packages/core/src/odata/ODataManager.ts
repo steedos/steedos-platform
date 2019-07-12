@@ -390,4 +390,9 @@ export class ODataManager {
 
   }
 
+  getReadableFields(allFieldsObj, unreadableFieldsArry) {
+    let allFieldsName = _.pluck(allFieldsObj, 'name');
+    return _.difference(allFieldsName, unreadableFieldsArry);
+  }
+
 }
