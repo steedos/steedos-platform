@@ -21,8 +21,8 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'ObjectQL', // Title for your website.
-  tagline: 'Build GraphQL API for your business objects.',
+  title: '华炎“低代码”开发平台', // Title for your website.
+  tagline: '只需编写少量代码，就能创建功能强大的企业应用程序。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -38,13 +38,12 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'introduction', label: '学习'},
-    {doc: 'server', label: '服务端'},
-    {doc: 'odata_auth', label: 'API'},
-    //{blog: true, label: '动态'},
+    {doc: 'introduction', label: '教程'},
+    {doc: 'server', label: '文档'},
+    {blog: true, label: '动态'},
     {
-      href: 'https://github.com/steedos/object-server',
-      label: 'GitHub',
+      href: 'https://github.com/steedos/creator',
+      label: 'Github',
     },
   ],
 
@@ -52,14 +51,14 @@ const siteConfig = {
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/icon.png',
-  footerIcon: 'img/icon.png',
-  favicon: 'img/favicon.png',
+  headerIcon: 'img/icon_blue.png',
+  footerIcon: 'img/icon_blue.png',
+  favicon: 'img/icon_blue.png',
 
   /* Colors for website */
   colors: {
-    primaryColor: '#039be5',
-    secondaryColor: 'rgb(2, 108, 160)',
+    primaryColor: '#20232a',
+    secondaryColor: '#61dafb',
   },
 
   /* Custom fonts for website */
@@ -105,6 +104,10 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/steedos/object-server',
+  scrollToTop: true,
+  enableUpdateTime: true,
+  enableUpdateBy: true,
+  docsSideNavCollapsible: true,
 };
 
 module.exports = siteConfig;
