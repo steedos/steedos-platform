@@ -2,11 +2,50 @@
 title: 快速向导
 ---
 
-Steedos“低代码”开发平台使用yaml格式定义对象的配置文件。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
+使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建企业级应用程序。
 
-比如你可以这样定义对象 account.object.yml
+> steedos项目使用nodejs语言开发，您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行steedos项目。
+
+### 安装运行环境
+- 安装NodeJS [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
+- 安装数据库服务器 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)
+- 安装版本管理工具 [Github Desktop](https://desktop.github.com/)
+- 安装源码编辑工具 [Visual Studio Code](https://code.visualstudio.com/)
+
+### 安装 yarn 包管理工具
+yarn 是 Facebook 开发的 Nodejs 包管理工具（替代npm），可以更快速更稳定的为项目安装依赖包。
+```bash
+npm i yarn -g
+```
+
+### 安装 steedos 客户端工具
+steedos客户端工具用于创建和运行项目，还可以从现有数据库自动导入初始业务对象。
+```bash
+yarn global add steedos-cli
+```
+## 创建项目 
+```bash
+steedos create my-app
+```
+
+### 文件夹结构
+项目创建后，您的项目文件夹内容如下：
+```bash
+my-app/
+  README.md
+  node_modules/
+  package.json
+  src/
+    accounts.object.yml
+  server.js
+  steedos-config.yml
+```
+
+### 定义一个业务对象
+创建一个对象描述文件 src/accounts.object.yml 。
+
 ```yaml
-name: Account
+name: accounts
 label: 单位
 description: 统一保存客户、合作伙伴、供应商数据
 fields:
@@ -19,7 +58,7 @@ fields:
   owner:
     label: 所有人
     type: lookup
-    reference_to: User
+    reference_to: users
 list_views:
   recent:
     label: 最近查看
@@ -52,22 +91,34 @@ permission_set:
     viewAllRecords: true
 ```
 
-Steedos Object Server 是 Steedos Object 服务端运行环境。您可以把您定义的一组对象组成一个App，Steedos 自动生成符合 [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/) 界面规范的用户操作界面。
-- 根据定义的对象视图，生成数据浏览和查询界面。可设定列表字段、过滤条件、排序规则。所有的数据均按照设定的对象权限进行过滤，确保最终用户只能看到授权的数据。
-- 根据用户权限，进行增删改操作；
-- 根据定义的对象报表，展示统计分析结果；
-- 管理界面，可以设定组织结构、用户、权限、系统参数；
+### 创建一个App
+创建一个应用描述文件 src/my-app.app.yml 。
+```yaml
+_id: my-app
+name: My App
+description: 我的第一个Steedos App
+icon_slds: metrics
+is_creator: true
+objects: 
+  - accounts
+```
 
-![电脑、手机界面展示](assets/mac_ipad_iphone_home.png)
+### 运行项目
+```bash
+cd my-app
+yarn
+yarn start
+```
 
-想要开发自己的客户端或是手机App吗？Steedos Object Server立刻华丽转身成为你的API服务器。
-- 使用 [ODATA API](http://odata.org) 协议访问所有业务数据
-- 使用 [GraphQL API](http://graphql.org) 协议访问所有业务数据 (即将上线)
+> 系统默认使用本机安装的MongoDB数据库，需要先安装并启动 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)。
 
-Steedos Object Server 设计的目的是为了连接到任何数据源，包括SQL或MongoDB数据库，也可以是类似Salesforce、SAP等API接口。目前我们已发布的 Steedos Object Server 1.0 可以连接到 MongoDB 数据库。连接SQL数据库的版本也正在紧锣密鼓的开发中。
+### 使用浏览器访问
+使用浏览器访问地址 [http://127.0.0.1:5000/](http://127.0.0.1:5000/) ，即可访问用户界面。
+第一次使用时，数据库为空。点击“企业注册”，可以在本地数据库中创建一家新的企业账户。
+![界面展示](assets/mac_ipad_iphone_list.png)
 
-Steedos Object Cloud 即将上线，您设计的Apps不仅可以内部使用，还可以成为SAAS服务租用给客户使用。
-
-Steedos ObjectQL 的创意来自 [Salesforce Lightning Platform](https://www.salesforce.com/products/platform/)，很多设计标准遵循了 Salesforce 的规范。
-- [Salesforce Lightning Design System](https://www.lightningdesignsystem.com/)
-- [Salesforce Lightning Design System in React ](https://react.lightningdesignsystem.com/)
+### 案例参考
+您可以克隆并运行以下案例项目。
+- [合同管理](https://github.com/steedos/steedos-contracts-app)
+- [档案管理](https://github.com/steedos/steedos-records-app)
+- [会议管理](https://github.com/steedos/steedos-meeting-app)

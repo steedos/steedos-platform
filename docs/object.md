@@ -2,28 +2,59 @@
 title: 对象
 ---
 
-您可以创建 {object_name}.object.yml 文件，定义对象。
+## 对象描述语法
+Steedos 使用独创的对象描述语法定义业务对象。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
 
-post.object.yml
+您可以创建 *.object.yml 文件，用于定义业务对象。每个文件对应一个业务对象，通常放在 src/ 文件夹中。 Steedos 启动时会自动加载所有 .object.yml 结尾的文件。
+
+比如你可以定义如下对象 accounts.object.yml
 ```yaml
-name: Post
-label: 文章
-description: 用户发布的文章
+name: Account
+label: 单位
+description: 统一保存客户、合作伙伴、供应商数据
 fields:
   name: 
     type: String
     label: 标题 
-  description:
+  priority:
     type: String
-    label: 正文
-  isPublished:
-    type: Boolean
-    label: 已发布
+    label: 优先级
   owner:
-    label: 作者
-    type: master_detail
+    label: 所有人
+    type: lookup
     reference_to: User
+list_views:
+  recent:
+    label: 最近查看
+  all:
+    label: 所有单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_fields:
+      - priority
+  high_priority:
+    label: 重点关注
+    filters: ["priority", "=", "high"]
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
 ```
+> 使用 [Visual Studio Code](https://code.visualstudio.com/) 编辑对象文件，并按照提示安装插件[redhat.vscode-yaml](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)，Steedos 会自动校验用户编写的yml文件格式是否符合规范。
 
 ### 对象属性
 定义对象时，可以使用以下属性：
@@ -46,42 +77,6 @@ fields:
 - [字段](object_field.md): 根据用户定义的字段，Steedos自动生成数据库表用于保存业务数据
 - [列表视图](object_listview.md)，列表视图中可定义显示的列和列表过滤条件
 - [触发器](object_trigger.md)，创建对象操作触发器，在服务端执行。例如"before.insert"
-
-### 引用对象
-使用以下语法将对象加载到项目中。
-```javascript
-var steedos=require("@steedos/core")
-
-// 加载单个对象
-// 如果同时定义 .yml 和 .js 文件，会全部加载并合并属性。
-steedos.use("./xxx.object.yml");
-steedos.use("./xxx.object.js");
-steedos.use("./src/xxx.object.yml");
-steedos.use(__dirname + "/src/xxx.object.yml");
-steedos.use(["./xxx.object.yml", "./yyy.object.yml"])
-
-// 加载字段，可用于为对象新增或修改字段
-steedos.use("./xxx.field.yml");
-steedos.use("./xxx.field.js");
-
-// 加载触发器
-steedos.use("./xxx.trigger.js");
-
-// 加载报表
-steedos.use("./xxx.report.yml");
-steedos.use("./xxx.report.js");
-
-// 加载应用
-steedos.use("./xxx.app.yml");
-
-// 加载文件夹和所有子文件夹中的配置文件，依次加载对象、触发器、报表、应用
-steedos.use("./src");
-steedos.use("../src");
-steedos.use(__dirname);
-
-// 加载node_modules中的对象
-app.use("@steedos/standard-objects");
-```
 
 ### 参考
 - [Steedos 标准对象](https://github.com/steedos/object-server/tree/develop/packages/standard-objects)。
