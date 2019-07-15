@@ -30,3 +30,5 @@ export { Module } from "./module";
 export { default as ODataRouter } from './odata/ODataRouter'
 export { default as MeteorODataRouter } from './odata/MeteorODataRouter'
 export {use} from './use'
+import { loadJWTSSOAPI } from "./sso/jwt";
+loadJWTSSOAPI();
