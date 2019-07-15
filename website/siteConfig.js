@@ -49,7 +49,7 @@ const siteConfig = {
 
   // If you have users set above, you add it here:
   users,
-
+  editUrl: 'https://github.com/steedos/object-server/edit/develop/docs/',
   /* path to images for header/footer */
   headerIcon: 'img/icon_blue.png',
   footerIcon: 'img/icon_blue.png',
@@ -80,7 +80,7 @@ const siteConfig = {
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: 'default',
+    theme: 'atom-one-dark',
   },
 
   // Add custom scripts here that would be placed in <script> tags.
