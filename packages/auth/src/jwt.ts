@@ -1,11 +1,11 @@
 import { utils } from './utils';
 import { getSteedosSchema } from '@steedos/objectql'
 let express = require('express');
-let jwt = require('express-jwt')
+let jwt = require('express-jwt');
 
 let router = express.Router();
 
-let secretCallback = function (req, payload, done) {
+function secretCallback(req, payload, done) {
   let issuer = payload.iss
   let collection = getSteedosSchema().getObject('OAuth2Clients')
   collection.find({ filters: `clientId eq '${issuer}'` }).then(function (resolve) {
@@ -17,7 +17,7 @@ let secretCallback = function (req, payload, done) {
   })
 }
 
-router.get('/jwt/sso', jwt({ secret: secretCallback }), async function (req, res) {
+async function getTokenInfo(req) {
   let payload = req.user
   let data = { userId: '', authToken: '' }
   let userObj = getSteedosSchema().getObject('users')
@@ -39,9 +39,23 @@ router.get('/jwt/sso', jwt({ secret: secretCallback }), async function (req, res
 
       data = { userId: userId, authToken: authToken }
     }
-
   }
+
+  return data;
+}
+
+router.get('/jwt/getToken', jwt({ secret: secretCallback }), async function (req, res) {
+  let data = await getTokenInfo(req)
   res.send(data)
+})
+
+router.get('/jwt/sso', jwt({ secret: secretCallback }), async function (req, res) {
+  let data = await getTokenInfo(req);
+  res.cookie('X-User-Id', data.userId, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
+  res.cookie('X-Auth-Token', data.authToken, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
+  let payload = req.user;
+  let redirectUrl = payload.redirect_url;
+  res.redirect(301, redirectUrl);
 })
 
 export let jwtRouter = router
