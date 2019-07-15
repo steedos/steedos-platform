@@ -2,16 +2,23 @@
 title: 对象
 ---
 
-## 对象描述语法
-Steedos 使用独创的对象描述语法定义业务对象。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
+## 描述业务对象
+Steedos 使用yaml文件描述业务对象，每个文件对应一个业务对象。与传统的ORM标准不同，Steedos 不仅可以定义字段、校验、关系，还可以为后端定义触发器、权限，为前端定义视图、报表、过滤等内容。
 
-您可以创建 *.object.yml 文件，用于定义业务对象。每个文件对应一个业务对象，通常放在 src/ 文件夹中。 Steedos 启动时会自动加载所有 .object.yml 结尾的文件。
+业务对象描述文件以 .object.yml 结尾，通常放在 src/ 文件夹中，系统启动时会自动加载。
 
-比如你可以定义如下对象 accounts.object.yml
+比如你可以定义如下对象 src/accounts.object.yml
 ```yaml
-name: Account
+name: accounts
 label: 单位
 description: 统一保存客户、合作伙伴、供应商数据
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: false
+enable_api: true
+enable_share: true
+enable_chatter: true
 fields:
   name: 
     type: String
@@ -19,10 +26,17 @@ fields:
   priority:
     type: String
     label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
   owner:
     label: 所有人
     type: lookup
-    reference_to: User
+    reference_to: users
 list_views:
   recent:
     label: 最近查看
@@ -73,10 +87,83 @@ permission_set:
 - 自定义帮助(help_url)：如果设置了此字段的内容，最终用户在点击帮助时，跳转到此页面。否则跳转到默认帮助页面。
 - 描述(description): 此对象的描述
 
-### 对象子属性
-- [字段](object_field.md): 根据用户定义的字段，Steedos自动生成数据库表用于保存业务数据
-- [列表视图](object_listview.md)，列表视图中可定义显示的列和列表过滤条件
-- [触发器](object_trigger.md)，创建对象操作触发器，在服务端执行。例如"before.insert"
+  
+### 对象字段
+开发人员可以配置对象的[字段](object_field.md)。Creator支持常见的字段类型：
+  - 文本型；
+  - 日期型；
+  - 布尔型；
+  - 数值型；
+  - 选择型（单选、多选）；
+  - 关联到相关表（单选、多选）。
+  
+```yaml
+fields:
+  priority:
+    type: String
+    label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+```
+
+开发人员可以设定字段的显示名称、描述、可选项、是否必填、分组显示等参数。
+开发人员可以将字段关联到另一个对象，两个对象之间会自动创建关联关系，在查看主表记录时，自动显示相关的子表记录。 
+
+> [了解如何配置字段](object_field.md)
+
+### 列表视图
+开发人员可以配置对象的[列表视图](object_listview.md)，一个对象可以由一个或多个列表视图组成。业务人员在前台操作时，可以很方便的切换列表视图，也可以自定义列表视图。
+
+```yaml
+list_views:
+  all:
+    label: 所有单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_fields:
+      - priority
+```
+列表视图可以配置以下参数：
+  - 选择列表显示的字段；
+  - 设定排序规则；
+  - 设定列表过滤条件；
+  - 设定快捷过滤字段。
+
+> [了解如何配置列表视图](object_listview.md)
+
+### 访问权限
+开发人员可以配置对象的默认访问权限，系统上线后，系统管理员也可以在设置界面中设置对象权限。
+
+```yaml
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+```
+
+对象可以配置以下权限：
+  - 允许创建；
+  - 允许修改；
+  - 允许删除；
+  - 允许查看所有记录；
+  - 允许修改所有记录；
+高级权限配置：
+  - 对于集团企业，可以设定只能查看、修改本单位的数据；
+  - 对于敏感的业务数据，可以设定只能查看、修改部分字段。
+
+> [了解如何配置访问权限](object_permission.md)
 
 ### 参考
 - [Steedos 标准对象](https://github.com/steedos/object-server/tree/develop/packages/standard-objects)。

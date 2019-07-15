@@ -40,7 +40,7 @@ const siteConfig = {
   headerLinks: [
     {doc: 'overview', label: '关于'},
     {doc: 'getting_started', label: '快速向导'},
-    {blog: true, label: '动态'},
+    //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/creator',
       label: 'Github',

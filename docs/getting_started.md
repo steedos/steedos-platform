@@ -41,6 +41,12 @@ my-app/
   steedos-config.yml
 ```
 
+### 系统配置文件 
+文件 steedos-config.yml ，配置系统参数：
+- 数据库连接方式；
+- 附件存储位置；
+- 服务端口和访问地址。
+
 ### 定义一个业务对象
 创建一个对象描述文件 src/accounts.object.yml 。
 
