@@ -1,5 +1,5 @@
 ---
-title: 开始开发
+title: 安装
 ---
 
 开发和运行 Steedos Object 非常简单。您可以在 Windows、Mac 或 Linux 环境中运行以下安装指令。

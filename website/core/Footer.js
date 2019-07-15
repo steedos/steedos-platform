@@ -36,12 +36,12 @@ class Footer extends React.Component {
             )}
           </a>
           <div>
-            <h5>“低代码”开发平台</h5>
-            <a href={this.docUrl('introduction', this.props.language)}>
-              快速向导
+            <h5>Steedos</h5>
+            <a href={this.docUrl('overview', this.props.language)}>
+              什么是“低代码”开发平台
             </a>
-            <a href={this.docUrl('server', this.props.language)}>
-              文档
+            <a href={this.docUrl('getting_started', this.props.language)}>
+              快速向导
             </a>
             <a href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4" target="_blank">
               视频演示
