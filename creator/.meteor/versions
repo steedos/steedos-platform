@@ -192,7 +192,6 @@ steedos:mailqueue@0.0.1
 steedos:markdown@0.0.1
 steedos:oauth2-messenger@0.0.1
 steedos:oauth2-server@0.0.7
-steedos:object-database@0.0.2
 steedos:object-webhooks-queue@0.0.1
 steedos:objects@0.0.15
 steedos:objects-billing@0.0.1
