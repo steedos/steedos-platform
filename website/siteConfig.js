@@ -42,7 +42,7 @@ const siteConfig = {
     {doc: 'getting_started', label: '快速向导'},
     //{blog: true, label: '动态'},
     {
-      href: 'https://github.com/steedos/creator',
+      href: 'https://github.com/steedos/',
       label: 'Github',
     },
   ],
@@ -108,6 +108,12 @@ const siteConfig = {
   enableUpdateTime: true,
   enableUpdateBy: true,
   docsSideNavCollapsible: true,
+
+  algolia: {
+    apiKey: 'eaa8e1c86ac084b5cac664d9d996856c',
+    indexName: 'steedos',
+    algoliaOptions: {} // Optional, if provided by Algolia
+  },
 };
 
 module.exports = siteConfig;
