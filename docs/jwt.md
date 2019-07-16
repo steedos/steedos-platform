@@ -7,7 +7,7 @@ title: JWT
 
 ### 使用JWT单点登录到Steedos应用中
 - 以[华炎合同管理系统](https://github.com/steedos/steedos-contracts-app)为例，在本地启动合同管理系统访问地址为`http://127.0.0.1:5000`
-- 进入系统后在`设置-高级`里新建`OAuth2应用`, `客户端ID`作为生成JWT的payload.iss的值，`密钥`则作为生成JWT时的secret值
+- 进入系统后在`设置-高级`里新建`OAuth2应用`, `客户端ID`作为生成JWT的payload.iss的值，`密钥`则作为生成JWT时的secret值，这两个字段的值需要提供给其他系统保存以生成JWT
 - 生成JWT过程如下,以nodejs为例：
 ```js
 var jwt = require('jsonwebtoken');
