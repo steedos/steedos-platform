@@ -49,13 +49,37 @@ router.get('/jwt/getToken', jwt({ secret: secretCallback }), async function (req
   res.send(data)
 })
 
-router.get('/jwt/sso', jwt({ secret: secretCallback }), async function (req, res) {
-  let data = await getTokenInfo(req);
-  res.cookie('X-User-Id', data.userId, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
-  res.cookie('X-Auth-Token', data.authToken, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
-  let payload = req.user;
-  let redirectUrl = payload.redirect_url;
-  res.redirect(301, redirectUrl);
+router.get('/jwt/sso', async function (req, res) {
+  try {
+    let jwt = require('jsonwebtoken');
+    let token = req.query.jwt_token;
+    if (!token) {
+      throw new Error('jwt_token is needed!')
+    }
+    let decoded = jwt.decode(token, { complete: true });
+    let payload = decoded.payload;
+    let issuer = payload.iss;
+    if (!issuer) {
+      throw new Error('issuer is needed!')
+    }
+    let collection = getSteedosSchema().getObject('OAuth2Clients')
+    let clients = await collection.find({ filters: `clientId eq '${issuer}'` })
+    let clientInfo = clients[0]
+    let secret = clientInfo ? clientInfo.clientSecret : ''
+    if (!secret) {
+      throw new Error('secret is needed!')
+    }
+    let verifiedPayload = jwt.verify(token, secret);
+    let data = await getTokenInfo({ user: verifiedPayload })
+    res.cookie('X-User-Id', data.userId, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
+    res.cookie('X-Auth-Token', data.authToken, { maxAge: 90 * 60 * 60 * 24 * 1000, httpOnly: true });
+    let redirectUrl = verifiedPayload.redirect_url;
+    res.redirect(301, redirectUrl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.messenger)
+  }
+
 })
 
 export let jwtRouter = router

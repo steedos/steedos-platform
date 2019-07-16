@@ -1,7 +1,7 @@
 {
   "name": "@steedos/auth",
   "private": false,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
@@ -16,7 +16,8 @@
   "dependencies": {
     "@steedos/objectql": "^0.0.19",
     "express": "^4.16.4",
-    "express-jwt": "^5.3.1"
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
