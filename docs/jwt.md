@@ -18,12 +18,9 @@ var redirect_url = 'http://127.0.0.1:5000/app/admin/OAuth2Clients/grid/all'; // 
 var token = jwt.sign({ username: username, redirect_url: redirect_url, iss: iss }, secret);
 console.log('token: ', token);
 ```
-- 生成好token之后即可访问单点登录接口`GET /api-v2/jwt/sso`，并设置hearder如：
+- 生成好token之后即可访问单点登录接口`GET /api-v2/jwt/sso`，并设置query参数如：
 ```js
-fetch('http://127.0.0.1:5000/api-v2/jwt/sso', {
-  headers: {
-    'Authorization': 'Bearer ' + token // JWT传输token方式
-  }
+fetch('http://127.0.0.1:5000/api-v2/jwt/sso?jwt_token=xxxxxxxxx', {
 })
 ```
 - 请求成功则会跳转到redirect_url，完成单点登录
