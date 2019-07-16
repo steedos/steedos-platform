@@ -14,13 +14,13 @@ var jwt = require('jsonwebtoken');
 var username = 'Administrator'; // 用户名用于识别当前用户身份
 var iss = 'e37DceLdtx2Qedc6o'; // OAuth2应用的客户端ID
 var secret = '7q5G21ymbDxqBcAFzyKPro84FKDN6FclMOkz5rZ_kUg'; // OAuth2应用的密钥
-var redirect_url = 'http://127.0.0.1:3000/app/admin/OAuth2Clients/grid/all'; // 跳转地址
+var redirect_url = 'http://127.0.0.1:5000/app/admin/OAuth2Clients/grid/all'; // 跳转地址
 var token = jwt.sign({ username: username, redirect_url: redirect_url, iss: iss }, secret);
 console.log('token: ', token);
 ```
-- 生成好token之后即可访问单点登录接口`GET http://127.0.0.1:3000/api-v2/jwt/sso`，并设置hearder如：
+- 生成好token之后即可访问单点登录接口`GET /api-v2/jwt/sso`，并设置hearder如：
 ```js
-fetch('http://127.0.0.1:3000/api-v2/jwt/sso', {
+fetch('http://127.0.0.1:5000/api-v2/jwt/sso', {
   headers: {
     'Authorization': 'Bearer ' + token // JWT传输token方式
   }
