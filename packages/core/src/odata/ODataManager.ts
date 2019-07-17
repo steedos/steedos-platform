@@ -316,7 +316,7 @@ export class ODataManager {
     };
   }
 
-  async auth(request: Request, response: Response) {
+  async auth(request: Request, response: Response): Promise<any> {
     let cookies = new Cookies(request, response);
     let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
     if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
