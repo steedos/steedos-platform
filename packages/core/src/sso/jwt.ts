@@ -1,6 +1,10 @@
 declare var Package: any;
 
 export function loadJWTSSOAPI() {
+    if (!Package) {
+        console.error('undefined Package');
+        return
+    }
     let express = require('express');
     let steedosAuth = require('@steedos/auth');
     let jwtRouter = steedosAuth.jwtRouter;
