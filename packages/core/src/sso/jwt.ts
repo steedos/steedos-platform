@@ -1,8 +1,16 @@
 declare var Package: any;
 
 export function loadJWTSSOAPI() {
-    if (!Package) {
+    if (typeof Package == "undefined") {
         console.error('undefined Package');
+        return
+    }
+    if (typeof Package.webapp == "undefined") {
+        console.error('undefined Package.webapp');
+        return
+    }
+    if (typeof Package.webapp.WebApp == "undefined") {
+        console.error('undefined Package.webapp.WebApp');
         return
     }
     let express = require('express');
@@ -11,10 +19,7 @@ export function loadJWTSSOAPI() {
     let app = express();
 
     app.use('/api-v2', jwtRouter);
-    if (typeof Package.webapp.WebApp !== "undefined") {
-        Package.webapp.WebApp.connectHandlers.use(app);
-    } else {
-        console.error('undefined WebApp');
-    }
+    Package.webapp.WebApp.connectHandlers.use(app);
+
     return
 }
