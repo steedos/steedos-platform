@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@steedos/auth": "^1.0.5",
-    "@steedos/core": "^1.1.21",
+    "@steedos/auth": "^1.0.7",
+    "@steedos/core": "^1.1.23",
     "@steedos/oauth2-messenger": "1.0.0",
     "@steedos/objectql": "^0.0.19",
     "aliyun-sdk": "^1.11.12",
@@ -92,6 +92,6 @@
   "resolutions": {
     "graphql": "^14.1.1",
     "@steedos/objectql": "^0.0.19",
-    "@steedos/auth": "^1.0.5"
+    "@steedos/auth": "^1.0.7"
   }
 }
