@@ -61,6 +61,13 @@ fields:
   priority:
     type: String
     label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
   owner:
     label: 所有人
     type: lookup
