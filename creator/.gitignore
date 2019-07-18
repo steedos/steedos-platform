@@ -19,3 +19,4 @@ start.bat
 .steedos
 package-lock.json
 my_start.bat
+yarn.lock
