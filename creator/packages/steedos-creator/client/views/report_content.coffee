@@ -945,6 +945,10 @@ renderMatrixReport = (reportObject)->
 			pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
 			self.pivotGridInstance?.set pivotGrid
 
+renderJsReport = (reportObject)->
+	url = Creator.getRelativeUrl("/plugins/jsreport/web/viewer_db/#{reportObject._id}");
+	$('#jsreport').html("<iframe src=\"#{url}\"></iframe>");
+
 renderReport = (reportObject)->
 	unless reportObject
 		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
@@ -972,21 +976,33 @@ renderReport = (reportObject)->
 		return
 	if pivotGridChart
 		pivotGridChart.dispose()
+
+	innerStacking = $(".filter-list-wraper .innerStacking") #tabular/summary/matrix三种dx控件报表容器
 	switch reportObject.report_type
 		when 'tabular'
 			# 报表类型从matrix转变成tabular时，需要把原来matrix报表清除
 			gridLoadedArray = null
 			self.pivotGridInstance?.get()?.dispose()
+			innerStacking.show();
 			renderTabularReport.bind(self)(reportObject)
 		when 'summary'
 			# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
 			self.pivotGridInstance?.get()?.dispose()
+			innerStacking.show();
 			renderSummaryReport.bind(self)(reportObject)
 		when 'matrix'
 			# 报表类型从summary转变成matrix时，需要把原来summary报表清除
 			gridLoadedArray = null
 			self.dataGridInstance?.get()?.dispose()
+			innerStacking.show();
 			renderMatrixReport.bind(self)(reportObject)
+		when 'jsreport'
+			# 报表类型从dx控件报表转变成jsreport时，需要把原来报表相关内容清除
+			gridLoadedArray = null
+			self.dataGridInstance?.get()?.dispose()
+			self.pivotGridInstance?.get()?.dispose()
+			innerStacking.hide();
+			renderJsReport.bind(self)(reportObject)
 
 
 Template.creator_report_content.onRendered ->

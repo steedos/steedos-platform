@@ -233,6 +233,7 @@ Package.onUse(function (api) {
 
 	api.addFiles('client/views/report_content.html', 'client');
 	api.addFiles('client/views/report_content.coffee', 'client');
+	api.addFiles('client/views/report_content.less', 'client');
 
 	api.addFiles('client/views/report.html', 'client');
 	api.addFiles('client/views/report.coffee', 'client');
