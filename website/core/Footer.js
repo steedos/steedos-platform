@@ -36,15 +36,15 @@ class Footer extends React.Component {
             )}
           </a>
           <div>
-            <h5>Steedos</h5>
+            <h5>华炎开发平台</h5>
             <a href={this.docUrl('overview', this.props.language)}>
-              什么是“低代码”开发平台
+              关于“低代码”开发平台
             </a>
             <a href={this.docUrl('getting_started', this.props.language)}>
               快速向导
             </a>
             <a href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4" target="_blank">
-              视频演示
+              开发指南
             </a>
           </div>
           <div>
@@ -61,14 +61,14 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>更多</h5>
-            <a href={`${this.props.config.baseUrl}blog`}>动态</a>
-            <a href={`${this.props.config.repoUrl}`}>GitHub</a>
             <a
-              href="http://stackoverflow.com/questions/tagged/steedos"
+              href={`${this.props.config.baseUrl}docs/assets/support_qq.jpg`}
               target="_blank"
               rel="noreferrer noopener">
-              Stack Overflow
+              技术交流QQ群：797469729
             </a>
+            <a href={`${this.props.config.repoUrl}`}>GitHub</a>
+            <a href={`${this.props.config.baseUrl}blog`}>动态</a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}

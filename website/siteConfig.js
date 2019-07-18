@@ -21,8 +21,8 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Steedos 低代码开发平台', // Title for your website.
-  tagline: '只需编写少量代码，就能创建功能强大的企业应用程序。',
+  title: '华炎开发平台', // Title for your website.
+  tagline: '开发人员只需编写少量代码，就能创建功能强大的企业应用程序。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -40,6 +40,7 @@ const siteConfig = {
   headerLinks: [
     {doc: 'overview', label: '关于'},
     {doc: 'getting_started', label: '快速向导'},
+    {doc: 'object', label: '开发指南'},
     //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/',
@@ -57,7 +58,7 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: '#20232a',
+    primaryColor: 'rgba(0, 0, 0, 0.9)',
     secondaryColor: '#61dafb',
   },
 

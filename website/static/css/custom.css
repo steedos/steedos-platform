@@ -1,7 +1,7 @@
 /* your custom css */
 
 .homeContainer {
-  background: #282c34;
+  background-size: cover;
   color: white;
   padding: 80px 0;
 }

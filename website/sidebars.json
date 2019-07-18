@@ -1,12 +1,11 @@
 {
   "文档": {
-    "关于": ["overview"],
-    "快速向导": ["getting_started", "object", "object_field", "object_listview", "object_permission"],
-    "高级开发": ["object_filter", "object_trigger", "object_action", "object_workflow"],
-    "用户界面": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile", "app_ipad"],
+    "快速向导": ["overview", "getting_started"],
+    "开发指南": ["object", "object_field", "object_listview", "object_permission", "object_filter", "object_trigger", "object_action", "object_workflow"],
+    "用户指南": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile", "app_ipad"],
     "系统设置": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "ODATA": ["odata_auth", "odata_metadata", "odata_query", "odata_add", "odata_edit", "odata_delete", "odata_functions"],
     "GraphQL": ["graphql", "graphql_auth", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete"],
-    "单点登录": ["jwt"]
+    "单点登录": ["api_jwt"]
   }
 }
