@@ -54,112 +54,111 @@ Meteor.startup ->
 		})
 
 		#### 测试代码开始 TODO:remove ####
-#		if Meteor.isDevelopment
-#			path =require('path')
-#			testRootDir = path.resolve('../../../../../test')
-#			console.log('testRootDir', testRootDir);
-#			if Meteor.settings.datasource?.mall?.url
-#				Creator.steedosSchema.addDataSource('mall', {
-#					driver: "sqlite",
-#					url: path.join(testRootDir, Meteor.settings.datasource?.mall?.url),
-#					objectFiles: [path.join(testRootDir, 'mall')]
-#					appFiles: [path.join(testRootDir, 'mall')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('mall').init()
-#
-#			if Meteor.settings.datasource?.stock?.url
-#				Creator.steedosSchema.addDataSource('stock', {
-#					driver: "sqlserver",
-#					options: {
-#						useUTC: true
-#					},
-#					url: Meteor.settings.datasource.stock.url,
-#					objectFiles: [path.join(testRootDir, 'stock')]
-#					appFiles: [path.join(testRootDir, 'stock')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('stock').init()
-#
-#			if Meteor.settings.datasource?.pdrq?.url
-#				Creator.steedosSchema.addDataSource('pdrq', {
-#					driver: "sqlserver",
-#					options: {
-#						useUTC: true
-#					},
-#					url: Meteor.settings.datasource.pdrq.url,
-#					objectFiles: [path.join(testRootDir, 'pdrq_contracts')]
-#					appFiles: [path.join(testRootDir, 'pdrq_contracts')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('pdrq').init()
-#
-#			if Meteor.settings.datasource?.mongo?.url
-#				Creator.steedosSchema.addDataSource('mongo', {
-#					driver: "mongo"
-#					url: Meteor.settings.datasource?.mongo?.url,
-#					objectFiles: [path.join(testRootDir, 'mongo')]
-#					appFiles: [path.join(testRootDir, 'mongo')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('mongo').init()
-#
-#			if Meteor.settings.datasource?.mattermost?.url
-#				Creator.steedosSchema.addDataSource('mattermost', {
-#					driver: "postgres",
-#					url: Meteor.settings.datasource.mattermost.url,
-#					objectFiles: [path.join(testRootDir, 'mattermost')]
-#					appFiles: [path.join(testRootDir, 'mattermost')]
-#				})
-#
-#
-#				Creator.steedosSchema.getDataSource('mattermost').init()
-#
-#			if Meteor.settings.datasource?.test_postgres?.url
-#				Creator.steedosSchema.addDataSource('test_postgres', {
-#					driver: "postgres",
-#					url: Meteor.settings.datasource.test_postgres.url,
-#					objectFiles: [path.join(testRootDir, 'test_postgres')]
-#					appFiles: [path.join(testRootDir, 'test_postgres')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('test_postgres').init()
-#
-#			if Meteor.settings.datasource?.oracle_qhd?.connectString
-#				Creator.steedosSchema.addDataSource('oracle_qhd', {
-#					driver: "oracle",
-#					connectString: Meteor.settings.datasource.oracle_qhd.connectString,
-#					username: Meteor.settings.datasource.oracle_qhd.username,
-#					password: Meteor.settings.datasource.oracle_qhd.password,
-#					database: Meteor.settings.datasource.oracle_qhd.database,
-#					objectFiles: [path.join(testRootDir, 'oracle_qhd')]
-#					appFiles: [path.join(testRootDir, 'oracle_qhd')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('oracle_qhd').init()
-#
-#			if Meteor.settings.datasource?.test_mysql?.host
-#				Creator.steedosSchema.addDataSource('test_mysql', {
-#					driver: "mysql",
-#					host: Meteor.settings.datasource.test_mysql.host,
-#					username: Meteor.settings.datasource.test_mysql.username,
-#					password: Meteor.settings.datasource.test_mysql.password,
-#					database: Meteor.settings.datasource.test_mysql.database,
-#					timezone: 'Z',
-#					objectFiles: [path.join(testRootDir, 'test_mysql')]
-#					appFiles: [path.join(testRootDir, 'test_mysql')]
-#				})
-#
-#				Creator.steedosSchema.getDataSource('test_mysql').init()
+		# if Meteor.isDevelopment
+		# 	path =require('path')
+		# 	testRootDir = path.resolve('../../../../../test')
+		# 	console.log('testRootDir', testRootDir);
+		# 	if Meteor.settings.datasource?.mall?.url
+		# 		Creator.steedosSchema.addDataSource('mall', {
+		# 			driver: "sqlite",
+		# 			url: path.join(testRootDir, Meteor.settings.datasource?.mall?.url),
+		# 			objectFiles: [path.join(testRootDir, 'mall')]
+		# 			appFiles: [path.join(testRootDir, 'mall')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('mall').init()
+
+		# 	if Meteor.settings.datasource?.stock?.url
+		# 		Creator.steedosSchema.addDataSource('stock', {
+		# 			driver: "sqlserver",
+		# 			options: {
+		# 				useUTC: true
+		# 			},
+		# 			url: Meteor.settings.datasource.stock.url,
+		# 			objectFiles: [path.join(testRootDir, 'stock')]
+		# 			appFiles: [path.join(testRootDir, 'stock')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('stock').init()
+
+		# 	if Meteor.settings.datasource?.pdrq?.url
+		# 		Creator.steedosSchema.addDataSource('pdrq', {
+		# 			driver: "sqlserver",
+		# 			options: {
+		# 				useUTC: true
+		# 			},
+		# 			url: Meteor.settings.datasource.pdrq.url,
+		# 			objectFiles: [path.join(testRootDir, 'pdrq_contracts')]
+		# 			appFiles: [path.join(testRootDir, 'pdrq_contracts')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('pdrq').init()
+
+		# 	if Meteor.settings.datasource?.mongo?.url
+		# 		Creator.steedosSchema.addDataSource('mongo', {
+		# 			driver: "mongo"
+		# 			url: Meteor.settings.datasource?.mongo?.url,
+		# 			objectFiles: [path.join(testRootDir, 'mongo')]
+		# 			appFiles: [path.join(testRootDir, 'mongo')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('mongo').init()
+
+		# 	if Meteor.settings.datasource?.mattermost?.url
+		# 		Creator.steedosSchema.addDataSource('mattermost', {
+		# 			driver: "postgres",
+		# 			url: Meteor.settings.datasource.mattermost.url,
+		# 			objectFiles: [path.join(testRootDir, 'mattermost')]
+		# 			appFiles: [path.join(testRootDir, 'mattermost')]
+		# 		})
+
+
+		# 		Creator.steedosSchema.getDataSource('mattermost').init()
+
+		# 	if Meteor.settings.datasource?.test_postgres?.url
+		# 		Creator.steedosSchema.addDataSource('test_postgres', {
+		# 			driver: "postgres",
+		# 			url: Meteor.settings.datasource.test_postgres.url,
+		# 			objectFiles: [path.join(testRootDir, 'test_postgres')]
+		# 			appFiles: [path.join(testRootDir, 'test_postgres')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('test_postgres').init()
+
+		# 	if Meteor.settings.datasource?.oracle_qhd?.connectString
+		# 		Creator.steedosSchema.addDataSource('oracle_qhd', {
+		# 			driver: "oracle",
+		# 			connectString: Meteor.settings.datasource.oracle_qhd.connectString,
+		# 			username: Meteor.settings.datasource.oracle_qhd.username,
+		# 			password: Meteor.settings.datasource.oracle_qhd.password,
+		# 			database: Meteor.settings.datasource.oracle_qhd.database,
+		# 			objectFiles: [path.join(testRootDir, 'oracle_qhd')]
+		# 			appFiles: [path.join(testRootDir, 'oracle_qhd')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('oracle_qhd').init()
+
+		# 	if Meteor.settings.datasource?.test_mysql?.host
+		# 		Creator.steedosSchema.addDataSource('test_mysql', {
+		# 			driver: "mysql",
+		# 			host: Meteor.settings.datasource.test_mysql.host,
+		# 			username: Meteor.settings.datasource.test_mysql.username,
+		# 			password: Meteor.settings.datasource.test_mysql.password,
+		# 			database: Meteor.settings.datasource.test_mysql.database,
+		# 			timezone: 'Z',
+		# 			objectFiles: [path.join(testRootDir, 'test_mysql')]
+		# 			appFiles: [path.join(testRootDir, 'test_mysql')]
+		# 		})
+
+		# 		Creator.steedosSchema.getDataSource('test_mysql').init()
 
 		#### 测试代码结束 ####
 		express = require('express');
 		graphqlHTTP = require('express-graphql');
 		app = express();
 		router = express.Router();
-		router.use((req, res, next)->
-			authToken = authToken = Steedos.getAuthToken(req, res)
-
+		router.use("/:dataSourceName", (req, res, next)->
+			authToken = Steedos.getAuthToken(req, res)
 			user = null
 			if authToken
 				user = Meteor.wrapAsync((authToken, cb)->
@@ -168,17 +167,41 @@ Meteor.startup ->
 				)(authToken)
 
 			if user
-				# 因为没有spaceId,无法获取roles，暂不启用权限校验
+				# 因为其他数据源没有spaceId,无法获取roles，暂不启用权限校验
 				# req.userSession = user
 				next();
 			else
 				res.status(401).send({ errors: [{ 'message': 'You must be logged in to do this.' }] });
 		)
+		router.use("/:dataSourceName/:spaceId",(req, res, next)->
+			authToken = Steedos.getAuthToken(req, res)
+			spaceId = req.params.spaceId
+			console.log('spaceId: ', spaceId)
+			user = null
+			if authToken
+				user = Meteor.wrapAsync((authToken, spaceId, cb)->
+					steedosAuth.getSession(authToken, spaceId).then (resolve, reject)->
+						cb(reject, resolve)
+				)(authToken, spaceId)
+
+			if user
+				console.log('userSession: ', user)
+				req.userSession = user
+				next();
+			else
+				res.status(401).send({ errors: [{ 'message': 'You must be logged in to do this.' }] });
+		)
 		_.each Creator.steedosSchema.getDataSources(), (datasource, name) ->
-			router.use("/#{name}", graphqlHTTP({
-				schema: datasource.buildGraphQLSchema(),
-				graphiql: true
-			}))
+			if datasource.driver == 'mongo' || datasource.driver == 'meteor-mongo'
+				router.use("/#{name}/:spaceId", graphqlHTTP({
+					schema: datasource.buildGraphQLSchema(),
+					graphiql: true
+				}))
+			else
+				router.use("/#{name}", graphqlHTTP({
+					schema: datasource.buildGraphQLSchema(),
+					graphiql: true
+				}))
 
 		app.use('/graphql', router);
 		WebApp.connectHandlers.use(app);
