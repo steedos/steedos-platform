@@ -4,9 +4,7 @@ title: 快速向导
 
 使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建企业级应用程序。
 
-> 点击这里查看视频演示[使用低代码平台开发合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
-
-Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
+> Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
 
 ### 安装运行环境
 - 安装NodeJS [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
@@ -133,7 +131,7 @@ yarn start
 ![界面展示](assets/mac_ipad_iphone_list.png)
 
 ### 案例参考
-您可以克隆并运行以下案例项目。
+- [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
 - [合同管理](https://github.com/steedos/steedos-contracts-app)
 - [档案管理](https://github.com/steedos/steedos-records-app)
 - [会议管理](https://github.com/steedos/steedos-meeting-app)
