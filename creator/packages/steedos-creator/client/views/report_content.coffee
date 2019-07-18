@@ -340,6 +340,14 @@ renderTabularReport = (reportObject)->
 		else if itemField.type == "datetime"
 			# 如果不加这个转换语句，则datetime会显示为2019年 2月 28日这种格式，未显示时间值
 			field.dataType = "datetime"
+		
+		if ["date", "datetime"].includes(field.dataType)
+			field.format = {
+				formatter: (date)->
+					formattedDate = new Date(date.getTime())
+					formattedDate.setHours(formattedDate.getHours() - formattedDate.getTimezoneOffset() / 60 )  # 处理grid中的datetime 偏移
+					return DevExpress.localization.formatDate(formattedDate, 'yyyy-MM-dd HH:mm')
+			}
 
 		if sorts[item]
 			field.sortOrder = sorts[item]
@@ -462,6 +470,14 @@ renderSummaryReport = (reportObject)->
 		else if itemField.type == "datetime"
 			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 			field.dataType = "datetime"
+		
+		if ["date", "datetime"].includes(field.dataType)
+			field.format = {
+				formatter: (date)->
+					formattedDate = new Date(date.getTime())
+					formattedDate.setHours(formattedDate.getHours() - formattedDate.getTimezoneOffset() / 60 )  # 处理grid中的datetime 偏移
+					return DevExpress.localization.formatDate(formattedDate, 'yyyy-MM-dd HH:mm')
+			}
 
 		if sorts[item]
 			field.sortOrder = sorts[item]
@@ -494,6 +510,14 @@ renderSummaryReport = (reportObject)->
 		else if groupField.type == "datetime"
 			# 不加dataType，则显示出的格式就不对，会显示成：Fri Feb 08 2019 10:05:00 GMT+0800 (中国标准时间)
 			field.dataType = "datetime"
+		
+		if ["date", "datetime"].includes(field.dataType)
+			field.format = {
+				formatter: (date)->
+					formattedDate = new Date(date.getTime())
+					formattedDate.setHours(formattedDate.getHours() - formattedDate.getTimezoneOffset() / 60 )  # 处理grid中的datetime 偏移
+					return DevExpress.localization.formatDate(formattedDate, 'yyyy-MM-dd HH:mm')
+			}
 	
 		if sorts[group]
 			field.sortOrder = sorts[group]
@@ -983,6 +1007,25 @@ Template.creator_report_content.onRendered ->
 			filter_items = reportObject.filters || []
 			filter_scope = reportObject.filter_scope
 			filter_logic = reportObject.filter_logic
+			object_fields = Creator.getObject(reportObject.object_name)?.fields
+			if object_fields
+				filter_items.forEach (item)->
+					filter_field_type = object_fields[item.field]?.type
+					# 数据库中的报表过滤条件中，时间类型字段会被保存为像`2019-07-02T06:25:14.898Z`这样的字符串格式
+					# 保存到Session的filter_items对象中之前，需要转换为时间类型的对象
+					if ["date", "datetime"].includes(filter_field_type)
+						if typeof item.start_value == "string"
+							item.start_value = new Date(item.start_value)
+						if typeof item.end_value == "string"
+							item.end_value = new Date(item.end_value)
+						if typeof item.value == "string"
+							item.value = new Date(item.value)
+						else if _.isArray(item.value)
+							if typeof item.value[0] == "string"
+								item.value[0] = new Date(item.value[0])
+							if typeof item.value[1] == "string"
+								item.value[1] = new Date(item.value[1])
+
 			Session.set("filter_items", filter_items)
 			Session.set("filter_scope", filter_scope)
 			Session.set("filter_logic", filter_logic)
