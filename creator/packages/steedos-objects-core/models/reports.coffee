@@ -17,7 +17,16 @@ Creator.Objects.reports =
 			options: [
 				{label: "表格", value: "tabular"},
 				{label: "摘要", value: "summary"},
-				{label: "矩阵", value: "matrix"}
+				{label: "矩阵", value: "matrix"},
+				{label: "JsReport", value: "jsreport"}
+			]
+		data_source:
+			label: "报表数据来源"
+			type: "select"
+			defaultValue: "odata"
+			options: [
+				{label: "OData", value: "odata"},
+				{label: "Graphql", value: "graphql"}
 			]
 		object_name:
 			label: "对象名"
@@ -129,6 +138,22 @@ Creator.Objects.reports =
 			label: "显示记录计数"
 			type: "boolean"
 			defaultValue: true
+		graphql:
+			label: "Graphql"
+			type: "textarea"
+			is_wide: true
+		html:
+			label: "Html"
+			type: "textarea"
+			is_wide: true
+		helper:
+			label: "Helper"
+			type: "textarea"
+			is_wide: true
+		script:
+			label: "Script"
+			type: "textarea"
+			is_wide: true
 	list_views:
 		default:
 			columns: ["name", "report_type", "object_name"]

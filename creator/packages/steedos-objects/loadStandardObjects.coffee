@@ -155,6 +155,8 @@ Meteor.startup ->
 		#### 测试代码结束 ####
 		express = require('express');
 		graphqlHTTP = require('express-graphql');
+		# stimulsoftPlugin = require('@steedos/plugin-stimulsoft-report');
+		jsreportPlugin = require('@steedos/plugin-jsreport');
 		app = express();
 		router = express.Router();
 		router.use("/:dataSourceName", (req, res, next)->
@@ -204,6 +206,8 @@ Meteor.startup ->
 				}))
 
 		app.use('/graphql', router);
+		# stimulsoftPlugin.init(app);
+		jsreportPlugin.init(app);
 		WebApp.connectHandlers.use(app);
 	catch e
 		console.error(e)
