@@ -206,8 +206,8 @@ Meteor.startup ->
 				}))
 
 		app.use('/graphql', router);
-		# stimulsoftPlugin.init(app);
-		jsreportPlugin.init(app);
+		# stimulsoftPlugin.init({app:app});
+		jsreportPlugin.init({app:app});
 		WebApp.connectHandlers.use(app);
 	catch e
 		console.error(e)
