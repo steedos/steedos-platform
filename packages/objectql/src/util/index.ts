@@ -45,8 +45,7 @@ let loadObjects = (filePath: string) => {
     let results = []
     const filePatten = [
         path.join(filePath, "*.object.yml"),
-        path.join(filePath, "*.object.json"),
-        path.join(filePath, "*.object.js")
+        path.join(filePath, "*.object.json")
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
@@ -101,7 +100,7 @@ exports.loadReports = (filePath: string)=>{
 
 let loadApps = (filePath: string)=>{
     let results = []
-    if(isAppFile(filePath)){
+    if(filePath.indexOf("*") < 0 && isAppFile(filePath)){
         results.push(loadFile(filePath))
     }else{
         const filePatten = [
@@ -141,7 +140,7 @@ exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
 }
 
 exports.isObjectFile = (filePath: string)=>{
-  return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.object.yml') || filePath.endsWith('.object.js'))
+  return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.object.yml') || filePath.endsWith('.object.json'))
 }
 let isAppFile = (filePath: string)=>{
     return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.app.yml') || filePath.endsWith('.app.js'))
