@@ -54,7 +54,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
 
-const properties = ['label','icon','enable_search','is_enable','enable_files','enable_tasks','enable_notes','enable_events','enable_api','enable_share','enable_instances','enable_chatter','enable_audit','enable_trash','enable_space_global','enable_tree','is_view','hidden','description','custom','owner', 'methods']
+const properties = ['label', 'icon', 'enable_search', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_trash', 'enable_space_global', 'enable_tree', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods']
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -80,7 +80,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_audit;
     }
     public set enable_audit(value: boolean) {
-        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
+        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
             throw new Error(`not support, please set ${this._name}.enable_audit to false or remove the enable_audit attribute`)
         }
         this._enable_audit = value;
@@ -91,29 +91,29 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_instances;
     }
     public set enable_instances(value: boolean) {
-        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
+        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
             throw new Error(`not support, please set ${this._name}.enable_instances to false or remove the enable_instances attribute`)
         }
         this._enable_instances = value;
     }
-    
+
     private _enable_trash: boolean;
     public get enable_trash(): boolean {
         return this._enable_trash;
     }
     public set enable_trash(value: boolean) {
-        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
+        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
             throw new Error(`not support, please set ${this._name}.enable_trash to false or remove the enable_trash attribute`)
         }
         this._enable_trash = value;
     }
-    
+
     private _enable_share;
     public get enable_share(): boolean {
         return this._enable_share;
     }
     public set enable_share(value: boolean) {
-        if(value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)){
+        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
             throw new Error(`not support, please set ${this._name}.enable_share to false or remove the enable_share attribute`)
         }
         this._enable_share = value;
@@ -123,7 +123,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._NAME_FIELD_KEY;
     }
 
-    getMethod(method_name: string){
+    getMethod(method_name: string) {
         return this.methods[method_name]
     }
 
@@ -135,10 +135,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._idFieldNames;
     }
 
-    private checkField(){
+    private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
-            if(SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)){
+            if (SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)) {
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
             }
         })
@@ -149,7 +149,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this._name = object_name
         this._datasource = datasource
         this._schema = datasource.schema
-        if(this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo)
+        if (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo)
             this._enable_share = false
 
         if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true) {
@@ -162,8 +162,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this._tableName = this._name
         }
 
-        _.each(properties, (property)=>{
-            if(_.has(config, property)){
+        _.each(properties, (property) => {
+            if (_.has(config, property)) {
                 this[property] = config[property]
             }
         })
@@ -174,7 +174,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         this.checkField()
 
-        _.each(config.actions, (action, action_name)=>{
+        _.each(config.actions, (action, action_name) => {
             this.setAction(action_name, action)
         })
 
@@ -197,7 +197,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this.setPermission(permission)
         })
 
-        if(this._datasource.driver == SteedosDatabaseDriverType.Mongo || this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo){
+        if (this._datasource.driver == SteedosDatabaseDriverType.Mongo || this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo) {
             this._idFieldName = '_id'
         }
     }
@@ -230,7 +230,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
-        if(!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo) {
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -251,7 +251,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         let thisArg = {
             ...context,
-            object_name: object_name, 
+            object_name: object_name,
             datasource_name: this._datasource.name,
             getObject: (object_name: string) => {
                 return this._schema.getObject(object_name)
@@ -263,8 +263,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async runTriggers(when: string, context: SteedosTriggerContextConfig) {
         let triggers = this._triggersQueue[when]
-        if(!triggers){
-            return ;
+        if (!triggers) {
+            return;
         }
 
         let triggerKeys = _.keys(triggers)
@@ -281,8 +281,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             fields: {}
         }
 
-        _.each(properties, (property)=>{
-            if(this[property] != null && this[property] != undefined){
+        _.each(properties, (property) => {
+            if (this[property] != null && this[property] != undefined) {
                 config[property] = this[property]
             }
         })
@@ -294,31 +294,31 @@ export class SteedosObjectType extends SteedosObjectProperties {
             })
         }
 
-        if(this.list_views){
+        if (this.list_views) {
             config.list_views = {}
-            _.each(this.list_views, (list_view: SteedosObjectListViewType, key: string)=>{
+            _.each(this.list_views, (list_view: SteedosObjectListViewType, key: string) => {
                 config.list_views[key] = list_view.toConfig()
             })
         }
 
-        if(this.actions){
+        if (this.actions) {
             config.actions = {}
-            _.each(this.actions, (action: SteedosActionType, key: string)=>{
+            _.each(this.actions, (action: SteedosActionType, key: string) => {
                 config.actions[key] = action.toConfig()
             })
         }
 
-        if(this.triggers){
+        if (this.triggers) {
             config.triggers = {}
-            _.each(this.triggers, (trigger: SteedosTriggerType, key: string)=>{
+            _.each(this.triggers, (trigger: SteedosTriggerType, key: string) => {
                 config.triggers[key] = trigger.toConfig();
             })
         }
 
         let rolePermission = this.getObjectRolesPermission()
-        if(rolePermission){
+        if (rolePermission) {
             config.permission_set = {}
-            _.each(rolePermission, (v, k)=>{ 
+            _.each(rolePermission, (v, k) => {
                 config.permission_set[k] = v
             })
         }
@@ -330,14 +330,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let field = new SteedosFieldType(field_name, this, fieldConfig)
         this.fields[field_name] = field
 
-        if(field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo){
+        if (field.primary && this._datasource.driver != SteedosDatabaseDriverType.Mongo && this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo) {
             this._idFieldName = field.name
-            if (this._idFieldNames.indexOf(field.name) < 0){
+            if (this._idFieldNames.indexOf(field.name) < 0) {
                 this._idFieldNames.push(field.name);
             }
         }
 
-        if(field_name == 'name' || field.is_name){
+        if (field_name == 'name' || field.is_name) {
             this._NAME_FIELD_KEY = field_name
         }
     }
@@ -350,11 +350,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         this.list_views[list_view_name] = new SteedosObjectListViewType(list_view_name, this, config)
     }
 
-    setAction(action_name: string, actionConfig: SteedosActionTypeConfig){
+    setAction(action_name: string, actionConfig: SteedosActionTypeConfig) {
         this._actions[action_name] = new SteedosActionType(action_name, this, actionConfig)
     }
 
-    getAction(action_name: string){
+    getAction(action_name: string) {
         return this._actions[action_name]
     }
 
@@ -389,7 +389,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async getUserObjectPermission(userSession: SteedosUserSession) {
 
-        if(!userSession){
+        if (!userSession) {
             throw new Error('userSession is required')
         }
 
@@ -479,13 +479,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
-        await this.processUnreadableField(userSession, query);
-        return await this.callAdapter('find', this.tableName, query, userSession)
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('find', this.tableName, clonedQuery, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
-        await this.processUnreadableField(userSession, query);
-        return await this.callAdapter('findOne', this.tableName, id, query, userSession)
+        let clonedQuery = Object.assign({}, query);
+        await this.processUnreadableField(userSession, clonedQuery);
+        return await this.callAdapter('findOne', this.tableName, id, clonedQuery, userSession)
     }
 
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
@@ -502,7 +504,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
-        return await this.callAdapter('count', this.tableName, query, userSession)
+        let clonedQuery = Object.assign({}, query);
+        return await this.callAdapter('count', this.tableName, clonedQuery, userSession)
     }
 
     private async allow(method: string, userSession: SteedosUserSession) {
@@ -525,7 +528,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.runTriggers(when, context)
     }
 
-    private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig){
+    private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let when = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         return await this.runTriggers(when, context)
     }
@@ -534,7 +537,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined}
+        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined }
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
@@ -548,39 +551,39 @@ export class SteedosObjectType extends SteedosObjectProperties {
             context.doc = args[args.length - 2]
         }
 
-        if(when === 'after' && (method === 'update' || method === 'delete')){
+        if (when === 'after' && (method === 'update' || method === 'delete')) {
             context.previousDoc = await this.findOne(context.id, {}, userSession)
         }
 
         return context
     }
 
-    private async processUnreadableField(userSession: SteedosUserSession, query: SteedosQueryOptions){
-        if(!userSession){
-            return 
+    private async processUnreadableField(userSession: SteedosUserSession, query: SteedosQueryOptions) {
+        if (!userSession) {
+            return
         }
         let userObjectPermission = await this.getUserObjectPermission(userSession)
         let userObjectUnreadableFields = userObjectPermission.unreadable_fields
-        if(userObjectUnreadableFields.length > 0){
+        if (userObjectUnreadableFields.length > 0) {
             let queryFields = [];
 
-            if(!(query.fields && query.fields.length)){
+            if (!(query.fields && query.fields.length)) {
                 queryFields = _.keys(this.toConfig().fields)
             }
-            
-            if(_.isArray(query.fields)){
+
+            if (_.isArray(query.fields)) {
                 queryFields = query.fields
-            }else if(_.isString(query.fields)){
+            } else if (_.isString(query.fields)) {
                 queryFields = query.fields.split(',')
             }
 
             queryFields = _.difference(queryFields, userObjectUnreadableFields)
 
-            if(queryFields.length < 1){
+            if (queryFields.length < 1) {
                 queryFields.push()
             }
 
-            if(this.idFieldName){
+            if (this.idFieldName) {
                 queryFields.unshift(this.idFieldName)
                 queryFields = _.compact(_.uniq(queryFields))
             }
@@ -589,16 +592,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap){
-        if(!userSession){
-            return 
+    private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
+        if (!userSession) {
+            return
         }
 
         let userObjectPermission = await this.getUserObjectPermission(userSession)
         let userObjectUneditableFields = userObjectPermission.uneditable_fields
 
         let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
-        if(intersection.length > 0){
+        if (intersection.length > 0) {
             throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
         }
 
@@ -608,7 +611,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async callAdapter(method: string, ...args: any[]) {
-        
+
         const adapterMethod = this._datasource[method];
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');
@@ -617,16 +620,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (!allow) {
             throw new Error('not find permission')
         }
-        
+
+        // 判断处理工作区权限，公司级权限，owner权限
+        await this.dealWithMethodPermission(method, args);
+
         let beforeTriggerContext = await this.getTriggerContext('before', method, args)
         await this.runBeforeTriggers(method, beforeTriggerContext)
 
         let afterTriggerContext = await this.getTriggerContext('after', method, args)
 
         let userSession = args[args.length - 1]
-        args.splice(args.length-1, 1, userSession ? userSession.userId : undefined)
+        args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
         let returnValue = await adapterMethod.apply(this._datasource, args);
-        if(method === 'insert' || method === 'update'){
+        if (method === 'insert' || method === 'update') {
             afterTriggerContext.newDoc = returnValue
         }
         await this.runAfterTriggers(method, afterTriggerContext)
@@ -634,6 +640,34 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return returnValue
     };
 
+    private async dealWithMethodPermission(method: string, args: any[]) {
+        let userSession = args[args.length - 1];
+        if (userSession) {
+            let spaceId = userSession.spaceId;
+            let userId = userSession.userId;
+            let objPm = await this.getUserObjectPermission(userSession);
+            if (method === 'find' || method === 'findOne' || method === 'count') {
+                let query = args[args.length - 2];
+                if (spaceId) { // 工作区级
+                    query.filters = query.filters ? `(${query.filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
+                }
+                if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
+                    let companyFilters = _.map(userSession.companyIds, function (cid) {
+                        return `(company_id eq '${cid}')`
+                    }).join(' or ')
+                    if (companyFilters) {
+                        query.filters = query.filters ? `(${query.filters} and (${companyFilters}))` : `(${companyFilters})`;
+                    }
+                }
+
+                if (!objPm.viewAllRecords && !objPm.viewCompanyRecords && objPm.allowRead) { // owner
+                    query.filters = query.filters ? `(${query.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
+                }
+
+            }
+        }
+
+    }
 
     /***** get/set *****/
     public get schema(): SteedosSchema {
@@ -676,7 +710,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     public get primaryFields(): SteedosFieldType[] {
-        return this._idFieldNames.map((fieldName)=>{
+        return this._idFieldNames.map((fieldName) => {
             return this._fields[fieldName]
         });
     }

@@ -6,5 +6,7 @@ export type SteedosUserSession = {
     roles: string[],
     name: string,
     steedos_id?: string,
-    email?: string
+    email?: string,
+    companyId: string,
+    companyIds: string[]
 }
