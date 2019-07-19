@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.3",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/steedos/object-server.git"
