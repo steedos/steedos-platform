@@ -8,7 +8,7 @@
   "scripts": {
     "bootstrap": "npx lerna bootstrap",
     "publish": "npx lerna publish --registry https://registry.npmjs.org",
-    "tsc": "cd packages && cd objectql && tsc && tsc && cd ../auth && tsc && cd ../core ",
+    "tsc": "cd packages && cd objectql && tsc && cd ../auth && tsc && cd ../core && tsc ",
     "prepare": "lerna run prepare",
     "clear": "rd /s /q packages\\auth\\node_modules\\@steedos packages\\report\\node_modules\\@steedos packages\\objectql\\node_modules\\@steedos packages\\core\\node_modules\\@steedos packages\\react-components\\node_modules\\@steedos packages\\tools\\node_modules\\@steedos"
   },
