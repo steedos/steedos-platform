@@ -160,6 +160,16 @@ describe('advanced format filter to odata query', () => {
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("(object_name eq 'project_issues') or (object_name eq 'tasks')");
     });
+    it('filter item is a json object again', async () => {
+        let filters = [{
+            "field": "object_name",
+            "operation": "=",
+            "value": ["project_issues", "tasks"]
+        }];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("((object_name eq 'project_issues') or (object_name eq 'tasks'))");
+    });
     it(`filter item is a json object and it's value is a function`, async () => {
         let filters = [{
             "field": "object_name",

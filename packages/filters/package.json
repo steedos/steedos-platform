@@ -1,10 +1,10 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "filters lib for steedos",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache",
   "scripts": {
     "test": "mocha test/**/*.js"
   },
