@@ -26,6 +26,8 @@ interface ResultSession {
 interface SpaceSession {
   roles: string[];
   expiredAt: number;
+  companyId: string;
+  companyIds: string[];
 }
 
 function _hashLoginToken(token: string) {
@@ -146,7 +148,8 @@ export async function getSession(token: string, spaceId?: string): Promise<any> 
       let user = await getUser(token);
       if (user) {
         let roles = await getUserRoles(user._id, spaceId);
-        spaceSession = { roles: roles, expiredAt: expiredAt };
+        let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${user._id}')`, fields: ['company_id', 'company_ids'] });
+        spaceSession = { roles: roles, expiredAt: expiredAt, companyId: spaceUser[0].company_id, companyIds: spaceUser[0].company_ids };
         addSpaceSessionToCache(token, spaceId, spaceSession);
       }
     }
