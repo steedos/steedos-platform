@@ -94,6 +94,6 @@
     "graphql": "^14.1.1",
     "@steedos/objectql": "^0.1.3",
     "@steedos/auth": "^1.0.8",
-    "@steedos/filters": "^0.0.4"
+    "@steedos/filters": "^0.0.5"
   }
 }
