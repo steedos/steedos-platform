@@ -130,6 +130,14 @@ describe('advanced format filter to odata query', () => {
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z))");
     });
+    it('between array<dateString,null>', async () => {
+        let filters = [
+            ["created", "between", ['2019-05-22T09:00:00.000Z', null]]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z))");
+    });
     it('filter is a function', async () => {
         let filters = function () {
             return [
