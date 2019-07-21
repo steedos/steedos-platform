@@ -476,13 +476,20 @@ var loadProjectBundles = function(){
 }
 
 var run = function(){
+  var corePath = require.resolve('@steedos/core', {paths: [process.cwd()]});
+  var core = require(corePath);
   Fiber(function () {
-    Profile.run("Server startup", function () {
-      loadServerBundles();
-      callStartupHooks();
-      loadProjectBundles();
-      runMain();
-    });
+    try {
+      Profile.run("Server startup", function () {
+        loadServerBundles();
+        core.init();
+        callStartupHooks();
+        loadProjectBundles();
+        runMain();
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }).run();
 }
 
