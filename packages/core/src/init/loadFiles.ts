@@ -21,6 +21,11 @@ export class LoadFiles {
     //加载default数据源下的object, app文件，默认路径为src文件夹
     private static loadDefaultDatasourcesFiles() {
         let datasourcesConfig = Meteor.settings.datasources
+
+        if(!datasourcesConfig){
+            return ;
+        }
+
         let defaultPaths = ["./src/**"];
 
         //如果有多个数据源， 不默认加载src下定义的object，app文件
