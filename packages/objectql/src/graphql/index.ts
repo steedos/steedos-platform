@@ -144,18 +144,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 let object = steedosSchema.getObject(`${datasourceName}.${obj.name}`);
                 let userSession = context ? context.userSession : null;
                 console.log('context.userSession: ', userSession);
-                if (userSession && userSession.spaceId) {
-                    if (args.filters) {
-                        if (_.isString(args.filters)) {
-                            args.filters = `(${args.filters}) and (space eq \'${userSession.spaceId}\')`;
-                        } else {
-                            args.filters.push(['space', '=', userSession.spaceId])
-                        }
-                    } else {
-                        args.filters = `(space eq \'${userSession.spaceId}\')`
-                    }
-                }
-                console.log('args.filters: ', args.filters);
                 return object.find(args, userSession);
             }
         }
