@@ -37,16 +37,10 @@ Package.onUse(function(api) {
 	api.addFiles('i18n/en.i18n.json');
 	api.addFiles('i18n/zh-CN.i18n.json');
 
-	api.addFiles('models/apps.coffee');
-	api.addFiles('models/users.coffee');
-	api.addFiles('models/spaces.coffee');
-	api.addFiles('models/space_users.coffee');
-	api.addFiles('models/organizations.coffee');
+	api.addFiles('core_object_collection_init.coffee', 'client');
 	api.addFiles('models/steedos_keyvalue.coffee');
 	api.addFiles('models/audit_logs.coffee');
 	api.addFiles('models/space_settings.coffee');
-	api.addFiles('models/permission_set.coffee');
-	api.addFiles('models/permission_objects.coffee');
 	api.addFiles('models/permission_share.coffee');
 
 

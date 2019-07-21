@@ -9,6 +9,7 @@ Creator.formatObjectName = (object_name)->
 Creator.Object = (options)->
 	self = this
 	if (!options.name)
+		console.error(options)
 		throw new Error('Creator.Object options must specify name');
 
 	self._id = options._id || options.name
@@ -44,6 +45,7 @@ Creator.Object = (options)->
 	if options.database_name
 		self.database_name = options.database_name
 	if (!options.fields)
+		console.error(options)
 		throw new Error('Creator.Object options must specify name');
 
 	self.fields = _.clone(options.fields)

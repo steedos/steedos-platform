@@ -135,5 +135,6 @@
             "client_id": "4e1bmtawsf89fquf8pb1btjadr",
             "client_secret": "hjx5dwp6m38mt89g44s6fguhho"
         }
-    }
+    },
+    "plugins": ["@steedos/plugin-stimulsoft-report"] //配置使用的插件， 程序将自动调用其init函数。需要手动安装插件，eg: npm i xxx  ; yarn add xxx
 }
