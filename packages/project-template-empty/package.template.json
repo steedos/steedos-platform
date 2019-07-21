@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/meteor-bundle-runner": "^1.1.6",
-    "@steedos/objectql": "^0.0.19",
-    "steedos-server": "^1.2.10",
+    "@steedos/meteor-bundle-runner": "^1.1.7",
+    "@steedos/objectql": "^0.1.5",
+    "steedos-server": "^1.2.15",
     "underscore": "1.5.2"
   },
   "devDependencies": {},
@@ -26,8 +26,8 @@
   "homepage": "https://github.com/steedos/object-server#readme",
   "resolutions": {
     "graphql": "^14.1.1",
-    "@steedos/objectql": "^0.0.19",
-    "@steedos/core": "^1.1.20",
+    "@steedos/objectql": "^0.1.5",
+    "@steedos/core": "^1.1.27",
     "@steedos/auth": "^1.0.4"
   }
 }
