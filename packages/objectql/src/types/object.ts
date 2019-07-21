@@ -622,7 +622,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        await this.dealWithMethodPermission(method, args);
+        if(this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo || this._datasource.driver == SteedosDatabaseDriverType.Mongo){
+            await this.dealWithMethodPermission(method, args);
+        }
 
         let beforeTriggerContext = await this.getTriggerContext('before', method, args)
         await this.runBeforeTriggers(method, beforeTriggerContext)
