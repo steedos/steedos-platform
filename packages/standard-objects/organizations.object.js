@@ -788,7 +788,7 @@ if (Meteor.isServer) {
                 });
             });
         }
-        if (modifier.$set.name !== this.previous.name && (doc.is_company === true) && !doc.parent) {
+        if (modifier.$set.name && modifier.$set.name !== this.previous.name && (doc.is_company === true) && !doc.parent) {
             // 根组织名称变更时同步更新工作区名称
             db.spaces.direct.update({
                 _id: doc.space
