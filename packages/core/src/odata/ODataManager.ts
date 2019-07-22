@@ -162,7 +162,7 @@ export class ODataManager {
                     if (_.isEmpty(queryFields)) {
                       multiQuery.fields = [_ro_NAME_FIELD_KEY]
                     }
-                    let entityValuesRecord = await referenceToCollection.find(multiQuery, userSession);
+                    let entityValuesRecord = await referenceToCollection.find(multiQuery);
                     if (!entityValuesRecord.length) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
@@ -195,7 +195,7 @@ export class ODataManager {
                       queryOptions.fields = [_ro_NAME_FIELD_KEY]
                     }
 
-                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions, userSession);
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty], queryOptions);
                     if (!entities[idx][navigationProperty]) {
                       entities[idx][navigationProperty] = originalData;
                     } else {
@@ -238,7 +238,7 @@ export class ODataManager {
                     if (_.isEmpty(queryFields)) {
                       multiQuery.fields = [_ro_NAME_FIELD_KEY]
                     }
-                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery, userSession), function (o) {
+                    entities[idx][navigationProperty] = _.map(await referenceToCollection.find(multiQuery), function (o) {
                       o['reference_to.o'] = referenceToCollection._name;
                       o['reference_to._o'] = _o;
                       o['_NAME_FIELD_VALUE'] = o[_ro_NAME_FIELD_KEY];
@@ -256,7 +256,7 @@ export class ODataManager {
                     } else {
                       query.fields = queryFields
                     }
-                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query, userSession);
+                    entities[idx][navigationProperty] = await referenceToCollection.findOne(entities[idx][navigationProperty].ids[0], query);
                     if (entities[idx][navigationProperty]) {
                       entities[idx][navigationProperty]['reference_to.o'] = referenceToCollection._name;
                       entities[idx][navigationProperty]['reference_to._o'] = _o;
