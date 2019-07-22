@@ -7,6 +7,6 @@ export type SteedosUserSession = {
     name: string,
     steedos_id?: string,
     email?: string,
-    companyId: string,
-    companyIds: string[]
+    companyId?: string,
+    companyIds?: string[]
 }
