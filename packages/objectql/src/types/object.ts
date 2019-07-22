@@ -648,7 +648,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
             let objPm = await this.getUserObjectPermission(userSession);
-            if (method === 'find' || method === 'findOne' || method === 'count') {
+            if (method === 'find' || method === 'count') {
                 let query = args[args.length - 2];
                 if (spaceId) { // 工作区级
                     query.filters = query.filters ? `(${query.filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
