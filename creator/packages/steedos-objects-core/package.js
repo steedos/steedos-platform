@@ -37,25 +37,6 @@ Package.onUse(function(api) {
 	api.addFiles('i18n/en.i18n.json');
 	api.addFiles('i18n/zh-CN.i18n.json');
 
-	api.addFiles('core_object_collection_init.coffee', 'client');
-	api.addFiles('models/steedos_keyvalue.coffee');
-	api.addFiles('models/audit_logs.coffee');
-	api.addFiles('models/space_settings.coffee');
-	api.addFiles('models/permission_share.coffee');
-
-
-	api.addFiles('models/object_recent_viewed.coffee');
-	api.addFiles('models/object_listviews.coffee');
-
-	api.addFiles('models/cms_files.coffee');
-
-	api.addFiles('models/reports.coffee');
-	api.addFiles('models/queue_import.coffee');
-	api.addFiles('models/settings.coffee');
-	// api.addFiles('models/user_star.coffee');
-
-	api.addFiles('models/object_workflows.coffee');
-
 
 	api.addFiles('cfs/cfs.coffee');
 	api.addFiles('cfs/cfs_fix.coffee');

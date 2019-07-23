@@ -9,7 +9,6 @@ Package.describe({
 Package.onUse(function(api) {
 	api.use('coffeescript@1.11.1_4');
     api.use('steedos:creator@0.0.4');
-	api.use('steedos:app-admin');
     api.addFiles('meeting-app.coffee', "server");
     api.addFiles('models/meeting.coffee');
 	api.addFiles('models/meetingroom.coffee');

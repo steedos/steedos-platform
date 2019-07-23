@@ -175,9 +175,8 @@ steedos:version
 steedos:audit
 steedos:formbuilder
 steedos:app-workflow
-steedos:app-admin
 
-#steedos:objects-to-yaml
+# steedos:objects-to-yaml
 
 ## 应用 apps
 # steedos:app-informations
