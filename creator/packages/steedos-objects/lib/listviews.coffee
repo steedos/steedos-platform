@@ -63,7 +63,10 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 	if !oitem.columns
 		oitem.columns = ["name"]
 	if !oitem.filter_scope
-		oitem.filter_scope = "mine"
+		if Steedos.isSpaceAdmin()
+			oitem.filter_scope = "space"
+		else
+			oitem.filter_scope = "mine"
 
 	if !_.has(oitem, "_id")
 		oitem._id = list_view_name
