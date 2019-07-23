@@ -125,10 +125,17 @@
 }
 
 /*start=====处理客户端高度问题======*/
-.filter-list-wraper>.weui-flex{
-	height: calc(~"100% - 100px") !important;
-	&>.table-grid-content>.slds-col{
-		height: 100%;
+@media (min-width: 767px) {
+	.filter-list-wraper>.weui-flex {
+		height: calc(~"100% - 100px") !important;
+
+		&>.table-grid-content>.slds-col {
+			height: 100%;
+		}
+
+		.dx-scrollable-customizable-scrollbars {
+			height: calc(~"100% - 76px") !important;
+		}
 	}
 }
 /*end===========*/
