@@ -1,0 +1,94 @@
+name: audit_login
+label: 登录日志
+icon: record
+fields:
+  username:
+    label: 用户名
+    type: text
+    is_name: true
+    name: username
+    searchable: true
+  login_time:
+    label: 登录时间
+    type: datetime
+    name: login_time
+  source_ip:
+    label: IP地址
+    type: text
+    name: source_ip
+  location:
+    label: 位置
+    type: text
+    name: location
+  login_type:
+    label: 登录方式
+    type: text
+    name: login_type
+  status:
+    label: 状态
+    type: text
+    name: status
+  browser:
+    label: 浏览器
+    type: text
+    name: browser
+  platform:
+    label: 系统
+    type: text
+    name: platform
+  application:
+    label: 应用
+    type: text
+    name: application
+  client_version:
+    label: 客户端版本
+    type: text
+    name: client_version
+  api_type:
+    label: api类型
+    type: text
+    name: api_type
+  api_version:
+    label: api版本
+    type: text
+    name: api_version
+  login_url:
+    label: 登录URL
+    type: text
+    name: login_url
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - username
+      - login_time
+      - source_ip
+      - location
+      - login_type
+      - status
+      - browser
+      - platform
+      - application
+      - client_version
+      - api_type
+      - api_version
+      - login_url
+  recent:
+    label: 最近查看
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
