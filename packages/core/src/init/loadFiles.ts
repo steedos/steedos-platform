@@ -2,12 +2,29 @@ const objectql = require("@steedos/objectql");
 const _ = require("underscore");
 const globby = require("globby");
 const path = require("path");
-
+const fs = require("fs");
+const UglifyJS = require("uglify-js");
 export class LoadFiles {
 
     static run() {
         this.loadStandardFiles();
         this.loadDefaultDatasourcesFiles();
+        this.loadDatasourcesStaticJs();
+    }
+
+    private static loadDatasourcesStaticJs(){
+        let datasourcesConfig = Meteor.settings.datasources
+
+        if(!datasourcesConfig){
+            return ;
+        }
+        _.each(datasourcesConfig, (datasource, key)=>{
+            if(datasource.objectFiles){
+                _.each(datasource.objectFiles, (filePath)=>{
+                    this.addStaticJs(filePath);
+                })
+            }
+        })
     }
 
     private static loadStandardFiles() {
@@ -15,6 +32,7 @@ export class LoadFiles {
         if (standardObjectsDir) {
             this.loadObjectToCreator(standardObjectsDir);
             this.loadAppToCreator(standardObjectsDir);
+            this.addStaticJs(standardObjectsDir);
         }
     }
 
@@ -83,6 +101,22 @@ export class LoadFiles {
             Creator.Apps[app._id] = app
         })
 
+    }
+
+    private static getText(filePath: string, encoding: string){
+        return fs.readFileSync(filePath, encoding);
+    }
+
+    private static addStaticJs(filePath: string){
+        const filePatten = [
+            path.join(filePath, "*.client.js")
+        ]
+        let matchedPaths: [string] = globby.sync(filePatten);
+        matchedPaths = _.sortBy(matchedPaths)
+        _.each(matchedPaths, (matchedPath) => {
+            let minifyJs = UglifyJS.minify(this.getText(matchedPath, "utf8")).code
+            WebAppInternals.addStaticJs(minifyJs)
+        })
     }
 }
 
