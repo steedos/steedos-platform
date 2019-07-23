@@ -1,0 +1,62 @@
+name: OAuth2Clients
+icon: entity
+label: OAuth2应用
+enable_search: false
+fields:
+  clientName:
+    type: text
+    label: 名称
+    is_name: true
+    required: true
+    searchable: true
+  active:
+    type: boolean
+    label: 是否激活
+    defaultValue: true
+  expires:
+    type: number
+    label: 有效期（小时）
+    defaultValue: '1'
+  redirectUri:
+    type: text
+    label: 回调URL
+    is_wide: true
+    required: true
+  clientId:
+    type: text
+    label: 客户端ID
+    is_wide: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return Random.id();
+            }
+  clientSecret:
+    type: text
+    label: 密钥
+    is_wide: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return Random.secret();
+            }
+list_views:
+  all:
+    label: 全部
+    columns:
+      - clientName
+      - active
+      - redirectUri
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
