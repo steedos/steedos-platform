@@ -1,0 +1,8 @@
+_id: crm
+name: 客户管理
+description: 统一保存客户、合作伙伴、供应商数据
+icon_slds: folder
+is_creator: true
+objects: 
+  - contacts
+  - accounts
