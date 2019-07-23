@@ -11,6 +11,7 @@ Steedos 使用yaml文件描述业务对象，每个文件对应一个业务对�
 ```yaml
 name: accounts
 label: 单位
+icon: person_account
 description: 统一保存客户、合作伙伴、供应商数据
 enable_files: true
 enable_search: true
@@ -21,10 +22,10 @@ enable_share: true
 enable_chatter: true
 fields:
   name: 
-    type: String
+    type: text
     label: 标题 
   priority:
-    type: String
+    type: text
     label: 优先级
     options:
       - label: 高
@@ -51,7 +52,7 @@ list_views:
       - priority
   high_priority:
     label: 重点关注
-    filters: ["priority", "=", "high"]
+    filters: [["priority", "=", "high"]]
 permission_set:
   user:
     allowCreate: true
