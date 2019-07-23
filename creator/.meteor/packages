@@ -184,9 +184,9 @@ steedos:app-workflow
 # steedos:app-example
 # steedos:cms
 
-# steedos:app-crm
-# steedos:app-meeting
-# steedos:app-projects
+steedos:app-crm
+steedos:app-meeting
+steedos:app-projects
 # steedos:qhd-archive
 
 steedos:oauth2-messenger
