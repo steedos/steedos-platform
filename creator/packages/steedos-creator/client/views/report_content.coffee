@@ -950,7 +950,7 @@ renderJsReport = (reportObject)->
 	filter_items = Tracker.nonreactive ()->
 		return Session.get("filter_items")
 	if filter_items
-		query = encodeURI filter_items
+		query = encodeURI JSON.stringify(filter_items)
 		url += "?user_filters=#{query}"
 	$('#jsreport').html("<iframe src=\"#{url}\"></iframe>");
 
