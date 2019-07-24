@@ -581,6 +581,8 @@ Template.creator_grid.onRendered ->
 				# filter 为undefined时要设置为空，否则dxDataGrid控件会使用上次使用过的filter
 				filter = null
 			dxOptions =
+				scrolling: 
+					showScrollbar: "always"
 				paging:
 					pageSize: pageSize
 				pager:
