@@ -39,7 +39,7 @@
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="筛选器">
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFiltering}}filtering{{/if}} {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="筛选器">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 							</button>
 

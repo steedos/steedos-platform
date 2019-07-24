@@ -93,7 +93,14 @@ Template.creator_report.helpers
 			dataGridInstance: Template.instance().dataGridInstance
 			pivotGridInstance: Template.instance().pivotGridInstance
 		}
-
+	isFiltering: ()->
+		filter_items = Session.get("filter_items")
+		isFiltering = false;
+		_.every filter_items, (filter_item)->
+			if filter_item.value
+				isFiltering = true;
+			return !isFiltering;
+		return isFiltering
 Template.creator_report.events
 
 	'click .record-action-custom': (event, template) ->
