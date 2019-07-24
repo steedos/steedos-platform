@@ -99,6 +99,7 @@ Package.onUse(function (api) {
 	// api.addFiles('lib/eval.js');
 	// api.addFiles('lib/formula_engine.coffee');
 	api.addFiles('lib/object_recent.coffee', 'client');
+	api.addFiles('lib/filters_transform.coffee', 'client');
 
 
 	api.addFiles('server/methods/object_recent_viewed.coffee', 'server');

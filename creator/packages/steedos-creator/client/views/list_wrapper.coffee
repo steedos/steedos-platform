@@ -210,6 +210,16 @@ Template.creator_list_wrapper.helpers
 			return search_text
 		else
 			return ''
+	isFiltering: ()->
+		filter_items = Session.get("filter_items")
+		isFiltering = false;
+		_.every filter_items, (filter_item)->
+			if filter_item.value
+				isFiltering = true;
+			return !isFiltering;
+		return isFiltering
+
+
 transformFilters = (filters)->
 	_filters = []
 	_.each filters, (f)->

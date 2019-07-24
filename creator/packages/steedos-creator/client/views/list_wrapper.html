@@ -154,7 +154,7 @@
 								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="{{_ "creator_charts"}}" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 								</button>
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list" title="{{_ "creator_filters"}}">
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list {{#if isFiltering}}filtering{{/if}}" title="{{_ "creator_filters"}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 								</button>
 							</div>

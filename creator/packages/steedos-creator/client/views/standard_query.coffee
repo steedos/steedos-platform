@@ -4,7 +4,7 @@ Template.standard_query_modal.onCreated ->
 #	if standard_query and standard_query.object_name == Session.get("object_name")
 #		standard_query.query = {}
 #		Session.set "standard_query", standard_query
-	this.modalValue.set(Session.get("standard_query")?.query)
+	#this.modalValue.set(Session.get("standard_query")?.query)
 
 Template.standard_query_modal.onRendered ->
 	this.$("input[type='number']").val("")
@@ -145,8 +145,10 @@ Template.standard_query_modal.events
 	'click .btn-confirm': (event, template)->
 		query = AutoForm.getFormValues("standardQueryForm").insertDoc
 		object_name = Session.get("object_name")
-
-		Session.set 'standard_query', {object_name: object_name, query: query, is_mini: false}
+		Session.set("filter_items", FiltersTransform.queryToFilters({object_name: object_name, query: query, is_mini: false}))
+#		$(".btn-filter-list").toggleClass("slds-is-selected", true)
+#		$(".filter-list-container").toggleClass("slds-hide", false)
+#		Session.set 'standard_query', {object_name: object_name, query: query, is_mini: false}
 		$(".filter-list-wraper #grid-search").val("")
 		Modal.hide(template)
 
