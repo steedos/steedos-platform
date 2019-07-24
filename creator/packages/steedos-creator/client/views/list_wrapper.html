@@ -137,12 +137,12 @@
 								</div>
 							</div>
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
-								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="{{_ "creator_change_view"}}" disabled>
+								<button class="slds-button slds-button_icon slds-button_icon-more hide" aria-haspopup="true" title="{{_ "creator_change_view"}}" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="table"}}
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
 							</div>
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled" title="{{_ "creator_edit_list"}}" disabled>
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled hide" title="{{_ "creator_edit_list"}}" disabled>
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
 							</button>
 							{{#if isRefreshable}}
@@ -150,14 +150,19 @@
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 								</button>
 							{{/if}}
+							{{!--
 							<div class="slds-button-group" role="group">
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="{{_ "creator_charts"}}" disabled>
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled hide" title="{{_ "creator_charts"}}" disabled>
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 								</button>
 								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list {{#if isFiltering}}filtering{{/if}}" title="{{_ "creator_filters"}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 								</button>
 							</div>
+							--}}
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list {{#if isFiltering}}filtering{{/if}}" title="{{_ "creator_filters"}}">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
+							</button>
 						</div>
 					</div>
 					{{/unless}}
