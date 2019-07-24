@@ -541,3 +541,34 @@ margin-left: 168px; }
 margin-left: 192px; }
 .dx-treeview [aria-level="10"] > .dx-treeview-toggle-item-visibility {
 margin-left: 216px; }
+
+
+// 滚动条宽度默认值加大
+.dx-scrollbar-vertical {
+	&.dx-scrollbar-hoverable {
+		width: 12px;
+		&.dx-state-hover {
+			width: 16px;
+			.dx-scrollable-scroll {
+				width: 16px;
+			}
+		}
+	}
+	.dx-scrollable-scroll {
+		width: 12px;
+	}
+}
+.dx-scrollbar-horizontal{
+	&.dx-scrollbar-hoverable{
+		height: 12px;
+		&.dx-state-hover {
+			height: 16px;
+			.dx-scrollable-scroll {
+				height: 18px;
+			}
+		}
+	}
+	.dx-scrollable-scroll {
+		height: 14px;
+	}
+}

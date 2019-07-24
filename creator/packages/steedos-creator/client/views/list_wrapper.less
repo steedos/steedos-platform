@@ -135,9 +135,9 @@
 	}
 }
 
-/*start=====处理客户端高度问题======*/
+/*start=====处理客户端高度问题，客户端高度计算有bug，会造成grid列表底部显示不全，进而造成看不到底部水平滚动条======*/
 @media (min-width: 767px) {
-	.filter-list-wraper>.weui-flex {
+	.filter-list-wraper.creator-grid-wrap>.weui-flex {
 		height: calc(~"100% - 100px") !important;
 
 		&>.table-grid-content>.slds-col {
