@@ -54,10 +54,15 @@ Creator.Objects.object_listviews = {
         return _options;
       }
     },
+    shared: {
+        label: "共享视图到工作区",
+        type: "boolean"
+    },
     columns: {
       label: "需要显示的列",
       type: "lookup",
       multiple: true,
+      is_wide: true,
       depend_on: ["object_name"],
       optionsFunction: function (values) {
         var _object, _options, fields, icon;
@@ -83,6 +88,7 @@ Creator.Objects.object_listviews = {
       label: "默认过虑字段",
       type: "lookup",
       multiple: true,
+	  is_wide: true,
       depend_on: ["object_name"],
       optionsFunction: function (values) {
         if (!(values != null ? values.object_name : void 0)) {
@@ -90,10 +96,6 @@ Creator.Objects.object_listviews = {
         }
         return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
       }
-    },
-    shared: {
-      label: "共享视图到工作区",
-      type: "boolean"
     },
     sort: {
       label: "默认排序规则",
