@@ -100,6 +100,15 @@ comment_count:
   required: true
 ```
 
+### 金额 currency
+金额类型在界面上显示为数字输入框，并可配置显示的小数位数（默认为2）和数值最大长度（默认为18）。
+```yaml
+amount:
+  label: 总金额
+  type: currency
+  required: true
+```
+
 ### 选择 select
 选择类型的字段，用户输入时生成下拉框，需配合options属性使用。
 ```yaml
