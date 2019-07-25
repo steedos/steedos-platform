@@ -62,8 +62,8 @@
         padding: 0px;
         .panel-content{
             padding: 0px;
-            overflow: auto;
-            // overflow-x: auto;
+            //overflow: auto;
+             overflow-x: inherit;
             .table{
                 margin-bottom: 0px;
                 .title-delete {
@@ -98,9 +98,18 @@
 }
 
 .creator-table{
-    #field_mapTbody{
-        .field-type-String{
+    //#field_mapTbody{
+    //    .field-type-String{
+    //        position: relative;
+    //    }
+    //}
+
+    .steedos-lookups{
+        #listbox-unique-id{
             position: relative;
+            .slds-listbox{
+                top: 0px !important;
+            }
         }
     }
 
