@@ -1,5 +1,7 @@
 import crypto = require('crypto');
 import { getSteedosSchema, SteedosUserSession, SteedosIDType } from '@steedos/objectql';
+import { Request, Response } from "express";
+const Cookies = require("cookies");
 
 const sessions = {};
 const size = 35000;
@@ -158,4 +160,15 @@ export async function getSession(token: string, spaceId?: string): Promise<any> 
     return reviseSession(session)
   }
 
+}
+
+export async function auth(request: Request, response: Response): Promise<any> {
+  let cookies = new Cookies(request, response);
+  let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
+  if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
+    authToken = request.headers.authorization.split(' ')[1]
+  }
+  let spaceId: string = (request.params ? request.params.spaceId : null) || String(request.headers['x-space-id']);
+  let user = await getSession(authToken, spaceId);
+  return user;
 }
