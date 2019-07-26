@@ -684,7 +684,7 @@ Template.creator_grid.onRendered ->
 					filter: filter
 					expand: expand_fields
 				columns: showColumns
-				columnAutoWidth: true
+				columnAutoWidth: false
 				sorting:
 					mode: "multiple"
 				customizeExportData: (col, row)->
