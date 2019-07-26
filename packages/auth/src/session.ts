@@ -70,6 +70,9 @@ async function getUser(token: string) {
   let hashedToken = _hashLoginToken(token).replace(/\//g, '%2F');
   let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;
   let users = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'steedos_id', 'email'] });
+  if (!users || !users[0]) {
+    throw new Error('user can not found by token!');
+  }
   return users[0];
 }
 
@@ -168,7 +171,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
   if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
     authToken = request.headers.authorization.split(' ')[1]
   }
-  let spaceId: string = (request.params ? request.params.spaceId : null) || String(request.headers['x-space-id']);
+  let spaceId = (request.params ? request.params.spaceId : null) || request.headers['x-space-id'];
   let user = await getSession(authToken, spaceId);
   return user;
 }
