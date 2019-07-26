@@ -323,22 +323,18 @@ _columns = (object_name, columns, list_view_id, is_related)->
 	else
 		#默认读取default view的sort配置
 		list_view_sort = column_default_sort
-	console.log('columns', columns)
 	result = columns.map (n,i)->
 		defaultWidth = _defaultWidth(columns, object.enable_tree, i)
 		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)
-	console.log('result', JSON.stringify(result));
 	if !_.isEmpty(list_view_sort)
 		_.each list_view_sort, (sort,index)->
 			sortColumn = _.findWhere(result,{dataField:sort[0]})
 			if sortColumn
 				sortColumn.sortOrder = sort[1]
 				sortColumn.sortIndex = index
-	console.log('result 2', JSON.stringify(result));
 	return result
 
 _defaultWidth = (columns, isTree, i)->
-	console.log('_defaultWidth', columns.length, i)
 	if columns.length == i+1
 		return null;
 	column_counts = columns.length
