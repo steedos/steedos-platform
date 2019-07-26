@@ -29,3 +29,6 @@ export declare type SteedosIDType = number | string;
   email?: string; // 用户邮件
 }
 ```
+## 开放auth方法，验证用户session
+- `async function auth(request: Request, response: Response): Promise<any>`
+- 传入request response对象，返回getSession方法返回值
