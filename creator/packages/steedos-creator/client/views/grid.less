@@ -66,3 +66,62 @@
 .dx-treelist-rowsview {
     border-top: 0;
 }
+
+
+.list-table-container{
+
+    .dx-scrollable-wrapper{
+        .cell-type-number{
+
+            .field-number{
+                display: block !important;
+            }
+
+            text-align: right !important;
+            .cell-container{
+                float: right;
+            }
+            .table-cell-edit{
+                float: right;
+            }
+        }
+    }
+    .dx-datagrid-headers{
+        .cell-type-number{
+            //padding-right: 27px !important;
+            text-align: right !important;
+            .dx-datagrid-text-content{
+                float: right;
+            }
+            .dx-column-indicators{
+                float: right;
+            }
+        }
+    }
+
+    .cell-wrap{
+        .slds-truncate{
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -webkit-hyphens: none;
+            -ms-hyphens: none;
+            hyphens: none;
+            white-space: normal;
+            overflow: hidden;
+            position: relative;
+            max-height: 3.65625rem;
+        }
+
+        .slds-truncate:after {
+            content: "";
+            position: absolute;
+            top: 2.25rem;
+            bottom: 0;
+            right: 0;
+            width: 25%;
+            background: linear-gradient(to right, rgba(255,255,255,0.4) 0%,rgba(255,255,255,1) 69%);
+        }
+    }
+}
+
+

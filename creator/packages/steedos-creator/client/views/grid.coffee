@@ -150,8 +150,9 @@ _fields = (object_name, list_view_id)->
 		# 显示组织列表时，特殊处理name_field_key为name字段
 		name_field_key = "name"
 	fields = [name_field_key]
-	if Creator.getCollection("object_listviews").findOne(list_view_id)
-		fields = Creator.getCollection("object_listviews").findOne(list_view_id).columns
+	listView = Creator.getCollection("object_listviews").findOne(list_view_id)
+	if listView
+		fields = listView.columns
 		if !fields
 			defaultColumns = Creator.getObjectDefaultColumns(object_name)
 			if defaultColumns
@@ -164,7 +165,11 @@ _fields = (object_name, list_view_id)->
 			if defaultColumns
 				fields = defaultColumns
 
-	fields = fields.map (n)->
+	fields = fields.map (field)->
+		if _.isObject(field)
+			n = field.field
+		else
+			n = field
 		if object.fields[n]?.type # and !object.fields[n].hidden
 			# 对于a.b类型的字段，不应该替换字段名
 			#return n.split(".")[0]
@@ -236,10 +241,75 @@ _expandFields = (object_name, columns)->
 			# expand_fields.push n + "($select=name)"
 	return expand_fields
 
+getColumnItem = (object, list_view, column, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)->
+
+	field = object.fields[column]
+	listViewColumns = list_view.columns
+	listViewColumn = {field: column};
+
+	_.every listViewColumns, (_column)->
+		if _.isObject(_column)
+			eq =  _column?.field == column
+		else
+			eq =  _column == column
+
+		if eq
+			listViewColumn = _column
+
+		return !eq;
+
+	if _.isString(listViewColumn)
+		listViewColumn = {field: listViewColumn}
+	columnItem =
+		cssClass: "slds-cell-edit cell-type-#{field.type} cell-type-#{field.name}"
+		caption: listViewColumn?.label || field.label || TAPi18n.__(object.schema.label(listViewColumn?.field))
+		dataField: listViewColumn?.field
+		alignment: "left"
+		width: listViewColumn?.width
+		cellTemplate: (container, options) ->
+			field_name = column
+			if /\w+\.\$\.\w+/g.test(field_name)
+				# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+				field_name = column.replace(/\$\./,"")
+			# 需要考虑field_name为 a.b.c 这种格式
+			field_val = eval("options.data." + field_name)
+			cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name:object.object_name, agreement: "odata", is_related: is_related}
+			if field.type is "markdown"
+				cellOption["full_screen"] = true
+			Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+	if listViewColumn?.wrap
+		columnItem.cssClass += " cell-wrap"
+	else
+		columnItem.cssClass += " cell-nowrap"
+		# 不换行的字段如果没配置宽度，则使用默认宽度
+#		if !columnItem.width
+#			columnItem.width = defaultWidth
+
+	if column_sort_settings and column_sort_settings.length > 0
+		console.log("settings sort...")
+		_.each column_sort_settings, (sort)->
+			if sort[0] == column
+				columnItem.sortOrder = sort[1]
+	else if !_.isEmpty(list_view_sort)
+		console.log("view sort...")
+		_.each list_view_sort, (sort)->
+			if sort[0] == column
+				columnItem.sortOrder = sort[1]
+	else
+		console.log("default sort...")
+		#默认读取default view的sort配置
+		_.each column_default_sort, (sort)->
+			if sort[0] == column
+				columnItem.sortOrder = sort[1]
+
+	unless field.sortable
+		columnItem.allowSorting = false
+
+	return columnItem;
+
 _columns = (object_name, columns, list_view_id, is_related)->
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
-	defaultWidth = _defaultWidth(columns, object.enable_tree)
 	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
 	if grid_settings and grid_settings.settings
 		column_width_settings = grid_settings.settings[list_view_id]?.column_width
@@ -253,63 +323,24 @@ _columns = (object_name, columns, list_view_id, is_related)->
 	else
 		#默认读取default view的sort配置
 		list_view_sort = column_default_sort
+	console.log('columns', columns)
 	result = columns.map (n,i)->
-		field = object.fields[n]
-		columnItem =
-			cssClass: "slds-cell-edit"
-			caption: field.label || TAPi18n.__(object.schema.label(n))
-			dataField: n
-			alignment: "left"
-			cellTemplate: (container, options) ->
-				field_name = n
-				if /\w+\.\$\.\w+/g.test(field_name)
-					# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
-					field_name = n.replace(/\$\./,"")
-				# 需要考虑field_name为 a.b.c 这种格式
-				field_val = eval("options.data." + field_name)
-				cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name:object_name, agreement: "odata", is_related: is_related}
-				if field.type is "markdown"
-					cellOption["full_screen"] = true
-				Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
-
-		if field?.default_width
-			columnItem.width = field?.default_width
-
-		list_view = Creator.getListView(object_name, list_view_id)
-
-		list_view_sort = Creator.transformSortToDX(list_view?.sort)
-
-		if column_sort_settings and column_sort_settings.length > 0
-			console.log("settings sort...")
-			_.each column_sort_settings, (sort)->
-				if sort[0] == n
-					columnItem.sortOrder = sort[1]
-		else if !_.isEmpty(list_view_sort)
-			console.log("view sort...")
-			_.each list_view_sort, (sort)->
-				if sort[0] == n
-					columnItem.sortOrder = sort[1]
-		else
-			console.log("default sort...")
-			#默认读取default view的sort配置
-			_.each column_default_sort, (sort)->
-				if sort[0] == n
-					columnItem.sortOrder = sort[1]
-		
-		unless field.sortable
-			columnItem.allowSorting = false
-		return columnItem
-
+		defaultWidth = _defaultWidth(columns, object.enable_tree, i)
+		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)
+	console.log('result', JSON.stringify(result));
 	if !_.isEmpty(list_view_sort)
 		_.each list_view_sort, (sort,index)->
 			sortColumn = _.findWhere(result,{dataField:sort[0]})
 			if sortColumn
 				sortColumn.sortOrder = sort[1]
 				sortColumn.sortIndex = index
-
+	console.log('result 2', JSON.stringify(result));
 	return result
 
-_defaultWidth = (columns, isTree)->
+_defaultWidth = (columns, isTree, i)->
+	console.log('_defaultWidth', columns.length, i)
+	if columns.length == i+1
+		return null;
 	column_counts = columns.length
 	subWidth = if isTree then 46 else 46 + 60 + 60
 	content_width = $(".gridContainer").width() - subWidth
@@ -454,17 +485,17 @@ Template.creator_grid.onRendered ->
 				selectColumns = [curObject.NAME_FIELD_KEY]
 			else
 				selectColumns = Tracker.nonreactive ()->
-					grid_settings = Creator.Collections.settings.findOne({object_name: curObjectName, record_id: "object_gridviews"})
-					if grid_settings and grid_settings.settings and grid_settings.settings[list_view_id] and grid_settings.settings[list_view_id].column_width
-						settingColumns = _.keys(grid_settings.settings[list_view_id].column_width)
-					if settingColumns
-						defaultColumns = _fields(curObjectName, list_view_id)
-						selectColumns = _.intersection(settingColumns, defaultColumns)
-						selectColumns = _.union(selectColumns, defaultColumns)
-					else
-						selectColumns = _fields(curObjectName, list_view_id)
-					return selectColumns
-
+#					grid_settings = Creator.Collections.settings.findOne({object_name: curObjectName, record_id: "object_gridviews"})
+#					if grid_settings and grid_settings.settings and grid_settings.settings[list_view_id] and grid_settings.settings[list_view_id].column_width
+#						settingColumns = _.keys(grid_settings.settings[list_view_id].column_width)
+#					if settingColumns
+#						defaultColumns = _fields(curObjectName, list_view_id)
+#						selectColumns = _.intersection(settingColumns, defaultColumns)
+#						selectColumns = _.union(selectColumns, defaultColumns)
+#					else
+#						selectColumns = _fields(curObjectName, list_view_id)
+					return _fields(curObjectName, list_view_id)
+				console.log('selectColumns', selectColumns);
 			pageIndex = Tracker.nonreactive ()->
 				if Session.get("page_index")
 					if Session.get("page_index").object_name == curObjectName
@@ -562,6 +593,7 @@ Template.creator_grid.onRendered ->
 								$("<div>").append(htmlText).appendTo(container)
 			_.every showColumns, (n)->
 				n.sortingMethod = Creator.sortingMethod
+			console.log('showColumns', showColumns)
 			localPageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
 			if !is_related and localPageSize
 				pageSize = localPageSize
