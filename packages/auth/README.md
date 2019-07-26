@@ -4,7 +4,7 @@
 
 ## 开放getSession方法，获取用户session
 - 参数token是`X-AUTH-TOKEN`, spaceId是工作区id
-- `getSession(token: string, spaceId: string): Promise<SteedosUserSession>;`
+- `async function getSession(token: string, spaceId: string): Promise<SteedosUserSession>;`
 - 返回SteedosUserSession格式如下：
 ```ts
 export declare type SteedosIDType = number | string;
@@ -19,7 +19,7 @@ export declare type SteedosIDType = number | string;
     companyIds?: string[]; // 用户所属所有单位id
 }
 ```
-- 如果参数spaceid没传则 `getSession(token: string): Promise<ResultSession>;`
+- 如果参数spaceid没传则 `async function getSession(token: string): Promise<ResultSession>;`
 - 返回ResultSession格式如下：
 ```ts
 {
