@@ -311,7 +311,7 @@ Template.creator_table_cell.helpers
 							val = selectedOptions.getProperty("label")
 			else if _field.type == "filesize"
 				val = formatFileSize(val)
-			else if _field.type == "number" && val
+			else if _field.type == "number" && _.isNumber(val)
 				val = Number(val).toFixed(_field.scale)
 			else if _field.type == "markdown"
 				val = Spacebars.SafeString(marked(val))
