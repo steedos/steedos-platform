@@ -37,7 +37,13 @@ Creator.bootstrap = (spaceId, callback)->
 			Session.set "user_permission_sets", result.user_permission_sets
 
 			_.each Creator.Objects, (object, object_name)->
-				_.extend object.list_views, object_listviews[object_name]
+				_object_listviews = object_listviews[object_name]
+				_.each _object_listviews, (_object_listview)->
+					if _object_listview.related_code
+						_key = _object_listview.related_code
+					else
+						_key = _object_listview._id
+					object.list_views[_key] = _object_listview
 				Creator.loadObjects object, object_name
 
 			_.each result.apps, (app, key) ->
