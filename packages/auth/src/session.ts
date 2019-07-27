@@ -171,7 +171,9 @@ export async function auth(request: Request, response: Response): Promise<any> {
   if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
     authToken = request.headers.authorization.split(' ')[1]
   }
-  let spaceId = (request.params ? request.params.spaceId : null) || request.headers['x-space-id'];
+  let spaceId = (request.params ? request.params.spaceId : null) 
+    || (request.query ? request.query.space_id : null) 
+    || request.headers['x-space-id'];
   let user = await getSession(authToken, spaceId);
   return Object.assign({ authToken: authToken }, user);
 }
