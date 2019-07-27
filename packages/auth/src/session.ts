@@ -173,5 +173,5 @@ export async function auth(request: Request, response: Response): Promise<any> {
   }
   let spaceId = (request.params ? request.params.spaceId : null) || request.headers['x-space-id'];
   let user = await getSession(authToken, spaceId);
-  return user;
+  return Object.assign({ authToken: authToken }, user);
 }
