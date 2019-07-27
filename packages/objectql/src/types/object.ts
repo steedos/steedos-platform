@@ -5,6 +5,7 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
+import { formatFiltersToODataQuery } from "@steedos/filters";
 
 abstract class SteedosObjectProperties {
     name?: string
@@ -622,7 +623,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        if(this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo || this._datasource.driver == SteedosDatabaseDriverType.Mongo){
+        if (this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo || this._datasource.driver == SteedosDatabaseDriverType.Mongo) {
             await this.dealWithMethodPermission(method, args);
         }
 
@@ -650,6 +651,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let objPm = await this.getUserObjectPermission(userSession);
             if (method === 'find' || method === 'count') {
                 let query = args[args.length - 2];
+                if (query.filters && !_.isString(query.filters)) {
+                    query.filters = formatFiltersToODataQuery(query.filters);
+                }
                 if (spaceId) { // 工作区级
                     query.filters = query.filters ? `(${query.filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
                 }
