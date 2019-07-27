@@ -1,13 +1,12 @@
 const _ = require("underscore");
 const express = require('express');
 const app = express();
-
-const pluginContext = {
-    app
-}
-
 export class Plugins {
     static init() {
+        const pluginContext = {
+            app,
+            settings: Meteor.settings
+        };
         const plugins = Meteor.settings.plugins
         if (_.isArray(plugins)) {
             _.each(plugins, (pluginName) => {
