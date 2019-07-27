@@ -154,6 +154,9 @@ export async function getSession(token: string, spaceId?: string): Promise<any> 
       if (user) {
         let roles = await getUserRoles(user._id, spaceId);
         let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${user._id}')`, fields: ['company_id', 'company_ids'] });
+        if (!spaceUser || !spaceUser[0]) {
+          throw new Error('the spaceuser can not be found!');
+        }
         spaceSession = { roles: roles, expiredAt: expiredAt, companyId: spaceUser[0].company_id, companyIds: spaceUser[0].company_ids };
         addSpaceSessionToCache(token, spaceId, spaceSession);
       }
