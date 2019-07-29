@@ -40,7 +40,7 @@ const siteConfig = {
   headerLinks: [
     {doc: 'overview', label: '关于'},
     {doc: 'getting_started', label: '快速向导'},
-    {doc: 'object', label: '开发指南'},
+    {doc: 'object', label: '开发文档'},
     //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/',
@@ -81,7 +81,7 @@ const siteConfig = {
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: 'atom-one-dark',
+    //theme: 'atom-one-dark',
   },
 
   // Add custom scripts here that would be placed in <script> tags.

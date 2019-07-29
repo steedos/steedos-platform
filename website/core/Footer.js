@@ -44,7 +44,7 @@ class Footer extends React.Component {
               快速向导
             </a>
             <a href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4" target="_blank">
-              开发指南
+              视频演示
             </a>
           </div>
           <div>
