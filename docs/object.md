@@ -71,6 +71,9 @@ permission_set:
 ```
 > 使用 [Visual Studio Code](https://code.visualstudio.com/) 编辑对象文件，并按照提示安装插件[redhat.vscode-yaml](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)，Steedos 会自动校验用户编写的yml文件格式是否符合规范。
 
+### 对象显示效果
+![对象显示效果](assets/object_guide.png)
+
 ### 对象属性
 定义对象时，可以使用以下属性：
 - 对象名(object_name)： 必填，是对象的唯一名称，也是对象保存在数据库中的数据表名称。只能是英文、下划线和数字组成，不可重复。通过代码、API接口调用对象时，也需要使用此名称。

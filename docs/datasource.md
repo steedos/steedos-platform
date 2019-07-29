@@ -16,13 +16,13 @@ datasources:
     connection:
       url: mongodb://192.168.0.21/steedos
     objectFiles: 
-      - "./src/default/*.object.yml"
+      - "./src/default/"
   mattermost:
     connection: 
       driver: postgres
-      url: postgresql://mmuser:mmuser_password@192.168.0.21:5432/mattermost
+      url: postgresql://mmuser:password@192.168.0.21:5432/mattermost
     objectFiles: 
-      - "./src/mattermost/*.object.yml"
+      - "./src/mattermost/"
 ```
 
 ### 默认数据源
@@ -57,7 +57,7 @@ datasources:
       password: 
       database: ORCL
     objectFiles: 
-      - "./src/oracle1/*.object.yml"
+      - "./src/oracle1/"
 ```
 
 ### SQL Server 数据源
@@ -77,7 +77,26 @@ datasources:
       password: 
       database: database1
     objectFiles: 
-      - "./src/mssql1/*.object.yml"
+      - "./src/mssql1/"
+```
+
+### PostgreSQL 数据源
+连接到PostgreSQL数据源之前，需要先在项目中安装PostgreSQL驱动。
+```
+yarn add pg
+```
+```yaml
+datasources:
+  postgres1:
+    connection:
+      driver: postgres
+      host: 192.168.0.190
+      port: 
+      username: 
+      password: 
+      database: database1
+    objectFiles: 
+      - "./src/postgres1/"
 ```
 
 ### MySQL 数据源
@@ -97,24 +116,5 @@ datasources:
       password: 
       database: database1
     objectFiles: 
-      - "./src/mysql1/*.object.yml"
-```
-
-### PostgreSQL 数据源
-连接到PostgreSQL数据源之前，需要先在项目中安装PostgreSQL驱动。
-```
-yarn add pg
-```
-```yaml
-datasources:
-  postgres1:
-    connection:
-      driver: postgres
-      host: 192.168.0.190
-      port: 
-      username: 
-      password: 
-      database: database1
-    objectFiles: 
-      - "./src/postgres1/*.object.yml"
+      - "./src/mysql1/"
 ```
