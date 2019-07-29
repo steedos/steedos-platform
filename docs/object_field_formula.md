@@ -24,7 +24,7 @@ title: 字段公式
  - 乘：{field1}*{field2}
  - 除：{field1}/{field2}
 
-### 子表汇总
+### 子表汇总 （即将发布）
 对于master_detail类型字段，可以进行汇总：
  - 合计:   sum({object_name.field_name})
  - 平均值：average({object_name.field_name})
