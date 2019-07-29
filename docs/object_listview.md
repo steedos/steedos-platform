@@ -7,25 +7,38 @@ title: 列表视图
 ## 实例
 ```yaml
 list_views:
-	open:
-		label: "进行中"
-		columns: ["name", "category", "level", "tags", "created"]
-		filters: [["status", "=", "open"]]
-		filter_fields: ["category", "level", "tags"]
-		sort: [["created", "desc"]]
+  priority_high:
+    label: 重要客户
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filters: [["priority", "=", "high"]]
+    filter_fields: ["priority", "owner", "modified"]
+    sort: [["modified", "asc"]]
 ```
+![列表视图效果](assets/listview_guide.png)
 
 ## 列表视图属性
 
-### 基本属性
-- 列表视图名称(name):必填，是视图唯一名称。
-- 显示名称(label):列表视图名称为显示名称，如果没填写，则显示为列表视图名称。
-- 过滤范围(filter_scope): 有两个选项“我的(mine)”和“工作区(space)”，分别表示只能查看当前登录用户的数据和当前工作区的数据。默认为space。
+### 名称 name
+每个对象下的视图名称必须是唯一的。视图名称必须以英文开头，符合命名规范。
+系统内置了一个recent视图，显示最近查看的记录。你只可以为最近查看视图定义 label、 columns，其他参数不起作用。
+
+### 显示名称 label
+列表视图的显示名称显示在列表左上角，用户可以点击下拉箭头切换列表视图。
+如果未设置，则默认为列表视图名称。
+
+### 过滤范围 filter_scope
+目前只支持两种过滤范围。
+- 工作区 space （默认）：只能当前工作区的数据
+- 我的 mine：只能查看当前登录用户的数据
 
 ### 过滤条件 filters
 可以设定列表视图的[过滤条件(filters)](object_filter.md)，只有符合过滤条件的数据才会显示在列表中。
 ```yaml
-filters: [["status", "=", "open"]]
+filters: [["priority", "=", "high"]]
 ```
 
 ### 列 columns
@@ -48,9 +61,7 @@ columns:
   - name
   - field: category 
     width: 100
-    label: "分类"
     wrap: true
-    handlebar: ""
   - level
   - tags
   - created
@@ -59,13 +70,11 @@ columns:
 - field: 字段名。
 - width: 字段宽度，不填写为自动宽度。
 - wrap: 显示此字段时是否自动换行，默认为不换行，超出部分显示为... 。
-- label: 列标题，默认为字段名。
-- handlebar: 使用模版生成字段内容，在模版中能取到当前列表视图上的字段。
 
 ### 排序规则 sort
 定了列表数据的排序规则，可以设定多个字段的组合排序。如果未指定，默认的排序规则是按创建时间倒序排列，也就是如下代码：
 ```yaml
-sort: [["created", "desc"]]
+sort: [["modified", "asc"]]
 ```
 
 ### 用户筛选字段 filter_fields
