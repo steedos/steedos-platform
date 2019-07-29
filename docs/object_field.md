@@ -25,6 +25,8 @@ Steedos 默认使用MongoDB数据库，相比传统的SQL数据库，可以额�
 - 黑箱字段(blackbox): Steedos在做数据验证时，忽略此字段的内容。
 - 值范围(allowedValues): 此字段的值必须在此范围之内。
 
+![表单编辑效果](assets/field_guide.png)
+
 
 ## 字段类型
 Steedos支持以下基本字段类型。
