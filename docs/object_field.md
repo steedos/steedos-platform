@@ -75,6 +75,7 @@ deadline:
   label: '截止日期'
   type: 'date'
 ```
+![日期类型字段](assets/field_date.png)
 
 ### 日期时间 datetime
 日期时间类型的字段，用户输入时自动弹出日期时间选择框。
@@ -83,6 +84,7 @@ starttime:
   label: '开始时间'
   type: 'datetime'
 ```
+![日期时间类型字段](assets/field_datetime.png)
 
 ### 布尔 boolean
 布尔类型的字段，界面生成勾选框。
