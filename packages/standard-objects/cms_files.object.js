@@ -40,6 +40,7 @@ Creator.Objects.cms_files = {
       label: "所属记录",
       type: "lookup",
       omit: true,
+      index: true,
       reference_to: function() {
         return _.keys(Creator.Objects);
       }
