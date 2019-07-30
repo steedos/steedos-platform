@@ -21,7 +21,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: '华炎开发平台', // Title for your website.
+  title: '华炎开发', // Title for your website.
   tagline: '开发人员只需编写少量代码，就能创建功能强大的企业应用程序。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
@@ -38,9 +38,9 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'overview', label: '关于'},
+    {doc: 'overview', label: '“低代码”'},
     {doc: 'getting_started', label: '快速向导'},
-    {doc: 'object', label: '开发文档'},
+    {doc: 'object', label: '文档'},
     //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/',
@@ -58,8 +58,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: 'rgba(0, 0, 0, 0.9)',
-    secondaryColor: '#61dafb',
+    primaryColor: 'rgba(0, 0, 0, 0.8)',
+    secondaryColor: 'rgba(34,34,34,0.8)',
   },
 
   /* Custom fonts for website */
