@@ -493,3 +493,8 @@ if Meteor.isServer
 	db.instances._ensureIndex({
 		"category": 1
 	},{background: true})
+
+	db.instances._ensureIndex({
+		"record_ids.o": 1,
+		"record_ids.ids": 1
+	},{background: true})

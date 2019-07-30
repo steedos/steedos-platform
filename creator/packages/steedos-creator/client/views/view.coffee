@@ -87,7 +87,44 @@ loadRecord = ()->
 #			loadRecordFromOdata(Template.instance(), object_name, record_id)
 	if object_name and record_id
 		loadRecordFromOdata(Template.instance(), object_name, record_id)
+
+addFieldInfo = (element)->
+	element.$(".has-inline-text").each ->
+		id = "info_" + $(this).attr("for").replace(".", "_")
+		html = """
+						<span class="help-info" id="#{id}">
+							<i class="ion ion-information-circled"></i>
+						</span>
+					"""
+		$(".slds-form-element__label", $(this)).append(html)
+
+	element.$(".info-popover").each ->
+		_id = $("~ .slds-form-element .help-info", $(this)).attr("id");
+		$(this).dxPopover
+			target: "#" + _id,
+			showEvent: "mouseenter",
+			hideEvent: "mouseleave",
+			position: "top",
+			width: 300,
+			animation: {
+				show: {
+					type: "pop",
+					from: {
+						scale: 0
+					},
+					to: {
+						scale: 1
+					}
+				},
+				hide: {
+					type: "fade",
+					from: 1,
+					to: 0
+				}
+			}
+
 Template.creator_view.onRendered ->
+	self = this
 	this.autorun ->
 		record_id = Session.get("record_id")
 		if record_id
@@ -111,6 +148,9 @@ Template.creator_view.onRendered ->
 	this.autorun ->
 		if Creator.subs["Creator"].ready()
 			Template.instance().recordLoad.set(true)
+
+	Meteor.defer ()->
+		addFieldInfo(self)
 
 Template.creator_view.helpers Creator.helpers
 
@@ -421,6 +461,11 @@ Template.creator_view.helpers
 
 	showEditIcon: ()->
 		return Steedos.isMobile() && this.name == 'standard_edit'
+
+	hasInlineHelpText: (key)->
+		object_name = Session.get "object_name"
+		fields = Creator.getObject(object_name).fields
+		return fields[key]?.inlineHelpText
 
 Template.creator_view.events
 

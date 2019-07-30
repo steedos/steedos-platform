@@ -96,7 +96,10 @@
 																		<div class="slds-grid slds-grid slds-gutters_small slds-wrap">
 																			{{#each this}}
 																				{{#if this}}
-																					<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid">
+																					<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
+																						{{#if hasInlineHelpText this}}
+																							<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																						{{/if}}
 																						<div class="slds-form-element slds-form-element_readonly  {{#if is_wide this}} slds-form-element_stacked {{/if}} slds-hint-parent">
 
 																								<span class="slds-form-element__label">{{label this}}</span>
@@ -121,15 +124,18 @@
 												<div class="slds-grid slds-gutters_small slds-wrap">
 													{{#each this}}
 														{{#unless isObjectField this}}
-															<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid">
+															<div class="slds-col slds-size_1-of-1 {{#if is_wide this}}slds-large-size_12-of-12{{else}}slds-large-size_6-of-12{{/if}} slds-has-flexi-truncate slds-grid {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
 																{{#if this}}
-																<div class="slds-form-element {{#if is_wide this}} slds-form-element_stacked {{/if}} slds-form-element_readonly slds-hint-parent">
+																	{{#if hasInlineHelpText this}}
+																		<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																	{{/if}}
+																	<div class="slds-form-element {{#if is_wide this}} slds-form-element_stacked {{/if}} slds-form-element_readonly slds-hint-parent">
 																		<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
 																		<div class="slds-form-element__control">
 																		<span class="test-id__field-value slds-form-element__static slds-grow">
 																			{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
 																		</span>
-																		</div>
+																	</div>
 																</div>
 																{{/if}}
 															</div>

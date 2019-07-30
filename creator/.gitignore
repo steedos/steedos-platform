@@ -20,3 +20,4 @@ start.bat
 package-lock.json
 my_start.bat
 yarn.lock
+yarn-error.log

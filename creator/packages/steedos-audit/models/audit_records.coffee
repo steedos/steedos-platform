@@ -6,6 +6,7 @@ Creator.Objects.audit_records =
 		related_to:
 			label: "相关项"
 			type: "lookup"
+			index: true
 			reference_to: ()->
 				o = []
 				_.each Creator.Objects, (object, object_name)->
