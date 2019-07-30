@@ -33,6 +33,10 @@
   white-space: nowrap;
 }
   
+article p img[src*="#bordered"]{
+  border: 1px solid #DDD;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
