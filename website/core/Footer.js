@@ -36,9 +36,9 @@ class Footer extends React.Component {
             )}
           </a>
           <div>
-            <h5>华炎开发平台</h5>
+            <h5>Steedos “低代码”开发平台</h5>
             <a href={this.docUrl('overview', this.props.language)}>
-              关于“低代码”开发平台
+              什么是“低代码”开发平台？
             </a>
             <a href={this.docUrl('getting_started', this.props.language)}>
               快速向导
@@ -61,14 +61,14 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>更多</h5>
+            <a href="tel:4008201612">商务热线：400-820-1612</a>
             <a
               href={`${this.props.config.baseUrl}docs/assets/support_qq.jpg`}
               target="_blank"
               rel="noreferrer noopener">
-              技术交流QQ群：797469729
+              技术支持QQ群：797469729
             </a>
             <a href={`${this.props.config.repoUrl}`}>GitHub</a>
-            <a href={`${this.props.config.baseUrl}blog`}>动态</a>
             <a
               className="github-button"
               href={this.props.config.repoUrl}

@@ -61,10 +61,16 @@ article p img[src*="#bordered"]{
 .fixedHeaderContainer header .headerTitleWithLogo {
   font-family: "SF Pro SC","SF Pro Display","SF Pro Icons","PingFang SC","Helvetica Neue","Helvetica","Arial",sans-serif;
   font-weight: initial;
+  font-size: 1.1em;
 }
 
 #back-to-top {
   background: rgba(0, 0, 0, 0.5);
+}
+
+.navigationSlider .slidingNav ul li a {
+  font-size: 14px;
+  font-size: 0.9em;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
