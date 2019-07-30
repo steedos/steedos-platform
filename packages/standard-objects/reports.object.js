@@ -1,3 +1,4 @@
+const isJsreportPluginExisted = !!(Meteor.settings.plugins && Meteor.settings.plugins.length && Meteor.settings.plugins.indexOf("@steedos/plugin-jsreport") >= 0);
 Creator.Objects.reports = {
   name: "reports",
   label: "报表",
@@ -15,21 +16,27 @@ Creator.Objects.reports = {
       label: "报表类型",
       type: "select",
       defaultValue: "tabular",
-      options: [
-        {
-          label: "表格",
-          value: "tabular"
-        }, {
-          label: "摘要",
-          value: "summary"
-        }, {
-          label: "矩阵",
-          value: "matrix"
-        }, {
-          label: "JsReport",
-          value: "jsreport"
+      options: (() => {
+        let types = [
+          {
+            label: "表格",
+            value: "tabular"
+          }, {
+            label: "摘要",
+            value: "summary"
+          }, {
+            label: "矩阵",
+            value: "matrix"
+          }
+        ];
+        if (isJsreportPluginExisted) {
+          types.push({
+            label: "JsReport",
+            value: "jsreport"
+          });
         }
-      ]
+        return types;
+      })()
     },
     data_source: {
       label: "报表数据来源",
@@ -191,22 +198,30 @@ Creator.Objects.reports = {
     graphql: {
       label: "Graphql",
       type: "textarea",
-      is_wide: true
+      is_wide: true,
+      hidden: !isJsreportPluginExisted,
+      group: "JsReport"
     },
     html: {
       label: "Html",
       type: "textarea",
-      is_wide: true
+      is_wide: true,
+      hidden: !isJsreportPluginExisted,
+      group: "JsReport"
     },
     helper: {
       label: "Helper",
       type: "textarea",
-      is_wide: true
+      is_wide: true,
+      hidden: !isJsreportPluginExisted,
+      group: "JsReport"
     },
     script: {
       label: "Script",
       type: "textarea",
-      is_wide: true
+      is_wide: true,
+      hidden: !isJsreportPluginExisted,
+      group: "JsReport"
     }
   },
   list_views: {
