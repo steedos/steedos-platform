@@ -113,6 +113,18 @@ priority:
   filterable: true
 ```
 
+### 多选 multiple
+如果使用Steedos标准MongoDB数据源，选择类型字段可以定义多选(multiple)属性，实现多选功能。
+```yaml
+tags:
+  type: select
+  label: 类别
+  options: 客户,供应商,合作伙伴,其他
+  filterable: true
+  multiple: true
+```
+![select类型字段多选](assets/field_select_multiple.png#bordered)
+
 ### 可选项 options
 可以用多种格式定义可选项(options)。
 #### 完整格式
@@ -135,19 +147,32 @@ priority:
 ```
 
 ### 可选项脚本 optionsFunction
-通过脚本生成可选项的内容
-
-### 多选 multiple
-如果使用Steedos标准MongoDB数据源，选择类型字段可以定义多选(multiple)属性，实现多选功能。
-```yaml
-tags:
-  type: select
-  label: 类别
-  options: 客户,供应商,合作伙伴,其他
-  filterable: true
-  multiple: true
+通过脚本生成可选项的内容。函数需返回以下格式的数组：
+```js
+[{label: "Label A", value: "A", icon: "icon-a"}]
 ```
-![select类型字段多选](assets/field_select_multiple.png#bordered)
+示例
+```yaml
+objects:
+  label: 对象
+  type: lookup
+  required: true
+  multiple: true
+  optionsFunction: !!js/function |
+    function () {
+      var _options = [];
+      _.forEach(Creator.objectsByName, function (o, object_name) {
+        return _options.push({
+          label: o.label,
+          value: o.name,
+          icon: o.icon
+        });
+      });
+
+      return _options;
+    }
+  filterable: true
+```
 
 ### 数据存储格式
 单选字段在数据库中保存为字符串，多选字段在MongoDB数据库中保存为数组。

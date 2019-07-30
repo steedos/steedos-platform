@@ -26,7 +26,24 @@
 }
 
 .navigationSlider .slidingNav ul {
-  background: #282c34;
+  /*background: #282c34;*/
+}
+
+.navigationSlider .slidingNav ul li.siteNavGroupActive > a {
+  background-color: transparent;
+}
+
+.navigationSlider .slidingNav ul li.siteNavItemActive > a {
+  opacity: .65;
+}
+
+.toc .toggleNav ul li.navListItemActive a {
+  color: #0070d2;
+}
+
+.onPageNav .toc-headings > li > a.active {
+  color: #0070d2;
+  font-weight: initial;
 }
 
 .headerTitleWithLogo {
@@ -35,6 +52,19 @@
   
 article p img[src*="#bordered"]{
   border: 1px solid #DDD;
+}
+
+.fixedHeaderContainer {
+  background: rgba(0,0,0,0.8);
+}
+
+.fixedHeaderContainer header .headerTitleWithLogo {
+  font-family: "SF Pro SC","SF Pro Display","SF Pro Icons","PingFang SC","Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-weight: initial;
+}
+
+#back-to-top {
+  background: rgba(0, 0, 0, 0.5);
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
