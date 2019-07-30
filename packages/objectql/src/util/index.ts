@@ -6,6 +6,7 @@
  */
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
+import { Validators } from '../validators';
 
 
 const yaml = require('js-yaml');
@@ -41,6 +42,19 @@ let loadFile = (filePath: string)=>{
 };
 exports.loadFile = loadFile;
 
+function validateObject(json){
+    // 校验
+    let validate = Validators['steedos-schema_object'];
+    let objectName = json.name;
+    if (!validate(JSON.parse(JSON.stringify(json)))) {
+        console.error(`对象${objectName}校验不通过: `, validate.errors);
+        console.error(`${objectName}: `, json);
+        return false;
+    }
+
+    return true;
+}
+
 let loadObjects = (filePath: string) => {
     let results = []
     const filePatten = [
@@ -50,7 +64,9 @@ let loadObjects = (filePath: string) => {
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
-        results.push(json)
+        if (validateObject(json)){
+            results.push(json)
+        }
     })
     return results
 }

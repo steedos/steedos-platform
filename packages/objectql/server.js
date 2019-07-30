@@ -22,13 +22,11 @@ router.use('/:dataSourceName/:spaceId', async function (req, res, next) {
     cookies = new Cookies(req, res);
     authToken = req.headers['x-auth-token'] || cookies.get("X-Auth-Token");
     let spaceId = req.params.spaceId;
-    console.log('spaceId:::::::::: ', spaceId);
     user = null;
     if (authToken) {
         user = await steedosAuth.getSession(authToken, spaceId);
     }
     if (user) {
-        console.log('user::::::::::::::: ', user);
         // 因为没有spaceId,无法获取roles，暂不启用权限校验
         req.userSession = user;
         return next();
@@ -44,8 +42,6 @@ router.use('/:dataSourceName/:spaceId', async function (req, res, next) {
 })
 
 _.each(steedosSchema.getDataSources(), function (datasource, name) {
-    console.log('name::::::::: ', name);
-    console.log('datasource::::::::: ', datasource.driver);
     router.use(`/${name}/:spaceId`, graphqlHTTP({
         schema: datasource.buildGraphQLSchema(),
         graphiql: true
