@@ -128,7 +128,9 @@ Creator.Objects.instances =
 			type: "boolean"
 			label:"已删除"
 			hidden: true
-
+		is_recorded_creator:
+			type: "boolean"
+			label:"已归档"
 		related_instances:
 			type: "string"
 			type: "lookup"
