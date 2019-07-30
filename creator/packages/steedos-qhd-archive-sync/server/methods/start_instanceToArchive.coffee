@@ -10,8 +10,8 @@ Meteor.methods
 				instances = Creator.Collections["instances"].find({
 					"submit_date":{$gt:start_date, $lt:end_date},
 					$or: [
-						{is_recorded: false},
-						{is_recorded: {$exists: false}}
+						{is_recorded_creator: false},
+						{is_recorded_creator: {$exists: false}}
 					],
 					"values.record_need":"true", 
 					is_deleted: false, 
