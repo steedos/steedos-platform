@@ -22,7 +22,7 @@ class HomeSplash extends React.Component {
     const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
 
     const SplashContainer = props => (
-      <div className="homeContainer" style={{background: `rgba(0,0,0,.75)`}}>
+      <div className="homeContainer" style={{background: `rgba(0,0,0,.8) url(${baseUrl}docs/assets/banner_home.jpg) no-repeat center`}}>
         <div className="homeSplashFade">
           <div className="wrapper homeWrapper">{props.children}</div>
         </div>

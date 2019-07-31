@@ -4,6 +4,7 @@
   background-size: cover;
   color: white;
   padding: 80px 0;
+  margin-top: -50px;
 }
 
 .homeContainer .button {
@@ -83,6 +84,18 @@ article p img[src*="#bordered"]{
 }
 
 @media only screen and (max-width: 1023px) {
+  .fixedHeaderContainer {
+    background: rgba(0,0,0,1);
+  }
+  .navigationSlider .slidingNav ul {
+    background: rgb(34, 34, 34);
+  }
+  .mainContainer {
+    padding: 60px 0;
+  }
+  .reactNavSearchWrapper input#search_input_react {
+    background-color: rgb(34, 34, 34);
+  }
 }
 
 @media only screen and (min-width: 1400px) {
