@@ -39,8 +39,10 @@ Creator.bootstrap = (spaceId, callback)->
 			_.each Creator.Objects, (object, object_name)->
 				_object_listviews = object_listviews[object_name]
 				_.each _object_listviews, (_object_listview)->
-					if _object_listview.related_code
-						_key = _object_listview.related_code
+					if _.isString(_object_listview.options)
+						_object_listview.options = JSON.parse(_object_listview.options)
+					if _object_listview.api_name
+						_key = _object_listview.api_name
 					else
 						_key = _object_listview._id
 					object.list_views[_key] = _object_listview

@@ -73,6 +73,9 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 	else
 		oitem.label = oitem.label || list_view.name
 
+	if _.isString(oitem.options)
+		oitem.options = JSON.parse(oitem.options)
+
 	_.forEach oitem.filters, (filter, _index)->
 		if !_.isArray(filter) && _.isObject(filter)
 			if Meteor.isServer

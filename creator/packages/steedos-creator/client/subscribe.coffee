@@ -29,8 +29,8 @@ Meteor.startup ->
 			defaultColumns = Creator.getObjectDefaultColumns(Session.get("object_name"))
 			object_listViews.forEach (listview)->
 				_list_view = Creator.convertListView(defaultColumns, listview, listview.name)
-				if listview.related_code
-					_key = listview.related_code
+				if listview.api_name
+					_key = listview.api_name
 				else
 					_key = listview._id
 #				if listview.is_default
@@ -46,8 +46,8 @@ Meteor.startup ->
 					# 	key = oldDocument.name
 					# else
 					# 	key = oldDocument._id
-					if oldDocument.related_code
-						key = oldDocument.related_code
+					if oldDocument.api_name
+						key = oldDocument.api_name
 					else
 						key = oldDocument._id
 					delete Creator.Objects[Session.get("object_name")].list_views[key]
