@@ -1,5 +1,5 @@
 ---
-title: 调用自定义方法
+title: 自定义函数
 ---
 
 在 OData 中，可以调用自定义方法处理相关的业务逻辑并返回结果。
@@ -8,7 +8,7 @@ title: 调用自定义方法
 
  - 请求方法：POST
 
- - 请求接口：/api/odata/v4/#{spaceId}/#{object_name}/#{record_id}/#{method_name}
+ - 请求接口：/api/v4/{object_name}/{record_id}/{method_name}
 
  - 接口说明：
    - spaceId：工作区ID

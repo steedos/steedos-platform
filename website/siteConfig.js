@@ -41,6 +41,7 @@ const siteConfig = {
     {doc: 'overview', label: '关于'},
     {doc: 'getting_started', label: '向导'},
     {doc: 'object', label: '文档'},
+    {doc: 'api', label: 'API'},
     //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/',

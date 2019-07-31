@@ -74,6 +74,14 @@ article p img[src*="#bordered"]{
   font-size: 0.9em;
 }
 
+body {
+  background-color: #f8f8f8;
+}
+
+.lightBackground {
+  background-color: #fff;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
@@ -81,6 +89,20 @@ article p img[src*="#bordered"]{
   .navigationSlider .slidingNav ul {
     background: none;
   }
+  .docMainWrapper > * {
+    margin: 0 12px;
+  }
+
+  .docMainWrapper .mainContainer .wrapper {
+    background-color: #fff;
+    border-radius: .25rem;
+    box-shadow: 0 1px 0 rgba(0,0,0,.25);
+    padding: 2rem 2rem 1rem;
+    margin: 0 auto 2rem;
+    position: relative;
+    border: 1px solid #ddd;
+  }
+
 }
 
 @media only screen and (max-width: 1023px) {

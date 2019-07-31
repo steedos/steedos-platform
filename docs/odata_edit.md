@@ -1,5 +1,5 @@
 ---
-title: 业务数据编辑
+title: 更新
 ---
 
 在 OData 中，可以使用 PUT 方法来更新修改业务数据记录。成功的更新响应返回更新后的记录。使用 PUT 更新记录会用提供的数据替换现有记录。 记录中的所有属性值使用请求中提供的值或设置为默认值（如果请求中未包括这些值）。
@@ -8,7 +8,7 @@ title: 业务数据编辑
 
  - 请求方法：PUT
 
- - 请求接口：/api/odata/v4/#{spaceId}/#{object_name}/#{record_id}
+ - 请求接口：/api/v4/{object_name}/{record_id}
 
  - 接口说明：
    - spaceId：工作区ID

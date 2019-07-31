@@ -1,5 +1,5 @@
 ---
-title: 业务数据删除
+title: 删除
 ---
 
 通过 DELETE 请求删除业务数据。
@@ -8,12 +8,12 @@ title: 业务数据删除
 
  - 请求方法：DELETE
 
- - 请求接口：/api/odata/v4/#{spaceId}/#{object_name}/#{object_id}
+ - 请求接口：/api/v4/{object_name}/{record_id}
 
  - 接口说明：
    - spaceId：工作区ID
    - object_name：删除对象的对象名
-   - object_id：删除记录的主键ID
+   - record_id：删除记录的主键ID
 
  - 请求参数说明：
    - 无
