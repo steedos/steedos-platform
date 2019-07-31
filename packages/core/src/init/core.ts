@@ -5,6 +5,7 @@ const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
 const router = express.Router();
+import { Publish } from '../publish'
 
 export class Core {
 
@@ -13,6 +14,7 @@ export class Core {
         this.loadObjects();
         this.initObjects();
         this.initGraphqlAPI();
+        this.initPublishAPI()
     }
 
     private static expandSimpleSchemaPres() {
@@ -147,5 +149,9 @@ export class Core {
         });
         app.use('/graphql', router);
         return WebApp.connectHandlers.use(app);
+    }
+
+    private static initPublishAPI(){
+        Publish.init();
     }
 }
