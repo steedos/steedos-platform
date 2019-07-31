@@ -17,6 +17,8 @@ const globby = require("globby");
 var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
 
+const configName = 'steedos-config.yml'
+
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
 }
@@ -185,4 +187,15 @@ export function loadAppFiles(filePath: string) {
 
 export function getBaseDirectory(){
     return require('app-root-path').path
+}
+
+export function getSteedosConfig(){
+    let config: any;
+    let configPath = path.join(this.getBaseDirectory(), configName)
+    if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
+        config = this.loadFile(configPath)
+    }else{
+        console.info('not found steedos-config.yml', configPath);
+    }
+    return config;
 }

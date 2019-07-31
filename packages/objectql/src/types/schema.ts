@@ -1,12 +1,9 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
 import _ = require("underscore");
-const path = require("path");;
 const util = require('../util')
-const fs = require("fs");
 
 const defaultDatasourceName = 'default';
-const configName = 'steedos-config.yml'
 
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
@@ -16,17 +13,12 @@ export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
 
     loadConfig(){
-        let config: any;
-        let configPath = path.join(util.getBaseDirectory(), configName)
-        if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
-            console.info('load config from ', configPath);
-            config = util.loadFile(configPath)
-            if(config.datasources){
-                _.each(config.datasources, (datasource: any, datasource_name)=>{
-                    _.extend(datasource, datasource.connection)
-                })
-                delete config.datasources.default
-            }
+        let config: any = util.getSteedosConfig();
+        if(config && config.datasources){
+            _.each(config.datasources, (datasource: any, datasource_name)=>{
+                _.extend(datasource, datasource.connection)
+            })
+            delete config.datasources.default
         }
         return config;
     }
