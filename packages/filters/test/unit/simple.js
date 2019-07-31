@@ -1,6 +1,12 @@
 const formatFiltersToODataQuery = require('../../index').formatFiltersToODataQuery;
 const expect = require('chai').expect;
 describe('format filters to a simple odata query', () => {
+    it('empty array', async () => {
+        let filters = [];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("");
+    });
     it('eq =', async () => {
         let filters = [
             ["name", "=", "ptr"]

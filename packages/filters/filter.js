@@ -369,6 +369,9 @@ class SteedosFilter {
     }
 
     compileCore(criteria) {
+        if (!criteria || criteria.length === 0){
+            return "";
+        }
         if (Array.isArray(criteria[0])) {
             return this.compileGroup(criteria);
         }
