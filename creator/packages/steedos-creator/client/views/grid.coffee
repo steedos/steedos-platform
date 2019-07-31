@@ -608,9 +608,14 @@ Template.creator_grid.onRendered ->
 			if !filter
 				# filter 为undefined时要设置为空，否则dxDataGrid控件会使用上次使用过的filter
 				filter = null
+
+			_listView = Creator.getListView(object_name, list_view_id, true)
+
 			dxOptions =
+				remoteOperations: true
 				scrolling: 
 					showScrollbar: "always"
+					mode: _listView?.scrolling_mode || "standard"
 				paging:
 					pageSize: pageSize
 				pager:
