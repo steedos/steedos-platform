@@ -491,7 +491,6 @@ Template.creator_grid.onRendered ->
 #					else
 #						selectColumns = _fields(curObjectName, list_view_id)
 					return _fields(curObjectName, list_view_id)
-				console.log('selectColumns', selectColumns);
 			pageIndex = Tracker.nonreactive ()->
 				if Session.get("page_index")
 					if Session.get("page_index").object_name == curObjectName
@@ -589,7 +588,6 @@ Template.creator_grid.onRendered ->
 								$("<div>").append(htmlText).appendTo(container)
 			_.every showColumns, (n)->
 				n.sortingMethod = Creator.sortingMethod
-			console.log('showColumns', showColumns)
 			localPageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
 			if !is_related and localPageSize
 				pageSize = localPageSize
