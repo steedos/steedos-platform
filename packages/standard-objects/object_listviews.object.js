@@ -55,40 +55,60 @@ Creator.Objects.object_listviews = {
       }
     },
     shared: {
-        label: "共享视图到工作区",
-        type: "boolean"
+      label: "共享视图到工作区",
+      type: "boolean"
+    },
+    type: {
+      label: "视图类型",
+      type: "select",
+      options: "列表:grid, 日历视图:calendar",
+      defaultValue: "grid"
+    },
+    scrolling_mode: {
+      label: "滚动条样式",
+      inlineHelpText: "定义数据列表的滚动条显示样式",
+      type: "select",
+      options: "按照传统的分页显示，点击页码加载对应页面的数据:standard, 通过滚动条切换页面，当滚动到对应页面时，会远程加载数据:virtual, 滚动刷新，初始只加载第一页，一边滚动一边加载下一页:infinite",
+      defaultValue: "standard"
     },
     columns: {
-      label: "需要显示的列",
+      label: "显示的列",
+      type: "grid",
+      is_wide: true
+    },
+    "columns.$": {
+      label: "显示的列",
+      blackbox: true,
+      type: "Object"
+    },
+    "columns.$.field": {
+      label: "字段",
+      type: "lookup",
+      multiple: false,
+      is_wide: false,
+      required: true,
+      depend_on: ["object_name"],
+      optionsFunction: function (values) {
+        return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0, true);
+      }
+    },
+    "columns.$.width": {
+      label: "宽度",
+      type: "text"
+    },
+    // "columns.$.label": {
+    //     label: "显示名称",
+    //     type: "text"
+    // },
+    "columns.$.wrap": {
+      label: "是否换行",
+      type: "boolean"
+    },
+    filter_fields: {
+      label: "默认过滤字段",
       type: "lookup",
       multiple: true,
       is_wide: true,
-      depend_on: ["object_name"],
-      optionsFunction: function (values) {
-        var _object, _options, fields, icon;
-        _options = [];
-        _object = Creator.getObject(values != null ? values.object_name : void 0);
-        fields = Creator.getFields(values != null ? values.object_name : void 0);
-        icon = _object.icon;
-        _.forEach(fields, function (f) {
-          var label;
-          if (!_object.fields[f].hidden) {
-            label = _object.fields[f].label;
-            return _options.push({
-              label: label || f,
-              value: f,
-              icon: icon
-            });
-          }
-        });
-        return _options;
-      }
-    },
-    filter_fields: {
-      label: "默认过虑字段",
-      type: "lookup",
-      multiple: true,
-	  is_wide: true,
       depend_on: ["object_name"],
       optionsFunction: function (values) {
         if (!(values != null ? values.object_name : void 0)) {
@@ -99,7 +119,8 @@ Creator.Objects.object_listviews = {
     },
     sort: {
       label: "默认排序规则",
-      type: "grid"
+      type: "grid",
+      is_wide: true
     },
     "sort.$": {
       label: "排序条件",
@@ -138,7 +159,9 @@ Creator.Objects.object_listviews = {
     },
     filters: {
       label: "过滤器",
-      type: "grid"
+      readonly: true,
+      type: "grid",
+      is_wide: true
     },
     "filters.$": {
       label: "过滤条件",
