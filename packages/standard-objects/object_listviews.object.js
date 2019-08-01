@@ -62,14 +62,18 @@ Creator.Objects.object_listviews = {
       label: "视图类型",
       type: "select",
       options: "列表:grid, 日历视图:calendar",
-      defaultValue: "grid"
+      defaultValue: "grid",
+      hidden: true,
+      omit: true
     },
     scrolling_mode: {
       label: "滚动条样式",
       inlineHelpText: "定义数据列表的滚动条显示样式",
       type: "select",
       options: "按照传统的分页显示，点击页码加载对应页面的数据:standard, 通过滚动条切换页面，当滚动到对应页面时，会远程加载数据:virtual, 滚动刷新，初始只加载第一页，一边滚动一边加载下一页:infinite",
-      defaultValue: "standard"
+      defaultValue: "standard",
+      hidden: true,
+      omit: true
     },
     columns: {
       label: "显示的列",
@@ -89,6 +93,9 @@ Creator.Objects.object_listviews = {
       required: true,
       depend_on: ["object_name"],
       optionsFunction: function (values) {
+        if (!(values != null ? values.object_name : void 0)) {
+          values.object_name = Session.get("object_name");
+        }
         return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0, true);
       }
     },
