@@ -38,8 +38,17 @@
   opacity: .65;
 }
 
+.toc .toggleNav ul li a {
+  padding: 4px 8px;
+}
+
 .toc .toggleNav ul li.navListItemActive a {
-  color: #0070d2;
+  background-color: #0070d2;
+  border-color: #0070d2;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
 }
 
 .onPageNav .toc-headings > li > a.active {
