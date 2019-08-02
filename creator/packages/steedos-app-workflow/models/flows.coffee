@@ -439,6 +439,19 @@ Creator.Objects.flows =
 #				Session.set 'action_fields', 'current,current._rev,current.steps'
 #				Meteor.defer ()->
 #					$(".creator-edit").click()
+
+		export_default_template:
+			label: "导出默认模板"
+			on: "record"
+			visible: ()->
+				return true;
+			todo: (object_name, record_id, fields)->
+				workflowUrl = Meteor.settings.public.webservices?.workflow?.url
+				if !workflowUrl
+					toastr.error("settings.public.webservices.workflow.url", "缺少配置")
+					return ;
+				url = Meteor.absoluteUrl("/api/workflow/export/talbe_template?flow=" + record_id, {rootUrl: workflowUrl})
+				window.open(url, '_blank')
 		exportFlow:
 			label: "导出流程"
 			visible: true
