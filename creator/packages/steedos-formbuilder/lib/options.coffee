@@ -17,8 +17,8 @@ DISABLEDATTRS = ['description', 'maxlength', 'placeholder', "access", "value", '
 	'toggle', 'rows', 'subtype', 'multiple', 'name']
 
 # 定义字段类型排序
-CONTROLORDER = ['table', 'section', 'text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', 'checkboxBoolean',
-	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "odata"]
+CONTROLORDER = ['text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', 'checkboxBoolean',
+	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "odata", 'table', 'section']
 
 # 获取各字段类型禁用的字段属性
 #TYPEUSERDISABLEDATTRS = (()->
@@ -177,17 +177,20 @@ getTypeUserAttrs = ()->
 					url: {
 						label: 'Odata API',
 						type: 'textarea',
-						required: 'true'
+						required: 'true',
+						value: ''
 					}
 					filters: {
 						label: '过滤条件',
-						type: 'textarea'
+						type: 'textarea',
+						value: ''
 					},
 					search_field: {
 						label: '可搜索字段'
 						type: 'input'
 						placeholder: '多个请用英文逗号(,)分隔',
-						required: 'true'
+						required: 'true',
+						value: ''
 					}
 				}, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display'), FORMULAUSERATTRS_REQUIRED
 			else
