@@ -120,6 +120,7 @@ Creator.Objects.reports = {
       label: "字段",
       type: "lookup",
       multiple: true,
+      is_wide: true,
       depend_on: ["object_name"],
       defaultIcon: "service_contract",
       optionsFunction: function (values) {
@@ -130,6 +131,7 @@ Creator.Objects.reports = {
       label: "行",
       type: "lookup",
       multiple: true,
+      is_wide: true,
       depend_on: ["object_name"],
       defaultIcon: "service_contract",
       optionsFunction: function (values) {
@@ -140,6 +142,7 @@ Creator.Objects.reports = {
       label: "列",
       type: "lookup",
       multiple: true,
+      is_wide: true,
       depend_on: ["object_name"],
       defaultIcon: "service_contract",
       optionsFunction: function (values) {
@@ -150,6 +153,7 @@ Creator.Objects.reports = {
       label: "统计",
       type: "lookup",
       multiple: true,
+      is_wide: true,
       depend_on: ["object_name"],
       defaultIcon: "service_contract",
       optionsFunction: function (values) {
@@ -158,12 +162,25 @@ Creator.Objects.reports = {
     },
     filter_fields: {
       label: "默认过虑字段",
+      type: "grid",
+      is_wide: true
+    },
+    "filter_fields.$": {
+      label: "默认过虑字段",
+      blackbox: true,
+      type: "Object"
+    },
+    "filter_fields.$.field": {
+      label: "字段名称",
       type: "lookup",
-      multiple: true,
       depend_on: ["object_name"],
       optionsFunction: function (values) {
         return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
       }
+    },
+    "filter_fields.$.required": {
+      label: "必填",
+      type: "boolean"
     },
     options: {
       label: "操作",
