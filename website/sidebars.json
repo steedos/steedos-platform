@@ -3,7 +3,7 @@
     "快速向导": ["overview", "getting_started"],
     "定义业务对象": ["datasource", "object", "object_field", "object_field_type", "object_listview", "object_permission", "object_filter", "object_trigger", "object_action"],
     "台账": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile"],
-    "审批": ["object_workflow", "workflow_submit", "workflow_archive"],
+    "审批": ["workflow_overview", "workflow_submit", "workflow_archive", "object_workflow"],
     "权限": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "统计": ["reports", "report_jsreport"],
     "OData": ["api", "api_auth", "odata_query", "odata_get", "odata_add", "odata_edit", "odata_delete", "odata_functions", "odata_metadata"],
