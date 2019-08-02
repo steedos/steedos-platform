@@ -22,7 +22,7 @@ const users = [
 
 const siteConfig = {
   title: 'Steedos 低代码开发平台', // Title for your website.
-  tagline: '开发人员只需编写少量代码，就能创建功能强大的企业应用程序。',
+  tagline: '只需编写少量代码，就能构建全球最好的企业应用。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -86,7 +86,7 @@ const siteConfig = {
   },
 
   // Add custom scripts here that would be placed in <script> tags.
-  scripts: ['https://buttons.github.io/buttons.js'],
+  scripts: [],
 
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
