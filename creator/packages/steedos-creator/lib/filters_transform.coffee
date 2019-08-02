@@ -19,7 +19,7 @@ FiltersTransform.queryToFilters = (standard_query)->
 		if object_fields[k]
 			type = object_fields[k].type
 			if ["date", "datetime", "currency", "number"].includes(type)
-				filters.push({field: k, operation: getOperation(type), start_value: v, value: [v]})
+				filters.push({field: k, operation: getOperation(type), start_value: v, value: [v, null]})
 			else if ["text", "textarea", "html"].includes(type)
 				if _.isString(v)
 					filters.push({field: k, operation: getOperation(type), value: v})
@@ -37,9 +37,8 @@ FiltersTransform.queryToFilters = (standard_query)->
 					return f.field == k
 				)
 				if filter
-					console.log('filter', filter);
 					filter.end_value = v
-					filter.value.push(v)
+					filter.value[1] = v
 				else
 					filters.push({field: k, operation: getOperation(type), end_value: v, value: [null, v]})
 

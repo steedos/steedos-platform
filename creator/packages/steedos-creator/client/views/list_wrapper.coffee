@@ -77,6 +77,13 @@ Template.creator_list_wrapper.helpers
 		field_keys.remove(field_keys.indexOf("object_name"))
 		if !Steedos.isSpaceAdmin()
 			field_keys.remove(field_keys.indexOf("shared"))
+
+		field_keys.remove(field_keys.indexOf("filters"))
+		field_keys.remove(field_keys.indexOf("filters.$"))
+		field_keys.remove(field_keys.indexOf("filters.$.field"))
+		field_keys.remove(field_keys.indexOf("filters.$.operation"))
+		field_keys.remove(field_keys.indexOf("filters.$.value"))
+
 		return field_keys.join(",")
 
 	isRefreshable: ()->

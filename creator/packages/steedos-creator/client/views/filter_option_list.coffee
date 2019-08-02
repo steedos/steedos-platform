@@ -11,16 +11,27 @@ getDefaultFilters = (object_name, filter_fields, filters)->
 		filter_fields = []
 	if filter_fields?.length
 		filter_fields.forEach (n)->
-			if fields[n] and !_.findWhere(filters,{field:n})
-				filters.push {
-					field: n
-					is_default: true
-				}
+			if _.isString(n)
+				n = 
+					field: n,
+					required: false
+			if fields[n.field] and !_.findWhere(filters,{field:n.field})
+				filters.push
+					field: n.field,
+					is_default: true,
+					is_required: n.required
 	filters.forEach (filterItem)->
-		if _.include(filter_fields, filterItem.field)
+		matchField = filter_fields.find (n)-> return n == filterItem.field or n.field == filterItem.field
+		if _.isString(matchField)
+			matchField = 
+				field: matchField,
+				required: false
+		if matchField
 			filterItem.is_default = true
+			filterItem.is_required = matchField.required
 		else
 			delete filterItem.is_default
+			delete filterItem.is_required
 	return filters
 
 Template.filter_option_list.helpers Creator.helpers
