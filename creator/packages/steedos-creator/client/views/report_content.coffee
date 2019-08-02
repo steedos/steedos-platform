@@ -976,32 +976,44 @@ renderReport = (reportObject)->
 		return
 	if pivotGridChart
 		pivotGridChart.dispose()
-
-	innerStacking = $(".filter-list-wraper .innerStacking") #tabular/summary/matrix三种dx控件报表容器
+	innerStackingBox = $(".filter-list-wraper .innerStacking") #tabular/summary/matrix三种dx控件报表容器
+	jsreportBox = $(".filter-list-wraper #jsreport") #jsreport报表容器
+	emptyBox = $(".filter-list-wraper .creator-report-empty")
+	if filter_items and filter_items.length and filter_items.find((n)-> return n.is_required && _.isEmpty(n.value))
+		# 存在未填写的必要过滤条件则显示提示
+		innerStackingBox.hide();
+		jsreportBox.hide()
+		emptyBox.show()
+		return;
+	emptyBox.hide()
 	switch reportObject.report_type
 		when 'tabular'
 			# 报表类型从matrix转变成tabular时，需要把原来matrix报表清除
 			gridLoadedArray = null
 			self.pivotGridInstance?.get()?.dispose()
-			innerStacking.show();
+			jsreportBox.hide()
+			innerStackingBox.show();
 			renderTabularReport.bind(self)(reportObject)
 		when 'summary'
 			# 报表类型从matrix转变成summary时，需要把原来matrix报表清除
 			self.pivotGridInstance?.get()?.dispose()
-			innerStacking.show();
+			jsreportBox.hide()
+			innerStackingBox.show();
 			renderSummaryReport.bind(self)(reportObject)
 		when 'matrix'
 			# 报表类型从summary转变成matrix时，需要把原来summary报表清除
 			gridLoadedArray = null
 			self.dataGridInstance?.get()?.dispose()
-			innerStacking.show();
+			jsreportBox.hide()
+			innerStackingBox.show();
 			renderMatrixReport.bind(self)(reportObject)
 		when 'jsreport'
 			# 报表类型从dx控件报表转变成jsreport时，需要把原来报表相关内容清除
 			gridLoadedArray = null
 			self.dataGridInstance?.get()?.dispose()
 			self.pivotGridInstance?.get()?.dispose()
-			innerStacking.hide();
+			innerStackingBox.hide();
+			jsreportBox.show()
 			renderJsReport.bind(self)(reportObject)
 
 
