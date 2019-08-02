@@ -4,13 +4,29 @@ title: 字段
 
 Steedos 默认使用MongoDB数据库，相比传统的SQL数据库，可以额外实现数组、内嵌对象、内嵌表格等高级字段类型。
 
-## 字段属性
-每个字段都可以配置以下属性，定义字段的功能和界面操作。
-
-### 字段名 name
+## 字段名 name
 字段在数据库中保存的名称，区分大小写，建议全部使用小写字母。
 
 当使用OData或GraphQL API查询和更新对象数据时，也使用字段名。
+
+例如以下例子定义了一个owner字段:
+```yaml
+owner:
+  label: 责任人
+  type: lookup
+  reference_to: users
+  defaultValue:
+  required: true
+  inlineHelpText: 请选择此任务的责任人，相关人员会收到待办提醒。
+  is_wide: false
+  searchable: true
+  index: true
+  omit: false
+  hidden: false
+```
+
+## 字段属性
+字段名下一层，可以配置属性，定义字段的功能和界面操作。
 
 ### 显示名 label
 字段在最终用户界面上的显示名称。显示名称支持国际化，如果系统检测到i18n文件中包含 "{objectname}_{fieldname}"，以翻译为准。
