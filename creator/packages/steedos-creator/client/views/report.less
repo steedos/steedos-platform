@@ -724,3 +724,16 @@
 		}
 	}
 }
+
+.reportsFilterCard {
+	&.is-required {
+		.header {
+			.field {
+				&:after {
+					content: ' *';
+					color: red;
+				}
+			}
+		}
+	}
+}

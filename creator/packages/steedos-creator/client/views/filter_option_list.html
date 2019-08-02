@@ -22,7 +22,7 @@
     {{/if}}-->
     <ul class="editableFilters {{#unless isFilterLogicEmpty}} showNumbers {{/unless}}">
         {{#each filterItems}}
-        <li class="filterCardContainer editable reportsFilterCard filter-item">
+        <li class="filterCardContainer editable reportsFilterCard filter-item {{#if this.is_required}} is-required {{/if}}">
             <a class="filterCardEditor filter-option-item" href="javascript:void(0);">
                 <div class="filterCard">
                     <div class="header">
