@@ -9,7 +9,7 @@ if Meteor.isClient
 			url = url + "&companyId=#{companyId}"
 		Steedos.openWindow Steedos.absoluteUrl(url)
 	WorkflowCore.openFormDesign = (locale, space, form, companyId)->
-		Modal.show('formDesign', {formId: form})
+		Modal.show('formDesign', {formId: form}, {keyboard:false, backdrop: "static"})
 
 	Meteor.startup ->
 		$(document).keydown (e) ->
