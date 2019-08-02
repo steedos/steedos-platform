@@ -71,6 +71,11 @@ Template.creator_report.helpers
 	isChartDisabled: ()->
 		return Template.instance().is_chart_disabled?.get()
 	
+	isChartNeedToShow: ()->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		return reportObject?.report_type != "jsreport"
+	
 	isSavable: ->
 		obj = Creator.getObject()
 		object_name = obj.name
@@ -84,6 +89,11 @@ Template.creator_report.helpers
 	
 	isDesignerOpen: ()->
 		return Template.instance().is_designer_open?.get()
+	
+	isDesignerNeedToShow: ()->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		return reportObject?.report_type != "jsreport"
 	
 	report_content_params: ()->
 		return {
@@ -101,6 +111,17 @@ Template.creator_report.helpers
 				isFiltering = true;
 			return !isFiltering;
 		return isFiltering
+
+	isBtnSettingsNeedToShow: ->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		return reportObject?.report_type != "jsreport"
+
+	isBtnExportPdfNeedToShow: ->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		return reportObject?.report_type == "jsreport"
+
 Template.creator_report.events
 
 	'click .record-action-custom': (event, template) ->
@@ -144,10 +165,31 @@ Template.creator_report.events
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
 		data = {report_settings: template.report_settings}
-		if reportObject.report_type == "tabular"
+		if reportObject?.report_type == "tabular"
 			# 表格模式时只显示总计选项
 			data.options = ["totaling"]
 		Modal.show("report_settings", data)
+	
+	'click .btn-export-excel': (event, template)->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		switch reportObject?.report_type
+			when 'tabular'
+				$(".filter-list-wraper .dx-datagrid-export-button").trigger("click")
+			when 'summary'
+				$(".filter-list-wraper .dx-datagrid-export-button").trigger("click")
+			when 'matrix'
+				$(".filter-list-wraper .dx-pivotgrid-export-button").trigger("click")
+			when 'jsreport'
+				url = Creator.getJsReportExcelUrl(reportObject._id)
+				window.open(url, "_self")
+	
+	'click .btn-export-pdf': (event, template)->
+		record_id = Session.get "record_id"
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		if reportObject?.report_type == "jsreport"
+			url = Creator.getJsReportPdfUrl(reportObject._id)
+			window.open(url)
 
 	'click .btn-refresh': (event, template)->
 		Template.creator_report_content.renderReport()
@@ -157,7 +199,7 @@ Template.creator_report.events
 		template.is_designer_open.set(isOpen)
 		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
 		# 这里isOpen为false时要重写option，且每个子属性都不能省略，比如不能直接把fieldPanel设置为false，因为反复切换设计模式时会出现异常
-		switch reportObject.report_type
+		switch reportObject?.report_type
 			when 'tabular'
 				if isOpen
 					option = 

@@ -280,6 +280,31 @@ if Meteor.isClient
 			return undefined
 		return selector
 
+	Creator.getJsReportUrlQuery = ()->
+		urlQuery = "?space_id=#{Steedos.getSpaceId()}"
+		filter_items = Tracker.nonreactive ()->
+			return Session.get("filter_items")
+		if filter_items
+			filterQuery = encodeURI JSON.stringify(filter_items)
+			urlQuery += "&user_filters=#{filterQuery}"
+		return urlQuery;
+
+	Creator.getJsReportViewUrl = (report_id)->
+		url = Creator.getRelativeUrl("/plugins/jsreport/web/viewer_db/#{report_id}")
+		url += Creator.getJsReportUrlQuery()
+		return url;
+	
+	Creator.getJsReportExcelUrl = (report_id)->
+		url = Creator.getRelativeUrl("/plugins/jsreport/api/report_db/#{report_id}/excel")
+		url += Creator.getJsReportUrlQuery()
+		return url;
+	
+	Creator.getJsReportPdfUrl = (report_id)->
+		url = Creator.getRelativeUrl("/plugins/jsreport/api/report_db/#{report_id}/pdf")
+		url += Creator.getJsReportUrlQuery()
+		return url;
+	
+
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
 	Tracker.autorun ()->

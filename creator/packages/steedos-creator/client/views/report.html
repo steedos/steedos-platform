@@ -1,7 +1,7 @@
 <template name="creator_report">
 	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet">
 		<div class="slds-template__container">
-			<div class="reportsReportPage slds-grid slds-grid--vertical filter-list-wraper">
+			<div class="reportsReportPage slds-grid slds-grid--vertical filter-list-wraper report-type-{{reportObject.report_type}} {{#if isDesignerOpen}}report-is-designer-open{{/if}}">
 				<div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
 					<div class="slds-grid">
 						<div class="slds-col slds-has-flexi-truncate">
@@ -34,10 +34,11 @@
 							</div>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-							
-							<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="切换图表">
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
-							</button>
+							{{#if isChartNeedToShow}}
+								<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="切换图表">
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
+								</button>
+							{{/if}}
 
 							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFiltering}}filtering{{/if}} {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="筛选器">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
@@ -47,13 +48,45 @@
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-button_icon-more btn-settings" aria-haspopup="true" title="设置">
-								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
-							</button>
-							{{#if isSavable}}
-								<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="设计模式">
-									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="puzzle"}}
+							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small slds-button slds-button_icon" aria-expanded="false">
+								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+									title="{{_ "设置"}}" data-toggle="dropdown">
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
+									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
+								<div class="dropdown-menu dropdown-menu-right" role="menu">
+									<ul class="slds-dropdown__list list-view-controls">
+										<li class="slds-dropdown__header" role="separator">
+											<span class="slds-text-title--caps">{{_ "设置"}}</span>
+										</li>
+										{{#if isBtnSettingsNeedToShow}}
+											<li class="slds-dropdown__item btn-settings" role="presentation">
+												<a href="javascript:void(0);" class="" role="option" tabindex="-1">
+													<span>{{_ "选项"}}</span>
+												</a>
+											</li>
+										{{/if}}
+										<li class="slds-dropdown__item btn-export-excel" role="presentation">
+											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
+												<span>{{_ "导出为EXCEL"}}</span>
+											</a>
+										</li>
+										{{#if isBtnExportPdfNeedToShow}}
+											<li class="slds-dropdown__item btn-export-pdf" role="presentation">
+												<a href="javascript:void(0);" class="" role="option" tabindex="-1">
+													<span>{{_ "导出为PDF"}}</span>
+												</a>
+											</li>
+										{{/if}}
+									</ul>
+								</div>
+							</div>
+							{{#if isDesignerNeedToShow}}
+								{{#if isSavable}}
+									<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="设计模式">
+										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="puzzle"}}
+									</button>
+								{{/if}}
 							{{/if}}
 							<div class="slds-button-group" role="group">
 								{{#each actions}}

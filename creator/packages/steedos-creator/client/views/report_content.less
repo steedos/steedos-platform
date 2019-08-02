@@ -1,19 +1,34 @@
-#jsreport {
-	width: 100%;
-	height: 100%;
-	iframe {
-		width: 100%;
-		min-width: auto;
-		height: 100%;
-		border: none;
-		background: transparent;
+.reportsReportPage {
+	.pageBody {
+		.scrollarea {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+			#jsreport {
+				flex: 1;
+				iframe {
+					width: 100%;
+					height: 100%;
+					min-width: auto;
+					border: none;
+					background: transparent;
+				}
+			}
+		}
 	}
 }
 
 /** 解决jsreport报表在客户端显示不全 **/
-#jsreport {
-	position: absolute;
-	iframe {
-		padding-bottom: 71px;
+.reportsReportPage{
+	.pageBody {
+		.scrollarea {
+			#jsreport {
+				position: relative;
+				iframe {
+					position: absolute;
+				}
+			}
+		}
 	}
 }

@@ -199,7 +199,9 @@ Template.steedosLookups.helpers({
 		var template = Template.instance();
 		return template.uniSelectize.initialized.get();
 	},
-
+	id: function () {
+		return Template.instance().data.atts.id
+	},
 	dataSchemaKeyFromAtts: function(){
 		return Template.instance().data.atts.dataSchemaKey
 	},

@@ -4,8 +4,8 @@ SteedosTable.formId = "instanceform";
 
 CreatorTable = {};
 
-CreatorTable.getKeySchema = function(field){
-    var formId = AutoForm.getFormId();
+CreatorTable.getKeySchema = function(field, autoFormId){
+    var formId = autoFormId || AutoForm.getFormId();
     var schema = AutoForm.getFormSchema(formId)._schema;
     var keys = CreatorTable.getKeys(field);
     keys = _.map(keys, function(key){
@@ -17,8 +17,8 @@ CreatorTable.getKeySchema = function(field){
 }
 
 
-CreatorTable.getThead = function(field, keys) {
-    var formId = AutoForm.getFormId();
+CreatorTable.getThead = function(field, keys, autoFormId) {
+    var formId = autoFormId || AutoForm.getFormId();
 
     var ss = AutoForm.getFormSchema(formId);
 
@@ -42,8 +42,8 @@ CreatorTable.getThead = function(field, keys) {
 }
 
 
-CreatorTable.getKeys = function(field) {
-    var formId = AutoForm.getFormId()
+CreatorTable.getKeys = function(field, autoFormId) {
+    var formId = autoFormId || AutoForm.getFormId()
 
     if (!AutoForm.getCurrentDataForForm(formId)) {
         return [];
@@ -92,47 +92,20 @@ if(Meteor.isClient){
 
     Template.creatorTable.events({
         'click .add-item-tr': function(event, template) {
-
             var field = template.data.name;
-
-            var key_schema = CreatorTable.getKeySchema(field)
-
-			fieldValues = AutoForm.getFieldValue(field);
-
-            formValues = Session.get('cmDoc') || {};
-
-			formValues[field] = fieldValues;
-
-			Session.set('cmDoc', formValues);
-
-			var trField = template.trField.get();
-
-			if(fieldValues && _.isArray(fieldValues)){
-				trField = [];
-				fieldValues.forEach(function(fv, index){
-					trField.push({index: index, value: fv })
-                })
-            }
-
-            var index = trField.length;
-
-            trField.push({index: index, value: []})
-
-            template.trField.set(trField);
+			fieldValues = AutoForm.getFieldValue(field, template.formId);
+            var index = fieldValues ? fieldValues.length : 0;
+			Blaze.renderWithData(Template.creatorTableTr, {index: index, value: [], name: field, formId: template.formId}, $("#"+field+"Tbody", $("#"+template.data.atts.id))[0], null, template.view)
         },
         
         'click .delete-row': function(event, template) {
-            var index = event.currentTarget.dataset.index;
-            var trField = template.trField.get();
-            trField[index] = undefined
-
-        
-            template.trField.set(trField);
+			event.currentTarget.parentElement.remove()
         }
     });
 
     Template.creatorTable.onCreated(function(){
         this.trField = new ReactiveVar([]);
+        this.formId = AutoForm.getFormId();
     })
 
     Template.creatorTable.rendered = function() {
@@ -170,45 +143,54 @@ if(Meteor.isClient){
                 return Template.instance().trField.get();
             }
         },
-        fieldName: function(index, value){
+        trData: function(data){
+            data.name = Template.instance().data.name;
+            return data
+        }
+    });
 
-            var field = Template.instance().data.name;
 
-			var formId = AutoForm.getFormId();
+	Template.creatorTableTr.helpers({
+		fieldName: function(index, value){
+
+			var field = Template.instance().data.name;
+
+			var formId = Template.instance().data.formId || AutoForm.getFormId();
+
 			var schema = AutoForm.getFormSchema(formId)._schema;
 
-            var keys = CreatorTable.getKeys(field);
-            keys = _.map(keys, function(key, i){
-                var _value = {};
-                _value.name = field + "."+ index +"." + key;
-                _value.value = value[i]
-                _value.key = field + ".$." + key;
-                _value.type = 'field-type-' + schema[_value.key].type.name;
-                return _value
-            });
-            return keys
-        },
-        isHiddenField: function(key) {
-            var formId = AutoForm.getFormId();
-            var ss = AutoForm.getFormSchema(formId);
-            return ss._schema[key].autoform && ss._schema[key].autoform.type == "hidden";
-        },
-        isDisabledField: function(key) {
-            var formId = AutoForm.getFormId();
-            var ss = AutoForm.getFormSchema(formId);
-            return ss._schema[key].autoform && ss._schema[key].autoform.disabled;
-        },
-        disabledFieldsValue: function(key) {
-            var formId = AutoForm.getFormId();
-            var ss = AutoForm.getFormSchema(formId)
-            if (ss._schema[key].autoform && ss._schema[key].autoform.disabled) {
-                defaultValue = ss._schema[key].autoform.defaultValue;
-                if (_.isFunction(defaultValue)) {
-                    defaultValue = defaultValue();
-                }
-                return defaultValue;
-            }
-            return ;
-        }
-    }); 
+			var keys = CreatorTable.getKeys(field, formId);
+			keys = _.map(keys, function(key, i){
+				var _value = {};
+				_value.name = field + "."+ index +"." + key;
+				_value.value = value[i]
+				_value.key = field + ".$." + key;
+				_value.type = 'field-type-' + schema[_value.key].type.name;
+				return _value
+			});
+			return keys
+		},
+		isHiddenField: function(key) {
+			var formId = Template.instance().data.formId || AutoForm.getFormId();
+			var ss = AutoForm.getFormSchema(formId);
+			return ss._schema[key].autoform && ss._schema[key].autoform.type == "hidden";
+		},
+		isDisabledField: function(key) {
+			var formId = Template.instance().data.formId || AutoForm.getFormId();
+			var ss = AutoForm.getFormSchema(formId);
+			return ss._schema[key].autoform && ss._schema[key].autoform.disabled;
+		},
+		disabledFieldsValue: function(key) {
+			var formId = Template.instance().data.formId || AutoForm.getFormId();
+			var ss = AutoForm.getFormSchema(formId)
+			if (ss._schema[key].autoform && ss._schema[key].autoform.disabled) {
+				defaultValue = ss._schema[key].autoform.defaultValue;
+				if (_.isFunction(defaultValue)) {
+					defaultValue = defaultValue();
+				}
+				return defaultValue;
+			}
+			return ;
+		}
+	});
 }

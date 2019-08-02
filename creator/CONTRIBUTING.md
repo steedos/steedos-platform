@@ -23,6 +23,7 @@ export MONGO_URL=mongodb://127.0.0.1/steedos
 export TOOL_NODE_FLAGS="--max-old-space-size=3800"
 yarn run build
 cd .dist
+yarn
 yarn start
 ```
 
@@ -31,6 +32,8 @@ yarn start
 - 需先修改 .dist/package.json 中的版本号。
 - 因为要发布空的steedos-server，需先修改 .meteor/packages，注释app相关的package
 - 新增的meteor package 项目，如果有Npm.depends部分，需要将node package添加到package.json及.dist/package.json
+
+> 注意发版本是在项目根目录发，不是在.dist中
 
 **发布脚本**
 ```

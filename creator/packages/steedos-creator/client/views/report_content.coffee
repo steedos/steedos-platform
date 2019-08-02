@@ -946,13 +946,7 @@ renderMatrixReport = (reportObject)->
 			self.pivotGridInstance?.set pivotGrid
 
 renderJsReport = (reportObject)->
-	url = Creator.getRelativeUrl("/plugins/jsreport/web/viewer_db/#{reportObject._id}");
-	url += "?space_id=#{Steedos.getSpaceId()}"
-	filter_items = Tracker.nonreactive ()->
-		return Session.get("filter_items")
-	if filter_items
-		query = encodeURI JSON.stringify(filter_items)
-		url += "&user_filters=#{query}"
+	url = Creator.getJsReportViewUrl(reportObject._id)
 	$('#jsreport').html("<iframe src=\"#{url}\"></iframe>");
 
 renderReport = (reportObject)->

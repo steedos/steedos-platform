@@ -695,3 +695,32 @@
 		height: 36px;
 	}
 }
+
+.reportsReportPage{
+	// 隐藏原来三种普通报表类型tabular/summary/matrix的导出excel按钮
+	&.report-type-tabular{
+		.dx-datagrid-header-panel {
+			// 即使是设计模式时也不需要显示出header，所以可以一直隐藏
+			display: none;
+		}
+	}
+	&.report-type-summary{
+		.dx-datagrid-header-panel {
+			display: none;
+			.dx-datagrid-export-button {
+				display: none;
+			}
+		}
+		&.report-is-designer-open {
+			// 设计模式时需要显示出header以供设计功能使用
+			.dx-datagrid-header-panel {
+				display: block;
+			}
+		}
+	}
+	&.report-type-matrix{
+		.dx-pivotgrid-export-button {
+			display: none;
+		}
+	}
+}
