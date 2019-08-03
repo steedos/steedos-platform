@@ -112,7 +112,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z) and (created le 2019-05-23T02:00:00Z))");
+        expect(result).to.be.eq("((created ge 2019-05-22T09:00:00Z) and (created le 2019-05-22T18:00:00Z))");
     });
     it('between array<null,date>', async () => {
         let filters = [
@@ -120,7 +120,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((created le 2019-05-23T02:00:00Z))");
+        expect(result).to.be.eq("((created le 2019-05-22T18:00:00Z))");
     });
     it('between array<date,null>', async () => {
         let filters = [
@@ -128,7 +128,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z))");
+        expect(result).to.be.eq("((created ge 2019-05-22T09:00:00Z))");
     });
     it('between array<dateString,null>', async () => {
         let filters = [
@@ -136,7 +136,15 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((created ge 2019-05-22T17:00:00Z))");
+        expect(result).to.be.eq("((created ge 2019-05-22T09:00:00Z))");
+    });
+    it('between undefined', async () => {
+        let filters = [
+            ["created", "between", undefined]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("");
     });
     it('filter is a function', async () => {
         let filters = function () {
