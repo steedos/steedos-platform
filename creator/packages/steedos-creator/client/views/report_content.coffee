@@ -984,6 +984,7 @@ renderReport = (reportObject)->
 		innerStackingBox.hide();
 		jsreportBox.hide()
 		emptyBox.show()
+		Session.set("is_filter_open", true)
 		return;
 	emptyBox.hide()
 	switch reportObject.report_type
@@ -1037,6 +1038,7 @@ Template.creator_report_content.onRendered ->
 			filter_logic = reportObject.filter_logic
 			object_fields = Creator.getObject(reportObject.object_name)?.fields
 			if object_fields
+				filter_items = Creator.getFiltersWithFilterFields(filter_items, object_fields, reportObject.filter_fields)
 				filter_items.forEach (item)->
 					filter_field_type = object_fields[item.field]?.type
 					# 数据库中的报表过滤条件中，时间类型字段会被保存为像`2019-07-02T06:25:14.898Z`这样的字符串格式

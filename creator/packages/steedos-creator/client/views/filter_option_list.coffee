@@ -5,34 +5,7 @@ getDefaultFilters = (object_name, filter_fields, filters)->
 		list_view = Creator.getListView(object_name, list_view_id, true)
 		filter_fields = list_view?.filter_fields
 	fields = Creator.getObject(object_name)?.fields
-	unless filters
-		filters = []
-	unless filter_fields
-		filter_fields = []
-	if filter_fields?.length
-		filter_fields.forEach (n)->
-			if _.isString(n)
-				n = 
-					field: n,
-					required: false
-			if fields[n.field] and !_.findWhere(filters,{field:n.field})
-				filters.push
-					field: n.field,
-					is_default: true,
-					is_required: n.required
-	filters.forEach (filterItem)->
-		matchField = filter_fields.find (n)-> return n == filterItem.field or n.field == filterItem.field
-		if _.isString(matchField)
-			matchField = 
-				field: matchField,
-				required: false
-		if matchField
-			filterItem.is_default = true
-			filterItem.is_required = matchField.required
-		else
-			delete filterItem.is_default
-			delete filterItem.is_required
-	return filters
+	return Creator.getFiltersWithFilterFields(filters, fields, filter_fields)
 
 Template.filter_option_list.helpers Creator.helpers
 

@@ -104,6 +104,43 @@ Creator.getObjectFilterFieldOptions = (object_name)->
 
 	return _options
 
+###
+filters: 要转换的filters
+fields: 对象字段
+filter_fields: 默认过滤字段，支持字符串数组和对象数组两种格式，如:['filed_name1','filed_name2'],[{field:'filed_name1',required:true}]
+处理逻辑: 把filters中存在于filter_fields的过滤条件增加每项的is_default、is_required属性，不存在于filter_fields的过滤条件对应的移除每项的相关属性
+返回结果: 处理后的filters
+###
+Creator.getFiltersWithFilterFields = (filters, fields, filter_fields)->
+	unless filters
+		filters = []
+	unless filter_fields
+		filter_fields = []
+	if filter_fields?.length
+		filter_fields.forEach (n)->
+			if _.isString(n)
+				n = 
+					field: n,
+					required: false
+			if fields[n.field] and !_.findWhere(filters,{field:n.field})
+				filters.push
+					field: n.field,
+					is_default: true,
+					is_required: n.required
+	filters.forEach (filterItem)->
+		matchField = filter_fields.find (n)-> return n == filterItem.field or n.field == filterItem.field
+		if _.isString(matchField)
+			matchField = 
+				field: matchField,
+				required: false
+		if matchField
+			filterItem.is_default = true
+			filterItem.is_required = matchField.required
+		else
+			delete filterItem.is_default
+			delete filterItem.is_required
+	return filters
+
 Creator.getObjectRecord = (object_name, record_id, select_fields, expand)->
 
 	if !object_name

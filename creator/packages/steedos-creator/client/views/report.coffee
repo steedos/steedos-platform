@@ -63,7 +63,7 @@ Template.creator_report.helpers
 		return false
 	
 	isFilterOpen: ()->
-		return Template.instance().is_filter_open?.get()
+		return Session.get("is_filter_open")
 	
 	isChartOpen: ()->
 		return Template.instance().is_chart_open?.get()
@@ -154,8 +154,8 @@ Template.creator_report.events
 			Template.creator_report_content.renderReport()
 
 	'click .btn-toggle-filter': (event, template)->
-		isFilterOpen = template.is_filter_open.get()
-		template.is_filter_open.set(!isFilterOpen)
+		isFilterOpen = Session.get("is_filter_open")
+		Session.set("is_filter_open", !isFilterOpen)
 
 	'click .btn-toggle-chart': (event, template)->
 		isChartOpen = !template.is_chart_open.get()
@@ -250,8 +250,8 @@ Template.creator_report.events
 		objectName = Session.get("object_name")
 		reportContent = Template.creator_report_content.getReportContent()
 		Creator.odata.update "reports", record_id, reportContent
-		if template.is_filter_open.get()
-			template.is_filter_open.set(false)
+		if Session.get("is_filter_open")
+			Session.set("is_filter_open", false)
 
 Template.creator_report.onRendered ->
 	this.autorun (c)->
@@ -271,9 +271,7 @@ Template.creator_report.onCreated ->
 	this.filter_items_for_cancel = new ReactiveVar()
 	this.filter_scope_for_cancel = new ReactiveVar()
 	this.filter_logic_for_cancel = new ReactiveVar()
-	this.is_filter_open = new ReactiveVar(false)
 	this.is_designer_open = new ReactiveVar(false)
-
 	this.is_chart_open = new ReactiveVar(false)
 	this.is_chart_disabled = new ReactiveVar(false)
 	this.report_settings = new ReactiveVar()
