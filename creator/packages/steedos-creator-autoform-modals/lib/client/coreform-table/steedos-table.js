@@ -69,8 +69,9 @@ if(Meteor.isClient){
     AutoForm.addInputType("table", {
         template: "creatorTable",
         valueOut: function() {
-            // console.log("valueOut..............")
             // CreatorTable.getTableValue(this);
+			if($("tr", $("tbody", this)).length < 1)
+				return []
 			return 
         },
         valueConverters: {
