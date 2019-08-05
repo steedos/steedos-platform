@@ -101,7 +101,9 @@ let formatFiltersToDev = (filters) => {
                             }
                             if (item instanceof Date) {
                                 // 处理时区偏差，不增加该代码会差8小时
-                                item.setHours(item.getHours() + item.getTimezoneOffset() / 60);
+                                let newItem = new Date(item.getTime());
+                                newItem.setHours(newItem.getHours() + newItem.getTimezoneOffset() / 60);
+                                item = newItem;
                             }
                             return item;
                         });
@@ -148,7 +150,9 @@ let formatFiltersToDev = (filters) => {
                             }
                             if (value instanceof Date) {
                                 // 处理时区偏差，不增加该代码会差8小时
-                                value.setHours(value.getHours() + value.getTimezoneOffset() / 60);
+                                let newValue = new Date(value.getTime());
+                                newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
+                                value = newValue;
                             }
                             tempFilters = [field, option, value];
                         }
