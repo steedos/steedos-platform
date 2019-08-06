@@ -147,18 +147,15 @@ let formatFiltersToDev = (filters) => {
                         else {
                             if (typeof value === "string" && regDate.test(value)) {
                                 // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
-                                console.log("===========inString==========");
                                 value = new Date(value);
                             }
-                            // if (value instanceof Date) {
-                            //     console.log("===========inSetValue==========");
-                            //     // 处理时区偏差，不增加该代码会差8小时
-                            //     let newValue = new Date(value.getTime());
-                            //     newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
-                            //     value = newValue;
-                            // }
+                            if (value instanceof Date) {
+                                // 处理时区偏差，不增加该代码会差8小时
+                                let newValue = new Date(value.getTime());
+                                newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
+                                value = newValue;
+                            }
                             tempFilters = [field, option, value];
-                            console.log("===========tempFilters==========", tempFilters);
                         }
                     }
                 } else {
