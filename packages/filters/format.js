@@ -5,7 +5,7 @@ const utils = require("./utils");
 
 let formatFiltersToDev = (filters) => {
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
-    var regDate = /^\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}(\.\d{3})?Z$/;
+    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;
