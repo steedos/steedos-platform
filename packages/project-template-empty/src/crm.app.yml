@@ -1,8 +1,10 @@
 _id: crm
 name: 客户管理
-description: 统一保存客户、合作伙伴、供应商数据
+description: 管理客户、合作伙伴、供应商数据，以及相关的联系人、任务、日程
 icon_slds: folder
 is_creator: true
 objects: 
-  - contacts
   - accounts
+  - contacts
+  - tasks
+  - events  
