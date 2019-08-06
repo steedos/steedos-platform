@@ -4,8 +4,8 @@ const _ = require('underscore');
 const utils = require("./utils");
 
 let formatFiltersToDev = (filters) => {
-    // 2019-03-23T01:00:33.524Z这种格式
-    var regDate = /^\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/;
+    // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
+    var regDate = /^\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}(\.\d{3})?Z$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;
@@ -147,15 +147,18 @@ let formatFiltersToDev = (filters) => {
                         else {
                             if (typeof value === "string" && regDate.test(value)) {
                                 // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
+                                console.log("===========inString==========");
                                 value = new Date(value);
                             }
-                            if (value instanceof Date) {
-                                // 处理时区偏差，不增加该代码会差8小时
-                                let newValue = new Date(value.getTime());
-                                newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
-                                value = newValue;
-                            }
+                            // if (value instanceof Date) {
+                            //     console.log("===========inSetValue==========");
+                            //     // 处理时区偏差，不增加该代码会差8小时
+                            //     let newValue = new Date(value.getTime());
+                            //     newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
+                            //     value = newValue;
+                            // }
                             tempFilters = [field, option, value];
+                            console.log("===========tempFilters==========", tempFilters);
                         }
                     }
                 } else {
