@@ -97,7 +97,7 @@ let formatFiltersToDev = (filters) => {
                     if (_.isArray(value)) {
                         value = value.map(function (item) {
                             if (typeof item === "string" && regDate.test(item)) {
-                                // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
+                                // 如果value正好是regDate格式，则转换为Date类型
                                 item = new Date(item);
                             }
                             if (item instanceof Date) {
@@ -146,7 +146,7 @@ let formatFiltersToDev = (filters) => {
                         }
                         else {
                             if (typeof value === "string" && regDate.test(value)) {
-                                // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
+                                // 如果value正好是regDate格式，则转换为Date类型
                                 value = new Date(value);
                             }
                             if (value instanceof Date) {
