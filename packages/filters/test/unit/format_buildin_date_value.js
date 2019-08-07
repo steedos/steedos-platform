@@ -74,7 +74,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq(`((created ge ${currentYear - 1}-01-01T00:00:00Z) and (created le ${currentYear - 1}-12-31T23:59:59Z))`);
+        let start = moment.utc(new Date(`${currentYear - 1}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${currentYear - 1}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${currentYear - 1}-01-01T00:00:00Z) and (created le ${currentYear - 1}-12-31T23:59:59Z))`);
     });
     it('between this_year', async () => {
         let filters = [
@@ -82,7 +85,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq(`((created ge ${currentYear}-01-01T00:00:00Z) and (created le ${currentYear}-12-31T23:59:59Z))`);
+        let start = moment.utc(new Date(`${currentYear}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${currentYear}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${currentYear}-01-01T00:00:00Z) and (created le ${currentYear}-12-31T23:59:59Z))`);
     });
     it('between next_year', async () => {
         let filters = [
@@ -90,7 +96,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq(`((created ge ${currentYear + 1}-01-01T00:00:00Z) and (created le ${currentYear + 1}-12-31T23:59:59Z))`);
+        let start = moment.utc(new Date(`${currentYear + 1}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${currentYear + 1}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${currentYear + 1}-01-01T00:00:00Z) and (created le ${currentYear + 1}-12-31T23:59:59Z))`);
     });
     it('between last_quarter', async () => {
         let filters = [
@@ -100,7 +109,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(lastQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(lastQuarterEndDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between this_quarter', async () => {
         let filters = [
@@ -110,7 +122,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(thisQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(thisQuarterEndDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between next_quarter', async () => {
         let filters = [
@@ -120,7 +135,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(nextQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(nextQuarterEndDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between last_month', async () => {
         let filters = [
@@ -130,7 +148,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(lastMonthFirstDay).format("YYYY-MM-DD");
         strLastDay = moment(lastMonthFinalDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between this_month', async () => {
         let filters = [
@@ -140,7 +161,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(firstDay).format("YYYY-MM-DD");
         strLastDay = moment(lastDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between next_month', async () => {
         let filters = [
@@ -150,7 +174,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strFirstDay = moment(nextMonthFirstDay).format("YYYY-MM-DD");
         strLastDay = moment(nextMonthFinalDay).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strFirstDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strLastDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strFirstDay}T00:00:00Z) and (created le ${strLastDay}T23:59:59Z))`);
     });
     it('between last_week', async () => {
         let filters = [
@@ -160,7 +187,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strMonday = moment(lastMonday).format("YYYY-MM-DD");
         strSunday = moment(lastSunday).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strMonday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strSunday} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
     });
     it('between this_week', async () => {
         let filters = [
@@ -170,7 +200,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strMonday = moment(monday).format("YYYY-MM-DD");
         strSunday = moment(sunday).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strMonday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strSunday} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
     });
     it('between next_week', async () => {
         let filters = [
@@ -180,7 +213,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strMonday = moment(nextMonday).format("YYYY-MM-DD");
         strSunday = moment(nextSunday).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strMonday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strSunday} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strMonday}T00:00:00Z) and (created le ${strSunday}T23:59:59Z))`);
     });
     it('between yestday', async () => {
         let filters = [
@@ -189,7 +225,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
         strYestday = moment(yestday).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strYestday}T00:00:00Z) and (created le ${strYestday}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strYestday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strYestday} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strYestday}T00:00:00Z) and (created le ${strYestday}T23:59:59Z))`);
     });
     it('between today', async () => {
         let filters = [
@@ -198,7 +237,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
         strToday = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strToday}T00:00:00Z) and (created le ${strToday}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strToday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strToday} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strToday}T00:00:00Z) and (created le ${strToday}T23:59:59Z))`);
     });
     it('between tomorrow', async () => {
         let filters = [
@@ -207,7 +249,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
         strTomorrow = moment(tomorrow).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strTomorrow}T00:00:00Z) and (created le ${strTomorrow}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strTomorrow} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strTomorrow} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strTomorrow}T00:00:00Z) and (created le ${strTomorrow}T23:59:59Z))`);
     });
     it('between last_7_days', async () => {
         let filters = [
@@ -217,7 +262,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(last_7_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between last_30_days', async () => {
         let filters = [
@@ -227,7 +275,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(last_30_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between last_60_days', async () => {
         let filters = [
@@ -237,7 +288,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(last_60_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between last_90_days', async () => {
         let filters = [
@@ -247,7 +301,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(last_90_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between last_120_days', async () => {
         let filters = [
@@ -257,7 +314,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(last_120_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between next_7_days', async () => {
         let filters = [
@@ -267,7 +327,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_7_days).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between next_30_days', async () => {
         let filters = [
@@ -277,7 +340,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_30_days).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between next_60_days', async () => {
         let filters = [
@@ -287,7 +353,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_60_days).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between next_90_days', async () => {
         let filters = [
@@ -297,7 +366,10 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_90_days).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
     it('between next_120_days', async () => {
         let filters = [
@@ -307,6 +379,9 @@ describe('advanced format between buildin date value filter to odata query', () 
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_120_days).format("YYYY-MM-DD");
-        expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
+        let start = moment.utc(new Date(`${strStartDay} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
+        let end = moment.utc(new Date(`${strEndDay} 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
+        expect(result).to.be.eq(`((created ge ${start}Z) and (created le ${end}Z))`);
+        // expect(result).to.be.eq(`((created ge ${strStartDay}T00:00:00Z) and (created le ${strEndDay}T23:59:59Z))`);
     });
 });
