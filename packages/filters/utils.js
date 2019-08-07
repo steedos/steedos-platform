@@ -343,16 +343,17 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
     }
     values = [startValue, endValue];
-    // if (field_type === "datetime") {
-	// 	// 时间类型字段，内置时间范围应该考虑偏移时区值，否则过滤数据存在偏差
-	// 	// 非内置时间范围时，用户通过时间控件选择的范围，会自动处理时区偏差情况
-	// 	// 日期类型字段，数据库本来就存的是UTC的0点，不存在偏差
-    //     _.forEach(values, function (fv) {
-    //         if (fv) {
-    //             return fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60);
-    //         }
-    //     });
-    // }
+    // 时间类型字段，内置时间范围应该考虑偏移时区值，否则过滤数据存在偏差
+    // 日期类型字段，数据库本来就存的是UTC的0点；
+    // 日期类型字段，目前creator代码（2019年08月07号存的）存的是UTC的16点，见：https://github.com/steedos/creator/issues/1271；
+    // 日期类型字段，无论是存UTC的0点还是16点，按时间类型字段一样的处理方式是可以正常搜索到数据的
+    values = values.map(function (fv) {
+        if (fv) {
+            fv = new Date(fv.getTime());// clone fv的值以防止原来的值被更改
+            fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60);
+        }
+        return fv;
+    });
     return {
         label: label,
         key: key,
