@@ -476,9 +476,13 @@ Creator.formatFiltersToDev = (filters, object_name, options)->
 							if ["date", "datetime"].includes(filter_field_type)
 								# date:因日期字段数据库保存的值中不带时间值的，所以日期类型过滤条件需要特意处理的，为了兼容dx控件显示
 								# datetime:因新建/编辑记录保存的时候network中是处理了时区偏差的，所以在请求过滤条件的时候也应该相应的设置
-								_.forEach value, (fv)->
+								value = value.map (fv)->
 									if fv
+										if typeof fv == "string"
+											fv = new Date(fv);
+										fv = new Date(fv.getTime()) # clone value，防止原来的值变更
 										fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60 )  # 处理grid中的datetime 偏移
+									return fv
 							v_selector = []
 							if option == "="
 								_.each value, (v)->
@@ -505,6 +509,9 @@ Creator.formatFiltersToDev = (filters, object_name, options)->
 								# date:因日期字段数据库保存的值中不带时间值的，所以日期类型过滤条件需要特意处理的，为了兼容dx控件显示
 								# datetime:因新建/编辑记录保存的时候network中是处理了时区偏差的，所以在请求过滤条件的时候也应该相应的设置
 								if value
+									if typeof value == "string"
+										value = new Date(value);
+									value = new Date(value.getTime()) # clone value，防止原来的值变更
 									value.setHours(value.getHours() + value.getTimezoneOffset() / 60 )  # 处理grid中的datetime 偏移
 							tempFilters = [field, option, value]
 				else
