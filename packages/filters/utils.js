@@ -343,10 +343,12 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
     }
     values = [startValue, endValue];
-    // 时间类型字段，内置时间范围应该考虑偏移时区值，否则过滤数据存在偏差
+    // 时间类型字段，应该考虑偏移时区值，否则过滤数据存在偏差
     // 日期类型字段，数据库本来就存的是UTC的0点；
     // 日期类型字段，目前creator代码（2019年08月07号存的）存的是UTC的16点，见：https://github.com/steedos/creator/issues/1271；
-    // 日期类型字段，无论是存UTC的0点还是16点，按时间类型字段一样的处理方式是可以正常搜索到数据的
+    // 比如用户想搜索2019-08-07的数据，请求会是：((created ge 2019-08-06T16:00:00Z) and (created le 2019-08-07T15:59:59Z)) ，
+    // 如果数据库中存储的是2019-08-07T16:00:00Z而不是2019-08-07T00:00:00Z，那么就搜索不到数据。
+    // 所以，日期类型字段，要求存储的是UTC的0点，而不可以是16点，否则可能搜索不到数据。
     values = values.map(function (fv) {
         if (fv) {
             fv = new Date(fv.getTime());// clone fv的值以防止原来的值被更改
