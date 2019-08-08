@@ -100,12 +100,6 @@ let formatFiltersToDev = (filters) => {
                                 // 如果value正好是regDate格式，则转换为Date类型
                                 item = new Date(item);
                             }
-                            if (item instanceof Date) {
-                                // 处理时区偏差，不增加该代码会差8小时
-                                let newItem = new Date(item.getTime());
-                                newItem.setHours(newItem.getHours() + newItem.getTimezoneOffset() / 60);
-                                item = newItem;
-                            }
                             return item;
                         });
                         if (["=", "in"].indexOf(option) > -1) {
@@ -148,12 +142,6 @@ let formatFiltersToDev = (filters) => {
                             if (typeof value === "string" && regDate.test(value)) {
                                 // 如果value正好是regDate格式，则转换为Date类型
                                 value = new Date(value);
-                            }
-                            if (value instanceof Date) {
-                                // 处理时区偏差，不增加该代码会差8小时
-                                let newValue = new Date(value.getTime());
-                                newValue.setHours(newValue.getHours() + newValue.getTimezoneOffset() / 60);
-                                value = newValue;
                             }
                             tempFilters = [field, option, value];
                         }
