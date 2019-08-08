@@ -24,15 +24,16 @@ context中包含以下参数：
 ## 定义服务端API
 可以在插件中定义 Express Routes，并在插件初始化函数中注册相关路由。
 ```js
+const express = require('express')
 const router = express.Router();
 
-router.get('/plugins/test/hello', async (req, res) => {
+router.get('/hello', async (req, res) => {
     res.status(200).send(`Hello World`);
     res.end();
     return;
 }
 
 export function init(context) {
-    context.app.use(router);
+    context.app.use('/plugins/test', router);
 }
 ```
