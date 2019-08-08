@@ -3,7 +3,7 @@ const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
 
-let formatFiltersToDev = (filters) => {
+let formatFiltersToDev = (filters, utcOffset) => {
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
     var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
@@ -89,7 +89,7 @@ let formatFiltersToDev = (filters) => {
                     if (isBetweenOperation && _.isString(value)) {
                         // 如果是between运算符内置值，则取出对应values作为过滤值
                         // 比如value为last_year，返回对应的时间值
-                        builtinValue = utils.getBetweenBuiltinValueItem(value);
+                        builtinValue = utils.getBetweenBuiltinValueItem(value, utcOffset);
                         if (builtinValue) {
                             value = builtinValue.values;
                         }
@@ -204,8 +204,8 @@ let formatFiltersToDev = (filters) => {
     return selector;
 };
 
-let formatFiltersToODataQuery = (filters, odataProtocolVersion, forceLowerCase) => {
-    let devFilters = formatFiltersToDev(filters);
+let formatFiltersToODataQuery = (filters, utcOffset, odataProtocolVersion, forceLowerCase) => {
+    let devFilters = formatFiltersToDev(filters, utcOffset);
     return new SteedosFilter(devFilters, odataProtocolVersion, forceLowerCase).formatFiltersToODataQuery();
 };
 
