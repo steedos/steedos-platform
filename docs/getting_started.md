@@ -4,13 +4,23 @@ title: 教程
 
 使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建企业级应用程序。
 
-> Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
+> [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
+
+Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
 
 ## 安装运行环境
-- 安装NodeJS [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
-- 安装数据库服务器 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)
-- 安装版本管理工具 [Github Desktop](https://desktop.github.com/)
-- 安装源码编辑工具 [Visual Studio Code](https://code.visualstudio.com/)
+
+### 安装NodeJS 
+请安装 [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
+
+### 安装数据库服务器 
+请安装 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)，安装完成之后，请启动mongodb服务。
+
+### 安装版本管理工具 
+请安装 [Github Desktop](https://desktop.github.com/)，用于管理项目源码。如果您还没有Github账户，建议您先注册一个。
+
+### 安装源码编辑工具 
+请安装 [Visual Studio Code](https://code.visualstudio.com/)。并安装 Steedos 集成插件[redhat.vscode-yaml](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)，您在编写配置文件时如果有语法错误，Visual Studio Code 会自动提示。
 
 ### 安装 yarn 包管理工具
 yarn 是 Facebook 开发的 Nodejs 包管理工具（替代npm），可以更快速更稳定的为项目安装依赖包。
@@ -25,6 +35,8 @@ yarn global add steedos-cli
 ```
 
 ## 创建项目 
+
+### 创建空项目
 ```bash
 steedos create my-app
 ```
@@ -183,7 +195,7 @@ objects:
   - events  
 ```
 
-## 运行
+## 调试与运行
 
 ### 调试项目
 执行以下命令，进入调试模式。调试模式下，修改任何配置文件会自动重新启动服务，开发人员只需要刷新浏览器就能看到修改后的结果。
@@ -201,8 +213,9 @@ yarn start
 第一次使用时，数据库为空。点击“企业注册”，可以在本地数据库中创建一家新的企业账户。
 ![界面展示](assets/mac_ipad_iphone_list.png)
 
-## 案例参考
-- [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
+
+## 示例项目
+你也可以下载并运行我们的示例项目。这些示例项目预定义了许多业务对象，可以作为学习参考。
 - [合同管理](https://github.com/steedos/steedos-contracts-app)
 - [档案管理](https://github.com/steedos/steedos-records-app)
 - [会议管理](https://github.com/steedos/steedos-meeting-app)
