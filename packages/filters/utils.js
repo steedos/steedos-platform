@@ -352,8 +352,10 @@ let getBetweenTimeBuiltinValueItem = (key, utcOffset) => {
     if (utcOffset) {
         values = values.map(function (fv) {
             if (fv) {
+                // 注意这里取的值是moment().utcOffset() / 60得到的，不是new Date().getTimezoneOffset() / 60
+                // 它们的值正好为正负关系，北京时间前者为 +8，后者为 -8
                 fv = new Date(fv.getTime());// clone fv的值以防止原来的值被更改
-                fv.setHours(fv.getHours() + utcOffset);
+                fv.setHours(fv.getHours() - utcOffset);
             }
             return fv;
         });
