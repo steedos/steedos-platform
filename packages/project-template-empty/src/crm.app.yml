@@ -1,6 +1,6 @@
 _id: crm
-name: 客户管理
-description: 管理客户、合作伙伴、供应商数据，以及相关的联系人、任务、日程
+name: 客户
+description: 管理客户，以及相关的联系人、任务和日程。
 icon_slds: folder
 is_creator: true
 objects: 

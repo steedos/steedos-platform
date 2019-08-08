@@ -1,7 +1,6 @@
 name: accounts
 label: 单位
-icon: person_account
-description: 统一保存客户、合作伙伴、供应商数据
+icon: account
 enable_files: true
 enable_search: true
 enable_tasks: true
@@ -10,12 +9,31 @@ enable_api: true
 enable_share: true
 enable_chatter: true
 fields:
-  name: 
+  name:
+    label: 名称
     type: text
-    label: 标题 
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    searchable: true
+    required: true
+    sortable: true
+  credit_code:
+    type: text
+    label: 统一社会信用代码
+    inlineHelpText: '系统按照此字段校验重复，避免重复录入单位信息。'
+    required: true
+  owner:
+    label: 责任人
+    omit: false
+    readonly: false
+    hidden: false
+    type: lookup
+    reference_to: users
   priority:
-    type: text
     label: 优先级
+    type: select
+    sortable: true
     options:
       - label: 高
         value: high
@@ -23,13 +41,27 @@ fields:
         value: normal
       - label: 低
         value: low
-  owner:
-    label: 所有人
-    type: lookup
-    reference_to: users
+    filterable: true
+  registered_capital:
+    type: currency
+    label: 注册资金
+    scale: 2
+  website:
+    type: url
+    label: 网址
+  phone:
+    type: text
+    label: 电话
+    defaultValue: ''
+  email:
+    type: text
+    label: 邮箱
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+    name: description
 list_views:
-  recent:
-    label: 最近查看
   all:
     label: 所有单位
     columns:
@@ -37,17 +69,28 @@ list_views:
       - priority
       - owner
       - modified
-    filter_fields:
-      - priority
     filter_scope: space
-  high_priority:
-    label: 重点关注
-    filters: [["priority", "=", "high"]]
+  recent:
+    label: 最近查看
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_scope: space
+  mine:
+    label: 我的单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_scope: mine
 permission_set:
   user:
-    allowCreate: true
-    allowDelete: true
-    allowEdit: true
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: false
