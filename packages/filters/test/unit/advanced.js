@@ -1,5 +1,6 @@
 const formatFiltersToODataQuery = require('../../index').formatFiltersToODataQuery;
 const expect = require('chai').expect;
+const utcOffset = 0;
 
 describe('advanced arguments for the filter function', () => {
     it('odata protocol version for default value 4', async () => {
@@ -7,7 +8,7 @@ describe('advanced arguments for the filter function', () => {
             ["name", "contains", "ptr"]
         ];
         let result1 = formatFiltersToODataQuery(filters);
-        let result2 = formatFiltersToODataQuery(filters, 4);
+        let result2 = formatFiltersToODataQuery(filters, utcOffset, 4);
         console.log("odata filters query result1:", result1);
         expect(result1).to.be.eq("(contains(name,'ptr'))");
         expect(result1).to.be.eq(result2);
@@ -16,7 +17,7 @@ describe('advanced arguments for the filter function', () => {
         let filters = [
             ["name", "contains", "ptr"]
         ];
-        let result = formatFiltersToODataQuery(filters, 2);
+        let result = formatFiltersToODataQuery(filters, utcOffset, 2);
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("(substringof('ptr',name))");
     });
@@ -24,8 +25,8 @@ describe('advanced arguments for the filter function', () => {
         let filters = [
             ["title", "contains", "PTR"]
         ];
-        let result1 = formatFiltersToODataQuery(filters, 4);
-        let result2 = formatFiltersToODataQuery(filters, 4, true);
+        let result1 = formatFiltersToODataQuery(filters, utcOffset, 4);
+        let result2 = formatFiltersToODataQuery(filters, utcOffset, 4, true);
         console.log("odata filters query result:", result1);
         expect(result1).to.be.eq("(contains(title,'ptr'))");
         expect(result1).to.be.eq(result2);
@@ -34,7 +35,7 @@ describe('advanced arguments for the filter function', () => {
         let filters = [
             ["title", "contains", "PTR"]
         ];
-        let result = formatFiltersToODataQuery(filters, 4, false);
+        let result = formatFiltersToODataQuery(filters, utcOffset, 4, false);
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("(contains(title,'PTR'))");
     });

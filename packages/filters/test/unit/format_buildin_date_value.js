@@ -66,13 +66,14 @@ next_30_days = new Date(now.getTime() + (29 * millisecond));
 next_60_days = new Date(now.getTime() + (59 * millisecond));
 next_90_days = new Date(now.getTime() + (89 * millisecond));
 next_120_days = new Date(now.getTime() + (119 * millisecond));
+const utcOffset = moment().utcOffset() / 60;
 
 describe('advanced format between buildin date value filter to odata query', () => {
     it('between last_year', async () => {
         let filters = [
             ["created", "between", "last_year"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         let start = moment.utc(new Date(`${currentYear - 1}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
         let end = moment.utc(new Date(`${currentYear - 1}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -83,7 +84,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "this_year"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         let start = moment.utc(new Date(`${currentYear}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
         let end = moment.utc(new Date(`${currentYear}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -94,7 +95,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_year"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         let start = moment.utc(new Date(`${currentYear + 1}-01-01 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
         let end = moment.utc(new Date(`${currentYear + 1}-12-31 23:59:59`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -105,7 +106,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_quarter"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(lastQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(lastQuarterEndDay).format("YYYY-MM-DD");
@@ -118,7 +119,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "this_quarter"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(thisQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(thisQuarterEndDay).format("YYYY-MM-DD");
@@ -131,7 +132,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_quarter"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(nextQuarterStartDay).format("YYYY-MM-DD");
         strLastDay = moment(nextQuarterEndDay).format("YYYY-MM-DD");
@@ -144,7 +145,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_month"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(lastMonthFirstDay).format("YYYY-MM-DD");
         strLastDay = moment(lastMonthFinalDay).format("YYYY-MM-DD");
@@ -157,7 +158,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "this_month"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(firstDay).format("YYYY-MM-DD");
         strLastDay = moment(lastDay).format("YYYY-MM-DD");
@@ -170,7 +171,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_month"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strFirstDay = moment(nextMonthFirstDay).format("YYYY-MM-DD");
         strLastDay = moment(nextMonthFinalDay).format("YYYY-MM-DD");
@@ -183,7 +184,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_week"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strMonday = moment(lastMonday).format("YYYY-MM-DD");
         strSunday = moment(lastSunday).format("YYYY-MM-DD");
@@ -196,7 +197,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "this_week"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strMonday = moment(monday).format("YYYY-MM-DD");
         strSunday = moment(sunday).format("YYYY-MM-DD");
@@ -209,7 +210,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_week"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strMonday = moment(nextMonday).format("YYYY-MM-DD");
         strSunday = moment(nextSunday).format("YYYY-MM-DD");
@@ -222,7 +223,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "yestday"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strYestday = moment(yestday).format("YYYY-MM-DD");
         let start = moment.utc(new Date(`${strYestday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -234,7 +235,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "today"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strToday = moment(now).format("YYYY-MM-DD");
         let start = moment.utc(new Date(`${strToday} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -246,7 +247,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "tomorrow"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strTomorrow = moment(tomorrow).format("YYYY-MM-DD");
         let start = moment.utc(new Date(`${strTomorrow} 00:00:00`)).format("YYYY-MM-DDTHH:mm:ss");
@@ -258,7 +259,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_7_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(last_7_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
@@ -271,7 +272,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_30_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(last_30_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
@@ -284,7 +285,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_60_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(last_60_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
@@ -297,7 +298,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_90_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(last_90_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
@@ -310,7 +311,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "last_120_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(last_120_days).format("YYYY-MM-DD");
         strEndDay = moment(now).format("YYYY-MM-DD");
@@ -323,7 +324,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_7_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_7_days).format("YYYY-MM-DD");
@@ -336,7 +337,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_30_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_30_days).format("YYYY-MM-DD");
@@ -349,7 +350,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_60_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_60_days).format("YYYY-MM-DD");
@@ -362,7 +363,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_90_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_90_days).format("YYYY-MM-DD");
@@ -375,7 +376,7 @@ describe('advanced format between buildin date value filter to odata query', () 
         let filters = [
             ["created", "between", "next_120_days"]
         ];
-        let result = formatFiltersToODataQuery(filters);
+        let result = formatFiltersToODataQuery(filters, utcOffset);
         console.log("odata filters query result:", result);
         strStartDay = moment(now).format("YYYY-MM-DD");
         strEndDay = moment(next_120_days).format("YYYY-MM-DD");
