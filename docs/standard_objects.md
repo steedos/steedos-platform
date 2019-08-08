@@ -54,7 +54,7 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 [源码](https://github.com/steedos/object-server/blob/master/packages/standard-objects/permission_objects.object.yml)
 
-### 记录级权限 
+### 记录级权限 permission_shares
 在对象级权限的基础上，通过配置共享规则，可以实现记录级权限。
 
 [源码](https://github.com/steedos/object-server/blob/master/packages/standard-objects/permission_shares.object.js)
