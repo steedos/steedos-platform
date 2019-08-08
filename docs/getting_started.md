@@ -2,16 +2,16 @@
 title: 教程
 ---
 
-使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建企业级应用程序。
+使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建功能强大的企业应用程序。
 
 > [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
 
-Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
+## 安装开发环境
 
-## 安装运行环境
+Steedos项目基于NodeJS开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
 
 ### 安装NodeJS 
-请安装 [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
+请安装与操作系统对应的 [NodeJS v10.0 或以上版本](https://nodejs.org/en/) 。
 
 ### 安装数据库服务器 
 请安装 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)，安装完成之后，请启动mongodb服务。

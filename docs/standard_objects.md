@@ -26,6 +26,22 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 [源码](https://github.com/steedos/object-server/blob/master/packages/standard-objects/organizations.object.yml)
 
+## 功能
+
+### 任务 tasks
+用于统一管理对象的相关任务，业务人员可以在同一个列表中可以查看关联到各业务对象的工作任务。
+
+### 日程 events
+用于统一管理对象的相关日程，业务人员可以在同一个列表中可以查看关联到各业务对象的日程。
+
+### 备忘 notes
+用于统一管理对象的相关备忘，业务人员可以在同一个列表中可以查看关联到各业务对象的备忘。
+
+### 附件 cms_files
+用于统一管理对象的相关附件，业务人员可以在同一个列表中可以查看关联到各业务对象的备忘。
+
+[源码](https://github.com/steedos/object-server/blob/master/packages/standard-objects/cms_files.object.js)
+
 ## 权限
 
 ### 权限组 permission_set
@@ -43,11 +59,22 @@ Steedos SAAS 版本可以把用户划分为不同的工作区（企业），每�
 
 [源码](https://github.com/steedos/object-server/blob/master/packages/standard-objects/permission_shares.object.js)
 
-## 应用
+## 审批
 
-### 任务 tasks
-用于统一管理跨对象的任务，在同一个列表中可以查看关联到各业务对象的工作日程。
+### 审批单 forms
+用于保存审批单，用户可以使用Steedos表单设计工具来设计审批单。
 
-### 日程 events
-用于统一管理跨对象的日程，在同一个列表中可以查看关联到各业务对象的工作日程。
+### 审批流程 flows
+用于保存审批流程，用户可以使用Steedos流程设计工具来设计流程。每个流程对应一个审批单。
 
+### 流程分类 categories
+用于分类显示业务流程。每个流程只能属于一个分类。
+
+### 审批岗位 flow_roles
+用于配置公司的审批岗位。建议流程步骤处理人绑定到岗位而不是具体人员。当人员调动时，只需要修改岗位成员。
+
+### 岗位成员 flow_positions
+用于配置每个岗位对应的员工。
+
+### 申请单 instances
+用于保存业务人员填写的申请单和签核历程。
