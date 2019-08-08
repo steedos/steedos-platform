@@ -23,9 +23,16 @@ steedos客户端工具用于创建和运行项目，还可以从现有数据库�
 ```bash
 yarn global add steedos-cli
 ```
+
 ## 创建项目 
 ```bash
 steedos create my-app
+```
+
+### 安装依赖包
+```bash
+cd my-app
+yarn
 ```
 
 ### 文件夹结构
@@ -37,30 +44,66 @@ my-app/
   package.json
   src/
     accounts.object.yml
+    contacts.object.yml
+    crm.app.yml
   server.js
   steedos-config.yml
 ```
 
 ### 系统配置文件 
-文件 steedos-config.yml ，配置系统参数：
+文件 steedos-config.yml 用于配置Steedos系统参数，包括：
 - 数据库连接方式；
 - 附件存储位置；
 - 服务端口和访问地址。
 
-### 定义一个业务对象
-创建一个对象描述文件 src/accounts.object.yml 。
+> 配置文件默认使用本机安装的MongoDB数据库，需要先安装并启动 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)。
+
+### 调试项目
+执行以下命令，进入调试模式。调试模式下，修改任何配置文件会自动重新启动服务，开发人员只需要刷新浏览器就能看到修改后的结果。
+```bash
+yarn debug
+```
+
+### 定义业务对象
+系统内置了两个 [业务对象](object.md) 描述文件，例如 src/accounts.object.yml ，您可以尝试修改 。
 
 ```yaml
 name: accounts
 label: 单位
-description: 统一保存客户、合作伙伴、供应商数据
+icon: account
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: false
+enable_api: true
+enable_share: true
+enable_chatter: true
 fields:
-  name: 
-    type: String
-    label: 标题 
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    searchable: true
+    required: true
+    sortable: true
+  credit_code:
+    type: text
+    label: 统一社会信用代码
+    inlineHelpText: '系统按照此字段校验重复，避免重复录入单位信息。'
+    required: true
+  owner:
+    label: 责任人
+    omit: false
+    readonly: false
+    hidden: false
+    type: lookup
+    reference_to: users
   priority:
-    type: String
     label: 优先级
+    type: select
+    sortable: true
     options:
       - label: 高
         value: high
@@ -68,13 +111,27 @@ fields:
         value: normal
       - label: 低
         value: low
-  owner:
-    label: 所有人
-    type: lookup
-    reference_to: users
+    filterable: true
+  registered_capital:
+    type: currency
+    label: 注册资金
+    scale: 2
+  website:
+    type: url
+    label: 网址
+  phone:
+    type: text
+    label: 电话
+    defaultValue: ''
+  email:
+    type: text
+    label: 邮箱
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+    name: description
 list_views:
-  recent:
-    label: 最近查看
   all:
     label: 所有单位
     columns:
@@ -82,16 +139,28 @@ list_views:
       - priority
       - owner
       - modified
-    filter_fields:
+    filter_scope: space
+  recent:
+    label: 最近查看
+    columns:
+      - name
       - priority
-  high_priority:
-    label: 重点关注
-    filters: ["priority", "=", "high"]
+      - owner
+      - modified
+    filter_scope: space
+  mine:
+    label: 我的单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_scope: mine
 permission_set:
   user:
-    allowCreate: true
-    allowDelete: true
-    allowEdit: true
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: false
@@ -104,26 +173,25 @@ permission_set:
     viewAllRecords: true
 ```
 
-### 创建一个App
-创建一个应用描述文件 src/my-app.app.yml 。
+### 定义应用
+系统内置了一个 [应用](app.md) 描述文件 src/crm.app.yml ，您可以尝试修改此文件。
 ```yaml
-_id: my-app
-name: My App
-description: 我的第一个Steedos App
-icon_slds: metrics
+_id: crm
+name: 客户
+description: 管理客户，以及相关的联系人、任务和日程。
+icon_slds: folder
 is_creator: true
 objects: 
   - accounts
+  - contacts
+  - tasks
+  - events  
 ```
 
 ### 运行项目
 ```bash
-cd my-app
-yarn
 yarn start
 ```
-
-> 系统默认使用本机安装的MongoDB数据库，需要先安装并启动 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)。
 
 ### 使用浏览器访问
 使用浏览器访问地址 [http://127.0.0.1:5000/](http://127.0.0.1:5000/) ，即可访问用户界面。

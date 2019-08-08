@@ -75,6 +75,10 @@
   font-weight: initial;
 }
 
+article a {
+  color: #0070d2;
+}
+
 .headerTitleWithLogo {
   white-space: nowrap;
 }
