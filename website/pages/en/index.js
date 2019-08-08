@@ -37,7 +37,7 @@ class HomeSplash extends React.Component {
 
     const ProjectTitle = () => (
       <h2 className="projectTitle">
-        Steedos “低代码”开发平台
+        全球首个开源“低代码”开发平台
         <small>{siteConfig.tagline}</small>
       </h2>
     );
