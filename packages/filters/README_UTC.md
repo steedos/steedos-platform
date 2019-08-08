@@ -44,8 +44,13 @@ OData请求会是：`(signed_date ge 2019-08-07T05:00:00Z)`
 > Creator中时间字段与@steedos/filters包是一样的
 
 ### 内置时间范围：
-用户想搜索北京时间今年的数据，应该使用`[["created","between","this_year"]]`，会自动转换为`[["signed_date","between",["2018-12-31T16:00:00Z","2019-12-31T15:59:59Z"]]`
-OData请求会是：`((created ge 2018-12-31T16:00:00Z) and (created le 2019-12-31T15:59:59Z))`
+用户想搜索北京时间今年的数据，应该使用`[["created","between","this_year"]]`
+Creator中前端使用，会自动转换为`[["signed_date","between",["2018-12-31T16:00:00Z","2019-12-31T15:59:59Z"]]`，
+其OData请求会是：`((created ge 2018-12-31T16:00:00Z) and (created le 2019-12-31T15:59:59Z))`；
+后台使用，默认自动转换为`[["signed_date","between",["2019-01-01T00:00:00Z","2019-12-31T23:59:59Z"]]`，
+其OData请求会是：`((signed_date ge 2019-01-01T00:00:00Z) and (signed_date le 2019-12-31T23:59:59Z))`；
+
+> 后台可以配置utcOffset值来改变默认行为，比如设置为utcOffset等于8，则与上述Creator中前端效果是一样的，会自动减去8小时。
 
 > 注意与@steedos/filters包不一样，Creator中过滤器中选择今年范围时，OData请求是`((signed_date ge 2019-01-01T00:00:00Z) and (signed_date le 2019-12-31T23:59:59Z))`，这是因为Creator中今年这样的范围是以日期字段处理的，做了特别处理，直接用了utc的当年的时间范围，但是不影响功能。
 
