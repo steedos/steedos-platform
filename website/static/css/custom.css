@@ -79,6 +79,11 @@ article a {
   color: #0070d2;
 }
 
+article h2 {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: .3em;
+}
+
 .headerTitleWithLogo {
   white-space: nowrap;
 }

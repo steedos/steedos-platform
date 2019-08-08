@@ -6,7 +6,7 @@ title: 教程
 
 > Steedos项目使用nodejs语言开发，默认使用MongoDB数据库。您可以在 Windows、Mac 或 Linux 环境中创建、开发和运行Steedos项目。
 
-### 安装运行环境
+## 安装运行环境
 - 安装NodeJS [NodeJS v10.0.0 或以上版本.](https://nodejs.org/en/)
 - 安装数据库服务器 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)
 - 安装版本管理工具 [Github Desktop](https://desktop.github.com/)
@@ -58,13 +58,8 @@ my-app/
 
 > 配置文件默认使用本机安装的MongoDB数据库，需要先安装并启动 [MongoDB Community Server v3.4 或以上版本](https://www.mongodb.com/download-center/community)。
 
-### 调试项目
-执行以下命令，进入调试模式。调试模式下，修改任何配置文件会自动重新启动服务，开发人员只需要刷新浏览器就能看到修改后的结果。
-```bash
-yarn debug
-```
 
-### 定义业务对象
+### 配置业务对象
 系统内置了两个 [业务对象](object.md) 描述文件，例如 src/accounts.object.yml ，您可以尝试修改 。
 
 ```yaml
@@ -173,7 +168,7 @@ permission_set:
     viewAllRecords: true
 ```
 
-### 定义应用
+### 配置应用
 系统内置了一个 [应用](app.md) 描述文件 src/crm.app.yml ，您可以尝试修改此文件。
 ```yaml
 _id: crm
@@ -188,6 +183,14 @@ objects:
   - events  
 ```
 
+## 运行
+
+### 调试项目
+执行以下命令，进入调试模式。调试模式下，修改任何配置文件会自动重新启动服务，开发人员只需要刷新浏览器就能看到修改后的结果。
+```bash
+yarn debug
+```
+
 ### 运行项目
 ```bash
 yarn start
@@ -198,7 +201,7 @@ yarn start
 第一次使用时，数据库为空。点击“企业注册”，可以在本地数据库中创建一家新的企业账户。
 ![界面展示](assets/mac_ipad_iphone_list.png)
 
-### 案例参考
+## 案例参考
 - [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
 - [合同管理](https://github.com/steedos/steedos-contracts-app)
 - [档案管理](https://github.com/steedos/steedos-records-app)
