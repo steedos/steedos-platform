@@ -273,7 +273,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 				field_name = column.replace(/\$\./,"")
 			# 需要考虑field_name为 a.b.c 这种格式
 			field_val = eval("options.data." + field_name)
-			cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name:object.object_name, agreement: "odata", is_related: is_related}
+			cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name: object.name, agreement: "odata", is_related: is_related}
 			if field.type is "markdown"
 				cellOption["full_screen"] = true
 			Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
