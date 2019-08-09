@@ -14,7 +14,7 @@ fields:
     type: select
     defaultValue: tabular
     options:
-      - label: 表格
+      - label: 列表
         value: tabular
       - label: 摘要
         value: summary
