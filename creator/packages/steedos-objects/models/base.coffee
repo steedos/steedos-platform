@@ -363,7 +363,7 @@ Creator.baseObject =
 				if record and record.instances and record.instances.length > 0
 					return false
 
-				return false
+				return true
 			on: "record"
 			todo: ()->
 				Modal.show('initiate_approval', { object_name: this.object_name, record_id: this.record_id })
