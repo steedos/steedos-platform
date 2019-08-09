@@ -161,12 +161,12 @@ Creator.Objects.reports = {
       }
     },
     filter_fields: {
-      label: "默认过虑字段",
+      label: "过滤字段",
       type: "grid",
       is_wide: true
     },
     "filter_fields.$": {
-      label: "默认过虑字段",
+      label: "过滤字段",
       blackbox: true,
       type: "Object"
     },
