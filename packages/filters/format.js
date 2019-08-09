@@ -3,8 +3,10 @@ const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
 
-let formatFiltersToDev = (filters) => {
-    var regDate = /^\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z$/;
+let formatFiltersToDev = (filters, userContext = { utcOffset: 0 }) => {
+    let utcOffset = userContext.utcOffset;
+    // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
+    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;
@@ -88,30 +90,19 @@ let formatFiltersToDev = (filters) => {
                     if (isBetweenOperation && _.isString(value)) {
                         // 如果是between运算符内置值，则取出对应values作为过滤值
                         // 比如value为last_year，返回对应的时间值
-                        builtinValue = utils.getBetweenBuiltinValueItem(value);
+                        builtinValue = utils.getBetweenBuiltinValueItem(value, utcOffset);
                         if (builtinValue) {
                             value = builtinValue.values;
                         }
                     }
                     if (_.isArray(value)) {
-                        // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
                         value = value.map(function (item) {
                             if (typeof item === "string" && regDate.test(item)) {
-                                return new Date(item);
+                                // 如果value正好是regDate格式，则转换为Date类型
+                                item = new Date(item);
                             }
-                            else {
-                                return item;
-                            }
+                            return item;
                         });
-                        // if (["date", "datetime"].includes(filter_field_type)) {
-                        //     // date:因日期字段数据库保存的值中不带时间值的，所以日期类型过滤条件需要特意处理的，为了兼容dx控件显示
-                        // 	// datetime:因新建/编辑记录保存的时候network中是处理了时区偏差的，所以在请求过滤条件的时候也应该相应的设置
-                        //     _.forEach(value, function (fv) {
-                        //         if (fv) {
-                        //             return fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60); // 处理grid中的datetime 偏移
-                        //         }
-                        //     });
-                        // }
                         if (["=", "in"].indexOf(option) > -1) {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, "=", v], "or");
@@ -145,18 +136,16 @@ let formatFiltersToDev = (filters) => {
                             tempFilters = sub_selector;
                         }
                     } else {
-                        // 如果value正好是2016-07-18T08:00:00.000Z这种格式，则转换为Date类型
-                        if (typeof value === "string" && regDate.test(value)) {
-                            value = new Date(value);
+                        if (isBetweenOperation && !_.isArray(value)){
+                            // between操作符时，value必须是数组，不能是undefined等其他值
                         }
-                        // if (["date", "datetime"].includes(filter_field_type)) {
-                        // 	// date:因日期字段数据库保存的值中不带时间值的，所以日期类型过滤条件需要特意处理的，为了兼容dx控件显示
-                        // 	// datetime:因新建/编辑记录保存的时候network中是处理了时区偏差的，所以在请求过滤条件的时候也应该相应的设置
-                        //     if (value) {
-                        //         value.setHours(value.getHours() + value.getTimezoneOffset() / 60); // 处理grid中的datetime 偏移
-                        //     }
-                        // }
-                        tempFilters = [field, option, value];
+                        else {
+                            if (typeof value === "string" && regDate.test(value)) {
+                                // 如果value正好是regDate格式，则转换为Date类型
+                                value = new Date(value);
+                            }
+                            tempFilters = [field, option, value];
+                        }
                     }
                 } else {
                     // 普通数组，当成完整过虑条件进一步循环解析每个条件
@@ -216,8 +205,8 @@ let formatFiltersToDev = (filters) => {
     return selector;
 };
 
-let formatFiltersToODataQuery = (filters, odataProtocolVersion, forceLowerCase) => {
-    let devFilters = formatFiltersToDev(filters);
+let formatFiltersToODataQuery = (filters, userContext, odataProtocolVersion, forceLowerCase) => {
+    let devFilters = formatFiltersToDev(filters, userContext);
     return new SteedosFilter(devFilters, odataProtocolVersion, forceLowerCase).formatFiltersToODataQuery();
 };
 

@@ -89,7 +89,7 @@ let getLastQuarterFirstDay = (year, month) => {
     return new Date(year, month, 1);
 }
 
-let getBetweenTimeBuiltinValueItem = (key) => {
+let getBetweenTimeBuiltinValueItem = (key, utcOffset) => {
     // 过滤器between运算符，现算日期/日期时间类型字段的values值
     var currentMonth, currentYear, endValue, firstDay, label, lastDay, lastMonday, lastMonthFinalDay, lastMonthFirstDay, lastQuarterEndDay, lastQuarterStartDay, lastSunday, last_120_days, last_30_days, last_60_days, last_7_days, last_90_days, millisecond, minusDay, monday, month, nextMonday, nextMonthFinalDay, nextMonthFirstDay, nextQuarterEndDay, nextQuarterStartDay, nextSunday, nextYear, next_120_days, next_30_days, next_60_days, next_7_days, next_90_days, now, previousYear, startValue, strEndDay, strFirstDay, strLastDay, strMonday, strStartDay, strSunday, strToday, strTomorrow, strYestday, sunday, thisQuarterEndDay, thisQuarterStartDay, tomorrow, values, week, year, yestday;
     now = new Date();
@@ -343,16 +343,23 @@ let getBetweenTimeBuiltinValueItem = (key) => {
             endValue = new Date(strEndDay + "T23:59:59Z");
     }
     values = [startValue, endValue];
-    // if (field_type === "datetime") {
-	// 	// 时间类型字段，内置时间范围应该考虑偏移时区值，否则过滤数据存在偏差
-	// 	// 非内置时间范围时，用户通过时间控件选择的范围，会自动处理时区偏差情况
-	// 	// 日期类型字段，数据库本来就存的是UTC的0点，不存在偏差
-    //     _.forEach(values, function (fv) {
-    //         if (fv) {
-    //             return fv.setHours(fv.getHours() + fv.getTimezoneOffset() / 60);
-    //         }
-    //     });
-    // }
+    // 时间类型字段，应该考虑偏移时区值，否则过滤数据存在偏差
+    // 日期类型字段，数据库本来就存的是UTC的0点；
+    // 日期类型字段，目前creator代码（2019年08月07号存的）存的是UTC的16点，见：https://github.com/steedos/creator/issues/1271；
+    // 比如用户想搜索2019-08-07的数据，请求会是：((created ge 2019-08-06T16:00:00Z) and (created le 2019-08-07T15:59:59Z)) ，
+    // 如果数据库中存储的是2019-08-07T16:00:00Z而不是2019-08-07T00:00:00Z，那么就搜索不到数据。
+    // 所以，日期类型字段，要求存储的是UTC的0点，而不可以是16点，否则可能搜索不到数据。
+    if (utcOffset) {
+        values = values.map(function (fv) {
+            if (fv) {
+                // 注意这里取的值是moment().utcOffset() / 60得到的，不是new Date().getTimezoneOffset() / 60
+                // 它们的值正好为正负关系，北京时间前者为 +8，后者为 -8
+                fv = new Date(fv.getTime());// clone fv的值以防止原来的值被更改
+                fv.setHours(fv.getHours() - utcOffset);
+            }
+            return fv;
+        });
+    }
     return {
         label: label,
         key: key,
@@ -360,8 +367,8 @@ let getBetweenTimeBuiltinValueItem = (key) => {
     };
 };
 
-let getBetweenBuiltinValueItem = (key) => {
-    return getBetweenTimeBuiltinValueItem(key);
+let getBetweenBuiltinValueItem = (key, utcOffset) => {
+    return getBetweenTimeBuiltinValueItem(key, utcOffset);
 };
 
 let isBetweenFilterOperation = (operation) => {

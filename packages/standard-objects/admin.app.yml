@@ -119,12 +119,6 @@ admin_menus:
       - admin
     object_name: audit_records
     parent: menu_advanced
-  - _id: application_package
-    name: 软件包
-    permission_sets:
-      - admin
-    object_name: application_package
-    parent: menu_advanced
   - _id: queue_import
     name: 数据导入
     permission_sets:

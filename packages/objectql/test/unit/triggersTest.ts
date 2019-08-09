@@ -12,13 +12,14 @@ describe('Test object triggers', () => {
         let random = new Date().getTime();
         let id1 = `test20190402_${random}`;
         let id2 = `test20190403_${random}`;
-
-        let doc = await meeting.insert({_id: id1, name: 'test', start: '2019-03-23T01:00:00.000Z', end: '2019-03-23T08:00:00.000Z'})
+        let start = new Date('2019-03-23T01:00:00.000Z');
+        let end = new Date('2019-03-23T08:00:00.000Z');
+        let doc = await meeting.insert({ _id: id1, name: 'test', start: start, end: end})
         if(doc.created){
             beforeInsertSetValue = true
         }
         try {
-            await meeting.insert({_id: id2, name: 'test2', start: '2019-03-23T01:00:00.000Z', end: '2019-03-23T08:00:00.000Z'})
+            await meeting.insert({ _id: id2, name: 'test2', start: start, end: end})
         } catch (error) {
             if(error.message === '该时间段的此会议室已被占用'){
                 beforeInsert = true
@@ -40,8 +41,8 @@ describe('Test object triggers', () => {
         let id1 = `test20190404_${random}`;
         let id2 = `test20190405_${random}`;
 
-        await meeting.insert({_id: id1, name: 'test4', start: '2019-03-23T01:00:00.000Z', end: '2019-03-23T08:00:00.000Z'})
-        await meeting.insert({_id: id2, name: 'test5', start: '2019-03-23T09:00:00.000Z', end: '2019-03-23T10:00:00.000Z'})
+        await meeting.insert({ _id: id1, name: 'test4', start: new Date('2019-03-23T01:00:00.000Z'), end: new Date('2019-03-23T08:00:00.000Z')})
+        await meeting.insert({ _id: id2, name: 'test5', start: new Date('2019-03-23T09:00:00.000Z'), end: new Date('2019-03-23T10:00:00.000Z')})
         
         await meeting.update(id2, {start: '2019-03-23T11:00:00.000Z', end: '2019-03-23T12:00:00.000Z'})
         
@@ -51,7 +52,7 @@ describe('Test object triggers', () => {
         }
 
         try {
-            await meeting.update(id2, {start: '2019-03-23T06:00:00.000Z', end: '2019-03-23T15:00:00.000Z'})
+            await meeting.update(id2, { start: new Date('2019-03-23T06:00:00.000Z'), end: new Date('2019-03-23T15:00:00.000Z')})
         } catch (error) {
             if(error.message === '该时间段的此会议室已被占用'){
                 beforeUpdate = true

@@ -22,7 +22,7 @@ const users = [
 
 const siteConfig = {
   title: 'Steedos 低代码开发平台', // Title for your website.
-  tagline: '只需编写少量代码，就能构建全球最好的企业应用。',
+  tagline: '只需编写少量代码，就能构建功能强大的企业应用。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -39,7 +39,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'overview', label: '关于'},
-    {doc: 'getting_started', label: '向导'},
+    {doc: 'getting_started', label: '教程'},
     {doc: 'object', label: '文档'},
     {doc: 'api', label: 'API'},
     //{blog: true, label: '动态'},
