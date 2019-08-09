@@ -43,7 +43,7 @@ roles:  ["role_name"]         # 用户属于的所有权限组
 space:
   _id: i6thCRrKWYmdjxpzt      # 当前工作区Id
   name: Apple                 # 当前工作区名称
-spaces: []                    # 返回数组，用户所属的所有工作区 
+spaces: [space]               # 数组，用户所属的所有工作区 
 company:                   
   _id: i6thCRrKWYmdjxpzt      # 用户所属主单位 
   name: Apple China           # 用户所属主单位名称
@@ -57,13 +57,13 @@ organizations: [organization] # 数组，用户所属的所有部门
 
 ### Header 返回结果
 Header返回X-Space-Token。
-```
+```shell
 X-Space-Token: i6thCRrKWYmdjxpzt,392mkylUmFyNTRLR3aSTbsyM287On8bTULh-GDO1sH_
 ```
 
 ### Cookie 返回结果
 如果从浏览器登录，自动为浏览器设置以下Cookie。
-```
+```shell
 X-User-Id: dL4KFkLSqqGAozZ6C
 X-Auth-Token: 392mkylUmFyNTRLR3aSTbsyM287On8bTULh-GDO1sH_
 X-Space-Id: i6thCRrKWYmdjxpzt
