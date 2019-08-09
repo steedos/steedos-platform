@@ -13,7 +13,7 @@ title: 过滤条件
 使用数组的格式定义一个或多个过滤条件。例如以下过滤器用于查询本月创建的，责任人是本人的数据。
 
 ```yml
-filters:
+filter_conditions:
   - field: priority
     operation: =
     value:
@@ -52,7 +52,7 @@ filters:
 
 表示此过滤条件必须设定，否则列表视图不显示任何数据。
 
-### 过滤逻辑 filter_logic
+## 过滤逻辑 filter_logic
 
 过滤器中配置的多个过滤条件，默认使用 and 逻辑进行组合。
 
@@ -77,7 +77,7 @@ filter_logic: NOT (1 OR 2)
 以下过滤条件用于查询 priority 是 (high or normal) 的数据。
 
 ```yml
-filters:
+filter_conditions:
   - field: priority
     operation: =
     value:
@@ -90,7 +90,7 @@ filters:
 以下过滤条件用于查询 priority 不是 (high or normal) 的数据。
 
 ```yml
-filters:
+filter_conditions:
   - field: priority
     operation: <>
     value:
@@ -103,7 +103,7 @@ filters:
 以下过滤条件用于查询 age 在 20～30 之间的数据。
 
 ```yml
-filters:
+filter_conditions:
   - field: age
     operation: between
     value:
@@ -131,21 +131,25 @@ value: {name}
 
 例如想要查询 创建日期为北京时间下午13:00以前的文档，需要先将北京时间转换为GMT时间再执行查询。
 
-```js
-[["created","<=","2019-08-06T07:00:00Z"]]
+```yml
+filter_conditions:
+  - field: created
+    operation: <=
+    value: "2019-08-06T07:00:00Z"
 ```
 
 ### 值为函数
 
-```js
-filters: [{
-  "field": "object_name"
-  "operation": "="
-  "value": ()->
-    return "project_issues"
-}]
+```yml
+filter_conditions:
+  - field: object_name
+  - operation: =
+  - value: !!js/function |
+      function () {
+        return "project_issues"
+      }
 ```
 
-## 语法 v1.0
+## filters
 
-[filters v1.0 版本语法](object_filter_deprecated)已作废。
+用户定义的 filter_conditions 和 filter_logic，Steedos组合计算之后，成为用于过滤数据的 [filters](object_filter_deprecated) 。
