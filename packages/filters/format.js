@@ -3,7 +3,8 @@ const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
 
-let formatFiltersToDev = (filters, utcOffset) => {
+let formatFiltersToDev = (filters, userContext = { utcOffset: 0 }) => {
+    let utcOffset = userContext.utcOffset;
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
     var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
@@ -204,8 +205,8 @@ let formatFiltersToDev = (filters, utcOffset) => {
     return selector;
 };
 
-let formatFiltersToODataQuery = (filters, utcOffset, odataProtocolVersion, forceLowerCase) => {
-    let devFilters = formatFiltersToDev(filters, utcOffset);
+let formatFiltersToODataQuery = (filters, userContext, odataProtocolVersion, forceLowerCase) => {
+    let devFilters = formatFiltersToDev(filters, userContext);
     return new SteedosFilter(devFilters, odataProtocolVersion, forceLowerCase).formatFiltersToODataQuery();
 };
 
