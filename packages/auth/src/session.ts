@@ -1,6 +1,14 @@
 import crypto = require('crypto');
-import { getSteedosSchema, SteedosUserSession, SteedosIDType } from '@steedos/objectql';
-import { Request, Response } from "express";
+import { getSteedosSchema, SteedosUserSession, SteedosIDType, SteedosUserSessionSpace, SteedosUserSessionCompany, SteedosUserSessionOrganization } from '@steedos/objectql';
+import { Response } from "express";
+
+import * as core from "express-serve-static-core";
+interface Request extends core.Request {
+  user?: any;
+}
+
+const _ = require('underscore');
+
 const Cookies = require("cookies");
 
 const sessions = {};
@@ -11,25 +19,25 @@ const spacetokens = [];
 const sessionCacheInMinutes = 10;
 
 interface Session {
-  name: string;
   userId: SteedosIDType;
-  steedos_id?: string;
-  email?: string;
-  expiredAt: number;
-}
-
-interface ResultSession {
   name: string;
-  userId: SteedosIDType;
-  steedos_id?: string;
+  username?: string;
+  mobile?: string;
   email?: string;
+  utcOffset?: number;
+  steedos_id?: string;
+  expiredAt?: number;
 }
 
 interface SpaceSession {
   roles: string[];
+  space: SteedosUserSessionSpace;
+  spaces: SteedosUserSessionSpace[];
+  company?: SteedosUserSessionCompany;
+  companies?: SteedosUserSessionCompany[];
+  organization: SteedosUserSessionOrganization;
+  organizations: SteedosUserSessionOrganization[];
   expiredAt: number;
-  companyId: string;
-  companyIds: string[];
 }
 
 function _hashLoginToken(token: string) {
@@ -46,7 +54,7 @@ function reovkeSessionFromCache(token: string) {
   return delete sessions[token];
 }
 
-export function addSessionToCache(token: string, session: Session) {
+function addSessionToCache(token: string, session: Session) {
   sessions[token] = session;
   tokens.push(token);
   if (tokens.length > size) {
@@ -54,7 +62,7 @@ export function addSessionToCache(token: string, session: Session) {
   }
 }
 
-export function getSessionFromCache(token: string) {
+function getSessionFromCache(token: string) {
   let session = sessions[token];
   if (!session) {
     return null;
@@ -69,10 +77,7 @@ export function getSessionFromCache(token: string) {
 async function getUser(token: string) {
   let hashedToken = _hashLoginToken(token).replace(/\//g, '%2F');
   let filters = `(services/resume/loginTokens/hashedToken eq '${hashedToken}')`;
-  let users = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'steedos_id', 'email'] });
-  if (!users || !users[0]) {
-    throw new Error('user can not found by token!');
-  }
+  let users = await getSteedosSchema().getObject('users').find({ filters: filters, fields: ['name', 'username', 'mobile', 'email', 'utcOffset', 'steedos_id'] });
   return users[0];
 }
 
@@ -110,7 +115,7 @@ function reovkeSpaceSessionFromCache(key: string) {
   return delete spaceSessions[key];
 }
 
-export function addSpaceSessionToCache(token: string, spaceId: string, spaceSession: SpaceSession) {
+function addSpaceSessionToCache(token: string, spaceId: string, spaceSession: SpaceSession) {
   let key = `${token}-${spaceId}`;
   spaceSessions[key] = spaceSession;
   spacetokens.push(key);
@@ -119,7 +124,7 @@ export function addSpaceSessionToCache(token: string, spaceId: string, spaceSess
   }
 }
 
-export function getSpaceSessionFromCache(token: string, spaceId: string) {
+function getSpaceSessionFromCache(token: string, spaceId: string) {
   let key = `${token}-${spaceId}`;
   let spaceSession = spaceSessions[key];
   if (!spaceSession) {
@@ -132,9 +137,31 @@ export function getSpaceSessionFromCache(token: string, spaceId: string) {
   return spaceSession;
 }
 
-export async function getSession(token: string, spaceId: string): Promise<SteedosUserSession>;
-export async function getSession(token: string): Promise<ResultSession>;
-export async function getSession(token: string, spaceId?: string): Promise<any> {
+async function getObjectDataByIds(objectName: string, ids: string[], fields?: string[]) {
+  if (!ids || ids.length === 0) {
+    return []
+  }
+
+  let filters = _.map(ids, function (id) {
+    if (!id) {
+      return ''
+    }
+    return `(_id eq '${id}')`
+  }).join(' or ');
+
+  if (!filters) {
+    return []
+  }
+
+  let query = { filters: filters };
+  if (fields && fields.length > 0) {
+    query['fields'] = fields;
+  }
+
+  return await getSteedosSchema().getObject(objectName).find(query)
+}
+
+export async function getSession(token: string, spaceId?: string): Promise<SteedosUserSession> {
   if (!token) {
     return
   }
@@ -143,40 +170,81 @@ export async function getSession(token: string, spaceId?: string): Promise<any> 
   if (!session) {
     let user = await getUser(token);
     if (user) {
-      session = { name: user.name, userId: user._id, steedos_id: user.steedos_id, email: user.email, expiredAt: expiredAt };
+      session = {};
+      session.userId = user._id;
+      session.name = user.name;
+      session.username = user.username;
+      session.mobile = user.mobile;
+      session.email = user.email;
+      session.utcOffset = user.utcOffset;
+      session.steedos_id = user.steedos_id;
+      session.expiredAt = expiredAt;
       addSessionToCache(token, session);
     }
+    else {
+      return
+    }
   }
-  if (spaceId) {
-    let spaceSession = getSpaceSessionFromCache(token, spaceId);
-    if (!spaceSession) {
-      let user = await getUser(token);
-      if (user) {
-        let roles = await getUserRoles(user._id, spaceId);
-        let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${user._id}')`, fields: ['company_id', 'company_ids'] });
-        if (!spaceUser || !spaceUser[0]) {
-          throw new Error('the spaceuser can not be found!');
-        }
-        spaceSession = { roles: roles, expiredAt: expiredAt, companyId: spaceUser[0].company_id, companyIds: spaceUser[0].company_ids };
-        addSpaceSessionToCache(token, spaceId, spaceSession);
+
+  let spaceSession = getSpaceSessionFromCache(token, spaceId);
+  if (!spaceSession) {
+    let user = await getUser(token);
+    if (user) {
+      let su = null;
+      let suFields = ['space', 'company_id', 'company_ids', 'organization', 'organizations'];
+      let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${user._id}')`, fields: suFields });
+      // 如果spaceid和user不匹配，则取用户的第一个工作区
+      let spaceUsers = await getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${user._id}')`, fields: suFields });
+      if (spaceUser && spaceUser[0]) {
+        su = spaceUser[0];
+      } else {
+        su = spaceUsers[0];
+      }
+
+      if (su) {
+        let userSpaceId = su.space;
+        let userSpaceIds = _.pluck(spaceUsers, 'space');
+        let roles = await getUserRoles(user._id, userSpaceId);
+        spaceSession = { roles: roles, expiredAt: expiredAt };
+        spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name']))[0];
+        spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);
+        spaceSession.company = (await getObjectDataByIds('organizations', [su.company_id], ['name']))[0];
+        spaceSession.companies = await getObjectDataByIds('organizations', su.company_ids, ['name']);
+        spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname']))[0];
+        spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname']);
+        addSpaceSessionToCache(token, userSpaceId, spaceSession);
+        return assignSession(userSpaceId, session, spaceSession);
       }
     }
-    return assignSession(spaceId, session, spaceSession);
-  } else {
-    return reviseSession(session)
   }
-
+  return assignSession(spaceId, session, spaceSession);
 }
 
+// 解析Request对象，返回SteedosUserSession类型
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
   let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
-  if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
-    authToken = request.headers.authorization.split(' ')[1]
-  }
-  let spaceId = (request.params ? request.params.spaceId : null) 
-    || (request.query ? request.query.space_id : null) 
+  let spaceId = (request.params ? request.params.spaceId : null)
+    || (request.query ? request.query.space_id : null)
     || request.headers['x-space-id'];
+  if (request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
+    let spaceAuthToken = request.headers.authorization.split(' ')[1];
+    if (!authToken) {
+      authToken = spaceAuthToken.split(',')[0];
+    }
+    if (!spaceId) {
+      spaceId = spaceAuthToken.split(',')[1];
+    }
+  }
   let user = await getSession(authToken, spaceId);
   return Object.assign({ authToken: authToken }, user);
+}
+
+// 给Request对象添加user属性，值为SteedosUserSession类型
+export async function setRequestUser(request: Request, response: Response, next: () => void) {
+  let user = await auth(request, response);
+  if (user.userId) {
+    request.user = user;
+  }
+  next();
 }

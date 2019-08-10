@@ -1,6 +1,7 @@
 import crypto = require('crypto');
 import { default as Random } from './random';
 import { getSteedosSchema } from '@steedos/objectql';
+const Cookies = require('cookies');
 
 export let utils = {
   _hashLoginToken: function (loginToken) {
@@ -35,5 +36,24 @@ export let utils = {
     user['services']['resume']['loginTokens'].push(hashedToken)
     let data = { services: user['services'] }
     return await userObject.update(userId, data);
+  },
+
+  _setAuthCookies: function (req, res, userId, authToken, spaceId?) {
+    let cookies = new Cookies(req, res);
+    let options = {
+      maxAge: 90 * 60 * 60 * 24 * 1000,
+      httpOnly: false,
+      overwrite: true
+    }
+    cookies.set("X-User-Id", userId, options);
+    cookies.set("X-Auth-Token", authToken, options);
+    if (spaceId) {
+      cookies.set("X-Space-Id", spaceId, options);
+      cookies.set("X-Space-Token", spaceId + ',' + authToken, options);
+    }
+
+    return;
   }
+
+
 }
