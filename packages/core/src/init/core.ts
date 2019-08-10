@@ -15,6 +15,7 @@ export class Core {
         this.initObjects();
         this.initGraphqlAPI();
         this.initPublishAPI()
+        this.initRoutes();
     }
 
     private static expandSimpleSchemaPres() {
@@ -151,7 +152,16 @@ export class Core {
         return WebApp.connectHandlers.use(app);
     }
 
-    private static initPublishAPI(){
+    private static initPublishAPI() {
         Publish.init();
+    }
+
+    private static initRoutes() {
+        // /api/v4/users/login, /api/v4/users/validate
+        app.use(steedosAuth.initRouter);
+
+
+
+        WebApp.connectHandlers.use(app);
     }
 }
