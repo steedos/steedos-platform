@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 import { getSession, auth } from './session';
 import { utils } from './utils';
 import { Request, Response } from 'express';
+import { getSteedosSchema } from '@steedos/objectql';
 
 const router = express.Router();
 
@@ -39,9 +40,16 @@ router.post('/api/v4/users/login', async function (req: Request, res: Response) 
 
 
 router.post('/api/v4/users/validate', async function (req: Request, res: Response) {
+    let utcOffset = req.body.utcOffset;
     let userSession = await auth(req, res);
     if (userSession.userId) {
         utils._setAuthCookies(req, res, userSession.userId, userSession.authToken, userSession.spaceId);
+
+        let user = await getSteedosSchema().getObject('users').findOne(userSession.userId, { fields: ['utcOffset'] });
+
+        if (!user.hasOwnProperty('utcOffset')) {
+            await getSteedosSchema().getObject('users').update(userSession.userId, { 'utcOffset': utcOffset })
+        }
 
         return res.send(userSession);
     }
