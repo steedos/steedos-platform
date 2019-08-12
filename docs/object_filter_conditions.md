@@ -152,4 +152,4 @@ filter_conditions:
 
 ## filters
 
-用户定义的 filter_conditions 和 filter_logic，Steedos组合计算之后，成为用于查询数据的 [过滤条件 filters](object_filter) 。
+用户定义的 filter_conditions 和 filter_logic，Steedos组合计算之后，成为用于查询数据的 [过滤条件 filters](object_filter.md) 。
