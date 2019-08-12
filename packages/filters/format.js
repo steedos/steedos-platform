@@ -2,6 +2,7 @@
 const SteedosFilter = require("./filter");
 const _ = require('underscore');
 const utils = require("./utils");
+const formula = require("./formula");
 
 let formatFiltersToDev = (filters, userContext = { utcOffset: 0 }) => {
     let utcOffset = userContext.utcOffset;
@@ -85,6 +86,7 @@ let formatFiltersToDev = (filters, userContext = { utcOffset: 0 }) => {
                     if (_.isFunction(value)) {
                         value = value();
                     }
+                    value = formula.evaluateFormula(value, userContext)
                     sub_selector = [];
                     isBetweenOperation = utils.isBetweenFilterOperation(option);
                     if (isBetweenOperation && _.isString(value)) {
