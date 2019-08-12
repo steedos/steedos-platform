@@ -5,12 +5,14 @@
     "start": "meteor run",
     "build": "meteor build --directory .dist --server-only",
     "login": "npm login --registry https://registry.npmjs.org",
-    "pub": "cd .dist && npm publish --registry https://registry.npmjs.org"
+    "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
+    "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@steedos/auth": "^1.1.1",
     "@steedos/core": "^1.3.3",
+    "@steedos/filters": "^0.0.13",
     "@steedos/objectql": "^0.2.3",
     "aliyun-sdk": "^1.11.12",
     "basic-auth": "^2.0.1",
