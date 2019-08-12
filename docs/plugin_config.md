@@ -21,11 +21,12 @@ title: 插件配置
 ```yml
 datasources:
   - name: mattermost
+    objectFiles: ./src/**
 server:
   main: index.js
 webapp:
   main: webapp/dist/main.js
-  css: webapp/dist/css.js
+  css: webapp/dist/main.css
 settings_schema:
   header: Some header text
   footer: Some footer text
