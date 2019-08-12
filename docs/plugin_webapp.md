@@ -1,31 +1,145 @@
 ---
-title: Web插件
+title: Web 插件
 ---
 
-通过定义Web插件，开发人员可以扩展Steedos现有网页客户端的功能。
+此教程将引导您创建一个基本的Steedos Web插件。
 
 ## 创建插件
-任何 Steedos 项目都可以转换为一个插件。每个插件就是一个npm包，必须先发布到npm，才能在其他项目中引用。
 
-### 插件名称
-package.json 中定义的 npm 包名称，就是插件名称。
+创建并跳转到插件文件夹。
 
-## 插件API
-每个插件必须定义一个plugin.config.js文件，用于申明Steedos相关API。
-
-
-### 引入客户端 Javascript 文件
-如果需要扩展前端功能，可以在 plugin.config.js 中定义插件需加载的 Javascript 文件。
-```js
-export scripts = [
-    'https://buttons.github.io/buttons.js'
-]
+```bash
+cd {project_root}
+mkdir plugins
+cd plugins
+mkdir hello-world-plugin
+cd hello-world-plugin
 ```
 
-### 引入客户端 CSS 文件
-如果需要扩展前端功能，可以在 plugin.config.js 中定义插件需加载的 CSS 文件。
-```js
-export stylesheets = [
-    'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'
-]
+## 初始化插件
+
+创建一个 package.json 文件
+
+```json
+{
+  "name": "hello-world-plugin",
+  "version": "0.0.1",
+  "description": "Hello World",
+}
 ```
+
+## 安装依赖包
+
+```bash
+yarn add --dev  @babel/core @babel/preset-env @babel/preset-react babel-loader webpack webpack-cli
+yarn add react
+```
+
+## 配置 webpack
+创建一个 `/webpack.config.js`文件，配置webpack
+
+```js
+var path = require('path');
+
+module.exports = {
+    entry: [
+        './webapp/index.jsx',
+    ],
+    resolve: {
+        modules: [
+            'webapp',
+            'node_modules',
+        ],
+        extensions: ['*', '.js', '.jsx'],
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react',
+                            [
+                                "@babel/preset-env",
+                                {
+                                    "modules": "commonjs",
+                                    "targets": {
+                                        "node": "current"
+                                    }
+                                }
+                            ]
+                        ],
+                    },
+                },
+            },
+        ],
+    },
+    externals: {
+        react: 'React',
+    },
+    output: {
+        path: path.join(__dirname, '/dist/webapp'),
+        publicPath: '/',
+        filename: 'main.js',
+    },
+};
+```
+
+> 注意 `react` 被指定为外部包. 这样你可以在本地测试代码 (e.g. with [jest](https://jestjs.io/) and snapshots) ，但是必不会影响到 Steedos 打包的react版本。
+
+## 创建入口文件
+
+```bash
+mkdir webapp
+touch webapp/index.jsx
+```
+
+编辑 `src/index.jsx`，写入以下内容:
+
+```js
+import React from 'react';
+
+// Courtesy of https://feathericons.com/
+const Icon = () => <i className='icon fa fa-plug'/>;
+
+class HelloWorldPlugin {
+    initialize(registry, store) {
+        registry.registerChannelHeaderButtonAction(
+            // icon - JSX element to use as the button's icon
+            <Icon />,
+            // action - a function called when the button is clicked, passed the channel and channel member as arguments
+            // null,
+            () => {
+                alert("Hello World!");
+            },
+            // dropdown_text - string or JSX element shown for the dropdown button description
+            "Hello World",
+        );
+    }
+}
+
+window.registerPlugin('com.steedos.plugin-hello-world', new HelloWorldPlugin());
+```
+
+## 打包 Webapp
+
+生成打包文件，以便安装到项目中。
+
+```bash
+yarn webpack --mode=production
+```
+
+## 编写配置文件
+
+创建插件配置文件 plugin.config.yml
+
+```yml
+webapp:
+  main: webapp/dist/main.js
+```
+
+## 插件测试
+
+重新启动 Steedos服务，测试插件效果。

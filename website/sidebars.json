@@ -6,7 +6,7 @@
     "审批": ["workflow_overview", "workflow_submit", "workflow_archive", "object_workflow"],
     "权限": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "统计": ["reports", "report_jsreport"],
-    "插件": ["plugins", "plugin_server", "plugin_webapp"],
+    "插件(Beta)": ["plugins", "plugin_server", "plugin_webapp", "plugin_config"],
     "OData": ["api", "api_auth", "odata_query", "odata_get", "odata_add", "odata_edit", "odata_delete", "odata_functions", "odata_metadata"],
     "GraphQL": ["graphql", "graphql_auth", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete"],
     "单点登录 ": ["api_jwt"]
