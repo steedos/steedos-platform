@@ -1,12 +1,11 @@
 import { expect } from 'chai';
 import { SteedosSchema } from '../../src';
-import { SteedosUserSession } from '../../src/types/userSession';
 import { Dictionary } from '@salesforce/ts-types';
 var path = require('path')
 
 describe('Test Permission', () => {
 
-    let userSessionStorage: Dictionary<SteedosUserSession> = {}
+    let userSessionStorage: Dictionary<any> = {}
 
     userSessionStorage['0'] = {
         userId: 0,
