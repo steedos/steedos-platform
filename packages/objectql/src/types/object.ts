@@ -624,6 +624,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         // 判断处理工作区权限，公司级权限，owner权限
         if (this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo || this._datasource.driver == SteedosDatabaseDriverType.Mongo) {
+            this.dealWithFilters(method, args);
             await this.dealWithMethodPermission(method, args);
         }
 
@@ -642,6 +643,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         return returnValue
     };
+
+    /**
+     * 把query.filters用formatFiltersToODataQuery转为odata query
+     * 主要是为了把userSession中的utcOffset逻辑传入formatFiltersToODataQuery函数处理
+     */
+    private dealWithFilters(method: string, args: any[]) {
+        let userSession = args[args.length - 1];
+        if (userSession) {
+            if (method === 'find' || method === 'count') {
+                let query = args[args.length - 2];
+                if (query.filters && !_.isString(query.filters)) {
+                    query.filters = formatFiltersToODataQuery(query.filters, userSession);
+                }
+            }
+        }
+    }
 
     private async dealWithMethodPermission(method: string, args: any[]) {
         let userSession = args[args.length - 1];
