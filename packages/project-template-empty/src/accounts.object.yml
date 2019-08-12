@@ -4,6 +4,7 @@ icon: account
 enable_files: true
 enable_search: true
 enable_tasks: true
+enable_events: true
 enable_notes: false
 enable_api: true
 enable_share: true
