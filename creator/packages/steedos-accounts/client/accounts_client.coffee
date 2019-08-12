@@ -1,24 +1,27 @@
 Setup.validate = (cb)->
-	userId = Accounts._storedUserId()
 	loginToken = Accounts._storedLoginToken()
-	requestData = {}
-	if userId and loginToken
-		requestData = 
-			"X-User-Id": userId
-			"X-Auth-Token": loginToken
+	spaceId = window.localStorage.getItem("spaceId")
+	headers = {}
+	if loginToken && spaceId
+		headers['Authorization'] = 'Bearer ' + spaceId + ',' + loginToken
+	else if loginToken
+		headers['X-Auth-Token'] = loginToken
 
 	$.ajax
 		type: "POST",
-		url: Steedos.absoluteUrl("api/setup/validate"),
+		url: Steedos.absoluteUrl("api/v4/users/validate"),
 		contentType: "application/json",
 		dataType: 'json',
-		data: JSON.stringify(requestData),
 		xhrFields: 
 			withCredentials: true
 		crossDomain: true
+		headers: headers
 	.done ( data ) ->
 		if data.webservices
 			Steedos.settings.webservices = data.webservices
+		if data.spaceId
+			window.localStorage.setItem("spaceId", data.spaceId)
+			Session.set('spaceId', data.spaceId)
 		if cb
 			cb();
 
