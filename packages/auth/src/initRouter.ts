@@ -40,7 +40,7 @@ router.post('/api/v4/users/login', async function (req: Request, res: Response) 
 
 router.post('/api/v4/users/validate', async function (req: Request, res: Response) {
     let userSession = await auth(req, res);
-    if (userSession) {
+    if (userSession.userId) {
         utils._setAuthCookies(req, res, userSession.userId, userSession.authToken, userSession.spaceId);
 
         return res.send(userSession);

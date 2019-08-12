@@ -229,11 +229,11 @@ export async function auth(request: Request, response: Response): Promise<any> {
     || request.headers['x-space-id'];
   if (request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
     let spaceAuthToken = request.headers.authorization.split(' ')[1];
-    if (!authToken) {
-      authToken = spaceAuthToken.split(',')[0];
-    }
     if (!spaceId) {
-      spaceId = spaceAuthToken.split(',')[1];
+      spaceId = spaceAuthToken.split(',')[0];
+    }
+    if (!authToken) {
+      authToken = spaceAuthToken.split(',')[1];
     }
   }
   let user = await getSession(authToken, spaceId);
