@@ -30,6 +30,7 @@ export class LoadFiles {
     private static loadStandardFiles() {
         let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
         if (standardObjectsDir) {
+            standardObjectsDir = path.posix.join(standardObjectsDir, '/**');
             this.loadObjectToCreator(standardObjectsDir);
             this.loadAppToCreator(standardObjectsDir);
             this.addStaticJs(standardObjectsDir);
