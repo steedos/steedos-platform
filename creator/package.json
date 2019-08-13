@@ -27,6 +27,7 @@
     "connect-route": "^0.1.5",
     "cookies": "^0.6.2",
     "core-js": "^2.5.3",
+    "devextreme": "github:steedos/devextreme#7d45aa9232c7bf19b5826d614c1802b55bc1ba4a",
     "ejs": "^2.5.5",
     "ejs-lint": "^0.2.0",
     "eval": "0.1.2",
@@ -83,7 +84,6 @@
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "datatables": "^1.10.18",
-    "devextreme": "^18.2.4",
     "jquery": "^2.2.4",
     "jquery-ui-sortable": "^1.0.0",
     "simplemde": "^1.11.2",
@@ -93,6 +93,7 @@
   "resolutions": {
     "graphql": "^14.1.1",
     "@steedos/objectql": "^0.2.5",
-    "@steedos/auth": "^1.1.2"
+    "@steedos/auth": "^1.1.2",
+    "devextreme": "github:steedos/devextreme#7d45aa9232c7bf19b5826d614c1802b55bc1ba4a"
   }
 }

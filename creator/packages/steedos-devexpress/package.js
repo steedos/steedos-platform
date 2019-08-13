@@ -27,8 +27,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/css/dx.common.css', 'client');
 	api.addFiles('client/css/dx.material.light.blue.css', 'client');
 	api.addFiles('client/css/dx.material.light.blue.fix.css', 'client');
-	//api.addFiles('client.js', 'client');
-	api.addFiles('client/js/dx.all.debug.js', 'client');
+	api.addFiles('client.js', 'client');
 	api.addFiles('client/js/dx.date.formatter.js', 'client');
 	api.addFiles('client/js/dx.date.locale.js', 'client');
 })
