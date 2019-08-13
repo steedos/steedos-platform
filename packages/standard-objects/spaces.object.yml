@@ -12,10 +12,6 @@ fields:
     searchable: true
     index: true
     name: name
-  phone:
-    label: 联系电话
-    type: text
-    name: phone
   admins:
     label: 管理员
     type: lookup
@@ -26,13 +22,13 @@ fields:
     name: admins
     filterable: true
   avatar:
-    label: 公司Logo
+    label: 浅色公司Logo
     type: avatar
     name: avatar
-  cover:
-    label: 封面照片
+  avatar_dark:
+    label: 深色公司Logo
     type: avatar
-    name: cover
+    name: avatar_dark
   location:
     label: 地址
     type: location
@@ -45,6 +41,7 @@ fields:
     type: lookup
     reference_to: apps
     multiple: true
+    hidden: true
     name: apps
     filterable: true
   apps_paid:
@@ -55,6 +52,7 @@ fields:
   hostname:
     label: 绑定域名
     type: '[text]'
+    hidden: true
     name: hostname
   is_paid:
     label: 已付费
@@ -113,6 +111,7 @@ fields:
     label: 允许新用户注册
     type: boolean
     defaultValue: false
+    hidden: true
     name: enable_register
   owner:
     label: 所有者
@@ -128,8 +127,7 @@ list_views:
       - name
     filter_scope: all
     filters:
-      -
-        - _id
+      - - _id
         - =
         - '{spaceId}'
 actions:
@@ -137,7 +135,7 @@ actions:
     label: 订单
     'on': record
     visible: true
-    todo: !!js/function |
+    todo: !<tag:yaml.org,2002:js/function> |-
       function () {
               var url;
               url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
@@ -147,7 +145,7 @@ actions:
     label: 升级
     'on': record
     visible: true
-    todo: !!js/function |
+    todo: !<tag:yaml.org,2002:js/function> |-
       function () {
               return Modal.show('space_recharge_modal');
             }
