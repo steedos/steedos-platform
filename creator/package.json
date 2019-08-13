@@ -6,6 +6,7 @@
     "build": "meteor build --directory .dist --server-only",
     "login": "npm login --registry https://registry.npmjs.org",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
+    "postinstall": "node .scripts/npm-postinstall.js",
     "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos"
   },
   "dependencies": {
