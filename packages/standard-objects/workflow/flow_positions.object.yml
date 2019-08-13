@@ -1,0 +1,68 @@
+name: flow_positions
+icon: metrics
+label: 岗位成员
+fields:
+  role:
+    type: master_detail
+    label: 岗位
+    reference_to: flow_roles
+    required: true
+    name: role
+    filterable: true
+  users:
+    type: lookup
+    label: 成员
+    reference_to: users
+    multiple: true
+    required: true
+    name: users
+    filterable: true
+  org:
+    type: lookup
+    label: 管辖范围
+    reference_to: organizations
+    required: true
+    name: org
+    filterable: true
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+list_views:
+  all:
+    filter_scope: space
+    columns:
+      - role
+      - org
+      - users
+      - company_id
+    label: 所有
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  workflow_admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: true
+    viewCompanyRecords: true
+    disabled_list_views: []
+    disabled_actions: []
+    unreadable_fields: []
+    uneditable_fields: []
+    unrelated_objects: []

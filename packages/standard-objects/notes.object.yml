@@ -1,0 +1,72 @@
+name: notes
+label: 备忘
+icon: note
+fields:
+  name:
+    label: 标题
+    type: text
+    required: true
+    is_wide: true
+    searchable: true
+    index: true
+    name: name
+  description:
+    label: 内容
+    type: textarea
+    is_wide: true
+    searchable: true
+    index: true
+    name: description
+  related_to:
+    label: 相关项
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var o;
+              o = [];
+
+              _.each(Creator.Objects, function (object, object_name) {
+                if (object.enable_notes) {
+                  return o.push(object.name);
+                }
+              });
+
+              return o;
+            }
+    name: related_to
+    filterable: true
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - created_by
+      - created
+      - related_to
+  recent:
+    label: 最近查看
+    filter_scope: space
+  mine:
+    label: 我的备忘
+    filter_scope: space
+    filters:
+      - - owner
+        - =
+        - '{userId}'
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

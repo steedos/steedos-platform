@@ -1,0 +1,122 @@
+name: events
+label: 事件
+icon: event
+fields:
+  name:
+    label: 主题
+    type: text
+    required: true
+    is_wide: true
+    searchable: true
+    index: true
+    name: name
+  start:
+    label: 开始时间
+    type: datetime
+    required: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var now, reValue;
+              now = new Date();
+              reValue = new Date(now.getTime() + 1 * 60 * 60 * 1000);
+              reValue.setMinutes(0);
+              reValue.setSeconds(0);
+              return reValue;
+            }
+    sortable: true
+    name: start
+  end:
+    label: 结束时间
+    type: datetime
+    required: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var now, reValue;
+              now = new Date();
+              reValue = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+              reValue.setMinutes(0);
+              reValue.setSeconds(0);
+              return reValue;
+            }
+    name: end
+  assignees:
+    label: 分派给
+    type: lookup
+    reference_to: users
+    multiple: true
+    name: assignees
+    filterable: true
+  related_to:
+    label: 相关项
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var o;
+              o = [];
+
+              _.each(Creator.Objects, function (object, object_name) {
+                if (object.enable_events) {
+                  return o.push(object.name);
+                }
+              });
+
+              return o;
+            }
+    name: related_to
+    filterable: true
+  is_all_day:
+    label: 全天事件
+    type: boolean
+    name: is_all_day
+  location:
+    label: 地址
+    type: text
+    name: location
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+    name: description
+list_views:
+  calendar_view:
+    type: calendar
+    label: 日历视图
+    filter_scope: space
+    options:
+      startDateExpr: start
+      endDateExpr: end
+      textExpr: name
+      title:
+        - name
+        - start
+        - end
+        - assignees
+        - related_to
+      currentView: month
+      startDayHour: 8
+      endDayHour: 18
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - start
+      - end
+      - assignees
+      - related_to
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

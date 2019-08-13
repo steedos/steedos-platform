@@ -1,18 +1,20 @@
-name: permission_set
-label: 权限组
-icon: groups
+name: categories
+icon: metrics
+label: 流程分类
 fields:
   name:
-    label: 名称
     type: text
-    searchable: true
-    index: true
+    label: 名称
     name: name
-  assigned_apps:
-    label: 授权应用
+    searchable: true
+  sort_no:
+    label: 排序号
+    type: number
+    name: sort_no
+  app:
+    label: 所属应用
     type: lookup
     reference_to: apps
-    multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -29,23 +31,16 @@ fields:
 
               return _options;
             }
-    name: assigned_apps
-    filterable: true
-  users:
-    label: 成员
-    type: lookup
-    reference_to: users
-    multiple: true
-    is_wide: true
-    name: users
+    name: app
     filterable: true
 list_views:
   all:
-    label: 全部
+    label: 所有
     filter_scope: space
     columns:
       - name
-      - users
+      - sort_no
+      - app
 permission_set:
   user:
     allowCreate: false
@@ -53,7 +48,7 @@ permission_set:
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true

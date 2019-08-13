@@ -1,0 +1,93 @@
+name: permission_shares
+label: 共享规则
+icon: assigned_resource
+fields:
+  name:
+    label: 名称
+    type: text
+    required: true
+    searchable: true
+    index: true
+    name: name
+  object_name:
+    label: 对象
+    type: lookup
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+                var _options;
+              _options = [];
+              _.forEach(Creator.objectsByName, function (o, k) {
+                  var enable_share;
+                enable_share = o.enable_share === void 0 ? true : o.enable_share;
+                if (enable_share && !o.hidden) {
+                    return _options.push({
+                      label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
+              });
+              return _options;
+            }
+    required: true
+    name: object_name
+    filterable: true
+  filters:
+    label: 过滤条件
+    type: grid
+    name: filters
+  filters.$.field:
+    label: 字段名
+    type: text
+    name: filters.$.field
+  filters.$.operation:
+    label: 操作符
+    type: select
+    defaultValue: =
+    options: !<tag:yaml.org,2002:js/function> |-
+      function () {
+                return Creator.getFieldOperation();
+            }
+    name: filters.$.operation
+    filterable: true
+  filters.$.value:
+    label: 字段值
+    blackbox: true
+    name: filters.$.value
+  organizations:
+    label: 授权组织
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    defaultValue: []
+    name: organizations
+    filterable: true
+  users:
+    label: 授权用户
+    type: lookup
+    reference_to: users
+    multiple: true
+    defaultValue: []
+    name: users
+    filterable: true
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

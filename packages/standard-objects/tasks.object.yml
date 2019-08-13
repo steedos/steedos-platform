@@ -1,0 +1,151 @@
+name: tasks
+label: 任务
+icon: task
+fields:
+  name:
+    label: 主题
+    type: text
+    required: true
+    is_wide: true
+    searchable: true
+    index: true
+    name: name
+  assignees:
+    label: 分派给
+    type: lookup
+    reference_to: users
+    multiple: true
+    name: assignees
+    filterable: true
+  due_date:
+    label: 截止时间
+    type: datetime
+    sortable: true
+    name: due_date
+  state:
+    label: 状态
+    type: select
+    options:
+      - label: 未开始
+        value: not_started
+      - label: 进行中
+        value: in_progress
+      - label: 已完成
+        value: completed
+      - label: 暂停
+        value: paused
+    sortable: true
+    required: true
+    name: state
+    filterable: true
+  related_to:
+    label: 相关项
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var o;
+              o = [];
+
+              _.each(Creator.Objects, function (object, object_name) {
+                if (object.enable_tasks) {
+                  return o.push(object.name);
+                }
+              });
+
+              return o;
+            }
+    name: related_to
+    filterable: true
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+    name: description
+  company_id:
+    required: true
+    omit: false
+    hidden: false
+list_views:
+  my_open_tasks:
+    label: 待办任务
+    filter_scope: space
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+      - - state
+        - <>
+        - completed
+  my_closed_tasks:
+    label: 已办任务
+    filter_scope: space
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+      - - state
+        - =
+        - completed
+  created_tasks:
+    label: 交办任务
+    filter_scope: space
+    filters:
+      - - owner
+        - =
+        - '{userId}'
+  all:
+    label: 所有任务
+    columns:
+      - name
+      - due_date
+      - state
+      - assignees
+      - related_to
+    filter_scope: space
+  calendar_view:
+    type: calendar
+    label: 日历视图
+    filter_scope: space
+    options:
+      startDateExpr: created
+      endDateExpr: due_date
+      textExpr: name
+      title:
+        - name
+        - due_date
+        - assignees
+        - state
+      currentView: month
+      groups:
+        - state
+      resources:
+        - fieldExpr: state
+          dataSource:
+            - text: 未开始
+              id: not_started
+              color: 'rgb(118, 118, 118)'
+            - text: 进行中
+              id: in_progress
+              color: 'rgb(29, 186, 174)'
+            - text: 已完成
+              id: completed
+              color: 'rgb(32, 194, 46)'
+            - text: 暂停
+              id: paused
+              color: 'rgb(118, 118, 118)'
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
