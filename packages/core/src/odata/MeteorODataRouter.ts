@@ -6,7 +6,7 @@ import querystring = require('querystring');
 import odataV4Mongodb = require('odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express';
-
+import steedosAuth = require("@steedos/auth");
 var express = require('express');
 var router = express.Router();
 
@@ -15,16 +15,16 @@ interface Request extends core.Request {
   user: any;
 }
 
+router.use('/:spaceId', steedosAuth.setRequestUser);
+
 // middleware that is specific to this router
-router.use('/:spaceId', function auth(req: Request, res: Response, next: () => void) {
-  getODataManager().auth(req, res).then(function (result) {
-    if (result) {
-      req.user = result;
-      next();
-    } else {
-      res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
-    }
-  })
+router.use('/:spaceId', function (req: Request, res: Response, next: () => void) {
+  if (req.user) {
+    next();
+  }
+  else {
+    res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
+  }
 })
 
 /*

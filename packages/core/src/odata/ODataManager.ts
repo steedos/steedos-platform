@@ -1,10 +1,7 @@
 import { getCreator } from "../index";
 import _ = require('underscore');
-import { Request, Response } from "express";
+import { Response } from "express";
 import { JsonMap } from '@salesforce/ts-types';
-import { getSession } from '@steedos/auth';
-
-var Cookies = require("cookies");
 
 export class ODataManager {
   private METADATA_PATH = '$metadata';
@@ -314,17 +311,6 @@ export class ODataManager {
       statusCode: statusCode,
       body: body
     };
-  }
-
-  async auth(request: Request, response: Response): Promise<any> {
-    let cookies = new Cookies(request, response);
-    let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
-    if (!authToken && request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
-      authToken = request.headers.authorization.split(' ')[1]
-    }
-    let spaceId = (request.params ? request.params.spaceId : null) || request.headers['x-space-id'];
-    let user = await getSession(authToken, spaceId);
-    return user;
   }
 
   // 修改、删除时，如果 doc.space = "global"，报错
