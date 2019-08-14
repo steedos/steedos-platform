@@ -10,6 +10,8 @@ Setup.clearAuthCookies = (req, res) ->
 	cookies = new Cookies( req, res );
 	cookies.set("X-User-Id")
 	cookies.set("X-Auth-Token")
+	cookies.set("X-Space-Id")
+	cookies.set("X-Space-Token")
 
 	# 额外清除老的domain下的cookie
 	if req.headers.origin
@@ -21,6 +23,12 @@ Setup.clearAuthCookies = (req, res) ->
 		domain: uri?.domain(),
 		overwrite: true
 	cookies.set "X-Auth-Token", "",
+		domain: uri?.domain(),
+		overwrite: true
+	cookies.set "X-Space-Id", "",
+		domain: uri?.domain(),
+		overwrite: true
+	cookies.set "X-Space-Token", "",
 		domain: uri?.domain(),
 		overwrite: true
 
