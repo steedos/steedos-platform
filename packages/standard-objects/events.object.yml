@@ -1,5 +1,5 @@
 name: events
-label: 事件
+label: 日程
 icon: event
 fields:
   name:

@@ -62,10 +62,6 @@ fields:
     type: textarea
     is_wide: true
     name: description
-  company_id:
-    required: true
-    omit: false
-    hidden: false
 list_views:
   my_open_tasks:
     label: 待办任务
