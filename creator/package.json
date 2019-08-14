@@ -90,11 +90,5 @@
     "simplemde": "^1.11.2",
     "summernote": "^0.8.11",
     "xlsx": "0.10.6"
-  },
-  "resolutions": {
-    "graphql": "^14.1.1",
-    "@steedos/objectql": "^1.0.3",
-    "@steedos/auth": "^1.1.5",
-    "@steedos/standard-objects": "^1.0.2"
   }
 }
