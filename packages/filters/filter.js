@@ -2,6 +2,8 @@ const DevExpress = require("devextreme/bundles/modules/core");
 const DevExpressData = require("devextreme/bundles/modules/data");
 // const DevExpressOData = require("devextreme/bundles/modules/data.odata");
 const getLDMLFormatter = require("./date.formatter").getFormatter;
+const Guid = require("devextreme/core/guid");
+const EdmLiteral = require("devextreme/data/odata/utils").EdmLiteral;
 
 
 DevExpressData.utils.isUnaryOperation = (crit) => {
@@ -45,12 +47,12 @@ const DevExpressOData = {
         if (value instanceof Date) {
             return this.serializeDate(value);
         }
-        // if (value instanceof Guid) {
-        //     return "guid'" + value + "'";
-        // }
-        // if (value instanceof EdmLiteral) {
-        //     return value.valueOf();
-        // }
+        if (value instanceof Guid) {
+            return "guid'" + value + "'";
+        }
+        if (value instanceof EdmLiteral) {
+            return value.valueOf();
+        }
         if (typeof value === "string") {
             return this.serializeString(value);
         }
@@ -60,9 +62,9 @@ const DevExpressOData = {
         if (value instanceof Date) {
             return this.formatISO8601(value, false, false);
         }
-        // if (value instanceof Guid) {
-        //     return value.valueOf();
-        // }
+        if (value instanceof Guid) {
+            return value.valueOf();
+        }
         if (Array.isArray(value)) {
             return "[" + value.map(function (item) {
                 return this.serializeValueV4(item);
