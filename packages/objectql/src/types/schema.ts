@@ -71,7 +71,6 @@ export class SteedosSchema {
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
         this._datasources[datasource_name] = datasource
-        this.transformReferenceOfObject(datasource)
     }
 
     /**
@@ -82,7 +81,7 @@ export class SteedosSchema {
      * @memberof SteedosSchema
      * TODO 处理reference_to 为function的情况
      */
-    private transformReferenceOfObject(datasource: SteedosDataSourceType): void{
+    transformReferenceOfObject(datasource: SteedosDataSourceType): void{
         let objects = datasource.getObjects();
         _.each(objects, (object, object_name) => {
             _.each(object.fields, (field, field_name)=>{

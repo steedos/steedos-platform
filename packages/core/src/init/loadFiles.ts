@@ -64,7 +64,7 @@ export class LoadFiles {
         }
     }
 
-    private static loadObjectToCreator(filePath: string) {
+    static loadObjectToCreator(filePath: string) {
 
         if (!path.isAbsolute(filePath)) {
             filePath = path.resolve(objectql.getBaseDirectory(), filePath);
@@ -90,7 +90,7 @@ export class LoadFiles {
 
     }
 
-    private static loadAppToCreator(filePath: string) {
+    static loadAppToCreator(filePath: string) {
 
         if (!path.isAbsolute(filePath)) {
             filePath = path.resolve(objectql.getBaseDirectory(), filePath);
@@ -108,7 +108,7 @@ export class LoadFiles {
         return fs.readFileSync(filePath, encoding);
     }
 
-    private static addStaticJs(filePath: string){
+    static addStaticJs(filePath: string){
         const filePatten = [
             path.join(filePath, "*.client.js")
         ]

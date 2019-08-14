@@ -476,6 +476,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async init() {
+        this.schema.transformReferenceOfObject(this)
         if (this._adapter.init) {
             return await this._adapter.init(this._objects);
         }
