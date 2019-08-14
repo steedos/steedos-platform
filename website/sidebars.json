@@ -2,7 +2,7 @@
   "文档": {
     "快速向导": ["overview", "getting_started"],
     "定义业务对象": ["app", "datasource", "object", "object_field", "object_field_type", "object_listview", "object_permission", "object_filter_conditions", "object_trigger", "object_action", "standard_objects"],
-    "台账": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile"],
+    "台账": ["record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile", "notifications"],
     "审批": ["workflow_overview", "workflow_submit", "workflow_archive", "object_workflow"],
     "权限": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "统计": ["reports", "report_jsreport"],
