@@ -34,6 +34,7 @@ yarn start
 - 新增的meteor package 项目，如果有Npm.depends部分，需要将node package添加到package.json及.dist/package.json
 
 > 注意发版本是在项目根目录发，不是在.dist中
+> 发布前测试请不要直接使用上述的`编译并运行`小结中的yarn start办法，如果执行过yarn，应该先删除掉.dist文件夹中的node_modules、storage文件夹，再把整个.dist文件夹copy到相关项目中测试
 
 **发布脚本**
 ```

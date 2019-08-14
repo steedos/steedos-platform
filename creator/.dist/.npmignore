@@ -1,1 +1,3 @@
 /bundle/programs/server/npm
+/node_modules
+/storage
