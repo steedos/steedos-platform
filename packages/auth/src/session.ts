@@ -224,11 +224,13 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
   let authToken: string = request.headers['x-auth-token'] || cookies.get("X-Auth-Token");
+  let spaceToken = cookies.get("X-Space-Token");
+  let authorization = request.headers.authorization;
   let spaceId = (request.params ? request.params.spaceId : null)
     || (request.query ? request.query.space_id : null)
     || request.headers['x-space-id'];
-  if (request.headers.authorization && request.headers.authorization.split(' ')[0] == 'Bearer') {
-    let spaceAuthToken = request.headers.authorization.split(' ')[1];
+  if (authorization && authorization.split(' ')[0] == 'Bearer') {
+    let spaceAuthToken = authorization.split(' ')[1];
     if (!spaceId) {
       spaceId = spaceAuthToken.split(',')[0];
     }
@@ -236,6 +238,16 @@ export async function auth(request: Request, response: Response): Promise<any> {
       authToken = spaceAuthToken.split(',')[1];
     }
   }
+
+  if (spaceToken) {
+    if (!spaceId) {
+      spaceId = spaceToken.split(',')[0];
+    }
+    if (!authToken) {
+      authToken = spaceToken.split(',')[1];
+    }
+  }
+
   let user = await getSession(authToken, spaceId);
   return Object.assign({ authToken: authToken }, user);
 }
