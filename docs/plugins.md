@@ -12,10 +12,7 @@ title: 快速向导
 
 ```yaml
 plugins:
-  "@steedos/plugin-jsreport":
-    version: 1.1
-    props:
-      somekey: aaa
+  - "@steedos/plugin-jsreport"
 ```
 
 ### 安装插件
