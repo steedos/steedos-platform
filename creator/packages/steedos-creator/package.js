@@ -337,6 +337,8 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/slds_illustration_preview.coffee', 'client');
 	api.addFiles('client/views/slds_illustration_preview.less', 'client');
 
+	api.addFiles('client/title.coffee', 'client');
+
 	api.addFiles('client/theme.less', 'client');
 	api.addFiles('client/i18n.coffee', 'client');
 
