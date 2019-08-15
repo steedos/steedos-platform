@@ -85,18 +85,9 @@ export class Core {
     }
 
     private static initGraphqlAPI() {
-        router.use("/:dataSourceName", function (req, res, next) {
-            var authToken, user;
-            authToken = Steedos.getAuthToken(req, res);
-            user = null;
-            if (authToken) {
-                user = Meteor.wrapAsync(function (authToken, cb) {
-                    return steedosAuth.getSession(authToken).then(function (resolve, reject) {
-                        return cb(reject, resolve);
-                    });
-                })(authToken);
-            }
-            if (user) {
+        router.use("/", steedosAuth.setRequestUser);
+        router.use("/", function (req, res, next) {
+            if (req.user) {
                 return next();
             } else {
                 return res.status(401).send({
@@ -108,45 +99,12 @@ export class Core {
                 });
             }
         });
-        router.use("/:dataSourceName/:spaceId", function (req, res, next) {
-            var authToken, spaceId, user;
-            authToken = Steedos.getAuthToken(req, res);
-            spaceId = req.params.spaceId;
-            console.log('spaceId: ', spaceId);
-            user = null;
-            if (authToken) {
-                user = Meteor.wrapAsync(function (authToken, spaceId, cb) {
-                    return steedosAuth.getSession(authToken, spaceId).then(function (resolve, reject) {
-                        return cb(reject, resolve);
-                    });
-                })(authToken, spaceId);
-            }
-            if (user) {
-                console.log('userSession: ', user);
-                req.userSession = user;
-                return next();
-            } else {
-                return res.status(401).send({
-                    errors: [
-                        {
-                            'message': 'You must be logged in to do this.'
-                        }
-                    ]
-                });
-            }
-        });
+
         _.each(Creator.steedosSchema.getDataSources(), function (datasource: any, name) {
-            if (datasource.driver === 'mongo' || datasource.driver === 'meteor-mongo') {
-                return router.use("/" + name + "/:spaceId", graphqlHTTP({
-                    schema: datasource.buildGraphQLSchema(),
-                    graphiql: true
-                }));
-            } else {
-                return router.use("/" + name, graphqlHTTP({
-                    schema: datasource.buildGraphQLSchema(),
-                    graphiql: true
-                }));
-            }
+            return router.use("/" + name, graphqlHTTP({
+                schema: datasource.buildGraphQLSchema(),
+                graphiql: true
+            }));
         });
         app.use('/graphql', router);
         return WebApp.connectHandlers.use(app);
