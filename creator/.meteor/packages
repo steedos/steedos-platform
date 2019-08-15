@@ -189,6 +189,6 @@ steedos:app-meeting
 steedos:app-projects
 # steedos:qhd-archive
 
-steedos:oauth2-messenger
+# steedos:oauth2-messenger
 
 steedos:object-webhooks-queue
