@@ -9,18 +9,22 @@
     "host": "192.168.0.237",
     "port": 1521,
     "username": "qhd170411",
-    "password": "password",
+    "password": "123456",
     "database": "ORCL"
   },
   "postgres": {
-    "url": "postgresql://postgres:hotoainc.@192.168.0.195/driver-test"
+    "url": "postgresql://postgres:hotoainc.@192.168.0.195/driver-test",
+    "host": "192.168.0.195",
+    "username": "postgres",
+    "password": "hotoainc.",
+    "database": "driver-test"
   },
   "mssql": {
-    "--url": "mssql://sa:password@192.168.0.190:1433/driver-test",
+    "url": "mssql://sa:hotoainc.@192.168.0.190:1433/driver-test",
     "host": "192.168.0.190",
     "port": 1433,
-    "username":"sa",
-    "password":"password",
-    "database":"driver-test"
+    "username": "sa",
+    "password": "hotoainc.",
+    "database": "driver-test"
   }
 }
