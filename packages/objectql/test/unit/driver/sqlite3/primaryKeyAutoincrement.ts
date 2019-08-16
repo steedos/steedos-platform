@@ -132,6 +132,7 @@ describe('primary key autoincrement test for sqlite3 database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
+        await datasource.init();
         await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;
         // 删除重置主键自增队列

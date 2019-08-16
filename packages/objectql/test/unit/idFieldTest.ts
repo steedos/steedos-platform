@@ -40,6 +40,10 @@ describe('Test idField', () => {
             }
         })
 
+
+        await mySchema.getDataSource().init()
+        await mySchema.getDataSource('sqlite').init()
+
         let users = mySchema.getObject('users')
   
         let test = mySchema.getObject('sqlite.test');

@@ -3,7 +3,7 @@ import { SteedosSchema } from '../../src';
 import { Dictionary } from '@salesforce/ts-types';
 var path = require('path')
 
-describe('Test Permission', () => {
+describe('Test Permission', async () => {
 
     let userSessionStorage: Dictionary<any> = {}
 
@@ -92,7 +92,7 @@ describe('Test Permission', () => {
             }
         }
     })
-
+    await mySchema.getDataSource().init();
     it('guest: 权限测试', async () => {
         let userSession = userSessionStorage['0'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;

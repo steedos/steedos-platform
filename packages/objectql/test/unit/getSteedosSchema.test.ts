@@ -2,7 +2,7 @@ import { getSteedosSchema } from '../../src/types';
 import { expect } from 'chai';
 var path = require('path')
 
-describe('get SteedosSchema', () => {
+describe('get SteedosSchema', async () => {
     let schema = getSteedosSchema()
     
     // 添加默认数据源
@@ -35,6 +35,7 @@ describe('get SteedosSchema', () => {
         objectFiles: [path.resolve(__dirname, "./load")]
     })
 
+    await schema.getDataSource().init()
 
     it('should return true', () => {
         let object = schema.getObject("post")

@@ -15,6 +15,7 @@ describe('Test MeteorMongoObject extend BaseObject', () => {
     })
 
     it('extend permission_set', async () => {
+        await mySchema.getDataSource().init()
         let object = mySchema.getObject("application_package")
         expect(object.toConfig().permission_set["none"].name).to.equal("none")
     });

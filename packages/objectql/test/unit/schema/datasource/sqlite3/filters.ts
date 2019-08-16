@@ -230,6 +230,7 @@ describe('filters for sqlite3 database', () => {
         });
         const datasources = mySchema.getDataSources();
         for (let name in datasources) {
+            await datasources[name].init()
             await datasources[name].dropEntities();
             await datasources[name].createTables();
         }
