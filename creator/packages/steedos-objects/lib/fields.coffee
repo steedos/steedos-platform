@@ -46,7 +46,11 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					fs.autoform.type = 'date'
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "steedos-date-mobile"
+						dateMobileOptions:
+							type: "date"
 				else
 					fs.autoform.outFormat = 'yyyy-MM-dd';
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
@@ -61,7 +65,11 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = Date
 			if Meteor.isClient
 				if Steedos.isMobile() || Steedos.isPad()
-					fs.autoform.type = 'datetime-local'
+					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
+					fs.autoform.afFieldInput =
+						type: "steedos-date-mobile"
+						dateMobileOptions:
+							type: "datetime"
 				else
 					# 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
 					fs.autoform.afFieldInput =

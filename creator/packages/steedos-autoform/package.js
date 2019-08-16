@@ -113,6 +113,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/coreform/inputTypes/coreform-number/steedos-number.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-number/steedos-number.coffee', 'client');
 
+	api.addFiles('client/coreform/inputTypes/coreform-date-mobile/date.html', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-date-mobile/date.js', 'client');
+
 	api.addFiles('routes/formula_space_users.coffee', 'server');
 	api.addFiles('routes/formula_organizations.coffee', 'server');
 
