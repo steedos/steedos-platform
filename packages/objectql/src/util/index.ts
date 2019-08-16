@@ -136,7 +136,7 @@ let loadApps = (filePath: string)=>{
 
 exports.loadApps = loadApps
 
-exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
+export function extend(destination: JsonMap, ...sources: JsonMap[]){
     _.each(sources, (source: JsonMap)=>{
         _.each(source, (v:never, k: string)=>{
             if(!has(destination, k)){
@@ -153,7 +153,6 @@ exports.extend = (destination: JsonMap, ...sources: JsonMap[])=>{
             }
         })
     })
-
     return destination
 }
 

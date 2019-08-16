@@ -9,7 +9,7 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 
 abstract class SteedosObjectProperties {
     name?: string
-    // extend?: string
+    extend?: string
     tableName?: string
     label?: string
     icon?: string
@@ -360,7 +360,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     //TODO 处理对象继承
-    extend(config: SteedosObjectTypeConfig) {
+    extend_TODO(config: SteedosObjectTypeConfig) {
         if (this.name != config.name)
             throw new Error("You can not extend on different object");
 

@@ -93,6 +93,20 @@ export class SteedosDataSourceType implements Dictionary {
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
     private _graphQLSchema: GraphQLSchema;
+    private _config: SteedosDataSourceTypeConfig;
+    private _extendObjectsConfig: Array<SteedosObjectTypeConfig> = [];
+    public get extendObjectsConfig(): Array<SteedosObjectTypeConfig> {
+        return this._extendObjectsConfig;
+    }
+    public set extendObjectsConfig(value: Array<SteedosObjectTypeConfig>) {
+        this._extendObjectsConfig = value;
+    }
+    public get config(): SteedosDataSourceTypeConfig {
+        return this._config;
+    }
+    public set config(value: SteedosDataSourceTypeConfig) {
+        this._config = value;
+    }
     
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
@@ -114,43 +128,40 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        objectConfig.name = object_name
-        let config: SteedosObjectTypeConfig = { fields: {} }
-        let baseObject = this.getObject('base');
-        let coreObject = this.getObject('core');
-        if (this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject) {
-            let { triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(baseObject.toConfig())
-            config = util.extend(config, { triggers: baseTriggers }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
-        } else if (this.driver != SteedosDatabaseDriverType.MeteorMongo && coreObject) {
-            let { fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(coreObject.toConfig())
-            let coreListeners = clone(coreObject.listeners);
-            _.each(coreListeners, function (v: SteedosListenerConfig, k) {
-                v.listenTo = object_name;
-            })
-            config = util.extend(config, { listeners: coreListeners }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
-        } else {
-            config = objectConfig
+        let config:SteedosObjectTypeConfig;
+        if(objectConfig.extend){
+            let parentObjectConfig = clone(this._objectsConfig[object_name]);
+            if(_.isEmpty(parentObjectConfig)){
+                throw new Error(`not find extend object: ${objectConfig.extend}`);
+            }
+            config = util.extend(parentObjectConfig, objectConfig);
+            delete config.extend
+        }else{
+            objectConfig.name = object_name
+            config = { fields: {} }
+            let baseObject = this.getObject('base');
+            let coreObject = this.getObject('core');
+            if (this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject) {
+                let { triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(baseObject.toConfig())
+                config = util.extend(config, { triggers: baseTriggers }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
+            } else if (this.driver != SteedosDatabaseDriverType.MeteorMongo && coreObject) {
+                let { fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(coreObject.toConfig())
+                let coreListeners = clone(coreObject.listeners);
+                _.each(coreListeners, function (v: SteedosListenerConfig, k) {
+                    v.listenTo = object_name;
+                })
+                config = util.extend(config, { listeners: coreListeners }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
+            } else {
+                config = objectConfig
+            }
         }
+
         let object = new SteedosObjectType(object_name, this, config)
         this._objectsConfig[object_name] = config;
         this._objects[object_name] = object;
     }
 
-    constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
-        this._name = datasource_name
-        this._url = config.url
-        this._host = config.host
-        this._port = config.port
-        this._username = config.username
-        this._password = config.password
-        this._database = config.database
-        this._connectString = config.connectString
-        this._timezone = config.timezone
-        this._options = config.options
-        this._schema = schema
-        this._driver = config.driver
-        this._logging = config.logging
-
+    initDriver(){
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             host: this._host,
@@ -164,8 +175,8 @@ export class SteedosDataSourceType implements Dictionary {
             logging: this._logging
         }
 
-        if (_.isString(config.driver)) {
-            switch (config.driver) {
+        if (_.isString(this.config.driver)) {
+            switch (this.config.driver) {
                 case SteedosDatabaseDriverType.Mongo:
                     this._adapter = new SteedosMongoDriver(driverConfig);
                     break;
@@ -188,13 +199,16 @@ export class SteedosDataSourceType implements Dictionary {
                     this._adapter = new SteedosMySqlDriver(driverConfig);
                     break;
                 default:
-                    throw new Error(`the driver ${config.driver} is not supported`)
+                    throw new Error(`the driver ${this.config.driver} is not supported`)
             }
         } else {
-            this._adapter = config.driver
+            this._adapter = this.config.driver
         }
+    }
+
+    initBaseObject(){
         let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
-        if (config.driver === SteedosDatabaseDriverType.MeteorMongo) {
+        if (this.config.driver === SteedosDatabaseDriverType.MeteorMongo) {
             if (standardObjectsDir) {
                 let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
                 this.setObject(baseObject.name, baseObject)
@@ -209,44 +223,78 @@ export class SteedosDataSourceType implements Dictionary {
                 this.setObjectListener(coreObjectTrigger)
             }
         }
+    }
 
-        if (config.getRoles && !_.isFunction(config.getRoles)) {
-            throw new Error('getRoles must be a function')
-        }
-
-        this._getRoles = config.getRoles
-
-        _.each(config.objects, (object, object_name) => {
-            this.setObject(object_name, object)
+    initObjects(){
+        _.each(this.config.objects, (object, object_name) => {
+            if (object.extend){
+                this._extendObjectsConfig.push(object)
+            }else{
+                this.setObject(object_name, object)
+            }
         })
 
-        _.each(config.objectFiles, (objectFiles) => {
+        _.each(this.config.objectFiles, (objectFiles) => {
             this.use(objectFiles)
         })
 
-        _.each(config.objectsRolesPermission, (objectRolesPermission, object_name) => {
+        _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
                 objectRolePermission.name = role_name
                 this.setObjectPermission(object_name, objectRolePermission)
             })
         })
+    }
 
+    initExtendObject(){
+        _.each(this._extendObjectsConfig, (objectConfig)=>{
+            this.setObject(objectConfig.extend, objectConfig)
+        })
+    }
 
-        _.each(config.apps, (appConfig, app_id) => {
+    initApps(){
+        _.each(this.config.apps, (appConfig, app_id) => {
             this.addApp(app_id, appConfig)
         })
 
-        _.each(config.appFiles, (appFile) => {
+        _.each(this.config.appFiles, (appFile) => {
             this.useAppFile(appFile)
         })
+    }
 
-        _.each(config.reports, (reportConfig, report_id) => {
+    initReports(){
+        _.each(this.config.reports, (reportConfig, report_id) => {
             this.addReport(report_id, reportConfig)
         })
 
-        _.each(config.reportFiles, (reportFile) => {
+        _.each(this.config.reportFiles, (reportFile) => {
             this.useReportFile(reportFile)
         })
+    }
+
+    constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
+        this._name = datasource_name
+        this.config = config
+        this._url = config.url
+        this._host = config.host
+        this._port = config.port
+        this._username = config.username
+        this._password = config.password
+        this._database = config.database
+        this._connectString = config.connectString
+        this._timezone = config.timezone
+        this._options = config.options
+        this._schema = schema
+        this._driver = config.driver
+        this._logging = config.logging
+        
+        this.initDriver();
+        this.initBaseObject()
+
+        if (config.getRoles && !_.isFunction(config.getRoles)) {
+            throw new Error('getRoles must be a function')
+        }
+        this._getRoles = config.getRoles
     }
 
 
@@ -375,20 +423,24 @@ export class SteedosDataSourceType implements Dictionary {
         let objectJsons = util.loadObjects(filePath)
         let fieldJsons = util.loadFields(filePath)
         _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-            let objectFieldsJson = fieldJsons.filter(fieldJson => fieldJson.object_name === json.name)
-            let objectJson: SteedosObjectTypeConfig = { fields: {} }
-            if (objectFieldsJson.length > 0) {
-                let objectFields = objectFieldsJson.map(fj => {
-                    delete fj.object_name
-                    let f = { fields: {} }
-                    f.fields[fj.name] = fj
-                    return f
-                })
-                objectJson = util.extend({}, json, ...objectFields)
-            } else {
-                objectJson = json
+            if (json.extend){
+                this._extendObjectsConfig.push(json)
+            }else{
+                let objectFieldsJson = fieldJsons.filter(fieldJson => fieldJson.object_name === json.name)
+                let objectJson: SteedosObjectTypeConfig = { fields: {} }
+                if (objectFieldsJson.length > 0) {
+                    let objectFields = objectFieldsJson.map(fj => {
+                        delete fj.object_name
+                        let f = { fields: {} }
+                        f.fields[fj.name] = fj
+                        return f
+                    })
+                    objectJson = util.extend({}, json, ...objectFields)
+                } else {
+                    objectJson = json
+                }
+                this.setObject(objectJson.name, objectJson)
             }
-            this.setObject(objectJson.name, objectJson)
         })
 
         // let fieldJsons = util.loadFields(filePath)
@@ -433,6 +485,13 @@ export class SteedosDataSourceType implements Dictionary {
 
         let object = this.getObject(object_name);
         if (object) {
+            //TODO 处理listener 继承
+            //console.log('setObjectListener object_name', object_name, this._objectsConfig[object_name]);
+            let objectListener = this._objectsConfig[object_name].listeners;
+            if(!objectListener){
+                this._objectsConfig[object_name].listeners = {}
+            }
+            this._objectsConfig[object_name].listeners[json.name] = json
             object.setListener(json.name || '', json)
         } else {
             throw new Error(`not find object: ${object_name}`);
@@ -476,7 +535,11 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async init() {
-        this.schema.transformReferenceOfObject(this)
+        this.initObjects();
+        this.initExtendObject();
+        this.initApps();
+        this.initReports();
+        this.schema.transformReferenceOfObject(this);
         if (this._adapter.init) {
             return await this._adapter.init(this._objects);
         }

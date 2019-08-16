@@ -4,12 +4,31 @@ const globby = require("globby");
 const path = require("path");
 const fs = require("fs");
 const UglifyJS = require("uglify-js");
+const clone = require("clone");
 export class LoadFiles {
 
-    static run() {
+    static _extendObjectsConfig = []
+
+    static initStandardObjects(){
         this.loadStandardFiles();
+    }
+
+    static initProjectObjects() {
         this.loadDefaultDatasourcesFiles();
+        this.initProjectExtendObjects();
         this.loadDatasourcesStaticJs();
+    }
+
+    private static initProjectExtendObjects(){
+        _.each(this._extendObjectsConfig, (objectConfig)=>{
+            let parentObjectConfig = clone(Creator.Objects[objectConfig.extend]);
+            if(_.isEmpty(parentObjectConfig)){
+                throw new Error(`not find extend object: ${objectConfig.extend}`);
+            }
+            let config = objectql.extend(parentObjectConfig, objectConfig);
+            delete config.extend
+            Creator.Objects[objectConfig.extend] = config
+        })
     }
 
     private static loadDatasourcesStaticJs(){
@@ -73,8 +92,12 @@ export class LoadFiles {
         //load .object.yml
         let objects = objectql.loadObjectFiles(filePath)
         _.each(objects, (object) => {
-            if (object.name != 'core') {
-                Creator.Objects[object.name] = object
+            if(object.extend){
+                this._extendObjectsConfig.push(object)
+            }else{
+                if (object.name != 'core') {
+                    Creator.Objects[object.name] = object
+                }
             }
         })
 

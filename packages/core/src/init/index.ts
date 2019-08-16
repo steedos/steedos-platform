@@ -4,9 +4,10 @@ import { Core } from './core'
 import { Plugins } from './plugins';
 
 export function init() {
-    LoadFiles.run();
+    LoadFiles.initStandardObjects();
     Datasources.create();
     Plugins.init();
-    Datasources.init();
+    LoadFiles.initProjectObjects()
     Core.run();
+    Datasources.init();
 }
