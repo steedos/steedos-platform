@@ -37,7 +37,7 @@ export class Plugins {
     }
 
     static getPluginDir(pluginName) {
-        return path.dirname(require.resolve(`${pluginName}/package.json`, {paths: [path.join(process.cwd(), 'plugins')]}));
+        return path.dirname(require.resolve(`${pluginName}/package.json`, {paths: [path.join(process.cwd(), '.plugins')]}));
     }
 
     static getConfig(pluginDir: string){

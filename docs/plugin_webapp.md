@@ -10,8 +10,8 @@ title: Web 插件
 
 ```bash
 cd {project_root}
-mkdir plugins
-cd plugins
+mkdir .plugins
+cd .plugins
 mkdir hello-world-plugin
 cd hello-world-plugin
 ```

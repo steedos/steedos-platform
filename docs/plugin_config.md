@@ -20,8 +20,9 @@ title: 插件配置
 
 ```yml
 datasources:
-  - name: mattermost
-    objectFiles: ./src/**
+  mattermost:
+    objectFiles: 
+     - ./src/**
 server:
   main: index.js
 webapp:

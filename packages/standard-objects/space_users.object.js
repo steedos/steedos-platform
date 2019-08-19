@@ -159,11 +159,11 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "该用户已在此工作区");
                 }
             }
-            if (doc.username) {
-                if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-                    throw new Meteor.Error(400, "space_paid_info_title");
-                }
-            }
+            // if (doc.username) {
+            //     if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
+            //         throw new Meteor.Error(400, "space_paid_info_title");
+            //     }
+            // }
         };
         db.space_users.updatevaildate = function (userId, doc, modifier) {
             var addOrgs, currentUserPhonePrefix, isAllAddOrgsAdmin, isAllSubOrgsAdmin, isOrgAdmin, newOrgs, oldOrgs, phoneNumber, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, repeatEmailUser, repeatNumberUser, space, subOrgs;
@@ -261,11 +261,11 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "space_users_error_phone_already_existed");
                 }
             }
-            if (((ref9 = modifier.$set) != null ? ref9.hasOwnProperty('username') : void 0) || (((ref10 = modifier.$unset) != null ? ref10.hasOwnProperty('username') : void 0) && doc.username)) {
-                if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-                    throw new Meteor.Error(400, "space_paid_info_title");
-                }
-            }
+            // if (((ref9 = modifier.$set) != null ? ref9.hasOwnProperty('username') : void 0) || (((ref10 = modifier.$unset) != null ? ref10.hasOwnProperty('username') : void 0) && doc.username)) {
+            //     if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
+            //         throw new Meteor.Error(400, "space_paid_info_title");
+            //     }
+            // }
         };
         db.space_users.before.insert(function (userId, doc) {
             var creator, currentUserPhonePrefix, email, id, options, organization, phone, phoneNumber, user, userObj, userObjs;

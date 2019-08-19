@@ -1,3 +1,7 @@
+1.3.16 / 2019-08-19
+===================
+
+  * 调整插件调试文件夹plugins -> .plugins；统一steedos-config.yml 与 plugin-config.yml datasources 部分数据格式
 1.3.14 / 2019-08-17
 ===================
 
