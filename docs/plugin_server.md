@@ -12,8 +12,8 @@ title: 服务端插件
 
 ```bash
 cd {project_root}
-mkdir plugins
-cd plugins
+mkdir .plugins
+cd .plugins
 mkdir hello-world-plugin
 cd hello-world-plugin
 ```
@@ -77,7 +77,7 @@ const router = require("router");
 
 export function init(context) {
     // 执行插件初始化。
-    context.app.use('/plugins/hello-world/api', router);
+    context.app.use('/.plugins/hello-world/api', router);
 }
 ```
 
