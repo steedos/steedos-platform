@@ -254,61 +254,65 @@ importObject = function (importObj, space) {
 
 // 启动导入Jobs
 // Creator.startImportJobs()
-Meteor.methods({
-  startImportJobs: function (record_id, space) {
-    var endtime, importObj, starttime;
-    // collection = Creator.Collections["queue_import"]
-    // importList = collection.find({"status":"waitting"}).fetch()
-    // importList.forEach (importObj)->
-    // 	# 根据recordObj提供的对象名，逐个文件导入
-    starttime = new Date();
-    importObj = Creator.Collections["queue_import"].findOne({
-      _id: record_id
-    });
-    importObject(importObj, space);
-    endtime = new Date();
-    return Creator.Collections["queue_import"].direct.update(importObj._id, {
-      $set: {
-        start_time: starttime,
-        end_time: endtime
+try {
+  Meteor.methods({
+    startImportJobs: function (record_id, space) {
+      var endtime, importObj, starttime;
+      // collection = Creator.Collections["queue_import"]
+      // importList = collection.find({"status":"waitting"}).fetch()
+      // importList.forEach (importObj)->
+      // 	# 根据recordObj提供的对象名，逐个文件导入
+      starttime = new Date();
+      importObj = Creator.Collections["queue_import"].findOne({
+        _id: record_id
+      });
+      importObject(importObj, space);
+      endtime = new Date();
+      return Creator.Collections["queue_import"].direct.update(importObj._id, {
+        $set: {
+          start_time: starttime,
+          end_time: endtime
+        }
+      });
+    },
+    getValueLable: function (reference_to_object, name_field, value, space_id) {
+      var data, fields, ids, results;
+      if (!value) {
+        return "";
       }
-    });
-  },
-  getValueLable: function (reference_to_object, name_field, value, space_id) {
-    var data, fields, ids, results;
-    if (!value) {
-      return "";
-    }
-    ids = [];
-    if (value.constructor === Array) {
-      ids = value;
-    } else {
-      ids.push(value);
-    }
-    fields = {
-      _id: 1
-    };
-    fields[name_field] = 1;
-    results = Creator.getCollection(reference_to_object, space_id).find({
-      _id: {
-        $in: value
+      ids = [];
+      if (value.constructor === Array) {
+        ids = value;
+      } else {
+        ids.push(value);
       }
-    }, {
-      fields: fields
-    }).fetch();
-    data = [];
-    _.each(results, function (result) {
-      return data.push(result[name_field]);
-    });
-    return data;
-  },
-  // Creator.testImportJobs("fSNrgYcftFkiBXEvi","Af8eM6mAHo7wMDqD3")
-  // 测试
-  testImportJobs: function (record_id, space) {
-    var importObj;
-    importObj = Creator.Collections["queue_import"].findOne({
-      _id: record_id
-    });
-    return importObject(importObj, space);
-  }
-});
+      fields = {
+        _id: 1
+      };
+      fields[name_field] = 1;
+      results = Creator.getCollection(reference_to_object, space_id).find({
+        _id: {
+          $in: value
+        }
+      }, {
+        fields: fields
+      }).fetch();
+      data = [];
+      _.each(results, function (result) {
+        return data.push(result[name_field]);
+      });
+      return data;
+    },
+    // Creator.testImportJobs("fSNrgYcftFkiBXEvi","Af8eM6mAHo7wMDqD3")
+    // 测试
+    testImportJobs: function (record_id, space) {
+      var importObj;
+      importObj = Creator.Collections["queue_import"].findOne({
+        _id: record_id
+      });
+      return importObject(importObj, space);
+    }
+  });
+} catch (error) {
+  console.log(error.message)
+}
