@@ -8,8 +8,8 @@
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
     "postinstall": "node .scripts/npm-postinstall.js",
     "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos",
-    "tsc-steedos": "cd ../object-server/ && yarn tsc",
-    "map-steedos": "npm run tsc-steedos && cp -r ../object-server/packages/* node_modules/@steedos/"
+    "tos": "cd ../object-server/ && yarn tsc",
+    "os": "npm run tos && cp -r ../object-server/packages/* node_modules/@steedos/"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
