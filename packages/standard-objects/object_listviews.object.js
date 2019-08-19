@@ -58,6 +58,10 @@ Creator.Objects.object_listviews = {
       label: "共享视图到工作区",
       type: "boolean"
     },
+    show_count: {
+      label: "显示项目数量",
+      type: "boolean"
+    },
     type: {
       label: "视图类型",
       type: "select",
