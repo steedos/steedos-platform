@@ -47,6 +47,9 @@ Template.creatorSidebar.onRendered ->
 				if object_name == "spaces"
 					spaceId = Steedos.spaceId()
 					menuUrl = "/app/admin/spaces/view/#{spaceId}"
+				else if object_name == "users"
+					userId = Steedos.userId()
+					menuUrl = "/app/admin/users/view/#{userId}"
 				else
 					listViews = Creator.getListViews(object_name)
 					if listViews && listViews.length > 0

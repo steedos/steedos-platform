@@ -59,6 +59,23 @@ Template.creator_list_wrapper.onRendered ->
 
 	self.rendered = true
 
+	self.autorun ->
+		# object_name变化时自动请求odata获取每个视图的记录数
+		object_name = Session.get("object_name")
+		listViews = Creator.getListViews()
+		self.recordsListViewTotal.set {}
+		listViews.forEach (view)->
+			unless view?.show_count
+				return
+			filters = Creator.getODataFilter(view._id, object_name)
+			options =
+				filter: filters
+			Creator.odata.queryCount object_name, options, (count, error)->
+				if !error and count != false
+					recordsListViewTotal = self.recordsListViewTotal.get()
+					recordsListViewTotal[view._id] = count
+					self.recordsListViewTotal.set recordsListViewTotal
+
 
 Template.creator_list_wrapper.helpers Creator.helpers
 
@@ -142,6 +159,15 @@ Template.creator_list_wrapper.helpers
 			return item.label || item.name 
 		else
 			return ""
+	
+	list_view_count: (item)->
+		unless item.show_count
+			return ""
+		recordsListViewTotal = Template.instance().recordsListViewTotal.get()
+		if(recordsListViewTotal[item._id])
+			return "(#{recordsListViewTotal[item._id]})"
+		else
+			return "(--)"
 
 	actions: ()->
 		actions = Creator.getActions()
@@ -386,6 +412,7 @@ Template.creator_list_wrapper.events
 
 Template.creator_list_wrapper.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
+	this.recordsListViewTotal = new ReactiveVar({})
 
 Template.creator_list_wrapper.onDestroyed ->
 	object_name = Session.get("object_name")
