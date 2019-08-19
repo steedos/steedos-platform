@@ -1,0 +1,15 @@
+env:
+  PORT: 5000
+  ROOT_URL: http://127.0.0.1:5000
+datasources:
+  default:
+    connection: 
+      host: 127.0.0.1
+      database: steedos
+public:
+  cfs:
+    store: "local"
+    local: 
+      folder: "./storage"
+plugins:
+  - "@steedos/app-contracts"
