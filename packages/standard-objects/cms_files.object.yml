@@ -177,7 +177,7 @@ actions:
                   return false;
                 } else {
                     url = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
-                    window.location = url;
+                    window.open(url,"_blank");
                     return false;
                 }
               }
