@@ -55,21 +55,33 @@ export class Plugins {
         let pluginDir = this.getPluginDir(pluginName);
         let config = this.getConfig(pluginDir);
         if(config){
-            _.each(config.datasources, (_datasource)=>{
-                if(_datasource.name === 'default'){
-                    let filePath = path.join(pluginDir, _datasource.objectFiles)
-                    LoadFiles.loadObjectToCreator(filePath);
-                    LoadFiles.loadAppToCreator(filePath);
-                    LoadFiles.addStaticJs(filePath);
-                }else{
-                    let datasource = objectql.getSteedosSchema().getDataSource(_datasource.name)
-                    if(!datasource){
-                        throw new Error(`not find datasource: ${_datasource.name}`)
+            _.each(config.datasources, (_datasource, name)=>{
+                if(name === 'default'){
+                    if(!_.isArray(_datasource.objectFiles)){
+                        throw new Error(`${name}.objectFiles must be an array` + _datasource.objectFiles)
                     }
-                    let filePath = path.join(pluginDir, _datasource.objectFiles)
-                    datasource.use(filePath);
-                    datasource.useAppFile(filePath);
-                    datasource.useReportFile(filePath);
+                    _.each(_datasource.objectFiles, (objectFile)=>{
+                        let filePath = path.join(pluginDir, objectFile)
+                        LoadFiles.loadObjectToCreator(filePath);
+                        LoadFiles.loadAppToCreator(filePath);
+                        LoadFiles.addStaticJs(filePath);
+                    })
+                }else{
+                    if(!_.isArray(_datasource.objectFiles)){
+                        throw new Error(`${name}.objectFiles must be an array`)
+                    }
+                    let datasource = objectql.getSteedosSchema().getDataSource(name)
+                    if(!datasource){
+                        throw new Error(`not find datasource: ${name}` + _datasource.objectFiles)
+                    }
+
+                    _.each(_datasource.objectFiles, (objectFile)=>{
+                        let filePath = path.join(pluginDir, objectFile)
+                        datasource.use(filePath);
+                        datasource.useAppFile(filePath);
+                        datasource.useReportFile(filePath);
+                    })
+                    
                 }
             })
         }
