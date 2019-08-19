@@ -59,7 +59,7 @@ Creator.Objects.object_listviews = {
       type: "boolean"
     },
     show_count: {
-      label: "显示项目数量",
+      label: "显示条目数",
       type: "boolean"
     },
     type: {
