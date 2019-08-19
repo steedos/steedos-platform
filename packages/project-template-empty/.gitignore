@@ -13,3 +13,5 @@
 **/.vscode/launch.*
 
 **/yarn.lock
+
+.DS_Store
