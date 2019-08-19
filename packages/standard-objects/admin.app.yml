@@ -13,26 +13,12 @@ admin_menus:
       - user
     expanded: false
     mobile: false
-  - _id: account_avatar
-    name: 头像
+  - _id: account_profile
+    name: 我的资料
     permission_sets:
       - user
-    template_name: account_avatar
     parent: account
-    mobile: false
-  - _id: account_setting
-    name: 账户
-    permission_sets:
-      - user
-    template_name: account_setting
-    parent: account
-    mobile: false
-  - _id: account_password
-    name: 密码
-    permission_sets:
-      - user
-    template_name: account_password
-    parent: account
+    object_name: users
     mobile: false
   - _id: account_background
     name: 背景图
