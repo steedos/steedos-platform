@@ -9,10 +9,13 @@ import { Publish } from '../publish'
 
 export class Core {
 
-    static run() {
+    static load(){
         this.expandSimpleSchemaPres();
         this.loadObjects();
         this.initObjects();
+    }
+
+    static run() {
         this.initGraphqlAPI();
         this.initPublishAPI()
         this.initRoutes();
