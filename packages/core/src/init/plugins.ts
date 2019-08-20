@@ -26,7 +26,7 @@ export class Plugins {
                     
                 } catch (error) {
                     if(error.message.startsWith("Cannot find module")){
-                        throw new Error(`Plugin in not found in project, please execute: yarn add ${pluginName}`)
+                        throw new Error(`Plugin not found in project, please execute: yarn add ${pluginName}`)
                     }else{
                         throw new Error(error);
                     }
