@@ -165,9 +165,10 @@ Template.creator_list_wrapper.helpers
 			return ""
 		recordsListViewTotal = Template.instance().recordsListViewTotal.get()
 		if(recordsListViewTotal[item._id])
-			return "(#{recordsListViewTotal[item._id]})"
+			return "#{recordsListViewTotal[item._id]}"
 		else
-			return "(--)"
+			# 显示为正在请求中效果
+			return "..."
 
 	actions: ()->
 		actions = Creator.getActions()

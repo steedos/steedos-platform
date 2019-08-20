@@ -2,7 +2,7 @@ Template.account_background.onCreated ->
 
 Template.account_background.onRendered ->
 	this.$("#account_background").removeClass "hidden"	
-	this.$("#account_background").animateCss "fadeInRight"
+	# this.$("#account_background").animateCss "fadeInRight"
 
 Template.account_background.helpers Creator.helpers
 
