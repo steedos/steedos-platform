@@ -173,12 +173,10 @@ actions:
                   filename = file.name;
                   rev = fileId;
                   length = file.size;
-                  Steedos.cordovaDownload(url, filename, rev, length);
-                  return false;
+                  return Steedos.cordovaDownload(url, filename, rev, length);
                 } else {
                     url = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
-                    window.open(url,"_blank");
-                    return false;
+                    return window.location = url;
                 }
               }
             }
