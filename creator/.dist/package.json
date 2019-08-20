@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "1.4.0",
+  "version": "1.4.1-beta.0",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -19,10 +19,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@steedos/auth": "^1.1.4",
+    "@steedos/auth": "^1.1.5",
     "@steedos/core": "^1.3.18",
     "@steedos/filters": "^1.0.0",
-    "@steedos/objectql": "^1.0.5",
+    "@steedos/objectql": "^1.0.6",
+    "@steedos/standard-objects": "^1.0.6",
     "@steedos/meteor-bundle-dependencies": "0.0.3",
     "@steedos/meteor-bundle-runner": "^1.1.7",
     "aliyun-sdk": "^1.11.12",

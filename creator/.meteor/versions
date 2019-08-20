@@ -135,9 +135,6 @@ steedos:accounts-t9n@1.14.2_8
 steedos:adminlte@2.3.12_3
 steedos:app-base@0.0.1
 steedos:app-chat@0.0.1
-steedos:app-crm@0.0.1
-steedos:app-meeting@0.0.1
-steedos:app-projects@0.0.1
 steedos:app-workflow@0.0.15
 steedos:application-package@0.0.1
 steedos:audit@0.0.1
