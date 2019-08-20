@@ -17,6 +17,15 @@
 				/*ios设备滚动条功能依赖该段样式*/
 				overflow: auto;
 				-webkit-overflow-scrolling: touch;
+				/**
+					需要给iframe下的html界面增加以下样式，
+					否则android设备上水平滚动条显示不出来
+					body {
+						height: 100%;
+						width: 100%;
+						overflow: auto;
+					}
+				**/
 			}
 			.creator-report-empty{
 				display: flex;
