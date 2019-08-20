@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@steedos/auth": "^1.1.4",
-    "@steedos/core": "^1.3.17",
+    "@steedos/core": "^1.3.18",
     "@steedos/filters": "^1.0.0",
     "@steedos/objectql": "^1.0.5",
     "@steedos/meteor-bundle-dependencies": "0.0.3",

@@ -14,7 +14,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@steedos/auth": "^1.1.5",
-    "@steedos/core": "^1.3.17",
+    "@steedos/core": "^1.3.18",
     "@steedos/filters": "^1.0.0",
     "@steedos/objectql": "^1.0.6",
     "@steedos/standard-objects": "^1.0.6",
