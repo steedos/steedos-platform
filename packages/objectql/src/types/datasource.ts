@@ -419,7 +419,7 @@ export class SteedosDataSourceType implements Dictionary {
         return this._schema;
     }
 
-    async use(filePath) {
+    use(filePath) {
         let objectJsons = util.loadObjects(filePath)
         let fieldJsons = util.loadFields(filePath)
         _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
@@ -539,7 +539,7 @@ export class SteedosDataSourceType implements Dictionary {
         this.initExtendObject();
         this.initApps();
         this.initReports();
-        this.schema.transformReferenceOfObject(this);
+        // this.schema.transformReferenceOfObject(this);
         if (this._adapter.init) {
             return await this._adapter.init(this._objects);
         }

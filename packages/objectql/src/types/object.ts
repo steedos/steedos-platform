@@ -10,7 +10,7 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 abstract class SteedosObjectProperties {
     name?: string
     extend?: string
-    tableName?: string
+    table_name?: string
     label?: string
     icon?: string
     enable_search?: boolean
@@ -70,7 +70,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _listeners: Dictionary<SteedosListenerConfig> = {};
     private _triggers: Dictionary<SteedosTriggerType> = {};
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
-    private _tableName: string;
+    private _table_name: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
     private _idFieldNames: string[] = [];
@@ -154,13 +154,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this._enable_share = false
 
         if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(object_name) != true) {
-            throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set tableName');
+            throw new Error('invalid character, object_name can only be start with _ or a-zA-Z and contain only _ or _a-zA-Z0-9. you can set table_name');
         }
 
-        if (config.tableName) {
-            this._tableName = config.tableName
+        if (config.table_name) {
+            this._table_name = config.table_name
         } else {
-            this._tableName = this._name
+            this._table_name = this._name
         }
 
         _.each(properties, (property) => {
@@ -201,6 +201,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (this._datasource.driver == SteedosDatabaseDriverType.Mongo || this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo) {
             this._idFieldName = '_id'
         }
+        
+        this.schema.setObjectMap(this.name, {datasourceName: this.datasource.name})
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig) {
@@ -482,31 +484,31 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
-        return await this.callAdapter('find', this.tableName, clonedQuery, userSession)
+        return await this.callAdapter('find', this.table_name, clonedQuery, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         await this.processUnreadableField(userSession, clonedQuery);
-        return await this.callAdapter('findOne', this.tableName, id, clonedQuery, userSession)
+        return await this.callAdapter('findOne', this.table_name, id, clonedQuery, userSession)
     }
 
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        return await this.callAdapter('insert', this.tableName, doc, userSession)
+        return await this.callAdapter('insert', this.table_name, doc, userSession)
     }
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         await this.processUneditableFields(userSession, doc)
-        return await this.callAdapter('update', this.tableName, id, doc, userSession)
+        return await this.callAdapter('update', this.table_name, id, doc, userSession)
     }
 
     async delete(id: SteedosIDType, userSession?: SteedosUserSession) {
-        return await this.callAdapter('delete', this.tableName, id, userSession)
+        return await this.callAdapter('delete', this.table_name, id, userSession)
     }
 
     async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        return await this.callAdapter('count', this.tableName, clonedQuery, userSession)
+        return await this.callAdapter('count', this.table_name, clonedQuery, userSession) 
     }
 
     private async allow(method: string, userSession: SteedosUserSession) {
@@ -724,8 +726,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._list_views;
     }
 
-    public get tableName(): string {
-        return this._tableName;
+    public get table_name(): string {
+        return this._table_name;
     }
 
     public get primaryField(): SteedosFieldType {
