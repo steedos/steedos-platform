@@ -91,4 +91,3 @@ Meteor.startup ->
 		spaceId = Session.get("spaceId")
 		Creator.bootstrap spaceId, ()->
 			return
-		Setup.validate()

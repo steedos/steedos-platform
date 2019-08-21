@@ -50,6 +50,8 @@ Template.creator_app_list_modal.events
 
 	'click .switchSpace': (event, template)->
 		Steedos.setSpaceId(this._id)
+		# 切换工作区重新设置cookie
+		Setup.validate()
 		# 获取路由路径中第一个单词，即根目录
 		rootName = FlowRouter.current().path.split("/")[1]
 		FlowRouter.go("/#{rootName}")

@@ -22,8 +22,9 @@ Setup.validate = (cb)->
 		if data.webservices
 			Steedos.settings.webservices = data.webservices
 		if data.spaceId
-			window.localStorage.setItem("spaceId", data.spaceId)
-			Session.set('spaceId', data.spaceId)
+			if !Session.get('spaceId')
+				window.localStorage.setItem("spaceId", data.spaceId)
+				Session.set('spaceId', data.spaceId)
 		Creator.USER_CONTEXT = data
 		if cb
 			cb();
