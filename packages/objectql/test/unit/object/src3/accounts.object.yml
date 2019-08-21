@@ -1,0 +1,53 @@
+name: accounts3
+table_name: account
+label: 单位
+icon: person_account
+description: 统一保存客户、合作伙伴、供应商数据
+fields:
+  name: 
+    type: text
+    label: 标题 
+  priority:
+    type: text
+    label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+  owner:
+    label: 所有人
+    type: lookup
+    reference_to: users
+list_views:
+  recent:
+    label: 最近查看
+  all:
+    label: 所有单位
+    columns:
+      - name
+      - priority
+      - owner
+      - modified
+    filter_fields:
+      - priority
+  high_priority:
+    label: 重点关注
+    filters: [["priority", "=", "high"]]
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

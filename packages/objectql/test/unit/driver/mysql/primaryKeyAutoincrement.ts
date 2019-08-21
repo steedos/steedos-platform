@@ -103,7 +103,7 @@ describe('primary key autoincrement test for mysql database', () => {
             objects: {
                 test: {
                     label: 'MySql Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

@@ -51,7 +51,7 @@ describe('Test Permission', async () => {
                 objects: {
                     test2: {
                         label: 'Test2',
-                        tableName: 'test2.cccccc',
+                        table_name: 'test2.cccccc',
                         fields: {
                             name: {
                                 label: '名称',

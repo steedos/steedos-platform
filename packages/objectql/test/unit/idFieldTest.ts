@@ -9,7 +9,7 @@ describe('Test idField', () => {
                 default: {
                     driver: SteedosDatabaseDriverType.Mongo, 
                     url: 'mongodb://127.0.0.1/steedos',
-                    objectFiles: [path.resolve(__dirname, "./load")]
+                    objectFiles: [path.resolve(__dirname, "./load/base")]
                 },
                 sqlite: {
                     driver: SteedosDatabaseDriverType.Sqlite,
