@@ -39,7 +39,7 @@ list_views:
   all:
     label: "全部"
     filter_scope: "space"
-    columns: ["field_name", "created", "created_by", "previous_value", "new_value"]
+    columns: ["related_to", "field_name", "created", "created_by", "previous_value", "new_value"]
     filter_fields: ["related_to"]
   recent:
     label: "最近查看"
