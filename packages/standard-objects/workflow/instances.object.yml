@@ -266,6 +266,12 @@ actions:
               uobj["print_is_show_attachments"] = '1';
               uobj["X-User-Id"] = Meteor.userId();
               uobj["X-Auth-Token"] = Accounts._storedLoginToken();
-              workflowUrl = Meteor.settings["public"].webservices.workflow.url;
-              return Steedos.openWindow(workflowUrl + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
+              var settings = Meteor.settings["public"].webservices;
+              workflowUrl = settings && settings.workflow && settings.workflow.url;
+              if(workflowUrl){
+                return Steedos.openWindow(workflowUrl + "workflow/space/" + Session.get("spaceId") + "/print/" + record_id + "?" + $.param(uobj), "", 'width=900,height=750,scrollbars=yes,EnableViewPortScale=yes,toolbarposition=top,transitionstyle=fliphorizontal,menubar=yes,closebuttoncaption=  x  ');
+              }
+              else{
+                return toastr && toastr.error && toastr.error("Settings中缺失参数'public.webservices.workflow.url',请联系系统管理员");
+              }
             }
