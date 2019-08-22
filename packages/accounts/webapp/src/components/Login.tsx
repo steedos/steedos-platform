@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {connect} from 'react-redux';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
@@ -29,7 +29,7 @@ const Login = ({ history, title }: any) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  document.title = title;
+  document.title = "Login | " + title;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,9 +50,7 @@ const Login = ({ history, title }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <Typography variant="h4" gutterBottom>
-        Login
-      </Typography>
+
       <FormControl margin="normal">
         <InputLabel htmlFor="email">Email</InputLabel>
         <Input id="email" value={email} onChange={e => setEmail(e.target.value)} />
