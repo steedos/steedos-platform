@@ -15,11 +15,6 @@ if (!MONGO_URL)
 mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
 const accountsServer = new AccountsServer(
   {
     db: new MongoDBInterface(db, {
@@ -37,18 +32,13 @@ const accountsServer = new AccountsServer(
   }
 );
 
-const router = accountsExpress(accountsServer);
-router.get('/user', userLoader(accountsServer), (req, res) => {
-  res.json({ user: (req as any).user });
+const router = accountsExpress(accountsServer, {
+  path: '/api',
 });
 
-app.use("/api/v4", router);
-
-app.use("/accounts/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
-app.get('/accounts/*', (req, res) => {
+router.use("/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
+router.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
 });
 
-app.listen(4000, () => {
-  console.log('Server listening on port 4000');
-});
+export default router;

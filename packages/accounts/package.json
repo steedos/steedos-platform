@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development nodemon -w src -x ts-node src/index.ts",
+    "start": "NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc",
     "test": "yarn build"
   },

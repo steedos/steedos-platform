@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
-import { accountsClient, accountsRest } from '../accounts';
+import { accountsClient, accountsRest, accountsApiHost } from '../accounts';
 
 const Home = ({ history }: RouteComponentProps<{}>) => {
   const [user, setUser] = useState();
@@ -19,13 +19,14 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    const res = await fetch('http://localhost:4000/user', {
+    const res = await fetch( accountsApiHost + '/accounts/api/user', {
       headers: {
         Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
       },
     });
+
     const data = await res.json();
-    setUser(data.user);
+    setUser(data);
   };
 
   const onResendEmail = async () => {
