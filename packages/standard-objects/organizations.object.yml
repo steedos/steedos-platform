@@ -73,7 +73,7 @@ fields:
     label: 所属单位
     group: 系统
     type: lookup
-    reference_to: organizations
+    reference_to: company
     sortable: true
     index: true
     is_company_only: true
