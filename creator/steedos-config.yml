@@ -13,3 +13,4 @@ public:
       folder: "./storage"
 plugins:
   - "@steedos/app-contracts"
+  - "@steedos/steedos-plugin-workflow"
