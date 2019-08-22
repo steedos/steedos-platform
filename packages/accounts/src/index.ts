@@ -44,7 +44,10 @@ router.get('/user', userLoader(accountsServer), (req, res) => {
 
 app.use("/api/v4", router);
 
-app.use("/accounts/", express.static(path.join(__dirname, '../webapp/build')));
+app.use("/accounts/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
+app.get('/accounts/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
+});
 
 app.listen(4000, () => {
   console.log('Server listening on port 4000');
