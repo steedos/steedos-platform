@@ -10,3 +10,5 @@ packages/*/package-lock.json
 schema.json
 
 build/
+
+.DS_Store

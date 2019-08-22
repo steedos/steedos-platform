@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Typography, FormControl, InputLabel, Input } from '@material-ui/core';
 import QRCode from 'qrcode.react';
 
-import { accountsRest } from './accounts';
+import { accountsRest } from '../accounts';
 
 const TwoFactor = () => {
   const [secret, setSecret] = useState();

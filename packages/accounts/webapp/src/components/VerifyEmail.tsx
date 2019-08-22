@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
-import { accountsRest } from './accounts';
-import FormError from './components/FormError';
+import { accountsRest } from '../accounts';
+import FormError from './FormError';
 
 interface RouteMatchProps {
   token: string;

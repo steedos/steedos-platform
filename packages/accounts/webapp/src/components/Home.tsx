@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
-import { accountsClient, accountsRest } from './accounts';
+import { accountsClient, accountsRest } from '../accounts';
 
 const Home = ({ history }: RouteComponentProps<{}>) => {
   const [user, setUser] = useState();

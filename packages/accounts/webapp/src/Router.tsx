@@ -3,12 +3,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-import Signup from './Signup';
-import Login from './Login';
-import Home from './Home';
-import ResetPassword from './ResetPassword';
-import VerifyEmail from './VerifyEmail';
-import TwoFactor from './TwoFactor';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
+import ResetPassword from './components/ResetPassword';
+import VerifyEmail from './components/VerifyEmail';
+import TwoFactor from './components/TwoFactor';
 
 const useStyles = makeStyles({
   root: {

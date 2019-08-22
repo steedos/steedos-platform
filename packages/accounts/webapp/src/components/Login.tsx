@@ -3,8 +3,8 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-import { accountsPassword } from './accounts';
-import FormError from './components/FormError';
+import { accountsPassword } from '../accounts';
+import FormError from './FormError';
 
 const useStyles = makeStyles({
   formContainer: {
