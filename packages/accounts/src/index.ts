@@ -4,8 +4,8 @@ import * as cors from 'cors';
 import * as mongoose from 'mongoose';
 import { AccountsServer } from '@accounts/server';
 import { AccountsPassword } from '@accounts/password';
-import accountsExpress, { userLoader } from '@accounts/rest-express';
-import MongoDBInterface from '@accounts/mongo';
+import accountsExpress, { userLoader } from './rest-express';
+import MongoDBInterface from './database-mongo';
 
 mongoose.connect('mongodb://localhost:27017/steedos', { useNewUrlParser: true });
 const db = mongoose.connection;
