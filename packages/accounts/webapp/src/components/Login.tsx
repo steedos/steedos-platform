@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {connect} from 'react-redux';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -20,13 +21,15 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to="/reset-password" {...props} ref={ref} />
 ));
 
-const Login = ({ history }: RouteComponentProps<{}>) => {
+const Login = ({ history, title }: any) => {
   const classes = useStyles();
   const [enableCode] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+  document.title = title;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,4 +80,11 @@ const Login = ({ history }: RouteComponentProps<{}>) => {
   );
 };
 
-export default Login;
+
+function mapStateToProps(state: any) {
+  return {
+      title: state.settings.title,
+  };
+}
+
+export default connect(mapStateToProps)(Login);

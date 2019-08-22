@@ -8,7 +8,7 @@ import { devToolsEnhancer } from 'redux-devtools-extension';
 
 const initialStore = {
     settings: {
-        title: "Steedos"
+        title: "Steedos Accounts"
     }
 }
 
