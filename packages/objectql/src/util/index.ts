@@ -49,9 +49,7 @@ function validateObject(json){
     let validate = Validators['steedos-schema_object'];
     let objectName = json.name;
     if (!validate(JSON.parse(JSON.stringify(json)))) {
-        console.error(`对象${objectName}校验不通过: `, validate.errors);
-        console.error(`${objectName}: `, json);
-        return false;
+        throw new Error(`对象${objectName}校验不通过: ${JSON.stringify(validate.errors)}`);
     }
 
     return true;
