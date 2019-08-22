@@ -3,8 +3,8 @@
   "version": "0.18.0",
   "private": true,
   "scripts": {
-    "start": "SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts start",
-    "build": "SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts build",
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts start",
+    "build": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts build",
     "test": "yarn build",
     "testonly": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
@@ -45,6 +45,7 @@
     "@types/react-dom": "16.8.5",
     "@types/react-router": "5.0.3",
     "@types/react-router-dom": "4.3.4",
+    "cross-env": "^5.2.0",
     "react-scripts": "3.0.1",
     "redux-devtools-extension": "^2.13.8",
     "typescript": "3.5.3"

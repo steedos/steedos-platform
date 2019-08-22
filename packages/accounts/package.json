@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development nodemon -w src -x ts-node server.ts",
+    "start": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc",
     "test": "yarn build"
   },
@@ -21,6 +21,7 @@
     "tslib": "1.10.0"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "@types/node": "12.6.8",
     "nodemon": "1.19.1",
     "ts-node": "8.3.0",
