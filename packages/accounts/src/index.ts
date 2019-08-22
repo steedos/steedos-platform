@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as mongoose from 'mongoose';
@@ -43,7 +44,7 @@ router.get('/user', userLoader(accountsServer), (req, res) => {
 
 app.use("/api/v4", router);
 
-app.use(express.static('./webapp/build'));
+app.use("/accounts/", express.static(path.join(__dirname, '../webapp/build')));
 
 app.listen(4000, () => {
   console.log('Server listening on port 4000');

@@ -3,8 +3,8 @@
   "version": "0.18.0",
   "private": true,
   "scripts": {
-    "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
-    "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "start": "SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts start",
+    "build": "SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts build",
     "test": "yarn build",
     "testonly": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },

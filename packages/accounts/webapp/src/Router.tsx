@@ -25,7 +25,7 @@ const Router = () => {
   const classes = useStyles();
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/accounts">
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Paper className={classes.container}>
