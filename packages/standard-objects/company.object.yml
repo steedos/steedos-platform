@@ -31,6 +31,7 @@ list_views:
       - name
       - code
       - parent
+      - organization
       - modified
 permission_set:
   user:
