@@ -35,19 +35,19 @@
 				{{#if isDisabledField this.key}}
 					<td class="hidden-field">
 						<span class="disabled-field-value">{{disabledFieldsValue this.key}}</span>
-						<span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true}}</span>
+						<span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true label=false}}</span>
 					</td>
 				{{else}}
-					<td class="hidden-field">{{> afQuickField name=this.name}}</td>
+					<td class="hidden-field">{{> afQuickField name=this.name label=false}}</td>
 				{{/if}}
 			{{else}}
 				{{#if isDisabledField this.key}}
 					<td class="{{this.type}}">
 						<span class="disabled-field-value">{{disabledFieldsValue this.key}}</span>
-						<span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true}}</span>
+						<span class="disabled-field">{{> afQuickField name=this.name disabled=false readonly=true label=false}}</span>
 					</td>
 				{{else}}
-					<td class="{{this.type}}">{{> afQuickField name=this.name}}</td>
+					<td class="{{this.type}}">{{> afQuickField name=this.name label=false}}</td>
 				{{/if}}
 			{{/if}}
 		{{/each}}
