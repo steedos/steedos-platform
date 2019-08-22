@@ -9,6 +9,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+
+app.get('/', (req, res) => {
+  res.redirect("/accounts");
+  res.end();
+});
 app.use("/accounts", router);
 
 app.listen(4000, () => {
