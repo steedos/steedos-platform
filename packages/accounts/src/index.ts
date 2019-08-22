@@ -7,7 +7,11 @@ import { AccountsPassword } from '@accounts/password';
 import accountsExpress, { userLoader } from './rest-express';
 import MongoDBInterface from './database-mongo';
 
-mongoose.connect('mongodb://localhost:27017/steedos', { useNewUrlParser: true });
+let MONGO_URL = process.env.MONGO_URL;
+if (!MONGO_URL)
+  MONGO_URL = "mongodb://127.0.0.1/steedos"
+
+mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 const app = express();
@@ -31,11 +35,15 @@ const accountsServer = new AccountsServer(
     password: new AccountsPassword(),
   }
 );
-app.use(accountsExpress(accountsServer));
 
-app.get('/user', userLoader(accountsServer), (req, res) => {
+const router = accountsExpress(accountsServer);
+router.get('/user', userLoader(accountsServer), (req, res) => {
   res.json({ user: (req as any).user });
 });
+
+app.use("/api/v4", router);
+
+app.use(express.static('./webapp/build'));
 
 app.listen(4000, () => {
   console.log('Server listening on port 4000');
