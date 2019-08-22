@@ -1,0 +1,12 @@
+lib/
+node_modules/
+coverage/
+npm-debug.log
+lerna-debug.log
+yarn-error.log
+.idea
+.vscode
+packages/*/package-lock.json
+schema.json
+
+build/

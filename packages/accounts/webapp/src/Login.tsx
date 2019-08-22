@@ -22,6 +22,7 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
 
 const Login = ({ history }: RouteComponentProps<{}>) => {
   const classes = useStyles();
+  const [enableCode] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
@@ -64,7 +65,7 @@ const Login = ({ history }: RouteComponentProps<{}>) => {
       </FormControl>
       <FormControl margin="normal">
         <InputLabel htmlFor="password">2fa code if enabled</InputLabel>
-        <Input id="code" value={code} onChange={e => setCode(e.target.value)} />
+        {enableCode && <Input id="code" value={code} onChange={e => setCode(e.target.value)} />}        
       </FormControl>
       <Button variant="contained" color="primary" type="submit">
         Login
