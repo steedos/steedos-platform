@@ -2,6 +2,12 @@
 
 Fullstack authentication and accounts-management for steedos.
 
+## Connect to mongodb
+
+```bash
+export MONGO_URL=mongodb://127.0.0.1/steedos
+```
+
 ## Start Server
 
 ```bash
