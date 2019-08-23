@@ -1,11 +1,8 @@
 Creator.Objects['company'].triggers = {
-    "before.insert.server.default": {
+    "before.insert.server.company": {
         on: "server",
         when: "before.insert",
         todo: function (userId, doc) {
-            console.log("=======company=========before.insert.server.default====userId========", userId);
-            console.log("=======company=========before.insert.server.default====doc========", doc);
-            
             var existsCount = Creator.getCollection("company").find({
                 space: doc.space,
                 name: doc.name
@@ -42,19 +39,10 @@ Creator.Objects['company'].triggers = {
                     doc.organization = db.organizations.insert({
                         name: doc.name,
                         parent: rootOrg._id,
-                        space: doc.space,
-                        owner: userId
+                        space: doc.space
                     });
                 }
             }
-        }
-    },
-
-    "before.update.server.default": {
-        on: "server",
-        when: "before.update",
-        todo: function (userId, doc, fieldNames, modifier, options) {
-            console.log("modifier.$set=====", modifier.$set);
         }
     }
 }
