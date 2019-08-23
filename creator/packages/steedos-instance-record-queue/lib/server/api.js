@@ -231,10 +231,8 @@ InstanceRecordQueue.Configure = function (options) {
 						var oCollection = Creator.getCollection(oField.reference_to, spaceId)
 						var referObject = Creator.getObject(oField.reference_to, spaceId)
 						if (oCollection && referObject) {
-							var nameFieldKey = referObject.NAME_FIELD_KEY;
-							var selector = {};
-							selector[nameFieldKey] = values[fm.workflow_field];
-							var referData = oCollection.findOne(selector, {
+							// 先认为此值是referObject _id字段值
+							var referData = oCollection.findOne(values[fm.workflow_field], {
 								fields: {
 									_id: 1
 								}
@@ -242,6 +240,22 @@ InstanceRecordQueue.Configure = function (options) {
 							if (referData) {
 								obj[fm.object_field] = referData._id;
 							}
+
+							// 其次认为此值是referObject NAME_FIELD_KEY值
+							if (!referData) {
+								var nameFieldKey = referObject.NAME_FIELD_KEY;
+								var selector = {};
+								selector[nameFieldKey] = values[fm.workflow_field];
+								referData = oCollection.findOne(selector, {
+									fields: {
+										_id: 1
+									}
+								});
+								if (referData) {
+									obj[fm.object_field] = referData._id;
+								}
+							}
+
 						}
 					} else {
 						if (oField.type === "boolean") {
