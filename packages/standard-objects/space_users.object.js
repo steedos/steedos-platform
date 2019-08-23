@@ -467,8 +467,7 @@ Meteor.startup(function () {
                 organization = db.organizations.findOne(modifier.$set.organization, {
                     fields: {
                         company_id: 1,
-                        parent: 1,
-                        is_company: 1
+                        parent: 1
                     }
                 });
                 if (organization) {
@@ -645,7 +644,7 @@ Meteor.startup(function () {
             }
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
-            var new_company_id, old_company_id, ref, user_set, user_unset;
+            var ref, user_set, user_unset;
             modifier.$set = modifier.$set || {};
             modifier.$unset = modifier.$unset || {};
             user_set = {};
@@ -722,12 +721,12 @@ Meteor.startup(function () {
                 db.space_users.update_organizations_parents(doc._id, modifier.$set.organizations);
                 db.space_users.update_company_ids(doc._id, doc);
             }
-            // 设置主单位后更新单位字段
-            old_company_id = this.previous.company_id;
-            new_company_id = doc.company_id;
-            if (new_company_id !== old_company_id) {
-                return db.space_users.update_company(doc._id, new_company_id);
-            }
+            // // 设置主单位后更新单位字段
+            // old_company_id = this.previous.company_id;
+            // new_company_id = doc.company_id;
+            // if (new_company_id !== old_company_id) {
+            //     return db.space_users.update_company(doc._id, new_company_id);
+            // }
         });
         db.space_users.before.remove(function (userId, doc) {
             var isOrgAdmin, space;
@@ -863,29 +862,29 @@ Meteor.startup(function () {
                     }
                 });
         };
-        db.space_users.update_company = function (id, companyId) {
-            var org, user;
-            org = db.organizations.findOne({
-                _id: companyId
-            }, {
-                    fields: {
-                        fullname: 1
-                    }
-                });
-            user = db.space_users.findOne(id);
-            if (!user) {
-                console.error("db.space_users.update_company,can't find space_users by _id of:", id);
-            }
-            if (org) {
-                return db.space_users.direct.update({
-                    _id: id
-                }, {
-                        $set: {
-                            company: org.fullname
-                        }
-                    });
-            }
-        };
+        // db.space_users.update_company = function (id, companyId) {
+        //     var org, user;
+        //     org = db.company.findOne({
+        //         _id: companyId
+        //     }, {
+        //             fields: {
+        //                 fullname: 1
+        //             }
+        //         });
+        //     user = db.space_users.findOne(id);
+        //     if (!user) {
+        //         console.error("db.space_users.update_company,can't find space_users by _id of:", id);
+        //     }
+        //     if (org) {
+        //         return db.space_users.direct.update({
+        //             _id: id
+        //         }, {
+        //                 $set: {
+        //                     company: org.fullname
+        //                 }
+        //             });
+        //     }
+        // };
         Meteor.publish('space_users', function (spaceId) {
             var selector, user;
             if (!this.userId) {

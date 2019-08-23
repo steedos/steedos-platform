@@ -85,16 +85,6 @@ fields:
       }
     omit: true
     hidden: true
-  is_company:
-    label: 公司级
-    type: boolean
-    index: true
-    name: is_company
-  is_group:
-    label: 群组级
-    type: boolean
-    index: true
-    name: is_group
   hidden:
     label: 隐藏
     type: boolean
