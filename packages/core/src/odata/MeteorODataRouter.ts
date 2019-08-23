@@ -531,7 +531,7 @@ router.post('/:spaceId/:objectName/:_id/:methodName', async function (req: Reque
           space_id: spaceId,
           user_id: userId,
           permissions: permissions,
-          userSeesion: userSession,
+          userSession: userSession,
           getObject: (object_name: string) => {
             return getCreator().getSteedosSchema().getObject(object_name)
           }
