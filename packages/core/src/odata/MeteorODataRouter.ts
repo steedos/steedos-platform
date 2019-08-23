@@ -531,9 +531,12 @@ router.post('/:spaceId/:objectName/:_id/:methodName', async function (req: Reque
           space_id: spaceId,
           user_id: userId,
           permissions: permissions,
-          userSeesion: userSession
+          userSeesion: userSession,
+          getObject: (object_name: string) => {
+            return getCreator().getSteedosSchema().getObject(object_name)
+          }
         }
-        res.send(methods[methodName].apply(thisObj, [bodyParams]) || {})
+        res.send(await methods[methodName].apply(thisObj, [bodyParams]) || {})
       } else {
         res.status(404).send(setErrorMessage(404, collection, key));
       }
