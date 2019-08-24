@@ -353,6 +353,8 @@ _depandOnFields = (object_name, columns)->
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
+		# Template.currentData() 这个代码不能删除，用于更新self.data中的数据
+		templateData = Template.currentData()
 		is_related = self.data.is_related
 		if is_related
 			list_view_id = Creator.getListView(self.data.related_object_name, "all")._id
