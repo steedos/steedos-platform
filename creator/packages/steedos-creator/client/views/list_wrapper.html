@@ -72,9 +72,9 @@
 							<div>
 								<div class="search-in-list slds-m-left_large slds-is-relative">
 									<div force-list-view-manager-search-bar_list-view-manager-search-bar="" class="slds-form-element">
-										<label for="grid-search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索此列表...</label>
+										<label for="grid-search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索{{_ object.label}}</label>
 										<div class="slds-form-element__control slds-grow slds-input-has-icon slds-input-has-icon_left-right">
-											<input type="search" value="{{search_text}}" id="grid-search" placeholder="搜索此列表..." name="search-input" class="slds-input">
+											<input type="search" value="{{search_text}}" id="grid-search" placeholder="搜索{{_ object.label}}" name="search-input" class="slds-input">
 											<div>
 												{{> steedos_icon class="slds-input__icon slds-input__icon_left" source="utility-sprite" name="search"}}
 											</div>
