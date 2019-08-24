@@ -2,11 +2,8 @@
 	{{#unless isloading}}
 	<div class="steedos layout-top-nav skin-blue-light">
 		{{#unless hiddenHeader}}
-			{{#if isMobile}}
-				{{> creatorMobileHeader}}
-			{{else}}
-				{{> creatorHeader}}
-			{{/if}}
+			{{> creatorMobileHeader}}
+			{{> creatorHeader}}
 		{{/unless}}
 
 		{{> creatorSidebarLeft}}

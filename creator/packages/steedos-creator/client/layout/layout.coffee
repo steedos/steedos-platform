@@ -43,9 +43,9 @@ Template.creatorLayout.helpers
 
 Template.creatorLayout.events
 	'click .sidebar-show': (e, t)->
-#		$("#sidebar-left").addClass('move--right')
-#		$(".steedos").addClass('move--right')
-		FlowRouter.go "/app/#{Session.get('app_id')}"
+		$("#sidebar-left").addClass('move--right')
+		$(".steedos").addClass('move--right')
+#		FlowRouter.go "/app/#{Session.get('app_id')}"
 
 	'click .steedos.move--right': (e, t)->
 		$("#sidebar-left").removeClass('move--right')

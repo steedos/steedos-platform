@@ -26,10 +26,19 @@
     }
 }
 
+.creator-mobile-header{
+    display: none;
+}
+
 @media (max-width: 767px) {
     .creatorHeader{
         display: none !important;
     }
+
+    .creator-mobile-header{
+        display: block !important;
+    }
+
     .creator-content-wrapper{
         //z-index: 1040;
         top: 50px !important;
@@ -178,9 +187,9 @@
 
     .listViewManager{
 
-        .dx-datagrid-headers{
-            display: none !important;
-        }
+        //.dx-datagrid-headers{
+        //    display: none !important;
+        //}
 
         .slds-page-header--object-home{
             border: 0px !important;
@@ -207,13 +216,19 @@
                 display: none !important;
             }
 
-            .field-text:after{
-                content: '\f010';
-                display: block;
-                width: 21px;
-                font-family: DXIcons;
-                opacity: .3;
-                font-size: 21px;
+            //.field-text:after{
+            //    content: '\f010';
+            //    display: block;
+            //    width: 21px;
+            //    font-family: DXIcons;
+            //    opacity: .3;
+            //    font-size: 21px;
+            //}
+        }
+
+        .dx-datagrid-table{
+            td{
+                width: 150px !important;
             }
         }
     }
@@ -227,6 +242,37 @@
             border-bottom-right-radius: 0px !important;
             border-bottom-left-radius: 0px !important;
             //box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+        }
+    }
+    .gridContainer{
+        .dx-datagrid-table{
+            colgroup{
+                col:nth-child(-n+2){
+                    display: none !important;
+                }
+
+                col:nth-last-child(1){
+                    display: none !important;
+                }
+                col{
+                    //min-width: 150px;
+                    width: 150px;
+                }
+            }
+            .dx-row{
+                td:nth-child(-n+2){
+                    display: none !important;
+                }
+
+                td:nth-last-child(1){
+                    display: none !important;
+                }
+
+                //td{
+                //    min-width: 150px;
+                //}
+            }
+
         }
     }
 
