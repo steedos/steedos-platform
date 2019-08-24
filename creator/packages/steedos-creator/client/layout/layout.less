@@ -30,6 +30,14 @@
     display: none;
 }
 
+.record-edit-icon{
+    display: none;
+}
+
+.record-edit-text{
+    display: block;
+}
+
 @media (max-width: 767px) {
     .creatorHeader{
         display: none !important;
@@ -37,6 +45,12 @@
 
     .creator-mobile-header{
         display: block !important;
+    }
+    .record-edit-text{
+        display: none;
+    }
+    .record-edit-icon{
+        display: block;
     }
 
     .creator-content-wrapper{
@@ -254,10 +268,10 @@
                 col:nth-last-child(1){
                     display: none !important;
                 }
-                col{
-                    //min-width: 150px;
-                    width: 150px;
-                }
+                //col{
+                //    //min-width: 150px;
+                //    width: 150px;
+                //}
             }
             .dx-row{
                 td:nth-child(-n+2){

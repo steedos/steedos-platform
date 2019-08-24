@@ -260,12 +260,17 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 
 	if _.isString(listViewColumn)
 		listViewColumn = {field: listViewColumn}
+
+	columnWidth = listViewColumn?.width || ''
+	if !columnWidth && Steedos.isMobile()
+		columnWidth = "160px"
+
 	columnItem =
 		cssClass: "slds-cell-edit cell-type-#{field.type} cell-type-#{field.name}"
 		caption: listViewColumn?.label || field.label || TAPi18n.__(object.schema.label(listViewColumn?.field))
 		dataField: listViewColumn?.field
 		alignment: "left"
-		width: listViewColumn?.width
+		width: columnWidth
 		cellTemplate: (container, options) ->
 			field_name = column
 			if /\w+\.\$\.\w+/g.test(field_name)
@@ -286,17 +291,14 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 #			columnItem.width = defaultWidth
 
 	if column_sort_settings and column_sort_settings.length > 0
-		console.log("settings sort...")
 		_.each column_sort_settings, (sort)->
 			if sort[0] == column
 				columnItem.sortOrder = sort[1]
 	else if !_.isEmpty(list_view_sort)
-		console.log("view sort...")
 		_.each list_view_sort, (sort)->
 			if sort[0] == column
 				columnItem.sortOrder = sort[1]
 	else
-		console.log("default sort...")
 		#默认读取default view的sort配置
 		_.each column_default_sort, (sort)->
 			if sort[0] == column
