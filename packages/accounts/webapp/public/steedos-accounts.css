@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 body {    
     background-color: rgba(0, 0, 0, 0.6);
     background-image: url(./images/background.jpg);
@@ -11,6 +15,7 @@ body {
     left: 0;
     right: 0;
     display: flex;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #logo {
