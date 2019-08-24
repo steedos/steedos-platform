@@ -71,7 +71,7 @@ Template.creatorMobileHeader.events
 			app_id = Session.get("app_id")
 			object = Session.get("object_name")
 			if app_id && object
-				FlowRouter.go Creator.getObjectUrl(object, undefined, app_id)
+				FlowRouter.go Creator.getObjectRouterUrl(object, undefined, app_id)
 			else if app_id
 				FlowRouter.go "/app/#{app_id}"
 			else
