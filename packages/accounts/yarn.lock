@@ -518,11 +518,6 @@ cross-spawn@^6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
-crossenv@^0.0.2-security:
-  version "0.0.2-security"
-  resolved "https://registry.npm.taobao.org/crossenv/download/crossenv-0.0.2-security.tgz#ffd6ae6a6e9035d811f6dde88f8393c63b71ad6e"
-  integrity sha1-/9auam6QNdgR9t3oj4OTxjtxrW4=
-
 crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
