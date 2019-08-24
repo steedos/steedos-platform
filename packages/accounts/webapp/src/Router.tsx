@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
+import Logo from './components/Logo';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
@@ -13,8 +14,8 @@ import TwoFactor from './components/TwoFactor';
 const useStyles = makeStyles({
   root: {
     margin: 'auto',
-    maxWidth: 500,
-    marginTop: 50,
+    maxWidth: 380,
+    minWidth: 320,
   },
   container: {
     padding: 16,
@@ -28,6 +29,7 @@ const Router = () => {
     <BrowserRouter basename="/accounts">
       <Grid container className={classes.root}>
         <Grid item xs={12}>
+          <Logo></Logo>
           <Paper className={classes.container}>
             <CssBaseline />
             <Route exact path="/" component={Home} />
