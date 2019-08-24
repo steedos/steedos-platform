@@ -42,6 +42,23 @@ Creator.getObjectUrl = (object_name, record_id, app_id) ->
 		else
 			return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
 
+Creator.getObjectRouterUrl = (object_name, record_id, app_id) ->
+	if !app_id
+		app_id = Session.get("app_id")
+	if !object_name
+		object_name = Session.get("object_name")
+
+	list_view = Creator.getListView(object_name, null)
+	list_view_id = list_view?._id
+
+	if record_id
+		return "/app/" + app_id + "/" + object_name + "/view/" + record_id
+	else
+		if object_name is "meeting"
+			return "/app/" + app_id + "/" + object_name + "/calendar/"
+		else
+			return "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+
 Creator.getListViewUrl = (object_name, app_id, list_view_id) ->
 	url = Creator.getListViewRelativeUrl(object_name, app_id, list_view_id)
 	return Creator.getRelativeUrl(url)
