@@ -477,7 +477,7 @@ Template.creator_grid.onRendered ->
 							filter = [ filter, "and", sidebarFilter ]
 						else
 							filter = sidebarFilter
-			if Steedos.isMobile() && curObject.NAME_FIELD_KEY
+			if false && Steedos.isMobile() && curObject.NAME_FIELD_KEY
 				selectColumns = [curObject.NAME_FIELD_KEY]
 			else
 				selectColumns = Tracker.nonreactive ()->
@@ -523,7 +523,7 @@ Template.creator_grid.onRendered ->
 			selectColumns = _.union(selectColumns, extra_columns)
 			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
 			actions = Creator.getActions(curObjectName)
-			if !Steedos.isMobile() && actions.length
+			if true || !Steedos.isMobile() && actions.length
 				showColumns.push
 					dataField: "_id_actions"
 					width: 46
@@ -554,7 +554,7 @@ Template.creator_grid.onRendered ->
 				needToShowLinkForIndexColumn = false
 				if selectColumns.indexOf(nameFieldKey) < 0
 					needToShowLinkForIndexColumn = true
-				if !Steedos.isMobile()
+				if  true || !Steedos.isMobile()
 					showColumns.splice 0, 0,
 						dataField: "_id_checkbox"
 						width: 30
@@ -734,6 +734,9 @@ Template.creator_grid.onRendered ->
 				# 		firstNodeKey = rootNode?.children[0]?.key
 				# 		if firstNodeKey
 				# 			e.component.expandRow(firstNodeKey)
+			if Steedos.isMobile()
+				dxOptions.allowColumnReordering = false
+				dxOptions.allowColumnResizing = false
 
 			if is_related
 				dxOptions.pager.showPageSizeSelector = false
@@ -864,12 +867,12 @@ Template.creator_grid.events
 		object_name = Session.get("object_name")
 		Session.set 'page_index', {object_name: object_name, page_index: page_index}
 
-	'click .dx-datagrid-table .dx-row-lines': (event, template)->
-		if Steedos.isMobile()
-			herf = $("a", event.currentTarget).attr('href')
-			if herf.startsWith(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
-				herf = herf.replace(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX,'')
-			FlowRouter.go(herf)
+#	'click .dx-datagrid-table .dx-row-lines': (event, template)->
+#		if Steedos.isMobile()
+#			herf = $("a", event.currentTarget).attr('href')
+#			if herf.startsWith(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
+#				herf = herf.replace(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX,'')
+#			FlowRouter.go(herf)
 
 Template.creator_grid.onCreated ->
 	self = this
