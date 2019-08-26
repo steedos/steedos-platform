@@ -164,7 +164,7 @@ Template.creator_list_wrapper.helpers
 		unless item.show_count
 			return ""
 		recordsListViewTotal = Template.instance().recordsListViewTotal.get()
-		if(recordsListViewTotal[item._id])
+		if(recordsListViewTotal[item._id] != undefined)
 			return "#{recordsListViewTotal[item._id]}"
 		else
 			# 显示为正在请求中效果
