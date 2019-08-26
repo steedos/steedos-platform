@@ -60,13 +60,18 @@ Creator.Objects['company'].methods = {
             throw new Meteor.Error(400, "该单位的关联组织未设置");
         }
 
-        // let org = await this.getObject("organizations").findOne(company.organization, {
-        //     fields: ["_id"]
-        // });
-
-        await this.getObject("organizations").update(company.organization,{
+        let result = await this.getObject("organizations").updateMany([
+            ["_id", "=", company.organization], 
+            "or", 
+            ["parents", "=", company.organization]
+        ], {
             company_id: this.record_id
         }, this.userSession);
+
+
+        return {
+            updated: result
+        };
     }
 }
 
@@ -100,7 +105,7 @@ Creator.Objects['company'].actions = {
                     }
                 }
                 else{
-                    toastr.success("已成功更新组织")
+                    toastr.success(`已成功更新${reJson.updated}条组织信息`)
                 }
             } catch (err) {
                 console.error(err);
