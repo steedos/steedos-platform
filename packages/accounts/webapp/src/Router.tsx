@@ -2,9 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { green, lightBlue } from '@material-ui/core/colors';
 
 import Logo from './components/Logo';
 import Signup from './components/Signup';
@@ -14,11 +12,7 @@ import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import TwoFactor from './components/TwoFactor';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: lightBlue,
-  },
-});
+import theme from './theme';
 
 const useStyles = makeStyles({
   root: {
