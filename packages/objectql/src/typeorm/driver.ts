@@ -299,6 +299,21 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         return await this.findOne(tableName, id);
     }
 
+    async updateOne(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
+        await this.connect();
+        let entity = this._entities[tableName];
+        if (!entity) {
+            throw new Error(`${tableName} is not exist or not registered in the connect`);
+        }
+        let fields: any[] = Object.keys(data);
+        if (!fields.length) {
+            throw new Error("the params 'data' must not be empty");
+        }
+        let repository = this._client.getRepository(entity);
+        await repository.update(id, data);
+        return await this.findOne(tableName, id);
+    }
+
     async delete(tableName: string, id: SteedosIDType) {
         await this.connect();
         let entity = this._entities[tableName];

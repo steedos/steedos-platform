@@ -184,6 +184,29 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
     }
 
+    async updateOne(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
+        if (_.isEmpty(data)) {
+            throw new Error("the params 'data' must not be empty");
+        }
+        await this.connect();
+        let collection = this.collection(tableName);
+        let result = await collection.updateOne({ _id: id }, { $set: data });
+        if (result.result.ok) {
+            result = await collection.findOne({ _id: id });
+            return result;
+        }
+    }
+
+    async updateMany(tableName: string, queryFilters: SteedosQueryFilters, data: Dictionary<any>) {
+        if (_.isEmpty(data)) {
+            throw new Error("the params 'data' must not be empty");
+        }
+        await this.connect();
+        let collection = this.collection(tableName);
+        let mongoFilters = this.getMongoFilters(queryFilters);
+        return await collection.update(mongoFilters, { $set: data }, { multi: true });
+    }
+
     async delete(tableName: string, id: SteedosIDType) {
         await this.connect();
         let collection = this.collection(tableName);

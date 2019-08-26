@@ -2,7 +2,7 @@ import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
-import { SteedosQueryOptions } from "./query";
+import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { formatFiltersToODataQuery } from "@steedos/filters";
@@ -502,6 +502,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('update', this.table_name, id, doc, userSession)
     }
 
+    async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        await this.processUneditableFields(userSession, doc)
+        return await this.callAdapter('updateOne', this.table_name, id, doc, userSession)
+    }
+
+    async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        await this.processUneditableFields(userSession, doc)
+        return await this.callAdapter('updateMany', this.table_name, queryFilters, doc, userSession)
+    }
+
     async delete(id: SteedosIDType, userSession?: SteedosUserSession) {
         return await this.callAdapter('delete', this.table_name, id, userSession)
     }
@@ -519,7 +529,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return await this.allowFind(userSession)
         } else if (method === 'insert') {
             return await this.allowInsert(userSession)
-        } else if (method === 'update') {
+        } else if (method === 'update' || method === 'updateOne' || method === 'updateMany') {
             return await this.allowUpdate(userSession)
         } else if (method === 'delete') {
             return await this.allowDelete(userSession)

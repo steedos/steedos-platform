@@ -11,7 +11,7 @@ import {
 } from '../driver';
 
 import _ = require('underscore');
-import { SteedosQueryOptions } from './query';
+import { SteedosQueryOptions, SteedosQueryFilters } from './query';
 import {
     SteedosIDType,
     SteedosObjectType,
@@ -405,6 +405,14 @@ export class SteedosDataSourceType implements Dictionary {
 
     async update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.update(tableName, id, doc, userId)
+    }
+
+    async updateOne(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.updateOne(tableName, id, doc, userId)
+    }
+
+    async updateMany(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.updateMany(tableName, queryFilters, doc, userId)
     }
 
     async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
