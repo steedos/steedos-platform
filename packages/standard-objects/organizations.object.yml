@@ -70,9 +70,7 @@ fields:
     name: users
     filterable: true
   company_id:
-    label: 所属单位
     group: 系统
-    type: lookup
     omit: false
     hidden: false
   hidden:
