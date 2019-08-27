@@ -73,18 +73,8 @@ fields:
     label: 所属单位
     group: 系统
     type: lookup
-    reference_to: company
-    sortable: true
-    index: true
-    is_company_only: true
-    defaultValue: !!js/function |
-      function(){
-        if (Meteor.isClient) {
-          return Session.get('user_company_id')
-        }
-      }
-    omit: true
-    hidden: true
+    omit: false
+    hidden: false
   hidden:
     label: 隐藏
     type: boolean
