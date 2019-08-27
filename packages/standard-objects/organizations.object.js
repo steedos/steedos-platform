@@ -347,7 +347,7 @@ if (Meteor.isServer) {
                         }
                     });
                 db.space_users.update_organizations_parents(su._id, orgs);
-                db.space_users.update_company_ids(su._id, su);
+                // db.space_users.update_company_ids(su._id, su);
             });
         }
         // 新增部门后在audit_logs表中添加一条记录
@@ -514,7 +514,7 @@ if (Meteor.isServer) {
         }
     });
     db.organizations.after.update(function (userId, doc, fieldNames, modifier, options) {
-        var added_space_users, added_users, children, newParent, new_company_id, new_users, obj, oldParent, old_company_id, old_users, queryOptions, removed_space_users, removed_users, rootOrg, sUser, setOptions, unset_company_id, updateFields, updatedDoc;
+        var added_space_users, added_users, children, newParent, new_users, obj, oldParent, old_users, removed_space_users, removed_users, rootOrg, sUser, updateFields, updatedDoc;
         modifier.$set = modifier.$set || {};
         modifier.$unset = modifier.$unset || {};
         updateFields = {};
@@ -614,7 +614,7 @@ if (Meteor.isServer) {
                             }
                         });
                     db.space_users.update_organizations_parents(su._id, orgs);
-                    return db.space_users.update_company_ids(su._id, su);
+                    // return db.space_users.update_company_ids(su._id, su);
                 });
             }
             if (removed_users.length > 0) {
@@ -646,7 +646,7 @@ if (Meteor.isServer) {
                                 }
                             });
                         db.space_users.update_organizations_parents(su._id, [rootOrg._id]);
-                        db.space_users.update_company_ids(su._id, su);
+                        // db.space_users.update_company_ids(su._id, su);
                         return db.space_users.update_company(su._id, rootOrg._id);
                     } else if (orgs.length > 1) {
                         new_orgs = _.filter(orgs, function (org_id) {
@@ -678,7 +678,7 @@ if (Meteor.isServer) {
                                 });
                         }
                         db.space_users.update_organizations_parents(su._id, new_orgs);
-                        return db.space_users.update_company_ids(su._id, su);
+                        // return db.space_users.update_company_ids(su._id, su);
                     }
                 });
             }

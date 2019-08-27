@@ -93,9 +93,8 @@ list_views:
   all:
     columns:
       - name
+      - company_id
       - sort_no
-      - is_company
-      - is_group
       - admins
       - hidden
     label: 所有
