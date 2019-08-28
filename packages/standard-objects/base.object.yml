@@ -126,7 +126,7 @@ fields:
     defaultValue: !!js/function |
       function(){
         if(Meteor.isClient){
-          return Session.get("user_company_id")
+          return Steedos.getUserCompanyId()
         }
       }
     omit: true
