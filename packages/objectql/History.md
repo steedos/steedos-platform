@@ -1,3 +1,7 @@
+1.0.10 / 2019-08-28
+===================
+
+  * [graphql api 的url 取消 datasource_name 部分](https://github.com/steedos/object-server/issues/125)
 1.0.9 / 2019-08-21
 ===================
 
