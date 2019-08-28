@@ -91,7 +91,6 @@ if (Meteor.isServer) {
             // 直接修改根部门名字，跳过验证
             db.organizations.direct.update({
                 space: doc._id,
-                is_company: true,
                 parent: null
             }, {
                     $set: {
@@ -101,7 +100,6 @@ if (Meteor.isServer) {
                 });
             rootOrg = db.organizations.findOne({
                 space: doc._id,
-                is_company: true,
                 parent: null
             });
             children = db.organizations.find({
@@ -155,7 +153,6 @@ if (Meteor.isServer) {
         } else {
             root_org = db.organizations.findOne({
                 space: spaceId,
-                is_company: true,
                 parent: null
             });
             db.space_users.direct.insert({
@@ -194,7 +191,6 @@ if (Meteor.isServer) {
         org.space = space_id;
         org.name = space.name;
         org.fullname = space.name;
-        org.is_company = true;
         org.owner = space.owner;
         org_id = db.organizations.insert(org);
         if (!org_id) {
