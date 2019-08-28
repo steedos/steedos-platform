@@ -1,7 +1,7 @@
 name: fieldcontroller
 label: 字段控制
 icon: orders
-tableName: FLOWFIELDCONTROL
+table_name: FLOWFIELDCONTROL
 fields:
   ID: 
     type: number

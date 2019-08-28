@@ -1,7 +1,7 @@
 name: bookmarks
 label: 书签
 icon: orders
-tableName: BOOKMARKS
+table_name: BOOKMARKS
 fields:
   BOOKMARKID: 
     type: number

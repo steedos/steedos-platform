@@ -1,7 +1,7 @@
 name: stock_info
 label: 证券基本信息
 icon: macros
-tableName: SimulateStockInfo
+table_name: SimulateStockInfo
 enable_files: true
 enable_search: true
 enable_tasks: true

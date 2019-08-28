@@ -221,6 +221,9 @@ if Meteor.isClient
 							else
 								return obj
 						filters = Creator.formatFiltersToDev(filters, related_object_name)
+						if filters and filters.length > 0
+							#兼容[filter1,'or',filters]这种or链接条件，应该改为[[filter1,'or',filters]]，这样下面的selector.push就不会出问题
+							filters = [filters] 
 						_.each filters, (filter)->
 							addSelector filter
 

@@ -1,7 +1,7 @@
 name: crud
 label: 增删改查
 icon: orders
-tableName: TestCrudForMySql
+table_name: TestCrudForMySql
 fields:
   id: 
     type: text

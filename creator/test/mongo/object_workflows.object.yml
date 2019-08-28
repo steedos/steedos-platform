@@ -29,22 +29,6 @@ fields:
 
               return _options;
             }
-    _optionsFunction: |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
     name: object_name
     filterable: true
   flow_id:

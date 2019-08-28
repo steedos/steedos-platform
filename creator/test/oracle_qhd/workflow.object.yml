@@ -1,7 +1,7 @@
 name: workflow
 label: 流程
 icon: product
-tableName: WORKFLOW
+table_name: WORKFLOW
 fields:
   FLOWID: 
     type: number

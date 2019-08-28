@@ -2,5 +2,13 @@
     "files.exclude": {
         "**/.meteor/local": true,
         "**/.npm": true
+    },
+    "yaml.completion": true,
+    "yaml.customTags": [
+        "tag:yaml.org,2002:js/function"
+    ],
+    "yaml.schemas": {
+        "https://steedos.github.io/schemas/app/schema.json": "/*.app.yml",
+        "https://steedos.github.io/schemas/object/schema.json": "/*.object.yml"
     }
 }

@@ -1,7 +1,7 @@
 name: users
 label: 用户
 icon: orders
-tableName: SYSTEMUSERS
+table_name: SYSTEMUSERS
 fields:
   USERID: 
     type: number

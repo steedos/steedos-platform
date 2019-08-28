@@ -1,7 +1,7 @@
 name: pdrq_contracts
 label: 合同信息
 icon: macros
-tableName: contracts
+table_name: contracts
 enable_files: true
 enable_search: true
 enable_tasks: true
@@ -96,7 +96,7 @@ fields:
   stock:
     type: lookup
     label: 股票信息
-    reference_to: 'stock.stock_info'
+    reference_to: 'stock_info'
 list_views:
   all:
     label: 全部

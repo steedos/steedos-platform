@@ -1,7 +1,7 @@
 name: field_type
 label: 基本字段类型
 icon: product
-tableName: TestFieldTypesForPostgres
+table_name: TestFieldTypesForPostgres
 fields:
   id: 
     type: number

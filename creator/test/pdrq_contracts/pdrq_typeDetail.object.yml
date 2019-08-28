@@ -1,6 +1,6 @@
 name: typeDetail
 label: 合同性质
-tableName: contractTypeDetail
+table_name: contractTypeDetail
 icon: macros
 fields:
   recid: 

@@ -1,7 +1,7 @@
 name: crud
 label: 增删改查
 icon: orders
-tableName: TestCrudForPostgres
+table_name: TestCrudForPostgres
 fields:
   id: 
     type: text
