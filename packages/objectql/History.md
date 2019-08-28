@@ -1,3 +1,11 @@
+1.0.10 / 2019-08-28
+===================
+
+  * [graphql api 的url 取消 datasource_name 部分](https://github.com/steedos/object-server/issues/125)
+1.0.9 / 2019-08-21
+===================
+
+  * app 新增mobile_objects属性，用于指定在手机上显示应用的对象
 1.0.7 / 2019-08-21
 ===================
 

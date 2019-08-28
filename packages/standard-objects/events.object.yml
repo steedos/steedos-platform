@@ -83,6 +83,14 @@ list_views:
     type: calendar
     label: 日历视图
     filter_scope: space
+    filters:
+    - - owner 
+      - = 
+      - '{userId}'
+    - or 
+    - - assignees
+      - = 
+      - '{userId}'
     options:
       startDateExpr: start
       endDateExpr: end
@@ -99,6 +107,14 @@ list_views:
   all:
     label: 全部
     filter_scope: space
+    filters:
+    - - owner 
+      - = 
+      - '{userId}'
+    - or 
+    - - assignees
+      - = 
+      - '{userId}'
     columns:
       - name
       - start
@@ -112,7 +128,7 @@ permission_set:
     allowEdit: true
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
   admin:
     allowCreate: true
     allowDelete: true

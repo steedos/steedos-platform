@@ -6,7 +6,8 @@ export type SteedosAppTypeConfig = {
     name: string,
     description: string,
     icon_slds: string,
-    objects: string[]
+    objects: string[],
+    mobile_objects?: string[]
 }
 
 export class SteedosAppType{
@@ -54,6 +55,14 @@ export class SteedosAppType{
     public get is_creator(): boolean {
         return this._is_creator;
     }
+
+    private _mobile_objects: string[];
+    public get mobile_objects(): string[] {
+        return this._mobile_objects;
+    }
+    public set mobile_objects(value: string[]) {
+        this._mobile_objects = value;
+    }
     
     constructor(config: SteedosAppTypeConfig, datasource: SteedosDataSourceType){
         this._datasource = datasource
@@ -63,6 +72,7 @@ export class SteedosAppType{
         this.description = config.description
         this.icon_slds = config.icon_slds
         this.objects = config.objects
+        this.mobile_objects = config.mobile_objects
     }
 
     toConfig(){
@@ -73,6 +83,7 @@ export class SteedosAppType{
         config.icon_slds = this.icon_slds
         config.objects = this.objects
         config.is_creator = this.is_creator
+        config.mobile_objects = this.mobile_objects
         return config
     }
 
