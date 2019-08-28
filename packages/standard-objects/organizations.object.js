@@ -1,23 +1,5 @@
 db.organizations = new Meteor.Collection('organizations');
 
-if (Meteor.isServer) {
-    Meteor.publish("subCompany", function (space_id) {
-        return Creator.Collections.organizations.find({
-            space: space_id,
-            is_company: true
-        }, {
-                fields: {
-                    _id: 1,
-                    name: 1,
-                    parent: 1,
-                    parents: 1,
-                    space: 1,
-                    is_company: 1
-                }
-            });
-    });
-}
-
 if (Meteor.isClient) {
     //	db.organizations._simpleSchema.i18n("organizations")
     db.organizations._sortFunction = function (doc1, doc2) {
@@ -32,7 +14,6 @@ if (Meteor.isClient) {
     };
     db.organizations.getRoot = function (fields) {
         return SteedosDataManager.organizationRemote.findOne({
-            is_company: true,
             parent: null
         }, {
                 fields: fields
@@ -199,9 +180,6 @@ if (Meteor.isServer) {
             throw new Meteor.Error(400, "organizations_error_space_not_found");
         }
         isSpaceAdmin = space.admins.indexOf(userId) >= 0;
-        // if (doc.is_company && !isSpaceAdmin) {
-        //     throw new Meteor.Error(400, "organizations_error_space_admins_only_for_is_company");
-        // }
         // only space admin or org admin can insert organizations
         if (!isSpaceAdmin) {
             isOrgAdmin = false;
@@ -254,16 +232,6 @@ if (Meteor.isServer) {
             }
             // 新增组织时，自动继承上级组织的 company_id
             doc.company_id = parentOrg.company_id;
-            // // 公司级的部门的父部门必须也是公司级的部门
-            // if (doc.is_company && !parentOrg.is_company) {
-            //     throw new Meteor.Error(400, "organizations_error_parent_is_company_false_for_current_company");
-            // }
-            // if (doc.is_company && !doc.is_group) {
-            //     doc.company_id = doc._id;
-            // } else {
-            //     // parentOrg正好是根组织的情况通过脚本修正，保证默认情况下每个根组织company_id有正确的值
-            //     doc.company_id = parentOrg.company_id;
-            // }
         } else {
             // 新增部门时不允许创建根部门
             broexisted = db.organizations.find({
@@ -280,10 +248,6 @@ if (Meteor.isServer) {
             if (orgexisted > 0) {
                 throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
             }
-            // // 根组织的is_company值必须是true
-            // doc.is_company = true;
-            // // 如果是新建根组织则应该设置其company_id值为根组织本身的_id值，因默认is_group也是false
-            // doc.company_id = doc._id;
         }
         // only space admin can update organization.admins
         if (!isSpaceAdmin) {
@@ -314,8 +278,7 @@ if (Meteor.isServer) {
         if (!rootOrg) {
             rootOrg = db.organizations.findOne({
                 space: doc.space,
-                parent: null,
-                // is_company: true
+                parent: null
             }, {
                     fields: {
                         _id: 1
@@ -384,9 +347,6 @@ if (Meteor.isServer) {
             throw new Meteor.Error(400, "organizations_error_space_not_found");
         }
         isSpaceAdmin = space.admins.indexOf(userId) >= 0;
-        // if (modifier.$set.is_company !== void 0 && modifier.$set.is_company !== doc.is_company && !isSpaceAdmin) {
-        //     throw new Meteor.Error(400, "organizations_error_space_admins_only_for_is_company");
-        // }
         /*
             非工作区管理员修改部门，需要以下权限：
             1.需要有原组织或原组织的父组织的管理员权限
@@ -424,62 +384,14 @@ if (Meteor.isServer) {
         if (doc.parent) {
             // 公司级的部门的父部门必须也是公司级的部门
             parent = modifier.$set.parent || doc.parent;
-            // is_company = modifier.$set.is_company === void 0 ? doc.is_company : modifier.$set.is_company;
             parentOrg = db.organizations.findOne(parent);
             if (!parentOrg) {
                 throw new Meteor.Error(400, "organizations_error_parent_is_not_found");
             }
-            // if (is_company && !parentOrg.is_company) {
-            //     throw new Meteor.Error(400, "organizations_error_parent_is_company_false_for_current_company");
-            // }
-            // if (modifier.$set.is_company !== void 0) {
-            //     if (!is_company) {
-            //         childrenCompany = db.organizations.findOne({
-            //             _id: {
-            //                 $in: doc.children
-            //             },
-            //             is_company: true
-            //         });
-            //         if (childrenCompany) {
-            //             throw new Meteor.Error(400, "organizations_error_children_is_company_true_for_current_company");
-            //         }
-            //     }
-            // }
-            // is_group = modifier.$set.is_group === void 0 ? doc.is_group : modifier.$set.is_group;
-            // 当变更parent、is_company或is_group属性时，重新计算其company_id值
-            // if (modifier.$set.parent || modifier.$set.is_company !== void 0 || modifier.$set.is_group !== void 0) {
-            //     if (is_company && !is_group) {
-            //         company_id = doc._id;
-            //     } else {
-            //         company_id = parentOrg.company_id;
-            //     }
-            //     if (company_id) {
-            //         modifier.$set.company_id = company_id;
-            //     } else {
-            //         // 需求上是需要向上一层一层查找，直到找到 is_group=false and is_company = true 的节点，并设置company_id为其_id的
-            //         // 但实际上parentOrg本身的company_id值是一层一层算下来的，有值就有值，没值就没值，所以技术上不需要一层一层去找。
-            //         modifier.$unset = modifier.$unset || {};
-            //         modifier.$unset.company_id = 1;
-            //     }
-            // }
         } else {
-            // // 根组织的is_company不能为false
-            // if (modifier.$set.is_company !== void 0) {
-            //     if (!modifier.$set.is_company) {
-            //         throw new Meteor.Error(400, "organizations_error_is_company_false_in_root");
-            //     }
-            // }
             if (modifier.$set.parent) {
                 throw new Meteor.Error(400, "organizations_error_root_parent_can_not_set");
             }
-            // if (modifier.$set.is_group !== void 0) {
-            //     if (modifier.$set.is_group) {
-            //         modifier.$unset = modifier.$unset || {};
-            //         modifier.$unset.company_id = 1;
-            //     } else {
-            //         modifier.$set.company_id = doc._id;
-            //     }
-            // }
         }
         modifier.$set.modified_by = userId;
         modifier.$set.modified = new Date();
@@ -683,88 +595,6 @@ if (Meteor.isServer) {
                 });
             }
         }
-        // old_company_id = this.previous.company_id;
-        // new_company_id = doc.company_id;
-        // // unset_company_id不可以通过modifier.$unset?.company_id来获取，因为before.update中给$unset赋值这里拿不到
-        // unset_company_id = !new_company_id && old_company_id;
-        // if (unset_company_id || (new_company_id && (new_company_id !== old_company_id))) {
-        //     // 当前部门的company_id值变化时，把其子部门全部设置为相同的company_id值
-        //     setOptions = {};
-        //     if (unset_company_id) {
-        //         setOptions = {
-        //             $unset: {
-        //                 company_id: 1
-        //             }
-        //         };
-        //     } else {
-        //         setOptions = {
-        //             $set: {
-        //                 company_id: new_company_id
-        //             }
-        //         };
-        //     }
-        //     if (doc.children && doc.children.length) {
-        //         // 这里不能用direct.update，因为要触发级联操作
-        //         // 设置子部门company_id时，只能设置非公司级的部门，或者虽然是公司级，但是设置了is_group忽略公司级的部门
-        //         queryOptions = {
-        //             _id: {
-        //                 $in: doc.children
-        //             },
-        //             $or: [
-        //                 {
-        //                     is_company: {
-        //                         $ne: true
-        //                     }
-        //                 },
-        //                 {
-        //                     is_company: true,
-        //                     is_group: true
-        //                 }
-        //             ]
-        //         };
-        //         db.organizations.update(queryOptions, setOptions, {
-        //             multi: true
-        //         });
-        //     }
-        //     // 当前部门的company_id值变化时，同步主部门为当前部门的space_users的company_id值
-        //     queryOptions = {};
-        //     if (unset_company_id) {
-        //         queryOptions = {
-        //             space: doc.space,
-        //             company_id: doc._id
-        //         };
-        //     } else {
-        //         queryOptions = {
-        //             space: doc.space,
-        //             organization: doc._id
-        //         };
-        //     }
-        //     db.space_users.direct.update(queryOptions, setOptions, {
-        //         multi: true
-        //     });
-        //     // 当前部门的company_id值变化时，同步company_ids包含当前部门的space_users，
-        //     // 以及organizations包含当前部门的space_users的company_ids值
-        //     queryOptions = {
-        //         space: doc.space,
-        //         $or: [
-        //             {
-        //                 company_ids: doc._id
-        //             },
-        //             {
-        //                 organizations: doc._id
-        //             }
-        //         ]
-        //     };
-        //     db.space_users.find(queryOptions, {
-        //         fields: {
-        //             organizations: 1,
-        //             company_id: 1,
-        //             space: 1
-        //         }
-        //     }).forEach(function (su) {
-        //         return db.space_users.update_company_ids(su._id, su);
-        //     });
-        // }
         //修改部门的parent时, 需要其space_user的organizations_parents
         if (modifier.$set.parent) {
             children = db.organizations.find({
@@ -833,9 +663,6 @@ if (Meteor.isServer) {
             throw new Meteor.Error(400, "organizations_error_space_not_found");
         }
         isSpaceAdmin = space.admins.indexOf(userId) >= 0;
-        // if (doc.is_company && !isSpaceAdmin) {
-        //     throw new Meteor.Error(400, "organizations_error_space_admins_only_for_is_company");
-        // }
         // only space admin or org admin can remove organizations
         if (!isSpaceAdmin) {
             isOrgAdmin = false;
