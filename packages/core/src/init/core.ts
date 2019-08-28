@@ -103,12 +103,11 @@ export class Core {
             }
         });
 
-        _.each(Creator.steedosSchema.getDataSources(), function (datasource: any, name) {
-            return router.use("/" + name, graphqlHTTP({
-                schema: datasource.buildGraphQLSchema(),
-                graphiql: true
-            }));
-        });
+
+        router.use("/", graphqlHTTP({
+            schema: objectql.buildGraphQLSchema(objectql.getSteedosSchema()),
+            graphiql: true
+        }));
         app.use('/graphql', router);
         return WebApp.connectHandlers.use(app);
     }
