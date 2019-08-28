@@ -1,3 +1,9 @@
+// 防止 ios 上手指滑动时，触发页面弹动
+html, body {
+	position: fixed;
+	overflow: hidden;
+}
+
 body {
 
 	background-size: cover;
@@ -8,6 +14,9 @@ body {
 	}
 
 	zoom: 1 !important;
+
+	// iOS 上平滑滚动
+	-webkit-overflow-scrolling: touch;
 }
 
 .steedos {
@@ -205,53 +214,6 @@ body {
 		padding-top: 0px;
 		min-height: auto;
 		padding-bottom: 0.75rem;
-	}
-	.slds-global-header_container {
-		z-index: 1000;
-		background: rgba(255, 255, 255, 0.95);
-		border-bottom: 0;
-		transition: all 1s ease-in-out 0.5s;
-		x-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 5px, rgba(255, 255, 255, 0.2) 0 -1px 0 inset;
-
-		.slds-global-header {
-			background: transparent;
-			box-shadow: none;
-
-			.slds-global-header__logo {
-				width: 12.5rem;
-				height: 2.5rem;
-				background-size: contain;
-				background-repeat: no-repeat;
-				background-position: left center;
-				img{
-					height: 100%;
-					width: auto;
-				}
-			}
-
-		}
-		.slds-context-bar {
-			background: transparent;
-			padding: 0px 0px 0px 1rem;
-			border-bottom: 2px solid rgba(0, 161, 223, 1.0);
-			color: rgb(8, 7, 7);
-			a {
-				text-decoration: none !important;
-			}
-			.slds-context-bar__app-name {
-				font-weight: inherit;
-			}
-			.slds-context-bar__primary, .slds-context-bar__secondary, .slds-context-bar__tertiary {
-				height: 2.5rem;
-			}
-			.slds-context-bar__item:not(.slds-no-hover):hover:after {
-				bottom: auto;
-				top: 0;
-			}
-			.slds-context-bar__item.slds-is-active:before {
-				background: rgba(0, 161, 223, 1.0);
-			}
-		}
 	}
 
 	.slds-page-header {

@@ -101,7 +101,6 @@ FlowRouter.route '/app/:app_id',
 FlowRouter.route '/user_settings',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		if Steedos.isMobile()
 			Session.set('headerTitle', '设置' )
 			Session.set("showBackHeader", true)
 			BlazeLayout.render Creator.getLayout(),
@@ -115,7 +114,6 @@ FlowRouter.route '/user_settings',
 FlowRouter.route '/user_settings/switchspace',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		if Steedos.isMobile()
 			Session.set('headerTitle', '选择工作区')
 			Session.set("showBackHeader", true)
 			BlazeLayout.render Creator.getLayout(),

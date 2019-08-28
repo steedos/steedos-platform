@@ -2,16 +2,12 @@ Template.creatorHeader.helpers Creator.helpers
 
 Template.creatorHeader.helpers
 	logoUrl: ()->
-		logo_main_custome = Meteor?.settings?.public?.theme?.logo_main_custome
-		if logo_main_custome
-			return Creator.getRelativeUrl(logo_main_custome)
+		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_square
+		if avatar
+			return Creator.getRelativeUrl("/api/files/avatars/#{avatar}")
 		else
-			avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_dark
-			if avatar
-				return Creator.getRelativeUrl("/api/files/avatars/#{avatar}")
-			else
-				logo_url = "/packages/steedos_creator/assets/logo.png"
-				return Creator.getRelativeUrl(logo_url)
+			logo_url = "/packages/steedos_creator/assets/logo-square.png"
+			return Creator.getRelativeUrl(logo_url)
 	
 	currentUserUser: ()->
 		url = "app/admin/users/view/#{Steedos.userId()}"
@@ -47,6 +43,13 @@ Template.creatorHeader.helpers
 	showShopping: ()->
 		return Steedos.isSpaceAdmin() && !_.isEmpty(Creator?._TEMPLATE?.Apps)
 
+	spaceName: (spaceId)->
+		if !spaceId
+			spaceId = Steedos.getSpaceId()
+		if spaceId
+			space = db.spaces.findOne(spaceId)
+			if space
+				return space.name
 
 Template.creatorHeader.events
 

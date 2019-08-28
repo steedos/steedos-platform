@@ -10,6 +10,9 @@ Template.standard_query_modal.onRendered ->
 	this.$("input[type='number']").val("")
 
 Template.standard_query_modal.helpers
+	isNotMobile: ()->
+		return !Steedos.isMobile();
+
 	value: ()->
 		return Template.instance().modalValue?.get()
 

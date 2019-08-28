@@ -145,6 +145,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/header_search.coffee', 'client');
 	api.addFiles('client/layout/header.html', 'client');
 	api.addFiles('client/layout/header.coffee', 'client');
+	api.addFiles('client/layout/header.less', 'client');
 	api.addFiles('client/layout/navigation.html', 'client');
 	api.addFiles('client/layout/navigation.coffee', 'client');
 	api.addFiles('client/layout/sidebar.html', 'client');
@@ -343,6 +344,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/i18n.coffee', 'client');
 
 	api.addAssets('assets/logo.png', 'client');
+	api.addAssets('assets/logo-square.png', 'client');
 
 	api.export(['uuflowManager', 'permissionManager'], ['server']);
 

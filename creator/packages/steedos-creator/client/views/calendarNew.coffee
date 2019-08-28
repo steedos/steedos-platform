@@ -1,5 +1,5 @@
 dxSchedulerInstance = null
-
+Filters = require("@steedos/filters")
 _getSelect = (options)->
 	select = ['_id', 'owner', 'name']
 
@@ -29,7 +29,6 @@ getExpand = (options)->
 	return expand;
 
 _dataSource = (options) ->
-	filter = Creator.getODataFilter(Session.get("list_view_id"), Session.get('object_name'))
 	url = "/api/odata/v4/#{Steedos.spaceId()}/#{Session.get('object_name')}"
 	expand = getExpand(options)
 	dataSource = {
@@ -54,7 +53,10 @@ _dataSource = (options) ->
 					loadOptions.filter = [loadOptions.filter, 'and', _f]
 				else
 					loadOptions.filter = _f
-			beforeSend: (request) ->
+			beforeSend: (request, b, c) ->
+				filters = Creator.getODataFilter(Session.get("list_view_id"), Session.get('object_name'))
+				odataFilters = Filters.formatFiltersToODataQuery(filters)
+				request.params.$filter = "(#{odataFilters}) and (#{request.params.$filter})"
 				request.headers['X-User-Id'] = Meteor.userId()
 				request.headers['X-Space-Id'] = Steedos.spaceId()
 				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
@@ -71,7 +73,6 @@ _dataSource = (options) ->
 				toastr.error(error.message)
 		select: _getSelect(options)
 		expand: expand || ["owner($select=name)"]
-		filter: filter
 	}
 	return dataSource
 
@@ -258,7 +259,7 @@ _executeAction = (action_name, data)->
 
 		if action_name == 'standard_delete'
 			Creator.executeAction objectName, action, data._id, null, null, ()->
-				dxSchedulerInstance.repaint()
+				dxSchedulerInstance.getDataSource().reload()
 		else
 			Creator.executeAction objectName, action, data._id
 
@@ -283,7 +284,7 @@ _deleteData = (data)->
 
 setResource = (data, fieldName, value)->
 	Creator.odata.update Session.get("object_name"), data._id, {"#{fieldName}" : value}, ()->
-		dxSchedulerInstance.repaint()
+		dxSchedulerInstance.getDataSource().reload()
 
 getAppointmentContextMenuItems = (e, options)->
 	menuItems = []
@@ -361,13 +362,13 @@ Template.creator_calendarNew.onCreated ->
 		onSuccess: (formType,result)->
 			if $("#creator-scheduler").length < 1
 				return;
-			dxSchedulerInstance.repaint()
+			dxSchedulerInstance.getDataSource().reload()
 	,false
 	AutoForm.hooks creatorEditForm:
 		onSuccess: (formType,result)->
 			if $("#creator-scheduler").length < 1
 				return;
-			dxSchedulerInstance.repaint()
+			dxSchedulerInstance.getDataSource().reload()
 	,false
 
 Template.creator_calendarNew.onRendered ->

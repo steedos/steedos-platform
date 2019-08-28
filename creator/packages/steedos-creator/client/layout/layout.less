@@ -39,18 +39,16 @@
 }
 
 @media (max-width: 767px) {
+    .slds-modal__container {
+        margin: 0 1rem;
+        padding: 1rem 0;
+    }
     .creatorHeader{
         display: none !important;
     }
 
     .creator-mobile-header{
         display: block !important;
-    }
-    .record-edit-text{
-        display: none;
-    }
-    .record-edit-icon{
-        display: block;
     }
 
     .creator-content-wrapper{
@@ -61,56 +59,11 @@
             padding: 0px !important;
             .slds-page-header{
                 border-radius: 0px !important;
-                border: 0px !important;
             }
             .slds-card{
                 border-radius: 0px !important;
                 border-left: 0px !important;
                 border-right: 0px !important;
-            }
-
-            .actionsContainer{
-                position: fixed;
-                right: 9px;
-                top: 9px;
-                z-index: 1060;
-            }
-
-            .slds-button--neutral{
-                color: #ffffff;
-                border: 0px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.2);
-                margin-right: 7px;
-                width: 32px;
-                height: 32px;
-                padding: 0px;
-
-                .slds-button__icon_edit{
-                    color: #ffffff;
-                }
-            }
-
-            .slds-button_icon-border-filled{
-                border: 0px;
-                color: #ffffff;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.2);
-            }
-
-
-            .slds-page-header_bleed{
-                padding: 0px;
-            }
-
-            #creator-quick-form{
-                margin-top: 0px;
-                padding: 0px;
-                margin: 0px !important;
-                .slds-gutters_small{
-                    margin-right: 0px;
-                    margin-left: 0px;
-                }
             }
 
             .row-main{
@@ -126,57 +79,18 @@
         }
     }
 
-    .grid-info-actions{
-        display: none !important;
-    }
-
     .grid-actions{
         display: none !important;
     }
-
-    [class*="list-action-custom-"]{
-        display: none;
-    }
-
-    .list-action-custom-standard_new{
-        display: flex !important;
-        border-radius: 0 0 0 0 !important;
-    }
-
+    
     .tabular_info{
         display: none !important;
     }
 
     .grid-search-div{
-        width: 100%;
-        >div{
-            width: 100%;
-            .search-in-list{
-                width: 100%;
-                margin: 0;
-            }
-        }
+        display: none
     }
     /*详细界面*/
-    .creator_view{
-        .slds-page-header_bleed{
-            >.slds-grid:first-child{
-                //position: sticky; 详细页面标题不需要固定
-                top: 0px;
-                //z-index: 1050;
-                background: #f3f2f2;
-                width: 100%;
-                padding: 7px;
-            }
-            .slds-media__figure{
-                display: none !important;
-            }
-        }
-        .crm-breadcrumb-item{
-            display: none !important;
-        }
-    }
-
     /*user界面*/
     .slds-template_profile{
         padding: 3.5rem 0.75rem 0.75rem !important;
@@ -206,10 +120,10 @@
         //}
 
         .slds-page-header--object-home{
-            border: 0px !important;
-            border-radius: 0px !important;
-            padding: 7px !important;
-            border-bottom: 1px solid #dddbda !important;
+            //border: 0px !important;
+            border-radius: 0px ;
+            //padding: 7px !important;
+            //border-bottom: 1px solid #dddbda !important;
         }
 
         .list-table-container{

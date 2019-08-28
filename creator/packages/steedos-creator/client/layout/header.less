@@ -1,0 +1,59 @@
+
+	.slds-global-header_container {
+		z-index: 1000;
+		background: rgba(255, 255, 255, 1);
+		border-bottom: 0;
+		transition: all 1s ease-in-out 0.5s;
+    }
+    .slds-global-header {
+        background: transparent;
+        box-shadow: none;
+
+        .slds-global-header__item--logo {
+            display: flex;
+
+            .slds-global-header__logo {
+                width: 36px;
+                height: 36px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: left center;
+                box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+                border-radius: 3px;
+                background: white;
+                img{
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+            .slds-global-header__text {
+                font-size: 18px;
+                line-height: 36px;
+                padding-left: 10px;
+                font-weight: 400;
+            }
+        }
+
+    }
+    .slds-context-bar {
+        background: transparent;
+        padding: 0px 0px 0px 1rem;
+        border-bottom: 2px solid rgba(0, 161, 223, 1.0);
+        color: rgb(8, 7, 7);
+        a {
+            text-decoration: none !important;
+        }
+        .slds-context-bar__app-name {
+            font-weight: inherit;
+        }
+        .slds-context-bar__primary, .slds-context-bar__secondary, .slds-context-bar__tertiary {
+            height: 2.5rem;
+        }
+        .slds-context-bar__item:not(.slds-no-hover):hover:after {
+            bottom: auto;
+            top: 0;
+        }
+        .slds-context-bar__item.slds-is-active:before {
+            background: rgba(0, 161, 223, 1.0);
+        }
+    }
