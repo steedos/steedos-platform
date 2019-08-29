@@ -12,6 +12,11 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: "0 auto",
+  }
 });
 
 const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
@@ -50,7 +55,9 @@ const Login = ({ history, title }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-
+      <h4 className={classes.title}>
+        Sign In
+      </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="email">Email</InputLabel>
         <Input id="email" value={email} onChange={e => setEmail(e.target.value)} />

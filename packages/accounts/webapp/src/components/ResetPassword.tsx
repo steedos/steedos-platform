@@ -11,6 +11,11 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: "0 auto",
+  }
 });
 
 const LogInLink = (props: any) => <Link to="/login" {...props} />;
@@ -49,9 +54,9 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <Typography variant="h4" gutterBottom>
+      <h4 className={classes.title}>
         Reset Password
-      </Typography>
+      </h4>
       {!match.params.token && (
         <FormControl margin="normal">
           <InputLabel htmlFor="email">Email</InputLabel>

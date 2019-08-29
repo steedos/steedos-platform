@@ -11,6 +11,11 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: "0 auto",
+  }
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
@@ -52,9 +57,9 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <Typography variant="h4" gutterBottom>
-        Sign up
-      </Typography>
+      <h4 className={classes.title}>
+        Sign Up
+      </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="firstName">First name</InputLabel>
         <Input

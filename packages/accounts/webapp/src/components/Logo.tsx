@@ -8,8 +8,8 @@ interface Props {
 
 const useStyles = makeStyles({
   logo: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     display: "block",
     margin: "0 auto",
   },
