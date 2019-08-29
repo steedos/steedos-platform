@@ -32,6 +32,13 @@ admin_menus:
       - admin
       - organization_admin
     expanded: false
+  - _id: company
+    name: 我方单位
+    permission_sets:
+      - admin
+      - organization_admin
+    object_name: company
+    parent: menu_users
   - _id: organizations
     name: 部门
     permission_sets:
