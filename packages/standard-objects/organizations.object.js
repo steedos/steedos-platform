@@ -230,8 +230,10 @@ if (Meteor.isServer) {
                     throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
                 }
             }
-            // 新增组织时，自动继承上级组织的 company_id
-            doc.company_id = parentOrg.company_id;
+            if (!doc.company_id) {
+                // 新增组织时，自动继承上级组织的 company_id
+                doc.company_id = parentOrg.company_id;
+            }
         } else {
             // 新增部门时不允许创建根部门
             broexisted = db.organizations.find({

@@ -12,9 +12,15 @@ Creator.Objects['company'].triggers = {
                 // 还不支持i18n
                 throw new Meteor.Error(400, "该单位名称已经存在");
             }
-            if (!doc.organization){
+        }
+    },
+    "after.insert.server.company": {
+        on: "server",
+        when: "after.insert",
+        todo: async function (userId, doc) {
+            if (!doc.organization) {
                 // 未指定所属组织时自动在根节点新建一个组织，对应上关系
-                var rootOrg = db.organizations.findOne({
+                var rootOrg = Creator.getCollection("organizations").findOne({
                     space: doc.space,
                     parent: null
                 }, {
@@ -23,7 +29,7 @@ Creator.Objects['company'].triggers = {
                     }
                 });
 
-                var existsOrg = db.organizations.findOne({
+                var existsOrg = Creator.getCollection("organizations").findOne({
                     space: doc.space,
                     parent: rootOrg._id,
                     name: doc.name
@@ -32,14 +38,22 @@ Creator.Objects['company'].triggers = {
                         _id: 1
                     }
                 });
+
                 // 只有同名组织不存在时才自动新建根组织下对应的组织关联到新单位
-                if (!existsOrg){
+                if (!existsOrg) {
                     // 组织的其他属性，比如fullname，parents等在organizations.before.insert，organizations.after.insert处理
-                    // 组织的company_id属性，由用户手动点击“更新组织”按钮来触发actions处理
-                    doc.organization = db.organizations.insert({
+                    var orgId = Creator.getCollection("organizations").insert({
                         name: doc.name,
                         parent: rootOrg._id,
-                        space: doc.space
+                        space: doc.space,
+                        company_id: doc._id
+                    });
+                    Creator.getCollection("company").update({
+                        _id: doc._id
+                    }, {
+                        $set: {
+                            organization: orgId
+                        }
                     });
                 }
             }
@@ -83,9 +97,6 @@ let update_su_company_ids = async function (_id, su) {
 
 Creator.Objects['company'].methods = {
     updateOrgs: async function (params) {
-        console.log("====methods=updateOrgs======");
-        console.log("====methods=params======", params);
-        console.log("====methods=this======", this);
         let company = await this.getObject("company").findOne(this.record_id, {
             fields: ["organization"]
         });
@@ -102,7 +113,6 @@ Creator.Objects['company'].methods = {
             company_id: this.record_id
         }, this.userSession);
 
-        console.log("result======", result);
         sus = await this.getObject("space_users").find({
             filters: [["organizations_parents", "=", company.organization]],
             fields: ["organizations", "organization", "company_id", "space"]
@@ -138,7 +148,6 @@ Creator.Objects['company'].actions = {
                     body: JSON.stringify(fetchParams)
                 });
                 let reJson = await res.json();
-                console.log("=====reJson==========", reJson);
                 if(reJson.error){
                     console.error(reJson.error);
                     if (reJson.error.reason){
