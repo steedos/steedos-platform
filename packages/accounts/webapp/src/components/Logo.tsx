@@ -8,19 +8,17 @@ interface Props {
 
 const useStyles = makeStyles({
   logo: {
-    width: "100%",
-    height: "auto",
-    maxWidth: 320,
+    width: 100,
+    height: 100,
     display: "block",
     margin: "0 auto",
-    paddingBottom: 10,
   },
 });
 
 const Logo = ({ logoUrl }: Props) => {
   const classes = useStyles();
   if (!logoUrl) 
-    logoUrl = require("../assets/logo.png")
+    logoUrl = require("../assets/logo-square.png")
   return (
     <img src={logoUrl} className={classes.logo}></img>
   )

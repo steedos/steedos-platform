@@ -53,9 +53,9 @@ const Router = () => {
         <div className={classes.root}>
           <Grid container className={classes.rootGrid}>
             <Grid item xs={12}>
-              <Logo></Logo>
               <Paper className={classes.container}>
                 <CssBaseline />
+                <Logo></Logo>
                 <Route exact path="/" component={Home} />
                 <Route path="/two-factor" component={TwoFactor} />
 
