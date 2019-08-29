@@ -1,21 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './Router';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './reducers'
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import IntlProvider from './components/intl_provider';
 
-const initialStore = {
-    settings: {
-        title: "Steedos"
-    }
-}
-
-const store = createStore(rootReducer, initialStore, devToolsEnhancer({}));
+import store from './stores/redux_store';
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router />
+        <IntlProvider>
+            <Router />
+        </IntlProvider>
     </Provider>,
     document.getElementById('root') as HTMLElement);

@@ -37,6 +37,7 @@ const router = accountsExpress(accountsServer, {
 });
 
 router.use("/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
+router.use("/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
 router.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
 });

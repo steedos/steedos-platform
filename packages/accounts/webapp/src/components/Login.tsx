@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
 
 import { accountsPassword } from '../accounts';
+import { getSettings } from '../selectors';
 import FormError from './FormError';
 
 const useStyles = makeStyles({
@@ -56,7 +58,10 @@ const Login = ({ history, title }: any) => {
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
       <h4 className={classes.title}>
-        Sign In
+        <FormattedMessage
+            id='accounts.signin'
+            defaultMessage='Sign In 2'
+        />
       </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="email">Email</InputLabel>
@@ -88,7 +93,7 @@ const Login = ({ history, title }: any) => {
 
 function mapStateToProps(state: any) {
   return {
-      title: state.settings.title,
+      title: getSettings(state).title,
   };
 }
 
