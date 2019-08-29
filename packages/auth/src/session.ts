@@ -210,8 +210,8 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
         spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);
         spaceSession.company = (await getObjectDataByIds('company', [su.company_id], ['name', 'organization']))[0];
         spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
-        spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname']))[0];
-        spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname']);
+        spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname', 'company_id']))[0];
+        spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
         addSpaceSessionToCache(token, userSpaceId, spaceSession);
         return assignSession(userSpaceId, session, spaceSession);
       }
