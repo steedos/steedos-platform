@@ -51,10 +51,7 @@ if (Meteor.isServer) {
     // 	if _.indexOf(doc.apps_enabled, "admin")<0
     // 		doc.apps_enabled.push("admin")
     db.spaces.after.insert(function (userId, doc) {
-        db.spaces.createTemplateOrganizations(doc._id);
-        return _.each(doc.admins, function (admin) {
-            return db.spaces.space_add_user(doc._id, admin, true);
-        });
+        db.spaces.createTemplateOrganizations(doc);
     });
     db.spaces.before.update(function (userId, doc, fieldNames, modifier, options) {
         modifier.$set = modifier.$set || {};
@@ -126,7 +123,7 @@ if (Meteor.isServer) {
             return this.connection["spaceId"];
         }
     });
-    db.spaces.space_add_user = function (spaceId, userId, user_accepted) {
+    db.spaces.space_add_user = function (spaceId, userId, user_accepted, company_id) {
         var now, ref, ref1, ref2, ref3, root_org, spaceUserObj, userObj;
         spaceUserObj = db.space_users.direct.findOne({
             user: userId,
@@ -167,17 +164,16 @@ if (Meteor.isServer) {
                 invite_state: "accepted",
                 created: now,
                 created_by: userId,
-                owner: userId
+                owner: userId,
+                company_id: company_id,
+                company_ids: [company_id]
             });
-            return root_org.updateUsers();
+            root_org.updateUsers();
         }
     };
-    db.spaces.createTemplateOrganizations = function (space_id) {
-        var _create_org, org, org_id, space, user, company_id;
-        space = db.spaces.findOne(space_id);
-        if (!space) {
-            return false;
-        }
+    db.spaces.createTemplateOrganizations = function (space) {
+        var _create_org, org, org_id, user, company_id, space_id;
+        var space_id = space._id;
         user = db.users.findOne(space.owner);
         if (!user) {
             return false;
@@ -249,6 +245,10 @@ if (Meteor.isServer) {
             _create_org("Human Resources Department");
             _create_org("Company Leader", 101);
         }
+
+        _.each(space.admins, function (admin) {
+            return db.spaces.space_add_user(space._id, admin, true, company_id);
+        });
         return true;
     };
 }
