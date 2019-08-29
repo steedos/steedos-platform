@@ -47,11 +47,13 @@ spaces: [space]               # 数组，用户所属的所有工作区
 company:                   
   _id: i6thCRrKWYmdjxpzt      # 用户所属主单位 
   name: Apple China           # 用户所属主单位名称
+  organization: xxx           # 用户所属主单位关联组织id
 companies: [company]          # 数组，用户所属的所有单位
 organization:
   _id: i6thCRrKWYmdjxpzt
   name: Sales                 # 用户所属部门
   fullname: Apple China/Sales # 用户所属部门的全称
+  company_id: xxx             # 用户所属部门关联单位id
 organizations: [organization] # 数组，用户所属的所有部门
 ```
 
