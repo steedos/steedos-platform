@@ -33,6 +33,7 @@ list_views:
       - parent
       - organization
       - modified
+    filter_scope: space
 permission_set:
   user:
     allowCreate: false
