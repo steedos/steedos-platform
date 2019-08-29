@@ -231,12 +231,8 @@ export async function auth(request: Request, response: Response): Promise<any> {
     || request.headers['x-space-id'];
   if (authorization && authorization.split(' ')[0] == 'Bearer') {
     let spaceAuthToken = authorization.split(' ')[1];
-    if (!spaceId) {
-      spaceId = spaceAuthToken.split(',')[0];
-    }
-    if (!authToken) {
-      authToken = spaceAuthToken.split(',')[1];
-    }
+    spaceId = spaceAuthToken.split(',')[0];
+    authToken = spaceAuthToken.split(',')[1];
   }
 
   if (spaceToken) {
