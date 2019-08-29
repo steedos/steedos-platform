@@ -133,37 +133,59 @@ Creator.Objects['company'].actions = {
         label: "更新组织",
         visible: true,
         on: "record",
-        todo: async function (object_name, record_id, fields){
-            var userSession = Creator.USER_CONTEXT;
-            var url = `/api/odata/v4/${userSession.spaceId}/company/${record_id}/updateOrgs`;
-            try {
-                let authorization = `Bearer ${userSession.spaceId},${userSession.authToken}`;
-                let fetchParams = {};
-                const res = await fetch(url, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': authorization
-                    },
-                    method: 'POST',
-                    body: JSON.stringify(fetchParams)
-                });
-                let reJson = await res.json();
-                if(reJson.error){
-                    console.error(reJson.error);
-                    if (reJson.error.reason){
-                        toastr.error(reJson.error.reason)
-                    }
-                    else if (reJson.error.message) {
-                        toastr.error(reJson.error.message)
-                    }
-                }
-                else{
-                    toastr.success(`已成功更新${reJson.updatedOrgs}条组织信息及${reJson.updatedSus}条用户信息,`)
-                }
-            } catch (err) {
-                console.error(err);
-                toastr.error(err)
+        todo: async function (object_name, record_id, fields) {
+            console.log("====this====", this);
+            console.log("====record_id====", record_id);
+            if (!this.record.organization) {
+                toastr.warning("该单位的关联组织未设置，未更新任何数据");
             }
+            
+            doUpdate = async ()=> {
+                var userSession = Creator.USER_CONTEXT;
+                var url = `/api/odata/v4/${userSession.spaceId}/company/${record_id}/updateOrgs`;
+                try {
+                    let authorization = `Bearer ${userSession.spaceId},${userSession.authToken}`;
+                    let fetchParams = {};
+                    const res = await fetch(url, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': authorization
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(fetchParams)
+                    });
+                    let reJson = await res.json();
+                    if (reJson.error) {
+                        console.error(reJson.error);
+                        if (reJson.error.reason) {
+                            toastr.error(reJson.error.reason)
+                        }
+                        else if (reJson.error.message) {
+                            toastr.error(reJson.error.message)
+                        }
+                    }
+                    else {
+                        toastr.success(`已成功更新${reJson.updatedOrgs}条组织信息及${reJson.updatedSus}条用户信息,`)
+                    }
+                } catch (err) {
+                    console.error(err);
+                    toastr.error(err)
+                }
+            }
+
+            let text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属单位更新为本单位，组织中的人员所属单位也都更新为本单位。是否继续";
+            swal({
+                title: `更新“${this.record.name}”组织信息`,
+                text: "<div>" + text + "？</div>",
+                html: true,
+                showCancelButton: true,
+                confirmButtonText: t('YES'),
+                cancelButtonText: t('NO')
+            }, async (option)=> { 
+                if (option){
+                    await doUpdate();
+                }
+            });
         }
   }
 }
