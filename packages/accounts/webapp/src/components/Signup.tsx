@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
 
 import { accountsPassword } from '../accounts';
 import FormError from './FormError';
@@ -58,7 +59,10 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
       <h4 className={classes.title}>
-        Sign Up
+        <FormattedMessage
+            id='accounts.signup'
+            defaultMessage='Sign Up'
+        />
       </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="firstName">First name</InputLabel>
@@ -77,7 +81,12 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         />
       </FormControl>
       <FormControl margin="normal">
-        <InputLabel htmlFor="email">Email</InputLabel>
+        <InputLabel htmlFor="email">          
+          <FormattedMessage
+            id='accounts.email'
+            defaultMessage='Email'
+          />
+        </InputLabel>
         <Input
           id="email"
           value={user.email}
@@ -85,7 +94,12 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         />
       </FormControl>
       <FormControl margin="normal">
-        <InputLabel htmlFor="password">Password</InputLabel>
+        <InputLabel htmlFor="password">
+          <FormattedMessage
+            id='accounts.password'
+            defaultMessage='Password'
+          />
+        </InputLabel>
         <Input
           id="password"
           type="password"
@@ -94,10 +108,18 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         />
       </FormControl>
       <Button variant="contained" color="primary" type="submit">
-        Sign Up
+        <FormattedMessage
+            id='accounts.signup'
+            defaultMessage='Sign Up'
+        />
       </Button>
       {error && <FormError error={error!} />}
-      <Button component={LogInLink}>Log In</Button>
+      <Button component={LogInLink}>
+        <FormattedMessage
+            id='accounts.signin'
+            defaultMessage='Sign In'
+        />
+      </Button>
     </form>
   );
 };

@@ -1,3 +1,7 @@
 {
-    "accounts.signin": "登录"
+    "accounts.signin": "登录",
+    "accounts.signup": "注册",
+    "accounts.reset_password": "重置密码",
+    "accounts.email": "邮箱",
+    "accounts.password": "密码"
 }

@@ -60,15 +60,25 @@ const Login = ({ history, title }: any) => {
       <h4 className={classes.title}>
         <FormattedMessage
             id='accounts.signin'
-            defaultMessage='Sign In 2'
+            defaultMessage='Sign In'
         />
       </h4>
       <FormControl margin="normal">
-        <InputLabel htmlFor="email">Email</InputLabel>
+        <InputLabel htmlFor="email">
+          <FormattedMessage
+            id='accounts.email'
+            defaultMessage='Email'
+          />
+        </InputLabel>
         <Input id="email" value={email} onChange={e => setEmail(e.target.value)} />
       </FormControl>
       <FormControl margin="normal">
-        <InputLabel htmlFor="password">Password</InputLabel>
+        <InputLabel htmlFor="password">
+          <FormattedMessage
+            id='accounts.password'
+            defaultMessage='Password'
+          />
+        </InputLabel>
         <Input
           id="password"
           type="password"
@@ -81,11 +91,23 @@ const Login = ({ history, title }: any) => {
         {enableCode && <Input id="code" value={code} onChange={e => setCode(e.target.value)} />}        
       </FormControl>
       <Button variant="contained" color="primary" type="submit">
-        Login
+        <FormattedMessage
+            id='accounts.signin'
+            defaultMessage='Sign In'
+        />
       </Button>
       {error && <FormError error={error!} />}
-      <Button component={SignUpLink}>Sign Up</Button>
-      <Button component={ResetPasswordLink}>Reset Password</Button>
+      <Button component={SignUpLink}>
+        <FormattedMessage
+            id='accounts.signup'
+            defaultMessage='Sign Up'
+        /></Button>
+      <Button component={ResetPasswordLink}>
+        <FormattedMessage
+            id='accounts.reset_password'
+            defaultMessage='Reset Password'
+        />
+      </Button>
     </form>
   );
 };

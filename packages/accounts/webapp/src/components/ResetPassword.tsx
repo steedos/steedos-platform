@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
 
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
@@ -55,7 +56,10 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
       <h4 className={classes.title}>
-        Reset Password
+        <FormattedMessage
+            id='accounts.reset_password'
+            defaultMessage='Reset Password'
+        />
       </h4>
       {!match.params.token && (
         <FormControl margin="normal">
@@ -75,10 +79,18 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
         </FormControl>
       )}
       <Button variant="contained" color="primary" type="submit">
-        Reset Password
+        <FormattedMessage
+            id='accounts.reset_password'
+            defaultMessage='Reset Password'
+        />
       </Button>
       {error && <FormError error={error!} />}
-      <Button component={LogInLink}>Log In</Button>
+      <Button component={LogInLink}>
+        <FormattedMessage
+            id='accounts.signin'
+            defaultMessage='Sign In'
+        />
+      </Button>
       <Snackbar
         anchorOrigin={{
           vertical: 'top',
