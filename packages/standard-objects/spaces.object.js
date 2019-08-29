@@ -196,6 +196,28 @@ if (Meteor.isServer) {
         if (!org_id) {
             return false;
         }
+
+        // 初始化 organization 表时，自动初始化一条 company 记录，对应到 organizations 根节点
+        company_id = Creator.getCollection("company").insert({
+            name: space.name,
+            organization: org_id,
+            space: space_id,
+            owner: space.owner
+        });
+        if (!company_id) {
+            return false;
+        }
+
+        // 设置根组织的company_id值
+        // 后面的子组织的company_id值依赖根组织事先设置好company_id值
+        db.organizations.direct.update({
+            _id: org_id
+        }, {
+            $set: {
+                company_id: company_id
+            }
+        });
+
         // 初始化 space owner 的 orgnization
         // db.space_users.direct.update({space: space_id, user: space.owner}, {$set: {organization: org_id}})
         _create_org = function (orgName, sortNo) {
@@ -210,6 +232,7 @@ if (Meteor.isServer) {
             if (sortNo) {
                 _org.sort_no = sortNo;
             }
+            // 这里没用direct.insert，会自动触发继承上级组织的 company_id逻辑，所以要求根组织的company_id先有值
             return db.organizations.insert(_org);
         };
         // 新建5个部门
@@ -226,25 +249,6 @@ if (Meteor.isServer) {
             _create_org("Human Resources Department");
             _create_org("Company Leader", 101);
         }
-
-        // 初始化 organization 表时，自动初始化一条 company 记录，对应到 organizations 根节点
-        company_id = db.company.insert({
-            name: space.name,
-            organization: org_id,
-            space: space_id,
-            owner: space.owner
-        });
-        if (!company_id) {
-            return false;
-        }
-
-        db.organizations.direct.update({
-            _id: org_id
-        }, {
-            $set: {
-                company_id: company_id
-            }
-        });
         return true;
     };
 }
