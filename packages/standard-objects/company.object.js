@@ -52,7 +52,8 @@ Creator.Objects['company'].triggers = {
                         _id: doc._id
                     }, {
                         $set: {
-                            organization: orgId
+                            organization: orgId,
+                            company_id: doc._id
                         }
                     });
                 }
