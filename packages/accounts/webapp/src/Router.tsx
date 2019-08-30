@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     right: 0,
     display: "flex",
     backgroundColor: "rgba(0, 0, 0, 0.6)",
-    backgroundImage: "url(" + require("./assets/background.jpg") + ")",
+    backgroundImage: "url(" + require("./assets/background.svg") + ")",
     backgroundSize: "cover",
     height: "100%",
   },
