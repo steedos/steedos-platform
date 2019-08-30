@@ -1,0 +1,3 @@
+{
+    "built_in_plugins": ["@steedos/steedos-plugin-workflow"]
+}
