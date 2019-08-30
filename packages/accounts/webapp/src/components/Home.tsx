@@ -19,14 +19,19 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    const res = await fetch( accountsApiHost + '/accounts/api/user', {
-      headers: {
-        Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
-      },
-    });
-
-    const data = await res.json();
-    setUser(data);
+    let test = localStorage.getItem("accounts:test")
+    if(!test){
+      window.location.href = "/"
+    }else{
+      const res = await fetch( accountsApiHost + '/accounts/api/user', {
+        headers: {
+          Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
+        },
+      });
+  
+      const data = await res.json();
+      setUser(data);
+    }
   };
 
   const onResendEmail = async () => {
