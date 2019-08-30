@@ -22,10 +22,10 @@ const useStyles = makeStyles({
 });
 
 const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to="/signup" {...props} ref={ref} />
+  <Link to={{pathname: "/signup", search: window.location.search}} {...props}  ref={ref} />
 ));
 const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to="/reset-password" {...props} ref={ref} />
+  <Link to={{pathname: "/reset-password", search: window.location.search}} {...props} ref={ref} />
 ));
 
 const Login = ({ history, title }: any) => {
@@ -100,7 +100,8 @@ const Login = ({ history, title }: any) => {
         <FormattedMessage
             id='accounts.signup'
             defaultMessage='Sign Up'
-        /></Button>
+        />
+      </Button>
       <Button component={ResetPasswordLink}>
         <FormattedMessage
             id='accounts.reset_password'

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to="/login" {...props} ref={ref} />
+  <Link to={{pathname: "/login", search: window.location.search}} {...props} ref={ref} />
 ));
 
 interface UserForm {
@@ -50,7 +50,7 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         email: user.email,
         password: user.password,
       });
-      history.push('/login');
+      history.push('/login' + window.location.search);
     } catch (err) {
       setError(err.message);
     }

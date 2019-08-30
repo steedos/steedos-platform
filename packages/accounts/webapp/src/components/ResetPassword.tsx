@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-const LogInLink = (props: any) => <Link to="/login" {...props} />;
+const LogInLink = (props: any) => <Link to={{pathname: "/login", search: window.location.search}} {...props} />;
 
 interface RouteMatchProps {
   token: string;
