@@ -19,19 +19,14 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    let test = localStorage.getItem("accounts:test")
-    if(!test){
-      window.location.href = "/"
-    }else{
-      const res = await fetch( accountsApiHost + '/accounts/api/user', {
-        headers: {
-          Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
-        },
-      });
+    const res = await fetch( accountsApiHost + '/accounts/api/user', {
+      headers: {
+        Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
+      },
+    });
   
-      const data = await res.json();
-      setUser(data);
-    }
+    const data = await res.json();
+    setUser(data);
   };
 
   const onResendEmail = async () => {
@@ -57,7 +52,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
         <Button onClick={onResendEmail}>Resend verification email</Button>
       )}
 
-      <Link to="two-factor">Set up 2fa</Link>
+      {/* <Link to="two-factor">Set up 2fa</Link> */}
 
       <Button variant="contained" color="primary" onClick={onLogout}>
         Logout
