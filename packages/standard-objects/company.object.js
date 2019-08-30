@@ -134,8 +134,6 @@ Creator.Objects['company'].actions = {
         visible: true,
         on: "record",
         todo: async function (object_name, record_id, fields) {
-            console.log("====this====", this);
-            console.log("====record_id====", record_id);
             if (!this.record.organization) {
                 toastr.warning("该单位的关联组织未设置，未更新任何数据");
             }
