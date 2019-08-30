@@ -57,12 +57,6 @@ const Login = ({ history, title }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <h4 className={classes.title}>
-        <FormattedMessage
-            id='accounts.signin'
-            defaultMessage='Sign In'
-        />
-      </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="email">
           <FormattedMessage
