@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     minWidth: 320,
   },
   container: {
-    padding: 16,
+    padding: "16px 32px",
   },
 });
 
