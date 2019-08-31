@@ -14,8 +14,8 @@ export class Plugins {
             app,
             settings: Meteor.settings
         };
-        const builtInPlugins= initConfig.built_in_plugins
-        const settingsPlugins = Meteor.settings.plugins
+        const builtInPlugins= initConfig.built_in_plugins || [];
+        const settingsPlugins = Meteor.settings.plugins || [];
         let plugins = _.union(builtInPlugins, settingsPlugins)
         if (_.isArray(plugins)) {
             _.each(plugins, (pluginName) => {
