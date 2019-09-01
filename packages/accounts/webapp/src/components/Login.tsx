@@ -62,11 +62,13 @@ const Login = ({ history, title }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
+      {error && <FormError error={error!} />}
+
       <FormControl margin="normal">
         <InputLabel htmlFor="email">
           <FormattedMessage
-            id='accounts.email'
-            defaultMessage='Email'
+            id='accounts.username_or_email'
+            defaultMessage='Username or Email'
           />
         </InputLabel>
         <Input id="email" value={email} onChange={e => setEmail(e.target.value)} />
@@ -85,17 +87,18 @@ const Login = ({ history, title }: any) => {
           onChange={e => setPassword(e.target.value)}
         />
       </FormControl>
+      {enableCode && 
       <FormControl margin="normal">
         <InputLabel htmlFor="password">2fa code if enabled</InputLabel>
-        {enableCode && <Input id="code" value={code} onChange={e => setCode(e.target.value)} />}        
+        <Input id="code" value={code} onChange={e => setCode(e.target.value)} />       
       </FormControl>
+      } 
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
             id='accounts.signin'
             defaultMessage='Sign In'
         />
       </Button>
-      {error && <FormError error={error!} />}
       <Button component={SignUpLink}>
         <FormattedMessage
             id='accounts.signup'

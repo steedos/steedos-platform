@@ -2,9 +2,11 @@
     "accounts.signin": "登录",
     "accounts.signup": "注册",
     "accounts.reset_password": "重置密码",
+    "accounts.username_or_email": "用户名或邮箱",
     "accounts.email": "邮箱",
     "accounts.password": "密码",
     "accounts.logout": "注销",
     "accounts.home": "首页",
-    "accounts.welcome": "欢迎您"
+    "accounts.welcome": "欢迎您",
+    "accounts.invalid_credentials": "用户名或密码错。"
 }

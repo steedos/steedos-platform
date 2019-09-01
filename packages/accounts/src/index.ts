@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as mongoose from 'mongoose';
 import { AccountsServer } from '@accounts/server';
 import { AccountsPassword } from '@accounts/password';
+import { errors } from './errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 
@@ -29,7 +30,9 @@ function getAccountsServer (context){
       tokenSecret: 'secret',
     },
     {
-      password: new AccountsPassword(),
+      password: new AccountsPassword({
+        errors: errors
+      }),
     }
   );
 
