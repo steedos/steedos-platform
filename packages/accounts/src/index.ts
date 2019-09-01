@@ -6,6 +6,7 @@ import { AccountsPassword } from '@accounts/password';
 import { errors } from './errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
+import accountsSamlIdp from './saml-idp';
 
 
 
@@ -52,11 +53,16 @@ function getAccountsRouter(context){
     res.redirect("a/");
     res.end();
   });
+
+  /* Router to webapps build */
   router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
   router.use("/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
   router.get('/a/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
   });
+
+  /* Router to SAML-IDP */
+  router.use("/saml/", accountsSamlIdp);
 
   return router
 }

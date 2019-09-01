@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Identity Provider</title>
+    <link href="/dist/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/accounts/a/css/bootstrap.css" rel="stylesheet">
+    <link href="/accounts/a/css/main.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        <a class="navbar-brand" href="/accounts/saml/metadata"><i class="fa fa-key"><span>Simple SAML Identity Provider ({{idp.issuer}})</span></i></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a href="/accounts/saml/metadata"><i class="fa fa-file-code-o"><span>IdP Metadata</span></i></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/accounts/saml/signout"><i class="fa fa-sign-out"><span>New Session</span></i></a></li>
+            <li class="active"><a href="/accounts/saml/settings"><i class="fa fa-cog"><span>Settings</span></i></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+    </nav>
+
+
+    <div class="container">
+      <div class="row">
+        {{{body}}}
+      </div>
+    </div>
+  </body>
+
+  <script src="/dist/jquery/jquery.min.js"></script>
+  <script src="/dist/jquery-validation/jquery.validate.min.js"></script>
+  <script src="/dist/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/dist/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+  <script src="/dist/underscore/underscore.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    jQuery.validator.setDefaults({
+      errorPlacement: function(error, element) {
+        if(element.parent().hasClass('input-prepend') || element.parent().hasClass('input-append')) {
+          error.insertAfter(element.parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
+      errorElement: "span",
+      errorClass: "help-block",
+      highlight: function(element) {
+        $(element).closest('.form-group').addClass('has-error');
+      },
+      success: function(element) {
+        $(element).closest('.form-group').removeClass('has-error');
+      }
+    });
+  });
+  </script>
+
+  {{{block "scripts"}}}
+
+</html>

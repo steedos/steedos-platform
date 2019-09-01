@@ -8,6 +8,11 @@ Fullstack authentication and accounts-management for steedos.
 export MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
+## process.ENV
+```bash
+export ROOT_URL=http://127.0.0.1:4000/
+```
+
 ## Start Server at 4000
 
 ```bash

@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Keep Calm and Single Sign-On!</title>
+</head>
+<body>
+    <form method="post" name="hiddenform" action="{{AcsUrl}}">
+        <input type="hidden"
+               name="SAMLResponse"
+               value="{{SAMLResponse}}">
+        <input type="hidden" name="RelayState" value="{{RelayState}}">
+        <noscript>
+            <p>JavaScript is disabled. Click Submit to continue.</p>
+            <input type="submit" value="Submit">
+        </noscript>
+    </form>
+    <script language="javascript" type="text/javascript">
+        window.setTimeout(function(){document.forms[0].submit();}, 0);
+    </script>
+</body>
+</html>

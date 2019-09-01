@@ -1,0 +1,175 @@
+<div class="col-md-8 col-md-offset-2">
+  <form id="settings" class="form-settings form-horizontal" role="form" method="POST">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Identity Provider Settings</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <label for="issuer" class="col-sm-3 control-label">Issuer</label>
+          <div class="col-sm-9">
+            <input id="issuer" class="form-control" name="issuer" type="text" required="" value="{{idp.issuer}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="signatureAlgorithm" class="col-sm-3 control-label">Signature Algorithm</label>
+          <div class="col-sm-9">
+            <select id="signatureAlgorithm" class="form-control" name="signatureAlgorithm">
+              {{#select idp.signatureAlgorithm}}
+              <option value="rsa-sha1">RSA-SHA1</option>
+              <option value="rsa-sha256">RSA-SHA256</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="digestAlgorithm" class="col-sm-3 control-label">Digest Algorithm</label>
+          <div class="col-sm-9">
+            <select id="digestAlgorithm" class="form-control" name="digestAlgorithm">
+              {{#select idp.digestAlgorithm}}
+              <option value="sha1">SHA1</option>
+              <option value="sha256">SHA256</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="signResponse" class="col-sm-3 control-label">Sign Response</label>
+          <div class="col-sm-9">
+            <select id="signResponse" class="form-control" name="signResponse">
+              {{#select idp.signResponse}}
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lifetimeInSeconds" class="col-sm-3 control-label control-label-break">Assertion Lifetime Seconds</label>
+          <div class="col-sm-9">
+            <input id="lifetimeInSeconds" class="form-control" name="lifetimeInSeconds" type="number" required="" value="{{idp.lifetimeInSeconds}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="authnContextClassRef" class="col-sm-3 control-label control-label-break">Authentication Context Class</label>
+          <div class="col-sm-9">
+            <select id="authnContextClassRef" class="form-control" name="authnContextClassRef">
+              {{#select idp.authnContextClassRef}}
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocol">InternetProtocol</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:InternetProtocolPassword">InternetProtocolPassword</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:Kerberos">Kerberos</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:MobileOneFactorUnregistered">MobileOneFactorUnregistered</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorUnregistered">MobileTwoFactorUnregistered</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:MobileOneFactorContract">MobileOneFactorContract</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract">MobileTwoFactorContract</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:Password">Password</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport">PasswordProtectedTransport</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:PreviousSessionv">PreviousSessionv
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:X509">X509</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:PGP">PGP</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:SPKI">SPKI</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:XMLDSig">XMLDSig</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:Smartcard">Smartcard</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:SmartcardPKI">SmartcardPKI</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:SoftwarePKI">SoftwarePKI</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:Telephony">Telephony</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:NomadTelephony">NomadTelephony</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:PersonalTelephony">PersonalTelephony</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:AuthenticatedTelephony">AuthenticatedTelephony</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:SecureRemotePassword">SecureRemotePassword</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient">TLSClient</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:TimeSyncToken">TimeSyncToken</option>
+              <option value="urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified">unspecified</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="allowRequestAcsUrl" class="col-sm-3 control-label control-label-break">Allow Dynamic Assertion Consumer Service URL</label>
+          <div class="col-sm-9">
+            <select id="allowRequestAcsUrl" class="form-control" name="allowRequestAcsUrl">
+              {{#select idp.allowRequestAcsUrl}}
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Service Provider Settings</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <label for="serviceProviderId" class="col-sm-3 control-label">Issuer URI</label>
+          <div class="col-sm-9">
+            <input id="serviceProviderId" class="form-control" name="serviceProviderId" type="text" required="" value="{{idp.serviceProviderId}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sloUrl" class="col-sm-3 control-label control-label-break">Single Logout Service URL</label>
+          <div class="col-sm-9">
+            <input id="sloUrl" class="form-control" name="sloUrl" type="url" required="" value="{{idp.sloUrl}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="acsUrl" class="col-sm-3 control-label control-label-break">Assertion Consumer Service URL</label>
+          <div class="col-sm-9">
+            <input id="acsUrl" class="form-control" name="acsUrl" type="url" required="" value="{{idp.acsUrl}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destination" class="col-sm-3 control-label">Assertion Consumer Service Destination</label>
+          <div class="col-sm-9">
+            <input id="destination" class="form-control" name="destination" type="url" required="" value="{{idp.destination}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="recipient" class="col-sm-3 control-label">Assertion Consumer Service Recipient</label>
+          <div class="col-sm-9">
+            <input id="recipient" class="form-control" name="recipient" type="url" required="" value="{{idp.recipient}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="audience" class="col-sm-3 control-label">Audience URI</label>
+          <div class="col-sm-9">
+            <input id="audience" class="form-control" name="audience" type="text" required="" value="{{idp.audience}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="relayState" class="col-sm-3 control-label">Default Relay State</label>
+          <div class="col-sm-9">
+            <input id="relayState" class="form-control" name="RelayState" type="text" value="{{idp.RelayState}}">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-12 text-right">
+        <a href="/" class="btn btn-default input-xlarge">Cancel</a>
+        <button type="submit" class="btn btn-default btn-primary input-xlarge">Save</button>
+      </div>
+    </div>
+
+  </form>
+</div>
