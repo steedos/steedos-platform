@@ -9,7 +9,7 @@ if (process.env.NODE_ENV == 'production') {
 
 const accountsRest = new RestClient({
   apiHost: accountsApiHost,
-  rootPath: '/accounts/api',
+  rootPath: '/accounts',
 });
 const accountsClient = new AccountsClient({}, accountsRest);
 const accountsPassword = new AccountsClientPassword(accountsClient);

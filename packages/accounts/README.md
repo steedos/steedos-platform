@@ -8,16 +8,16 @@ Fullstack authentication and accounts-management for steedos.
 export MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-## Start Server
+## Start Server at 4000
 
 ```bash
 yarn
 yarn start
 ```
 
-Server apis runs on https://127.0.0.1:4000/accounts/api
+Server apis runs on https://127.0.0.1:4000/accounts/
 
-## Debug Webapp
+## Debug Webapp at 3000
 
 ```bash
 cd webapp
@@ -27,7 +27,7 @@ yarn start
 
 Navigate to https://127.0.0.1:3000/ to view react webapp.
 
-## Build Webapp
+## Build Webapp to 4000
 
 ```bash
 cd webapp
@@ -35,6 +35,6 @@ yarn
 yarn build
 ```
 
-Build webapp to /webapps/build folder
+Build webapp to /webapps/build folder, will mount to https://127.0.0.1:4000/accounts/a/
 
-Navigate to https://127.0.0.1:4000/ , will show the build webapp.
+Navigate to https://127.0.0.1:4000/ , will redirect to build webapp at https://127.0.0.1:4000/accounts/a/

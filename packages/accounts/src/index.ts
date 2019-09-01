@@ -41,12 +41,17 @@ function getAccountsRouter(context){
   let accountsServer = getAccountsServer(context)
 
   const router = accountsExpress(accountsServer, {
-    path: '/api',
+    path: '/',
   });
   
-  router.use("/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
+
+  router.get('/', (req, res) => {
+    res.redirect("a/");
+    res.end();
+  });
+  router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
   router.use("/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
-  router.get('/*', (req, res) => {
+  router.get('/a/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
   });
 

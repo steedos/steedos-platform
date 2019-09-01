@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.redirect("/accounts");
+  res.redirect("/accounts/a");
   res.end();
 });
 

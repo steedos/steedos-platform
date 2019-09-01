@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
 
 import { accountsClient, accountsRest, accountsApiHost } from '../accounts';
 
+const useStyles = makeStyles({
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: "0 auto",
+  }
+});
+
 const Home = ({ history }: RouteComponentProps<{}>) => {
+  const classes = useStyles();
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -19,7 +34,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    const res = await fetch( accountsApiHost + '/accounts/api/user', {
+    const res = await fetch( accountsApiHost + '/accounts/user', {
       headers: {
         Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
       },
@@ -38,11 +53,22 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
     history.push('/login');
   };
 
+  const onHome = async () => {
+    window.location.href="/"
+  };
+
   if (!user) {
     return null;
   }
   return (
-    <div>
+    <div className={classes.formContainer}>
+      <h4 className={classes.title}>
+        <FormattedMessage
+            id='accounts.welcome'
+            defaultMessage='Welcome' 
+        /> {user.emails[0].address}
+      </h4>
+      {/* 
       <Typography gutterBottom>You are logged in</Typography>
       <Typography gutterBottom>Email: {user.emails[0].address}</Typography>
       <Typography gutterBottom>
@@ -52,10 +78,20 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
         <Button onClick={onResendEmail}>Resend verification email</Button>
       )}
 
-      {/* <Link to="two-factor">Set up 2fa</Link> */}
-
-      <Button variant="contained" color="primary" onClick={onLogout}>
-        Logout
+      <Link to="two-factor">Set up 2fa</Link> */}
+      <br/><br/>
+      <Button onClick={onHome} variant="contained" color="primary">
+        <FormattedMessage
+            id='accounts.home'
+            defaultMessage='Home' 
+        /> 
+      </Button>
+      <br/>
+      <Button onClick={onLogout}>
+        <FormattedMessage
+            id='accounts.logout'
+            defaultMessage='Logout' 
+        /> 
       </Button>
     </div>
   );

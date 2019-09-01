@@ -3,8 +3,8 @@
   "version": "0.18.0",
   "private": true,
   "scripts": {
-    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts start",
-    "build": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/ react-scripts build",
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts start",
+    "build": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
     "test": "yarn build",
     "testonly": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },

@@ -48,7 +48,7 @@ const Router = () => {
   const classes = useStyles();
 
   return (
-    <BrowserRouter basename="/accounts">
+    <BrowserRouter basename="/accounts/a">
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <Grid container className={classes.rootGrid}>
