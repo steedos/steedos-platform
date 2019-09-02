@@ -68,7 +68,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      if (collection.tableName === 'cfs.files.filerecord') {
+      if (collection.table_name === 'cfs.files.filerecord') {
         filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
       } else {
         filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
