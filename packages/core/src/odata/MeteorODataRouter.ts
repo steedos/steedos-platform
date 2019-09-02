@@ -216,7 +216,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userSession);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
-        body['@odata.count'] = sort_entities.length;
+        body['@odata.count'] = recent_view_records_ids.length;
         let entities_OdataProperties = getCreator().setOdataProperty(sort_entities, spaceId, key);
         body['value'] = entities_OdataProperties;
         getODataManager().setHeaders(res);
