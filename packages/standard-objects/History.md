@@ -1,4 +1,7 @@
-1.0.11 / 2019-09-02
+1.0.12 / 2019-09-02
+===================
+
+  * [webhook增加全局checkbox选项](https://github.com/steedos/workflow/issues/2035)
 ===================
 
   * 对象扩展action.on值，增加选项list_item、record_only，移除原来的action.only_list_item、action.only_detail属性

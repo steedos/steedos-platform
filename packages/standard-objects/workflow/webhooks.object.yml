@@ -2,22 +2,34 @@ name: webhooks
 icon: metrics
 label: Webhooks
 fields:
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    is_wide: true
+    is_name: true
+    name: name
   flow:
     label: 流程
     type: lookup
     reference_to: flows
-    is_name: true
-    required: true
     create: false
     name: flow
     filterable: true
     searchable: true
+    is_wide: true
+    inlineHelpText: '如果未选择流程则应用范围为此工作区全部流程'
   payload_url:
     label: URL
     type: text
     regEx: !<tag:yaml.org,2002:js/regexp> >-
       /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i
     required: true
+    is_wide: true
     name: payload_url
   content_type:
     label: 请求数据格式
@@ -34,11 +46,13 @@ fields:
     type: text
     label: 描述
     name: description
+    is_wide: true
 list_views:
   all:
     label: 所有
     filter_scope: space
     columns:
+      - name
       - flow
       - payload_url
       - active
