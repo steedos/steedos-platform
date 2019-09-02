@@ -74,7 +74,7 @@ export class Core {
             var _key, _obj;
             if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(key) === false) {
                 _obj = _.clone(obj);
-                _obj.tableName = _.clone(key);
+                _obj.table_name = _.clone(key);
                 _key = key.replace(new RegExp('\\.', 'g'), '_');
                 _obj.name = _key;
                 newObjects[_key] = _obj;
