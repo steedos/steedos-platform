@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
+import * as mongodb from 'mongodb';
 import { AccountsServer } from '@accounts/server';
 import { AccountsPassword } from '@accounts/password';
 import { errors } from './errors';
@@ -24,6 +25,7 @@ function getAccountsServer (context){
       db: new MongoDBInterface(db, {
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
+        idProvider: () => new mongodb.ObjectId().toString(),
         timestamps: {
           createdAt: 'created',
           updatedAt: 'modified',
