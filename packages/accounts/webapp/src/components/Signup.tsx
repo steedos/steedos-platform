@@ -23,32 +23,23 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/login", search: window.location.search}} {...props} ref={ref} />
 ));
 
-interface UserForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
 const Signup = ({ history }: RouteComponentProps<{}>) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<UserForm>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
+  const [name, setName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [password, setPassword] = useState<string | null>(null);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
     setError(null);
     try {
       await accountsPassword.createUser({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
+        name: name,
+        firstName: name,
+        email: email,
+        password: password,
       });
       history.push('/login' + window.location.search);
     } catch (err) {
@@ -65,19 +56,11 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         />
       </h4>
       <FormControl margin="normal">
-        <InputLabel htmlFor="firstName">First name</InputLabel>
+        <InputLabel htmlFor="name">Name</InputLabel>
         <Input
-          id="firstName"
-          value={user.firstName}
-          onChange={e => setUser(prevState => ({ ...prevState, firstName: e.target.value }))}
-        />
-      </FormControl>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="lastName">Last name</InputLabel>
-        <Input
-          id="lastName"
-          value={user.lastName}
-          onChange={e => setUser(prevState => ({ ...prevState, lastName: e.target.value }))}
+          id="name"
+          value={name}
+          onChange={e => setName(e.target.value)} 
         />
       </FormControl>
       <FormControl margin="normal">
@@ -89,8 +72,8 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         </InputLabel>
         <Input
           id="email"
-          value={user.email}
-          onChange={e => setUser(prevState => ({ ...prevState, email: e.target.value }))}
+          value={email}
+          onChange={e => setEmail(e.target.value)} 
         />
       </FormControl>
       <FormControl margin="normal">
@@ -103,8 +86,8 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
         <Input
           id="password"
           type="password"
-          value={user.password}
-          onChange={e => setUser(prevState => ({ ...prevState, password: e.target.value }))}
+          value={password}
+          onChange={e => setPassword(e.target.value)} 
         />
       </FormControl>
       <Button variant="contained" color="primary" type="submit">

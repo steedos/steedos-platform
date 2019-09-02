@@ -16,19 +16,35 @@ var profile = {
   /**
    * SAML Attribute Metadata
    */
-  var metadata = [{
-    id: "firstName",
-    optional: false,
-    displayName: 'First Name',
-    description: 'The given name of the user',
+  var metadata = [
+  // {
+  //   id: "firstName",
+  //   optional: false,
+  //   displayName: 'First Name',
+  //   description: 'The given name of the user',
+  //   multiValue: false
+  // }, {
+  //   id: "lastName",
+  //   optional: false,
+  //   displayName: 'Last Name',
+  //   description: 'The surname of the user',
+  //   multiValue: false
+  // }, 
+  {
+    id: "userId",
+    optional: true,
+    displayName: 'User Id',
+    description: 'The id of the user',
     multiValue: false
-  }, {
-    id: "lastName",
-    optional: false,
-    displayName: 'Last Name',
-    description: 'The surname of the user',
+  },
+  {
+    id: "username",
+    optional: true,
+    displayName: 'User Name',
+    description: 'The username of the user',
     multiValue: false
-  }, {
+  },
+  {
     id: "name",
     optional: true,
     displayName: 'Display Name',
@@ -46,19 +62,21 @@ var profile = {
     displayName: 'Mobile',
     description: 'The mobile phone of the user',
     multiValue: false
-  }, {
-    id: "groups",
-    optional: true,
-    displayName: 'Groups',
-    description: 'Group memberships of the user',
-    multiValue: true
-  }, {
-    id: "userType",
-    optional: true,
-    displayName: 'User Type',
-    description: 'The type of user',
-    options: ['Admin', 'Editor', 'Commenter']
-  }];
+  },
+  // {
+  //   id: "groups",
+  //   optional: true,
+  //   displayName: 'Groups',
+  //   description: 'Group memberships of the user',
+  //   multiValue: true
+  // }, {
+  //   id: "userType",
+  //   optional: true,
+  //   displayName: 'User Type',
+  //   description: 'The type of user',
+  //   options: ['Admin', 'User']
+  // }
+];
   
   module.exports = {
     user: profile,

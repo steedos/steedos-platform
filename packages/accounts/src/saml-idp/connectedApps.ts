@@ -4,8 +4,9 @@ export const connectedApps = {
     audience: `https://mail.steedos.cn/SOGo/saml2/artifactResponse`,
   },
   salesforce: {
-    acsUrl: `https://mail.steedos.cn/SOGo/saml2-signon-post`,
-    audience: `https://mail.steedos.cn/SOGo/saml2/artifactResponse`,
+    issuer: "http://192.168.0.50:4000/accounts/saml/",
+    acsUrl: `https://steedos-dev-ed.my.salesforce.com?so=00D7F000000q6uO`,
+    audience: `https://steedos-dev-ed.my.salesforce.com/`,
   },
   auth0: {
     issuer: "urn:auth0:hotlong:Steedos",
