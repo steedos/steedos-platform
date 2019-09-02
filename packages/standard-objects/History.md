@@ -1,3 +1,7 @@
+1.0.11 / 2019-09-02
+===================
+
+  * 对象扩展action.on值，增加选项list_item、record_only，移除原来的action.only_list_item、action.only_detail属性
 1.0.10 / 2019-09-02
 ===================
 

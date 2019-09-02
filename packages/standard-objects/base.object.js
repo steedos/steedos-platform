@@ -20,8 +20,7 @@ Creator.baseObject.actions = {
     standard_open_view: {
         label: "查看",
         visible: false,
-        on: "record",
-        only_list_item: true,
+        on: "list_item",
         todo: "standard_open_view"
     },
     standard_edit: {
