@@ -32,7 +32,7 @@ SimpleProfileMapper.prototype.getClaims = function() {
 
 SimpleProfileMapper.prototype.getNameIdentifier = function() {
   return {
-    nameIdentifier:                  this._pu.userName,
+    nameIdentifier:                  this._pu.username,
     nameIdentifierFormat:            this._pu.nameIdFormat,
     nameIdentifierNameQualifier:     this._pu.nameIdNameQualifier,
     nameIdentifierSPNameQualifier:   this._pu.nameIdSPNameQualifier,
@@ -54,9 +54,9 @@ SimpleProfileMapper.prototype.metadata = [ {
   description: 'The surname of the user',
   multiValue: false
 }, {
-  id: "displayName",
+  id: "name",
   optional: true,
-  displayName: 'Display Name',
+  displayName: 'Name',
   description: 'The display name of the user',
   multiValue: false
 }, {

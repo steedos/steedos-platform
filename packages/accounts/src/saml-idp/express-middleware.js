@@ -570,7 +570,13 @@ function _runServer(argv) {
         };
         console.log('Received AuthnRequest => \n', req.authnRequest);
       }
-      return showUser(req, res, next);
+      if (req.user != undefined){
+        return showUser(req, res, next);
+      } else {
+        console.log('Redirect to login => \n');
+        res.redirect("/accounts/a/login?redirectUrl="+ encodeURIComponent(req.originalUrl));
+        return res.end();
+      }
     })
   };
 
@@ -584,7 +590,7 @@ function _runServer(argv) {
     return {
       serviceProviderId: req.idp.options.serviceProviderId,
       sessionIndex: getSessionIndex(req),
-      nameId: req.user.userName,
+      nameId: req.user.username,
       nameIdFormat: req.user.nameIdFormat,
       serviceProviderLogoutURL: req.idp.options.sloUrl
     }
@@ -633,10 +639,10 @@ function _runServer(argv) {
 
   app.use(function(req, res, next){
     //req.user = argv.config.user;
-    console.log(req.user);
     req.metadata = argv.config.metadata;
     req.idp = { options: idpOptions };
-    req.participant = getParticipant(req);
+    if (req.user)
+      req.participant = getParticipant(req);
     next();
   });
 
@@ -696,12 +702,12 @@ function _runServer(argv) {
   });
 
   app.post(IDP_PATHS.METADATA, function(req, res, next) {
-    if (req.body && req.body.attributeName && req.body.displayName) {
+    if (req.body && req.body.attributeName && req.body.name) {
       var attributeExists = false;
       const attribute = {
         id: req.body.attributeName,
         optional: true,
-        displayName: req.body.displayName,
+        name: req.body.name,
         description: req.body.description || '',
         multiValue: req.body.valueType === 'multi'
       };
@@ -723,7 +729,7 @@ function _runServer(argv) {
 
   app.get(IDP_PATHS.SIGN_OUT, function(req, res, next) {
     if (req.idp.options.sloUrl) {
-      console.log('Initiating SAML SLO request for user: ' + req.user.userName +
+      console.log('Initiating SAML SLO request for user: ' + req.user.username +
       ' with sessionIndex: ' + getSessionIndex(req));
       res.redirect(IDP_PATHS.SLO);
     } else {

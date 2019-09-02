@@ -29,7 +29,7 @@ var profile = {
     description: 'The surname of the user',
     multiValue: false
   }, {
-    id: "displayName",
+    id: "name",
     optional: true,
     displayName: 'Display Name',
     description: 'The display name of the user',
@@ -41,9 +41,9 @@ var profile = {
     description: 'The e-mail address of the user',
     multiValue: false
   },{
-    id: "mobilePhone",
+    id: "mobile",
     optional: true,
-    displayName: 'Mobile Phone',
+    displayName: 'Mobile',
     description: 'The mobile phone of the user',
     multiValue: false
   }, {

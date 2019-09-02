@@ -2,6 +2,8 @@ import { providerCallback } from './endpoints/oauth/provider-callback';
 import { resetPassword, sendResetPasswordEmail } from './endpoints/password/reset';
 import { verifyEmail, sendVerificationEmail } from './endpoints/password/verify-email';
 import * as express from 'express';
+import * as cookieParser from 'cookie-parser';
+var cookie = require('cookie-parser');
 import { AccountsServer } from '@accounts/server';
 import { refreshAccessToken } from './endpoints/refresh-access-token';
 import { getUser } from './endpoints/get-user';
@@ -31,6 +33,7 @@ const accountsExpress = (
   }
 
   const router = express.Router();
+  router.use(cookieParser());
 
   router.post(`${path}/impersonate`, impersonate(accountsServer));
 
