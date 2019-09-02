@@ -7,6 +7,7 @@ import { errors } from './errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
+import { userLoader } from './rest-express/user-loader';
 
 
 
@@ -62,7 +63,7 @@ function getAccountsRouter(context){
   });
 
   /* Router to SAML-IDP */
-  router.use("/saml/", accountsSamlIdp);
+  router.use("/saml/", userLoader(accountsServer), accountsSamlIdp);
 
   return router
 }

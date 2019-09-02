@@ -27,8 +27,8 @@ const chalk               = require('chalk'),
  */
 
 const IDP_PATHS = {
-  SSO: '/saml/sso',
-  SLO: '/saml/slo',
+  SSO: '/idp/sso',
+  SLO: '/idp/slo',
   METADATA: '/metadata',
   SIGN_IN: '/signin',
   SIGN_OUT: '/signout',
@@ -376,7 +376,7 @@ function _runServer(argv) {
 
     {bold [{yellow Service Provider}]}
 
-    Issuer URI:
+    serviceProviderId URI:
       {cyan ${argv.serviceProviderId || UNDEFINED_VALUE}}
     Audience URI:
       {cyan ${argv.audience || UNDEFINED_VALUE}}
@@ -632,7 +632,8 @@ function _runServer(argv) {
   });
 
   app.use(function(req, res, next){
-    req.user = argv.config.user;
+    //req.user = argv.config.user;
+    console.log(req.user);
     req.metadata = argv.config.metadata;
     req.idp = { options: idpOptions };
     req.participant = getParticipant(req);
