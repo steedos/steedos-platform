@@ -4,7 +4,9 @@ import { Core } from './core'
 import { Plugins } from './plugins';
 
 export async function init() {
+    Core.createBaseObject()
     LoadFiles.initStandardObjects();
+    Core.addStaticJs()
     Datasources.create();
     Plugins.init();
     LoadFiles.initProjectObjects()

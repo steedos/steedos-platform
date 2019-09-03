@@ -201,8 +201,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (this._datasource.driver == SteedosDatabaseDriverType.Mongo || this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo) {
             this._idFieldName = '_id'
         }
-        
-        this.schema.setObjectMap(this.name, {datasourceName: this.datasource.name})
+
+        this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name })
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig) {
@@ -518,7 +518,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        return await this.callAdapter('count', this.table_name, clonedQuery, userSession) 
+        return await this.callAdapter('count', this.table_name, clonedQuery, userSession)
     }
 
     private async allow(method: string, userSession: SteedosUserSession) {
@@ -683,6 +683,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }
+
+                if (this.table_name == 'cfs.files.filerecord') {
+                    return;
+                }
+
                 if (spaceId) { // 工作区级
                     query.filters = query.filters ? `(${query.filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
                 }

@@ -6,7 +6,7 @@ fields:
     reference_to: users
     sortable: true
     index: true
-    defaultValue: "{userId}"
+    defaultValue: '{userId}'
     omit: true
     hidden: true
   space:
@@ -15,7 +15,7 @@ fields:
     reference_to: spaces
     index: true
     hidden: true
-    defaultValue: "{spaceId}"
+    defaultValue: '{spaceId}'
   created:
     type: datetime
     label: 创建时间
@@ -94,12 +94,12 @@ fields:
     hidden: true
   sharing.$.u:
     label: 授权用户
-    type: "[text]"
+    type: '[text]'
     omit: true
     hidden: true
   sharing.$.o:
     label: 授权组织
-    type: "[text]"
+    type: '[text]'
     omit: true
     hidden: true
   sharing.$.r:
@@ -135,18 +135,18 @@ fields:
     label: 审批状态
     type: select
     options:
-    - label: 草稿
-      value: draft
-    - label: 进行中
-      value: pending
-    - label: 已完成
-      value: completed
-    - label: 已核准
-      value: approved
-    - label: 已驳回
-      value: rejected
-    - label: 已取消
-      value: terminated
+      - label: 草稿
+        value: draft
+      - label: 进行中
+        value: pending
+      - label: 已完成
+        value: completed
+      - label: 已核准
+        value: approved
+      - label: 已驳回
+        value: rejected
+      - label: 已取消
+        value: terminated
     omit: true
     hidden: true
 permission_set:
@@ -170,147 +170,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-actions:
-  standard_query:
-    label: 查找
-    visible: true
-    'on': list
-    todo: standard_query
-  standard_new:
-    label: 新建
-    'on': list
-    todo: standard_new
-    visible: !!js/function |
-      function(){
-        var permissions = Creator.getPermissions();
-        if (permissions) {
-          return permissions["allowCreate"];
-        }
-      }
-  standard_edit:
-    label: 编辑
-    sort: 0
-    'on': record
-    todo: standard_edit
-    visible: !!js/function |
-      function(object_name, record_id, record_permissions) {
-        var perms, record;
-        perms = {};
-        if (record_permissions) {
-          perms = record_permissions;
-        } else {
-          record = Creator.getObjectRecord(object_name, record_id);
-          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-          if (record_permissions) {
-            perms = record_permissions;
-          }
-        }
-        return perms["allowEdit"];
-      }
-  standard_delete:
-    label: 删除
-    'on': record_more
-    todo: standard_delete
-    visible: !!js/function |
-      function(object_name, record_id, record_permissions) {
-        var perms, record;
-        perms = {};
-        if (record_permissions) {
-          perms = record_permissions;
-        } else {
-          record = Creator.getObjectRecord(object_name, record_id);
-          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-          if (record_permissions) {
-            perms = record_permissions;
-          }
-        }
-        return perms["allowDelete"];
-      }
-  standard_approve:
-    label: 发起审批
-    'on': record
-    visible: !!js/function |
-      function(object_name, record_id, record_permissions) {
-        var object_workflow, record;
-        if (record_permissions && !record_permissions["allowEdit"]) {
-          return false;
-        }
-        record = Creator.getObjectRecord(object_name, record_id);
-        record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-        if (record_permissions && !record_permissions["allowEdit"]) {
-          return false;
-        }
-        object_workflow = _.find(Creator.object_workflows, function(ow) {
-          return ow.object_name === object_name;
-        });
-        if (!object_workflow) {
-          return false;
-        }
-        if (record && record.instances && record.instances.length > 0) {
-          return false;
-        }
-        return false;
-      }
-    todo: !!js/function |
-      function() {
-        return Modal.show('initiate_approval', {
-          object_name: this.object_name,
-          record_id: this.record_id
-        });
-      }
-  standard_view_instance:
-    label: 查看审批单
-    'on': record
-    visible: !!js/function |
-      function(object_name, record_id, record_permissions) {
-        var record;
-        record = Creator.getObjectRecord(object_name, record_id);
-        if (record && !_.isEmpty(record.instances)) {
-          return true;
-        }
-        return false;
-      }
-    todo: !!js/function |
-      function() {
-        var data, instanceId, uobj, url;
-        instanceId = this.record.instances[0]._id;
-        if (!instanceId) {
-          console.error('instanceId not exists');
-          return;
-        }
-        uobj = {};
-        uobj['X-User-Id'] = Meteor.userId();
-        uobj['X-Auth-Token'] = Accounts._storedLoginToken();
-        data = {
-          object_name: this.object_name,
-          record_id: this.record_id,
-          space_id: Session.get("spaceId")
-        };
-        url = Meteor.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj);
-        data = JSON.stringify(data);
-        $(document.body).addClass('loading');
-        return $.ajax({
-          url: url,
-          type: 'POST',
-          async: true,
-          data: data,
-          dataType: 'json',
-          processData: false,
-          contentType: 'application/json',
-          success: function(responseText, status) {
-            $(document.body).removeClass('loading');
-            if (responseText.errors) {
-              responseText.errors.forEach(function(e) {
-                toastr.error(e.errorMessage);
-              });
-              return;
-            } else if (responseText.redirect_url) {
-              Steedos.openWindow(responseText.redirect_url);
-            }
-          },
-          error: function(xhr, msg, ex) {
-            $(document.body).removeClass('loading');
-            toastr.error(msg);
-          }
-        });
-      }

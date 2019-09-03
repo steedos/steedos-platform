@@ -5,6 +5,9 @@ const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
 const router = express.Router();
+var path = require('path')
+var util = require('../util/index')
+const UglifyJS = require("uglify-js");
 import { Publish } from '../publish'
 
 export class Core {
@@ -19,6 +22,32 @@ export class Core {
         this.initGraphqlAPI();
         this.initPublishAPI()
         this.initRoutes();
+    }
+
+    static addStaticJs(){
+        let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
+            if (typeof val === 'function') {
+                return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
+            }
+            return val;
+        });
+        let minifyJs = UglifyJS.minify("Creator.baseObject=" + baseObject)
+        let minifyJsCode = minifyJs.code;
+        let minifyJsError = minifyJs.error;
+        if(minifyJsCode){
+            minifyJsCode = minifyJsCode.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
+            WebAppInternals.addStaticJs(minifyJsCode);
+        }else{
+            throw new Error(minifyJsError)
+        }
+    }
+
+    static createBaseObject(){
+        let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
+        if (standardObjectsDir) {
+            let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
+            Creator.baseObject = baseObject
+        }
     }
 
     private static expandSimpleSchemaPres() {
@@ -45,7 +74,7 @@ export class Core {
             var _key, _obj;
             if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(key) === false) {
                 _obj = _.clone(obj);
-                _obj.tableName = _.clone(key);
+                _obj.table_name = _.clone(key);
                 _key = key.replace(new RegExp('\\.', 'g'), '_');
                 _obj.name = _key;
                 newObjects[_key] = _obj;

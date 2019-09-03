@@ -68,7 +68,7 @@ router.get('/:spaceId/:objectName', async function (req: Request, res: Response)
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      if (collection.tableName === 'cfs.files.filerecord') {
+      if (collection.table_name === 'cfs.files.filerecord') {
         filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
       } else {
         filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
@@ -166,19 +166,29 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
           query: {},
           sort: undefined,
           projection: {},
-          includes: []
+          includes: [],
+          limit: 100
         };
       }
 
       let entities = [];
       let filters = queryParams.$filter;
       let fields = [];
-      filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
       if (queryParams.$select) {
         fields = _.keys(createQuery.projection)
       }
       getODataManager().excludeDeleted(filters)
       if (queryParams.$top !== '0') {
+        if (recent_view_records_ids.length > createQuery.limit) {
+          recent_view_records_ids = _.first(recent_view_records_ids, createQuery.limit)
+        }
+        let idsFilters = _.map(recent_view_records_ids, function (reid) {
+          return `(_id eq '${reid}')`
+        }).join(' or ')
+        if (_.isEmpty(recent_view_records_ids)) {
+          idsFilters = '_id eq -1'
+        }
+        filters = filters ? `(${filters}) and (${idsFilters})` : idsFilters;
         let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
         if (queryParams.hasOwnProperty('$skip')) {
           query['skip'] = Number(queryParams.$skip);
@@ -186,6 +196,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         if (queryParams.$orderby) {
           query['sort'] = queryParams.$orderby;
         }
+
         entities = await collection.find(query, userSession);
       }
       let entities_ids = _.pluck(entities, '_id');
@@ -205,7 +216,7 @@ router.get('/:spaceId/:objectName/recent', async function (req: Request, res: Re
         await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userSession);
         let body = {};
         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
-        body['@odata.count'] = sort_entities.length;
+        body['@odata.count'] = recent_view_records_ids.length;
         let entities_OdataProperties = getCreator().setOdataProperty(sort_entities, spaceId, key);
         body['value'] = entities_OdataProperties;
         getODataManager().setHeaders(res);

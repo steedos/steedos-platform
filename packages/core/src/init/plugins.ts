@@ -7,13 +7,16 @@ const objectql = require('@steedos/objectql')
 const util = require('../util/index')
 import {LoadFiles} from './loadFiles'
 const ConfigName = 'plugin.config.yml'
+import * as initConfig from './init-config.json'
 export class Plugins {
     static init() {
         const pluginContext = {
             app,
             settings: Meteor.settings
         };
-        const plugins = Meteor.settings.plugins
+        const builtInPlugins= initConfig.built_in_plugins || [];
+        const settingsPlugins = Meteor.settings.plugins || [];
+        let plugins = _.union(builtInPlugins, settingsPlugins)
         if (_.isArray(plugins)) {
             _.each(plugins, (pluginName) => {
                 try {

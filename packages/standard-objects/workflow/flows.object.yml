@@ -1,6 +1,7 @@
 name: flows
 icon: timesheet
 label: 流程
+enable_files: true
 fields:
   name:
     type: text

@@ -210,8 +210,7 @@ actions:
               }
               return perms["allowEdit"];
             }
-    only_detail: true
     is_file: true
-    'on': record
+    'on': record_only
     todo: !<tag:yaml.org,2002:js/function> |- 
       function (object_name, record_id) {}
