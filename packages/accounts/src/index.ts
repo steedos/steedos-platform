@@ -73,9 +73,12 @@ function getAccountsRouter(context){
 export function init(context){
   if(context.settings){
     if(!context.settings.public){
-        context.settings.public = {webservices: {}}
+        context.settings.public = {} 
     }
-    context.settings.public.webservices.accounts = {url: '/accounts'}
+    if(!context.settings.public.webservices){
+        context.settings.public.webservices = {}  
+    }
+    context.settings.public.webservices.accounts = { url: '/accounts' }
   }
   let accountsRouter = getAccountsRouter(context)
   context.app.use("/accounts", accountsRouter)

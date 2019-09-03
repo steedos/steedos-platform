@@ -7,7 +7,6 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   res: express.Response,
   next: any
 ) => {
-  console.log("userLoader start")
   let accessToken =
     get(req.cookies, 'X-Access-Token') ||
     get(req.headers, 'Authorization') ||
@@ -27,6 +26,5 @@ export const userLoader = (accountsServer: AccountsServer) => async (
       // Do nothing
     }
   }
-  console.log("userLoader end")
   return next();
 };
