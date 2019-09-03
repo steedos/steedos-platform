@@ -38,7 +38,7 @@ const Login = ({ history, title }: any) => {
 
   document.title = "Login | " + title;
   const searchParams = new URLSearchParams(window.location.search);
-  const redirectUrl = searchParams.get("redirectUrl");
+  const redirect_uri = searchParams.get("redirect_uri");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,8 +51,8 @@ const Login = ({ history, title }: any) => {
         password,
         code,
       });
-      if (redirectUrl)
-        window.location.href = redirectUrl;
+      if (redirect_uri)
+        window.location.href = redirect_uri;
       else
         history.push('/');
     } catch (err) {

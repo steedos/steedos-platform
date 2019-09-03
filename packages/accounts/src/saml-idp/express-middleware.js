@@ -574,7 +574,7 @@ function _runServer(argv) {
         return showUser(req, res, next);
       } else {
         console.log('Redirect to login => \n');
-        res.redirect("/accounts/a/login?redirectUrl="+ encodeURIComponent(req.originalUrl));
+        res.redirect("/accounts/a/login?redirect_uri="+ encodeURIComponent(req.originalUrl));
         return res.end();
       }
     })

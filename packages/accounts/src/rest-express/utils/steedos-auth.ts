@@ -40,7 +40,7 @@ export const setAuthCookies = function (req, res, userId, authToken, accessToken
 export const clearAuthCookies = function (req, res) {
   let cookies = new Cookies(req, res);
   let options = {
-    maxAge: 90 * 60 * 60 * 24 * 1000,
+    maxAge: 0,
     httpOnly: false,
     overwrite: true
   }
