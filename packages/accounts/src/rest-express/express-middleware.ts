@@ -8,6 +8,7 @@ import { AccountsServer } from '@accounts/server';
 import { refreshAccessToken } from './endpoints/refresh-access-token';
 import { getUser } from './endpoints/get-user';
 import { impersonate } from './endpoints/impersonate';
+import { authorize } from './endpoints/authorize';
 import { logout } from './endpoints/logout';
 import { serviceAuthenticate } from './endpoints/service-authenticate';
 import { registerPassword } from './endpoints/password/register';
@@ -36,6 +37,8 @@ const accountsExpress = (
   router.use(cookieParser());
 
   router.post(`${path}/impersonate`, impersonate(accountsServer));
+
+  router.get(`${path}/authorize`, userLoader(accountsServer), authorize(accountsServer));
 
   router.get(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
