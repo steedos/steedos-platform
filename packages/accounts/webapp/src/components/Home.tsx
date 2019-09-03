@@ -41,6 +41,10 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
     });
   
     const data = await res.json();
+    if (!data) {
+      history.push('/login');
+      return;
+    }
     setUser(data);
   };
 
