@@ -248,9 +248,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private async runTirgger(trigger: SteedosTriggerType, context: SteedosTriggerContextConfig) {
         let object_name = this.name
         let event = trigger.todo
-        let todoWrapper = async function () {
+        let todoWrapper = async function (...args) {
             // Object.setPrototypeOf(thisArg, Object.getPrototypeOf(trigger))
-            return await event.apply(thisArg, arguments)
+            return await event.apply(thisArg, args)
         }
         let thisArg = {
             ...context,
