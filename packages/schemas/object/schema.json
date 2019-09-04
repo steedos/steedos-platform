@@ -1,0 +1,692 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_object",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "name",
+                "description"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "对象名称",
+            "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$"
+        },
+        "table_name": {
+            "type": "string",
+            "description": "数据库表名称"
+        },
+        "extend": {
+            "type": "string",
+            "description": "要继承的对象标识"
+        },
+        "label": {
+            "type": "string",
+            "description": "对象显示名称"
+        },
+        "icon": {
+            "type": "string",
+            "description": "对象图标，对应https://www.lightningdesignsystem.com/icons/#standard"
+        },
+        "enable_search": {
+            "type": "boolean",
+            "description": "允许搜索"
+        },
+        "is_enable": {
+            "type": "boolean",
+            "description": "是否启用，如果为false，则对象不可见"
+        },
+        "enable_files": {
+            "type": "boolean",
+            "description": "允许上传附件"
+        },
+        "enable_tasks": {
+            "type": "boolean",
+            "description": "允许创建任务"
+        },
+        "enable_notes": {
+            "type": "boolean",
+            "description": "允许创建备忘"
+        },
+        "enable_events": {
+            "type": "boolean",
+            "description": "允许创建事件"
+        },
+        "enable_api": {
+            "type": "boolean",
+            "description": "TODO..."
+        },
+        "enable_share": {
+            "type": "boolean",
+            "description": "允许分享"
+        },
+        "enable_instances": {
+            "type": "boolean",
+            "description": "允许查看申请单"
+        },
+        "enable_chatter": {
+            "type": "boolean",
+            "description": "允许评论"
+        },
+        "enable_audit": {
+            "type": "boolean",
+            "description": "允许记录字段历史"
+        },
+        "enable_trash": {
+            "type": "boolean",
+            "description": "允许假删除。如果为true,则开启回收站功能，此对象数据删除后，会进入回收站。如果为false，则直接删除"
+        },
+        "enable_space_global": {
+            "type": "boolean",
+            "description": "允许数据夸工作区使用"
+        },
+        "enable_tree": {
+            "type": "boolean",
+            "description": "树状显示"
+        },
+        "is_view": {
+            "type": "boolean",
+            "description": "此对象是否对应数据库中的视图"
+        },
+        "hidden": {
+            "type": "boolean",
+            "description": "是否隐藏对象"
+        },
+        "description": {
+            "type": "string",
+            "description": "对象描述"
+        },
+        "sidebar": {
+            "type": "object",
+            "description": "TODO"
+        },
+        "custom": {
+            "type": "boolean",
+            "description": "创建的实体表是否加默认的前缀，默认前缀为：c_${spaceId}_"
+        },
+        "owner": {
+            "type": "string",
+            "description": "对象拥有者"
+        },
+        "methods": {
+            "type": "object",
+            "description": "对象可执行的方法，用于odata接口",
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9].*$": {
+                    "$ref": "#/definitions/method"
+                }
+            }
+        },
+        "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9].*$": {
+                    "$ref": "#/definitions/field"
+                }
+            }
+        },
+        "list_views": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/list_view"
+                }
+            }
+        },
+        "actions": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/action"
+                }
+            }
+        },
+        "permission_set": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/permission"
+                }
+            }
+        },
+        "triggers": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/trigger"
+                }
+            }
+        },
+        "calendar": {
+            "type": "object"
+        },
+        "listeners": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/listener"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "field": {
+            "type": "object",
+            "description": "对象字段",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "字段名称"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "字段显示名称"
+                },
+                "is_name": {
+                    "type": "boolean",
+                    "description": "将当前字段叫标记为name字段，用于选择数据时的显示名称"
+                },
+                "object": {
+                    "type": "string",
+                    "description": "字段所属对象"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "字段名称",
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "text",
+                                "textarea",
+                                "html",
+                                "select",
+                                "boolean",
+                                "date",
+                                "datetime",
+                                "number",
+                                "currency",
+                                "password",
+                                "lookup",
+                                "master_detail",
+                                "grid",
+                                "url",
+                                "email",
+                                "avatar",
+                                "location",
+                                "image",
+                                "object",
+                                "[object]",
+                                "[Object]",
+                                "[grid]",
+                                "[text]",
+                                "selectCity",
+                                "audio",
+                                "filesize",
+                                "file",
+                                "code"
+                            ]
+                        }
+                    ]
+                },
+                "sort_no": {
+                    "type": "integer",
+                    "description": "排序号, 默认值100"
+                },
+                "group": {
+                    "type": "string",
+                    "description": "分组名称"
+                },
+                "defaultValue": {
+                    "type": [
+                        "string",
+                        "boolean",
+                        "array",
+                        "integer"
+                    ],
+                    "description": "默认值"
+                },
+                "allowedValues": {
+                    "type": [
+                        "string",
+                        "boolean",
+                        "array"
+                    ],
+                    "description": "允许的值"
+                },
+                "multiple": {
+                    "type": "boolean",
+                    "description": "支持多选"
+                },
+                "required": {
+                    "type": "boolean",
+                    "description": "是否必填"
+                },
+                "is_wide": {
+                    "type": "boolean",
+                    "description": "是否宽字段，如果为true，则在详细页面，一个字段占一行"
+                },
+                "readonly": {
+                    "type": "boolean",
+                    "description": "是否只读"
+                },
+                "hidden": {
+                    "type": "boolean",
+                    "description": "是否隐藏"
+                },
+                "omit": {
+                    "type": "boolean",
+                    "description": "忽略此字段"
+                },
+                "index": {
+                    "type": "boolean",
+                    "description": "创建索引"
+                },
+                "searchable": {
+                    "type": "boolean",
+                    "description": "允许搜索"
+                },
+                "sortable": {
+                    "type": "boolean",
+                    "description": "允许排序"
+                },
+                "precision": {
+                    "type": "integer",
+                    "description": "数值类型字段的最大长度，默认值18"
+                },
+                "scale": {
+                    "type": "integer",
+                    "description": "数值类型的小数位数，默认值2"
+                },
+                "reference_to": {
+                    "type": [
+                        "string",
+                        "array"
+                    ],
+                    "description": "引用的对象"
+                },
+                "rows": {
+                    "type": "integer",
+                    "description": "多行文本默认行数"
+                },
+                "options": {
+                    "type": [
+                        "string",
+                        "array"
+                    ],
+                    "description": "字段选项"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "字段描述"
+                },
+                "filterable": {
+                    "type": "boolean",
+                    "description": "过滤器默认字段"
+                },
+                "inlineHelpText": {
+                    "type": "string",
+                    "description": "提示文本"
+                },
+                "unique": {
+                    "type": "boolean",
+                    "description": "重复"
+                },
+                "optionsFunction": {
+                    "type": "string",
+                    "description": "字段选项函数名称"
+                },
+                "min": {
+                    "type": "integer",
+                    "description": "最小长度"
+                },
+                "max": {
+                    "type": "integer",
+                    "description": "最大长度"
+                },
+                "blackbox": {
+                    "type": "boolean",
+                    "description": "不校验字段类型"
+                },
+                "disabled": {
+                    "type": "boolean",
+                    "description": "禁用"
+                },
+                "reference_sort": {
+                    "type": "object",
+                    "description": "排序方式"
+                },
+                "reference_limit": {
+                    "type": "number",
+                    "description": "一次最多显示数据"
+                },
+                "is_company_only": {
+                    "type": "boolean",
+                    "description": "本公司"
+                },
+                "system": {
+                    "type": "string"
+                },
+                "depend_on": {
+                    "type": "array"
+                },
+                "defaultIcon": {
+                    "type": "string"
+                },
+                "primary": {
+                    "type": "boolean",
+                    "description": "主键"
+                },
+                "generated": {
+                    "type": "boolean",
+                    "description": "自增"
+                },
+                "fieldDBType": {
+                    "type": "string",
+                    "description": "字段数据库类型"
+                },
+                "collection": {
+                    "type": "string",
+                    "description": "对应对象名"
+                },
+                "language": {
+                    "type": "string",
+                    "description": "模板名"
+                },
+                "create": {
+                    "type": "boolean",
+                    "description": "关联时是否允许创建"
+                },
+                "regEx": {
+                    "type": "object",
+                    "description": "正则表达式"
+                }
+            }
+        },
+        "list_view": {
+            "type": "object",
+            "description": "列表视图",
+            "additionalProperties": false,
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "视图显示名称"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "列表显示类型，默认为list",
+                    "enum": [
+                        "calendar"
+                    ]
+                },
+                "filter_scope": {
+                    "type": "string",
+                    "description": "范围",
+                    "enum": [
+                        "space",
+                        "mine",
+                        "all"
+                    ]
+                },
+                "columns": {
+                    "type": "array",
+                    "description": "列表显示的字段"
+                },
+                "extra_columns": {
+                    "type": "array",
+                    "description": "额外在列表显示的字段"
+                },
+                "order": {
+                    "type": "array",
+                    "description": "排序"
+                },
+                "filters": {
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "description": "过滤条件"
+                },
+                "filter_fields": {
+                    "type": "array",
+                    "description": "过滤的字段"
+                },
+                "sort": {
+                    "type": "array",
+                    "description": "排序"
+                },
+                "options": {
+                    "type": "object",
+                    "description": "额外选项"
+                },
+                "show_count": {
+                    "type": "boolean",
+                    "description": "显示条目数"
+                }
+            }
+        },
+        "action": {
+            "type": "object",
+            "description": "对象操作",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "操作名称"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "操作显示名称"
+                },
+                "is_enable": {
+                    "type": "boolean",
+                    "description": "是否启用"
+                },
+                "visible": {
+                    "type": [
+                        "string",
+                        "boolean"
+                    ],
+                    "description": "是否有效"
+                },
+                "on": {
+                    "type": "string",
+                    "description": "显示位置, list: 只显示在列表右上角; record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中; record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中; list_item: 只显示在列表视图中每项的下拉菜单中; record_only: 只显示在记录查看页右上角",
+                    "enum": [
+                        "list",
+                        "record",
+                        "record_more",
+                        "list_item",
+                        "record_only"
+                    ]
+                },
+                "todo": {
+                    "type": "string",
+                    "description": "执行的脚本"
+                },
+                "sort": {
+                    "type": "number",
+                    "description": "显示顺序"
+                },
+                "is_file": {
+                    "type": "boolean",
+                    "description": "是否是附件"
+                }
+            }
+        },
+        "permission": {
+            "type": "object",
+            "description": "对象权限",
+            "additionalProperties": false,
+            "properties": {
+                "allowRead": {
+                    "type": "boolean",
+                    "description": "允许查看"
+                },
+                "allowCreate": {
+                    "type": "boolean",
+                    "description": "允许创建"
+                },
+                "allowEdit": {
+                    "type": "boolean",
+                    "description": "允许修改"
+                },
+                "allowDelete": {
+                    "type": "boolean",
+                    "description": "允许删除"
+                },
+                "viewAllRecords": {
+                    "type": "boolean",
+                    "description": "查看所有记录"
+                },
+                "modifyAllRecords": {
+                    "type": "boolean",
+                    "description": "修改所有记录"
+                },
+                "viewCompanyRecords": {
+                    "type": "boolean",
+                    "description": "查看本单位"
+                },
+                "modifyCompanyRecords": {
+                    "type": "boolean",
+                    "description": "修改本单位"
+                },
+                "disabled_list_views": {
+                    "type": "array",
+                    "description": "禁用对象列表视图"
+                },
+                "disabled_actions": {
+                    "type": "array",
+                    "description": "禁用对象操作"
+                },
+                "unreadable_fields": {
+                    "type": "array",
+                    "description": "不可见字段"
+                },
+                "uneditable_fields": {
+                    "type": "array",
+                    "description": "不可编辑字段"
+                },
+                "unrelated_objects": {
+                    "type": "array",
+                    "description": "禁用关联对象"
+                }
+            }
+        },
+        "trigger": {
+            "type": "object",
+            "description": "触发器",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "操作名称"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "操作显示名称"
+                },
+                "is_enable": {
+                    "type": "boolean",
+                    "description": "是否启用"
+                },
+                "on": {
+                    "type": "string",
+                    "description": "显示位置, client: 在客户端执行; server: 在服务端执行",
+                    "enum": [
+                        "client",
+                        "server"
+                    ]
+                },
+                "when": {
+                    "type": "string",
+                    "description": "在什么时候触发：before.insert： 新增记录之前；after.insert：新增记录之后；before.update：修改记录之前；after.update：修改记录之后；after.remove：删除记录之前；after.remove：删除记录之后；",
+                    "enum": [
+                        "before.insert",
+                        "after.insert",
+                        "before.update",
+                        "after.update",
+                        "before.remove",
+                        "after.remove"
+                    ]
+                },
+                "todo": {
+                    "type": "string",
+                    "description": "执行的脚本"
+                }
+            }
+        },
+        "method": {
+            "type": "string"
+        },
+        "listener": {
+            "type": "object",
+            "description": "触发器",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "监听器名称"
+                },
+                "listenTo": {
+                    "type": "string",
+                    "description": "监听对象名"
+                },
+                "beforeInsert": {
+                    "type": "string",
+                    "description": "新增前事件"
+                },
+                "beforeUpdate": {
+                    "type": "string",
+                    "description": "修改前事件"
+                },
+                "beforeDelete": {
+                    "type": "string",
+                    "description": "删除前事件"
+                },
+                "afterInsert": {
+                    "type": "string",
+                    "description": "新增后事件"
+                },
+                "afterUpdate": {
+                    "type": "string",
+                    "description": "修改后事件"
+                },
+                "afterDelete": {
+                    "type": "string",
+                    "description": "删除后事件"
+                }
+            }
+        }
+    }
+}

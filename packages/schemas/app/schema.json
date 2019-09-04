@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_app",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "name",
+                "description"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "_id": {
+            "type": "string",
+            "description": "应用的唯一标识。"
+        },
+        "url": {
+            "type": "string",
+            "description": "应用地址"
+        },
+        "name": {
+            "description": "应用显示名称。",
+            "type": "string"
+        },
+        "description": {
+            "type": "string",
+            "description": "应用描述。"
+        },
+        "icon": {
+            "type": "string",
+            "description": "应用图标。"
+        },
+        "icon_slds": {
+            "type": "string",
+            "description": "应用图标。"
+        },
+        "is_creator": {
+            "type": "boolean",
+            "description": "TODO....。"
+        },
+        "objects": {
+            "type": "array",
+            "description": "用于指定此应用下有多少对象。",
+            "items": {
+                "type": "string",
+                "description": "对象唯一标识。"
+            }
+        },
+        "mobile_objects": {
+            "type": "array",
+            "description": "用于指定此应用在手机上显示的对象。",
+            "items": {
+                "type": "string",
+                "description": "对象唯一标识。"
+            }
+        },
+        "admin_menus": {
+            "type": "array",
+            "description": "管理员菜单",
+            "items": {
+                "type": "object",
+                "description": "菜单详情"
+            }
+        }
+    }
+}
