@@ -2,7 +2,7 @@ import * as express from 'express';
 import { get, isEmpty } from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../utils/send-error';
-import { clearAuthCookies } from '../utils/steedos-auth';
+import { setAuthCookies, clearAuthCookies } from '../utils/steedos-auth';
 
 export const authorize = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -22,6 +22,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
     res.redirect(redirect_uri);
     res.end();
   } else {
+    clearAuthCookies(req, res);
     res.redirect("/accounts/a/login" + query);
     res.end();
   }
