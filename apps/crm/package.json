@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@steedos/app-contracts",
-  "version": "1.5.1",
+  "version": "1.5.3",
   "description": "contract-management-system",
   "main": "index.js",
   "scripts": {
@@ -16,10 +16,10 @@
   "author": "Jack Zhuang",
   "license": "ISC",
   "dependencies": {
-    "steedos-cli": "^1.5.1",
-    "@steedos/core": "^1.5.1",
+    "@steedos/core": "^1.5.3",
     "@steedos/meteor-bundle-runner": "^1.5.1",
     "@steedos/standard-objects": "^1.5.1",
+    "steedos-cli": "^1.5.1",
     "steedos-server": "^1.0.9"
   },
   "bugs": {
