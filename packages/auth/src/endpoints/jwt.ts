@@ -1,18 +1,17 @@
 import { hashStampedToken, insertHashedLoginToken, hashLoginToken } from '../utils';
 import { getSteedosSchema } from '@steedos/objectql'
-let jwt = require('express-jwt');
 
-function secretCallback(req, payload, done) {
-  let issuer = payload.iss
-  let collection = getSteedosSchema().getObject('OAuth2Clients')
-  collection.find({ filters: `clientId eq '${issuer}'` }).then(function (resolve) {
-    let clientInfo = resolve[0]
-    let clientSecret = clientInfo ? clientInfo.clientSecret : ''
-    done(null, clientSecret)
-  }).catch(function (reject) {
-    done(reject, '')
-  })
-}
+// function secretCallback(req, payload, done) {
+//   let issuer = payload.iss
+//   let collection = getSteedosSchema().getObject('OAuth2Clients')
+//   collection.find({ filters: `clientId eq '${issuer}'` }).then(function (resolve) {
+//     let clientInfo = resolve[0]
+//     let clientSecret = clientInfo ? clientInfo.clientSecret : ''
+//     done(null, clientSecret)
+//   }).catch(function (reject) {
+//     done(reject, '')
+//   })
+// }
 
 async function getTokenInfo(req) {
   let payload = req.user
