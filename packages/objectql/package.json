@@ -64,7 +64,7 @@
     "sinon-chai": "^3.3.0",
     "sqlite3": "^4.0.6",
     "ts-node": "^8.0.3",
-    "typescript": "^3.3.4000"
+    "typescript": "3.5.3"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {
