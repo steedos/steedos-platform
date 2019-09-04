@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@steedos/app-contracts",
   "version": "1.0.0",
   "description": "contract-management-system",

@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "steedos-tools",
   "version": "1.0.0",
   "description": "",
