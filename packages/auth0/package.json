@@ -1,5 +1,5 @@
 {
-  "private": false,
+  "private": true,
   "name": "@steedos/auth0",
   "version": "1.5.1",
   "main": "index.js",
