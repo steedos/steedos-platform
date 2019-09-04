@@ -1,11 +1,10 @@
 {
-  "private": true,
+  "private": false,
   "name": "@steedos/stimulsoft-report",
-  "version": "0.0.1",
+  "version": "1.5.1",
   "description": "Stimulsoft report and dashboard lib for steedos",
   "main": "index.js",
   "license": "MIT",
-  "private": false,
   "publishConfig": {
     "access": "public"
   }

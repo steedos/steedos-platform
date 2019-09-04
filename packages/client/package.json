@@ -1,13 +1,11 @@
 {
   "private": true,
   "name": "@steedos/client",
-  "version": "0.0.1",
+  "version": "1.5.1",
   "description": "client lib for steedos",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "devextreme": "^18.2.6"
-  },
-  "devDependencies": {
   }
 }
