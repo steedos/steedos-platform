@@ -9,5 +9,6 @@
     "auth0-js": "^9.10.1",
     "auth0-lock": "^11.14.1",
     "express": "^4.16.4"
-  }
+  },
+  "gitHead": "c1e253e1f4c3547da7bab11d324d5eea885690f4"
 }

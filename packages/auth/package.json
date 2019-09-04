@@ -33,5 +33,6 @@
     "sinon-chai": "^3.3.0",
     "ts-node": "^8.0.3",
     "typescript": "3.5.3"
-  }
+  },
+  "gitHead": "c1e253e1f4c3547da7bab11d324d5eea885690f4"
 }
