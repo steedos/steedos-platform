@@ -1,4 +1,3 @@
 export { getSession, auth, setRequestUser } from "./session";
-export { jwtRouter } from "./jwt";
-export { utils } from "./utils";
-export { initRouter } from "./initRouter";
+export * from "./utils";
+export { authExpress } from "./express-middleware";
