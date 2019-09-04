@@ -15,6 +15,7 @@
     "clear": "rd /s /q packages\\auth\\node_modules\\@steedos packages\\report\\node_modules\\@steedos packages\\objectql\\node_modules\\@steedos packages\\core\\node_modules\\@steedos packages\\react-components\\node_modules\\@steedos packages\\tools\\node_modules\\@steedos"
   },
   "devDependencies": {
-    "lerna": "^3.14.0"
+    "lerna": "^3.14.0",
+    "typescript": "3.5.3"
   }
 }
