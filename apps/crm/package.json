@@ -16,10 +16,10 @@
   "author": "Jack Zhuang",
   "license": "ISC",
   "dependencies": {
-    "@steedos/cli": "^1.1.5",
-    "@steedos/core": "^0.0.6",
+    "steedos-cli": "^1.5.1",
+    "@steedos/core": "^1.5.1",
     "@steedos/meteor-bundle-runner": "^1.5.1",
-    "@steedos/standard-objects": "^0.0.1",
+    "@steedos/standard-objects": "^1.5.1",
     "steedos-server": "^1.0.9"
   },
   "bugs": {

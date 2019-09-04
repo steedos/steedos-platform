@@ -2196,52 +2196,15 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/cli@^1.1.5":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@steedos/cli/-/cli-1.1.15.tgz#eeede083aee63fb2f3b0cb1ea860a5bbe0ba2788"
-  integrity sha512-g1Z15iciDuDuBbbjpyk6bTA4XgmufSkBBOHDj3uO5prapJjzypVUM4OoIPNmMWDaa+wI1Wd5keeAP7tubiUx5g==
-  dependencies:
-    "@geek/spinner" "^1.0.0"
-    "@oclif/command" "^1.5.10"
-    "@oclif/config" "^1.12.8"
-    "@oclif/plugin-help" "^2.1.6"
-    "@steedos/meteor-bundle-runner" "^1.1.5"
-    "@steedos/project-template-empty" "^0.0.3"
-    "@steedos/steedos-model-generator" "^0.5.34"
-    change-case "^3.1.0"
-    colors "^1.3.3"
-    fs-extra "^7.0.1"
-    inquirer "^6.2.2"
-    js-yaml "^3.12.2"
-    latest-version "^5.1.0"
-    reflect-metadata "^0.1.13"
-    typescript "^3.3.3333"
-    yargs "^13.2.1"
-    yn "^2.0.0"
-
-"@steedos/core@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-0.0.6.tgz#54a8d38971ab0fd2b933d8727f28411d6828f4ff"
-  integrity sha512-8NgfXq1c0Y+NNtgI9DuDuj2tK3WLePTSqX6NAxCe8MEuYJI++UOGu9t6lZGbAUZGyg2o4b1YQ/SYwNUPm5JfFw==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@types/node" "^11.10.4"
-    fibers "^3.1.1"
-    js-yaml "3.12.2"
-    jsen "^0.6.6"
-    simpl-schema "^1.5.5"
-    underscore "1.5.2"
-
 "@steedos/core@file:packages/core":
-  version "1.3.23"
+  version "1.5.1"
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.1.5"
-    "@steedos/objectql" "^1.0.13"
-    "@steedos/standard-objects" "^1.0.10"
+    "@steedos/auth" "^1.5.1"
+    "@steedos/objectql" "^1.5.1"
+    "@steedos/standard-objects" "^1.5.1"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -2268,13 +2231,6 @@
     simpl-schema "^1.5.5"
     uglify-js "^3.6.0"
     underscore "1.5.2"
-
-"@steedos/filters@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-0.0.3.tgz#e336e0861d8e586456746947442b1fd6e7f47c54"
-  integrity sha512-Q3oGoGRqxyZkpsC77xJowY4s72YO3TTMAazIvpc8fr/vwLOuGGCWA9ybv3e7lWlxqU0InnL8uJkqyM0cxSAu1Q==
-  dependencies:
-    devextreme "^18.2.6"
 
 "@steedos/meteor-bundle-dependencies@0.0.3":
   version "0.0.3"
@@ -2325,87 +2281,16 @@
     uuid "3.3.2"
     whatwg-fetch "2.0.4"
 
-"@steedos/objectql@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-0.0.11.tgz#ae9cf1645bf474a7a841e4653a35d67739560760"
-  integrity sha512-8A216WhYR9ikkbE2UJA0cz9RtgkiIq7xaCz1V6rJAl5sdSxGq/PtFHthFkfVGQJ9kfr6h7yOu+gnlKfN1GIhmg==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "0.0.3"
-    "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/standard-objects" "0.0.1"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    app-root-path "^2.2.1"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^3.1.1"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    jsen "^0.6.6"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    odata-v4-sql "^0.1.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    typeorm "^0.2.16"
-    underscore "1.5.2"
-
-"@steedos/objectql@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-0.0.4.tgz#388d80564c14aceb22870b739840748ede229ebf"
-  integrity sha512-2u5rguD9M8WUVr5y7DifMGqfPaq3bbSMwnQMCOHhCGyQqIzeBh3AOjz/HcTZI5E9wCW0+DE4TRcsUGocK65sbg==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "0.0.3"
-    "@steedos/odata-v4-typeorm" "^0.0.23"
-    "@steedos/standard-objects" "0.0.1"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^3.1.1"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    jsen "^0.6.6"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    odata-v4-sql "^0.1.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    typeorm "^0.2.16"
-    underscore "1.5.2"
-
 "@steedos/objectql@file:packages/objectql":
-  version "1.0.13"
+  version "1.5.1"
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.0.0"
+    "@steedos/filters" "^1.5.1"
     "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/schemas" "^1.0.5"
-    "@steedos/standard-objects" "^1.0.11"
+    "@steedos/schemas" "^1.5.1"
+    "@steedos/standard-objects" "^1.5.1"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -2430,14 +2315,6 @@
     routing-controllers "^0.7.7"
     typeorm "^0.2.16"
     underscore "1.5.2"
-
-"@steedos/odata-v4-typeorm@^0.0.23":
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-typeorm/-/odata-v4-typeorm-0.0.23.tgz#a6eac3163c3f39f65de44f1ae2ab291a129bc312"
-  integrity sha512-SyXReHk91U37oixD7N+IpOYOnAQQPuJ+AmhS/g/buKSW5blhtO6l1wj3r/qIjkivUGy3u+mp3oiFhyboa3zBQg==
-  dependencies:
-    odata-v4-parser "0.1.13"
-    odata-v4-sql "^0.1.2"
 
 "@steedos/odata-v4-typeorm@^0.0.24":
   version "0.0.24"
@@ -2446,16 +2323,6 @@
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
-
-"@steedos/project-template-empty@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@steedos/project-template-empty/-/project-template-empty-0.0.3.tgz#7c97c5e318341da270134291f15201bedaecde11"
-  integrity sha512-twyRrvSsJ0XfgHOVggB1lkXb+YzKthEDhkYNnhsciabhCuj80UgX5RndLzaND6JChFvbmEAs3G3OM/ySuYtvWA==
-
-"@steedos/standard-objects@0.0.1", "@steedos/standard-objects@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-0.0.1.tgz#9ae2ad078d0b06df9648f6d2dbfc75a6f9c37962"
-  integrity sha512-DsF50A3sfGF01Fcf5jNEIvlCoI66pXah2Y3oc3ODqJfa6f343KjrSmsVSMaaNdoQeqrtgjJKqr3w+C8RGUDbNA==
 
 "@steedos/steedos-model-generator@^0.5.34":
   version "0.5.34"
@@ -11025,15 +10892,7 @@ js-yaml@3.12.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@3.12.2:
-  version "3.12.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.12.2.tgz#ef1d067c5a9d9cb65bd72f285b5d8105c77f14fc"
-  integrity sha512-QHn/Lh/7HhZ/Twc7vJYQTkjuCa0kaCcDcjK5Zlk2rvnUpy7DxMJ23+Jc2dcyvltwQVg1nygAVlB2oRDFHoRS5Q==
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^4.0.0"
-
-js-yaml@3.13.1, js-yaml@3.x, js-yaml@>=3.13.1, js-yaml@^3.12.0, js-yaml@^3.12.2, js-yaml@^3.13.0, js-yaml@^3.13.1, js-yaml@^3.7.0:
+js-yaml@3.13.1, js-yaml@3.x, js-yaml@>=3.13.1, js-yaml@^3.12.0, js-yaml@^3.13.0, js-yaml@^3.13.1, js-yaml@^3.7.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   integrity sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==

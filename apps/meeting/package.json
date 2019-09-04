@@ -20,13 +20,7 @@
   "homepage": "https://github.com/steedos/app-meeting#readme",
   "dependencies": {
     "@steedos/meteor-bundle-runner": "^1.5.1",
-    "@steedos/objectql": "^0.0.11",
+    "@steedos/objectql": "^1.5.1",
     "steedos-server": "^1.2.5"
-  },
-  "resolutions": {
-    "graphql": "^14.1.1",
-    "@steedos/objectql": "^0.0.11",
-    "@steedos/core": "^1.1.15",
-    "@steedos/auth": "^1.0.4"
   }
 }
