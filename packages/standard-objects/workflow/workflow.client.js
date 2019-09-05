@@ -2,6 +2,7 @@ db.categories = new Meteor.Collection('categories');
 db.flows = new Meteor.Collection('flows');
 db.flow_instances = new Meteor.Collection('flow_instances');
 db.forms = new Meteor.Collection('forms');
+db.instances = new Meteor.Collection('instances');
 db.instance_traces = new Meteor.Collection('instance_traces');
 db.form_versions = new Meteor.Collection('form_versions');
 db.flow_versions = new Mongo.Collection("flow_versions");
