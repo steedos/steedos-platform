@@ -1,5 +1,5 @@
 name: spaces
-label: 工作区
+label: 租户
 icon: groups
 fields:
   name:
