@@ -71,7 +71,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/resources.coffee',  "client");
 
 
-	api.addFiles('models/base.coffee');
+	// api.addFiles('models/base.coffee');
 
 	api.addFiles('server/routes/api_workflow_view_instance.coffee', 'server');
 

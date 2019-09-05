@@ -192,7 +192,7 @@ if Meteor.isServer
 			menus = allMenus.filter (menu)->
 				psetsMenu = menu.permission_sets
 				# 如果普通用户有权限，则直接返回true
-				if psetsMenu.indexOf("user") > -1
+				if psetsMenu && psetsMenu.indexOf("user") > -1
 					return true
 				# 否则取当前用户的权限集与menu菜单要求的权限集对比，如果交集大于1个则返回true
 				return _.intersection(currentPsetNames, psetsMenu).length

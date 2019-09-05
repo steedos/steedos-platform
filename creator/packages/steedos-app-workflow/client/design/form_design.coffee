@@ -18,7 +18,7 @@ Template.formDesign.events
 
 		form.current.fields = formFields
 
-		url = "#{Meteor.settings.public.webservices.workflow.url}am/forms?sync_token=#{(new Date()).getTime() / 1000}"
+		url = Steedos.absoluteUrl("/am/forms?sync_token=#{(new Date()).getTime() / 1000}")
 		data = {}
 		form.id = form._id
 		data['Forms'] = [form]

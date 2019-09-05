@@ -15,9 +15,7 @@ Template.creator_report.helpers
 		actions = _.values(obj.actions) 
 		# actions = _.where(actions, {on: "record", visible: true})
 		actions = _.filter actions, (action)->
-			if action.on == "record"
-				if action.only_list_item
-					return false
+			if action.on == "record" or action.on == "record_only"
 				if typeof action.visible == "function"
 					return action.visible(object_name, record_id, record_permissions)
 				else
@@ -36,8 +34,6 @@ Template.creator_report.helpers
 		actions = _.values(obj.actions) 
 		actions = _.filter actions, (action)->
 			if action.on == "record_more"
-				if action.only_list_item
-					return false
 				if typeof action.visible == "function"
 					return action.visible(object_name, record_id, record_permissions)
 				else

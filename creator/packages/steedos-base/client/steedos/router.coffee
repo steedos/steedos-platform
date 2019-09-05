@@ -96,7 +96,7 @@ FlowRouter.route '/admin/customize_apps',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if !Meteor.userId()
-			FlowRouter.go "/steedos/sign-in";
+			Steedos.redirectToSignIn()
 			return true
 		
 		BlazeLayout.render 'adminLayout',
@@ -109,7 +109,7 @@ FlowRouter.route '/admin/space_user_signs',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if !Meteor.userId()
-			FlowRouter.go "/steedos/sign-in";
+			Steedos.redirectToSignIn()
 			return true
 
 		BlazeLayout.render 'adminLayout',
@@ -119,7 +119,7 @@ FlowRouter.route '/admin/webhooks',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		if !Meteor.userId()
-			FlowRouter.go "/steedos/sign-in";
+			Steedos.redirectToSignIn()
 			return true
 
 		BlazeLayout.render 'adminLayout',

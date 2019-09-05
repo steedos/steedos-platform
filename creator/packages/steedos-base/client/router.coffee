@@ -1,20 +1,11 @@
 checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
-		Steedos.redirectToSignIn()
+		Setup.validate();
 
 FlowRouter.triggers.enter (context, redirect, stop)->
 	if context?.queryParams?.app_id
 		Session.set('current_app_id', context.queryParams.app_id)
 
-FlowRouter.route '/steedos/logout',
-	action: (params, queryParams)->
-		#AccountsTemplates.logout();
-		$("body").addClass('loading')
-		Meteor.logout ()->
-			Setup.logout();
-			#Session.set("spaceId", null);
-			$("body").removeClass('loading')
-			FlowRouter.go("/");
 
 FlowRouter.route '/apps/iframe/:app_id',
 	triggersEnter: [ checkUserSigned ],
@@ -57,7 +48,7 @@ workbenchRoutes = FlowRouter.group
 workbenchRoutes.route '/', 
 	action: (params, queryParams)->
 		if !Meteor.userId()
-			FlowRouter.go "/steedos/sign-in";
+			Steedos.redirectToSignIn()
 			return true
 
 		NavigationController.reset();

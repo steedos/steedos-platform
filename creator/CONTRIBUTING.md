@@ -18,12 +18,17 @@
 export MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-### 编译并运行
+### 编译
 ```
 export TOOL_NODE_FLAGS="--max-old-space-size=3800"
 yarn run build
-cd .dist
-yarn
+```
+
+### 测试
+执行以下命令，会把编译好的 steedos-server，复制到 ../steedos-contracts-app/node_modules 中
+```
+yarn run testbuild
+cd ../steedos-contracts-app/
 yarn start
 ```
 

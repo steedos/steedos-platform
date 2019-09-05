@@ -99,8 +99,3 @@ JsonRoutes.add "get", "/api/setup/sso/:app_id", (req, res, next) ->
 	res.writeHead 401
 	res.end()
 	return
-
-# get '/api/jwt/sso'
-app = express()
-app.use('/api-v2', require('@steedos/auth').jwtRouter)
-WebApp.connectHandlers.use(app)

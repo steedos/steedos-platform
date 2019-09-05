@@ -673,7 +673,7 @@ pushManager.triggerWebhook = (flow_id, instance, current_approve, action, from_u
 			to_user?.mobile = to_space_user?.mobile || ""
 			to_user?.email = to_space_user?.email || ""
 
-	db.webhooks.find({flow: flow_id, active: true}).forEach (w)->
+	db.webhooks.find({ flow: { $in: [flow_id, null] }, active: true }).forEach (w)->
 		WebhookQueue.send({
 				instance: instance,
 				current_approve: current_approve,

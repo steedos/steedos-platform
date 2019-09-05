@@ -58,7 +58,6 @@ Creator._TEMPLATE.Objects.monthTask = {
 #			label: "打印"
 #			on: "record"
 #			visible: true
-#			only_detail: true
 #			todo: ()->
 #				console.log("you clicked on print button")
 }

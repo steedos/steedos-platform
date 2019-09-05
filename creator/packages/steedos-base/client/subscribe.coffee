@@ -3,17 +3,6 @@ Steedos.subsBootstrap.subscribe('userData')
 Steedos.subsBootstrap.subscribe('my_spaces')
 Steedos.subsBootstrap.subscribe("steedos_keyvalues")
 
-Meteor.startup ->
-	Tracker.autorun (c)->
-		if Steedos.subsBootstrap.ready("my_spaces")
-			if Meteor.userId() and not Meteor.loggingIn()
-				# 只在已登录的情况下设置工作区ID
-				spaceId = Steedos.getSpaceId()
-				if spaceId
-					Steedos.setSpaceId(spaceId)
-				# else
-				# 	FlowRouter.go("/accounts/setup/space")
-		
 Steedos.subsSpaceBase = new SubsManager();
 
 Meteor.startup ->
@@ -56,10 +45,3 @@ Meteor.startup ->
 		$("body").addClass("locale-#{locale}")
 
 
-	Tracker.autorun (c)->
-		spaceId = Session.get("spaceId")
-		if spaceId and Meteor.userId()
-			Meteor.call "updateServerSession", spaceId,
-				(error, result) ->
-					if error
-						console.log error

@@ -1,5 +1,6 @@
 Creator.Objects["cfs.files.filerecord"] = 
 	name: "cfs.files.filerecord"
+	table_name: "cfs.files.filerecord"
 	label: "附件版本"
 	icon: "drafts"
 	enable_search: true

@@ -1,5 +1,5 @@
 Meteor.methods
-	"object_recent_viewed": (object_name, record_id, spaceId)->
+	"object_recent_viewed": (object_name, record_id)->
 
 		if !this.userId
 			return null
@@ -7,6 +7,10 @@ Meteor.methods
 		if object_name == "object_recent_viewed"
 			return
 		if object_name and record_id
+
+			doc = Creator.getCollection(object_name).findOne({_id: record_id}, {fields: {space: 1}})
+			spaceId = doc.space
+
 			collection_recent_viewed = Creator.getCollection("object_recent_viewed")
 			filters = { owner: this.userId, space: spaceId, 'record.o': object_name, 'record.ids': [record_id]}
 			current_recent_viewed = collection_recent_viewed.findOne(filters)

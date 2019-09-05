@@ -172,9 +172,7 @@ Template.mobileView.helpers
 		permissions = Creator.getPermissions(object_name)
 
 		actions = _.filter actions, (action)->
-			if action.on == "record" or action.on == "record_more"
-				if action.only_list_item
-					return false
+			if action.on == "record" or action.on == "record_more" or action.on == "record_only"
 				if typeof action.visible == "function"
 					return action.visible(object_name, record_id, permissions)
 				else

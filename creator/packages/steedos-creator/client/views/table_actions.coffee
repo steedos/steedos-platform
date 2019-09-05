@@ -14,9 +14,7 @@ Template.creator_table_actions.helpers
 		obj = Creator.getObject(object_name)
 		actions = Creator.getActions(object_name)
 		actions = _.filter actions, (action)->
-			if action.on == "record" or action.on == "record_more"
-				if action.only_detail
-					return false
+			if action.on == "record" or action.on == "record_more" or action.on == "list_item"
 				if typeof action.visible == "function"
 					return action.visible(object_name, record_id, record_permissions)
 				else
