@@ -147,9 +147,7 @@ export class Core {
 
     private static initRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
-        app.use(steedosAuth.initRouter);
-
-
+        app.use(steedosAuth.authExpress);
 
         WebApp.connectHandlers.use(app);
     }

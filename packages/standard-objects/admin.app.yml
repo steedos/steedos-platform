@@ -60,7 +60,7 @@ admin_menus:
     object_name: permission_set
     parent: menu_users
   - _id: spaces
-    name: 公司信息
+    name: 租户信息
     permission_sets:
       - admin
     object_name: spaces

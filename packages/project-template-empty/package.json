@@ -1,7 +1,7 @@
 {
   "name": "@steedos/project-template-empty",
   "private": false,
-  "version": "0.1.5",
+  "version": "1.5.1",
   "description": "",
   "main": "server.js",
   "repository": {
@@ -16,5 +16,6 @@
   "homepage": "https://github.com/steedos/object-server#readme",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "c1e253e1f4c3547da7bab11d324d5eea885690f4"
 }

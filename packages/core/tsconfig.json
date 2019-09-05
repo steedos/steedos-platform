@@ -7,7 +7,16 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "lib": [
+          "es5",
+          "es6",
+          "dom",
+          "es2015",
+          "es2016",
+          "es2017",
+          "esnext"
+        ],
     },
     "include": [
       "./src/**/*"

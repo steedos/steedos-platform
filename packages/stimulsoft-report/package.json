@@ -1,10 +1,10 @@
 {
-  "name": "@steedos/standard-objects",
-  "private": false,
+  "private": true,
+  "name": "@steedos/stimulsoft-report",
   "version": "1.5.1",
-  "description": "Standard objects for steedos",
+  "description": "Stimulsoft report and dashboard lib for steedos",
   "main": "index.js",
-  "license": "Apache",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },

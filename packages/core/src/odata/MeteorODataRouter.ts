@@ -431,10 +431,11 @@ router.put('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
       res.status(404).send(setErrorMessage(404, collection, key));
     }
     let permissions = await collection.getUserObjectPermission(userSession);
+    let record_owner = ""
     if (key == "users") {
-      var record_owner = recordId;
+      record_owner = recordId;
     } else {
-      var record_owner = (await collection.findOne(recordId, { fields: ['owner'] })).owner
+      record_owner = (await collection.findOne(recordId, { fields: ['owner'] })).owner
     }
     let companyId = (await collection.findOne(recordId, { fields: ['company_id'] })).company_id
 
