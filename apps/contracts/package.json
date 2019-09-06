@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@steedos-app/steedos-contracts-app",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "contract-management-system",
   "main": "steedos-app/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@steedos/meteor-bundle-runner": "^1.5.1",
-    "@steedos/objectql": "^1.5.4",
+    "@steedos/objectql": "^1.5.5",
     "steedos-server": "^1.2.5"
   },
   "bugs": {
