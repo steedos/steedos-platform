@@ -9,10 +9,11 @@
     "bootstrap": "lerna bootstrap; yarn run link",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
-    "publish": "lerna publish --registry https://registry.npmjs.org",
+    "pub": "lerna publish --registry https://registry.npmjs.org",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "changed": "lerna changed"
   },
   "devDependencies": {
     "lerna": "^3.14.0",
