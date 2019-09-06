@@ -44,15 +44,18 @@ const Login = ({ history, title }: any) => {
     e.preventDefault();
     setError(null);
     try {
-      await accountsPassword.login({
+      let result = await accountsPassword.login({
         user: {
           email,
         },
         password,
         code,
       });
-      if (redirect_uri)
-        window.location.href = redirect_uri;
+      if (redirect_uri){
+        let u = new URL(redirect_uri);
+        u.searchParams.append("token", result.tokens.accessToken)
+        window.location.href = u.toString();
+      }
       else
         history.push('/');
     } catch (err) {
