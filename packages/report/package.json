@@ -1,6 +1,6 @@
 {
   "name": "@steedos/report",
-  "version": "1.5.1",
+  "version": "1.5.4",
   "description": "report server for steedos",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/objectql": "^1.5.1",
+    "@steedos/objectql": "^1.5.4",
     "@steedos/stimulsoft-report": "^1.5.1",
     "express": "^4.15.4",
     "graphql-request": "^1.8.2",
