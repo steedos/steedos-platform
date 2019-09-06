@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/objectql": "file:../objectql"
+    "@steedos/objectql": "^1.5.1"
   }
 }
