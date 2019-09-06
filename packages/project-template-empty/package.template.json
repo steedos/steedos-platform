@@ -15,13 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-      "@steedos/meteor-bundle-runner": "^1.1.7",
-      "@steedos/filters": "^1.0.0",
-      "@steedos/objectql": "^1.0.5",
-      "@steedos/core": "^1.3.14",
-      "@steedos/auth": "^1.1.5",
-      "@steedos/standard-objects": "^1.0.2",
-      "steedos-server": "^1.4.0",
+      "@steedos/meteor-bundle-runner": "^1.5.1",
+      "@steedos/filters": "^1.5.1",
+      "@steedos/objectql": "^1.5.5",
+      "@steedos/core": "^1.5.5",
+      "@steedos/auth": "^1.5.5",
+      "@steedos/standard-objects": "^1.5.5",
+      "steedos-server": "^1.5.2",
       "underscore": "1.5.2"
   },
   "devDependencies": {
