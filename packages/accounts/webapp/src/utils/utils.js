@@ -1,5 +1,5 @@
-import store from 'stores/redux_store';
-import {getCurrentLocale, getTranslations} from 'selectors/i18n';
+import store from '../stores/redux_store';
+import {getCurrentLocale, getTranslations} from '../selectors/i18n';
 
 export function localizeMessage(id, defaultMessage) {
     const state = store.getState();
