@@ -38,20 +38,28 @@ const Login = ({ history, title }: any) => {
 
   document.title = "Login | " + title;
   const searchParams = new URLSearchParams(window.location.search);
-  const redirect_uri = searchParams.get("redirect_uri");
+  let redirect_uri = searchParams.get("redirect_uri");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     try {
-      let result = await accountsPassword.login({
+      let result: any = await accountsPassword.login({
         user: {
           email,
         },
         password,
         code,
       });
+
+      if(result.password_expired){
+        return history.push('/update-password' + window.location.search, {error: "密码已过期，请修改密码"});
+      }
+
       if (redirect_uri){
+        if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
+          redirect_uri = window.location.origin + redirect_uri
+        }
         let u = new URL(redirect_uri);
         u.searchParams.append("token", result.tokens.accessToken)
         window.location.href = u.toString();

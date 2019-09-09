@@ -8,5 +8,9 @@
     "accounts.logout": "注销",
     "accounts.home": "首页",
     "accounts.welcome": "欢迎您",
-    "accounts.invalid_credentials": "用户名或密码错。"
+    "accounts.invalid_credentials": "用户名或密码错。",
+    "accounts.update_password": "修改密码",
+    "accounts.oldPassword": "旧密码",
+    "accounts.newPassword": "新密码",
+    "accounts.confirmPassword": "确认密码"
 }

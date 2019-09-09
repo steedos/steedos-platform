@@ -15,6 +15,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     const { oldPassword, newPassword } = req.body;
     const password: any = accountsServer.getServices().password;
     await password.changePassword((req as any).userId, oldPassword, newPassword);
+    password.db.collection.updateOne({_id: req.userId}, {$set: {password_expired: false}})
     res.json(null);
   } catch (err) {
     sendError(res, err);
