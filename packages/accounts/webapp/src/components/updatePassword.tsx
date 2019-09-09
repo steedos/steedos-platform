@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { accountsPassword, accountsClient } from '../accounts';
 import FormError from './FormError';
-import { checkPropTypes } from 'prop-types';
+import { localizeMessage } from '../utils/utils';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -47,17 +47,17 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
     setError(null);
 
     if(oldPassword === newPassword){
-      setError('新旧密码不能相同!');
+      setError(localizeMessage('accounts.oldAndNewPasswordNotEQ'));
       return;
     }
 
     if(newPassword != confirmPassword){
-        setError('密码不一致!');
+        setError(localizeMessage('accounts.passwordNotEQ'));
         return;
     }
     var reg=/^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/;
     if(!reg.test(newPassword || '')){
-        setError('密码必须包含字母和数字，且不能少于8位!');
+        setError(localizeMessage('accounts.passwordRegError'));
         return;
     }
     try {

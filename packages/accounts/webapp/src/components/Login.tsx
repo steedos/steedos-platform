@@ -9,6 +9,8 @@ import { accountsPassword } from '../accounts';
 import { getSettings } from '../selectors';
 import FormError from './FormError';
 
+import { localizeMessage } from '../utils/utils';
+
 const useStyles = makeStyles({
   formContainer: {
     display: 'flex',
@@ -53,7 +55,7 @@ const Login = ({ history, title }: any) => {
       });
 
       if(result.password_expired){
-        return history.push('/update-password' + window.location.search, {error: "密码已过期，请修改密码"});
+        return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});
       }
 
       if (redirect_uri){
