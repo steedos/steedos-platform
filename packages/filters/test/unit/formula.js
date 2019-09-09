@@ -1,4 +1,4 @@
-const formatFiltersToODataQuery = require('../../index').formatFiltersToODataQuery;
+const formatFiltersToODataQuery = require('../../lib/index').formatFiltersToODataQuery;
 const expect = require('chai').expect;
 
 const userContext = { userId: "hPgDcEd9vKQxwndQR", user: { _id: "hPgDcEd9vKQxwndQR", name: "系统管理员", email: "test1@steedos.cn" } };
