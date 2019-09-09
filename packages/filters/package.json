@@ -1,9 +1,12 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "1.5.1",
+  "version": "1.5.3",
   "description": "filters lib for steedos",
   "main": "index.js",
+  "files": [
+    "lib"
+  ],
   "license": "Apache",
   "scripts": {
     "test": "npm run compile && mocha test/**/*.js",
