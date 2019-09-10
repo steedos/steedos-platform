@@ -1,0 +1,16 @@
+.instance-pick_approve_users .title th {
+  font-weight: bold;
+  border: solid 1px #000000;
+}
+.instance-pick_approve_users .title .step {
+  text-align: center;
+}
+.instance-pick_approve_users .title .approves {
+  padding-left: 13px;
+}
+.instance-pick_approve_users .step-item .td-approve .form-group {
+  margin-bottom: 0px;
+}
+.instance-pick_approve_users .step-item .td-approve .form-group .control-label {
+  display: none;
+}

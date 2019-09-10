@@ -24,22 +24,22 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-10T08:13:58.264Z",
+        "date": "2019-09-10T10:35:25.922Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
         "osRelease": "18.6.0",
         "totalMemory": 8589934592,
-        "freeMemory": 572620800,
+        "freeMemory": 472498176,
         "cpus": 6
     },
     "commit": {
-        "hash": "39769d94d36f892fecdcee9e4fe8327c8a2b3d40",
-        "date": "Tue Sep 10 13:31:16 2019 +0800",
-        "author": "sunhaolin",
-        "subject": "creator中打开的流程设计器中点击设置流程权限按钮没反应 #1328",
-        "tag": "v1.1.2",
-        "branch": "dev"
+        "hash": "719e3186a39ed66864f02be78cdf4fff3e2d58be",
+        "date": "Tue Sep 10 18:28:13 2019 +0800",
+        "author": "庄建国",
+        "subject": "Merge branch 'dev' into 1.5",
+        "tag": "1.5.1",
+        "branch": "1.5"
     }
 };
 ///////////////////////////////////////////////////////////////////////

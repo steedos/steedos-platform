@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "a7e25580d191837ae9ebc003edc9e702f00d9ff8.js",
+      "path": "27bb6eaf6088b288bbe254b866fec5799f367e76.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/a7e25580d191837ae9ebc003edc9e702f00d9ff8.js?meteor_js_resource=true",
-      "size": 4941012,
-      "hash": "a7e25580d191837ae9ebc003edc9e702f00d9ff8",
-      "sri": "kuKuYpJyD4NzR4UDIsnzl4THJoc6Amg9m1aEcmOE71gvXTRg8DG7FydOjRaM8pmiRG1LTBOqAVB6+h+1YfI3ow=="
+      "url": "/27bb6eaf6088b288bbe254b866fec5799f367e76.js?meteor_js_resource=true",
+      "size": 6971682,
+      "hash": "27bb6eaf6088b288bbe254b866fec5799f367e76",
+      "sri": "p4BTFgcFJkLOcFsSiC0Ikh3dYH1EaYICRNdIJPxNsRjJXEJTsX+A97sYigAdQovRFVb3qkBYVGA1+USHoEVG1Q=="
     },
     {
-      "path": "a7e25580d191837ae9ebc003edc9e702f00d9ff8.stats.json",
+      "path": "27bb6eaf6088b288bbe254b866fec5799f367e76.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/a7e25580d191837ae9ebc003edc9e702f00d9ff8.stats.json?meteor_js_resource=true",
-      "size": 99356,
-      "hash": "67407135184d23e4967eeb0d43e92363ff2a23dc",
-      "sri": "/2SIw9oSle8NJWDKLWLMNXK90oK1Cpo6MI5UQ78bctTlNS+w4FRhjFItgxqTzWZejzqlax0Wgb752YZy8o3N3Q=="
+      "url": "/27bb6eaf6088b288bbe254b866fec5799f367e76.stats.json?meteor_js_resource=true",
+      "size": 134633,
+      "hash": "adbced230a0ffdcf8e5e6403e936a7bb916ea4ad",
+      "sri": "7Z0fcF/7y4nhtOq5h5LHSsa8UYwiKpg0ZwndM3FNaunIICx4eZZ6P5KkRjQSuBdrWGkqpvxghffGePvU789gZA=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -3202,76 +3202,6 @@
       "sri": "BZaA2BKFWBHlALCahPXqmZFDS70Vlf55jtczEYEMJmnrmQjEaHO1CWcIUB2HFGnAHSUUgBUgW2rK0SMG7jl7uQ=="
     },
     {
-      "path": "dynamic/node_modules/meteor-node-stubs/deps/stream.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/deps/stream.js?hash=dce40b9b81ebb08e3bd847e1182104c10dbe7235",
-      "size": 37,
-      "hash": "dce40b9b81ebb08e3bd847e1182104c10dbe7235",
-      "sri": "jtXSPJWBj1Lgq7rjozEg4J2ziQri8RCKzOrs6DtPhgMnf8RsSPNCNpnRhsagWnqakig7TgPP6XzhtIKMlS2OQw=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/stream-browserify/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/stream-browserify/package.json?hash=28966a2eec16ef893ece636a24ed8614d5e9872f",
-      "size": 87,
-      "hash": "28966a2eec16ef893ece636a24ed8614d5e9872f",
-      "sri": "+C+VOh3i6Ff5SSCQOTv9KHQ+E/UAne2QbXfeylHhoQd//WR50pfcEL7yjMZtpLmcqk0Zl0La9p/bsmL1r6T4yQ=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/stream-browserify/index.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/stream-browserify/index.js?hash=2495626c8f415cf938b3c177fe0b32a5386658f5",
-      "size": 1116,
-      "hash": "2495626c8f415cf938b3c177fe0b32a5386658f5",
-      "sri": "fTr3+iN0jaKQjXhPlEDg05zcNxsyLQbjLhwAtdfy9p8p3gRXI+XZepLPETaAsL9Gx2RLwZU+18iPMgyxUm8YmA=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/writable-browser.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/writable-browser.js?hash=db1deb79c09331acdf7405b2963caaf78c85184b",
-      "size": 59,
-      "hash": "db1deb79c09331acdf7405b2963caaf78c85184b",
-      "sri": "+mO1JYSVT8BbAOQqjlWckr70I4tePbq8RXDzvUz7ATZ5MfZr4rh30Qq6HJcyLrgrCWW/dP3i9TwIe7l6a4YvWQ=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/duplex-browser.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/duplex-browser.js?hash=ee455a6994b32eecfd1285e0ba42fc6831d1fce6",
-      "size": 57,
-      "hash": "ee455a6994b32eecfd1285e0ba42fc6831d1fce6",
-      "sri": "wmasnAzylO78QYkpREnMOEfihD/Z+AHsT5xt1VUm0mfSuVoBCfScTwTaGM2LsNqxrQjod+lvqtX8/REv4kC1ig=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/transform.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/transform.js?hash=0d3b908a561096904f78b15ddc127c0df25891b3",
-      "size": 54,
-      "hash": "0d3b908a561096904f78b15ddc127c0df25891b3",
-      "sri": "Vwg5luksCO9KezFPCC9tFtFNwMGTo4rKw+efWWIf6k9m5NMNI0RMU++CAfjzTlNcBnr/W0tw1dSUtMsFI4q9pw=="
-    },
-    {
-      "path": "dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/passthrough.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/meteor-node-stubs/node_modules/readable-stream/passthrough.js?hash=56139966a9ffc4b54634ec62cb1d3322f7ec8ab7",
-      "size": 56,
-      "hash": "56139966a9ffc4b54634ec62cb1d3322f7ec8ab7",
-      "sri": "e50Cl5S1apB27aTrm98DZXp5y/+pPhx9xp1SrpYGB+9Kmfr47JPI6D6Aq20vvCnozJTCKns7hgW7mALdBHXSYg=="
-    },
-    {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
       "where": "client",
       "type": "dynamic js",
@@ -4782,12 +4712,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/theme.less.css?hash=0f9654c749f52a9509b9c889c2d6a782a4897dff",
+      "url": "/packages/steedos_creator/client/theme.less.css?hash=02dd55fc324087428f258597fa48c85fb349b908",
       "sourceMap": "packages/steedos_creator/client/theme.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/0f9654c749f52a9509b9c889c2d6a782a4897dff.map",
-      "size": 14158,
-      "hash": "0f9654c749f52a9509b9c889c2d6a782a4897dff",
-      "sri": "rg7LZD40zbL/P8i3joF0dvlB6qMsW7iO1hpCbSw6Ebu5uA2F31q+TIRx4wjlC/iS+w8p9TN1dr2D8HkJYol4ng=="
+      "sourceMapUrl": "/packages/steedos_creator/client/02dd55fc324087428f258597fa48c85fb349b908.map",
+      "size": 14198,
+      "hash": "02dd55fc324087428f258597fa48c85fb349b908",
+      "sri": "8NeFG6UujBWmRtljulpQZzQD7qLkQEyeUsKoiZzo8my1NGkqj67Npktet7tJiHx8xj8oScgz0svDzN5sxdX5Ew=="
     },
     {
       "path": "packages/steedos_app-workflow/client/new_flow_modal.less.css",
@@ -4848,6 +4778,388 @@
       "size": 1315,
       "hash": "9a6cbbd493127b517960d77bc8460f9b19182857",
       "sri": "YE3W+XCF89hy05N9PZb9fNCkcxhJAfMB+wuPvDs2e+BFejjCHlTIyKevprGvOLICrKcUlk+SJL054A47T4xXQQ=="
+    },
+    {
+      "path": "packages/steedos_autoform-modals/lib/client/modals.less",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_autoform-modals/lib/client/modals.less?hash=a4a0b21e1f279b759ee8b0a46d5a5a3b9ba873d4",
+      "sourceMap": "packages/steedos_autoform-modals/lib/client/modals.less.map",
+      "sourceMapUrl": "/packages/steedos_autoform-modals/lib/client/a4a0b21e1f279b759ee8b0a46d5a5a3b9ba873d4.map",
+      "size": 2582,
+      "hash": "a4a0b21e1f279b759ee8b0a46d5a5a3b9ba873d4",
+      "sri": "pbmCeN6qe78IQq/JxlyjGDjaH0d2lXA1sH9wWhL5Nq803O5E+ubst0zu4HAMp8yw7iOpYDxoz2XMR0AH/3KauQ=="
+    },
+    {
+      "path": "packages/steedos_slipjs/src/slip.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_slipjs/src/slip.css?hash=51d8981edd001cf8b0d23c34a5546f9d240d0602",
+      "size": 783,
+      "hash": "51d8981edd001cf8b0d23c34a5546f9d240d0602",
+      "sri": "cU3StCBKPW/H9g8SrYh2NAcvo3Ba2g/TDkNadcMFEPiD7fB50vqUtvtiasFFDEfW+n8LHMRquLh2uJS14dQfxA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/layout/master_print.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/layout/master_print.less.css?hash=d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
+      "sourceMap": "packages/steedos_workflow/client/layout/master_print.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/layout/d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c.map",
+      "size": 3219,
+      "hash": "d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
+      "sri": "maE4ihkkdLHky4/1lhwZ7xCn/2eKM6UAj9muAfs/JGgPy4QtMYR1S2X19yEy5ORXhBlJHO28z4JtIRz8OBzmaw=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-section/steedos-section.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-section/steedos-section.less.css?hash=f5ae213403a036e14d8b99889263ef3810f0a8d8",
+      "sourceMap": "packages/steedos_workflow/client/coreform/inputTypes/coreform-section/steedos-section.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-section/f5ae213403a036e14d8b99889263ef3810f0a8d8.map",
+      "size": 510,
+      "hash": "f5ae213403a036e14d8b99889263ef3810f0a8d8",
+      "sri": "3J2N23aFBX37AAtYk3wsLrRn+SUUkOHY+cg6DTImZjUUkUU0eEBxMoB1sJqVWhZe490l7H1ParnaFIAjItcM9w=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-table/steedos-table.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-table/steedos-table.less.css?hash=f9926c8e30f513accf65f1fd1ab7f0e9a7bb3a32",
+      "sourceMap": "packages/steedos_workflow/client/coreform/inputTypes/coreform-table/steedos-table.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-table/f9926c8e30f513accf65f1fd1ab7f0e9a7bb3a32.map",
+      "size": 3968,
+      "hash": "f9926c8e30f513accf65f1fd1ab7f0e9a7bb3a32",
+      "sri": "lZ+3F0pqDGGA0aS0aAjDfhRuOKsNPAisXEmH6nLJpd5pCkaXsavTtXf1de3LQmxDEDxvJiG7oNtKK5Oks0/j+Q=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css?hash=c474d72152498f265115209c734682f5d65acff6",
+      "sourceMap": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/c474d72152498f265115209c734682f5d65acff6.map",
+      "size": 566,
+      "hash": "c474d72152498f265115209c734682f5d65acff6",
+      "sri": "AfAVFaiTwmkvM0vVHDATqUCkUlhqdK+jEBZEd4wrsbtGlW4+8E7efJDSx3l4EayS8ho0oWu08E93A2cF8uRYOQ=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/layout/master.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/layout/master.less.css?hash=70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "size": 146,
+      "hash": "70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "sri": "/zNhRNXU672OzfacMbuOX7jurEQ0IhVkvFxwB/1bYJ+C9UMuNt7CFAYdhCBTJojnZyA05tzRy0u9r7Pafq308w=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/layout/sidebar.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/layout/sidebar.less.css?hash=8a0ed17f1186f4db9d588cda53435aeeb628b0b8",
+      "sourceMap": "packages/steedos_workflow/client/layout/sidebar.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/layout/8a0ed17f1186f4db9d588cda53435aeeb628b0b8.map",
+      "size": 616,
+      "hash": "8a0ed17f1186f4db9d588cda53435aeeb628b0b8",
+      "sri": "qC66iTNZ2y7jcHYvRA3MP/QX3tMzW1R6ja7sXnkaCx4bdUpKt+LNhITsE+YZeOpgzMiUH14Btbg/Vd2wMawr+w=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/instance/instance_form.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/instance/instance_form.less.css?hash=96bee452931903fbba6f913c229cfcfcb4c7dd7c",
+      "sourceMap": "packages/steedos_workflow/client/views/instance/instance_form.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/96bee452931903fbba6f913c229cfcfcb4c7dd7c.map",
+      "size": 33991,
+      "hash": "96bee452931903fbba6f913c229cfcfcb4c7dd7c",
+      "sri": "hCcdwJcI22mQzu9BF2pVWyDES2hjOV8N1MjC6KYTKSJKzqB2zt3yFWoDSpASLyiV9NjkBXO86yj4NnccG8WAIA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/instance/traces_table_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/instance/traces_table_modal.less.css?hash=193a30880673102e3a485ac3761cfaf0ca849821",
+      "sourceMap": "packages/steedos_workflow/client/views/instance/traces_table_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/193a30880673102e3a485ac3761cfaf0ca849821.map",
+      "size": 528,
+      "hash": "193a30880673102e3a485ac3761cfaf0ca849821",
+      "sri": "syeJDMMT+suYyG2JdNx5IM8NsZB9x9IIVSbMm4JZsIOI/GcC8tOaPJv6wEHsy7x7fVE5l3FIMrc+kpebg67Qmg=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/instance/instance_sign_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/instance/instance_sign_modal.less.css?hash=91493a1fa6a382715531c63cae44c1172e6815cb",
+      "sourceMap": "packages/steedos_workflow/client/views/instance/instance_sign_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/91493a1fa6a382715531c63cae44c1172e6815cb.map",
+      "size": 1006,
+      "hash": "91493a1fa6a382715531c63cae44c1172e6815cb",
+      "sri": "AB3caCqubc2SgNBI861LYUS1LcsM3aNiXgh74hgnFWKpqYrbVmdcddxtR1kYCf4etZ7ol/adjRF7QICIPAQpkw=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/instance/history_sign_approve.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/instance/history_sign_approve.less.css?hash=daaad794e5e25d59eda9b6a4bc954d4ae3379377",
+      "sourceMap": "packages/steedos_workflow/client/views/instance/history_sign_approve.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/daaad794e5e25d59eda9b6a4bc954d4ae3379377.map",
+      "size": 468,
+      "hash": "daaad794e5e25d59eda9b6a4bc954d4ae3379377",
+      "sri": "/9STibmKv7kVm3AsNc8d+DPwua9Ok61/NnkExBf6NmVHOa6JI/SwQCtFRgLqSPOYjL6gQrTGDMzDW+0FBgqwzg=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/instance/pick_approve_users.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/instance/pick_approve_users.less.css?hash=eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7",
+      "sourceMap": "packages/steedos_workflow/client/views/instance/pick_approve_users.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7.map",
+      "size": 423,
+      "hash": "eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7",
+      "sri": "ij1no8Q0DAjgSR5Nmk8JZaCdl6BwHJ/grAQVqz4njCVacWu1DfxMJse8NRLazwexO5K5WkJgJIFz6CrIKbig+w=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/flow_list_box.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/flow_list_box.less.css?hash=0fc79387372eb7d76066b6f94699b5212f932d91",
+      "sourceMap": "packages/steedos_workflow/client/views/list/flow_list_box.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/0fc79387372eb7d76066b6f94699b5212f932d91.map",
+      "size": 622,
+      "hash": "0fc79387372eb7d76066b6f94699b5212f932d91",
+      "sri": "ZpbjlSgqnStFBRYX09/oUBMteMCxAklbkLhau/5wWQKoWthmQZl9ydGtqwYohyOIad6zlG6SlWNLcoaN5iazSA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/flow_list_box_org.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/flow_list_box_org.less.css?hash=bb967f1ae3158a20cddab117b48108dfe4b21012",
+      "sourceMap": "packages/steedos_workflow/client/views/list/flow_list_box_org.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/bb967f1ae3158a20cddab117b48108dfe4b21012.map",
+      "size": 696,
+      "hash": "bb967f1ae3158a20cddab117b48108dfe4b21012",
+      "sri": "7s7uPEGoRXi4u5DSsbUWgAhgNLYzgqDoEzLW5j8Mx1cwERnJcFZBOOUzLStxavUyCSEyiIpM00seQuoUNddg/g=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/flow_list_box_org_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/flow_list_box_org_modal.less.css?hash=c4b3e7566f698bc21f749b495f5beffd700cf99f",
+      "sourceMap": "packages/steedos_workflow/client/views/list/flow_list_box_org_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/c4b3e7566f698bc21f749b495f5beffd700cf99f.map",
+      "size": 200,
+      "hash": "c4b3e7566f698bc21f749b495f5beffd700cf99f",
+      "sri": "5hLygwRgfvBogVo4T1yOFLcNyJSUxICmdzVWR7eQRJwutc42Vb1oy9U6gaP8ia1pOMrJXyC0DSTjHf5kGMcwzw=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/forward_select_flow_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/forward_select_flow_modal.less.css?hash=b6bee0cce3964734dd12101b39f3235699652b9d",
+      "sourceMap": "packages/steedos_workflow/client/views/list/forward_select_flow_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/b6bee0cce3964734dd12101b39f3235699652b9d.map",
+      "size": 137,
+      "hash": "b6bee0cce3964734dd12101b39f3235699652b9d",
+      "sri": "bHVEKOkY6UQlwyjmD2U5ToR/BRZaeb/4ibRYdWZ/19/o7h/GzTqs4Kb+KPM1TBr/RpkeKQwfM6f2zO87oXedKQ=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/instance_list.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/instance_list.less.css?hash=fcd85c778715f887f177fbb91dc08ad5d9d1cecd",
+      "sourceMap": "packages/steedos_workflow/client/views/list/instance_list.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/fcd85c778715f887f177fbb91dc08ad5d9d1cecd.map",
+      "size": 5157,
+      "hash": "fcd85c778715f887f177fbb91dc08ad5d9d1cecd",
+      "sri": "yF4v5csP8hUKllm2xendBWzK6V7ZaKokSZXN7sDxhxN2qPFJ+rZvTYkXls/K7upDBcnhkhlTWSx8voX05qs5dA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/menu.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/menu.less.css?hash=509ed0525dcd9e6cc78956f97e20b6174b998300",
+      "sourceMap": "packages/steedos_workflow/client/views/menu.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/509ed0525dcd9e6cc78956f97e20b6174b998300.map",
+      "size": 698,
+      "hash": "509ed0525dcd9e6cc78956f97e20b6174b998300",
+      "sri": "80Lmuk2HrsnGX7pB9ihfpxkK97zIxKjO55aiAqIgOxgUBeq0FXaaQj+wFEytFWduwcdd6Hh5rBuNSVwQs/MQzQ=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/workflow_main.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/workflow_main.less.css?hash=1642737f8bf5c9ae53a6be6e754a9c7afc09a248",
+      "sourceMap": "packages/steedos_workflow/client/views/workflow_main.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/1642737f8bf5c9ae53a6be6e754a9c7afc09a248.map",
+      "size": 15710,
+      "hash": "1642737f8bf5c9ae53a6be6e754a9c7afc09a248",
+      "sri": "7Qwvd9jndLxtyJS5UtHmWw7LJDEpKtZYNkUY5W5gzBfByx4ChJtAf+SOMOh6DJhLCm1JPgjsppeV1aeLWPkQxg=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/flow/admin_flows.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/flow/admin_flows.less.css?hash=95fd997bd91db24726f7db28b410038366e488e9",
+      "sourceMap": "packages/steedos_workflow/client/views/flow/admin_flows.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/flow/95fd997bd91db24726f7db28b410038366e488e9.map",
+      "size": 1958,
+      "hash": "95fd997bd91db24726f7db28b410038366e488e9",
+      "sri": "qCbhW6r+MTqNUknvsZ2IlB4xL3zrz0toSP1epe25VQGJhSG8UtfcdQvjJJJnNTk80asjp543W+bXF3/nLdmulw=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/admin_flows_roles.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/admin_flows_roles.less.css?hash=8ba4d38eec4fe7b50f4cb1a7859efe6b5ad6ac2b",
+      "sourceMap": "packages/steedos_workflow/client/views/list/admin_flows_roles.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/8ba4d38eec4fe7b50f4cb1a7859efe6b5ad6ac2b.map",
+      "size": 264,
+      "hash": "8ba4d38eec4fe7b50f4cb1a7859efe6b5ad6ac2b",
+      "sri": "RDUf6MyeHX/qV8nYUT/OvdFaH4TZBmTq4hxYU5D6qUva2ybqfF0LNZ2TGYkRUFXjHjkOyW17zTfkNHIxlvzxQg=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/admin_flows_roles_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/admin_flows_roles_modal.less.css?hash=54d2986d340e78b48a5a03b3034ab275211d6450",
+      "sourceMap": "packages/steedos_workflow/client/views/list/admin_flows_roles_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/54d2986d340e78b48a5a03b3034ab275211d6450.map",
+      "size": 2145,
+      "hash": "54d2986d340e78b48a5a03b3034ab275211d6450",
+      "sri": "a1rP4gesdk23/OXt1PgXqHNfMiwyfpF09LRDReT1opL1/889hWFk+8Bf+XW7T49WcBHD67UeiOEQlbPsiRAuaA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/admin_flows_roles_detail_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/admin_flows_roles_detail_modal.less.css?hash=29137765b1bebbb0fba77e46e3d091f230a42065",
+      "sourceMap": "packages/steedos_workflow/client/views/list/admin_flows_roles_detail_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/29137765b1bebbb0fba77e46e3d091f230a42065.map",
+      "size": 175,
+      "hash": "29137765b1bebbb0fba77e46e3d091f230a42065",
+      "sri": "P8lmGpmisBXXNZLiNUMEiOKMHaf1yEtEM6BonGQrNyjgm3fRiHEtF+21nSdxy+k3rlVvUu6cQYdfXv1ifkBkqQ=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/related_instances_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/related_instances_modal.less.css?hash=f378cb934aad783f58880def30625ffe65729a41",
+      "sourceMap": "packages/steedos_workflow/client/views/list/related_instances_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/f378cb934aad783f58880def30625ffe65729a41.map",
+      "size": 800,
+      "hash": "f378cb934aad783f58880def30625ffe65729a41",
+      "sri": "cOMWXfm9lv/Es3R3M+PYK5PmaYMYs1SpobBJ8rtfvHvbgPyQVkdehcpsYdmdBYKWaHkSjGlqbXC5eErNYRk0aA=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/admin_flow_positions.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/admin_flow_positions.less.css?hash=70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "size": 146,
+      "hash": "70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "sri": "/zNhRNXU672OzfacMbuOX7jurEQ0IhVkvFxwB/1bYJ+C9UMuNt7CFAYdhCBTJojnZyA05tzRy0u9r7Pafq308w=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/tableau_introduction_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/tableau_introduction_modal.less.css?hash=087fd5dcd9294a808c55741d9059ee90c533455d",
+      "sourceMap": "packages/steedos_workflow/client/views/list/tableau_introduction_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/087fd5dcd9294a808c55741d9059ee90c533455d.map",
+      "size": 648,
+      "hash": "087fd5dcd9294a808c55741d9059ee90c533455d",
+      "sri": "mlJQLAbcKZLIBqxxHu3iMMQshKKkH9BmpowWo/xo2M2nyOOpI6buVM4Arz8A0x5e9x73YOdaJD26fFJ0qyvaEw=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/batch_instances_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/batch_instances_modal.less.css?hash=984418f50f31ec3d75533209852b16ddd5b51f0b",
+      "sourceMap": "packages/steedos_workflow/client/views/list/batch_instances_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/984418f50f31ec3d75533209852b16ddd5b51f0b.map",
+      "size": 347,
+      "hash": "984418f50f31ec3d75533209852b16ddd5b51f0b",
+      "sri": "X7+yIAVumaciH42ODL3YWaUTd3T+m1IwiRhpyb7Pma/iOxzGEykiP/QaoCV5GAIaKIUApu4goWgo0+JGuLlKng=="
+    },
+    {
+      "path": "packages/steedos_workflow/client/views/list/cancel_distribute_modal.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_workflow/client/views/list/cancel_distribute_modal.less.css?hash=4188904cf2f3569454811c28108a908104e824cb",
+      "sourceMap": "packages/steedos_workflow/client/views/list/cancel_distribute_modal.less.css.map",
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/list/4188904cf2f3569454811c28108a908104e824cb.map",
+      "size": 277,
+      "hash": "4188904cf2f3569454811c28108a908104e824cb",
+      "sri": "SfZKLjN0XSzUKLlFRWmLweX6bpkbznd2MBtUGBqc4PsSlo+y4HQNy7KB01v+uaWTcQQ00WVSPH7Et0bIVNjPWg=="
+    },
+    {
+      "path": "packages/keepnox_perfect-scrollbar/css/perfect-scrollbar.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/keepnox_perfect-scrollbar/css/perfect-scrollbar.css?hash=a4053a000c90ffbf00f00e122d22971857ccc2cc",
+      "size": 4266,
+      "hash": "a4053a000c90ffbf00f00e122d22971857ccc2cc",
+      "sri": "EDMbBEZWVSAQWnSFYMTheem7NHJqB8V2JT1X67o3hyuhXXDbsEre6V/PYOXxwt/Bor6Us7SZDKUZrMwWTBEhqg=="
+    },
+    {
+      "path": "packages/jeremy_selectize/selectize/dist/css/selectize.bootstrap3.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/jeremy_selectize/selectize/dist/css/selectize.bootstrap3.css?hash=f5d9480b37b33f72c9b01693f1da35566f5f13b8",
+      "size": 10729,
+      "hash": "f5d9480b37b33f72c9b01693f1da35566f5f13b8",
+      "sri": "LJ8P0fWTzKC5vbFIliGzvvMJmhd3b8KuZdm0SERo/fWziwaOG8SUIPIFSBCJDfl40PLZirFwa3enXoJ/xHejeQ=="
+    },
+    {
+      "path": "packages/comerc_autoform-selectize/themes/bootstrap3.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/comerc_autoform-selectize/themes/bootstrap3.css?hash=702750d962a1249caba7a0fa41e2facf0643e693",
+      "size": 207,
+      "hash": "702750d962a1249caba7a0fa41e2facf0643e693",
+      "sri": "UEbcGIDZy+NzNtvh2eIiA+fyEx4ciw5dIxNxXmW3YUmDnqfQcNo5fAuFa0eeJkRhsg8hZ2Hef2Ra4MeiA8agQA=="
+    },
+    {
+      "path": "app/client/compatibility/swipebox/swipebox.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/compatibility/swipebox/swipebox.css?hash=47eb3a8d7fb4e06601928d192b015d1be89dd9cb",
+      "size": 5445,
+      "hash": "47eb3a8d7fb4e06601928d192b015d1be89dd9cb",
+      "sri": "dHD2MYVfoUoKwIwxsHzzZK9/Vtl0GSkdOm9N0du2LSAekrafe7nCcHV2Z+KAWp1TjPRsXT+70VgBrWrgRzt/Nw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -5420,6 +5732,86 @@
       "sri": "1hOpj/w0o4gq78aB0PlHOMqzLC0KV8CYo84ZNe01Jhgr0nKLQgTdKFLYMWxQVv1lKVsescWZ7WVX5dNASIWUnQ=="
     },
     {
+      "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css",
+      "size": 4053,
+      "hash": "b9547b69afeb56e55b1f00f02dfb855b1afad9c1",
+      "sri": "/YAQOWy5oTA+aQ1X+kOkOnsGZc9tdMQfImbS3owBKJGAYAhGMOuEjSw4cIA6xoOLUH4NP0A5deQ/pqMxSLp/kw=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.dark.css",
+      "size": 4200,
+      "hash": "d85e0ab8b459135855c4d729b624c8aea081581f",
+      "sri": "U8wC0Y6kY6cJHACXFjnHiZ88d4qX02hgF7bUi5UHo4WQpzaewESMM25Vb7wYZ4jlJ/q/1iEf9/7LNwcCfS94Ww=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.forest.css",
+      "size": 5208,
+      "hash": "dcd2ae3d517f69aa2b2228645c20931fc8994b33",
+      "sri": "YYawKhnW+Q41390oq6sBksa5fnO5eyQDLQNXJ1LBMI0whBWLc8h4iwRUtcB/HqDnxxH8IajG8A6t/1YlDIrM/Q=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js",
+      "size": 1108921,
+      "hash": "9570edbd1fa9226da6991ea9b7d28d7025cfdba3",
+      "sri": "ImRiLKrrb4FLaTnXMn0V3zRZf2uHgNpGDDhoPbBjyMR86HstDVfMwgsmMfUDEAiY6El6luyaW+5thgWGh3czYw=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/index.html",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/index.html",
+      "size": 3014,
+      "hash": "4899669ea54f135caef77aca00a79a16c7917a1a",
+      "sri": "1ow5OVm0J4w2ENyVT9LPqSbmjD81YnrAkwo80V5w4VjzvWzOlJ2ekP2R2JV2+JAP9mlJnWTrDDlpiqVH7UdJSg=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/index.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/index.js",
+      "size": 1239,
+      "hash": "7646379e38e5d686479bf305a9591fa363a4306e",
+      "sri": "pI6AStkZ8n9F3tRTKHuig2pqfNLXPpZu9zIIE6iVtsuKpZRs8oG1oJjPwB/g76ULQ4DnIyiEX943CQbrO6eGhw=="
+    },
+    {
+      "path": "packages/steedos_workflow-chart/assets/index.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/steedos_workflow-chart/assets/index.css",
+      "size": 37,
+      "hash": "0dd1bdac71090a9aba8fea7364809a2a92fb0098",
+      "sri": "bx+VQh3nyLV4f3EZVKeuzIEjpL1GuOQIO03DwsNF1rehBvSfsnfYCUbggSqC82k2atIkavDYMrChnxma8qgPjw=="
+    },
+    {
+      "path": "app/workflow.html",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/workflow.html",
+      "size": 1219,
+      "hash": "3e446c75fbfb3d37e2906214264d45fb52d8ebb4",
+      "sri": "AL4/TjEEMSqdQNzoG5AoagQ0wI7WfiA2onm16I5d/D8bvuv/v89Cwz7wpSpcURixLpGYvq+xVKBgaVfO4ruVMA=="
+    },
+    {
       "path": "app/built/global.css",
       "where": "client",
       "type": "asset",
@@ -5470,6 +5862,426 @@
       "sri": "rkbc4lIqXN6WTjEd4MnCBJNzZqZyprePSQGmQeQqHHvCMEznOD0TjYKr9pK0WDIa/Sua48FSAt3vIzJjJJoCag=="
     },
     {
+      "path": "app/cab/OfficeControl.cab",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/cab/OfficeControl.cab",
+      "size": 213792,
+      "hash": "081778965a99a379a9775b7a84e88dff74fee00b",
+      "sri": "4DZO/YApjJefE54XgIVHMP19reppgV0Q87uluc1/GnCX8pcKT5T6/Ued1QT3vnnqEGLBm/86bPrQ0J3ObWmPvA=="
+    },
+    {
+      "path": "app/excel/steedos_import_users_simple.xls",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/excel/steedos_import_users_simple.xls",
+      "size": 32768,
+      "hash": "b3966ec3756c739ace11ca7a75e5f8e05de21456",
+      "sri": "3t8EMJ4ps9yWnKWB2/QUZqFQdptkuUeFbM9f8I8ewHvo5D2xH7y2xUh4V8epDK3o+dI0SS6dwGjgBRx2CoWR0Q=="
+    },
+    {
+      "path": "app/favicons/android-chrome-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-144x144.png",
+      "size": 19051,
+      "hash": "57c55bfd2d4b15bebebf29a298e2a21db3c90000",
+      "sri": "Fnvl4li8iIdOEr3l0WqhdkN97epwscF/tsb0tauY6lgfvI/ROYfovM85stnCCnouVkvjvM8uu7VYKihU4YW3sQ=="
+    },
+    {
+      "path": "app/favicons/android-chrome-192x192.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-192x192.png",
+      "size": 44066,
+      "hash": "4b04c767ab55f16b17ce7e2e303db47353895af2",
+      "sri": "iNT5nP5eBzYzIb9ICk2WCz8+CVtWjlKqOXlbfPgPlsCOxQ4Yz40rkcdaoRwPG9Zph+lW/jw3Chc6FYudaenhEA=="
+    },
+    {
+      "path": "app/favicons/android-chrome-36x36.png.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-36x36.png.png",
+      "size": 19965,
+      "hash": "566bb24c8ee9b9f59cc4fbc8fdbad56cbb791077",
+      "sri": "JC4ZdZc0CiWpNW11bDMoULwJzNdhgenh1XNKksA25m7l7eOdWjiwLbyMd4H2kSHd/Wplzjt2jhSVkMMler0yjA=="
+    },
+    {
+      "path": "app/favicons/android-chrome-48x48.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-48x48.png",
+      "size": 21181,
+      "hash": "711a17de45d8c4aa3c196d2d98ca7c06724f9ac4",
+      "sri": "GnVOn5pKKqNbiCBlZ8C0XUkaqmzF9UYGnQWlk02euAoCUL6WgkvvUr/tix+zUoNDraD+ghf2WwbGBJRlwSzhFQ=="
+    },
+    {
+      "path": "app/favicons/android-chrome-72x72.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-72x72.png",
+      "size": 10317,
+      "hash": "60539daba8430c3c35e7eaeaef4a3cf5945647a0",
+      "sri": "OqwuX7w8z+Qg9MmTMZdIhRYcbLbd4JT8Z3PKgoqFW2GKCtirx9IOznsJyrrGPE5G0QmMUsGTZNO4mveYUdlyYA=="
+    },
+    {
+      "path": "app/favicons/android-chrome-96x96.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/android-chrome-96x96.png",
+      "size": 13260,
+      "hash": "e2ab095bcf95165bcd880e1954908f6980f30c56",
+      "sri": "iP/y0GdaOwbIgF+stTrYOWHwd/h1e8pBqvt7IPHrvbziusIebdohA+A+5tXEbDO74FiG5VkniZJLMpufOzz5VA=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-114x114.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-114x114.png",
+      "size": 15988,
+      "hash": "a73d0b7c3277e1bb8cbb4116e9edecf5e1d7050b",
+      "sri": "lc99DKQHP8em2ZUzMy5JevkeaVDdN7Sl00s50oS6Bdq0lalGAlY20SA8L8/3hNXI1xtOS9Q2f3jFjLplSJ1Uiw=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-120x120.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-120x120.png",
+      "size": 16774,
+      "hash": "42ee2ef24f8422103e8ca52d0acb87f6fd5e0fca",
+      "sri": "kf/5GwjuPBEFZVXTQi6MHraXHHLfC2WoQrOulhi1NJ34Nf5Z3x/SVwtey6GGYMAk4SIiiWLgQu/A8PWgzaSEEA=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-144x144.png",
+      "size": 19051,
+      "hash": "57c55bfd2d4b15bebebf29a298e2a21db3c90000",
+      "sri": "Fnvl4li8iIdOEr3l0WqhdkN97epwscF/tsb0tauY6lgfvI/ROYfovM85stnCCnouVkvjvM8uu7VYKihU4YW3sQ=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-152x152.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-152x152.png",
+      "size": 20290,
+      "hash": "b6b2316deef9c02a83c791d4fc494b76d28fc167",
+      "sri": "CPlKahujGojAsZFlGYatLHEGYZxi+AA6i6tH3qOIbj1uOPS0v98lLNajgfdMLVHMHD2lK2Wvst1lFy3kWvFqmQ=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-180x180.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-180x180.png",
+      "size": 24859,
+      "hash": "5e4f03080a563b4ab68c151c079bfbbc1b8f017c",
+      "sri": "NDiQMZ0nV46GYYfzezFhdBHcaiymByhRs+s48sKvmKvHeOanxesT1km6MNKZKR6IEhHwy11sM+DFTUIpKlSbzA=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-57x57.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-57x57.png",
+      "size": 8954,
+      "hash": "fb615ba339da96719a3728d7900cbdd8fe0d7d36",
+      "sri": "4BbeRKFD4b66KBr7Tv2YXD7jGhyDxD4x+IJkqmCTo3qoofvtcyuGqtULBAiMVdZPXh/I782YdX+VcKF9PrMgEw=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-60x60.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-60x60.png",
+      "size": 9288,
+      "hash": "89392e0b3512032808d3f2d42c022f1057999ad2",
+      "sri": "c8+frSFSZZJOJ6sWsSVqletDbUnyCbP2JLm6nbDXRHsnzFqpEd7dRQ2eTHhrmlR7/pCM6SLPGmd2eEJMPzsl1g=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-72x72.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-72x72.png",
+      "size": 10317,
+      "hash": "60539daba8430c3c35e7eaeaef4a3cf5945647a0",
+      "sri": "OqwuX7w8z+Qg9MmTMZdIhRYcbLbd4JT8Z3PKgoqFW2GKCtirx9IOznsJyrrGPE5G0QmMUsGTZNO4mveYUdlyYA=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-76x76.png",
+      "size": 10921,
+      "hash": "05029bda4f2de85f3f058941385a6754c3e42f64",
+      "sri": "iUtFa/aq06Lsa6ANz1WJaJM+oKdI6xQLSOs0kJkjoDlsx+uGH8B23m5eEzVm8wRLlKyxhLSlFnWsu3nHdWze0w=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon-precomposed.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon-precomposed.png",
+      "size": 24859,
+      "hash": "5e4f03080a563b4ab68c151c079bfbbc1b8f017c",
+      "sri": "NDiQMZ0nV46GYYfzezFhdBHcaiymByhRs+s48sKvmKvHeOanxesT1km6MNKZKR6IEhHwy11sM+DFTUIpKlSbzA=="
+    },
+    {
+      "path": "app/favicons/apple-touch-icon.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/apple-touch-icon.png",
+      "size": 44066,
+      "hash": "4b04c767ab55f16b17ce7e2e303db47353895af2",
+      "sri": "iNT5nP5eBzYzIb9ICk2WCz8+CVtWjlKqOXlbfPgPlsCOxQ4Yz40rkcdaoRwPG9Zph+lW/jw3Chc6FYudaenhEA=="
+    },
+    {
+      "path": "app/favicons/bitbug_favicon.ico",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/bitbug_favicon.ico",
+      "size": 1150,
+      "hash": "7c796d0ec791884deea2eb8752728666ba34b1ae",
+      "sri": "abFK+IUyKRYYT2hHcUKPWRyWOTH0LHwqHJ0Mm3EzbNkpD4/Gz+OtOEjMkrcbjmeRBNVYkJtaK6okjfhiQ9Lr8Q=="
+    },
+    {
+      "path": "app/favicons/browserconfig.xml",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/browserconfig.xml",
+      "size": 453,
+      "hash": "8919837f3620a61d396152d4983821eca64d7f98",
+      "sri": "TBdvN5BR9OfFFlA16fW8Pr1rLA2RupUlE0YC2sqe0cnMAYkRi+kk/LWoBdzOHlXXCzEya30apIriZ6x6ZmJmGg=="
+    },
+    {
+      "path": "app/favicons/coast-228x228.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/coast-228x228.png",
+      "size": 33956,
+      "hash": "093393b0d487fd9f1795a1183c3759449216c2e5",
+      "sri": "S2XVanUVXimn+THoWlSKo0b7HLCF271T3lfrRvUUaGLUwv/eLxPtGEmoTftd2G+WHQImvh3ATe/ezo5H93Yjtg=="
+    },
+    {
+      "path": "app/favicons/favicon-16x16.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/favicon-16x16.png",
+      "size": 5076,
+      "hash": "9d3bf59588902e93513c16be5e75b3026ffc22da",
+      "sri": "w2qqP/bUOWliGPEVbFQ2ogqZ2xmf5ExqvIo8m7MmnAfXLlaQq7C9CFN5FQS4J1U+KQNwKPcMhX8zmJrOjZtrLw=="
+    },
+    {
+      "path": "app/favicons/favicon-230x230.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/favicon-230x230.png",
+      "size": 34269,
+      "hash": "5db8a52b395c5d87b7de0ced0df2cb50ac806050",
+      "sri": "GgiMl7osCBMcFVXDbRSs/i/2N0KN0EWtehZJF/lwCRh57wAPAHr6pN6rnpTITN0VddDOF6joYGkMJFORQzX0EA=="
+    },
+    {
+      "path": "app/favicons/favicon-32x32.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/favicon-32x32.png",
+      "size": 19573,
+      "hash": "2aec1ff58597ef12d51cd436d01db9178418e695",
+      "sri": "veQ+hiLeEPGIbAam/WHTOKqAyC0ksRvqhmSGB4hTpyN8mnI53tievueStYTqMm5ilLo9hqWlGIMa+tYv2GJ58A=="
+    },
+    {
+      "path": "app/favicons/favicon-96x96.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/favicon-96x96.png",
+      "size": 30050,
+      "hash": "78a5a82fb42dbed3379a86e39d42deae5c17efc8",
+      "sri": "XqRlu7HAWyxra+0TLgQG54VLmY/ueRKtllGfRPyy8na7guAgTY7fZ0A4DtqC4TWPRqSS6yxTfzTcoebYinnLHA=="
+    },
+    {
+      "path": "app/favicons/favicon.ico",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/favicon.ico",
+      "size": 1150,
+      "hash": "7c796d0ec791884deea2eb8752728666ba34b1ae",
+      "sri": "abFK+IUyKRYYT2hHcUKPWRyWOTH0LHwqHJ0Mm3EzbNkpD4/Gz+OtOEjMkrcbjmeRBNVYkJtaK6okjfhiQ9Lr8Q=="
+    },
+    {
+      "path": "app/favicons/firefox_app_128x128.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/firefox_app_128x128.png",
+      "size": 34222,
+      "hash": "daa8ae900ac22f44c8952ad7f278b8af3fcfd86f",
+      "sri": "ihhMzE1XpgNY1JgUOBeFaaGZRgOxYOmjyxrMTgNvT9Y+dE6hrJZs4A2Lele2yzSvvZfCRex1gwv+GFibymSGow=="
+    },
+    {
+      "path": "app/favicons/firefox_app_512x512.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/firefox_app_512x512.png",
+      "size": 95673,
+      "hash": "dcf0b0ca264e5b526887a0b4264e1af3d17400a2",
+      "sri": "ux3C8Lmb7c7wRW24SiwrkvkSCLmwZAo1PP7dINwFcoPfMnSaXxdDu8ezgnEW3bia9ey3vdsXhc2U4HFETSA7XA=="
+    },
+    {
+      "path": "app/favicons/firefox_app_60x60.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/firefox_app_60x60.png",
+      "size": 9288,
+      "hash": "89392e0b3512032808d3f2d42c022f1057999ad2",
+      "sri": "c8+frSFSZZJOJ6sWsSVqletDbUnyCbP2JLm6nbDXRHsnzFqpEd7dRQ2eTHhrmlR7/pCM6SLPGmd2eEJMPzsl1g=="
+    },
+    {
+      "path": "app/favicons/manifest.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/manifest.json",
+      "size": 930,
+      "hash": "9da022335215cb252ccf779f2125c32f413ad0f0",
+      "sri": "XnLHtKHJax3A53tMqmwYBMBC18VG1RM1+zrk4QNtVrpiNNxTslPju8gcSeRQb5qHywuXpY9vPWmxh1zfEOCYgQ=="
+    },
+    {
+      "path": "app/favicons/manifest.webapp",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/manifest.webapp",
+      "size": 275,
+      "hash": "b9b44a472cef7037d5aa1b486ef0a8294709c2fc",
+      "sri": "hMF79aNXEEY+XA/bknQPLp3dmw+dgv+yw6tofana3/pPJ2TaqxXurKUwKpXpu8YRWSlccFCSLd8coRIOnPjZVg=="
+    },
+    {
+      "path": "app/favicons/mstile-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/mstile-144x144.png",
+      "size": 15988,
+      "hash": "a73d0b7c3277e1bb8cbb4116e9edecf5e1d7050b",
+      "sri": "lc99DKQHP8em2ZUzMy5JevkeaVDdN7Sl00s50oS6Bdq0lalGAlY20SA8L8/3hNXI1xtOS9Q2f3jFjLplSJ1Uiw=="
+    },
+    {
+      "path": "app/favicons/mstile-150x150.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/mstile-150x150.png",
+      "size": 31126,
+      "hash": "70e3ead09927dc66ad358910a52811b2db057eaa",
+      "sri": "3MEfMFA1DJ7L6dFzENnsbBn1C4SPHIlmkYHWtb//3VzGk2dgsy8w+HMw5qQc16RWywzDqagPTHmAgy7RuK/QFw=="
+    },
+    {
+      "path": "app/favicons/mstile-310x150.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/mstile-310x150.png",
+      "size": 63816,
+      "hash": "a3933f7309d9bc814ac8beaf942b7546d6fec971",
+      "sri": "4d1iTF5mFIESH5Qx3a3Marxq9imf0oF5sW7HpQr6rDy4EZDpQGXJMuwwJmDtMTuD7dC4tMzSetmT2+Fhkia0LQ=="
+    },
+    {
+      "path": "app/favicons/mstile-310x310.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/mstile-310x310.png",
+      "size": 57236,
+      "hash": "f0a1b979e51f1e6488fa03f3167d259ded43472f",
+      "sri": "g+rEMZS1y2B712rqDlXLzM0Y203D17PwTD/YYfVJ/Q2xW9TLfZZnenUHUWNXGjqmX/anNxb0R5gHqaQmorjIGQ=="
+    },
+    {
+      "path": "app/favicons/mstile-70x70.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/mstile-70x70.png",
+      "size": 10317,
+      "hash": "60539daba8430c3c35e7eaeaef4a3cf5945647a0",
+      "sri": "OqwuX7w8z+Qg9MmTMZdIhRYcbLbd4JT8Z3PKgoqFW2GKCtirx9IOznsJyrrGPE5G0QmMUsGTZNO4mveYUdlyYA=="
+    },
+    {
+      "path": "app/favicons/twitter.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/twitter.png",
+      "size": 207762,
+      "hash": "9568f7f0e7e90b61826bcfb553b959856f70967c",
+      "sri": "jY+La+Q84BR8jc3FYXEeX568ywzFK6GF82izeDiAO4uUPm/BMEH/ch65nqyCiCsjDHm+QNCQg3fCCsDvob2TjQ=="
+    },
+    {
+      "path": "app/favicons/yandex-browser-50x50.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/yandex-browser-50x50.png",
+      "size": 21181,
+      "hash": "711a17de45d8c4aa3c196d2d98ca7c06724f9ac4",
+      "sri": "GnVOn5pKKqNbiCBlZ8C0XUkaqmzF9UYGnQWlk02euAoCUL6WgkvvUr/tix+zUoNDraD+ghf2WwbGBJRlwSzhFQ=="
+    },
+    {
+      "path": "app/favicons/yandex-browser-manifest.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicons/yandex-browser-manifest.json",
+      "size": 155,
+      "hash": "3be527dd5efa95d1750526ac5810d9c80b5cf177",
+      "sri": "y6TZ+2sEMmTSdEtqmTqUFSzlwpppH0po6t33sTmnncInhX46fpePOJskUusXHO0IKnq6fghbBO7oc6M0pBAWBQ=="
+    },
+    {
+      "path": "app/images/bg.jpg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/bg.jpg",
+      "size": 29176,
+      "hash": "18697251b69fdaf58c1d0b39d94cd6ec1ebae446",
+      "sri": "fvPwLMVirFdYpipBJeF9VlCwQiOoUQaZ+kO7OJej+t982vSdj/acA7xKMlLN7j/v94eFQe0JO7LDq5K+XUxXKA=="
+    },
+    {
+      "path": "app/images/ua-logo.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/ua-logo.png",
+      "size": 39072,
+      "hash": "bf7719bdbdd35ddf797288941863b19e100cc2bd",
+      "sri": "lE7Lb/O8IDeRQeAxuL16NdpT7EoshnPLkHRu+RecwhMbSzG+p1tJKQ2FV4N0e9yLbTVCzwJkool0u8DLIBl14w=="
+    },
+    {
       "path": "app/js/infinitescroll.js",
       "where": "client",
       "type": "asset",
@@ -5490,6 +6302,66 @@
       "sri": "HvnDC5OnMUovH4SnWQ1VfMUvucbLqxml1lBCfBvWsMF4hAkMRHjrD0yWQauYwRtCtc20DLquXpwrhsFFQkvG1w=="
     },
     {
+      "path": "app/js/nw_core.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/nw_core.js",
+      "size": 3100,
+      "hash": "3d28eb9aa4e455b4f634a3a0e240dcbfb9095b74",
+      "sri": "9E8e2CziwBD5C1HoMl25zV+vOJ/ERLaFqqZB/MxkGcN7kh9N6YfwF1WiwkDu5xcxFNO7/GV6+puDvcQe2x8EPA=="
+    },
+    {
+      "path": "app/js/workflow_client.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/workflow_client.css",
+      "size": 834,
+      "hash": "9f709f69111f1aac44eac8cff374f041b95ac5b7",
+      "sri": "/gfGGzdnCbVxbUpb0Xf+gUhju0i97dkVI0ffkpVGsm/tKBc5tRej2JMXda1w2Wc81OEqdZPtK+2h9FJ5R2B+eA=="
+    },
+    {
+      "path": "app/js/workflow_client.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/workflow_client.js",
+      "size": 3509,
+      "hash": "0a417003fea713945c7259c70fad3fa536685a22",
+      "sri": "bJ0sVVLVwhSYmZta2jA1zaKx3fl84TgcWpvHs9wKq9GZJe7VDH/FD/BhqBu2H1DPQrWvS5140pIIHADqsH85Uw=="
+    },
+    {
+      "path": "app/js/xlsx.full.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/xlsx.full.min.js",
+      "size": 1001064,
+      "hash": "06e769d2827936dd49deecc8cc8edd3598422c56",
+      "sri": "Bk9SYEkE9NpxqInRntNqpAewXC3V6oVcvAttITG2EJgbcdxwIcgnlUsk/z/VAqjdBa3irmPNkbCnSAXXCnD3IQ=="
+    },
+    {
+      "path": "app/sound/notification.mp3",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/sound/notification.mp3",
+      "size": 23065,
+      "hash": "f9a69afa9fc9d5cb0e1a56427b733c95a3b1a37e",
+      "sri": "fQwxY+hvTDEGYE0lLYY/FX/By2Uj91gak7ovMBWyEl5DLpSIhur4K1rDVhZTD1jFqZlYyzZb0McdpcCcNlAxsw=="
+    },
+    {
+      "path": "app/word/demo.doc",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/word/demo.doc",
+      "size": 29696,
+      "hash": "31007e9052241b78a1e31edd5fe09a2d2eb24ede",
+      "sri": "K83/VMpdaFEsZucbiwN0FWy2Ql3zyS0/kV3ik2KQjOm4qWUVM17pwCLrwfK2OXNzChuecPXoUZykJYRzfafHhQ=="
+    },
+    {
       "path": "app/images/billing/WePayDescription.png",
       "where": "client",
       "type": "asset",
@@ -5508,6 +6380,346 @@
       "size": 10480,
       "hash": "0065cbd6d21ddf7f5efa653ee347c9dda3d31bc7",
       "sri": "j5bPUXLtySmBVNanpSipyheqDj1KoOxLjKM6a+XMevDYvrmaRIxJQ6T3d8GvvuFkFRtDPHHtWdrilHeaR121rg=="
+    },
+    {
+      "path": "app/js/selectize/selectize.bootstrap2.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/selectize/selectize.bootstrap2.css",
+      "size": 15641,
+      "hash": "6a0f70096fbb224113d97272b815b14a886f7dc8",
+      "sri": "y6i9lA6pxmZNxKH0Z6fRG91J5oa9CV18JF2igtcri14KYJivi5Xr+AAyH9nlffxgMnWsAbQwikCehcL/lJOhgg=="
+    },
+    {
+      "path": "app/js/selectize/selectize.bootstrap3.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/selectize/selectize.bootstrap3.css",
+      "size": 10766,
+      "hash": "a2a09eb186fe1df26f3b32974eb4dc9ef8da47fe",
+      "sri": "9faQzoOrmSWuWok5WafiKlN8eeeJ0lf29iL5V7kJ85lJj0EYdQpvIwCsU4Q6pFOKdp8DIVg5yINP9YCOysbK5w=="
+    },
+    {
+      "path": "app/js/selectize/selectize.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/selectize/selectize.css",
+      "size": 8589,
+      "hash": "fabae3f163ed504336c7ac03625e7c3f753493d9",
+      "sri": "TiosW4w/HVwJ52ZU9jJusI0WdV/45GM0uY4uw/jz1GPlt0eILooiBpFKW2E1JkmO/QvLEZBBbmUIgCAqreeapQ=="
+    },
+    {
+      "path": "app/js/selectize/selectize.default.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/selectize/selectize.default.css",
+      "size": 11692,
+      "hash": "17bee4766dad4d9d6234061abce6f1bd0b8cda37",
+      "sri": "G0LHRibh/9fc31posKfwZe09lMyK+xeWZTyEVd5gIzXmZraRAPkbGOsFsm1uAshUIdnhdYZD1zbgteAirzx8fg=="
+    },
+    {
+      "path": "app/js/selectize/selectize.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/selectize/selectize.js",
+      "size": 104098,
+      "hash": "97ce9340022eb3835ab23d1fd7f367350cfbf176",
+      "sri": "HZIAJLilYHn64VGUXIInrZuY30WnflKrTrWFzhTHcNi1LjR89hVSUjWxSxQXRcnd8dxFPZ1Xqe1/3bDqNQeYGQ=="
+    },
+    {
+      "path": "app/lib/jquery/jquery-1.11.2.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/jquery/jquery-1.11.2.min.js",
+      "size": 95930,
+      "hash": "b3690f0044526568948082940d71953619a77ba7",
+      "sri": "EEIer7bKX2CelUlcsF+CQUiQ2CKEg4zjQsTU+2tlaUmJDM+Epw70m3yK0Wa1XWdFfldX4U7nr8bO74bym8nFlw=="
+    },
+    {
+      "path": "app/lib/select2/select2-spinner.gif",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/select2/select2-spinner.gif",
+      "size": 1849,
+      "hash": "c43c85c326c500a75d1a8ec42bed100dea5de8fc",
+      "sri": "mirL7+9h63md6dErSPikdxlbbhDPrOkpiTiw/zkrJjH54QlwfZMnqGUbTyQ4/df4Y41x33chf/bFnDYmsiqmow=="
+    },
+    {
+      "path": "app/lib/select2/select2.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/select2/select2.png",
+      "size": 613,
+      "hash": "f02bfaf58eeb53ec626acfb16b963e72201cd6a6",
+      "sri": "ibK8vOOC6LfE0nuqB6vtbx2ND1qPKbYqmPBfsd5G1eQPTIFGBHYU6S79zSNbgLhC+LCOnaNqX9s3boP57isJ6g=="
+    },
+    {
+      "path": "app/lib/select2/select2x2.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/select2/select2x2.png",
+      "size": 845,
+      "hash": "cdac3158a7bbd05212ed700c55f9302e256b9bd9",
+      "sri": "viCdq1m14EyH1qCD6jo2bp+vdm1Fi9p7MaBJyBvkKjUVqHqWX417e8IGqPBnUMMhMAQJeLCX4AXTGGI996tl5A=="
+    },
+    {
+      "path": "app/plugins/toastr/toastr.min.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/plugins/toastr/toastr.min.css",
+      "size": 5738,
+      "hash": "dfe4450e2c0d2c7d6c87cc81127a3c79688d94df",
+      "sri": "LEetX42b+K0TTmnfCNxYOrVTLlg36s06bJ8cutF3BpQT3VnpzdeqoYfn+FW2KBi/imYk2RpfQzlyzY7CrRW4CQ=="
+    },
+    {
+      "path": "app/plugins/toastr/toastr.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/plugins/toastr/toastr.min.js",
+      "size": 4321,
+      "hash": "9804ebab9d5f94b3548c07cb9a0bff58408fd3df",
+      "sri": "pi7w4/MYBJ/7/NFGQ1OCInentlT3CCVVKU2udjNRWhxIOY5K2vxSPKYEa6EKbEZvHkgyEB8SMlSU8E84Ig81Og=="
+    },
+    {
+      "path": "app/images/apps/calendar/AppIcon48x48.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/calendar/AppIcon48x48.png",
+      "size": 17147,
+      "hash": "d47ec367973222a6a3cc8af1f23ad27e37ed0f07",
+      "sri": "p+jjosEe0cvYmmBUg25YMU3P2Qhmd1StZ1nj2rgm2TQx0zh7FzPsN+YuFYoeAEqtXHOmPnkFWxRpCLSMvdiv5w=="
+    },
+    {
+      "path": "app/images/apps/calendar/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/calendar/AppIcon76x76.png",
+      "size": 14303,
+      "hash": "fa08635b5f5e0ebe9494f747fe245b65cdd229da",
+      "sri": "6Oj91lPlBi6PeqHHeZ/nJ1UL+AJwgkxYf+cZka1Up5C0Egqa1nbt5kZJSpTZDS3ACnVWG2B1z/9BMT/ysrQE4A=="
+    },
+    {
+      "path": "app/images/apps/calendar/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/calendar/AppIcon76x76@2x.png",
+      "size": 28623,
+      "hash": "e7c6cd7b3d59d9ba8fa9e167b145d26cece4bb74",
+      "sri": "ZJbpc1ExYDUvo2a3Iy5YvPMWSeuRO/apAMZiFZGnpRInFujuEYICCVVtvmwy5vJJZVz1AlqK3S9yWJ1ry58KvQ=="
+    },
+    {
+      "path": "app/images/apps/chat/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/chat/AppIcon76x76.png",
+      "size": 8947,
+      "hash": "1ad5cb18e9790dbf0c76805b67ad61d3f5253b5c",
+      "sri": "bEhaNUEPJ9IuvqT9WwF775GsMS4SuZUnutbljzrDyryJwO0al+43Ycf7nVo9ABraQggNQR12bkz7BkKP6K58RA=="
+    },
+    {
+      "path": "app/images/apps/chat/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/chat/AppIcon76x76@2x.png",
+      "size": 11633,
+      "hash": "18468fb6b93d69c1fc1609d7fff8c4e4b8568fdb",
+      "sri": "3JoXWDUPKqKg3l3vCebMeAEJrISZIyhlh+9Ulx++UajmhKH4NoZ5+5JrtASQe5nyWlrXoM7zP4fONWY02V1Dnw=="
+    },
+    {
+      "path": "app/images/apps/drive/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/drive/AppIcon76x76.png",
+      "size": 15236,
+      "hash": "4d3121a13e21f7e789343f0ede2edbed1bcebf3e",
+      "sri": "jn46Up/B94MdZTCA2esGk6f1X38PIGaxuqAs63TYye8FkjEgn2odv3q50H/dwCukXq3j/oekImD0JOaq/cPLBQ=="
+    },
+    {
+      "path": "app/images/apps/drive/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/drive/AppIcon76x76@2x.png",
+      "size": 23521,
+      "hash": "a9d7743d00c433c08a244044fdc37ca261a877bf",
+      "sri": "oqsqhS+1h8a5OqRMZVESHJT0+KXIsEdShoPanKekYnUJrZjmKKsXZ/IbXS33wV1H/hbCHdMM9s/vtkbtveL0Og=="
+    },
+    {
+      "path": "app/images/apps/mail/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/mail/AppIcon76x76.png",
+      "size": 14945,
+      "hash": "574a81f54f329ece2798d2904770312f8fd50f3d",
+      "sri": "k+h8/gaBbxVfuJQjWg7wL3YKW2JCL6A9FJ05uA8Cn+ZN4un7hmJOFJuxH/5+Vn3y51qc62coQs+DV8pZSw/6JA=="
+    },
+    {
+      "path": "app/images/apps/mail/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/mail/AppIcon76x76@2x.png",
+      "size": 24974,
+      "hash": "bfe933eb57d35c6e7e565ee6f2313d45a3debe24",
+      "sri": "Ks798FpssQWIqwbW4VUvMdyOSOSemLskZHsv3trWDPudinV0RgS3ruf+KscQCv56CMq6H2PN6Ak09VSRrYWNgw=="
+    },
+    {
+      "path": "app/images/apps/otask/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/otask/AppIcon76x76.png",
+      "size": 17680,
+      "hash": "1d1dbabcb83a350daee65d073afd61b5c36e1724",
+      "sri": "tn7du7qKriIv4vn5Ke4mhFdzT2C/+eQRbZXSZSNAvPKeSivKJI8Tco7BjYkfD3P9mwmS28+KqYWEowYw1Lw5sw=="
+    },
+    {
+      "path": "app/images/apps/otask/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/otask/AppIcon76x76@2x.png",
+      "size": 38381,
+      "hash": "4a206e88da08f5725d49c07af5f3ae8ffd4a3c2a",
+      "sri": "Yg+GLEpmkBOoQxQld741tPTNOWta7ZXSOUv/48mSteCWajevCJqzjXbg1GhrOp2nK52aMqS4kn1O/cUy0U7v5g=="
+    },
+    {
+      "path": "app/images/apps/steedos/AppIcon48x48.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/steedos/AppIcon48x48.png",
+      "size": 3964,
+      "hash": "108df19665e5cc5193f97beb25c832501d32775a",
+      "sri": "K7dNfo3uUwoK6PFT6jfOwWoFG9QEcNJEjrzUNXW7QIRTDmNVjeDOva8smhUg+yvCNk5+xK/I6yTj2JuMsCRLjg=="
+    },
+    {
+      "path": "app/images/apps/steedos/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/steedos/AppIcon76x76.png",
+      "size": 5610,
+      "hash": "a94bfa900a0da1a87fbc97a4b9af312f06fddc23",
+      "sri": "2Dn4YZwGlXIjmlRkxpdnLha3cnFfodgLFtcoWEPmRGu/6xFRogIeOjqA3iPAK39pPd0M9WpRmZT+ZIexj+kQ9A=="
+    },
+    {
+      "path": "app/images/apps/steedos/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/steedos/AppIcon76x76@2x.png",
+      "size": 11379,
+      "hash": "e5ffda51be331f39d391dab75d555fe6bde45c0d",
+      "sri": "+EgbH/Om/VjKiehQ86h85wL6oV4c0cwWK/3/PjWpn2mhFEIs17XdDvCbrdEWZ56kF9j7ZZW+qRrLmhMYIwDKSQ=="
+    },
+    {
+      "path": "app/images/apps/workflow/AppIcon48x48.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/workflow/AppIcon48x48.png",
+      "size": 21902,
+      "hash": "3e27d7fae3d985e136f2f85785060d06efa44f38",
+      "sri": "MAnJnpelLfxhU/j/wGP2wEcsocRHEsEJqAs5ctMqn5rp1rpLkgTuCuZgs7Z4AAxgugNM+cxB/4qDaLc8cOOMKw=="
+    },
+    {
+      "path": "app/images/apps/workflow/AppIcon76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/workflow/AppIcon76x76.png",
+      "size": 14303,
+      "hash": "fa08635b5f5e0ebe9494f747fe245b65cdd229da",
+      "sri": "6Oj91lPlBi6PeqHHeZ/nJ1UL+AJwgkxYf+cZka1Up5C0Egqa1nbt5kZJSpTZDS3ACnVWG2B1z/9BMT/ysrQE4A=="
+    },
+    {
+      "path": "app/images/apps/workflow/AppIcon76x76@2x.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/images/apps/workflow/AppIcon76x76@2x.png",
+      "size": 28623,
+      "hash": "e7c6cd7b3d59d9ba8fa9e167b145d26cece4bb74",
+      "sri": "ZJbpc1ExYDUvo2a3Iy5YvPMWSeuRO/apAMZiFZGnpRInFujuEYICCVVtvmwy5vJJZVz1AlqK3S9yWJ1ry58KvQ=="
+    },
+    {
+      "path": "app/lib/swipebox/img/icons.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/swipebox/img/icons.png",
+      "size": 729,
+      "hash": "b343558bde8d864f0380023512ff46a50b7a6968",
+      "sri": "jH138PNCZW8hqJ2ppyXB3z4iNhn+DOyziolhwvqQdjIgd9f+8kC5RrleFmLVarNe1803MyAZ0yXIE42pbAwLtQ=="
+    },
+    {
+      "path": "app/lib/swipebox/img/icons.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/swipebox/img/icons.svg",
+      "size": 1431,
+      "hash": "4455563fa4e40c46f1b11bd3ce438e5fdcc4a347",
+      "sri": "6URDZU50g1M2gAArbc6MTUYfoPSB9MckfNWBOap7d/Y/q0hOoAH/Qb4WRi3X7w4jQfaKEijqgr42IzongYT9bA=="
+    },
+    {
+      "path": "app/lib/swipebox/img/loader.gif",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/lib/swipebox/img/loader.gif",
+      "size": 2608,
+      "hash": "6ac8782d5d546647be3eacae1ec865d3d41c60e2",
+      "sri": "GkL4gSh+lfPRGj80OqgPCrWURjV2ggsGgElYiaK22rZVdJ9ULym54QctqG//I9e3Mo3bqaVwQtfaMOtKrC8NMQ=="
+    },
+    {
+      "path": "app/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css",
+      "size": 11276,
+      "hash": "5bc42123e28d13dc0ef413ce73aa0af82adc71a4",
+      "sri": "m9g5oqvMhf2FsilNZqftBnOR1GW+dJpb1a8RN+R3Aw1dVI2AeDfpSOa9Sm48xMacONC1vJlM2iIadPy4uLEC4Q=="
+    },
+    {
+      "path": "app/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+      "size": 39213,
+      "hash": "f82d0d4d4b035781fc69f80302071c62936b35a7",
+      "sri": "4lTnmq2kNbykTiOPulgEvxRgqegB5/YMhMqaBWvxji/9wRgR9W/TSGF51/mIG1hQ6janxTojpr41y5/gaW9LRA=="
+    },
+    {
+      "path": "app/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+      "size": 813,
+      "hash": "ec483a84d8fafa80cfb637ff387a3a2b91377773",
+      "sri": "BJxP//gb9xnbzNc1Z8aABpvykmomOaJ9YV0PIGiZDkZoBw+J2pEf7Wbtxb8zz1ph16j/KPUws1vwk+nwx1K8PA=="
     },
     {
       "path": "head.html",

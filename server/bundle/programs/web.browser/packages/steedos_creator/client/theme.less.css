@@ -1,7 +1,9 @@
-html,
-body {
-  position: fixed;
-  overflow: hidden;
+@media (max-width: 767px) {
+  html,
+  body {
+    position: fixed;
+    overflow: hidden;
+  }
 }
 body {
   background-size: cover;

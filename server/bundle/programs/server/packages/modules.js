@@ -126,6 +126,9 @@ install("deps");
 install("htmljs");
 install("blaze");
 install("spacebars");
+install("html-tools");
+install("blaze-tools");
+install("spacebars-compiler");
 install("standard-minifier-js");
 install("less");
 install("accounts-ui");
@@ -170,6 +173,7 @@ install("mpowaga:jquery-fileupload");
 install("steedos:autoform-file");
 install("steedos:autoform-lookup");
 install("steedos:autoform-tags");
+install("perak:markdown");
 install("q42:autoform-markdown");
 install("steedos:markdown");
 install("steedos:autoform-dx-date-box");
@@ -243,9 +247,6 @@ install("steedos:lightning-design-system");
 install("steedos:odata");
 install("steedos:object-database");
 install("steedos:mailqueue");
-install("html-tools");
-install("blaze-tools");
-install("spacebars-compiler");
 install("meteorhacks:ssr");
 install("steedos:autoform-filesize");
 install("steedos:autoform-location");
@@ -266,6 +267,15 @@ install("steedos:version");
 install("steedos:audit");
 install("steedos:formbuilder");
 install("steedos:object-webhooks-queue");
+install("steedos:api-authenticate-user");
+install("steedos:api");
+install("steedos:autoform-modals");
+install("steedos:slipjs");
+install("steedos:workflow");
+install("steedos:workflow-chart");
+install("keepnox:perfect-scrollbar");
+install("jeremy:selectize");
+install("comerc:autoform-selectize");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -766,7 +776,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.5.5",
+  "version": "1.6.0-alpha.0",
   "main": "lib/index.js"
 };
 
@@ -793,7 +803,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.5.5",
+  "version": "1.6.0-alpha.0",
   "main": "lib/index.js"
 };
 
@@ -820,7 +830,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.5.4",
+  "version": "1.6.0-alpha.0",
   "main": "lib/index.js"
 };
 
@@ -954,7 +964,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "xml2js",
-  "version": "0.4.22",
+  "version": "0.4.21",
   "main": "./lib/xml2js"
 };
 

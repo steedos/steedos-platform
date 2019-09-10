@@ -1,0 +1,28 @@
+.traces_table_modal .modal-body {
+  border-top: 0px;
+}
+.traces_table_modal .modal-body .modal-header {
+  display: none;
+}
+.traces_table_modal .box {
+  border: 0px;
+  box-shadow: none;
+}
+.traces_table_modal .box .box-header {
+  display: none;
+}
+.traces_table_modal .box .box-body {
+  padding: 0px;
+}
+.traces_table_modal .box .box-body table {
+  margin: 0px auto;
+}
+.traces_modal .modal-body {
+  padding: 0px;
+}
+.traces_modal .modal-body .box {
+  border-top: 0px;
+}
+.traces_modal .modal-body .box .box-header {
+  display: none;
+}
