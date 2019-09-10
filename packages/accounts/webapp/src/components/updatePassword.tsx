@@ -55,7 +55,7 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
         setError(localizeMessage('accounts.passwordNotEQ'));
         return;
     }
-    var reg=/^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/;
+    var reg=/^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$/;
     if(!reg.test(newPassword || '')){
         setError(localizeMessage('accounts.passwordRegError'));
         return;

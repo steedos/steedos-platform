@@ -15,6 +15,6 @@
     "accounts.confirmPassword": "确认密码",
     "accounts.oldAndNewPasswordNotEQ": "新旧密码不能相同",
     "accounts.passwordNotEQ": "密码不一致",
-    "accounts.passwordRegError": "密码必须包含字母和数字，且不能少于8位",
+    "accounts.passwordRegError": "密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位",
     "accounts.passwordExpired": "密码已过期，请修改密码"
 }
