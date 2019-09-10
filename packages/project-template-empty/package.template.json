@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
       "@steedos/accounts": "^0.1.1",
-      "steedos-server": "^1.6.0-alpha.4"
+      "steedos-server": "^1.6.0"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
