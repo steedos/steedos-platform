@@ -15,6 +15,17 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     const userAgent = getUserAgent(req);
     const ip = requestIp.getClientIp(req);
     const email = req.body.user.email
+
+    let services: any = accountsServer.getServices()
+    let db = services[serviceName].db
+
+    if(/^\+?\d+$/g.test(email)){
+      const mobileUser = await db.findUserByMobile(email)
+      if(mobileUser && mobileUser._id){
+        req.body.user.id = mobileUser._id;
+      }
+    }
+
     if(email.indexOf("@") < 0){
       req.body.user.username = email
     }
@@ -26,8 +37,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     //获取user session
     let session:any = await accountsServer.findSessionByAccessToken(loggedInUser.tokens.accessToken)
     
-    let services: any = accountsServer.getServices()
-    let db = services[serviceName].db
+    
 
     //确认用户密码是否过期
     let user = await db.collection.findOne({_id: session.userId}, {fields: {password_expired: 1}})

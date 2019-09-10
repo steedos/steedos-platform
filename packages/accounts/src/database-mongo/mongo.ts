@@ -164,6 +164,21 @@ export class Mongo implements DatabaseInterface {
     return user;
   }
 
+  public async findUserByMobile(mobile: string): Promise<User | null>{
+
+    if(!/^\+\d+/g.test(mobile)){
+      mobile = "+86" + mobile;
+    }
+
+    const user = await this.collection.findOne({
+      'phone.number': mobile,
+    });
+    if (user) {
+      user.id = user._id.toString();
+    }
+    return user;
+  }
+
   public async addEmail(userId: string, newEmail: string, verified: boolean): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;
     const ret = await this.collection.updateOne(
