@@ -1,7 +1,7 @@
 {
   "name": "@steedos/project-template-empty",
   "private": false,
-  "version": "1.6.0-alpha.0",
+  "version": "1.6.0-alpha.1",
   "description": "",
   "main": "server.js",
   "repository": {
@@ -10,10 +10,8 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  },
   "devDependencies": {
-      "underscore": "1.5.2"
+    "underscore": "1.5.2"
   },
   "bugs": {
     "url": "https://github.com/steedos/object-server/issues"
