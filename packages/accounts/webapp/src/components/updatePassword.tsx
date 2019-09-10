@@ -55,11 +55,12 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
         setError(localizeMessage('accounts.passwordNotEQ'));
         return;
     }
-    var reg=/^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$/;
-    if(!reg.test(newPassword || '')){
-        setError(localizeMessage('accounts.passwordRegError'));
-        return;
-    }
+    // 密码策略在服务端校验
+    // var reg=/^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$/;
+    // if(!reg.test(newPassword || '')){
+    //     setError(localizeMessage('accounts.passwordRegError'));
+    //     return;
+    // }
     try {
       await accountsPassword.changePassword(oldPassword, newPassword);
       await accountsClient.logout();

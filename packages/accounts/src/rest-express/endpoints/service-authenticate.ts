@@ -4,7 +4,6 @@ import { AccountsServer } from '@accounts/server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';
 import { setAuthCookies, hashStampedToken } from '../utils/steedos-auth';
-const Cookies = require('cookies');
 
 export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
   req: express.Request,
