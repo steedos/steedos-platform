@@ -11,3 +11,5 @@ public:
     store: "local"
     local: 
       folder: "./storage"
+# plugins:
+#   - "@steedos/accounts"

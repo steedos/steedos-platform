@@ -1,15 +1,20 @@
 {
   "name": "@steedos/project-template-empty",
   "private": false,
-  "version": "1.5.8",
+  "version": "1.5.8-patch.5",
   "description": "",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/steedos/object-server.git"
   },
-  "author": "Jack Zhuang",
+  "author": "",
   "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+      "underscore": "1.5.2"
+  },
   "bugs": {
     "url": "https://github.com/steedos/object-server/issues"
   },

@@ -1,6 +1,6 @@
 {
   "name": "",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -15,14 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-      "@steedos/meteor-bundle-runner": "^1.5.1",
-      "@steedos/filters": "^1.5.1",
-      "@steedos/objectql": "^1.5.5",
-      "@steedos/core": "^1.5.5",
-      "@steedos/auth": "^1.5.5",
-      "@steedos/standard-objects": "^1.5.5",
-      "steedos-server": "^1.5.2",
-      "underscore": "1.5.2"
+      "@steedos/accounts": "^0.1.1",
+      "steedos-server": "^1.5.8"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
