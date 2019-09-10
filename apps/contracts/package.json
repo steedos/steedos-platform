@@ -1,6 +1,6 @@
 {
   "name": "@steedos/app-contracts",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "contract-management-system",
   "main": "index.js",
   "private": false,
