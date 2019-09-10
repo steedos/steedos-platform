@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:base/client/base.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACC,qBAAA;EAAA,sBAAA;EAAA,qBAAA;EAAA,cAAA;EACA,0BAAA;EAAA,4BAAA;MAAA,uBAAA;UAAA,oBAAA;EACA,OAAA;CCCA;ADCD;EACC,gDAAA;CCCA","file":"to.css","sourcesContent":[".flex-center {\n\tdisplay: flex;\n\talign-items: center;\n\ttop: 0;\n}\n.bg-shadow{\n\tbackground-color: rgba(0, 0, 0, 0.2)!important;\n}",".flex-center {\n  display: flex;\n  align-items: center;\n  top: 0;\n}\n.bg-shadow {\n  background-color: rgba(0, 0, 0, 0.2) !important;\n}\n"]}

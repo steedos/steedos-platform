@@ -1,0 +1,48 @@
+name: department
+label: 经办部门
+icon: account
+enable_api: true
+fields:
+  name:
+    label: 部门名称
+    type: text
+  code: 
+    label: 部门代码
+    type: text
+  parent:
+    label: 上级部门
+    type: lookup
+    reference_to: department
+  company_id:
+    label: 公司
+    type: lookup
+    reference_to: company
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - code
+      - parent
+      - modified
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: false
+    viewCompanyRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

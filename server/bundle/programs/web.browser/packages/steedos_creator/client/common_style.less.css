@@ -1,0 +1,38 @@
+.view-page-section-row .view-page-block-item {
+  padding: 0 .75rem;
+}
+.view-page-section-row .uiInput .form-control {
+  background-color: #ffffff;
+  color: #16325c;
+  border: 1px solid #dddbda;
+  border-radius: .25rem;
+  -webkit-transition: border 0.1s linear, background-color 0.1s linear;
+  transition: border 0.1s linear, background-color 0.1s linear;
+  display: inline-block;
+  width: 100% !important;
+}
+.view-page-section-row .uiInput .form-control:focus,
+.view-page-section-row .uiInput .form-control:active {
+  outline: 0;
+  border-color: #1589ee;
+  background-color: #ffffff;
+  box-shadow: 0 0 3px #0070d2;
+}
+.view-page-section-row .uiInput .form-control[disabled] {
+  background-color: #ecebea;
+  border-color: #a8b7c7;
+  cursor: not-allowed;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.view-page-section-row .uiInput .form-control[disabled]:focus,
+.view-page-section-row .uiInput .form-control[disabled]:active {
+  box-shadow: none;
+}
+@media (max-width: 599px) {
+  .view-page-section-row {
+    display: block;
+  }
+}

@@ -1,0 +1,18 @@
+_id: receipt
+name: 收款
+description: 合同收款相关业务流程
+icon_slds: metrics
+is_creator: true
+objects: 
+  - contracts
+  - contract_receipts
+  - account_receivable
+  - account_receipt
+  - accounts
+  - tasks
+  - events
+  - reports
+mobile_objects: 
+  - contract_receipts
+  - account_receivable
+  - account_receipt

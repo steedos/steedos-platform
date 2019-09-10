@@ -1,0 +1,38 @@
+.import-users-modal .modal-dialog {
+  height: calc(100% - 60px);
+}
+.import-users-modal .modal-dialog .modal-content {
+  height: 100%;
+}
+.import-users-modal .modal-dialog .modal-content .modal-body {
+  overflow: auto;
+  height: calc(100% - 120px);
+}
+.import-users-modal .modal-dialog .modal-content .modal-body .data-perview {
+  height: 100%;
+}
+.import-users-modal .modal-dialog .modal-content .modal-body .data-items {
+  overflow: auto;
+  max-height: calc(100% - 145px);
+}
+.import-users-modal .modal-dialog .modal-content .modal-body .data-items .table {
+  margin-bottom: 0px;
+}
+.import-users-modal .modal-dialog .modal-content .modal-body .data-items td,
+.import-users-modal .modal-dialog .modal-content .modal-body .data-items th {
+  white-space: nowrap;
+}
+.sweet-alert .error-report .report-title {
+  color: #333;
+  font-weight: normal;
+}
+.sweet-alert .error-report .export-report {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow: auto;
+  margin-top: 15px;
+}
+.sweet-alert .error-report .export-report li {
+  padding: 2px 0;
+}

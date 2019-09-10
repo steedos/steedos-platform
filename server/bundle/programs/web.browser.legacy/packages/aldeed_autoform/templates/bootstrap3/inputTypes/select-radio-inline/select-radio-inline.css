@@ -1,0 +1,8 @@
+.radio-inline.fix-indent,
+.radio-inline.fix-indent+.radio-inline.fix-indent {
+  margin-left: 0;
+  margin-right: 10px;
+}
+.radio-inline.fix-indent:last-child {
+  margin-right: 0;
+}

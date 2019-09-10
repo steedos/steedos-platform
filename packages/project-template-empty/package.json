@@ -8,8 +8,13 @@
     "type": "git",
     "url": "git+https://github.com/steedos/object-server.git"
   },
-  "author": "Jack Zhuang",
+  "author": "",
   "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+      "underscore": "1.5.2"
+  },
   "bugs": {
     "url": "https://github.com/steedos/object-server/issues"
   },

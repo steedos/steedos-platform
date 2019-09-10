@@ -1,0 +1,19 @@
+.list-group-item.autoform-array-item > div {
+  display: table;
+  width: 100%;
+}
+
+.list-group-item.autoform-array-item .autoform-remove-item-wrap {
+  display: table-cell;
+}
+
+.list-group-item.autoform-array-item .autoform-remove-item {
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+.list-group-item.autoform-array-item .autoform-array-item-body {
+  display: table-cell;
+  vertical-align: top;
+  width: 100%;
+}

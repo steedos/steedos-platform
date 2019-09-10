@@ -1,0 +1,47 @@
+name: company
+label: 我方单位
+icon: account
+enable_api: true
+fields:
+  name:
+    label: 公司名称
+    type: text
+  code: 
+    label: 公司代码
+    type: text
+  parent:
+    label: 上级公司
+    type: lookup
+    reference_to: company
+  currency_type:
+    label: 本位币
+    type: text
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - code
+      - parent
+      - modified
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: false
+    viewCompanyRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

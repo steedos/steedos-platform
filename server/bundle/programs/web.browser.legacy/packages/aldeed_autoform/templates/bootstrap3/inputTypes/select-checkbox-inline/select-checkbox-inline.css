@@ -1,0 +1,8 @@
+.checkbox-inline.fix-indent,
+.checkbox-inline.fix-indent+.checkbox-inline.fix-indent {
+  margin-left: 0;
+  margin-right: 10px;
+}
+.checkbox-inline.fix-indent:last-child {
+  margin-right: 0;
+}

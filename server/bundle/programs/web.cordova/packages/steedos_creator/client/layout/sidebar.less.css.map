@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:creator/client/layout/sidebar.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACI,qCAAA;EACA,cAAA;CCCH","file":"to.css","sourcesContent":["#sidebar-menu {\n    background: rgba(255, 255, 255, 0.8);\n    padding: 10px;\n}","#sidebar-menu {\n  background: rgba(255, 255, 255, 0.8);\n  padding: 10px;\n}\n"]}

@@ -1,0 +1,133 @@
+.steedos.skin-blue-light .content-wrapper {
+  border-left: 0px;
+}
+.steedos.skin-blue-light .main-sidebar {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+  border-radius: 0px;
+  top: 0px;
+  margin-top: 50px;
+  padding-top: 0px;
+  bottom: 0px;
+  min-height: auto;
+  left: 0px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar {
+  top: 0px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .space-switcher .space-name {
+  color: black;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .header-app {
+  cursor: pointer;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .ion {
+  position: relative;
+  top: 1px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.header {
+  color: #000000;
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: visible;
+  padding: 10px 15px 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 3px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.header.header-app {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 15px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.header .pull-right-container {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  margin-top: -7px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.header.header-space-switcher {
+  padding: 12px 15px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu li .pull-right-container .label.bg-special {
+  color: #333;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li > a {
+  color: #000;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li > a:active,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li > a:focus,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.active > a,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li.active > a:hover {
+  color: #0078D7;
+  background: rgba(150, 150, 150, 0.15);
+  border-left-color: #0078D7;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li:hover > a,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li > a:hover {
+  color: #0078D7;
+  background: rgba(150, 150, 150, 0.25);
+  border-left-color: #0078D7;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-menu > li > .treeview-menu {
+  background: transparent;
+  margin-left: 10px;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-form input[type="text"],
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-form input[type="text"] + .input-group-btn .btn,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-form .btn {
+  background-color: transparent;
+  border: 1px solid #bdc9e1;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-form input[type="text"]:focus,
+.steedos.skin-blue-light .main-sidebar .sidebar .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: transparent;
+  border: 1px solid #3c8dbc;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .treeview-menu > li > a {
+  color: #333;
+}
+.steedos.skin-blue-light .main-sidebar .sidebar .user-panel > .info,
+.steedos.skin-blue-light .main-sidebar .sidebar .user-panel > .info > a {
+  color: black;
+}
+@media (min-width: 768px) {
+  .steedos.skin-blue-light .sidebar-toggle {
+    display: none;
+  }
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li:hover > a {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > a:hover .pull-right-container {
+  background-color: rgba(255, 255, 255, 0);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > a:active,
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > a:focus,
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li.active > a,
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li.active > a:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li.active > a:hover .pull-right-container {
+  background-color: rgba(255, 255, 255, 0);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > .treeview-menu {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > .treeview:hover a {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.steedos.skin-blue-light.sidebar-collapse .main-sidebar .sidebar .sidebar-menu > li > .treeview-menu {
+  margin-left: 0;
+}
+@media (max-width: 767px) {
+  .steedos.fixed .main-sidebar {
+    margin-top: 0px;
+  }
+  .steedos.fixed.sidebar-open .main-sidebar .main-header {
+    display: none !important;
+  }
+}

@@ -1,0 +1,46 @@
+.creator-form-builder ._id-wrap {
+  display: none;
+}
+.creator-form-builder .className-wrap {
+  display: none !important;
+}
+.creator-form-builder .fields-wrap {
+  display: none;
+}
+.creator-form-builder .code-wrap label:after {
+  content: " *";
+  color: red;
+}
+.creator-form-builder [type="odata"] .code-wrap label:after,
+.creator-form-builder [type="odata"] .url-wrap label:after,
+.creator-form-builder [type="odata"] .search_field-wrap label:after,
+.creator-form-builder [type="odata"] .formula-wrap label:after {
+  content: " *";
+  color: red;
+}
+.creator-form-builder .form-wrap.form-builder .frmb .prev-holder input[type=number] {
+  width: 100%;
+}
+.creator-form-builder .form-wrap.form-builder .frmb .sortable-options .option-value {
+  display: none;
+}
+.creator-form-builder .form-wrap.form-builder .frmb .sortable-options input[type=text] {
+  width: calc(72%) !important;
+}
+.creator-form-builder #fbEditorForm .form-group .control-label {
+  display: none !important;
+}
+.form-wrap.form-builder .frmb .prev-holder .form-group > label:not([class=fb-checkbox-label]) {
+  display: none;
+}
+.form-elements .form-group label {
+  display: block !important;
+}
+.table-field .form-group,
+.section-field .form-group {
+  margin-left: 0 !important;
+  margin-bottom: 15px !important;
+}
+.flow-modal .modal-lg {
+  width: 992px;
+}

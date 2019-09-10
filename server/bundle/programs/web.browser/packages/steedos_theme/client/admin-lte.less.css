@@ -1,0 +1,176 @@
+.steedos.fixed.sidebar-collapse .main-header .logo {
+  background: transparent!important;
+}
+.steedos.fixed.sidebar-collapse .main-header .navbar {
+  margin-left: 50px;
+}
+.steedos.fixed .main-header,
+.steedos.fixed .main-sidebar,
+.steedos.fixed .left-side {
+  position: absolute;
+}
+.steedos.fixed .main-header {
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 9px, rgba(255, 255, 255, 0.2) 0 -1px 0 inset;
+  -webkit-transition: all 1s ease-in-out 0.5s;
+          transition: all 1s ease-in-out 0.5s;
+  border-bottom: 1px solid #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(22, 84, 150, 0.84);
+}
+.steedos.fixed .main-header .logo {
+  background: transparent;
+  cursor: pointer;
+}
+.steedos.fixed .main-header .logo.logo-avatar {
+  background-size: contain!important;
+}
+.steedos.fixed .main-header .logo.logo-avatar .logo-lg {
+  display: none!important;
+}
+.steedos.fixed .main-header .logo-x {
+  width: 50px;
+  background-color: #0078D7;
+  -webkit-transition: background-color 0.467s cubic-bezier(0.1, 0.9, 0.2, 1) 34ms;
+          transition: background-color 0.467s cubic-bezier(0.1, 0.9, 0.2, 1) 34ms;
+}
+.steedos.fixed .main-header .logo-x:hover,
+.steedos.fixed .main-header .logo-x:active {
+  background-color: #104A7D;
+}
+.steedos.fixed .main-header .logo-x .logo-mini {
+  display: block;
+}
+.steedos.fixed .main-header .logo-x .logo-mini .ion {
+  font-size: 25px;
+  line-height: 50px;
+}
+.steedos.fixed .main-header .navbar {
+  margin: 0;
+  margin-left: 230px;
+  background-color: transparent;
+}
+.steedos.fixed .main-header .navbar .navbar-nav {
+  float: left;
+  margin: 0;
+  font-size: 16px;
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li {
+  max-height: 50px;
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li.active a {
+  background: rgba(0, 0, 0, 0.2);
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li.active a:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li > a {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-shadow: #222 0 0 25px;
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li > a:hover,
+.steedos.fixed .main-header .navbar .navbar-nav > li > a:active,
+.steedos.fixed .main-header .navbar .navbar-nav > li > a:focus {
+  background: transparent;
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li > a.menu-apps-link .ion {
+  font-size: 20px;
+}
+.steedos.fixed .main-header .navbar .navbar-nav > li .nav-brandingText {
+  padding-left: 20px;
+  display: inline-block;
+  font-family: "SegoeUI-SemiLight-final", "Segoe UI SemiLight", "Segoe UI WPC Semilight", "Segoe UI", Segoe, Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  -webkit-font-smoothing: antialiased;
+}
+.steedos.fixed .main-header .navbar .navbar-custom-menu > li a {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.steedos.fixed .main-header .navbar .navbar-custom-menu > li .dropdown-menu {
+  background: transparent;
+}
+.steedos.fixed .main-header .navbar .navbar-custom-menu > li.notifications-menu a {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.steedos.fixed .main-header .navbar .navbar-custom-menu > li.notifications-menu .tooltip {
+  word-break: keep-all;
+  white-space: nowrap;
+}
+.steedos.fixed .main-header .navbar .navbar-custom-menu > li.user-menu {
+  padding-left: 6px;
+}
+.steedos.fixed .wrapper {
+  background: transparent;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.steedos.fixed .content-wrapper {
+  background: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  bottom: 0;
+  padding-top: 0px;
+  min-height: auto;
+}
+.steedos.fixed .content-wrapper.no-sidebar {
+  margin-left: 0px!important;
+}
+.steedos.fixed.no-sidebar .main-sidebar {
+  display: none;
+}
+.steedos.fixed.no-sidebar .content-wrapper {
+  margin-left: 0px;
+}
+.steedos.fixed .dropdown-menu a:hover {
+  cursor: pointer;
+}
+.steedos.fixed .dropdown-menu .menu-item-help {
+  margin-top: 4px;
+  padding-top: 4px;
+  font-size: 0.9em;
+  color: #999;
+  width: 280px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+@media (max-width: 767px) {
+  .steedos.fixed .dropdown-menu .menu-item-help {
+    min-width: 140px;
+    width: auto;
+  }
+}
+@media (max-width: 767px) {
+  .steedos.fixed .main-header {
+    display: none !important;
+  }
+  .steedos.fixed .main-header .logo {
+    width: 50px;
+    float: left;
+  }
+  .steedos.fixed .main-header .navbar {
+    width: initial;
+  }
+  .steedos.fixed .main-header .navbar .navbar-title {
+    display: none;
+  }
+  .steedos.fixed .main-header .navbar .navbar-custom-menu {
+    display: none;
+  }
+  .steedos.fixed .content-wrapper {
+    background-color: transparent;
+  }
+  .steedos.fixed .content-wrapper,
+  .steedos.fixed .right-side {
+    padding-top: 0px;
+    top: 0px;
+  }
+}
