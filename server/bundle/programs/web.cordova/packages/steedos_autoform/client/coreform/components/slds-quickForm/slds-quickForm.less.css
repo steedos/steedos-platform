@@ -1,0 +1,13 @@
+.quickForm_slds.horizontal .form-group .control-label {
+  vertical-align: middle;
+  padding-top: 6px;
+}
+.quickForm_slds.horizontal .to + .view-page-block-item .form-control {
+  margin-top: 0px !important;
+}
+.quickForm_slds .help-info {
+  display: inline-block;
+  font-size: 12px;
+  color: #706e6b;
+  padding-left: 6px;
+}

@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:creator/client/views/home.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACI,iBAAA;EACA,aAAA;CCCH","file":"to.css","sourcesContent":[".creator-home{\n    background: #fff;\n    height: 100%;\n}",".creator-home {\n  background: #fff;\n  height: 100%;\n}\n"]}

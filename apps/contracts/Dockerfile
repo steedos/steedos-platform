@@ -1,10 +1,12 @@
-FROM node:8.16.0
+FROM jsreport/jsreport:2.5.0-full
+
+ADD . /app
 
 WORKDIR /app
 
 RUN npm config set registry http://registry.npm.taobao.org/
 
-RUN apt-get install git
+RUN npm i yarn -g
 
 RUN yarn --force
 

@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:base/client/steedos/views/animated.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACE,iCAAA;UAAA,yBAAA;CCCD","file":"to.css","sourcesContent":[".animated {\n  animation-duration: 0.3s;\n}",".animated {\n  animation-duration: 0.3s;\n}\n"]}
