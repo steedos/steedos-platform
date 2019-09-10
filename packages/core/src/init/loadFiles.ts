@@ -4,12 +4,31 @@ const globby = require("globby");
 const path = require("path");
 const fs = require("fs");
 const UglifyJS = require("uglify-js");
+const clone = require("clone");
 export class LoadFiles {
 
-    static run() {
+    static _extendObjectsConfig = []
+
+    static initStandardObjects(){
         this.loadStandardFiles();
+    }
+
+    static initProjectObjects() {
         this.loadDefaultDatasourcesFiles();
+        this.initProjectExtendObjects();
         this.loadDatasourcesStaticJs();
+    }
+
+    private static initProjectExtendObjects(){
+        _.each(this._extendObjectsConfig, (objectConfig)=>{
+            let parentObjectConfig = clone(Creator.Objects[objectConfig.extend]);
+            if(_.isEmpty(parentObjectConfig)){
+                throw new Error(`not find extend object: ${objectConfig.extend}`);
+            }
+            let config = objectql.extend(parentObjectConfig, objectConfig);
+            delete config.extend
+            Creator.Objects[objectConfig.extend] = config
+        })
     }
 
     private static loadDatasourcesStaticJs(){
@@ -30,6 +49,7 @@ export class LoadFiles {
     private static loadStandardFiles() {
         let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
         if (standardObjectsDir) {
+            standardObjectsDir = path.posix.join(standardObjectsDir, '/**');
             this.loadObjectToCreator(standardObjectsDir);
             this.loadAppToCreator(standardObjectsDir);
             this.addStaticJs(standardObjectsDir);
@@ -63,7 +83,7 @@ export class LoadFiles {
         }
     }
 
-    private static loadObjectToCreator(filePath: string) {
+    static loadObjectToCreator(filePath: string) {
 
         if (!path.isAbsolute(filePath)) {
             filePath = path.resolve(objectql.getBaseDirectory(), filePath);
@@ -72,8 +92,12 @@ export class LoadFiles {
         //load .object.yml
         let objects = objectql.loadObjectFiles(filePath)
         _.each(objects, (object) => {
-            if (object.name != 'core') {
-                Creator.Objects[object.name] = object
+            if(object.extend){
+                this._extendObjectsConfig.push(object)
+            }else{
+                if (object.name != 'core') {
+                    Creator.Objects[object.name] = object
+                }
             }
         })
 
@@ -89,7 +113,7 @@ export class LoadFiles {
 
     }
 
-    private static loadAppToCreator(filePath: string) {
+    static loadAppToCreator(filePath: string) {
 
         if (!path.isAbsolute(filePath)) {
             filePath = path.resolve(objectql.getBaseDirectory(), filePath);
@@ -107,7 +131,7 @@ export class LoadFiles {
         return fs.readFileSync(filePath, encoding);
     }
 
-    private static addStaticJs(filePath: string){
+    static addStaticJs(filePath: string){
         const filePatten = [
             path.join(filePath, "*.client.js")
         ]

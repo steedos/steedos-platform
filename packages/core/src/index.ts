@@ -13,6 +13,4 @@ export function getCreator(): CreatorManager{
 
 export { default as ODataRouter } from './odata/ODataRouter'
 export { default as MeteorODataRouter } from './odata/MeteorODataRouter'
-import { loadJWTSSOAPI } from "./sso/jwt";
 export {init} from './init'
-loadJWTSSOAPI();

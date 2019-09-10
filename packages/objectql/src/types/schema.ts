@@ -11,6 +11,21 @@ export type SteedosSchemaConfig = {
 
 export class SteedosSchema {
     private _datasources: Dictionary<SteedosDataSourceType> = {};
+    private _objectsMap: Dictionary<{datasourceName: string, filePath?: string}> = {}
+    
+    setObjectMap(objectName:string, options){
+        let objectMap = this.getObjectMap(objectName);
+        if(objectMap){
+            if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
+                throw new Error(`object name ${objectName} is unique, you can set table_name. see: https://developer.steedos.com/docs/en/object/#%E8%A1%A8%E5%90%8D-table_name`)
+            }
+        }
+        this._objectsMap[objectName] = options
+    }
+
+    getObjectMap(objectName: string){
+        return this._objectsMap[objectName]
+    }
 
     loadConfig(){
         let config: any = util.getSteedosConfig();
@@ -48,8 +63,12 @@ export class SteedosSchema {
         let datasource_name: string, object_name: string;
         let args = name.split('.')
         if(args.length == 1){
-            datasource_name = defaultDatasourceName
-            object_name = args[0]
+            object_name = name
+            let objectMap = this.getObjectMap(name);
+            if(!objectMap){
+                throw new Error(`not find object ${name}`);
+            }
+            datasource_name = objectMap.datasourceName
         }
         if(args.length > 1){
             datasource_name = args[0]
@@ -71,7 +90,6 @@ export class SteedosSchema {
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
         this._datasources[datasource_name] = datasource
-        this.transformReferenceOfObject(datasource)
     }
 
     /**
@@ -82,7 +100,7 @@ export class SteedosSchema {
      * @memberof SteedosSchema
      * TODO 处理reference_to 为function的情况
      */
-    private transformReferenceOfObject(datasource: SteedosDataSourceType): void{
+    transformReferenceOfObject(datasource: SteedosDataSourceType): void{
         let objects = datasource.getObjects();
         _.each(objects, (object, object_name) => {
             _.each(object.fields, (field, field_name)=>{

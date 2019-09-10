@@ -1,0 +1,73 @@
+name: process_delegation_rules
+icon: metrics
+label: 流程委托
+fields:
+  from:
+    type: lookup
+    label: 委托人
+    reference_to: users
+    index: true
+    omit: true
+    name: from
+    filterable: true
+  from_name:
+    type: text
+    label: 委托人姓名
+    readonly: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return Meteor.user().name;
+            }
+    name: from_name
+  to:
+    type: lookup
+    label: 被委托人
+    reference_to: users
+    index: true
+    name: to
+    filterable: true
+  to_name:
+    type: text
+    label: 被委托人姓名
+    omit: true
+    name: to_name
+  start_time:
+    type: datetime
+    label: 委托开始
+    required: true
+    name: start_time
+  end_time:
+    type: datetime
+    label: 委托结束
+    required: true
+    name: end_time
+  enabled:
+    type: boolean
+    label: 启用
+    defaultValue: false
+    name: enabled
+list_views:
+  all:
+    filter_scope: space
+    columns:
+      - from
+      - to
+      - start_time
+      - end_time
+      - enabled
+    label: 所有
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false

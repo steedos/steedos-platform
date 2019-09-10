@@ -72,7 +72,7 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
 }
 
 export function getEntity(object: SteedosObjectType, databaseType: DatabaseType): EntitySchema {
-    let tableName = object.tableName;
+    let tableName = object.table_name;
     let fields = object.fields;
     let columns: EntitySchemaColumnDictionary = getTableColumns(fields, object, databaseType);
     if (!columns){
@@ -101,14 +101,14 @@ export function getEntities(objects: Dictionary<SteedosObjectType>, databaseType
         if (primaryKeys.length === 1) {
             let entitySchema = getEntity(object, databaseType);
             if (entitySchema) {
-                entities[object.tableName] = entitySchema;
+                entities[object.table_name] = entitySchema;
             }
         }
         else if (primaryKeys.length > 1) {
-            primaryColumnMultiErrorTables.push(object.tableName);
+            primaryColumnMultiErrorTables.push(object.table_name);
         }
         else{
-            primaryColumnEmptyErrorTables.push(object.tableName);
+            primaryColumnEmptyErrorTables.push(object.table_name);
         }
     }
     if (primaryColumnEmptyErrorTables.length) {

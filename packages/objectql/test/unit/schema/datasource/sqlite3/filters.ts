@@ -203,7 +203,7 @@ describe('filters for sqlite3 database', () => {
                     objects: {
                         test: {
                             label: 'Sqlite3 Schema',
-                            tableName: tableName,
+                            table_name: tableName,
                             fields: {
                                 id: {
                                     label: '主键',
@@ -230,6 +230,7 @@ describe('filters for sqlite3 database', () => {
         });
         const datasources = mySchema.getDataSources();
         for (let name in datasources) {
+            await datasources[name].init()
             await datasources[name].dropEntities();
             await datasources[name].createTables();
         }

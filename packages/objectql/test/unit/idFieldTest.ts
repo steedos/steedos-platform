@@ -9,7 +9,7 @@ describe('Test idField', () => {
                 default: {
                     driver: SteedosDatabaseDriverType.Mongo, 
                     url: 'mongodb://127.0.0.1/steedos',
-                    objectFiles: [path.resolve(__dirname, "./load")]
+                    objectFiles: [path.resolve(__dirname, "./load/base")]
                 },
                 sqlite: {
                     driver: SteedosDatabaseDriverType.Sqlite,
@@ -39,6 +39,10 @@ describe('Test idField', () => {
                 }
             }
         })
+
+
+        await mySchema.getDataSource().init()
+        await mySchema.getDataSource('sqlite').init()
 
         let users = mySchema.getObject('users')
   

@@ -1,0 +1,58 @@
+name: categories
+icon: metrics
+label: 流程分类
+fields:
+  name:
+    type: text
+    label: 名称
+    name: name
+    searchable: true
+  sort_no:
+    label: 排序号
+    type: number
+    name: sort_no
+  app:
+    label: 所属应用
+    type: lookup
+    reference_to: apps
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Apps, function (o, k) {
+                return _options.push({
+                  label: o.name,
+                  value: k,
+                  icon: o.icon_slds
+                });
+              });
+
+              return _options;
+            }
+    name: app
+    filterable: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - sort_no
+      - app
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

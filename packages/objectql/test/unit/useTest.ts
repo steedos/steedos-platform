@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { SteedosSchema } from '../../src';
 var path = require('path')
 
-describe('Test use file', () => {
+describe('Test use file', async () => {
     let mySchema = new SteedosSchema({
         datasources: {
             default: {
@@ -14,6 +14,8 @@ describe('Test use file', () => {
         },
         
     })
+
+    await mySchema.getDataSource().init()
 
     it('use Object file', async () => {
         let object = mySchema.getObject("test")

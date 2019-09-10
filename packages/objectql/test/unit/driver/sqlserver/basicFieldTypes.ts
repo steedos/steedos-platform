@@ -36,7 +36,7 @@ describe('basic field types for sqlserver database', () => {
             objects: {
                 test: {
                     label: 'SqlServer Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

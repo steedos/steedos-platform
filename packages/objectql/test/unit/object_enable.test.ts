@@ -148,7 +148,7 @@ describe('Test Object.enable_xxx', () => {
                 }
             }
         })
-
+        await schema.getDataSource().init();
         let enable_share_test = schema.getObject('enable_share_test')
         let enable_share_test_config = enable_share_test.toConfig()
         expect(enable_share_test.enable_share).to.equal(false) && expect(enable_share_test_config.enable_share).to.equal(false)

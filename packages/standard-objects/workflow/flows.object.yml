@@ -1,0 +1,500 @@
+name: flows
+icon: timesheet
+label: 流程
+enable_files: true
+fields:
+  name:
+    type: text
+    label: 流程名
+    required: true
+    searchable: true
+    readonly: true
+    name: name
+  form:
+    label: 流程表单
+    type: lookup
+    reference_to: forms
+    readonly: true
+    name: form
+    filterable: true
+  category:
+    label: 流程分类
+    type: lookup
+    reference_to: categories
+    name: category
+    filterable: true
+  state:
+    label: 流程状态
+    type: select
+    options:
+      - label: 启用
+        value: enabled
+      - label: 停用
+        value: disabled
+    readonly: true
+    name: state
+    filterable: true
+  is_valid:
+    label: 流程有效
+    type: boolean
+    readonly: true
+    name: is_valid
+  current_no:
+    label: 当前序号
+    type: number
+    readonly: true
+    name: current_no
+  description:
+    label: 备注
+    type: textarea
+    is_wide: true
+    name: description
+  help_text:
+    label: 帮助文本
+    type: textarea
+    is_wide: true
+    name: help_text
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+  created_by:
+    label: 创建人
+  modified_by:
+    label: 修改人
+  current:
+    label: 步骤
+    type: object
+    is_wide: true
+    blackbox: true
+    name: current
+  current.modified:
+    label: 修改时间
+    type: datetime
+    readonly: true
+    omit: true
+    hidden: true
+    name: current.modified
+  current.modified_by:
+    label: 修改人
+    type: lookup
+    reference_to: users
+    readonly: true
+    omit: true
+    hidden: true
+    name: current.modified_by
+    filterable: true
+  current.created:
+    label: 创建时间
+    type: datetime
+    readonly: true
+    omit: true
+    hidden: true
+    name: current.created
+  current.created_by:
+    label: 创建人
+    type: lookup
+    reference_to: users
+    readonly: true
+    omit: true
+    hidden: true
+    name: current.created_by
+    filterable: true
+  current.steps:
+    label: 步骤
+    type: grid
+    readonly: true
+    is_wide: true
+    name: current.steps
+  current.steps.$._id:
+    type: text
+    omit: true
+    readonly: true
+    hidden: true
+    name: current.steps.$._id
+  current.steps.$.name:
+    label: 名称
+    readonly: true
+    type: text
+    name: current.steps.$.name
+  current.steps.$.disableCC:
+    label: 禁止传阅
+    type: boolean
+    readonly: true
+    name: current.steps.$.disableCC
+  current.steps.$.allowDistribute:
+    label: 允许分发
+    type: boolean
+    readonly: true
+    name: current.steps.$.allowDistribute
+  current.steps.$.can_edit_main_attach:
+    label: 允许修改正文
+    type: boolean
+    readonly: true
+    name: current.steps.$.can_edit_main_attach
+  current.steps.$.can_edit_normal_attach:
+    label: 允许修改附件
+    type: boolean
+    readonly: true
+    name: current.steps.$.can_edit_normal_attach
+  current.steps.$.distribute_optional_flows:
+    label: 此步骤分发时可选的流程范围
+    type: lookup
+    reference_to: flows
+    multiple: true
+    omit: true
+    hidden: true
+    name: current.steps.$.distribute_optional_flows
+    filterable: true
+  current.steps.$.cc_must_finished:
+    label: 必须等待传阅完成
+    type: boolean
+    readonly: true
+    name: current.steps.$.cc_must_finished
+  current.steps.$.cc_alert:
+    label: 弹出传阅提醒
+    type: boolean
+    readonly: true
+    name: current.steps.$.cc_alert
+  current.steps.$.allowBatch:
+    label: 批量审批
+    type: boolean
+    readonly: true
+    name: current.steps.$.allowBatch
+  current.steps.$.oneClickApproval:
+    label: 一键核准
+    type: boolean
+    readonly: true
+    name: current.steps.$.oneClickApproval
+  current.steps.$.oneClickRejection:
+    label: 一键驳回
+    type: boolean
+    readonly: true
+    name: current.steps.$.oneClickRejection
+  perms:
+    label: 权限
+    type: object
+    is_wide: true
+    blackbox: true
+    name: perms
+  perms.users_can_add:
+    label: '授权用户: 新建申请单'
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    name: perms.users_can_add
+    filterable: true
+  perms.orgs_can_add:
+    label: '授权部门: 新建申请单'
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    name: perms.orgs_can_add
+    filterable: true
+  perms.users_can_monitor:
+    label: '授权用户: 查看所有申请单'
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    name: perms.users_can_monitor
+    filterable: true
+  perms.orgs_can_monitor:
+    label: '授权部门: 查看所有申请单'
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    name: perms.orgs_can_monitor
+    filterable: true
+  perms.users_can_admin:
+    label: '授权用户: 查看所有申请单，并能执行重定位、转签核、删除操作'
+    type: lookup
+    reference_to: users
+    multiple: true
+    is_wide: true
+    name: perms.users_can_admin
+    filterable: true
+  perms.orgs_can_admin:
+    label: '授权部门: 查看所有申请单，并能执行重定位、转签核、删除操作'
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    name: perms.orgs_can_admin
+    filterable: true
+  app:
+    label: 所属应用
+    type: text
+    omit: true
+    hidden: true
+    name: app
+  historys:
+    label: 历史版本
+    blackbox: true
+    omit: true
+    hidden: true
+    name: historys
+  instance_template:
+    label: 表单模板
+    type: code
+    language: handlebars
+    is_wide: true
+    group: 模板
+    name: instance_template
+  print_template:
+    label: 打印模板
+    type: code
+    language: handlebars
+    is_wide: true
+    group: 模板
+    name: print_template
+  field_map:
+    label: 映射关系
+    type: textarea
+    is_wide: true
+    group: 归档
+    name: field_map
+  events:
+    label: 相关事件
+    type: textarea
+    is_wide: true
+    group: 脚本
+    name: events
+  distribute_optional_users:
+    type: lookup
+    label: 流程被分发时分发对象选择范围
+    reference_to: users
+    multiple: true
+    is_wide: true
+    group: 分发
+    blackbox: true
+    omit: true
+    hidden: true
+    name: distribute_optional_users
+    filterable: true
+  distribute_to_self:
+    label: 分发给自己
+    type: boolean
+    group: 分发
+    omit: true
+    hidden: true
+    name: distribute_to_self
+  name_formula:
+    label: 标题公式
+    type: text
+    group: 高级
+    name: name_formula
+  code_formula:
+    label: 系统公式
+    type: text
+    group: 高级
+    name: code_formula
+  auto_remind:
+    label: 自动催办
+    type: boolean
+    group: 高级
+    name: auto_remind
+  sort_no:
+    type: number
+    label: 排序号
+    group: 高级
+    sortable: true
+    name: sort_no
+  timeout_auto_submit:
+    label: 超时自动流转
+    type: boolean
+    group: 高级
+    name: timeout_auto_submit
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - modified
+      - modified_by
+      - auto_remind
+      - state
+      - is_deleted
+      - company_id
+      - form
+      - sort_no
+    sort:
+      - - sort_no
+        - desc
+      - - modified
+        - desc
+actions:
+  standard_new:
+    label: 新建
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var permissions;
+              permissions = Creator.getPermissions();
+
+              if (permissions) {
+                return permissions["allowCreate"];
+              }
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return Modal.show('new_flow_modal');
+            }
+  design:
+    label: 流程设计器
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return true;
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return WorkflowCore.openFlowDesign(Steedos.locale(), Steedos.spaceId(), null, Creator.getUserCompanyId());
+            }
+  standard_edit:
+    visible: false
+    'on': record
+  standard_delete:
+    visible: false
+    'on': record_more
+  designFlow:
+    label: 流程设计器
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+              return true;
+            }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return WorkflowCore.openFlowDesign(Steedos.locale(), Steedos.spaceId(), record_id, Creator.getUserCompanyId());
+            }
+  designForm:
+    label: 表单设计器
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions) {
+              return true;
+            }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId());
+            }
+  export_default_template:
+    label: 导出默认模板
+    'on': record
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return true;
+            }
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              var ref2, ref3, url, workflowUrl;
+              workflowUrl = (ref2 = Meteor.settings["public"].webservices) != null ? (ref3 = ref2.workflow) != null ? ref3.url : void 0 : void 0;
+
+              if (!workflowUrl) {
+                toastr.error("settings.public.webservices.workflow.url", "缺少配置");
+                return;
+              }
+
+              url = Meteor.absoluteUrl("/api/workflow/export/talbe_template?flow=" + record_id, {
+                rootUrl: workflowUrl
+              });
+              return window.open(url, '_blank');
+            }
+  exportFlow:
+    label: 导出流程
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              var flow, form_id, ref2, ref3, ref4;
+              console.log("exportFlow", object_name, record_id, fields);
+
+              if (_.isString((ref2 = this.record) != null ? ref2.form : void 0)) {
+                form_id = this.record.form;
+              } else if ((ref3 = this.record) != null ? (ref4 = ref3.form) != null ? ref4._id : void 0 : void 0) {
+                form_id = this.record.form._id;
+              }
+
+              if (form_id) {
+                return window.open(Steedos.absoluteUrl("/api/workflow/export/form?form=" + form_id), '_blank');
+              } else {
+                flow = Creator.getCollection(object_name).findOne(record_id);
+
+                if (flow) {
+                  return window.open(Steedos.absoluteUrl("/api/workflow/export/form?form=" + form_id), '_blank');
+                }
+              }
+            }
+  importFlow:
+    label: 导入流程
+    visible: true
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return Modal.show("admin_import_flow_modal", {
+                onSuccess: function (flows) {
+                  if (flows.length > 0) {
+                    return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
+                  }
+                }
+              });
+            }
+  copyFlow:
+    label: 复制流程
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return Modal.show("copy_flow_modal", {
+                record_id: record_id,
+                onSuccess: function (flows) {
+                  if (flows.length > 0) {
+                    return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
+                  }
+                }
+              });
+            }
+  distributeAdmin:
+    label: 设置分发
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return Modal.show("distribute_edit_flow_modal", {
+                flow: this.record
+              });
+            }
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  workflow_admin:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: true
+    viewCompanyRecords: true
+    disabled_list_views: []
+    disabled_actions: []
+    unreadable_fields: []
+    uneditable_fields: []
+    unrelated_objects: []

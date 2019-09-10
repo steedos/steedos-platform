@@ -104,7 +104,7 @@ describe('primary key autoincrement test for oracle database', () => {
             objects: {
                 test: {
                     label: 'Oracle Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

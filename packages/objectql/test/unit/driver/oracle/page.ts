@@ -137,7 +137,7 @@ describe('fetch records by paging for oracle database', function() {
             objects: {
                 test: {
                     label: 'Oracle Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

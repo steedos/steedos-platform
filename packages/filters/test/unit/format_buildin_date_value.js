@@ -1,9 +1,9 @@
-const formatFiltersToODataQuery = require('../../index').formatFiltersToODataQuery;
-const getMonthDays = require('../../utils').getMonthDays;
-const getLastMonthFirstDay = require('../../utils').getLastMonthFirstDay;
-const getQuarterStartMonth = require('../../utils').getQuarterStartMonth;
-const getLastQuarterFirstDay = require('../../utils').getLastQuarterFirstDay;
-const getNextQuarterFirstDay = require('../../utils').getNextQuarterFirstDay;
+const formatFiltersToODataQuery = require('../../lib/index').formatFiltersToODataQuery;
+const getMonthDays = require('../../lib/utils').getMonthDays;
+const getLastMonthFirstDay = require('../../lib/utils').getLastMonthFirstDay;
+const getQuarterStartMonth = require('../../lib/utils').getQuarterStartMonth;
+const getLastQuarterFirstDay = require('../../lib/utils').getLastQuarterFirstDay;
+const getNextQuarterFirstDay = require('../../lib/utils').getNextQuarterFirstDay;
 const expect = require('chai').expect;
 const moment = require('moment');
 

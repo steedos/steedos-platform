@@ -5,16 +5,49 @@ const graphqlHTTP = require('express-graphql');
 const _ = require("underscore");
 const app = express();
 const router = express.Router();
+var path = require('path')
+var util = require('../util/index')
+const UglifyJS = require("uglify-js");
 import { Publish } from '../publish'
 
 export class Core {
 
-    static run() {
+    static load(){
         this.expandSimpleSchemaPres();
         this.loadObjects();
         this.initObjects();
+    }
+
+    static run() {
         this.initGraphqlAPI();
         this.initPublishAPI()
+        this.initRoutes();
+    }
+
+    static addStaticJs(){
+        let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
+            if (typeof val === 'function') {
+                return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
+            }
+            return val;
+        });
+        let minifyJs = UglifyJS.minify("Creator.baseObject=" + baseObject)
+        let minifyJsCode = minifyJs.code;
+        let minifyJsError = minifyJs.error;
+        if(minifyJsCode){
+            minifyJsCode = minifyJsCode.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
+            WebAppInternals.addStaticJs(minifyJsCode);
+        }else{
+            throw new Error(minifyJsError)
+        }
+    }
+
+    static createBaseObject(){
+        let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
+        if (standardObjectsDir) {
+            let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
+            Creator.baseObject = baseObject
+        }
     }
 
     private static expandSimpleSchemaPres() {
@@ -41,7 +74,7 @@ export class Core {
             var _key, _obj;
             if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(key) === false) {
                 _obj = _.clone(obj);
-                _obj.tableName = _.clone(key);
+                _obj.table_name = _.clone(key);
                 _key = key.replace(new RegExp('\\.', 'g'), '_');
                 _obj.name = _key;
                 newObjects[_key] = _obj;
@@ -84,18 +117,9 @@ export class Core {
     }
 
     private static initGraphqlAPI() {
-        router.use("/:dataSourceName", function (req, res, next) {
-            var authToken, user;
-            authToken = Steedos.getAuthToken(req, res);
-            user = null;
-            if (authToken) {
-                user = Meteor.wrapAsync(function (authToken, cb) {
-                    return steedosAuth.getSession(authToken).then(function (resolve, reject) {
-                        return cb(reject, resolve);
-                    });
-                })(authToken);
-            }
-            if (user) {
+        router.use("/", steedosAuth.setRequestUser);
+        router.use("/", function (req, res, next) {
+            if (req.user) {
                 return next();
             } else {
                 return res.status(401).send({
@@ -107,51 +131,24 @@ export class Core {
                 });
             }
         });
-        router.use("/:dataSourceName/:spaceId", function (req, res, next) {
-            var authToken, spaceId, user;
-            authToken = Steedos.getAuthToken(req, res);
-            spaceId = req.params.spaceId;
-            console.log('spaceId: ', spaceId);
-            user = null;
-            if (authToken) {
-                user = Meteor.wrapAsync(function (authToken, spaceId, cb) {
-                    return steedosAuth.getSession(authToken, spaceId).then(function (resolve, reject) {
-                        return cb(reject, resolve);
-                    });
-                })(authToken, spaceId);
-            }
-            if (user) {
-                console.log('userSession: ', user);
-                req.userSession = user;
-                return next();
-            } else {
-                return res.status(401).send({
-                    errors: [
-                        {
-                            'message': 'You must be logged in to do this.'
-                        }
-                    ]
-                });
-            }
-        });
-        _.each(Creator.steedosSchema.getDataSources(), function (datasource: any, name) {
-            if (datasource.driver === 'mongo' || datasource.driver === 'meteor-mongo') {
-                return router.use("/" + name + "/:spaceId", graphqlHTTP({
-                    schema: datasource.buildGraphQLSchema(),
-                    graphiql: true
-                }));
-            } else {
-                return router.use("/" + name, graphqlHTTP({
-                    schema: datasource.buildGraphQLSchema(),
-                    graphiql: true
-                }));
-            }
-        });
+
+
+        router.use("/", graphqlHTTP({
+            schema: objectql.buildGraphQLSchema(objectql.getSteedosSchema()),
+            graphiql: true
+        }));
         app.use('/graphql', router);
         return WebApp.connectHandlers.use(app);
     }
 
-    private static initPublishAPI(){
+    private static initPublishAPI() {
         Publish.init();
+    }
+
+    private static initRoutes() {
+        // /api/v4/users/login, /api/v4/users/validate
+        app.use(steedosAuth.authExpress);
+
+        WebApp.connectHandlers.use(app);
     }
 }

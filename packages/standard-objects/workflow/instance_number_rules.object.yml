@@ -1,0 +1,79 @@
+name: instance_number_rules
+icon: metrics
+label: 流程编号规则
+fields:
+  name:
+    type: text
+    label: 名称
+    required: true
+    name: name
+    searchable: true
+  year:
+    type: number
+    label: 年份
+    readonly: true
+    defaultValue: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              if (Meteor.isClient) {
+                return new Date().getFullYear();
+              }
+            }
+    name: year
+  first_number:
+    type: number
+    label: 起始序号
+    defaultValue: 1
+    name: first_number
+  number:
+    type: number
+    label: 序号
+    defaultValue: 0
+    name: number
+  rules:
+    type: text
+    label: 编号规则
+    required: true
+    name: rules
+  company_id:
+    required: false
+    omit: false
+    hidden: false
+list_views:
+  all:
+    filter_scope: space
+    columns:
+      - name
+      - year
+      - first_number
+      - number
+      - rules
+    label: 所有
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  workflow_admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: true
+    viewCompanyRecords: true
+    disabled_list_views: []
+    disabled_actions: []
+    unreadable_fields: []
+    uneditable_fields: []
+    unrelated_objects: []

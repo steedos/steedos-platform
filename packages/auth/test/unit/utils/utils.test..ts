@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { utils } from '../../../src/utils';
+import { generateStampedLoginToken, hashStampedToken, hashLoginToken } from '../../../src/utils';
 
 describe('test utils', () => {
 
@@ -32,10 +32,10 @@ describe('test utils', () => {
     // });
 
 
-    it('test method _generateStampedLoginToken, _hashStampedToken, _hashLoginToken', () => {
-        let stampedToken = utils._generateStampedLoginToken();
-        let hashedTokenObj = utils._hashStampedToken(stampedToken)
-        let hashedToken = utils._hashLoginToken(stampedToken.token)
+    it('test method generateStampedLoginToken, hashStampedToken, hashLoginToken', () => {
+        let stampedToken = generateStampedLoginToken();
+        let hashedTokenObj = hashStampedToken(stampedToken)
+        let hashedToken = hashLoginToken(stampedToken.token)
         expect(hashedTokenObj.hashedToken).to.be.eq(hashedToken);
     });
 

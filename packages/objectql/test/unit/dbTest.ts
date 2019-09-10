@@ -13,7 +13,7 @@ describe('Test db', () => {
                 }
             }
         })
-
+        await mySchema.getDataSource().init()
         let users = mySchema.getObject('users')
         let random = new Date().getTime();
         let id = `test_users_${random}`;

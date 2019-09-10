@@ -247,21 +247,6 @@ list_views:
       - modifyCompanyRecords
       - viewCompanyRecords
     filter_scope: space
-triggers:
-  beforeInsertServerProcess:
-    'on': server
-    when: before.insert
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (userId, doc) {
-              return Creator.processPermissions(doc);
-            }
-  beforeUpdateServerProcess:
-    'on': server
-    when: before.update
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (userId, doc, fieldNames, modifier, options) {
-              return Creator.processPermissions(modifier.$set);
-            }
 permission_set:
   user:
     allowCreate: false

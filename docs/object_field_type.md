@@ -69,20 +69,22 @@ is_done:
 ```
 
 ## 数值 number
-数值类型在界面上显示为数字输入框，并可配置显示的小数位数（默认为0）和数值最大长度（默认为18）。
+数值类型在界面上显示为数字输入框，并可使用scale属性来配置显示的小数位数（默认为0）
 ```yaml
 comment_count:
   label: 评论数
   type: number
+  scale: 2
   required: true
 ```
 
 ## 金额 currency
-金额类型在界面上显示为数字输入框，并可配置显示的小数位数（默认为2）和数值最大长度（默认为18）。
+金额类型在界面上显示为数字输入框，并可使用scale属性来配置显示的小数位数（默认为2）
 ```yaml
 amount:
   label: 总金额
   type: currency
+  scale: 4
   required: true
 ```
 

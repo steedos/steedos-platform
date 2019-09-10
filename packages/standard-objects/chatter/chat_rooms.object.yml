@@ -1,0 +1,59 @@
+name: chat_rooms
+label: 房间
+fields:
+  name:
+    is_name: true
+    label: 内容
+    type: text
+    name: name
+    searchable: true
+  members:
+    label: 成员
+    type: lookup
+    reference_to: users
+    multiple: true
+    name: members
+    filterable: true
+  owner:
+    label: 房主
+  type:
+    label: 类型
+    type: select
+    options:
+      - label: private
+        value: private
+      - label: ' protected'
+        value: ' protected'
+      - label: ' public'
+        value: ' public'
+    name: type
+    filterable: true
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - owner
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: false
+  guest:
+    allowCreate: true
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

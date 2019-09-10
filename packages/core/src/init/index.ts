@@ -3,9 +3,14 @@ import { LoadFiles } from './loadFiles'
 import { Core } from './core'
 import { Plugins } from './plugins';
 
-export function init() {
-    Datasources.init();
-    LoadFiles.run()
-    Core.run();
+export async function init() {
+    Core.createBaseObject()
+    LoadFiles.initStandardObjects();
+    Core.addStaticJs()
+    Datasources.create();
     Plugins.init();
+    LoadFiles.initProjectObjects()
+    Core.load();
+    await Datasources.init();
+    Core.run();
 }

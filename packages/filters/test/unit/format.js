@@ -1,4 +1,4 @@
-const formatFiltersToODataQuery = require('../../index').formatFiltersToODataQuery;
+const formatFiltersToODataQuery = require('../../lib/index').formatFiltersToODataQuery;
 const expect = require('chai').expect;
 
 describe('advanced format filter to odata query', () => {

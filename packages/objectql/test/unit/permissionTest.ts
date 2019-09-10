@@ -1,12 +1,11 @@
 import { expect } from 'chai';
 import { SteedosSchema } from '../../src';
-import { SteedosUserSession } from '../../src/types/userSession';
 import { Dictionary } from '@salesforce/ts-types';
 var path = require('path')
 
-describe('Test Permission', () => {
+describe('Test Permission', async () => {
 
-    let userSessionStorage: Dictionary<SteedosUserSession> = {}
+    let userSessionStorage: Dictionary<any> = {}
 
     userSessionStorage['0'] = {
         userId: 0,
@@ -52,7 +51,7 @@ describe('Test Permission', () => {
                 objects: {
                     test2: {
                         label: 'Test2',
-                        tableName: 'test2.cccccc',
+                        table_name: 'test2.cccccc',
                         fields: {
                             name: {
                                 label: '名称',
@@ -93,7 +92,7 @@ describe('Test Permission', () => {
             }
         }
     })
-
+    await mySchema.getDataSource().init();
     it('guest: 权限测试', async () => {
         let userSession = userSessionStorage['0'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;

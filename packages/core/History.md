@@ -1,3 +1,39 @@
+1.3.19 / 2019-08-20
+===================
+
+  * base object 迁移到standard-objects
+1.3.19 / 2019-08-20
+===================
+
+  * [graphql api 的url 取消 datasource_name 部分](https://github.com/steedos/object-server/issues/125)
+1.3.18 / 2019-08-20
+===================
+
+  * 优化core.init 函数
+1.3.17 / 2019-08-20
+===================
+
+  * 支持在meteor 项目中的.plugins文件夹中调试插件
+1.3.16 / 2019-08-19
+===================
+
+  * 调整插件调试文件夹plugins -> .plugins；统一steedos-config.yml 与 plugin-config.yml datasources 部分数据格式
+1.3.14 / 2019-08-17
+===================
+
+  * 支持对象继承
+1.3.10 / 2019-08-14
+===================
+
+  * 升级@steedos/objectql，fix npm install 版本冲突
+1.3.9 / 2019-08-14
+===================
+
+  * 支持加载plugins中的objects
+1.3.2 / 2019-08-10
+===================
+
+  * core.ts添加initRoutes函数
 1.3.1 / 2019-08-02
 ===================
 

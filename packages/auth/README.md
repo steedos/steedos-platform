@@ -32,3 +32,11 @@ export declare type SteedosIDType = number | string;
 ## 开放auth方法，验证用户session
 - `async function auth(request: Request, response: Response): Promise<any>`
 - 传入request response对象，返回getSession方法返回值
+
+## 开放setRequestUser方法，设置req.user属性
+- `async function setRequestUser(request: Request, response: Response, next)`
+- 示例：
+```js
+  let app = express();
+  app.use('/', setRequestUser);
+```

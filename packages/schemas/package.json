@@ -1,0 +1,13 @@
+{
+  "name": "@steedos/schemas",
+  "version": "1.5.1",
+  "main": "index.js",
+  "repository": "https://github.com/steedos/schemas.git",
+  "author": "sunhaolin <sunhaolin@hotoa.com>",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "c1e253e1f4c3547da7bab11d324d5eea885690f4"
+}

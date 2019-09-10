@@ -188,11 +188,12 @@ name: 客户
 description: 管理客户，以及相关的联系人、任务和日程。
 icon_slds: folder
 is_creator: true
-objects: 
+objects:
   - accounts
   - contacts
   - tasks
   - events  
+  - reports
 ```
 
 ## 调试与运行

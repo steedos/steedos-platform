@@ -2,7 +2,7 @@ import { SteedosSchema } from '../../src/types';
 import { expect } from 'chai';
 var path = require('path')
 
-describe('new SteedosSchema', () => {
+describe('new SteedosSchema', async () => {
     let schema = new SteedosSchema({
         datasources: {
             default: {
@@ -35,6 +35,7 @@ describe('new SteedosSchema', () => {
             }
         }
     })
+    await schema.getDataSource().init()
     it('should return true', () => {
         let object = schema.getObject("post")
         // console.log(object)

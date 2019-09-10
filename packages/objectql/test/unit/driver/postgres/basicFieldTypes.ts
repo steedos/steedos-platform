@@ -36,7 +36,7 @@ describe('basic field types for postgres database', () => {
             objects: {
                 test: {
                     label: 'Postgres Schema',
-                    tableName: tableName,
+                    table_name: tableName,
                     fields: {
                         id: {
                             label: '主键',

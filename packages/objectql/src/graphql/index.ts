@@ -12,8 +12,6 @@ import {
 var _ = require("underscore");
 import { ObjectId } from 'mongodb';
 var GraphQLJSON = require('graphql-type-json');
-import express = require('express');
-import graphqlHTTP = require('express-graphql');
 
 /** Maps basic creator field types to basic GraphQL types */
 const BASIC_TYPE_MAPPING = {
@@ -32,7 +30,7 @@ const BASIC_TYPE_MAPPING = {
 
 const knownTypes = {};
 
-function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasourceName) {
+function convertFields(steedosSchema: SteedosSchema, fields, knownTypes) {
     let objTypeFields = {};
     objTypeFields["_id"] = {
         type: GraphQLString
@@ -53,14 +51,12 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
         }
 
         else if ((v.type == 'lookup' || v.type == 'master_detail') && v.reference_to && _.isString(v.reference_to)) {
-            let reference_to = v.reference_to;
-            let objectName = reference_to.indexOf('.') > -1 ? reference_to : `${datasourceName}.${reference_to}`;
+            let objectName = v.reference_to;
             let corName = correctName(objectName);
-            if (reference_to.indexOf('.') > -1 && !knownTypes[corName]) {
-                let refDatasourceName = reference_to.split('.')[0]
-                let object = steedosSchema.getObject(reference_to);
+            if (!knownTypes[corName]) {
+                let object = steedosSchema.getObject(objectName);
                 if (object) {
-                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes, datasourceName, refDatasourceName)
+                    knownTypes[corName] = buildGraphQLObjectType(object, steedosSchema, knownTypes)
                 }
             }
 
@@ -69,7 +65,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
                 args: {},
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(objectName);
-                    let userSession = context ? context.userSession : null;
+                    let userSession = context ? context.user : null;
                     let record = await object.findOne(source[info.fieldName], {}, userSession);
                     return record;
                 }
@@ -85,7 +81,7 @@ function convertFields(steedosSchema: SteedosSchema, fields, knownTypes, datasou
                     if (filters.length === 0) {
                         return null;
                     }
-                    let userSession = context ? context.userSession : null;
+                    let userSession = context ? context.user : null;
                     return await object.find({
                         filters: filters.join(' or ')
                     }, userSession);
@@ -106,48 +102,46 @@ function correctName(name: string) {
     return name.replace(/\./g, '_');
 }
 
-function buildGraphQLObjectType(obj, steedosSchema, knownTypes, thisDatasourceName, refDatasourceName?) {
+function buildGraphQLObjectType(obj, steedosSchema, knownTypes) {
 
     let corName = correctName(obj.name);
-    if (refDatasourceName && refDatasourceName != thisDatasourceName) {
-        corName = correctName(refDatasourceName + '.' + obj.name);
-    }
 
     return new GraphQLObjectType({
         name: corName, fields: function () {
-            return convertFields(steedosSchema, obj.fields, knownTypes, thisDatasourceName);
+            return convertFields(steedosSchema, obj.fields, knownTypes);
         }
     })
 }
 
-export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: SteedosDataSourceType): GraphQLSchema {
+export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: SteedosDataSourceType): GraphQLSchema {
     let rootQueryfields = {};
-    let datasourceName = datasource.name;
+    _.each(steedosSchema.getDataSources(), function (datasource) {
+        _.each(datasource.getObjects(), function (obj, object_name) {
 
-    _.each(datasource.getObjects(), function (obj, object_name) {
-
-        if (!obj.name) {
-            return;
-        }
-
-        let corName = correctName(obj.name);
-        let objName: string = correctName(datasourceName + '.' + obj.name);
-
-        if (!knownTypes[objName]) {
-            knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes, datasourceName)
-        }
-
-        rootQueryfields[corName] = {
-            type: new GraphQLList(knownTypes[objName]),
-            args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
-            resolve: async function (source, args, context, info) {
-                let object = steedosSchema.getObject(`${datasourceName}.${obj.name}`);
-                let userSession = context ? context.userSession : null;
-                console.log('context.userSession: ', userSession);
-                return object.find(args, userSession);
+            if (!obj.name) {
+                return;
             }
-        }
+
+            let corName = correctName(obj.name);
+            let objName: string = correctName(obj.name);
+
+            if (!knownTypes[objName]) {
+                knownTypes[objName] = buildGraphQLObjectType(obj, steedosSchema, knownTypes)
+            }
+
+            rootQueryfields[corName] = {
+                type: new GraphQLList(knownTypes[objName]),
+                args: { 'fields': { type: new GraphQLList(GraphQLString) || GraphQLString }, 'filters': { type: GraphQLJSON }, 'top': { type: GraphQLInt }, 'skip': { type: GraphQLInt }, 'sort': { type: GraphQLString } },
+                resolve: async function (source, args, context, info) {
+                    let object = steedosSchema.getObject(`${obj.name}`);
+                    let userSession = context ? context.user : null;
+                    console.log('context.user: ', userSession);
+                    return object.find(args, userSession);
+                }
+            }
+        })
     })
+
 
     let rootMutationfields = {};
     _.each(rootQueryfields, function (type, objName) {
@@ -158,8 +152,8 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 console.log('args: ', args);
                 var data = args['data'];
                 data._id = data._id || new ObjectId().toHexString();
-                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
-                let userSession = context ? context.userSession : null;
+                let object = steedosSchema.getObject(`${type.name}`);
+                let userSession = context ? context.user : null;
                 return object.insert(data, userSession);
             }
         }
@@ -170,8 +164,8 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
                 console.log('args: ', args);
                 let data = args['data'];
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
-                let userSession = context ? context.userSession : null;
+                let object = steedosSchema.getObject(`${type.name}`);
+                let userSession = context ? context.user : null;
                 return object.update(_id, data, userSession);
             }
         }
@@ -181,8 +175,8 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
             resolve: async function (source, args, context, info) {
                 console.log('args: ', args);
                 let _id = args['_id'];
-                let object = steedosSchema.getObject(`${datasourceName}.${type.name}`);
-                let userSession = context ? context.userSession : null;
+                let object = steedosSchema.getObject(`${type.name}`);
+                let userSession = context ? context.user : null;
                 return object.delete(_id, userSession);
             }
         }
@@ -200,13 +194,4 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource: Ste
     };
 
     return new GraphQLSchema(schemaConfig);
-}
-
-export function getGraphQLRoutes(datasource: SteedosDataSourceType) {
-    let router = express.Router();
-    router.use(`/${datasource.name}`, graphqlHTTP({
-        schema: datasource.buildGraphQLSchema(),
-        graphiql: true
-    }))
-    return router;
 }

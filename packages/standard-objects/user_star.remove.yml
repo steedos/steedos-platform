@@ -18,10 +18,6 @@ fields:
       function () {
               return _.keys(Creator.Objects);
             }
-    _reference_to: |-
-      function () {
-              return _.keys(Creator.Objects);
-            }
     name: related_to
     filterable: true
     searchable: true

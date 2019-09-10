@@ -1,6 +1,6 @@
 {
   "name": "",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -15,10 +15,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/meteor-bundle-runner": "^1.1.7",
-    "@steedos/objectql": "^0.1.8",
-    "steedos-server": "^1.3.3",
-    "underscore": "1.5.2"
+      "@steedos/meteor-bundle-runner": "^1.5.1",
+      "@steedos/filters": "^1.5.1",
+      "@steedos/objectql": "^1.5.5",
+      "@steedos/core": "^1.5.5",
+      "@steedos/auth": "^1.5.5",
+      "@steedos/standard-objects": "^1.5.5",
+      "steedos-server": "^1.5.2",
+      "underscore": "1.5.2"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
@@ -26,11 +30,5 @@
   "bugs": {
     "url": "https://github.com/steedos/object-server/issues"
   },
-  "homepage": "https://github.com/steedos/object-server#readme",
-  "resolutions": {
-    "graphql": "^14.1.1",
-    "@steedos/objectql": "^0.1.8",
-    "@steedos/core": "^1.2.1",
-    "@steedos/auth": "^1.0.14"
-  }
+  "homepage": "https://github.com/steedos/object-server#readme"
 }

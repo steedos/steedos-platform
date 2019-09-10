@@ -1,9 +1,9 @@
 {
   "name": "@steedos/react-components",
-  "version": "0.0.1",
+  "version": "1.5.5",
   "private": true,
   "dependencies": {
-    "@steedos/core": "file:../core",
+    "@steedos/core": "^1.5.5",
     "eslint": "5.12.0",
     "http-proxy-middleware": "^0.19.1",
     "react": "^16.8.4",

@@ -68,7 +68,7 @@ describe('fetch records width specific fields for sqlite3 database', () => {
                     objects: {
                         test: {
                             label: 'Sqlite3 Schema',
-                            tableName: tableName,
+                            table_name: tableName,
                             fields: {
                                 id: {
                                     label: '主键',
@@ -94,6 +94,7 @@ describe('fetch records width specific fields for sqlite3 database', () => {
             }
         });
         const datasource = mySchema.getDataSource("default");
+        await datasource.init();
         await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;
     });

@@ -77,7 +77,7 @@ fields:
     sortable: true
     index: true
     is_company_only: true
-    defaultValue: |
+    defaultValue: !!js/function |
       function(){
         if (Meteor.isClient) {
           return Session.get('user_company_id')
@@ -123,7 +123,7 @@ actions:
     todo: standard_query
   addSubOrganization:
     label: 添加子部门
-    visible: |
+    visible: !!js/function |
       function () {
               var permissions;
               permissions = Creator.getPermissions();
@@ -133,7 +133,7 @@ actions:
               }
             }
     'on': record
-    todo: |
+    todo: !!js/function |
       function (object_name, record_id) {
               var record;
 

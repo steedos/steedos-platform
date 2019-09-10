@@ -1,5 +1,5 @@
 name: spaces
-label: 工作区
+label: 租户
 icon: groups
 fields:
   name:
@@ -11,7 +11,6 @@ fields:
     required: true
     searchable: true
     index: true
-    name: name
   admins:
     label: 管理员
     type: lookup
@@ -19,100 +18,83 @@ fields:
     index: true
     multiple: true
     is_wide: true
-    name: admins
     filterable: true
   avatar:
-    label: 浅色公司Logo
+    label: Logo
     type: avatar
-    name: avatar
-  avatar_dark:
-    label: 深色公司Logo
+  # avatar_dark:
+  #   label: 深色公司Logo
+  #   type: avatar
+  avatar_square:
+    label: 正方形Logo
     type: avatar
-    name: avatar_dark
   location:
     label: 地址
     type: location
     system: gcj02
     omit: true
     hidden: true
-    name: location
   apps:
     label: 启用应用
     type: lookup
     reference_to: apps
     multiple: true
     hidden: true
-    name: apps
     filterable: true
   apps_paid:
     label: 已付费应用
     type: '[text]'
     omit: true
-    name: apps_paid
   hostname:
     label: 绑定域名
-    type: '[text]'
+    type: 'text'
     hidden: true
-    name: hostname
   is_paid:
     label: 已付费
     type: boolean
     group: 账务
     omit: true
     readonly: true
-    name: is_paid
   balance:
     label: 账户余额
     type: number
     scale: 2
     omit: true
     hidden: true
-    name: balance
   services:
     type: object
     blackbox: true
-    omit: true
-    hidden: true
-    name: services
-  is_deleted:
-    type: boolean
     omit: true
     hidden: true
   billing.remaining_months:
     type: number
     omit: true
     hidden: true
-    name: billing.remaining_months
   user_limit:
     label: 已购买用户数
     type: number
     omit: true
     group: 账务
-    name: user_limit
   start_date:
     label: 付费开始时间
     type: datetime
     omit: true
     group: 账务
-    name: start_date
   end_date:
     label: 付费截止时间
     type: datetime
     omit: true
     group: 账务
-    name: end_date
   modules:
     label: 模块
     type: '[text]'
     omit: true
     hidden: true
-    name: modules
   enable_register:
     label: 允许新用户注册
     type: boolean
     defaultValue: false
-    hidden: true
-    name: enable_register
+    hidden: false
   owner:
     label: 所有者
     type: lookup
@@ -141,21 +123,11 @@ actions:
               url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
               return FlowRouter.go(url);
             }
-    _todo: |-
-      function () {
-              var url;
-              url = Creator.getListViewRelativeUrl("billing_pay_records", "admin", "all");
-              return FlowRouter.go(url);
-            }
   upgrade:
     label: 升级
     'on': record
     visible: true
     todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Modal.show('space_recharge_modal');
-            }
-    _todo: |-
       function () {
               return Modal.show('space_recharge_modal');
             }
