@@ -2,38 +2,37 @@
 # yarn lockfile v1
 
 
-"@accounts/client-password@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@accounts/client-password/-/client-password-0.18.0.tgz#dae4013d0d064b2616db988e6eb7fc03adc09ba7"
-  integrity sha512-tKZQ7eG4IwF7UfxsmJC+fuaeeQ8ItCeLUoxl85R+lI6BzPxN5xGMUUugAh1hEuKhmwZVjS/nyMXVgCPDBDMyIA==
+"@accounts/client-password@^0.19.0":
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/@accounts/client-password/-/client-password-0.19.0.tgz#62fad3e20f6768d141e0c075f5c48b32e3a6f0c0"
+  integrity sha512-y8JUElr/n0PteOZMRXVDfxZmJRze97tIqANHkP1wyXs+cCebrz5PcVzJbs3dbNXb4AFwKcMPnQxibjP7un/5ag==
   dependencies:
-    "@accounts/client" "^0.18.0"
-    "@accounts/types" "^0.18.0"
-    crypto-js "^3.1.9-1"
+    "@accounts/client" "^0.19.0"
+    "@accounts/types" "^0.19.0"
     tslib "1.10.0"
 
-"@accounts/client@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@accounts/client/-/client-0.18.0.tgz#637a9b560c6042bf3b5d3a5976f5cfb07621ad6a"
-  integrity sha512-sfqyMiug0daBdWLTCKuj4RSY0/9G9NXG9ZPxyAt9rxgh5eqlRVlFkNfJwFRxFlbAWWA+ABe8gfSsVNpl2vaXig==
+"@accounts/client@^0.19.0":
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/@accounts/client/-/client-0.19.0.tgz#b088fa55046b37d89eeeb8893a1d0b979cc9fab2"
+  integrity sha512-S6IOmX7ufg07BP+k5ep2vIPti4q5DkhFi4HZBmrLuLiHWZvJFr/TY32W4sMh5F5qXrFnaAvoyu2b9LzjMUBgQw==
   dependencies:
-    "@accounts/types" "^0.18.0"
+    "@accounts/types" "^0.19.0"
     jwt-decode "2.2.0"
     tslib "1.10.0"
 
-"@accounts/rest-client@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@accounts/rest-client/-/rest-client-0.18.0.tgz#3d202b5752da3f3b79f0a6dad84de9deac036a81"
-  integrity sha512-X+J3Yx6uAEyyz+XmKoT+QkIF/TWQz0kD8ZARCLYVHksSlUCtf0P47UR/OS43M1HVLMXsEycTWWfnVuWbOCQDVQ==
+"@accounts/rest-client@^0.19.0":
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/@accounts/rest-client/-/rest-client-0.19.0.tgz#ec9ecaf0a86cccac3b5f6aca308a526c60d7db52"
+  integrity sha512-502vtznJ3l89xjXRxxLrZxaDUlJi8lwGvGu6c6z7pCNRmuO8rPl/YTr5+ZqSqVEpt0k9ICKviFG1e42O033pNw==
   dependencies:
-    "@accounts/types" "^0.18.0"
+    "@accounts/types" "^0.19.0"
     lodash "^4.17.15"
     tslib "1.10.0"
 
-"@accounts/types@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.18.0.tgz#5c44287415cf714a726ef54c210771c535635cc3"
-  integrity sha512-qWm4HKFlM5iv4dDMs5XtjCAJufRVDN+btD7coE2phnI/uVCQvm5slPL7veZMFKyuaiK+1C64qzIU5z1J8g18ww==
+"@accounts/types@^0.19.0":
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.19.0.tgz#283e5a236ad79e37a017ef843254ff6699ccbe78"
+  integrity sha512-Su72qBZN2SpNrlC5yIFg/eyV18dEIDvfKyqmiPNlwFlIFAzNUoQCFr9i3+r/F5Zz3DFzvHb7dYFRCzFgtozPCg==
   dependencies:
     tslib "1.10.0"
 
@@ -3047,11 +3046,6 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
-
-crypto-js@^3.1.9-1:
-  version "3.1.9-1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
-  integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
 css-blank-pseudo@^0.1.4:
   version "0.1.4"
