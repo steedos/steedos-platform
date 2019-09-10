@@ -43,3 +43,15 @@ yarn build
 Build webapp to /webapps/build folder, will mount to https://127.0.0.1:4000/accounts/a/
 
 Navigate to https://127.0.0.1:4000/ , will redirect to build webapp at https://127.0.0.1:4000/accounts/a/
+
+## 密码策略
+默认密码格式要求为：密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
+可通过steedos-config.ym配置文件进行重写：
+```
+public:
+  accounts:
+    password:
+      policy:
+        reg: ^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$
+        regErrorMessage: 密码必须包含字母和数字，且不能少于8位
+```
