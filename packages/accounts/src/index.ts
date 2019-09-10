@@ -9,7 +9,7 @@ import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
-
+import { initConfig } from './config/index';
 
 
 function getAccountsServer (context){
@@ -35,7 +35,8 @@ function getAccountsServer (context){
     },
     {
       password: new AccountsPassword({
-        errors: errors
+        errors: errors,
+        passwordHashAlgorithm: 'sha256'
       }),
     }
   );
@@ -71,6 +72,9 @@ function getAccountsRouter(context){
 }
 
 export function init(context){
+
+  initConfig(context.settings)
+
   if(context.settings){
     if(!context.settings.public){
         context.settings.public = {} 
