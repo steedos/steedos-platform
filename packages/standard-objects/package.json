@@ -1,12 +1,12 @@
 {
   "name": "@steedos/standard-objects",
   "private": false,
-  "version": "1.5.1",
+  "version": "1.5.5",
   "description": "Standard objects for steedos",
   "main": "index.js",
   "license": "Apache",
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c1e253e1f4c3547da7bab11d324d5eea885690f4"
+  "gitHead": "853a6165c2afba1dc115212c524a6b6dc31dbd70"
 }

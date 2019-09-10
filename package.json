@@ -9,10 +9,11 @@
     "bootstrap": "lerna bootstrap; yarn run link",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
-    "publish": "lerna publish --registry https://registry.npmjs.org",
+    "pub": "lerna publish --registry https://registry.npmjs.org",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
-    "clear": "rd /s /q packages\\auth\\node_modules\\@steedos packages\\report\\node_modules\\@steedos packages\\objectql\\node_modules\\@steedos packages\\core\\node_modules\\@steedos packages\\react-components\\node_modules\\@steedos packages\\tools\\node_modules\\@steedos"
+    "clean": "lerna clean",
+    "changed": "lerna changed"
   },
   "devDependencies": {
     "lerna": "^3.14.0",
