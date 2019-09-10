@@ -64,6 +64,10 @@ CODEUSERATTRS = {
 	},
 	label: {
 		type: 'text'
+	},
+	description: {
+		label: '描述',
+		type: 'textarea'
 	}
 }
 
@@ -146,10 +150,6 @@ getTypeUserAttrs = ()->
 						label: '唯一键'
 						readonly: 'readonly'
 					},
-					description: {
-						label: '描述',
-						type: 'textarea'
-					},
 					fields: {
 						label: '字段'
 					}
@@ -159,10 +159,6 @@ getTypeUserAttrs = ()->
 					_id: {
 						label: '唯一键'
 						readonly: 'readonly'
-					},
-					description: {
-						label: '描述',
-						type: 'textarea'
 					},
 					fields: {
 						label: '字段'
