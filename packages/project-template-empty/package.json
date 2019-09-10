@@ -1,7 +1,7 @@
 {
   "name": "@steedos/project-template-empty",
   "private": false,
-  "version": "1.5.6",
+  "version": "1.5.8",
   "description": "",
   "main": "server.js",
   "repository": {
