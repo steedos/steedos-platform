@@ -372,7 +372,8 @@ router.get('/:spaceId/:objectName/:_id', async function (req: Request, res: Resp
         let entity = await collection.findOne(recordId, { fields: fields }, userSession);
         let entities = [];
         if (entity) {
-          let isAllowed = (entity.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, entity.company_id));
+          let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] }, userSession);
+          let isAllowed = (recordData.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, recordData.company_id));
           // if object.enable_share and !isAllowed
           //   shares = []
           //   orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
