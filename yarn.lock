@@ -2752,33 +2752,10 @@
     saml-idp "^1.1.0"
     tslib "1.10.0"
 
-"@steedos/auth@^1.1.4", "@steedos/auth@^1.1.5":
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.5.8.tgz#bf5eea50fdcd92c71c178ba548c3cc1288a1f26e"
-  integrity sha512-jrkO6uzrbMx3inaLYsaE+bibD+/Lnm72HatZQCEVnN4pc7i+7QnTTK/ksvJOu63CjogOqXip49qmlkQQs2Yvwg==
-  dependencies:
-    "@steedos/objectql" "^1.5.8"
-    bcrypt "^3.0.6"
-    cookies "^0.7.3"
-    express "^4.16.4"
-    express-jwt "^5.3.1"
-    jsonwebtoken "^8.5.1"
-    sha256 "^0.2.0"
-    underscore "^1.9.1"
-
 "@steedos/filters@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-0.0.5.tgz#3bd0ee50f35a42acc7681594fdc807553eae8523"
   integrity sha512-mXZebjdQyULNSBsfO8zFVBc6jA7b4reIAEupx0BlmCVZeJ81QAROsNjbzac4HwH67GwvWLihztNG6sTUB33Fcg==
-  dependencies:
-    devextreme "^18.2.6"
-    moment "^2.24.0"
-    underscore "^1.9.1"
-
-"@steedos/filters@^1.0.0", "@steedos/filters@^1.5.8":
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.5.8.tgz#d38b4da59b763e5b0668d51a9fb7b1d56153c1cb"
-  integrity sha512-itVcip4TNdEfb2Zaccm+/SjxxIkfCcS02Z/jSavkMXLR3bUxNroPxXDLNnVvmqC58qQyhZZwlOXh3+bhU84ySw==
   dependencies:
     devextreme "^18.2.6"
     moment "^2.24.0"
@@ -2796,43 +2773,6 @@
     "@steedos/odata-v4-typeorm" "^0.0.24"
     "@steedos/schemas" "^1.0.0"
     "@steedos/standard-objects" "^0.1.1"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    app-root-path "^2.2.1"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^3.1.1"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    jsen "^0.6.6"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    odata-v4-sql "^0.1.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    typeorm "^0.2.16"
-    underscore "1.5.2"
-
-"@steedos/objectql@^1.0.2", "@steedos/objectql@^1.0.7", "@steedos/objectql@^1.5.8":
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.5.8.tgz#42789b60b2d2d9e31529e8eeff88396954cecb5e"
-  integrity sha512-hDN/uaQ0p9teaGoQ7AZ/ccRs7mZgbl2pwfvEOg1p7vEixILsJVjrQvFk7k68EZrUPPaI0S/XBGP/w1BAg9Mmkw==
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.5.8"
-    "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/schemas" "^1.5.8"
-    "@steedos/standard-objects" "^1.5.8"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -2904,20 +2844,15 @@
     react-scripts "3.0.1"
     underscore "^1.9.1"
 
-"@steedos/schemas@^1.0.0", "@steedos/schemas@^1.5.8":
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.5.8.tgz#8a026cafbc7b0d1767d9d4e69219d72c59ea09a1"
-  integrity sha512-jTpmtbVYEEoCHOPXtdoE/H76S2TJgBkol89L3se0z4vfD0xC67BA3knPONAQWIMc2yEu5+qc8o4xFYGkuvRBgg==
+"@steedos/project-template-empty@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@steedos/project-template-empty/-/project-template-empty-1.6.0.tgz#94029e04a28de68a5ad61efea1ebc2625c7ef0e0"
+  integrity sha512-syVO5YDSWLkMZpWVMEvIYc0atXntwoQD6pfRtLs5cXkoxXn7pMSzPf+I3PiiSuqnHgzDdl4oIWDIX/bUZ0OVfg==
 
 "@steedos/standard-objects@^0.1.1":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-0.1.2.tgz#ee33e71fc7899b57b6e140fd46fe08e6fd53f222"
   integrity sha512-jmR+cxvrlav8Q420laOWPnpD6xn21c5FVDIFJOf437Ls4zm0Gx/F3GsmBXgdewhpmb0gtvfSbnFMFMR2Mihj5g==
-
-"@steedos/standard-objects@^1.5.8":
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.5.8.tgz#6d66eacc44075a9e6743fbc4dfac23986ab9d2cf"
-  integrity sha512-IoN94/yi9kSheoUdrXUN91o/vg5hqRfLD6wGwCXDlviojRFKLCQR0Q3QWgCP4VMIl7tqwKzojhmqekrOg+SOjg==
 
 "@steedos/steedos-model-generator@^0.5.34":
   version "0.5.34"
