@@ -1,19 +1,4 @@
 Creator.Objects['company'].triggers = {
-    "before.insert.server.company": {
-        on: "server",
-        when: "before.insert",
-        todo: function (userId, doc) {
-            var existsCount = Creator.getCollection("company").find({
-                space: doc.space,
-                name: doc.name
-            }).count();
-            if (existsCount > 0) {
-                // throw new Meteor.Error(400, "company_error_company_name_exists");
-                // 还不支持i18n
-                throw new Meteor.Error(400, "该单位名称已经存在");
-            }
-        }
-    },
     "after.insert.server.company": {
         on: "server",
         when: "after.insert",

@@ -219,17 +219,18 @@ if (Meteor.isServer) {
             if (!parentOrg) {
                 throw new Meteor.Error(400, "organizations_error_parent_is_not_found");
             }
-            if (parentOrg.children) {
-                nameOrg = db.organizations.find({
-                    _id: {
-                        $in: parentOrg.children
-                    },
-                    name: doc.name
-                }).count();
-                if (nameOrg > 0) {
-                    throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
-                }
-            }
+            // 允许重名，去掉重名判断
+            // if (parentOrg.children) {
+            //     nameOrg = db.organizations.find({
+            //         _id: {
+            //             $in: parentOrg.children
+            //         },
+            //         name: doc.name
+            //     }).count();
+            //     if (nameOrg > 0) {
+            //         throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
+            //     }
+            // }
             if (!doc.company_id) {
                 // 新增组织时，自动继承上级组织的 company_id
                 doc.company_id = parentOrg.company_id;
@@ -242,14 +243,15 @@ if (Meteor.isServer) {
             if (broexisted > 0) {
                 throw new Meteor.Error(400, "organizations_error_organizations_parent_required");
             }
-            orgexisted = db.organizations.find({
-                name: doc.name,
-                space: doc.space,
-                fullname: doc.name
-            }).count();
-            if (orgexisted > 0) {
-                throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
-            }
+            // 允许重名，去掉重名判断
+            // orgexisted = db.organizations.find({
+            //     name: doc.name,
+            //     space: doc.space,
+            //     fullname: doc.name
+            // }).count();
+            // if (orgexisted > 0) {
+            //     throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
+            // }
         }
         // only space admin can update organization.admins
         if (!isSpaceAdmin) {
@@ -406,18 +408,19 @@ if (Meteor.isServer) {
             if (doc._id === parentOrg._id || parentOrg.parents.indexOf(doc._id) >= 0) {
                 throw new Meteor.Error(400, "organizations_error_parent_is_self");
             }
-            // 同一个 parent 不能有同名的 child
-            if (parentOrg.children && modifier.$set.name) {
-                nameOrg = db.organizations.find({
-                    _id: {
-                        $in: parentOrg.children
-                    },
-                    name: modifier.$set.name
-                }).count();
-                if ((nameOrg > 0) && (modifier.$set.name !== doc.name)) {
-                    throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
-                }
-            }
+            // 允许重名，去掉重名判断
+            // // 同一个 parent 不能有同名的 child
+            // if (parentOrg.children && modifier.$set.name) {
+            //     nameOrg = db.organizations.find({
+            //         _id: {
+            //             $in: parentOrg.children
+            //         },
+            //         name: modifier.$set.name
+            //     }).count();
+            //     if ((nameOrg > 0) && (modifier.$set.name !== doc.name)) {
+            //         throw new Meteor.Error(400, "organizations_error_organizations_name_exists");
+            //     }
+            // }
         }
         // else if (modifier.$set.name != doc.name)
         // 	existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()
