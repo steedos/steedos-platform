@@ -71,8 +71,14 @@ fields:
     filterable: true
   company_id:
     group: 系统
-    omit: false
+    omit: true
     hidden: false
+  is_company:
+    label: 公司级
+    type: boolean
+    index: true
+    name: is_company
+    omit: true
   hidden:
     label: 隐藏
     type: boolean
@@ -83,6 +89,7 @@ list_views:
       - name
       - company_id
       - sort_no
+      - is_company
       - admins
       - hidden
     label: 所有

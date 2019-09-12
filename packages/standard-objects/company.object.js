@@ -18,48 +18,63 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "after.insert",
         todo: async function (userId, doc) {
-            if (!doc.organization) {
-                // 未指定所属组织时自动在根节点新建一个组织，对应上关系
-                var rootOrg = Creator.getCollection("organizations").findOne({
-                    space: doc.space,
-                    parent: null
-                }, {
-                    fields: {
-                        _id: 1
-                    }
-                });
-
-                var existsOrg = Creator.getCollection("organizations").findOne({
-                    space: doc.space,
-                    parent: rootOrg._id,
-                    name: doc.name
-                }, {
-                    fields: {
-                        _id: 1
-                    }
-                });
-
-                // 只有同名组织不存在时才自动新建根组织下对应的组织关联到新单位
-                if (!existsOrg) {
-                    // 组织的其他属性，比如fullname，parents等在organizations.before.insert，organizations.after.insert处理
-                    var orgId = Creator.getCollection("organizations").insert({
-                        name: doc.name,
-                        parent: rootOrg._id,
-                        space: doc.space,
-                        company_id: doc._id
-                    });
-                    Creator.getCollection("company").update({
-                        _id: doc._id
-                    }, {
-                        $set: {
-                            organization: orgId,
-                            company_id: doc._id
-                        }
-                    });
+            // 自动在根节点新建一个组织，对应上关系
+            var rootOrg = Creator.getCollection("organizations").findOne({
+                space: doc.space,
+                parent: null
+            }, {
+                fields: {
+                    _id: 1
                 }
-            }
+            });
+
+            // 自动新建根组织下对应的组织关联到新单位，就算存在同名组织，也要新建，同名的老组织用户应该手动删除
+            // 组织的其他属性，比如fullname，parents等在organizations.before.insert，organizations.after.insert处理
+            var orgId = Creator.getCollection("organizations").insert({
+                _id: doc._id,
+                name: doc.name,
+                parent: rootOrg._id,
+                space: doc.space,
+                company_id: doc._id,
+                is_company: true
+            });
+            Creator.getCollection("company").update({
+                _id: doc._id
+            }, {
+                $set: {
+                    organization: orgId,
+                    company_id: doc._id
+                }
+            });
         }
-    }
+    },
+    // "before.remove.server.company": {
+    //     on: "server",
+    //     when: "before.remove",
+    //     todo: async function (userId, doc) {
+    //         console.log("===before.remove.server.company====doc=======",doc);
+    //         var existsOrg = Creator.getCollection("organizations").findOne({
+    //             space: doc.space,
+    //             parent: doc.organization
+    //         }, {
+    //             fields: {
+    //                 _id: 1
+    //             }
+    //         });
+
+    //         if (existsOrg) {
+    //             // throw new Meteor.Error(400, "company_error_company_name_exists");
+    //             // 还不支持i18n
+    //             throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
+    //         }
+    //         else{
+    //             let xx = Creator.getCollection("organizations").direct.remove({
+    //                 _id: doc.organization
+    //             });
+    //             console.log("======xx======", xx);
+    //         }
+    //     }
+    // }
 }
 
 let _ = require("underscore");

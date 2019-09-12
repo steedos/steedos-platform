@@ -658,6 +658,10 @@ if (Meteor.isServer) {
         }
     });
     db.organizations.before.remove(function (userId, doc) {
+        // if (doc.is_company) {
+        //     // 您无法删除单位级部门，可以通过删除对应的单位来自动删除该部门
+        //     throw new Meteor.Error(400, "organizations_error_can_not_remove_company_organization");
+        // }
         var isOrgAdmin, isSpaceAdmin, parents, ref, space;
         // check space exists
         space = db.spaces.findOne(doc.space);
