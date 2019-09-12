@@ -47,6 +47,32 @@ Creator.Objects['company'].triggers = {
                 }
             });
         }
+    },
+    "before.remove.server.company": {
+        on: "server",
+        when: "before.remove",
+        todo: async function (userId, doc) {
+            var existsOrg = Creator.getCollection("organizations").findOne({
+                space: doc.space,
+                parent: doc.organization
+            }, {
+                fields: {
+                    _id: 1
+                }
+            });
+
+            if (existsOrg) {
+                // throw new Meteor.Error(400, "company_error_company_name_exists");
+                // 还不支持i18n
+                throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
+            }
+            else{
+                // 删除关联组织
+                Creator.getCollection("organizations").remove({
+                    _id: doc.organization
+                });
+            }
+        }
     }
 }
 
@@ -106,7 +132,7 @@ Creator.Objects['company'].methods = {
             filters: [["organizations_parents", "=", company.organization]],
             fields: ["organizations", "organization", "company_id", "space"]
         });
-
+        
         for (let su of sus){
             await update_su_company_ids.call(this, su._id, su);
         }
