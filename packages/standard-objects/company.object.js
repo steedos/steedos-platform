@@ -47,34 +47,7 @@ Creator.Objects['company'].triggers = {
                 }
             });
         }
-    },
-    // "before.remove.server.company": {
-    //     on: "server",
-    //     when: "before.remove",
-    //     todo: async function (userId, doc) {
-    //         console.log("===before.remove.server.company====doc=======",doc);
-    //         var existsOrg = Creator.getCollection("organizations").findOne({
-    //             space: doc.space,
-    //             parent: doc.organization
-    //         }, {
-    //             fields: {
-    //                 _id: 1
-    //             }
-    //         });
-
-    //         if (existsOrg) {
-    //             // throw new Meteor.Error(400, "company_error_company_name_exists");
-    //             // 还不支持i18n
-    //             throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
-    //         }
-    //         else{
-    //             let xx = Creator.getCollection("organizations").direct.remove({
-    //                 _id: doc.organization
-    //             });
-    //             console.log("======xx======", xx);
-    //         }
-    //     }
-    // }
+    }
 }
 
 let _ = require("underscore");
@@ -133,9 +106,10 @@ Creator.Objects['company'].methods = {
             filters: [["organizations_parents", "=", company.organization]],
             fields: ["organizations", "organization", "company_id", "space"]
         });
-        sus.forEach( async (su)=>{
-            await update_su_company_ids.call(this, su._id, su)
-        });
+
+        for (let su of sus){
+            await update_su_company_ids.call(this, su._id, su);
+        }
 
         return {
             updatedOrgs: result,
