@@ -669,6 +669,16 @@
       "path": "packages/steedos_mailqueue.js"
     },
     {
+      "path": "packages/chuangbo_cookie.js"
+    },
+    {
+      "path": "packages/steedos_sso.js"
+    },
+    {
+      "sourceMap": "packages/steedos_webhookqueue.js.map",
+      "path": "packages/steedos_webhookqueue.js"
+    },
+    {
       "path": "packages/meteorhacks_ssr.js"
     },
     {
@@ -676,12 +686,6 @@
     },
     {
       "path": "packages/steedos_autoform-location.js"
-    },
-    {
-      "path": "packages/chuangbo_cookie.js"
-    },
-    {
-      "path": "packages/steedos_sso.js"
     },
     {
       "sourceMap": "packages/steedos_autoform.js.map",
@@ -693,24 +697,6 @@
     {
       "sourceMap": "packages/steedos_creator.js.map",
       "path": "packages/steedos_creator.js"
-    },
-    {
-      "sourceMap": "packages/steedos_webhookqueue.js.map",
-      "path": "packages/steedos_webhookqueue.js"
-    },
-    {
-      "sourceMap": "packages/steedos_app-workflow.js.map",
-      "path": "packages/steedos_app-workflow.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_qhd-archive-sync/node_modules",
-      "sourceMap": "packages/steedos_qhd-archive-sync.js.map",
-      "path": "packages/steedos_qhd-archive-sync.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_qhd-archive-xml/node_modules",
-      "sourceMap": "packages/steedos_qhd-archive-xml.js.map",
-      "path": "packages/steedos_qhd-archive-xml.js"
     },
     {
       "sourceMap": "packages/steedos_instance-record-queue.js.map",
@@ -740,6 +726,10 @@
     },
     {
       "path": "packages/steedos_formbuilder.js"
+    },
+    {
+      "sourceMap": "packages/steedos_app-workflow.js.map",
+      "path": "packages/steedos_app-workflow.js"
     },
     {
       "sourceMap": "packages/steedos_object-webhooks-queue.js.map",

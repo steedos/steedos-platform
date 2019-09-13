@@ -247,18 +247,15 @@ install("steedos:lightning-design-system");
 install("steedos:odata");
 install("steedos:object-database");
 install("steedos:mailqueue");
+install("chuangbo:cookie");
+install("steedos:sso");
+install("steedos:webhookqueue");
 install("meteorhacks:ssr");
 install("steedos:autoform-filesize");
 install("steedos:autoform-location");
-install("chuangbo:cookie");
-install("steedos:sso");
 install("steedos:autoform");
 install("steedos:app-base");
 install("steedos:creator");
-install("steedos:webhookqueue");
-install("steedos:app-workflow");
-install("steedos:qhd-archive-sync");
-install("steedos:qhd-archive-xml");
 install("steedos:instance-record-queue");
 install("steedos:app-chat");
 install("steedos:application-package");
@@ -266,6 +263,7 @@ install("steedos:users-import");
 install("steedos:version");
 install("steedos:audit");
 install("steedos:formbuilder");
+install("steedos:app-workflow");
 install("steedos:object-webhooks-queue");
 install("steedos:api-authenticate-user");
 install("steedos:api");
@@ -776,7 +774,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.6.0-alpha.0",
+  "version": "1.6.0-patch.1",
   "main": "lib/index.js"
 };
 
@@ -803,7 +801,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.6.0-alpha.0",
+  "version": "1.6.0",
   "main": "lib/index.js"
 };
 
@@ -830,7 +828,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.6.0-alpha.0",
+  "version": "1.6.0",
   "main": "lib/index.js"
 };
 
@@ -964,7 +962,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "xml2js",
-  "version": "0.4.21",
+  "version": "0.4.22",
   "main": "./lib/xml2js"
 };
 

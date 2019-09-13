@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/client/theme.less"],"names":[],"mappings":"AAAA,QAAQ,QAAS,yBAAyB;EACtC,MAAA;;AAGJ,QAAQ,QAAS,yBAAyB;EACtC,aAAA;;AAGJ,QAAQ,SACJ;EACI,SAAA","sourcesContent":[".steedos.creator .creator-content-wrapper .content-wrapper {\n    top: 0;\n}\n\n.steedos.creator .creator-content-wrapper .main-sidebar {\n    margin-top: 0;\n}\n\n.steedos.workflow {\n    .creator-list-wrapper {\n        top: 50px;\n    }\n    \n}"]}
