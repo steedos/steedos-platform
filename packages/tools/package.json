@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "steedos-tools",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "",
   "main": "lib/sqlserver.js",
   "scripts": {
@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/objectql": "^1.6.0"
+    "@steedos/objectql": "^1.6.1"
   }
 }

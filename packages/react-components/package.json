@@ -1,6 +1,6 @@
 {
   "name": "@steedos/react-components",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "dependencies": {
     "@steedos/core": "^1.6.0",
