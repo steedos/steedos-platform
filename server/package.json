@@ -90,5 +90,6 @@
     "uglify-js": "^3.4.9",
     "unpipe": "1.0.0",
     "xml2js": "^0.4.19"
-  }
+  },
+  "gitHead": "3a32d86885e3928f9867bbebfee1a9f2b0899972"
 }
