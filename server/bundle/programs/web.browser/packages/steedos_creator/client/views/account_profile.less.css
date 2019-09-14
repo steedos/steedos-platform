@@ -1,0 +1,200 @@
+.avatar-file {
+  position: absolute !important;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  opacity: 0;
+  z-index: 10000;
+  cursor: pointer;
+  width: 250px;
+}
+.change-avatar {
+  margin-left: 5px;
+  margin-top: 20px;
+}
+.change-avatar.miss-avator {
+  margin-bottom: 80px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.steedos-admin .nav-tabs-custom .tab-content .box-header {
+  height: auto;
+}
+.steedos-admin .nav-tabs-custom .tab-content .box-body {
+  padding: 10px 0px;
+}
+.steedos-admin .nav-tabs-custom .tab-content .list-group-item .pull-right {
+  line-height: 100%;
+}
+.steedos-admin .admin-content .nav-tabs-custom {
+  box-shadow: none;
+}
+#personalization a.thumbnail,
+#creator-account-background-form a.thumbnail,
+#accountZoom a.thumbnail {
+  cursor: pointer;
+}
+#personalization a.thumbnail.active,
+#creator-account-background-form a.thumbnail.active,
+#accountZoom a.thumbnail.active {
+  background: #337ab7;
+}
+#personalization a.thumbnail .bg-body,
+#creator-account-background-form a.thumbnail .bg-body,
+#accountZoom a.thumbnail .bg-body {
+  height: 180px;
+}
+#personalization .upload-box,
+#creator-account-background-form .upload-box,
+#accountZoom .upload-box {
+  height: 180px;
+}
+#personalization .upload-box .btn-upload-bg-file,
+#creator-account-background-form .upload-box .btn-upload-bg-file,
+#accountZoom .upload-box .btn-upload-bg-file {
+  position: absolute;
+  top: 50%;
+  margin-top: -12px;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item,
+#accountZoom .skin-setting-item-wrap .skin-setting-item {
+  height: 50px;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-side,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-side,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-side {
+  display: block;
+  float: left;
+  width: 20%;
+  height: 100%;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-head,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-head,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-head {
+  height: 20%;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-head .skin-setting-title,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-head .skin-setting-title,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-head .skin-setting-title {
+  display: block;
+  float: left;
+  width: 80%;
+  height: 100%;
+  background: #ecf0f5;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-body,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-body,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-body {
+  height: 80%;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-side,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-side,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-side {
+  background: #222d32;
+}
+#personalization .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-content,
+#creator-account-background-form .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-content,
+#accountZoom .skin-setting-item-wrap .skin-setting-item .skin-setting-body .skin-setting-content {
+  background: #f4f5f7;
+  display: block;
+  width: 80%;
+  float: left;
+  height: 100%;
+}
+#personalization .zoom-setting-item-wrap .zoom-setting-item,
+#creator-account-background-form .zoom-setting-item-wrap .zoom-setting-item,
+#accountZoom .zoom-setting-item-wrap .zoom-setting-item {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+}
+@media (max-width: 767px) {
+  #creator-account-setting-form .list-group .list-group-item .pull-right {
+    float: none !important;
+  }
+  #creator-account-setting-form .list-group .list-group-item span {
+    display: block;
+  }
+  #creator-account-setting-form .list-group .list-group-item .btn-link {
+    height: 22px;
+    line-height: 22px;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+}
+#creator-account-avatar-form .account-default-avatar {
+  height: 160px;
+  width: 160px;
+  border: 3px solid;
+  border-color: #e0e0e0;
+  border-radius: 50%;
+  font-size: 120px;
+  color: #e0e0e0;
+  text-align: center;
+  padding-top: 10px;
+}
+#creator-account-avatar-form .avatar-preview {
+  height: 160px;
+  width: 160px;
+}
+#creator-account-setting-form .btn-set-password-by-phone {
+  margin-left: 4px;
+}
+#creator-account-setting-form .phone-box {
+  margin-bottom: 12px;
+}
+#creator-account-setting-form .phone-box .phone-status {
+  margin-left: 4px;
+}
+#creator-account-setting-form .change-username-box .username-text {
+  margin-bottom: 12px;
+}
+#creator-account-setting-form h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#creator-account-setting-form hr {
+  margin-bottom: 20px;
+}
+#creator-account-password-form .change-username-box .username-text {
+  margin-bottom: 12px;
+}
+#creator-account-password-form .slds-grid .form-group {
+  margin-bottom: 0;
+}
+@media (max-width: 768px) {
+  .admin-profile-content .nav-tabs-custom .nav-tabs {
+    display: none;
+  }
+  .admin-profile-content .nav-tabs-custom .tab-content {
+    margin-top: -15px;
+  }
+}
+#secrets .copy-secret {
+  cursor: copy;
+}
+#secrets .token {
+  width: calc(100% - 25px);
+}
+#secrets .token p {
+  max-width: calc(100% - 15px);
+}
+#secrets .name {
+  width: 150px;
+}
+#secrets .remove-secret {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+#secrets .remove-secret i {
+  width: 15px;
+}

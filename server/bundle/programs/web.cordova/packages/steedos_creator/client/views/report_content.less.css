@@ -1,0 +1,49 @@
+.reportsReportPage .pageBody .scrollarea {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.reportsReportPage .pageBody .scrollarea #jsreport {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  /*ios设备滚动条功能依赖该段样式*/
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  /**
+					需要给iframe下的html界面增加以下样式，
+					否则android设备上水平滚动条显示不出来
+					body {
+						height: 100%;
+						width: 100%;
+						overflow: auto;
+					}
+				**/
+}
+.reportsReportPage .pageBody .scrollarea #jsreport iframe {
+  width: 100%;
+  height: 100%;
+  min-width: auto;
+  border: none;
+  background: transparent;
+}
+.reportsReportPage .pageBody .scrollarea .creator-report-empty {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 15px;
+}
+/** 解决jsreport报表在客户端显示不全 **/
+.reportsReportPage .pageBody .scrollarea #jsreport {
+  position: relative;
+}
+.reportsReportPage .pageBody .scrollarea #jsreport iframe {
+  position: absolute;
+}

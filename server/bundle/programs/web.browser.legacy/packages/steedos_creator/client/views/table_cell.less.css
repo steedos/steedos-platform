@@ -1,0 +1,83 @@
+.creator_table_cell {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.creator_table_cell .cell-container > a:not(:last-of-type):after {
+  content: ",";
+}
+.creator_table_cell .cell-container {
+  /**grid列表字段很多时，列显示异常 #1232
+		display: flex;
+		flex-wrap: wrap;
+		flex: 1;
+		**/
+}
+.creator_table_cell .cell-container .fulltex {
+  margin-right: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  overflow: hidden;
+}
+.creator_table_cell .cell-container .cellGridContainer {
+  border: 1px solid #ddd;
+  border-bottom: none;
+}
+.creator_table_cell .cell-container .cellGridContainer td {
+  padding-left: 7px !important;
+}
+.creator_table_cell .cell-container .cellGridContainer .dx-data-row td {
+  line-height: 25px;
+}
+.creator_table_cell .cell-container img.creator-table-cell-image {
+  max-height: 60px;
+  border-radius: 6px;
+  margin: 3px 6px 3px 0;
+}
+.creator_table_cell .editor-preview-side {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0;
+  height: auto !important;
+  position: inherit;
+  background: transparent;
+  display: block;
+  border: none;
+}
+.creator_table_cell .slds-button {
+  margin-right: 0;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0;
+      -ms-flex: 0;
+          flex: 0;
+}
+#creator-quick-form .cell-container .fulltex {
+  white-space: pre-line;
+}
+#creator-quick-form .cell-container img.creator-table-cell-image {
+  max-height: 80px;
+}
+#creator-quick-form .cell-extra-field-container {
+  padding-left: 10px;
+}
+#viewRecordForm .creator_table_cell .cell-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}

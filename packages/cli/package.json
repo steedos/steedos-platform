@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "1.5.1",
+  "version": "1.5.8-patch.1",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "posttest": "eslint .",
     "prepack": "oclif-dev manifest && oclif-dev readme",
     "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "prepare": "tsc"
   },
   "bin": {
     "steedos": "./bin/run"
@@ -35,8 +36,8 @@
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/meteor-bundle-runner": "^1.5.1",
-    "@steedos/project-template-empty": "^1.5.1",
+    "@steedos/meteor-bundle-runner": "^1.5.8",
+    "@steedos/project-template-empty": "^1.5.8-patch.4",
     "@steedos/steedos-model-generator": "^0.5.34",
     "change-case": "^3.1.0",
     "colors": "^1.3.3",

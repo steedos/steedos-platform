@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:creator/client/views/about_content.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,oBAAA;CCCH","file":"to.css","sourcesContent":["#creator-about-form {\n    padding: 0;\n    background: #fbf9fe;\n}","#creator-about-form {\n  padding: 0;\n  background: #fbf9fe;\n}\n"]}

@@ -1,0 +1,33 @@
+.record-search-template .record-search-container {
+  height: 100%;
+  width: 100%;
+}
+.record-search-template .record-search-container .navContainer {
+  border-right: 1px solid #dddbda;
+  background-color: #fafaf9;
+  width: 15rem;
+  min-width: 15rem;
+}
+.record-search-template .record-search-container .navContainer .search-title {
+  font-size: 13px;
+}
+.record-search-template .record-search-container .navContainer .slds-is-active .object-item {
+  border-left-color: #fdca3d;
+}
+.record-search-template .record-search-container .navContainer .object-item {
+  font-size: 14px;
+  padding: 8px 12px 8px 24px;
+  line-height: 19px;
+  color: #000;
+}
+.record-search-template .record-search-container .navContainer .object-item:focus {
+  border-left-color: #fdca3d;
+  color: #000;
+}
+.record-search-template .record-search-container .result-wrapper {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}

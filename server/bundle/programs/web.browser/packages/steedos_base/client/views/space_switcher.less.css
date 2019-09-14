@@ -1,0 +1,109 @@
+.steedos .main-sidebar .space-switcher {
+  cursor: pointer;
+}
+.steedos .main-sidebar .space-switcher.only-one-space {
+  cursor: default;
+}
+.steedos .main-sidebar .space-switcher .space-name {
+  overflow: hidden;
+  display: block;
+  background: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  color: #efefef;
+  width: 180px;
+  text-overflow: ellipsis;
+}
+.steedos .main-sidebar .space-switcher .dropdown-toggle .pull-right-container {
+  font-size: 18px;
+  height: 15px;
+  line-height: 15px;
+}
+.steedos .main-sidebar .space-switcher .dropdown-toggle .pull-right-container .ion {
+  font-size: 60%;
+}
+.steedos .main-sidebar .dropdown-toggle,
+.steedos .main-sidebar .dropdown-toggle:focus {
+  overflow: hidden;
+  background: transparent;
+}
+.steedos .main-sidebar .dropdown-menu.dropdown-space {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-top: 5px;
+  width: 200px;
+  max-height: 300px;
+}
+.steedos .main-sidebar .dropdown-menu.dropdown-space #switchSpace {
+  cursor: pointer;
+  color: black;
+}
+.steedos .main-sidebar .dropdown-menu.dropdown-space a {
+  cursor: pointer;
+  color: #333;
+}
+.steedos .main-sidebar .dropdown-menu.dropdown-space .space-item-link .space-item-title {
+  width: 82%;
+  margin-left: 12px;
+}
+.steedos .sidebar-menu > li .label,
+.steedos .sidebar-menu > li .badge {
+  margin-top: -2px;
+  height: 18px;
+  line-height: 14px;
+}
+.steedos .springboard-wrapper .space-switcher .dropdown-toggle .space-name {
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 90%;
+  height: 36px;
+  line-height: 36px;
+}
+.steedos .springboard-wrapper .space-switcher .dropdown-toggle .pull-right-container {
+  display: inline-block;
+  /*height: 36px;*/
+  /*只有一个工作区时，这行代码在苹果手机上会造成工作区名称位置明显偏下*/
+  line-height: 36px;
+  overflow: hidden;
+}
+.steedos #app_list_box .space-switcher {
+  margin-right: 30px;
+}
+.steedos #app_list_box .space-switcher .dropdown-menu.dropdown-space .space-item-link .space-item-title {
+  width: 84%;
+}
+.steedos .space-switcher .dropdown-toggle .pull-right-container .ion {
+  font-size: 60%;
+}
+.steedos .space-switcher .dropdown-menu.dropdown-space {
+  width: 100%;
+}
+.steedos .space-switcher .dropdown-menu.dropdown-space .space-item-link {
+  height: 40px;
+}
+.steedos .space-switcher .dropdown-menu.dropdown-space .switchSpace {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.steedos .space-switcher .dropdown-menu.dropdown-space .switchSpace .pull-right-container .label,
+.steedos .space-switcher .dropdown-menu.dropdown-space .switchSpace .pull-right-container .badge {
+  height: 18px;
+  line-height: 14px;
+}
+.steedos .space-switcher .dropdown-menu.dropdown-space .switchSpace .space-item-link .space-item-title {
+  max-width: calc(100% - 20px);
+  padding-left: 5px;
+}
+#space_switcher_modal .space-item-title {
+  max-width: calc(100% - 20px);
+  padding-left: 5px;
+}
+#space_switcher_modal .weui-cell {
+  font-size: 14px;
+  cursor: pointer;
+}
+#space_switcher_modal .active {
+  color: #ffffff;
+  background: #08C;
+}

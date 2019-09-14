@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:app-workflow/client/views/flow/distribute_edit_flow_modal.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EAGG,eAAA;CCDF","file":"to.css","sourcesContent":["#distribute_edit_flow_modal{\n\t.selectize-input{\n\t\t.item{\n\t\t\tcolor: #FFFFFF;\n\t\t}\n\t}\n}","#distribute_edit_flow_modal .selectize-input .item {\n  color: #FFFFFF;\n}\n"]}

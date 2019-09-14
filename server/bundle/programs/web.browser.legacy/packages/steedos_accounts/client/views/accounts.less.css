@@ -1,0 +1,32 @@
+.accounts-wrapper .accounts-content {
+  max-width: 350px;
+  margin: auto;
+}
+.accounts-wrapper .accounts-title {
+  font-size: 26px;
+  color: #fff;
+  text-align: center;
+}
+.accounts-wrapper .weui-cells {
+  border-radius: 8px;
+  border: none;
+}
+.accounts-wrapper .weui-btn-area {
+  margin-left: 0;
+  margin-right: 0;
+}
+.accounts-wrapper .weui-footer a {
+  color: #fff;
+}
+.accounts-wrapper .weui-cells__tips {
+  color: #fff;
+  margin: 0.3em -15px;
+}
+.accounts-wrapper .weui-cell_select-before .weui-select.phone-prefixes-select {
+  width: 148px;
+}
+@media (max-width: 767px) {
+  .accounts-wrapper .weui-cell_select-before .weui-select.phone-prefixes-select {
+    width: 120px;
+  }
+}

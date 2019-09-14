@@ -1,0 +1,103 @@
+.slds-table_edit.gridContainer {
+  max-width: none !important;
+}
+.slds-table_edit .dx-datagrid-content .dx-datagrid-table .dx-row > td {
+  padding: 3px 8px;
+  vertical-align: middle;
+}
+.slds-table_edit .dx-datagrid-content .dx-datagrid-table .dx-row > td:first-child {
+  padding-left: 8px;
+}
+.slds-table_edit .dx-datagrid-content .dx-datagrid-table .dx-row > td:hover {
+  outline: 0;
+}
+.slds-table_edit .dx-datagrid-content .dx-datagrid-table .dx-row > td a.grid-index-link {
+  text-decoration: underline;
+  padding: 0 10px;
+  margin: 0 -10px;
+}
+.slds-table_edit .dx-datagrid-header-panel {
+  display: none;
+}
+.slds-table_edit .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  padding: 7px;
+}
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  background-color: #fafaf9;
+  color: #514f4d;
+}
+.dx-datagrid-headers [role="columnheader"]:hover {
+  box-shadow: #dddbda -0.25rem 0 0 inset;
+  outline: 0;
+  background-color: white!important;
+}
+.dx-datagrid-headers [role="columnheader"]:first-child:hover {
+  box-shadow: none;
+}
+.dx-datagrid-headers [role="columnheader"].slds-has-focus {
+  background-color: white!important;
+  box-shadow: #0070d2 0 0 0 1px inset, #0070d2 -0.25rem 0 0 inset;
+}
+.dx-datagrid-headers [role="columnheader"].slds-has-focus:hover {
+  box-shadow: #0070d2 0 0 0 1px inset, #0070d2 -0.25rem 0 0 inset;
+}
+.dx-datagrid-pager {
+  background-color: transparent;
+  padding: 5px;
+  border-top: 0;
+}
+.dx-actionsheet-container .dx-actionsheet-item:last-child {
+  margin-bottom: 0px;
+}
+.dx-treelist-rowsview {
+  border-top: 0;
+}
+.list-table-container .dx-scrollable-wrapper .cell-type-number {
+  text-align: right !important;
+}
+.list-table-container .dx-scrollable-wrapper .cell-type-number .field-number {
+  display: block !important;
+}
+.list-table-container .dx-scrollable-wrapper .cell-type-number .cell-container {
+  float: right;
+}
+.list-table-container .dx-scrollable-wrapper .cell-type-number .table-cell-edit {
+  float: right;
+}
+.list-table-container .dx-datagrid-headers .cell-type-number,
+.list-table-container .dx-treelist-headers .cell-type-number {
+  text-align: right !important;
+}
+.list-table-container .dx-datagrid-headers .cell-type-number .dx-datagrid-text-content,
+.list-table-container .dx-treelist-headers .cell-type-number .dx-datagrid-text-content,
+.list-table-container .dx-datagrid-headers .cell-type-number .dx-treelist-text-content,
+.list-table-container .dx-treelist-headers .cell-type-number .dx-treelist-text-content {
+  float: right;
+  margin-right: 3px;
+}
+.list-table-container .dx-datagrid-headers .cell-type-number .dx-column-indicators,
+.list-table-container .dx-treelist-headers .cell-type-number .dx-column-indicators {
+  float: right;
+}
+.list-table-container .cell-wrap .slds-truncate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  -moz-hyphens: none;
+       hyphens: none;
+  white-space: normal;
+  overflow: hidden;
+  position: relative;
+  max-height: 3.65625rem;
+}
+.list-table-container .cell-wrap .slds-truncate:after {
+  content: "";
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.4) 0%, #ffffff 69%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.4) 0%, #ffffff 69%);
+}

@@ -1,0 +1,156 @@
+name: accounts
+label: 签约对象
+icon: account
+enable_files: true
+enable_search: true
+enable_tasks: true
+enable_notes: false
+enable_api: true
+enable_share: true
+enable_chatter: true
+fields:
+  owner:
+    label: 录入人
+    omit: false
+    readonly: true
+    type: lookup
+    reference_to: users
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    searchable: true
+    required: true
+    sortable: true
+    name: name
+  phone:
+    type: text
+    label: 电话
+    defaultValue: ''
+    name: phone
+  address:
+    type: text
+    label: 住址
+    defaultValue: ''
+    name: address
+  registered_capital:
+    type: currency
+    label: 注册资金
+    scale: 2
+    name: registered_capital
+  category:
+    label: 签约对象类别（企业、个人、其它）
+    type: select
+    sortable: true
+    required: true
+    options:
+      - label: 企业
+        value: 企业
+      - label: 个人
+        value: 个人
+      - label: 其它
+        value: 其它
+    allowedValues:
+      - 企业
+      - 个人
+      - 其它
+    name: category
+  country:
+    type: text
+    label: 国家/地区
+    name: country
+  credit_code:
+    type: text
+    label: 统一社会信用代码
+    required: true
+    name: credit_code
+  identity:
+    type: text
+    label: 身份证（个人）
+    name: credit_code
+  description:
+    label: 其他
+    type: textarea
+    is_wide: true
+    name: description
+  corporation:
+    type: text
+    label: 所属公司
+    name: corporation
+  status:
+    label: 使用状态
+    type: select
+    sortable: true
+    options:
+      - label: 使用中
+        value: 使用中
+      - label: 停用
+        value: 停用
+    allowedValues:
+      - 使用中
+      - 停用
+    name: status
+list_views:
+  all:
+    label: 所有单位
+    columns:
+      - name
+      - phone
+      - address
+      - registered_capital
+      - category
+      - credit_code
+    filter_scope: space
+  recent:
+    label: 最近查看
+    columns:
+      - name
+      - phone
+      - address
+      - registered_capital
+      - category
+      - credit_code
+    filter_scope: space
+  mine:
+    label: 我的单位
+    columns:
+      - name
+      - phone
+      - address
+      - registered_capital
+      - category
+      - credit_code
+    filter_scope: mine
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: false
+    viewCompanyRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
+  workflow_admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: true
+    viewCompanyRecords: true
+    disabled_list_views: []
+    disabled_actions: []
+    unreadable_fields: []
+    uneditable_fields: []
+    unrelated_objects: []
