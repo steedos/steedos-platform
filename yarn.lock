@@ -2331,11 +2331,6 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/project-template-empty@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@steedos/project-template-empty/-/project-template-empty-1.6.0.tgz#94029e04a28de68a5ad61efea1ebc2625c7ef0e0"
-  integrity sha512-syVO5YDSWLkMZpWVMEvIYc0atXntwoQD6pfRtLs5cXkoxXn7pMSzPf+I3PiiSuqnHgzDdl4oIWDIX/bUZ0OVfg==
-
 "@steedos/steedos-model-generator@^0.5.34":
   version "0.5.34"
   resolved "https://registry.yarnpkg.com/@steedos/steedos-model-generator/-/steedos-model-generator-0.5.34.tgz#5ef4dc0fcdfad5d12b4b1befaad055f345d9b25f"
@@ -6513,6 +6508,11 @@ dateformat@^1.0.12:
     get-stdin "^4.0.1"
     meow "^3.3.0"
 
+dateformat@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-2.2.0.tgz#4065e2013cf9fb916ddfd82efb506ad4c6769062"
+  integrity sha1-QGXiATz5+5Ft39gu+1Bq1MZ2kGI=
+
 dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
@@ -7015,6 +7015,11 @@ dotenv@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
   integrity sha512-FlWbnhgjtwD+uNLUGHbMykMOYQaTivdHEmYwAKFjn6GKe/CqY0fNae93ZHTd20snh9ZLr8mTzIL9m0APQ1pjQg==
+
+dotenv@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+  integrity sha1-hk7xN5rO1Vzm+V3r7NzhefegzR0=
 
 dotenv@^6.2.0:
   version "6.2.0"
@@ -12574,6 +12579,20 @@ micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
+migrate@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/migrate/-/migrate-1.6.2.tgz#8970d596780553fe9f545bdf83806df8473f025b"
+  integrity sha512-XAFab+ArPTo9BHzmihKjsZ5THKRryenA+lwob0R+ax0hLDs7YzJFJT5YZE3gtntZgzdgcuFLs82EJFB/Dssr+g==
+  dependencies:
+    chalk "^1.1.3"
+    commander "^2.9.0"
+    dateformat "^2.0.0"
+    dotenv "^4.0.0"
+    inherits "^2.0.3"
+    minimatch "^3.0.3"
+    mkdirp "^0.5.1"
+    slug "^0.9.2"
+
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
@@ -16920,7 +16939,7 @@ saml-idp@^1.1.0:
     xmldom "=0.1.27"
     xpath "0.0.27"
 
-"samlp@github:mcguinness/node-samlp":
+samlp@mcguinness/node-samlp:
   version "3.4.1"
   resolved "https://codeload.github.com/mcguinness/node-samlp/tar.gz/7bfb7c29be520f249beff6a9e933b63a628e31a1"
   dependencies:
@@ -17436,6 +17455,13 @@ slide@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
   integrity sha1-VusCfWW00tzmyy4tMsTUr8nh1wc=
+
+slug@^0.9.2:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/slug/-/slug-0.9.4.tgz#fad5f1ef33150830c7688cd8500514576eccabd8"
+  integrity sha512-3YHq0TeJ4+AIFbJm+4UWSQs5A1mmeWOTQqydW3OoPmQfNKxlO96NDRTIrp+TBkmvEsEFrd+Z/LXw8OD/6OlZ5g==
+  dependencies:
+    unicode ">= 0.3.1"
 
 smart-buffer@4.0.2:
   version "4.0.2"
@@ -19131,6 +19157,11 @@ unicode-property-aliases-ecmascript@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.0.5.tgz#a9cc6cc7ce63a0a3023fc99e341b94431d405a57"
   integrity sha512-L5RAqCfXqAwR3RriF8pM0lU0w4Ryf/GgzONwi6KnL1taJQa7x1TCxdJnILX59WIGOwR57IVxn7Nej0fz1Ny6fw==
+
+"unicode@>= 0.3.1":
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/unicode/-/unicode-12.1.0.tgz#7ee53a7a0ca5539b353419432823d8da58bbbf33"
+  integrity sha512-Ty6+Ew21DiYTWLYtd05RF/X4c1ekOvOgANyHbBj0h3MaXpfaGr2Rdmc0hMFuGQLyPLb9cU4ArNxl0bTF5HSzXw==
 
 union-value@^1.0.0:
   version "1.0.1"
