@@ -1,0 +1,50 @@
+
+.btn-steedos-workflow{
+	position: fixed;
+	z-index: 10000;
+	bottom: 0;
+}
+
+.steedos{
+	margin-bottom: 35px;
+}
+
+.btn{
+	border-radius: 0px;
+}
+
+.box{
+	border-top: 0px;
+}
+
+.btn-steedos-workflow {
+	color: #fff;
+	background-color: #3b5998;
+	border-color: rgba(0,0,0,0.2);
+	font-size: 18px;
+	padding: 10px 12px;
+}
+
+.btn-steedos-workflow:hover {
+	color: #fff;
+	background-color: #2d4373;
+	border-color: rgba(0,0,0,0.2);
+}
+
+.applicant-wrapper{
+	display: none;
+}
+
+.af-radio-group, .af-checkbox-group{
+	min-height: 32px !important;
+	line-height: 22px;
+	padding-left: 0px;
+	padding-top: 0px;
+}
+
+
+.instance-default .instance-form .form-control[disabled], .instance-default .instance-form .form-control[readonly], .instance-default .instance-form fieldset[disabled] .form-control {
+	background-color: #F9F9F9 !important;
+	opacity: 1;
+	color: black;
+}

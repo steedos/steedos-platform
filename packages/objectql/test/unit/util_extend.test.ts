@@ -25,7 +25,6 @@ describe('test util.extend', () => {
                     reference_to: "organizations",
                     sortable: true,
                     index: true,
-                    is_company_only: true,
                     defaultValue: function(){
                         
                     },

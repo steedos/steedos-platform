@@ -24,22 +24,22 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-10T08:13:58.264Z",
+        "date": "2019-09-13T14:57:30.850Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
-        "platform": "darwin",
-        "osRelease": "18.6.0",
-        "totalMemory": 8589934592,
-        "freeMemory": 572620800,
-        "cpus": 6
+        "platform": "win32",
+        "osRelease": "10.0.17134",
+        "totalMemory": 8464728064,
+        "freeMemory": 2130284544,
+        "cpus": 4
     },
     "commit": {
-        "hash": "39769d94d36f892fecdcee9e4fe8327c8a2b3d40",
-        "date": "Tue Sep 10 13:31:16 2019 +0800",
-        "author": "sunhaolin",
-        "subject": "creator中打开的流程设计器中点击设置流程权限按钮没反应 #1328",
-        "tag": "v1.1.2",
-        "branch": "dev"
+        "hash": "'bd154b10b8eb94695df6ec24958e6d09a25d394f",
+        "date": "Fri Sep 13 22:13:54 2019 +0800",
+        "author": "Jack",
+        "subject": "停用档案相关包'",
+        "tag": "1.5.1",
+        "branch": "1.5"
     }
 };
 ///////////////////////////////////////////////////////////////////////

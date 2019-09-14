@@ -1,5 +1,5 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { SteedosQueryOptions } from "../types/query";
+import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosFieldDBType } from './fieldDBType';
 
@@ -68,6 +68,8 @@ export interface SteedosDriver {
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     insert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
     update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType): any;
+    updateOne(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType): any;
+    updateMany?(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType): any;
     delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;

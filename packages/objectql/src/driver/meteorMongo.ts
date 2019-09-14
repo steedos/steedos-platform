@@ -244,6 +244,52 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
+    async updateOne(tableName: string, id: SteedosIDType, data: Dictionary<any>, userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        collection.update({ _id: id }, { $set: data });
+                        return collection.findOne({ _id: id });
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
+    async updateMany(tableName: string, queryFilters: SteedosQueryFilters, data: Dictionary<any>, userId?: SteedosIDType) {
+        let collection = this.collection(tableName);
+        let mongoFilters = this.getMongoFilters(queryFilters);
+        return await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    let invocation = new DDPCommon.MethodInvocation({
+                        isSimulation: true,
+                        userId: userId,
+                        connection: null,
+                        randomSeed: DDPCommon.makeRpcSeed()
+                    })
+                    let result = DDP._CurrentInvocation.withValue(invocation, function () {
+                        return collection.update(mongoFilters, { $set: data }, { multi: true });
+                    })
+                    resolve(result);
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        });
+    }
+
     async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
         return await new Promise((resolve, reject) => {

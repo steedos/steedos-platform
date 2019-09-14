@@ -1,0 +1,111 @@
+<template name="instance_traces_table" >
+
+    <div class="box instance-traces">
+        <div class="box-header with-border">
+            <div class="pull-left"><B>{{_t "instance_approval_history"}}</B></div>
+        </div>
+        <div class="box-body">
+            <table class='table table-condensed traces'>
+                <tbody>
+                    {{#each this}}
+                        {{#if firstTrace @index}}
+                            {{#with last_distribute_from this.instance}}
+                                <tr class="trace-item">
+                                    <td class="td-stepname">{{_t "instance_distribute_title"}}</td>
+                                    <td class="td-approve">
+                                        <table class="trace-approve-talbe">
+                                            <tr class="approve-item-distribute">
+                                                <td class="name">{{this.from_user_name}}</td>
+                                                <td class="finish-date">{{dateFormat this.created}}</td>
+                                                <td class="status {{this.judge}}"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            {{/with}}
+                        {{/if}}
+
+                    <tr class="trace-item">
+                        <td class="td-stepname">{{getStepName this.step}}</td>
+                        <td class="td-approve">
+                            <table class="trace-approve-talbe">
+                                {{#each this.approves}}
+                                        {{#if this.is_finished}}
+                                            {{#if unempty this.description}}
+                                            <tr class="approve-description">
+                                                <td class="description" colspan="3">{{{markDownToHtml this.description}}}</td>
+                                            </tr>
+                                            {{/if}}
+                                        {{else}}
+                                            {{#if (unempty (myApproveDescription this._id))}}
+                                                <tr class="approve-description">
+                                                    <td class="description" colspan="3">{{{markDownToHtml (myApproveDescription this._id)}}}</td>
+                                                </tr>
+                                            {{/if}}
+                                        {{/if}}
+
+                                        {{#if this.agent}}
+                                        <tr class="approve-description">
+                                            <td class="description" colspan="3">{{{agentDescription this.user_name}}}</td>
+                                        </tr>
+                                        {{/if}}
+
+                                        <tr class="approve-item">
+                                            <td class="name">
+                                                {{this.handler_name}}
+                                                {{#if isCC this}}
+                                                    <label class='cc-label'>
+                                                        <span class="cc-label-title">({{_t "instance_cc_title"}})</span>
+                                                    </label>
+                                                {{/if}}
+                                                {{#if isForward this}}
+                                                    <label class='cc-label'>
+                                                        <span class="forward-label-title">({{_t "instance_forward_title"}})</span>
+                                                    </label>
+                                                {{/if}}
+                                                {{#if isDistribute this}}
+                                                    <label class='cc-label'>
+                                                        <span class="forward-label-title">({{_t "instance_distribute_title"}})</span>
+                                                    </label>
+                                                {{/if}}
+                                            </td>
+                                            {{#if unempty this.finish_date}}
+
+                                                {{#if isDistribute this}}
+                                                    {{#if judgeTerminated this.judge}}
+                                                        <td class="finish-date"><span class='{{getApproveStatusIcon this.judge}}'></span>&nbsp;&nbsp;<span>{{getApproveStatusText this.judge}}</span></td>
+                                                    {{else}}
+                                                        <td class="finish-date"><span class="{{getInstanceStateColor this.forward_instance}}">{{getInstanceStateText this.forward_instance}}</span></td>
+                                                    {{/if}}
+                                                    <td class="status {{this.judge}}"></td>
+                                                {{else}}
+                                                    <td class="finish-date">{{dateFormat this.finish_date}}</td>
+                                                    <td class="status {{this.judge}}"><span class='{{getApproveStatusIcon this.judge}}'></span>&nbsp;&nbsp;<span class="hidden-xs">{{getApproveStatusText this.judge}}</span></td>
+                                                {{/if}}
+                                            {{else}}
+                                                <td class="finish-date">
+                                                    {{#if this.is_read}}
+                                                        <span class='blue'>{{_t "instance_approve_read"}}</span>
+                                                    {{else}}
+                                                        <span class='red'>{{_t "instance_approve_not_yet_handled"}}</span>
+                                                    {{/if}}
+                                                </td>
+                                                <td class="status {{this.judge}}"><!-- {{_t "instance_in_progress"}} --></td>
+                                            {{/if}}
+                                        </tr>
+                                        {{#if this.auto_submitted}}
+                                            <tr class="approve-description">
+                                                <td class="description red" colspan="3">{{_t "instance_approve_timeout_auto_submitted"}}</td>
+                                            </tr>
+                                        {{/if}}
+                                {{/each}}
+                            </table>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</template>

@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:o="urn:schemas-microsoft-com:office:office"
+	xmlns:x="urn:schemas-microsoft-com:office:excel"
+	xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:html="http://www.w3.org/TR/REC-html40">
+
+	<Worksheet ss:Name="<%= form_name %>" >
+		<Table>
+			<!-- 编号 -->
+			<Column ss:Width="35"/>
+			<!-- 名称 -->
+			<Column ss:Width="300"/>
+			<!-- 提交人 -->
+			<Column ss:Width="150"/>
+			<!-- 提交人所属部门 -->
+			<Column ss:Width="300"/>
+			<!-- 提交时间 -->
+			<Column ss:Width="150"/>
+			<!-- 申请单状态 -->
+			<Column ss:Width="150"/>
+			<!-- 当前步骤 -->
+			<Column ss:Width="150"/>
+			<!-- 当前步骤开始时间 -->
+			<Column ss:Width="150"/>
+
+			<% _.each(fields, function(field){ %>
+				<% if (field.type != "table" && field.type != "section") {
+					wid = 150;
+					if (field.is_wide == true) wid = 300;
+				%>
+					<Column ss:Width="<%= wid %>"/>
+				<% } %>
+
+				<% if (field.type == "section" && field.fields) {
+					_.each(field.fields, function(sec){
+						wid = 150;
+						if (sec.is_wide == true) wid = 300;
+				%>
+						<Column ss:Width="<%= wid %>"/>
+					<% }) %>
+				<% } %>
+			<% }) %>
+			<Row>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.code',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.name',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.initiator',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.initiator_org',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.submit_date',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.status',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.current_step_name',{},lang) %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= TAPi18n.__('export.current_step_start_date',{},lang) %></Data></Cell>
+				<% _.each(fields, function(field) { %>
+					<% if (field.type != "table" && field.type != "section") { %>
+						<Cell><Data ss:Type="String"><%= field.name ? field.name : field.code %></Data></Cell>
+					<% } %>
+
+					<% if (field.type == "section" && field.fields) {
+						_.each(field.fields, function(sec) {
+					%>
+							<Cell><Data ss:Type="String"><%= sec.name ? sec.name : sec.code %></Data></Cell>
+						<% }) %>
+					<% } %>
+				<% }) %>
+			</Row>
+
+			<% _.each(ins_to_xls, function(ins) { %>
+				<Row>
+					<Cell><Data ss:Type="Number"><%= ins["code"] %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= ins["name"] %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= ins["applicant_name"] %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= ins["applicant_organization_fullname"] %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= moment(ins["submit_date"].getTime()+(ins["submit_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+					<%
+						var state_str = "";
+						if (ins["state"] == "pending") {
+							// "审核中"
+							var current_trace = _.last(ins["traces"]);
+							state_str = TAPi18n.__('export.state.pending', {}, lang) + "(" + current_trace.name + ")";
+						} else if (ins["state"] == "completed") {
+							if (ins["final_decision"]) {
+								var finalDecision = ins["final_decision"];
+								if (finalDecision == "approved") {
+									// "已核准"
+									state_str = TAPi18n.__('export.state.approved', {}, lang);
+								} else if (finalDecision == "rejected") {
+									// "已驳回"
+									state_str = TAPi18n.__('export.state.rejected', {}, lang);
+								} else if (finalDecision == "terminated") {
+									// "已取消"
+									state_str = TAPi18n.__('export.state.terminated', {}, lang);
+								} else if (finalDecision == "") {
+									// "已完成"
+									state_str = TAPi18n.__('export.state.finished', {}, lang);
+								}
+							} else {
+								// "已完成"
+								state_str = TAPi18n.__('export.state.finished', {}, lang);
+							}
+						}
+					%>
+					<Cell><Data ss:Type="String"><%= state_str %></Data></Cell>
+					<%
+						var current_trace = _.last(ins["traces"]);
+					%>
+					<Cell><Data ss:Type="String"><%= current_trace.name %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= moment(current_trace["start_date"].getTime()+(current_trace["start_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+					<% _.each(fields, function(field){ %>
+						<% if (field.type != "table" && field.type != "section") { %>
+							<% if (!ins["values"] || !ins["values"][field.code]) { %>
+								<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+							<% } else { %>
+								<% if (['user','group'].includes(field.type) && field.is_multiselect == false) { %>
+									<Cell><Data ss:Type="String"><%= field.type=="user" ? ins["values"][field.code]["name"] : ins["values"][field.code]["fullname"]%></Data></Cell>
+								<% } else if (['user','group'].includes(field.type) && field.is_multiselect == true) {
+									var tem_ary = new Array;
+									_.each(ins["values"][field.code], function(s){
+										tem_ary.push(field.type=="user" ? s["name"] : s["fullname"])
+									})
+								%>
+									<Cell><Data ss:Type="String"><%= tem_ary.join(",") %></Data></Cell>
+								<% } else if (field.type == "checkbox") { %>
+									<Cell><Data ss:Type="String"><%= ins["values"][field.code]=="true" ? TAPi18n.__('instance.formatter.checkbox.checked',{},lang) : TAPi18n.__('instance.formatter.checkbox.unchecked',{},lang) %></Data></Cell>
+								<% } else if (field.type == "password") { %>
+									<Cell><Data ss:Type="String">******</Data></Cell>
+								<% } else if (field.type == "number") { %>
+									<Cell><Data ss:Type="Number"><%= Number(ins["values"][field.code]) ? Number(Number(ins["values"][field.code]).toFixed(field.digits)) : 0 %></Data></Cell>
+								<% } else if (field.type == "date") { %>
+									<%
+										var v = ins["values"][field.code];
+										if (typeof(v) == "string" && v) {
+											try {
+												v = new Date(v);
+											} catch (e) {
+												console.error(e);
+											}
+										}
+										if (v instanceof Date) {
+											v = moment(v).format(TAPi18n.__('instance.formatter.date.export_date',{},lang));
+										}
+										if (!v) {
+											v = "";
+										}
+									%>
+									<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+								<% } else if (field.type == "dateTime") { %>
+									<%
+										var v = ins["values"][field.code];
+										if (typeof(v) == "string" && v) {
+											try {
+												v = new Date(v);
+											} catch (e) {
+												console.error(e);
+											}
+										}
+										if (v instanceof Date) {
+											v = moment(v).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
+										}
+										if (!v) {
+											v = "";
+										}
+									%>
+									<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+								<% } else { %>
+									<%
+										tem_v = ins["values"][field.code];
+										if (typeof(tem_v) == "string") {
+											tem_v = tem_v.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+										}
+									%>
+									<Cell><Data ss:Type="String"><%= tem_v %></Data></Cell>
+								<% } %>
+							<% } %>
+						<% } %>
+						<% if (field.type == "section" && field.fields) { %>
+							<% _.each(field.fields, function(sec){ %>
+								<% if (!ins["values"] || !ins["values"][sec.code]) { %>
+									<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+								<% } else { %>
+									<% if (['user','group'].includes(sec.type) && sec.is_multiselect == false) { %>
+										<Cell><Data ss:Type="String"><%= sec.type=="user" ? ins["values"][sec.code]["name"] : ins["values"][sec.code]["fullname"]%></Data></Cell>
+									<% } else if (['user','group'].includes(sec.type) && sec.is_multiselect == true) {
+										var tem_ary = new Array;
+										_.each(ins["values"][sec.code], function(s){
+											tem_ary.push(sec.type=="user" ? s["name"] : s["fullname"])
+										})
+									%>
+										<Cell><Data ss:Type="String"><%= tem_ary.join(",") %></Data></Cell>
+									<% } else if (sec.type == "checkbox") { %>
+										<Cell><Data ss:Type="String"><%= ins["values"][sec.code]=="true" ? TAPi18n.__('instance.formatter.checkbox.checked',{},lang) : TAPi18n.__('instance.formatter.checkbox.unchecked',{},lang) %></Data></Cell>
+									<% } else if (sec.type == "password") { %>
+										<Cell><Data ss:Type="String">******</Data></Cell>
+									<% } else if (sec.type == "number") { %>
+										<Cell><Data ss:Type="Number"><%= Number(ins["values"][sec.code]) ? Number(Number(ins["values"][sec.code]).toFixed(sec.digits)) : 0 %></Data></Cell>
+									<% } else if (sec.type == "date") { %>
+										<%
+											var v = ins["values"][sec.code];
+											if (typeof(v) == "string" && v) {
+												try {
+													v = new Date(v);
+												} catch (e) {
+													console.error(e);
+												}
+											}
+											if (v instanceof Date) {
+												v = moment(v).format(TAPi18n.__('instance.formatter.date.export_date',{},lang));
+											}
+											if (!v) {
+												v = "";
+											}
+										%>
+										<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+									<% } else if (sec.type == "dateTime") { %>
+										<%
+											var v = ins["values"][sec.code];
+											if (typeof(v) == "string" && v) {
+												try {
+													v = new Date(v);
+												} catch (e) {
+													console.error(e);
+												}
+											}
+											if (v instanceof Date) {
+												v = moment(v).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
+											}
+											if (!v) {
+												v = "";
+											}
+										%>
+										<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+									<% } else { %>
+										<%
+											tem_v = ins["values"][sec.code];
+											if (typeof(tem_v) == "string") {
+												tem_v = tem_v.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+											}
+										%>
+										<Cell><Data ss:Type="String"><%= tem_v %></Data></Cell>
+									<% } %>
+								<% } %>
+							<% }) %>
+						<% } %>
+					<% }) %>
+				</Row>
+			<% }) %>
+		</Table>
+	</Worksheet>
+
+	<% _.each(table_fields, function(table_field) { %>
+		<Worksheet ss:Name="<%= table_field.name ? table_field.name : table_field.code %>" >
+			<Table>
+				<!-- 编号 -->
+				<Column ss:Width="35"/>
+				<!-- 名称 -->
+				<Column ss:Width="300"/>
+				<!-- 提交人 -->
+				<Column ss:Width="150"/>
+				<!-- 提交人所属部门 -->
+				<Column ss:Width="300"/>
+				<!-- 提交时间 -->
+				<Column ss:Width="150"/>
+				<!-- 申请单状态 -->
+				<Column ss:Width="150"/>
+				<!-- 当前步骤 -->
+				<Column ss:Width="150"/>
+				<!-- 当前步骤开始时间 -->
+				<Column ss:Width="150"/>
+				<% _.each(table_field.fields, function(field){ %>
+					<%
+						var wid = 150;
+						if (field.is_wide == true) {
+							wid = 300;
+						}
+					%>
+					<Column ss:Width="<%= wid %>"/>
+				<% }) %>
+				<Row>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.code',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.name',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.initiator',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.initiator_org',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.submit_date',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.status',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.current_step_name',{},lang) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= TAPi18n.__('export.current_step_start_date',{},lang) %></Data></Cell>
+					<% _.each(table_field.fields, function(field) { %>
+								<Cell><Data ss:Type="String"><%= field.name ? field.name : field.code %></Data></Cell>
+					<% }) %>
+				</Row>
+				<% _.each(ins_to_xls, function(ins) { %>
+					<% if (ins["values"] && ins["values"][table_field.code]) { %>
+						<% _.each(ins["values"][table_field.code], function(f_obj) { %>
+							<Row>
+								<Cell><Data ss:Type="Number"><%= ins["code"] %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= ins["name"] %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= ins["applicant_name"] %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= ins["applicant_organization_fullname"] %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= moment(ins["submit_date"].getTime()+(ins["submit_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+								<%
+									var state_str = "";
+									if (ins["state"] == "pending") {
+										// "审核中"
+										var current_trace = _.last(ins["traces"]);
+										state_str = TAPi18n.__('export.state.pending', {}, lang) + "(" + current_trace.name + ")";
+									} else if (ins["state"] == "completed") {
+										if (ins["final_decision"]) {
+											var finalDecision = ins["final_decision"];
+											if (finalDecision == "approved") {
+												// "已核准"
+												state_str = TAPi18n.__('export.state.approved', {}, lang);
+											} else if (finalDecision == "rejected") {
+												// "已驳回"
+												state_str = TAPi18n.__('export.state.rejected', {}, lang);
+											} else if (finalDecision == "terminated") {
+												// "已取消"
+												state_str = TAPi18n.__('export.state.terminated', {}, lang);
+											} else if (finalDecision == "") {
+												// "已完成"
+												state_str = TAPi18n.__('export.state.finished', {}, lang);
+											}
+										} else {
+											// "已完成"
+											state_str = TAPi18n.__('export.state.finished', {}, lang);
+										}
+									}
+								%>
+								<Cell><Data ss:Type="String"><%= state_str %></Data></Cell>
+								<%
+									var current_trace = _.last(ins["traces"]);
+								%>
+								<Cell><Data ss:Type="String"><%= current_trace.name %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= moment(current_trace["start_date"].getTime()+(current_trace["start_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+								<% _.each(table_field.fields, function(field) { %>
+									<% if (!f_obj[field.code]) { %>
+										<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
+									<% } else { %>
+										<% if (['user','group'].includes(field.type) && field.is_multiselect == false) { %>
+											<Cell><Data ss:Type="String"><%= field.type=="user" ? f_obj[field.code]["name"] : f_obj[field.code]["fullname"]%></Data></Cell>
+										<% } else if (['user','group'].includes(field.type) && field.is_multiselect == true) {
+											var tem_ary = new Array;
+											_.each(f_obj[field.code], function(s){
+												tem_ary.push(field.type=="user" ? s["name"] : s["fullname"])
+											})
+										%>
+											<Cell><Data ss:Type="String"><%= tem_ary.join(",") %></Data></Cell>
+										<% } else if (field.type == "checkbox") { %>
+											<Cell><Data ss:Type="String"><%= f_obj[field.code]=="true" ? TAPi18n.__('instance.formatter.checkbox.checked',{},lang) : TAPi18n.__('instance.formatter.checkbox.unchecked',{},lang) %></Data></Cell>
+										<% } else if (field.type == "password") { %>
+											<Cell><Data ss:Type="String">******</Data></Cell>
+										<% } else if (field.type == "number") { %>
+											<Cell><Data ss:Type="Number"><%= Number(f_obj[field.code]) ? Number(Number(f_obj[field.code]).toFixed(field.digits)) : 0 %></Data></Cell>
+										<% } else if (field.type == "date") { %>
+											<%
+												var v = f_obj[field.code];
+												if (typeof(v) == "string" && v) {
+													try {
+														v = new Date(v);
+													} catch (e) {
+														console.error(e);
+													}
+												}
+												if (v instanceof Date) {
+													v = moment(v).format(TAPi18n.__('instance.formatter.date.export_date',{},lang));
+												}
+												if (!v) {
+													v = "";
+												}
+											%>
+											<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+										<% } else if (field.type == "dateTime") { %>
+											<%
+												var v = f_obj[field.code];
+												if (typeof(v) == "string" && v) {
+													try {
+														v = new Date(v);
+													} catch (e) {
+														console.error(e);
+													}
+												}
+												if (v instanceof Date) {
+													v = moment(v).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
+												}
+												if (!v) {
+													v = "";
+												}
+											%>
+											<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+										<% } else { %>
+											<%
+												tem_v = f_obj[field.code];
+												if (typeof(tem_v) == "string") {
+													tem_v = tem_v.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+												}
+											%>
+											<Cell><Data ss:Type="String"><%= tem_v %></Data></Cell>
+										<% } %>
+									<% } %>
+								<% }) %>
+							</Row>
+						<% }) %>
+					<% } %>
+				<% }) %>
+			</Table>
+		</Worksheet>
+	<% }) %>
+</Workbook>

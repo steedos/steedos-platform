@@ -1,9 +1,0 @@
-_id: meeting
-name: 会议
-description: 会议日程、会议室预定、冲突提醒、统计分析
-icon_slds: event
-is_creator: true
-objects: 
-  - meeting
-  - meetingroom
-  - reports

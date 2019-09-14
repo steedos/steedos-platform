@@ -151,7 +151,6 @@ db.apps = new Meteor.Collection('apps');
 
   db.organizations.getRoot = function(fields) {
     return SteedosDataManager.organizationRemote.findOne({
-      is_company: true,
       parent: null
     }, {
       fields: fields

@@ -467,8 +467,7 @@ Meteor.startup(function () {
                 organization = db.organizations.findOne(modifier.$set.organization, {
                     fields: {
                         company_id: 1,
-                        parent: 1,
-                        is_company: 1
+                        parent: 1
                     }
                 });
                 if (organization) {
@@ -645,7 +644,7 @@ Meteor.startup(function () {
             }
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
-            var new_company_id, old_company_id, ref, user_set, user_unset;
+            var ref, user_set, user_unset;
             modifier.$set = modifier.$set || {};
             modifier.$unset = modifier.$unset || {};
             user_set = {};
@@ -722,12 +721,12 @@ Meteor.startup(function () {
                 db.space_users.update_organizations_parents(doc._id, modifier.$set.organizations);
                 db.space_users.update_company_ids(doc._id, doc);
             }
-            // 设置主单位后更新单位字段
-            old_company_id = this.previous.company_id;
-            new_company_id = doc.company_id;
-            if (new_company_id !== old_company_id) {
-                return db.space_users.update_company(doc._id, new_company_id);
-            }
+            // // 设置主单位后更新单位字段
+            // old_company_id = this.previous.company_id;
+            // new_company_id = doc.company_id;
+            // if (new_company_id !== old_company_id) {
+            //     return db.space_users.update_company(doc._id, new_company_id);
+            // }
         });
         db.space_users.before.remove(function (userId, doc) {
             var isOrgAdmin, space;
@@ -863,29 +862,29 @@ Meteor.startup(function () {
                     }
                 });
         };
-        db.space_users.update_company = function (id, companyId) {
-            var org, user;
-            org = db.organizations.findOne({
-                _id: companyId
-            }, {
-                    fields: {
-                        fullname: 1
-                    }
-                });
-            user = db.space_users.findOne(id);
-            if (!user) {
-                console.error("db.space_users.update_company,can't find space_users by _id of:", id);
-            }
-            if (org) {
-                return db.space_users.direct.update({
-                    _id: id
-                }, {
-                        $set: {
-                            company: org.fullname
-                        }
-                    });
-            }
-        };
+        // db.space_users.update_company = function (id, companyId) {
+        //     var org, user;
+        //     org = db.company.findOne({
+        //         _id: companyId
+        //     }, {
+        //             fields: {
+        //                 fullname: 1
+        //             }
+        //         });
+        //     user = db.space_users.findOne(id);
+        //     if (!user) {
+        //         console.error("db.space_users.update_company,can't find space_users by _id of:", id);
+        //     }
+        //     if (org) {
+        //         return db.space_users.direct.update({
+        //             _id: id
+        //         }, {
+        //                 $set: {
+        //                     company: org.fullname
+        //                 }
+        //             });
+        //     }
+        // };
         Meteor.publish('space_users', function (spaceId) {
             var selector, user;
             if (!this.userId) {
@@ -1000,5 +999,74 @@ Meteor.startup(function () {
         }, {
                 background: true
             });
+    }
+});
+
+// steedos-workflow包中相关脚本迁移过来
+Meteor.startup(function () {
+    if (Meteor.isServer && db.space_users) {
+        db.space_users.vaildateUserUsedByOther = function (doc) {
+            var flowNames, roleNames;
+            roleNames = [];
+            _.each(db.flow_positions.find({
+                space: doc.space,
+                users: doc.user
+            }, {
+                    fields: {
+                        users: 1,
+                        role: 1
+                    }
+                }).fetch(), function (p) {
+                    var role;
+                    if (p.users.includes(doc.user)) {
+                        role = db.flow_roles.findOne({
+                            _id: p.role
+                        }, {
+                                fields: {
+                                    name: 1
+                                }
+                            });
+                        if (role) {
+                            return roleNames.push(role.name);
+                        }
+                    }
+                });
+            if (!_.isEmpty(roleNames)) {
+                throw new Meteor.Error(400, "space_users_error_roles_used", {
+                    names: roleNames.join(',')
+                });
+            }
+            flowNames = [];
+            _.each(db.flows.find({
+                space: doc.space
+            }, {
+                    fields: {
+                        name: 1,
+                        'current.steps': 1
+                    }
+                }).fetch(), function (f) {
+                    return _.each(f.current.steps, function (s) {
+                        if (s.deal_type === 'specifyUser' && s.approver_users.includes(doc.user)) {
+                            return flowNames.push(f.name);
+                        }
+                    });
+                });
+            if (!_.isEmpty(flowNames)) {
+                throw new Meteor.Error(400, "space_users_error_flows_used", {
+                    names: _.uniq(flowNames).join(',')
+                });
+            }
+        };
+        db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
+            modifier.$set = modifier.$set || {};
+            if (modifier.$set.user_accepted !== void 0 && !modifier.$set.user_accepted) {
+                // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+                return db.space_users.vaildateUserUsedByOther(doc);
+            }
+        });
+        return db.space_users.before.remove(function (userId, doc) {
+            // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+            return db.space_users.vaildateUserUsedByOther(doc);
+        });
     }
 });

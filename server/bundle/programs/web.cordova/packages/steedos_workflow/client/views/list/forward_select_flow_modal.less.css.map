@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/packages/steedos:workflow/client/views/list/forward_select_flow_modal.less","meteor://💻app/"],"names":[],"mappings":"AACA;EACE,iBAAA;CCAD;ADGD;EAEI,qCAAA;CCFH","file":"to.css","sourcesContent":["\n.flow-list-box-modal-body{\n  padding-top: 5px;\n}\n\n.forward-select-flow-modal{\n  input[readonly]{\n    background-color: #FFFFFF !important;\n  }\n}",".flow-list-box-modal-body {\n  padding-top: 5px;\n}\n.forward-select-flow-modal input[readonly] {\n  background-color: #FFFFFF !important;\n}\n"]}

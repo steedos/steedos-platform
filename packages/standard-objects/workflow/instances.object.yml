@@ -197,6 +197,11 @@ fields:
     omit: true
     hidden: true
     name: current_step_auto_submit
+  applicant_company:
+    label: 申请人所属单位
+    type: lookup
+    reference_to: company
+    name: applicant_company
 list_views:
   all:
     label: 所有

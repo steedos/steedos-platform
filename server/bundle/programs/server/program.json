@@ -256,6 +256,16 @@
       "path": "packages/spacebars.js"
     },
     {
+      "path": "packages/html-tools.js"
+    },
+    {
+      "path": "packages/blaze-tools.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/spacebars-compiler/node_modules",
+      "path": "packages/spacebars-compiler.js"
+    },
+    {
       "path": "packages/standard-minifier-js.js"
     },
     {
@@ -404,6 +414,9 @@
     {
       "sourceMap": "packages/steedos_autoform-tags.js.map",
       "path": "packages/steedos_autoform-tags.js"
+    },
+    {
+      "path": "packages/perak_markdown.js"
     },
     {
       "path": "packages/q42_autoform-markdown.js"
@@ -656,14 +669,14 @@
       "path": "packages/steedos_mailqueue.js"
     },
     {
-      "path": "packages/html-tools.js"
+      "path": "packages/chuangbo_cookie.js"
     },
     {
-      "path": "packages/blaze-tools.js"
+      "path": "packages/steedos_sso.js"
     },
     {
-      "node_modules": "npm/node_modules/meteor/spacebars-compiler/node_modules",
-      "path": "packages/spacebars-compiler.js"
+      "sourceMap": "packages/steedos_webhookqueue.js.map",
+      "path": "packages/steedos_webhookqueue.js"
     },
     {
       "path": "packages/meteorhacks_ssr.js"
@@ -675,12 +688,6 @@
       "path": "packages/steedos_autoform-location.js"
     },
     {
-      "path": "packages/chuangbo_cookie.js"
-    },
-    {
-      "path": "packages/steedos_sso.js"
-    },
-    {
       "sourceMap": "packages/steedos_autoform.js.map",
       "path": "packages/steedos_autoform.js"
     },
@@ -690,24 +697,6 @@
     {
       "sourceMap": "packages/steedos_creator.js.map",
       "path": "packages/steedos_creator.js"
-    },
-    {
-      "sourceMap": "packages/steedos_webhookqueue.js.map",
-      "path": "packages/steedos_webhookqueue.js"
-    },
-    {
-      "sourceMap": "packages/steedos_app-workflow.js.map",
-      "path": "packages/steedos_app-workflow.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_qhd-archive-sync/node_modules",
-      "sourceMap": "packages/steedos_qhd-archive-sync.js.map",
-      "path": "packages/steedos_qhd-archive-sync.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_qhd-archive-xml/node_modules",
-      "sourceMap": "packages/steedos_qhd-archive-xml.js.map",
-      "path": "packages/steedos_qhd-archive-xml.js"
     },
     {
       "sourceMap": "packages/steedos_instance-record-queue.js.map",
@@ -739,8 +728,53 @@
       "path": "packages/steedos_formbuilder.js"
     },
     {
+      "sourceMap": "packages/steedos_app-workflow.js.map",
+      "path": "packages/steedos_app-workflow.js"
+    },
+    {
       "sourceMap": "packages/steedos_object-webhooks-queue.js.map",
       "path": "packages/steedos_object-webhooks-queue.js"
+    },
+    {
+      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
+      "path": "packages/steedos_api-authenticate-user.js"
+    },
+    {
+      "sourceMap": "packages/steedos_api.js.map",
+      "path": "packages/steedos_api.js"
+    },
+    {
+      "sourceMap": "packages/steedos_autoform-modals.js.map",
+      "path": "packages/steedos_autoform-modals.js"
+    },
+    {
+      "path": "packages/steedos_slipjs.js"
+    },
+    {
+      "sourceMap": "packages/steedos_workflow.js.map",
+      "path": "packages/steedos_workflow.js",
+      "assets": {
+        "client/views/instance/image_sign.html": "assets/packages/steedos_workflow/client/views/instance/image_sign.html",
+        "client/views/instance/instance_attachments.html": "assets/packages/steedos_workflow/client/views/instance/instance_attachments.html",
+        "client/views/instance/traces.html": "assets/packages/steedos_workflow/client/views/instance/traces.html",
+        "client/views/instance/traces_table.html": "assets/packages/steedos_workflow/client/views/instance/traces_table.html",
+        "client/views/instance/related_instances.html": "assets/packages/steedos_workflow/client/views/instance/related_instances.html",
+        "server/ejs/export_instances.ejs": "assets/packages/steedos_workflow/server/ejs/export_instances.ejs",
+        "client/views/instance/instance_sign_text.html": "assets/packages/steedos_workflow/client/views/instance/instance_sign_text.html"
+      }
+    },
+    {
+      "sourceMap": "packages/steedos_workflow-chart.js.map",
+      "path": "packages/steedos_workflow-chart.js"
+    },
+    {
+      "path": "packages/keepnox_perfect-scrollbar.js"
+    },
+    {
+      "path": "packages/jeremy_selectize.js"
+    },
+    {
+      "path": "packages/comerc_autoform-selectize.js"
     },
     {
       "path": "packages/hot-code-push.js"

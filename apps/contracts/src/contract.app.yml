@@ -11,6 +11,7 @@ objects:
   - contract_receipts
   - account_payable
   - account_receivable
+  - instances
   - tasks
   - events
   - reports

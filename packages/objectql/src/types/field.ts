@@ -76,7 +76,7 @@ abstract class SteedosFieldProperties{
     blackbox?: boolean
     reference_sort?: JsonMap
     reference_limit?: number
-    is_company_only?: boolean
+    is_company_limited?: boolean
     system?: string;
     fieldDBType?: SteedosFieldDBType | string
 }

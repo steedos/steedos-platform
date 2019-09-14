@@ -200,7 +200,6 @@ if (Meteor.isServer) {
             user_email = doc.emails[0].address;
             rootOrg = db.organizations.findOne({
                 space: space_registered,
-                is_company: true,
                 parent: null
             }, {
                     fields: {

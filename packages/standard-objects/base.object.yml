@@ -120,16 +120,15 @@ fields:
   company_id:
     label: 所属单位
     type: lookup
-    reference_to: organizations
+    reference_to: company
     sortable: true
     index: true
-    is_company_only: true
-    defaultValue: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              if (Meteor.isClient) {
-                return Session.get("user_company_id");
-              }
-            }
+    defaultValue: !!js/function |
+      function(){
+        if(Meteor.isClient){
+          return Steedos.getUserCompanyId()
+        }
+      }
     omit: true
     hidden: true
   instance_state:
