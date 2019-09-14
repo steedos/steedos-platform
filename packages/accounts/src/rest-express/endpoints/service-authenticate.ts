@@ -39,7 +39,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     
 
     //确认用户密码是否过期
-    let user = await db.collection.findOne({_id: session.userId}, {fields: {password_expired: 1}})
+    let user = await db.collection.findOne({_id: session.userId}, { password_expired: 1 })
 
     if(user.password_expired){
       loggedInUser.password_expired = true
@@ -52,13 +52,13 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
       };
       authToken = stampedAuthToken.token;
       let hashedToken = hashStampedToken(stampedAuthToken);
-      let _user = await db.collection.findOne({_id: session.userId}, { fields: ['services'] })
+      let _user = await db.collection.findOne({_id: session.userId}, { services:1 })
       if (!_user['services']['resume']) {
         _user['services']['resume'] = {loginTokens: []}
       }
       _user['services']['resume']['loginTokens'].push(hashedToken)
       let data = { services: _user['services'] }
-      await db.collection.update({_id: session.userId}, {$set: data});
+      await db.collection.updateOne({_id: session.userId}, {$set: data});
       // 设置cookies
       setAuthCookies(req, res, session.userId, authToken, loggedInUser.tokens.accessToken, null);
     }
