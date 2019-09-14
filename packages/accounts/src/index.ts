@@ -31,7 +31,7 @@ function getAccountsServer (context){
           updatedAt: 'modified',
         },
       }),
-      tokenSecret: 'secret',
+      tokenSecret: 'steedos',
     },
     {
       password: new AccountsPassword({
