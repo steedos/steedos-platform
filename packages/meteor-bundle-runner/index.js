@@ -135,15 +135,17 @@ __steedos_bootstrap__ = {
     verbose: false
 }
 
+var version = require("steedos-server/package.json").version
+
 console.log("*******************************************************************");
 console.log("*")
 console.log(`*  Initialize Steedos Server ...`);
 console.log("*")
+console.log(`*  VERSION: ${version}`);
 console.log(`*  PORT: ${process.env.PORT}`);
 console.log(`*  ROOT_URL: ${process.env.ROOT_URL}`);
 console.log(`*  MONGO_URL: ${process.env.MONGO_URL}`);
 console.log(`*  PROJECT_DIR: ${projectDir}`);
-console.log(`*  SERVER_DIR: ${serverDir}`);
 var ref, ref1;
 if ((typeof settings !== "undefined" && settings !== null ? (ref2 = settings["public"]) != null ? (ref3 = ref2.cfs) != null ? ref3.store : void 0 : void 0 : void 0) === 'local') {
   console.log(`*  STORAGE_DIR: ${steedosStorageDir}`);
