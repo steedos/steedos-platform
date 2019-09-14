@@ -1,19 +1,19 @@
 recent_aggregate = (created_by, spaceId, _records, callback)->
-	Creator.Collections.object_recent_viewed.rawCollection().aggregate [
+	Creator.Collections.object_recent_viewed.rawCollection().aggregate([
 		{$match: {created_by: created_by, space: spaceId}},
 		{$group: {_id: {object_name: "$record.o", record_id: "$record.ids", space: "$space"}, maxCreated: {$max: "$created"}}},
 		{$sort: {maxCreated: -1}},
 		{$limit: 10}
-	], (err, data)->
+	]).toArray (err, data)->
 		if err
 			throw new Error(err)
 
 		data.forEach (doc) ->
-#			console.log "doc", doc
 			_records.push doc._id
 
 		if callback && _.isFunction(callback)
 			callback()
+
 		return
 
 async_recent_aggregate = Meteor.wrapAsync(recent_aggregate)
@@ -53,11 +53,8 @@ Meteor.methods
 	'object_recent_record': (spaceId)->
 		data = new Array()
 		records = new Array()
-
 		async_recent_aggregate(this.userId, spaceId, records)
-
 		records.forEach (item)->
-#			console.log item
 			record_object = Creator.getObject(item.object_name, item.space)
 
 			if !record_object

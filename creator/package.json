@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run --settings settings.json",
-    "build": "meteor build --directory .dist --server-only && node .scripts/build-after.js",
+    "build": "rm -rf .dist/bundle && meteor build --directory .dist --server-only && node .scripts/build-after.js",
     "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
     "login": "npm login --registry https://registry.npmjs.org",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",

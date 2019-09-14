@@ -6000,7 +6000,7 @@ saml-idp@^1.1.0:
     xmldom "=0.1.27"
     xpath "0.0.27"
 
-"samlp@github:mcguinness/node-samlp":
+samlp@mcguinness/node-samlp:
   version "3.4.1"
   resolved "https://codeload.github.com/mcguinness/node-samlp/tar.gz/7bfb7c29be520f249beff6a9e933b63a628e31a1"
   dependencies:
