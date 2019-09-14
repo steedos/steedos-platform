@@ -183,7 +183,8 @@ export function loadAppFiles(filePath: string) {
 }
 
 export function getBaseDirectory(){
-    return require('app-root-path').path
+    //return require('app-root-path').path
+    return process.cwd()
 }
 
 export function getSteedosConfig(){
