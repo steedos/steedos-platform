@@ -16,7 +16,7 @@
   },
   "author": "Jack Zhuang",
   "devDependencies": {
-    "@steedos/accounts": "^1.6.1",
+    "@steedos/accounts": "^1.6.1-patch.1",
     "@steedos/auth": "^1.6.1",
     "@steedos/core": "^1.6.0",
     "@steedos/filters": "^1.6.1",
