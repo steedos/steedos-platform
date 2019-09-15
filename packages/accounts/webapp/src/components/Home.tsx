@@ -41,6 +41,17 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       return;
     }
     setUser(data);
+    
+    const searchParams = new URLSearchParams(window.location.search);
+    let redirect_uri = searchParams.get("redirect_uri");
+    if (redirect_uri){
+      if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
+        redirect_uri = window.location.origin + redirect_uri
+      }
+      let u = new URL(redirect_uri);
+      u.searchParams.append("token", tokens.accessToken)
+      window.location.href = u.toString();
+    }
   };
 
   const onResendEmail = async () => {
