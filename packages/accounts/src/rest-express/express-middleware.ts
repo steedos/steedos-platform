@@ -16,6 +16,7 @@ import { twoFactorSecret, twoFactorSet, twoFactorUnset } from './endpoints/passw
 import { changePassword } from './endpoints/password/change-password';
 import { userLoader } from './user-loader';
 import { AccountsExpressOptions } from './types';
+import { createTenant } from './endpoints/tenant/create';
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -42,6 +43,9 @@ const accountsExpress = (
 
   router.get(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
+
+  
+  router.post(`${path}/tenant`, userLoader(accountsServer), createTenant(accountsServer));
 
   router.post(`${path}/refreshTokens`, refreshAccessToken(accountsServer));
 

@@ -80,19 +80,6 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
       </h4>
       
       <FormControl margin="normal">
-        <InputLabel htmlFor="email">          
-          <FormattedMessage
-            id='accounts.email'
-            defaultMessage='Email'
-          />
-        </InputLabel>
-        <Input
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)} 
-        />
-      </FormControl>
-      <FormControl margin="normal">
       <InputLabel htmlFor="oldPassword">          
           <FormattedMessage
             id='accounts.oldPassword'

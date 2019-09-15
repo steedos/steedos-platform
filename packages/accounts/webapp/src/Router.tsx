@@ -12,6 +12,7 @@ import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import TwoFactor from './components/TwoFactor';
 import UpdatePassword from './components/updatePassword';
+import CreateTenant from './components/CreateTenant';
 
 import theme from './theme';
 
@@ -62,6 +63,7 @@ const Router = () => {
 
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
+                <Route path="/create-tenant" component={CreateTenant} />
                 <Route exact path="/reset-password" component={ResetPassword} />
                 <Route exact path="/update-password" component={UpdatePassword} />
                 <Route path="/reset-password/:token" component={ResetPassword} />

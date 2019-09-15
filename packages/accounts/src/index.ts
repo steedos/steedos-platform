@@ -10,14 +10,11 @@ import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { initConfig } from './config/index';
-
+import { mongoUrl } from './db';
 
 function getAccountsServer (context){
-  let MONGO_URL = process.env.MONGO_URL;
-  if (!MONGO_URL)
-    MONGO_URL = "mongodb://127.0.0.1/steedos"
   
-  mongoose.connect(MONGO_URL, { useNewUrlParser: true });
+  mongoose.connect(mongoUrl, { useNewUrlParser: true });
   const db = mongoose.connection;
   
   const accountsServer = new AccountsServer(

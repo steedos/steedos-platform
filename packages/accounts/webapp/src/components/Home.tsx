@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 
-import { accountsClient, accountsRest, accountsApiHost } from '../accounts';
+import { accountsClient, accountsRest } from '../accounts';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -34,13 +34,8 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    const res = await fetch( accountsApiHost + '/accounts/user', {
-      headers: {
-        Authorization: tokens ? 'Bearer ' + tokens.accessToken : '',
-      },
-    });
+    const data = await accountsRest.authFetch( '/user', {});
   
-    const data = await res.json();
     if (!data) {
       history.push('/login');
       return;

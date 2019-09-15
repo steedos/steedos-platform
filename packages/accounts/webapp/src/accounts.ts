@@ -14,4 +14,4 @@ const accountsRest = new RestClient({
 const accountsClient = new AccountsClient({}, accountsRest);
 const accountsPassword = new AccountsClientPassword(accountsClient);
 
-export { accountsClient, accountsRest, accountsPassword, accountsApiHost };
+export { accountsClient, accountsRest, accountsPassword };

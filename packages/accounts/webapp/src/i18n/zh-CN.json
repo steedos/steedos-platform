@@ -1,8 +1,12 @@
 {
     "accounts.signin": "登录",
     "accounts.signup": "注册",
+    "accounts.submit": "确定",
     "accounts.reset_password": "重置密码",
     "accounts.username_or_email": "用户名或邮箱",
+    "accounts.create_tenant": "创建企业",
+    "accounts.tenant_name": "企业名称",
+    "accounts.name": "姓名",
     "accounts.email": "邮箱",
     "accounts.password": "密码",
     "accounts.logout": "注销",
@@ -16,5 +20,6 @@
     "accounts.oldAndNewPasswordNotEQ": "新旧密码不能相同",
     "accounts.passwordNotEQ": "密码不一致",
     "accounts.passwordRegError": "密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位",
-    "accounts.passwordExpired": "密码已过期，请修改密码"
+    "accounts.passwordExpired": "密码已过期，请修改密码",
+    "accounts.access_denied": "您无权执行此操作。"
 }

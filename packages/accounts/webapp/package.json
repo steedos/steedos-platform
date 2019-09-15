@@ -1,5 +1,5 @@
 {
-  "name": "@examples/react-rest-typescript",
+  "name": "@steedos/accounts-webapp",
   "version": "0.18.0",
   "private": true,
   "scripts": {

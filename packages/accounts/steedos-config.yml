@@ -1,8 +1,7 @@
 datasources:
   default:
-    connection: 
-      host: 127.0.0.1
-      database: steedos
+    connection:
+      url: mongodb://127.0.0.1/steedos
 public:
   accounts:
     password:

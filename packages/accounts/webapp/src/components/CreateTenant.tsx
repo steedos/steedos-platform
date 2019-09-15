@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 
-import { accountsPassword } from '../accounts';
+import { accountsRest } from '../accounts';
 import FormError from './FormError';
 
 const useStyles = makeStyles({
@@ -23,25 +23,26 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/login", search: window.location.search}} {...props} ref={ref} />
 ));
 
-const Signup = ({ history }: RouteComponentProps<{}>) => {
+const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | undefined>(undefined);
-  const [password, setPassword] = useState<string | null>(null);
+  const [tenantName, setTenantName] = useState<string | "">("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
     e.preventDefault();
     setError(null);
     try {
-      await accountsPassword.createUser({
-        name: name,
-        firstName: name,
-        email: email,
-        password: password,
+      
+      // refresh the session to get a new accessToken if expired
+      const res = await accountsRest.authFetch( '/tenant', {
+        method: "POST",
+        body: JSON.stringify({
+          name: tenantName
+        })
       });
-      history.push('/login' + window.location.search);
+      console.log(res)
+      //history.push('/login' + window.location.search);
     } catch (err) {
       setError(err.message);
     }
@@ -51,57 +52,31 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
     <form onSubmit={onSubmit} className={classes.formContainer}>
       <h4 className={classes.title}>
         <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
+            id='accounts.create_tenant'
+            defaultMessage='Create Company'
         />
       </h4>
       <FormControl margin="normal">
-        <InputLabel htmlFor="name">
+        <InputLabel htmlFor="tenantName">
           <FormattedMessage
-              id='accounts.name'
-              defaultMessage='Name'
+              id='accounts.tenant_name'
+              defaultMessage='Company Name'
             />
         </InputLabel>
         <Input
-          id="name"
-          value={name}
-          onChange={e => setName(e.target.value)} 
-        />
-      </FormControl>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="email">          
-          <FormattedMessage
-            id='accounts.email'
-            defaultMessage='Email'
-          />
-        </InputLabel>
-        <Input
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)} 
-        />
-      </FormControl>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="password">
-          <FormattedMessage
-            id='accounts.password'
-            defaultMessage='Password'
-          />
-        </InputLabel>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)} 
+          id="tenantName"
+          value={tenantName}
+          onChange={e => setTenantName(e.target.value)} 
         />
       </FormControl>
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
+            id='accounts.submit'
+            defaultMessage='Submit'
         />
       </Button>
       {error && <FormError error={error!} />}
+      <br/>
       <Button component={LogInLink}>
         <FormattedMessage
             id='accounts.signin'
@@ -112,4 +87,4 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
   );
 };
 
-export default Signup;
+export default CreateTenant;

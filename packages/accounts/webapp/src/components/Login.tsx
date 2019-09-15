@@ -5,7 +5,7 @@ import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 
-import { accountsPassword } from '../accounts';
+import { accountsRest, accountsPassword } from '../accounts';
 import { getSettings } from '../selectors';
 import FormError from './FormError';
 
@@ -54,8 +54,17 @@ const Login = ({ history, title }: any) => {
         code,
       });
 
-      if(result.password_expired){
+
+      const user = await accountsRest.authFetch( '/user', {});
+      console.log(user);
+
+      if(user.password_expired){
         return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});
+      }
+
+      if (user.spaces.length == 0)
+      {
+        return history.push('/create-tenant' + window.location.search);
       }
 
       if (redirect_uri){

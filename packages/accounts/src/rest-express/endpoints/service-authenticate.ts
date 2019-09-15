@@ -35,33 +35,28 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
 
     //获取user session
     let session:any = await accountsServer.findSessionByAccessToken(loggedInUser.tokens.accessToken)
-    
-    
 
     //确认用户密码是否过期
     let user = await db.collection.findOne({_id: session.userId}, { password_expired: 1 })
 
-    if(user.password_expired){
-      loggedInUser.password_expired = true
-    }else{
-      //创建Meteor token
-      let authToken = null;
-      let stampedAuthToken = {
-        token: session.token,
-        when: new Date
-      };
-      authToken = stampedAuthToken.token;
-      let hashedToken = hashStampedToken(stampedAuthToken);
-      let _user = await db.collection.findOne({_id: session.userId}, { services:1 })
-      if (!_user['services']['resume']) {
-        _user['services']['resume'] = {loginTokens: []}
-      }
-      _user['services']['resume']['loginTokens'].push(hashedToken)
-      let data = { services: _user['services'] }
-      await db.collection.updateOne({_id: session.userId}, {$set: data});
-      // 设置cookies
-      setAuthCookies(req, res, session.userId, authToken, loggedInUser.tokens.accessToken, null);
+    //创建Meteor token
+    let authToken = null;
+    let stampedAuthToken = {
+      token: session.token,
+      when: new Date
+    };
+    authToken = stampedAuthToken.token;
+    let hashedToken = hashStampedToken(stampedAuthToken);
+    let _user = await db.collection.findOne({_id: session.userId}, { services:1 })
+    if (!_user['services']['resume']) {
+      _user['services']['resume'] = {loginTokens: []}
     }
+    _user['services']['resume']['loginTokens'].push(hashedToken)
+    let data = { services: _user['services'] }
+    await db.collection.updateOne({_id: session.userId}, {$set: data});
+    // 设置cookies
+    setAuthCookies(req, res, session.userId, authToken, loggedInUser.tokens.accessToken, null);
+
     res.json(loggedInUser);
   } catch (err) {
     sendError(res, err);

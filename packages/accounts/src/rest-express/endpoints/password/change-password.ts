@@ -29,7 +29,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     const password: any = accountsServer.getServices().password;
 
     await password.changePassword((req as any).userId, oldPassword, hashPassword(newPassword, password.options.passwordHashAlgorithm));
-    password.db.collection.updateOne({_id: req.userId}, {$set: {password_expired: false}})
+    password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false}})
     res.json(null);
   } catch (err) {
     sendError(res, err);
