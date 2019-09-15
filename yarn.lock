@@ -1025,7 +1025,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.4.0", "@babel/runtime@^7.5.4", "@babel/runtime@^7.6.0":
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.0.tgz#4fc1d642a9fd0299754e8b5de62c631cf5568205"
   integrity sha512-89eSBLJsxNxOERC0Op4vd+0Bqm6wRMqMbFtV3i0/fbaWw/mJ8Q3eBvgX0G4SyrOOLCtbu98HspF8o09MRT+KzQ==
@@ -2304,15 +2304,17 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.6.1-patch.2":
-  version "1.6.1-patch.2"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.1-patch.2.tgz#650af41f42fa32e69a83843cc1cdabea250f47be"
-  integrity sha512-SFrWkQzqg7RBYtd1P40On7o3dFadXdL3zzPNrYZz4QQUcQT0g1On2Iiex8FePPz0z9Am9z7Ab2VBTrEVhqut7A==
+"@steedos/accounts@^1.6.1-patch.5":
+  version "1.6.1-patch.5"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.1-patch.5.tgz#185a18d597c78e925d3e63b5a66b4e9e8e4a2d52"
+  integrity sha512-RFrjwzn6dqcEej1kl6fkLmc5hyAdOMz3IpNGlW+sqTywFg9J3ItbhmCbWrQGym0aIg6G6Brc2MOLOlY+UvX0iA==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
     "@accounts/server" "^0.19.0"
+    "@babel/runtime" "^7.6.0"
+    "@steedos/objectql" "^1.6.1"
     app-root-path "^2.2.1"
     body-parser "1.19.0"
     cookies "^0.7.3"
