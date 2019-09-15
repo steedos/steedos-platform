@@ -26,9 +26,9 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
 const Signup = ({ history }: RouteComponentProps<{}>) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string | "">("");
   const [email, setEmail] = useState<string | undefined>(undefined);
-  const [password, setPassword] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | "">("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
@@ -36,8 +36,7 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
     setError(null);
     try {
       await accountsPassword.createUser({
-        name: name,
-        firstName: name,
+        username: name,
         email: email,
         password: password,
       });

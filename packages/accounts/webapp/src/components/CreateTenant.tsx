@@ -41,8 +41,7 @@ const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
           name: tenantName
         })
       });
-      console.log(res)
-      //history.push('/login' + window.location.search);
+      history.push('/' + window.location.search);
     } catch (err) {
       setError(err.message);
     }
