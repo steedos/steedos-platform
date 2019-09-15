@@ -197,3 +197,11 @@ export function getSteedosConfig(){
     }
     return config;
 }
+
+// TODO: init and return datasource
+export function getDatasource(datasourceName: string) {
+}
+
+// TODO: init and return object
+export function getObject(objectName: string) {
+}
