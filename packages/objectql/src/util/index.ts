@@ -189,7 +189,7 @@ export function getBaseDirectory(){
 
 export function getSteedosConfig(){
     let config: any;
-    let configPath = path.join(this.getBaseDirectory(), configName)
+    let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
     }else{
