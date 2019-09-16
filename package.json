@@ -11,7 +11,7 @@
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
     "ver": "lerna version --force-publish",
-    "pub": "lerna publish from-git --registry https://registry.npmjs.org",
+    "pub": "lerna publish from-package --registry https://registry.npmjs.org",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
     "clean": "lerna clean",
