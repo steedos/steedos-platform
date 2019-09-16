@@ -50,6 +50,7 @@ Creator.Objects['company'].triggers = {
                 // throw new Meteor.Error(400, "company_error_company_name_exists");
                 // 还不支持i18n
                 throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
+                return false;
             }
             else{
                 // 删除关联组织
@@ -153,6 +154,7 @@ Creator.Objects['company'].actions = {
             }
             
             doUpdate = async ()=> {
+                $("body").addClass("loading");
                 var userSession = Creator.USER_CONTEXT;
                 var url = `/api/odata/v4/${userSession.spaceId}/company/${record_id}/updateOrgs`;
                 try {
@@ -179,9 +181,11 @@ Creator.Objects['company'].actions = {
                     else {
                         toastr.success(`已成功更新${reJson.updatedOrgs}条组织信息及${reJson.updatedSus}条用户信息,`)
                     }
+                    $("body").removeClass("loading");
                 } catch (err) {
                     console.error(err);
-                    toastr.error(err)
+                    toastr.error(err);
+                    $("body").removeClass("loading");
                 }
             }
 
