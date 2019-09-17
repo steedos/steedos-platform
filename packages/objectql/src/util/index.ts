@@ -196,7 +196,7 @@ export function getSteedosConfig(){
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
     }else{
-        console.info('not found steedos-config.yml', configPath);
+        throw new Error('Config file not found: ' + configPath);
     }
     return config;
 }
