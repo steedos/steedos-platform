@@ -184,9 +184,6 @@ export function loadAppFiles(filePath: string) {
 
 export function getBaseDirectory(){
     //return require('app-root-path').path
-    if (process.env.PWD) 
-        return process.env.PWD;
-
     let cwd = process.cwd();
     if (cwd.indexOf('.meteor') > -1) {
         return cwd.split('.meteor')[0];
