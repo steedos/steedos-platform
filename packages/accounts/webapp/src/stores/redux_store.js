@@ -4,9 +4,14 @@
 // This is a temporary store while we are transitioning from Flux to Redux. This file exports
 // the configured Redux store for use by actions and selectors.
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import rootReducer from '../reducers'
 import { devToolsEnhancer } from 'redux-devtools-extension';
+const en = require("../i18n/en.json");
+
+// const config = await accountsRest.authFetch( '/config' );
+// window._steedos_runtime_config = config;
 
 const initialStore = {
     settings: {
@@ -14,12 +19,20 @@ const initialStore = {
     },
     views: {
         i18n: {
-            translations: []
+            translations: {
+                en: en
+            }
         }
     }
 }
 
-const store = createStore(rootReducer, initialStore, devToolsEnhancer({}));
+const store = createStore(
+    rootReducer, 
+    initialStore, 
+    applyMiddleware(
+      thunkMiddleware,
+    )
+);
 
 export function bindActionToRedux(action, ...args) {
     return async () => {

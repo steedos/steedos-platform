@@ -12,7 +12,6 @@ import store from '../stores/redux_store';
 import { getSettings } from '../selectors';
 
 const en = require("./en.json");
-const zhCN = require("./zh-CN.json");
 
 // should match the values in model/config.go
 const languages = {
@@ -20,15 +19,13 @@ const languages = {
         value: 'en',
         name: 'English',
         order: 1,
-        url: '',
         translations: en
     },
     'zh-CN': {
         value: 'zh-CN',
         name: '中文 (简体)',
         order: 13,
-        url: '/accounts/i18n/zh-CN.json',
-        translations: zhCN,
+        url: 'a/i18n/zh-CN.json'
     },
 };
 

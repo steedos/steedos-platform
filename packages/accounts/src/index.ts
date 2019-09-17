@@ -23,10 +23,10 @@ function getAccountsServer (context){
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
         idProvider: () => new mongodb.ObjectId().toString(),
-        timestamps: {
-          createdAt: 'created',
-          updatedAt: 'modified',
-        },
+        // timestamps: {
+        //   createdAt: 'created',
+        //   updatedAt: 'modified',
+        // },
       }),
       sendMail: sendMail,
       tokenSecret: 'secret',
@@ -57,8 +57,11 @@ function getAccountsRouter(context){
   });
 
   /* Router to webapps build */
+  router.get('/config', (req, res) => {
+    res.json({hello:'world'})
+  });
   router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
-  router.use("/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
+  router.use("/a/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
   router.get('/a/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'webapp', 'build', 'index.html'));
   });

@@ -109,6 +109,40 @@ export default class Client4 {
         );
     };
 
+    getOptions(options) {
+        const newOptions = Object.assign({}, options);
+
+        const headers = {
+            [HEADER_REQUESTED_WITH]: 'XMLHttpRequest',
+            ...this.defaultHeaders,
+        };
+
+        if (this.token) {
+            headers[HEADER_AUTH] = `${HEADER_BEARER} ${this.token}`;
+        }
+
+        if (options.method && options.method.toLowerCase() !== 'get' && this.csrf) {
+            headers[HEADER_X_CSRF_TOKEN] = this.csrf;
+        }
+
+        if (this.includeCookies) {
+            newOptions.credentials = 'include';
+        }
+
+        if (this.userAgent) {
+            headers[HEADER_USER_AGENT] = this.userAgent;
+        }
+
+        if (newOptions.headers) {
+            Object.assign(headers, newOptions.headers);
+        }
+
+        return {
+            ...newOptions,
+            headers,
+        };
+    }
+
 }
 
 
