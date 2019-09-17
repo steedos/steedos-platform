@@ -1,7 +1,9 @@
 import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
-import SteedosConfig from '../../../config'
+import { getSteedosConfig } from '@steedos/objectql'
+
+const config = getSteedosConfig();
 
 import { hashPassword } from '@accounts/password/lib/utils'
 
@@ -17,7 +19,7 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     }
     const { oldPassword, newPassword } = req.body;
 
-    let passworPolicy = (SteedosConfig as any).public.accounts.password.policy
+    let passworPolicy = (config as any).accounts.password.policy
 
     if(passworPolicy.reg){
       if(!(new RegExp(passworPolicy.reg)).test(newPassword || '')){

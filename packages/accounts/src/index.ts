@@ -11,6 +11,9 @@ import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
 import { sendMail } from './mail';
+import { getSteedosConfig } from '@steedos/objectql'
+
+const config = getSteedosConfig();
 
 function getAccountsServer (context){
   
@@ -57,8 +60,11 @@ function getAccountsRouter(context){
   });
 
   /* Router to webapps build */
-  router.get('/config', (req, res) => {
-    res.json({hello:'world'})
+  router.get('/settings', (req, res) => {
+    res.json({
+      title: 'Steedos',
+      accounts: config.accounts
+    })
   });
   router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
   router.use("/a/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));

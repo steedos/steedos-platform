@@ -4,7 +4,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {loadTranslations} from '../../actions/views/root';
+import {loadSettings, loadTranslations} from '../../actions/views/root';
 
 import {getCurrentLocale, getTranslations} from '../../selectors/i18n';
 
@@ -22,6 +22,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
+            loadSettings,
             loadTranslations,
         }, dispatch),
     };

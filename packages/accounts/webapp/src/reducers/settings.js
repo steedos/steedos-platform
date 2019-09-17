@@ -1,6 +1,6 @@
 const settings = (state = {}, action) => {
     switch (action.type) {
-        case 'RECEIEVED_SETTINGS':
+        case 'RECEIVED_SETTINGS':
             return action.data;
         default:
             return state
