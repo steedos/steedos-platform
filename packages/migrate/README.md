@@ -26,7 +26,7 @@ open nodejs console.
 
 ```js
 var migrate = require("@steedos/migrate");
-migrate.up();
+migrate.down();
 ```
 
 ### Disable auto migrate for steedos

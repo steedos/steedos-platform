@@ -53,7 +53,6 @@
     "@salesforce/dev-scripts": "0.3.12",
     "@steedos/meteor-bundle-runner": "^1.6.2",
     "@steedos/migrate": "^1.6.2",
-    "@steedos/stimulsoft-report": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
     "@types/mocha": "^5.2.6",
