@@ -412,7 +412,6 @@
       "path": "packages/steedos_autoform-lookup.js"
     },
     {
-      "sourceMap": "packages/steedos_autoform-tags.js.map",
       "path": "packages/steedos_autoform-tags.js"
     },
     {
