@@ -8,3 +8,10 @@ public:
       policy:
         reg: ^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$
         regErrorMessage: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
+email:
+  host: 
+  port: 465
+  username: 
+  password: 
+  secure: true
+  from: support@steedos.com
