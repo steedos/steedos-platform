@@ -2,7 +2,7 @@ Creator.Objects['company'].triggers = {
     "after.insert.server.company": {
         on: "server",
         when: "after.insert",
-        todo: async function (userId, doc) {
+        todo: function (userId, doc) {
             // 自动在根节点新建一个组织，对应上关系
             var rootOrg = Creator.getCollection("organizations").findOne({
                 space: doc.space,
@@ -36,7 +36,7 @@ Creator.Objects['company'].triggers = {
     "before.remove.server.company": {
         on: "server",
         when: "before.remove",
-        todo: async function (userId, doc) {
+        todo: function (userId, doc) {
             var existsOrg = Creator.getCollection("organizations").findOne({
                 space: doc.space,
                 parent: doc.organization
@@ -50,7 +50,6 @@ Creator.Objects['company'].triggers = {
                 // throw new Meteor.Error(400, "company_error_company_name_exists");
                 // 还不支持i18n
                 throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
-                return false;
             }
             else{
                 // 删除关联组织
