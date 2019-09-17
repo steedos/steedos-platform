@@ -94,7 +94,7 @@ async function getUserRoles(userId: string, spaceId: string) {
     roles.push(p.name);
   });
 
-  console.log('roles：', roles)
+  //console.log('roles：', roles)
 
   return roles;
 }
