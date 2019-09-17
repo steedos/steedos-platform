@@ -1,5 +1,5 @@
 name: company
-label: 我方单位
+label: 单位
 icon: account
 enable_api: true
 fields:
