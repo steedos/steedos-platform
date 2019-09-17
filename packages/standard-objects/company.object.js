@@ -98,7 +98,7 @@ let update_su_company_ids = async function (_id, su) {
 };
 
 // 循环执行当前组织及其子组织children的company_id值计算
-let update_org_company_id = async function (_id, company_id, count) {
+let update_org_company_id = async function (_id, company_id, updated = { count: 0 }) {
     const org = await this.getObject("organizations").findOne(_id, {
         fields: ["children", "is_company", "company_id", "space"]
     }, this.userSession);
@@ -108,19 +108,19 @@ let update_org_company_id = async function (_id, company_id, count) {
             company_id: _id
         }, this.userSession);
         company_id = _id;
-        count++;
+        updated.count += 1;
     }
     else {
         await this.getObject("organizations").updateOne(_id, {
             company_id: company_id
         }, this.userSession);
-        count++;
+        updated.count += 1;
     }
 
     const children = org.children;
     if (children && children.length) {
         for (let child of children) {
-            await update_org_company_id.call(this, child, company_id);
+            await update_org_company_id.call(this, child, company_id, updated);
         }
     }
 }
@@ -135,7 +135,7 @@ Creator.Objects['company'].methods = {
             throw new Meteor.Error(400, "该单位的关联组织未设置");
         }
 
-        let updatedOrgs = 0;
+        let updatedOrgs = { count: 0 };
         await update_org_company_id.call(this, company.organization, this.record_id, updatedOrgs);
 
         sus = await this.getObject("space_users").find({
@@ -148,7 +148,7 @@ Creator.Objects['company'].methods = {
         }
 
         return {
-            updatedOrgs: updatedOrgs,
+            updatedOrgs: updatedOrgs.count,
             updatedSus: sus.length
         };
     }
@@ -204,7 +204,8 @@ Creator.Objects['company'].actions = {
                     }
                     else {
                         let logInfo = `已成功更新${reJson.updatedOrgs}条组织信息及${reJson.updatedSus}条用户信息`;
-                        toastr.success(logInfo)
+                        console.log(logInfo);
+                        toastr.success(logInfo);
                     }
                     $("body").removeClass("loading");
                 } catch (err) {
