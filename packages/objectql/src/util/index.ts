@@ -191,7 +191,7 @@ export function getBaseDirectory(){
     if (cwd.indexOf('.meteor') > -1) {
         return cwd.split('.meteor')[0];
     }
-    return process.cwd();
+    return cwd;
 }
 
 export function getSteedosConfig(){
