@@ -9,8 +9,8 @@ import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
-import { initConfig } from './config/index';
 import { mongoUrl } from './db';
+import { sendMail } from './mail';
 
 function getAccountsServer (context){
   
@@ -28,7 +28,8 @@ function getAccountsServer (context){
           updatedAt: 'modified',
         },
       }),
-      tokenSecret: 'steedos',
+      sendMail: sendMail,
+      tokenSecret: 'secret',
     },
     {
       password: new AccountsPassword({
@@ -69,8 +70,6 @@ function getAccountsRouter(context){
 }
 
 export function init(context){
-
-  initConfig(context.settings)
 
   if(context.settings){
     if(!context.settings.public){

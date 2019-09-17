@@ -130,27 +130,27 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/filters@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.6.1.tgz#61e8f0e1fb7b7769b6ca17dbefde9d3d95b5ffca"
-  integrity sha512-pe+uwxhbEzHHKDfrAKXwZZwIzuqO0CcKftdfk5h/3fDMI6uvXMm5FB7+tNF7+kCel4s/br7Nob+HO9/50O4iWA==
+"@steedos/filters@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.6.4.tgz#be52a4072ed11b05d6910437f4de0a5923486cac"
+  integrity sha512-YjyeC0k0ldk0CF3bMxMKoL+h+p/ev8URvGezV0oq3VCWXLuju3lA3kDW3R6Ibw0bTJGCz+F8F7tPqJukksgzmQ==
   dependencies:
     devextreme "^18.2.6"
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/objectql@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.6.1.tgz#0ec84c105a8d2b81dde0b1cb32874b50e3bab6ec"
-  integrity sha512-Q0JqWCS89VaTyOzMRFJC66gaIlN7TmZDVwqzZFrNifgbkQ8Ry1n4UIfyB08ytMaZpVZbzhx0wT0zyS6ggM7FWw==
+"@steedos/objectql@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.6.4.tgz#b7d17b0cdfa8eb248b74c1e9584fa96f061d81db"
+  integrity sha512-W/FzupEWlpUI3I90lMpf9hes3hg7kTZrM3LrkUgvtEHtJfD4qYVqgVeSFx1tdZV0Rstjp7vVY3tGJk0IKGjWow==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.6.1"
+    "@steedos/filters" "^1.6.4"
     "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/schemas" "^1.6.1"
-    "@steedos/standard-objects" "^1.6.1"
+    "@steedos/schemas" "^1.6.4"
+    "@steedos/standard-objects" "^1.6.4"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -184,15 +184,15 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/schemas@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.6.1.tgz#f078b53e7b6af9b7e45aa68cb0844edbba15d319"
-  integrity sha512-rFPEIJewjD6r0hBYoIjilrfddTGrkC46Mjp+Qrmae2rdkwmXTRKad+edtlCD2VfoE02Otu3ylzrXDE2WzeTL6g==
+"@steedos/schemas@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.6.4.tgz#a6be3b532ecd5bc2f51dd8fef415c4c1943dafa3"
+  integrity sha512-U17RDDMkei+xXlnA/tnTI+I8y+Bikci/RZmr7s5S/PfG9w+0m2GreCzsFKmwP9HYf3RL/QkXkHxyfvp4bd9mxQ==
 
-"@steedos/standard-objects@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.6.1.tgz#d7b44d4f1af8e11cf6ab44bef86e19475d4dd762"
-  integrity sha512-8VHNBxFq/AQGltA2XKIrylyyyf3lmFsLKYLvoiE9ezp2g2yI4tGEat/Fy4FMW0yWIjBNo+wCkKG5mQIn843SZQ==
+"@steedos/standard-objects@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.6.4.tgz#cd2fc59ca0dd8fb5a475b6c9f6e32560e3e9707c"
+  integrity sha512-vxyPBoqOlbvbBrQM2UAPV2mVfPXxKEVg396UJRexvhh9ZNAF+pjUwdEqMNcwUPG9jFQQ24B1TjQ9SoYPV4atmw==
 
 "@types/body-parser@*":
   version "1.17.1"
@@ -3009,6 +3009,11 @@ node-pre-gyp@^0.12.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+nodemailer@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.3.0.tgz#a89b0c62d3937bdcdeecbf55687bd7911b627e12"
+  integrity sha512-TEHBNBPHv7Ie/0o3HXnb7xrPSSQmH1dXwQKRaMKDBGt/ZN54lvDVujP6hKkO/vjkIYL9rK8kHSG11+G42Nhxuw==
 
 nodemon@1.19.1:
   version "1.19.1"
