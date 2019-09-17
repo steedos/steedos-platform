@@ -19,7 +19,7 @@ let upBySpace = async function (spaceId) {
         return
     }
 
-    // ["is_group", "=", null]查的是is_group未定义的情况，对应到mongo语法`is_group: { $exists: false }`
+    // ["is_group", "=", null]查的是is_group未定义的情况，对应到mongo语法`is_group: null`，它包含了`is_group: { $exists: false }`的情况
     let orgs = await db.find("organizations", {
         filters: [["space", "=", spaceId], [[["is_company", "=", true], ["is_group", "=", null]], "or", ["parent", "=", null]]],
         fields: ["name", "space", "owner", "created_by", "created", "modified_by", "modified"]
@@ -111,7 +111,7 @@ let upBySpace = async function (spaceId) {
     let rootOrgId = rootOrgs[0] ? rootOrgs[0]._id : null;
 
     if (rootOrgId) {
-        // 更新所有未设置company_id值的flow的company_id值为根组织
+        // workflow: 出一个脚本更新所有未设置company_id值的flow的company_id值为根组织 #1944
         let updatedDoc = await db.updateMany("flows", [["space", "=", spaceId], ["company_id", "=", null]], {
             company_id: rootOrgId
         }).catch((ex) => {
