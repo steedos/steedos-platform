@@ -9,10 +9,6 @@ tenant:
   enable_register: true
   enable_forget_password: true
   enable_create_tenant: true
-accounts:
-  register: true
-  forget_password: true
-  create_tenant: true
 email:
   host: 
   port: 465
