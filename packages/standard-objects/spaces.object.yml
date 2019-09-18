@@ -11,7 +11,6 @@ fields:
     required: true
     searchable: true
     index: true
-    name: name
   admins:
     label: 管理员
     type: lookup
@@ -23,11 +22,12 @@ fields:
   avatar:
     label: 浅色公司Logo
     type: avatar
-    name: avatar
   avatar_dark:
     label: 深色公司Logo
     type: avatar
-    name: avatar_dark
+  background:
+    label: 背景图
+    type: avatar
   location:
     label: 地址
     type: location
@@ -40,7 +40,6 @@ fields:
     reference_to: apps
     multiple: true
     hidden: true
-    name: apps
     filterable: true
   apps_paid:
     label: 已付费应用
@@ -50,7 +49,6 @@ fields:
     label: 绑定域名
     type: '[text]'
     hidden: true
-    name: hostname
   is_paid:
     label: 已付费
     type: boolean
@@ -97,7 +95,6 @@ fields:
     type: boolean
     defaultValue: false
     hidden: true
-    name: enable_register
   owner:
     label: 所有者
     type: lookup
