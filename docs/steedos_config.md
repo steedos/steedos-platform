@@ -27,15 +27,25 @@ plugins:
   - "@steedos/accounts"
 ```
 
-### 账户管理
+### 登录界面配置
 
-配置账户管理相关参数，例如是否允许注册、是否允许修改密码、是否允许创建企业。
+配置登录界面相关参数，例如是否允许注册、是否允许修改密码、是否允许创建企业。
 
 ```yml
-accounts:
-  register: true
-  forget_password: true
-  create_tenant: true
+tenant:
+  name: Steedos
+  logo_url:
+  background_url:
+  enable_register: true
+  enable_forget_password: true
+  enable_create_tenant: true
+```
+
+### Web服务URL
+
+```yml
+services:
+  steedos: /
 ```
 
 ### 文件存储
