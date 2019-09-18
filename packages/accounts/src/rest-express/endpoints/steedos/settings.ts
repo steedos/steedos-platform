@@ -9,7 +9,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     res: express.Response
   ) => {
     res.json({
-      space: config.accounts?config.space:{},
-      accounts: config.accounts?config.accounts:{}
+        tenant: config.accounts?config.tenant:{},
+        accounts: config.accounts?config.accounts:{}
     })
 }

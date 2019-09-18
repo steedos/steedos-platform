@@ -15,7 +15,7 @@ const en = require("../i18n/en.json");
 
 const initialStore = {
     settings: {
-        space: {
+        tenant: {
             name: "Steedos"
         },
         accounts: {

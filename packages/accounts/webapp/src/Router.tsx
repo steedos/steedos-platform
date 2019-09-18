@@ -22,8 +22,8 @@ import theme from './theme';
 const Router = ({settings}:any) => {
 
   let backgroundUrl = require("./assets/background.svg");
-  if (settings.space.background) {
-    backgroundUrl = settings.space.background 
+  if (settings.tenant.background) {
+    backgroundUrl = settings.tenant.background 
   }
 
   const useStyles = makeStyles({

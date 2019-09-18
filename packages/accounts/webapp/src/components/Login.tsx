@@ -38,7 +38,7 @@ const Login = ({ history, settings }: any) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  document.title = "Login | " + settings.space.name;
+  document.title = "Login | " + settings.tenant.name;
   const searchParams = new URLSearchParams(window.location.search);
   let redirect_uri = searchParams.get("redirect_uri");
 

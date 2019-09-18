@@ -14,14 +14,15 @@ const useStyles = makeStyles({
     height: 70,
     display: "block",
     margin: "0 auto",
+    paddingBottom: 20
   },
 });
 
 const Logo = ({ settings }: any) => {
   const classes = useStyles();
   let logoUrl = require("../assets/logo-square.png")
-  if (settings.space.logo) {
-    logoUrl = settings.space.logo
+  if (settings.tenant.logo) {
+    logoUrl = settings.tenant.logo
   }
   return (
     <img src={logoUrl} className={classes.logo}></img>

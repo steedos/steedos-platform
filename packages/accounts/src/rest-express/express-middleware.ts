@@ -16,6 +16,7 @@ import { twoFactorSecret, twoFactorSet, twoFactorUnset } from './endpoints/passw
 import { changePassword } from './endpoints/password/change-password';
 import { userLoader } from './user-loader';
 import { AccountsExpressOptions } from './types';
+import { getTenant } from './endpoints/steedos/get-tenant';
 import { createTenant } from './endpoints/steedos/create-tenant';
 import { getSettings } from './endpoints/steedos/settings';
 
@@ -47,6 +48,7 @@ const accountsExpress = (
 
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
+  router.get(`${path}/tenant`, userLoader(accountsServer), getTenant(accountsServer));
   router.post(`${path}/tenant`, userLoader(accountsServer), createTenant(accountsServer));
 
   router.post(`${path}/refreshTokens`, refreshAccessToken(accountsServer));

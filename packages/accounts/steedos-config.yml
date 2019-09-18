@@ -2,7 +2,7 @@ datasources:
   default:
     connection:
       url: mongodb://127.0.0.1/steedos
-space:
+tenant:
   name: Steedos
   logo: 
   background: 
