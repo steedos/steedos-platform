@@ -48,7 +48,7 @@ const accountsExpress = (
 
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
-  router.get(`${path}/tenant`, userLoader(accountsServer), getTenant(accountsServer));
+  router.get(`${path}/tenant/:id`, userLoader(accountsServer), getTenant(accountsServer));
   router.post(`${path}/tenant`, userLoader(accountsServer), createTenant(accountsServer));
 
   router.post(`${path}/refreshTokens`, refreshAccessToken(accountsServer));

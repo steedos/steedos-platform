@@ -1,20 +1,5 @@
-import {Client4} from '../../client';
-import * as I18n from '../../i18n/i18n';
-import { accountsRest } from '../../accounts';
-
-export function loadSettings() {
-    return (dispatch) => {
-
-        accountsRest.fetch("/settings").then((configs) => {
-            dispatch({
-                type:"RECEIVED_SETTINGS",
-                data: configs,
-            });
-        }).catch((error) => {
-            console.warn('Actions - loadSettings - recreived error: ', error)
-        }); // eslint-disable-line no-empty-function
-    }
-}
+import * as I18n from '../i18n/i18n';
+import { accountsRest } from '../accounts';
 
 export function loadTranslations(locale, url) {
     const translations = {};

@@ -14,18 +14,9 @@ const en = require("../i18n/en.json");
 // window._steedos_runtime_config = config;
 
 const initialStore = {
-    settings: {
-        tenant: {
-            name: "Steedos"
-        },
-        accounts: {
-        }
-    },
-    views: {
-        i18n: {
-            translations: {
-                en: en
-            }
+    i18n: {
+        translations: {
+            en: en
         }
     }
 }

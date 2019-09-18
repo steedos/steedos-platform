@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import views from './views'
+import i18n from './i18n'
+import tenant from './tenant'
 import settings from './settings'
 
 export default combineReducers({
-  views,
-  settings
+  i18n,
+  settings,
+  tenant,
 })

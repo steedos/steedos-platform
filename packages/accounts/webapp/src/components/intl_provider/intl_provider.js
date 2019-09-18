@@ -13,10 +13,17 @@ export default class IntlProvider extends React.PureComponent {
         locale: PropTypes.string.isRequired,
         translations: PropTypes.object,
         actions: PropTypes.shape({
+            loadTenant: PropTypes.func.isRequired,
             loadSettings: PropTypes.func.isRequired,
             loadTranslations: PropTypes.func.isRequired,
         }).isRequired,
     };
+
+    constructor(props) {
+        super(props);
+        props.actions.loadSettings();
+        props.actions.loadTenant();
+    }
 
     componentDidMount() {
         // Initialize browser's i18n data
@@ -52,7 +59,6 @@ export default class IntlProvider extends React.PureComponent {
     }
 
     render() {
-        this.props.actions.loadSettings();
         
         if (!this.props.translations) {
             return null;

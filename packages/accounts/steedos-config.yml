@@ -4,8 +4,8 @@ datasources:
       url: mongodb://127.0.0.1/steedos
 tenant:
   name: Steedos
-  logo: 
-  background: 
+  logo_url:
+  background_url:
 accounts:
   register: true
   forget_password: true
@@ -25,3 +25,5 @@ password:
   symbol: true
   policy: ^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$
   policyError: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
+webservices:
+  steedos: http://127.0.0.1:3000/

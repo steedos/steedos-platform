@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 
 import { accountsRest, accountsPassword } from '../accounts';
 import { connect } from 'react-redux';
-import { getSettings } from '../selectors';
+import { getTenant, getSettings } from '../selectors';
 import FormError from './FormError';
 
 import { localizeMessage } from '../utils/utils';
@@ -30,7 +30,7 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/reset-password", search: window.location.search}} {...props} ref={ref} />
 ));
 
-const Login = ({ history, settings }: any) => {
+const Login = ({ history, settings, tenant }: any) => {
   const classes = useStyles();
   const [enableCode] = useState('');
   const [email, setEmail] = useState('');
@@ -38,7 +38,7 @@ const Login = ({ history, settings }: any) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  document.title = "Login | " + settings.tenant.name;
+  document.title = "Login | " + tenant.name;
   const searchParams = new URLSearchParams(window.location.search);
   let redirect_uri = searchParams.get("redirect_uri");
 
@@ -144,7 +144,8 @@ const Login = ({ history, settings }: any) => {
 
 function mapStateToProps(state: any) {
   return {
-      settings: getSettings(state),
+    tenant: getTenant(state),
+    settings: getSettings(state),
   };
 }
 

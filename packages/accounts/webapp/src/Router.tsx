@@ -4,7 +4,7 @@ import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { getSettings } from './selectors';
+import { getTenant } from './selectors';
 
 import Logo from './components/Logo';
 import Signup from './components/Signup';
@@ -19,11 +19,11 @@ import CreateTenant from './components/CreateTenant';
 import theme from './theme';
 
 
-const Router = ({settings}:any) => {
+const Router = ({tenant}:any) => {
 
   let backgroundUrl = require("./assets/background.svg");
-  if (settings.tenant.background) {
-    backgroundUrl = settings.tenant.background 
+  if (tenant.background_url) {
+    backgroundUrl = tenant.background_url 
   }
 
   const useStyles = makeStyles({
@@ -89,7 +89,7 @@ const Router = ({settings}:any) => {
 
 function mapStateToProps(state: any) {
   return {
-      settings: getSettings(state),
+    tenant: getTenant(state),
   };
 }
 

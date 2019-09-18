@@ -3,7 +3,7 @@
 
 import {combineReducers} from 'redux';
 
-import en from '../../i18n/en.json';
+import en from '../i18n/en.json';
 
 function translations(state = {en}, action) {
     switch (action.type) {
