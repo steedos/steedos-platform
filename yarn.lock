@@ -2243,17 +2243,17 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.6.1-patch.5":
-  version "1.6.1-patch.5"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.1-patch.5.tgz#185a18d597c78e925d3e63b5a66b4e9e8e4a2d52"
-  integrity sha512-RFrjwzn6dqcEej1kl6fkLmc5hyAdOMz3IpNGlW+sqTywFg9J3ItbhmCbWrQGym0aIg6G6Brc2MOLOlY+UvX0iA==
+"@steedos/accounts@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.4.tgz#343d520410e9dcf4897a2fdd8e0ba155d123bcc1"
+  integrity sha512-aDnkPwD9HWPN4e2K2QpDCByZzyCtFOLBMSBUGZN8r2V0REZ7ooDrrRDe/QdBXEFt6EfwnNQJHLDKNW7qU10LsQ==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
     "@accounts/server" "^0.19.0"
     "@babel/runtime" "^7.6.0"
-    "@steedos/objectql" "^1.6.1"
+    "@steedos/objectql" "^1.6.4"
     app-root-path "^2.2.1"
     body-parser "1.19.0"
     cookies "^0.7.3"
@@ -2263,6 +2263,7 @@
     js-yaml "^3.13.1"
     mem "^5.1.1"
     mongoose "5.6.6"
+    nodemailer "^6.3.0"
     oauth2-server "^3.0.1"
     saml-idp "^1.1.0"
     tslib "1.10.0"
@@ -13239,6 +13240,11 @@ node4mailer@4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/node4mailer/-/node4mailer-4.0.3.tgz#8f0c7a6737527a128530185a14c2e879989a8910"
   integrity sha1-jwx6ZzdSehKFMBhaFMLoeZiaiRA=
+
+nodemailer@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.3.0.tgz#a89b0c62d3937bdcdeecbf55687bd7911b627e12"
+  integrity sha512-TEHBNBPHv7Ie/0o3HXnb7xrPSSQmH1dXwQKRaMKDBGt/ZN54lvDVujP6hKkO/vjkIYL9rK8kHSG11+G42Nhxuw==
 
 nodemon@^1.18.10, nodemon@^1.19.1:
   version "1.19.2"
