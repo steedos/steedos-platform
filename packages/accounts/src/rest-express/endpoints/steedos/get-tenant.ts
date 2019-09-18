@@ -17,7 +17,7 @@ export const getTenant = (accountsServer: AccountsServer) => async (
         throw new Error("accounts.tenant_id_required")
     
     const now = new Date();
-    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background"]})
+    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "enable_forget_password", "enable_create_tenant"]})
 
     if (config.webservices.steedos) {
         if (spaceDoc.avatar_dark) {
