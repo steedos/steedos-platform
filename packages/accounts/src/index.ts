@@ -62,8 +62,7 @@ function getAccountsRouter(context){
   /* Router to webapps build */
   router.get('/settings', (req, res) => {
     res.json({
-      title: 'Steedos',
-      accounts: config.accounts
+      accounts: config.accounts?config.accounts:{}
     })
   });
   router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));

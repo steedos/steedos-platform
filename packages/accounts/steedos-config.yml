@@ -3,9 +3,10 @@ datasources:
     connection:
       url: mongodb://127.0.0.1/steedos
 accounts:
-  register: true
-  forget_password: true
-  create_tenant: true
+  site_name: Steedos
+  register: false
+  forget_password: false
+  create_tenant: false
 email:
   host: 
   port: 465

@@ -30,7 +30,7 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/reset-password", search: window.location.search}} {...props} ref={ref} />
 ));
 
-const Login = ({ history, title }: any) => {
+const Login = ({ history, settings }: any) => {
   const classes = useStyles();
   const [enableCode] = useState('');
   const [email, setEmail] = useState('');
@@ -38,7 +38,7 @@ const Login = ({ history, title }: any) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  document.title = "Login | " + title;
+  document.title = "Login | " + settings.accounts.site_name;
   const searchParams = new URLSearchParams(window.location.search);
   let redirect_uri = searchParams.get("redirect_uri");
 
@@ -56,13 +56,12 @@ const Login = ({ history, title }: any) => {
 
 
       const user = await accountsRest.authFetch( '/user', {});
-      console.log(user);
 
       if(user.password_expired){
         return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});
       }
 
-      if (user.spaces.length == 0)
+      if (settings.accounts.create_tenant && user.spaces.length == 0)
       {
         return history.push('/create-tenant' + window.location.search);
       }
@@ -115,24 +114,29 @@ const Login = ({ history, title }: any) => {
         <Input id="code" value={code} onChange={e => setCode(e.target.value)} />       
       </FormControl>
       } 
+      <br/>
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
             id='accounts.signin'
             defaultMessage='Sign In'
         />
       </Button>
+      {settings.accounts.register &&
       <Button component={SignUpLink}>
         <FormattedMessage
             id='accounts.signup'
             defaultMessage='Sign Up'
         />
       </Button>
+      }
+      {settings.accounts.forget_password &&
       <Button component={ResetPasswordLink}>
         <FormattedMessage
             id='accounts.reset_password'
             defaultMessage='Reset Password'
         />
       </Button>
+      }
     </form>
   );
 };
@@ -140,7 +144,7 @@ const Login = ({ history, title }: any) => {
 
 function mapStateToProps(state: any) {
   return {
-      title: getSettings(state).title,
+      settings: getSettings(state),
   };
 }
 

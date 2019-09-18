@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     minWidth: 320,
   },
   container: {
-    padding: "16px 32px",
+    padding: 32,
   },
 });
 

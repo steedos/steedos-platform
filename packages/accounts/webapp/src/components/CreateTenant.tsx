@@ -68,6 +68,7 @@ const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
           onChange={e => setTenantName(e.target.value)} 
         />
       </FormControl>
+      <br/>
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
             id='accounts.submit'

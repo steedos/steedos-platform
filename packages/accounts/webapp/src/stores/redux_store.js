@@ -15,7 +15,6 @@ const en = require("../i18n/en.json");
 
 const initialStore = {
     settings: {
-        title: "Steedos"
     },
     views: {
         i18n: {
