@@ -21,12 +21,12 @@ export const getTenant = (accountsServer: AccountsServer) => async (
 
     if (config.webservices.steedos) {
         if (spaceDoc.avatar_dark) {
-            spaceDoc.logo_url = config.webservices.steedos + "/api/files/avatars/" + spaceDoc.avatar_dark
+            spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
         } else if (spaceDoc.avatar) {
-            spaceDoc.logo_url = config.webservices.steedos + "/api/files/avatars/" + spaceDoc.avatar
+            spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar
         } 
         if (spaceDoc.background) {
-            spaceDoc.background_url = config.webservices.steedos + "/api/files/avatars/" + spaceDoc.background
+            spaceDoc.background_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.background
         }
     }
     res.json(spaceDoc);

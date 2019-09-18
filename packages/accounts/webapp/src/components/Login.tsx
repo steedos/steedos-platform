@@ -61,7 +61,7 @@ const Login = ({ history, settings, tenant }: any) => {
         return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});
       }
 
-      if (settings.accounts.create_tenant && user.spaces.length == 0)
+      if (tenant.create_tenant && user.spaces.length == 0)
       {
         return history.push('/create-tenant' + window.location.search);
       }
@@ -121,7 +121,7 @@ const Login = ({ history, settings, tenant }: any) => {
             defaultMessage='Sign In'
         />
       </Button>
-      {settings.accounts.register &&
+      {tenant.enable_register &&
       <Button component={SignUpLink}>
         <FormattedMessage
             id='accounts.signup'
@@ -129,7 +129,7 @@ const Login = ({ history, settings, tenant }: any) => {
         />
       </Button>
       }
-      {settings.accounts.forget_password &&
+      {tenant.forget_password &&
       <Button component={ResetPasswordLink}>
         <FormattedMessage
             id='accounts.reset_password'
