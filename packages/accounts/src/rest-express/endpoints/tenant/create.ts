@@ -18,9 +18,68 @@ export const createTenant = (accountsServer: AccountsServer) => async (
     if (!spaceName)
         throw new Error("accounts.tenant_name_required")
     
-    const spaceDoc = await db.insert("spaces", {name: spaceName, owner: userId, admins: [userId]})
-    const orgDoc = await db.insert("organizations", {space: spaceDoc._id, name: spaceDoc.name, fullname: spaceDoc.name, is_company: true, users: [userId]})
-    await db.insert("space_users", {user: userDoc._id, space: spaceDoc._id, username: userDoc.username, name: userDoc.name, user_accepted: true, organizations: [orgDoc._id], organizations_parents: [orgDoc._id]})    
+    const now = new Date();
+    const spaceDoc = await db.insert("spaces", {
+      name: spaceName, 
+      admins: [userId],
+      owner: userId, 
+      created_by: userId,
+      created: now,
+      modified_by: userId,
+      modified: now
+    })
+    await db.updateOne("spaces", spaceDoc._id, {
+      space: spaceDoc._id
+    }).catch((ex) => {
+      console.error(ex);
+      return {};
+    });
+    const companyDoc = await db.insert("company", { 
+      name: spaceDoc.name, 
+      space: spaceDoc._id, 
+      owner: userId,
+      created_by: userId,
+      created: now,
+      modified_by: userId,
+      modified: now
+    })
+    const orgDoc = await db.insert("organizations", {
+      _id: companyDoc._id,
+      name: spaceDoc.name, 
+      fullname: spaceDoc.name, 
+      is_company: true, 
+      users: [userId],
+      company_id: companyDoc._id,
+      space: spaceDoc._id, 
+      owner: userId,
+      created_by: userId,
+      created: now,
+      modified_by: userId,
+      modified: now
+    })
+    await db.updateOne("company", companyDoc._id, {
+      organization: companyDoc._id,
+      company_id: companyDoc._id
+    }).catch((ex) => {
+      console.error(ex);
+      return {};
+    });
+    await db.insert("space_users", {
+      user: userDoc._id, 
+      username: userDoc.username, 
+      name: userDoc.name, 
+      user_accepted: true, 
+      organizations: [orgDoc._id], 
+      organizations_parents: [orgDoc._id],
+      company_id: companyDoc._id,
+      company_ids: [companyDoc._id],
+      space: spaceDoc._id,
+      owner: userId,
+      created_by: userId,
+      created: now,
+      modified_by: userId,
+      modified: now
+    })
 
     res.json(spaceDoc);
   } catch (err) {
