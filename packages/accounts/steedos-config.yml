@@ -3,10 +3,9 @@ datasources:
     connection:
       url: mongodb://127.0.0.1/steedos
 accounts:
-  password:
-    policy:
-      reg: ^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$
-      regErrorMessage: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
+  register: true
+  forget_password: true
+  create_tenant: true
 email:
   host: 
   port: 465
@@ -14,3 +13,11 @@ email:
   password: 
   secure: true
   from: support@steedos.com
+password:
+  minimum_length: 10
+  lowercase: true
+  number: true
+  uppercase: true
+  symbol: true
+  policy: ^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$
+  policyError: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
