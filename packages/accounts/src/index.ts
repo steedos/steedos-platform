@@ -62,6 +62,7 @@ function getAccountsRouter(context){
   /* Router to webapps build */
   router.get('/settings', (req, res) => {
     res.json({
+      space: config.accounts?config.space:{},
       accounts: config.accounts?config.accounts:{}
     })
   });

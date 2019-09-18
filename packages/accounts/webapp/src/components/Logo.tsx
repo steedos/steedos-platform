@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+import { getSettings } from '../selectors';
 
 interface Props {
   logoUrl?: string;
@@ -8,20 +10,29 @@ interface Props {
 
 const useStyles = makeStyles({
   logo: {
-    width: 80,
-    height: 80,
+    width: "auto",
+    height: 70,
     display: "block",
     margin: "0 auto",
   },
 });
 
-const Logo = ({ logoUrl }: Props) => {
+const Logo = ({ settings }: any) => {
   const classes = useStyles();
-  if (!logoUrl) 
-    logoUrl = require("../assets/logo-square.png")
+  let logoUrl = require("../assets/logo-square.png")
+  if (settings.space.logo) {
+    logoUrl = settings.space.logo
+  }
   return (
     <img src={logoUrl} className={classes.logo}></img>
   )
 };
 
-export default Logo;
+
+function mapStateToProps(state: any) {
+  return {
+      settings: getSettings(state),
+  };
+}
+
+export default connect(mapStateToProps)(Logo);

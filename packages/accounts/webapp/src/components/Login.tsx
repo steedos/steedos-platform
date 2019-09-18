@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 
 import { accountsRest, accountsPassword } from '../accounts';
+import { connect } from 'react-redux';
 import { getSettings } from '../selectors';
 import FormError from './FormError';
 
@@ -38,7 +38,7 @@ const Login = ({ history, settings }: any) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  document.title = "Login | " + settings.accounts.site_name;
+  document.title = "Login | " + settings.space.name;
   const searchParams = new URLSearchParams(window.location.search);
   let redirect_uri = searchParams.get("redirect_uri");
 

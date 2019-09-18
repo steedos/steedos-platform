@@ -2,11 +2,14 @@ datasources:
   default:
     connection:
       url: mongodb://127.0.0.1/steedos
+space:
+  name: Steedos
+  logo: 
+  background: 
 accounts:
-  site_name: Steedos
-  register: false
-  forget_password: false
-  create_tenant: false
+  register: true
+  forget_password: true
+  create_tenant: true
 email:
   host: 
   port: 465
