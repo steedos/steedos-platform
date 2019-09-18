@@ -19,11 +19,11 @@ export const changePassword = (accountsServer: AccountsServer) => async (
     }
     const { oldPassword, newPassword } = req.body;
 
-    let passworPolicy = (config as any).accounts.password.policy
+    let passworPolicy = (config as any).password.policy
 
-    if(passworPolicy.reg){
-      if(!(new RegExp(passworPolicy.reg)).test(newPassword || '')){
-          sendError(res, new Error(passworPolicy.regErrorMessage));
+    if(passworPolicy){
+      if(!(new RegExp(passworPolicy)).test(newPassword || '')){
+          sendError(res, new Error((config as any).password.policyError));
           return;
       }
     }
