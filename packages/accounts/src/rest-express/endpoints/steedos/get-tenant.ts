@@ -19,7 +19,7 @@ export const getTenant = (accountsServer: AccountsServer) => async (
     const now = new Date();
     const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "enable_forget_password", "enable_create_tenant"]})
 
-    if (config.webservices.steedos) {
+    if (config.webservices && config.webservices.steedos) {
         if (spaceDoc.avatar_dark) {
             spaceDoc.logo_url = config.webservices.steedos + "api/files/avatars/" + spaceDoc.avatar_dark
         } else if (spaceDoc.avatar) {
