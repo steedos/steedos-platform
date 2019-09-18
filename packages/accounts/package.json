@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "1.6.4",
+  "version": "1.6.5",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -14,7 +14,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc && yarn buildClient",
-    "buildClient": "cd webapp && yarn build && cd ..",
+    "buildClient": "cd webapp && yarn && yarn build && cd ..",
     "prepare": "yarn build"
   },
   "dependencies": {
