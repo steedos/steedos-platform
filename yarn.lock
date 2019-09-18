@@ -2243,10 +2243,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.4.tgz#343d520410e9dcf4897a2fdd8e0ba155d123bcc1"
-  integrity sha512-aDnkPwD9HWPN4e2K2QpDCByZzyCtFOLBMSBUGZN8r2V0REZ7ooDrrRDe/QdBXEFt6EfwnNQJHLDKNW7qU10LsQ==
+"@steedos/accounts@^1.6.5-patch.3":
+  version "1.6.5-patch.3"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.5-patch.3.tgz#157710fe20c7c4c865cebac7472cdeaf39ccb8c0"
+  integrity sha512-e9Xl7jTOf7ZNhT5TlpuEZjsdjo9/CE6Ivyfz/2vPqUjqqGIMoFpWxM+C1QxuPv4QlU40ZPvSmlPLiqrC0oAGVg==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
@@ -2265,8 +2265,16 @@
     mongoose "5.6.6"
     nodemailer "^6.3.0"
     oauth2-server "^3.0.1"
+    redux-thunk "^2.3.0"
     saml-idp "^1.1.0"
     tslib "1.10.0"
+
+"@steedos/migrate@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.6.4.tgz#22e9f54af9995f5e59843e56ed3575390ef3c764"
+  integrity sha512-YbfhalyhzUXy97oyKflUXYWWcjz18G9klQX38ktEy5ezlmUq/1LaiKjOkMRJ4kEpPLHX2mGQgKHv7TBY3sPOUQ==
+  dependencies:
+    migrate "^1.6.2"
 
 "@steedos/odata-v4-typeorm@^0.0.24":
   version "0.0.24"
@@ -16095,7 +16103,7 @@ redux-persist@^4.5.0:
     lodash "^4.17.4"
     lodash-es "^4.17.4"
 
-redux-thunk@2.3.0:
+redux-thunk@2.3.0, redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
