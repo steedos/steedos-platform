@@ -1,13 +1,14 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "1.6.5",
+  "version": "1.6.5-patch.3",
   "main": "lib/index.js",
   "files": [
     "/package.json",
     "/README",
     "/src",
     "/lib",
+    "/webapp/src/i18n",
     "/webapp/build"
   ],
   "license": "MIT",
