@@ -60,12 +60,6 @@ function getAccountsRouter(context){
   });
 
   /* Router to webapps build */
-  router.get('/settings', (req, res) => {
-    res.json({
-      space: config.accounts?config.space:{},
-      accounts: config.accounts?config.accounts:{}
-    })
-  });
   router.use("/a/", express.static(path.join(__dirname, '..', 'webapp', 'build')));
   router.use("/a/i18n", express.static(path.join(__dirname, '..', 'webapp', 'src', 'i18n')));
   router.get('/a/*', (req, res) => {

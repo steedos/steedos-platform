@@ -16,7 +16,8 @@ import { twoFactorSecret, twoFactorSet, twoFactorUnset } from './endpoints/passw
 import { changePassword } from './endpoints/password/change-password';
 import { userLoader } from './user-loader';
 import { AccountsExpressOptions } from './types';
-import { createTenant } from './endpoints/tenant/create';
+import { createTenant } from './endpoints/steedos/create-tenant';
+import { getSettings } from './endpoints/steedos/settings';
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -45,6 +46,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
 
   
+  router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
   router.post(`${path}/tenant`, userLoader(accountsServer), createTenant(accountsServer));
 
   router.post(`${path}/refreshTokens`, refreshAccessToken(accountsServer));
