@@ -33,6 +33,7 @@ plugins:
 
 ```yml
 tenant:
+  _id:
   name: Steedos
   logo_url:
   background_url:

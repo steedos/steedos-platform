@@ -37,6 +37,6 @@
   },
   "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632",
   "dependencies": {
-    "@steedos/accounts": "^1.6.5-patch.3"
+    "@steedos/accounts": "^1.6.5-patch.5"
   }
 }

@@ -16,3 +16,5 @@ plugins:
   - "@steedos/accounts"
 webservices:
   steedos: /
+tenant: 
+  _id: 
