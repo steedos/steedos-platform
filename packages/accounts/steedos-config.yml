@@ -3,6 +3,7 @@ datasources:
     connection:
       url: mongodb://127.0.0.1/steedos
 tenant:
+  _id: 
   name: Steedos
   logo_url:
   background_url: 

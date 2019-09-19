@@ -1,5 +1,7 @@
 import { accountsRest } from '../accounts';
 
+import { loadTenant } from './tenant';
+
 export function loadSettings() {
     return (dispatch) => {
 
@@ -13,3 +15,4 @@ export function loadSettings() {
         }); // eslint-disable-line no-empty-function
     }
 }
+

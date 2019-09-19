@@ -11,6 +11,7 @@ export default class IntlProvider extends React.PureComponent {
     static propTypes = {
         children: PropTypes.element.isRequired,
         locale: PropTypes.string.isRequired,
+        settings: PropTypes.object,
         translations: PropTypes.object,
         actions: PropTypes.shape({
             loadTenant: PropTypes.func.isRequired,
@@ -59,7 +60,6 @@ export default class IntlProvider extends React.PureComponent {
     }
 
     render() {
-        
         if (!this.props.translations) {
             return null;
         }

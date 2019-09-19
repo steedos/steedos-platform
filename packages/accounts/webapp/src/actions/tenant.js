@@ -1,14 +1,13 @@
 import { accountsRest } from '../accounts';
+import { getSettings } from '../selectors';
 
 export function loadTenant() {
     return (dispatch) => {
-
         const searchParams = new URLSearchParams(window.location.search);
         let tenant = searchParams.get("tenant");
         if (!tenant) 
             tenant = localStorage.getItem("spaceId")
         if (tenant) {
-            
             accountsRest.fetch("/tenant/" + tenant).then((tenantDoc) => {
                 dispatch({
                     type: "RECEIVED_TENANT",
