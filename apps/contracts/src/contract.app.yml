@@ -16,6 +16,7 @@ objects:
   - events
   - reports
 mobile_objects: 
+  - instances
   - contracts
   - accounts
   - contacts
