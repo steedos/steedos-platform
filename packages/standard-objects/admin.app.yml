@@ -33,7 +33,7 @@ admin_menus:
       - organization_admin
     expanded: false
   - _id: company
-    name: 我方单位
+    name: 单位
     permission_sets:
       - admin
       - organization_admin
@@ -60,7 +60,7 @@ admin_menus:
     object_name: permission_set
     parent: menu_users
   - _id: spaces
-    name: 租户信息
+    name: 工作区
     permission_sets:
       - admin
     object_name: spaces
@@ -118,20 +118,14 @@ admin_menus:
       - admin
     object_name: queue_import
     parent: menu_advanced
-  - _id: OAuth2Clients
-    name: OAuth2 应用
+  - _id: connected_apps
+    name: 外接应用
     permission_sets:
       - admin
-    object_name: OAuth2Clients
-    parent: menu_advanced
-  - _id: OAuth2AccessTokens
-    name: OAuth2 Token
-    permission_sets:
-      - admin
-    object_name: OAuth2AccessTokens
+    object_name: connected_apps
     parent: menu_advanced
   - _id: object_webhooks
-    name: Object Webhooks
+    name: Webhooks
     permission_sets:
       - admin
     object_name: object_webhooks

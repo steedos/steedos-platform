@@ -2,7 +2,7 @@ Creator.Objects['company'].triggers = {
     "after.insert.server.company": {
         on: "server",
         when: "after.insert",
-        todo: async function (userId, doc) {
+        todo: function (userId, doc) {
             // 自动在根节点新建一个组织，对应上关系
             var rootOrg = Creator.getCollection("organizations").findOne({
                 space: doc.space,
@@ -36,7 +36,7 @@ Creator.Objects['company'].triggers = {
     "before.remove.server.company": {
         on: "server",
         when: "before.remove",
-        todo: async function (userId, doc) {
+        todo: function (userId, doc) {
             var existsOrg = Creator.getCollection("organizations").findOne({
                 space: doc.space,
                 parent: doc.organization
@@ -63,6 +63,7 @@ Creator.Objects['company'].triggers = {
 
 let _ = require("underscore");
 
+// 根据当前space_users的organizations/organization值，计算其company_ids及company_id值
 let update_su_company_ids = async function (_id, su) {
     var company_ids, orgs, org;
     if (!su) {
@@ -95,6 +96,34 @@ let update_su_company_ids = async function (_id, su) {
     await this.getObject("space_users").updateOne(_id, updateDoc, this.userSession);
 };
 
+// 循环执行当前组织及其子组织children的company_id值计算
+let update_org_company_id = async function (_id, company_id, updated = { count: 0 }) {
+    const org = await this.getObject("organizations").findOne(_id, {
+        fields: ["children", "is_company", "company_id", "space"]
+    }, this.userSession);
+
+    if (org.is_company) {
+        await this.getObject("organizations").updateOne(_id, {
+            company_id: _id
+        }, this.userSession);
+        company_id = _id;
+        updated.count += 1;
+    }
+    else {
+        await this.getObject("organizations").updateOne(_id, {
+            company_id: company_id
+        }, this.userSession);
+        updated.count += 1;
+    }
+
+    const children = org.children;
+    if (children && children.length) {
+        for (let child of children) {
+            await update_org_company_id.call(this, child, company_id, updated);
+        }
+    }
+}
+
 Creator.Objects['company'].methods = {
     updateOrgs: async function (params) {
         let company = await this.getObject("company").findOne(this.record_id, {
@@ -105,13 +134,8 @@ Creator.Objects['company'].methods = {
             throw new Meteor.Error(400, "该单位的关联组织未设置");
         }
 
-        let result = await this.getObject("organizations").updateMany([
-            ["_id", "=", company.organization], 
-            "or", 
-            ["parents", "=", company.organization]
-        ], {
-            company_id: this.record_id
-        }, this.userSession);
+        let updatedOrgs = { count: 0 };
+        await update_org_company_id.call(this, company.organization, this.record_id, updatedOrgs);
 
         sus = await this.getObject("space_users").find({
             filters: [["organizations_parents", "=", company.organization]],
@@ -123,7 +147,7 @@ Creator.Objects['company'].methods = {
         }
 
         return {
-            updatedOrgs: result,
+            updatedOrgs: updatedOrgs.count,
             updatedSus: sus.length
         };
     }
@@ -147,57 +171,76 @@ Creator.Objects['company'].actions = {
             return perms["allowEdit"];
         },
         on: "record",
-        todo: async function (object_name, record_id, fields) {
+        todo: function (object_name, record_id, fields) {
             if (!this.record.organization) {
                 toastr.warning("该单位的关联组织未设置，未更新任何数据");
             }
             
-            doUpdate = async ()=> {
+            var doUpdate = function() {
+                $("body").addClass("loading");
                 var userSession = Creator.USER_CONTEXT;
-                var url = `/api/odata/v4/${userSession.spaceId}/company/${record_id}/updateOrgs`;
+                var url = "/api/odata/v4/" + userSession.spaceId + "/company/" + record_id + "/updateOrgs";
                 try {
-                    let authorization = `Bearer ${userSession.spaceId},${userSession.authToken}`;
-                    let fetchParams = {};
-                    const res = await fetch(url, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': authorization
+                    var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
+                    var fetchParams = {};
+                    var headers = [{
+                        name: 'Content-Type',
+                        value: 'application/json'
+                    }, {
+                        name: 'Authorization',
+                        value: authorization
+                    }];
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: fetchParams,
+                        dataType: "json",
+                        contentType: 'application/json',
+                        beforeSend: function (XHR) {
+                            if (headers && headers.length) {
+                                return headers.forEach(function (header) {
+                                    return XHR.setRequestHeader(header.name, header.value);
+                                });
+                            }
                         },
-                        method: 'POST',
-                        body: JSON.stringify(fetchParams)
+                        success: function (data) {
+                            console.log(data);
+                            $("body").removeClass("loading");
+                            var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
+                            console.log(logInfo);
+                            toastr.success(logInfo);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $("body").removeClass("loading");
+                            console.error(XMLHttpRequest.responseJSON);
+                            if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
+                                toastr.error(XMLHttpRequest.responseJSON.error.message)
+                            }
+                            else {
+                                toastr.error(XMLHttpRequest.responseJSON)
+                            }
+                        }
                     });
-                    let reJson = await res.json();
-                    if (reJson.error) {
-                        console.error(reJson.error);
-                        if (reJson.error.reason) {
-                            toastr.error(reJson.error.reason)
-                        }
-                        else if (reJson.error.message) {
-                            toastr.error(reJson.error.message)
-                        }
-                    }
-                    else {
-                        toastr.success(`已成功更新${reJson.updatedOrgs}条组织信息及${reJson.updatedSus}条用户信息,`)
-                    }
                 } catch (err) {
                     console.error(err);
-                    toastr.error(err)
+                    toastr.error(err);
+                    $("body").removeClass("loading");
                 }
             }
 
-            let text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属单位更新为本单位，组织中的人员所属单位也都更新为本单位。是否继续";
+            var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属单位更新为本单位，组织中的人员所属单位也都更新为本单位。是否继续";
             swal({
-                title: `更新“${this.record.name}”组织信息`,
+                title: "更新“" + this.record.name +"”组织信息",
                 text: "<div>" + text + "？</div>",
                 html: true,
                 showCancelButton: true,
                 confirmButtonText: t('YES'),
                 cancelButtonText: t('NO')
-            }, async (option)=> { 
+            }, (option)=> { 
                 if (option){
-                    await doUpdate();
+                    doUpdate();
                 }
             });
         }
-  }
+    }
 }

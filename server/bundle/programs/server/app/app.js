@@ -24,22 +24,22 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-13T14:57:30.850Z",
+        "date": "2019-09-17T06:47:38.669Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
-        "platform": "win32",
-        "osRelease": "10.0.17134",
-        "totalMemory": 8464728064,
-        "freeMemory": 2130284544,
-        "cpus": 4
+        "platform": "darwin",
+        "osRelease": "18.6.0",
+        "totalMemory": 8589934592,
+        "freeMemory": 238522368,
+        "cpus": 6
     },
     "commit": {
-        "hash": "'bd154b10b8eb94695df6ec24958e6d09a25d394f",
-        "date": "Fri Sep 13 22:13:54 2019 +0800",
-        "author": "Jack",
-        "subject": "停用档案相关包'",
+        "hash": "759c00c1f25b9eb9f8b406b7a9b562722ed276f4",
+        "date": "Tue Sep 17 14:39:32 2019 +0800",
+        "author": "庄建国",
+        "subject": "disable meteor migrate",
         "tag": "1.5.1",
-        "branch": "1.5"
+        "branch": "dev"
     }
 };
 ///////////////////////////////////////////////////////////////////////
@@ -48,8 +48,8 @@ Steedos.Info = {
   "extensions": [
     ".js",
     ".json",
-    ".info",
-    ".coffee"
+    ".coffee",
+    ".info"
   ]
 });
 

@@ -9,8 +9,6 @@ Migrate steedos database with [node-migrate](https://github.com/tj/node-migrate)
 
 set database connection in steedos-config.yml
 
-## Programmatic usage
-
 ### Migrate up
 
 open nodejs console.
@@ -26,17 +24,17 @@ open nodejs console.
 
 ```js
 var migrate = require("@steedos/migrate");
-migrate.up();
+migrate.down();
 ```
 
-### Disable auto migrate for steedos
+### Enable auto migrate for steedos
 
 steedos-config.yml
 
 ```yml
 datasources:
   default:
-    auto_migrate: false
+    auto_migrate: true
 ```
 
 ### Add migration script

@@ -184,7 +184,11 @@ export function loadAppFiles(filePath: string) {
 
 export function getBaseDirectory(){
     //return require('app-root-path').path
-    return process.cwd()
+    let cwd = process.cwd();
+    if (cwd.indexOf('.meteor') > -1) {
+        return cwd.split('.meteor')[0];
+    }
+    return cwd;
 }
 
 export function getSteedosConfig(){
@@ -193,7 +197,7 @@ export function getSteedosConfig(){
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
     }else{
-        console.info('not found steedos-config.yml', configPath);
+        throw new Error('Config file not found: ' + configPath);
     }
     return config;
 }

@@ -24,10 +24,7 @@ const up = async function() {
 
 const init = async function() {
     var objectql = require("@steedos/objectql");
-    var autoMigrate = true;
-    if (objectql.getSteedosConfig().datasources.default.auto_migrate == false)
-        autoMigrate = false;
-    if (autoMigrate)
+    if (objectql.getSteedosConfig().datasources.default.auto_migrate)
         up();
 }
 
