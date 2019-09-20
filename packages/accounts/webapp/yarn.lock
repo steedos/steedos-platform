@@ -1263,16 +1263,16 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@material-ui/core@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.3.3.tgz#38a02331da7916c18e65c3dc56f3f6a67ba60c07"
-  integrity sha512-wUQjoJEbtVWYi+R9gBWCPGy0O+c0oY8cAp2TugyB70f89ahq/cnfnTbMZl6O2arKe2xQlfAMzY8rOOy8UMzJoQ==
+"@material-ui/core@^4.4.1":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.4.2.tgz#66a9423e533833d2867827e6fdf526adbdceb7c0"
+  integrity sha512-hnZ4SP/hWJ9sUoNMkStz/y/CL2c7j4JpVIB2py3+vpBFU9TgHL3noBk3Fr0gltRvvlYA9ekpiGsGZ2ukk1R7Eg==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@material-ui/styles" "^4.3.3"
+    "@material-ui/styles" "^4.4.1"
     "@material-ui/system" "^4.3.3"
     "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.3.0"
+    "@material-ui/utils" "^4.4.0"
     "@types/react-transition-group" "^4.2.0"
     clsx "^1.0.2"
     convert-css-length "^2.0.1"
@@ -1285,31 +1285,7 @@
     react-transition-group "^4.0.0"
     warning "^4.0.1"
 
-"@material-ui/styles@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.3.3.tgz#39867dd6f3779a8326075e097d72208d3c5b4977"
-  integrity sha512-quupQ6RYXbtKBJxhLkF3RQx6LSfrfuh2lYpILvk7p9XNkfqOQq36fuNVgrJ/A+NNn03uqDFfQYIWh4CByKr4hA==
-  dependencies:
-    "@babel/runtime" "^7.4.4"
-    "@emotion/hash" "^0.7.1"
-    "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.1.0"
-    clsx "^1.0.2"
-    csstype "^2.5.2"
-    deepmerge "^4.0.0"
-    hoist-non-react-statics "^3.2.1"
-    jss "10.0.0-alpha.24"
-    jss-plugin-camel-case "10.0.0-alpha.24"
-    jss-plugin-default-unit "10.0.0-alpha.24"
-    jss-plugin-global "10.0.0-alpha.24"
-    jss-plugin-nested "10.0.0-alpha.24"
-    jss-plugin-props-sort "10.0.0-alpha.24"
-    jss-plugin-rule-value-function "10.0.0-alpha.24"
-    jss-plugin-vendor-prefixer "10.0.0-alpha.24"
-    prop-types "^15.7.2"
-    warning "^4.0.1"
-
-"@material-ui/styles@^4.3.3":
+"@material-ui/styles@^4.4.1":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.4.1.tgz#a53fb39e373636bd2c296a78c54afecb80f68446"
   integrity sha512-wXASlta7G+N8NeihbAKQjL6E1XMkS3SWpksNKn1cxhmKYQ+5pkMAUW/rChC5ovG7C/C2ZIdajYgOz977m3xlBA==
@@ -1350,7 +1326,7 @@
   dependencies:
     "@types/react" "*"
 
-"@material-ui/utils@^4.1.0", "@material-ui/utils@^4.3.0":
+"@material-ui/utils@^4.1.0", "@material-ui/utils@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.4.0.tgz#9275421e2798a067850d201212d46f12725828ad"
   integrity sha512-UXoQVwArQEQWXxf2FPs0iJGT+MePQpKr0Qh0CPoLc1OdF0GSMTmQczcqCzwZkeHxHAOq/NkIKM1Pb/ih1Avicg==
