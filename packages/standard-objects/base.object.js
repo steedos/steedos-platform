@@ -363,8 +363,7 @@ Creator.baseObject.triggers = {
                     return num;
                 };
                 var anColl = Creator.getCollection('autonumber');
-                var now = new Date(),
-                    date_from, date_to;
+                var date_from, date_to;
                 var selector = {
                     object_name: objectName,
                     field_name: fieldName,
@@ -389,12 +388,11 @@ Creator.baseObject.triggers = {
                     date_to = m.endOf("year").toDate();
                 }
                 if (date_from && date_to) {
-                    selector.date_from = {
-                        $lte: now
-                    };
-                    selector.date_to = {
-                        $gte: now
-                    };
+                    selector.date_from = date_from;
+                    selector.date_to = date_to;
+                } else {
+                    selector.date_from = null;
+                    selector.date_to = null;
                 }
                 var anData = anColl.findOne(selector),
                     anId;

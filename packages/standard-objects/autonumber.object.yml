@@ -13,10 +13,6 @@ fields:
     type: text
     required: true
     index: true
-  prefix:
-    label: 前缀
-    type: text
-    required: true
   current_no:
     label: 当前编号值
     type: number
@@ -24,10 +20,10 @@ fields:
     defaultValue: 1
   date_from:
     label: 日期范围开始日期
-    type: date
+    type: datetime
   date_to:
     label: 日期范围截止日期
-    type: date
+    type: datetime
 list_views:
   all:
     label: 所有
@@ -35,7 +31,6 @@ list_views:
     columns:
       - object_name
       - field_name
-      - prefix
       - current_no
 permission_set:
   user:

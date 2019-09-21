@@ -130,6 +130,12 @@ admin_menus:
       - admin
     object_name: object_webhooks
     parent: menu_advanced
+  - _id: autonumber
+    name: 自动编号
+    permission_sets:
+      - admin
+    object_name: autonumber
+    parent: menu_advanced
   - _id: about
     name: 关于
     permission_sets:
