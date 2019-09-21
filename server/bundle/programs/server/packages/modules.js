@@ -774,7 +774,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "main": "lib/index.js"
 };
 
@@ -801,7 +801,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "main": "lib/index.js"
 };
 
@@ -828,7 +828,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "main": "lib/index.js"
 };
 

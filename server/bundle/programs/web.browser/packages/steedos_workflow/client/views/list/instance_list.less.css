@@ -1,3 +1,6 @@
+.instance-list {
+  margin-top: 1px;
+}
 .instance-list .datatable-instances {
   border-right: none;
 }
@@ -81,12 +84,6 @@
   line-height: 35px;
   text-align: center;
 }
-.zoom-extra-large .instance-list .instance-priority-bar {
-  top: 20px;
-}
-.zoom-large .instance-list .instance-priority-bar {
-  top: 21px;
-}
 .instance-list .instance-name span {
   color: #333;
   display: inline-block;
@@ -120,12 +117,6 @@
   bottom: 0px;
   line-height: 35px;
   text-align: center;
-}
-.zoom-extra-large .instance-list .instance-read-bar {
-  top: 0px;
-}
-.zoom-large .instance-list .instance-read-bar {
-  top: 1px;
 }
 .instance-list .unread {
   color: #1f95ec;
@@ -230,4 +221,27 @@
 }
 .instance-priority-muted input[name="文件标题"] {
   color: blue !important;
+}
+.instance-list-wrapper .slds-page-header--object-home {
+  border-radius: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  height: 100px;
+}
+@media (max-width: 768px) {
+  .instance-list-wrapper .slds-page-header--object-home {
+    height: 65px;
+  }
+}
+.instance-list-wrapper .slds-page-header--object-home .slds-media__figure {
+  margin-top: -2px;
+}
+.instance-list-wrapper .slds-page-header--object-home .dropdown-workflow-menu-by-flow {
+  width: 140%;
+}
+.instance-list-wrapper .slds-page-header--object-home .dropdown-workflow-menu-by-flow ul {
+  background: #fff!important;
+}
+.instance-list-wrapper .slds-page-header--object-home .slds-button {
+  cursor: pointer;
 }

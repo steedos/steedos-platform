@@ -24,6 +24,17 @@
 .record-edit-text {
   display: block;
 }
+.listViewManager .slds-page-header--object-home {
+  height: 100px;
+}
+@media (max-width: 767px) {
+  .listViewManager .slds-page-header--object-home {
+    height: 65px;
+  }
+}
+.listViewManager .slds-page-header--object-home .slds-media__figure {
+  margin-top: -2px;
+}
 @media (max-width: 767px) {
   .slds-modal__container {
     margin: 0 1rem;
@@ -90,6 +101,8 @@
   }
   .listViewManager .slds-page-header--object-home {
     border-radius: 0px ;
+    border-left: 0px;
+    border-right: 0px;
   }
   .listViewManager .list-table-container {
     border-bottom-right-radius: 0px !important;

@@ -413,23 +413,6 @@ textarea {
 .instance-sign .instance-sign-text {
   clear: both;
 }
-.zoom-large .instance-table .bootstrap-datetimepicker-widget,
-.zoom-extra-large .instance-table .bootstrap-datetimepicker-widget {
-  top: inherit !important;
-}
-.zoom-large .instance-table td:not(:last-child) .bootstrap-datetimepicker-widget,
-.zoom-extra-large .instance-table td:not(:last-child) .bootstrap-datetimepicker-widget,
-.zoom-large .instance-table .bootstrap-datetimepicker-widget-left .bootstrap-datetimepicker-widget,
-.zoom-extra-large .instance-table .bootstrap-datetimepicker-widget-left .bootstrap-datetimepicker-widget {
-  left: inherit !important;
-}
-.zoom-large .instance-table td:last-child .bootstrap-datetimepicker-widget,
-.zoom-extra-large .instance-table td:last-child .bootstrap-datetimepicker-widget,
-.zoom-large .instance-table .bootstrap-datetimepicker-widget-right .bootstrap-datetimepicker-widget,
-.zoom-extra-large .instance-table .bootstrap-datetimepicker-widget-right .bootstrap-datetimepicker-widget {
-  left: auto !important;
-  right: 20px !important;
-}
 .instance-table .instance-template,
 .traces_table_modal .instance-template {
   max-width: 700px;

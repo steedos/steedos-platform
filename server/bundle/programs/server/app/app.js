@@ -24,20 +24,20 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-17T06:47:38.669Z",
+        "date": "2019-09-21T11:00:40.275Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
         "osRelease": "18.6.0",
         "totalMemory": 8589934592,
-        "freeMemory": 238522368,
+        "freeMemory": 238661632,
         "cpus": 6
     },
     "commit": {
-        "hash": "759c00c1f25b9eb9f8b406b7a9b562722ed276f4",
-        "date": "Tue Sep 17 14:39:32 2019 +0800",
-        "author": "庄建国",
-        "subject": "disable meteor migrate",
+        "hash": "4e039f0696f5906d0c265dd6c72462ed1c51ff24",
+        "date": "Sat Sep 21 18:15:58 2019 +0800",
+        "author": "yinlainghui",
+        "subject": "fix 顶部左侧小图标没对齐",
         "tag": "1.5.1",
         "branch": "dev"
     }
