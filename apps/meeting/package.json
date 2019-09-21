@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@steedos/app-meeting",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Meeting room booking",
   "main": "main.js",
   "scripts": {
@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/steedos/app-meeting#readme",
   "dependencies": {
-    "@steedos/meteor-bundle-runner": "^1.6.4",
+    "@steedos/meteor-bundle-runner": "^1.6.5",
     "@steedos/objectql": "^1.6.4",
-    "steedos-server": "^1.6.4"
+    "steedos-server": "^1.6.5"
   }
 }

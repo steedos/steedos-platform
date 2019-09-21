@@ -1,6 +1,6 @@
 {
   "name": "@steedos/react-components",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "private": true,
   "dependencies": {
     "@devexpress/dx-react-core": "^2.0.4",

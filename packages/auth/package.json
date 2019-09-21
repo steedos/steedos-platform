@@ -1,7 +1,7 @@
 {
   "name": "@steedos/auth",
   "private": false,
-  "version": "1.6.4",
+  "version": "1.6.5",
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
