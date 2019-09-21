@@ -37,7 +37,8 @@ const FIELDTYPES = [
     "function Object() { [native code] }",
     "function String() { [native code] }",
     "code",
-    "Object"
+    "Object",
+    "autonumber"
 ]
 
 abstract class SteedosFieldProperties{
@@ -303,6 +304,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 break;
             case 'Object':
                 this._fieldDBType = SteedosFieldDBType.json
+                break;
+            case 'autonumber':
+                this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             default:
                 throw new Error(`${this._object.name}.${this.name} invalid field type ${this.type}`)
