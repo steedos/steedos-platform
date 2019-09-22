@@ -1,14 +1,14 @@
 import * as Odata from 'ts-odata-client'
+import utils from '../utils'
 
 export async function query(service: string, options: any = {pageSize: 10, currentPage: 0}){
     const objectName = options.objectName;
     let {currentPage, pageSize, $select} = options
     let skip = currentPage * pageSize
 
-    //TODO 处理spaceId，authToken，userId值
-    let spaceId = '51ae9b1a8e296a29c9000001';
-    let authToken = 'qeY7uk7tiifhDyElCDVKHEKrJndZJ5N1VCF6KZQYgkg';
-    let userId = '51a842c87046900538000001'
+    let spaceId = utils.getCookie("X-Space-Id");
+    let authToken = utils.getCookie("X-Auth-Token");
+    let userId = utils.getCookie("X-User-Id")
     
     const endpoint = `${service}/api/odata/v4/${spaceId}/${objectName}`;
     const requestInit = ()=>{
