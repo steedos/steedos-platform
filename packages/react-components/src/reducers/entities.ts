@@ -1,5 +1,5 @@
 
-import { DXGRID_STATE_CHANGE_ACTION, loadEntitiesData } from '../actions/views/dx_grid'
+import { DXGRID_STATE_CHANGE_ACTION } from '../actions/views/dx_grid'
 import { TREE_STATE_CHANGE_ACTION } from '../actions/views/tree'
 import TreeReducer from './views/tree'
 import DXGridReducer from './views/dx_grid'

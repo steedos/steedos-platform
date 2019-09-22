@@ -1,19 +1,18 @@
 import { combineReducers } from 'redux'
 
 import entitiesReducer from './entities'
+import settingsReducer from './settings'
 import {TREE_STATE_CHANGE_ACTION} from '../actions/views/tree'
-import selectUsersReducre from './views/select_users'
 
 const combinedReducer = combineReducers({
-    entities: entitiesReducer
+    entities: entitiesReducer,
+    settings: settingsReducer
 })
 
 function crossSliceReducer(state: any, action: any) {
+    console.log('state', state)
     if (action.type === TREE_STATE_CHANGE_ACTION) {
         switch (action.partialStateName) {
-            case 'onClick': {
-                return selectUsersReducre(state, action)
-            }
             default:
                 return state
         }

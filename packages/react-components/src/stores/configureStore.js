@@ -6,14 +6,10 @@ const initialStore = {
     entities: {}
 }
 
-function configureStore(rootReducer, initialStore) {
+export default function configureStore(preloadedState) {
     return createStore(
         rootReducer,
-        initialStore,
+        Object.assign({}, initialStore, preloadedState),
         applyMiddleware(thunkMiddleware)
     )
 }
-
-const store = configureStore(rootReducer, initialStore);
-
-export default store;

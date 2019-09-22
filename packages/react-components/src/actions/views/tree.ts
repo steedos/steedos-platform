@@ -1,5 +1,5 @@
-import * as DataSource from '../../datasource'
-
+import { loadEntitiesDataRequest } from '../data_request'
+import states from '../../states';
 export const TREE_STATE_CHANGE_ACTION = 'TREE_STATE_CHANGE';
 
 export const createGridAction = (partialStateName: any, partialStateValue: any, objectName: string) => ({
@@ -11,24 +11,8 @@ export const createGridAction = (partialStateName: any, partialStateValue: any, 
 
 
 export function loadEntitiesData(options: any) {
-    return function (dispatch: any) {
-        return loadData(options).then(
-            (sauce) => dispatch(loadDataSauce(sauce, options.objectName)),
-            (error) => dispatch(loadDataError(error, options.objectName)),
-        );
+    return function (dispatch: any, getState: any) {
+        const service = states.getDataServices(getState())
+        return loadEntitiesDataRequest(dispatch, TREE_STATE_CHANGE_ACTION, service, options)
     };
-}
-
-async function loadData(options: any) {
-    return await DataSource.query(options)
-}
-
-function loadDataSauce(results: any, objectName: string) {
-    let records = results.value
-    let totalCount = results["@odata.count"] || 0
-    return createGridAction('loadDataSauce', {records, totalCount}, objectName)
-}
-
-function loadDataError(error: any, objectName: string) {
-    return createGridAction('loadDataError', {error: error}, objectName)
 }

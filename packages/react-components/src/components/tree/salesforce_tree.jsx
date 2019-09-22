@@ -26,7 +26,8 @@ class SFTree extends React.Component {
 		rootNodes: PropTypes.array.isRequired,
 		$select: PropTypes.array.isRequired,
 		getNodes: PropTypes.func.isRequired,
-		id: PropTypes.string
+		id: PropTypes.string,
+		onClickFunc: PropTypes.func.isRequired
     }
 
 	componentDidMount() {

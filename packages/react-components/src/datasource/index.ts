@@ -1,15 +1,21 @@
 import * as Odata from 'ts-odata-client'
 
-export async function query(options: any = {pageSize: 10, currentPage: 0}){
+export async function query(service: string, options: any = {pageSize: 10, currentPage: 0}){
     const objectName = options.objectName;
     let {currentPage, pageSize, $select} = options
     let skip = currentPage * pageSize
-    const endpoint = `http://192.168.3.2:5000/api/odata/v4/51ae9b1a8e296a29c9000001/${objectName}`;
+
+    //TODO 处理spaceId，authToken，userId值
+    let spaceId = '51ae9b1a8e296a29c9000001';
+    let authToken = 'qeY7uk7tiifhDyElCDVKHEKrJndZJ5N1VCF6KZQYgkg';
+    let userId = '51a842c87046900538000001'
+    
+    const endpoint = `${service}/api/odata/v4/${spaceId}/${objectName}`;
     const requestInit = ()=>{
         return {
             headers: {
-                'X-Auth-Token': 'qeY7uk7tiifhDyElCDVKHEKrJndZJ5N1VCF6KZQYgkg',
-                'X-User-Id': '51a842c87046900538000001'
+                'X-Auth-Token': authToken,
+                'X-User-Id': userId
             }
         }
     }

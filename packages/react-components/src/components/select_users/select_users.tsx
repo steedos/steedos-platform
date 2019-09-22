@@ -2,6 +2,7 @@ import * as React from 'react';
 import DXGrid from '../../components/dx_grid'
 import OrganizationsTree from '../../components/organizations'
 import PropTypes from 'prop-types';
+import { createGridAction } from '../../actions/views/dx_grid';
 
 class SelectUsers extends React.Component {
     static defaultProps = {
@@ -26,11 +27,22 @@ class SelectUsers extends React.Component {
         ]
         let getRowId = (row: any) => row[(this.props as any).valueField]
 
+        let onClick = function(event: any, data: any){
+            return function(dispatch: any, getState: any){
+                dispatch(createGridAction("filters", [{ columnName: "organizations", value: data.node.id, operation: "equals" }], "space_users"))
+                dispatch({
+                    type: 'TREE_STATE_CHANGE',
+                    partialStateName: 'onClick',
+                    partialStateValue: data,
+                    objectName: 'organizations'
+                })
+            }
+        }
         //Tree props
         let { rootNodes } = this.props as any
         return (
             <div className="slds-grid">
-                <div className="left"><OrganizationsTree rootNodes={rootNodes}/></div>
+                <div className="left"><OrganizationsTree rootNodes={rootNodes} onClickFunc={onClick}/></div>
                 <div className="right"><DXGrid objectName='space_users' columns={userListColumns} getRowId={getRowId} /></div>
             </div>
         )

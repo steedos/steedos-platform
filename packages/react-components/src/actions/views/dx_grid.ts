@@ -1,17 +1,15 @@
-import * as DataSource from '../../datasource'
-import { getEntityState } from '../../states/entitys';
+import states from '../../states';
+import { loadEntitiesDataRequest } from '../data_request'
 
 export const DXGRID_STATE_CHANGE_ACTION = 'DXGRID_STATE_CHANGE';
 
 export function createGridAction(partialStateName: any, partialStateValue: any, objectName: string) {
     if(["currentPage", "pageSize", "filters"].includes(partialStateName)){
         return function(dispatch: any, getState: any){
-            let entityState = getEntityState(getState(), objectName);
+            let entityState = states.getEntityState(getState(), objectName);
+            const service = states.getDataServices(getState())
             let options: any = Object.assign({}, entityState, {[partialStateName]: partialStateValue})
-            loadData(options).then(
-                (sauce) => dispatch(loadDataSauce(sauce, options.objectName)),
-                (error) => dispatch(loadDataError(error, options.objectName)),
-            );
+            loadEntitiesDataRequest(dispatch, DXGRID_STATE_CHANGE_ACTION, service, options)
             dispatch({
                 type: DXGRID_STATE_CHANGE_ACTION,
                 partialStateName,
@@ -30,24 +28,8 @@ export function createGridAction(partialStateName: any, partialStateValue: any, 
 } 
 
 export function loadEntitiesData(options: any) {
-    return function (dispatch: any) {
-        return loadData(options).then(
-            (sauce) => dispatch(loadDataSauce(sauce, options.objectName)),
-            (error) => dispatch(loadDataError(error, options.objectName)),
-        );
+    return function (dispatch: any, getState: any) {
+        const service = states.getDataServices(getState())
+        return loadEntitiesDataRequest(dispatch, DXGRID_STATE_CHANGE_ACTION, service, options)
     };
-}
-
-async function loadData(options: any) {
-    return await DataSource.query(options)
-}
-
-function loadDataSauce(results: any, objectName: string) {
-    let records = results.value
-    let totalCount = results["@odata.count"] || 0
-    return createGridAction('loadDataSauce', {records, totalCount}, objectName)
-}
-
-function loadDataError(error: any, objectName: string) {
-    return createGridAction('loadDataError', {error: error}, objectName)
 }

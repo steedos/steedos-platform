@@ -48,7 +48,6 @@ function reducer(state: any = {}, action: any) {
             default:
                 break;
         }
-        console.log('tree reducer', Object.assign({}, state, { [action.partialStateName]: action.partialStateValue }));
         return Object.assign({}, state, { [action.partialStateName]: action.partialStateValue });
 
     }
