@@ -12,7 +12,7 @@ fields:
     reference_to: users
     required: true
   token: 
-    label: 密钥
+    label: Token
     type: text
     required: true
   userAgent: 
@@ -32,9 +32,9 @@ list_views:
   all:
     label: 所有
     columns:
-      - name
       - userId
       - ip
+      - userAgent
       - connected_app_id
       - modified
     sort: [["modified", "desc"]]
@@ -49,9 +49,9 @@ permission_set:
     modifyCompanyRecords: false
     viewCompanyRecords: true
   admin:
-    allowCreate: true
-    allowDelete: true
-    allowEdit: true
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
     allowRead: true
-    modifyAllRecords: true
+    modifyAllRecords: false
     viewAllRecords: true
