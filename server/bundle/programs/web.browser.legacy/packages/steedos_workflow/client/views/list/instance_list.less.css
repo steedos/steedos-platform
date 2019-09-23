@@ -245,3 +245,21 @@
 .instance-list-wrapper .slds-page-header--object-home .slds-button {
   cursor: pointer;
 }
+.instance-list-wrapper .instance-list table.dataTable thead .sorting_asc:after {
+  font: 14px/1 DXIcons;
+  content: "\f051";
+  opacity: 0.6;
+  bottom: 10px;
+}
+.instance-list-wrapper .instance-list table.dataTable thead .sorting_desc:after {
+  font: 14px/1 DXIcons;
+  content: "\f052";
+  opacity: 0.6;
+  bottom: 10px;
+}
+.instance-list-wrapper .instance-list table.dataTable thead .sorting:after {
+  font: 14px/1 DXIcons;
+  content: "\f055";
+  opacity: 0;
+  bottom: 10px;
+}

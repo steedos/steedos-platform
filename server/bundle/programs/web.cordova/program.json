@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "7ca72e4052838e439cf2e4e56a7bf8c8a0e266cc.js",
+      "path": "81f49faa1092cda7e765f25966a1098061c629b3.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/7ca72e4052838e439cf2e4e56a7bf8c8a0e266cc.js?meteor_js_resource=true",
-      "size": 10007908,
-      "hash": "7ca72e4052838e439cf2e4e56a7bf8c8a0e266cc",
-      "sri": "oLuVm4AiHqrfOAWmqdd7oIpVKVspREtyOIzwDgT+aWokeJRjUw14YrH1UQ91Sha2OlVpDWPzM8RCmlthGy7lzw=="
+      "url": "/__cordova/81f49faa1092cda7e765f25966a1098061c629b3.js?meteor_js_resource=true",
+      "size": 10006254,
+      "hash": "81f49faa1092cda7e765f25966a1098061c629b3",
+      "sri": "Vc64OgmwOb5LnckR2tXafS5xkGa/rOvRrj+ug8oiM8eU4EBsdU77zpncx2SPXT76xtTSnzC+9N0WsRS44zuhWg=="
     },
     {
-      "path": "7ca72e4052838e439cf2e4e56a7bf8c8a0e266cc.stats.json",
+      "path": "81f49faa1092cda7e765f25966a1098061c629b3.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/7ca72e4052838e439cf2e4e56a7bf8c8a0e266cc.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/81f49faa1092cda7e765f25966a1098061c629b3.stats.json?meteor_js_resource=true",
       "size": 144610,
-      "hash": "8465220e7931c766febe8f4504b6c6e211eb06ea",
-      "sri": "5AAUg05I8XBYPvRk8//yufSJxz2djUS3I1XvU/cQSchfJyE/dvy+THjM6V0UT+A3OfO/CbBjaLKVNL3x0pu+qA=="
+      "hash": "3e3eda5fd912c34fd22a0aa657133c6f19f7338d",
+      "sri": "TvKWeBinrN7k8SRyIn9st/+tZaPK+e1IsQSjdZZWdVuxfNma9G4uG3aQYBK9JB6tSz9ZxUfAA5Nna9WggdvhkA=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -38,10 +38,10 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/aldeed_tabular/client/lib/dataTables.bootstrap.css?hash=96c4ad3dc0de267a4bb5a257f38151df192259bd",
-      "size": 4858,
-      "hash": "96c4ad3dc0de267a4bb5a257f38151df192259bd",
-      "sri": "bgCl582rnqytxEN5FoUxif7vFePlbeENrVE4QEKZxoFNbuCe5LlfrIM5niM00TxdVnjK0CLn+8028kQ/lpiLwA=="
+      "url": "/__cordova/packages/aldeed_tabular/client/lib/dataTables.bootstrap.css?hash=b07fc49e0b3fe81b63a3d8f797ebb094b3c15c8d",
+      "size": 4859,
+      "hash": "b07fc49e0b3fe81b63a3d8f797ebb094b3c15c8d",
+      "sri": "rJCBQsiaL0nZp7UMZH5tkt4m1/0rMOo0cJIFNeBqsYvWfAPvwrTbBD+yUUcVklJBwzhMfdA8x0QuK4RoFYepcA=="
     },
     {
       "path": "packages/aldeed_autoform/templates/bootstrap3/components/afArrayField/afArrayField.css",
@@ -1792,12 +1792,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_workflow/client/views/list/instance_list.less.css?hash=ee8463a08e6ec74628a6e734ab7ebd3c9713e46d",
+      "url": "/__cordova/packages/steedos_workflow/client/views/list/instance_list.less.css?hash=6a536088f0d84ea671f4f76da3a379e2fff1c513",
       "sourceMap": "packages/steedos_workflow/client/views/list/instance_list.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/views/list/ee8463a08e6ec74628a6e734ab7ebd3c9713e46d.map",
-      "size": 5589,
-      "hash": "ee8463a08e6ec74628a6e734ab7ebd3c9713e46d",
-      "sri": "V3MiRudKpUinW3OHLseCYwOSq6jX2l4dCBeJqJgz2fAtEJ++XaDnu8wbshjKV4alNtJpFwzkh74Ddc2S50RzTg=="
+      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/views/list/6a536088f0d84ea671f4f76da3a379e2fff1c513.map",
+      "size": 6061,
+      "hash": "6a536088f0d84ea671f4f76da3a379e2fff1c513",
+      "sri": "pI/g11OFFvJilCqUY8Cl+6fOWGiZWBelOuMY0Kxdyqw/XCTX0FOktsQ3UCQLizcMcV6Sl6daxc4EdnGiIz/Wlw=="
     },
     {
       "path": "packages/steedos_workflow/client/views/menu.less.css",
