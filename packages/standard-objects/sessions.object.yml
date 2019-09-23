@@ -16,8 +16,10 @@ fields:
     type: text
     required: true
   userAgent: 
+    label: 用户代理
     type: text
   ip: 
+    label: IP地址
     type: text
   valid:
     label: 有效
@@ -28,6 +30,10 @@ fields:
     label: 连接的应用程序
     type: lookup
     reference_to: connected_apps
+  modified:
+    label: 最近登录时间
+  created:
+    label: 首次登录时间
 list_views:
   all:
     label: 所有
