@@ -1,3 +1,7 @@
+1.6.4-patch.1 / 2019-09-16
+===================
+
+  * jsreport-core等jsreport内核包版本固定住，以防止高版本报错Cannot find module 'handlebars'
 1.5.0-beta.0 / 2019-08-30
 
   * 把所属单位表 company 从 organizations 中独立出来 #124
