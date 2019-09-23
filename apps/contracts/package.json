@@ -16,7 +16,7 @@
   },
   "author": "Jack Zhuang",
   "devDependencies": {
-    "@steedos/accounts": "^1.6.4",
+    "@steedos/accounts": "^1.6.5-patch.5",
     "@steedos/auth": "^1.6.5",
     "@steedos/core": "^1.6.5",
     "@steedos/filters": "^1.6.5",
@@ -35,8 +35,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632",
-  "dependencies": {
-    "@steedos/accounts": "^1.6.5-patch.5"
-  }
+  "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632"
 }

@@ -2530,10 +2530,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.6.4":
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.5.tgz#068a9e5e91091621af1d288090d2019f7a391132"
-  integrity sha512-CQmilR1Dv/62P+CIpawwyI04hAArGUYvqK/ZKIg0Dkb92+uh99aneCZx8CfD41pdSwq5WE/MEXAXG+WQ+PK87g==
+"@steedos/accounts@^1.6.5-patch.5":
+  version "1.6.5-patch.5"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.5-patch.5.tgz#6634ad404d25cc53603324730435650778358151"
+  integrity sha512-vuhiIDOQQnNhr9q9s4oSoyEyrrm+F+0RbSPQVo5+imEB25yWJDSyry3KyhBxpryRL0dcXyVZj96G0vsE2RxiOA==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
