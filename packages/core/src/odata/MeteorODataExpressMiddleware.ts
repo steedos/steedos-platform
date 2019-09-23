@@ -14,12 +14,12 @@ interface Request extends core.Request {
 const getObjectList = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = req.user.userId;
+        let userId = userSession.userId;
         let urlParams = req.params;
         let queryParams = req.query;
 
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -112,11 +112,11 @@ const getObjectList = async function (req: Request, res: Response) {
 const getObjectRecent = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = req.user.userId;
+        let userId = userSession.userId;
         let urlParams = req.params;
         let queryParams = req.query;
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -212,11 +212,11 @@ const getObjectRecent = async function (req: Request, res: Response) {
 const createObjectData = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        // let userId = req.user.userId;
+        // let userId = userSession.userId;
         let urlParams = req.params;
         let bodyParams = req.body;
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -251,11 +251,11 @@ const createObjectData = async function (req: Request, res: Response) {
 
 const getObjectData = async function (req: Request, res: Response) {
     let userSession = req.user;
-    let userId = req.user.userId;
+    let userId = userSession.userId;
     let urlParams = req.params;
     let queryParams = req.query;
     let key = urlParams.objectName;
-    let spaceId = urlParams.spaceId;
+    let spaceId = userSession.spaceId;
     let recordId = urlParams._id;
     let setErrorMessage = getODataManager().setErrorMessage;
     if (key.indexOf("(") > -1) {
@@ -395,11 +395,11 @@ const getObjectData = async function (req: Request, res: Response) {
 const updateObjectData = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = req.user.userId;
+        let userId = userSession.userId;
         let urlParams = req.params;
         let bodyParams = req.body;
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let recordId = urlParams._id;
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -450,10 +450,10 @@ const updateObjectData = async function (req: Request, res: Response) {
 const deleteObjectData = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = req.user.userId;
+        let userId = userSession.userId;
         let urlParams = req.params;
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let recordId = urlParams._id;
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -498,11 +498,11 @@ const deleteObjectData = async function (req: Request, res: Response) {
 const excuteObjectMethod = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = req.user.userId;
+        let userId = userSession.userId;
         let urlParams = req.params;
         let bodyParams = req.body;
         let key = urlParams.objectName;
-        let spaceId = urlParams.spaceId;
+        let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
