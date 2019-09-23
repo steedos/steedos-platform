@@ -13,5 +13,5 @@ export function getCreator(): CreatorManager{
 
 export { default as ODataRouter } from './odata/ODataRouter'
 export { default as MeteorODataRouter } from './odata/MeteorODataRouter'
-export { default as MeteorODataAPIV4Router } from './odata/MeteorODataRouter'
+export { default as MeteorODataAPIV4Router } from './odata/MeteorODataAPIV4Router'
 export {init} from './init'
