@@ -17,9 +17,15 @@
         "newLine": "LF",
         "lib": [
             "es2017"
-        ]
+        ],
+        "skipLibCheck": true,
+        "esModuleInterop": true,
     },
     "include": [
         "./src"
+    ],
+    "exclude": [
+      "**/node_modules",
+      "**/*.spec.ts"
     ]
 }
