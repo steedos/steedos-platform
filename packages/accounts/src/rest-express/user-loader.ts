@@ -17,10 +17,12 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   if (!isEmpty(accessToken)) {
     try {
       (req as any).authToken = accessToken;
-      const user = await accountsServer.resumeSession(accessToken);
-      (user as any).id = (user as any)._id;
-      (user as any).userId = (user as any)._id;
-      (user as any).email = user.emails[0].address;
+      const user: any = await accountsServer.resumeSession(accessToken);
+      user.id = user._id;
+      user.userId = user._id;
+      if(user.emails && user.emails.length > 0){
+        user.email = user.emails[0].address;
+      }
       (req as any).user = user;
       (req as any).userId = user.id;
       const spaces = [];

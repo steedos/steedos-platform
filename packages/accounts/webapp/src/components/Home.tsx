@@ -76,7 +76,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
         <FormattedMessage
             id='accounts.welcome'
             defaultMessage='Welcome' 
-        /> {user.emails[0].address}
+        /> {user.email || user.name}
       </h4>
       {/* 
       <Typography gutterBottom>You are logged in</Typography>
