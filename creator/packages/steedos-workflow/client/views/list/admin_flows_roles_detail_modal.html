@@ -1,0 +1,45 @@
+<template name="admin_flows_roles_detail_modal">
+	<div class="modal fade admin-flows-roles-detail-modal" id="adminFlowDetailRoles_modal" role="dialog" aria-labelledby="adminFlowDetailRoles_modal_label" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="">
+						{{_ "flow_positions"}}
+					</h4>
+				</div>
+
+				<div class="modal-body modal-zoom panel panel-default admin-position-content">
+					<!-- {{#afModal class="btn btn-primary flows-roles flows-roles-edit hidden" collection="db.flow_positions"  operation="update" dialogClass="modal-lg modal-body-zoom modal-flows-roles-edit" buttonContent=updateButtonContent}}
+						{{_ "Edit"}}
+					{{/afModal}} -->
+					{{#autoForm id="flowPositions" collection="db.flow_positions" type="normal" doc=doc disabled=false omitFields="role"}}
+						{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+					{{/autoForm}}
+				</div>
+
+				<div class="modal-footer">
+					{{#if isAdd}}
+						<div class="pull-right">
+						<button type="button" class="btn btn-default add-positions">
+								{{_ "Add"}}
+							</button>
+						</div>
+					{{else}}
+						<div class="pull-left">
+							<button type="button" class="btn btn-danger remove-positions">
+								{{_ "Delete"}}
+							</button>
+						</div>
+						<div class="pull-right">
+							<button type="button" class="btn btn-default save-positions">
+								{{_ "OK"}}
+							</button>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

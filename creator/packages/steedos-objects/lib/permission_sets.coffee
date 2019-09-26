@@ -18,7 +18,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 	if record
 		isOwner = record.owner == userId || record.owner?._id == userId
 		if Meteor.isClient
-			user_company_ids = Session.get("user_company_ids")
+			user_company_ids = Steedos.getUserCompanyIds()
 		else
 			user_company_ids = Creator.getUserCompanyIds(userId, spaceId)
 		record_company_id = record?.company_id

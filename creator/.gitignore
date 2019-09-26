@@ -21,3 +21,4 @@ my_start.bat
 yarn-error.log
 .dist/yarn.lock
 .plugins
+package-lock.json

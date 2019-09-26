@@ -63,10 +63,8 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 	if !oitem.columns
 		oitem.columns = ["name"]
 	if !oitem.filter_scope
-		if Steedos.isSpaceAdmin()
-			oitem.filter_scope = "space"
-		else
-			oitem.filter_scope = "mine"
+		# listview视图的filter_scope默认值改为space #131
+		oitem.filter_scope = "space"
 
 	if !_.has(oitem, "_id")
 		oitem._id = list_view_name

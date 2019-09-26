@@ -1,0 +1,54 @@
+<template name="tableau_introduction_modal">
+    <div class="modal fade ins-opinion-modal" id="tableau_introduction_modal" role="dialog" aria-labelledby="tableau_introduction_modal_label">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="subcalendar_modal_label">
+                        {{_ "steedos_tableau_function_introduction"}}
+                    </h4>
+                </div>
+                <div class="modal-body modal-zoom modal-large">
+                    <div class="weui-media-box weui-media-box_text tableau_introduction">
+                        <h5>{{_ "steedos_tableau_simple_introduction"}}</h5>
+                    </div>
+                    <div class="weui-panel weui-panel_access tableau_using">
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_text">
+                                <h4 class="weui-media-box__title">{{_ "steedos_tableau_introduction"}}</h4>
+                                <p class="weui-media-box__desc">
+                                    {{_ "steedos_tableau_function"}}<a href="https://www.tableau.com/zh-cn" target="_blank">Tableau</a> {{_ "steedos_tableau_web_connect"}}
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    {{_ "steedos_tableau_statistics_analysis"}}
+                                </p>
+                                <h4 class="weui-media-box__title">{{_ "steedos_tableau_use"}}</h4>
+                                <p class="weui-media-box__desc">
+                                    1.<a href="https://public.tableau.com/zh-cn/s/download" target="_blank">{{_ "steedos_tableau_download"}}</a>
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    2.{{_ "steedos_tableau_button_copy"}}<b>{{_ "steedos_tableau_copy_Link"}}</b>{{_ "steedos_tableau_instance_link"}}
+                                </p>
+                                <p class="weui-media-box__desc">
+                                    3.{{_ "steedos_tableau_use_step"}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-left">
+                        <button type="button" id="copyTableauUrl" class="btn btn-primary" data-clipboard-text="{{tableauUrl}}">
+                            {{_ "steedos_tableau_copy_link"}}
+                        </button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default btn-refuse" data-dismiss="modal">
+                            {{_ "tableau_introduction_modal_close"}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

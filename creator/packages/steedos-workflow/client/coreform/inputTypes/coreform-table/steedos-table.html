@@ -1,0 +1,25 @@
+<template name="afTable">
+    <div class="panel panel-default steedos-table">
+        <div class="panel-body">
+          <div class="panel-heading" >
+            <label class='control-label'>{{afFieldLabelText name=this.atts.name}}</label>
+            
+            <span class="description">{{{this.atts.description}}}</span>
+          </div>
+
+          <div class="panel-content">
+              <table type='table' class="table table-bordered table-condensed autoform-table" data-label="{{afFieldLabelText name=this.atts.name}}" {{this.atts}} id="{{this.name}}Table" data-schema-key="{{this.name}}">
+                  <thead id="{{this.name}}Thead" name="{{this.name}}Thead">
+
+                  </thead>
+                  <tbody id="{{this.name}}Tbody" name="{{this.name}}Tbody">
+                    
+                  </tbody>
+                  <tfoot id="{{this.name}}Tfoot" name="{{this.name}}Tfoot">
+                    
+                  </tfoot>
+              </table>
+          </div>
+        </div>
+      </div>
+</template>

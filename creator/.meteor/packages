@@ -30,6 +30,7 @@ service-configuration@1.0.11
 session@1.1.7
 shell-server@0.3.1
 spacebars
+spacebars-compiler@1.1.3
 standard-minifier-js@2.3.1
 tracker@1.1.3
 
@@ -45,7 +46,7 @@ fourseven:scss
 tap:i18n
 
 raix:push
-steedos:cors
+# steedos:cors must disabled
 aldeed:tabular
 aldeed:collection2
 aldeed:simple-schema
@@ -57,6 +58,7 @@ steedos:autoform-bs-minicolors
 steedos:autoform-file
 steedos:autoform-lookup
 steedos:autoform-tags
+perak:markdown
 q42:autoform-markdown
 steedos:markdown@0.0.1
 steedos:autoform-dx-date-box
@@ -145,8 +147,8 @@ steedos:mailqueue
 
 
 # 档案系统相关
-steedos:qhd-archive-sync
-steedos:qhd-archive-xml
+# steedos:qhd-archive-sync
+# steedos:qhd-archive-xml
 
 # steedos:vip-card
 # steedos:vip-post
@@ -192,3 +194,11 @@ steedos:app-workflow
 # steedos:oauth2-messenger
 
 steedos:object-webhooks-queue
+
+steedos:workflow
+steedos:workflow-chart
+steedos:api
+keepnox:perfect-scrollbar
+jeremy:selectize
+comerc:autoform-selectize
+steedos:slipjs

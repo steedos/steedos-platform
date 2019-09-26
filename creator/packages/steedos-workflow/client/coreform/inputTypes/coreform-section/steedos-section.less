@@ -1,0 +1,32 @@
+.section{
+	.control-label{
+		color: #333;
+		font-weight: bold;
+		font-size: 15px;
+	}
+}
+.instance{
+	&.instance-default{
+		.section{
+			&.callout.callout-default{
+				padding: 2px 0;
+				border: none;
+				background: #fff;
+				border-radius: 0px;
+				margin-top: 5px;
+				margin-bottom: -5px;
+			}
+			.control-label{
+				color: #795548;
+				font-weight: bold;
+				font-size: 16px;
+				width: 100%;
+				border-bottom: dashed 1px #d2d6de;
+				padding-bottom: 3px;
+			}
+			p{
+				color: #777;
+			}
+		}
+	}
+}

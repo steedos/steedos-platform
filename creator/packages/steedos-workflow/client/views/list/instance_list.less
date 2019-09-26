@@ -1,0 +1,348 @@
+@instance-priority-color-danger: red;
+@instance-priority-color-warning: purple;
+@instance-priority-color-muted: blue;
+
+.instance-list {
+	margin-top: 1px;
+	.datatable-instances {
+		border-right: none;
+	}
+
+	.dataTables_paginate {
+		float: right;
+		width: 65%;
+	}
+	.dataTables_length {
+		float: left;
+		width: 35%;
+	}
+	@media (max-width: 768px) {
+		.dataTables_paginate {
+			width: 100%;
+		}
+	}
+
+	& > div:nth-child(3) {
+		overflow-x: auto;
+	}
+
+	.dataTables_container {
+		position: relative;
+		.ps-container.ps-in-scrolling.ps-x > .ps-scrollbar-x-rail {
+			background: #fff;
+		}
+		.ps-container:hover > .ps-scrollbar-x-rail:hover {
+			background: #fff
+		}
+	}
+
+	.dataTables_wrapper tbody tr td {
+		position: relative;
+	}
+
+	.flow-name {
+		padding-left: 15px;
+		width: 69%;
+		color: #777;
+	}
+	.dataTables_wrapper {
+
+		thead {
+			th:first-child {
+				padding-left: 20px !important;
+			}
+
+			th {
+				white-space: nowrap;
+				min-width: 115px;
+			}
+
+			th:nth-child(3) {
+				min-width: 115px;
+			}
+
+		}
+
+	}
+
+	.color-priority {
+		color: blue;
+		display: none;
+		&.instance-name {
+			display: inline-block;
+		}
+		&.color-priority-danger {
+			color: @instance-priority-color-danger;
+			display: inline-block;
+		}
+		&.color-priority-warning {
+			color: @instance-priority-color-warning;
+			display: inline-block;
+		}
+		&.color-priority-muted {
+			color: @instance-priority-color-muted;
+			display: inline-block;
+		}
+	}
+
+	.step-current-state {
+		&.terminated {
+			color: gray;
+		}
+		&.approved {
+			color: green;
+		}
+		&.rejected {
+			color: red;
+		}
+	}
+
+	.instance-priority-bar {
+		position: absolute;
+		width: 20px;
+		left: 1px;
+		top: 22px;
+		bottom: 0px;
+		line-height: 35px;
+		text-align: center;
+		// .zoom-extra-large & {
+		// 	top: 20px;
+		// }
+		// .zoom-large & {
+		// 	top: 21px;
+		// }
+	}
+
+	.instance-name {
+		span {
+			color: #333;
+			display: inline-block;
+			float: right;
+			font-weight: normal;
+			margin-right: 10px;
+		}
+		.color-priority {
+			margin-left: 8px;
+		}
+	}
+	.selected .instance-name span {
+		color: #fff;
+	}
+	.selected .instance-modified {
+		color: #fff;
+	}
+	.selected .flow-name {
+		color: #fff;
+	}
+	.instance-modified {
+		color: #777;
+	}
+	.selected .step-current-state {
+		color: #fff;
+	}
+
+	.instance-read-bar {
+		position: absolute;
+		width: 20px;
+		left: 1px;
+		top: 4px;
+		bottom: 0px;
+		line-height: 35px;
+		text-align: center;
+		// .zoom-extra-large & {
+		// 	top: 0px;
+		// }
+		// .zoom-large & {
+		// 	top: 1px;
+		// }
+	}
+
+	.unread {
+		color: #1f95ec;
+		position: absolute;
+		top: 9px;
+		left: 5px;
+		font-size: 90%;
+	}
+
+	.instance-step-current-name {
+		color: #999;
+		font-weight: 400;
+		padding-left: 5px;
+		display: initial;
+	}
+
+	.selected .instance-step-current-name {
+		color: #fff;
+	}
+
+	.toolbar {
+		min-height: 51px;
+	}
+
+	.search-tip-bar {
+		border-bottom: 1px solid #eee;
+		padding: 10px 20px;
+	}
+
+	[aria-label='标题'], [aria-label='Title'] {
+		min-width: 400px !important;
+	}
+
+
+	th.flow-filter{
+		position: relative;
+		padding-right: 30px;
+		cursor: pointer;
+	}
+
+	th.flow-filter:after{
+		font-family: "Ionicons";
+		content: "\f31b";
+		position: absolute;
+		right: 0px;
+		position: absolute;
+		bottom: 8px;
+		right: 8px;
+		display: block;
+		opacity: 0.5;
+	}
+}
+
+.batch_instances_view {
+	position: absolute;
+	width: 100%;
+	transform: translate(0, 0);
+	bottom: 120px;
+	right: 20px;
+
+	button {
+		z-index: 999;
+		position: fixed;
+		right: 20px;
+		box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+		border: solid 1px #08C;
+		outline: none!important;
+		width: 57px;
+		height: 57px;
+		border-radius: 57px;
+		font-size: 16px;
+	}
+}
+
+.instance-list-wrapper{
+	.tabular-filter-by-flow{
+		margin-right: 5px;
+		.caret{
+			margin-left: 5px;
+		}
+	}
+}
+
+.instance-list-wrapper .search-tip-bar {
+	.label {
+		margin-right: 5px;
+		border-radius: 0px;
+		font-size: 12px;
+	}
+
+	.breadcrumb {
+		display: inline-block;
+		margin-bottom: 0px;
+		padding: 0px;
+		background-color: #fff;
+	}
+}
+
+#instance_more_search_modal {
+	.submit-date-icon {
+		border-right: none;
+	}
+	.submit_date_end {
+		padding-top: 5px;
+	}
+}
+
+.instance-priority-danger {
+	.td-field-文件标题 {
+		.form-group {
+			color: @instance-priority-color-danger !important;
+		}
+	}
+
+	input[name="文件标题"] {
+		color: @instance-priority-color-danger !important;
+	}
+}
+
+.instance-priority-warning {
+	.td-field-文件标题 {
+		.form-group {
+			color: @instance-priority-color-warning !important;
+		}
+	}
+
+	input[name="文件标题"] {
+		color: @instance-priority-color-warning !important;
+	}
+}
+
+.instance-priority-muted {
+	.td-field-文件标题 {
+		.form-group {
+			color: @instance-priority-color-muted !important;
+		}
+	}
+
+	input[name="文件标题"] {
+		color: @instance-priority-color-muted !important;
+	}
+}
+
+.instance-list-wrapper{
+	.slds-page-header--object-home {
+		border-radius: 0px;
+		border-left: 0px;
+		border-right: 0px;
+		height: 100px;
+		@media (max-width: 768px) {
+			height: 65px;
+		}
+		.slds-media__figure {
+			margin-top: -2px;
+		}
+		.dropdown-workflow-menu-by-flow {
+			width: 140%;
+			ul{
+				background: #fff!important;
+			}
+		}
+		.slds-button {
+			cursor: pointer;
+		}
+	}
+
+	// 用devexpress grid中的图标，dx-sort dx-sort-down sorting代替原来的sort图标
+	.instance-list {
+		table.dataTable thead .sorting_asc:after {
+			font: 14px/1 DXIcons;
+			content: "\f051";
+			opacity: 0.6;
+			bottom: 10px;
+		}
+
+		table.dataTable thead .sorting_desc:after {
+			font: 14px/1 DXIcons;
+			content: "\f052";
+			opacity: 0.6;
+			bottom: 10px;
+		}
+
+		table.dataTable thead .sorting:after {
+			font: 14px/1 DXIcons;
+			content: "\f055";
+			opacity: 0; //不显示未排序时图标
+			bottom: 10px;
+		}
+	}
+}

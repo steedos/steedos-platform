@@ -1,0 +1,11 @@
+<template name="printLayout">
+	{{#if subsReady}}
+		<div class="steedos workflow instance-print">
+			{{# AdminLTE skin="green" sidebarMini="true" }}
+				<div class="content-wrapper">
+					{{> Template.dynamic template=main}}
+				</div>
+			{{/ AdminLTE}}
+		</div>
+	{{/if}}
+</template>

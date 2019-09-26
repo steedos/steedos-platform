@@ -1,0 +1,53 @@
+<template name="admin_flow_positions">
+
+	<section class="admin instance-number-rules">
+		<div class="navigation-bar">
+
+			<a class="btn btn-default" href="/admin">
+				<i class="ion ion-android-arrow-back"></i>
+			</a>
+
+			<span class="navigation-title">
+				{{_ "flow_positions"}}
+			</span>
+
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" id="create">{{_ "New"}}</button>
+			</div>
+		</div>
+		<div class="admin-content">
+			<div class="box-body" style="display: block;">
+				<div class="search-toolbar">
+					<div class="pull-right">
+						<div class="input-group">
+							<input type="text" name="flow-position-search-key" id="flow-position-search-key" class="form-control flow-position-search-key" placeholder="{{_ 'Search'}}...">
+							<span class="input-group-btn">
+								<button type="submit" name="flow-position-search-btn" id="flow-position-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+				{{> tabular table=TabularTables.flow_positions selector=selector class="table table-hover dataTable no-footer datatable-flow-positions"}}
+
+				{{#afModal class="btn btn-primary record-types-edit hidden" collection="db.flow_positions"  operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+					{{_ "Edit"}}
+				{{/afModal}}
+
+				{{#afModal class="btn btn-primary record-types-create hidden" collection="db.flow_positions"  operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+					{{_ "Create"}}
+				{{/afModal}}
+
+				{{#afModal class="btn btn-primary record-types-copy hidden" collection="db.flow_positions"  operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+					{{_ "Create"}}
+				{{/afModal}}
+
+				{{#afModal class="btn btn-danger record-types-remove hidden" collection="db.flow_positions" operation="remove" doc=_id buttonContent=removeButtonContent prompt=removePrompt }}
+					{{_ "Delete"}}
+				{{/afModal}}
+
+			</div>
+		</div>
+	</section>
+
+</template>

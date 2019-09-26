@@ -16,7 +16,7 @@ Package.onUse(function(api) {
     'aldeed:autoform@5.6.0',
   ], 'client');
 
-  api.addFiles('checkNpm.js', "server");
+  api.addFiles('checkNpm.js', "client");
   
   api.addFiles([
     'lib/client/autoform-tags.html',

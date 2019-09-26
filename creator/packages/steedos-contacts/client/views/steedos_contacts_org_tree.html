@@ -1,0 +1,19 @@
+<template name="steedos_contacts_org_tree">
+    <div class="navigation-bar">
+        <button type="button" class="btn btn-default contacts_back" id="contacts_back" title="返回"><i class="ion ion-android-arrow-back"></i></button>
+
+        {{#if isFromAdmin}}
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+        {{else}}
+            <button type="button" class="btn btn-default offcanvas" data-toggle="offcanvas">
+                <i class="fa fa-bars"></i>
+            </button>
+        {{/if}}
+        <span class="navigation-title">{{_ "contacts_organizations"}}</span>
+    </div>
+    <div class="contacts-tree">
+        <div id="steedos_contacts_org_tree"></div>
+    </div>
+</template>

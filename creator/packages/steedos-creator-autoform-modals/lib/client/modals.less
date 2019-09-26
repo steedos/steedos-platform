@@ -237,6 +237,14 @@
 			overflow: visible;
 		}
 	}
+	header.slds-modal__header {
+		.slds-button_neutral {
+			display: none;
+		}
+		.slds-button_brand {
+			display: none;
+		}
+	}
 }
 
 @media screen and (min-width: 648px){
@@ -271,9 +279,11 @@
 				}
 				.slds-button_neutral {
 					float: left;
+					display: block;
 				}
 				.slds-button_brand {
 					float: right;
+					display: block;
 				}
 			}
 			.slds-modal__content {

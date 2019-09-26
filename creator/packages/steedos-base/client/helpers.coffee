@@ -166,9 +166,9 @@ Steedos.Helpers =
 	coreformNumberToString: (number, locale)->
 		return Steedos.numberToString number, locale
 
-	selfCompanys: ()->
-		# 返回当前用户所属公司Id集合
-		company_ids = Session.get("user_company_ids")
+	selfCompanyOrganizationIds: ()->
+		# 返回当前用户所属公司的关联组织Id集合
+		company_ids = Steedos.getUserCompanyOrganizationIds()
 		return if company_ids?.length then company_ids else null
 
 _.extend Steedos, Steedos.Helpers
@@ -210,11 +210,7 @@ TemplateHelpers =
 		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
 
 	isMobile: ->
-
-		if window.DevExpress
-			return DevExpress.devices._currentDevice.phone
-		else
-			return $(window).width()<767
+		return $(window).width() < 767
 
 	isAndroidOrIOS: ->
 		return Steedos.isAndroidApp() || Steedos.isiOS()

@@ -1,0 +1,41 @@
+<!-- <template name="distribute_edit_flow_modal">
+	<div class="modal fade" id="distribute_edit_flow_modal">
+		<div class="modal-dialog modal-lg modal-body-zoom" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">
+						{{_ "Edit"}}:&nbsp;{{flow.name}}
+					</h4>
+				</div>
+
+				<div class="modal-body" style='overflow-y:auto'>
+					<div class="form-group">
+						<label for="distribute_edit_flow_select_users" class="control-label">{{_ 'distribute_edit_flow_select_users'}}</label>
+						{{>afSelectUser user_context}}
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label><input type="checkbox" id="distribute_to_self" checked="{{#if to_self}}checked{{/if}}">&nbsp;{{_ 'distribute_to_self'}}</label>
+						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" id="distribute_end_notification" checked="{{#if end_notification}}checked{{/if}}">&nbsp;{{_ 'distribute_end_notification'}}</label>
+						</div>
+					</div>
+					{{#each allow_distribute_steps}}
+						<div class="form-group">
+							<label class="control-label">{{name}}</label>
+							{{#autoForm id=(_id) schema=schema doc=(flows_doc distribute_optional_flows) type="update" autosave=false placeholder=(_ "distribute_edit_flow_select_flows")}}
+								{{> afFieldInput name="distribute_flows"  multiple=true }}
+							{{/autoForm}}
+						</div>
+					{{/each}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="distribute_edit_flow_modal_ok">{{_ "OK"}}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template> -->

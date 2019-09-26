@@ -1,0 +1,37 @@
+<template name="admin_categories">
+
+	<section class="admin categories">
+		<div class="navigation-bar">
+
+			<a class="btn btn-default" href="/admin">
+				<i class="ion ion-android-arrow-back"></i>
+			</a>
+
+			<span class="navigation-title">
+				{{_ "categories"}}
+			</span>
+		</div>
+		<div class="admin-content">
+			<div class="box-body" style="display: block;">
+				<div class="search-toolbar">
+					<div class="pull-right">
+						<div class="input-group">
+							<input type="text" name="categories-search-key" id="categories-search-key" class="form-control categories-search-key" placeholder="{{_ 'Search'}}...">
+							<span class="input-group-btn">
+								<button type="submit" name="categories-search-btn" id="categories-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+				{{> tabular table=TabularTables.Categories selector=selector class="table dataTable no-footer table-hover datatable-categories"}}
+
+				{{#afModal class="btn btn-primary record-types-edit hidden" collection="db.categories"  operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent}}
+					{{_ "Edit"}}
+				{{/afModal}}
+
+			</div>
+		</div>
+	</section>
+
+</template>

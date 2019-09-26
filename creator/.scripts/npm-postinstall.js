@@ -6,3 +6,9 @@ console.log("Running npm-postinstall.js");
 
 // fix DevExtreme的 formatISO8601函数没用使用utc时间
 execSync('cp -r .scripts/devextreme/* node_modules/devextreme/');
+execSync('rm -rf ./node_modules/crypto');
+
+if (process.platform == "darwin")
+    execSync('cp -r .scripts/bcrypt-57-darwin-x64/* node_modules/bcrypt/');
+else if (process.platform == "win32")
+    execSync('cp -r .scripts/bcrypt-57-win32-x64/* node_modules/bcrypt/');

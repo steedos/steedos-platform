@@ -1,0 +1,9 @@
+<template name="afFormGroup_plain">
+  <div class="{{#if afFieldIsInvalid name=this.name}}has-error{{/if}} {{afFormGroupClass}}" data-required={{required}} {{afFormGroupAtts}}>
+    {{#unless this.skipLabel}}
+    <label {{this.afFieldLabelAtts}}>{{#if this.labelText}}{{this.labelText}}{{else}}{{afFieldLabelText name=this.name}}{{/if}}</label>
+    {{/unless}}
+    {{> afFieldInput this.afFieldInputAtts}}
+    <span>{{{afFieldMessage name=this.name}}}</span>
+  </div>
+</template>

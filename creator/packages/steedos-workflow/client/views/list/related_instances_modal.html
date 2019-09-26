@@ -1,0 +1,38 @@
+<template name="related_instances_modal">
+    <div class="modal fade related_instances_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        {{_ "instance_related_instances_title"}}
+                    </h4>
+                </div>
+				{{#if isMobile}}
+					{{#autoForm id="related_instances" collection="db.instances" schema=schema doc=instances_doc type="update" autosave=false placeholder= (_ "instance_related_instances_placeholder")}}
+						<div class="modal-body modal-zoom" style='overflow-y:auto'>
+							{{> afFieldInput name="related_instances" multiple=true optionsMethodParams=instances_doc._id label = (_ "instance_related_instances")}}
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary btn-submit-related-instances">{{_ "OK"}}</button>
+							<button type="button" class="btn btn-default btn-data-dismiss" data-dismiss="modal">{{_ "Cancel"}}</button>
+						</div>
+					{{/autoForm}}
+				{{else}}
+					<div class="modal-body modal-zoom">
+						{{> related_instances_list}}
+					</div>
+
+					<div class="modal-footer">
+						<div class="pull-right">
+							<button type="button" class="btn btn-primary save-instances-related">{{_ "OK"}}({{seletec_length}})</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+						</div>
+					</div>
+				{{/if}}
+            </div>
+        </div>
+    </div>
+</template>

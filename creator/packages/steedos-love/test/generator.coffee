@@ -217,7 +217,7 @@ if Meteor.isDevelopment
 
 	Generator.space_users = (space_id, number, other_object)->
 		console.time('init_space_users')
-		main_org = Creator.getCollection('organizations').findOne({space: space_id, is_company: true, parent: null}, {fields: {_id: 1}})
+		main_org = Creator.getCollection('organizations').findOne({space: space_id, parent: null}, {fields: {_id: 1}})
 
 		if !main_org
 			throw new Error('未找到is_company为true的部门')

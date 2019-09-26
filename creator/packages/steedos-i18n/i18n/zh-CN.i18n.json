@@ -42,7 +42,7 @@
 	"password_invalid": "密码必须包含字母和数字，且不能少于8位",
 
 	"Steedos": "Steedos",
-	"Steedos Workflow": "审批中心",
+	"Steedos Workflow": "审批",
 	"Steedos Chat": "即时通讯",
 	"Steedos Drive": "云盘",
 	"Steedos Mail": "邮件",

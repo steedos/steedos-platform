@@ -1,0 +1,37 @@
+<template name="relocate_modal">
+  <div class="modal fade" id="relocate_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content ins-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLabel2">
+            {{_ "Instance Relocate Title"}}
+            <a class="btn btn-lg btn-link btn-help" id="relocate_help">
+              <i class="ion ion-ios-help-outline" title="{{_ "Help"}}"></i>
+            </a>
+          </h4>
+        </div>
+
+        <div class="modal-body modal-zoom">
+          {{#autoForm id='relocate' schema=fields doc=values }}
+            <p><span>{{_ "Instance Relocate CurStep"}}</span><label id="relocate_currentStepName">{{current_step_name}}</label></p>
+            <p><span>{{_ "Inbox Suggestion NextSteps Label"}}</span><select class="suggestion-control" id="relocate_steps">
+              <option></option>
+              {{#each relocate_steps}}
+                <option value="{{this._id}}" >{{this.name}}</option>
+              {{/each}}
+            </select></p>
+            <p id="relocate_users_p">
+            {{> afFormGroup name="relocate_users"}}
+            </p>
+            <textarea class="form-control" id="relocate_modal_text" placeholder={{_ "Instance Relocate Reason"}}></textarea>
+          {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="relocate_modal_ok">{{_ "OK"}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

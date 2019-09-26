@@ -1,0 +1,145 @@
+<template name="instance_suggestion">
+	{{#if show_toggle_button}}
+		{{!--
+		{{#if isMobile}}
+			<button type="utton" class="btn btn-primary btn-suggestion-toggle animated bounceInUp"><i class="ion ion-ios-compose-outline"></i></button>
+		{{else}}
+			<button type="utton" class="btn btn-primary btn-suggestion-toggle txt-suggestion-toggle animated bounceInUp">{{_ 'instance_sign'}}</button>
+		{{/if}}
+		--}}
+		<button type="utton" class="btn btn-primary btn-suggestion-toggle txt-suggestion-toggle animated bounceInUp">{{_ 'instance_sign'}}</button>
+
+	{{/if}}
+	{{#if show_suggestion}}
+		{{!-- chrome版本升级到 61.0.3163.79后fadeInUp等动画效果会造成一些样式BUG --}}
+		{{!-- 具体原因网上解释为：同时使用 background-color（16进制值） 、opacity（值小于1）、animation-fill-mode 会出现奇异现象，该问题已证实为 Chrome 自身 Bug。 --}}
+		{{!-- 比如弹出层modal与instance-suggestion同时显示时，会出现多出莫名视图 --}}
+		{{!-- 比如把弹出的instance-suggestion窗口关掉后，会把表单的部分内容(instance-suggestion窗口显示的时候挡住的部分)擦除掉造成表单部分内容不见了 --}}
+		{{!-- 所以这里专门去掉animated fadeInUp样式类，待以后chrome更高版本fix掉相关问题后再放开 --}}
+		{{!-- <div class="instance-suggestion well animated fadeInUp"> --}}
+		<div class="instance-suggestion well {{#if isMobile}}animated fadeInUp{{/if}}">
+			{{#if includes currentStep.step_type 'sign,counterSign,submit'}}
+				<div class="instance-suggestion-close"><button type="button" class="btn btn-transparent btn-remove"><span aria-hidden="true">×</span></button></div>
+			{{/if}}
+			<div class="box-body">
+
+				{{#if includes currentStep.step_type 'sign,counterSign,submit'}}
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group suggestion-radio-box">
+							{{#if isCC}}
+								{{#if (gt opinionFields.length 1)}}
+									<div class="cc-description-box">
+										<label>{{_ "instance_cc_title"}} ({{_ "from"}}{{ccFromUserName}})</label>
+										{{#if ccDescription.length}}
+											: {{ccDescription}}
+										{{/if}}
+									</div>
+									{{#each opinionFields}}
+										<label class="radio-inline">
+											<input type='radio' name='opinion_fields_code' value="{{code}}" id="opinion_fields_code" checked="{{#if _checked}}checked{{/if}}"/>{{name}}
+										</label>
+									{{/each}}
+								{{else}}
+									<div class="cc-description-box">
+										<label>{{cc_opinion_field_code}} ({{_ "from"}}{{ccFromUserName}})</label>
+										{{#if ccDescription.length}}
+											: {{ccDescription}}
+										{{/if}}
+									</div>
+								{{/if}}
+							{{else}}
+								<label>{{currentStep.name}}&nbsp;:&nbsp;&nbsp;</label>
+								{{#if includes currentStep.step_type 'sign,counterSign'}}
+									{{#if includes currentStep.step_type 'counterSign'}}
+										{{#unless hideCounterSignJudgeOptions}}
+											<label class="radio-inline">
+												<input type='radio' name='judge' value="approved" class='suggestion' checked="{{#if equals judge 'approved'}}checked{{/if}}" id="judge_approved"/>{{_ "instance_approve"}}
+											</label>
+											<label class="radio-inline">
+												<input type='radio' name='judge' value="rejected" class='suggestion' checked="{{#if equals judge 'rejected'}}checked{{/if}}"/>{{_ "instance_reject"}}
+											</label>
+											<label class="radio-inline">
+												<input type='radio' name='judge' value="readed" class='suggestion' checked="{{#if equals judge 'readed'}}checked{{/if}}"/>{{_ "instance_readed"}}
+											</label>
+										{{/unless}}
+									{{else}}
+										<label class="radio-inline">
+											<input type='radio' name='judge' value="approved" class='suggestion' checked="{{#if equals judge 'approved'}}checked{{/if}}" id="judge_approved"/>{{_ "instance_approve"}}
+										</label>
+										<label class="radio-inline">
+											<input type='radio' name='judge' value="rejected" class='suggestion' checked="{{#if equals judge 'rejected'}}checked{{/if}}"/>{{_ "instance_reject"}}
+										</label>
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							</div>
+						</div>
+					</div>
+					
+				{{/if}}
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<textarea name="suggestion" class="suggestion-control" id="suggestion" placeholder='{{_ "workflow_suggestion_placeholder"}}'>{{approve_suggestion}}</textarea>
+							{{#if isMobile}}
+								<button type="button" class="btn btn-default btn-transparent pull-right btn-mobile" id="instance_flow_opinions" title="{{_ 'instance_opinion_title'}}"><i class="ion ion-ios-list-outline"></i></button>
+							{{else}}
+								<button type="button" class="btn btn-default btn-transparent pull-right" id="instance_flow_opinions" title="{{_ 'instance_opinion_title'}}">{{{_ 'instance_opinion_btn'}}}</button>
+							{{/if}}
+
+							<span class="help-block"></span>
+						</div>
+					</div>
+				</div>
+				{{#if isCC}}
+				{{else}}
+					<div class="row" id='instance_next'>
+						<div class="col-md-12">
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon">{{_ "instance_next_step"}}</div>
+									<div class="instance-suggestion-next-steps">
+										{{#each next_step_options }}
+											{{#if gt next_step_options.length 1}}
+												<label {{disabled}} class="radio">
+													<input type="radio" name="instance_suggestion_next_step" value="{{id}}" {{step_selected}} {{disabled}} steptype={{type}}>{{text}}{{#if is_approved id}}<i class="ion ion-ios-paperplane-outline"></i>{{/if}}
+												</label>
+											{{else}}
+											   <label class="only-one-next-step">
+												   <input type="radio" name="instance_suggestion_next_step" value="{{id}}" {{step_selected}} {{disabled}} steptype={{type}}>{{text}}
+											   </label> 
+											{{/if}}
+										{{/each}}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group" id="nextStepUsers_div">
+								{{#if isReady}}
+									<div class="input-group">
+										<div class="input-group-addon">{{_ "instance_next_step_users"}}</div>
+										{{>afSelectUser next_user_context}}
+									</div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				{{/if}}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							{{#if enabled_submit}}
+								<button type="button" class="btn btn-primary" id="instance_submit" title="{{_ 'instance_submit'}}" >{{_ "instance_submit"}}</button>
+							{{/if}}
+							<button type="button" class="btn btn-default btn-remove">{{_ "cancel"}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+</template>

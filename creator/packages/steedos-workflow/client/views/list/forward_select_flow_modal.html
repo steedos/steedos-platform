@@ -1,0 +1,65 @@
+<template name="forward_select_flow_modal">
+    <div class="modal fade forward-select-flow-modal instance-{{action_type}}-modal" id="forward_select_flow_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        {{title}}
+                        <a class="btn btn-lg btn-link btn-help" id="forward_help">
+                            <i class="ion ion-ios-help-outline" title="{{_ "Help"}}"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div class="modal-body flow-list-box-modal-body" style='overflow-y:auto'>
+                    <div class="box-title" style="margin: 10px 0;">{{note}}</div>
+                    <div class="form-group">
+
+                        <label for="SRhwCKkNvtiw9sr4s" class="control-label">{{_ "flows_name"}}</label>
+
+                        <input placeholder={{_ "Select a flow"}} type="text" readonly="" multiple="true" name="forward_flow" id="forward_flow" data-schema-key="forward_flow" class="form-control" data-values="">
+
+                        <span class="help-block"></span>
+                    </div>
+
+                    {{#if is_show_selectuser}}
+                        <div class="form-group">
+                            <label for="forward_select_user" class="control-label">{{ selectuser_title ../action_type}}</label>
+                            {{>afSelectUser user_context}}
+                        </div>
+                        {{#if can_to_self}}
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="instance_distribute_to_self" >&nbsp;{{_ 'instance_distribute_to_self'}}</label>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/if}}
+
+                    <div class="form-group">
+                        <textarea class="form-control" id="forward_flow_text" placeholder={{_ "forwardFlowText"}}></textarea>
+                    </div>
+
+                    <div class="instance-to-attachment af-checkbox-group">
+                        <label class="checkbox-inline fix-indent"><input type="checkbox" id="saveInstanceToAttachment"/>{{_ "saveInstanceToAttachment"}}</label>
+                    </div>
+                    <!-- <div class="instance-to-attachment af-checkbox-group">
+                        <label class="checkbox-inline fix-indent"><input type="checkbox" id="isForwardAttachments" checked="checked"/>{{take_attachments}}</label>
+                    </div> -->
+
+					{{#if is_distribute}}
+						<div class="instance-to-related af-checkbox-group">
+							<label class="checkbox-inline fix-indent"><input type="checkbox" id="instance_related"/>{{_ "instance_distribute_related_instances_title"}}</label>
+						</div>
+					{{/if}}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="forward_flow_ok">{{_ "OK"}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

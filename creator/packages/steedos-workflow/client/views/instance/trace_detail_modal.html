@@ -1,0 +1,224 @@
+<template name="instance_trace_detail_modal" >
+	<div class="modal fade instance-trace-detail-modal" id="instance_trace_detail_modal" role="dialog" aria-labelledby="instance_trace_detail_modal_label" tabindex="-1">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<h4 class="modal-title" id="instance_trace_detail_modal_label">{{traceName this.instance this.trace}}</h4>
+				</div>
+				<div class="modal-body modal-zoom weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<span class="weui-label">{{_t "instance_handler_name"}}</span>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary text-muted">
+							<span class="weui-input">{{this.handler_name}}</span>
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<span class="weui-label">{{_t "instance_handler_organization_fullname"}}</span>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary text-muted">
+							<span class="weui-input">{{this.handler_organization_fullname}}</span>
+						</div>
+					</div>
+					{{#if this.cc_description}}
+						<div class="weui-cell">
+							<div class="weui-cell__hd">
+								<span class="weui-label">{{_t "instance_cc_description"}}</span>
+							</div>
+							<div class="weui-cell__bd weui-cell_primary text-muted">
+								<span class="weui-input">{{this.cc_description}}</span>
+							</div>
+						</div>
+					{{/if}}
+					{{#if this.from_user_name}}
+						<div class="weui-cell">
+							<div class="weui-cell__hd">
+								{{#if isCC this}}
+									<span class="weui-label">{{_t "instance_approve_from_user_name_label"}}</span>
+								{{/if}}
+								{{#if isForward this}}
+									<span class="weui-label">{{_t "instance_approve_from_user_name_label_forward"}}</span>
+								{{/if}}
+								{{#if isDistribute this}}
+									<span class="weui-label">{{_t "instance_distribute_approve_from_user_name_label"}}</span>
+								{{/if}}
+							</div>
+							<div class="weui-cell__bd weui-cell_primary text-muted">
+								<span class="weui-input">{{this.from_user_name}}</span>
+							</div>
+						</div>
+					{{/if}}
+					{{#if unempty this.finish_date}}
+						{{#if getApproveStatusText this.judge}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label">{{_t "instance_approve_status_text_label"}}</span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									<span class="weui-input status {{this.judge}}">
+										<span class='{{getApproveStatusIcon this.judge}}'></span>
+										<span>{{getApproveStatusText this.judge}}</span>
+									</span>
+								</div>
+							</div>
+						{{/if}}
+					{{else}}
+						{{#unless isCC this}}
+							{{#unless isForward this}}
+								{{#unless isDistribute this}}
+									<div class="weui-cell">
+										<div class="weui-cell__hd">
+											<span class="weui-label">{{_t "instance_approve_status_text_label"}}</span>
+										</div>
+										<div class="weui-cell__bd weui-cell_primary text-muted">
+											<span class="weui-input status pending">
+												<span class='ion ion-ios-loop'></span>
+												<span>{{_t "instance_in_progress"}}</span>
+											</span>
+										</div>
+									</div>
+								{{/unless}}
+							{{/unless}}
+						{{/unless}}
+					{{/if}}
+					{{#if this.is_finished}}
+						{{#if isShowDescription this}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label">{{_t "instance_approve_description_label"}}</span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									{{#if isEditing this}}
+										<textarea class="form-control" name="opinion_input" id="opinion_input" value="{{this.description}}"></textarea>
+									{{else}}
+										<span class="weui-input ">{{markDownToHtml this.description}}</span>
+									{{/if}}
+								</div>
+							</div>
+						{{/if}}
+					{{else}}
+						{{#if (unempty (myApproveDescription this._id))}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label">{{_t "instance_approve_description_label"}}</span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									<span class="weui-input">{{{markDownToHtml (myApproveDescription this._id)}}}</span>
+								</div>
+							</div>
+						{{/if}}
+					{{/if}}
+					{{#if isDistribute this}}
+						<div class="weui-cell">
+							<div class="weui-cell__hd">
+								<span class="weui-label">{{_t "instance_approve_distribute_date_label"}}</span>
+							</div>
+							<div class="weui-cell__bd weui-cell_primary text-muted">
+								<span class="weui-input">{{dateFormat this.start_date}}</span>
+							</div>
+						</div>
+					{{else}}
+						<div class="weui-cell">
+							<div class="weui-cell__hd">
+								<span class="weui-label">{{_t "instance_approve_start_date_label"}}</span>
+							</div>
+							<div class="weui-cell__bd weui-cell_primary text-muted">
+								<span class="weui-input">{{dateFormat this.start_date}}</span>
+							</div>
+						</div>
+						{{#if unempty this.finish_date}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label">{{_t "instance_approve_finish_date_label"}}</span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									{{#if isEditing this}}
+										{{#autoForm id='finishDateAutoForm' schema=finishDateSchema doc=finishDateValues }}
+											{{> afFieldInput id="finish_input" name="finish_date"}}
+										{{/autoForm}}
+									{{else}}
+										<span class="weui-input">{{dateFormat this.finish_date}}</span>
+									{{/if}}
+								</div>
+							</div>
+						{{/if}}
+					{{/if}}
+
+					{{#unless this.is_finished}}
+						<div class="weui-cell">
+							<div class="weui-cell__hd">
+								<span class="weui-label">{{_t "instance_approve_read"}}</span>
+							</div>
+							<div class="weui-cell__bd weui-cell_primary text-muted">
+								<span class="weui-input">
+									{{#if this.is_read}}
+										{{_t "instance_approve_read_yes"}}
+									{{else}}
+										{{_t "instance_approve_read_no"}}
+									{{/if}}
+								</span>
+							</div>
+						</div>
+
+					{{/unless}}
+					{{#if isForward this}}
+						{{#unless judgeTerminated this.judge}}
+							{{#if instanceExists this.forward_instance}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label"></span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									<span class="weui-input">
+										<button type="button" class="btn btn-default btn-forward-instance-look pull-left" data-forwardspace="{{forward_space}}" data-forwardinstance="{{forward_instance}}">{{_t "instance_forward_instance_look"}}</button>
+									</span>
+								</div>
+							</div>
+							{{/if}}
+						{{/unless}}
+					{{/if}}
+					{{#if isDistribute this}}
+						{{#unless judgeTerminated this.judge}}
+							{{#if instanceExists this.forward_instance}}
+							<div class="weui-cell">
+								<div class="weui-cell__hd">
+									<span class="weui-label"></span>
+								</div>
+								<div class="weui-cell__bd weui-cell_primary text-muted">
+									<span class="weui-input">
+										<button type="button" class="btn btn-default btn-forward-instance-look pull-left" data-forwardspace="{{forward_space}}" data-forwardinstance="{{forward_instance}}">{{_t "instance_distribute_instance_look"}}</button>
+									</span>
+								</div>
+							</div>
+							{{/if}}
+						{{/unless}}
+					{{/if}}
+				</div>
+				<div class="modal-footer">
+					{{#if showDeleteButton this}}
+						<button type="button" class="btn btn-default btn-cc-approve-remove pull-left" data-approve="{{_id}}">{{_t "instance_approve_cc_remove"}}</button>
+					{{/if}}
+					{{#if showForwardDeleteButton this}}
+						<button type="button" class="btn btn-default btn-forward-approve-remove pull-left" data-approve="{{_id}}" data-trace="{{trace}}">{{_t "instance_approve_forward_remove"}}</button>
+					{{/if}}
+					{{#if showDistributeDeleteButton this}}
+						<button type="button" class="btn btn-default btn-distribute-approve-remove pull-left" data-approve="{{_id}}" data-trace="{{trace}}">{{_t "instance_distribute_approve_remove"}}</button>
+					{{/if}}
+					{{#if isEditing this}}
+						<button type="button" class="btn btn-default  btn-saveBut" data-approve="{{_id}}" data-trace="{{trace}}">{{_t "instance_approve_modal_save"}}</button>
+						<button type="button" class="btn btn-default  btn-cancelBut">{{_t "instance_approve_moda_back"}}</button>
+					{{else}}
+						{{#if isShowModificationButton this}}
+							{{#if this.is_finished}}
+								<button type="button" class="btn btn-default  btn-modification pull-left">{{_t "instance_approve_modal_modification"}}</button>
+							{{/if}}
+						{{/if}}
+						<button type="button" class="btn btn-primary btn-data-dismiss" data-dismiss="modal">{{_t "instance_approve_close_modal"}}</button>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

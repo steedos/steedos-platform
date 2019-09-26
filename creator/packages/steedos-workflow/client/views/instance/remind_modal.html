@@ -1,0 +1,47 @@
+<template name="remind_modal">
+    <div class="modal fade" id="remind_modal" role="dialog" aria-labelledby="remind_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ins-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" >{{_ "instance_remind_title"}}</h4>
+                </div>
+
+                <div class="modal-body modal-zoom">
+                    <div class="">
+                        <div class="form-group">
+                            {{#autoForm id='instance_remind_deadline' schema=deadline_fields doc=deadline_values }}
+                                  {{> afFormGroup name="remind_deadline"}}
+                            {{/autoForm}}
+                        </div>
+                        <div class="form-group">
+                            <label for="instance_remind_select_users" class="control-label">{{_ 'instance_remind_select_users'}}</label>
+                            {{#if user_context action_types}}
+                                {{>afSelectUser user_context action_types}}
+                            {{else}}
+                                <div class="form-control" >
+                                    <label class="control-label">没有可催办的对象</label>
+                                </div>
+                            {{/if}}
+                        </div>
+                        <div class="form-group">
+                            <label for="instance_remind_count" class="control-label">{{_ 'instance_remind_count'}}</label>
+                            <div class="form-control" disabled="{{#if disabled}}disabled{{/if}}">
+                                {{#each remind_count_options }}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="remind_count_options" value="{{value}}" checked='{{#if isSingle this.value}}checked{{/if}}' disabled="{{#if disabled}}disabled{{/if}}"> {{name}}
+                                    </label>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="instance_remind_ok">{{_ 'instance_remind_title'}}</button>
+                    <button type="button" class="btn btn-default btn-data-dismiss" data-dismiss="modal">{{_ "Cancel"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,72 @@
+<template name="instancePrint">
+	<div class="navigation-bar btn-group no-print" style="/*position: fixed; margin:0 auto;left:0;right:0; */min-width: 600px; z-index: 999">
+        <button type="button" class="btn btn-primary" id="instance_to_print">{{printButton}}</button>
+        <div class="print-tool">
+            <label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-attachments" /><span>{{_ 'instance_attachment'}}</span></label>
+            <label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces"/><span>{{_ 'instance_approval_history'}}</span></label>
+        </div>
+        <div class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-flat" id="font-plus"><i class="ion ion-ios-plus-outline"></i></button>
+                <button type="button" class="btn btn-default btn-flat" id="font-minus"><i class="ion ion-ios-minus-outline"></i></button>
+            </div>
+        </div>
+		<span style="color:#ccc;font-size: 20px;padding-left: 10px;" class="pull-right">|</span>
+		<div class="form-group pull-right">
+			<label class="radio-inline">
+				<input type="radio" name="printWidthA4" id="printWidthAZ" value="210" checked="checked">
+				A4纵向
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="printWidthA4" id="printWidthAH" value="297">
+				A4横向
+			</label>
+			<label class="radio-inline" style="padding-left: 0px;">
+				<div class="input-group input-group-sm">
+					<input type="number" class="form-control" style="width: 100px" id="printWidth" value="210">
+				</div>
+			</label>
+		</div>
+        <div style="display:none"><input id="instanceId"></div>
+    </div>
+    <div class="instance-print" style="/*margin-top: 51px*/">
+    	{{#if hasInstance}}
+    		{{#with instance}}
+        	    <!--{{#if isTableView flow}}-->
+				    <div class="instance instance-table">
+                        <div class="instance-form box {{instance_box_style }}">
+                            {{#if formDescription}}
+                                <div class="box-header  with-border instance-header">
+                                    <div>
+                                        {{{formDescription}}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                            <div class="box-body">
+                                <div class="col-md-12">
+                                    <div class="{{#unless isShowAttachments}} hide {{/unless}}">
+                                        {{> Template.dynamic template="instance_attachments" }}
+                                        {{> related_instances}}
+                                    </div>
+                                    {{{readOnlyView}}}
+                                </div>
+                            </div>
+                        </div>
+                        {{#if unequals 'draft' instance.state}}
+                            <div class="{{#unless isShowTraces}} hide {{/unless}}">
+                                {{> Template.dynamic template="instance_traces_table" data=instance.traces}}
+                            </div>
+                        {{/if}}
+				    </div>
+			    <!--{{else}}-->
+				    <!--<div class="instance">-->
+				        <!--{{> instanceform}}-->
+				        <!--{{#if unequals 'draft' state}}-->
+				            <!--{{> Template.dynamic template="instance_traces" data=traces}}-->
+				        <!--{{/if}}-->
+				    <!--</div>-->
+			    <!--{{/if}}-->
+			{{/with}}
+        {{/if}}
+    </div>
+</template>

@@ -1,0 +1,94 @@
+<template name="org_main_mobile">
+	<div class="contacts-main contacts-show">
+		{{#if subsReady}}
+			{{#if isShowOrg}}
+				<div class="contacts-wrapper contacts-wrapper-mobile">
+					<div class="navigation-bar">
+						{{#if isBackButtonNeeded}}
+							<button type="button" class="btn btn-default btn-back">
+								<i class="ion ion-android-arrow-back"></i>
+							</button>
+						{{else}}
+							{{#if isFromAdmin}}
+							<a class="btn btn-default" href="/admin">
+								<i class="ion ion-android-arrow-back"></i>
+							</a>
+							{{else}}
+							<button type="button" class="btn btn-default offcanvas" data-toggle="offcanvas">
+								<i class="fa fa-bars"></i>
+							</button>
+							{{/if}}
+						{{/if}}
+						<span class="navigation-title">
+							<span class="top-title text-overflow">{{title}}</span>
+							<span class="top-ion"><i class="ion ion-android-arrow-dropdown"></i></span>
+						</span>
+						{{#if showAddContactUserBtn}}
+							{{#if isMobile}}
+							<button type="button" class="btn btn-default manage-contacts pull-right">
+								<i class="ion ion-gear-a"></i>
+							</button>
+							{{else}}
+							<button type="button" class="btn btn-default add-contact-user pull-right">
+								<i class="ion ion-plus"></i>
+							</button>
+							{{/if}}
+						{{/if}}
+						<!-- {{#if showAddContactUserBtn}}
+							<a href="/admin/organizations" class="btn btn-default manage-contacts pull-right">
+								<i class="ion ion-gear-a"></i>
+							</a>
+						{{/if}}
+ -->
+
+						{{#autoForm id='contacts_org_mobile_sel_form' schema=orgFields class="hide"}}
+							{{> afFormGroup name="contacts_org_mobile_sel" label=false}}
+						{{/autoForm}}
+					</div>
+					<div class="contacts">
+						<div class="contacts-mobile">
+							<div class="weui-search-bar">
+								<div class="weui-search-bar__form">
+									<div class="weui-search-bar__box">
+										<i class="weui-icon-search"></i>
+										<input type="search" class="weui-search-bar__input" id="contact-list-search-key" placeholder={{_ "search_contact"}} />
+										<a href="javascript:" class="weui-icon-clear empty"></a>
+									</div>
+									<label class="weui-search-bar__label">
+										<i class="weui-icon-search"></i>
+										<span>{{_ "search_contact"}}</span>
+									</label>
+								</div>
+								<a href="javascript:" class="weui-search-bar__cancel-btn">{{_ "Cancel"}}</a>
+							</div>
+							{{> tabular table=TabularTables.steedosContactsMobileOrganizations selector=selectorForOrgs class=tabular_organizations_class}}
+							{{> tabular table=TabularTables.steedosContactsMobileUsers selector=selector class=tabular_users_class}}
+						</div>
+					</div>
+				</div>
+				{{> baseTabbar}}
+				{{#if showAddContactUserBtn}}
+					{{#if isMobile}}
+					<div>
+						<div class="weui-mask contacts-option-mask" style="display: none;opacity: 0"></div>
+						<div class="weui-actionsheet contacts-option-actionsheet" >
+							<div class="weui-actionsheet__menu">
+								<div class="weui-actionsheet__cell add-users">{{_ "cantact_add_space_user"}}</div>
+								<div class="weui-actionsheet__cell add-organization">{{_ "add_sub_department"}}</div>
+								<div class="weui-actionsheet__cell edit-organization">{{_ "edit_current_department"}}</div>
+							</div>
+							<div class="weui-actionsheet__action">
+								<div class="weui-actionsheet__cell actionsheet-cancel">{{_ "Cancel"}}</div>
+							</div>
+						</div>
+					</div>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		{{else}}
+			<div class="loading">
+				{{> steedosLoading}}
+			</div>
+		{{/if}}
+	</div>
+</template>

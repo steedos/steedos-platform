@@ -256,8 +256,7 @@ Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
 			USER_CONTEXT.user.organization = {
 				_id: space_user_org._id,
 				name: space_user_org.name,
-				fullname: space_user_org.fullname,
-				is_company: space_user_org.is_company
+				fullname: space_user_org.fullname
 			}
 		return USER_CONTEXT
 

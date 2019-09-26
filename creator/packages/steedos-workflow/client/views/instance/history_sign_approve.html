@@ -1,0 +1,34 @@
+<template name="history_sign_approve">
+	<div class="modal fade history-sign-approve" id="history-sign-approve" role="dialog" aria-labelledby="history-sign-approve" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content is-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="selectFlowLabel">{{_ "workflow_history_approve_description"}}</h4>
+				</div>
+
+				<div class="modal-body modal-zoom">
+					<div class="weui-cells weui-cells_form sign-approves">
+						{{#each sign_approves}}
+							<div class="weui-cell weui-cell_switch" data-id="{{_id}}">
+								<div class="weui-cell__bd use-suggestion">
+									<h4 class="weui-media-box__title">{{description}}</h4>
+									<p class="weui-media-box__desc">{{format finish_date}}</p>
+								</div>
+								<div class="weui-cell__ft select-suggestion">
+									<input id="switchCP-{{_id}}" class="weui-switch is-{{sign_show}}" type="checkbox" checked="{{sign_show}}" value="{{_id}}">
+								</div>
+							</div>
+						{{/each}}
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary confirm-select-suggestion">确认</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -2,9 +2,9 @@
 
 if Meteor.isClient
 	WorkflowCore.openFlowDesign = (locale, space, flow, companyId)->
-		url = "/applications/designer/current/?locale=#{locale}&space=#{space}"
+		url = "/applications/designer/current/#{locale.toLocaleLowerCase()}/?space=#{space}"
 		if flow
-			url = url + "&flow=#{flow}"
+			url = url + "&flowId=#{flow}"
 		if companyId && !Creator.isSpaceAdmin(space, Meteor.userId())
 			url = url + "&companyId=#{companyId}"
 		Steedos.openWindow Steedos.absoluteUrl(url)
@@ -34,7 +34,7 @@ if Meteor.isServer
 #				return false
 
 		if company_id
-			if db.organizations.find({ _id: company_id, space: spaceId }).count() == 0
+			if Creator.getCollection("company").find({ _id: company_id, space: spaceId }).count() == 0
 				return false
 
 		return true

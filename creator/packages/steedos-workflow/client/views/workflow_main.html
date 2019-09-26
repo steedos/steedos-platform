@@ -1,0 +1,18 @@
+<template name="workflow_main">
+
+	{{> workflowSidebar}}
+	<div class="content-wrapper">
+		<div class="workflow-main">
+			<div class="instance-list-wrapper">
+				{{> instance_list}}
+			</div>
+			{{#if instanceId}}
+			<div class="instance-wrapper">
+				{{#if isNeedToShowInstance}}
+					{{> instance_view}}
+				{{/if}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</template>

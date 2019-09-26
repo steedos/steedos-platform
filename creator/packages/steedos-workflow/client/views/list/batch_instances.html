@@ -1,0 +1,17 @@
+<template name="batch_instances">
+	<div class="batch-instances">
+		<div class="weui-cells">
+			{{#each this.batch_instances}}
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<p>{{name}}{{#if success _id}}<i class="weui-icon-success"></i>{{/if}}</p>
+						<span style="float: left;">{{applicant_name}}</span>
+						<span style="float: right">
+							{{dataFormat submit_date}}
+						</span>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>

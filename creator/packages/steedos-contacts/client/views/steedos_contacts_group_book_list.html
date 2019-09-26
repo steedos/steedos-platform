@@ -1,0 +1,39 @@
+<template name="steedos_contacts_group_book_list">
+	<div class="navigation-bar">
+		<button type="button" class="btn btn-default offcanvas" data-toggle="offcanvas">
+			<i class="fa fa-bars"></i>
+		</button>
+		<div class="btn-group" >
+			<button type="button" data-toggle="tooltip" data-placement="bottom" title="{{_ 'contacts_add'}}" class="btn btn-default btn-flat" id="steedos_contacts_group_book_list_add_btn"><i class="ion ion-plus-round"></i></button>
+			{{#unless isMobile}}
+				<button type="button" class="btn btn-default btn-flat" disabled="{{#if is_disabled}}disabled{{/if}}" id="steedos_contacts_group_book_list_import_btn">
+					{{_ 'steedos_contacts_import'}}
+				</button>
+				<a target="_parent" class="btn btn-default btn-flat" id="steedos_contacts_group_book_list_export_btn" data-toggle="tooltip" data-placement="right" title="{{_ 'steedos_contact_books_exprot_vcf_title'}}">
+						{{_ 'steedos_contacts_export'}}
+				</a>
+			{{/unless}}
+
+		</div>
+
+		{{#if isSearchNeeded}}
+			<div class="pull-right">
+				<div class="input-group">
+					<input type="text" name="contact-list-search-key" id="contact-list-search-key" class="form-control contact-list-search-key" placeholder='{{_ "Search"}}...'>
+					<span class="input-group-btn">
+						<button type="submit" name="contact-list-search-btn" id="contact-list-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+	<div class="navigation-bar org-bar" id="steedos_contacts_show_orgs">
+		<i class="ion ion-android-contacts" style="padding-right: 4px;"></i>{{getOrgName}}<i class="caret"></i>
+	</div>
+	<div id="contacts_list" class="contacts">
+		<div class="contacts_books_list_table">
+			{{> tabular table=TabularTables.steedosContactsBooks selector=books_selector class="table table-striped datatable-steedos-contacts"}}
+		</div>
+	</div>
+</template>

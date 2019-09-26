@@ -1,0 +1,36 @@
+<template name="contacts_modal">
+	<div class="modal fade steedos-mail steedos-contacts cf_contact_modal" id="contacts_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">请选择人员</h4>
+				</div>
+				<div class="modal-body contacts-main contacts-show steedos-mail-contacts-modal">
+					{{#if subsReady}}
+						<div class="contacts-list-wrapper">
+							{{> contacts_tree}}
+						</div>
+						<div class="contacts-wrapper">
+							{{>Template.dynamic  template="contacts_list" data=contactsListData}}
+						</div>
+					{{else}}
+						<div class="loading">
+							{{> steedosLoading}}
+						</div>
+					{{/if}}
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-10">
+							{{> selectedValue}}
+						</div>
+						<div class="col-md-2 pull-right">
+							<button type="button" class="btn btn-primary" id='confirm' title='{{_ "OK"}}' style="width:100%">{{_ "OK"}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

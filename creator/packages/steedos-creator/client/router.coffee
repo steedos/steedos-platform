@@ -128,6 +128,14 @@ FlowRouter.route '/app/:app_id/reports/view/:record_id',
 		BlazeLayout.render Creator.getLayout(),
 			main: "creator_report"
 
+FlowRouter.route '/app/:app_id/instances/grid/all',
+	action: (params, queryParams)->
+		app_id = FlowRouter.getParam("app_id")
+		Session.set("app_id", app_id)
+		Session.set("object_name", "instances")
+		FlowRouter.go '/workflow'
+		return
+
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
@@ -231,4 +239,3 @@ FlowRouter.route '/app/admin/page/:template_name',
 			Session.set("admin_template_name", template_name)
 			BlazeLayout.render Creator.getLayout(),
 				main: template_name
-

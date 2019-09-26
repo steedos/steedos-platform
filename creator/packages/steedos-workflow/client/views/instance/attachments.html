@@ -1,0 +1,240 @@
+<template name="instance_attachment" >
+	<tr>
+		<td class="ins-attach-view">
+			{{#if isPrint}}
+				<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+			{{else}}
+				{{#if isCordova}}
+					<a href="#" data-downloadurl="{{getUrl this._id}}" name="ins_attach_mobile">{{this.name}}</a>
+				{{else}}
+					{{#if isNode}}
+						{{#if canEdit this.metadata.main this.name this.metadata.locked_by}}
+							<a href="#" data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_isNode" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{this.name}}</a>
+						{{else}}
+							{{#if canView this.name}}
+								<a data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_isView" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{this.name}}</a>
+							{{else}}
+								{{#if IsImageAttachment this}}
+									<a name="ins_attach_preview" style="cursor: pointer" id="{{this._id}}">{{this.name}}</a>
+								{{else}}
+									{{#if IsHtmlAttachment this}}
+										<a name="ins_attach_preview" style="cursor: pointer" id="{{this._id}}">{{this.name}}</a>
+									{{else}}
+										<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+									{{/if}}
+								{{/if}}
+							{{/if}}
+						{{/if}}
+					{{else}}
+						<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
+					{{/if}}
+				{{/if}}
+				{{#if isMobile}}
+					<div class="pull-right">
+						<div class="btn-group">
+							<button type="button" style="padding: 0px 6px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<span class="fa fa-ellipsis-h fa-1"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								{{#if IsImageAttachment this}}
+									<li><a name="ins_attach_preview" id="{{this._id}}"><i class="ion ion-ios-search"></i>{{_ "workflow_attachment_view"}}</a></li>
+								{{else}}
+									{{#if IsHtmlAttachment this}}
+										<li><a name="ins_attach_preview" id="{{this._id}}"><i class="ion ion-ios-search"></i>{{_ "workflow_attachment_view"}}</a></li>
+									{{/if}}
+								{{/if}}
+								<li><a name="ins_attach_version" data-parent="{{this.metadata.parent}}"><i class="ion ion-ios-copy-outline"></i>{{_ "workflow_attachment_versions"}}</a></li>
+								{{#if can_delete this.metadata.approve this.metadata.parent}}
+									<li><a class="ins-attach-delete" id="{{this._id}}" data-name="{{this.name}}"><i class="ion ion-close-round"></i>{{_ "workflow_attachment_delete"}}</a></li>
+								{{/if}}
+							</ul>
+						</div>
+					</div>
+				{{else}}
+					{{#if canEdit this.metadata.main this.name this.metadata.locked_by}}
+						{{#if isIE}}
+							<a name="ins_attach_edit" id="{{this._id}}" class="mouse-hover" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_officeOnline"}}</a>
+						{{/if}}
+					{{/if}}
+					{{#if isNode}}
+					{{else}}
+						{{#if IsImageAttachment this}}
+							<a name="ins_attach_preview" class="mouse-hover" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+						{{else}}
+							{{#if IsHtmlAttachment this}}
+								<a name="ins_attach_preview" class="mouse-hover" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+							{{/if}}
+						{{/if}}
+					{{/if}}
+					<a name="ins_attach_version" class="mouse-hover" data-parent="{{this.metadata.parent}}">{{_ "workflow_attachment_versions"}}</a>
+					{{#if this.metadata.locked_by}}
+						<span style="margin-left: 10px;">{{locked_info this.metadata.locked_by_name}}</span>
+					{{/if}}
+					{{#if can_unlock this.metadata.locked_by}}
+						<a class="mouse-hover ins-attach-unlock" id="{{this._id}}">{{_ 'workflow_attach_unlock'}}</a>
+					{{/if}}
+					{{#if can_delete this.metadata.approve this.metadata.parent}}
+						<a class="mouse-hover ins-attach-delete" id="{{this._id}}" data-name="{{this.name}}">{{_ "workflow_attachment_delete"}}</a>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		</td>
+	</tr>
+</template>
+
+<template name="ins_attach_version_modal" >
+
+	<div class="modal fade" id="ins_attach_version" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content ins-modal">
+				{{#with attach_versions}}
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{{#with attach_current_version}}
+					<h4 class="modal-title" id="modalLabel2">{{ this.name }}</h4>
+					{{/with}}
+				</div>
+
+				<div class="modal-body modal-zoom">
+					<div>
+						<span style="font-size: 17px;">{{_ "Versions"}}</span>
+						{{#if enabled_add_attachment}}
+							{{#with attach_current_version}}
+							<div class="ins-upload" style="cursor: pointer;float: right;">
+								<span class="ion ion-plus-round"  title='{{_ "Attachments"}}'></span>
+								{{#if metadata.main}}
+									<input type="file" name="file" class="ins-file-version-input" id="ins_upload_main_attach_version">
+								{{else}}
+									<input type="file" name="file" class="ins-file-version-input" id="ins_upload_normal_attach_version">
+								{{/if}}
+							</div>
+							{{/with}}
+						{{/if}}
+					</div>
+					<table style="width:100%;max-width:100%;background-color: #f5f5f5;font-size: 15px;">
+						<tbody>
+							{{#each attach_versions}}
+								{{#if this.metadata.current}}
+									{{#if this.metadata.locked_by}}
+									<tr>
+										<td class="ins-attach-version-view">
+											<label style="margin-bottom:0px;">{{locked_info this.metadata.locked_by_name this.metadata.locked_time}}</label>
+										</td>
+									</tr>
+									{{/if}}
+									<tr>
+										<td class="ins-attach-version-view">
+											{{#if isCordova}}
+												<a href="#" data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_mobile">{{this.name}} {{_ "Current Version"}}</a>
+											{{else}}
+												<a href="{{getUrl this._id}}" style="cursor: pointer" class="ins_attach_href" target="_parent" >{{this.name}} {{_ "Current Version"}}</a>
+											{{/if}}
+											{{#if isNode}}
+												<a href="{{getUrl this._id}}" class="mouse-hover ins_attach_href" target="_parent" >{{_ "workflow_attachment_download"}}</a>
+											{{/if}}
+											{{#if isMobile}}
+												{{#if IsImageAttachment this}}
+													<a style="cursor: pointer;padding-left: 10px" name="ins_attach_preview" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+												{{else}}
+													{{#if IsHtmlAttachment this}}
+														<a style="cursor: pointer;padding-left: 10px" name="ins_attach_preview" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+													{{/if}}
+												{{/if}}
+												{{#if current_can_delete this.metadata.approve this.metadata.parent}}
+													<a style="cursor: pointer;padding-left: 10px" class="ins-attach-version-delete" id="{{this._id}}">{{_ "workflow_attachment_delete"}}</a>
+												{{/if}}
+											{{else}}
+												{{#if canView this.name}}
+													<a data-downloadurl="{{getUrl this._id}}" class="mouse-hover" name="ins_attach_isView" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_view"}}</a>
+												{{/if}}
+												{{#if IsImageAttachment this}}
+													<a class="mouse-hover" name="ins_attach_preview" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+												{{else}}
+													{{#if IsHtmlAttachment this}}
+														<a class="mouse-hover" name="ins_attach_preview" id="{{this._id}}">{{_ "workflow_attachment_view"}}</a>
+													{{/if}}
+												{{/if}}
+												{{#if current_can_delete this.metadata.approve this.metadata.parent}}
+													<a class="mouse-hover ins-attach-version-delete" id="{{this._id}}" data-name="{{this.name}}">{{_ "workflow_attachment_delete"}}</a>
+												{{/if}}
+											{{/if}}
+											<br/>
+											<label style="margin-bottom:0px;">{{attach_version_info this.metadata.owner_name this.uploadedAt}}</label>
+										</td>
+									</tr>
+								{{else}}
+									<tr>
+										<td class="ins-attach-version-view">
+											{{#if isCordova}}
+												<a href="#" data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_mobile">{{this.name}}</a>
+											{{else}}
+												<a href="{{getUrl this._id}}" style="cursor: pointer" class="ins_attach_href" target="_parent" >{{this.name}}</a>
+											{{/if}}
+											{{#if isNode}}
+												<a href="{{getUrl this._id}}" class="mouse-hover ins_attach_href" target="_parent" >{{_ "workflow_attachment_download"}}</a>
+											{{/if}}
+											{{#if canView this.name}}
+												<a data-downloadurl="{{getUrl this._id}}" class="mouse-hover" name="ins_attach_isView" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_view"}}</a>
+											{{/if}}
+											<br/>
+											<label style="margin-bottom:0px;">{{attach_version_info this.metadata.owner_name this.uploadedAt}}</label>
+										</td>
+									</tr>
+								{{/if}}
+
+							{{/each}}
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					{{#with attach_current_version}}
+						{{#if can_unlock this.metadata.locked_by}}
+							<button type="button" class="btn btn-primary pull-left" id="{{this._id}}">{{_ 'workflow_attach_unlock'}}</button>
+						{{else}}
+							{{#if isNode}}	
+								{{#if canEdit this.metadata.main this.name this.metadata.locked_by}}
+									<button type="button" data-downloadurl="{{getUrl this._id}}" class="btn btn-default pull-left" name="ins_attach_isNode" id="{{this._id}}" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_officeOnline"}}</button>
+								{{/if}}
+								{{#if canConvertToPdf this.metadata.main this.name this.metadata.locked_by}}
+									<button type="button" data-downloadurl="{{getUrl this._id}}" class="btn btn-default pull-left" name="ins_attach_convert_to_pdf" id="{{this._id}}" style="display: none" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_wordToPdf"}}</button>
+								{{/if}}
+								{{#if canSign this.metadata.main this.name this.metadata.locked_by}}
+									<button type="button" data-downloadurl="{{getUrl this._id}}" class="btn btn-default pull-left" name="ins_attach_signature" id="{{this._id}}" style="display: none" data-parent="{{this.metadata.parent}}" data-name="{{this.name}}">{{_ "workflow_attachment_signature"}}</button>
+								{{/if}}
+							{{/if}}
+						{{/if}}
+					{{/with}}
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ 'close'}}</button>
+				</div>
+				{{/with}}
+		  </div>
+		</div>
+	</div>
+</template>
+
+<template name="ins_attach_edit_modal">
+	<div class="modal fade" id="ins_attach_edit" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+		<div style="height: 100%;">
+			<div class="modal-content ins-modal" style="height: 100%;">
+
+				<div class="modal-header" id="attach_edit_modal_header">
+					<h4 class="modal-title" id="modalLabel2">{{ name }}</h4>
+					<button type="button" class="btn btn-primary" style="float: right;margin-top: -25px;" data-filename="{{name}}">{{_ "workflow_attachment_save"}}</button>
+					<button type="button" class="btn btn-default" style="float: right;margin-top: -25px;" data-dismiss="modal">{{_ "workflow_attachment_close"}}</button>
+					<a href="http://oss.steedos.com/apps/steedos/windows/steedos-desktop.exe" style="float: right;cursor: pointer;margin-right: 25px;margin-top: -10px;" target="_top">{{_ "workflow_install_desktop"}}</a>
+				</div>
+
+				<div class="modal-body" id="attach_edit_modal_body" style="padding-top: 0px;">
+					<object id='TANGER_OCX_OBJ'   classid='clsid:C9BC4DFF-4248-4a3c-8A49-63A7D317F404'  codebase= '/cab/OfficeControl.cab#Version=5.0.2.2' width='100%'    height='100%'>
+						<param name='Titlebar' value='0'>
+						<param name='Menubar' value='0'>
+						<param name='ProductCaption' value='上海华炎软件科技有限公司'>
+						<param name='ProductKey' value='B401843AE60C0E72C1C8BC3E543B5E7790B42415'>
+					</object>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,31 @@
+<template name="reassign_modal">
+  <div class="modal fade" id="reassign_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content ins-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLabel2">
+            {{_ "instance_reassign_title"}}
+            <a class="btn btn-lg btn-link btn-help" id="reassign_help">
+              <i class="ion ion-ios-help-outline" title="{{_ "Help"}}"></i>
+            </a>
+          </h4>
+        </div>
+
+        <div class="modal-body modal-zoom">
+          {{#autoForm id='reassign' schema=fields doc=values }}
+            <p><span>{{_ "instance_reassign_curstep"}}</span><label id="reassign_currentStepName">{{current_step_name}}</label></p>
+            <p data-required="true">
+              {{> afFormGroup name="reassign_users"}}
+            </p>
+            <textarea class="form-control" id="reassign_modal_text" placeholder={{_ "instance_reassign_reason"}}></textarea>
+          {{/autoForm}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="reassign_modal_ok">{{_ "OK"}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,22 @@
+<template name="flow_list_box_org">
+	<div class="flow_list_box_org">
+		<div class='box box-solid '>
+			<div class='box-group' id='flow_accordion'>
+				{{#each flow_list_data.flows}}
+					<div class='weui-cell flow-item {{#if isFlowChecked _id}}checked{{/if}}'>
+						<div class='weui-cell__bd' data-flow='{{_id}}'>
+							{{name}}
+						</div>
+					</div>
+				{{/each}}
+				{{#each flow_list_data.distribute_optional_flows}}
+					<div class='weui-cell flow-item {{#if isFlowChecked _id}}checked{{/if}}'>
+						<div class='weui-cell__bd' data-flow='{{_id}}'>
+							{{name}}
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>

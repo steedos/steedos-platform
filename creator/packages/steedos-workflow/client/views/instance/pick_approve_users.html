@@ -1,0 +1,32 @@
+<template name="instance_pick_approve_users">
+	<div class="instance-pick_approve_users">
+		{{#autoForm id="pick_approve_users" schema=schema doc=doc_values }}
+			<div class="box instance-traces">
+				<div class="box-header with-border">
+					<div class="pull-left"><B>审批步骤</B></div>
+				</div>
+				<div class="box-body">
+					<table class='table table-condensed traces'>
+						<thead>
+							<tr class="title">
+								<th class="step">步骤名称</th>
+								<th class="approves">处理人</th>
+							</tr>
+						</thead>
+						<tbody>
+						{{#each instanceSteps}}
+
+							<tr class="step-item">
+								<td class="td-stepname">{{name}}</td>
+								<td class="td-approve">
+									{{> afQuickField name=_id disabled=false readonly=true}}
+								</td>
+							</tr>
+						{{/each}}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{{/autoForm}}
+	</div>
+</template>

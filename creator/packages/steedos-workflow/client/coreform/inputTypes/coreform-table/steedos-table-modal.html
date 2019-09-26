@@ -1,0 +1,37 @@
+<template name="steedosTableModal">
+    <div class="modal fade steedos-table-modal" id="steedos-table-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{#autoForm id=(getId this) schema=(getSchema this) doc=this.value}}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="selectTagModalTitle">{{afFieldLabelText name=this.field.code}}</h4> 
+                    </div>
+
+                    <div class="modal-body steedos-table-modal-body modal-zoom">
+                        <div class="">
+                            {{> afObjectField name=this.field.code}}
+                        </div>
+                    </div>
+                {{/autoForm}}
+                <div class="modal-footer">
+                    <!-- {{#if equals this.method 'edit'}}
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-default remove-steedos-table-item">删除</button>
+                        </div>
+                    {{/if}} -->
+                    {{#if equals this.method 'edit'}}
+                        <button type="button" class="btn btn-danger steedos-table-delete-button pull-left">{{_ "workflow_table_delete"}}</button>
+                    {{/if}}
+					{{#if equals this.method 'read'}}
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{_ "close"}}</button>
+					{{else}}
+						<button type="button" class="btn btn-primary steedos-table-ok-button">{{_ "workflow_table_confirm"}}</button>
+					{{/if}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

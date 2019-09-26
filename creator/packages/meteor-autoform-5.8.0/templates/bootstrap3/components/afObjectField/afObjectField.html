@@ -1,0 +1,15 @@
+<template name="afObjectField_bootstrap3">
+  <div class="panel {{panelClass}}">
+    {{#with afFieldLabelText name=this.name}}
+    <div class="panel-heading {{headingClass}}">
+      <h3 class="panel-title">{{this}}</h3>
+    </div>
+    {{/with}}
+    <div class="panel-body {{bodyClass}}">
+      {{#if afFieldIsInvalid name=this.name}}
+      <span class="help-block">{{{afFieldMessage name=this.name}}}</span>
+      {{/if}}
+      {{> afQuickFields quickFieldsAtts}}
+    </div>
+  </div>
+</template>

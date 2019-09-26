@@ -1,0 +1,15 @@
+<template name="afBooleanRadioGroup">
+  <div {{dsk}}>
+    <div>
+      <label><input type="radio" value="false" name="{{this.name}}" {{falseAtts}} /> {{#with this.atts.falseLabel}}{{this}}{{else}}False{{/with}}</label>
+    </div>
+    <div>
+      <label><input type="radio" value="true" name="{{this.name}}" {{trueAtts}} /> {{#with this.atts.trueLabel}}{{this}}{{else}}True{{/with}}</label>
+    </div>
+    {{#if this.atts.nullLabel}}
+    <div>
+      <label><input type="radio" value="null" name="{{this.name}}" {{nullAtts}} /> {{this.atts.nullLabel}}</label>
+    </div>
+    {{/if}}
+  </div>
+</template>

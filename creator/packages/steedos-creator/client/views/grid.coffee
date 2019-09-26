@@ -379,7 +379,7 @@ Template.creator_grid.onRendered ->
 		curObject = Creator.getObject(curObjectName)
 
 		user_permission_sets = Session.get("user_permission_sets")
-		user_company_id = Session.get("user_company_id")
+		userCompanyOrganizationId = Steedos.getUserCompanyOrganizationId()
 		isSpaceAdmin = Creator.isSpaceAdmin()
 		isOrganizationAdmin = _.include(user_permission_sets,"organization_admin")
 
@@ -780,8 +780,8 @@ Template.creator_grid.onRendered ->
 				if object_name == "organizations"
 					unless isSpaceAdmin
 						if isOrganizationAdmin
-							if user_company_id
-								dxOptions.rootValue = user_company_id
+							if userCompanyOrganizationId
+								dxOptions.rootValue = userCompanyOrganizationId
 							else
 								dxOptions.rootValue = "-1"
 						else

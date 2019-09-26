@@ -1,7 +1,10 @@
-// 防止 ios 上手指滑动时，触发页面弹动
-html, body {
-	position: fixed;
-	overflow: hidden;
+@media (max-width: 767px) {
+	// 防止 ios 上手指滑动时，触发页面弹动
+	// 只应用在手机上，是因为PC上部分界面需要滚动条，比如审批王申请单打印界面
+	html, body {
+		position: fixed;
+		overflow: hidden;
+	}
 }
 
 body {
@@ -443,7 +446,7 @@ body {
 }
 
 .dx-treeview-search {
-	margin: 12px 6px;
+	margin: 8px 6px;
 }
 
 .dx-treeview-item.dx-state-hover {
@@ -534,3 +537,5 @@ margin-left: 216px; }
 		height: 14px;
 	}
 }
+
+

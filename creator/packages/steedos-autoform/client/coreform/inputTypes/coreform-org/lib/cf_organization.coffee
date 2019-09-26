@@ -2,7 +2,6 @@ renderTree = (container, isSelf)->
 	templateData = Template.instance().data
 	spaceId = templateData.spaceId
 	rootOrg = templateData.rootOrg
-	showCompanyOnly = templateData.showCompanyOnly
 	showLimitedCompanyOnly = templateData.showLimitedCompanyOnly
 	CFDataManager.setOrganizationModalValue(CFDataManager.getFormulaOrganizations(templateData.defaultValues, spaceId));
 	$.jstree.defaults.checkbox.three_state = false;
@@ -40,7 +39,7 @@ renderTree = (container, isSelf)->
 			themes: {"stripes": true},
 			data: (node, cb) ->
 				# Session.set("cf_selectOrgId", node.id);
-				cb(CFDataManager.getNode(spaceId, node, {isSelf: isSelf, rootOrg: rootOrg, showCompanyOnly: showCompanyOnly, showLimitedCompanyOnly: showLimitedCompanyOnly}));
+				cb(CFDataManager.getNode(spaceId, node, {isSelf: isSelf, rootOrg: rootOrg, showLimitedCompanyOnly: showLimitedCompanyOnly}));
 			three_state: false
 		conditionalselect: (node) ->
 			return Template.cf_organization.conditionalselect(node);
@@ -71,9 +70,8 @@ Template.cf_organization.conditionalselect = (node)->
 
 Template.cf_organization.onRendered ->
 	templateData = Template.instance().data
-	showCompanyOnly = templateData.showCompanyOnly
 	showLimitedCompanyOnly = templateData.showLimitedCompanyOnly
-	if !showCompanyOnly and !showLimitedCompanyOnly
+	if !showLimitedCompanyOnly
 		renderTree "#cf_organizations_tree_self", true
 	renderTree "#cf_organizations_tree", false
 

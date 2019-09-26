@@ -1,0 +1,44 @@
+<template name="admin_flow_roles">
+
+	<section class="admin admin-flow-roles">
+		<div class="navigation-bar">
+
+			<a class="btn btn-default" href="/admin">
+				<i class="ion ion-android-arrow-back"></i>
+			</a>
+
+			<span class="navigation-title">
+				{{_ "flow_roles"}}
+				<a class="btn btn-xs btn-default role-help">
+					<i class="ion ion-ios-help-outline" title='{{_ "flow_roles_help"}}'></i>
+				</a>
+			</span>
+
+			<div class="pull-right">
+				<button type="button" class="btn btn-primary" id="create">{{_ "New"}}</button>
+			</div>
+		</div>
+		<div class="admin-content">
+			<div class="box-body" style="display: block;">
+				<div class="search-toolbar">
+					<div class="pull-right">
+						<div class="input-group">
+							<input type="text" name="flow-roles-search-key" id="flow-roles-search-key" class="form-control flow-roles-search-key" placeholder="{{_ 'Search'}}...">
+							<span class="input-group-btn">
+								<button type="submit" name="flow-roles-search-btn" id="flow-roles-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+				{{> tabular table=TabularTables.flow_roles  selector=selector class="table table-hover dataTable no-footer dataTale-flow-roles"}}
+
+				{{#afModal class="btn btn-primary admin-roles-add hidden" collection="db.flow_roles"  operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+					{{_ "Create"}}
+				{{/afModal}}
+
+			</div>
+		</div>
+	</section>
+
+</template>

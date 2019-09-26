@@ -1,0 +1,48 @@
+<template name="instanceSignModal">
+
+	<div class="modal fade instance-sign-modal" id="instance-sign-modal" role="dialog" aria-labelledby="instance-sign-modal" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content is-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="selectFlowLabel">{{modal_title}}</h4>
+
+				</div>
+
+				<div class="modal-body modal-zoom">
+					<div class="instance-suggestion">
+						{{#unless sign_type_add}}
+						<div class="form-group">
+							<label class="radio-inline" style="padding-left: 0px">
+								<a class="instance-sign-history">
+									{{_ "workflow_history_approve_counts" show_suggestion_counts}}
+								</a>
+							</label>
+						</div>
+						{{/unless}}
+
+						<textarea name="modal_suggestion" class="suggestion-control" id="modal_suggestion">{{modal_suggestion}}</textarea>
+						<span class="help-block"></span>
+						{{#if opinions.length}}
+							{{#each opinions}}
+								<a class="instance-sign-opinion-btn text-overflow">{{this}}</a>
+							{{/each}}
+						{{else}}
+							<a class="instance-sign-opinion-btn">{{_ "instance_sign_read"}}</a>
+							<a class="instance-sign-opinion-btn">{{_ "instance_sign_done"}}</a>
+							<a class="instance-sign-opinion-btn">{{_ "instance_sign_agree"}}</a>
+						{{/if}}
+						<a id="instance_flow_opinions">{{_ 'instance_opinion_title_select'}}</a>
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="instance_sign_modal_ok">{{_ "OK"}}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

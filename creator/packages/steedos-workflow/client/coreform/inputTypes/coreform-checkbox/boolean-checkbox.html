@@ -1,0 +1,22 @@
+<template name="afCheckboxSteedos">
+    <div class="checkbox">
+        {{#if isReadOnly}}
+            <label class="readonly">
+                {{#if this.value}}
+                    {{_ "form_field_checkbox_yes"}}
+                {{else}}
+                    {{_ "form_field_checkbox_no"}}
+                {{/if}}
+            </label>
+            <label style="display:none"><input type="checkbox" value="true" {{atts}} /> {{afFieldLabelText name=this.name}}</label>
+        {{else}}
+			{{#if skipLabel}}
+				<label><input type="checkbox" value="true" {{atts}} /> {{afFieldLabelText name=this.name}}</label>
+			{{else}}
+				<label style="width: 100%;"><input type="checkbox" value="true" {{atts}} /></label>
+			{{/if}}
+
+
+        {{/if}}
+    </div>
+</template>

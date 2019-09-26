@@ -1,0 +1,64 @@
+.instance_new {
+	cursor: pointer;
+}
+
+.sidebar{
+	.treeview-menu{
+		.ion{
+			float: left;
+		}
+		.inbox-flow{
+			.flow-name{
+				width:135px;
+				//line-height: 100%;/*增加text-overflow后需要该样式保持高度正常*/
+				vertical-align: bottom;
+			}
+		}
+		.category-name{
+			width: 125px;
+			vertical-align: bottom;
+		}
+	}
+}
+
+.sidebar-collapse{
+	.sidebar{
+		.treeview-menu{
+			max-height: 350px;
+			overflow-y: auto;
+			.inbxo-flow{
+				.flow-name{
+					width:115px;
+				}
+			}
+		}
+	}
+}
+
+
+.workflow{
+	.main-sidebar{
+		.sidebar-menu{
+			ul{
+				.active{
+					a{
+						color: #0078D7 !important;
+					}
+				}
+			}
+			//@media (max-width: 768px){
+			//	//手机上始终把待审核菜单展开
+			//	.inbox ul.treeview-menu {
+			//		overflow: visible!important;
+			//		display: block!important;
+			//		height: auto!important;
+			//	}
+			//}
+		}
+
+		.box-space-name{
+			width: 140px !important;
+			vertical-align: bottom;
+		}
+	}
+}

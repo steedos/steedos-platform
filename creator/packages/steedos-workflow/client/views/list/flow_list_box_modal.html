@@ -1,0 +1,23 @@
+<template name="flow_list_box_modal">
+  <div class="modal fade" id="flow_list_box_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content ins-modal">
+        <div class="modal-header">
+          <div class="btn-group pull-right">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <h4 class="modal-title" id="myModalLabel">
+            {{title}}
+            {{#if help_url}}
+              <a class="btn btn-lg btn-link btn-help" id="btn_help">
+                <i class="ion ion-ios-help-outline" title="{{_ "Help"}}"></i>
+              </a>
+            {{/if}}
+          </h4>
+        </div>
+        <div class="modal-body flow-list-box-modal-body modal-zoom" style='overflow-y:auto'> {{> flow_list_box}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

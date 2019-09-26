@@ -1,0 +1,15 @@
+<template name="afRadioGroupInlineSteedos">
+    <div class="af-radio-group" {{dsk}}>
+        {{#each this.items}}
+            {{#if isReadOnly}}
+                {{#if this.selected}}
+                    <label class="radio-inline fix-indent readonly">{{this.label}}</label>
+                {{/if}}
+
+                <label class="radio-inline fix-indent" style="display: none"><input type="radio" value="{{this.value}}" {{atts}} /> {{this.label}}</label>
+            {{else}}
+                <label class="radio-inline fix-indent"><input type="radio" value="{{this.value}}" {{atts}} /> {{this.label}}</label>
+            {{/if}}
+        {{/each}}
+    </div>
+</template>

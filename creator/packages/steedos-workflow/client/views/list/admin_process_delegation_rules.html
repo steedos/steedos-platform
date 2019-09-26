@@ -1,0 +1,48 @@
+<template name="admin_process_delegation_rules">
+
+    <section class="admin_flows">
+        <div class="navigation-bar">
+
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+
+            <span class="navigation-title">
+                    {{_ "process_delegation_rules"}}
+            </span>
+
+            {{#if showCreateBtn}}
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary" id="addProcessDelegationRules">{{_ "Create"}}</button>
+            </div>
+            {{/if}}
+
+        </div>
+        <div class="admin-content">
+            <div class="box-body" style="display: block;">
+                <div class="search-toolbar">
+                    <div class="pull-right">
+                        <div class="input-group">
+                            <input type="text" name="process-delegation-rules-search-key" id="process-delegation-rules-search-key" class="form-control process-delegation-rules-search-key" placeholder="{{_ 'Search'}}...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="process-delegation-rules-search-btn" id="process-delegation-rules-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{> tabular table=TabularTables.process_delegation_rules selector=selector class="table dataTable no-footer datatable-process-delegation-rules table-hover"}}
+
+                {{#afModal class="btn btn-primary process-delegation-rules-insert hidden" collection="db.process_delegation_rules" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=insertButtonContent}}
+                    {{_ "Create"}}
+                {{/afModal}}
+
+                {{#afModal class="btn btn-primary process-delegation-rules-edit hidden" collection="db.process_delegation_rules" operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent showRemoveButton=true}}
+                    {{_ "Edit"}}
+                {{/afModal}}
+
+            </div>
+        </div>
+    </section>
+
+</template>

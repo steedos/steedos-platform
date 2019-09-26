@@ -1,0 +1,96 @@
+<template name="flow_list_box">
+	<div class="flow_list_box">
+		{{#if subtitle}}
+			<div class="form-subtitle">{{subtitle}}</div>
+		{{/if}}
+		<div class='box box-solid '>
+			{{#if clearable}}
+				<div class='panel box box-default' style='margin-bottom:0'>
+					<a data-toggle='collapse' data-parent='#flow_accordion'>
+						<div class='box-header with-border' style='border-bottom:0; padding-left:0'>
+							<h4 class='box-title'>
+								<div class='panel-collapse collapse in' id="categories_all">
+									<div class='weui-cells-weui-cells-access'>
+										<div class='weui-cell flow-item'>
+											<div class='weui-cell__bd' data-flow=''>
+												<i class='fa fa-bars' aria-hidden="true"></i>&nbsp;&nbsp;{{_ "All flows"}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</h4>
+						</div>
+					</a>
+				</div>
+			{{/if}}
+			<div class='box-group' id='flow_accordion'>
+				{{#if show_start_flows start_flows}}
+					<div class='panel box box-default'>
+						<a data-toggle='collapse' data-parent='#flow_accordion' href='#categories_start' aria-expanded="true">
+							<div class='box-header with-border'>
+								<h4 class='box-title'>
+									{{_ "start_flows"}} <i class="ion ion-ios-star"></i>
+								</h4>
+							</div>
+						</a>
+						<div class="weui-cells panel-collapse collapse in" id="categories_start" aria-expanded="true">
+							{{#each start_flows}}
+								<div class='weui-cell flow-item {{#if isFlowChecked _id}}checked{{/if}}'>
+									<div class='weui-cell__bd' data-flow='{{_id}}'>
+										<i class='ion ion-ios-compose-outline'></i>&nbsp;&nbsp;{{name}}
+									</div>
+									<div class="weui-cell__ft" data-start="true">
+										<i class="ion ion-ios-star"></i>
+									</div>
+								</div>
+							{{/each}}
+						</div>
+					</div>
+				{{/if}}
+
+				{{#each flow_list_data.categories}}
+					{{#if empty this}}
+						<div class='panel box box-default'>
+							<a data-toggle='collapse' data-parent='#flow_accordion' href='#categories_{{_id}}'>
+								<div class='box-header with-border'>
+									<h4 class='box-title'>
+										{{name}}
+									</h4>
+								</div>
+							</a>
+							<div class='panel-collapse collapse {{#if isCategorieChecked _id}}in{{/if}}' data-categorie='{{_id}}' id="categories_{{_id}}">
+								<div class="weui-cells">
+									{{#each forms}}
+										{{#each flows}}
+											<div class='weui-cell flow-item {{#if isFlowChecked _id}}checked{{/if}}'>
+												<div class='weui-cell__bd' data-flow='{{_id}}'>
+													<i class='ion ion-ios-compose-outline'></i>&nbsp;&nbsp;{{name}}
+												</div>
+												{{#if is_start_flow _id}}
+													<div class="weui-cell__ft" data-start="true">
+														<i class="ion ion-ios-star"></i>
+													</div>
+												{{else}}
+													<div class="weui-cell__ft">
+														<i class="ion ion-ios-star-outline"></i>
+													</div>
+												{{/if}}
+											</div>
+										{{/each}}
+									{{/each}}
+								</div>
+							</div>
+						</div>
+					{{/if}}
+				{{/each}}
+				{{#each flow_list_data.distribute_optional_flows}}
+					<div class='weui-cell flow-item'>
+						<div class='weui-cell__bd' data-flow='{{_id}}'>
+							<i class='ion ion-ios-compose-outline'></i>&nbsp;&nbsp;{{name}}
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>

@@ -3,7 +3,7 @@
 
 	"steedos_contacts_import_users": "导入用户",
 	"steedos_contacts_import_users_note": "导入规则",
-	"steedos_contacts_import_users_note_detail": "<p>数据文件必须为Excel</p><p>1、部门必须为全路径（例如：上海华炎软件/研发部）。如果部门不存在，则自动创建</p><p>2、导入用户如果不存在，则自动创建; 只有新建的用户支持设置密码</p><p>3、导入用户如果存在，并且已加入当前工作区，则修改用户信息。如果导入的属性为空，则不修改此属性值</p>",
+	"steedos_contacts_import_users_note_detail": "<p>数据文件必须为Excel</p><p>1、部门必须为全路径（例如：上海华炎软件/研发部）。如果部门不存在，请先创建</p><p>2、导入用户如果不存在，则自动创建; 只有新建的用户支持设置密码</p><p>3、导入用户如果存在，并且已加入当前工作区，则修改用户信息。如果导入的属性为空，则不修改此属性值</p>",
 	"steedos_contacts_import_users_data_file_title": "数据文件(Excel)",
 	"steedos_contacts_import_users_download_simple_data_file": "下载导入模板",
 	"steedos_contacts_import_users_match_user_base_username": "根据用户名匹配用户",

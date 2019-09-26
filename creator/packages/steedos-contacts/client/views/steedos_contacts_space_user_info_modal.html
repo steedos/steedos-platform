@@ -1,0 +1,174 @@
+<template name="steedos_contacts_space_user_info_modal">
+	<div class="modal fade contacts-detail-info-modal" id="steedos_contacts_space_user_info_modal" role="dialog" aria-labelledby="modalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content {{#if isHiddenUser}}hidden-user{{/if}}">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">{{spaceUser.name}}</h4>
+				</div>
+				<div class="weui-panel space-user-info-container modal-body modal-zoom">
+					{{#if isShowInviteState spaceUser.invite_state}}
+						<div class="weui-panel__hd">{{_ "contact_invite_state"}}</div>
+						<div class="weui-panel__bd">
+							<div class="weui-media-box weui-media-box_small-appmsg">
+								<div class="weui-cells">
+									<div class="weui-cell">
+										<div class="weui-cell__bd weui-cell_primary">
+											<p>
+												{{isShowInviteState spaceUser.invite_state}}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+					<div class="weui-panel__hd">{{_ "space_users_mobile"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell weui-cell-hidden-user-field">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{#if isAndroidOrIOS}}
+												<a href="tel:{{spaceUser.mobile}}" class="weui-input" style="color: #3c8dbc">{{spaceUser.mobile}}</a>
+											{{else}}
+												<span class="weui-input">{{spaceUser.mobile}}</span>
+											{{/if}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "space_users_email"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{spaceUser.email}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "space_users_work_phone"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell weui-cell-hidden-user-field">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{#if isAndroidOrIOS}}
+												<a href="tel:{{spaceUser.work_phone}}" class="weui-input" style="color: #3c8dbc">{{spaceUser.work_phone}}</a>
+											{{else}}
+												<span class="weui-input">{{spaceUser.work_phone}}</span>
+											{{/if}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "users_organizations"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{#each spaceUserOrganizations}}
+												<div class="user-org-item">
+													{{#if isMobile}}
+														{{name}} 
+													{{else}}
+														{{fullname}}
+													{{/if}}
+													{{#if isPrimaryOrg _id}}
+														<span class="badge">{{_ "space_users_organization"}}</span>
+													{{else}}
+														{{#if isEditable}}
+															<button class="btn btn-default btn-xs btn-set-primary hide" data-id="{{_id}}">{{_ "btn_set_primary_title"}}</button>
+														{{/if}}
+													{{/if}}
+												</div>
+											{{/each}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "space_users_position"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{spaceUser.position}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "space_users_company"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{spaceUser.company}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-panel__hd">{{_ "users_username"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								<div class="weui-cell">
+									<div class="weui-cell__bd weui-cell_primary">
+										<p>
+											{{username}}
+											{{#if isEditable}}
+												<button class="btn btn-transparent btn-edit-username" data-id="{{spaceUser.user}}" title="{{_ 'Edit'}}">
+													<i class="ion ion-ios-compose-outline"></i>
+												</button>
+											{{/if}}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="weui-btn-area text-right">
+						{{#if isEditable}}
+							{{#if isModifiable targetId}}
+								<button class="btn btn-default steedos-info-edit pull-left" data-id="{{targetId}}">{{_ "Edit"}}</button>
+							{{/if}}
+							{{#if isShowReinvite spaceUser.invite_state}}
+								<button class="btn btn-default steedos-contact-reinvite pull-left" data-id="{{targetId}}">再次邀请</button>
+							{{/if}}
+						{{/if}}
+						{{#if isDeletable}}
+							<button class="btn btn-default steedos-info-delete pull-left" data-id="{{targetId}}">{{_ "Delete"}}</button>
+						{{/if}}
+
+						<button class="btn btn-default steedos-info-copy pull-left" data-info="{{spaceUserInfo}}">{{_ "steedos_contacts_copy"}}</button>
+						<button class="btn btn-default steedos-info-close">{{_ "steedos_contacts_close"}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,20 @@
+<template name="traces_table_modal">
+	<div class="modal fade {{traces_modal_calss}}" role="dialog" style="overflow: hidden;">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content flow-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">{{_ "instance_approval_history"}}</h4>
+				</div>
+
+				<div class="modal-body" style="max-height: {{maxHeight}}">
+					{{> Template.dynamic template=traces_list_template data=(tracesListData instance)}}
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default pull-left btn-view-chart-traces">{{_ "chart_traces"}}</button> -->
+					<button type="button" class="btn btn-default btn-data-dismiss" data-dismiss="modal">{{_ "close"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

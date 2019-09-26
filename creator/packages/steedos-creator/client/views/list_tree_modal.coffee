@@ -9,6 +9,7 @@ findParent = (items, item)->
 
 getTreeData = ()->
 	items = [];
+	# 依赖订阅单位级组织，已经去掉了相关订阅，is_company属性也去掉了，该段代码应该不有再用了，所以如果要用，请改为odata请求
 	subCompany = db.organizations.find({space: Session.get('spaceId'), is_company: true}, {fields: {_id: 1, name: 1, parent: 1, parents: 1, is_company: 1}}).fetch()
 	#处理数据上下级
 	_.forEach subCompany, (item)->

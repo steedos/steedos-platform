@@ -1,0 +1,57 @@
+<template name="instance_attachments" >
+	{{#if showAttachments}}
+		<div class="instance_attachments col-md-12">
+			<div>
+				{{#if showMainTitle}}
+					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "instance_main_attachment"}}</span>
+				{{/if}}
+
+				<div class="btn btn-default ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
+					<input type="file" name="file" class="ins-file-input" id="ins_upload_main_attach">
+					<i class="fa fa-paperclip"></i>
+					<span>{{_ "workflow_attach_upload"}}</span>
+				</div>
+				{{#if isNode}}
+					<div class="btn btn-default ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
+						<button type="button" class="ins-file-input" id="ins_new_main_file"></button>
+						<i class="fa fa-file-word-o"></i>
+						<span>{{_ "workflow_attach_new"}}</span>
+					</div>
+				{{/if}}
+			</div>
+			<div class="attachments-list">
+				<table class='table table-condensed attachments' style="margin-bottom: 0px;">
+					<tbody>
+						{{#with main_attachment}}
+							{{> Template.dynamic template="instance_attachment" data=this}}
+						{{/with}}
+					</tbody>
+				</table>
+			</div>
+
+			<div>
+				{{#if enabled_edit_normal_attachment}}
+					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
+					<div class="btn btn-default ins-upload" title='{{_ "Attachments"}}'>
+						<input type="file" name="file" class="ins-file-input" id="ins_upload_normal_attach">
+						<i class="fa fa-paperclip"></i>
+						<span>{{_ "workflow_attach_upload"}}</span>
+					</div>
+				{{else}}
+					{{#with normal_attachments}}
+						<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
+					{{/with}}
+				{{/if}}
+			</div>
+			<div class="attachments-list">
+				<table class='table table-condensed attachments' style="margin-bottom: 0px;">
+					<tbody>
+					{{#each normal_attachments}}
+						{{> Template.dynamic template="instance_attachment" data=this}}
+					{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	{{/if}}
+</template>

@@ -1,0 +1,173 @@
+@media print{
+
+	.instance-print *{
+		color: inherit !important;
+	}
+
+	.instance-print .table-page-body .form-group,.instance-print .table-page-footer .form-group{
+		color: black !important;
+	}
+
+	.instance-print .table-page-body .instance-sign,.instance-print .table-page-footer .instance-sign{
+		color: black !important;
+	}
+
+	.instance-print .instance-table .form-table .td-title.is-required:after {
+		color: red !important;
+	}
+
+	.box-tools{
+		button{
+			display: none
+		}
+	}
+	.instance-traces{
+		.box-body{
+			display: block !important;
+		}
+	}
+
+	.no-print{
+		display: none !important;
+	}
+	//由于html5-boilerplate 插件的css中，写了A标签的打印样式用于打印a标签地址，此处进行重写
+	a[href]:after {
+		content: "";
+	}
+
+	.table-bordered{
+		border: 1px solid #000 !important;
+	}
+
+	.table-bordered th,.table-bordered td {
+		border: 1px solid #000 !important;
+	}
+
+	.table-bordered th{
+		border-bottom: 1px solid #000 !important;
+	}
+
+	.steedos-table{
+		.checkbox,.radio{
+			display: table-cell !important;
+			position: static !important;
+		}
+
+		table{
+			border-bottom: none !important;
+		}
+
+		.table{
+			border-left: 0px !important;
+			border-right: 0px !important;
+			border-collapse: separate !important;
+		}
+	}
+
+	.ins_attach_version{
+		display: none !important;
+	}
+
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display:table-header-group }
+    tfoot { display:table-footer-group }
+}
+
+.instance-print{
+
+	.hidden-xs{
+		display: inline !important
+	}
+
+    .instance-view .instance-name{
+      display: inline !important
+    }
+	.wrapper{
+	    overflow: visible;
+		background: silver !important;
+        position: inherit !important;
+	}
+
+	.content-wrapper{
+		top: 0px !important;
+	}
+
+	.btn{
+		border-radius: 0px;
+	}
+	.box{
+		border-radius: 0px;
+		border-top: 0px;
+		margin-bottom: 0px;
+		padding-bottom: 10px;
+		.box-body{
+			padding: 0px;
+            padding-top: 10px;
+
+			// .col-md-12{
+			// 	padding-left: 0px;
+			// 	padding-right: 0px;
+			// }
+		}
+	}
+
+	.content-wrapper{
+		margin-left: 0px;
+		width: 700px;
+		margin: 0 auto;
+		transition: all .3s;
+	}
+
+	.instance-table, .traces_table_modal{
+		.instance-template{
+			transition: all .3s;
+			max-width: none;
+		}
+
+		.steedos-table table thead .title{
+			min-width: auto;
+			white-space: normal;
+		}
+	}
+
+	.navigation-bar{
+		.print-tool{
+			padding: 6px 12px;
+			float: left;
+			.cbx-label{
+				cursor: pointer;
+				margin-right: 8px;
+				.cbx-print{
+					margin-right: 4px;
+				}
+				span{
+					position: relative;
+					top: -1px;
+				}
+			}
+		}
+	}
+
+	.instance_attachments{
+		margin-top: 0px !important;
+	}
+
+	//.instance-form{
+	//	padding-top: 15px;
+	//}
+
+    .instance-traces{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .form-control{
+        min-height: 22px !important;
+        text-align: left;
+    }
+
+    .td-padding{
+      padding: 5px 10px !important;
+    }
+}

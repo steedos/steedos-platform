@@ -1,0 +1,24 @@
+<template name="book_main">
+  <div class="contacts-main contacts-show">
+    {{#if subsReady}}
+      <div class="contacts-list-wrapper">
+        {{> steedos_contacts_group_tree}}
+      </div>
+      <div class="contacts-wrapper">
+      
+        {{> steedos_contacts_group_book_list}}
+        
+      </div>
+      <div class="row" style="display:none">
+        <div class="col-md-12">
+            {{> selectedValue}}
+        </div>
+      </div>
+      {{> baseTabbar}}
+    {{else}}
+      <div class="loading">
+        {{> steedosLoading}}
+      </div>
+    {{/if}}
+  </div>
+</template>

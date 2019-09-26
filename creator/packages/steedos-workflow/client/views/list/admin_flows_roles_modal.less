@@ -1,0 +1,98 @@
+.admin-flows-roles-modal {
+	.dataTables_wrapper {
+		// .row:nth-of-type(2) {
+		// 		margin: 0 1px 0 0;
+		// 	.col-sm-12 {
+		// 		overflow: auto;
+		// 		padding: 0;
+		// 	}
+		// }
+	}
+	.datatable-flows-roles {
+		border-color: #d2d6de;
+		word-warp:break-word; 
+		word-break:break-all;
+		thead {
+			th {
+				border-color: #eee;
+				border-bottom-width: 1px;
+				background-color: #f9f9f9;
+			}
+		}
+		tbody {
+			td {
+				border-color: #eee;
+				.users-name {
+					color: #333;
+				}
+				.org-fullname {
+					color: #777;
+				}
+			}
+		}
+		tfoot {
+			td {
+				border-color: #eee;
+			}
+		}
+
+		#copy {
+			display: none;
+		}
+	}
+	.weui-media-box__desc.table-content {
+		color: #333;
+		font-size: 14px;
+	}
+	.admin-role-panel {
+		border: none;
+		box-shadow: none;
+		margin-bottom: 0px;
+		.admin-role-table {
+			border: none; 
+			box-shadow: none;
+			.panel-body {
+				padding: 0 15px;
+				label {
+					padding-bottom: 5px !important; 
+				}
+			}
+			.heading {
+				overflow: hidden;
+				padding-bottom: 10px;
+				.col-sm-2 {
+					padding: 0;
+				}
+				.col-sm-12 {
+					padding: 0;
+				}
+			}
+			[data-required] label::after {
+			    content: ' *';
+			    color: red;
+			}
+			.panel-content {
+			    // border-bottom-left-radius: 3px;
+			    // border-bottom-right-radius: 3px;
+			    .add-positions {
+			    	cursor: pointer;
+			    	.ion {
+			    		position: relative;
+			    		top: 1px;
+			    		margin-right: 6px;
+			    	}
+			    }
+			}
+			.dataTables_wrapper {
+				.row:first-child {
+					display: none;
+				}
+				tbody {
+					tr {
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+}

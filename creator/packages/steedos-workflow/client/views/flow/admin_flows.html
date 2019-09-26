@@ -1,0 +1,42 @@
+<template name="admin_flows">
+
+    <section class="admin_flows">
+        <div class="navigation-bar">
+
+            <a class="btn btn-default" href="/admin">
+                <i class="ion ion-android-arrow-back"></i>
+            </a>
+
+            <span class="navigation-title">
+                    {{_ "workflow_form_edit"}}
+            </span>
+
+			<!--<div class="pull-right">-->
+				<!--<button type="button" class="btn btn-primary" id="importFlow">{{_ "workflow_import_flow"}}</button>-->
+			<!--</div>-->
+
+        </div>
+        <div class="admin-content">
+            <div class="box-body" style="display: block;">
+                <div class="search-toolbar">
+                    <div class="pull-right">
+                        <div class="input-group">
+                            <input type="text" name="flow-list-search-key" id="flow-list-search-key" class="form-control flow-list-search-key" placeholder="{{_ 'Search'}}...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="flow-list-search-btn" id="flow-list-search-btn" class="btn btn-default"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{> tabular table=TabularTables.Flows  selector=selector class="table dataTable no-footer flow-list table-hover"}}
+
+                {{#afModal class="btn btn-primary record-types-edit hidden" collection="db.flows" fields=fields operation="update" dialogClass="modal-lg modal-body-zoom" buttonContent=updateButtonContent}}
+                    {{_ "Edit"}}
+                {{/afModal}}
+
+            </div>
+        </div>
+    </section>
+
+</template>

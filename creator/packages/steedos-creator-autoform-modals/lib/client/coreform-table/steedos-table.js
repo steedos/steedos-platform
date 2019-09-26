@@ -66,7 +66,7 @@ CreatorTable.getKeys = function(field, autoFormId) {
 
 
 if(Meteor.isClient){
-    AutoForm.addInputType("table", {
+    AutoForm.addInputType("steedosGrid", {
         template: "creatorTable",
         valueOut: function() {
             // CreatorTable.getTableValue(this);

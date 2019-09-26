@@ -1,0 +1,32 @@
+<template name="batch_instances_modal">
+	<div class="modal fade batch-instances-modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">{{_ "workflow_batch_approval"}}</h4>
+				</div>
+				<div class="modal-body">
+					{{> Template.dynamic template='batch_instances' data=batch_instances}}
+				</div>
+				<div class="modal-footer">
+					<div class="form-group" style="text-align: left;">
+						<label class="control-label">{{_ "instance_approve_description_label"}}</label>
+						<textarea rows="2" class="cfTextarea form-control" id="batch_instances_description"></textarea>
+					</div>
+
+					<div class="progress-group batch-instances-modal-progress" style="text-align: left;display: none">
+						<span class="progress-text">{{_ "workflow_batch_approval_processing"}}</span>
+						<span class="progress-number"><b>{{submitted}}</b>/{{batch_instances_length}}</span>
+
+						<div class="progress sm">
+							<div class="progress-bar progress-bar-aqua" style="width: {{progress}}%"></div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-primary confirm">{{_ "OK"}}({{batch_instances_length}})</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{_ "Cancel"}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

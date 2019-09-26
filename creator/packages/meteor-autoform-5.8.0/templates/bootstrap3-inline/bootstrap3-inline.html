@@ -1,0 +1,24 @@
+<template name="quickForm_bootstrap3-inline">
+  {{#autoForm qfAutoFormContext}}
+    {{> afQuickFields quickFieldsAtts}}
+    {{#if qfShouldRenderButton}}
+    <button type="submit" {{submitButtonAtts}}>
+    {{#with ../atts.buttonContent}}
+    {{this}}
+    {{else}}
+    Submit
+    {{/with}}
+    </button>
+    {{/if}}
+  {{/autoForm}}
+</template>
+
+<template name="afFormGroup_bootstrap3-inline">
+  <div class="form-group {{#if afFieldIsInvalid name=this.name}}has-error{{/if}} {{afFormGroupClass}}" data-required={{required}} {{afFormGroupAtts}}>
+    {{#unless skipLabel}}
+    <label {{afFieldLabelAtts}}>{{#if this.labelText}}{{this.labelText}}{{else}}{{afFieldLabelText name=this.name}}{{/if}}</label>
+    {{/unless}}
+    {{> afFieldInput afFieldInputAtts}}
+    <span class="help-block">{{{afFieldMessage name=this.name}}}</span>
+  </div>
+</template>

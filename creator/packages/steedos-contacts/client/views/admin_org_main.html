@@ -1,0 +1,26 @@
+<template name="admin_org_main">
+  <div class="contacts-main contacts-show">
+    {{#if subsReady}}
+      {{#if isShowOrg}}
+        <div class="contacts-list-wrapper">
+          {{> steedos_contacts_org_tree}}
+        </div>
+        <div class="contacts-wrapper">
+
+          {{> steedos_contacts_org_user_list}}
+
+        </div>
+        <div class="row" style="display:none">
+          <div class="col-md-12">
+              {{> selectedValue}}
+          </div>
+        </div>
+        {{> baseTabbar}}
+      {{/if}}
+    {{else}}
+      <div class="loading">
+        {{> steedosLoading}}
+      </div>
+    {{/if}}
+  </div>
+</template>

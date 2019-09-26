@@ -156,10 +156,8 @@ Creator.getObjectSchema = (obj) ->
 
 					if field.reference_to == "users"
 						fs.autoform.type = "selectuser"
-						fs.autoform.is_company_only = field.is_company_only
 						if !field.hidden && !field.omit
 							# is_company_limited表示过滤数据时是否只显示本单位下的数据
-							# is_company_limited为true时，is_company_only不会被强制设置为true，它们是两个独立的功能属性
 							# is_company_limited可以被改写覆盖成true/false或其他function
 							if field.is_company_limited == undefined
 								# 未定义is_company_limited属性时默认处理逻辑：
@@ -188,10 +186,8 @@ Creator.getObjectSchema = (obj) ->
 							fs.autoform.is_company_limited = field.is_company_limited
 					else if field.reference_to == "organizations"
 						fs.autoform.type = "selectorg"
-						fs.autoform.is_company_only = field.is_company_only
 						if !field.hidden && !field.omit
 							# is_company_limited表示过滤数据时是否只显示本单位下的数据
-							# is_company_limited为true时，is_company_only不会被强制设置为true，它们是两个独立的功能属性
 							# is_company_limited可以被改写覆盖成true/false或其他function
 							if field.is_company_limited == undefined
 								# 未定义is_company_limited属性时默认处理逻辑：
@@ -330,7 +326,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "grid"
 			fs.type = Array
 			fs.autoform.editable = true
-			fs.autoform.type = "table"
+			fs.autoform.type = "steedosGrid"
 
 			schema[field_name + ".$"] =
 				type: Object
@@ -402,6 +398,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = String
 			fs.regEx = SimpleSchema.RegEx.Email
 			fs.autoform.type = 'steedosEmail'
+		else if field.type == 'autonumber'
+			fs.type = String
 		else
 			fs.type = field.type
 

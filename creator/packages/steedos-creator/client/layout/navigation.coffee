@@ -18,7 +18,7 @@ Template.creatorNavigation.helpers
 		return Creator.getObject(this)
 
 	object_class_name: (obj)->
-		if (obj == FlowRouter.getParam("object_name"))
+		if (obj == Session.get("object_name"))
 			return "slds-is-active"
 
 	object_url: ()->

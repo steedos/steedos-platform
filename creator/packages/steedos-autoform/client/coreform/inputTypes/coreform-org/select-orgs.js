@@ -101,9 +101,6 @@ Template.afSelectOrg.events({
 			options.rootOrg = dataset.rootOrg
 		}
 
-		if(template.data.atts.is_company_only){
-			options.showCompanyOnly = true
-		}
 		if (template.data.atts.is_company_limited) {
 			options.showLimitedCompanyOnly = true
 		}

@@ -49,7 +49,6 @@ WXMini.newOrganization = (userId, spaceId, orgName)->
 		space: spaceId
 		name: orgName
 		fullname: orgName
-		is_company: true
 		users: [userId]
 		created: now
 		created_by: userId
@@ -83,7 +82,7 @@ WXMini.addUserToSpace = (userId, spaceId, userName, profile)->
 	space = Creator.getCollection("spaces").findOne({_id: spaceId})
 	if space
 		#将用户添加到space的根部门下
-		root_org = Creator.getCollection("organizations").findOne({space: space._id, is_company: true, parent: null}, {fields: {_id: 1}})
+		root_org = Creator.getCollection("organizations").findOne({space: space._id, parent: null}, {fields: {_id: 1}})
 		if root_org
 			Creator.getCollection("organizations").direct.update({_id: root_org._id}, {$push: {users: userId}})
 			# 新增一条space_user

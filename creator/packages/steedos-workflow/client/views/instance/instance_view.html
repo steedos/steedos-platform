@@ -1,0 +1,46 @@
+<template name="instance_view">
+    <div class="navigation-bar">
+        <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
+        {{> instance_button}}
+    </div>
+    <div class="instance-view {{get_priority_class}}">
+        {{> instance_suggestion}}
+        <div class="instance {{instanceStyle instance.form}}">
+            <div class="instance-form {{instance_box_style }} {{box}}">
+                {{#if formDescription}}
+                    <div class="box-header  with-border instance-header">
+                        <div>
+                            {{{formDescription}}}
+                        </div>
+                    </div>
+                {{/if}}
+                <div class="box-body">
+                    <div class="col-md-12">
+                        {{> Template.dynamic template="instance_attachments" }}
+                        {{> related_instances}}
+                        {{> related_records}}
+                        {{#if isIReadable}}
+                            {{{readOnlyView}}}
+                        {{else}}
+                            {{#if isTableView}}
+                                {{> instanceform_table}}
+                            {{else}}
+                                {{> instanceform}}
+                            {{/if}}
+                        {{/if}}
+
+                    </div>
+                </div>
+            </div>
+            {{#if notDistributeAndDraft instance.state}}
+				{{#if (showTracesView instance.form instance.form_version)}}
+                	{{> Template.dynamic template=(tracesTemplateName instance.form) data=(tracesListData instance)}}
+				{{/if}}
+			{{else}}
+				{{#if showPickApproveUsers}}
+					{{> Template.dynamic template="instance_pick_approve_users"}}
+				{{/if}}
+			{{/if}}
+        </div>
+    </div>
+</template>

@@ -1,0 +1,18 @@
+<template name="contactsSidebar">
+		<aside class="main-sidebar">
+				<div class="sidebar" id="scrollspy">
+					{{> sidebarUserPanel}}
+					<ul class="nav sidebar-menu">
+						<li class="header header-app">
+							{{_ "Steedos Contacts"}}
+						</li>
+
+						<li class="{{liActive 'orgs'}}"><a href="/contacts/orgs" ><i class="fa fa-sitemap"></i><span>{{_ 'contacts_organizations'}}</span></a></li>
+
+						<li class="{{liActive 'books'}}"><a href="/contacts/books" ><i class="ion ion-android-contacts"></i><span>{{_ 'contacts_personal_contacts'}}</span></a></li>
+
+					</ul>
+				</div>
+		</aside>
+		{{> contentWrapperShadow}}
+</template>

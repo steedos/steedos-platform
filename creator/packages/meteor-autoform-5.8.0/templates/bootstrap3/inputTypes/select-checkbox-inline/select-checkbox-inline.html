@@ -1,0 +1,10 @@
+<template name="afCheckboxGroupInline_bootstrap3">
+  <div class="af-checkbox-group" {{dsk}}>
+    {{#each this.items}}
+    <label class="checkbox-inline fix-indent">
+      <input type="checkbox" value="{{this.value}}" {{atts}} />
+      {{this.label}}
+    </label>
+    {{/each}}
+  </div>
+</template>

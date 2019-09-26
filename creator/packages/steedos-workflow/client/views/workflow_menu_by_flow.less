@@ -1,0 +1,58 @@
+.workflow-menu-by-flow {
+	.fa-angle-left{
+		display: none;
+	}
+	&>li>.treeview-menu {
+		margin-left: 10px;
+	}
+	.treeview-menu .treeview-menu {
+		padding-left: 20px;
+	}
+}
+.creator-content-wrapper {
+	.main-sidebar {
+		.workflow-menu-by-flow {
+			li>.treeview-menu {
+				// 默认自动展开所有菜单内容
+				display: block !important;
+			}
+		}
+	}
+}
+
+// creator中手机上切换审批箱时，左侧sidebar展开为待选项菜单
+@media (max-width: 767px) {
+	.creator-content-wrapper {
+		.main-sidebar {
+			background: #fff !important;
+			display: none;
+			width: 100%;
+			margin-top: 66px !important;
+
+			.top-sidebar {
+				display: none;
+			}
+
+			.workflow-menu-by-flow {
+				.header-app {
+					display: none;
+				}
+			}
+		}
+
+		.content-wrapper {
+			transform: none;
+			&.content-wrapper-shadow {
+				display: none;
+			}
+		}
+	}
+
+	.sidebar-open {
+		.creator-content-wrapper {
+			.main-sidebar {
+				display: block;
+			}
+		}
+	}
+}

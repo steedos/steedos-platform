@@ -2,7 +2,6 @@ renderTree = (container,isSelf)->
 	templateData = Template.instance().data
 	spaceId = Template.instance().data.spaceId
 	rootOrg = Template.instance().data.rootOrg
-	showCompanyOnly = templateData.showCompanyOnly
 	showLimitedCompanyOnly = templateData.showLimitedCompanyOnly
 	$(container).on('select_node.jstree', (e, data) ->
 		if(container == "#cf_organizations_tree_self")
@@ -25,7 +24,7 @@ renderTree = (container,isSelf)->
 			themes: {"stripes": true, "variant": "large"},
 			three_state: false,
 			data: (node, cb) ->
-				cb(CFDataManager.getNode(spaceId, node, {isSelf: isSelf, isNeedtoSelDefault: true, rootOrg: rootOrg, showCompanyOnly: showCompanyOnly, showLimitedCompanyOnly: showLimitedCompanyOnly}));
+				cb(CFDataManager.getNode(spaceId, node, {isSelf: isSelf, isNeedtoSelDefault: true, rootOrg: rootOrg, showLimitedCompanyOnly: showLimitedCompanyOnly}));
 
 				# if node.id != '#'
 					# Session.set("cf_selectOrgId", node.id);
@@ -39,9 +38,8 @@ Template.cf_organization_list.helpers
 
 Template.cf_organization_list.onRendered ->
 	templateData = Template.instance().data
-	showCompanyOnly = templateData.showCompanyOnly
 	showLimitedCompanyOnly = templateData.showLimitedCompanyOnly
-	if !showCompanyOnly and !showLimitedCompanyOnly
+	if !showLimitedCompanyOnly
 		renderTree "#cf_organizations_tree_self", true
 	renderTree "#cf_organizations_tree", false
 

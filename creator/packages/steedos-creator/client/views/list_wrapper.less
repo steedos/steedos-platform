@@ -125,6 +125,13 @@
 		&.list-table-sidebar{
 			flex: 1;
 			border-right: 1px solid rgb(224, 229, 238);
+			border-bottom-right-radius: 0px !important;
+			.dx-scrollable-content{
+				padding-bottom: 20px;
+			}
+			&~.list-table-container {
+				border-bottom-left-radius: 0px !important;
+			}
 		}
 	}
 }
@@ -144,8 +151,10 @@
 			height: 100%;
 		}
 
-		.dx-scrollable-customizable-scrollbars {
-			height: calc(~"100% - 76px") !important;
+		.dx-datagrid {
+			.dx-scrollable-customizable-scrollbars {
+				height: calc(~"100% - 76px") !important;
+			}
 		}
 	}
 }

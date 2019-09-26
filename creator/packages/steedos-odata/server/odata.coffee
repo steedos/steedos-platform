@@ -4,6 +4,9 @@ Meteor.startup ->
 	express = require('express');
 	app = express();
 	app.use('/api/odata/v4', MeteorODataRouter);
+	MeteorODataAPIV4Router = require('@steedos/core').MeteorODataAPIV4Router;
+	if MeteorODataAPIV4Router
+		app.use('/api/v4', MeteorODataAPIV4Router)
 	WebApp.connectHandlers.use(app);
 	_.each Creator.steedosSchema.getDataSources(), (datasource, name)->
 		if(name != 'default')

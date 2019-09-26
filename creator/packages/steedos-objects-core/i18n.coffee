@@ -95,6 +95,7 @@ if Meteor.isClient
 				moment.locale("en")
 
 		Tracker.autorun ()->
+			Session.set("steedos-locale", "zh-CN")
 			if Meteor.user()
 				if Meteor.user().locale
 					Session.set("steedos-locale",Meteor.user().locale)

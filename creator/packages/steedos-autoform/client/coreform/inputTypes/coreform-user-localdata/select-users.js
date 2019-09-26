@@ -104,7 +104,7 @@ Template.afSelectUser_localData.events({
     var start_orgId = "";
 
     if(data.orgs && data.orgs.length > 0){
-        var start_org = data.orgs.filterProperty("is_company",true).filterProperty("parent", null);
+        var start_org = data.orgs.filterProperty("parent", null);
         start_org.forEach(function(so){
             start_orgId = so.id;
         });

@@ -25,20 +25,20 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 		if spaceId and userId
 			isSpaceAdmin = Creator.isSpaceAdmin()
 			user_permission_sets = Session.get("user_permission_sets")
-			user_company_id = Session.get("user_company_id")
+			userCompanyOrganizationId = Steedos.getUserCompanyOrganizationId()
 			isOrganizationAdmin = _.include(user_permission_sets,"organization_admin")
 			unless isSpaceAdmin
-				# 如果不是工作区管理员左侧选中组织需要有默认值user_company_id
+				# 如果不是工作区管理员左侧选中组织需要有默认值userCompanyOrganizationId
 				selectedKeys = null
-				if isOrganizationAdmin and user_company_id
-					selectedKeys = [user_company_id]
+				if isOrganizationAdmin and userCompanyOrganizationId
+					selectedKeys = [userCompanyOrganizationId]
 				Session.set "grid_sidebar_selected", selectedKeys
 				if selectedKeys and selectedKeys.length
 					setGridSidebarFilters(selectedKeys)
 				else
 					# 没有权限时，应该看不到右侧列表相关数据
 					setGridSidebarFilters([-1])
-				if isOrganizationAdmin and !user_company_id
+				if isOrganizationAdmin and !userCompanyOrganizationId
 					toastr.error("您的单位信息未设置，请联系系统管理员。");
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
@@ -98,10 +98,10 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 					Session.set "grid_sidebar_selected", selectedKeys
 					setGridSidebarFilters(selectedKeys)
 				else
-					# 如果不是工作区管理员，清空选项时，左侧选中组织需要有默认值user_company_id
+					# 如果不是工作区管理员，清空选项时，左侧选中组织需要有默认值userCompanyOrganizationId
 					selectedKeys = null
-					if isOrganizationAdmin and user_company_id
-						selectedKeys = [user_company_id]
+					if isOrganizationAdmin and userCompanyOrganizationId
+						selectedKeys = [userCompanyOrganizationId]
 					Session.set "grid_sidebar_selected", selectedKeys
 					if selectedKeys and selectedKeys.length
 						setGridSidebarFilters(selectedKeys)
@@ -109,7 +109,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						# 没有权限时，应该看不到右侧列表相关数据
 						setGridSidebarFilters([-1])
 				
-				if isOrganizationAdmin and !user_company_id
+				if isOrganizationAdmin and !userCompanyOrganizationId
 					toastr.error("您的单位信息未设置，请联系系统管理员。");
 
 			dxOptions.keyExpr = "_id"
@@ -122,8 +122,8 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			
 			unless isSpaceAdmin
 				if isOrganizationAdmin
-					if user_company_id
-						dxOptions.rootValue = user_company_id
+					if userCompanyOrganizationId
+						dxOptions.rootValue = userCompanyOrganizationId
 					else
 						dxOptions.rootValue = "-1"
 				else

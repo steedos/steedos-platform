@@ -1,0 +1,39 @@
+<template name="flow_list_box_org_modal">
+<div class="modal fade flow-list-box-org-modal cf_contact_modal" id="flow_list_box_org_modal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+				</div>
+				<div class="modal-body contacts-main contacts-show">
+					{{#if subsReady}}
+						<div class="contacts-list-wrapper">
+							{{>Template.dynamic template="flow_list_box_org_tree" data=contactsTreeData}}
+						</div>
+						<div class="contacts-wrapper" style='overflow-y:auto'>
+							{{>Template.dynamic template="flow_list_box_org" data=flowListData}}
+						</div>
+					{{else}}
+						<div class="loading">
+							{{> steedosLoading}}
+						</div>
+					{{/if}}
+				</div>
+				{{#if clearable}}
+					<div class="modal-footer">
+						<div class="row">
+							<div class="col-md-2 pull-left">
+								<button type="button" class="btn btn-default" id="remove" title='{{_ "remove"}}' style="width:100%">{{_ "remove"}}</button>
+							</div>
+							<div class="col-md-2 pull-right">
+								<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" title='{{_ "close"}}' style="width:100%">{{_ "close"}}</button>
+							</div>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>

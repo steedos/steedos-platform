@@ -210,9 +210,6 @@ Template.afSelectUser.events({
             options.spaceId = dataset.spaceId || template.data.atts.spaceId || Session.get("spaceId")
         }
 
-        if (template.data.atts.is_company_only) {
-            options.showCompanyOnly = true
-        }
         if (template.data.atts.is_company_limited) {
             options.showLimitedCompanyOnly = true
         }

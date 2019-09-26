@@ -13,7 +13,7 @@ Meteor.startup ->
 					if su.organizations.length is 1
 						check_count = db.organizations.find(su.organizations[0]).count()
 						if check_count is 0
-							root_org = db.organizations.findOne({space: su.space, is_company: true, parent: null})
+							root_org = db.organizations.findOne({space: su.space, parent: null})
 							if root_org
 								r = db.space_users.direct.update({_id: su._id}, {$set: {organizations: [root_org._id], organization: root_org._id}})
 								if r
