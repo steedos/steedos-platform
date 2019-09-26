@@ -151,4 +151,16 @@ export class Core {
 
         WebApp.connectHandlers.use(app);
     }
+
+    static initDesignSystem(){
+        const router = express.Router()
+
+        let dsPath = require.resolve("@salesforce-ux/design-system/package.json")
+        dsPath = dsPath.replace("package.json", 'assets')
+        let routerPath = "/assets/"
+        if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
+            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/assets/";
+        router.use(routerPath, express.static(dsPath));
+        WebApp.rawConnectHandlers.use(router);
+    }
 }

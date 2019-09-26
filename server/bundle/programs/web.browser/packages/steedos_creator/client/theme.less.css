@@ -391,7 +391,7 @@ body button {
   padding-left: 0;
 }
 .dx-treeview-search {
-  margin: 12px 6px;
+  margin: 8px 6px;
 }
 .dx-treeview-item.dx-state-hover {
   background-color: rgba(0, 0, 0, 0.05);

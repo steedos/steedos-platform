@@ -5,6 +5,7 @@ import { Plugins } from './plugins';
 import * as migrate from '@steedos/migrate';
 
 export async function init() {
+    Core.initDesignSystem()
     Core.createBaseObject()
     LoadFiles.initStandardObjects();
     Core.addStaticJs()

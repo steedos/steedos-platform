@@ -24,20 +24,20 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-23T10:15:06.813Z",
+        "date": "2019-09-26T12:20:24.267Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
         "osRelease": "18.7.0",
         "totalMemory": 8589934592,
-        "freeMemory": 1079754752,
+        "freeMemory": 218787840,
         "cpus": 6
     },
     "commit": {
-        "hash": "be4db744bde75d326ef60de76bc1ed528992f90d",
-        "date": "Mon Sep 23 18:01:13 2019 +0800",
-        "author": "yinlainghui",
-        "subject": "fix xp电脑上数值字段编辑异常问题 #1354",
+        "hash": "63a43b01042dfa3f06e58cf806bf5ab526b7825b",
+        "date": "Thu Sep 26 20:14:03 2019 +0800",
+        "author": "庄建国",
+        "subject": "Update layout.less",
         "tag": "1.5.1",
         "branch": "dev"
     }
@@ -49,7 +49,6 @@ Steedos.Info = {
     ".js",
     ".json",
     ".coffee",
-    ".jsx",
     ".info"
   ]
 });

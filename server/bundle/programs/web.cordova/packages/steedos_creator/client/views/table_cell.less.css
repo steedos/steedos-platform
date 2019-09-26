@@ -75,9 +75,6 @@
 #creator-quick-form .cell-extra-field-container {
   padding-left: 10px;
 }
-#viewRecordForm .creator_table_cell .cell-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+#viewRecordForm .creator_table_cell .cell-extra-field-container {
+  float: right;
 }

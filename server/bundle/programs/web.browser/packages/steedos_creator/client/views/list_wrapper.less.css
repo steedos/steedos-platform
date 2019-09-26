@@ -119,6 +119,13 @@
       -ms-flex: 1;
           flex: 1;
   border-right: 1px solid #e0e5ee;
+  border-bottom-right-radius: 0px !important;
+}
+.slds-col.sidebar-open > .list-table-container.list-table-sidebar .dx-scrollable-content {
+  padding-bottom: 20px;
+}
+.slds-col.sidebar-open > .list-table-container.list-table-sidebar ~ .list-table-container {
+  border-bottom-left-radius: 0px !important;
 }
 /*start=====处理客户端grid列表高度问题，客户端高度计算有bug，会造成grid列表底部显示不全，进而造成看不到底部水平滚动条======*/
 @media (min-width: 767px) {
@@ -128,7 +135,7 @@
   .filter-list-wraper.creator-grid-wrap > .weui-flex > .table-grid-content > .slds-col {
     height: 100%;
   }
-  .filter-list-wraper.creator-grid-wrap > .weui-flex .dx-scrollable-customizable-scrollbars {
+  .filter-list-wraper.creator-grid-wrap > .weui-flex .dx-datagrid .dx-scrollable-customizable-scrollbars {
     height: calc(100% - 76px) !important;
   }
 }

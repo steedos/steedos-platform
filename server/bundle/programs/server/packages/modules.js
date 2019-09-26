@@ -468,7 +468,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"length-stream":{"package.json":function(require,exports,module){
+}},"cors":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/cors/package.json                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "cors",
+  "version": "2.8.5",
+  "main": "./lib/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/cors/lib/index.js                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"length-stream":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -774,7 +801,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.6.5",
+  "version": "1.6.6-patch.1",
   "main": "lib/index.js"
 };
 
@@ -801,7 +828,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "main": "lib/index.js"
 };
 
@@ -828,7 +855,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "main": "lib/index.js"
 };
 
@@ -1341,7 +1368,6 @@ module.useNode();
     ".js",
     ".json",
     ".coffee",
-    ".jsx",
     ".info"
   ]
 });
