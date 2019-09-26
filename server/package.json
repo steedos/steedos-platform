@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "@salesforce-ux/design-system": "^2.7.4",
     "@steedos/auth": "^1.6.6",
     "@steedos/core": "^1.6.6",
     "@steedos/filters": "^1.6.6",
@@ -41,6 +42,7 @@
     "connect-route": "^0.1.5",
     "cookies": "^0.6.2",
     "core-js": "^2.5.3",
+    "cors": "^2.8.5",
     "csv": "^1.1.0",
     "ejs": "^2.5.5",
     "ejs-lint": "^0.2.0",
