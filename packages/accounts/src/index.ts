@@ -38,7 +38,7 @@ function getAccountsServer (context){
       password: new AccountsPassword({
         errors: errors,
         passwordHashAlgorithm: 'sha256',
-        notifyUserAfterPasswordChanged: config.password.notifyUserAfterPasswordChanged
+        notifyUserAfterPasswordChanged: config.password ? config.password.notifyUserAfterPasswordChanged : true
       }),
     }
   );
