@@ -11,10 +11,12 @@ objects:
   - contract_receipts
   - account_payable
   - account_receivable
+  - instances
   - tasks
   - events
   - reports
 mobile_objects: 
+  - instances
   - contracts
   - accounts
   - contacts

@@ -73,9 +73,9 @@ if (Meteor.isServer) {
                 modifier.$set['current.modified'] = new Date();
             }
         }
-        if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-            throw new Meteor.Error(400, "space_paid_info_title");
-        }
+        // if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
+        //     throw new Meteor.Error(400, "space_paid_info_title");
+        // }
         if (doc.category !== this.previous.category) {
             if (doc.category) {
                 db.forms.update(doc.form, {

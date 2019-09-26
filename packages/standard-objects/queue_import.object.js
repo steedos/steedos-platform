@@ -20,14 +20,8 @@ xlsx = require('node-xlsx');
 logger = new Logger('QUEUE_IMPORT');
 
 converterString = function (field_name, dataCell, jsonObj) {
-  var text_error;
-  text_error = "";
-  if (dataCell) {
-    jsonObj[field_name] = dataCell + '';
-  } else {
-    text_error = `${field_name}不能为空`;
-  }
-  return text_error;
+  jsonObj[field_name] = dataCell + '';
+  return '';
 };
 
 converterDate = function (field_name, dataCell, jsonObj) {
@@ -156,7 +150,7 @@ insertRow = function (dataRow, objectName, field_mapping, space, external_id_nam
     // 不存在则新建，存在则更新
     if (external_id_name) {
       selectObj[external_id_name] = jsonObj[external_id_name];
-      if (objectCollection.find(selectObj).count() > 0) {
+      if (selectObj[external_id_name] != undefined && objectCollection.find(selectObj).count() > 0) {
         recordExists = true;
       }
     }

@@ -183,16 +183,29 @@ export function loadAppFiles(filePath: string) {
 }
 
 export function getBaseDirectory(){
-    return require('app-root-path').path
+    //return require('app-root-path').path
+    let cwd = process.cwd();
+    if (cwd.indexOf('.meteor') > -1) {
+        return cwd.split('.meteor')[0];
+    }
+    return cwd;
 }
 
 export function getSteedosConfig(){
     let config: any;
-    let configPath = path.join(this.getBaseDirectory(), configName)
+    let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
     }else{
-        console.info('not found steedos-config.yml', configPath);
+        throw new Error('Config file not found: ' + configPath);
     }
     return config;
+}
+
+// TODO: init and return datasource
+export function getDatasource(datasourceName: string) {
+}
+
+// TODO: init and return object
+export function getObject(objectName: string) {
 }

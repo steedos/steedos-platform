@@ -1,0 +1,49 @@
+name: autonumber
+label: 自动编号
+icon: apps
+fields:
+  object_name:
+    label: 对象名
+    type: text
+    index: true
+    required: true
+    is_name: true
+  field_name:
+    label: 自动编号字段
+    type: text
+    required: true
+    index: true
+  current_no:
+    label: 当前编号值
+    type: number
+    required: true
+    defaultValue: 1
+  date_from:
+    label: 日期范围开始日期
+    type: datetime
+  date_to:
+    label: 日期范围截止日期
+    type: datetime
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - object_name
+      - field_name
+      - current_no
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

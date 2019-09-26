@@ -1,0 +1,35 @@
+.flow_list_box a {
+  cursor: pointer;
+  color: #000;
+}
+.flow_list_box .box.box-success {
+  overflow: hidden;
+  box-shadow: 0 0px 0px;
+}
+.flow_list_box .weui-cell .ion {
+  font-size: 20px;
+}
+.flow_list_box .weui-cell.checked {
+  background-color: #00a65a;
+  color: #fff;
+}
+.flow_list_box .form-subtitle {
+  font-size: 16px;
+  margin-bottom: 9px;
+  margin-top: 9px;
+}
+.flow_list_box .box {
+  box-shadow: none;
+}
+.flow_list_box .box .weui-cells {
+  margin-top: 0px;
+}
+.flow_list_box .weui-cell__bd {
+  cursor: pointer;
+}
+.flow_list_box .weui-cell__ft {
+  cursor: pointer;
+}
+.flow_list_box .ion-ios-star {
+  color: #f39c12;
+}

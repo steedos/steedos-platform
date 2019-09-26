@@ -254,7 +254,8 @@
                                 "audio",
                                 "filesize",
                                 "file",
-                                "code"
+                                "code",
+                                "autonumber"
                             ]
                         }
                     ]
@@ -430,6 +431,10 @@
                 "regEx": {
                     "type": "object",
                     "description": "正则表达式"
+                },
+                "formula": {
+                    "type":"string",
+                    "description": "自动编号规则"
                 }
             }
         },

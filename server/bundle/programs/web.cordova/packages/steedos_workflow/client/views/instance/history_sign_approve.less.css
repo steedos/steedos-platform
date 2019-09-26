@@ -1,0 +1,18 @@
+.history-sign-approve .sign-approves {
+  margin-top: 0px;
+}
+.history-sign-approve .sign-approves .use-suggestion {
+  margin-right: 10px;
+}
+.history-sign-approve .sign-approves .use-suggestion .weui-media-box__title {
+  overflow: auto;
+  text-overflow: unset;
+  white-space: normal;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+}
+.history-sign-approve .sign-approves .select-suggestion .weui-switch {
+  outline: none;
+  zoom: 0.78;
+  cursor: pointer;
+}

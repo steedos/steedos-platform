@@ -38,14 +38,13 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'overview', label: '关于'},
-    {doc: 'getting_started', label: '教程'},
+    {doc: 'getting_started', label: '快速向导'},
     {doc: 'object', label: '文档'},
     {doc: 'api', label: 'API'},
     //{blog: true, label: '动态'},
     {
       href: 'https://github.com/steedos/',
-      label: 'Github',
+      label: '开源',
     },
   ],
 

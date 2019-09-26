@@ -1,7 +1,7 @@
 {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.5.8-patch.1",
+  "version": "1.6.6",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -18,9 +18,10 @@
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.5.8",
-    "@steedos/objectql": "^1.5.8",
-    "@steedos/standard-objects": "^1.5.8",
+    "@steedos/auth": "^1.6.6",
+    "@steedos/migrate": "^1.6.6",
+    "@steedos/objectql": "^1.6.6",
+    "@steedos/standard-objects": "^1.6.6",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -50,8 +51,8 @@
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.5.8",
-    "@steedos/stimulsoft-report": "^1.5.8",
+    "@steedos/meteor-bundle-runner": "^1.6.6",
+    "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
     "@types/mocha": "^5.2.6",
@@ -67,5 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "853a6165c2afba1dc115212c524a6b6dc31dbd70"
+  "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632"
 }

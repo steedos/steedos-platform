@@ -4,7 +4,7 @@ env:
 datasources:
   default:
     connection:
-      url: mongodb://192.168.0.21/steedos_cn
+      url: mongodb://127.0.0.1/steedos
 public:
   cfs:
     store: "local"
@@ -14,4 +14,7 @@ cron:
   instancerecordqueue_interval: 10000
 plugins: 
   - "@steedos/accounts"
-  - "@steedos/plugin-jsreport"
+webservices:
+  steedos: /
+tenant: 
+  _id: 

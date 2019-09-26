@@ -353,7 +353,7 @@ actions:
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              return WorkflowCore.openFlowDesign(Steedos.locale(), Steedos.spaceId(), null, Creator.getUserCompanyId());
+              return WorkflowCore.openFlowDesign(Steedos.locale().toLocaleLowerCase(), Steedos.spaceId(), null, Creator.getUserCompanyId());
             }
   standard_edit:
     visible: false
@@ -370,7 +370,7 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              return WorkflowCore.openFlowDesign(Steedos.locale(), Steedos.spaceId(), record_id, Creator.getUserCompanyId());
+              return WorkflowCore.openFlowDesign(Steedos.locale().toLocaleLowerCase(), Steedos.spaceId(), record_id, Creator.getUserCompanyId());
             }
   designForm:
     label: 表单设计器

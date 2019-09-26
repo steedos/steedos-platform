@@ -24,21 +24,21 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-10T08:13:58.264Z",
+        "date": "2019-09-23T10:15:06.813Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
-        "osRelease": "18.6.0",
+        "osRelease": "18.7.0",
         "totalMemory": 8589934592,
-        "freeMemory": 572620800,
+        "freeMemory": 1079754752,
         "cpus": 6
     },
     "commit": {
-        "hash": "39769d94d36f892fecdcee9e4fe8327c8a2b3d40",
-        "date": "Tue Sep 10 13:31:16 2019 +0800",
-        "author": "sunhaolin",
-        "subject": "creator中打开的流程设计器中点击设置流程权限按钮没反应 #1328",
-        "tag": "v1.1.2",
+        "hash": "be4db744bde75d326ef60de76bc1ed528992f90d",
+        "date": "Mon Sep 23 18:01:13 2019 +0800",
+        "author": "yinlainghui",
+        "subject": "fix xp电脑上数值字段编辑异常问题 #1354",
+        "tag": "1.5.1",
         "branch": "dev"
     }
 };
@@ -48,8 +48,9 @@ Steedos.Info = {
   "extensions": [
     ".js",
     ".json",
-    ".info",
-    ".coffee"
+    ".coffee",
+    ".jsx",
+    ".info"
   ]
 });
 

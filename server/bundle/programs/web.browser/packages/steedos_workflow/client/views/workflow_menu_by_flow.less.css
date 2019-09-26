@@ -1,0 +1,37 @@
+.workflow-menu-by-flow .fa-angle-left {
+  display: none;
+}
+.workflow-menu-by-flow > li > .treeview-menu {
+  margin-left: 10px;
+}
+.workflow-menu-by-flow .treeview-menu .treeview-menu {
+  padding-left: 20px;
+}
+.creator-content-wrapper .main-sidebar .workflow-menu-by-flow li > .treeview-menu {
+  display: block !important;
+}
+@media (max-width: 767px) {
+  .creator-content-wrapper .main-sidebar {
+    background: #fff !important;
+    display: none;
+    width: 100%;
+    margin-top: 66px !important;
+  }
+  .creator-content-wrapper .main-sidebar .top-sidebar {
+    display: none;
+  }
+  .creator-content-wrapper .main-sidebar .workflow-menu-by-flow .header-app {
+    display: none;
+  }
+  .creator-content-wrapper .content-wrapper {
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
+  }
+  .creator-content-wrapper .content-wrapper.content-wrapper-shadow {
+    display: none;
+  }
+  .sidebar-open .creator-content-wrapper .main-sidebar {
+    display: block;
+  }
+}

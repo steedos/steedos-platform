@@ -20,14 +20,27 @@ fields:
     is_wide: true
     filterable: true
   avatar:
-    label: Logo
+    label: 浅色公司Logo
     type: avatar
-  # avatar_dark:
-  #   label: 深色公司Logo
-  #   type: avatar
+  avatar_dark:
+    label: 深色公司Logo
+    type: avatar
   avatar_square:
     label: 正方形Logo
     type: avatar
+  background:
+    label: 背景图
+    type: avatar
+  enable_register:
+    label: 启用用户注册
+    type: boolean
+  enable_forget_password: 
+    label: 启用忘记密码
+    type: boolean
+    defaultValue: true
+  enable_create_tenant: 
+    label: 启用创建企业
+    type: boolean
   location:
     label: 地址
     type: location
@@ -90,11 +103,6 @@ fields:
     type: '[text]'
     omit: true
     hidden: true
-  enable_register:
-    label: 允许新用户注册
-    type: boolean
-    defaultValue: false
-    hidden: false
   owner:
     label: 所有者
     type: lookup

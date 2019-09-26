@@ -1,0 +1,63 @@
+name: sessions
+label: 登录会话
+icon: report
+fields:
+  name:
+    label: 名称
+    type: text
+    required: true
+  userId: 
+    label: 用户
+    type: lookup
+    reference_to: users
+    required: true
+  token: 
+    label: Token
+    type: text
+    required: true
+  userAgent: 
+    label: 用户代理
+    type: text
+  ip: 
+    label: IP地址
+    type: text
+  valid:
+    label: 有效
+    type: boolean
+  client_id: 
+    type: text
+  connected_app_id:
+    label: 连接的应用程序
+    type: lookup
+    reference_to: connected_apps
+  modified:
+    label: 最近登录时间
+  created:
+    label: 首次登录时间
+list_views:
+  all:
+    label: 所有
+    columns:
+      - userId
+      - ip
+      - userAgent
+      - connected_app_id
+      - modified
+    sort: [["modified", "desc"]]
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    modifyCompanyRecords: false
+    viewCompanyRecords: true
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true

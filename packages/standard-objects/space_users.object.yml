@@ -43,25 +43,14 @@ fields:
   company_id:
     label: 主单位
     type: lookup
-    reference_to: organizations
-    sortable: true
-    index: true
-    is_company_only: true
-    defaultValue: !!js/function |
-      function(){
-        if (Meteor.isClient) {
-          return Session.get('user_company_id')
-        }
-      }
     hidden: false
     readonly: true
   company_ids:
     label: 所属单位
     type: lookup
-    reference_to: organizations
+    reference_to: company
     multiple: true
     index: true
-    is_company_only: true
     omit: true
     hidden: false
     readonly: true

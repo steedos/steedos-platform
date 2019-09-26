@@ -19,7 +19,7 @@ fields:
     filterable: true
   object_name:
     label: 对象
-    type: text
+    type: master_detail
     index: true
     #reference_to: objects
     required: true

@@ -231,8 +231,8 @@ Creator.baseObject.triggers = {
                         return collection.direct.update({
                             _id: doc._id
                         }, {
-                                $push: push
-                            });
+                            $push: push
+                        });
                     }
                 });
             }
@@ -263,10 +263,10 @@ Creator.baseObject.triggers = {
                 collection.direct.update({
                     _id: doc._id
                 }, {
-                        $unset: {
-                            "sharing": 1
-                        }
-                    });
+                    $unset: {
+                        "sharing": 1
+                    }
+                });
                 return psRecords.forEach(function (ps) {
                     var count, filters, push;
                     filters = Creator.formatFiltersToMongo(ps.filters, {
@@ -289,8 +289,8 @@ Creator.baseObject.triggers = {
                         return collection.direct.update({
                             _id: doc._id
                         }, {
-                                $push: push
-                            });
+                            $push: push
+                        });
                     }
                 });
             }
@@ -340,8 +340,106 @@ Creator.baseObject.triggers = {
         todo: function (userId, doc) {
             return Creator.objectWebhooksPreSend(userId, doc, this.object_name, 'delete');
         }
+    },
+    "after.insert.server.autonumber": {
+        "on": "server",
+        when: "after.insert",
+        todo: function (userId, doc) {
+            var spaceId = doc.space;
+            if (!spaceId) {
+                return;
+            }
+            var obj, object_name, fields, setObj = {};
+            object_name = this.object_name;
+            obj = Creator.getObject(object_name);
+            fields = obj.fields;
+            var caculateAutonumber = function (objectName, fieldName, formula, spaceId) {
+                var padding = function (num, length) {
+                    var len = (num + "").length;
+                    var diff = length - len;
+                    if (diff > 0) {
+                        return Array(diff + 1).join("0") + num;
+                    }
+                    return num;
+                };
+                var anColl = Creator.getCollection('autonumber');
+                var date_from, date_to;
+                var selector = {
+                    object_name: objectName,
+                    field_name: fieldName,
+                    space: spaceId
+                };
+                var m = moment();
+                var yyyy = m.format('YYYY'),
+                    yy = m.format('YY'),
+                    mm = m.format('MM'),
+                    dd = m.format('DD');
+                var hasYear = formula.indexOf('{YYYY}') > -1;
+                var hasMonth = formula.indexOf('{MM}') > -1;
+                var hasDay = formula.indexOf('{DD}') > -1;
+                if (hasYear && hasMonth && hasDay) {
+                    date_from = m.startOf("day").toDate();
+                    date_to = m.endOf("day").toDate();
+                } else if (hasYear && hasMonth) {
+                    date_from = m.startOf("month").toDate();
+                    date_to = m.endOf("month").toDate();
+                } else if (hasYear) {
+                    date_from = m.startOf("year").toDate();
+                    date_to = m.endOf("year").toDate();
+                }
+                if (date_from && date_to) {
+                    selector.date_from = date_from;
+                    selector.date_to = date_to;
+                } else {
+                    selector.date_from = null;
+                    selector.date_to = null;
+                }
+                var anData = anColl.findOne(selector),
+                    anId;
+                if (anData) {
+                    anId = anData._id;
+                    anColl.update(anId, {
+                        $inc: {
+                            current_no: 1
+                        }
+                    });
+                } else {
+                    anId = anColl._makeNewID();
+                    var insertObj = {
+                        _id: anId,
+                        object_name: objectName,
+                        field_name: fieldName,
+                        space: spaceId
+                    };
+                    if (date_from && date_to) {
+                        insertObj.date_from = date_from;
+                        insertObj.date_to = date_to;
+                    }
+                    anColl.direct.insert(insertObj);
+                }
+                var currentNo = anColl.findOne(anId).current_no;
+
+                var numberFormatMethod = function ($1) {
+                    return padding(currentNo, $1.length - 2);
+                };
+                var autonumber = formula.replace(/{YYYY}/g, yyyy).replace(/{YY}/g, yy).replace(/{MM}/g, mm).replace(/{DD}/g, dd).replace(/{[0]+}/g, numberFormatMethod);
+                return autonumber;
+            };
+            _.each(fields, function (f, k) {
+                if (f.type == 'autonumber' && f.formula) {
+                    setObj[k] = caculateAutonumber(object_name, k, f.formula, spaceId);
+                }
+            });
+            if (!_.isEmpty(setObj)) {
+                Creator.getCollection(object_name).direct.update(doc._id, {
+                    $set: setObj
+                });
+            }
+            return;
+        }
     }
-}
+
+};
 
 if (Meteor.isServer) {
     Creator.objectWebhooksPreSend = function (userId, doc, object_name, action) {

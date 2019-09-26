@@ -94,7 +94,7 @@ async function getUserRoles(userId: string, spaceId: string) {
     roles.push(p.name);
   });
 
-  console.log('roles：', roles)
+  //console.log('roles：', roles)
 
   return roles;
 }
@@ -208,10 +208,10 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
         spaceSession = { roles: roles, expiredAt: expiredAt };
         spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name']))[0];
         spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);
-        spaceSession.company = (await getObjectDataByIds('organizations', [su.company_id], ['name']))[0];
-        spaceSession.companies = await getObjectDataByIds('organizations', su.company_ids, ['name']);
-        spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname']))[0];
-        spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname']);
+        spaceSession.company = (await getObjectDataByIds('company', [su.company_id], ['name', 'organization']))[0];
+        spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
+        spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname', 'company_id']))[0];
+        spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
         addSpaceSessionToCache(token, userSpaceId, spaceSession);
         return assignSession(userSpaceId, session, spaceSession);
       }
