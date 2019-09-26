@@ -65,7 +65,7 @@ WebApp.rawConnectHandlers.use(function (req, res, next) {
   });
 });
 WebApp.rawConnectHandlers.use(cors({
-  origin: true
+  origin: true, credentials: true
 }));
 WebApp.rawConnectHandlers.use(function (req, res, next) {
   var method, setHeader;
