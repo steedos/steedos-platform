@@ -16,14 +16,14 @@ Setup.validate = (onSuccess)->
 	# 优先使用 URL 变量
 	loginToken = searchParams.get("X-Auth-Token");
 	userId = searchParams.get("X-User-Id");
-	# 然后使用 Cookie 变量
-	if (!userId or !loginToken)
-		loginToken = getCookie("X-Auth-Token");
-		userId = getCookie("X-User-Id");
 	# 然后使用 Meteor LocalStorage 变量
 	if (!userId or !loginToken)
 		loginToken = Accounts._storedLoginToken()
 		userId = Accounts._storedUserId();
+	# 然后使用 Cookie 变量
+	if (!userId or !loginToken)
+		loginToken = getCookie("X-Auth-Token");
+		userId = getCookie("X-User-Id");
 	spaceId = localStorage.getItem("spaceId")
 	if (!spaceId)
 		spaceId = getCookie("X-Space-Id");
