@@ -35,5 +35,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "resolutions": {
+    "**/lodash": "^4.17.12"
+  },
   "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632"
 }

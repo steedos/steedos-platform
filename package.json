@@ -17,8 +17,13 @@
     "clean": "lerna clean",
     "changed": "lerna changed"
   },
+  "resolutions": {
+    "**/lodash": "^4.17.12",
+    "**/handlebars": "^4.3.0",
+    "**/debug": "^3.1.0",
+    "**/hoek": "^5.0.3"
+  },
   "devDependencies": {
-    "lerna": "^3.14.0",
-    "typescript": "3.5.3"
+    "lerna": "^3.16.4"
   }
 }
