@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "1.6.7-patch.2",
+  "version": "1.6.8",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -93,8 +93,9 @@
   },
   "resolutions": {
     "**/lodash": "^4.17.12",
-    "huawei-push/lodash": ">=4.17.12",
-    "xiaomi-push/lodash": ">=4.17.12"
+    "**/handlebars": "^4.3.0",
+    "**/debug": "^3.1.0",
+    "**/hoek": "^5.0.3"
   },
   "gitHead": "ab674adbae90d4aa34a0547a739bc525c9457632"
 }
