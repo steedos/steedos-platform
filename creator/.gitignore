@@ -22,3 +22,9 @@ yarn-error.log
 .dist/yarn.lock
 .plugins
 package-lock.json
+
+.DS_Store
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local

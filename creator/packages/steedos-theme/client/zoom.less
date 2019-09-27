@@ -1,273 +1,273 @@
-.modal-body {
-	max-height: 500px;
-}
-@media(max-width: 767px) {
-	.modal-body {
-		height: 300px;
-	}
-}
+// .modal-body {
+// 	max-height: 500px;
+// }
+// @media(max-width: 767px) {
+// 	.modal-body {
+// 		height: 300px;
+// 	}
+// }
 
-.zoom-standard(@zoom:117%, @inverseZoom:80%, @dialogWidth:721px){
-	-ms-text-size-adjust: auto;
-	-webkit-text-size-adjust: auto;
-	zoom:@zoom;
-	.modal{
-		zoom:@inverseZoom;
-		.modal-header{
-			zoom:@zoom;
-		}
-		.modal-footer{
-			zoom:@zoom;
-		}
-		.modal-body{
-			zoom:@zoom;
-		}
-		&.accounts-guide-modal{
-			.modal-dialog{
-				width:@dialogWidth;
-			}
-		}
-
-		// .box{
-		// 	zoom:@zoom;
-		// 	.box{
-				/*这里是为了兼容出现两层box嵌套的情况*/
-		// 		zoom:100%;
-		// 	}
-		// }
-		// &.forward-select-flow-modal{
-		// 	.modal-body>div{
-		// 		zoom:@zoom;
-		// 	}
-		// }
-		// &#instance_cc_modal{
-		// 	.modal-body>form{
-		// 		zoom:@zoom;
-		// 	}
-		// }
-		// .admin-dashboard-body>form{
-		// 	zoom:@zoom;
-		// }
-		// .modal-body>.weui_grids{
-		// 	zoom:@zoom;
-		// }
-		// .mail-account-modal{
-		// 	.modal-body>form{
-		// 		zoom:@zoom;
-		// 	}
-		// }
-	}
-}
-
-.zoom-level(normal){
-	@media (max-width: 767px){
-		.zoom-standard(115%, 85%, 708px);
-	}
-}
-.zoom-level(large){
-	.zoom-standard();
-	@media (max-width: 767px){
-		.zoom-standard(130%, 76%, 800px);
-	}
-}
-.zoom-level(extra_large){
-	.zoom-standard(135%, 74%, 811px);
-	@media (max-width: 767px){
-		.zoom-standard(145%, 65%, 900px);
-	}
-}
-
-.zoom-normal{
-	.zoom-level(normal);
-}
-.zoom-large{
-	// .zoom-level(large);
-	.zoom-level(normal);
-}
-.zoom-extra-large{
-	// .zoom-level(extra_large);
-	.zoom-level(normal);
-}
-
-
-// /*IE11支持zoom有特别BUG需要特别定制*/
-// _:-ms-fullscreen,
-// :root .zoom-large{
+// .zoom-standard(@zoom:117%, @inverseZoom:80%, @dialogWidth:721px){
+// 	-ms-text-size-adjust: auto;
+// 	-webkit-text-size-adjust: auto;
+// 	zoom:@zoom;
 // 	.modal{
-// 		zoom:normal;
+// 		zoom:@inverseZoom;
 // 		.modal-header{
-// 			zoom:117%;
-// 			width:85.2%;
+// 			zoom:@zoom;
 // 		}
 // 		.modal-footer{
-// 			zoom:117%;
-// 			width:85.2%;
+// 			zoom:@zoom;
 // 		}
 // 		.modal-body{
-// 			zoom:117%;
-// 			width:85.2%;
+// 			zoom:@zoom;
 // 		}
-// 		// &.accounts-guide-modal{
-// 		// 	.modal-dialog{
-// 		// 		width:723px;
-// 		// 	}
-// 		// }
+// 		&.accounts-guide-modal{
+// 			.modal-dialog{
+// 				width:@dialogWidth;
+// 			}
+// 		}
 
 // 		// .box{
-// 		// 	zoom:117%;
-// 		// 	width:83%;
+// 		// 	zoom:@zoom;
 // 		// 	.box{
-// 		// 		/*这里是为了兼容出现两层box嵌套的情况*/
-// 		// 		zoom:normal;
-// 		// 		width:auto;
+// 				/*这里是为了兼容出现两层box嵌套的情况*/
+// 		// 		zoom:100%;
 // 		// 	}
 // 		// }
 // 		// &.forward-select-flow-modal{
 // 		// 	.modal-body>div{
-// 		// 		zoom:117%;
-// 		// 		width:83%;
+// 		// 		zoom:@zoom;
 // 		// 	}
 // 		// }
 // 		// &#instance_cc_modal{
 // 		// 	.modal-body>form{
-// 		// 		zoom:117%;
-// 		// 		width:83%;
+// 		// 		zoom:@zoom;
 // 		// 	}
 // 		// }
 // 		// .admin-dashboard-body>form{
-// 		// 	zoom:117%;
-// 		// 	width:83%;
+// 		// 	zoom:@zoom;
 // 		// }
 // 		// .modal-body>.weui_grids{
-// 		// 	zoom:117%;
-// 		// 	width:83%;
+// 		// 	zoom:@zoom;
 // 		// }
 // 		// .mail-account-modal{
 // 		// 	.modal-body>form{
-// 		// 		zoom:117%;
-// 		// 		width:83%;
+// 		// 		zoom:@zoom;
 // 		// 	}
 // 		// }
 // 	}
 // }
 
-// /*IE11支持zoom有特别BUG需要特别定制*/
-// _:-ms-fullscreen,
-// :root .zoom-extra-large{
-// 	.modal{
-// 		zoom:100%;
-// 		.modal-header{
-// 			zoom:135%;
-// 			width:74%;
+// .zoom-level(normal){
+// 	@media (max-width: 767px){
+// 		.zoom-standard(115%, 85%, 708px);
+// 	}
+// }
+// .zoom-level(large){
+// 	.zoom-standard();
+// 	@media (max-width: 767px){
+// 		.zoom-standard(130%, 76%, 800px);
+// 	}
+// }
+// .zoom-level(extra_large){
+// 	.zoom-standard(135%, 74%, 811px);
+// 	@media (max-width: 767px){
+// 		.zoom-standard(145%, 65%, 900px);
+// 	}
+// }
+
+// .zoom-normal{
+// 	.zoom-level(normal);
+// }
+// .zoom-large{
+// 	// .zoom-level(large);
+// 	.zoom-level(normal);
+// }
+// .zoom-extra-large{
+// 	// .zoom-level(extra_large);
+// 	.zoom-level(normal);
+// }
+
+
+// // /*IE11支持zoom有特别BUG需要特别定制*/
+// // _:-ms-fullscreen,
+// // :root .zoom-large{
+// // 	.modal{
+// // 		zoom:normal;
+// // 		.modal-header{
+// // 			zoom:117%;
+// // 			width:85.2%;
+// // 		}
+// // 		.modal-footer{
+// // 			zoom:117%;
+// // 			width:85.2%;
+// // 		}
+// // 		.modal-body{
+// // 			zoom:117%;
+// // 			width:85.2%;
+// // 		}
+// // 		// &.accounts-guide-modal{
+// // 		// 	.modal-dialog{
+// // 		// 		width:723px;
+// // 		// 	}
+// // 		// }
+
+// // 		// .box{
+// // 		// 	zoom:117%;
+// // 		// 	width:83%;
+// // 		// 	.box{
+// // 		// 		/*这里是为了兼容出现两层box嵌套的情况*/
+// // 		// 		zoom:normal;
+// // 		// 		width:auto;
+// // 		// 	}
+// // 		// }
+// // 		// &.forward-select-flow-modal{
+// // 		// 	.modal-body>div{
+// // 		// 		zoom:117%;
+// // 		// 		width:83%;
+// // 		// 	}
+// // 		// }
+// // 		// &#instance_cc_modal{
+// // 		// 	.modal-body>form{
+// // 		// 		zoom:117%;
+// // 		// 		width:83%;
+// // 		// 	}
+// // 		// }
+// // 		// .admin-dashboard-body>form{
+// // 		// 	zoom:117%;
+// // 		// 	width:83%;
+// // 		// }
+// // 		// .modal-body>.weui_grids{
+// // 		// 	zoom:117%;
+// // 		// 	width:83%;
+// // 		// }
+// // 		// .mail-account-modal{
+// // 		// 	.modal-body>form{
+// // 		// 		zoom:117%;
+// // 		// 		width:83%;
+// // 		// 	}
+// // 		// }
+// // 	}
+// // }
+
+// // /*IE11支持zoom有特别BUG需要特别定制*/
+// // _:-ms-fullscreen,
+// // :root .zoom-extra-large{
+// // 	.modal{
+// // 		zoom:100%;
+// // 		.modal-header{
+// // 			zoom:135%;
+// // 			width:74%;
+// // 		}
+// // 		.modal-footer{
+// // 			zoom:135%;
+// // 			width:74%;
+// // 		}
+// // 		.modal-body{
+// // 			zoom:135%;
+// // 			width:74%;
+// // 		}
+
+// // 		// .box{
+// // 		// 	zoom:135%;
+// // 		// 	width:74%;
+// // 		// 	.box{
+// // 		// 		/*这里是为了兼容出现两层box嵌套的情况*/
+// // 		// 		zoom:normal;
+// // 		// 		width:auto;
+// // 		// 	}
+// // 		// }
+// // 		// &.forward-select-flow-modal{
+// // 		// 	.modal-body>div{
+// // 		// 		zoom:135%;
+// // 		// 		width:74%;
+// // 		// 	}
+// // 		// }
+// // 		// &#instance_cc_modal{
+// // 		// 	.modal-body>form{
+// // 		// 		zoom:135%;
+// // 		// 		width:74%;
+// // 		// 	}
+// // 		// }
+// // 		// .admin-dashboard-body>form{
+// // 		// 	zoom:135%;
+// // 		// 	width:74%;
+// // 		// }
+// // 		// .modal-body>.weui_grids{
+// // 		// 	zoom:135%;
+// // 		// 	width:74%;
+// // 		// }
+// // 		// .mail-account-modal{
+// // 		// 	.modal-body>form{
+// // 		// 		zoom:135%;
+// // 		// 		width:74%;
+// // 		// 	}
+// // 		// }
+// // 	}
+// // }
+
+// /*IE11 .zoom-large,.zoom-extra-large字体放大需要该样式*/
+// @media screen and(-ms-high-contrast:active),(-ms-high-contrast:none) {
+// 	html{
+// 		height:100%;
+// 	}
+// }
+
+// // /*IE11 CSS hack*/
+// // _:-ms-fullscreen,
+// // :root .zoom-large,.zoom-extra-large{
+// // 	overflow:hidden;
+// // 	.app-wrapper{
+// // 		position:relative!important;
+// // 	}
+// // }
+
+// // /*IE11 CSS hack*/
+// // _:-ms-fullscreen,
+// // :root .zoom-large{
+// // 	margin-right: -7px;
+// // 	margin-bottom: -7px;
+// // 	.app-wrapper{
+// // 		width: 85.2%;
+// // 		height: 85.2%;
+// // 	}
+// // 	&.zoom-setting-item{
+// // 		width: 85.2%;
+// // 		margin-bottom: 0px;
+// // 	}
+// // }
+
+// // /*IE11 CSS hack*/
+// // _:-ms-fullscreen,
+// // :root .zoom-extra-large{
+// // 	margin-right: -2px;
+// // 	margin-bottom: -2px;
+// // 	.app-wrapper{
+// // 		width: 74%;
+// // 		height: 74%;
+// // 	}
+// // 	&.zoom-setting-item{
+// // 		width: 74%;
+// // 		margin-bottom: 0px;
+// // 	}
+// // }
+
+// // /*字体放大时，ie11/edge上tootip箭头位置不对*/
+// // .zoom-large,.zoom-extra-large{
+// // 	.tooltip.left .tooltip-arrow{
+// // 		top:50%!important;
+// // 	}
+// // }
+
+// /*字体放大时，点击按钮后下方的菜单在小屏幕下显示不全*/
+// @media (max-width: 767px) {	
+// 	ul.dropdown-menu.dropdown-menu-right {
+// 		width: auto;
+// 		max-width: 200px;
+// 		.menu-item-help {
+// 			min-width: 140px;
 // 		}
-// 		.modal-footer{
-// 			zoom:135%;
-// 			width:74%;
-// 		}
-// 		.modal-body{
-// 			zoom:135%;
-// 			width:74%;
-// 		}
-
-// 		// .box{
-// 		// 	zoom:135%;
-// 		// 	width:74%;
-// 		// 	.box{
-// 		// 		/*这里是为了兼容出现两层box嵌套的情况*/
-// 		// 		zoom:normal;
-// 		// 		width:auto;
-// 		// 	}
-// 		// }
-// 		// &.forward-select-flow-modal{
-// 		// 	.modal-body>div{
-// 		// 		zoom:135%;
-// 		// 		width:74%;
-// 		// 	}
-// 		// }
-// 		// &#instance_cc_modal{
-// 		// 	.modal-body>form{
-// 		// 		zoom:135%;
-// 		// 		width:74%;
-// 		// 	}
-// 		// }
-// 		// .admin-dashboard-body>form{
-// 		// 	zoom:135%;
-// 		// 	width:74%;
-// 		// }
-// 		// .modal-body>.weui_grids{
-// 		// 	zoom:135%;
-// 		// 	width:74%;
-// 		// }
-// 		// .mail-account-modal{
-// 		// 	.modal-body>form{
-// 		// 		zoom:135%;
-// 		// 		width:74%;
-// 		// 	}
-// 		// }
 // 	}
 // }
-
-/*IE11 .zoom-large,.zoom-extra-large字体放大需要该样式*/
-@media screen and(-ms-high-contrast:active),(-ms-high-contrast:none) {
-	html{
-		height:100%;
-	}
-}
-
-// /*IE11 CSS hack*/
-// _:-ms-fullscreen,
-// :root .zoom-large,.zoom-extra-large{
-// 	overflow:hidden;
-// 	.app-wrapper{
-// 		position:relative!important;
-// 	}
-// }
-
-// /*IE11 CSS hack*/
-// _:-ms-fullscreen,
-// :root .zoom-large{
-// 	margin-right: -7px;
-// 	margin-bottom: -7px;
-// 	.app-wrapper{
-// 		width: 85.2%;
-// 		height: 85.2%;
-// 	}
-// 	&.zoom-setting-item{
-// 		width: 85.2%;
-// 		margin-bottom: 0px;
-// 	}
-// }
-
-// /*IE11 CSS hack*/
-// _:-ms-fullscreen,
-// :root .zoom-extra-large{
-// 	margin-right: -2px;
-// 	margin-bottom: -2px;
-// 	.app-wrapper{
-// 		width: 74%;
-// 		height: 74%;
-// 	}
-// 	&.zoom-setting-item{
-// 		width: 74%;
-// 		margin-bottom: 0px;
-// 	}
-// }
-
-// /*字体放大时，ie11/edge上tootip箭头位置不对*/
-// .zoom-large,.zoom-extra-large{
-// 	.tooltip.left .tooltip-arrow{
-// 		top:50%!important;
-// 	}
-// }
-
-/*字体放大时，点击按钮后下方的菜单在小屏幕下显示不全*/
-@media (max-width: 767px) {	
-	ul.dropdown-menu.dropdown-menu-right {
-		width: auto;
-		max-width: 200px;
-		.menu-item-help {
-			min-width: 140px;
-		}
-	}
-}
 

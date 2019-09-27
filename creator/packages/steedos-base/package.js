@@ -161,8 +161,6 @@ Package.onUse(function(api) {
 		'client/helpers.coffee',
 		'client/tooltip.coffee',
 		'client/router.coffee',
-		'client/layout/main.html',
-		'client/layout/main.less',
 		'client/layout/main.coffee',
 		'client/layout/layout.html',
 		'client/layout/layout.less',

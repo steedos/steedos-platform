@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, user-scalable=no">
 	<title>Steedos</title>
-
+	
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="theme-color" content="#000">
@@ -23,17 +23,14 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title">
 	<link rel="icon" type="image/png" sizes="228x228" href="/favicons/coast-228x228.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="230x230" href="/favicons/favicon-230x230.png">
-	<link rel="shortcut icon" href="/favicons/favicon.ico">
 	<link rel="yandex-tableau-widget" href="/favicons/yandex-browser-manifest.json">
 	<meta name="msapplication-TileColor" content="#fff">
 	<meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png">
 	<meta name="msapplication-config" content="/favicons/browserconfig.xml">
 	<meta property="twitter:image" content="/favicons/twitter.png">
 	<meta property="og:image" content="/favicons/open-graph.png">
+
+	<meteor-bundled-css />
 	
 	<script type="text/javascript">
 		window.SC = window.SC || {
@@ -259,7 +256,7 @@
 </head>
 
 <body class="skin-blue-light fixed steedos sidebar-mini three-columns loading">
-
+	{{> preloadAssets}}
 	<section class="loadingOverlay keyboard">
 		<div class="loading-box">
 			<div class="spinner">
@@ -276,3 +273,12 @@
 	</section>
 
 </body>
+
+<template name="preloadAssets">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{absoluteUrl '/favicons/favicon-16x16.png'}}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{absoluteUrl '/favicons/favicon-32x32.png'}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{absoluteUrl '/favicons/favicon-96x96.png'}}">
+	<link rel="icon" type="image/png" sizes="230x230" href="{{absoluteUrl '/favicons/favicon-230x230.png'}}">
+	<link rel="shortcut icon" href="{{absoluteUrl '/favicons/favicon.ico'}}">
+	<link rel="stylesheet" type="text/css" href="{{absoluteUrl '/assets/styles/salesforce-lightning-design-system.min.css'}}">
+</template>

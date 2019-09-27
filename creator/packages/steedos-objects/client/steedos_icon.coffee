@@ -6,7 +6,7 @@ helpers =
 			if !source?.endsWith("-sprite")
 				source += "-sprite"
 			name = foo[1]
-		url = "/packages/steedos_lightning-design-system/client/icons/#{source}/symbols.svg##{name}"
+		url = "/assets/icons/#{source}/svg/symbols.svg##{name}"
 		return Creator.getRelativeUrl(url)
 
 	formatName: (name) ->

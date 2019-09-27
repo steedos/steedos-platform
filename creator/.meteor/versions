@@ -175,6 +175,7 @@ steedos:cfs-tempstore@0.1.6_2
 steedos:cfs-ui@0.1.4_2
 steedos:cfs-upload-http@0.0.22_2
 steedos:cfs-worker@0.1.5_4
+steedos:cors@0.0.5
 steedos:creator@0.0.9
 steedos:creator-autoform-modals@0.0.1
 steedos:datatables-extensions@0.0.1

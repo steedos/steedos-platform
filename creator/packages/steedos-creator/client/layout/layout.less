@@ -53,6 +53,7 @@
 }
 
 @media (max-width: 767px) {
+    
     .slds-modal__container {
         margin: 0 1rem;
         padding: 1rem 0;
@@ -91,19 +92,33 @@
                 }
             }
         }
-    }
 
-    .grid-actions{
-        display: none !important;
+        .grid-actions{
+            display: none;
+        }
+        
+        .tabular_info{
+            display: none;
+        }
+
+        .grid-search-div{
+            display: none;
+        }
+
+        &.split {
+            &>.split-left {
+                display: none
+            }
+            &>.split-right {
+                left: 0;
+                width: 100%;
+                position: relative;
+                height: 100%;
+            }
+        }
+
     }
     
-    .tabular_info{
-        display: none !important;
-    }
-
-    .grid-search-div{
-        display: none
-    }
     /*详细界面*/
     /*user界面*/
     .slds-template_profile{

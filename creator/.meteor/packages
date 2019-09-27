@@ -46,7 +46,7 @@ fourseven:scss
 tap:i18n
 
 raix:push
-# steedos:cors must disabled
+steedos:cors
 aldeed:tabular
 aldeed:collection2
 aldeed:simple-schema

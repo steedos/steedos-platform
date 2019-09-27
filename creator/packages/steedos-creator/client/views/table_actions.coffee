@@ -24,5 +24,5 @@ Template.creator_table_actions.helpers
 		return actions
 
 	getSvgUrl: (source, name)->
-		url = "/packages/steedos_lightning-design-system/client/icons/#{source}/symbols.svg##{name}"
+		url = "/assets/icons/#{source}/svg/symbols.svg##{name}"
 		return Creator.getRelativeUrl(url)
