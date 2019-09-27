@@ -100,7 +100,7 @@
     "dotenv-flow": "^3.1.0",
     "jquery": "^3.4.0",
     "jquery-ui-sortable": "^1.0.0",
-    "simplemde": "^1.11.2",
+    "simplemde": "1.11.2",
     "summernote": "^0.8.11",
     "xlsx": "0.10.6"
   },
