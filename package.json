@@ -18,10 +18,11 @@
     "changed": "lerna changed"
   },
   "resolutions": {
-    "**/lodash": "^4.17.12",
+    "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
-    "**/hoek": "^5.0.3"
+    "**/hoek": "^5.0.3",
+    "**/cryptiles": "^4.1.2"
   },
   "devDependencies": {
     "lerna": "^3.16.4"
