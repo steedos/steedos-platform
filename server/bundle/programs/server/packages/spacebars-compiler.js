@@ -1241,7 +1241,7 @@ _.extend(CodeGen.prototype, {
                                                                                                        //
 var UglifyJSMinify = null;
 if (Meteor.isServer) {
-  UglifyJSMinify = Npm.require('uglify-js').minify;
+  //UglifyJSMinify = Npm.require('uglify-js').minify;
 }
 
 SpacebarsCompiler.parse = function (input) {
@@ -1343,7 +1343,7 @@ SpacebarsCompiler._beautify = function (code) {
   if (!UglifyJSMinify) {
     return code;
   }
-
+  console.log(code)
   var result = UglifyJSMinify(code, { 
     fromString: true,
     mangle: false,

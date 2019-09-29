@@ -646,7 +646,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "aliyun-sdk",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "main": "index.js"
 };
 
@@ -726,7 +726,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "qs",
-  "version": "6.8.0",
+  "version": "6.9.0",
   "main": "lib/index.js"
 };
 
@@ -801,7 +801,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.6.6-patch.1",
+  "version": "1.6.8",
   "main": "lib/index.js"
 };
 
@@ -828,7 +828,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.6.6",
+  "version": "1.6.8",
   "main": "lib/index.js"
 };
 
@@ -855,7 +855,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "main": "lib/index.js"
 };
 
@@ -1054,7 +1054,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "twilio",
-  "version": "1.11.1",
+  "version": "3.35.0",
   "main": "./lib"
 };
 
@@ -1292,7 +1292,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "socket.io",
-  "version": "1.4.8",
+  "version": "2.3.0",
   "main": "./lib/index"
 };
 
