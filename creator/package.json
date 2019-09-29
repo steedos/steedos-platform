@@ -2,7 +2,7 @@
   "name": "steedos",
   "private": true,
   "scripts": {
-    "start": "meteor run --settings settings.json --port 3100",
+    "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
     "build": "rm -rf .dist/bundle && meteor build --directory .dist --server-only && node .scripts/build-after.js",
     "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
     "login": "npm login --registry https://registry.npmjs.org",
@@ -42,6 +42,7 @@
     "devextreme": "^18.2.6",
     "ejs": "^2.5.5",
     "ejs-lint": "^0.2.0",
+    "env-cmd": "^10.0.1",
     "eval": "0.1.2",
     "express": "^4.16.4",
     "fibers": "^3.1.1",
