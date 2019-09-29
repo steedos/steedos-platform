@@ -40,7 +40,7 @@ Template.instance_attachments.onRendered(function() {
 		self.workflowMainAttachTitle.set(false);
 	}
 
-	$('.swipebox').swipebox();
+	//$('.swipebox').swipebox();
 });
 
 Template.instance_attachment.helpers({
