@@ -22,6 +22,12 @@
 export MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
+### 安装依赖
+
+```shell
+yarn
+```
+
 ### 编译
 
 ```shell
