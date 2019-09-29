@@ -2,7 +2,7 @@
   "name": "steedos",
   "private": true,
   "scripts": {
-    "start": "export $(cat .env) $(cat .env.local) && meteor run --settings settings.json --port 3100",
+    "start": "meteor run --settings settings.json --port 3100",
     "build": "rm -rf .dist/bundle && meteor build --directory .dist --server-only && node .scripts/build-after.js",
     "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
     "login": "npm login --registry https://registry.npmjs.org",
