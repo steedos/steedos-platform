@@ -8,4 +8,4 @@ execSync('rm -rf .dist/cfs');
 execSync('rm -rf .dist/bundle/programs/server/npm');
 execSync('rm -rf .dist/bundle/programs/server/*.js');
 
-execSync('cp -r .dist/bundle/* ../object-server/server/bundle/');
+execSync('cp -rf .dist/bundle/* ../object-server/server/bundle/');
