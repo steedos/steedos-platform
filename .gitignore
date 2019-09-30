@@ -28,3 +28,4 @@ packages/objectql/test/**/*.db-journal
 packages/odata-v4-typeorm/
 
 .migrate
+.history/*
