@@ -631,13 +631,23 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 	allCssLink = """<link rel="stylesheet" type="text/css" class="__meteor-css__" href="#{cssHref}">"""
 
 	submit_btn = ""
+	instanceTracesStyle = ""
 
 #	if options?.editable
 #		submit_btn = '<a class="btn btn-block btn-social btn-steedos-workflow" onclick="wc.submit()"><i class="fa fa-facebook"></i> 提交到审批王</a>'
-	showTracesBtn = """
-		<div class="print-tool">
-			<label class="cbx-label"><input type="checkbox" checked class="cbx-print cbx-print-traces" id="cbx-print-traces"/><span>#{t('instance_approval_history')}</span></label>
-		</div>
+	if options?.tagger == 'email'
+		showTracesBtn = ""
+	else
+		showTracesBtn = """
+			<div class="print-tool">
+				<label class="cbx-label"><input type="checkbox" checked class="cbx-print cbx-print-traces" id="cbx-print-traces"/><span>#{t('instance_approval_history')}</span></label>
+			</div>
+			"""
+		instanceTracesStyle = """
+			.instance-view .instance-traces{
+				padding-left: 15px;
+				padding-right: 15px;
+			}
 		"""
 
 	showTracesScript = """
@@ -708,10 +718,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 						background: azure !important;
 					}
 
-					.instance-view .instance-traces{
-						padding-left: 15px;
-						padding-right: 15px;
-					}
+					#{instanceTracesStyle}
 
 					#{options?.styles || ""}
 				</style>

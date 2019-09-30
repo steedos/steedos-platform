@@ -1642,7 +1642,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 # 生成HTML格式只读表单和签核历程, 由于此方法生成的html数据会作为邮件内容发送，为了再邮件中样式显示正常，
 # 请不要写单独的css，所有样式请写在html标签的style属性中。
 uuflowManager.ins_html = (current_user_info, ins) ->
-	options = { templateName: 'table', showTrace: true, showAttachments: false }
+	options = { templateName: 'table', showTrace: true, showAttachments: false, tagger: 'email' }
 	options.width = "765px" #此处宽度不能设置为偶数，否则会引起子表与主表线条对不齐的bug
 	options.styles = "
 		body {
