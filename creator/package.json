@@ -10,7 +10,8 @@
     "postinstall": "node .scripts/npm-postinstall.js",
     "prepare": "node .scripts/npm-postinstall.js",
     "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos node_modules\\@steedos\\accounts\\node_modules\\@steedos",
-    "os": "cp -r ../object-server/packages/* node_modules/@steedos/ && yarn start",
+    "osy": "cd ../object-server/ && yarn",
+    "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && yarn start",
     "oss": "cp -r ../object-server/packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start"
   },
   "dependencies": {
