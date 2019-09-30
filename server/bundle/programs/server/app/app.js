@@ -24,20 +24,20 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-30T02:32:51.640Z",
+        "date": "2019-09-30T03:50:10.810Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
         "osRelease": "18.7.0",
         "totalMemory": 8589934592,
-        "freeMemory": 632750080,
+        "freeMemory": 31797248,
         "cpus": 6
     },
     "commit": {
-        "hash": "c409cbfe1764e9a351aab18dfd3df21be6303fc0",
-        "date": "Mon Sep 30 09:44:46 2019 +0800",
+        "hash": "a8a4528acc209ab487602d7449506031e34905f8",
+        "date": "Mon Sep 30 11:37:41 2019 +0800",
         "author": "baozhoutao",
-        "subject": "邮件内容样式异常",
+        "subject": "处理查找页面lookup选中后，选中项文字不显示问题",
         "tag": "1.5.1",
         "branch": "dev"
     }
