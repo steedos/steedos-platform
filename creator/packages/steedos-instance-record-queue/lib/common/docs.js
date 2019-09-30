@@ -1,4 +1,4 @@
-InstanceRecordQueue.collection = new Mongo.Collection('instance_record_queue');
+InstanceRecordQueue.collection = db.instance_record_queue = new Mongo.Collection('instance_record_queue');
 
 var _validateDocument = function(doc) {
 
