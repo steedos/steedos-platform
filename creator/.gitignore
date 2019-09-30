@@ -28,3 +28,4 @@ package-lock.json
 .env.local
 .env.production.local
 .env.test.local
+.history/*
