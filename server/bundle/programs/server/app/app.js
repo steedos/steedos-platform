@@ -24,20 +24,20 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-29T09:51:32.968Z",
+        "date": "2019-09-30T01:57:49.370Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
-        "platform": "win32",
-        "osRelease": "10.0.17763",
-        "totalMemory": 17054965760,
-        "freeMemory": 5754310656,
-        "cpus": 8
+        "platform": "darwin",
+        "osRelease": "18.7.0",
+        "totalMemory": 8589934592,
+        "freeMemory": 845508608,
+        "cpus": 6
     },
     "commit": {
-        "hash": "'da4c05c6962adfc4f7145d17b2cc53307b0aab12",
-        "date": "Sun Sep 29 17:06:28 2019 +0800",
-        "author": "Jack Zhuang",
-        "subject": "fix build'",
+        "hash": "c409cbfe1764e9a351aab18dfd3df21be6303fc0",
+        "date": "Mon Sep 30 09:44:46 2019 +0800",
+        "author": "baozhoutao",
+        "subject": "邮件内容样式异常",
         "tag": "1.5.1",
         "branch": "dev"
     }
