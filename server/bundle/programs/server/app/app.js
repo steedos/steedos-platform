@@ -24,13 +24,13 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-30T01:57:49.370Z",
+        "date": "2019-09-30T02:32:51.640Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
         "osRelease": "18.7.0",
         "totalMemory": 8589934592,
-        "freeMemory": 845508608,
+        "freeMemory": 632750080,
         "cpus": 6
     },
     "commit": {

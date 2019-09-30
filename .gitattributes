@@ -1,5 +1,5 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 
 [core]
-	filemode = false
-	autocrlf = true
+filemode=false
+autocrlf=true
