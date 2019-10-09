@@ -108,6 +108,10 @@
             "type": "boolean",
             "description": "树状显示"
         },
+        "enable_approvals": {
+            "type": "boolean",
+            "description": "树状显示"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
