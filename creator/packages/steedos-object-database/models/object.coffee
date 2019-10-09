@@ -57,6 +57,9 @@ Creator.Objects.objects =
 		enable_space_global:
 			type: "boolean"
 			defaultValue: false
+		enable_approvals:
+			type: "boolean"
+			defaultValue: false
 		is_view:
 			type: 'boolean'
 			defaultValue: false

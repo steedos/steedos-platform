@@ -41,6 +41,7 @@ Creator.Object = (options)->
 	self.enable_chatter = options.enable_chatter
 	self.enable_trash = options.enable_trash
 	self.enable_space_global = options.enable_space_global
+	self.enable_approvals = options.enable_approvals
 	self.idFieldName = '_id'
 	if options.database_name
 		self.database_name = options.database_name
