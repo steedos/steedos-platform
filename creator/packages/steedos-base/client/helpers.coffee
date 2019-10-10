@@ -538,7 +538,7 @@ TemplateHelpers =
 				return true
 
 	isNode: ()->
-		return process?.__nwjs
+		return nw?.require?
 
 	detectIE: ()->
 		ua = window.navigator.userAgent
