@@ -28,7 +28,7 @@ InstanceManager.isTableStyle = function(formId) {
 
 InstanceManager.getFormField = function(fieldId) {
 	var instanceFields = WorkflowManager.getInstanceFields();
-	var field = instanceFields.filterProperty("_id", fieldId);
+	var field = instanceFields.filterProperty("id", fieldId);
 
 	if (field.length > 0) {
 		return field[0];
