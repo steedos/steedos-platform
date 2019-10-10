@@ -7,6 +7,7 @@ checkNpmVersions({
 	"xml2js": "^0.4.19",
 	mkdirp: "^0.3.5",
 	"sprintf-js": "^1.0.3",
+	"url-search-params-polyfill": "^7.0.0",
 }, 'steedos:base');
 
 if (Meteor.settings && Meteor.settings.billing) {

@@ -10,6 +10,8 @@ getCookie = (name)->
 
 Setup.lastSpaceId = null;
 
+require('url-search-params-polyfill');
+
 Setup.validate = (onSuccess)->
 	console.log("Validating user...")
 	searchParams = new URLSearchParams(window.location.search);
