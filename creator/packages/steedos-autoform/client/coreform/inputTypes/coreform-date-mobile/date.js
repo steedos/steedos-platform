@@ -40,13 +40,13 @@ AutoForm.addInputType("steedos-date-mobile", {
 });
 
 Template.steedosInputDateMobile.helpers({
-  atts() {
+  atts: function() {
     var atts = _.clone(this.atts);
     atts = AutoForm.Utility.addClass(atts, "form-control");
     delete atts.dateMobileOptions;
     return atts;
   },
-  inputtype() {
+  inputtype: function() {
     let type = "datetime";
     if(this.atts.dateMobileOptions){
       type = this.atts.dateMobileOptions.type;
