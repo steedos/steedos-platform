@@ -236,7 +236,7 @@ Creator.Objects['company'].actions = {
                 showCancelButton: true,
                 confirmButtonText: t('YES'),
                 cancelButtonText: t('NO')
-            }, (option)=> { 
+            }, function(option) { 
                 if (option){
                     doUpdate();
                 }
