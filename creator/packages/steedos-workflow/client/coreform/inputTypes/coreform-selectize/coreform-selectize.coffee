@@ -1,5 +1,3 @@
-Steedos.OdataClient = require('odata-client');
-
 AutoForm.addInputType "steedos-selectize", {
 	template: "afSteedosSelectize"
 	valueOut: ()->
@@ -19,7 +17,6 @@ Template.afSteedosSelectize.onCreated ()->
 
 Template.afSteedosSelectize.onRendered ()->
 	key = '@label' || 'name'
-
 	service = SelectizeManager.getService(this.data.atts)
 	objectName = this.data.atts.related_object
 	formula = this.data.atts.formula
@@ -34,7 +31,7 @@ Template.afSteedosSelectize.onRendered ()->
 	this.selectize = $("##{this.data.atts.id}").selectize {
 		valueField: '_id',
 		labelField: key,
-		searchField: [key],
+		searchField: [key].concat(search_field.split(',')),
 		options: [],
 		create: false,
 		maxItems: 1,
