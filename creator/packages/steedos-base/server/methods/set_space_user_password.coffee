@@ -2,6 +2,12 @@ Meteor.methods
 	setSpaceUserPassword: (space_user_id, space_id, password) ->
 		if !this.userId
 			throw new Meteor.Error(400, "请先登录")
+		
+		space = db.spaces.findOne({_id: space_id})
+		isSpaceAdmin = space?.admins?.includes(this.userId)
+
+		unless isSpaceAdmin
+			throw new Meteor.Error(400, "您没有权限修改该用户密码")
 
 		spaceUser = db.space_users.findOne({_id: space_user_id, space: space_id})
 		user_id = spaceUser.user;
