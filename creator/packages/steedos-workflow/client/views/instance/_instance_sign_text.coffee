@@ -133,7 +133,13 @@ InstanceSignText.helpers =
 
 	myApproveDescription: (approveId)->
 		if Meteor.isClient
-			return TracesTemplate.helpers.myApproveDescription(approveId)
+			if Session.get("box") == 'inbox'
+				myApprove = Template.instance()?.myApprove?.get()
+				if myApprove && myApprove.id == approveId
+					if !myApprove.sign_field_code || myApprove.sign_field_code == Template.instance()?.data?.name
+						if !Session.get("instance_my_approve_description")
+							return myApprove?.description || ""
+						return Session.get("instance_my_approve_description")
 
 	now: ()->
 		return new Date();
@@ -199,11 +205,12 @@ InstanceSignText.helpers =
 		return "";
 
 	showApprove: (approve)->
-		if approve?.is_read
-			if approve.is_finished
-				return ["approved", "rejected", "submitted", "readed"].includes(approve.judge)
-			else
-				return true;
+		if !approve.sign_field_code || approve.sign_field_code == Template.instance()?.data?.name
+			if approve?.is_read
+				if approve.is_finished
+					return ["approved", "rejected", "submitted", "readed"].includes(approve.judge)
+				else
+					return true;
 		return false;
 
 	judge_description: (judge)->
