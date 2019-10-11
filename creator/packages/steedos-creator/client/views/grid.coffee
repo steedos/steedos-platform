@@ -405,6 +405,9 @@ Template.creator_grid.onRendered ->
 
 				_filters = []
 				_.forEach filter_items, (fi)->
+					if fi.value == undefined
+						# value为undefined时不应该生成过滤条件，dev过滤器不支持
+						return
 					_f = _objFields[fi?.field]
 					if ["text", "textarea", "html", "code"].includes(_f?.type)
 						if _.isString(fi.value)
