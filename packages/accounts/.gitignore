@@ -12,3 +12,4 @@ schema.json
 build/
 
 .DS_Store
+.history/*
