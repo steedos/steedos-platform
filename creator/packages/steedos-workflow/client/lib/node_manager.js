@@ -38,9 +38,8 @@ NodeManager.uploadAttach = function(fileDataInfo, fileKeyValue, req) {
 	var files = new Array();
 	for (var i = 0; i < fileKeyValue.length; i++) {
 		var content = "\r\n----" + boundaryKey + "\r\n" + "Content-Disposition: form-data; name=\"" + fileKeyValue[i].urlKey + "\"; filename=\"" + encodeURIComponent(path.basename(fileKeyValue[i].urlValue)) + "\r\n" + "Content-Type: " + fileinfo[i].urlValue + "\r\n\r\n";
-		var contentBinary = new Buffer(content, 'utf-8'); //当编码为ascii时，中文会乱码。
 		files.push({
-			contentBinary: contentBinary,
+			contentBinary: content,
 			filePath: fileKeyValue[i].urlValue
 		});
 	}
@@ -67,7 +66,7 @@ NodeManager.uploadAttach = function(fileDataInfo, fileKeyValue, req) {
 
 	var fileindex = 0;
 	var doOneFile = function() {
-		req.write(files[fileindex].contentBinary);
+		req.write(files[fileindex].contentBinary, "UTF-8");
 		var currentFilePath = files[fileindex].filePath;
 		if (fs.existsSync(currentFilePath)) {
 			var fileStream = fs.createReadStream(currentFilePath, {
