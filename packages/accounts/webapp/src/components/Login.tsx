@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 
-import { accountsRest, accountsPassword } from '../accounts';
+import { accountsClient, accountsRest, accountsPassword } from '../accounts';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import FormError from './FormError';
@@ -46,14 +46,22 @@ const Login = ({ history, settings, tenant }: any) => {
     e.preventDefault();
     setError(null);
     try {
-      let result: any = await accountsPassword.login({
+      let data = {
         user: {
           email,
         },
         password,
         code,
+      }
+      let result: any = await accountsRest.authFetch( '/password/authenticate', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...data,
+        }),
+        credentials: "include"
       });
-
+      accountsClient.setTokens(result.tokens);
+      
 
       const user = await accountsRest.authFetch( '/user', {});
 

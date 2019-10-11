@@ -12,7 +12,7 @@ app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layout' })
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 
 app.get('/', (req, res) => {
   res.redirect("/accounts/a");
