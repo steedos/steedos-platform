@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "1.6.5-patch.8",
+  "version": "1.6.5-patch.9",
   "main": "lib/index.js",
   "files": [
     "/package.json",
