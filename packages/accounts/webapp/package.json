@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts start",
-    "build": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
+    "build": "cross-env NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/accounts/a/ react-scripts build",
     "test": "yarn build",
     "testonly": "SKIP_PREFLIGHT_CHECK=true react-scripts test"
   },
@@ -18,6 +18,8 @@
       "not op_mini all"
     ],
     "development": [
+      "ie 9",
+      "last 1 edge version",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
@@ -32,6 +34,7 @@
     "@types/react-redux": "^7.1.2",
     "qrcode.react": "0.9.3",
     "react": "16.8.6",
+    "react-app-polyfill": "^1.0.4",
     "react-dom": "16.8.6",
     "react-intl": "^3.1.13",
     "react-redux": "^7.1.0",
@@ -55,7 +58,7 @@
     "@types/react-router": "5.0.3",
     "@types/react-router-dom": "4.3.4",
     "cross-env": "^5.2.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.2.0",
     "redux-devtools-extension": "^2.13.8",
     "typescript": "3.5.3"
   }
