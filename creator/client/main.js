@@ -10,3 +10,10 @@ Template.preloadAssets.helpers({
         return Steedos.absoluteUrl(url)
     }
 });
+
+Meteor.startup(function(){
+    if (Steedos.isMobile() && Meteor.settings.public && Meteor.settings.public.tenant && Meteor.settings.public.tenant.enable_mobile == false) {
+        $('head meta[name=viewport]').remove();
+        $('head').append('<meta name="viewport" content="">');
+    }
+});
