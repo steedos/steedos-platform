@@ -1,4 +1,6 @@
 import 'react-app-polyfill/ie9';
+import 'core-js/proposals/url';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './Router';
