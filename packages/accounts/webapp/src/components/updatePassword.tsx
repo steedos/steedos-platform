@@ -66,6 +66,9 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
       await accountsClient.logout();
       history.push('/login' + window.location.search);
     } catch (err) {
+      if(err.message === 'accounts.invalid_credentials'){
+        err.message = 'accounts.updatePassword_invalid_credentials'
+      }
       setError(err.message);
     }
   };

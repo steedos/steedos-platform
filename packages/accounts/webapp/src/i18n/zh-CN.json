@@ -21,5 +21,6 @@
     "accounts.passwordNotEQ": "密码不一致",
     "accounts.passwordRegError": "密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位",
     "accounts.passwordExpired": "密码已过期，请修改密码",
-    "accounts.access_denied": "您无权执行此操作。"
+    "accounts.access_denied": "您无权执行此操作。",
+    "accounts.updatePassword_invalid_credentials": "旧密码错误"
 }
