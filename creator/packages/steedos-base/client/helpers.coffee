@@ -97,12 +97,22 @@ Steedos.Helpers =
 		valid = true
 		unless pwd
 			valid = false
-		unless /\d+/.test(pwd)
-			valid = false
-		unless /[a-zA-Z]+/.test(pwd)
-			valid = false
-		if pwd.length < 8
-			valid = false
+
+		passworPolicy = Meteor.settings.public?.password?.policy
+		passworPolicyError = Meteor.settings.public?.password?.policyError
+		if passworPolicy
+			if !(new RegExp(passworPolicy)).test(pwd || '')
+				reason = passworPolicyError
+				valid = false
+			else
+				valid = true
+#		else
+#			unless /\d+/.test(pwd)
+#				valid = false
+#			unless /[a-zA-Z]+/.test(pwd)
+#				valid = false
+#			if pwd.length < 8
+#				valid = false
 		if valid
 			return true
 		else
