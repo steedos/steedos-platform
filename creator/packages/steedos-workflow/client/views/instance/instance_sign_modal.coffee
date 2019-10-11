@@ -1,3 +1,9 @@
+getGlobalOpinions = ()->
+	options = db.space_settings.findOne({space: Session.get("spaceId"), key: "workflow_global_opinions"})?.values
+	if !options
+		options = Meteor.settings.public?.workflow?.global_opinions
+	return options;
+
 Template.instanceSignModal.helpers
 	modal_suggestion: ()->
 
@@ -33,6 +39,19 @@ Template.instanceSignModal.helpers
 		if o
 			opinions = o.value.workflow
 		return opinions.slice(0,3)
+
+	global_opinions: () ->
+		options = getGlobalOpinions()
+		return options;
+
+	topOptions: ()->
+		globalOptions = getGlobalOpinions()
+		userOptions = db.steedos_keyvalues.findOne({user: Meteor.userId(), key: 'flow_opinions', 'value.workflow': $exists: true})
+		if userOptions
+			globalOptions = globalOptions.concat(userOptions.value.workflow)
+		return globalOptions.slice(0,3)
+
+
 
 Template.instanceSignModal.events
 	'click #instance_flow_opinions': (event, template)->

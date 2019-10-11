@@ -14,7 +14,10 @@
             "logo_login_custome": "/packages/steedos_theme/client/images/logo_login_custome.png",   //配置登录页logo
             "logo_main_custome": "/packages/steedos_theme/client/images/logo_main_custome.png"   //配置主页左上角logo
         },
-        "is_group_company": true // 是否开启集团功能
+        "is_group_company": true, // 是否开启集团功能
+        "workflow": {
+            "global_opinions": ["同意", "不同意"]   //全局默认意见选项，在签批窗口中始终显示在自定义意见之前。
+        }
     },
     "cron": {
         "instancerecordqueue_interval": 10000, // creator同步instance到record队列执行间隔

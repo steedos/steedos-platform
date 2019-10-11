@@ -24,14 +24,20 @@
 
 						<textarea name="modal_suggestion" class="suggestion-control" id="modal_suggestion">{{modal_suggestion}}</textarea>
 						<span class="help-block"></span>
-						{{#if opinions.length}}
-							{{#each opinions}}
+						{{#if global_opinions.length}}
+							{{#each topOptions}}
 								<a class="instance-sign-opinion-btn text-overflow">{{this}}</a>
 							{{/each}}
 						{{else}}
-							<a class="instance-sign-opinion-btn">{{_ "instance_sign_read"}}</a>
-							<a class="instance-sign-opinion-btn">{{_ "instance_sign_done"}}</a>
-							<a class="instance-sign-opinion-btn">{{_ "instance_sign_agree"}}</a>
+							{{#if opinions.length}}
+								{{#each opinions}}
+									<a class="instance-sign-opinion-btn text-overflow">{{this}}</a>
+								{{/each}}
+							{{else}}
+								<a class="instance-sign-opinion-btn">{{_ "instance_sign_read"}}</a>
+								<a class="instance-sign-opinion-btn">{{_ "instance_sign_done"}}</a>
+								<a class="instance-sign-opinion-btn">{{_ "instance_sign_agree"}}</a>
+							{{/if}}
 						{{/if}}
 						<a id="instance_flow_opinions">{{_ 'instance_opinion_title_select'}}</a>
 					</div>
