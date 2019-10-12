@@ -1,0 +1,44 @@
+<template name="atForm">
+  {{#unless hide}}
+    <div class="at-form text-center">
+      {{#if showTitle}}
+        {{> atTitle}}
+      {{/if}}
+
+<!--       {{#if showServicesSeparator}}
+        {{> atSep}}
+      {{/if}} -->
+      {{#if showError}}
+        {{> atError}}
+      {{/if}}
+      {{#if showResult}}
+        {{> atResult}}
+      {{/if}}
+      {{#if showMessage}}
+        {{> atMessage}}
+      {{/if}}
+      {{#if showPwdForm}}
+        {{> atPwdForm}}
+      {{/if}}
+      {{#if showTermsLink}}
+        {{> atTermsLink}}
+      {{/if}}
+      {{#if showSignInLink}}
+        {{> atSigninLink}}
+      {{/if}}
+      {{#if showSignUpLink}}
+        {{> atSignupLink}}
+      {{/if}}
+      {{#if showForgotPasswordLink}}
+        {{> atPwdLink}}
+      {{/if}}
+      {{#if showResendVerificationEmailLink}}
+        {{> atResendVerificationEmailLink}}
+      {{/if}}
+      
+      {{#if showOauthServices}}
+        {{> atOauth}}
+      {{/if}}
+    </div>
+  {{/unless}}
+</template>
