@@ -206,12 +206,21 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
         let userSpaceIds = _.pluck(spaceUsers, 'space');
         let roles = await getUserRoles(user._id, userSpaceId);
         spaceSession = { roles: roles, expiredAt: expiredAt };
-        spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name']))[0];
+        spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name','admins']))[0];
         spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);
         spaceSession.company = (await getObjectDataByIds('company', [su.company_id], ['name', 'organization']))[0];
         spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
         spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname', 'company_id']))[0];
         spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
+        if (spaceSession.space && spaceSession.space.admins){
+          spaceSession.is_space_admin = spaceSession.space.admins.indexOf(user._id) > -1;
+        }
+        if (spaceSession.company) {
+          spaceSession.company_id = spaceSession.company._id;
+        }
+        if (spaceSession.companies) {
+          spaceSession.company_ids = spaceSession.companies.map(function (company: any) { return company._id});
+        }
         addSpaceSessionToCache(token, userSpaceId, spaceSession);
         return assignSession(userSpaceId, session, spaceSession);
       }
