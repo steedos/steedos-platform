@@ -50,6 +50,25 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	_.each Creator.steedosSchema.getDataSources(), (datasource, name) ->
 		result.apps = _.extend result.apps, datasource.getAppsConfig()
 
+	tryFetchPluginsInfo = (fun)->
+		try
+			# 因为require函数中参数用变量传入的话，可能会造成直接报错
+			# 具体`name = "@steedos/objectql/package.json",info = require(name)`会报错，只能用`info = require("@steedos/objectql/package.json")`
+			# 但是`name = "@steedos/core/package.json",info = require(name)`却不会报错
+			# 所以这里把整个fun传入执行
+			fun()
+		catch
+
+	result.plugins = {}
+	tryFetchPluginsInfo ->
+		result.plugins["@steedos/core"] = version: require("@steedos/core/package.json")?.version
+	tryFetchPluginsInfo ->
+		result.plugins["@steedos/objectql"] = version: require("@steedos/objectql/package.json")?.version
+	tryFetchPluginsInfo ->
+		result.plugins["@steedos/accounts"] = version: require("@steedos/accounts/package.json")?.version
+	tryFetchPluginsInfo ->
+		result.plugins["@steedos/steedos-plugin-workflow"] = version: require("@steedos/steedos-plugin-workflow/package.json")?.version
+
 	JsonRoutes.sendResult res,
 		code: 200,
 		data: result

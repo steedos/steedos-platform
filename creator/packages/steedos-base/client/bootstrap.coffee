@@ -214,6 +214,8 @@ Setup.bootstrap = (spaceId, callback)->
 			if (!Session.get("app_id"))
 				apps = Creator.getVisibleApps(true)
 				Session.set("app_id", apps[0]?._id)
+			
+			Creator.Plugins = result.plugins;
 				
 			if _.isFunction(callback)
 				callback()
