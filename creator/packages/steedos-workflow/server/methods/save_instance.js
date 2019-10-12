@@ -166,7 +166,8 @@ Meteor.methods({
 				state: 1,
 				form: 1,
 				form_version: 1,
-				values: 1
+				values: 1,
+				code: 1
 			}
 		});
 
