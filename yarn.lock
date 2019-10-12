@@ -2181,6 +2181,15 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
+"@steedos/steedos-plugin-workflow@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.7.0.tgz#761560d34ee391c9289d0b8fca39ce226f6685ab"
+  integrity sha512-mzBeSyLzllvUFH9vA0q8T/pIo5cQBRRlEIiTpQl3R97qu3BVr2APAbU/9Xz44GfbSaV5E4GDlhIQmyg456m+ug==
+  dependencies:
+    body-parser "^1.19.0"
+    express "^4.17.1"
+    underscore "^1.9.1"
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
