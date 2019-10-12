@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b7ec6a86043404f6456308d42156f782379c8ab3.js",
+      "path": "22eda14197a4da2394cf38c8760f879de529c1a6.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/b7ec6a86043404f6456308d42156f782379c8ab3.js?meteor_js_resource=true",
-      "size": 7150915,
-      "hash": "b7ec6a86043404f6456308d42156f782379c8ab3",
-      "sri": "0el7slwpzRRo/qexnd91HsYH3EPow0ksl82HS0K/ge3zPHh05y7kTk3FVQkz2xP97GcOVbcKy03Mmp1DtAydog=="
+      "url": "/22eda14197a4da2394cf38c8760f879de529c1a6.js?meteor_js_resource=true",
+      "size": 6210782,
+      "hash": "22eda14197a4da2394cf38c8760f879de529c1a6",
+      "sri": "CwuU8kNpl8lAOnv6wAvZnWhFklGP8QThSmQRJpIOBSxWY9uciLIVTuv3LlvIp/LKQFvBXutOtI7LUHqS1y29KA=="
     },
     {
-      "path": "b7ec6a86043404f6456308d42156f782379c8ab3.stats.json",
+      "path": "22eda14197a4da2394cf38c8760f879de529c1a6.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/b7ec6a86043404f6456308d42156f782379c8ab3.stats.json?meteor_js_resource=true",
-      "size": 143905,
-      "hash": "969b745be878239b7c53106c903b1ed504d4a3ac",
-      "sri": "BnNDCJfm5bJVC8hcXPZ/23Zz1KeYt3yDd1BQ2C5LKZYLbWvSbXkNdmsJH8fKmUO6ChklACIfjsNxKRRJzDL6hg=="
+      "url": "/22eda14197a4da2394cf38c8760f879de529c1a6.stats.json?meteor_js_resource=true",
+      "size": 130243,
+      "hash": "304882c129488bd43929b0aaa344403b990a9c13",
+      "sri": "wXQD0gkcvT80z9gxGI3qLuC/Xzj7ABKutqvGqfcKU9Gluww2XUxKBbJ1sUHQNIGa1JblGOSYx4l69Y1KEu5xlA=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -3528,10 +3528,10 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_useraccounts-bootstrap/lib/at_bootstrap.css?hash=e75fba4fdc6a834af464f4e5429837cf3580f749",
-      "size": 2896,
-      "hash": "e75fba4fdc6a834af464f4e5429837cf3580f749",
-      "sri": "BW19kZYuGMYnj7gJgKL0hDBvpDkpjcLnLU/AV9k1R1LsGhQwQcn6/l1cF8Zgn8sEE/2FNvpKzo08RSZcxfd6Cg=="
+      "url": "/packages/steedos_useraccounts-bootstrap/lib/at_bootstrap.css?hash=792dfc2ac23fcbbcdd008841b27c61a2bb4adb66",
+      "size": 2740,
+      "hash": "792dfc2ac23fcbbcdd008841b27c61a2bb4adb66",
+      "sri": "VZPZn7TysHpDAor4Q3fo+0DoyMU1SFeuyCR7E1FyUdG1xBa+lJdPFpSnAOikk+qsYZalgPgKrdiuq7gk2jxmSg=="
     },
     {
       "path": "packages/twbs_bootstrap/bootstrap.less",

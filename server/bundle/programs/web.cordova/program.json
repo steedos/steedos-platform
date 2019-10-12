@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "77c3c19356facf80c85d045473dda53a03d589ae.js",
+      "path": "f2034e1359e3bece8c852696627d4530eb27e222.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/77c3c19356facf80c85d045473dda53a03d589ae.js?meteor_js_resource=true",
-      "size": 9994041,
-      "hash": "77c3c19356facf80c85d045473dda53a03d589ae",
-      "sri": "lPxPdDROW0EHbwzJJ54otzY9btbwH2q5nhxGwiOD1G1fIGT51SnBxnMvDVlMvgR7MC7AgRlhpN01XH5wERGqRQ=="
+      "url": "/__cordova/f2034e1359e3bece8c852696627d4530eb27e222.js?meteor_js_resource=true",
+      "size": 9053907,
+      "hash": "f2034e1359e3bece8c852696627d4530eb27e222",
+      "sri": "3xNz3hractpihJGeET6B0RLjBsWhiyuR1XnZKdxVPW2ulyuERVA0DOhXaA9WBMGPPdPG0Mpdvsr0jcQpkLjIOg=="
     },
     {
-      "path": "77c3c19356facf80c85d045473dda53a03d589ae.stats.json",
+      "path": "f2034e1359e3bece8c852696627d4530eb27e222.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/77c3c19356facf80c85d045473dda53a03d589ae.stats.json?meteor_js_resource=true",
-      "size": 144423,
-      "hash": "1e53c8aa32f4f0af289d2c48ce63590605117b4b",
-      "sri": "Q2bGUcCP8fvs8Nx40nF9RHEhvJfQSQjIN+DeHQW1XibJl06y0MojixPiQ43+m3gUHmZim+NCqO29wsgS63L0LQ=="
+      "url": "/__cordova/f2034e1359e3bece8c852696627d4530eb27e222.stats.json?meteor_js_resource=true",
+      "size": 130761,
+      "hash": "6f4ce0af8c53ff1f352d44b6f26aea57650a4987",
+      "sri": "+aHcBySrZfa+zpwwViHakZwetgED4Pt0zczvzjVE7vRCwczoDy+WMru+ezZcsd7jFDB88F0k88wGzw4ixXOzbQ=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -328,10 +328,10 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_useraccounts-bootstrap/lib/at_bootstrap.css?hash=e75fba4fdc6a834af464f4e5429837cf3580f749",
-      "size": 2896,
-      "hash": "e75fba4fdc6a834af464f4e5429837cf3580f749",
-      "sri": "BW19kZYuGMYnj7gJgKL0hDBvpDkpjcLnLU/AV9k1R1LsGhQwQcn6/l1cF8Zgn8sEE/2FNvpKzo08RSZcxfd6Cg=="
+      "url": "/__cordova/packages/steedos_useraccounts-bootstrap/lib/at_bootstrap.css?hash=792dfc2ac23fcbbcdd008841b27c61a2bb4adb66",
+      "size": 2740,
+      "hash": "792dfc2ac23fcbbcdd008841b27c61a2bb4adb66",
+      "sri": "VZPZn7TysHpDAor4Q3fo+0DoyMU1SFeuyCR7E1FyUdG1xBa+lJdPFpSnAOikk+qsYZalgPgKrdiuq7gk2jxmSg=="
     },
     {
       "path": "packages/twbs_bootstrap/bootstrap.less",

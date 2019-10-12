@@ -15,7 +15,8 @@
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
     "clean": "lerna clean",
-    "changed": "lerna changed"
+    "changed": "lerna changed",
+    "git": "git config core.autocrlf true && git config core.filemode false"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",

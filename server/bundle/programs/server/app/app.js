@@ -24,22 +24,22 @@ TAPi18n.languages_names["en"] = ["English","English"];
 Steedos.Info = {
     "version": "1.5.2",
     "build": {
-        "date": "2019-09-30T03:50:10.810Z",
+        "date": "2019-10-12T03:14:50.433Z",
         "nodeVersion": "v8.11.4",
         "arch": "x64",
         "platform": "darwin",
-        "osRelease": "18.7.0",
+        "osRelease": "19.0.0",
         "totalMemory": 8589934592,
-        "freeMemory": 31797248,
+        "freeMemory": 272338944,
         "cpus": 6
     },
     "commit": {
-        "hash": "a8a4528acc209ab487602d7449506031e34905f8",
-        "date": "Mon Sep 30 11:37:41 2019 +0800",
-        "author": "baozhoutao",
-        "subject": "处理查找页面lookup选中后，选中项文字不显示问题",
+        "hash": "4d40c72e2c146775befdf412d0b66cfef4216608",
+        "date": "Sat Oct 12 10:59:36 2019 +0800",
+        "author": "hotlong",
+        "subject": "引入登录界面",
         "tag": "1.5.1",
-        "branch": "dev"
+        "branch": "master"
     }
 };
 ///////////////////////////////////////////////////////////////////////
