@@ -6,7 +6,7 @@ fields:
     reference_to: users
     sortable: true
     index: true
-    defaultValue: '{userId}'
+    defaultValue: "{userId}"
     omit: true
     hidden: true
   space:
@@ -15,7 +15,7 @@ fields:
     reference_to: spaces
     index: true
     hidden: true
-    defaultValue: '{spaceId}'
+    defaultValue: "{spaceId}"
   created:
     type: datetime
     label: 创建时间
@@ -94,12 +94,12 @@ fields:
     hidden: true
   sharing.$.u:
     label: 授权用户
-    type: '[text]'
+    type: "[text]"
     omit: true
     hidden: true
   sharing.$.o:
     label: 授权组织
-    type: '[text]'
+    type: "[text]"
     omit: true
     hidden: true
   sharing.$.r:
@@ -127,6 +127,26 @@ fields:
       function(){
         if(Meteor.isClient){
           return Steedos.getUserCompanyId()
+        }
+      }
+    omit: true
+    hidden: true
+  company_ids:
+    label: 所属单位
+    type: lookup
+    reference_to: company
+    sortable: true
+    index: true
+    multiple: true
+    defaultValue: !!js/function |
+      function(){
+        if(Meteor.isClient){
+          var cid = Steedos.getUserCompanyId();
+          if (cid) {
+            return [cid];
+          } else {
+            return [];
+          }
         }
       }
     omit: true

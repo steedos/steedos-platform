@@ -693,7 +693,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
                     let companyFilters = _.map(userSession.companies, function (comp: any) {
-                        return `(company_id eq '${comp._id}')`
+                        return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     }).join(' or ')
                     if (companyFilters) {
                         query.filters = query.filters ? `(${query.filters} and (${companyFilters}))` : `(${companyFilters})`;
