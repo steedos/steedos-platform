@@ -110,7 +110,7 @@
         },
         "enable_approvals": {
             "type": "boolean",
-            "description": "树状显示"
+            "description": "历史步骤"
         },
         "is_view": {
             "type": "boolean",
