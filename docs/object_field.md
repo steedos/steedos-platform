@@ -106,6 +106,11 @@ priority:
 
 ![表单编辑效果](assets/field_guide.png)
 
+## 第三方数据源
+
+### 主键 primary
+默认数据源使用mongodb数据库，默认使用_id作为主键。如使用第三方SQL数据源，需要手工指定主键字段。
+
 ## 系统字段
 如果使用Steedos默认数据源，每个Steedos对象都会自动创建一些系统字段。
 
