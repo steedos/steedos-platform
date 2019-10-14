@@ -12,38 +12,99 @@ title: 应用
 
 ![电脑、手机界面展示](assets/mac_mobile_list.png)
 
-## 应用属性
+管理员可以在权限集中配置应用的访问权限，如果一个用户属于多个权限集，则最终可访问的应用为个权限集的叠加。
+
+## 应用
+
 ```yaml
 _id: crm
 name: 客户
 description: 管理客户，以及相关的联系人、任务和日程。
 icon_slds: folder
 is_creator: true
-objects: 
+objects:
   - accounts
   - contacts
   - tasks
   - events  
+mobile_objects:
+  - accounts
+  - contacts
 ```
+
 ### _id
+
 应用的API名称，必须符合变量的命名规范。
 
 ### 应用名称 name
+
 应用在界面上的显示名称，可以使用中文名称。
 
 ### 应用图标 icon_slds
+
 必须配置。对应 [LIGHTNING DESIGN SYSTEM 中的Standard Icons图标](https://www.lightningdesignsystem.com/icons/#standard) 中的图标名称。
 
-### 对象 objects
+### 可见 visible
+
+如果配置为false，可将应用隐藏。
+
+### 排序号
+
+控制应用在开始菜单中显示的先后顺序。
+
+### 电脑端菜单 objects
+
 使用数组格式定义此应用中显示的对象清单，系统按照定义的先后顺序显示为业务对象Tab。点击业务对象名称，进入业务对象列表界面。
 
 除了可以配置当前项目中的业务对象，也可以配置系统内置的[标准业务对象](standard_objects.md)。
 
-### 可见 visible
-如果配置为false，可将应用隐藏。
+## 手机端菜单 mobile_objects
 
-### 排序号
-控制应用在开始菜单中显示的先后顺序。
+使用数组格式定义在手机端主菜单中显示的对象清单，系统按照定义的先后顺序显示为业务对象菜单。
 
-## 应用权限
-管理员可以在权限集中配置应用的访问权限，如果一个用户属于多个权限集，则最终可访问的应用为个权限集的叠加。
+## 门户 dashboard
+
+如果配置了此参数，在电脑端会自动加上“首页”Tab，按照配置自动生成应用首页。
+
+```yml
+dashboard:
+  pending_tasks:
+    label: 待办任务
+    object_name: tasks
+    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    columns:
+      - field: name
+        width: 70%
+        wrap: true
+        href: true
+      - field: priority
+        width: 30%
+        wrap: false
+    position: LEFT
+```
+
+### 标题 label
+
+显示在 widget 左上角。
+
+### 对象 object_name
+
+查询的对象。
+
+### 筛选条件 filters
+
+在 widget 中只显示符合筛选条件的数据。
+
+### 列 columns
+
+设定显示的列，以及列的属性。
+
+### 位置 position
+
+显示 widget 的位置，可选项：
+
+- LEFT: 显示在左侧
+- CENTER_TOP: 显示在中间栏顶部
+- CENTER_BOTTOM_LEFT: 显示在中间栏底部左侧
+- CENTER_BOTTOM_RIGHT: 显示在中间栏底部右侧
+- RIGHT: 显示在右侧
