@@ -70,6 +70,8 @@ mobile_objects:
 dashboard:
   pending_tasks:
     label: 待办任务
+    position: LEFT
+    type: odata
     object_name: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
     columns:
@@ -80,12 +82,20 @@ dashboard:
       - field: priority
         width: 30%
         wrap: false
-    position: LEFT
 ```
 
 ### 标题 label
 
 显示在 widget 左上角。
+
+### 类型 type
+
+内置 widget 类型。目前支持以下类型：
+
+- object_grid: 以表格的形式显示对象的列表数据。
+- apps: 显示 apps 清单，点击可以跳转到对应的应用。
+- html: 显示静态的html内容，可嵌入 javascript。
+- email: 显示当前用户的未读邮件。
 
 ### 对象 object_name
 
