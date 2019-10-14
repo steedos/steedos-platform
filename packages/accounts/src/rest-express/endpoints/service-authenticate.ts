@@ -51,6 +51,9 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     if (!_user['services']['resume']) {
       _user['services']['resume'] = {loginTokens: []}
     }
+    if (!_user['services']['resume']['loginTokens']) {
+      _user['services']['resume']['loginTokens'] = [];
+    }
     _user['services']['resume']['loginTokens'].push(hashedToken)
     let data = { services: _user['services'] }
     await db.collection.updateOne({_id: session.userId}, {$set: data});
