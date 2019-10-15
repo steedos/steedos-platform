@@ -390,7 +390,8 @@ if Meteor.isClient
 					ifrBody[0].addEventListener 'contextmenu', (ev) ->
 						ev.preventDefault()
 						return false
-
+	Steedos.getAppHomeUrl = ()->
+		return Steedos.absoluteUrl("app/#{Session.get('app_id')}/home")
 if Meteor.isServer
 	Steedos.getUserOrganizations = (spaceId,userId,isIncludeParents)->
 		space_user = db.space_users.findOne({user:userId,space:spaceId},fields:{organizations:1})

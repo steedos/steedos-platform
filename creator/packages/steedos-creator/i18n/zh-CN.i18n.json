@@ -104,6 +104,7 @@
 	"creator_filters": "过滤器",
 
 	"true": "是",
-	"false": "否"
+	"false": "否",
+  	"dashboard": "首页"
 
 }

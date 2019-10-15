@@ -81,6 +81,28 @@ FlowRouter.route '/app/:app_id',
 			Session.set("hidden_header", undefined)
 	]
 
+FlowRouter.route '/app/:app_id/home',
+	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	action: (params, queryParams)->
+		app_id = FlowRouter.getParam("app_id")
+		Session.set("app_id", app_id)
+		Session.set("admin_template_name", null)
+		Session.set("app_home_active", true)
+		if FlowRouter.getParam("app_id") is "meeting"
+			FlowRouter.go('/app/' + app_id + '/meeting/calendar')
+		else
+			main = 'dashboard'
+			if Steedos.isMobile()
+				Session.set('hidden_header', true)
+				main = 'dashboard'
+			BlazeLayout.render Creator.getLayout(),
+				main: main
+	triggersExit: [(context, redirect) ->
+		Session.set("app_home_active", false);
+		if Steedos.isMobile()
+			Session.set("hidden_header", undefined)
+	]
+
 FlowRouter.route '/user_settings',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->

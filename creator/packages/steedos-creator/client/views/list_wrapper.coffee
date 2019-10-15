@@ -64,7 +64,7 @@ Template.creator_list_wrapper.onRendered ->
 		object_name = Session.get("object_name")
 		listViews = Creator.getListViews()
 		self.recordsListViewTotal.set {}
-		listViews.forEach (view)->
+		listViews?.forEach (view)->
 			unless view?.show_count
 				return
 			filters = Creator.getODataFilter(view._id, object_name)
@@ -233,7 +233,7 @@ Template.creator_list_wrapper.helpers
 	isTree: ()->
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
-		return object.enable_tree
+		return object?.enable_tree
 
 	search_text: ()->
 		search_text = Tracker.nonreactive ()->

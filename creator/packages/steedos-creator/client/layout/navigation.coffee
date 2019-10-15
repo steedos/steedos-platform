@@ -18,6 +18,8 @@ Template.creatorNavigation.helpers
 		return Creator.getObject(this)
 
 	object_class_name: (obj)->
+		if Session.get("app_home_active")
+			return ;
 		if (obj == Session.get("object_name"))
 			return "slds-is-active"
 
@@ -58,6 +60,16 @@ Template.creatorNavigation.helpers
 			return true
 		else
 			return false
+	hasAppDashboard: ()->
+		app = Creator.getApp()
+		if app?.dashboard
+			return true
+		return false
+	dashboard_url: ()->
+		return Steedos.getAppHomeUrl()
+	dashboard_class_name: ()->
+		if Session.get("app_home_active")
+			return "slds-is-active"
 
 Template.creatorNavigation.events
 

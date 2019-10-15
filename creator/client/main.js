@@ -4,6 +4,8 @@ require("./theme.less");
 svg4everybody();
 
 import("./main.html");
+import Grid from '../imports/ui/grid.js';
+import Dashboard from '../imports/ui/dashboard.js';
 
 Template.preloadAssets.helpers({
     absoluteUrl(url){

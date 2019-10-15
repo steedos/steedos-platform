@@ -102,5 +102,6 @@
 	"creator_filters": "Filters",
 
 	"true": "YES",
-	"false": "NO"
+	"false": "NO",
+  	"dashboard": "Dashboard"
 }

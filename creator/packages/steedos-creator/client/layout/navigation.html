@@ -32,6 +32,15 @@
 						<span class="slds-truncate" title="Home">Home</span>
 					</a>
 				</li> -->
+
+				{{#if hasAppDashboard}}
+					<li class="slds-context-bar__item dashboard {{dashboard_class_name}}">
+						<a href="{{dashboard_url}}" class="slds-context-bar__label-action">
+							<span class="slds-truncate">{{_ "dashboard"}}</span>
+						</a>
+					</li>
+				{{/if}}
+
 				{{#each app_objects}}
 					<li class="slds-context-bar__item {{object_class_name this}}">
 						<a href="{{object_url}}" class="slds-context-bar__label-action">
