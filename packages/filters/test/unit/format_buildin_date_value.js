@@ -67,7 +67,11 @@ next_60_days = new Date(now.getTime() + (59 * millisecond));
 next_90_days = new Date(now.getTime() + (89 * millisecond));
 next_120_days = new Date(now.getTime() + (119 * millisecond));
 const utcOffset = moment().utcOffset() / 60;
-const userContext = { utcOffset };
+const userContext = {
+    user: {
+        utcOffset
+    }
+};
 
 describe('advanced format between buildin date value filter to odata query', () => {
     it('between last_year', async () => {
