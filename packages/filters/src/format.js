@@ -4,8 +4,8 @@ const _ = require('underscore');
 const utils = require("./utils");
 const formula = require("./formula");
 
-let formatFiltersToDev = (filters, userContext = { utcOffset: 0 }) => {
-    let utcOffset = userContext.utcOffset;
+let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, user: { utcOffset: 0 } }) => {
+    let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
     var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
