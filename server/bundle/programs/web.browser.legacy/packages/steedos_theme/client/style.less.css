@@ -1,9 +1,16 @@
+body {
+  background-size: cover !important;
+  background-position: center !important;
+}
+.steedos.login .at-form .at-error {
+  margin-top: 20px;
+}
 .steedos.login .at-form .at-pwd-link {
   margin-top: 10px;
 }
 .steedos.login .at-form img.logo {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 70px;
 }
 @media (max-width: 767px) {
   .steedos.login .at-form img.logo {

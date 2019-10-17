@@ -718,9 +718,6 @@
       }
     },
     {
-      "path": "packages/steedos_version.js"
-    },
-    {
       "sourceMap": "packages/steedos_audit.js.map",
       "path": "packages/steedos_audit.js"
     },
@@ -775,6 +772,10 @@
     },
     {
       "path": "packages/comerc_autoform-selectize.js"
+    },
+    {
+      "sourceMap": "packages/steedos_webkit-notification.js.map",
+      "path": "packages/steedos_webkit-notification.js"
     },
     {
       "path": "packages/hot-code-push.js"

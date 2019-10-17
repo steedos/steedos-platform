@@ -17,3 +17,15 @@
   max-height: initial !important;
   height: auto !important;
 }
+.steedos-selectize .selectize-control.multi .selectize-input.has-items {
+  padding: 0px 0px 0px 0px !important;
+}
+.steedos-selectize .selectize-control .selectize-input.disabled {
+  opacity: 1 !important;
+}
+.steedos-selectize .selectize-control.multi .selectize-input.disabled [data-value] {
+  color: inherit !important;
+}
+.steedos-selectize .disabled .slds-pill__remove {
+  display: none;
+}
