@@ -94,7 +94,7 @@ dashboard:
 
 - object: 以表格的形式显示对象的列表数据。
 - apps: 显示 apps 清单，点击可以跳转到对应的应用。
-- html: 显示静态的html内容，可嵌入 javascript。
+- react: 显示react component内容，是一个function，返回react node节点。
 - email: 显示当前用户的未读邮件。
 
 ### 对象 object_name
@@ -118,3 +118,21 @@ dashboard:
 - CENTER_BOTTOM_LEFT: 显示在中间栏底部左侧
 - CENTER_BOTTOM_RIGHT: 显示在中间栏底部右侧
 - RIGHT: 显示在右侧
+
+
+### 组件 component
+
+显示 react component内容，可选项，type为react时必填，是一个function，返回react node节点，比如：
+```
+const styled = require('styled-components').default;
+let CenterDiv = styled.div`
+  text-align: center;
+  height: 230px;
+  background: #fff;
+  border: solid 1px #eee;
+  border-radius: 4px;
+  margin-bottom: 12px;
+`;
+return <CenterDiv className="testReact1">react component</CenterDiv>;
+```
+

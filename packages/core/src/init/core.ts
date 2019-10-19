@@ -215,7 +215,8 @@ export class Core {
         let routerPath = "/assets/"
         if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
             routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/assets/";
-        router.use(routerPath, express.static(dsPath));
+        const cacheTime = 86400000*1; // one day
+        router.use(routerPath, express.static(dsPath, { maxAge: cacheTime }));
         WebApp.rawConnectHandlers.use(router);
     }
 }
