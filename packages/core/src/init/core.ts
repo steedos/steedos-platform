@@ -63,9 +63,59 @@ export class Core {
     }
 
     private static loadObjects() {
+        let self = this;
         _.each(Creator.Objects, function (obj, object_name) {
+            self.dynamicLoadObjectMethods(object_name, obj);
+            self.dynamicLoadObjectTriggers(object_name, obj);
+            self.dynamicLoadObjectActions(object_name, obj);
             return Creator.loadObjects(obj, object_name);
         });
+    }
+
+    private static dynamicLoadObjectMethods(objectName: string, objectConfig){
+        _.each(objectql.objectDynamicLoad.getMethods(objectName), (item)=>{
+            objectql.extend(objectConfig, {methods: {[item.methodName]: item.method}})
+        })
+    }
+
+    private static transformTriggerWhen(triggerWhen: string){
+        let when = triggerWhen;
+        switch (triggerWhen) {
+            case 'beforeInsert':
+                when = 'before.insert'
+                break;
+            case 'beforeUpdate':
+                when = 'before.update'
+                break;
+            case 'beforeDelete':
+                when = 'before.delete'
+                break;
+            case 'afterInsert':
+                when = 'after.insert'
+                break;
+            case 'afterUpdate':
+                when = 'after.update'
+                break;
+            case 'afterDelete':
+                when = 'after.delete'
+                break;
+            default:
+                break;
+        }
+        return when
+    }
+
+    private static dynamicLoadObjectTriggers(objectName: string, objectConfig){
+        _.each(objectql.objectDynamicLoad.getTriggers(objectName), (item)=>{
+            item.trigger.when = this.transformTriggerWhen(item.trigger.when);
+            objectql.extend(objectConfig, {triggers: {[item.triggerName]: item.trigger}})
+        })
+    }
+
+    private static dynamicLoadObjectActions(objectName: string, objectConfig){
+        _.each(objectql.objectDynamicLoad.getActions(objectName), (item)=>{
+            objectql.extend(objectConfig, {actions: {[item.actionName]: item.action}})
+        })
     }
 
     private static initObjects() {
@@ -148,6 +198,11 @@ export class Core {
     private static initRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
+        
+        let routers = objectql.objectDynamicLoad.getRouters()
+        _.each(routers, (item)=>{
+            app.use(item.routerPath, item.router)
+        })
 
         WebApp.connectHandlers.use(app);
     }

@@ -28,6 +28,7 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 import { GraphQLSchema } from 'graphql';
+import { objectDynamicLoad } from './object_dynamic_load'
 
 var util = require('../util')
 var path = require('path')
@@ -156,6 +157,12 @@ export class SteedosDataSourceType implements Dictionary {
             }
         }
 
+        if(this.driver !== SteedosDatabaseDriverType.MeteorMongo){
+            this.dynamicLoadObjectMethods(object_name, config);
+            this.dynamicLoadObjectActions(object_name, config);
+            this.dynamicLoadObjectTriggers(object_name, config);
+        }
+
         let object = new SteedosObjectType(object_name, this, config)
         this._objectsConfig[object_name] = config;
         this._objects[object_name] = object;
@@ -237,6 +244,12 @@ export class SteedosDataSourceType implements Dictionary {
         _.each(this.config.objectFiles, (objectFiles) => {
             this.use(objectFiles)
         })
+
+        if(this.driver !== SteedosDatabaseDriverType.MeteorMongo){
+            _.each(objectDynamicLoad.getObjects(this.name), (item)=>{
+                this.use(item.filePath)
+            })
+        }
 
         _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
@@ -540,6 +553,24 @@ export class SteedosDataSourceType implements Dictionary {
         if (this._adapter.createTables) {
             return await this._adapter.createTables(this._objects);
         }
+    }
+
+    private dynamicLoadObjectMethods(objectName: string, objectConfig: SteedosObjectTypeConfig){
+        _.each(objectDynamicLoad.getMethods(objectName), (item)=>{
+            util.extend(objectConfig, {methods: {[item.methodName]: item.method}})
+        })
+    }
+
+    private dynamicLoadObjectTriggers(objectName: string, objectConfig: SteedosObjectTypeConfig){
+        _.each(objectDynamicLoad.getTriggers(objectName), (item)=>{
+            util.extend(objectConfig, {listeners: {[item.triggerName]: {[item.trigger.when]: item.trigger.todo}}})
+        })
+    }
+
+    private dynamicLoadObjectActions(objectName: string, objectConfig: SteedosObjectTypeConfig){
+        _.each(objectDynamicLoad.getActions(objectName), (item)=>{
+            util.extend(objectConfig, {actions: {[item.actionName]: item.action}})
+        })
     }
 
     async init() {

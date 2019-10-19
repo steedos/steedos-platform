@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const UglifyJS = require("uglify-js");
 const clone = require("clone");
+
 export class LoadFiles {
 
     static _extendObjectsConfig = []
@@ -15,8 +16,19 @@ export class LoadFiles {
 
     static initProjectObjects() {
         this.loadDefaultDatasourcesFiles();
+        this.loadObjectDynamic()
         this.initProjectExtendObjects();
         this.loadDatasourcesStaticJs();
+    }
+
+    private static loadObjectDynamic(){
+        _.each(objectql.objectDynamicLoad.getObjects('default'), (item)=>{
+            this.loadObjectToCreator(item.filePath)
+        })
+
+        _.each(objectql.objectDynamicLoad.getApps(), (item)=>{
+            this.loadAppToCreator(item.filePath)
+        })
     }
 
     private static initProjectExtendObjects(){
