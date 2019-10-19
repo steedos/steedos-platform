@@ -214,7 +214,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         _TRIGGERKEYS.forEach((key) => {
             let event = config[key];
             if (_.isFunction(event)) {
-                this.setTrigger(`${listener_name}_${event.name}`, event.name, event);
+                this.setTrigger(`${listener_name}_${event.name}`, key, event);
             }
         })
     }
