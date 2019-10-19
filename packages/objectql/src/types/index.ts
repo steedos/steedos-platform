@@ -22,3 +22,11 @@ export { addObjects, addApps, addMethod, addTrigger, addAction, addRouter, objec
 export function getSteedosSchema(): SteedosSchema {
     return getFromContainer(SteedosSchema);
 }
+
+export function getObject(objectName: string, schema?: SteedosSchema){
+    return (schema ? schema : getSteedosSchema()).getObject(objectName);
+}
+
+export function getDatasource(datasourceName: string, schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getDataSource(datasourceName);
+}
