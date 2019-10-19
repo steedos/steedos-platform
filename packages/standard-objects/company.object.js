@@ -125,7 +125,7 @@ let update_org_company_id = async function (_id, company_id, updated = { count: 
 }
 
 Creator.Objects['company'].methods = {
-    updateOrgs: async function (params) {
+    updateOrgs: async function (req, res) {
         let company = await this.getObject("company").findOne(this.record_id, {
             fields: ["organization"]
         });
@@ -146,10 +146,10 @@ Creator.Objects['company'].methods = {
             await update_su_company_ids.call(this, su._id, su);
         }
 
-        return {
+        return res.send({
             updatedOrgs: updatedOrgs.count,
             updatedSus: sus.length
-        };
+        });
     }
 }
 

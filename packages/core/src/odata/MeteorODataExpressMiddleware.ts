@@ -500,7 +500,7 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
         let userSession = req.user;
         let userId = userSession.userId;
         let urlParams = req.params;
-        let bodyParams = req.body;
+        // let bodyParams = req.body;
         let key = urlParams.objectName;
         let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
@@ -525,7 +525,7 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
                         return getCreator().getSteedosSchema().getObject(object_name)
                     }
                 }
-                res.send(await methods[methodName].apply(thisObj, [bodyParams]) || {})
+                methods[methodName].apply(thisObj, [req, res])
             } else {
                 res.status(404).send(setErrorMessage(404, collection, key));
             }
