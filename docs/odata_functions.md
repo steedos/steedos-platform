@@ -11,15 +11,13 @@ title: 自定义函数
  - 请求接口：/api/v4/{object_name}/{record_id}/{method_name}
 
  - 接口说明：
-   - spaceId：工作区ID
-   - object_name：对象名
-   - record_id：记录的主键ID，如果方法中未用到此参数可传all
-   - method_name： 方法名，需要在对象的model中预先定义方法，如：
+   - req.user：当前用户信息
      ```coffeescript
         methods:
-          # 可通过this获取到object_name, record_id, space_id, user_id; params为request的body
-          confirmReceipt: (params) ->
-            return Steedos.getCollection('vip_order').findOne({ _id: this.record_id, owner: this.user_id, status: 'delivered' })
+          confirmReceipt: (req, res) ->
+            let {_id} = req.params
+            let {userId} = req.user
+            return Steedos.getCollection('vip_order').findOne({ _id: _id, owner: userId, status: 'delivered' })
       ```
 
  - 请求参数说明：
