@@ -17,7 +17,7 @@ title: 自定义函数
           confirmReceipt: (req, res) ->
             let {_id} = req.params
             let {userId} = req.user
-            return Steedos.getCollection('vip_order').findOne({ _id: _id, owner: userId, status: 'delivered' })
+            return res.send(Steedos.getCollection('vip_order').findOne({ _id: _id, owner: userId, status: 'delivered' }))
       ```
 
  - 请求参数说明：
