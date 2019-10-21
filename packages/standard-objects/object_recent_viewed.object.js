@@ -53,14 +53,17 @@ Creator.Objects.object_recent_viewed = {
     }
   },
   methods: {
-    inc: function (params) {
+    inc: function (req, res) {
+      let {objectName, _id: record_id} = req.params
+      let userSession = req.user;
+      let {spaceId, userId} = userSession
       var collection_recent_viewed, current_recent_viewed, filters;
-      collection_recent_viewed = Creator.getCollection(this.object_name);
+      collection_recent_viewed = Creator.getCollection(objectName);
       filters = {
-        owner: this.user_id,
-        space: this.space_id,
-        'record.o': params.object_name,
-        'record.ids': [params.record_id]
+        owner: userId,
+        space: spaceId,
+        'record.o': objectName,
+        'record.ids': [record_id]
       };
       current_recent_viewed = collection_recent_viewed.findOne(filters);
       if (current_recent_viewed) {
@@ -70,23 +73,23 @@ Creator.Objects.object_recent_viewed = {
           },
           $set: {
             modified: new Date(),
-            modified_by: this.user_id
+            modified_by: userId
           }
         });
       } else {
         collection_recent_viewed.insert({
           _id: collection_recent_viewed._makeNewID(),
-          owner: this.user_id,
-          space: this.space_id,
+          owner: userId,
+          space: spaceId,
           record: {
-            o: params.object_name,
-            ids: [params.record_id]
+            o: objectName,
+            ids: [record_id]
           },
           count: 1,
           created: new Date(),
-          created_by: this.user_id,
+          created_by: userId,
           modified: new Date(),
-          modified_by: this.user_id
+          modified_by: userId
         });
       }
       return true;

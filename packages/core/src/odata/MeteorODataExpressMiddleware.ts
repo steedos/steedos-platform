@@ -498,11 +498,11 @@ const deleteObjectData = async function (req: Request, res: Response) {
 const excuteObjectMethod = async function (req: Request, res: Response) {
     try {
         let userSession = req.user;
-        let userId = userSession.userId;
+        // let userId = userSession.userId;
         let urlParams = req.params;
         // let bodyParams = req.body;
         let key = urlParams.objectName;
-        let spaceId = userSession.spaceId;
+        // let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -514,18 +514,18 @@ const excuteObjectMethod = async function (req: Request, res: Response) {
             let methodName = urlParams.methodName;
             let methods = collection.methods || {};
             if (methods.hasOwnProperty(methodName)) {
-                let thisObj = {
-                    object_name: key,
-                    record_id: urlParams._id,
-                    space_id: spaceId,
-                    user_id: userId,
-                    permissions: permissions,
-                    userSession: userSession,
-                    getObject: (object_name: string) => {
-                        return getCreator().getSteedosSchema().getObject(object_name)
-                    }
-                }
-                methods[methodName].apply(thisObj, [req, res])
+                // let thisObj = {
+                //     object_name: key,
+                //     record_id: urlParams._id,
+                //     space_id: spaceId,
+                //     user_id: userId,
+                //     permissions: permissions,
+                //     userSession: userSession,
+                //     getObject: (object_name: string) => {
+                //         return getCreator().getSteedosSchema().getObject(object_name)
+                //     }
+                // }
+                methods[methodName].apply({}, [req, res])
             } else {
                 res.status(404).send(setErrorMessage(404, collection, key));
             }

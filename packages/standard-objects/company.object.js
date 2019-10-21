@@ -1,3 +1,5 @@
+const objectql = require('@steedos/objectql')
+
 Creator.Objects['company'].triggers = {
     "after.insert.server.company": {
         on: "server",
@@ -126,7 +128,14 @@ let update_org_company_id = async function (_id, company_id, updated = { count: 
 
 Creator.Objects['company'].methods = {
     updateOrgs: async function (req, res) {
-        let company = await this.getObject("company").findOne(this.record_id, {
+        let {_id: record_id} = req.params
+
+        let callThis = {
+            getObject: objectql.getObject,
+            userSession: req.user
+        }
+
+        let company = await objectql.getObject("company").findOne(record_id, {
             fields: ["organization"]
         });
 
@@ -135,15 +144,15 @@ Creator.Objects['company'].methods = {
         }
 
         let updatedOrgs = { count: 0 };
-        await update_org_company_id.call(this, company.organization, this.record_id, updatedOrgs);
+        await update_org_company_id.call(callThis, company.organization, record_id, updatedOrgs);
 
-        sus = await this.getObject("space_users").find({
+        sus = await objectql.getObject("space_users").find({
             filters: [["organizations_parents", "=", company.organization]],
             fields: ["organizations", "organization", "company_id", "space"]
         });
         
         for (let su of sus){
-            await update_su_company_ids.call(this, su._id, su);
+            await update_su_company_ids.call(callThis, su._id, su);
         }
 
         return res.send({
