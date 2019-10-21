@@ -14,22 +14,21 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const client_id = req.query.client_id || "steedos"
   const connection = req.query.connection || "steedos"
   const state = req.query.state || ""
-  const redirect_uri = req.query.redirect_uri
   const query = req.url.substring("/authorize".length)
+  let redirect_uri = req.query.redirect_uri
+  if (!redirect_uri)
+    redirect_uri = "/"
 
   let userId = (req as any).userId
   let userIdCookie = get(req.cookies, 'X-User-Id') 
   let userAccessTokenCookie = get(req.cookies, 'X-Access-Token') 
   if (userId && (userIdCookie== userId)) {
-    if (redirect_uri) {
-      const redirectURL = new URL(redirect_uri);
-      redirectURL.searchParams.set("token", userAccessTokenCookie)
-      res.redirect(redirectURL.toString());
-      res.end();
-    } else {
-      res.redirect("/");
-      res.end();
-    }
+    if (redirect_uri.indexOf("?"))
+      redirect_uri += "&token=" + userAccessTokenCookie
+    else 
+      redirect_uri += "?token=" + userAccessTokenCookie
+    res.redirect(redirect_uri);
+    res.end();
   } else {
     clearAuthCookies(req, res);
     res.redirect("/accounts/a/login" + query);
