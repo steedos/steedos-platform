@@ -49,10 +49,16 @@ const Router = ({tenant}:any) => {
     rootGrid: {
     },
     container: {
+      alignItems: 'center'
+    },
+    paper: {
       padding: 28,
       margin: '0px auto',
       maxWidth: 380,
       minWidth: 320,
+      '@media only screen and (max-width: 480px)': {
+        borderRadius: 0
+      }
     },
   });
 
@@ -62,9 +68,9 @@ const Router = ({tenant}:any) => {
     <BrowserRouter basename="/accounts/a">
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
-          <Grid container id="wrapper">
+          <Grid className={classes.container} container id="container">
             <Grid item xs={12}>
-              <Paper className={classes.container} id="container">
+              <Paper className={classes.paper} id="paper">
                 <CssBaseline />
                 <Logo></Logo>
                 <Route exact path="/" component={Home} />
