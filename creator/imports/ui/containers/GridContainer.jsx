@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Grid from 'steedos-webapp/lib/components/grid';
-import store from 'steedos-webapp/lib/stores/configureStore';
+import Grid from '@steedos/react/lib/components/grid';
+import store from '@steedos/react/lib/stores/configureStore';
 import { IconSettings } from '@salesforce/design-system-react';
 
 var iconPath = `/assets/icons`;
