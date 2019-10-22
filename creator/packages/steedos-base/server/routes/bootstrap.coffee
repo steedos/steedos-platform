@@ -9,8 +9,13 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 			data: null
 		return
 
-	USER_CONTEXT = Creator.getUserContext(userId, spaceId, true)
-	unless USER_CONTEXT
+	authToken = Steedos.getAuthToken(req, res)
+	userSession = Meteor.wrapAsync((authToken, spaceId, cb)->
+			steedosAuth.getSession(authToken, spaceId).then (resolve, reject)->
+				cb(reject, resolve)
+		)(authToken, spaceId)
+	
+	unless userSession
 		JsonRoutes.sendResult res,
 			code: 500,
 			data: null
@@ -19,18 +24,11 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	space = Creator.Collections["spaces"].findOne({_id: spaceId}, {fields: {name: 1}})
 
 	result = Creator.getAllPermissions(spaceId, userId)
-	result.USER_CONTEXT = USER_CONTEXT
+	result.user = userSession
 	result.space = space
 	result.apps = _.extend Creator.getDBApps(spaceId), Creator.Apps
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
-
-	authToken = Steedos.getAuthToken(req, res)
-
-	userSession = Meteor.wrapAsync((authToken, spaceId, cb)->
-			steedosAuth.getSession(authToken, spaceId).then (resolve, reject)->
-				cb(reject, resolve)
-		)(authToken, spaceId)
 
 	permissions = Meteor.wrapAsync (v, userSession, cb)->
 		v.getUserObjectPermission(userSession).then (resolve, reject)->

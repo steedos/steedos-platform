@@ -134,10 +134,12 @@
 				<span>{{_ 'instance_reopen_title'}}</span>
 			</button>
 		{{/if}}
-		<button type="button" class="btn btn-default btn-workflow-chart" data-for="btn-workflow-chart" data-toggle="tooltip" data-placement="bottom">
-			<i class="ion ion-network"></i>
-			<span>{{_ 'workflow_chart'}}</span>
-		</button>
+		{{#if enabled_workflow_chart}}
+			<button type="button" class="btn btn-default btn-workflow-chart" data-for="btn-workflow-chart" data-toggle="tooltip" data-placement="bottom">
+				<i class="ion ion-network"></i>
+				<span>{{_ 'workflow_chart'}}</span>
+			</button>
+		{{/if}}
 	</div>
 	<div class="pull-right">
 		<div class="btn-group instance-dropdown-menu">

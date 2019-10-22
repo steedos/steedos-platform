@@ -16,6 +16,8 @@ Template.formDesign.events
 
 		form = Creator.odata.get("forms", t.data.formId)
 
+		delete form.historys
+
 		form.current.fields = formFields
 
 		url = Steedos.absoluteUrl("/am/forms?sync_token=#{(new Date()).getTime() / 1000}")

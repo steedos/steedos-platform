@@ -115,6 +115,10 @@ Form_formula.getFormulaFieldVariable = function(prefix,fields){
             if(sectionFields) {
                 for(var k=0;k<sectionFields.length;k++){
 
+					if(sectionFields[k].type === 'odata'){
+						continue;
+					}
+
                     if(InstanceformTemplate.helpers.isOpinionField(sectionFields[k])){
                         continue;
                     }

@@ -203,9 +203,9 @@ Template.CreatorAutoformModals.events
 	'click button.btn-remove': (event,template)->
 		collection = Session.get 'cmCollection'
 		object_name = getObjectName(collection)
-		url = Meteor.absoluteUrl()
+		
 		_id = Session.get('cmDoc')._id
-		url = Steedos.absoluteUrl "/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{_id}"
+		url = Steedos.absoluteUrl "/api/v4/#{object_name}/#{_id}"
 
 		$.ajax
 			type: "delete"
@@ -602,7 +602,7 @@ Template.CreatorAfModal.events
 					if Session.get("cmOperation") == "insert"
 						data = insertDoc
 						type = "post"
-						urls.push Steedos.absoluteUrl("#{Creator.getObjectODataRouterPrefix(object)}/#{Steedos.spaceId()}/#{object_name}")
+						urls.push Steedos.absoluteUrl("/api/v4/#{object_name}")
 						delete data._object_name
 					if Session.get("cmOperation") == "update"
 						if Session.get("cmMeteorMethod")
@@ -636,7 +636,7 @@ Template.CreatorAfModal.events
 
 						_ids = _id.split(",")
 						_.each _ids, (id)->
-							urls.push Steedos.absoluteUrl("#{Creator.getObjectODataRouterPrefix(object)}/#{Steedos.spaceId()}/#{object_name}/#{id}")
+							urls.push Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}")
 						data = updateDoc
 						type = "put"
 

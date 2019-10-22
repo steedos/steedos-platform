@@ -236,6 +236,7 @@ TemplateHelpers =
 		return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?avatar=#{avatar}");
 
 	setSpaceId: (spaceId)->
+		console.log("set spaceId " + spaceId)
 		if !spaceId
 			Session.set("spaceId", null)
 			localStorage.removeItem("spaceId:" + Meteor.userId())
@@ -248,27 +249,8 @@ TemplateHelpers =
 
 	getSpaceId: ()->
 		# find space from session and local storage
-		spaceId = Session.get("spaceId")
-		if !spaceId
-			spaceId = localStorage.getItem("spaceId")
 
-		# check space exists
-		if spaceId
-			space = db.spaces.findOne(spaceId);
-			if space
-				return space._id
-
-		# find space by hostname, currently hostname must unique for each space
-		hostSpace = db.spaces.findOne({hostname: document.location.hostname});
-		if hostSpace
-			return hostSpace._id
-
-		# nothing found, select first space
-		space = db.spaces.findOne();
-		if space
-			return space._id
-
-		return undefined
+		return Session.get("spaceId")
 
 	isSpaceAdmin: (spaceId)->
 		if !spaceId

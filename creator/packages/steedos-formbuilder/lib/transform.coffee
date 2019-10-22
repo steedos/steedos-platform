@@ -21,6 +21,10 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 			value: f.default_value,
 			required: f.is_required
 		}, f)
+		if !field.code
+			field.code = field.name
+		else
+			field.name = field.code
 		switch f.type
 			when 'input'
 				field.type = 'text'

@@ -80,4 +80,4 @@ Template.creatorMobileHeader.events
 #		if !Session.get("object_name")
 #			FlowRouter.go('/app')
 #		else
-#			FlowRouter.go(Creator.getObjectFirstListViewUrl(Session.get("object_name")))
+#			FlowRouter.go(/app/-/#{Session.get("object_name")})

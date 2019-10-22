@@ -188,7 +188,7 @@ getTypeUserAttrs = ()->
 						required: 'true',
 						value: ''
 					}
-				}, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display'), FORMULAUSERATTRS_REQUIRED
+				}, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display'), MULTISELECTUSERATTRS, FORMULAUSERATTRS_REQUIRED
 			else
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, BASEUSERATTRS, FORMULAUSERATTRS
 	return typeUserAttrs

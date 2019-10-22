@@ -18,6 +18,7 @@ Package.onUse(function(api) {
 	api.use('underscore');
 	api.use('reactive-var');
 	api.use('tracker');
+	api.use('ecmascript');
 
 	api.use('random');
 	api.use('ddp');
@@ -91,8 +92,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/coreform/inputTypes/coreform-url/url.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-url/url.js', 'client');
 
-	api.addFiles('client/coreform/inputTypes/coreform-widearea/lib/widearea.css', 'client');
-	api.addFiles('client/coreform/inputTypes/coreform-widearea/lib/widearea.js', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-widearea/widearea.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-widearea/widearea.coffee', 'client');
 

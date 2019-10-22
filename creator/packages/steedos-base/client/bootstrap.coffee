@@ -1,3 +1,5 @@
+require('url-search-params-polyfill');
+
 getCookie = (name)->
 	pattern = RegExp(name + "=.[^;]*")
 	matched = document.cookie.match(pattern)
@@ -8,9 +10,8 @@ getCookie = (name)->
 
 @Setup = {}
 
-Setup.lastSpaceId = null;
-
-require('url-search-params-polyfill');
+Blaze._allowJavascriptUrls() 
+FlowRouter.wait();
 
 Setup.validate = (onSuccess)->
 	console.log("Validating user...")
@@ -49,37 +50,37 @@ Setup.validate = (onSuccess)->
 		crossDomain: true
 		headers: headers
 	.done ( data ) ->
-		if !data
-			Steedos.redirectToSignIn()
-
 		if Meteor.userId() != data.userId
 			Accounts.connection.setUserId(data.userId);
 			Accounts.loginWithToken data.authToken, (err) ->
 				if (err)
 					Meteor._debug("Error logging in with token: " + err);
-					FlowRouter.go("/steedos/logout");
+					document.location.href = Steedos.absoluteUrl("/steedos/logout");
+					return
 
 		if data.webservices
 			Steedos.settings.webservices = data.webservices
+		Setup.lastUserId = data.userId
 		if data.spaceId 
 			Setup.lastSpaceId = data.spaceId
 			if (data.spaceId != Session.get("spaceId"))
 				Steedos.setSpaceId(data.spaceId)
 
-		Creator.USER_CONTEXT = data
-
-		if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
-			if FlowRouter.current()?.queryParams?.redirect
-				FlowRouter.go FlowRouter.current().queryParams.redirect
-			else
-				FlowRouter.go "/"
+		Creator.USER_CONTEXT = {
+			spaceId: data.spaceId,
+			userId: data.userId,
+			user: data
+		}
 
 		Setup.bootstrap(Session.get("spaceId"))
 
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->
-		FlowRouter.go("/steedos/logout");
+		if (e.status == 401)
+			FlowRouter.initialize();
+			Steedos.redirectToSignIn()
+		return
 
 Setup.clearAuthLocalStorage = ()->
 	localStorage = window.localStorage;
@@ -105,35 +106,50 @@ Setup.logout = (callback) ->
 
 Meteor.startup ->
 
+	Setup.validate();
 	Accounts.onLogin ()->
-		Setup.validate();
-		Tracker.autorun (c)->
-			# 登录后需要清除登录前订阅的space数据，以防止默认选中登录前浏览器url参数中的的工作区ID所指向的工作区
-			# 而且可能登录后的用户不属性该SpaceAvatar中订阅的工作区，所以需要清除订阅，由之前的订阅来决定当前用户可以选择哪些工作区
-			if Steedos.subsSpaceBase.ready()
-				c.stop()
-				Steedos.subs["SpaceAvatar"]?.clear()
-			return
+		console.log("onLogin")
+		if Meteor.userId() != Setup.lastUserId
+			Setup.validate();
+
+		# Tracker.autorun (c)->
+		# 	# 登录后需要清除登录前订阅的space数据，以防止默认选中登录前浏览器url参数中的的工作区ID所指向的工作区
+		# 	# 而且可能登录后的用户不属性该SpaceAvatar中订阅的工作区，所以需要清除订阅，由之前的订阅来决定当前用户可以选择哪些工作区
+		# 	if Steedos.subsSpaceBase.ready()
+		# 		c.stop()
+		# 		Steedos.subs["SpaceAvatar"]?.clear()
+		# 	return
 		return
 
 	Accounts.onLogout ()->
-		Creator.bootstrapLoaded.set(false)
-		Steedos.redirectToSignIn()
-		return
+		console.log("onLogout")
+		Setup.logout ()-> 
+			Creator.bootstrapLoaded.set(false)
+			$("body").removeClass('loading')
+			Setup.lastUserId = null;
+			Steedos.redirectToSignIn()
 
 	Tracker.autorun (c)->
-		console.log("spaceId change: " + Session.get("spaceId"))
-
-		if !Setup.lastSpaceId or (Setup.lastSpaceId != Session.get("spaceId"))
+		if Setup.lastSpaceId && (Setup.lastSpaceId != Session.get("spaceId"))
+			console.log("spaceId change from " + Setup.lastSpaceId + " to " + Session.get("spaceId"))
 			Setup.validate()
-	return
+		return
 
+	if (localStorage.getItem("app_id") && !Session.get("app_id"))
+		Session.set("app_id", localStorage.getItem("app_id"));
+
+	Tracker.autorun (c)->
+		#console.log("app_id change: " + Session.get("app_id"))
+		localStorage.setItem("app_id", Session.get("app_id"))
+		return
+
+	return
 
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
 Setup.bootstrap = (spaceId, callback)->
-	if Meteor.loggingIn() || Meteor.loggingOut()
-		return
+	console.log("bootstrap")
+
 	unless spaceId and Meteor.userId()
 		return
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
@@ -146,6 +162,7 @@ Setup.bootstrap = (spaceId, callback)->
 			request.setRequestHeader('X-User-Id', Meteor.userId())
 			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 		error: (jqXHR, textStatus, errorThrown) ->
+				FlowRouter.initialize();
 				error = jqXHR.responseJSON
 				console.error error
 				if error?.reason
@@ -211,22 +228,29 @@ Setup.bootstrap = (spaceId, callback)->
 			
 			Creator.Menus = result.assigned_menus
 
-			if (!Session.get("app_id"))
-				apps = Creator.getVisibleApps(true)
-				Session.set("app_id", apps[0]?._id)
-			
-			Creator.Plugins = result.plugins;
-				
+			appIds = _.pluck(Creator.getVisibleApps(true), "_id")
+			if (appIds && appIds.length>0)
+				if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
+					Session.set("app_id", appIds[0])
+			Creator.Plugins = result.plugins;				
+
 			if _.isFunction(callback)
 				callback()
 
 			Creator.bootstrapLoaded.set(true)
+			if (!FlowRouter._initialized)
+				FlowRouter.initialize();
+
+			if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
+				if FlowRouter.current()?.queryParams?.redirect
+					document.location.href = FlowRouter.current().queryParams.redirect;
+					return
+				else
+					FlowRouter.go("/")
 
 FlowRouter.route '/steedos/logout',
 	action: (params, queryParams)->
 		#AccountsTemplates.logout();
 		$("body").addClass('loading')
 		Meteor.logout ()->
-			Setup.logout ()-> 
-				$("body").removeClass('loading')
-				Steedos.redirectToSignIn()
+			return

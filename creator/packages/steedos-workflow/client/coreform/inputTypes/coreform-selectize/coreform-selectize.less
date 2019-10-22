@@ -18,4 +18,22 @@
 		max-height: initial !important;
 		height: auto !important;
 	}
+
+	.selectize-control.multi .selectize-input.has-items{
+		padding: 0px 0px 0px 0px !important;
+	}
+
+	.selectize-control .selectize-input.disabled{
+		opacity: 1 !important;
+	}
+
+	.selectize-control.multi .selectize-input.disabled [data-value]{
+		color: inherit !important;
+	}
+
+	.disabled{
+		.slds-pill__remove{
+			display: none;
+		}
+	}
 }

@@ -7,7 +7,7 @@ Creator.odata.get = (object_name, record_id, select_fields, expand, callback)->
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "/api/v4/#{_object_name}/#{record_id}"
 		request_data = {}
 		if select_fields
 			request_data =
@@ -61,7 +61,7 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 	isAsync = callback and _.isFunction(callback)
 	if is_ajax
 		if object_name
-			url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
+			url = Steedos.absoluteUrl "/api/v4/#{_object_name}"
 			$.ajax
 				type: "get"
 				url: url
@@ -91,11 +91,11 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 		return result
 	else
 		if object_name
-			url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
+			url = Steedos.absoluteUrl"/api/v4/#{_object_name}"
 			options.store = new DevExpress.data.ODataStore({
 				type: "odata"
 				version: 4
-				url: Steedos.absoluteUrl(url)
+				url: url
 				withCredentials: false
 				beforeSend: (request) ->
 					request.headers['X-User-Id'] = Meteor.userId()
@@ -144,11 +144,11 @@ Creator.odata.queryCount = (object_name, options, callback)->
 	unless callback and _.isFunction(callback)
 		return
 	if object_name
-		url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
+		url = Steedos.absoluteUrl "/api/v4/#{_object_name}"
 		store = new DevExpress.data.ODataStore({
 			type: "odata"
 			version: 4
-			url: Steedos.absoluteUrl(url)
+			url: url
 			withCredentials: false
 			beforeSend: (request) ->
 				request.headers['X-User-Id'] = Meteor.userId()
@@ -191,7 +191,7 @@ Creator.odata.delete = (object_name,record_id,callback)->
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "/api/v4/#{_object_name}/#{record_id}"
 		$.ajax
 			type: "delete"
 			url: url
@@ -227,7 +227,7 @@ Creator.odata.update = (object_name,record_id,doc,callback)->
 	unless spaceId
 		return
 	if object_name and record_id
-		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}/#{record_id}"
+		url = Steedos.absoluteUrl "/api/v4/#{_object_name}/#{record_id}"
 		data = {}
 		data['$set'] = doc
 		$.ajax
@@ -263,7 +263,7 @@ Creator.odata.insert = (object_name,doc)->
 	unless spaceId
 		return
 	if object_name
-		url = Steedos.absoluteUrl "#{Creator.getObjectODataRouterPrefix(Creator.getObject(object_name))}/#{spaceId}/#{_object_name}"
+		url = Steedos.absoluteUrl "/api/v4/#{_object_name}"
 		$.ajax
 			type: "post"
 			url: url

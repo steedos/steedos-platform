@@ -20,12 +20,7 @@ Template.atTitle.helpers({
 				return Steedos.absoluteUrl("/api/files/avatars/@%".replace("@%",space.avatar))
 			}
 			else{
-				var locale = Steedos.locale();
-				if (locale === "zh-cn" || locale === "zh-CN") {
-					return Steedos.absoluteUrl(Theme.logo);
-				} else {
-					return Steedos.absoluteUrl(Theme.logo_en);
-				}
+				return Steedos.absoluteUrl("/images/logo.png");
 			}
 		}
 		else{

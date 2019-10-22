@@ -20,8 +20,8 @@
 Steedos.getUserCompanyIds = ()->
 	unless Creator.USER_CONTEXT
 		return []
-	if Creator.USER_CONTEXT.companies
-		return Creator.USER_CONTEXT.companies.map((c)-> return c._id)
+	if Creator.USER_CONTEXT.user?.companies
+		return Creator.USER_CONTEXT.user.companies.map((c)-> return c._id)
 	else
 		return []
 
@@ -29,14 +29,15 @@ Steedos.getUserCompanyIds = ()->
 Steedos.getUserCompanyId = ()->
 	unless Creator.USER_CONTEXT
 		return ""
-	return Creator.USER_CONTEXT.company?._id
+	id = Creator.USER_CONTEXT.user?.company?._id
+	return if id then id else ""
 
 # 根据Creator.USER_CONTEXT.companies值返回对应的company.organization
 Steedos.getUserCompanyOrganizationIds = ()->
 	unless Creator.USER_CONTEXT
 		return []
-	if Creator.USER_CONTEXT.companies
-		return Creator.USER_CONTEXT.companies.map((c)-> return c.organization)
+	if Creator.USER_CONTEXT.user?.companies
+		return Creator.USER_CONTEXT.user.companies.map((c)-> return c.organization)
 	else
 		return []
 
@@ -44,7 +45,8 @@ Steedos.getUserCompanyOrganizationIds = ()->
 Steedos.getUserCompanyOrganizationId = ()->
 	unless Creator.USER_CONTEXT
 		return ""
-	return Creator.USER_CONTEXT.company?.organization
+	id = Creator.USER_CONTEXT.user?.company?.organization
+	return if id then id else ""
 
 
 

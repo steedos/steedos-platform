@@ -49,11 +49,16 @@ AccountsTemplates.configureRoute 'resetPwd',
 AccountsTemplates.configureRoute 'signIn',
   path: '/steedos/sign-in'
   redirect: ()->
-    path = FlowRouter.current().path
-    if /^\/oauth2\b/.test(path)
-      location.reload()
+    # path = FlowRouter.current().path
+    # if /^\/oauth2\b/.test(path)
+    #   location.reload()
+    # else
+    #   FlowRouter.go(FlowRouter.current().queryParams?.redirect || "/");
+    if FlowRouter.current().queryParams?.redirect 
+      document.location.href = FlowRouter.current().queryParams?.redirect 
     else
-      FlowRouter.go(FlowRouter.current().queryParams?.redirect || "/");
+      document.location.href = Steedos.absoluteUrl "/"
+      
 AccountsTemplates.configureRoute 'signUp',
   path: '/steedos/sign-up'
 AccountsTemplates.configureRoute 'verifyEmail',

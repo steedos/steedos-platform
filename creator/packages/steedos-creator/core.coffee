@@ -16,15 +16,6 @@
 Creator.getSchema = (object_name)->
 	return Creator.getObject(object_name)?.schema
 
-Creator.getObjectFirstListViewUrl = (object_name)->
-	list_view = Creator.getObjectFirstListView(object_name)
-	list_view_id = list_view?._id
-	app_id = Session.get("app_id")
-	if object_name is "meeting"
-		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/calendar/")
-	else
-		return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
-
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
 		app_id = Session.get("app_id")

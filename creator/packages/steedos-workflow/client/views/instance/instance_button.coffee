@@ -384,6 +384,9 @@ Template.instance_button.helpers
 			return true
 
 		return false
+	
+	enabled_workflow_chart: ()->
+		return !Steedos.isIE()
 
 Template.instance_button.onRendered ->
 	$('[data-toggle="tooltip"]').tooltip();

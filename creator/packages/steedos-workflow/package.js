@@ -140,6 +140,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/coreform-selectize.html', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/coreform-selectize.less', 'client');
+	api.addFiles('client/coreform/inputTypes/coreform-selectize/coreform-selectize-pill.css', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/coreform-selectize.coffee', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/selectize_manager.coffee', 'client');
 

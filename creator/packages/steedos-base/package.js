@@ -252,10 +252,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/space/space_select.html', 'client');
 	api.addFiles('client/steedos/views/space/space_select.coffee', 'client');
 
-	api.addFiles('client/steedos/views/about/steedos_about.html', 'client');
-	api.addFiles('client/steedos/views/about/steedos_about.coffee', 'client');
-	api.addFiles('client/steedos/views/about/steedos_about.css', 'client');
-
 	api.addFiles('client/steedos/views/billing/steedos_billing.html', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.coffee', 'client');
 	api.addFiles('client/steedos/views/billing/steedos_billing.less', 'client');

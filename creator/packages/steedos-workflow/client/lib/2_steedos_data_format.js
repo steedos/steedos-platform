@@ -209,7 +209,12 @@ var s_autoform = function (schema, field) {
 
             break;
         case 'odata':
-			schema.type = Object;
+			if (is_multiselect) {
+				schema.type = [Object];
+				autoform.multiple = true;
+			}else{
+				schema.type = Object;
+            }
 			schema.blackbox = true;
 			autoform.type = "steedos-selectize";
 			autoform.readonly = (permission === 'readonly');

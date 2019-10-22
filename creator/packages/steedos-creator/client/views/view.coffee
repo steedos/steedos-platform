@@ -49,7 +49,7 @@ loadRecordFromOdata = (template, object_name, record_id)->
 
 Template.creator_view.onCreated ->
 	this.recordsTotal = new ReactiveVar({})
-	this.recordLoad = new ReactiveVar(false)
+	# this.recordLoad = new ReactiveVar(false)
 	this.record = new ReactiveVar()
 	this.agreement = new ReactiveVar()
 	object_name = Session.get "object_name"
@@ -137,17 +137,18 @@ Template.creator_view.onRendered ->
 			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
 			$("#creator-quick-form").addClass("slds-show")
 
-	if Steedos.isMobile()
-		this.autorun ->
-			loadRecord()
-	else
-		this.autorun ->
-			if Session.get("record_id")
-				Tracker.nonreactive(loadRecord)
+	loadRecord()
+	# if Steedos.isMobile()
+	# 	this.autorun ->
+	# 		loadRecord()
+	# else
+	# 	this.autorun ->
+	# 		if Session.get("record_id")
+	# 			Tracker.nonreactive(loadRecord)
 
-	this.autorun ->
-		if Creator.subs["Creator"].ready()
-			Template.instance().recordLoad.set(true)
+	# this.autorun ->
+	# 	if Creator.subs["Creator"].ready()
+	# 		Template.instance().recordLoad.set(true)
 
 	Meteor.defer ()->
 		addFieldInfo(self)
@@ -202,7 +203,10 @@ Template.creator_view.helpers
 			else
 				return false
 
-		fields = Creator.getFieldsForReorder(schema, schemaFieldKeys)
+		fields = Creator.getFieldsForReorder(schema._schema, schemaFieldKeys)
+		console.log(schema)
+		console.log(schemaFieldKeys)
+		console.log(fields)
 		return {
 			name: name
 			fields: fields
@@ -450,7 +454,7 @@ Template.creator_view.helpers
 		return Creator.getObject(Session.get("object_name"))?.enable_chatter
 
 	show_chatter: ()->
-		return Template.instance().recordLoad.get() && Creator.getObjectRecord()
+		return Creator.getObjectRecord()
 
 	agreement: ()->
 		return Template.instance().agreement.get()

@@ -156,12 +156,16 @@ if Meteor.isServer
 			return []
 		else
 			psetBase = psetsUser
-			if psetBase?.assigned_apps
+			if psetBase?.assigned_apps?.length
 				apps = _.union apps, psetBase.assigned_apps
+			else
+				# user权限组中的assigned_apps表示所有用户具有的apps权限，为空则表示有所有apps权限，不需要作权限判断了
+				return []
 			_.each psets, (pset)->
 				if !pset.assigned_apps
 					return
 				if pset.name == "admin" ||  pset.name == "user"
+					# 这里之所以要排除admin/user，是因为这两个权限组是所有权限组中users属性无效的权限组，特指工作区管理员和所有用户
 					return
 				apps = _.union apps, pset.assigned_apps
 			return _.without(_.uniq(apps),undefined,null)

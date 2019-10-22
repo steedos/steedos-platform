@@ -1,6 +1,6 @@
 checkUserSigned = (context, redirect) ->
-	if !Meteor.userId()
-		Setup.validate();
+	# if !Meteor.userId()
+	# 	Setup.validate();
 
 accountsRoutes = FlowRouter.group
 	triggersEnter: [ checkUserSigned ],

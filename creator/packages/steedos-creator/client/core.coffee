@@ -154,29 +154,29 @@ if Meteor.isClient
 				selector.push "and"
 			selector.push ["owner", "=", userId]
 		
-		permissions = Creator.getPermissions(object_name)
-		if permissions.viewAllRecords
-			# 有所有权限则不另外加过虑条件
-		else if permissions.viewCompanyRecords
-			# 限制查看本单位时另外加过虑条件
-			if selector.length > 0
-				selector.push "and"
-			userCompanyIds = Creator.getUserCompanyIds()
-			if userCompanyIds && userCompanyIds.length
-				companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], object_name)
-				selector.push companyIdsFilters
-			else 
-				selector.push ["company_id", "=", -1]
-		else if permissions.allowRead
-			# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
-			if selector.length > 0
-				selector.push "and"
-			selector.push ["owner", "=", userId]
-		else
-			# 没有权限时不应该显示任何记录
-			if selector.length > 0
-				selector.push "and"
-			selector.push ["id", "=", "-1"]
+		# permissions = Creator.getPermissions(object_name)
+		# if permissions.viewAllRecords
+		# 	# 有所有权限则不另外加过虑条件
+		# else if permissions.viewCompanyRecords
+		# 	# 限制查看本单位时另外加过虑条件
+		# 	if selector.length > 0
+		# 		selector.push "and"
+		# 	userCompanyIds = Creator.getUserCompanyIds()
+		# 	if userCompanyIds && userCompanyIds.length
+		# 		companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], object_name)
+		# 		selector.push companyIdsFilters
+		# 	else 
+		# 		selector.push ["company_id", "=", -1]
+		# else if permissions.allowRead
+		# 	# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
+		# 	if selector.length > 0
+		# 		selector.push "and"
+		# 	selector.push ["owner", "=", userId]
+		# else
+		# 	# 没有权限时不应该显示任何记录
+		# 	if selector.length > 0
+		# 		selector.push "and"
+		# 	selector.push ["id", "=", "-1"]
 
 		if selector.length == 0
 			return undefined
@@ -264,25 +264,25 @@ if Meteor.isClient
 		if filter_scope == "mine"
 			addSelector ["owner", "=", userId]
 			
-		permissions = Creator.getPermissions(related_object_name, spaceId, userId)
-		if permissions.viewAllRecords
-			# 有所有权限则不另外加过虑条件
-		else if permissions.viewCompanyRecords
-			# 限制查看本单位时另外加过虑条件
-			if selector.length > 0
-				selector.push "and"
-			userCompanyIds = Creator.getUserCompanyIds()
-			if userCompanyIds && userCompanyIds.length
-				companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], related_object_name)
-				addSelector companyIdsFilters
-			else
-				addSelector ["company_id", "=",-1]
-		else if permissions.allowRead
-			# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
-			addSelector ["owner", "=", userId]
-		else
-			# 没有权限时不应该显示任何记录
-			addSelector ["1", "=", "-1"]
+		# permissions = Creator.getPermissions(related_object_name, spaceId, userId)
+		# if permissions.viewAllRecords
+		# 	# 有所有权限则不另外加过虑条件
+		# else if permissions.viewCompanyRecords
+		# 	# 限制查看本单位时另外加过虑条件
+		# 	if selector.length > 0
+		# 		selector.push "and"
+		# 	userCompanyIds = Creator.getUserCompanyIds()
+		# 	if userCompanyIds && userCompanyIds.length
+		# 		companyIdsFilters = Creator.formatFiltersToDev(["company_id", "=", userCompanyIds], related_object_name)
+		# 		addSelector companyIdsFilters
+		# 	else
+		# 		addSelector ["company_id", "=",-1]
+		# else if permissions.allowRead
+		# 	# 只是时allowRead另外加过虑条件，限制为只能看自己的记录
+		# 	addSelector ["owner", "=", userId]
+		# else
+		# 	# 没有权限时不应该显示任何记录
+		# 	addSelector ["1", "=", "-1"]
 
 		if selector.length == 0
 			return undefined

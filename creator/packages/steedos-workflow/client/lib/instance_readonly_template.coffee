@@ -291,7 +291,10 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = value.toFixed(field.digits)
 				value = Steedos.numberToString value, locale
 		when 'odata'
-			value = value['@label']
+			if field.is_multiselect
+				value = _.pluck(value, '@label').toString()
+			else
+				value = value['@label']
 
 	return value;
 

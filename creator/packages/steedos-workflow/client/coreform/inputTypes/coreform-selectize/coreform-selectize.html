@@ -1,3 +1,6 @@
 <template name="afSteedosSelectize">
-	<div class="steedos-selectize"><input type="input" value="" {{atts}} /></div>
+	<div class="steedos-selectize" style="{{#if isReadOnly}}display: none{{/if}}"><input type="input" value="" {{atts}} /></div>
+	{{#if isReadOnly}}
+		<div class="form-control" readonly disabled>{{readonlyValue}}</div>
+	{{/if}}
 </template>

@@ -104,10 +104,10 @@ Template.creator_list_wrapper.helpers
 		return field_keys.join(",")
 
 	isRefreshable: ()->
-		return Template["creator_#{FlowRouter.getParam('template')}"]?.refresh
+		return Template["creator_grid"]?.refresh
 
 	list_template: ()->
-		return "creator_#{FlowRouter.getParam('template')}"
+		return "creator_grid"
 
 	recordsTotalCount: ()->
 		return Template.instance().recordsTotal.get()
@@ -387,7 +387,7 @@ Template.creator_list_wrapper.events
 	'click .btn-refresh': (event, template)->
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
 		dxDataGridInstance = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
-		Template["creator_#{FlowRouter.getParam('template')}"]?.refresh(dxDataGridInstance)
+		Template["creator_grid"]?.refresh(dxDataGridInstance)
 
 	'keydown input#grid-search': (event, template)->
 		if event.keyCode == "13" or event.key == "Enter"

@@ -173,7 +173,7 @@ steedos:users-import
 steedos:app-base
 
 
-steedos:version
+# steedos:version
 steedos:audit
 steedos:formbuilder
 steedos:app-workflow
@@ -203,3 +203,5 @@ jeremy:selectize
 comerc:autoform-selectize
 steedos:slipjs
 react-template-helper
+
+steedos:webkit-notification

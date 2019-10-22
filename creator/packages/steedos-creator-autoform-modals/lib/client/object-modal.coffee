@@ -117,7 +117,7 @@ Template.CreatorObjectModal.onRendered ()->
 			if operation == "insert"
 				data = insertDoc
 				type = "post"
-				urls.push Steedos.absoluteUrl("/api/odata/v4/#{Steedos.spaceId()}/#{object_name}")
+				urls.push Steedos.absoluteUrl("/api/v4/#{object_name}")
 				delete data._object_name
 			if operation == "update"
 				if Session.get("cmMeteorMethod")
@@ -142,7 +142,7 @@ Template.CreatorObjectModal.onRendered ()->
 
 				_ids = _id.split(",")
 				_.each _ids, (id)->
-					urls.push Steedos.absoluteUrl("/api/odata/v4/#{Steedos.spaceId()}/#{object_name}/#{id}")
+					urls.push Steedos.absoluteUrl("/api/v4/#{object_name}/#{id}")
 				data = updateDoc
 				type = "put"
 

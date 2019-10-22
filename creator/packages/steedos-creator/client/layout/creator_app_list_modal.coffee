@@ -22,7 +22,7 @@ Template.creator_app_list_modal.helpers
 			return Creator.getRelativeUrl("/app/#{this._id}/");
 
 	object_url: ()->
-		return Creator.getObjectUrl(this.name, null)
+		return Steedos.absoluteUrl("/app/-/#{this.name}")
 
 	spaceName: ->
 		if Session.get("spaceId")

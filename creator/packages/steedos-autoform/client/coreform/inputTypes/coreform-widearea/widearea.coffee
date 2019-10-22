@@ -42,7 +42,8 @@ Template.afWidearea.onRendered ()->
 	console.log('Template.afWidearea.onRendered');
 	id = this.data.atts.id
 	Meteor.defer ()->
-		wideArea("", $("##{id}").parent()[0], id)
+		if wideArea
+			wideArea("", $("##{id}").parent()[0], id)
 
 
 #Template.afWidearea.onDestroyed ()->
