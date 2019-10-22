@@ -138,17 +138,6 @@ fields:
     sortable: true
     index: true
     multiple: true
-    defaultValue: !!js/function |
-      function(){
-        if(Meteor.isClient){
-          var cid = Steedos.getUserCompanyId();
-          if (cid) {
-            return [cid];
-          } else {
-            return [];
-          }
-        }
-      }
     omit: true
     hidden: true
   instance_state:

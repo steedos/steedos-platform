@@ -67,10 +67,10 @@ export interface SteedosDriver {
     find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     insert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType): any;
-    update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType): any;
-    updateOne(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType): any;
+    update(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
+    updateOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType): any;
     updateMany?(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType): any;
-    delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType): any;
+    delete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     dropEntities?(): any;
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;

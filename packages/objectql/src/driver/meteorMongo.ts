@@ -35,8 +35,8 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
     disconnect() {
     }
 
-    init(){
-        
+    init() {
+
     }
 
     constructor(config: SteedosDriverConfig) {
@@ -174,6 +174,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
 
     async findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
+        let mongoFilters = this.getMongoFilters(query.filters);
         let mongoOptions = this.getMongoOptions(query);
         return await new Promise((resolve, reject) => {
             Fiber(function () {
@@ -185,7 +186,11 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        return collection.findOne({ _id: id }, mongoOptions);
+                        let selector = { _id: id };
+                        if (!_.isEmpty(mongoFilters)) {
+                            selector = Object.assign(mongoFilters, selector);
+                        }
+                        return collection.findOne(selector, mongoOptions);
                     })
                     resolve(result);
                 } catch (error) {
@@ -221,8 +226,14 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async update(tableName: string, id: SteedosIDType, data: Dictionary<any>, userId?: SteedosIDType) {
+    async update(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {
@@ -233,8 +244,8 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update({ _id: id }, { $set: data });
-                        return collection.findOne({ _id: id });
+                        collection.update(selector, { $set: data });
+                        return collection.findOne(selector);
                     })
                     resolve(result);
                 } catch (error) {
@@ -244,8 +255,14 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async updateOne(tableName: string, id: SteedosIDType, data: Dictionary<any>, userId?: SteedosIDType) {
+    async updateOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {
@@ -256,8 +273,8 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update({ _id: id }, { $set: data });
-                        return collection.findOne({ _id: id });
+                        collection.update(selector, { $set: data });
+                        return collection.findOne(selector);
                     })
                     resolve(result);
                 } catch (error) {
@@ -290,8 +307,14 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         });
     }
 
-    async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
+    async delete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType) {
         let collection = this.collection(tableName);
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
         return await new Promise((resolve, reject) => {
             Fiber(function () {
                 try {
@@ -302,7 +325,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        return collection.remove({ _id: id });
+                        return collection.remove(selector);
                     })
                     resolve(result);
                 } catch (error) {

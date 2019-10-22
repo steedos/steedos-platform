@@ -107,7 +107,7 @@ export class SteedosDataSourceType implements Dictionary {
     public set config(value: SteedosDataSourceTypeConfig) {
         this._config = value;
     }
-    
+
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
@@ -128,15 +128,15 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        let config:SteedosObjectTypeConfig;
-        if(objectConfig.extend){
+        let config: SteedosObjectTypeConfig;
+        if (objectConfig.extend) {
             let parentObjectConfig = clone(this._objectsConfig[object_name]);
-            if(_.isEmpty(parentObjectConfig)){
+            if (_.isEmpty(parentObjectConfig)) {
                 throw new Error(`not find extend object: ${objectConfig.extend}`);
             }
             config = util.extend(parentObjectConfig, objectConfig);
             delete config.extend
-        }else{
+        } else {
             objectConfig.name = object_name
             config = { fields: {} }
             let baseObject = this.getObject('base');
@@ -161,7 +161,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._objects[object_name] = object;
     }
 
-    initDriver(){
+    initDriver() {
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             host: this._host,
@@ -206,7 +206,7 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    initBaseObject(){
+    initBaseObject() {
         let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
         if (this.config.driver === SteedosDatabaseDriverType.MeteorMongo) {
             if (standardObjectsDir) {
@@ -225,11 +225,11 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    initObjects(){
+    initObjects() {
         _.each(this.config.objects, (object, object_name) => {
-            if (object.extend){
+            if (object.extend) {
                 this._extendObjectsConfig.push(object)
-            }else{
+            } else {
                 this.setObject(object_name, object)
             }
         })
@@ -246,13 +246,13 @@ export class SteedosDataSourceType implements Dictionary {
         })
     }
 
-    initExtendObject(){
-        _.each(this._extendObjectsConfig, (objectConfig)=>{
+    initExtendObject() {
+        _.each(this._extendObjectsConfig, (objectConfig) => {
             this.setObject(objectConfig.extend, objectConfig)
         })
     }
 
-    initApps(){
+    initApps() {
         _.each(this.config.apps, (appConfig, app_id) => {
             this.addApp(app_id, appConfig)
         })
@@ -262,7 +262,7 @@ export class SteedosDataSourceType implements Dictionary {
         })
     }
 
-    initReports(){
+    initReports() {
         _.each(this.config.reports, (reportConfig, report_id) => {
             this.addReport(report_id, reportConfig)
         })
@@ -287,7 +287,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._schema = schema
         this._driver = config.driver
         this._logging = config.logging
-        
+
         this.initDriver();
         this.initBaseObject()
 
@@ -403,11 +403,11 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.insert(tableName, doc, userId)
     }
 
-    async update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
+    async update(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.update(tableName, id, doc, userId)
     }
 
-    async updateOne(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
+    async updateOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.updateOne(tableName, id, doc, userId)
     }
 
@@ -415,7 +415,7 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.updateMany(tableName, queryFilters, doc, userId)
     }
 
-    async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
+    async delete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.delete(tableName, id, userId)
     }
 
@@ -431,9 +431,9 @@ export class SteedosDataSourceType implements Dictionary {
         let objectJsons = util.loadObjects(filePath)
         let fieldJsons = util.loadFields(filePath)
         _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-            if (json.extend){
+            if (json.extend) {
                 this._extendObjectsConfig.push(json)
-            }else{
+            } else {
                 let objectFieldsJson = fieldJsons.filter(fieldJson => fieldJson.object_name === json.name)
                 let objectJson: SteedosObjectTypeConfig = { fields: {} }
                 if (objectFieldsJson.length > 0) {
@@ -496,7 +496,7 @@ export class SteedosDataSourceType implements Dictionary {
             //TODO 处理listener 继承
             //console.log('setObjectListener object_name', object_name, this._objectsConfig[object_name]);
             let objectListener = this._objectsConfig[object_name].listeners;
-            if(!objectListener){
+            if (!objectListener) {
                 this._objectsConfig[object_name].listeners = {}
             }
             this._objectsConfig[object_name].listeners[json.name] = json
@@ -512,7 +512,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     getGraphQLSchema() {
-        if (this._graphQLSchema){
+        if (this._graphQLSchema) {
             return this._graphQLSchema;
         }
         return buildGraphQLSchema(this._schema, this);
