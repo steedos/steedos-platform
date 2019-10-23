@@ -17,6 +17,7 @@ TAPi18n.languages_names["en"] = ["English","English"];
   "extensions": [
     ".js",
     ".json",
+    ".jsx",
     ".coffee"
   ]
 });

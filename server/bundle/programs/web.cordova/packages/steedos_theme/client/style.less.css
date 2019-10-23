@@ -12,12 +12,6 @@ body {
   width: auto;
   height: 70px;
 }
-@media (max-width: 767px) {
-  .steedos.login .at-form img.logo {
-    width: 100%;
-    height: auto;
-  }
-}
 .steedos.login .at-form .at-title h3 {
   display: none;
 }
