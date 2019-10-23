@@ -114,8 +114,8 @@ describe('Test companyRecordsPermission', function () {
         _id: _id,
         name: '1',
         space: 'space1',
-        company_id: 'cid1',
-        company_ids: ['cid1', 'cid2']
+        company_id: 'company1',
+        company_ids: ['company1', 'company2']
       }, userSessions.admin);
       expect(newRecord._id).to.equal(_id)
 
