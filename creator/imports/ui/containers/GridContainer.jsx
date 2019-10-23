@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Grid, store } from '@steedos/react';
-import { IconSettings } from '@salesforce/design-system-react';
 
 var iconPath = `/assets/icons`;
 var gridObjectName = 'space_users';
@@ -38,11 +37,11 @@ var gridColumns = [
 ];
 
 function GridContainer(){
-	return <IconSettings iconPath={iconPath} >
+	return 
 			<Provider store={store}>
 				<Grid objectName={gridObjectName} columns={gridColumns} selectRows='checkbox' enableSearch={true}></Grid>
 			</Provider>
-		</IconSettings>
+		
 }
 
 export default GridContainer;

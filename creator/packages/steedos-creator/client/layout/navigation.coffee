@@ -66,7 +66,7 @@ Template.creatorNavigation.helpers
 			return true
 		return false
 	dashboard_url: ()->
-		return Steedos.getAppHomeUrl()
+		return Steedos.absoluteUrl("app/#{Session.get('app_id')}/home")
 	dashboard_class_name: ()->
 		if Session.get("app_home_active")
 			return "slds-is-active"

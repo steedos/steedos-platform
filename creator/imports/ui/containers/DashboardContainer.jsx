@@ -3,16 +3,16 @@ import { Provider } from 'react-redux';
 import { Dashboard, Bootstrap, store } from '@steedos/react';
 import { IconSettings } from '@salesforce/design-system-react';
 
-var iconPath = `/assets/icons`;
+var iconPath = `/creator/assets/icons`;
 
 function DashboardContainer(prop){
-	return <IconSettings iconPath={iconPath} >
+	return (
 		<Provider store={store}>
 			<Bootstrap>
-				<Dashboard config={prop.config}/>
+					<Dashboard config={prop.config}/>
 			</Bootstrap>
 		</Provider>
-	</IconSettings>
+	)
 }
 
 export default DashboardContainer;

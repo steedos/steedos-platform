@@ -3,7 +3,7 @@ Template.creator_app_home.onRendered ()->
 		if Session.get("app_id")
 			app = Creator.getApp()
 			if app?.dashboard
-				FlowRouter.go Steedos.getAppHomeUrl()
+				FlowRouter.go "/app/#{Session.get('app_id')}/home"
 			else
 				first_app_obj = _.first(Creator.getAppObjectNames(Session.get("app_id")))
 				if first_app_obj
