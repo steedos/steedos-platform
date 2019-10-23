@@ -35,7 +35,7 @@ describe('Test companyRecordsPermission', function () {
       allowRead: true,
       modifyAllRecords: false,
       viewAllRecords: true,
-      modifyCompanyRecords: true,
+      modifyCompanyRecords: false,
       viewCompanyRecords: true
     },
     admin: {
@@ -43,7 +43,7 @@ describe('Test companyRecordsPermission', function () {
       allowDelete: true,
       allowEdit: true,
       allowRead: true,
-      modifyAllRecords: false,
+      modifyAllRecords: true,
       viewAllRecords: true,
       modifyCompanyRecords: true,
       viewCompanyRecords: true
@@ -59,14 +59,14 @@ describe('Test companyRecordsPermission', function () {
       viewCompanyRecords: true
     },
     none: {
-      allowCreate: true,
-      allowDelete: true,
-      allowEdit: true,
+      allowCreate: false,
+      allowDelete: false,
+      allowEdit: false,
       allowRead: true,
       modifyAllRecords: false,
-      viewAllRecords: true,
-      modifyCompanyRecords: true,
-      viewCompanyRecords: true
+      viewAllRecords: false,
+      modifyCompanyRecords: false,
+      viewCompanyRecords: false
     }
   }
 
@@ -113,13 +113,14 @@ describe('Test companyRecordsPermission', function () {
       let newRecord = await crpObj.insert({
         _id: _id,
         name: '1',
+        space: 'space1',
         company_id: 'cid1',
         company_ids: ['cid1', 'cid2']
       }, userSessions.admin);
       expect(newRecord._id).to.equal(_id)
 
       let fRecords = await crpObj.find({ filters: `(_id eq '${_id}')` }, userSessions.admin);
-      console.log(fRecords);
+
       expect(fRecords[0]._id).to.equal(_id)
 
       let foRecord = await crpObj.findOne(_id, {}, userSessions.admin);
@@ -135,10 +136,10 @@ describe('Test companyRecordsPermission', function () {
       expect(uRecord2.name).to.equal('newName2')
 
       let updateManyResult = await crpObj.updateMany(`(_id eq '${_id}')`, { name: 'newName3' }, userSessions.admin);
-      expect(updateManyResult.ok).to.equal('1')
+      expect(updateManyResult.result.ok).to.equal(1)
 
       let deleteResult = await crpObj.delete(_id, userSessions.admin);
-      expect(deleteResult.ok).to.equal('1')
+      expect(deleteResult).to.equal(undefined)
 
     })
   })
