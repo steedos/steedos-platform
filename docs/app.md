@@ -72,7 +72,7 @@ dashboard:
     label: 待办任务
     position: LEFT
     type: object
-    object_name: tasks
+    objectName: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
     columns:
       - field: name
@@ -82,6 +82,10 @@ dashboard:
       - field: priority
         width: 30%
         wrap: false
+    illustration: 
+      path: "/assets/images/illustrations/empty-state-not-available-in-lightning.svg#not-available-in-lightning",
+      heading: "没有找到待办任务"
+    showAllLink: true
 ```
 
 ### 标题 label
