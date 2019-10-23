@@ -990,39 +990,6 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@devexpress/dx-core@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.1.2.tgz#972dbaef9a61b642a82a309d1fac29f6b4df98e8"
-  integrity sha512-rf9uAqKRvfKOn41WRPA51Q8qNBcGgpx5z272Zx0CbuSc+w+tCqQTgTdl8v8Z0LQEsQlPf+shs53ZFHD5tMM4WA==
-
-"@devexpress/dx-grid-core@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-grid-core/-/dx-grid-core-2.1.2.tgz#856b15203a64137c8abc1dc3334acdf76d46d125"
-  integrity sha512-cFdlv6jQ2ftMyDZEwv7u48nQ01EZ7k9ctrMK8RSomcYvo4IDJcB++WINCKg8YWbx5NsHO6+WRzuoSig6gk8JQg==
-
-"@devexpress/dx-react-core@^2.0.4":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-core/-/dx-react-core-2.1.2.tgz#ada997ecfa9d2bc3bc53dca7db91f3c491feabae"
-  integrity sha512-WgLeccBVwqcuSfrkzMD96Jofjao+bKh2r8pB3JCr4zRJuxsyO8dP8RMqvwM9Sz0Vg9SPWB4ee75k+fUwssFmew==
-  dependencies:
-    "@devexpress/dx-core" "2.1.2"
-    prop-types "^15.7.2"
-
-"@devexpress/dx-react-grid-material-ui@^2.0.4":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid-material-ui/-/dx-react-grid-material-ui-2.1.2.tgz#88ef82f2adca11ae9956c1a61716b7a1466daff0"
-  integrity sha512-wNFvcW3Xj3kydGme5s2l5my++q+ysWYuAinYcIK5+hsz8egMEeRoC2rSUZzFeExXk5QAOk9kw8UFAKPrpMmsdQ==
-  dependencies:
-    clsx "^1.0.4"
-    prop-types "^15.7.2"
-
-"@devexpress/dx-react-grid@^2.0.4":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid/-/dx-react-grid-2.1.2.tgz#919313b7e39b414356b08cbd277369e52e77cbb6"
-  integrity sha512-tGQEysMZU3xWucVHm5VDwuaaKWfVPOV7gS0BtAVueNL1nRmz217KNB9enR73cTmzfYi/BRxYoTbz/Yj20tcG6Q==
-  dependencies:
-    "@devexpress/dx-grid-core" "2.1.2"
-
 "@emotion/hash@^0.7.1":
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.7.3.tgz#a166882c81c0c6040975dd30df24fae8549bd96f"
@@ -1367,11 +1334,6 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@salesforce-ux/design-system@^2.10.0":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.10.1.tgz#06361e3d1d71aad9e672f3d07eab62a57732ed9d"
-  integrity sha512-pTs4mlIAUEBj15wD6uUpDoH+AYO7xP5FeEJQiDmLqk45kNgFQCsOYLnjFqvWNFh90W2rutMsozFzNFSMTnWobA==
-
 "@salesforce-ux/design-system@^2.7.4":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.10.0.tgz#a7291c0f335cdece3f1a6d4a610f84a7e2f80d30"
@@ -1587,6 +1549,29 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
+"@steedos/react@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-0.0.3.tgz#d2634af561d2bb689f9168027f716b1de57df792"
+  integrity sha512-08F6hbiR8Zq6Yf+KoyLGCOdogRDorAzJlHbqj68gL1wTr7K8jUTodqGIa/8+4WYGkHMXE5gQQHD82rY2TamrdQ==
+  dependencies:
+    "@material-ui/core" "^4.4.0"
+    "@material-ui/icons" "^4.2.1"
+    "@salesforce/design-system-react" "^0.10.12"
+    dotenv-flow "^3.1.0"
+    immer "^4.0.1"
+    moment "^2.24.0"
+    prop-types "^15.7.2"
+    react "^16.9.0"
+    react-dom "^16.9.0"
+    react-redux "^7.1.1"
+    react-scripts "^3.1.2"
+    redux "^4.0.4"
+    redux-devtools-extension "^2.13.8"
+    redux-thunk "^2.3.0"
+    styled-components "^4.4.0"
+    ts-odata-client "^1.0.2"
+    underscore "^1.9.1"
+
 "@steedos/schemas@^1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.7.0.tgz#092bafad9ea2f822572f258f448f5c8390e078bd"
@@ -1604,33 +1589,6 @@
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
-    underscore "^1.9.1"
-
-"@steedos/webapp@../steedos-webapp":
-  version "0.0.1"
-  dependencies:
-    "@devexpress/dx-react-core" "^2.0.4"
-    "@devexpress/dx-react-grid" "^2.0.4"
-    "@devexpress/dx-react-grid-material-ui" "^2.0.4"
-    "@material-ui/core" "^4.4.0"
-    "@material-ui/icons" "^4.2.1"
-    "@salesforce-ux/design-system" "^2.10.0"
-    "@salesforce/design-system-react" "^0.10.12"
-    "@steedos/filters" "^1.7.4"
-    dotenv-flow "^3.1.0"
-    immer "^4.0.1"
-    moment "^2.24.0"
-    prop-types "^15.7.2"
-    react "^16.9.0"
-    react-dom "^16.9.0"
-    react-redux "^7.1.1"
-    react-scripts "^3.1.2"
-    redux "^4.0.4"
-    redux-devtools-extension "^2.13.8"
-    redux-thunk "^2.3.0"
-    styled-components "^4.4.0"
-    ts-odata-client "^1.0.2"
-    typescript "^3.6.2"
     underscore "^1.9.1"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
@@ -3604,7 +3562,7 @@ clone@^2.1.1, clone@^2.1.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
-clsx@^1.0.2, clsx@^1.0.4:
+clsx@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
@@ -13736,11 +13694,6 @@ typeorm@^0.2.16:
     xml2js "^0.4.17"
     yargonaut "^1.1.2"
     yargs "^13.2.1"
-
-typescript@^3.6.2:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
-  integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
 
 typescript@~3.1.6:
   version "3.1.6"
