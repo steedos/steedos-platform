@@ -60,3 +60,52 @@ admin_menus:
     name: 税码
     object_name: account_tax
     parent: contracts
+dashboard:
+  workflow: 
+    label: 待审批
+    position: CENTER_TOP
+    type: object
+    objectName: "instances"
+    filters: [
+      ['space', '=', '{spaceId}'],
+      [
+        ['inbox_users', '=', '{userId}'], 'or', ['cc_users', '=', '{userId}']
+      ]
+    ]
+    columns: [{
+      label: "名称",
+      field: "name",
+      href: true
+    }, {
+      label: "修改时间",
+      field: "modified",
+      type: 'datetime'
+    }]
+  pending_tasks:
+    label: 待办任务
+    position: CENTER_TOP
+    type: object
+    objectName: tasks
+    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    columns:
+      - field: name
+        label: 名称
+        href: true
+      - field: priority
+        label: 优先级
+  apps:
+    label: 应用程序启动器
+    position: CENTER_TOP
+    type: apps
+  empty_tasks:
+    label: 日历事件
+    position: RIGHT
+    type: object
+    objectName: events
+    filters: [['state', '=', 'xxx']]
+    columns:
+      - field: name
+        label: 名称
+        href: true
+    illustration:
+      messageBody: "没有找到日历事件"
