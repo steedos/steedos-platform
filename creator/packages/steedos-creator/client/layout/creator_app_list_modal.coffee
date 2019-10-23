@@ -17,9 +17,18 @@ Template.creator_app_list_modal.helpers
 
 	app_url: ()->
 		if this?.url
-			return Creator.getRelativeUrl(this.url);
+			if /^http:\/\//.test(this.url)
+				return this.url
+			else
+				return Creator.getRelativeUrl(this.url);
 		else if this._id
 			return Creator.getRelativeUrl("/app/#{this._id}/");
+	
+	app_target: ()->
+		if this?.is_new_window
+			return "_blank"
+		else
+			return ""
 
 	object_url: ()->
 		return Steedos.absoluteUrl("/app/-/#{this.name}")
