@@ -84,8 +84,11 @@ dashboard:
         wrap: false
     illustration: 
       path: "/assets/images/illustrations/empty-state-not-available-in-lightning.svg#not-available-in-lightning",
-      heading: "没有找到待办任务"
+      heading: ""
+      messageBody: "没有找到待办任务"
     showAllLink: true
+    noHeader: true
+    unborderedRow: true
 ```
 
 ### 标题 label
