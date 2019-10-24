@@ -63,8 +63,9 @@ admin_menus:
 dashboard:
   apps:
     label: 应用程序启动器
-    position: CENTER_TOP
+    position: RIGHT
     type: apps
+    mobile: true
   workflow: 
     label: 待审核文件
     position: CENTER_TOP
@@ -94,7 +95,7 @@ dashboard:
       messageBody: "您没有待审核文件"
   tasks:
     label: 待办任务
-    position: RIGHT
+    position: CENTER_TOP
     type: object
     objectName: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
