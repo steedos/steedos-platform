@@ -18,7 +18,7 @@ Steedos.redirectToSignIn = (redirect)->
 	if accountsUrl 
 		window.location.href = accountsUrl + "/authorize?redirect_uri=/";
 	else
-		if window.location.pathname.indexOf('/steedos/')>=0
+		if window.location.pathname.indexOf('/steedos/sign-in')>=0
 			return
 		signInUrl = AccountsTemplates.getRoutePath("signIn")
 		if redirect
@@ -30,7 +30,7 @@ Steedos.redirectToSignIn = (redirect)->
 		
 Setup.validate = (onSuccess)->
 
-	if window.location.pathname.indexOf('/steedos/')>=0
+	if window.location.pathname.indexOf('/steedos/sign-in')>=0
 		FlowRouter.initialize();
 		return;
 
@@ -92,8 +92,6 @@ Setup.validate = (onSuccess)->
 			user: data
 		}
 		
-		Setup.bootstrap(Session.get("spaceId"), data.userId, data.authToken)
-
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->
@@ -128,8 +126,11 @@ Meteor.startup ->
 	Setup.validate();
 	Accounts.onLogin ()->
 		console.log("onLogin")
+
 		if Meteor.userId() != Setup.lastUserId
 			Setup.validate();
+		else 
+			Setup.bootstrap(Session.get("spaceId"))
 
 		# Tracker.autorun (c)->
 		# 	# 登录后需要清除登录前订阅的space数据，以防止默认选中登录前浏览器url参数中的的工作区ID所指向的工作区
@@ -166,12 +167,14 @@ Meteor.startup ->
 
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
-Setup.bootstrap = (spaceId, userId, authToken, callback)->
+Setup.bootstrap = (spaceId, callback)->
 	console.log("bootstrap")
 
 	unless spaceId and Meteor.userId()
 		return
 
+	userId = Meteor.userId()
+	authToken = Accounts._storedLoginToken()
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
 	headers = {}
 	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
@@ -182,9 +185,6 @@ Setup.bootstrap = (spaceId, userId, authToken, callback)->
 		url: url
 		dataType: "json"
 		headers: headers
-		beforeSend: (request) ->
-			request.setRequestHeader('X-User-Id', Meteor.userId())
-			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 		error: (jqXHR, textStatus, errorThrown) ->
 				FlowRouter.initialize();
 				error = jqXHR.responseJSON
