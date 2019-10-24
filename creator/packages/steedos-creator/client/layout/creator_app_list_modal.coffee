@@ -17,7 +17,7 @@ Template.creator_app_list_modal.helpers
 
 	app_url: ()->
 		if this?.url
-			if /^http:\/\//.test(this.url)
+			if /^http(s?):\/\//.test(this.url)
 				return this.url
 			else
 				return Creator.getRelativeUrl(this.url);
