@@ -16,7 +16,7 @@
   },
   "author": "Jack Zhuang",
   "devDependencies": {
-    "@steedos/accounts": "^1.6.5-patch.5",
+    "@steedos/accounts": "^1.7.5",
     "@steedos/auth": "^1.7.5",
     "@steedos/core": "^1.7.5",
     "@steedos/filters": "^1.7.5",
@@ -38,5 +38,9 @@
   "resolutions": {
     "**/lodash": "^4.17.12"
   },
-  "gitHead": "574de651108b2868d889995c7a722e647f99ef62"
+  "gitHead": "574de651108b2868d889995c7a722e647f99ef62",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "dotenv-flow": "^3.1.0"
+  }
 }

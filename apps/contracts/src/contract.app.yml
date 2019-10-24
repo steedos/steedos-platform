@@ -61,8 +61,12 @@ admin_menus:
     object_name: account_tax
     parent: contracts
 dashboard:
+  apps:
+    label: 应用程序启动器
+    position: CENTER_TOP
+    type: apps
   workflow: 
-    label: 待审批
+    label: 待审核文件
     position: CENTER_TOP
     type: object
     objectName: "instances"
@@ -72,18 +76,25 @@ dashboard:
         ['inbox_users', '=', '{userId}'], 'or', ['cc_users', '=', '{userId}']
       ]
     ]
-    columns: [{
-      label: "名称",
-      field: "name",
-      href: true
-    }, {
-      label: "修改时间",
-      field: "modified",
-      type: 'datetime'
-    }]
-  pending_tasks:
+    columns: 
+      - label: 名称
+        field: name
+        href: true
+      - label: 提交人
+        field: submitter_name
+        width: 10rem
+      - label: 修改时间
+        field: modified
+        type: datetime
+        width: 10rem
+    noHeader: false
+    unborderedRow: true
+    showAllLink: true
+    illustration:
+      messageBody: "您没有待审核文件"
+  tasks:
     label: 待办任务
-    position: CENTER_TOP
+    position: RIGHT
     type: object
     objectName: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
@@ -93,13 +104,13 @@ dashboard:
         href: true
       - field: priority
         label: 优先级
-  apps:
-    label: 应用程序启动器
-    position: CENTER_TOP
-    type: apps
-  empty_tasks:
+    unborderedRow: true
+    showAllLink: true
+    illustration:
+      messageBody: "您今天没有待办任务"
+  calendar:
     label: 日历事件
-    position: RIGHT
+    position: CENTER_BOTTOM_RIGHT
     type: object
     objectName: events
     filters: [['state', '=', 'xxx']]
@@ -107,5 +118,7 @@ dashboard:
       - field: name
         label: 名称
         href: true
+    unborderedRow: true
+    showAllLink: true
     illustration:
-      messageBody: "没有找到日历事件"
+      messageBody: "您今天没有日程"

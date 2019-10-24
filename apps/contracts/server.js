@@ -1,3 +1,6 @@
+dotenv = require('dotenv-flow');
+dotenv.config()
+
 var server = require('@steedos/meteor-bundle-runner');
 var steedos = require('@steedos/core')
 server.Fiber(function () {
