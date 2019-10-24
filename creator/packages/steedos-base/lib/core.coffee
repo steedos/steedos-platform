@@ -187,18 +187,6 @@ if Meteor.isClient
 			else
 				Steedos.openWindow(url)
 
-	Steedos.redirectToSignIn = (redirect)->	
-		accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
-		if accountsUrl 
-			window.location.href = accountsUrl + "/authorize?redirect_uri=/";
-		else
-			signInUrl = AccountsTemplates.getRoutePath("signIn")
-			if redirect
-				if signInUrl.indexOf("?") > 0
-					signInUrl += "&redirect=#{redirect}"
-				else
-					signInUrl += "?redirect=#{redirect}"
-			FlowRouter.go signInUrl
 
 	Steedos.openApp = (app_id)->
 		if !Meteor.userId()

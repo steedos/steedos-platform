@@ -13,7 +13,27 @@ getCookie = (name)->
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
+Steedos.redirectToSignIn = (redirect)->
+	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
+	if accountsUrl 
+		window.location.href = accountsUrl + "/authorize?redirect_uri=/";
+	else
+		if window.location.pathname.indexOf('/steedos/')>=0
+			return
+		signInUrl = AccountsTemplates.getRoutePath("signIn")
+		if redirect
+			if signInUrl.indexOf("?") > 0
+				signInUrl += "&redirect=#{redirect}"
+			else
+				signInUrl += "?redirect=#{redirect}"
+		window.location.href = Steedos.absoluteUrl signInUrl
+		
 Setup.validate = (onSuccess)->
+
+	if window.location.pathname.indexOf('/steedos/')>=0
+		FlowRouter.initialize();
+		return;
+
 	console.log("Validating user...")
 	searchParams = new URLSearchParams(window.location.search);
 	# 优先使用 URL 变量
@@ -71,14 +91,13 @@ Setup.validate = (onSuccess)->
 			userId: data.userId,
 			user: data
 		}
-
-		Setup.bootstrap(Session.get("spaceId"))
+		
+		Setup.bootstrap(Session.get("spaceId"), data.userId, data.authToken)
 
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->
 		if (e.status == 401)
-			FlowRouter.initialize();
 			Steedos.redirectToSignIn()
 		return
 
@@ -147,17 +166,22 @@ Meteor.startup ->
 
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
-Setup.bootstrap = (spaceId, callback)->
+Setup.bootstrap = (spaceId, userId, authToken, callback)->
 	console.log("bootstrap")
 
 	unless spaceId and Meteor.userId()
 		return
+
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+	headers = {}
+	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+	headers['X-User-Id'] = userId
+	headers['X-Auth-Token'] = authToken
 	$.ajax
 		type: "get"
 		url: url
 		dataType: "json"
-		#contentType: "application/json"
+		headers: headers
 		beforeSend: (request) ->
 			request.setRequestHeader('X-User-Id', Meteor.userId())
 			request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
