@@ -70,8 +70,10 @@ export class SteedosAppType{
         this._is_creator = true
         this._id = config._id
         _.each(config, (value: any, key: string)=>{
-            this[key] = value
-            this.properties.push(key)
+            if(key != 'is_creator'){
+                this[key] = value
+                this.properties.push(key)
+            }
         })
         // this.name = config.name
         // this.description = config.description
