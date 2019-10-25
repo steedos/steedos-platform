@@ -2,6 +2,7 @@ import { SteedosActionTypeConfig } from './action'
 import _ = require('underscore')
 import path = require('path')
 import crypto = require('crypto')
+import { transformTrigger } from '../util'
 
 function makeTriggerName(trigger){
     var md5 = crypto.createHash('md5');
@@ -108,6 +109,9 @@ export function addTrigger(objectName: string, when: string, trigger: Function){
     let on = 'server';
 
     let triggerName = `${objectName}_${when}_${on}_${makeTriggerName(trigger)}`;
+
+
+    trigger = transformTrigger(when, trigger);
 
     objectDynamicLoad.triggerList.push({objectName, triggerName, trigger: {on, when, todo: trigger}})
 }

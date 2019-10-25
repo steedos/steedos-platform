@@ -19,6 +19,8 @@ import { has, getJsonMap } from '@salesforce/ts-types';
 
 const configName = 'steedos-config.yml'
 
+export * from './transform'
+
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
 }

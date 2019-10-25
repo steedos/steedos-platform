@@ -216,6 +216,13 @@ Creator.Objects.object_workflows = {
                       });
                     });
                   }
+                }else if(f.type === 'table'){
+                  return f.fields.forEach(function (ff) {
+                    return form_fields.push({
+                      'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
+                      'value': f.code + '.$.' + ff.code
+                    });
+                  });
                 } else {
                   return form_fields.push({
                     'label': f.name || f.code,
