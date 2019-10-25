@@ -116,6 +116,18 @@ dashboard:
 
 设定显示的列，以及列的属性。
 
+### 显示查看全部链接 showAllLink
+
+是否显示查看全部链接，设置为true，type为object时，会在底部显示查看全部链接，默认值false
+
+### 不显示表头 noHeader
+
+是否不显示表头，设置为true，type为object时，会隐藏表头，默认值false
+
+### 不显示行分隔线 unborderedRow
+
+是否不显示行分隔线，设置为true，type为object时，会隐藏表格的行分隔线，默认值false
+
 ### 位置 position
 
 显示 widget 的位置，可选项：
@@ -126,6 +138,13 @@ dashboard:
 - CENTER_BOTTOM_RIGHT: 显示在中间栏底部右侧
 - RIGHT: 显示在右侧
 
+### 手机版效果 mobile
+
+是否显示为手机版效果，即窄屏效果，默认值false，type为apps时有效
+
+### 显示App的object列表 showAllItems
+
+type为apps时是否显示app对应的object列表，默认值false，`为true的功能暂时未实现`
 
 ### 组件 component
 
