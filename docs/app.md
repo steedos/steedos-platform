@@ -76,11 +76,12 @@ dashboard:
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
     columns:
       - field: name
-        width: 70%
+        label: 名称
         wrap: true
         href: true
       - field: priority
-        width: 30%
+        label: 优先级
+        width: 14rem
         wrap: false
     illustration: 
       path: "/assets/images/illustrations/empty-state-not-available-in-lightning.svg#not-available-in-lightning",
@@ -116,6 +117,34 @@ dashboard:
 
 设定显示的列，以及列的属性。
 
+#### columns.field
+
+设定列的字段名
+
+#### columns.label
+
+设定列的显示文字
+
+#### columns.width
+
+设定列的宽度，为空则自适应，可设置为rex，百分比，像素等，例如：14rex，20%，80px，推荐用rex单位
+
+#### columns.wrap
+
+设定列是否换行，默认为false，设置为true时，文字超出会换行显示，为false时则会显示为省略号
+
+#### columns.hidden
+
+设定列是否隐藏，默认为false，设置为true时，该列将不显示，不过数据会加载到内存中
+
+#### columns.onClick
+
+设定列的单击行为，可设置为一个函数，点击将执行该函数
+
+#### columns.renderCell
+
+设定列的渲染函数，该函数可变更列内容显示规则
+
 ### 显示查看全部链接 showAllLink
 
 是否显示查看全部链接，设置为true，type为object时，会在底部显示查看全部链接，默认值false
@@ -127,6 +156,19 @@ dashboard:
 ### 不显示行分隔线 unborderedRow
 
 是否不显示行分隔线，设置为true，type为object时，会隐藏表格的行分隔线，默认值false
+
+### 数据空白时显示效果 illustration
+
+当数据内容空白时，其显示效果可通过该属性来配置，type为object时有效
+
+#### illustration.heading
+当数据内容空白时，显示大标题文字
+
+#### illustration.messageBody
+当数据内容空白时，显示小标题文字
+
+#### illustration.path
+当数据内容空白时，要显示的图标路径
 
 ### 位置 position
 
