@@ -63,27 +63,29 @@ export class SteedosAppType{
     public set mobile_objects(value: string[]) {
         this._mobile_objects = value;
     }
+
+    private properties: string[] = []
     
     constructor(config: SteedosAppTypeConfig, datasource: SteedosDataSourceType){
         this._datasource = datasource
         this._is_creator = true
         this._id = config._id
-        this.name = config.name
-        this.description = config.description
-        this.icon_slds = config.icon_slds
-        this.objects = config.objects
-        this.mobile_objects = config.mobile_objects
+        _.each(config, (value: any, key: string)=>{
+            this[key] = value
+            this.properties.push(key)
+        })
+        // this.name = config.name
+        // this.description = config.description
+        // this.icon_slds = config.icon_slds
+        // this.objects = config.objects
+        // this.mobile_objects = config.mobile_objects
     }
 
     toConfig(){
-        let config:JsonMap = {}
-        config._id = this._id
-        config.name = this.name
-        config.description = this.description
-        config.icon_slds = this.icon_slds
-        config.objects = this.objects
-        config.is_creator = this.is_creator
-        config.mobile_objects = this.mobile_objects
+        let config = {}
+        this.properties.forEach((property)=>{
+            config[property] = this[property]
+        })
         return config
     }
 
