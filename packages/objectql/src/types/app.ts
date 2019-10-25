@@ -63,7 +63,7 @@ export class SteedosAppType{
         this._mobile_objects = value;
     }
 
-    private properties: string[] = []
+    private properties: string[] = ['is_creator']
     
     constructor(config: SteedosAppTypeConfig, datasource: SteedosDataSourceType){
         this._datasource = datasource
