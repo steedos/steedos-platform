@@ -1,4 +1,3 @@
-import { JsonMap } from '@salesforce/ts-types';
 import { SteedosDataSourceType } from '.';
 import _ = require('underscore');
 export type SteedosAppTypeConfig = {
