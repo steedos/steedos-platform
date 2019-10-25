@@ -4,6 +4,7 @@ import { get, isEmpty } from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../utils/send-error';
 import { setAuthCookies, clearAuthCookies } from '../utils/steedos-auth';
+const queryString = require('querystring');
 
 export const authorize = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -14,7 +15,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
   const client_id = req.query.client_id || "steedos"
   const connection = req.query.connection || "steedos"
   const state = req.query.state || ""
-  const query = req.url.substring("/authorize".length)
+  const query = queryString.stringify(req.query);
   let redirect_uri = req.query.redirect_uri
   if (!redirect_uri)
     redirect_uri = "/"
@@ -31,7 +32,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
     res.end();
   } else {
     clearAuthCookies(req, res);
-    res.redirect("/accounts/a/login" + query);
+    res.redirect("/accounts/a/login?" + query);
     res.end();
   }
 };
