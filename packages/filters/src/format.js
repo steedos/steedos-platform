@@ -4,8 +4,21 @@ const _ = require('underscore');
 const utils = require("./utils");
 const formula = require("./formula");
 
+let extendUserContext = (userContext, utcOffset) => {
+    if (!userContext.now){
+        userContext.now = new Date();
+        if (utcOffset) {
+            // 注意这里取的值是moment().utcOffset() / 60得到的，不是new Date().getTimezoneOffset() / 60
+            // 它们的值正好为正负关系，北京时间前者为 +8，后者为 -8
+            userContext.now.setHours(userContext.now.getHours() - utcOffset);
+        }
+    }
+    return userContext;
+}
+
 let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, user: { utcOffset: 0 } }) => {
     let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
+    userContext = extendUserContext(userContext, utcOffset);
     // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
     var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}\:\d{1,2}(\.\d{1,3})?(Z)?$/;
     var filtersLooper, selector;
