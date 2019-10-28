@@ -174,6 +174,7 @@ Creator.Objects['company'].actions = {
         todo: function (object_name, record_id, fields) {
             if (!this.record.organization) {
                 toastr.warning("该单位的关联组织未设置，未更新任何数据");
+                return;
             }
             
             var doUpdate = function() {
@@ -236,7 +237,7 @@ Creator.Objects['company'].actions = {
                 showCancelButton: true,
                 confirmButtonText: t('YES'),
                 cancelButtonText: t('NO')
-            }, (option)=> { 
+            }, function(option) { 
                 if (option){
                     doUpdate();
                 }

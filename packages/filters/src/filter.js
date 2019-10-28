@@ -1,16 +1,30 @@
-const DevExpress = require("devextreme/bundles/modules/core");
-const DevExpressData = require("devextreme/bundles/modules/data");
+// const DevExpress = require("devextreme/bundles/modules/core");
+// const DevExpressData = require("devextreme/bundles/modules/data");
 // const DevExpressOData = require("devextreme/bundles/modules/data.odata");
 const getLDMLFormatter = require("./date.formatter").getFormatter;
-const Guid = require("devextreme/core/guid");
-const EdmLiteral = require("devextreme/data/odata/utils").EdmLiteral;
+// const Guid = require("devextreme/core/guid");
+// const EdmLiteral = require("devextreme/data/odata/utils").EdmLiteral;
 
-
-DevExpressData.utils.isUnaryOperation = (crit) => {
-    return crit[0] === "!" && Array.isArray(crit[1]);
+const DevExpressData = {
+    utils: {
+        isConjunctiveOperator: function (condition) {
+            return /^(and|&&|&)$/i.test(condition);
+        },
+        normalizeBinaryCriterion: function (crit) {
+            return [
+                crit[0],
+                crit.length < 3 ? "=" : String(crit[1]).toLowerCase(),
+                crit.length < 2 ? true : crit[crit.length - 1]
+            ];
+        },
+        isUnaryOperation: function (crit) {
+            return crit[0] === "!" && Array.isArray(crit[1]);
+        }
+    }
 }
 
-const defaultDateNames = DevExpress.localization.date;
+// const defaultDateNames = DevExpress.localization.date;
+const defaultDateNames = require("./default_date_names");
 
 const DevExpressOData = {
     pad(text, length, right) {
@@ -47,12 +61,12 @@ const DevExpressOData = {
         if (value instanceof Date) {
             return this.serializeDate(value);
         }
-        if (value instanceof Guid) {
-            return "guid'" + value + "'";
-        }
-        if (value instanceof EdmLiteral) {
-            return value.valueOf();
-        }
+        // if (value instanceof Guid) {
+        //     return "guid'" + value + "'";
+        // }
+        // if (value instanceof EdmLiteral) {
+        //     return value.valueOf();
+        // }
         if (typeof value === "string") {
             return this.serializeString(value);
         }
@@ -62,9 +76,9 @@ const DevExpressOData = {
         if (value instanceof Date) {
             return this.formatISO8601(value, false, false);
         }
-        if (value instanceof Guid) {
-            return value.valueOf();
-        }
+        // if (value instanceof Guid) {
+        //     return value.valueOf();
+        // }
         if (Array.isArray(value)) {
             return "[" + value.map(function (item) {
                 return this.serializeValueV4(item);

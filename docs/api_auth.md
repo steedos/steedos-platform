@@ -47,12 +47,15 @@ roles:  ["role_name"]         # 用户属于的所有权限组
 space:
   _id: i6thCRrKWYmdjxpzt      # 当前工作区Id
   name: Apple                 # 当前工作区名称
+is_space_admin: true          # 是否是当前工作区管理员
 spaces: [space]               # 数组，用户所属的所有工作区 
 company:                   
   _id: i6thCRrKWYmdjxpzt      # 用户所属主单位 
   name: Apple China           # 用户所属主单位名称
   organization: xxx           # 用户所属主单位关联组织id
 companies: [company]          # 数组，用户所属的所有单位
+company_id: "xxx"             # 用户所属主单位id值
+company_ids: ["xxx"]          # 数组，用户所属的所有单位id值
 organization:
   _id: i6thCRrKWYmdjxpzt
   name: Sales                 # 用户所属部门

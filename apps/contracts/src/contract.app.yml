@@ -60,3 +60,66 @@ admin_menus:
     name: 税码
     object_name: account_tax
     parent: contracts
+dashboard:
+  apps:
+    label: 应用程序启动器
+    position: RIGHT
+    type: apps
+    mobile: true
+  workflow: 
+    label: 待审核文件
+    position: CENTER_TOP
+    type: object
+    objectName: "instances"
+    filters: [
+      ['space', '=', '{spaceId}'],
+      [
+        ['inbox_users', '=', '{userId}'], 'or', ['cc_users', '=', '{userId}']
+      ]
+    ]
+    columns: 
+      - label: 名称
+        field: name
+        href: true
+      - label: 提交人
+        field: submitter_name
+        width: 10rem
+      - label: 修改时间
+        field: modified
+        type: datetime
+        width: 10rem
+    noHeader: false
+    unborderedRow: true
+    showAllLink: true
+    illustration:
+      messageBody: "您没有待审核文件"
+  tasks:
+    label: 待办任务
+    position: CENTER_TOP
+    type: object
+    objectName: tasks
+    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    columns:
+      - field: name
+        label: 名称
+        href: true
+      - field: priority
+        label: 优先级
+    unborderedRow: true
+    showAllLink: true
+    illustration:
+      messageBody: "您今天没有待办任务"
+  calendar:
+    label: 日历事件
+    position: CENTER_BOTTOM_RIGHT
+    type: object
+    objectName: events
+    filters: [['state', '=', 'xxx']]
+    columns:
+      - field: name
+        label: 名称
+        href: true
+    unborderedRow: true
+    showAllLink: true
+    illustration:
+      messageBody: "您今天没有日程"

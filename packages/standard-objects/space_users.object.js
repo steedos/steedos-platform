@@ -1070,3 +1070,100 @@ Meteor.startup(function () {
         });
     }
 });
+
+Creator.Objects['space_users'].actions = {
+    import: {
+        label: "导入",
+        on: "list",
+        visible: function (object_name, record_id, record_permissions) {
+            return Creator.isSpaceAdmin();
+        },
+        todo: function () {
+            if (!Steedos.isPaidSpace()) {
+                Steedos.spaceUpgradedModal();
+                return;
+            }
+            return Modal.show('import_users_modal');
+        }
+    },
+    export: {
+        label: "导出",
+        on: "list",
+        visible: function (object_name, record_id, record_permissions) {
+            return Creator.isSpaceAdmin();
+        },
+        todo: function () {
+            var orgId, ref, spaceId, uobj, url;
+            spaceId = Session.get('spaceId');
+            orgId = (ref = Session.get('grid_sidebar_selected')) != null ? ref[0] : void 0;
+
+            if (spaceId && orgId) {
+                uobj = {};
+                uobj['X-User-Id'] = Meteor.userId();
+                uobj['X-Auth-Token'] = Accounts._storedLoginToken();
+                uobj.space_id = spaceId;
+                uobj.org_id = orgId;
+                url = Steedos.absoluteUrl() + 'api/export/space_users?' + $.param(uobj);
+                return window.open(url, '_parent', 'EnableViewPortScale=yes');
+            } else {
+                return swal({
+                    title: '左侧未选中任何组织',
+                    text: '请在左侧组织机构树中选中一个组织后再执行导出操作',
+                    html: true,
+                    type: 'warning',
+                    confirmButtonText: TAPi18n.__('OK')
+                });
+            }
+        }
+    },
+    setPassword: {
+        label: "更改密码",
+        on: "record",
+        visible: function (object_name, record_id, record_permissions) {
+            return Creator.isSpaceAdmin();
+        },
+        todo: function (object_name, record_id, fields) {
+            var doUpdate = function (inputValue) {
+                $("body").addClass("loading");
+                var userSession = Creator.USER_CONTEXT;
+                try {
+                    Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
+                        $("body").removeClass("loading");
+                        if (error) {
+                            return toastr.error(error.reason);
+                        } else {
+                            swal.close();
+                            return toastr.success("更改密码成功");
+                        }
+                    });
+                } catch (err) {
+                    console.error(err);
+                    toastr.error(err);
+                    $("body").removeClass("loading");
+                }
+            }
+
+            swal({
+                title: "更改密码",
+                type: "input",
+                inputType: "password",
+                inputValue: "",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: t('OK'),
+                cancelButtonText: t('Cancel'),
+                showLoaderOnConfirm: false
+            }, function (inputValue) {
+                var result;
+                if (inputValue === false) {
+                    return false;
+                }
+                result = Steedos.validatePassword(inputValue);
+                if (result.error) {
+                    return toastr.error(result.error.reason);
+                }
+                doUpdate(inputValue);
+            });
+        }
+    }
+}

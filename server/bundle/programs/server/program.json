@@ -525,6 +525,7 @@
       "path": "packages/steedos_cfs-s3.js"
     },
     {
+      "node_modules": "npm/node_modules/meteor/matb33_collection-hooks/node_modules",
       "path": "packages/matb33_collection-hooks.js"
     },
     {
@@ -717,9 +718,6 @@
       }
     },
     {
-      "path": "packages/steedos_version.js"
-    },
-    {
       "sourceMap": "packages/steedos_audit.js.map",
       "path": "packages/steedos_audit.js"
     },
@@ -774,6 +772,13 @@
     },
     {
       "path": "packages/comerc_autoform-selectize.js"
+    },
+    {
+      "path": "packages/react-template-helper.js"
+    },
+    {
+      "sourceMap": "packages/steedos_webkit-notification.js.map",
+      "path": "packages/steedos_webkit-notification.js"
     },
     {
       "path": "packages/hot-code-push.js"

@@ -40,15 +40,15 @@ const getObjectList = async function (req: Request, res: Response) {
             };
         }
         let permissions = await collection.getUserObjectPermission(userSession);
-        if (permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, createQuery.query.company_id, queryParams)) || (permissions.allowRead && userId)) {
+        if (permissions.viewAllRecords || (permissions.viewCompanyRecords) || (permissions.allowRead && userId)) {
             let entities = [];
-            let filters = queryParams.$filter;
+            let filters = queryParams.$filter || '';
             let fields = [];
-            if (collection.table_name === 'cfs.files.filerecord') {
-                filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
-            } else {
-                filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
-            }
+            // if (collection.table_name === 'cfs.files.filerecord') {
+            //     filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
+            // } else {
+            //     filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
+            // }
 
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)
@@ -72,7 +72,7 @@ const getObjectList = async function (req: Request, res: Response) {
                     filters = filters ? `(${filters}) and (${or})` : `(${or})`;
                     console.log('enable_share filters: ', filters)
                 } else {
-                    filters = `(${filters}) and (owner eq \'${userId}\')`;
+                    filters = filters ? `(${filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
                 }
             }
             filters = getODataManager().excludeDeleted(filters);
@@ -349,7 +349,7 @@ const getObjectData = async function (req: Request, res: Response) {
                 let entities = [];
                 if (entity) {
                     let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] }, userSession);
-                    let isAllowed = (recordData.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, recordData.company_id));
+                    let isAllowed = (recordData.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords);
                     // if object.enable_share and !isAllowed
                     //   shares = []
                     //   orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
@@ -399,7 +399,7 @@ const updateObjectData = async function (req: Request, res: Response) {
         let urlParams = req.params;
         let bodyParams = req.body;
         let key = urlParams.objectName;
-        let spaceId = userSession.spaceId;
+        // let spaceId = userSession.spaceId;
         let recordId = urlParams._id;
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -414,9 +414,9 @@ const updateObjectData = async function (req: Request, res: Response) {
         } else {
             record_owner = (await collection.findOne(recordId, { fields: ['owner'] })).owner
         }
-        let companyId = (await collection.findOne(recordId, { fields: ['company_id'] })).company_id
+        // let companyId = (await collection.findOne(recordId, { fields: ['company_id'] })).company_id
 
-        let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords && await getODataManager().isSameCompany(spaceId, userId, companyId));
+        let isAllowed = permissions.modifyAllRecords || (permissions.allowEdit && record_owner == userId) || (permissions.modifyCompanyRecords);
         if (isAllowed) {
             await getODataManager().checkGlobalRecord(collection, recordId, collection);
 
@@ -453,7 +453,7 @@ const deleteObjectData = async function (req: Request, res: Response) {
         let userId = userSession.userId;
         let urlParams = req.params;
         let key = urlParams.objectName;
-        let spaceId = userSession.spaceId;
+        // let spaceId = userSession.spaceId;
         let recordId = urlParams._id;
         let setErrorMessage = getODataManager().setErrorMessage;
 
@@ -464,8 +464,8 @@ const deleteObjectData = async function (req: Request, res: Response) {
         let permissions = await collection.getUserObjectPermission(userSession);
         let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] });
         let record_owner = recordData.owner;
-        let companyId = recordData.company_id;
-        let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete && await getODataManager().isSameCompany(spaceId, userId, companyId)) || (permissions.allowDelete && record_owner === userId);
+        // let companyId = recordData.company_id;
+        let isAllowed = (permissions.modifyAllRecords && permissions.allowDelete) || (permissions.modifyCompanyRecords && permissions.allowDelete) || (permissions.allowDelete && record_owner === userId);
         if (isAllowed) {
             await getODataManager().checkGlobalRecord(collection, recordId, collection);
 

@@ -5,4 +5,4 @@
  * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 const path = require('path');
-process.env.TS_NODE_PROJECT = path.resolve('test/tsconfig.json');
+process.env.TS_NODE_PROJECT = path.resolve(__dirname, 'tsconfig.json');

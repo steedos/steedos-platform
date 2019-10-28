@@ -10,9 +10,6 @@
 .standard-query-modal .view-page-section-row .to:last-child {
   display: none;
 }
-.standard-query-modal .view-page-section-row .view-page-block-item .form-group {
-  font-size: 0;
-}
 .standard-query-modal .view-page-section-row .view-page-block-item .form-group .control-label {
   min-width: 1px;
   height: 20px;

@@ -1343,7 +1343,6 @@ SpacebarsCompiler._beautify = function (code) {
   if (!UglifyJSMinify) {
     return code;
   }
-  console.log(code)
   var result = UglifyJSMinify(code, { 
     fromString: true,
     mangle: false,

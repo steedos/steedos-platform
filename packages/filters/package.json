@@ -1,7 +1,7 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "1.6.10",
+  "version": "1.8.1",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
@@ -14,7 +14,6 @@
     "prepare": "npm run compile"
   },
   "dependencies": {
-    "devextreme": "^18.2.6",
     "moment": "^2.24.0",
     "underscore": "^1.9.1"
   },
@@ -38,5 +37,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "04f7de5922808b8d45133e461678575c5d3df657"
+  "gitHead": "574de651108b2868d889995c7a722e647f99ef62"
 }

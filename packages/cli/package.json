@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "1.6.10",
+  "version": "1.8.1",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -36,8 +36,8 @@
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/meteor-bundle-runner": "^1.6.10",
-    "@steedos/project-template-empty": "^1.6.10",
+    "@steedos/meteor-bundle-runner": "^1.8.1",
+    "@steedos/project-template-empty": "^1.8.1",
     "@steedos/steedos-model-generator": "^0.5.34",
     "change-case": "^3.1.0",
     "colors": "^1.3.3",
@@ -94,5 +94,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "04f7de5922808b8d45133e461678575c5d3df657"
+  "gitHead": "574de651108b2868d889995c7a722e647f99ef62"
 }

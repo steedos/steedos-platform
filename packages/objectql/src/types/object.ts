@@ -499,21 +499,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         await this.processUneditableFields(userSession, doc)
-        return await this.callAdapter('update', this.table_name, id, doc, userSession)
+        let clonedId = id;
+        return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
     }
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         await this.processUneditableFields(userSession, doc)
-        return await this.callAdapter('updateOne', this.table_name, id, doc, userSession)
+        let clonedId = id;
+        return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
     }
-
+    // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         await this.processUneditableFields(userSession, doc)
-        return await this.callAdapter('updateMany', this.table_name, queryFilters, doc, userSession)
+        let clonedQueryFilters = queryFilters;
+        return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
     }
 
     async delete(id: SteedosIDType, userSession?: SteedosUserSession) {
-        return await this.callAdapter('delete', this.table_name, id, userSession)
+        let clonedId = id;
+        return await this.callAdapter('delete', this.table_name, clonedId, userSession)
     }
 
     async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
@@ -678,7 +682,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
             let objPm = await this.getUserObjectPermission(userSession);
-            if (method === 'find' || method === 'count') {
+            if (method === 'find' || method === 'count' || method === 'findOne') {
                 let query = args[args.length - 2];
                 if (query.filters && !_.isString(query.filters)) {
                     query.filters = formatFiltersToODataQuery(query.filters);
@@ -693,18 +697,93 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
                     let companyFilters = _.map(userSession.companies, function (comp: any) {
-                        return `(company_id eq '${comp._id}')`
+                        return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     }).join(' or ')
                     if (companyFilters) {
-                        query.filters = query.filters ? `(${query.filters} and (${companyFilters}))` : `(${companyFilters})`;
+                        query.filters = query.filters ? `(${query.filters}) and (${companyFilters})` : `(${companyFilters})`;
                     }
                 }
 
                 if (!objPm.viewAllRecords && !objPm.viewCompanyRecords && objPm.allowRead) { // owner
                     query.filters = query.filters ? `(${query.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
                 }
-
             }
+            else if (method === 'insert') {
+                if (!objPm.allowCreate) {
+                    throw new Error(`no ${method} permission!`);
+                }
+            }
+            else if (method === 'update' || method === 'updateOne') {
+                if (!objPm.allowEdit) {
+                    throw new Error(`no ${method} permission!`);
+                }
+                let id = args[args.length - 3];
+                if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
+                    let companyFilters = _.map(userSession.companies, function (comp: any) {
+                        return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
+                    }).join(' or ')
+                    if (companyFilters) {
+                        if (_.isString(id)) {
+                            id = { filters: `(_id eq \'${id}\') and (${companyFilters})` }
+                        }
+                        else if (_.isObject(id)) {
+                            if (id.filters && !_.isString(id.filters)) {
+                                id.filters = formatFiltersToODataQuery(id.filters);
+                            }
+                            id.filters = id.filters ? `(${id.filters}) and (${companyFilters})` : `(${companyFilters})`;
+                        }
+                    }
+                }
+                else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords && objPm.allowEdit) {
+                    if (_.isString(id)) {
+                        id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` }
+                    }
+                    else if (_.isObject(id)) {
+                        if (id.filters && !_.isString(id.filters)) {
+                            id.filters = formatFiltersToODataQuery(id.filters);
+                        }
+                        id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
+                    }
+                }
+                args[args.length - 3] = id;
+            }
+            else if (method === 'updateMany') {
+                if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords) {
+                    throw new Error(`no ${method} permission!`);
+                }
+                if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
+                    let queryFilters = args[args.length - 3];
+                    let companyFilters = _.map(userSession.companies, function (comp: any) {
+                        return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
+                    }).join(' or ')
+                    if (companyFilters) {
+                        if (queryFilters && !_.isString(queryFilters)) {
+                            queryFilters = formatFiltersToODataQuery(queryFilters);
+                        }
+                        queryFilters = queryFilters ? `(${queryFilters}) and (${companyFilters})` : `(${companyFilters})`;
+                        args[args.length - 3] = queryFilters;
+                    }
+                }
+            }
+            else if (method === 'delete') {
+                if (!objPm.allowDelete) {
+                    throw new Error(`no ${method} permission!`);
+                }
+                let id = args[args.length - 2];
+                if (!objPm.modifyAllRecords && objPm.modifyCompanyRecords) {
+                    let companyFilters = _.map(userSession.companies, function (comp: any) {
+                        return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
+                    }).join(' or ')
+                    if (companyFilters) {
+                        id = { filters: `(_id eq \'${id}\') and (${companyFilters})` };
+                    }
+                }
+                else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords) {
+                    id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\')` };
+                }
+                args[args.length - 2] = id;
+            }
+
         }
 
     }

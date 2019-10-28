@@ -12,38 +12,195 @@ title: 应用
 
 ![电脑、手机界面展示](assets/mac_mobile_list.png)
 
-## 应用属性
+管理员可以在权限集中配置应用的访问权限，如果一个用户属于多个权限集，则最终可访问的应用为个权限集的叠加。
+
+## 应用
+
 ```yaml
 _id: crm
 name: 客户
 description: 管理客户，以及相关的联系人、任务和日程。
 icon_slds: folder
 is_creator: true
-objects: 
+objects:
   - accounts
   - contacts
   - tasks
   - events  
+mobile_objects:
+  - accounts
+  - contacts
 ```
+
 ### _id
+
 应用的API名称，必须符合变量的命名规范。
 
 ### 应用名称 name
+
 应用在界面上的显示名称，可以使用中文名称。
 
 ### 应用图标 icon_slds
+
 必须配置。对应 [LIGHTNING DESIGN SYSTEM 中的Standard Icons图标](https://www.lightningdesignsystem.com/icons/#standard) 中的图标名称。
 
-### 对象 objects
+### 可见 visible
+
+如果配置为false，可将应用隐藏。
+
+### 排序号
+
+控制应用在开始菜单中显示的先后顺序。
+
+### 电脑端菜单 objects
+
 使用数组格式定义此应用中显示的对象清单，系统按照定义的先后顺序显示为业务对象Tab。点击业务对象名称，进入业务对象列表界面。
 
 除了可以配置当前项目中的业务对象，也可以配置系统内置的[标准业务对象](standard_objects.md)。
 
-### 可见 visible
-如果配置为false，可将应用隐藏。
+## 手机端菜单 mobile_objects
 
-### 排序号
-控制应用在开始菜单中显示的先后顺序。
+使用数组格式定义在手机端主菜单中显示的对象清单，系统按照定义的先后顺序显示为业务对象菜单。
 
-## 应用权限
-管理员可以在权限集中配置应用的访问权限，如果一个用户属于多个权限集，则最终可访问的应用为个权限集的叠加。
+## 门户 dashboard
+
+如果配置了此参数，在电脑端会自动加上“首页”Tab，按照配置自动生成应用首页。
+
+```yml
+dashboard:
+  pending_tasks:
+    label: 待办任务
+    position: LEFT
+    type: object
+    objectName: tasks
+    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    columns:
+      - field: name
+        label: 名称
+        wrap: true
+        href: true
+      - field: priority
+        label: 优先级
+        width: 14rem
+        wrap: false
+    illustration: 
+      path: "/assets/images/illustrations/empty-state-not-available-in-lightning.svg#not-available-in-lightning",
+      heading: ""
+      messageBody: "没有找到待办任务"
+    showAllLink: true
+    noHeader: true
+    unborderedRow: true
+```
+
+### 标题 label
+
+显示在 widget 左上角。
+
+### 类型 type
+
+内置 widget 类型。目前支持以下类型：
+
+- object: 以表格的形式显示对象的列表数据。
+- apps: 显示 apps 清单，点击可以跳转到对应的应用。
+- react: 显示react component内容，是一个function，返回react node节点。
+- email: 显示当前用户的未读邮件。
+
+### 对象 object_name
+
+查询的对象。
+
+### 筛选条件 filters
+
+在 widget 中只显示符合筛选条件的数据。
+
+### 列 columns
+
+设定显示的列，以及列的属性。
+
+#### columns.field
+
+设定列的字段名
+
+#### columns.label
+
+设定列的显示文字
+
+#### columns.width
+
+设定列的宽度，为空则自适应，可设置为rex，百分比，像素等，例如：14rex，20%，80px，推荐用rex单位
+
+#### columns.wrap
+
+设定列是否换行，默认为false，设置为true时，文字超出会换行显示，为false时则会显示为省略号
+
+#### columns.hidden
+
+设定列是否隐藏，默认为false，设置为true时，该列将不显示，不过数据会加载到内存中
+
+#### columns.onClick
+
+设定列的单击行为，可设置为一个函数，点击将执行该函数
+
+#### columns.renderCell
+
+设定列的渲染函数，该函数可变更列内容显示规则
+
+### 显示查看全部链接 showAllLink
+
+是否显示查看全部链接，设置为true，type为object时，会在底部显示查看全部链接，默认值false
+
+### 不显示表头 noHeader
+
+是否不显示表头，设置为true，type为object时，会隐藏表头，默认值false
+
+### 不显示行分隔线 unborderedRow
+
+是否不显示行分隔线，设置为true，type为object时，会隐藏表格的行分隔线，默认值false
+
+### 数据空白时显示效果 illustration
+
+当数据内容空白时，其显示效果可通过该属性来配置，type为object时有效
+
+#### illustration.heading
+当数据内容空白时，显示大标题文字
+
+#### illustration.messageBody
+当数据内容空白时，显示小标题文字
+
+#### illustration.path
+当数据内容空白时，要显示的图标路径
+
+### 位置 position
+
+显示 widget 的位置，可选项：
+
+- LEFT: 显示在左侧
+- CENTER_TOP: 显示在中间栏顶部
+- CENTER_BOTTOM_LEFT: 显示在中间栏底部左侧
+- CENTER_BOTTOM_RIGHT: 显示在中间栏底部右侧
+- RIGHT: 显示在右侧
+
+### 手机版效果 mobile
+
+是否显示为手机版效果，即窄屏效果，默认值false，type为apps时有效
+
+### 显示App的object列表 showAllItems
+
+type为apps时是否显示app对应的object列表，默认值false，`为true的功能暂时未实现`
+
+### 组件 component
+
+显示 react component内容，可选项，type为react时必填，是一个function，返回react node节点，比如：
+```
+const styled = require('styled-components').default;
+let CenterDiv = styled.div`
+  text-align: center;
+  height: 230px;
+  background: #fff;
+  border: solid 1px #eee;
+  border-radius: 4px;
+  margin-bottom: 12px;
+`;
+return <CenterDiv className="testReact1">react component</CenterDiv>;
+```
+

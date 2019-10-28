@@ -1,0 +1,215 @@
+
+
+.slds-pill {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	line-height: 1.5;
+	max-width: 100%;
+	padding: .125rem;
+	border: 1px solid #dddbda;
+	border-radius: .25rem;
+	background-color: #fff;
+	position: relative;
+	min-height: 1.625rem
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill {
+		line-height:1.875rem;
+		padding: 0 .75rem
+	}
+}
+
+.slds-pill+.slds-pill {
+	margin-left: .125rem
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill+.slds-pill {
+		margin-left:.25rem
+	}
+}
+
+.slds-pill:hover {
+	background-color: #f4f6f9
+}
+
+.slds-pill:focus {
+	outline: 0;
+	border-radius: .25rem;
+	border-color: #1589ee;
+	box-shadow: 0 0 3px #0070d2
+}
+
+.slds-pill a {
+	text-decoration: none
+}
+
+.slds-pill--bare,.slds-pill_bare {
+	background-color: transparent;
+	border: 0
+}
+
+.slds-pill--bare:hover,.slds-pill_bare:hover {
+	background-color: transparent
+}
+
+.slds-pill-container,.slds-pill__container,.slds-pill_container {
+	display: flex;
+	min-height: calc(1.875rem + 2px);
+	padding: .125rem;
+	border: 1px solid #dddbda;
+	border-radius: .25rem;
+	background-color: #fff
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill-container,.slds-pill__container,.slds-pill_container {
+		padding:.25rem
+	}
+}
+
+.slds-pill-container .slds-listbox_inline,.slds-pill__container .slds-listbox_inline,.slds-pill_container .slds-listbox_inline {
+	margin-left: 0;
+	margin-right: 0
+}
+
+.slds-pill__container--bare,.slds-pill__container_bare,.slds-pill_container--bare,.slds-pill_container_bare {
+	display: flex;
+	padding: .125rem;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent
+}
+
+.slds-pill__label {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill__label {
+		font-size:.875rem
+	}
+}
+
+.slds-pill__label:focus {
+	outline: 0;
+	border-radius: .25rem;
+	box-shadow: 0 0 3px #0070d2
+}
+
+.slds-pill__icon,.slds-pill__icon_container {
+	width: 1.25rem;
+	height: 1.25rem;
+	margin-right: .25rem
+}
+
+.slds-pill__icon .slds-avatar,.slds-pill__icon .slds-icon,.slds-pill__icon_container .slds-avatar,.slds-pill__icon_container .slds-icon {
+	width: 1.25rem;
+	height: 1.25rem;
+	display: block;
+	font-size: .625rem
+}
+
+.slds-pill__icon_container~.slds-pill__action,.slds-pill__icon~.slds-pill__action {
+	padding-left: calc(1.25rem + .25rem + 2px)
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill__icon_container~.slds-pill__action,.slds-pill__icon~.slds-pill__action {
+		padding-left:2.25rem
+	}
+}
+
+.slds-pill__remove {
+	width: 1rem;
+	height: 1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: .25rem;
+	border-radius: .125rem
+}
+
+.slds-pill__remove svg {
+	width: .875rem;
+	height: .875rem
+}
+
+.slds-pill--link,.slds-pill_link {
+	border: 0;
+	padding: 0
+}
+
+.slds-pill--link .slds-pill__icon_container,.slds-pill_link .slds-pill__icon_container {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: .125rem;
+	transform: translateY(-50%)
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill--link .slds-pill__icon_container,.slds-pill_link .slds-pill__icon_container {
+		left:.75rem
+	}
+}
+
+.slds-pill--link .slds-pill__remove,.slds-pill_link .slds-pill__remove {
+	position: absolute;
+	top: 50%;
+	right: .125rem;
+	transform: translateY(-50%)
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill--link .slds-pill__remove,.slds-pill_link .slds-pill__remove {
+		right:.75rem
+	}
+}
+
+.slds-pill__action {
+	padding: .125rem;
+	padding-right: calc(1rem + .25rem + 2px);
+	border: 1px solid #dddbda;
+	border-radius: .25rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-grow: 1;
+	color: inherit !important;
+}
+
+@media (pointer: coarse) and (hover:none) {
+	.slds-pill__action {
+		padding:0;
+		padding-left: .75rem;
+		padding-right: calc(1rem + .75rem + 2px)
+	}
+}
+
+.slds-pill__action:focus {
+	outline: 0;
+	border-color: #1589ee;
+	box-shadow: 0 0 3px #0070d2
+}
+
+.selectize-control.multi .selectize-input [data-value]{
+	background: none !important;
+	box-shadow: none !important;
+	border-radius: .25rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	line-height: 1.5 !important;
+	max-width: 100% !important;
+	padding: 0px !important;
+	border: none !important;
+	background-color: #fff !important;
+	position: relative !important;
+	min-height: 1.625rem !important;
+	text-shadow: none !important;
+}

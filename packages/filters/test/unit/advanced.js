@@ -1,7 +1,9 @@
 const formatFiltersToODataQuery = require('../../lib/index').formatFiltersToODataQuery;
 const expect = require('chai').expect;
 const userContext = {
-    utcOffset: 0
+    user: {
+        utcOffset: 0
+    }
 };
 
 describe('advanced arguments for the filter function', () => {

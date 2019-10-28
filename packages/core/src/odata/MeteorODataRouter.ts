@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import steedosAuth = require("@steedos/auth");
-import { meteorODataExpressMiddleware } from './MeteorODataExpressMiddleware';
+import { getObjectList, getObjectRecent, createObjectData, getObjectData, updateObjectData, deleteObjectData, excuteObjectMethod } from './server';
 var express = require('express');
 var router = express.Router();
 
@@ -29,18 +29,18 @@ router.use('/:spaceId', function (req: Request, res: Response, next: () => void)
     owner(记录所有者)处理
 */
 
-router.get('/:spaceId/:objectName', meteorODataExpressMiddleware.getObjectList);
+router.get('/:spaceId/:objectName', getObjectList);
 
-router.get('/:spaceId/:objectName/recent', meteorODataExpressMiddleware.getObjectRecent);
+router.get('/:spaceId/:objectName/recent', getObjectRecent);
 
-router.post('/:spaceId/:objectName', meteorODataExpressMiddleware.createObjectData);
+router.post('/:spaceId/:objectName', createObjectData);
 
-router.get('/:spaceId/:objectName/:_id', meteorODataExpressMiddleware.getObjectData);
+router.get('/:spaceId/:objectName/:_id', getObjectData);
 
-router.put('/:spaceId/:objectName/:_id', meteorODataExpressMiddleware.updateObjectData);
+router.put('/:spaceId/:objectName/:_id', updateObjectData);
 
-router.delete('/:spaceId/:objectName/:_id', meteorODataExpressMiddleware.deleteObjectData);
+router.delete('/:spaceId/:objectName/:_id', deleteObjectData);
 
-router.post('/:spaceId/:objectName/:_id/:methodName', meteorODataExpressMiddleware.excuteObjectMethod);
+router.post('/:spaceId/:objectName/:_id/:methodName', excuteObjectMethod);
 
 export default router
