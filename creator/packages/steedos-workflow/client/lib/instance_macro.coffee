@@ -14,6 +14,14 @@ InstanceMacro.check = (macro) ->
 
 InstanceMacro.run = (macro) ->
 
+	if _.isFunction(macro)
+		try
+			return macro();
+		catch e
+			console.log "InstanceMacro.run error." , e
+			return ;
+
+
 	form_version = WorkflowManager.getInstanceFormVersion();
 
 	_context = Form_formula.init_formula_values(form_version.fields, {});

@@ -271,15 +271,14 @@ var s_schema = function (label, field) {
 
     if(schema.autoform.disabled == false){
 
-		if(!field.default_value || field.default_value.indexOf("auto_number(") < 0){
+		if(!field.default_value || (_.isString(field.default_value) && field.default_value.indexOf("auto_number(") < 0)){
 			schema.autoform.defaultValue = field.default_value;
 		}
-
-		if(InstanceMacro.check(field.default_value)){
+		if(InstanceMacro.check(field.default_value) || _.isFunction(field.default_value)){
 			schema.autoform.defaultValue = InstanceMacro.run(field.default_value);
 		}
 
-		if(field.default_value && field.default_value.indexOf("auto_number(") > -1){
+		if(field.default_value && _.isString(field.default_value) && field.default_value.indexOf("auto_number(") > -1){
 
 			schema.autoform["data-new-number"] = true
 

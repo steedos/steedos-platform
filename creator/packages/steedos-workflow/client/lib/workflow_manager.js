@@ -124,6 +124,12 @@ WorkflowManager.getInstanceFormVersion = function() {
 								field['permission'] = 'editable';
 							}
 						});
+						field['sfields'].push({
+							code: "_id",
+							permission: "editable",
+							type: "hidden",
+							default_value: db.instances._makeNewID
+						})
 					} else {
 						console.error("子表：" + field.code + " 没有字段");
 					}
