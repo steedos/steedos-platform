@@ -69,7 +69,7 @@ Creator.getSwitchListUrl = (object_name, app_id, list_view_id) ->
 Creator.getRelatedObjectUrl = (object_name, app_id, record_id, related_object_name) ->
 	return Creator.getRelativeUrl("/app/" + app_id + "/" + object_name + "/" + record_id + "/" + related_object_name + "/grid")
 
-Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide)->
+Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide, is_related)->
 	_options = []
 	unless object_name
 		return _options
@@ -92,6 +92,14 @@ Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide)->
 				if r_object
 					_.forEach r_object.fields, (f2, k2)->
 						_options.push {label: "#{f.label || k}=>#{f2.label || k2}", value: "#{k}.#{k2}", icon: r_object?.icon}
+	if is_related
+		relatedObjects = Creator.getRelatedObjects(object_name)
+		_.each relatedObjects, (_relatedObject)=>
+			relatedOptions = Creator.getObjectLookupFieldOptions(_relatedObject.object_name, false, false, false)
+			relatedObject = Creator.getObject(_relatedObject.object_name)
+			_.each relatedOptions, (relatedOption)->
+				if _relatedObject.foreign_key != relatedOption.value
+					_options.push {label: "#{relatedObject.label || relatedObject.name}=>#{relatedOption.label}", value: "#{relatedObject.name}.#{relatedOption.value}", icon: relatedObject?.icon}
 	return _options
 
 # 统一为对象object_name提供可用于过虑器过虑字段
