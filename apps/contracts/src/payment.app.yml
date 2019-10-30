@@ -1,7 +1,7 @@
 _id: payment
 name: 付款
 description: 合同付款相关业务流程
-icon_slds: metrics
+icon_slds: logging
 is_creator: true
 objects: 
   - contracts
