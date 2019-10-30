@@ -464,11 +464,8 @@ InstanceRecordQueue.Configure = function (options) {
 									formFieldKey = valueKey;
 									relatedObjectFieldValue = getRelatedFieldValue(valueKey, values)
 								}
-								console.log('formFieldKey', valueKey, formFieldKey);
 								var formField = getFormField(formFields, formFieldKey);
 								var relatedObjectField = relatedObject.fields[fieldKey];
-								console.log('formField', formField);
-								console.log('relatedObjectField', relatedObjectField);
 								if(formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)){
 									if(!_.isEmpty(relatedObjectFieldValue)){
 										if(relatedObjectField.multiple && formField.is_multiselect){
@@ -510,8 +507,6 @@ InstanceRecordQueue.Configure = function (options) {
 			// 	}
 			// }
 		})
-		console.log('filterObj', JSON.stringify(filterObj));
-		console.log('relatedObjs', JSON.stringify(relatedObjs));
 		return {
 			mainObjectValue: filterObj,
 			relatedObjectsValue: relatedObjs
@@ -565,15 +560,8 @@ InstanceRecordQueue.Configure = function (options) {
 					Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, {validate: false, filter: false})
 				}
 			})
-			console.log('tableMap', tableMap);
 			//清理申请单上被删除子表记录对应的相关表记录
 			_.each(tableMap, function(tableIds, tableCode){
-				console.log(relatedObject.object_name + ' remove', JSON.stringify({
-					[relatedObject.foreign_key]: mainRecordId,
-					"instances._id": insId,
-					"_table._code": tableCode,
-					"_table._id": {$nin: tableIds}
-				}));
 				objectCollection.remove({
 					[relatedObject.foreign_key]: mainRecordId,
 					"instances._id": insId,
