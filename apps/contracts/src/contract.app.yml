@@ -98,7 +98,11 @@ dashboard:
     position: CENTER_BOTTOM_LEFT
     type: object
     objectName: tasks
-    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    # filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
+    filters: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+        return [['assignees', '=', '{userId}'], ['state', '<>', 'complete']];
+      }
     columns:
       - field: name
         label: 名称
@@ -114,7 +118,7 @@ dashboard:
     position: CENTER_BOTTOM_RIGHT
     type: object
     objectName: events
-    filters: [['state', '=', 'xxx']]
+    filters: [['created', '<=', '{now}']]
     columns:
       - field: name
         label: 名称
