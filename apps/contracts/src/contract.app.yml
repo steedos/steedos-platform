@@ -93,6 +93,7 @@ dashboard:
     showAllLink: true
     illustration:
       messageBody: "您没有待审核文件"
+    sort: "modified desc, name"
   tasks:
     label: 待办任务
     position: CENTER_BOTTOM_LEFT
@@ -110,9 +111,14 @@ dashboard:
       - field: priority
         label: 优先级
     unborderedRow: true
-    showAllLink: true
+    # showAllLink: true
     illustration:
       messageBody: "您今天没有待办任务"
+    sort: [["created", "desc"], ["name"]]
+    footer: !<tag:yaml.org,2002:js/function> |- 
+      function () {
+        return "aaa"
+      }
   calendar:
     label: 日历事件
     position: CENTER_BOTTOM_RIGHT
@@ -125,5 +131,7 @@ dashboard:
         href: true
     unborderedRow: true
     showAllLink: true
+    hrefTarget: _blank
+    noHeader: true
     illustration:
       messageBody: "您今天没有日程"
