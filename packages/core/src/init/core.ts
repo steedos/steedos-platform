@@ -25,6 +25,7 @@ export class Core {
     }
 
     static addStaticJs(){
+        WebAppInternals.setInlineScriptsAllowed(false);
         let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
             if (typeof val === 'function') {
                 return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
