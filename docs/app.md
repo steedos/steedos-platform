@@ -113,6 +113,18 @@ dashboard:
 
 在 widget 中只显示符合筛选条件的数据。
 
+### 列表数据排序规则 sort
+
+type为object时，设置widget列表排序规则，支持字符串和数组两种格式：
+
+```
+sort: "modified desc, name"
+```
+
+```
+sort: [["due_date", "desc"], ["state"]],
+```
+
 ### 列 columns
 
 设定显示的列，以及列的属性。
@@ -148,6 +160,31 @@ dashboard:
 ### 显示查看全部链接 showAllLink
 
 是否显示查看全部链接，设置为true，type为object时，会在底部显示查看全部链接，默认值false
+
+### 链接打开方式 hrefTarget
+
+链接打开方式，设置为"_blank"，type为object时，包括列表及底部显示的查看全部链接都会从新窗口中打开，默认值为空
+
+### 底部显示内容 footer
+
+底部显示内容，type为object时，通过把该属性设置为一个函数，可定制底部显示内容，该函数会覆盖showAllLink、hrefTarget属性
+
+
+```yml
+dashboard:
+  pending_tasks:
+    ...
+    ...
+    footer: !<tag:yaml.org,2002:js/function> |- 
+      function (options) {
+        let objectName = options.objectName;
+        return (
+          <a href={`/app/-/${objectName}`} target="_blank">
+            查看全部任务
+          </a>
+        )
+      }
+```
 
 ### 不显示表头 noHeader
 
