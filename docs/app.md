@@ -225,6 +225,10 @@ dashboard:
 
 type为apps时是否显示app对应的object列表，默认值false，`为true的功能暂时未实现`
 
+### 新窗口打开应用
+
+type为apps时，点击应用链接时是否新窗口中打开应用，通过把应用设置为新窗口中打开即可，即app.is_new_window为true的应用将从新窗口中打开
+
 ### 组件 component
 
 显示 react component内容，可选项，type为react时必填，是一个function，返回react node节点，比如：
