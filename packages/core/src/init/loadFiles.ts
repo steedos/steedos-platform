@@ -3,7 +3,6 @@ const _ = require("underscore");
 const globby = require("globby");
 const path = require("path");
 const fs = require("fs");
-const UglifyJS = require("uglify-js");
 const clone = require("clone");
 export class LoadFiles {
 
@@ -138,7 +137,7 @@ export class LoadFiles {
         let matchedPaths: [string] = globby.sync(filePatten);
         matchedPaths = _.sortBy(matchedPaths)
         _.each(matchedPaths, (matchedPath) => {
-            let minifyJs = UglifyJS.minify(this.getText(matchedPath, "utf8")).code
+            let minifyJs = this.getText(matchedPath, "utf8")
             WebAppInternals.addStaticJs(minifyJs)
         })
     }
