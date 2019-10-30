@@ -167,6 +167,7 @@ InstanceRecordQueue.Configure = function (options) {
 			obj = {},
 			tableFieldCodes = [],
 			tableFieldMap = [];
+			tableToRelatedMap = {};
 
 		field_map_back = field_map_back || [];
 
@@ -185,10 +186,74 @@ InstanceRecordQueue.Configure = function (options) {
 
 		var objectFields = objectInfo.fields;
 		var objectFieldKeys = _.keys(objectFields);
+		var relatedObjects = Creator.getRelatedObjects(objectInfo.name,spaceId);
+		var relatedObjectsKeys = _.pluck(relatedObjects, 'object_name');
+		var formTableFields = _.filter(formFields, function(formField){
+			return formField.type === 'table'
+		});
+		var formTableFieldsCode =  _.pluck(formTableFields, 'code');
+
+		var getRelatedObjectField = function(key){
+			return _.find(relatedObjectsKeys, function(relatedObjectsKey){
+				return key.startsWith(relatedObjectsKey + '.');
+			})
+		};
+
+		var getFormTableField = function (key) {
+			return _.find(formTableFieldsCode, function(formTableFieldCode){
+				return key.startsWith(formTableFieldCode + '.');
+			})
+		};
+
+		var getFormField = function(_formFields, _fieldCode){
+			var formField = null;
+			_.each(_formFields, function (ff) {
+				if (!formField) {
+					if (ff.code === _fieldCode) {
+						formField = ff;
+					} else if (ff.type === 'section') {
+						_.each(ff.fields, function (f) {
+							if (!formField) {
+								if (f.code === _fieldCode) {
+									formField = f;
+								}
+							}
+						})
+					}else if (ff.type === 'table') {
+						_.each(ff.fields, function (f) {
+							if (!formField) {
+								if (f.code === _fieldCode) {
+									formField = f;
+								}
+							}
+						})
+					}
+				}
+			});
+			return formField;
+		}
 
 		field_map_back.forEach(function (fm) {
+			//workflow 的子表到creator object 的相关对象
+			var relatedObjectField = getRelatedObjectField(fm.object_field);
+			var formTableField = getFormTableField(fm.workflow_field);
+			if (relatedObjectField){
+				var oTableCode = fm.object_field.split('.')[0];
+				var oTableFieldCode = fm.object_field.split('.')[1];
+				var tableToRelatedMapKey = oTableCode;
+				if(!tableToRelatedMap[tableToRelatedMapKey]){
+					tableToRelatedMap[tableToRelatedMapKey] = {}
+				}
+
+				if(formTableField){
+					var wTableCode = fm.workflow_field.split('.')[0];
+					tableToRelatedMap[tableToRelatedMapKey]['_FROM_TABLE_CODE'] = wTableCode
+				}
+
+				tableToRelatedMap[tableToRelatedMapKey][oTableFieldCode] = fm.workflow_field
+			}
 			// 判断是否是子表字段
-			if (fm.workflow_field.indexOf('.$.') > 0 && fm.object_field.indexOf('.$.') > 0) {
+			else if (fm.workflow_field.indexOf('.$.') > 0 && fm.object_field.indexOf('.$.') > 0) {
 				var wTableCode = fm.workflow_field.split('.$.')[0];
 				var oTableCode = fm.object_field.split('.$.')[0];
 				if (values.hasOwnProperty(wTableCode) && _.isArray(values[wTableCode])) {
@@ -199,7 +264,8 @@ InstanceRecordQueue.Configure = function (options) {
 					tableFieldMap.push(fm);
 				}
 
-			} else if (values.hasOwnProperty(fm.workflow_field)) {
+			}
+			else if (values.hasOwnProperty(fm.workflow_field)) {
 				var wField = null;
 
 				_.each(formFields, function (ff) {
@@ -227,7 +293,8 @@ InstanceRecordQueue.Configure = function (options) {
 					// 表单选人选组字段 至 对象 lookup master_detail类型字段同步
 					if (!wField.is_multiselect && ['user', 'group'].includes(wField.type) && !oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
 						obj[fm.object_field] = values[fm.workflow_field]['id'];
-					} else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
+					}
+					else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
 						var oCollection = Creator.getCollection(oField.reference_to, spaceId)
 						var referObject = Creator.getObject(oField.reference_to, spaceId)
 						if (oCollection && referObject) {
@@ -257,7 +324,8 @@ InstanceRecordQueue.Configure = function (options) {
 							}
 
 						}
-					} else {
+					}
+					else {
 						if (oField.type === "boolean") {
 							var tmp_field_value = values[fm.workflow_field];
 							if (['true', '是'].includes(tmp_field_value)) {
@@ -267,7 +335,19 @@ InstanceRecordQueue.Configure = function (options) {
 							} else {
 								obj[fm.object_field] = tmp_field_value;
 							}
-						} else {
+						}
+						else if(['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata'){
+							if(oField.multiple && wField.is_multiselect){
+								obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], '_id'))
+							}else if(!oField.multiple && !wField.is_multiselect){
+								if(!_.isEmpty(values[fm.workflow_field])){
+									obj[fm.object_field] = 	values[fm.workflow_field]._id
+								}
+							}else{
+								obj[fm.object_field] = values[fm.workflow_field];
+							}
+						}
+						else {
 							obj[fm.object_field] = values[fm.workflow_field];
 						}
 					}
@@ -290,9 +370,19 @@ InstanceRecordQueue.Configure = function (options) {
 							}
 						}
 					}
+					// else{
+					// 	var relatedObject = _.find(relatedObjects, function(_relatedObject){
+					// 		return _relatedObject.object_name === fm.object_field
+					// 	})
+					//
+					// 	if(relatedObject){
+					// 		obj[fm.object_field] = values[fm.workflow_field];
+					// 	}
+					// }
 				}
 
-			} else {
+			}
+			else {
 				if (fm.workflow_field.startsWith('instance.')) {
 					var insField = fm.workflow_field.split('instance.')[1];
 					if (self.syncInsFields.includes(insField)) {
@@ -343,23 +433,89 @@ InstanceRecordQueue.Configure = function (options) {
 					obj[c.object_table_field_code].push(newTr);
 				}
 			})
+		});
+		var relatedObjs = {};
+		var getRelatedFieldValue = function(valueKey, parent) {
+			return valueKey.split('.').reduce(function(o, x) {
+				return o[x];
+			}, parent);
+		};
+		_.each(tableToRelatedMap, function(map, key){
+			var tableCode = map._FROM_TABLE_CODE;
+			if(!tableCode){
+				console.warn('tableToRelated: [' + key + '] missing corresponding table.')
+			}else{
+				var relatedObjectName = key;
+				var relatedObjectValues = [];
+				var relatedObject = Creator.getObject(relatedObjectName, spaceId);
+				_.each(values[tableCode], function (tableValueItem) {
+					var relatedObjectValue = {};
+					_.each(map, function(valueKey, fieldKey){
+						if(fieldKey != '_FROM_TABLE_CODE'){
+							if(valueKey.startsWith('instance.')){
+								relatedObjectValue[fieldKey] = getRelatedFieldValue(valueKey, {'instance': ins});
+							}
+							else{
+								var relatedObjectFieldValue, formFieldKey;
+								if(valueKey.startsWith(tableCode + '.')){
+									formFieldKey = valueKey.split(".")[1];
+									relatedObjectFieldValue = getRelatedFieldValue(valueKey, {[tableCode]:tableValueItem});
+								}else{
+									formFieldKey = valueKey;
+									relatedObjectFieldValue = getRelatedFieldValue(valueKey, values)
+								}
+								console.log('formFieldKey', valueKey, formFieldKey);
+								var formField = getFormField(formFields, formFieldKey);
+								var relatedObjectField = relatedObject.fields[fieldKey];
+								console.log('formField', formField);
+								console.log('relatedObjectField', relatedObjectField);
+								if(formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)){
+									if(!_.isEmpty(relatedObjectFieldValue)){
+										if(relatedObjectField.multiple && formField.is_multiselect){
+											relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, '_id'))
+										}else if(!relatedObjectField.multiple && !formField.is_multiselect){
+											relatedObjectFieldValue = relatedObjectFieldValue._id
+										}
+									}
+								}
+								relatedObjectValue[fieldKey] = relatedObjectFieldValue;
+							}
+						}
+					});
+					relatedObjectValue['_table'] = {
+						_id: tableValueItem["_id"],
+						_code: tableCode
+					};
+					relatedObjectValues.push(relatedObjectValue);
+				});
+				relatedObjs[relatedObjectName] = relatedObjectValues;
+			}
 		})
-
-
 
 		if (field_map_back_script) {
 			_.extend(obj, self.evalFieldMapBackScript(field_map_back_script, ins));
 		}
-
 		// 过滤掉非法的key
 		var filterObj = {};
+
 		_.each(_.keys(obj), function (k) {
 			if (objectFieldKeys.includes(k)) {
 				filterObj[k] = obj[k];
 			}
+			// else if(relatedObjectsKeys.includes(k) && _.isArray(obj[k])){
+			// 	if(_.isArray(relatedObjs[k])){
+			// 		relatedObjs[k] = relatedObjs[k].concat(obj[k])
+			// 	}else{
+			// 		relatedObjs[k] = obj[k]
+			// 	}
+			// }
 		})
-
-		return filterObj;
+		console.log('filterObj', JSON.stringify(filterObj));
+		console.log('relatedObjs', JSON.stringify(relatedObjs));
+		return {
+			mainObjectValue: filterObj,
+			relatedObjectsValue: relatedObjs
+		};
 	}
 
 	self.evalFieldMapBackScript = function (field_map_back_script, ins) {
@@ -372,6 +528,64 @@ InstanceRecordQueue.Configure = function (options) {
 			console.error("evalFieldMapBackScript: 脚本返回值类型不是对象");
 		}
 		return {}
+	}
+
+	self.syncRelatedObjectsValue = function(mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins){
+		var insId = ins._id;
+
+		_.each(relatedObjects, function(relatedObject){
+			var objectCollection = Creator.getCollection(relatedObject.object_name, spaceId);
+			var tableMap = {};
+			_.each(relatedObjectsValue[relatedObject.object_name], function(relatedObjectValue){
+				var table_id = relatedObjectValue._table._id;
+				var table_code = relatedObjectValue._table._code;
+				if(!tableMap[table_code]){
+					tableMap[table_code] = []
+				};
+				tableMap[table_code].push(table_id);
+				var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({[relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table}, {fields: {_id:1}})
+				if(oldRelatedRecord){
+					Creator.getCollection(relatedObject.object_name, spaceId).update({_id: oldRelatedRecord._id}, {$set: relatedObjectValue})
+				}else{
+					relatedObjectValue[relatedObject.foreign_key] = mainRecordId;
+					relatedObjectValue.space = spaceId;
+					relatedObjectValue.owner = ins.applicant;
+					relatedObjectValue.created_by = ins.applicant;
+					relatedObjectValue.modified_by = ins.applicant;
+					relatedObjectValue._id = objectCollection._makeNewID();
+					var instance_state = ins.state;
+					if (ins.state === 'completed' && ins.final_decision) {
+						instance_state = ins.final_decision;
+					}
+					relatedObjectValue.instances = [{
+						_id: insId,
+						state: instance_state
+					}];
+					relatedObjectValue.instance_state = instance_state;
+					Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, {validate: false, filter: false})
+				}
+			})
+			console.log('tableMap', tableMap);
+			//清理申请单上被删除子表记录对应的相关表记录
+			_.each(tableMap, function(tableIds, tableCode){
+				console.log(relatedObject.object_name + ' remove', JSON.stringify({
+					[relatedObject.foreign_key]: mainRecordId,
+					"instances._id": insId,
+					"_table._code": tableCode,
+					"_table._id": {$nin: tableIds}
+				}));
+				objectCollection.remove({
+					[relatedObject.foreign_key]: mainRecordId,
+					"instances._id": insId,
+					"_table._code": tableCode,
+					"_table._id": {$nin: tableIds}
+				})
+			})
+		});
+
+		tableIds = _.compact(tableIds);
+
+
 	}
 
 	self.sendDoc = function (doc) {
@@ -400,7 +614,7 @@ InstanceRecordQueue.Configure = function (options) {
 			spaceId = ins.space;
 
 		if (records && !_.isEmpty(records)) {
-			// 此情况属于从creator中发起审批
+			// 此情况属于从creator中发起审批，或者已经从Apps同步到了creator
 			var objectName = records[0].o;
 			var ow = Creator.getCollection('object_workflows').findOne({
 				object_name: objectName,
@@ -415,9 +629,9 @@ InstanceRecordQueue.Configure = function (options) {
 					$in: records[0].ids
 				}
 			}).forEach(function (record) {
-				// 附件同步
 				try {
-					var setObj = self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
+					var syncValues = self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record)
+					var setObj = syncValues.mainObjectValue;
 					setObj.locked = false;
 
 					var instance_state = ins.state;
@@ -432,6 +646,12 @@ InstanceRecordQueue.Configure = function (options) {
 					}, {
 						$set: setObj
 					})
+
+					var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
+					var relatedObjectsValue = syncValues.relatedObjectsValue;
+					self.syncRelatedObjectsValue(record._id, relatedObjects, relatedObjectsValue, spaceId, ins);
+
+
 					// 以最终申请单附件为准，旧的record中附件删除
 					Creator.getCollection('cms_files').remove({
 						'parent': {
@@ -484,8 +704,8 @@ InstanceRecordQueue.Configure = function (options) {
 						objectName = ow.object_name;
 
 					var objectInfo = Creator.getObject(ow.object_name, spaceId);
-
-					var newObj = self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script);
+					var syncValues = self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script);
+					var newObj = syncValues.mainObjectValue;
 
 					newObj._id = newRecordId;
 					newObj.space = spaceId;
@@ -514,6 +734,9 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 							}
 						})
+						var relatedObjects = Creator.getRelatedObjects(ow.object_name,spaceId);
+						var relatedObjectsValue = syncValues.relatedObjectsValue;
+						self.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
 						// workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
 						var record = objectCollection.findOne(newRecordId);
 						self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
