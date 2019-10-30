@@ -10,7 +10,7 @@ let extendUserContext = (userContext, utcOffset) => {
         if (utcOffset) {
             // 注意这里取的值是moment().utcOffset() / 60得到的，不是new Date().getTimezoneOffset() / 60
             // 它们的值正好为正负关系，北京时间前者为 +8，后者为 -8
-            userContext.now.setHours(userContext.now.getHours() - utcOffset);
+            // userContext.now.setHours(userContext.now.getHours() - utcOffset);
         }
     }
     return userContext;
