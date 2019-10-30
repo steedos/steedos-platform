@@ -153,9 +153,33 @@ sort: [["due_date", "desc"], ["state"]],
 
 设定列的单击行为，可设置为一个函数，点击将执行该函数
 
-#### columns.renderCell
+#### columns.href
+
+设定列的是否显示为链接，默认为false
+
+#### columns.format
 
 设定列的渲染函数，该函数可变更列内容显示规则
+
+```yml
+dashboard:
+  pending_tasks:
+    ...
+    ...
+    footer: !<tag:yaml.org,2002:js/function> |- 
+      function (children, data, options) {
+        let objectName = options.objectName;
+        let url = `/app/-/${objectName}/view/${data.id}`;
+        if (window.__meteor_runtime_config__)
+          url = window.__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url;
+
+        return (
+          <a target="_blank" href={url} title={children}>
+            {children}
+          </a>
+        )
+      }
+```
 
 ### 显示查看全部链接 showAllLink
 
