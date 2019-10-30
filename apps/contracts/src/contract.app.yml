@@ -95,7 +95,7 @@ dashboard:
       messageBody: "您没有待审核文件"
   tasks:
     label: 待办任务
-    position: CENTER_TOP
+    position: CENTER_BOTTOM_LEFT
     type: object
     objectName: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
