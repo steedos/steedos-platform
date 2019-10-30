@@ -143,7 +143,7 @@ Creator.Objects.object_workflows = {
       depend_on: ["object_name"],
       defaultIcon: "service_contract",
       optionsFunction: function (values) {
-        return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
+        return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, false, true);
       }
     },
     "field_map_back.$.workflow_field": {
@@ -215,6 +215,15 @@ Creator.Objects.object_workflows = {
                         'value': ff.code
                       });
                     });
+                  }
+                }else if(f.type === 'table'){
+                  if(f.fields){
+					  return f.fields.forEach(function (ff) {
+						  return form_fields.push({
+							  'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
+							  'value': f.code + '.' + ff.code
+						  });
+					  });
                   }
                 } else {
                   return form_fields.push({
