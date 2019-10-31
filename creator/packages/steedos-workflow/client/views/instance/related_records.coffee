@@ -1,9 +1,4 @@
-Template.related_records.helpers
-	showRelatedRecords: ()->
-		ins = WorkflowManager.getInstance()
-		if !ins
-			return false
-		return !_.isEmpty(ins.record_ids)
+Template.related_records.helpers RelatedRecords.helpers
 
 Template.related_records.events
 	'click .ins-related-records': (event, template)->

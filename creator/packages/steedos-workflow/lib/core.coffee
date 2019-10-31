@@ -12,6 +12,8 @@ Workflow = {}
 
 @RelatedInstances = {}
 
+@RelatedRecords = {}
+
 @InstanceMacro = {context: {}}
 
 @TracesManager = {};
