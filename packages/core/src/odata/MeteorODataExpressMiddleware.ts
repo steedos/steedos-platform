@@ -87,12 +87,13 @@ const getObjectList = async function (req: Request, res: Response) {
                 }
                 entities = await collection.find(query, userSession);
             }
-            let scannedCount = await collection.count({ filters: filters, fields: ['_id'] }, userSession);
             if (entities) {
                 entities = await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
                 let body = {};
                 body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
-                body['@odata.count'] = scannedCount;
+                if (queryParams.$count != 'false') {
+                    body['@odata.count'] = await collection.count({ filters: filters, fields: ['_id'] }, userSession);
+                }
                 let entities_OdataProperties = getCreator().setOdataProperty(entities, spaceId, key);
                 body['value'] = entities_OdataProperties;
                 getODataManager().setHeaders(res);
@@ -192,7 +193,9 @@ const getObjectRecent = async function (req: Request, res: Response) {
                 await getODataManager().dealWithExpand(createQuery, sort_entities, key, urlParams.spaceId, userSession);
                 let body = {};
                 body['@odata.context'] = getCreator().getODataContextPath(spaceId, key);
-                body['@odata.count'] = recent_view_records_ids.length;
+                if (queryParams.$count != 'false') {
+                    body['@odata.count'] = recent_view_records_ids.length;
+                }
                 let entities_OdataProperties = getCreator().setOdataProperty(sort_entities, spaceId, key);
                 body['value'] = entities_OdataProperties;
                 getODataManager().setHeaders(res);
