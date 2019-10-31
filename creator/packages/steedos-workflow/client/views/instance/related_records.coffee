@@ -10,5 +10,5 @@ Template.related_records.events
 			uobj = {}
 			uobj["X-User-Id"] = Meteor.userId()
 			uobj["X-Auth-Token"] = Accounts._storedLoginToken()
-			redirectUrl = creatorService + "app/default/#{objcetName}/view/#{id}?" + $.param(uobj)
+			redirectUrl = creatorService + "app/-/#{objcetName}/view/#{id}?" + $.param(uobj)
 			Steedos.openWindow redirectUrl
