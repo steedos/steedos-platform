@@ -94,9 +94,10 @@ The web app exports a number of libraries and functions on the [window](https://
 | react-redux | window.ReactRedux | [React bindings for Redux](https://github.com/reactjs/react-redux) |
 | react-bootstrap | window.ReactBootstrap | [Bootstrap for React](https://react-bootstrap.github.io/) |
 | prop-types | window.PropTypes | [PropTypes](https://www.npmjs.com/package/prop-types) |
-| @steedos/react | window.SteedosReact | Steedos react components and utility functions (see below) |
+| @steedos/react | window.ReactSteedos | Steedos react components and utility functions |
+| @salesforce/design-system-react | window.ReactDesignSystem | Salesforce react components and utility functions |
 
-### SteedosReact
+### ReactSteedos
 
 Contains the following utility functions:
 
@@ -108,7 +109,7 @@ Contains the following utility functions:
 
 ```javascript
 const React = window.react;
-const SteedosReact = window['@steedos/react']; // import the post utilities
+const ReactSteedos = window['ReactSteedos']; // import the post utilities
 import PropTypes from 'prop-types';
 
 export default class DashboardComponent extends React.PureComponent {
@@ -119,7 +120,7 @@ export default class DashboardComponent extends React.PureComponent {
 
 
         return (
-            <SteedosReact.Dashboard/>
+            <ReactSteedos.Dashboard/>
         );
     }
 }
