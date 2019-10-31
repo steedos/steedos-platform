@@ -220,7 +220,17 @@ InstanceAttachmentTemplate.helpers = {
 
 	_t: function(key) {
 		return TAPi18n.__(key)
-	}
+	},
+
+	_: function(key) {
+		var locale;
+		if (Meteor.isClient) {
+			return TAPi18n.__(key);
+		} else {
+			locale = Template.instance().view.template.steedosData.locale;
+			return TAPi18n.__(key, {}, locale);
+		}
+	},
 
 }
 

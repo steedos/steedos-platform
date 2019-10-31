@@ -550,6 +550,30 @@ InstanceReadOnlyTemplate.getRelatedInstancesView = (user, space, instance, optio
 
 	return body;
 
+InstanceReadOnlyTemplate.getRelatedRecordsView = (user, space, instance, options)->
+	steedosData = _getTemplateData(user, space, instance)
+
+	steedosData.absolute = false;
+
+	if options?.absolute
+		steedosData.absolute = true;
+
+	relatedRecordsHtml = _getViewHtml('client/views/instance/related_records.html')
+
+	relatedRecordsCompiled = SpacebarsCompiler.compile(relatedRecordsHtml, {isBody: true});
+
+	relatedRecordsRenderFunction = eval(relatedRecordsCompiled);
+
+	Template.related_records_view = new Blaze.Template("related_records_view", relatedRecordsRenderFunction);
+
+	Template.related_records_view.steedosData = steedosData
+
+	Template.related_records_view.helpers RelatedRecords.helpers
+
+	body = Blaze.toHTMLWithData(Template.related_records_view, steedosData)
+
+	return body;
+
 InstanceReadOnlyTemplate.getOnLoadScript = (instance)->
 	form_version = WorkflowManager.getFormVersion(instance.form, instance.form_version)
 
@@ -568,6 +592,9 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 	body = InstanceReadOnlyTemplate.getInstanceView(user, space, instance, options);
 
 	onLoadScript = InstanceReadOnlyTemplate.getOnLoadScript(instance);
+
+	creatorService = Meteor.settings.public.webservices?.creator?.url
+	ins_record_ids = instance.record_ids
 
 	openFileScript = """
 			if(window.isNode && isNode()){
@@ -589,6 +616,33 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 			var flow = "#{instance.flow}";
 			var space = "#{instance.space}";
 
+			function getCookie(name){
+				let pattern = RegExp(name + "=.[^;]*")
+				let matched = document.cookie.match(pattern)
+				if(matched){
+					let cookie = matched[0].split('=')
+					return cookie[1]
+				}
+				return ''
+			}
+
+			var records = document.getElementsByClassName("ins-related-records");
+			for(var i = 0; i < records.length; i++){
+					var record = records[i];
+					record.addEventListener("click", function(e){
+						var creatorService = "#{creatorService}"
+						var ins_record_ids = #{JSON.stringify(ins_record_ids)}
+						if(creatorService && ins_record_ids && ins_record_ids.length > 0){
+							var objcetName = ins_record_ids[0].o
+							var id = ins_record_ids[0].ids[0]
+							var uobj = {};
+							uobj["X-User-Id"] = getCookie("X-User-Id");
+							uobj["X-Auth-Token"] = getCookie("X-Auth-Token");
+							redirectUrl = creatorService + "app/-/" + objcetName + "/view/" + id + "?" + $.param(uobj);
+							openWindow(redirectUrl);
+						}
+					});
+				}
 	""";
 
 
@@ -621,6 +675,8 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 		attachment = ""
 
 	related_instances = InstanceReadOnlyTemplate.getRelatedInstancesView(user, space, instance, options)
+
+	related_records = InstanceReadOnlyTemplate.getRelatedRecordsView(user, space, instance, options)
 
 	absoluteUrl = Meteor.absoluteUrl()
 
@@ -740,6 +796,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 											#{body}
 											#{attachment}
 											#{related_instances}
+											#{related_records}
 										</div>
 									</div>
 								</div>
