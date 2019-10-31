@@ -79,7 +79,7 @@ An instance of the plugin registry is passed to each plugin via the `initialize`
 /**
     * Register a component that show a dashboard
 */
-registerRootComponent('dashboard', component)
+registerObjectHomeComponent('dashboard', component)
 ```
 
 ## Exported Libraries and Functions
