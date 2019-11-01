@@ -99,6 +99,9 @@ insertRow = function (dataRow, objectName, field_mapping, space, external_id_nam
   errorInfo = "";
   // 对象的fields
   objFields = typeof Creator !== "undefined" && Creator !== null ? (ref = Creator.getObject(objectName)) != null ? ref.fields : void 0 : void 0;
+
+  objFields = Object.assign({_id: {name: "_id", type: "text"}}, objFields);
+
   dataRow.forEach(function (dataCell, i) {
     var error, field_mapping_name, noField;
     field_mapping_name = field_mapping[i];
