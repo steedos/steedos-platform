@@ -67,7 +67,10 @@ Template.steedosTableModal.events({
             SteedosTable.updateItem(field, item_index);
         }
         // 关闭Modal。使用Modal.hide() 不能关闭 Modal.allowMultiple = true 的底层Modal。此情况场景为：在字表中选择用户、部门
-		$("#instanceform").trigger('change', [this.field.code])
+		var self = this;
+        Meteor.defer(function(){
+			$("#instanceform").trigger('change', [self.field.code])
+		});
         $(".close", $("#steedos-table-modal")).click(); // Modal.hide();
 
     },
@@ -75,7 +78,10 @@ Template.steedosTableModal.events({
     'click .steedos-table-modal .steedos-table-delete-button': function(event,template) {
         SteedosTable.removeItem(this.field.code, this.index);
 		Session.set("instance_change", true);
-		$("#instanceform").trigger('change', [this.field.code]);
+		var self = this;
+		Meteor.defer(function(){
+			$("#instanceform").trigger('change', [self.field.code])
+        });
         $('[data-dismiss="modal"]').click();
     }
 
