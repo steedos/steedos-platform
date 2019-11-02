@@ -189,7 +189,7 @@ valOutformat = (val)->
 					$element[0].selectize.clearOptions()
 				cb(result)
 			error: (jqXHR, textStatus, errorThrown) ->
-				error = jqXHR.responseJSON.error
+				error = jqXHR.responseJSON?.error
 				if error?.reason
 					toastr?.error?(TAPi18n.__(error.reason))
 				else if error?.message
