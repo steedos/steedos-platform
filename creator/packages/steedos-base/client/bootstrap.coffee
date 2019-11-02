@@ -92,6 +92,8 @@ Setup.validate = (onSuccess)->
 			user: data
 		}
 		
+		Setup.bootstrap(Session.get("spaceId"))
+		
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->
@@ -129,8 +131,6 @@ Meteor.startup ->
 
 		if Meteor.userId() != Setup.lastUserId
 			Setup.validate();
-		else 
-			Setup.bootstrap(Session.get("spaceId"))
 
 		# Tracker.autorun (c)->
 		# 	# 登录后需要清除登录前订阅的space数据，以防止默认选中登录前浏览器url参数中的的工作区ID所指向的工作区
