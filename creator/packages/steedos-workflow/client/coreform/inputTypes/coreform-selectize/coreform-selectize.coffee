@@ -10,6 +10,37 @@ getSelected = (tag)->
 				return _.include(vals, item._id)
 			)
 
+getArgumentsList = (func) ->
+	if _.isFunction(func)
+		funcString = func.toString();
+	else
+		funcString = func
+	regExp =/function\s*\w*\(([\s\S]*?)\)/;
+	if regExp.test(funcString)
+		argList = RegExp.$1.split(',');
+		return argList.map((arg)->
+			return arg.replace(/\s/g,'');
+		);
+	else
+		return []
+
+isFunctionStr = (funStr)->
+	if !_.isString(funStr)
+		return false
+	if funStr.startsWith('function')
+		return true
+	else
+		return false
+
+getFilterStr = (filters, functionArgsName)->
+	instanceform = AutoForm.getFormValues("instanceform")
+	formValues = instanceform.insertDoc
+	functionArgs = _.map functionArgsName, (argName)->
+		return formValues[argName]
+	filterFun = null;
+	eval('filterFun=' + filters)
+	return filterFun.apply({}, functionArgs)
+
 AutoForm.addInputType "steedos-selectize", {
 	template: "afSteedosSelectize"
 	valueOut: ()->
@@ -67,6 +98,23 @@ Template.afSteedosSelectize.onRendered ()->
 
 	self = this
 
+	filterStr = '';
+
+	if isFunctionStr(filters)
+		functionArgsName = getArgumentsList(filters)
+		$("#instanceform").on 'change',(e, elementName)->
+			if e.target.nodeName == 'FORM'
+				changeFieldName = elementName
+			else
+				changeFieldName = e.target.name;
+			if changeFieldName && functionArgsName.includes(changeFieldName)
+				filterStr = getFilterStr(filters, functionArgsName)
+				if self.filterStr != filterStr
+					self.selectize[0].selectize.clearOptions();
+					self.selectize[0].selectize.load(selectizeLoad)
+					self.filterStr = filterStr
+	else
+		filterStr = filters
 
 	selectizeRender = {
 		option: (item, escape) ->
@@ -90,6 +138,22 @@ Template.afSteedosSelectize.onRendered ()->
 							</button>
 						</span>'
 
+	selectizeLoad = (query, callback) ->
+		if _.isFunction(query)
+			callback = query;
+			query = '';
+		if query.indexOf("'") > -1
+			console.debug('搜索已忽略：odata字段搜索字符串包含无效字符\'');
+			return
+		if this.lastQuery != query || this.lastFilters != filterStr || true
+			this.lastQuery = query;
+			this.lastFilters = filterStr
+			if self.st
+				clearTimeout(self.st)
+			self.st = setTimeout ()->
+				SelectizeManager.dataFunc(self.selectize, service, objectName, {code: code, formula: formula, query: query, search_field: search_field, filters: filterStr}, callback);
+			, 100
+
 	this.selectize = $("##{this.data.atts.id}").selectize {
 		valueField: '_id',
 		labelField: key,
@@ -104,14 +168,7 @@ Template.afSteedosSelectize.onRendered ()->
 			return  (item) ->
 				return score(item);
 		,
-		load: (query, callback) ->
-			if this.lastquery != query
-				this.lastquery = query;
-				if self.st
-					clearTimeout(self.st)
-				self.st = setTimeout ()->
-					SelectizeManager.dataFunc(self.selectize, service, objectName, {code: code, formula: formula, query: query, search_field: search_field, filters: filters}, callback);
-				, 100
+		load: selectizeLoad
 		,
 		onFocus: SelectizeManager.onFocus,
 		onBlur: SelectizeManager.onBlur,
@@ -132,10 +189,10 @@ Template.afSteedosSelectize.onRendered ()->
 		if _.isArray(value)
 			_.each value, (_val)->
 				self.selectize[0].selectize.addOption(_val)
-			self.selectize[0].selectize.setValue(_.pluck(value, '_id'))
+			self.selectize[0].selectize.setValue(_.pluck(value, '_id'), true)
 		else
 			self.selectize[0].selectize.addOption(value)
-			self.selectize[0].selectize.setValue(value._id)
+			self.selectize[0].selectize.setValue(value._id, true)
 
 	firstNode = this.view.firstNode()
 
