@@ -92,7 +92,6 @@ The web app exports a number of libraries and functions on the [window](https://
 | react-dom | window.ReactDOM | [ReactDOM](https://reactjs.org/docs/react-dom.html) |
 | redux | window.Redux | [Redux](https://redux.js.org/) |
 | react-redux | window.ReactRedux | [React bindings for Redux](https://github.com/reactjs/react-redux) |
-| react-bootstrap | window.ReactBootstrap | [Bootstrap for React](https://react-bootstrap.github.io/) |
 | prop-types | window.PropTypes | [PropTypes](https://www.npmjs.com/package/prop-types) |
 | @steedos/react | window.ReactSteedos | Steedos react components and utility functions |
 | @salesforce/design-system-react | window.ReactDesignSystem | Salesforce react components and utility functions |

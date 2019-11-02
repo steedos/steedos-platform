@@ -7,7 +7,9 @@
   "scripts": {
     "debug": "nodemon server.js",
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "yarn buildClient",
+    "buildClient": "cd webapp && yarn && yarn build && cd ..",
+    "prepare": "yarn build",
     "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos"
   },
   "repository": {
