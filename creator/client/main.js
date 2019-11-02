@@ -6,6 +6,8 @@ svg4everybody();
 import("./main.html");
 import Grid from '../imports/ui/grid.js';
 import Dashboard from '../imports/ui/dashboard.js';
+import { registerWindowLibraries } from '@steedos/react';
+registerWindowLibraries();
 
 Template.preloadAssets.helpers({
     absoluteUrl(url){
