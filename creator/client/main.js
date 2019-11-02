@@ -4,8 +4,11 @@ require("./theme.less");
 svg4everybody();
 
 import("./main.html");
-import Grid from '../imports/ui/grid.js';
-import Dashboard from '../imports/ui/dashboard.js';
+
+// 把组件导入才能在creator中正常使用
+import * as UI from '../imports/ui';
+
+// 全局变量导入
 import { registerWindowLibraries } from '@steedos/react';
 registerWindowLibraries();
 

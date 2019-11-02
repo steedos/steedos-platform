@@ -168,17 +168,20 @@ objectRoutes.route '/',
 		# 自动跳转到对象的第一个视图
 		(context, redirect) -> 
 			object_name = context.params.object_name
-			list_view = Creator.getObjectFirstListView(object_name)
-			list_view_id = list_view?._id
-			app_id = context.params.app_id
-			if object_name == "meeting"
-				url = "/app/" + app_id + "/" + object_name + "/calendar/"
-			else
-				url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
-			redirect(url)
+			objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
+			unless objectHomeComponent
+				list_view = Creator.getObjectFirstListView(object_name)
+				list_view_id = list_view?._id
+				app_id = context.params.app_id
+				if object_name == "meeting"
+					url = "/app/" + app_id + "/" + object_name + "/calendar/"
+				else
+					url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+				redirect(url)
 	 ],
 	action: (params, queryParams)->
-		return
+		BlazeLayout.render Creator.getLayout(),
+			main: "object_home"
 
 #objectRoutes.route '/list/switch',
 #	action: (params, queryParams)->
