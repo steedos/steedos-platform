@@ -91,8 +91,9 @@ Setup.validate = (onSuccess)->
 			userId: data.userId,
 			user: data
 		}
-		
-		Setup.bootstrap(Session.get("spaceId"))
+		if !Meteor.loggingIn()
+			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
+			Setup.bootstrap(Session.get("spaceId"))
 		
 		if onSuccess
 			onSuccess()
@@ -131,6 +132,8 @@ Meteor.startup ->
 
 		if Meteor.userId() != Setup.lastUserId
 			Setup.validate();
+		else 
+			Setup.bootstrap(Session.get("spaceId"))
 
 		# Tracker.autorun (c)->
 		# 	# 登录后需要清除登录前订阅的space数据，以防止默认选中登录前浏览器url参数中的的工作区ID所指向的工作区
