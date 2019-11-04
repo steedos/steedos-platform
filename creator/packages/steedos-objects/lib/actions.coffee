@@ -47,7 +47,7 @@ if Meteor.isClient
 				# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 				Session.set 'cmShowAgainDuplicated', true
 			else
-				Session.set 'cmDoc', FormManager.getInitialvalues(object_name)
+				Session.set 'cmDoc', FormManager.getInitialValues(object_name)
 			Meteor.defer ()->
 				$(".creator-add").click()
 			return 

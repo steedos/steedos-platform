@@ -3,7 +3,7 @@
 #注册验证错误类型：formValidate
 SimpleSchema.messages({formValidate: "[value]"})
 
-FormManager.getRelatedinitialvalues = (main_object_name, main_record_id, related_object_name)=>
+FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related_object_name)=>
 
 	if !_.isString(main_record_id)
 		throw new Meteor.Error('main_record_id must be String');
@@ -23,7 +23,7 @@ FormManager.getRelatedinitialvalues = (main_object_name, main_record_id, related
 #		if main_record[field.name]
 #			defaultValue[field.name] = main_record[field.name]
 
-	defaultValue = FormManager.getInitialvalues(related_object_name)
+	defaultValue = FormManager.getInitialValues(related_object_name)
 
 	if relatedKey
 		if main_object_name == "objects"
@@ -34,7 +34,7 @@ FormManager.getRelatedinitialvalues = (main_object_name, main_record_id, related
 	return defaultValue;
 
 
-FormManager.getInitialvalues = (object_name)->
+FormManager.getInitialValues = (object_name)->
 	object = Creator.getObject(object_name);
 	objectFormInitialValuesFun = object?.form?.initialValues
 	if _.isFunction(objectFormInitialValuesFun)

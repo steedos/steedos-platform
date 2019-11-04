@@ -558,7 +558,7 @@ Template.creator_view.events
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
 		else
-			defaultDoc = FormManager.getRelatedinitialvalues(current_object_name, Session.get("record_id"), object_name);
+			defaultDoc = FormManager.getRelatedInitialValues(current_object_name, Session.get("record_id"), object_name);
 			if !_.isEmpty(defaultDoc)
 				Session.set 'cmDoc', defaultDoc
 
