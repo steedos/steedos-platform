@@ -542,11 +542,11 @@ Template.creator_view.events
 		collection = "Creator.Collections.#{Creator.getObject(object_name)._collection_name}"
 		current_object_name = Session.get("object_name")
 
-		relatedKey = ""
-		relatedValue = Session.get("record_id")
-		Creator.getRelatedList(current_object_name, relatedValue).forEach (related_obj) ->
-			if object_name == related_obj.object_name
-				relatedKey = related_obj.related_field_name
+#		relatedKey = ""
+#		relatedValue = Session.get("record_id")
+#		Creator.getRelatedList(current_object_name, relatedValue).forEach (related_obj) ->
+#			if object_name == related_obj.object_name
+#				relatedKey = related_obj.related_field_name
 		
 		ids = Creator.TabularSelectedIds[object_name]
 		if ids?.length
@@ -557,11 +557,16 @@ Template.creator_view.events
 			Session.set 'cmDoc', doc
 			# “保存并新建”操作中自动打开的新窗口中需要再次复制最新的doc内容到新窗口中
 			Session.set 'cmShowAgainDuplicated', true
-		else if current_object_name == "objects"
-			recordObjectName = Creator.getObjectRecord().name
-			Session.set 'cmDoc', {"#{relatedKey}": recordObjectName}
-		else if relatedKey
-			Session.set 'cmDoc', {"#{relatedKey}": {o: current_object_name, ids: [relatedValue]}}
+		else
+			defaultDoc = FormManager.getRelatedinitialvalues(current_object_name, Session.get("record_id"), object_name);
+			if !_.isEmpty(defaultDoc)
+				Session.set 'cmDoc', defaultDoc
+
+#		else if current_object_name == "objects"
+#			recordObjectName = Creator.getObjectRecord().name
+#			Session.set 'cmDoc', {"#{relatedKey}": recordObjectName}
+#		else if relatedKey
+#			Session.set 'cmDoc', {"#{relatedKey}": {o: current_object_name, ids: [relatedValue]}}
 
 		Session.set("action_fields", undefined)
 		Session.set("action_collection", collection)

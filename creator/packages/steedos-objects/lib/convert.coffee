@@ -256,6 +256,21 @@
 								filter.value = Creator.eval("(#{filter._value})")
 							else if filter._is_date == true
 								filter.value = new Date(filter.value)
+
+		if Meteor.isServer
+			if object.form && !_.isString(object.form)
+				object.form = JSON.stringify object.form, (key, val)->
+					if _.isFunction(val)
+						return val + '';
+					else
+						return val;
+		else if Meteor.isClient
+			if object.form
+				object.form = JSON.parse object.form, (key, val)->
+					if _.isString(val) && val.startsWith('function')
+						return eval("(function(){return "+val+" })()");
+					else
+						return val;
 		return object
 
 

@@ -246,6 +246,15 @@ Template.CreatorAutoformModals.events
 		event.stopPropagation()
 		$(event.currentTarget).closest('.group-section').toggleClass('slds-is-open')
 
+	'change form': (event, template)->
+		collection = Session.get 'cmCollection'
+		object_name = getObjectName(collection)
+		validate = FormManager.validate(object_name);
+		console.log('validate', validate);
+		if(!validate)
+			event.preventDefault()
+			event.stopPropagation()
+
 
 helpers =
 	cmCollection: () ->
@@ -589,6 +598,15 @@ Template.CreatorAfModal.events
 
 					self = this
 					urls = []
+
+
+					validate = FormManager.validate(object_name, t.data.formId);
+					if !validate
+						return false;
+
+					onSubmit = FormManager.onSubmit(object_name, t.data.formId);
+					if !onSubmit
+						return false;
 
 					cmCollection = Session.get 'cmCollection'
 					if cmCollection
