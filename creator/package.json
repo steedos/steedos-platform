@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "env-cmd -f ./.env.local meteor run --settings settings.json --port 3100",
-    "build": "rm -rf .dist/bundle && meteor build --directory .dist --server-only && node .scripts/build-after.js",
+    "build": "env-cmd -f ./.env.local rm -rf .dist/bundle && meteor build --directory .dist --server-only && node .scripts/build-after.js",
     "testbuild": "cp -rf .dist/* ../steedos-contracts-app/node_modules/steedos-server/",
     "login": "npm login --registry https://registry.npmjs.org",
     "pub": "cd .dist && npm publish --registry https://registry.npmjs.org",
@@ -94,7 +94,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@steedos/react": "0.1.2",
+    "@steedos/react": "0.1.3",
     "@salesforce-ux/design-system": "^2.7.4",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
