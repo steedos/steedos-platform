@@ -3,6 +3,6 @@ label: 首页
 icon: account
 fields:
   name:
-    label: name
-    name: end
+    label: 标题
+    name: name
     type: text
