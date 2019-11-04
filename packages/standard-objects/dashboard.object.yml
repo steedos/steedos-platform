@@ -1,0 +1,8 @@
+name: dashboard
+label: 首页
+icon: account
+fields:
+  name:
+    label: name
+    name: end
+    type: text
