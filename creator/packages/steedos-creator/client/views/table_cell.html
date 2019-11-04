@@ -38,7 +38,7 @@
 		</div>
 		{{#if showEditIcon}}
 			<span class="triggerContainer">
-				<button type="button" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="Edit">
+				<button type="button" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
 				{{#if editable}}
 					{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
 				{{else}}
