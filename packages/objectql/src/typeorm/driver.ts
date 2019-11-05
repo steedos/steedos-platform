@@ -324,6 +324,18 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         await repository.delete(id);
     }
 
+    async directInsert(tableName: string, data: Dictionary<any>) {
+        return this.insert(tableName, data)
+    }
+
+    async directUpdate(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
+       return this.update(tableName, id, data)
+    }
+
+    async directDelete(tableName: string, id: SteedosIDType) {
+       return this.delete(tableName, id)
+    }
+
     async getDatabaseVersion() {
         // 各个driver层可以通过重写该函数来设置databaseVersion值
         return "";

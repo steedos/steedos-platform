@@ -520,6 +520,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('delete', this.table_name, clonedId, userSession)
     }
 
+    async directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        return await this.callAdapter('directInsert', this.table_name, doc, userSession)
+    }
+
+    async directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        await this.processUneditableFields(userSession, doc)
+        let clonedId = id;
+        return await this.callAdapter('directUpdate', this.table_name, clonedId, doc, userSession)
+    }
+
+    async directDelete(id: SteedosIDType, userSession?: SteedosUserSession) {
+        let clonedId = id;
+        return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
+    }
+
+    private isDirectCRUD(methodName: string){
+        return methodName.startsWith("direct");
+    }
+
+
     async count(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
         return await this.callAdapter('count', this.table_name, clonedQuery, userSession)
@@ -644,18 +664,24 @@ export class SteedosObjectType extends SteedosObjectProperties {
             await this.dealWithMethodPermission(method, args);
         }
 
-        let beforeTriggerContext = await this.getTriggerContext('before', method, args)
-        await this.runBeforeTriggers(method, beforeTriggerContext)
-
-        let afterTriggerContext = await this.getTriggerContext('after', method, args)
-
+        let returnValue;
         let userSession = args[args.length - 1]
         args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
-        let returnValue = await adapterMethod.apply(this._datasource, args);
-        if (method === 'insert' || method === 'update') {
-            afterTriggerContext.newDoc = returnValue
+        
+        if(this.isDirectCRUD(method)){
+            returnValue = await adapterMethod.apply(this._datasource, args);
+        }else{
+            let beforeTriggerContext = await this.getTriggerContext('before', method, args)
+            await this.runBeforeTriggers(method, beforeTriggerContext)
+
+            let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            
+            returnValue = await adapterMethod.apply(this._datasource, args);
+            if (method === 'insert' || method === 'update') {
+                afterTriggerContext.newDoc = returnValue
+            }
+            await this.runAfterTriggers(method, afterTriggerContext)
         }
-        await this.runAfterTriggers(method, afterTriggerContext)
 
         return returnValue
     };

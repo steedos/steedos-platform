@@ -235,4 +235,16 @@ export class SteedosMongoDriver implements SteedosDriver {
         await collection.deleteOne(selector);
     }
 
+    async directInsert(tableName: string, data: Dictionary<any>) {
+        return this.insert(tableName, data)
+    }
+
+    async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
+       return this.update(tableName, id, data)
+    }
+
+    async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions) {
+       return this.delete(tableName, id)
+    }
+
 }

@@ -423,6 +423,19 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.count(tableName, query, userId)
     }
 
+    async directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.directInsert(tableName, doc, userId)
+    }
+
+    async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.directUpdate(tableName, id, doc, userId)
+    }
+
+    async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType) {
+        return await this._adapter.directDelete(tableName, id, userId)
+    }
+
+
     public get schema(): SteedosSchema {
         return this._schema;
     }
