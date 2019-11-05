@@ -665,17 +665,18 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         let returnValue;
-        let userSession = args[args.length - 1]
-        args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
+        
         
         if(this.isDirectCRUD(method)){
+            let userSession = args[args.length - 1]
+            args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         }else{
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
-
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
-            
+            let userSession = args[args.length - 1]
+            args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
             if (method === 'insert' || method === 'update') {
                 afterTriggerContext.newDoc = returnValue
