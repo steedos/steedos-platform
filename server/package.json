@@ -90,7 +90,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@steedos/steedos-plugin-workflow": "^1.7.0"
+    "@steedos/steedos-plugin-workflow": "^1.9.0"
   },
   "resolutions": {
     "**/lodash": "^4.17.12",
