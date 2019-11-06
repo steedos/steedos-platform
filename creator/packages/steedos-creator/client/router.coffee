@@ -25,6 +25,12 @@ set_sessions = (context, redirect)->
 		Session.set("app_id", app_id)
 	Session.set("object_name", context.params.object_name)
 	Session.set("record_id", context.params.record_id)
+	object_name = context.params.object_name
+	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", context.params.object_name)
+	if objectHomeComponent
+		Session.set("object_home_component", objectHomeComponent.toString());
+	else
+		Session.set("object_home_component", null)
 
 checkAppPermission = (context, redirect)->
 	app_id = context.params.app_id
@@ -168,8 +174,7 @@ objectRoutes.route '/',
 		# 自动跳转到对象的第一个视图
 		(context, redirect) -> 
 			object_name = context.params.object_name
-			objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
-			unless objectHomeComponent
+			unless Session.get("object_home_component")
 				list_view = Creator.getObjectFirstListView(object_name)
 				list_view_id = list_view?._id
 				app_id = context.params.app_id

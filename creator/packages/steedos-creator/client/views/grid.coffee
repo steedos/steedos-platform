@@ -353,6 +353,9 @@ _depandOnFields = (object_name, columns)->
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
+		if Session.get("object_home_component")
+			# 如果从grid界面切换到plugin自定义的object component则不需要执行下面的代码
+			return
 		# Template.currentData() 这个代码不能删除，用于更新self.data中的数据
 		templateData = Template.currentData()
 		is_related = self.data.is_related
