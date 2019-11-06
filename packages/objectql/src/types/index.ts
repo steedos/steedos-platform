@@ -27,6 +27,6 @@ export function getObject(objectName: string, schema?: SteedosSchema){
     return (schema ? schema : getSteedosSchema()).getObject(objectName);
 }
 
-export function getDatasource(datasourceName: string, schema?: SteedosSchema) {
+export function getDataSource(datasourceName: string, schema?: SteedosSchema) {
     return (schema ? schema : getSteedosSchema()).getDataSource(datasourceName);
 }

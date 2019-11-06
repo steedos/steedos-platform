@@ -1,4 +1,4 @@
-import { addObjects, addMethod, getObject, getDatasource, SteedosSchema } from '../../src/';
+import { addObjects, addMethod, getObject, getDataSource, SteedosSchema } from '../../src/';
 
 import { objectDynamicLoad, addTrigger } from '../../src/types/object_dynamic_load';
 import { expect } from 'chai';
@@ -52,7 +52,7 @@ describe('new SteedosSchema', async () => {
         })
 
         console.log('getObject...', getObject('post', schema));
-        console.log('getDatasource...', getDatasource('default', schema));
+        console.log('getDataSource...', getDataSource('default', schema));
 
         console.log('getObject test', objectDynamicLoad.getObjects('test'));
 
