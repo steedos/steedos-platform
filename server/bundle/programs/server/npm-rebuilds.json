@@ -1,4 +1,5 @@
 [
   "npm/node_modules/meteor/raix_push",
+  "npm/node_modules/meteor/matb33_collection-hooks",
   "npm"
 ]
