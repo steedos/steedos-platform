@@ -149,7 +149,7 @@ TemplateManager._template =
 			</div>
 			{{#each steedos_form.fields}}
 				{{#if isOpinionField this}}
-					<div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+					<div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}} field-{{this.code}}">
 						<div class="form-group automatic opinion-field-{{this.code}}">
 							<label class="control-label">{{afFieldLabelText name=this.code}}</label>
 
@@ -158,11 +158,11 @@ TemplateManager._template =
 					</div>
 				{{else}}
 					{{#if includes this.type 'section,table'}}
-						<div class="col-md-12">
+						<div class="col-md-12 field-{{this.code}}">
 							{{> afFormGroup name=this.code label=false}}
 						</div>
 					{{else}}
-						<div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+						<div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}} field-{{this.code}}">
 						{{> afFormGroup name=this.code}}
 						</div>
 					{{/if}}
