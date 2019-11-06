@@ -142,7 +142,7 @@ export class SteedosDataSourceType implements Dictionary {
             config = { fields: {} }
             let baseObject = this.getObject('base');
             let coreObject = this.getObject('core');
-            if (this.driver === SteedosDatabaseDriverType.MeteorMongo && baseObject) {
+            if ((this.driver === SteedosDatabaseDriverType.MeteorMongo || this.driver === SteedosDatabaseDriverType.Mongo) && baseObject) {
                 let { triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(baseObject.toConfig())
                 config = util.extend(config, { triggers: baseTriggers }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
             } else if (this.driver != SteedosDatabaseDriverType.MeteorMongo && coreObject) {
@@ -215,7 +215,7 @@ export class SteedosDataSourceType implements Dictionary {
 
     initBaseObject(){
         let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
-        if (this.config.driver === SteedosDatabaseDriverType.MeteorMongo) {
+        if (this.config.driver === SteedosDatabaseDriverType.MeteorMongo || this.config.driver === SteedosDatabaseDriverType.Mongo) {
             if (standardObjectsDir) {
                 let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
                 this.setObject(baseObject.name, baseObject)
