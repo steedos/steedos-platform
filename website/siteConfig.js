@@ -45,10 +45,10 @@ const siteConfig = {
     //{doc: 'record_list', label: '用户手册'},
     //{doc: 'api', label: 'API'},
     //{blog: true, label: '动态'},
-    {
-      href: 'https://github.com/steedos/',
-      label: '开源',
-    },
+    // {
+    //   href: 'https://github.com/steedos/',
+    //   label: '开源',
+    // },
   ],
 
   // If you have users set above, you add it here:
