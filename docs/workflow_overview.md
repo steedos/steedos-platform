@@ -2,7 +2,7 @@
 title: 业务审批
 ---
 
-Steedos 可以与开源流程审批软件 [审批王](https://github.com/steedos/workflow) 无缝集成，无需编写任何代码，即可实现将业务数据提交审批，并在审批完成后自动更新台账数据。
+Steedos 内置开源流程审批软件 [审批王](https://github.com/steedos/workflow) ，无需编写任何代码，即可实现将业务数据提交审批，并在审批完成后自动更新台账数据。
 
 ## 关于审批王
 
