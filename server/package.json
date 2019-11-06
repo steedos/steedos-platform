@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -20,13 +20,13 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@salesforce-ux/design-system": "^2.7.4",
-    "@steedos/auth": "^1.9.0",
-    "@steedos/core": "^1.9.0",
-    "@steedos/filters": "^1.9.0",
-    "@steedos/meteor-bundle-dependencies": "^1.9.0",
-    "@steedos/meteor-bundle-runner": "^1.9.0",
-    "@steedos/objectql": "^1.9.0",
-    "@steedos/standard-objects": "^1.9.0",
+    "@steedos/auth": "^1.9.1",
+    "@steedos/core": "^1.9.1",
+    "@steedos/filters": "^1.9.1",
+    "@steedos/meteor-bundle-dependencies": "^1.9.1",
+    "@steedos/meteor-bundle-runner": "^1.9.1",
+    "@steedos/objectql": "^1.9.1",
+    "@steedos/standard-objects": "^1.9.1",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "^2.533.0",
     "basic-auth": "^2.0.1",
