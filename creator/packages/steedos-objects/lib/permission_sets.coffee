@@ -13,6 +13,26 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 	if !object_name and Meteor.isClient
 		object_name = Session.get("object_name")
 
+	if !spaceId and Meteor.isClient
+		spaceId = Session.get("spaceId")
+	
+	if record and object_name == "cms_files" and Meteor.isClient
+		# 如果是cms_files附件，则权限取其父记录权限
+		if object_name == Session.get('object_name')
+			# 当前处于cms_files附件详细界面
+			object_name = record.parent['reference_to._o'];
+			record_id = record.parent._id;
+		else 
+			# 当前处于cms_files附件的父记录界面
+			object_name = Session.get('object_name');
+			record_id = Session.get("record_id");
+		object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
+		select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
+		if select.length > 0
+			record = Creator.getObjectRecord(object_name, record_id, select.join(','));
+		else
+			record = null;
+
 	permissions = _.clone(Creator.getPermissions(object_name))
 
 	if record
