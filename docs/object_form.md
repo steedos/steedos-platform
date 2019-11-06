@@ -1,5 +1,5 @@
 ---
-title: 对象表单
+title: 表单事件
 ---
 
 ## 表单触发器
@@ -10,7 +10,7 @@ title: 对象表单
 
 initialValues 可以定义为同步函数或是异步函数。
 
-```
+```yml
 form:
   initialValues: function () {
       return {
@@ -26,7 +26,7 @@ form:
 
 onSubmit 可以定义为同步函数或是异步函数。
 
-```
+```yml
 form:
   onSubmit: function (formValues) {
       return {
@@ -42,7 +42,7 @@ form:
 
 validate 可以定义为同步函数或是异步函数。
 
-```
+```yml
 form:
   validate: function (formValues) {
       return {
