@@ -425,6 +425,9 @@
                 "defaultIcon": {
                     "type": "string"
                 },
+                "showIcon": {
+                    "type": "boolean"
+                },
                 "primary": {
                     "type": "boolean",
                     "description": "主键"
