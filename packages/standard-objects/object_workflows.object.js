@@ -200,39 +200,57 @@ Creator.Objects.object_workflows = {
         form_fields = [];
         if (values != null ? values.flow_id : void 0) {
           flowId = _.isObject(values.flow_id) ? values.flow_id._id : values.flow_id;
-          res_flow = Creator.odata.get("flows", flowId, "form");
-          if (res_flow != null ? res_flow.form : void 0) {
-            form_id = res_flow != null ? res_flow.form : void 0;
-            res_form = Creator.odata.get("forms", form_id, "current");
-            if (res_form != null ? res_form.current : void 0) {
-              fields = (res_form != null ? res_form.current.fields : void 0) || [];
-              fields.forEach(function (f) {
-                if (f.type === 'section') {
-                  if (f.fields) {
-                    return f.fields.forEach(function (ff) {
-                      return form_fields.push({
-                        'label': ff.name || ff.code,
-                        'value': ff.code
-                      });
+
+          if (!window.ObjectWorkflowsDataCache) {
+            window.ObjectWorkflowsDataCache = {};
+          }
+
+          if (!window.ObjectWorkflowsDataCache.flowsMap) {
+            window.ObjectWorkflowsDataCache.flowsMap = {};
+          }
+
+          var flowCache = window.ObjectWorkflowsDataCache.flowsMap[flowId];
+
+          if (!flowCache || flowCache._EXPIREDATE < (new Date()).getTime()) {
+            var flow = Creator.odata.get("flows", flowId, "form");
+            if (flow && flow.form) {
+              var form = Creator.odata.get("forms", flow.form, "current");
+              if (form && form.current) {
+                window.ObjectWorkflowsDataCache.flowsMap[flowId] = Object.assign({ _EXPIREDATE: (new Date().getTime()) + 60 * 1000 }, form);
+              }
+            }
+          }
+
+          var res_form = window.ObjectWorkflowsDataCache.flowsMap[flowId];
+
+          if (res_form != null ? res_form.current : void 0) {
+            fields = (res_form != null ? res_form.current.fields : void 0) || [];
+            fields.forEach(function (f) {
+              if (f.type === 'section') {
+                if (f.fields) {
+                  return f.fields.forEach(function (ff) {
+                    return form_fields.push({
+                      'label': ff.name || ff.code,
+                      'value': ff.code
                     });
-                  }
-                }else if(f.type === 'table'){
-                  if(f.fields){
-					  return f.fields.forEach(function (ff) {
-						  return form_fields.push({
-							  'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
-							  'value': f.code + '.' + ff.code
-						  });
-					  });
-                  }
-                } else {
-                  return form_fields.push({
-                    'label': f.name || f.code,
-                    'value': f.code
                   });
                 }
-              });
-            }
+              } else if (f.type === 'table') {
+                if (f.fields) {
+                  return f.fields.forEach(function (ff) {
+                    return form_fields.push({
+                      'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
+                      'value': f.code + '.' + ff.code
+                    });
+                  });
+                }
+              } else {
+                return form_fields.push({
+                  'label': f.name || f.code,
+                  'value': f.code
+                });
+              }
+            });
           }
         }
         options = _.union(instance_fields, form_fields);
