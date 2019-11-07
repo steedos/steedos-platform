@@ -20,7 +20,6 @@ export class Plugins {
             _.each(plugins, (pluginName) => {
                 try {
                     const pluginDir = this.getPluginDir(pluginName)
-                    console.log(pluginDir)
                     const plugin = require(pluginDir);
                     this.loadFiles(pluginName);
                     if(_.isFunction(plugin.init)){

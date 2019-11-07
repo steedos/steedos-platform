@@ -33,7 +33,6 @@ export const initCreator = () => {
 
     let allObjects = objectql.getObjectConfigs('default');
     _.each(allObjects, function (obj) {
-        console.log(obj)
         Creator.Objects[obj.name] = obj;
         Creator.loadObjects(obj, obj.name);
     });
@@ -113,9 +112,9 @@ export class Core {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
         
-        let routers = objectql.objectDynamicLoad.getRouters()
+        let routers = objectql.getRouterConfigs()
         _.each(routers, (item)=>{
-            app.use(item.routerPath, item.router)
+            app.use(item.prefix, item.router)
         })
 
         WebApp.connectHandlers.use(app);

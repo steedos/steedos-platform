@@ -63,9 +63,10 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         config = clone(objectConfig);
     }
     else if (objectConfig.extend){
-        let parentObjectConfig = getObjectConfig(objectConfig.extend);
+        object_name = objectConfig.extend
+        let parentObjectConfig = getObjectConfig(object_name);
         if(_.isEmpty(parentObjectConfig)){
-            throw new Error(`Extended failed, object not exist: ${objectConfig.extend}`);
+            throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
@@ -120,6 +121,9 @@ export const loadStandardObjects = () => {
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
     addObjectConfig(baseObject, SYSTEM_DATASOURCE);
+    let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
+    baseObjectJs.extend = MONGO_BASE_OBJECT;
+    addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE);
     let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
     baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
     addObjectListenerConfig(baseObjectTrigger)
@@ -176,11 +180,11 @@ export const getReportConfig = (name: string):SteedosAppTypeConfig => {
     return _.find(_reportConfigs, {name: name})
 }
 
-export const addRouterConfig = (config: SteedosReportTypeConfig, datasource: string) => {
-    if (!config.name) 
-        throw new Error(`Error add app, name required`);
-    _.remove(_routerConfigs, {name: config.name});
-    _routerConfigs.push(config)
+export const addRouterConfig = (prefix: string, router: any) => {
+    if (!prefix) 
+        throw new Error(`Error add router, prefix required`);
+    _.remove(_routerConfigs, {prefix: prefix});
+    _routerConfigs.push({prefix: prefix, router: router})
 }
 
 export const getRouterConfigs = () => {
