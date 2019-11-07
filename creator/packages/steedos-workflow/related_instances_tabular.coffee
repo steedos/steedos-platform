@@ -22,7 +22,19 @@ Meteor.startup ()->
 				orderable: false,
 				width: '45%',
 				render: (val, type, doc) ->
-					return "<div data-id='#{doc._id}'>" + doc.name + "</div>"
+					href = '';
+					if Meteor.isClient && (Steedos.isMobile() || Steedos.isCordova())
+						href = ''
+
+					absolute = false
+
+					if Meteor.isServer
+						absolute = this.absolute
+					if absolute
+						href = Meteor.absoluteUrl("workflow/space/"+doc.space+"/view/readonly/" + doc._id + '?hide_traces=0')
+					else
+						href = Steedos.absoluteUrl("workflow/space/"+doc.space+"/view/readonly/" + doc._id + '?hide_traces=0')
+					return "<a data-id='#{doc._id}' target='_blank' href='"+href+"'>" + doc.name + "</a>"
 			},
 			{
 				data: "applicant_name",
