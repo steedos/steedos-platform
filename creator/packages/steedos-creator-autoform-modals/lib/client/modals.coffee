@@ -249,8 +249,7 @@ Template.CreatorAutoformModals.events
 	'change form': (event, template)->
 		collection = Session.get 'cmCollection'
 		object_name = getObjectName(collection)
-		validate = FormManager.validate(object_name);
-		console.log('validate', validate);
+		validate = FormManager.validate(object_name, Session.get('cmFormId') or defaultFormId);
 		if(!validate)
 			event.preventDefault()
 			event.stopPropagation()

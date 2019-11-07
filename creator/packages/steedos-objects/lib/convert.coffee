@@ -268,7 +268,7 @@
 			if object.form
 				object.form = JSON.parse object.form, (key, val)->
 					if _.isString(val) && val.startsWith('function')
-						return eval("(function(){return "+val+" })()");
+						return Creator.eval("(#{val})")
 					else
 						return val;
 		return object
