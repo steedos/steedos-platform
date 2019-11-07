@@ -101,7 +101,8 @@ Template.afSteedosSelectize.onRendered ()->
 	filterStr = '';
 
 	if isFunctionStr(filters)
-		functionArgsName = getArgumentsList(filters)
+		functionArgsName = getArgumentsList(filters);
+		filterStr = getFilterStr(filters, functionArgsName);
 		$("#instanceform").on 'change',(e, elementName)->
 			if e.target.nodeName == 'FORM'
 				changeFieldName = elementName
