@@ -38,7 +38,7 @@ describe('new SteedosSchema', async () => {
             }
         })
         await schema.getDataSource().init()
-        addObjects('test', 'D:/test/**/*');
+        addObjects('D:/test/**/*', 'test');
         addMethod('test', 'test', function(res,req){})
 
         addTrigger('test', 'beforeInsert', ()=>{

@@ -5,8 +5,14 @@ const util = require('../util')
 
 const defaultDatasourceName = 'default';
 
+declare var Meteor:any;
+
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
+}
+
+export function isMeteor() {
+    return (typeof Meteor != "undefined")            
 }
 
 export class SteedosSchema {
@@ -33,7 +39,11 @@ export class SteedosSchema {
             _.each(config.datasources, (datasource: any, datasource_name)=>{
                 _.extend(datasource, datasource.connection)
             })
-            delete config.datasources.default
+            
+            if (isMeteor())
+                config.datasources.default.driver = "meteor-mongo"
+            else
+                config.datasources.default.driver = "mongo"
         }
         return config;
     }

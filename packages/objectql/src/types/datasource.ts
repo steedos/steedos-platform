@@ -10,14 +10,13 @@ import {
     SteedosMySqlDriver
 } from '../driver';
 
-import _ = require('underscore');
+import _ = require('lodash');
 import { SteedosQueryOptions, SteedosQueryFilters } from './query';
 import {
     SteedosIDType,
     SteedosObjectType,
     SteedosObjectTypeConfig,
     SteedosSchema,
-    SteedosListenerConfig,
     SteedosObjectPermissionTypeConfig,
     SteedosObjectPermissionType,
     SteedosAppTypeConfig,
@@ -28,11 +27,10 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 import { GraphQLSchema } from 'graphql';
-import { objectDynamicLoad } from './object_dynamic_load'
+import { getObjectConfigs, addObjectConfig, addObjectConfigFiles } from './object_dynamic_load';
 
 var util = require('../util')
 var path = require('path')
-var clone = require('clone')
 
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
@@ -95,13 +93,6 @@ export class SteedosDataSourceType implements Dictionary {
     private _logging: boolean | Array<any>;
     private _graphQLSchema: GraphQLSchema;
     private _config: SteedosDataSourceTypeConfig;
-    private _extendObjectsConfig: Array<SteedosObjectTypeConfig> = [];
-    public get extendObjectsConfig(): Array<SteedosObjectTypeConfig> {
-        return this._extendObjectsConfig;
-    }
-    public set extendObjectsConfig(value: Array<SteedosObjectTypeConfig>) {
-        this._extendObjectsConfig = value;
-    }
     public get config(): SteedosDataSourceTypeConfig {
         return this._config;
     }
@@ -129,42 +120,8 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     setObject(object_name: string, objectConfig: SteedosObjectTypeConfig) {
-        let config:SteedosObjectTypeConfig;
-        if(objectConfig.extend){
-            let parentObjectConfig = clone(this._objectsConfig[object_name]);
-            if(_.isEmpty(parentObjectConfig)){
-                throw new Error(`not find extend object: ${objectConfig.extend}`);
-            }
-            config = util.extend(parentObjectConfig, objectConfig);
-            delete config.extend
-        }else{
-            objectConfig.name = object_name
-            config = { fields: {} }
-            let baseObject = this.getObject('base');
-            let coreObject = this.getObject('core');
-            if ((this.driver === SteedosDatabaseDriverType.MeteorMongo || this.driver === SteedosDatabaseDriverType.Mongo) && baseObject) {
-                let { triggers: baseTriggers, fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(baseObject.toConfig())
-                config = util.extend(config, { triggers: baseTriggers }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
-            } else if (this.driver != SteedosDatabaseDriverType.MeteorMongo && coreObject) {
-                let { fields: basefields, permission_set, actions: baseActions, list_views: baseListViews } = clone(coreObject.toConfig())
-                let coreListeners = clone(coreObject.listeners);
-                _.each(coreListeners, function (v: SteedosListenerConfig, k) {
-                    v.listenTo = object_name;
-                })
-                config = util.extend(config, { listeners: coreListeners }, { actions: baseActions }, { actions: baseListViews }, { permission_set: permission_set }, objectConfig, { fields: basefields }, objectConfig)
-            } else {
-                config = objectConfig
-            }
-        }
-
-        if(this.driver !== SteedosDatabaseDriverType.MeteorMongo){
-            this.dynamicLoadObjectMethods(object_name, config);
-            this.dynamicLoadObjectActions(object_name, config);
-            this.dynamicLoadObjectTriggers(object_name, config);
-        }
-
-        let object = new SteedosObjectType(object_name, this, config)
-        this._objectsConfig[object_name] = config;
+        let object = new SteedosObjectType(object_name, this, objectConfig)
+        this._objectsConfig[object_name] = objectConfig;
         this._objects[object_name] = object;
     }
 
@@ -213,55 +170,18 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    initBaseObject(){
-        let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
-        if (this.config.driver === SteedosDatabaseDriverType.MeteorMongo || this.config.driver === SteedosDatabaseDriverType.Mongo) {
-            if (standardObjectsDir) {
-                let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
-                this.setObject(baseObject.name, baseObject)
-                let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
-                this.setObjectListener(baseObjectTrigger)
-            }
-        } else {
-            if (standardObjectsDir) {
-                let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
-                this.setObject(coreObject.name, coreObject)
-                let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
-                this.setObjectListener(coreObjectTrigger)
-            }
-        }
-    }
-
     initObjects(){
-        _.each(this.config.objects, (object, object_name) => {
-            if (object.extend){
-                this._extendObjectsConfig.push(object)
-            }else{
-                this.setObject(object_name, object)
-            }
-        })
-
-        _.each(this.config.objectFiles, (objectFiles) => {
-            this.use(objectFiles)
-        })
-
-        if(this.driver !== SteedosDatabaseDriverType.MeteorMongo){
-            _.each(objectDynamicLoad.getObjects(this.name), (item)=>{
-                this.use(item.filePath)
-            })
-        }
+        // 从缓存中加载所有本数据源对象到datasource中
+        let objects: Array<SteedosObjectTypeConfig> = getObjectConfigs(this._name);
+        _.each(objects, (object) => {
+            this.setObject(object.name, object);
+        });
 
         _.each(this.config.objectsRolesPermission, (objectRolesPermission, object_name) => {
             _.each(objectRolesPermission, (objectRolePermission, role_name) => {
                 objectRolePermission.name = role_name
                 this.setObjectPermission(object_name, objectRolePermission)
             })
-        })
-    }
-
-    initExtendObject(){
-        _.each(this._extendObjectsConfig, (objectConfig)=>{
-            this.setObject(objectConfig.extend, objectConfig)
         })
     }
 
@@ -302,7 +222,17 @@ export class SteedosDataSourceType implements Dictionary {
         this._logging = config.logging
         
         this.initDriver();
-        this.initBaseObject()
+
+        // 添加对象到缓存
+        _.each(this.config.objects, (object, object_name) => {
+            object.name = object_name
+            addObjectConfig(object, this._name);
+        })
+
+        // 添加对象到缓存
+        _.each(this.config.objectFiles, (objectPath) => {
+            addObjectConfigFiles(path.join(process.cwd(), objectPath), this._name)
+        })
 
         if (config.getRoles && !_.isFunction(config.getRoles)) {
             throw new Error('getRoles must be a function')
@@ -440,85 +370,6 @@ export class SteedosDataSourceType implements Dictionary {
         return this._schema;
     }
 
-    use(filePath) {
-        let objectJsons = util.loadObjects(filePath)
-        let fieldJsons = util.loadFields(filePath)
-        _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-            if (json.extend){
-                this._extendObjectsConfig.push(json)
-            }else{
-                let objectFieldsJson = fieldJsons.filter(fieldJson => fieldJson.object_name === json.name)
-                let objectJson: SteedosObjectTypeConfig = { fields: {} }
-                if (objectFieldsJson.length > 0) {
-                    let objectFields = objectFieldsJson.map(fj => {
-                        delete fj.object_name
-                        let f = { fields: {} }
-                        f.fields[fj.name] = fj
-                        return f
-                    })
-                    objectJson = util.extend({}, json, ...objectFields)
-                } else {
-                    objectJson = json
-                }
-                this.setObject(objectJson.name, objectJson)
-            }
-        })
-
-        // let fieldJsons = util.loadFields(filePath)
-        // _.each(fieldJsons, (json: SteedosFieldTypeConfig) => {
-        //     if (!json.object_name) {
-        //         throw new Error('missing attribute object_name')
-        //     }
-        //     let object = this.getObject(json.object_name);
-        //     if (object) {
-        //         object.setField(json.name, json)
-        //     } else {
-        //         throw new Error(`not find object: ${json.object_name}`);
-        //     }
-        // })
-
-        let triggerJsons = util.loadTriggers(filePath)
-        _.each(triggerJsons, (json: SteedosListenerConfig) => {
-            this.setObjectListener(json);
-        })
-
-        //TODO load reports
-
-        //TODO load actions
-    }
-
-    private setObjectListener(json: SteedosListenerConfig) {
-        if (!json.listenTo) {
-            throw new Error('missing attribute listenTo')
-        }
-
-        if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
-            throw new Error('listenTo must be a function or string')
-        }
-
-        let object_name = '';
-
-        if (_.isString(json.listenTo)) {
-            object_name = json.listenTo
-        } else if (_.isFunction(json.listenTo)) {
-            object_name = json.listenTo()
-        }
-
-        let object = this.getObject(object_name);
-        if (object) {
-            //TODO 处理listener 继承
-            //console.log('setObjectListener object_name', object_name, this._objectsConfig[object_name]);
-            let objectListener = this._objectsConfig[object_name].listeners;
-            if(!objectListener){
-                this._objectsConfig[object_name].listeners = {}
-            }
-            this._objectsConfig[object_name].listeners[json.name] = json
-            object.setListener(json.name || '', json)
-        } else {
-            throw new Error(`not find object: ${object_name}`);
-        }
-    }
-
     buildGraphQLSchema() {
         this._graphQLSchema = buildGraphQLSchema(this._schema, this);
         return this._graphQLSchema;
@@ -555,30 +406,14 @@ export class SteedosDataSourceType implements Dictionary {
         }
     }
 
-    private dynamicLoadObjectMethods(objectName: string, objectConfig: SteedosObjectTypeConfig){
-        _.each(objectDynamicLoad.getMethods(objectName), (item)=>{
-            util.extend(objectConfig, {methods: {[item.methodName]: item.method}})
-        })
-    }
-
-    private dynamicLoadObjectTriggers(objectName: string, objectConfig: SteedosObjectTypeConfig){
-        _.each(objectDynamicLoad.getTriggers(objectName), (item)=>{
-            util.extend(objectConfig, {listeners: {[item.triggerName]: {[item.trigger.when]: item.trigger.todo}}})
-        })
-    }
-
-    private dynamicLoadObjectActions(objectName: string, objectConfig: SteedosObjectTypeConfig){
-        _.each(objectDynamicLoad.getActions(objectName), (item)=>{
-            util.extend(objectConfig, {actions: {[item.actionName]: item.action}})
-        })
-    }
-
-    async init() {
+    init() {
         this.initObjects();
-        this.initExtendObject();
         this.initApps();
         this.initReports();
         // this.schema.transformReferenceOfObject(this);
+    }
+
+    async initTypeORM() {
         if (this._adapter.init) {
             return await this._adapter.init(this._objects);
         }

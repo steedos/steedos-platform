@@ -39,6 +39,7 @@
     "graphql": "^14.1.1",
     "graphql-type-json": "^0.2.2",
     "jsen": "^0.6.6",
+    "lodash": "^4.17.15",
     "mongodb": "^3.0.8",
     "odata-v4-mongodb": "^0.1.12",
     "odata-v4-sql": "^0.1.2",

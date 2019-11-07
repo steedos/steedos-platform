@@ -2,7 +2,7 @@ import { SteedosSchema } from "..";
 import { getFromContainer } from "typeorm";
 
 
-export { SteedosSchema } from "./schema";
+export * from "./schema";
 export { SteedosDatabaseDriverType, SteedosDataSourceType, SteedosDataSourceTypeConfig } from "./datasource";
 export { SteedosObjectType, SteedosObjectTypeConfig } from "./object";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
@@ -17,7 +17,7 @@ export { SteedosAppType, SteedosAppTypeConfig } from './app'
 export { SteedosUserSession, SteedosUserSessionSpace, SteedosUserSessionCompany, SteedosUserSessionOrganization } from './userSession';
 export { SteedosQueryFilters } from './query';
 export { SteedosReportType, SteedosReportTypeConfig } from './report';
-export { addObjects, addApps, addMethod, addTrigger, addAction, addRouter, objectDynamicLoad } from './object_dynamic_load'
+export * from './object_dynamic_load'
 
 export function getSteedosSchema(): SteedosSchema {
     return getFromContainer(SteedosSchema);
