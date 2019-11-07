@@ -101,7 +101,7 @@ Creator.getObjectSchema = (obj) ->
 
 		else if (field.type == "lookup" or field.type == "master_detail")
 			fs.type = String
-
+			fs.autoform.showIcon = field.showIcon
 			if field.multiple
 				fs.type = [String]
 

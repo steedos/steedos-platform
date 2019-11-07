@@ -140,6 +140,12 @@ Template.steedosLookups.onRendered(function () {
 		}
 	});
 
+	template.autorun(function () {
+		if(template.uniSelectize.open.get()){
+			template.uniSelectize.opened.set(true)
+		}
+	});
+
 	if(template.uniSelectize.dependOn && _.isArray(template.uniSelectize.dependOn) && template.uniSelectize.dependOn.length > 0){
 		template.autorun(function () {
 
@@ -173,19 +179,20 @@ Template.steedosLookups.onRendered(function () {
     this.form.bind('reset', function () {
         template.uniSelectize.unselectItem(null, true);
     });
-
-	Sortable.create($(".slds-selected-items-" + this.data.id)[0], {
-		group: 'words',
-		animation: 150,
-		filter: '.js-remove',
-		onFilter: function (evt) {
-			var el = selectUsersList.closest(evt.item)
-			console.log("onFilter-->", el)
-		},
-		onEnd: function (event) {
-			console.log("onEnd-->", event)
-		}
-	})
+	if($(".slds-selected-items-" + this.data.id)[0]){
+		Sortable.create($(".slds-selected-items-" + this.data.id)[0], {
+			group: 'words',
+			animation: 150,
+			filter: '.js-remove',
+			onFilter: function (evt) {
+				var el = selectUsersList.closest(evt.item)
+				console.log("onFilter-->", el)
+			},
+			onEnd: function (event) {
+				console.log("onEnd-->", event)
+			}
+		})
+	}
 });
 
 Template.steedosLookups.onDestroyed(function () {
@@ -248,6 +255,10 @@ Template.steedosLookups.helpers({
 
         return template.uniSelectize.open.get();
     },
+	isOpened: function () {
+		var template = Template.instance();
+		return template.uniSelectize.opened.get();
+	},
     loading: function () {
         var template = Template.instance();
         return template.uniSelectize.loading.get();

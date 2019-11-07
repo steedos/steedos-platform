@@ -8,6 +8,7 @@ UniSelectize = function (options, template, filtersFunction, optionsFunction, cr
 	this.itemsUnselected = new ReactiveVar([]);
 
 	this.open = new ReactiveVar(false);
+	this.opened = new ReactiveVar(false);
 	this.loading = new ReactiveVar(false);
 	this.searchText = new ReactiveVar();
 	this.activeOption = new ReactiveVar(-1);
