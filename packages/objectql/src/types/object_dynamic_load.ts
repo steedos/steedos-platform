@@ -1,21 +1,17 @@
 import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
-import crypto = require('crypto')
-import { transformTrigger, getRandomString } from '../util'
-import { SteedosObjectTypeConfig, SteedosListenerConfig } from '.'
+import { getRandomString } from '../util'
+import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosAppTypeConfig, SteedosReportTypeConfig } from '.'
 var util = require('../util')
 var clone = require('clone')
 
-function makeTriggerName(trigger){
-    var md5 = crypto.createHash('md5');
-    return md5.update(trigger.toString()).digest('hex') + _.random(0, 1000000);
-}
-
-const SYSTEM_DATASOURCE = '__SYSTEM__';
 const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
+const _appConfigs: Array<SteedosAppTypeConfig> = [];
+const _reportConfigs: Array<any> = [];
+const _routerConfigs: Array<any> = [];
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -104,7 +100,7 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         json.name = getRandomString(10);
         object.listeners[json.name] = json
     } else {
-        throw new Error(`Error setting listener, object not found: ${object_name}`);
+        throw new Error(`Error add listener, object not found: ${object_name}`);
     }
 }
 
@@ -125,107 +121,73 @@ export const loadBaseObject = () => {
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)
 }
+
+export const addAppConfig = (appConfig: SteedosAppTypeConfig, datasource: string) => {
+    if (!appConfig.name) 
+        throw new Error(`Error add app, name undefined`);
+    _.remove(_appConfigs, {name: appConfig.name});
+    _appConfigs.push(appConfig)
+}
+
+export const getAppConfigs = () => {
+    return _appConfigs
+}
+
+export const getAppConfig = (appName: string):SteedosAppTypeConfig => {
+    return _.find(_appConfigs, {name: appName})
+}
+
+export const addReportConfig = (config: SteedosReportTypeConfig, datasource: string) => {
+    if (!config.name) 
+        throw new Error(`Error add app, name undefined`);
+    _.remove(_reportConfigs, {name: config.name});
+    _reportConfigs.push(config)
+}
+
+export const getReportConfigs = () => {
+    return _reportConfigs
+}
+
+export const getReportConfig = (name: string):SteedosAppTypeConfig => {
+    return _.find(_reportConfigs, {name: name})
+}
+
+export const addRouterConfig = (config: SteedosReportTypeConfig, datasource: string) => {
+    if (!config.name) 
+        throw new Error(`Error add app, name undefined`);
+    _.remove(_routerConfigs, {name: config.name});
+    _routerConfigs.push(config)
+}
+
+export const getRouterConfigs = () => {
+    return _routerConfigs
+}
+
+export function addObjectMethod(objectName: string, methodName: string, method: Function){
+    
+    let object = getObjectConfig(objectName);
+    if (!object) 
+        throw new Error(`Error add method ${methodName}, object not found: ${objectName}`);
+
+    if(!object.methods){
+        object.methods = {}
+    }
+    object.methods[methodName] = method
+}
+
+export function addObjectAction(objectName: string, actionConfig: SteedosActionTypeConfig){
+    
+    if (!actionConfig.name) 
+        throw new Error(`Error add action, name undefined`);
+
+    let object = getObjectConfig(objectName);
+    if (!object) 
+        throw new Error(`Error add action ${actionConfig.name}, object not found: ${objectName}`);
+
+    if(!object.actions){
+        object.actions = {}
+    }
+    object.actions[actionConfig.name] = actionConfig;
+}
+
 loadBaseObject();
-export class objectDynamicLoad {
-    static objectPathList = [];
-    static appList = [];
-    static methodList = [];
-    static triggerList = [];
-    static actionList = [];
-    static routerList = [];
-    // static reportList = [];
-
-    static getObjectFiles(datasourceName: string){
-        return _.filter(this.objectPathList, (item)=>{
-            return item.datasourceName === datasourceName
-        })
-    }
-
-    static getApps(){
-        return this.appList
-    }
-
-    static getMethods(objectName: string){
-        return _.filter(this.methodList, (item)=>{
-            return item.objectName === objectName
-        })
-    }
-
-    static getTriggers(objectName: string){
-        return _.filter(this.triggerList, (item)=>{
-            return item.objectName === objectName
-        })
-    }
-
-    static getActions(objectName: string){
-        return _.filter(this.actionList, (item)=>{
-            return item.objectName === objectName
-        })
-    }
-
-    static getRouters(){
-        return this.routerList
-    }
-}
-
-
-export function addApps(filePath: string){
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
-    
-    objectDynamicLoad.appList.push({filePath})
-}
-
-// export function addReports(filePath: string){
-//     if(!path.isAbsolute(filePath)){
-//         throw new Error(`${filePath} must be an absolute path`);
-//     }
-    
-//     objectDynamicLoad.reportList.push({filePath})
-// }
-
-export function addMethod(objectName: string, methodName: string, method: Function){
-    objectDynamicLoad.methodList.push({objectName, methodName, method})
-}
-
-export function addTrigger(objectName: string, when: string, trigger: Function){
-    // switch (when) {
-    //     case 'beforeInsert':
-    //         when = 'before.insert'
-    //         break;
-    //     case 'beforeUpdate':
-    //         when = 'before.update'
-    //         break;
-    //     case 'beforeDelete':
-    //         when = 'before.delete'
-    //         break;
-    //     case 'afterInsert':
-    //         when = 'after.insert'
-    //         break;
-    //     case 'afterUpdate':
-    //         when = 'after.update'
-    //         break;
-    //     case 'afterDelete':
-    //         when = 'after.delete'
-    //         break;
-    //     default:
-    //         break;
-    // }
-    let on = 'server';
-
-    let triggerName = `${objectName}_${when}_${on}_${makeTriggerName(trigger)}`;
-
-
-    trigger = transformTrigger(when, trigger);
-
-    objectDynamicLoad.triggerList.push({objectName, triggerName, trigger: {on, when, todo: trigger}})
-}
-
-export function addAction(objectName: string, actionName: string, action: SteedosActionTypeConfig){
-    objectDynamicLoad.actionList.push({objectName, actionName, action})
-}
-
-export function addRouter(routerPath: string, router: any){
-    objectDynamicLoad.routerList.push({routerPath, router})
-}
