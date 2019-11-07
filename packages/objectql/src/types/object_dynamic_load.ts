@@ -1,17 +1,23 @@
 import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
+import fs = require('fs')
 import { getRandomString } from '../util'
-import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosAppTypeConfig, SteedosReportTypeConfig } from '.'
+import { ValidatorManager } from '../validators';
+import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosAppTypeConfig, SteedosReportTypeConfig, SteedosObjectPermissionTypeConfig } from '.'
 var util = require('../util')
 var clone = require('clone')
+var globby = require('globby');
 
-const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
-const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
+export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
+export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
+export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _appConfigs: Array<SteedosAppTypeConfig> = [];
 const _reportConfigs: Array<any> = [];
 const _routerConfigs: Array<any> = [];
+const _permissionSets: Array<any> = [];
+const _staticScripts: Array<string> = [];
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -25,7 +31,7 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export function addObjectConfigFiles(filePath: string, datasource: string){
+export function addObjectConfigFiles(filePath: string, datasource?: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -42,8 +48,10 @@ export function addObjectConfigFiles(filePath: string, datasource: string){
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
         addObjectListenerConfig(json);
     })
-
+    
+    addStaticScriptFiles(filePath);
 }
+
 export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
     let object_name = objectConfig.name;
     let config:SteedosObjectTypeConfig = {
@@ -55,7 +63,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         config = clone(objectConfig);
     }
     else if (objectConfig.extend){
-        let parentObjectConfig = getObjectConfig(object_name);
+        let parentObjectConfig = getObjectConfig(objectConfig.extend);
         if(_.isEmpty(parentObjectConfig)){
             throw new Error(`Extended failed, object not exist: ${objectConfig.extend}`);
         }
@@ -104,27 +112,43 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
     }
 }
 
-export const loadBaseObject = () => {
+export const loadStandardObjects = () => {
+
+    ValidatorManager.loadCoreValidators();
+
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
-    addObjectConfig(baseObject, 'default');
-    console.log(baseObject)
+    addObjectConfig(baseObject, SYSTEM_DATASOURCE);
     let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, "base.trigger.js"))
     baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
     addObjectListenerConfig(baseObjectTrigger)
 
     let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
-    addObjectConfig(coreObject, 'default');
+    addObjectConfig(coreObject, SYSTEM_DATASOURCE);
     let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, "core.objectwebhooks.trigger.js"))
     coreObjectTrigger.listenTo = SQL_BASE_OBJECT
     addObjectListenerConfig(coreObjectTrigger)
+
+    addObjectConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }
 
-export const addAppConfig = (appConfig: SteedosAppTypeConfig, datasource: string) => {
+export function addAppConfigFiles(filePath: string){
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+
+    let jsons = util.loadApps(filePath)
+    _.each(jsons, (json: SteedosAppTypeConfig) => {
+         addAppConfig(json);
+    })
+
+}
+
+export const addAppConfig = (appConfig: SteedosAppTypeConfig) => {
     if (!appConfig.name) 
-        throw new Error(`Error add app, name undefined`);
+        throw new Error(`Error add app, name required`);
     _.remove(_appConfigs, {name: appConfig.name});
     _appConfigs.push(appConfig)
 }
@@ -139,7 +163,7 @@ export const getAppConfig = (appName: string):SteedosAppTypeConfig => {
 
 export const addReportConfig = (config: SteedosReportTypeConfig, datasource: string) => {
     if (!config.name) 
-        throw new Error(`Error add app, name undefined`);
+        throw new Error(`Error add app, name required`);
     _.remove(_reportConfigs, {name: config.name});
     _reportConfigs.push(config)
 }
@@ -154,7 +178,7 @@ export const getReportConfig = (name: string):SteedosAppTypeConfig => {
 
 export const addRouterConfig = (config: SteedosReportTypeConfig, datasource: string) => {
     if (!config.name) 
-        throw new Error(`Error add app, name undefined`);
+        throw new Error(`Error add app, name required`);
     _.remove(_routerConfigs, {name: config.name});
     _routerConfigs.push(config)
 }
@@ -178,7 +202,7 @@ export function addObjectMethod(objectName: string, methodName: string, method: 
 export function addObjectAction(objectName: string, actionConfig: SteedosActionTypeConfig){
     
     if (!actionConfig.name) 
-        throw new Error(`Error add action, name undefined`);
+        throw new Error(`Error add action, name required`);
 
     let object = getObjectConfig(objectName);
     if (!object) 
@@ -190,4 +214,45 @@ export function addObjectAction(objectName: string, actionConfig: SteedosActionT
     object.actions[actionConfig.name] = actionConfig;
 }
 
-loadBaseObject();
+export function addObjectPermission(objectName: string, permissionConfig: SteedosObjectPermissionTypeConfig){
+    
+    if (!permissionConfig.name) 
+        throw new Error(`Error add permission, name required`);
+
+    let object = getObjectConfig(objectName);
+    if (!object) 
+        throw new Error(`Error add permission ${permissionConfig.name}, object not found: ${objectName}`);
+
+    if(!object.permissions){
+        object.permissions = {}
+    }
+    object.permissions[permissionConfig.name] = permissionConfig;
+}
+
+export const  addStaticScriptFiles = (filePath: string) => {
+    const filePatten = [
+        path.join(filePath, "*.client.js")
+    ]
+    let matchedPaths: Array<string> = globby.sync(filePatten);
+    matchedPaths = _.sortBy(matchedPaths)
+    _.each(matchedPaths, (matchedPath) => {
+        let code = fs.readFileSync(matchedPath, 'utf8');
+        _staticScripts.push(code)
+    })
+}
+
+export const getStaticScripts = () => {
+    return _staticScripts;
+}
+
+export function addPermissionSet(_id: string, name: string) {
+    if (getPermissionSet(_id))
+        _.remove(_permissionSets, {_id: _id});
+    _permissionSets.push({_id: _id, name: name})
+}
+
+export function getPermissionSet(_id: string){    
+    return _.find(_permissionSets, {_id: _id})
+}
+
+loadStandardObjects();

@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 const objectql = require('@steedos/objectql')
 const util = require('../util/index')
-import {LoadFiles} from './loadFiles'
 const ConfigName = 'plugin.config.yml'
 import * as initConfig from './init-config.json'
 export class Plugins {
@@ -21,6 +20,7 @@ export class Plugins {
             _.each(plugins, (pluginName) => {
                 try {
                     const pluginDir = this.getPluginDir(pluginName)
+                    console.log(pluginDir)
                     const plugin = require(pluginDir);
                     this.loadFiles(pluginName);
                     if(_.isFunction(plugin.init)){
@@ -61,33 +61,14 @@ export class Plugins {
         let config = this.getConfig(pluginDir);
         if(config){
             _.each(config.datasources, (_datasource, name)=>{
-                if(name === 'default'){
-                    if(!_.isArray(_datasource.objectFiles)){
-                        throw new Error(`${name}.objectFiles must be an array` + _datasource.objectFiles)
-                    }
-                    _.each(_datasource.objectFiles, (objectFile)=>{
-                        let filePath = path.join(pluginDir, objectFile)
-                        LoadFiles.loadObjectToCreator(filePath);
-                        LoadFiles.loadAppToCreator(filePath);
-                        LoadFiles.addStaticJs(filePath);
-                    })
-                }else{
-                    if(!_.isArray(_datasource.objectFiles)){
-                        throw new Error(`${name}.objectFiles must be an array`)
-                    }
-                    let datasource = objectql.getSteedosSchema().getDataSource(name)
-                    if(!datasource){
-                        throw new Error(`not find datasource: ${name}` + _datasource.objectFiles)
-                    }
-
-                    _.each(_datasource.objectFiles, (objectFile)=>{
-                        let filePath = path.join(pluginDir, objectFile)
-                        datasource.use(filePath);
-                        datasource.useAppFile(filePath);
-                        datasource.useReportFile(filePath);
-                    })
-                    
+                if(!_.isArray(_datasource.objectFiles)){
+                    throw new Error(`${name}.objectFiles must be an array` + _datasource.objectFiles)
                 }
+                _.each(_datasource.objectFiles, (objectFile)=>{
+                    let filePath = path.join(pluginDir, objectFile)
+                    objectql.addObjectConfigFiles(filePath, name)
+                    objectql.addAppConfigFiles(filePath, name)
+                })
             })
         }
     }

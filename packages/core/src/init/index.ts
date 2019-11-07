@@ -1,18 +1,15 @@
 import { Datasources } from './datasources'
-import { LoadFiles } from './loadFiles'
-import { Core } from './core'
+import { Core, initCreator, initDesignSystem } from './core'
 import { Plugins } from './plugins';
+import { loadStandardObjects } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
 
 export async function init() {
-    Core.initDesignSystem()
-    Core.createBaseObject()
-    LoadFiles.initStandardObjects();
-    Core.addStaticJs()
-    Datasources.create();
+    initDesignSystem()
+    loadStandardObjects()
+    debugger
     Plugins.init();
-    LoadFiles.initProjectObjects()
-    Core.load();
+    initCreator();
     await Datasources.init();
     await migrate.init();
     Core.run();
