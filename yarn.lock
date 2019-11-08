@@ -2118,17 +2118,16 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.6.5-patch.5":
-  version "1.6.5-patch.5"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.6.5-patch.5.tgz#6634ad404d25cc53603324730435650778358151"
-  integrity sha512-vuhiIDOQQnNhr9q9s4oSoyEyrrm+F+0RbSPQVo5+imEB25yWJDSyry3KyhBxpryRL0dcXyVZj96G0vsE2RxiOA==
+"@steedos/accounts@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.7.5.tgz#0d442a4ebcc955e75dbccaa86a888d82b1d82fda"
+  integrity sha512-1AGmNBhkG3EmfQQoNeGKosJY4y9t8YJMwl0hioTJrz/zy1T3ZYvhX5C4/8Lk+AYkZYSugwLwsI30Z7qUQ47lcA==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
     "@accounts/server" "^0.19.0"
     "@babel/runtime" "^7.6.0"
-    "@steedos/objectql" "^1.6.4"
     app-root-path "^2.2.1"
     body-parser "1.19.0"
     cookies "^0.7.3"
@@ -2181,10 +2180,10 @@
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/steedos-plugin-workflow@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.7.0.tgz#761560d34ee391c9289d0b8fca39ce226f6685ab"
-  integrity sha512-mzBeSyLzllvUFH9vA0q8T/pIo5cQBRRlEIiTpQl3R97qu3BVr2APAbU/9Xz44GfbSaV5E4GDlhIQmyg456m+ug==
+"@steedos/steedos-plugin-workflow@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.0.tgz#eb9cdd2828083eef1db14ab55186f625b1f241ba"
+  integrity sha512-wVo8clNM5jxYmyGl97sy2gxpqyTSMzfaa8WAH5/r/1esr/dddPHrmh56gYmpqiXtYmsvwUm4nOk3UrTyZ/1vSA==
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
@@ -5507,6 +5506,13 @@ dot-prop@^4.1.0, dot-prop@^4.2.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv-flow@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv-flow/-/dotenv-flow-3.1.0.tgz#2abcb4661cf2d0ca5b46d8ff5e95c1045ade9938"
+  integrity sha512-BMA8vfu2DbAx5x5G3C+tgb1hCbONggZTSpBE7B4yCPG5vziKX/lA3CzsjdGKlPvLxZgTbP1qb+KlWux8pYqsmA==
+  dependencies:
+    dotenv "^8.0.0"
+
 dotenv@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
@@ -5516,6 +5522,11 @@ dotenv@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
+
+dotenv@^8.0.0, dotenv@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
 double-ended-queue@2.1.0-0:
   version "2.1.0-0"

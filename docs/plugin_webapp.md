@@ -1,19 +1,16 @@
 ---
-title: Web 插件
+title: Web App 插件
 ---
 
 此教程将引导您创建一个基本的Steedos Web插件。
 
 ## 创建插件
 
-创建并跳转到插件文件夹。
+创建并跳转到webapp文件夹。
 
 ```bash
-cd {project_root}
-mkdir .plugins
-cd .plugins
-mkdir hello-world-plugin
-cd hello-world-plugin
+mkdir webapp
+cd webapp
 ```
 
 ## 初始化插件
@@ -21,11 +18,7 @@ cd hello-world-plugin
 创建一个 package.json 文件
 
 ```json
-{
-  "name": "hello-world-plugin",
-  "version": "0.0.1",
-  "description": "Hello World",
-}
+yarn init
 ```
 
 ## 安装依赖包
@@ -36,6 +29,7 @@ yarn add react
 ```
 
 ## 配置 webpack
+
 创建一个 `/webpack.config.js`文件，配置webpack
 
 ```js
@@ -43,11 +37,11 @@ var path = require('path');
 
 module.exports = {
     entry: [
-        './webapp/index.jsx',
+        './src/index.jsx',
     ],
     resolve: {
         modules: [
-            'webapp',
+            'src',
             'node_modules',
         ],
         extensions: ['*', '.js', '.jsx'],
@@ -80,7 +74,7 @@ module.exports = {
         react: 'React',
     },
     output: {
-        path: path.join(__dirname, '/dist/webapp'),
+        path: path.join(__dirname, '/dist'),
         publicPath: '/',
         filename: 'main.js',
     },

@@ -1,10 +1,8 @@
 ---
-title: 安装
+title: 创建项目
 ---
 
 使用Steedos“低代码”开发平台，开发人员使用少量代码就可以构建功能强大的企业应用程序。
-
-> [视频演示：华炎“低代码”开发平台应用案例之 合同管理系统](https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4)
 
 ## 安装开发环境
 

@@ -756,6 +756,7 @@
         "client/views/instance/traces.html": "assets/packages/steedos_workflow/client/views/instance/traces.html",
         "client/views/instance/traces_table.html": "assets/packages/steedos_workflow/client/views/instance/traces_table.html",
         "client/views/instance/related_instances.html": "assets/packages/steedos_workflow/client/views/instance/related_instances.html",
+        "client/views/instance/related_records.html": "assets/packages/steedos_workflow/client/views/instance/related_records.html",
         "server/ejs/export_instances.ejs": "assets/packages/steedos_workflow/server/ejs/export_instances.ejs",
         "client/views/instance/instance_sign_text.html": "assets/packages/steedos_workflow/client/views/instance/instance_sign_text.html"
       }
@@ -772,6 +773,9 @@
     },
     {
       "path": "packages/comerc_autoform-selectize.js"
+    },
+    {
+      "path": "packages/react-template-helper.js"
     },
     {
       "sourceMap": "packages/steedos_webkit-notification.js.map",

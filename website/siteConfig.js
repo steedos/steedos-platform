@@ -21,7 +21,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Steedos 低代码开发平台', // Title for your website.
+  title: '华炎开发', // Title for your website.
   tagline: '只需编写少量代码，就能构建功能强大的企业应用。',
   url: 'https://steedos.github.io/', // Your website URL
   baseUrl: '/', // Base URL for your project */
@@ -38,14 +38,17 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'getting_started', label: '快速向导'},
-    {doc: 'object', label: '文档'},
-    {doc: 'api', label: 'API'},
+    {doc: 'overview', label: '特色'},
+    {doc: 'getting_started', label: '开发文档'},
+    {doc: 'plugins', label: '插件'},
+    {doc: 'projects', label: '案例'},
+    //{doc: 'record_list', label: '用户手册'},
+    //{doc: 'api', label: 'API'},
     //{blog: true, label: '动态'},
-    {
-      href: 'https://github.com/steedos/',
-      label: '开源',
-    },
+    // {
+    //   href: 'https://github.com/steedos/',
+    //   label: '开源',
+    // },
   ],
 
   // If you have users set above, you add it here:

@@ -72,16 +72,24 @@ dashboard:
     label: 待办任务
     position: LEFT
     type: object
-    object_name: tasks
+    objectName: tasks
     filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
     columns:
       - field: name
-        width: 70%
+        label: 名称
         wrap: true
         href: true
       - field: priority
-        width: 30%
+        label: 优先级
+        width: 14rem
         wrap: false
+    illustration: 
+      path: "/assets/images/illustrations/empty-state-not-available-in-lightning.svg#not-available-in-lightning",
+      heading: ""
+      messageBody: "没有找到待办任务"
+    showAllLink: true
+    noHeader: true
+    unborderedRow: true
 ```
 
 ### 标题 label
@@ -105,9 +113,123 @@ dashboard:
 
 在 widget 中只显示符合筛选条件的数据。
 
+### 列表数据排序规则 sort
+
+type为object时，设置widget列表排序规则，支持字符串和数组两种格式：
+
+```
+sort: "modified desc, name"
+```
+
+```
+sort: [["due_date", "desc"], ["state"]],
+```
+
 ### 列 columns
 
 设定显示的列，以及列的属性。
+
+#### columns.field
+
+设定列的字段名
+
+#### columns.label
+
+设定列的显示文字
+
+#### columns.width
+
+设定列的宽度，为空则自适应，可设置为rex，百分比，像素等，例如：14rex，20%，80px，推荐用rex单位
+
+#### columns.wrap
+
+设定列是否换行，默认为false，设置为true时，文字超出会换行显示，为false时则会显示为省略号
+
+#### columns.hidden
+
+设定列是否隐藏，默认为false，设置为true时，该列将不显示，不过数据会加载到内存中
+
+#### columns.onClick
+
+设定列的单击行为，可设置为一个函数，点击将执行该函数
+
+#### columns.href
+
+设定列的是否显示为链接，默认为false
+
+#### columns.format
+
+设定列的渲染函数，该函数可变更列内容显示规则
+
+```yml
+dashboard:
+  pending_tasks:
+    ...
+    ...
+    footer: !<tag:yaml.org,2002:js/function> |- 
+      function (children, data, options) {
+        let objectName = options.objectName;
+        let url = `/app/-/${objectName}/view/${data.id}`;
+        if (window.__meteor_runtime_config__)
+          url = window.__meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url;
+
+        return (
+          <a target="_blank" href={url} title={children}>
+            {children}
+          </a>
+        )
+      }
+```
+
+### 显示查看全部链接 showAllLink
+
+是否显示查看全部链接，设置为true，type为object时，会在底部显示查看全部链接，默认值false
+
+### 链接打开方式 hrefTarget
+
+链接打开方式，设置为"_blank"，type为object时，包括列表及底部显示的查看全部链接都会从新窗口中打开，默认值为空
+
+### 底部显示内容 footer
+
+底部显示内容，type为object时，通过把该属性设置为一个函数，可定制底部显示内容，该函数会覆盖showAllLink、hrefTarget属性
+
+
+```yml
+dashboard:
+  pending_tasks:
+    ...
+    ...
+    footer: !<tag:yaml.org,2002:js/function> |- 
+      function (options) {
+        let objectName = options.objectName;
+        return (
+          <a href={`/app/-/${objectName}`} target="_blank">
+            查看全部任务
+          </a>
+        )
+      }
+```
+
+### 不显示表头 noHeader
+
+是否不显示表头，设置为true，type为object时，会隐藏表头，默认值false
+
+### 不显示行分隔线 unborderedRow
+
+是否不显示行分隔线，设置为true，type为object时，会隐藏表格的行分隔线，默认值false
+
+### 数据空白时显示效果 illustration
+
+当数据内容空白时，其显示效果可通过该属性来配置，type为object时有效
+
+#### illustration.heading
+当数据内容空白时，显示大标题文字
+
+#### illustration.messageBody
+当数据内容空白时，显示小标题文字
+
+#### illustration.path
+当数据内容空白时，要显示的图标路径
 
 ### 位置 position
 
@@ -119,6 +241,17 @@ dashboard:
 - CENTER_BOTTOM_RIGHT: 显示在中间栏底部右侧
 - RIGHT: 显示在右侧
 
+### 手机版效果 mobile
+
+是否显示为手机版效果，即窄屏效果，默认值false，type为apps时有效
+
+### 显示App的object列表 showAllItems
+
+type为apps时是否显示app对应的object列表，默认值false，`为true的功能暂时未实现`
+
+### 新窗口打开应用
+
+type为apps时，点击应用链接时是否新窗口中打开应用，通过把应用设置为新窗口中打开即可，即app.is_new_window为true的应用将从新窗口中打开
 
 ### 组件 component
 

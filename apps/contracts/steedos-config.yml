@@ -1,11 +1,8 @@
-env:
-  PORT: 5000
-  ROOT_URL: http://127.0.0.1:5000/
 datasources:
   default:
     connection:
       url: mongodb://127.0.0.1/steedos
-    objectFiles:
+    objectFiles: 
       - "./src/**"
 public:
   cfs:

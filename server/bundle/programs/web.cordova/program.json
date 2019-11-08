@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "9581c891f0f25e25b3171beca98af10082e23411.js",
+      "path": "41029c37798157a8de8ce1b82321b73fbf4b91a6.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/9581c891f0f25e25b3171beca98af10082e23411.js?meteor_js_resource=true",
-      "size": 9062849,
-      "hash": "9581c891f0f25e25b3171beca98af10082e23411",
-      "sri": "7Zy/nb8VtVtqTnBDRWT7hi+11CSKcOJmhvjsSSykLl3e32psuA++2vb0/q5ExFYqEDbgi+EBFA7fFYi9pQqlfA=="
+      "url": "/__cordova/41029c37798157a8de8ce1b82321b73fbf4b91a6.js?meteor_js_resource=true",
+      "size": 10735369,
+      "hash": "41029c37798157a8de8ce1b82321b73fbf4b91a6",
+      "sri": "wZ9hgW8FBYpjI7Se3ut4fk9d0Sh2DVFX2V4+Z7ZH+Yhmwf0ESgbpE8R9j1byShGARoFyvoIbzy6WBXuljtOw8Q=="
     },
     {
-      "path": "9581c891f0f25e25b3171beca98af10082e23411.stats.json",
+      "path": "41029c37798157a8de8ce1b82321b73fbf4b91a6.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/9581c891f0f25e25b3171beca98af10082e23411.stats.json?meteor_js_resource=true",
-      "size": 131214,
-      "hash": "8043f71576155045fb94aea62ad08baf8d06e129",
-      "sri": "A6UAbBE+S0MMDKwuI3QQNSdDwbsCikXKH5l6PxwGolB2SPEUTapZC1Xgxe0NwCWn2XrIXMlMBj0xYFEuszIaRw=="
+      "url": "/__cordova/41029c37798157a8de8ce1b82321b73fbf4b91a6.stats.json?meteor_js_resource=true",
+      "size": 174016,
+      "hash": "48ee6c26d6b74a6889db7ef9c80a2f932a05e226",
+      "sri": "Cs+Z5ReA3Aa+li1hs54S0RSzuadUxgA+PqIgj6EckaFsbqlGZNiTPs42LWDLdTrXCdLK61mbjq4budLjWHyMlQ=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -472,12 +472,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_theme/client/style.less.css?hash=59b822cddbb8ab7f1729cea813a85272cc6e8a20",
+      "url": "/__cordova/packages/steedos_theme/client/style.less.css?hash=38f23b18831d05586fb7005da85af9f800d3e280",
       "sourceMap": "packages/steedos_theme/client/style.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_theme/client/59b822cddbb8ab7f1729cea813a85272cc6e8a20.map",
-      "size": 2260,
-      "hash": "59b822cddbb8ab7f1729cea813a85272cc6e8a20",
-      "sri": "jQyInuQJipfDeI+Uk+E2tAUy5rlAhIdwe8ciU9PsDLAuJ+AeHhvx/KNC6b281PUkzFCPTyvW1y2bDIb+mA2N9g=="
+      "sourceMapUrl": "/__cordova/packages/steedos_theme/client/38f23b18831d05586fb7005da85af9f800d3e280.map",
+      "size": 2154,
+      "hash": "38f23b18831d05586fb7005da85af9f800d3e280",
+      "sri": "Y69085M3Jmcv+GTULDSBGOlLoyTKt9CS3KEHyCYNVuTQOmX4W2pMQDXUBAGcMUATTkSapMXEeKlLjRqB1xKWVQ=="
     },
     {
       "path": "packages/steedos_theme/client/zoom.less.css",
@@ -966,16 +966,6 @@
       "size": 157,
       "hash": "a9ebe08dadf6a48079cf19bacdb8cb2b7fea8c3f",
       "sri": "Ck9pk4nsmYGA/03artTIVBcY5mF+1tJ/Givbs+PTpUmrlSXoM+IFUqX3m4s/aortDOWoZDSspuOzvdaiTjXUCg=="
-    },
-    {
-      "path": "packages/steedos_autoform/client/coreform/inputTypes/coreform-widearea/lib/widearea.css",
-      "where": "client",
-      "type": "css",
-      "cacheable": true,
-      "url": "/__cordova/packages/steedos_autoform/client/coreform/inputTypes/coreform-widearea/lib/widearea.css?hash=3efa6adc356d2af8f8c7d795ba6936b1cc969c32",
-      "size": 6102,
-      "hash": "3efa6adc356d2af8f8c7d795ba6936b1cc969c32",
-      "sri": "D+1hvQEBDF4GtUcmsbr5Vdq6JvNfluA1zJhl49vw0e0kIDs/BUlxlKvDYceCbR8CNH2KaMmK7mP5G/AVeUKTmg=="
     },
     {
       "path": "packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css",
@@ -1946,6 +1936,16 @@
       "size": 207,
       "hash": "702750d962a1249caba7a0fa41e2facf0643e693",
       "sri": "UEbcGIDZy+NzNtvh2eIiA+fyEx4ciw5dIxNxXmW3YUmDnqfQcNo5fAuFa0eeJkRhsg8hZ2Hef2Ra4MeiA8agQA=="
+    },
+    {
+      "path": "app/client/compatibility/widearea/widearea.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/__cordova/client/compatibility/widearea/widearea.css?hash=3efa6adc356d2af8f8c7d795ba6936b1cc969c32",
+      "size": 6102,
+      "hash": "3efa6adc356d2af8f8c7d795ba6936b1cc969c32",
+      "sri": "D+1hvQEBDF4GtUcmsbr5Vdq6JvNfluA1zJhl49vw0e0kIDs/BUlxlKvDYceCbR8CNH2KaMmK7mP5G/AVeUKTmg=="
     },
     {
       "path": "app/client/theme.less",
@@ -4538,6 +4538,66 @@
       "size": 4321,
       "hash": "9804ebab9d5f94b3548c07cb9a0bff58408fd3df",
       "sri": "pi7w4/MYBJ/7/NFGQ1OCInentlT3CCVVKU2udjNRWhxIOY5K2vxSPKYEa6EKbEZvHkgyEB8SMlSU8E84Ig81Og=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-no-access.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/images/illustrations/empty-state-no-access.svg",
+      "size": 6641,
+      "hash": "ceab8cfc684d0f41a61e69118f8910d1cd262590",
+      "sri": "Ju7gUImWC9AN46W/PTcTWazXaN5ZrqiQb3KGa+9BP6U8C1O62UGcGCgAad5q/Na00EIBTaRrHRu16H4KfvdEVw=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-no-access.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/images/illustrations/empty-state-no-access.svg",
+      "size": 6641,
+      "hash": "ceab8cfc684d0f41a61e69118f8910d1cd262590",
+      "sri": "Ju7gUImWC9AN46W/PTcTWazXaN5ZrqiQb3KGa+9BP6U8C1O62UGcGCgAad5q/Na00EIBTaRrHRu16H4KfvdEVw=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-no-results.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/images/illustrations/empty-state-no-results.svg",
+      "size": 16453,
+      "hash": "bc3c9c439da4fe835d94b20be48a9704f0920232",
+      "sri": "zo1wDi84eJtASkkl5MeO86+m8QdmCaR7cVHs1/LYZZ3duDh5y2MzDEvIMwSL/L7VfoMnA85b3O5Qs066opqnnw=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-no-results.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/images/illustrations/empty-state-no-results.svg",
+      "size": 16453,
+      "hash": "bc3c9c439da4fe835d94b20be48a9704f0920232",
+      "sri": "zo1wDi84eJtASkkl5MeO86+m8QdmCaR7cVHs1/LYZZ3duDh5y2MzDEvIMwSL/L7VfoMnA85b3O5Qs066opqnnw=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-not-available-in-lightning.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/images/illustrations/empty-state-not-available-in-lightning.svg",
+      "size": 5303,
+      "hash": "8bdfa130d537b7e19b12d1169911db655b1fec9c",
+      "sri": "+qf+NymdflQuapsf8rnq5Jv9Mtza4Br+KHO7OalN4nhwNlltlDBEKjgJv4hyenpCbX4GzJPIHjzB7WIXvSK9Sw=="
+    },
+    {
+      "path": "assets/images/illustrations/empty-state-not-available-in-lightning.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/images/illustrations/empty-state-not-available-in-lightning.svg",
+      "size": 5303,
+      "hash": "8bdfa130d537b7e19b12d1169911db655b1fec9c",
+      "sri": "+qf+NymdflQuapsf8rnq5Jv9Mtza4Br+KHO7OalN4nhwNlltlDBEKjgJv4hyenpCbX4GzJPIHjzB7WIXvSK9Sw=="
     },
     {
       "path": "app/lib/swipebox/img/icons.png",

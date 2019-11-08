@@ -140,7 +140,7 @@ permission_set:
 
 ### 字段
 
-开发人员可以配置对象的[字段](object_field.md)，设定字段名、显示名称、[字段类型](object_field_type.md)、可选项等属性。
+开发人员可以配置对象的[字段](object_field.md)，设定字段名、显示名称、字段类型、可选项等属性。
   
 ```yaml
 fields:

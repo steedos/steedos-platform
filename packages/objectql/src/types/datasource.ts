@@ -99,7 +99,7 @@ export class SteedosDataSourceType implements Dictionary {
     public set config(value: SteedosDataSourceTypeConfig) {
         this._config = value;
     }
-    
+
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
@@ -125,7 +125,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._objects[object_name] = object;
     }
 
-    initDriver(){
+    initDriver() {
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
             host: this._host,
@@ -195,7 +195,7 @@ export class SteedosDataSourceType implements Dictionary {
         })
     }
 
-    initReports(){
+    initReports() {
         _.each(this.config.reports, (reportConfig, report_id) => {
             this.addReport(report_id, reportConfig)
         })
@@ -220,7 +220,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._schema = schema
         this._driver = config.driver
         this._logging = config.logging
-        
+
         this.initDriver();
 
         // 添加对象到缓存
@@ -346,11 +346,11 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.insert(tableName, doc, userId)
     }
 
-    async update(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
+    async update(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.update(tableName, id, doc, userId)
     }
 
-    async updateOne(tableName: string, id: SteedosIDType, doc: Dictionary<any>, userId?: SteedosIDType) {
+    async updateOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
         return await this._adapter.updateOne(tableName, id, doc, userId)
     }
 
@@ -358,13 +358,26 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.updateMany(tableName, queryFilters, doc, userId)
     }
 
-    async delete(tableName: string, id: SteedosIDType, userId?: SteedosIDType) {
+    async delete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.delete(tableName, id, userId)
     }
 
     async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
         return await this._adapter.count(tableName, query, userId)
     }
+
+    async directInsert(tableName: string, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.directInsert(tableName, doc, userId)
+    }
+
+    async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.directUpdate(tableName, id, doc, userId)
+    }
+
+    async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType) {
+        return await this._adapter.directDelete(tableName, id, userId)
+    }
+
 
     public get schema(): SteedosSchema {
         return this._schema;
@@ -376,7 +389,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     getGraphQLSchema() {
-        if (this._graphQLSchema){
+        if (this._graphQLSchema) {
             return this._graphQLSchema;
         }
         return buildGraphQLSchema(this._schema, this);

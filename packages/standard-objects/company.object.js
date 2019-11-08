@@ -189,9 +189,11 @@ Creator.Objects['company'].actions = {
             var doUpdate = function() {
                 $("body").addClass("loading");
                 var userSession = Creator.USER_CONTEXT;
-                var url = "/api/odata/v4/" + userSession.spaceId + "/company/" + record_id + "/updateOrgs";
+                var spaceId = userSession.spaceId;
+                var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
+                var url = "/api/odata/v4/" + spaceId + "/company/" + record_id + "/updateOrgs";
                 try {
-                    var authorization = "Bearer " + userSession.spaceId + "," + userSession.authToken;
+                    var authorization = "Bearer " + spaceId + "," + authToken;
                     var fetchParams = {};
                     var headers = [{
                         name: 'Content-Type',

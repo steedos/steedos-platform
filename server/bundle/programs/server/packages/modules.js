@@ -273,6 +273,7 @@ install("steedos:workflow-chart");
 install("keepnox:perfect-scrollbar");
 install("jeremy:selectize");
 install("comerc:autoform-selectize");
+install("react-template-helper");
 install("steedos:webkit-notification");
 install("hot-code-push");
 install("launch-screen");
@@ -609,6 +610,33 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}},"react":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/react/package.json                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "react",
+  "version": "16.11.0",
+  "main": "index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/react/index.js                                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }},"mkdirp":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -802,7 +830,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.6.8",
+  "version": "1.9.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -819,10 +847,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.6.7",
-    "@steedos/migrate": "^1.6.7",
-    "@steedos/objectql": "^1.6.8",
-    "@steedos/standard-objects": "^1.6.7",
+    "@steedos/auth": "^1.9.1",
+    "@steedos/migrate": "^1.9.1",
+    "@steedos/objectql": "^1.9.1",
+    "@steedos/standard-objects": "^1.9.1",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -852,7 +880,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.6.8",
+    "@steedos/meteor-bundle-runner": "^1.9.1",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -869,7 +897,7 @@ module.exports = {
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "df74039ffc3d306d359a9ca5af3f838a770c6eec"
+  "gitHead": "574de651108b2868d889995c7a722e647f99ef62"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -895,7 +923,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.6.8",
+  "version": "1.9.1",
   "main": "lib/index.js"
 };
 
@@ -955,7 +983,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.6.7",
+  "version": "1.9.1",
   "main": "lib/index.js"
 };
 
@@ -1548,6 +1576,7 @@ module.useNode();
   "extensions": [
     ".js",
     ".json",
+    ".jsx",
     ".coffee"
   ]
 });

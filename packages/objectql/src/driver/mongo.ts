@@ -18,14 +18,14 @@ export class SteedosMongoDriver implements SteedosDriver {
         this._url = config.url;
     }
 
-    init(){
-        
+    init() {
+
     }
 
     getSupportedColumnTypes() {
         return [
-            SteedosFieldDBType.varchar, 
-            SteedosFieldDBType.text, 
+            SteedosFieldDBType.varchar,
+            SteedosFieldDBType.text,
             SteedosFieldDBType.number,
             SteedosFieldDBType.boolean,
             SteedosFieldDBType.date,
@@ -157,8 +157,12 @@ export class SteedosMongoDriver implements SteedosDriver {
         await this.connect();
         let collection = this.collection(tableName);
         let mongoOptions = this.getMongoOptions(query);
-
-        let result = await collection.findOne({ _id: id }, mongoOptions);
+        let mongoFilters = this.getMongoFilters(query.filters);
+        let selector = { _id: id };
+        if (!_.isEmpty(mongoFilters)) {
+            selector = Object.assign(mongoFilters, selector);
+        }
+        let result = await collection.findOne(selector, mongoOptions);
 
         return result;
     }
@@ -171,28 +175,40 @@ export class SteedosMongoDriver implements SteedosDriver {
         return result.ops[0];
     }
 
-    async update(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
-        if (_.isEmpty(data)){
-            throw new Error("the params 'data' must not be empty");
-        }
-        await this.connect();
-        let collection = this.collection(tableName);
-        let result = await collection.updateOne({ _id: id }, {$set: data});
-        if (result.result.ok) {
-            result = await collection.findOne({ _id: id });
-            return result;
-        }
-    }
-
-    async updateOne(tableName: string, id: SteedosIDType, data: Dictionary<any>) {
+    async update(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
         if (_.isEmpty(data)) {
             throw new Error("the params 'data' must not be empty");
         }
         await this.connect();
         let collection = this.collection(tableName);
-        let result = await collection.updateOne({ _id: id }, { $set: data });
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
+        let result = await collection.updateOne(selector, { $set: data });
         if (result.result.ok) {
-            result = await collection.findOne({ _id: id });
+            result = await collection.findOne(selector);
+            return result;
+        }
+    }
+
+    async updateOne(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
+        if (_.isEmpty(data)) {
+            throw new Error("the params 'data' must not be empty");
+        }
+        await this.connect();
+        let collection = this.collection(tableName);
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
+        let result = await collection.updateOne(selector, { $set: data });
+        if (result.result.ok) {
+            result = await collection.findOne(selector);
             return result;
         }
     }
@@ -207,10 +223,28 @@ export class SteedosMongoDriver implements SteedosDriver {
         return await collection.update(mongoFilters, { $set: data }, { multi: true });
     }
 
-    async delete(tableName: string, id: SteedosIDType) {
+    async delete(tableName: string, id: SteedosIDType | SteedosQueryOptions) {
         await this.connect();
         let collection = this.collection(tableName);
-        await collection.deleteOne({ _id: id });
+        let selector;
+        if (_.isObject(id)) {
+            selector = this.getMongoFilters(id['filters']);
+        } else {
+            selector = { _id: id };
+        }
+        await collection.deleteOne(selector);
+    }
+
+    async directInsert(tableName: string, data: Dictionary<any>) {
+        return this.insert(tableName, data)
+    }
+
+    async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
+       return this.update(tableName, id, data)
+    }
+
+    async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions) {
+       return this.delete(tableName, id)
     }
 
 }

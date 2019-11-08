@@ -73,7 +73,15 @@ fields:
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
+              if(values && values.object_name){
+                var _object = Creator.getObject(values.object_name);
+                if(_object){
+                  var icon = _object.icon;
+                  return [{label: "主键(_id)", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+                }
+              }else{
+                return []
+              }
             }
     required: true
     name: field_mapping
@@ -87,7 +95,15 @@ fields:
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
+              if(values && values.object_name){
+                var _object = Creator.getObject(values.object_name);
+                if(_object){
+                  var icon = _object.icon;
+                  return [{label: "主键(_id)", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+                }
+              }else{
+                return []
+              }
             }
     required: false
     name: external_id_name
