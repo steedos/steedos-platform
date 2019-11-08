@@ -8,5 +8,9 @@ Creator.evalInContext = function(js, context) {
 
 
 Creator.eval = function(js){
-	return eval(js)
-}
+	try{
+		return eval(js)
+	}catch (e){
+		console.error(e, js);
+	}
+};
