@@ -1,5 +1,6 @@
-import { SteedosDataSourceType } from '.';
+import { SteedosDataSourceType, addRecordFiles, addRecord } from '.';
 import _ = require('underscore');
+import { getRecords, getRecord } from './record';
 export type SteedosAppTypeConfig = {
     _id: string,
     name: string,
@@ -113,4 +114,20 @@ export class SteedosAppType{
             }
         }
     }
+}
+
+export function addAppConfigFiles(filePath: string){
+    addRecordFiles('app', filePath);
+}
+
+export const addAppConfig = (appConfig: SteedosAppTypeConfig) => {
+    addRecord('app', appConfig);
+}
+
+export const getAppConfigs = () => {
+    return getRecords('app')
+}
+
+export const getAppConfig = (_id: string):SteedosAppTypeConfig => {
+    return getRecord('app', _id);
 }

@@ -57,7 +57,7 @@ function validateObject(json){
     return true;
 }
 
-let loadObjects = (filePath: string) => {
+export const loadObjects = (filePath: string) => {
     let results = []
     const filePatten = [
         path.join(filePath, "*.object.yml"),
@@ -73,9 +73,8 @@ let loadObjects = (filePath: string) => {
     return results
 }
 
-exports.loadObjects = loadObjects
 
-exports.loadTriggers = (filePath: string)=>{
+export const loadTriggers = (filePath: string)=>{
     let results = []
     const filePatten = [
         path.join(filePath, "*.trigger.js")
@@ -88,7 +87,7 @@ exports.loadTriggers = (filePath: string)=>{
     return results
 }
 
-exports.loadFields = (filePath: string)=>{
+export const loadFields = (filePath: string)=>{
     let results = []
     const filePatten = [
         path.join(filePath, "*.field.yml"),
@@ -102,21 +101,17 @@ exports.loadFields = (filePath: string)=>{
     return results
 }
 
-exports.loadReports = (filePath: string)=>{
+export const loadJsonFiles = (filePatten: Array<string>)=>{
     let results = []
-    const filePatten = [
-        path.join(filePath, "*.report.yml"),
-        path.join(filePath, "*.report.js")
-    ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
-        results.push(json)
+        results.push({file: matchedPath, data: json})
     })
     return results
 }
 
-let loadApps = (filePath: string)=>{
+export const loadApps = (filePath: string)=>{
     let results = []
     if(filePath.indexOf("*") < 0 && isAppFile(filePath)){
         results.push(loadFile(filePath))
@@ -133,8 +128,6 @@ let loadApps = (filePath: string)=>{
     }
     return results
 }
-
-exports.loadApps = loadApps
 
 export function extend(destination: JsonMap, ...sources: JsonMap[]){
     _.each(sources, (source: JsonMap)=>{

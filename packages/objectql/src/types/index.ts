@@ -13,11 +13,12 @@ export { SteedosIDType } from "./field_types";
 export { SteedosQueryOptions } from "./query";
 export { SteedosObjectPermissionType, SteedosObjectPermissionTypeConfig } from "./object_permission";
 export { SteedosActionType, SteedosActionTypeConfig } from './action'
-export { SteedosAppType, SteedosAppTypeConfig } from './app'
+export * from './app'
 export { SteedosUserSession, SteedosUserSessionSpace, SteedosUserSessionCompany, SteedosUserSessionOrganization } from './userSession';
 export { SteedosQueryFilters } from './query';
 export { SteedosReportType, SteedosReportTypeConfig } from './report';
 export * from './object_dynamic_load'
+export * from "./record";
 
 export function getSteedosSchema(): SteedosSchema {
     return getFromContainer(SteedosSchema);

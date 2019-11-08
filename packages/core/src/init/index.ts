@@ -5,6 +5,7 @@ import { loadStandardObjects } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
 
 export async function init() {
+    WebAppInternals.setInlineScriptsAllowed(false);
     initDesignSystem()
     loadStandardObjects();
     Plugins.init();

@@ -1,4 +1,4 @@
-import { Dictionary, JsonMap } from '@salesforce/ts-types';
+import { Dictionary } from '@salesforce/ts-types';
 import {
     SteedosDriver,
     SteedosMongoDriver,
@@ -19,17 +19,13 @@ import {
     SteedosSchema,
     SteedosObjectPermissionTypeConfig,
     SteedosObjectPermissionType,
-    SteedosAppTypeConfig,
-    SteedosAppType,
-    SteedosReportTypeConfig,
-    SteedosReportType
+    getAppConfigs
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 import { GraphQLSchema } from 'graphql';
 import { getObjectConfigs, addObjectConfig, addObjectConfigFiles } from './object_dynamic_load';
 
-var util = require('../util')
 var path = require('path')
 
 export enum SteedosDatabaseDriverType {
@@ -59,10 +55,6 @@ export type SteedosDataSourceTypeConfig = {
     objectFiles?: string[]
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
     getRoles?: Function //TODO 尚未开放此功能
-    apps?: Dictionary<SteedosAppTypeConfig>
-    appFiles?: string[]
-    reports?: Dictionary<SteedosReportTypeConfig>
-    reportFiles?: string[]
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -103,9 +95,6 @@ export class SteedosDataSourceType implements Dictionary {
     public get driver(): SteedosDatabaseDriverType | string | SteedosDriver {
         return this._driver;
     }
-
-    private _apps: Dictionary<SteedosAppType> = {}
-    private _reports: Dictionary<SteedosReportType> = {}
 
     getObjects() {
         return this._objects
@@ -185,26 +174,6 @@ export class SteedosDataSourceType implements Dictionary {
         })
     }
 
-    initApps(){
-        _.each(this.config.apps, (appConfig, app_id) => {
-            this.addApp(app_id, appConfig)
-        })
-
-        _.each(this.config.appFiles, (appFile) => {
-            this.useAppFile(appFile)
-        })
-    }
-
-    initReports() {
-        _.each(this.config.reports, (reportConfig, report_id) => {
-            this.addReport(report_id, reportConfig)
-        })
-
-        _.each(this.config.reportFiles, (reportFile) => {
-            this.useReportFile(reportFile)
-        })
-    }
-
     constructor(datasource_name: string, config: SteedosDataSourceTypeConfig, schema: SteedosSchema) {
         this._name = datasource_name
         this.config = config
@@ -238,80 +207,6 @@ export class SteedosDataSourceType implements Dictionary {
             throw new Error('getRoles must be a function')
         }
         this._getRoles = config.getRoles
-    }
-
-
-    /**apps */
-    addApp(app_id: string, config: SteedosAppTypeConfig) {
-        config._id = app_id
-        this._apps[config._id] = new SteedosAppType(config, this)
-    }
-
-    useAppFiles(appFiles: string[]) {
-        _.each(appFiles, (appFile) => {
-            this.useAppFile(appFile)
-        })
-
-    }
-
-    useAppFile(filePath: string) {
-        let appJsons = util.loadApps(filePath)
-        _.each(appJsons, (json: SteedosAppTypeConfig) => {
-            this.addApp(json._id, json)
-        })
-    }
-
-    getApp(app_id: string) {
-        return this._apps[app_id]
-    }
-
-    getApps() {
-        return this._apps
-    }
-
-    getAppsConfig() {
-        let appsConfig: JsonMap = {}
-        _.each(this._apps, (app: SteedosAppType, _id: string) => {
-            appsConfig[_id] = app.toConfig()
-        })
-        return appsConfig
-    }
-
-    /**reports */
-    addReport(report_id: string, config: SteedosReportTypeConfig) {
-        config._id = report_id
-        this._reports[config._id] = new SteedosReportType(config, this)
-    }
-
-    useReportFiles(reportFiles: string[]) {
-        _.each(reportFiles, (reportFile) => {
-            this.useReportFile(reportFile)
-        })
-
-    }
-
-    useReportFile(filePath: string) {
-        let reportJsons = util.loadReports(filePath)
-        _.each(reportJsons, (json: SteedosReportTypeConfig) => {
-            json.mrt_file = path.join(filePath, `${json._id}.mrt`)
-            this.addReport(json._id, json)
-        })
-    }
-
-    getReport(report_id: string) {
-        return this._reports[report_id]
-    }
-
-    getReports() {
-        return this._reports
-    }
-
-    getReportsConfig() {
-        let reportsConfig: JsonMap = {}
-        _.each(this._reports, (report: SteedosReportType, _id: string) => {
-            reportsConfig[_id] = report.toConfig()
-        })
-        return reportsConfig
     }
 
     setObjectPermission(object_name: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
@@ -421,8 +316,6 @@ export class SteedosDataSourceType implements Dictionary {
 
     init() {
         this.initObjects();
-        this.initApps();
-        this.initReports();
         // this.schema.transformReferenceOfObject(this);
     }
 
@@ -430,5 +323,10 @@ export class SteedosDataSourceType implements Dictionary {
         if (this._adapter.init) {
             return await this._adapter.init(this._objects);
         }
+    }
+
+    // 暂时保留，兼容creator bootstrap接口
+    getAppsConfig() {
+        return getAppConfigs()
     }
 }

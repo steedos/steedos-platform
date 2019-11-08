@@ -4,7 +4,7 @@ import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
 import { ValidatorManager } from '../validators';
-import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosAppTypeConfig, SteedosReportTypeConfig, SteedosObjectPermissionTypeConfig } from '.'
+import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig } from '.'
 var util = require('../util')
 var clone = require('clone')
 var globby = require('globby');
@@ -13,8 +13,6 @@ export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
 export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
-const _appConfigs: Array<SteedosAppTypeConfig> = [];
-const _reportConfigs: Array<any> = [];
 const _routerConfigs: Array<any> = [];
 const _permissionSets: Array<any> = [];
 const _clientScripts: Array<string> = [];
@@ -171,48 +169,6 @@ export const loadStandardObjects = () => {
     addObjectConfigFiles(path.join(standardObjectsDir, "**"), 'default');
 }
 
-export function addAppConfigFiles(filePath: string){
-    if(!path.isAbsolute(filePath)){
-        throw new Error(`${filePath} must be an absolute path`);
-    }
-
-    let jsons = util.loadApps(filePath)
-    _.each(jsons, (json: SteedosAppTypeConfig) => {
-         addAppConfig(json);
-    })
-
-}
-
-export const addAppConfig = (appConfig: SteedosAppTypeConfig) => {
-    if (!appConfig.name) 
-        throw new Error(`Error add app, name required`);
-    _.remove(_appConfigs, {name: appConfig.name});
-    _appConfigs.push(appConfig)
-}
-
-export const getAppConfigs = () => {
-    return _appConfigs
-}
-
-export const getAppConfig = (appName: string):SteedosAppTypeConfig => {
-    return _.find(_appConfigs, {name: appName})
-}
-
-export const addReportConfig = (config: SteedosReportTypeConfig, datasource: string) => {
-    if (!config.name) 
-        throw new Error(`Error add app, name required`);
-    _.remove(_reportConfigs, {name: config.name});
-    _reportConfigs.push(config)
-}
-
-export const getReportConfigs = () => {
-    return _reportConfigs
-}
-
-export const getReportConfig = (name: string):SteedosAppTypeConfig => {
-    return _.find(_reportConfigs, {name: name})
-}
-
 export const addRouterConfig = (prefix: string, router: any) => {
     if (!prefix) 
         throw new Error(`Error add router, prefix required`);
@@ -275,3 +231,5 @@ export function addPermissionSet(_id: string, name: string) {
 export function getPermissionSet(_id: string){    
     return _.find(_permissionSets, {_id: _id})
 }
+
+

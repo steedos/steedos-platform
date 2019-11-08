@@ -117,12 +117,6 @@ export class SteedosSchema {
                 field.transformReferenceOfObject()
             })
         })
-
-        let apps = datasource.getApps()
-
-        _.each(apps, (app, app_name)=>{
-            app.transformReferenceOfObject()
-        })
     }
 
     getDataSource(datasource_name: string = defaultDatasourceName) {
