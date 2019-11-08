@@ -201,7 +201,11 @@ export class SteedosDataSourceType implements Dictionary {
 
         // 添加对象到缓存
         _.each(this.config.objectFiles, (objectPath) => {
-            addAllConfigFiles(path.join(process.cwd(), objectPath), this._name)
+            let filePath = objectPath;
+            if(!path.isAbsolute(objectPath)){
+                filePath = path.join(process.cwd(), objectPath)
+            }
+            addAllConfigFiles(filePath, this._name)
         })
 
         if (config.getRoles && !_.isFunction(config.getRoles)) {
