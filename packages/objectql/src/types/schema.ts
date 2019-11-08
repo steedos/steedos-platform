@@ -134,8 +134,8 @@ export class SteedosSchema {
 export function getSteedosSchema(): SteedosSchema {
     
     ValidatorManager.loadCoreValidators();
+    loadStandardObjects();
 
     const schema = getFromContainer(SteedosSchema);
-    loadStandardObjects();
     return schema;
 }

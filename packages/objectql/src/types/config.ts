@@ -1,6 +1,8 @@
 import path = require('path')
 import _ = require('lodash')
 import {loadJsonFiles} from '../util'
+import { addAppConfigFiles } from './app';
+import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles } from '.';
 
 export const LOADED_OBJECT_RECORDS = {}
 
@@ -67,4 +69,12 @@ export const getConfigs = (objectName: string) => {
 export const getConfig = (objectName: string, _id: string) => {
     let records = getConfigs(objectName);
     return _.find(records, {_id: _id})
+}
+
+export const addAllConfigFiles = (filePath, datasource) => {
+    addObjectConfigFiles(filePath, datasource);
+    addAppConfigFiles(filePath);
+    addClientScriptFiles(filePath);
+    addServerScriptFiles(filePath);
+    addConfigDataFiles(filePath);
 }

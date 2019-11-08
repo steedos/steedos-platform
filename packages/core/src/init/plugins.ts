@@ -65,8 +65,7 @@ export class Plugins {
                 }
                 _.each(_datasource.objectFiles, (objectFile)=>{
                     let filePath = path.join(pluginDir, objectFile)
-                    objectql.addObjectConfigFiles(filePath, name)
-                    objectql.addAppConfigFiles(filePath, name)
+                    objectql.addAllConfigFiles(filePath, name)
                 })
             })
         }

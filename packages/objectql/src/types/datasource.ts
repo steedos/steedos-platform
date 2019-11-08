@@ -25,7 +25,7 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 import { GraphQLSchema } from 'graphql';
-import { getObjectConfigs, addObjectConfig, addObjectConfigFiles } from './object_dynamic_load';
+import { getObjectConfigs, addObjectConfig, addAllConfigFiles } from '.';
 
 var path = require('path')
 
@@ -201,7 +201,7 @@ export class SteedosDataSourceType implements Dictionary {
 
         // 添加对象到缓存
         _.each(this.config.objectFiles, (objectPath) => {
-            addObjectConfigFiles(path.join(process.cwd(), objectPath), this._name)
+            addAllConfigFiles(path.join(process.cwd(), objectPath), this._name)
         })
 
         if (config.getRoles && !_.isFunction(config.getRoles)) {
