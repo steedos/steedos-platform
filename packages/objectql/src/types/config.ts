@@ -77,4 +77,7 @@ export const addAllConfigFiles = (filePath, datasource) => {
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
     addConfigDataFiles(filePath);
+    addConfigFiles('flow', filePath);
+    addConfigFiles('form', filePath);
+    addConfigFiles('dashboard', filePath);
 }
