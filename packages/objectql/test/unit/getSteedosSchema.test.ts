@@ -1,10 +1,8 @@
 import { getSteedosSchema } from '../../src/types';
 import { expect } from 'chai';
-var path = require('path')
 
-describe('get SteedosSchema', async () => {
+describe('get SteedosSchema', () => {
     let schema = getSteedosSchema()
-    
     // 添加默认数据源
     schema.addDataSource('default', {
         driver: "mongo",
@@ -32,11 +30,9 @@ describe('get SteedosSchema', async () => {
                 }
             }
         },
-        objectFiles: [path.resolve(__dirname, "./load")]
+        objectFiles: ["./test/unit/load"]
     })
-
-    await schema.getDataSource().init()
-
+    schema.getDataSource().init()
     it('should return true', () => {
         let object = schema.getObject("post")
 
