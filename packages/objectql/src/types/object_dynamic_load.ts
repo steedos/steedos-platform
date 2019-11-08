@@ -13,7 +13,6 @@ export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _routerConfigs: Array<any> = [];
-const _permissionSets: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 
@@ -223,15 +222,4 @@ export function addObjectPermission(objectName: string, permissionConfig: Steedo
     }
     object.permissions[permissionConfig.name] = permissionConfig;
 }
-
-export function addPermissionSet(_id: string, name: string) {
-    if (getPermissionSet(_id))
-        _.remove(_permissionSets, {_id: _id});
-    _permissionSets.push({_id: _id, name: name})
-}
-
-export function getPermissionSet(_id: string){    
-    return _.find(_permissionSets, {_id: _id})
-}
-
 
