@@ -6,8 +6,7 @@ import * as migrate from '@steedos/migrate';
 
 export async function init() {
     initDesignSystem()
-    loadStandardObjects()
-    debugger
+    loadStandardObjects();
     Plugins.init();
     initCreator();
     await Datasources.init();

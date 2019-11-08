@@ -17,7 +17,8 @@ const _appConfigs: Array<SteedosAppTypeConfig> = [];
 const _reportConfigs: Array<any> = [];
 const _routerConfigs: Array<any> = [];
 const _permissionSets: Array<any> = [];
-const _staticScripts: Array<string> = [];
+const _clientScripts: Array<string> = [];
+const _serverScripts: Array<string> = [];
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -31,7 +32,7 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export function addObjectConfigFiles(filePath: string, datasource?: string){
+export function addObjectConfigFiles(filePath: string, datasource: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -41,7 +42,7 @@ export function addObjectConfigFiles(filePath: string, datasource?: string){
 
     let objectJsons = util.loadObjects(filePath)
     _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-         addObjectConfig(json, datasource);
+        addObjectConfig(json, datasource);
     })
 
     let triggerJsons = util.loadTriggers(filePath)
@@ -49,14 +50,45 @@ export function addObjectConfigFiles(filePath: string, datasource?: string){
         addObjectListenerConfig(json);
     })
     
-    addStaticScriptFiles(filePath);
+    addClientScriptFiles(filePath);
+    addServerScriptFiles(filePath);
 }
+
+export const addServerScriptFiles = (filePath: string) => {
+    const filePatten = [
+        path.join(filePath, "*.object.js"),
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        _serverScripts.push(matchedPath)
+    })
+}
+
+export const getServerScripts = () => {
+    return _serverScripts;
+}
+
+export const  addClientScriptFiles = (filePath: string) => {
+    const filePatten = [
+        path.join(filePath, "*.client.js")
+    ]
+    let matchedPaths: Array<string> = globby.sync(filePatten);
+    matchedPaths = _.sortBy(matchedPaths)
+    _.each(matchedPaths, (matchedPath) => {
+        let code = fs.readFileSync(matchedPath, 'utf8');
+        _clientScripts.push(code)
+    })
+}
+
+export const getClientScripts = () => {
+    return _clientScripts;
+}
+
 
 export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
     let object_name = objectConfig.name;
     let config:SteedosObjectTypeConfig = {
         name: object_name,
-        datasource: datasource,
         fields: {}
     }
     if (object_name === MONGO_BASE_OBJECT || object_name === SQL_BASE_OBJECT) {
@@ -79,6 +111,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
             config = util.extend(config, clone(coreObjectConfig), clone(objectConfig));
         }
     }
+    config.datasource = datasource;
     _.remove(_objectConfigs, {name: object_name});
     _objectConfigs.push(config)
 }
@@ -233,22 +266,6 @@ export function addObjectPermission(objectName: string, permissionConfig: Steedo
     object.permissions[permissionConfig.name] = permissionConfig;
 }
 
-export const  addStaticScriptFiles = (filePath: string) => {
-    const filePatten = [
-        path.join(filePath, "*.client.js")
-    ]
-    let matchedPaths: Array<string> = globby.sync(filePatten);
-    matchedPaths = _.sortBy(matchedPaths)
-    _.each(matchedPaths, (matchedPath) => {
-        let code = fs.readFileSync(matchedPath, 'utf8');
-        _staticScripts.push(code)
-    })
-}
-
-export const getStaticScripts = () => {
-    return _staticScripts;
-}
-
 export function addPermissionSet(_id: string, name: string) {
     if (getPermissionSet(_id))
         _.remove(_permissionSets, {_id: _id});
@@ -258,5 +275,3 @@ export function addPermissionSet(_id: string, name: string) {
 export function getPermissionSet(_id: string){    
     return _.find(_permissionSets, {_id: _id})
 }
-
-loadStandardObjects();

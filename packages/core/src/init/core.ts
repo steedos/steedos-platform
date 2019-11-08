@@ -8,6 +8,7 @@ const router = express.Router();
 var path = require('path');
 
 import { Publish } from '../publish'
+import { getSteedosSchema } from '@steedos/objectql';
 
 
 const extendSimpleSchema = () => {
@@ -25,16 +26,17 @@ const extendSimpleSchema = () => {
 export const initCreator = () => {
     extendSimpleSchema();
     Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT)
-    _.each(Creator.Objects, function (obj, object_name) {
-        obj.name = object_name
-        objectql.addObjectConfig(obj, 'default')
-    });
+    Creator.steedosSchema = getSteedosSchema()
+    // 不需要加载 Creator 中定义的objects
+    // _.each(Creator.Objects, function (obj, object_name) {
+    //     obj.name = object_name
+    //     objectql.addObjectConfig(obj, 'default')
+    // });
     objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
 
     let allObjects = objectql.getObjectConfigs('default');
     _.each(allObjects, function (obj) {
         Creator.Objects[obj.name] = obj;
-        Creator.loadObjects(obj, obj.name);
     });
 
     let allApps = objectql.getAppConfigs();
@@ -43,6 +45,37 @@ export const initCreator = () => {
           app._id = app.name
         Creator.Apps[app._id] = app
     });
+
+    let allServerScripts = objectql.getServerScripts();
+    _.each(allServerScripts, function (scriptFile) {
+        require(scriptFile)
+    });
+
+    let clientScripts = objectql.getClientScripts();
+    let clientCodes = getClientBaseObject();
+    _.each(clientScripts, function (code) {
+        clientCodes += code
+        clientCodes += "\r\n";
+    });
+    WebAppInternals.addStaticJs(clientCodes)
+
+    _.each(allObjects, function (obj) {
+        if (obj.name != 'users')
+            Creator.loadObjects(obj, obj.name);
+    });
+}
+
+const getClientBaseObject = () => {
+    let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
+        if (typeof val === 'function') {
+            return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
+        }
+        return val;
+    });
+    let code = "Creator.baseObject=" + baseObject;
+    code = code.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
+    code = code + ";\r\n";
+    return code;
 }
 
 export class Core {

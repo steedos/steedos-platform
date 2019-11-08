@@ -5,6 +5,8 @@ datasources:
   default:
     connection:
       url: mongodb://127.0.0.1/steedos
+    objectFiles:
+      - "./src/**"
 public:
   cfs:
     store: "local"
