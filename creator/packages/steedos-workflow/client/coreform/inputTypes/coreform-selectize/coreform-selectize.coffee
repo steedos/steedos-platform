@@ -138,13 +138,12 @@ Template.afSteedosSelectize.onRendered ()->
 								</svg>
 							</button>
 						</span>'
-
 	selectizeLoad = (query, callback) ->
 		if _.isFunction(query)
 			callback = query;
 			query = '';
 		if query.indexOf("'") > -1
-			console.debug('搜索已忽略：odata字段搜索字符串包含无效字符\'');
+			console.debug('搜索已忽略：odata字段搜索字符串包含无效字符\'', query);
 			return
 		if this.lastQuery != query || this.lastFilters != filterStr || true
 			this.lastQuery = query;
