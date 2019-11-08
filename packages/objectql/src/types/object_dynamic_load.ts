@@ -3,7 +3,7 @@ import _ = require('lodash')
 import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
-import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig } from '.'
+import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addConfigDataFiles } from '.'
 var util = require('../util')
 var clone = require('clone')
 var globby = require('globby');
@@ -51,6 +51,8 @@ export function addObjectConfigFiles(filePath: string, datasource: string){
     
     addClientScriptFiles(filePath);
     addServerScriptFiles(filePath);
+    addConfigDataFiles(filePath);
+
 }
 
 export const addServerScriptFiles = (filePath: string) => {
