@@ -108,7 +108,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         }
     }
     config.datasource = datasource;
-    _.remove(_objectConfigs, {name: object_name});
+    _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     _objectConfigs.push(config)
 }
 
