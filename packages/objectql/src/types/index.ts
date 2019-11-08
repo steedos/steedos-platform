@@ -1,10 +1,6 @@
-import { SteedosSchema } from "..";
-import { getFromContainer } from "typeorm";
-
-
 export * from "./schema";
-export { SteedosDatabaseDriverType, SteedosDataSourceType, SteedosDataSourceTypeConfig } from "./datasource";
-export { SteedosObjectType, SteedosObjectTypeConfig } from "./object";
+export * from "./datasource";
+export * from "./object";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'
@@ -18,16 +14,4 @@ export { SteedosUserSession, SteedosUserSessionSpace, SteedosUserSessionCompany,
 export { SteedosQueryFilters } from './query';
 export { SteedosReportType, SteedosReportTypeConfig } from './report';
 export * from './object_dynamic_load'
-export * from "./record";
-
-export function getSteedosSchema(): SteedosSchema {
-    return getFromContainer(SteedosSchema);
-}
-
-export function getObject(objectName: string, schema?: SteedosSchema){
-    return (schema ? schema : getSteedosSchema()).getObject(objectName);
-}
-
-export function getDataSource(datasourceName: string, schema?: SteedosSchema) {
-    return (schema ? schema : getSteedosSchema()).getDataSource(datasourceName);
-}
+export * from './config'

@@ -1,5 +1,5 @@
 import { JsonMap } from '@salesforce/ts-types';
-import { SteedosQueryFilters, addRecordFiles, addRecord, getRecords, getRecord } from '.';
+import { SteedosQueryFilters, addConfigFiles, addConfig, getConfigs, getConfig } from '.';
 import { SteedosDataSourceType } from '.';
 
 export const LOADED_REPORTS_CONFIGS: Array<SteedosReportTypeConfig> = [];
@@ -112,17 +112,17 @@ export class SteedosReportType{
 }
 
 export function addReportConfigFiles(filePath: string){
-    addRecordFiles('report', filePath);
+    addConfigFiles('report', filePath);
 }
 
 export const addReportConfig = (appConfig: SteedosReportTypeConfig) => {
-    addRecord('report', appConfig);
+    addConfig('report', appConfig);
 }
 
 export const getReportConfigs = () => {
-    return getRecords('report')
+    return getConfigs('report')
 }
 
 export const getReportConfig = (_id: string):SteedosReportTypeConfig => {
-    return getRecord('report', _id);
+    return getConfig('report', _id);
 }

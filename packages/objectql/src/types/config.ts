@@ -5,7 +5,7 @@ import {loadJsonFiles} from '../util'
 export const LOADED_OBJECT_RECORDS = {}
 
 
-export function addRecordArrayFiles(filePath: string){
+export function addConfigDataFiles(filePath: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -20,12 +20,12 @@ export function addRecordArrayFiles(filePath: string){
     _.each(jsons, (json: any) => {
         let objectName = path.basename(json.file).split(".data.")[0]
         _.each(json.data, (record) => {
-            addRecord(objectName, record);
+            addConfig(objectName, record);
         })
     })
 }
 
-export function addRecordFiles(objectName: string, filePath: string){
+export function addConfigFiles(objectName: string, filePath: string){
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -41,26 +41,30 @@ export function addRecordFiles(objectName: string, filePath: string){
         let recordId = path.basename(json.file).split(`.${objectName}.`)[0]
         if (typeof json.data._id === "undefined")
             json.data._id = recordId
-        addRecord(objectName, json.data);
+        addConfig(objectName, json.data);
     })
 }
 
-export const addRecord = (objectName: string, record: any) => {
+export const addConfig = (objectName: string, record: any) => {
     if(!record._id){
         throw new Error(`Error adding record to ${objectName}, record._id required`);
     }
-    let records = getRecords(objectName);
+    let records = getConfigs(objectName);
     _.remove(records, {_id: record._id});
     records.push(record)
 }
 
-export const getRecords = (objectName: string) => {
+export const getConfigDatabase = (objectName: string) => {
+    return LOADED_OBJECT_RECORDS
+}
+
+export const getConfigs = (objectName: string) => {
     if (!LOADED_OBJECT_RECORDS.hasOwnProperty(objectName))
         LOADED_OBJECT_RECORDS[objectName] = []
     return LOADED_OBJECT_RECORDS[objectName]
 }
 
-export const getRecord = (objectName: string, _id: string) => {
-    let records = getRecords(objectName);
+export const getConfig = (objectName: string, _id: string) => {
+    let records = getConfigs(objectName);
     return _.find(records, {_id: _id})
 }

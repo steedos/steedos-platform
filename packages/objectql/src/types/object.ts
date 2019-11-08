@@ -1,5 +1,5 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession } from ".";
+import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -861,4 +861,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return this._fields[fieldName]
         });
     }
+}
+
+export function getObject(objectName: string, schema?: SteedosSchema){
+    return (schema ? schema : getSteedosSchema()).getObject(objectName);
 }

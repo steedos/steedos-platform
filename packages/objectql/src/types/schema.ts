@@ -1,6 +1,9 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
 import _ = require("underscore");
+import { getFromContainer } from 'typeorm';
+import { ValidatorManager } from '../validators';
+import { loadStandardObjects } from './object_dynamic_load';
 const util = require('../util')
 
 const defaultDatasourceName = 'default';
@@ -126,4 +129,13 @@ export class SteedosSchema {
     getDataSources(){
         return this._datasources
     }
+}
+
+export function getSteedosSchema(): SteedosSchema {
+    
+    ValidatorManager.loadCoreValidators();
+
+    const schema = getFromContainer(SteedosSchema);
+    loadStandardObjects();
+    return schema;
 }

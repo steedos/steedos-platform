@@ -3,7 +3,6 @@ import _ = require('lodash')
 import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
-import { ValidatorManager } from '../validators';
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig } from '.'
 var util = require('../util')
 var clone = require('clone')
@@ -17,6 +16,8 @@ const _routerConfigs: Array<any> = [];
 const _permissionSets: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
+
+let standardObjectsLoaded: boolean = false;
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -145,8 +146,11 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
 }
 
 export const loadStandardObjects = () => {
+    
+    if (standardObjectsLoaded)
+        return;
 
-    ValidatorManager.loadCoreValidators();
+    standardObjectsLoaded = true;
 
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
     let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))

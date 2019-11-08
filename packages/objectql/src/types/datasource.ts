@@ -19,7 +19,8 @@ import {
     SteedosSchema,
     SteedosObjectPermissionTypeConfig,
     SteedosObjectPermissionType,
-    getAppConfigs
+    getAppConfigs,
+    getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
@@ -329,4 +330,8 @@ export class SteedosDataSourceType implements Dictionary {
     getAppsConfig() {
         return getAppConfigs()
     }
+}
+
+export function getDataSource(datasourceName: string, schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getDataSource(datasourceName);
 }

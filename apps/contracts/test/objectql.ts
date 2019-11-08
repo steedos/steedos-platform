@@ -11,3 +11,4 @@ object.find({}).then(function(result){
 })
 objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
 let apps = objectql.getAppConfigs()
+console.log(objectql.getConfigDatabase())
