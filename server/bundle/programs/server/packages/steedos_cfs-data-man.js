@@ -35,7 +35,7 @@ require("mime/package.json");
 require("temp/package.json");
 
 checkNpmVersions({
-  mime: "^2.0.2",
+  mime: ">=1.6.0",
   'buffer-stream-reader': "0.1.1",
   //request: "2.44.0",
   // We use a specific commit from a fork of "request" package for now; we need fix for
