@@ -93,8 +93,11 @@ _select = (object_name) ->
 	default_columns = Creator.getObjectDefaultColumns(object_name) || [obj.NAME_FIELD_KEY]
 	fields = obj.fields
 	default_columns = _.map default_columns, (column) ->
-		if fields[column]?.type and !fields[column].hidden
-			return column
+		fieldName = column
+		if _.isObject(column)
+			fieldName = column.field
+		if fields[fieldName]?.type and !fields[fieldName].hidden
+			return fieldName
 		else
 			return undefined
 	default_columns = _.compact(default_columns)
