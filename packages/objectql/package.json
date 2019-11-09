@@ -9,7 +9,7 @@
     "watch": "tsc --watch",
     "debug": "nodemon --inspect server.js",
     "compile": "tsc",
-    "test": "mocha test/unit/loadSteedosConfig.test.ts",
+    "test": "mocha test/unit/**/*.ts",
     "prepare": "tsc"
   },
   "author": "",
