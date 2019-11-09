@@ -35,7 +35,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
     disconnect() {
     }
 
-    init() {
+    async init() {
 
     }
 

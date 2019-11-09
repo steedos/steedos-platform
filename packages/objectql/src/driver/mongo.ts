@@ -18,7 +18,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         this._url = config.url;
     }
 
-    init() {
+    async init() {
 
     }
 

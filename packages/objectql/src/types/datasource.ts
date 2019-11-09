@@ -26,7 +26,7 @@ import { SteedosDriverConfig } from '../driver';
 import { buildGraphQLSchema } from '../graphql';
 import { GraphQLSchema } from 'graphql';
 import { getObjectConfigs, addObjectConfig, addAllConfigFiles } from '.';
-
+let Fiber = require('fibers');
 var path = require('path')
 
 export enum SteedosDatabaseDriverType {
@@ -321,12 +321,22 @@ export class SteedosDataSourceType implements Dictionary {
 
     init() {
         this.initObjects();
+        this.initTypeORM();
         // this.schema.transformReferenceOfObject(this);
     }
 
-    async initTypeORM() {
+    initTypeORM() {
         if (this._adapter.init) {
-            return await this._adapter.init(this._objects);
+            let self = this;
+            Fiber(function(){
+                let fiber = Fiber.current;
+                self._adapter.init(self._objects).then(result => {
+                    fiber.run();
+                }).catch(result => {
+                    fiber.run();
+                })
+                Fiber.yield();
+            }).run();
         }
     }
 
