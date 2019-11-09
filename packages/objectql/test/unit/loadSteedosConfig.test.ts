@@ -3,9 +3,6 @@ let objectql = require("../../src")
 let path = require("path");
 
 
-
-
-
 describe('Load StedosConfig Test', () => {
     it('LoadStedosConfigTest return true', async () => {
         let datasource = objectql.getDataSource()
