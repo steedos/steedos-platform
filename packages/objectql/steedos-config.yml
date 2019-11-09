@@ -1,0 +1,18 @@
+datasources:
+  default:
+    connection:
+      url: mongodb://127.0.0.1/steedos
+    objectFiles: 
+      - "../../apps/contracts/src/**"
+public:
+  cfs:
+    store: "local"
+    local:
+      folder: "./storage"
+cron:
+  instancerecordqueue_interval: 10000
+plugins: 
+webservices:
+  steedos: /
+tenant: 
+  _id: 

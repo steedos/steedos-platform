@@ -22,13 +22,6 @@ describe('Test use file', async () => {
         expect(object.name).to.equal("test")
     });
 
-    it('use field file', async () => {
-        let object = mySchema.getObject("test")
-        let room = object.getField('room')
-        expect(room.type).to.equal("lookup")
-
-    });
-
     it('use trigger file', async () => {
         let meeting = mySchema.getObject('meeting');
         let triggers = meeting.triggers

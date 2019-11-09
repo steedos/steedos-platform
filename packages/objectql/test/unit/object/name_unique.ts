@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { SteedosSchema } from '../../../src';
 var path = require('path')
 
-describe('Test object name is unique', async () => {
+describe('Test object name is unique', () => {
     let mySchema = new SteedosSchema({
         datasources: {
             mongo: {
@@ -22,13 +22,12 @@ describe('Test object name is unique', async () => {
             }
         }
     })
-    await mySchema.getDataSource("mongo").init();
-
-    it('name is unique check', async () => {
+    mySchema.getDataSource("mongo").init();
+    it('name is unique check', () => {
         
         let nameRepeatTest = false
         try {
-            await mySchema.getDataSource("mongo2").init()
+            mySchema.getDataSource("mongo2").init()
         } catch (error) {
             if(error.message.indexOf("is unique") > -1){
                 nameRepeatTest = true
@@ -37,8 +36,8 @@ describe('Test object name is unique', async () => {
         expect(nameRepeatTest).to.equal(true)
     });
 
-    it('name is unique use', async () => {
-        await mySchema.getDataSource("mongo3").init();
+    it('name is unique use',  () => {
+        mySchema.getDataSource("mongo3").init();
         let accounts3IsUndefined = true
         let accounts3 = mySchema.getObject("accounts3")
         if(accounts3){

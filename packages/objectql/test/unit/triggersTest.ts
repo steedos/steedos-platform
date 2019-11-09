@@ -2,14 +2,13 @@ import { expect } from 'chai';
 import { SteedosSchema } from '../../src';
 var path = require('path')
 
-describe('Test object triggers', async () => {
-    let mySchema = new SteedosSchema({datasources: {default: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos', objectFiles: [path.resolve(__dirname, "./load")]}}})
-    mySchema.getDataSource().init()
+describe('Test object triggers', () => {
+    let mySchema = new SteedosSchema({datasources: {defaultTriggers: {driver: 'mongo', url: 'mongodb://127.0.0.1/steedos', objectFiles: [path.resolve(__dirname, "./triggers")]}}})
+    mySchema.getDataSource('defaultTriggers').init()
     it('beforeInsert', async () => {
-        let meeting = mySchema.getObject('meeting');
+        let meeting = mySchema.getObject('meeting_new');
         let beforeInsert = false
         let beforeInsertSetValue = false
-
         let random = new Date().getTime();
         let id1 = `test20190402_${random}`;
         let id2 = `test20190403_${random}`;
@@ -36,7 +35,7 @@ describe('Test object triggers', async () => {
         let beforeUpdate = false
         let beforeUpdateSetValue = false
 
-        let meeting = mySchema.getObject('meeting');
+        let meeting = mySchema.getObject('meeting_new');
 
         let random = new Date().getTime();
         let id1 = `test20190404_${random}`;

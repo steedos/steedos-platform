@@ -3,7 +3,7 @@ import { SteedosSchema } from '../../src';
 import { Dictionary } from '@salesforce/ts-types';
 var path = require('path')
 
-describe('Test Permission', async () => {
+describe('Test Permission', () => {
 
     let userSessionStorage: Dictionary<any> = {}
 
@@ -44,7 +44,7 @@ describe('Test Permission', async () => {
 
     let mySchema = new SteedosSchema({
         datasources: {
-            default: {
+            default2: {
                 driver: 'mongo', 
                 url: 'mongodb://127.0.0.1/steedos',
                 objectFiles: [path.resolve(__dirname, "./load")],
@@ -78,21 +78,22 @@ describe('Test Permission', async () => {
                             allowRead: true,
                             allowEdit: true,
                             allowDelete: false,
-                            uneditable_fields: ['no']
+                            uneditable_fields: ['no'],
+                            viewAllRecords: true
                         },
                         admin: {
                             allowCreate: true,
                             allowRead: true,
                             allowEdit: true,
                             allowDelete: true,
-                            
+                            viewAllRecords: true
                         }
                     }
                 }
             }
         }
     })
-    await mySchema.getDataSource().init();
+    mySchema.getDataSource('default2').init();
     it('guest: 权限测试', async () => {
         let userSession = userSessionStorage['0'];
         let insertOK = true, updateOK=true, findOk=true, deleteOK=true;
@@ -313,14 +314,10 @@ describe('Test Permission', async () => {
         let test = mySchema.getObject('test2');
         let random = new Date().getTime();
         let id = `test2019_${random}`;
-        await test.insert({_id: id, name: 'test2019 name', no: 666}, userSession2)
-        
+        await test.insert({_id: id, name: 'test2019 name', no: 666, space: 'XXX', owner: '1'}, userSession2)
         let userDoc = await test.findOne(id, {fields: ['name','no']}, userSession1)
-        
         let adminDoc = await test.findOne(id, {fields: ['name','no']}, userSession2)
-        
         await test.delete(id, userSession2)
-        
         expect(userDoc.name).to.undefined && expect(adminDoc.name).to.equal('test2019 name')
     })
 
@@ -330,7 +327,7 @@ describe('Test Permission', async () => {
         let test = mySchema.getObject('test2');
         let random = new Date().getTime();
         let id = `test2019_${random}`;
-        await test.insert({_id:id, name: 'test2019 name', no: 666})
+        await test.insert({_id:id, name: 'test2019 name', no: 666, space: 'XXX', owner: '2'})
         
         let userUpdateOK = false
 

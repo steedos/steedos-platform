@@ -15,7 +15,7 @@ describe('Test idField', () => {
                     driver: SteedosDatabaseDriverType.Sqlite,
                     url: path.join(__dirname, "sqlite-test.db"),
                     objects: {
-                        test: {
+                        testIdField: {
                             name: 'SQ1',
                             label: '关系数据库主键测试',
                             fields: {
@@ -46,7 +46,7 @@ describe('Test idField', () => {
 
         let users = mySchema.getObject('users')
   
-        let test = mySchema.getObject('sqlite.test');
+        let test = mySchema.getObject('sqlite.testIdField');
         
         expect(users.idFieldName).to.equal('_id') && expect(test.idFieldName).to.equal('id') && expect(test.getField('name').fieldDBType).to.equal('text')
     });

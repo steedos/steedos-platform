@@ -81,7 +81,7 @@ describe('Test companyRecordsPermission', function () {
 
   let mySchema = new SteedosSchema({
     datasources: {
-      default: {
+      defaultMongo: {
         driver: 'mongo',
         url: 'mongodb://127.0.0.1/test',
         objectFiles: [path.resolve(__dirname, "./load")],
@@ -115,7 +115,7 @@ describe('Test companyRecordsPermission', function () {
 
   describe('admin', function () {
     it('insert,find,findOne,count,update,updateOne,updateMany,delete', async function () {
-      await mySchema.getDataSource().init();
+      mySchema.getDataSource('defaultMongo').init();
 
       let crpObj = mySchema.getObject('companyRecordsPermission');
       let _id = new Date().getTime() + 'admin';
@@ -155,7 +155,7 @@ describe('Test companyRecordsPermission', function () {
 
   describe('workflow_admin', function () {
     it('insert,find,findOne,count,update,updateOne,updateMany,delete', async function () {
-      await mySchema.getDataSource().init();
+      mySchema.getDataSource('defaultMongo').init();
 
       let crpObj = mySchema.getObject('companyRecordsPermission');
       let _id = new Date().getTime() + 'workflow_admin';

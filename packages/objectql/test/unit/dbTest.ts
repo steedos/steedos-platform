@@ -6,14 +6,14 @@ describe('Test db', () => {
     it('should return true', async () => {
         let mySchema = new SteedosSchema({
             datasources: {
-                default: {
+                default2: {
                     driver: SteedosDatabaseDriverType.Mongo, 
                     url: 'mongodb://127.0.0.1/steedos',
                     objectFiles: [path.resolve(__dirname, "./load")]
                 }
             }
         })
-        await mySchema.getDataSource().init()
+        mySchema.getDataSource('default2').init()
         let users = mySchema.getObject('users')
         let random = new Date().getTime();
         let id = `test_users_${random}`;
