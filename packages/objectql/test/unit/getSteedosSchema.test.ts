@@ -4,7 +4,7 @@ import { expect } from 'chai';
 describe('get SteedosSchema', () => {
     let schema = getSteedosSchema()
     // 添加默认数据源
-    schema.addDataSource('default', {
+    schema.addDataSource('defaultSchema', {
         driver: "mongo",
         url: 'mongodb://127.0.0.1:27017/steedos',
         objects: {
@@ -32,7 +32,7 @@ describe('get SteedosSchema', () => {
         },
         objectFiles: ["./test/unit/load"]
     })
-    schema.getDataSource().init()
+    schema.getDataSource('defaultSchema').init()
     it('should return true', () => {
         let object = schema.getObject("post")
 
