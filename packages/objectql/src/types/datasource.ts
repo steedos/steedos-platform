@@ -333,6 +333,7 @@ export class SteedosDataSourceType implements Dictionary {
                 self._adapter.init(self._objects).then(result => {
                     fiber.run();
                 }).catch(result => {
+                    console.error(result)
                     fiber.run();
                 })
                 Fiber.yield();
