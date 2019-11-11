@@ -25,8 +25,9 @@ export const ValidatorManager = {
         if (Validators.id)
             delete Validators.id
     },
+}
 
-    loadCoreValidators() {
-        ValidatorManager.loadFile(path.resolve(path.dirname(require.resolve("@steedos/schemas")), "./object/schema.json"));
-    }
+
+export const loadCoreValidators = () => {
+    ValidatorManager.loadFile(path.resolve(path.dirname(require.resolve("@steedos/schemas")), "./object/schema.json"));
 }

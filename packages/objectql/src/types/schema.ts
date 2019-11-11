@@ -2,7 +2,7 @@ import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
 import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
-import { ValidatorManager } from '../validators';
+import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
 const util = require('../util')
 
@@ -138,6 +138,6 @@ export function getSteedosSchema(): SteedosSchema {
 }
 
 (function loadRun(){
-    ValidatorManager.loadCoreValidators();    
+    loadCoreValidators();    
     loadStandardObjects();
 })();
