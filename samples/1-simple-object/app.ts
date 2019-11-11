@@ -31,4 +31,7 @@ createConnection(options).then(async connection => {
         .insert(post)
         .then(post => console.log("Post has been saved: ", post));
 
+    connection.disconnect();
+    
 }, error => console.log("Cannot connect: ", error));
+
