@@ -14,6 +14,27 @@ var searchVal = {
 	options_limit: optionsLimit
 };
 ###
+
+getQueryFiltersStr = (query, search_field)->
+	filtersStr = "";
+	if query && search_field
+		query = query.replace(new RegExp('\''), '')
+		_.each query.split(' '), (text)->
+			if !_.isEmpty(text)
+				filtersOrStr = "";
+				_.each search_field.split(','), (field)->
+					if !_.isEmpty(field)
+						if _.isEmpty(filtersOrStr)
+							filtersOrStr = "(contains(tolower(#{field}), '#{encodeURIComponent(Creator.convertSpecialCharacter(text))}'))"
+						else
+							filtersOrStr = "#{filtersOrStr} or " + "(contains(tolower(#{field}), '#{encodeURIComponent(Creator.convertSpecialCharacter(text))}'))"
+
+				if !_.isEmpty(filtersOrStr)
+					if _.isEmpty(filtersStr)
+						filtersStr = filtersOrStr
+					else
+						filtersStr = "#{filtersStr} and #{filtersOrStr}"
+	return filtersStr
 DataSource.Odata.lookup_options = (options)->
 	object = Creator.getObject(options.params.reference_to, options.params.space)
 	name_field_key = object.NAME_FIELD_KEY
@@ -26,7 +47,7 @@ DataSource.Odata.lookup_options = (options)->
 		options_limit = options?.options_limit || 10
 
 		filters = []
-		console.log('options.filterQuery', options.filterQuery);
+#		console.log('options.filterQuery', options.filterQuery);
 		if !_.isEmpty(options.filterQuery)
 			if(!_.isString(options.filterQuery) && !_.isArray(options.filterQuery))
 				_fqstring = [];
@@ -41,7 +62,7 @@ DataSource.Odata.lookup_options = (options)->
 		selectedFilter = []
 
 		if options.searchText
-			searchFilter = "(contains(tolower(#{name_field_key}),'#{encodeURIComponent(Creator.convertSpecialCharacter(options.searchText))}'))"
+			searchFilter = getQueryFiltersStr(options.searchText.trim(), name_field_key)
 
 		if options?.values?.length
 			_.each options.values, (item)->
