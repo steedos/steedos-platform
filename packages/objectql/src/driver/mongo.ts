@@ -11,11 +11,27 @@ import _ = require("underscore");
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
     _client: any;
+    _config: SteedosDriverConfig;
     _collections: Dictionary<any>;
 
     constructor(config: SteedosDriverConfig) {
         this._collections = {};
-        this._url = config.url;
+        this._config = config;
+        this._url = this.buildConnectionUrl();
+    }
+
+    /**
+     * Builds connection url that is passed to underlying driver to perform connection to the mongodb database.
+     */
+    protected buildConnectionUrl(): string {
+        if (this._config.url)
+            return this._config.url;
+
+        const credentialsUrlPart = (this._config.username && this._config.password)
+            ? `${this._config.username}:${this._config.password}@`
+            : "";
+
+        return `mongodb://${credentialsUrlPart}${this._config.host || "127.0.0.1"}:${this._config.port || "27017"}/${this._config.database}`;
     }
 
     async init() {
