@@ -1,11 +1,10 @@
 import { Dictionary } from '@salesforce/ts-types';
-import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
-import { isMeteor } from "./meteor";
+import { SteedosDataSourceType, SteedosDataSourceTypeConfig } from ".";
+import { isMeteor, getSteedosConfig } from "../util";
 import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
 import { loadCoreValidators } from '../validators';
 import { loadStandardObjects } from './object_dynamic_load';
-const util = require('../util')
 
 const defaultDatasourceName = 'default';
 
@@ -31,36 +30,29 @@ export class SteedosSchema {
         return this._objectsMap[objectName]
     }
 
-    loadConfig(){
-        let config: any = util.getSteedosConfig();
+    addDataSourceFromSteedosConfig() {
+        let config: any = getSteedosConfig();
         if(config && config.datasources){
-            _.each(config.datasources, (datasource: any, datasource_name)=>{
-                _.extend(datasource, datasource.connection)
+            _.each(config.datasources, (datasource: any, datasource_name: string)=>{
+                datasource = _.extend(datasource, datasource.connection)
+                if (datasource_name === 'default') {
+                    if (isMeteor())
+                        datasource.driver = "meteor-mongo"
+                    else
+                        datasource.driver = "mongo"
+                }
+                this.addDataSource(datasource_name, datasource);
             })
-            
-            if (config.datasources.default) {
-                if (isMeteor())
-                    config.datasources.default.driver = "meteor-mongo"
-                else
-                    config.datasources.default.driver = "mongo"
-            }
         }
-        return config;
     }
-    
-    constructor(config?: SteedosSchemaConfig) {
-        if(!config){
-            config = this.loadConfig()
-        }
 
+    constructor(config?: SteedosSchemaConfig) {
         if(config){
             _.each(config.datasources, (datasourceConfig, datasource_name) => {
                 this.addDataSource(datasource_name, datasourceConfig)
             })
-            // if(!this.getDataSource(defaultDatasourceName)){
-            //     throw new Error('missing default database');
-            // }
         }
+        this.addDataSourceFromSteedosConfig();
     }
 
     /**

@@ -4,7 +4,7 @@ import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
-import { isMeteor } from './meteor'
+import { isMeteor } from '../util'
 
 var util = require('../util')
 var clone = require('clone')

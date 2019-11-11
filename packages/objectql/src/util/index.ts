@@ -206,3 +206,10 @@ export function getRandomString(length) {
     }
     return result;
  }
+
+
+declare var Meteor:any;
+
+export const isMeteor = () => {
+    return (typeof Meteor != "undefined")            
+}

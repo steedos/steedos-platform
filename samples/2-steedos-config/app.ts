@@ -1,13 +1,12 @@
 import "reflect-metadata";
 import {createConnection} from "@steedos/objectql";
 
-createConnection('mongo').then(async connection => {
+createConnection('default').then(async connection => {
     let post = {
         name: "Hello how are you?",
         body: "hello",
         likesCount: 100
     }
-    connection.connect();
     let postObject = connection.getObject("post");
 
     postObject

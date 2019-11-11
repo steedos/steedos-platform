@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import * as path from "path";
-import {ConnectionOptions, createConnection} from "@steedos/objectql";
+import {ConnectionOptions, createConnection, getConnectionManager} from "@steedos/objectql";
 
 const options: ConnectionOptions = {
     "name": "mongo",
@@ -18,13 +18,12 @@ const options: ConnectionOptions = {
     objectFiles: [path.join(__dirname, "objects")]
 };
 
-createConnection(options).then(async connection => {
+getConnectionManager().create(options).then(async connection => {
     let post = {
         name: "Hello how are you?",
         body: "hello",
         likesCount: 100
     }
-    connection.connect();
     let postObject = connection.getObject("post");
 
     postObject

@@ -1,57 +1,57 @@
-# Working with Connection
+---
+title: 数据库连接
+---
 
-* [What is `Connection`](#what-is-connection)
-* [Creating a new connection](#creating-a-new-connection)
-* [Using `ConnectionManager`](#using-connectionmanager)
-* [Working with connection](#working-with-connection)
-    
-## What is `Connection`
+  * [连接](#connection)
+  * [什么是`Connection`](#什么是`Connection`)
+  * [创建新的连接](#创建新的连接)
+  * [使用`ConnectionManager`](#使用`ConnectionManager`)
+  * [使用连接](#使用连接)
 
-Your interaction with the database is only possible once you setup a connection.
-ObjectQL's `Connection` does not setup a database connection as it might seem, instead it sets up a connection pool.
-Connection pool setup is established once `connect` method of the `Connection` is called.
-`connect` method is called automatically if you setup your connection using `createConnection` function.
-Disconnection (closing all connections in the pool) is made when `close` is called.
-Generally, you must create connection only once in your application bootstrap,
-and close it after you completely finished working with the database.
-In practice, if you are building a backend for your site and your backend server always stays running -
-you never close a connection.
+## 什么是`Connection`
 
-## Creating a new connection
+只有在建立连接后才能与数据库进行交互。
+ObjectQL 的`Connection`不会像看起来那样设置单个数据库连接，而是设置连接池。
+如果使用`createConnection`函数设置连接，则会自动调用`connect`方法。调用`close`时会断开连接（关闭池中的所有连接）。
+通常情况下，你只能在应用程序启动时创建一次连接，并在完全使用数据库后关闭它。实际上，如果要为站点构建后端，并且后端服务器始终保持运行,则不需要关闭连接。
 
-There are several ways how a connection can be created.
-The most simple and common way is to use `createConnection` and `createConnections` functions.
+## 创建新的连接
 
-`createConnection` creates a single connection:
+有多种方法可以创建连接。但是最简单和最常用的方法是使用`createConnection`和`createConnections`函数。
+
+`createConnection` 创建单个连接：
 
 ```typescript
-import {createConnection, Connection} from "@steedos/objectql";
+import { createConnection, Connection } from "@steedos/objectql";
 
 const connection = await createConnection({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test"
+  name: "mysql",
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "test",
+  password: "test",
+  database: "test"
 });
 ```
 
-A single `url` attribute, plus the `type` attribute, will work too.
+只使用`url`和`type`也可以进行连接。
 
 ```js
 createConnection({
-    type: 'postgres',
-    url: 'postgres://test:test@localhost/test'
-})
+  name: "postgres",  
+  type: "postgres",
+  url: "postgres://test:test@localhost/test"
+});
 ```
 
-`createConnections` creates multiple connections:
+`createConnections` 创建多个连接:
 
 ```typescript
-import {createConnections, Connection} from "typeorm";
+import { createConnections, Connection } from "@steedos/objectql";
 
-const connections = await createConnections([{
+const connections = await createConnections([
+  {
     name: "default",
     type: "mysql",
     host: "localhost",
@@ -59,7 +59,8 @@ const connections = await createConnections([{
     username: "test",
     password: "test",
     database: "test"
-}, {
+  },
+  {
     name: "test2-connection",
     type: "mysql",
     host: "localhost",
@@ -67,140 +68,112 @@ const connections = await createConnections([{
     username: "test",
     password: "test",
     database: "test2"
-}]);
+  }
+]);
 ```
 
-Both these functions create `Connection` based on connection options you pass and call a `connect` method.
-You can create [steedos-config.yml](../steedos-config.md) file in the root of your project
-and connection options will be automatically read from this file by those methods.
-Root of your project is the same level where your `node_modules` directory is.
+这两种方式都根据你传递的连接选项创建`Connection`，并调用`connect`方法。另外你也可以在项目的根目录中创建一个`ormconfig.json`文件，`createConnection`和`createConnections`将自动从此文件中读取连接选项。项目的根目录与`node_modules`目录的级别相同。
 
 ```typescript
-import {createConnection, createConnections, Connection} from "@steedos/objectql";
+import { createConnection, createConnections, Connection } from "@steedos/objectql";
 
-// here createConnection will load connection options from
-// steedos-config.yml
-// files, or from special environment variables
+// createConnection将从ormconfig.json / ormconfig.js / ormconfig.yml / ormconfig.env / ormconfig.xml 文件或特殊环境变量中加载连接选项
 const connection: Connection = await createConnection();
 
-// you can specify the name of the connection to create
-// (if you omit name it will create a connection without name specified)
+// 你可以指定要创建的连接的名称
+// （如果省略名称，则将创建没有指定名称的连接）
 const secondConnection: Connection = await createConnection("test2-connection");
 
-// if createConnections is called instead of createConnection then
-// it will initialize and return all connections defined in ormconfig file
+// 如果调用createConnections而不是createConnection
+// 它将初始化并返回ormconfig文件中定义的所有连接
 const connections: Connection[] = await createConnections();
 ```
 
-Different connections must have different names.
-By default, if connection name is not specified it's equal to `default`.
-Usually, you use multiple connections when you use multiple databases or multiple connection configurations.
+不同的连接必须具有不同的名称默。认情况下，如果未指定连接名称，则为`default`。
+通常在你使用多个数据库或多个连接配置时才会使用多连接。
 
-Once you created a connection you can obtain it anywhere from your app, using `getConnection` function:
+创建连接后，你可以使用`getConnection`函数从应用程序中的任何位置使用它：
 
 ```typescript
-import {getConnection} from "typeorm";
+import { getConnection } from "type@steedos/objectqlorm";
 
-// can be used once createConnection is called and is resolved
+// 可以在调用createConnection后使用并解析
 const connection = getConnection();
 
-// if you have multiple connections you can get connection by name
+// 如果你有多个连接，则可以按名称获取连接
 const secondConnection = getConnection("test2-connection");
 ```
 
-Avoid creating extra classes / services to store and manage your connections.
-This functionality is already embedded into ObjectQL -
-you don't need to overengineer and create useless abstractions.
+## 使用`ConnectionManager`
 
-## Using `ConnectionManager`
-
-You can create connection using `ConnectionManager` class. For example:
+你可以使用`ConnectionManager`类创建连接。例如：
 
 ```typescript
-import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
+import { getConnectionManager, ConnectionManager, Connection } from "@steedos/objectql";
 
 const connectionManager = getConnectionManager();
 const connection = connectionManager.create({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "test",
+  password: "test",
+  database: "test"
 });
-await connection.connect(); // performs connection
+await connection.connect(); // 执行连接
 ```
 
-This is not a general way of creating a connection, but it may be useful for some users.
-For example, users who want to create connection and store its instance,
-but have to control when the actual "connection" will be established.
-Also you can create and maintain your own `ConnectionManager`:
+这不是常规创建连接的方法，但它可能对某些用户有用。例如，想要创建连接并存储其实例,同时控制何时建立实际"connection"。你还可以创建和维护自己的`ConnectionManager`：
 
 ```typescript
-import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
+import { getConnectionManager, ConnectionManager, Connection } from "@steedos/objectql";
 
 const connectionManager = new ConnectionManager();
 const connection = connectionManager.create({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "test",
+  password: "test",
+  database: "test"
 });
-await connection.connect(); // performs connection
+await connection.connect(); // 执行连接
 ```
 
-But note, this way you won't be able to use `getConnection()` anymore -
-you'll need to store your connection manager instance and use `connectionManager.get` to get a connection you need.
+## 使用连接
 
-Generally avoid this method and avoid unnecessary complications in your application,
-use `ConnectionManager` only if you really think you need it.
-
-## Working with connection
-
-Once you set your connection up, you can use it anywhere in your app using `getConnection` function:
+设置连接后，可以使用`getConnection`函数在应用程序的任何位置使用它：
 
 ```typescript
-import {getConnection} from "typeorm";
-import {User} from "../entity/User";
+import { getConnection } from "@steedos/objectql";
+import { User } from "../entity/User";
 
 export class UserController {
-
-    @Get("/users")
-    getAll() {
-        return getConnection().manager.find(User);
-    }
-
+  @Get("/users")
+  getAll() {
+    return getConnection().manager.find(User);
+  }
 }
 ```
 
-You can also use `ConnectionManager#get` to get a connection,
-but using `getConnection()` is enough in most cases.
+使用 Connection，你可以对实体执行数据库操作，尤其是使用连接的`EntityManager`和`Repository`。
+有关它们的更多信息，请参阅[Entity Manager 和 Repository](working-with-entity-manager.md) 文档。
 
-Using Connection you execute database operations with your entities,
-particularly using connection's `EntityManager` and `Repository`.
-For more information about them see [Entity Manager and Repository](working-with-entity-manager.md) documentation.
-
-But generally, you don't use `Connection` much.
-Most of the time you only create a connection and use `getRepository()` and `getManager()`
-to access your connection's manager and repositories without directly using connection object:
+但一般来说，你不要太多使用`Connection`。大多数情况下，你只需创建连接并使用`getRepository()`和`getManager()`来访问连接的管理器和存储库，而无需直接使用连接对象：
 
 ```typescript
-import {getManager, getRepository} from "typeorm";
-import {User} from "../entity/User";
+import { getManager, getRepository } from "typeorm";
+import { User } from "../entity/User";
 
 export class UserController {
+  @Get("/users")
+  getAll() {
+    return getManager().find(User);
+  }
 
-    @Get("/users")
-    getAll() {
-        return getManager().find(User);
-    }
-
-    @Get("/users/:id")
-    getAll(@Param("id") userId: number) {
-        return getRepository(User).findOne(userId);
-    }
-
+  @Get("/users/:id")
+  getAll(@Param("id") userId: number) {
+    return getRepository(User).findOne(userId);
+  }
 }
 ```

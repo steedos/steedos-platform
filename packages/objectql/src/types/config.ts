@@ -82,3 +82,4 @@ export const addAllConfigFiles = (filePath, datasource) => {
     addConfigFiles('form', filePath);
     addConfigFiles('dashboard', filePath);
 }
+

@@ -1,5 +1,5 @@
 datasources:
-  mongo:
+  default:
     driver: mongo
     host: localhost
     port: 27017

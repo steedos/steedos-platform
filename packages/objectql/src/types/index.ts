@@ -5,7 +5,6 @@ export * from "./schema";
 export * from "./datasource";
 export * from "./object";
 export * from "./connection";
-export * from "./meteor";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'

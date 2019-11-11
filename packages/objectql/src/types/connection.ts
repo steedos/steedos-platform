@@ -1,5 +1,6 @@
 import { SteedosDataSourceTypeConfig, getSteedosSchema, SteedosDataSourceType } from "../";
 import { getSteedosConfig } from '../util';
+import _ = require('lodash');
 
 export type Connection = SteedosDataSourceType;
 export type ConnectionOptions = SteedosDataSourceTypeConfig;
@@ -34,24 +35,38 @@ export async function createConnection(options: ConnectionOptions): Promise<Conn
  */
 export async function createConnection(optionsOrName?: any): Promise<Connection> {
     let connection: Connection;
-    if (typeof optionsOrName === "string")
+    if (typeof optionsOrName === "string" || typeof optionsOrName === 'undefined')
     {
         connection =  getSteedosSchema().getDataSource(optionsOrName)
+        if (connection) {
+            connection.connect();
+            return connection;
+        } else 
+            throw new Error (`Connection not found: ${optionsOrName}`)
     } else {
         let datasourceName: string = optionsOrName.name? optionsOrName.name : "default";
         connection =  getSteedosSchema().addDataSource(datasourceName, optionsOrName);
+        connection.connect();
+        return connection;
     }
-
-    connection.connect();
-    return connection;
 }
 
-export async function createConnections(optionsArray: Array<ConnectionOptions>): Promise<Array<Connection>> {
+export async function createConnections(optionsArray: ConnectionOptions[]): Promise<Connection[]> {
+
     let connections:Array<Connection> = []
-    optionsArray.forEach( async element => {
-        let connection = await createConnection(element);
-        connections.push(connection);
-    });
+    if (!optionsArray) {
+        let _datasources = getSteedosSchema().getDataSources()
+        _.each(_datasources, (connection, ds_name) => {
+            connection.connect();
+            connections.push(connection);
+        })
+
+    } else {
+        optionsArray.forEach( async element => {
+            let connection = await createConnection(element);
+            connections.push(connection);
+        });
+    }
     return connections;
 }
 
@@ -59,4 +74,14 @@ export const getConnectionOptions = async (connectionName: string = "default"): 
     let config:any = getSteedosConfig();
     if (config && config.datasources && config.datasources[connectionName] )
         return config.datasources[connectionName]
+}
+
+export const ConnectionManager = {
+    async create(options){
+        return createConnection(options)
+    }
+}
+
+export const getConnectionManager = () => {
+    return ConnectionManager;
 }
