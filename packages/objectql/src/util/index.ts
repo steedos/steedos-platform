@@ -191,8 +191,8 @@ export function getSteedosConfig(){
     let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
-    }else{
-        throw new Error('Config file not found: ' + configPath);
+    // }else{
+    //     throw new Error('Config file not found: ' + configPath);
     }
     return config;
 }

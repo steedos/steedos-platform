@@ -345,6 +345,13 @@ export class SteedosDataSourceType implements Dictionary {
     getAppsConfig() {
         return getAppConfigs()
     }
+
+    async connect() {
+        this.initObjects();
+        // init typeorm
+        if (this._adapter.init) 
+            this._adapter.init(this._objects)
+    }
 }
 
 export function getDataSource(datasourceName: string, schema?: SteedosSchema) {

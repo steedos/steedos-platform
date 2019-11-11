@@ -103,6 +103,7 @@ export class SteedosSchema {
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
         this._datasources[datasource_name] = datasource
+        return datasource;
     }
 
     /**

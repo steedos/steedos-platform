@@ -4,6 +4,7 @@ export * from './object_dynamic_load'
 export * from "./schema";
 export * from "./datasource";
 export * from "./object";
+export * from "./connection";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
 export { SteedosListenerConfig } from './listeners'
 export { SteedosTriggerType } from './trigger'
