@@ -1,5 +1,6 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { SteedosDataSourceType, SteedosDataSourceTypeConfig} from ".";
+import { isMeteor } from "./meteor";
 import _ = require("underscore");
 import { getFromContainer } from 'typeorm';
 import { loadCoreValidators } from '../validators';
@@ -8,14 +9,8 @@ const util = require('../util')
 
 const defaultDatasourceName = 'default';
 
-declare var Meteor:any;
-
 export type SteedosSchemaConfig = {
     datasources?: Dictionary<SteedosDataSourceTypeConfig>
-}
-
-export function isMeteor() {
-    return (typeof Meteor != "undefined")            
 }
 
 export class SteedosSchema {
@@ -139,5 +134,6 @@ export function getSteedosSchema(): SteedosSchema {
 
 (function loadRun(){
     loadCoreValidators();    
-    loadStandardObjects();
+    if (isMeteor())
+        loadStandardObjects();
 })();

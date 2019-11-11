@@ -4,6 +4,8 @@ import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
+import { isMeteor } from './meteor'
+
 var util = require('../util')
 var clone = require('clone')
 var globby = require('globby');
@@ -30,7 +32,7 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
     return _.find(_objectConfigs, {name: object_name})
 }
 
-export function addObjectConfigFiles(filePath: string, datasource: string){
+export const addObjectConfigFiles = (filePath: string, datasource: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
@@ -39,9 +41,9 @@ export function addObjectConfigFiles(filePath: string, datasource: string){
       datasource = 'default'
 
     let objectJsons = util.loadObjects(filePath)
-    _.each(objectJsons, (json: SteedosObjectTypeConfig) => {
-        addObjectConfig(json, datasource);
-    })
+    objectJsons.forEach(element => {
+        addObjectConfig(element, datasource);
+    });
 
     let triggerJsons = util.loadTriggers(filePath)
     _.each(triggerJsons, (json: SteedosListenerConfig) => {
@@ -99,7 +101,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
     } else {
-        if (datasource === 'default') {
+        if (isMeteor() && (datasource === 'default')) {
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             config = util.extend(config, clone(baseObjectConfig), clone(objectConfig));
         } else {
