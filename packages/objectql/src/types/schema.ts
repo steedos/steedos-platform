@@ -38,10 +38,12 @@ export class SteedosSchema {
                 _.extend(datasource, datasource.connection)
             })
             
-            if (isMeteor())
-                config.datasources.default.driver = "meteor-mongo"
-            else
-                config.datasources.default.driver = "mongo"
+            if (config.datasources.default) {
+                if (isMeteor())
+                    config.datasources.default.driver = "meteor-mongo"
+                else
+                    config.datasources.default.driver = "mongo"
+            }
         }
         return config;
     }

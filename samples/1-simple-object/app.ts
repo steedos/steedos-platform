@@ -3,7 +3,7 @@ import * as path from "path";
 import {ConnectionOptions, createConnection} from "@steedos/objectql";
 
 const options: ConnectionOptions = {
-    "name": "default",
+    "name": "mongo",
     "driver": "mongo",
     "host": "localhost",
     "port": 27017,
@@ -31,7 +31,7 @@ createConnection(options).then(async connection => {
         .insert(post)
         .then(post => console.log("Post has been saved: ", post));
 
-    connection.disconnect();
+    connection.close();
     
 }, error => console.log("Cannot connect: ", error));
 

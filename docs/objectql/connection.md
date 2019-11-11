@@ -9,8 +9,6 @@
 
 Your interaction with the database is only possible once you setup a connection.
 ObjectQL's `Connection` does not setup a database connection as it might seem, instead it sets up a connection pool.
-If you are interested in a real database connection, then refer to `QueryRunner` documentation.
-Each instance of `QueryRunner` is a separate isolated database connection.
 Connection pool setup is established once `connect` method of the `Connection` is called.
 `connect` method is called automatically if you setup your connection using `createConnection` function.
 Disconnection (closing all connections in the pool) is made when `close` is called.
@@ -27,7 +25,7 @@ The most simple and common way is to use `createConnection` and `createConnectio
 `createConnection` creates a single connection:
 
 ```typescript
-import {createConnection, Connection} from "typeorm";
+import {createConnection, Connection} from "@steedos/objectql";
 
 const connection = await createConnection({
     type: "mysql",
@@ -38,6 +36,7 @@ const connection = await createConnection({
     database: "test"
 });
 ```
+
 A single `url` attribute, plus the `type` attribute, will work too.
 
 ```js
@@ -72,15 +71,15 @@ const connections = await createConnections([{
 ```
 
 Both these functions create `Connection` based on connection options you pass and call a `connect` method.
-You can create [ormconfig.json](./using-ormconfig.md) file in the root of your project
+You can create [steedos-config.yml](../steedos-config.md) file in the root of your project
 and connection options will be automatically read from this file by those methods.
 Root of your project is the same level where your `node_modules` directory is.
 
 ```typescript
-import {createConnection, createConnections, Connection} from "typeorm";
+import {createConnection, createConnections, Connection} from "@steedos/objectql";
 
 // here createConnection will load connection options from
-// ormconfig.json / ormconfig.js / ormconfig.yml / ormconfig.env / ormconfig.xml
+// steedos-config.yml
 // files, or from special environment variables
 const connection: Connection = await createConnection();
 

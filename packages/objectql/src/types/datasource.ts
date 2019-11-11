@@ -356,7 +356,7 @@ export class SteedosDataSourceType implements Dictionary {
             this._adapter.init(this._objects)
     }
 
-    async disconnect() {
+    async close() {
         if (this._adapter.disconnect) 
             this._adapter.disconnect()
     }
