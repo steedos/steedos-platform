@@ -2,31 +2,13 @@
 title: 对象
 ---
 
-* [对象是什么?](#对象是什么)
-* [对象列](#对象列)
-  * [主列](#主列)
-  * [特殊列](#特殊列)
-  * [空间列](#空间列)
-* [列类型](#列类型)
-  * [`mysql`/`mariadb`的列类型](#`mysql`/`mariadb`的列类型)
-  * [`postgres`的列类型](#`postgres`的列类型)
-  * [`sqlite`/`cordova`/`react-native`/`expo`的列类型](#sqlite`/`cordova`/`react-native`/`expo`的列类型)
-  *   [`mssql`的列类型](#`mssql`的列类型)
-  *   [`oracle`的列类型](#`oracle`的列类型)
-  *   [`enum`列类型](#`enum`列类型)
-  *   [`simple-array`的列类型](#`simple-array`的列类型)
-  *   [`simple-json`列类型](#`simple-json`列类型)
-  *   [具有生成值的列](#具有生成值的列)
-* [列选项](#列选项)
-
 ## 对象是什么?
 
 对象是一个映射到数据库表（或使用 MongoDB 时的集合）的配置文件。
 你可以通过定义yml文件来创建一个对象：
 
 ```yml
-name: User
-label: Users
+name: user
 fields:
   id:
     type: number
@@ -52,11 +34,10 @@ fields:
 基本对象由列和关系组成。
 每个对象**必须**有一个主列（如果使用 MongoDB，则为 _id 列）。
 
-每个对象都必须在连接选项中注册：
+每个对象都必须在Connection选项中注册，你可以指定包含所有对象的整个目录， 该目录下所有对象都将被加载。
 
 ```typescript
-import { createConnection, Connection } from "typeorm";
-import { User } from "./entity/User";
+import { createConnection, Connection } from "@steedos/objectql";
 
 const connection: Connection = await createConnection({
     type: "mysql",
@@ -65,23 +46,7 @@ const connection: Connection = await createConnection({
     username: "test",
     password: "test",
     database: "test",
-    entities: [User]
-});
-```
-
-或者你可以指定包含所有对象的整个目录， 该目录下所有对象都将被加载：
-
-```typescript
-import { createConnection, Connection } from "typeorm";
-
-const connection: Connection = await createConnection({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
-    entities: ["entity/*.js"]
+    objectFiles: ["./objects/"]
 });
 ```
 

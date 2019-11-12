@@ -1,8 +1,8 @@
 ---
-title: 配置
+title: steedos-config
 ---
 
-## steedos-config.yml
+## 配置文件
 
 steedos-config.yml 用于配置系统参数，位于每个项目的根目录。
 

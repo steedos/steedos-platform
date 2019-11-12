@@ -1,12 +1,6 @@
 ---
-title: 数据库连接
+title: Connection API
 ---
-
-  * [连接](#connection)
-  * [什么是`Connection`](#什么是`Connection`)
-  * [创建新的连接](#创建新的连接)
-  * [使用`ConnectionManager`](#使用`ConnectionManager`)
-  * [使用连接](#使用连接)
 
 ## 什么是`Connection`
 
@@ -26,7 +20,7 @@ import { createConnection, Connection } from "@steedos/objectql";
 
 const connection = await createConnection({
   name: "mysql",
-  type: "mysql",
+  driver: "mysql",
   host: "localhost",
   port: 3306,
   username: "test",
@@ -40,7 +34,7 @@ const connection = await createConnection({
 ```js
 createConnection({
   name: "postgres",  
-  type: "postgres",
+  driver: "postgres",
   url: "postgres://test:test@localhost/test"
 });
 ```
@@ -53,7 +47,7 @@ import { createConnections, Connection } from "@steedos/objectql";
 const connections = await createConnections([
   {
     name: "default",
-    type: "mysql",
+    driver: "mysql",
     host: "localhost",
     port: 3306,
     username: "test",
@@ -62,7 +56,7 @@ const connections = await createConnections([
   },
   {
     name: "test2-connection",
-    type: "mysql",
+    driver: "mysql",
     host: "localhost",
     port: 3306,
     username: "test",
@@ -113,7 +107,7 @@ import { getConnectionManager, ConnectionManager, Connection } from "@steedos/ob
 
 const connectionManager = getConnectionManager();
 const connection = connectionManager.create({
-  type: "mysql",
+  driver: "mysql",
   host: "localhost",
   port: 3306,
   username: "test",
@@ -130,7 +124,7 @@ import { getConnectionManager, ConnectionManager, Connection } from "@steedos/ob
 
 const connectionManager = new ConnectionManager();
 const connection = connectionManager.create({
-  type: "mysql",
+  driver: "mysql",
   host: "localhost",
   port: 3306,
   username: "test",
