@@ -45,8 +45,6 @@ fields:
     required: true
     omit: false
     hidden: false
-    type: lookup
-    reference_to: organizations
 list_views:
   all:
     label: 所有

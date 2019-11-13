@@ -15,8 +15,6 @@ fields:
     reference_to: department
   company_id:
     label: 公司
-    type: lookup
-    reference_to: company
   description:
     label: 备注
     type: textarea

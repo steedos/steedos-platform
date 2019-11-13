@@ -119,8 +119,6 @@ fields:
     omit: false
     hidden: false
     sortable: true
-    type: lookup
-    reference_to: organizations
   chengbankeshi:
     type: text
     label: 承办科室
