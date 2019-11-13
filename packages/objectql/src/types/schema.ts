@@ -122,6 +122,9 @@ export class SteedosSchema {
 }
 
 export function getSteedosSchema(): SteedosSchema {
+    loadCoreValidators();    
+    if (isMeteor())
+        loadStandardObjects();
     const schema = getFromContainer(SteedosSchema);
     return schema;
 }
