@@ -11,7 +11,5 @@ export const initPublicStaticRouter = () => {
             routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + "/";
         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
         WebApp.rawConnectHandlers.use(router);
-    }else{
-        console.warn('enablePublicRouterWarning:',`${publicPath} folder not found`)
     }
 }
