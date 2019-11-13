@@ -138,6 +138,18 @@ fields:
     sortable: true
     index: true
     multiple: true
+    defaultValue: !!js/function |
+      function(){
+        if(Meteor.isClient){
+          var companyId = Steedos.getUserCompanyId();
+          if(companyId){
+            return [companyId]
+          }
+          else{
+            return []
+          }
+        }
+      }
     omit: true
     hidden: true
   instance_state:

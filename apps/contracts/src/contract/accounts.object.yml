@@ -92,6 +92,10 @@ fields:
       - 使用中
       - 停用
     name: status
+  company_id:
+    label: 主单位
+    omit: false
+    hidden: false
 list_views:
   all:
     label: 所有单位

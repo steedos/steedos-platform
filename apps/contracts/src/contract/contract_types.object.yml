@@ -16,6 +16,10 @@ fields:
     label: 印花税率
     scale: 4
     name: yinhuashuilv
+  company_ids:
+    label: 所属单位
+    omit: false
+    hidden: false
 permission_set:
   user:
     allowCreate: false

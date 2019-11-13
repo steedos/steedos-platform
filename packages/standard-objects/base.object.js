@@ -239,9 +239,38 @@ module.exports = {
             when: "before.update",
             todo: function (userId, doc, fieldNames, modifier, options) {
                 modifier.$set = modifier.$set || {};
+                modifier.$unset = modifier.$unset || {};
                 modifier.$set.modified = new Date();
                 if (userId) {
-                    return modifier.$set.modified_by = userId;
+                    modifier.$set.modified_by = userId;
+                }
+                if (_.has(modifier.$set, "company_ids")){
+                    /*
+                        原则上应该将 company_ids 设置为可编辑，company_id 设置为只读。
+                        当 company_ids 可编辑时，修改 company_ids 同时更新 company_id = company_ids[0]
+                    */
+                    var firstCompanyId = modifier.$set.company_ids ? modifier.$set.company_ids[0] : null;
+                    if (firstCompanyId){
+                        modifier.$set.company_id = firstCompanyId;
+                    }
+                    else {
+                        modifier.$unset.company_id = 1;
+                    }
+                }
+                if (_.has(modifier.$set, "company_id")) {
+                    /*
+                        考虑到兼容老项目，允许将 company_id 设置为可编辑，此时 company_ids 必须只读。
+                        当 company_id 可编辑时，修改 company_id 同时更新 company_ids = [company_id]
+                    */
+                    if (modifier.$set.company_id) {
+                        modifier.$set.company_ids = [modifier.$set.company_id];
+                    }
+                    else {
+                        modifier.$unset.company_ids = 1;
+                    }
+                }
+                if (_.isEmpty(modifier.$unset)){
+                    delete modifier.$unset;
                 }
             }
         },
