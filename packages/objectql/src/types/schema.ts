@@ -47,6 +47,11 @@ export class SteedosSchema {
     }
 
     constructor(config?: SteedosSchemaConfig) {
+        
+        loadCoreValidators();    
+        if (isMeteor())
+            loadStandardObjects();
+            
         if(config){
             _.each(config.datasources, (datasourceConfig, datasource_name) => {
                 this.addDataSource(datasource_name, datasourceConfig)
@@ -122,15 +127,9 @@ export class SteedosSchema {
 }
 
 export function getSteedosSchema(): SteedosSchema {
-    loadCoreValidators();    
-    if (isMeteor())
-        loadStandardObjects();
     const schema = getFromContainer(SteedosSchema);
     return schema;
 }
 
 (function loadRun(){
-    loadCoreValidators();    
-    if (isMeteor())
-        loadStandardObjects();
 })();
