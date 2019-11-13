@@ -2,7 +2,7 @@
   "文档": {
     "项目": ["getting_started", "app", "steedos_config"],
     "数据源": ["datasource", "datasource_options", "datasource_api"],
-    "业务对象": ["object", "object_field", "object_listview", "object_permission", "object_trigger", "object_action", "object_form", "standard_objects", "object_filter_conditions", "object_field_formula"],
+    "业务对象": ["object", "object_field", "object_listview", "object_permission", "object_trigger", "object_action", "object_form", "standard_objects", "object_filter_conditions", "object_field_formula", "object_api"],
     "权限": ["organization","space_user", "permission_set", "object_permission", "permission_share"],
     "API": ["api", "api_auth", "odata_query", "odata_get", "odata_add", "odata_edit", "odata_delete", "odata_functions", "odata_metadata", "api_jwt"],
     "GraphQL": ["graphql", "graphql_auth", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete"]
