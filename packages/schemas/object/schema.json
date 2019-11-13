@@ -244,7 +244,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "description": "字段名称",
+                    "description": "字段类型",
                     "anyOf": [
                         {
                             "enum": [
@@ -457,8 +457,15 @@
                     "description": "正则表达式"
                 },
                 "formula": {
-                    "type":"string",
+                    "type": "string",
                     "description": "自动编号规则"
+                },
+                "filters": {
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "description": "过滤条件"
                 }
             }
         },
