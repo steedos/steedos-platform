@@ -150,6 +150,49 @@ fields:
           }
         }
       }
+    optionsFunction: !!js/function |
+      function (values) {
+        var object = Creator.getObject(values._object_name);
+        if(!object){
+          console.error("未找到当前对象：" + values._object_name);
+          return [];
+        }
+        var perms = object.permissions.get();
+        if(perms.modifyAllRecords){
+          /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择单位时可以能从所有单位中选择。*/
+          var options, result, companys;
+          result = [];
+          options = {
+            $select: 'name'
+          };
+          companys = Creator.odata.query('company', options, true);
+          companys.forEach(function (item) {
+            result.push({
+              label: item.name,
+              value: item._id
+            });
+          });
+          return result;
+        }
+        else if(perms.modifyCompanyRecords){
+          /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
+          var companies = Creator.USER_CONTEXT.user.companies;
+          if(!companies.length){
+            console.warn("当前用户不属于任何单位，无权修改该字段。");
+            return [];
+          }
+          return companies.map(function(item){
+            return {
+              label: item.name,
+              value: item._id
+            }
+          });
+        }
+        else{
+          console.warn("当前用户无权修改该字段。");
+          return [];
+        }
+      }
     omit: true
     hidden: true
   instance_state:
