@@ -260,7 +260,7 @@ module.exports = {
                             modifier.$unset.company_id = 1;
                         }
                     }
-                    if (_.has(modifier.$set, "company_id")) {
+                    else if (_.has(modifier.$set, "company_id")) {
                         /*
                             考虑到兼容老项目，允许将 company_id 设置为可编辑，此时 company_ids 必须只读。
                             当 company_id 可编辑时，修改 company_id 同时更新 company_ids = [company_id]
