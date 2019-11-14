@@ -1,5 +1,5 @@
 ---
-title: Object API
+title: Object
 ---
 
 ```typescript

@@ -1,5 +1,5 @@
 ---
-title: Connection API
+title: Connection
 ---
 
 ## 什么是`Connection`
@@ -149,7 +149,7 @@ export class UserController {
 }
 ```
 
-使用 Connection，你可以对对象执行数据库操作。有关它们的更多信息，请参阅[Object API](object_api.md) 文档。
+使用 Connection，你可以对对象执行数据库操作。有关它们的更多信息，请参阅[Object API](objectql_object.md) 文档。
 
 但一般来说，你不要太多使用`Connection`。大多数情况下，你只需创建连接并使用`getObject()`和来访问连接的管理器和存储库，而无需直接使用连接对象：
 
