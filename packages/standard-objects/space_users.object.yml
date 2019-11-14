@@ -43,8 +43,17 @@ fields:
   company_id:
     label: 主单位
     type: lookup
+    omit: true
     hidden: false
     readonly: true
+    defaultValue: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+    optionsFunction: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
   company_ids:
     label: 所属单位
     type: lookup
@@ -56,6 +65,14 @@ fields:
     readonly: true
     name: company_ids
     filterable: true
+    defaultValue: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+    optionsFunction: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
   manager:
     type: lookup
     label: 上级主管
