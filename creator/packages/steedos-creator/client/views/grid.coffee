@@ -516,7 +516,7 @@ Template.creator_grid.onRendered ->
 			if grid_paging
 				pageIndex = grid_paging.pageIndex
 
-			extra_columns = _.intersection(["owner", "company_id", "locked"], _.keys(curObject.fields));
+			extra_columns = _.intersection(["owner", "company_id", "company_ids", "locked"], _.keys(curObject.fields));
 			if !is_related and curObject.enable_tree
 				extra_columns.push("parent")
 				extra_columns.push("children")

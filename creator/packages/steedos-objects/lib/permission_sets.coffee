@@ -27,7 +27,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 			object_name = Session.get('object_name');
 			record_id = Session.get("record_id");
 		object_fields_keys = _.keys(Creator.getObject(object_name, spaceId)?.fields or {}) || [];
-		select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
+		select = _.intersection(object_fields_keys, ['owner', 'company_id', 'company_ids', 'locked']) || [];
 		if select.length > 0
 			record = Creator.getObjectRecord(object_name, record_id, select.join(','));
 		else
@@ -45,18 +45,23 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 		if record_company_id and _.isObject(record_company_id) and record_company_id._id
 			# 因record_company_id是lookup类型，有可能dx控件会把它映射转为对应的object，所以这里取出其_id值
 			record_company_id = record_company_id._id
+		record_company_ids = record?.company_ids
+		if record_company_ids and record_company_ids.length and _.isObject(record_company_ids[0])
+			# 因record_company_ids是lookup类型，有可能dx控件会把它映射转为对应的[object]，所以这里取出其_id值
+			record_company_ids = record_company_ids.map((n)-> n._id)
+		record_company_ids = _.union(record_company_ids, [record_company_id])
 		if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
 			permissions.allowEdit = false
 			permissions.allowDelete = false
 		else if permissions.modifyCompanyRecords
-			if record_company_id and _.isString(record_company_id)
+			if record_company_ids and record_company_ids.length
 				if user_company_ids and user_company_ids.length
-					if !_.include(user_company_ids, record_company_id)
-						# 记录的company_id属性不在当前用户user_company_ids范围内时，认为无权修改
+					if !_.intersection(user_company_ids, record_company_ids).length
+						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权修改
 						permissions.allowEdit = false
 						permissions.allowDelete = false
 				else
-					# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权修改
+					# 记录有company_id/company_ids属性，但是当前用户user_company_ids为空时，认为无权修改
 					permissions.allowEdit = false
 					permissions.allowDelete = false
 		
@@ -67,10 +72,10 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 		if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
 			permissions.allowRead = false
 		else if permissions.viewCompanyRecords
-			if record_company_id and _.isString(record_company_id)
+			if record_company_ids and record_company_ids.length
 				if user_company_ids and user_company_ids.length
-					if !_.include(user_company_ids, record_company_id)
-						# 记录的company_id属性不在当前用户user_company_ids范围内时，认为无权查看
+					if !_.intersection(user_company_ids, record_company_ids).length
+						# 记录的company_id/company_ids属性不在当前用户user_company_ids范围内时，认为无权查看
 						permissions.allowRead = false
 				else
 					# 记录有company_id属性，但是当前用户user_company_ids为空时，认为无权查看
