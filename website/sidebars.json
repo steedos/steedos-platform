@@ -2,7 +2,7 @@
   "文档": {
     "项目": ["getting_started", "steedos_config"],
     "数据源": ["datasource", "datasource_options"],
-    "业务对象": ["object", "object_field", "object_listview", "object_permission", "object_trigger", "object_action", "object_form", "standard_objects", "object_filter_conditions", "object_field_formula"],
+    "业务对象": ["object", "object_field", "object_listview", "object_trigger", "object_action", "object_form", "standard_objects", "object_filter_conditions", "object_field_formula"],
     "权限": ["permission_set", "object_permission", "permission_share", "organization","space_user"],
     "审批": ["workflow_overview", "workflow_submit", "workflow_archive", "object_workflow"],
     "统计": ["reports", "report_jsreport"],
