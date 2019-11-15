@@ -98,42 +98,6 @@ const connection = getConnection();
 const secondConnection = getConnection("test2-connection");
 ```
 
-## 使用`ConnectionManager`
-
-你可以使用`ConnectionManager`类创建连接。例如：
-
-```typescript
-import { getConnectionManager, ConnectionManager, Connection } from "@steedos/objectql";
-
-const connectionManager = getConnectionManager();
-const connection = connectionManager.create({
-  driver: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "test",
-  password: "test",
-  database: "test"
-});
-await connection.connect(); // 执行连接
-```
-
-这不是常规创建连接的方法，但它可能对某些用户有用。例如，想要创建连接并存储其实例,同时控制何时建立实际"connection"。你还可以创建和维护自己的`ConnectionManager`：
-
-```typescript
-import { getConnectionManager, ConnectionManager, Connection } from "@steedos/objectql";
-
-const connectionManager = new ConnectionManager();
-const connection = connectionManager.create({
-  driver: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "test",
-  password: "test",
-  database: "test"
-});
-await connection.connect(); // 执行连接
-```
-
 ## 使用连接
 
 设置连接后，可以使用`getConnection`函数在应用程序的任何位置使用它：
@@ -149,7 +113,7 @@ export class UserController {
 }
 ```
 
-使用 Connection，你可以对对象执行数据库操作。有关它们的更多信息，请参阅[Object API](objectql_object.md) 文档。
+使用 Connection，你可以对对象执行数据库操作。有关它们的更多信息，请参阅[Object API](object_api.md) 文档。
 
 但一般来说，你不要太多使用`Connection`。大多数情况下，你只需创建连接并使用`getObject()`和来访问连接的管理器和存储库，而无需直接使用连接对象：
 
@@ -161,4 +125,18 @@ export class UserController {
     return getObject("users").find({username: 'god'});
   }
 }
+```
+
+## 获取对象
+
+使用 getObject 函数可以获取此连接下的对象，使用[Object API](object_api.md)执行查询操作。
+
+```typescript
+  const posts = await connection.getObject("posts").find({
+      fields: ['name', 'body', 'likesCount'],
+      filters: [['likesCount', '>', 10]],
+      top: 20,
+      skip: 0,
+      sort: 'likesCount desc'
+  });
 ```
