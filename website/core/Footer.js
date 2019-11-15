@@ -40,7 +40,7 @@ class Footer extends React.Component {
             <a href={this.docUrl('overview', this.props.language)}>
               什么是“低代码”开发平台？
             </a>
-            <a href={this.docUrl('getting_started', this.props.language)}>
+            <a href={this.docUrl('guide', this.props.language)}>
               快速向导
             </a>
             <a href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4" target="_blank">

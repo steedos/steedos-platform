@@ -65,7 +65,7 @@ class HomeSplash extends React.Component {
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
             <Button target="demo" href="https://www-steedos-com.oss-cn-beijing.aliyuncs.com/videos/creator/contracts-demo.mp4">观看案例视频</Button> &nbsp;&nbsp;
-            <Button href={docUrl('getting_started.html')}>快速向导</Button>
+            <Button href={docUrl('guide.html')}>快速向导</Button>
           </PromoSection>
         </div>
       </SplashContainer>
