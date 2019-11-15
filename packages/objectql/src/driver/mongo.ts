@@ -58,7 +58,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
     }
 
-    async disconnect() {
+    async close() {
         if (this._client) {
             await this._client.close();
             this._client = null;

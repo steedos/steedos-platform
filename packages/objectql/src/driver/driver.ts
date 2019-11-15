@@ -62,7 +62,7 @@ export interface SteedosDriver {
     databaseVersion?: string;
     config?: SteedosDriverConfig;
     connect();
-    disconnect();
+    close();
     getSupportedColumnTypes(): SteedosFieldDBType[];
     find(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     findOne(tableName: string, id: SteedosIDType, query: SteedosQueryOptions, userId?: SteedosIDType): any;

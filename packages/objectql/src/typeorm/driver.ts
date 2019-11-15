@@ -54,7 +54,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         }
     }
 
-    async disconnect() {
+    async close() {
         if (this._client) {
             await this._client.close();
             this._client = null;
@@ -346,7 +346,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         this._entities = this.getEntities(objects);
         await this.connect();
         await this._client.synchronize(true);
-        await this.disconnect();
+        await this.close();
         this._entities = null;
     }
 
