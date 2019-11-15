@@ -6,9 +6,11 @@
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "version": "docusaurus-version",
-    "rename-version": "docusaurus-rename-version"
+    "rename-version": "docusaurus-rename-version",
+    "pub": "cross-env GIT_USER=hotlong yarn publish-gh-pages"
   },
   "devDependencies": {
-    "docusaurus": "^2.0.0-alpha.34"
+    "docusaurus": "^2.0.0-alpha.34",
+    "cross-env": "^6.0.3"
   }
 }
