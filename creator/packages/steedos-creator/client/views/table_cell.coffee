@@ -125,8 +125,6 @@ Template.creator_table_cell.helpers
 
 		_field = this.field
 
-		# debugger
-
 		if !_field
 			return
 
@@ -140,83 +138,12 @@ Template.creator_table_cell.helpers
 		else if _field.type == "location"
 			data.push {value: val?.address || '', id: this._id}
 		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
-			# 有optionsFunction的情况下，reference_to不考虑数组
-			if _.isFunction(_field.optionsFunction)
-				_values = this.doc || {}
-				_record_val = this.record_val
-				_val = val
-				if _val
-					if !_.isArray(_val)
-						if _.isObject(_val)
-							_val = [_val._id]
-						else
-							_val = [_val]
-					selectedOptions = _.filter _field.optionsFunction(_record_val || _values), (_o)->
-						return _val.indexOf(_o?.value) > -1
-					if selectedOptions
-						if val && _.isArray(val) && _.isArray(selectedOptions)
-							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
-						val = selectedOptions.getProperty("label")
-				if reference_to && false
-					_.each val, (v)->
-						href = Creator.getObjectUrl(reference_to, v)
-						data.push {reference_to: reference_to,  rid: v, value: v, id: this._id, href: href}
-				else
-					data.push {value: val, id: this._id}
-			else
-				if this.agreement == "odata"
-					if !_.isArray(val)
-						val = if val then [val] else []
-					_.each val, (v)->
-						reference_to = v["reference_to._o"] || reference_to
-						href = Creator.getObjectUrl(reference_to, v._id)
-						data.push {reference_to: reference_to, rid: v._id, value: v['_NAME_FIELD_VALUE'], href: href, id: this._id}
-
-				else
-					if _.isArray(reference_to) && _.isObject(val)
-						reference_to = val.o
-						val = val.ids
-
-					if !_.isArray(val)
-						val = if val then [val] else []
-					try
-						# debugger;
-						reference_to_object = Creator.getObject(reference_to)
-
-						reference_to_object_name_field_key = reference_to_object.NAME_FIELD_KEY
-
-						reference_to_fields = {_id: 1}
-						reference_to_fields[reference_to_object_name_field_key] = 1
-
-						reference_to_sort = {}
-						reference_to_sort[reference_to_object_name_field_key] = -1
-
-						if _.isFunction(_field.optionsFunction)
-							_values = this.doc || {}
-							_record_val = this.record_val
-							_val = val
-							if _val
-								if !_.isArray(_val)
-									if _.isObject(_val)
-										_val = [_val._id]
-									else
-										_val = [_val]
-								selectedOptions = _.filter _field.optionsFunction(_record_val || _values), (_o)->
-									return _val.indexOf(_o?.value) > -1
-								if selectedOptions
-									if val && _.isArray(val) && _.isArray(selectedOptions)
-										selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
-									val = selectedOptions.getProperty("label").join(',')
-									data.push {value: val}
-						else
-							values = Creator.getCollection(reference_to).find({_id: {$in: val}}, {fields: reference_to_fields, sort: reference_to_sort}).fetch()
-							values = Creator.getOrderlySetByIds(values, val)
-							values.forEach (v)->
-								href = Creator.getObjectUrl(reference_to, v._id)
-								data.push {reference_to: reference_to, rid: v._id, value: v[reference_to_object_name_field_key], href: href, id: this._id}
-					catch e
-						console.error(reference_to, e)
-						return
+			if !_.isArray(val)
+				val = if val then [val] else []
+			_.each val, (v)->
+				reference_to = v["reference_to._o"] || reference_to
+				href = Creator.getObjectUrl(reference_to, v._id)
+				data.push {reference_to: reference_to, rid: v._id, value: v['_NAME_FIELD_VALUE'], href: href, id: this._id}
 		else if _field.type == "image"
 			if typeof val is "string"
 				data.push {value: val, id: this._id, isImage: true, baseUrl: Creator.getRelativeUrl("/api/files/images")}
