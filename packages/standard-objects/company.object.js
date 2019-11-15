@@ -53,7 +53,7 @@ Creator.Objects['company'].triggers = {
                 // 还不支持i18n
                 throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
             }
-            else{
+            else {
                 // 删除关联组织，只删除单位与组织_id值相等的关联记录，_id值不相等的记录不执行级联删除
                 Creator.getCollection("organizations").remove({
                     _id: doc._id
@@ -65,9 +65,8 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "before.update",
         todo: function (userId, doc, fields, options) {
-            console.log("before.update.server.company=========doc===", doc);
-            console.log("before.update.server.company=========options.$set===", options.$set);
-            if (options.$set.organization !== doc.organization){
+            console.log("=========before.update.server.company============");
+            if (options.$set.organization !== doc.organization) {
                 if (doc.organization === doc._id) {
                     /* 只允许单位的organization值为空或单位的organization值不等于其_id值的记录可以编辑其organization属性值 */
                     throw new Error("不允许编辑关联组织，只有同步过来的单位才可以编辑其关联组织属性")
@@ -86,7 +85,7 @@ Creator.Objects['company'].triggers = {
                         throw new Error("该关联组织，已经被其他单位占用了，不能重复关联该组织");
                     }
                 }
-                else{
+                else {
                     /* 允许清除关联组织值，而且不用处理其is_company、company_id值逻辑 */
                 }
             }
@@ -123,7 +122,7 @@ let update_su_company_ids = async function (_id, su) {
     let updateDoc = {
         company_ids: company_ids
     };
-    if (org && org.company_id){
+    if (org && org.company_id) {
         updateDoc.company_id = org.company_id;
     }
     await this.getObject("space_users").updateOne(_id, updateDoc, this.userSession);
@@ -157,9 +156,31 @@ let update_org_company_id = async function (_id, company_id, updated = { count: 
     }
 }
 
+// 执行更新组织前先把所有company的直属关联组织is_company及is_company设置对，
+// 即把直属关联组织is_company设置为true，company_id设置为关联单位_id
+// 只需要处理organization值不等于其_id值的company记录，这些记录不是新建出来的，而是其他方式同步过来的数据
+let update_all_company_org = async function (space_id) {
+    console.log("=========update_all_company_org========space_id====", space_id);
+    var companys = await objectql.getObject("company").find({
+        filters: [["space", "=", space_id]],
+        fields: ["organization"]
+    });
+
+    for (let company of companys) {
+        if (company.organization && company._id !== company.organization) {
+            console.log("=========update_all_company_org=======company=====", company);
+            await this.getObject("organizations").updateOne(company.organization, {
+                is_company: true,
+                company_id: company._id
+            }, this.userSession);
+        }
+    }
+}
+
 Creator.Objects['company'].methods = {
     updateOrgs: async function (req, res) {
-        let {_id: record_id} = req.params
+        console.log("=========updateOrgs============");
+        let { _id: record_id } = req.params
 
         let callThis = {
             getObject: objectql.getObject,
@@ -167,10 +188,12 @@ Creator.Objects['company'].methods = {
         }
 
         let company = await objectql.getObject("company").findOne(record_id, {
-            fields: ["organization"]
+            fields: ["organization", "space"]
         });
 
-        if (!company.organization){
+        await update_all_company_org.call(callThis, company.space);
+
+        if (!company.organization) {
             throw new Meteor.Error(400, "该单位的关联组织未设置");
         }
 
@@ -181,8 +204,8 @@ Creator.Objects['company'].methods = {
             filters: [["organizations_parents", "=", company.organization]],
             fields: ["organizations", "organization", "company_id", "space"]
         });
-        
-        for (let su of sus){
+
+        for (let su of sus) {
             await update_su_company_ids.call(callThis, su._id, su);
         }
 
@@ -216,8 +239,8 @@ Creator.Objects['company'].actions = {
                 toastr.warning("该单位的关联组织未设置，未更新任何数据");
                 return;
             }
-            
-            var doUpdate = function() {
+
+            var doUpdate = function () {
                 $("body").addClass("loading");
                 var userSession = Creator.USER_CONTEXT;
                 var spaceId = userSession.spaceId;
@@ -273,14 +296,14 @@ Creator.Objects['company'].actions = {
 
             var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属单位更新为本单位，组织中的人员所属单位也都更新为本单位。是否继续";
             swal({
-                title: "更新“" + this.record.name +"”组织信息",
+                title: "更新“" + this.record.name + "”组织信息",
                 text: "<div>" + text + "？</div>",
                 html: true,
                 showCancelButton: true,
                 confirmButtonText: t('YES'),
                 cancelButtonText: t('NO')
-            }, function(option) { 
-                if (option){
+            }, function (option) {
+                if (option) {
                     doUpdate();
                 }
             });
