@@ -17,7 +17,7 @@ fields:
     label: 关联组织
     type: lookup
     reference_to: organizations
-    omit: true
+    omit: false
   currency_type:
     label: 本位币
     type: text
