@@ -39,7 +39,8 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'overview', label: '特色'},
-    {doc: 'getting_started', label: '文档'},
+    {doc: 'guide', label: '文档'},
+    {doc: 'api', label: 'API'},
     {doc: 'projects', label: '案例'},
     //{doc: 'record_list', label: '用户手册'},
     //{doc: 'api', label: 'API'},
@@ -117,6 +118,7 @@ const siteConfig = {
     indexName: 'steedos',
     algoliaOptions: {} // Optional, if provided by Algolia
   },
+  useEnglishUrl: false
 };
 
 module.exports = siteConfig;

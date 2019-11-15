@@ -1,15 +1,17 @@
 {
   "文档": {
-    "项目": ["getting_started", "steedos_config"],
+    "快速向导": ["guide", "guide_create", "steedos_config"],
     "数据源": ["datasource", "datasource_options"],
     "业务对象": ["object", "object_field", "object_listview", "object_trigger", "object_action", "object_form", "standard_objects", "object_filter_conditions", "object_field_formula"],
     "权限": ["permission_set", "object_permission", "permission_share", "organization","space_user"],
     "审批": ["workflow_overview", "workflow_submit", "workflow_archive", "object_workflow"],
     "统计": ["reports", "report_jsreport"],
-    "台账": ["app", "record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile", "notifications"],
-    "插件": ["plugins", "plugin_server", "plugin_webapp", "plugin_config"],
-    "ObjectQL": ["objectql_connection", "objectql_object"],
-    "OData": ["api", "api_auth", "odata_query", "odata_get", "odata_add", "odata_edit", "odata_delete", "odata_functions", "odata_metadata", "api_jwt"],
-    "GraphQL": ["graphql", "graphql_auth", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete"]
+    "台账": ["app", "record_list", "record_view", "record_edit", "record_search", "record_attachment", "record_chatter", "record_task", "app_mobile", "notifications"]
+  }, 
+  "API": {
+    "API": ["api", "api_connection", "api_object"],
+    "OData": ["odata", "odata_auth", "odata_query", "odata_get", "odata_add", "odata_edit", "odata_delete", "odata_functions", "odata_metadata", "api_jwt"],
+    "GraphQL": ["graphql", "graphql_auth", "graphql_query", "graphql_add", "graphql_edit", "graphql_delete"],
+    "插件": ["plugins", "plugin_server", "plugin_webapp", "plugin_config"]
   }
 }
