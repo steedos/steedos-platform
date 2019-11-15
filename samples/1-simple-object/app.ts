@@ -19,17 +19,24 @@ const options: ConnectionOptions = {
 };
 
 getConnectionManager().create(options).then(async connection => {
-    let post = {
+    let newPost = {
         name: "Hello how are you?",
         body: "hello",
         likesCount: 100
     }
-    let postObject = connection.getObject("post");
 
-    postObject
-        .insert(post)
-        .then(post => console.log("Post has been saved: ", post));
+    const post = await connection.getObject("posts")
+        .insert(newPost)
+    console.log(post);
 
+    const posts = await connection.getObject("posts").find({
+        fields: ['name', 'body', 'likesCount'],
+        filters: [['likesCount', '>', 10]],
+        top: 20,
+        skip: 0,
+        sort: 'likesCount desc'
+    });
+    console.log(posts);
     connection.close();
     
 }, error => console.log("Cannot connect: ", error));
