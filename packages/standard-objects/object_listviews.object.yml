@@ -185,11 +185,6 @@ fields:
     label: 过滤逻辑
     type: text
     omit: true
-  is_default:
-    label: 是否为默认视图
-    type: boolean
-    omit: true
-    defaultValue: false
 list_views:
   all:
     columns:

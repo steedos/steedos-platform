@@ -39,9 +39,6 @@ Creator.Objects['object_listviews'].triggers = {
       if (doc.owner !== userId) {
         throw new Meteor.Error(403, "can only remove own list view");
       }
-      if (doc.is_default) {
-        throw new Meteor.Error(403, "can not remove default list view");
-      }
     }
   }
 }
