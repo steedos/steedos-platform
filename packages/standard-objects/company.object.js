@@ -65,9 +65,30 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "before.update",
         todo: function (userId, doc, fields, options) {
-            if (options.$set.organization !== doc.organization && doc.organization === doc._id){
-                /* 只允许单位的organization值为空或单位的organization值不等于其_id值的记录可以编辑其organization属性值 */
-                throw new Error("不允许编辑关联组织，只有同步过来的单位才可以编辑其关联组织属性")
+            console.log("before.update.server.company=========doc===", doc);
+            console.log("before.update.server.company=========options.$set===", options.$set);
+            if (options.$set.organization !== doc.organization){
+                if (doc.organization === doc._id) {
+                    /* 只允许单位的organization值为空或单位的organization值不等于其_id值的记录可以编辑其organization属性值 */
+                    throw new Error("不允许编辑关联组织，只有同步过来的单位才可以编辑其关联组织属性")
+                }
+                if (options.$set.organization) {
+                    var repeatCompany = Creator.getCollection("company").findOne({
+                        space: doc.space,
+                        organization: options.$set.organization
+                    }, {
+                        fields: {
+                            _id: 1
+                        }
+                    });
+                    if (repeatCompany) {
+                        /* 要判断选中的关联组织是否已经被其他单位关联了，如果有就提示不能修改，而且不用处理其is_company、company_id值逻辑 */
+                        throw new Error("该关联组织，已经被其他单位占用了，不能重复关联该组织");
+                    }
+                }
+                else{
+                    /* 允许清除关联组织值，而且不用处理其is_company、company_id值逻辑 */
+                }
             }
         }
     }
