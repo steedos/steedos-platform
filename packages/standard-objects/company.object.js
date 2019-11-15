@@ -54,9 +54,9 @@ Creator.Objects['company'].triggers = {
                 throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
             }
             else{
-                // 删除关联组织
+                // 删除关联组织，只删除单位与组织_id值相等的关联记录，_id值不相等的记录不执行级联删除
                 Creator.getCollection("organizations").remove({
-                    _id: doc.organization
+                    _id: doc._id
                 });
             }
         }

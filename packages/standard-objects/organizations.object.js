@@ -710,7 +710,7 @@ if (Meteor.isServer) {
             });
         }
         if (doc.is_company) {
-            // 删除单位级组织关联单位，因为单位级组织的company_id等于其_id值，这里用_id是为了保险万一company_id指向错了
+            // 删除单位级组织关联单位，只删除单位与组织_id值相等的关联记录，_id值不相等的记录不执行级联删除
             Creator.getCollection("company").direct.remove({
                 _id: doc._id
             });
