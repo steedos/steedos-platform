@@ -60,6 +60,16 @@ Creator.Objects['company'].triggers = {
                 });
             }
         }
+    },
+    "before.update.server.company": {
+        on: "server",
+        when: "before.update",
+        todo: function (userId, doc, fields, options) {
+            if (options.$set.organization !== doc.organization && doc.organization === doc._id){
+                /* 只允许单位的organization值为空或单位的organization值不等于其_id值的记录可以编辑其organization属性值 */
+                throw new Error("不允许编辑关联组织，只有同步过来的单位才可以编辑其关联组织属性")
+            }
+        }
     }
 }
 
