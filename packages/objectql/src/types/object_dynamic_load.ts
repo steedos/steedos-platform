@@ -103,9 +103,13 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     } else {
         if (isMeteor() && (datasource === 'default')) {
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
+            // 确保字段顺序正确，避免base中的字段跑到前面
+            config.fields = _.clone(objectConfig.fields);
             config = util.extend(config, clone(baseObjectConfig), clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
+            // 确保字段顺序正确，避免base中的字段跑到前面
+            config.fields = _.clone(objectConfig.fields);
             config = util.extend(config, clone(coreObjectConfig), clone(objectConfig));
         }
     }
