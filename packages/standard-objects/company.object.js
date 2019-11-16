@@ -65,7 +65,6 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "before.update",
         todo: function (userId, doc, fields, options) {
-            console.log("=========before.update.server.company============");
             if (options.$set.organization !== doc.organization) {
                 if (doc.organization === doc._id) {
                     /* 只允许单位的organization值为空或单位的organization值不等于其_id值的记录可以编辑其organization属性值 */
@@ -101,7 +100,7 @@ let update_su_company_ids = async function (_id, su) {
     if (!su) {
         su = await this.getObject("space_users").findOne(_id, {
             fields: ["organizations", "organization", "company_id", "space"]
-        }, this.userSession);
+        });
     }
     if (!su) {
         console.error("db.space_users.update_company_ids,can't find space_users by _id of:", _id);
@@ -110,14 +109,14 @@ let update_su_company_ids = async function (_id, su) {
     orgs = await this.getObject("organizations").find({
         filters: [["_id", "in", su.organizations]],
         fields: ["company_id"]
-    }, this.userSession);
+    });
     company_ids = _.pluck(orgs, 'company_id');
     // company_ids中的空值就空着，不需要转换成根组织ID值
     company_ids = _.uniq(_.compact(company_ids));
 
     org = await this.getObject("organizations").findOne(su.organization, {
         fields: ["company_id"]
-    }, this.userSession);
+    });
 
     let updateDoc = {
         company_ids: company_ids
@@ -132,7 +131,7 @@ let update_su_company_ids = async function (_id, su) {
 let update_org_company_id = async function (_id, company_id, space_id, updated = { count: 0 }) {
     const org = await this.getObject("organizations").findOne(_id, {
         fields: ["children", "is_company", "company_id", "space"]
-    }, this.userSession);
+    });
 
     if (org.is_company) {
         if (org.company_id === _id){
@@ -172,7 +171,6 @@ let update_org_company_id = async function (_id, company_id, space_id, updated =
 // 即把直属关联组织is_company设置为true，company_id设置为关联单位_id
 // 只需要处理organization值不等于其_id值的company记录，这些记录不是新建出来的，而是其他方式同步过来的数据
 let update_all_company_org = async function (space_id) {
-    console.log("=========update_all_company_org========space_id====", space_id);
     var companys = await objectql.getObject("company").find({
         filters: [["space", "=", space_id]],
         fields: ["organization"]
@@ -180,7 +178,6 @@ let update_all_company_org = async function (space_id) {
 
     for (let company of companys) {
         if (company.organization && company._id !== company.organization) {
-            console.log("=========update_all_company_org=======company=====", company);
             await this.getObject("organizations").updateOne(company.organization, {
                 is_company: true,
                 company_id: company._id
@@ -191,7 +188,6 @@ let update_all_company_org = async function (space_id) {
 
 Creator.Objects['company'].methods = {
     updateOrgs: async function (req, res) {
-        console.log("=========updateOrgs============");
         let { _id: record_id } = req.params
 
         let callThis = {
