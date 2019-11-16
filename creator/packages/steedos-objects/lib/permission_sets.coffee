@@ -53,7 +53,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 		if !permissions.modifyAllRecords and !isOwner and !permissions.modifyCompanyRecords
 			permissions.allowEdit = false
 			permissions.allowDelete = false
-		else if permissions.modifyCompanyRecords
+		else if !permissions.modifyAllRecords and permissions.modifyCompanyRecords
 			if record_company_ids and record_company_ids.length
 				if user_company_ids and user_company_ids.length
 					if !_.intersection(user_company_ids, record_company_ids).length
@@ -71,7 +71,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 
 		if !permissions.viewAllRecords and !isOwner and !permissions.viewCompanyRecords
 			permissions.allowRead = false
-		else if permissions.viewCompanyRecords
+		else if !permissions.viewAllRecords and permissions.viewCompanyRecords
 			if record_company_ids and record_company_ids.length
 				if user_company_ids and user_company_ids.length
 					if !_.intersection(user_company_ids, record_company_ids).length
