@@ -171,17 +171,38 @@ let update_org_company_id = async function (_id, company_id, space_id, updated =
 // 即把直属关联组织is_company设置为true，company_id设置为关联单位_id
 // 只需要处理organization值不等于其_id值的company记录，这些记录不是新建出来的，而是其他方式同步过来的数据
 let update_all_company_org = async function (space_id) {
-    var companys = await objectql.getObject("company").find({
+    let companys = await this.getObject("company").find({
         filters: [["space", "=", space_id]],
         fields: ["organization"]
     });
 
     for (let company of companys) {
         if (company.organization && company._id !== company.organization) {
+            // company.organization为自身_id值说明单company是新建出来的，不是其他方式同步过来的数据，不需要再修正其is_company、company值
             await this.getObject("organizations").updateOne(company.organization, {
                 is_company: true,
                 company_id: company._id
             }, this.userSession);
+        }
+    }
+
+    let orgs = await this.getObject("organizations").find({
+        filters: [["space", "=", space_id], ["is_company", "=", true]],
+        fields: ["company_id", "is_company"]
+    });
+    // 清除未被company引用的organizations记录的is_company值为false
+    for (let org of orgs) {
+        if (org.company_id !== org._id) {
+            // company_id为自身_id值说明单company是新建出来的，不是其他方式同步过来的数据，不需要再从company表中查询确认其是否被引用
+            const companys = await this.getObject("company").find({
+                filters: [["space", "=", space_id], ["organization", "=", org._id]],
+                fields: ["_id"]
+            });
+            if (!companys.length) {
+                await this.getObject("organizations").updateOne(org._id, {
+                    is_company: false
+                }, this.userSession);
+            }
         }
     }
 }
