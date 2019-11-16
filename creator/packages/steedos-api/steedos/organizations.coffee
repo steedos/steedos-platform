@@ -1,5 +1,6 @@
-# API.addCollection db.organizations, 
-# 	excludedEndpoints: []
-# 	routeOptions:
-# 		authRequired: true
-# 		spaceRequired: true
+Meteor.startup ->
+	API.addCollection db.organizations, 
+		excludedEndpoints: []
+		routeOptions:
+			authRequired: true
+			spaceRequired: true
