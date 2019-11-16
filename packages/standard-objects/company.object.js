@@ -129,17 +129,29 @@ let update_su_company_ids = async function (_id, su) {
 };
 
 // 循环执行当前组织及其子组织children的company_id值计算
-let update_org_company_id = async function (_id, company_id, updated = { count: 0 }) {
+let update_org_company_id = async function (_id, company_id, space_id, updated = { count: 0 }) {
     const org = await this.getObject("organizations").findOne(_id, {
         fields: ["children", "is_company", "company_id", "space"]
     }, this.userSession);
 
     if (org.is_company) {
-        await this.getObject("organizations").updateOne(_id, {
-            company_id: _id
-        }, this.userSession);
-        company_id = _id;
-        updated.count += 1;
+        if (org.company_id === _id){
+            // company_id为自身_id值说明单company是新建出来的，不是其他方式同步过来的数据，不需要再从company表中查询其company_id值
+            company_id = _id;
+        }
+        else {
+            const companys = await this.getObject("company").find({
+                filters: [["space", "=", space_id], ["organization", "=", _id]],
+                fields: ["_id"]
+            });
+            if (companys.length) {
+                company_id = companys[0]._id;
+            }
+            await this.getObject("organizations").updateOne(_id, {
+                company_id: company_id
+            }, this.userSession);
+            updated.count += 1;
+        }
     }
     else {
         await this.getObject("organizations").updateOne(_id, {
@@ -151,7 +163,7 @@ let update_org_company_id = async function (_id, company_id, updated = { count: 
     const children = org.children;
     if (children && children.length) {
         for (let child of children) {
-            await update_org_company_id.call(this, child, company_id, updated);
+            await update_org_company_id.call(this, child, company_id, space_id, updated);
         }
     }
 }
@@ -198,7 +210,7 @@ Creator.Objects['company'].methods = {
         }
 
         let updatedOrgs = { count: 0 };
-        await update_org_company_id.call(callThis, company.organization, record_id, updatedOrgs);
+        await update_org_company_id.call(callThis, company.organization, record_id, company.space, updatedOrgs);
 
         sus = await objectql.getObject("space_users").find({
             filters: [["organizations_parents", "=", company.organization]],
