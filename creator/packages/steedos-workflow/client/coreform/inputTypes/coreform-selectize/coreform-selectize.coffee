@@ -68,6 +68,8 @@ Template.afSteedosSelectize.helpers
 				value = value['@label']
 			return value
 		return ''
+	description: ()->
+		return this.atts?.title || ""
 
 Template.afSteedosSelectize.events
 	'click .slds-pill__remove': (e, t)->
