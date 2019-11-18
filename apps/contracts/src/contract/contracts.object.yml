@@ -343,7 +343,6 @@ list_views:
         wrap: true
     filter_scope: space
     filter_fields:
-      - company_id
       - contract_type
       - signed_date
       - othercompany
@@ -406,12 +405,6 @@ list_views:
       - field: description
         width: 100
         wrap: true
-    filter_fields:
-      - company_id
-      - contract_type
-      - signed_date
-      - othercompany
-      - contract_state
   mine:
     label: 我的合同
     filter_scope: mine
@@ -470,12 +463,6 @@ list_views:
       - field: description
         width: 100
         wrap: true
-    filter_fields:
-      - company_id
-      - contract_type
-      - signed_date
-      - othercompany
-      - contract_state
 permission_set:
   user:
     allowCreate: false
