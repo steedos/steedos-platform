@@ -1,0 +1,63 @@
+name: notifications
+label: 通知
+fields:
+  name: 
+    label: 通知标题
+    type: text
+  body:
+    label: 通知描述
+    type: textarea
+  related_to:
+    label: 相关记录
+    type: lookup
+    index: true
+    reference_to: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var o = [];
+              _.each(Creator.Objects, function (object, object_name) {
+                return o.push(object.name);
+              });
+              return o;
+            }
+    filterable: true
+  related_name:
+    label: 记录标题
+    type: text
+  url:
+    label: 相对链接
+    type: url
+  owner:
+    label: 通知对象
+  is_read:
+    label: 已读
+    type: boolean
+  created:
+    label: 通知时间
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - body
+      - related_to
+      - related_name
+      - url
+      - owner
+      - is_read
+      - created
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
