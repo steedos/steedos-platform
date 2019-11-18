@@ -28,3 +28,4 @@ packages/odata-v4-typeorm/
 
 .migrate
 .history/*
+apps/contracts/.env.local
