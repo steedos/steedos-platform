@@ -274,7 +274,8 @@ Creator.Objects['company'].actions = {
                 var userSession = Creator.USER_CONTEXT;
                 var spaceId = userSession.spaceId;
                 var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
-                var url = "/api/odata/v4/" + spaceId + "/company/" + record_id + "/updateOrgs";
+                var url = "/api/v4/company/" + record_id + "/updateOrgs";
+                url = Steedos.absoluteUrl(url);
                 try {
                     var authorization = "Bearer " + spaceId + "," + authToken;
                     var fetchParams = {};
