@@ -244,7 +244,7 @@ module.exports = {
                                 /* 如果用户在界面上指定了company_ids，则取第一个值 */
                                 doc.company_id = doc.company_ids[0];
                             }
-                            else if (su.company_id) {
+                            else if (su && su.company_id) {
                                 doc.company_id = su.company_id;
                             }
                         }
@@ -253,7 +253,7 @@ module.exports = {
                                 /* 如果用户在界面上指定了company_id，则取其值输入 */
                                 doc.company_ids = [doc.company_id];
                             }
-                            else if (su.company_id) {
+                            else if (su && su.company_id) {
                                 doc.company_ids = [su.company_id];
                             }
                         }
