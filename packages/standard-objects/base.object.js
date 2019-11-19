@@ -230,7 +230,34 @@ module.exports = {
                         doc.owner = userId;
                     }
                     doc.created_by = userId;
-                    return doc.modified_by = userId;
+                    doc.modified_by = userId;
+                }
+                var extras = ["spaces", "company", "organizations", "users", "space_users"];
+                if (extras.indexOf(this.object_name) < 0) {
+                    /* company_ids/company_id默认值逻辑*/
+                    if (!doc.company_id || !doc.company_ids) {
+                        var su = Creator.getCollection("space_users").findOne({ space: doc.space, user: userId }, {
+                            fields: { company_id: 1 }
+                        });
+                        if (!doc.company_id) {
+                            if (doc.company_ids && doc.company_ids.length) {
+                                /* 如果用户在界面上指定了company_ids，则取第一个值 */
+                                doc.company_id = doc.company_ids[0];
+                            }
+                            else if (su.company_id) {
+                                doc.company_id = su.company_id;
+                            }
+                        }
+                        if (!doc.company_ids) {
+                            if (doc.company_id) {
+                                /* 如果用户在界面上指定了company_id，则取其值输入 */
+                                doc.company_ids = [doc.company_id];
+                            }
+                            else if (su.company_id) {
+                                doc.company_ids = [su.company_id];
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -273,7 +300,7 @@ module.exports = {
                         }
                     }
                 }
-                if (_.isEmpty(modifier.$unset)){
+                if (_.isEmpty(modifier.$unset)) {
                     delete modifier.$unset;
                 }
             }
