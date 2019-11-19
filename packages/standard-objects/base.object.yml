@@ -153,7 +153,7 @@ fields:
           });
           return result;
         }
-        else if(perms.modifyCompanyRecords){
+        else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
           var companies = Creator.USER_CONTEXT.user.companies;
           if(!companies.length){
@@ -166,10 +166,6 @@ fields:
               value: item._id
             }
           });
-        }
-        else{
-          console.warn("当前用户无权修改该字段。");
-          return [];
         }
       }
     omit: true
@@ -217,7 +213,7 @@ fields:
           });
           return result;
         }
-        else if(perms.modifyCompanyRecords){
+        else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
           var companies = Creator.USER_CONTEXT.user.companies;
           if(!companies.length){
@@ -230,10 +226,6 @@ fields:
               value: item._id
             }
           });
-        }
-        else{
-          console.warn("当前用户无权修改该字段。");
-          return [];
         }
       }
     omit: true
