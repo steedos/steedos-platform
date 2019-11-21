@@ -57,7 +57,7 @@ list_views:
     extra_columns:
       - versions
     order:
-      - - 4
+      - - modified
         - asc
     filter_scope: space
 permission_set:
