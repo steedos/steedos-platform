@@ -1,9 +1,29 @@
+#steedos-table-modal{
+	.steedos-selectize{
+		.selectize-dropdown{
+			position: fixed;
+			top: auto !important;
+			left: auto !important;
+		}
+
+		.selectize-control.multi .selectize-input [data-value]{
+			padding: 2px !important;
+			min-height: auto !important;
+		}
+
+		.selectize-control.multi .selectize-input .slds-pill .slds-pill__action{
+			line-height: 24px;
+		}
+	}
+}
+
 .steedos-selectize{
 	.selectize-input{
 		border-radius: 0px !important;
 		background-image: none !important;
 		border-color: #d2d6de !important;
 		box-shadow: none !important;
+		height: auto;
 	}
 	.selectize-dropdown{
 		border-radius: 0px !important;
