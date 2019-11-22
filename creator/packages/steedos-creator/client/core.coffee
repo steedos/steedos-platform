@@ -312,6 +312,51 @@ if Meteor.isClient
 		url += Creator.getJsReportUrlQuery()
 		return url;
 	
+	Creator.objectOdataSelectFields = (object)->
+		_fields = object.fields
+		_keys = _.keys(_fields)
+		_keys = _keys.filter (k)->
+			if k.indexOf(".") < 0
+				return true
+			else
+				return false
+		return _keys.join(",")
+
+	Creator.objectOdataExpandFields = (object, columns)->
+		expand_fields = []
+		fields = object.fields
+		unless columns
+			columns = _.keys(fields)
+		_.each columns, (n)->
+			if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
+				if fields[n].reference_to
+					ref = fields[n].reference_to
+					if _.isFunction(ref)
+						ref = ref()
+				else
+					ref = fields[n].optionsFunction({}).getProperty("value")
+
+				if !_.isArray(ref)
+					ref = [ref]
+
+				ref = _.map ref, (o)->
+					key = Creator.getObject(o)?.NAME_FIELD_KEY || "name"
+					return key
+
+				ref = _.compact(ref)
+
+				ref = _.uniq(ref)
+
+				ref = ref.join(",")
+				if ref && n.indexOf("$") < 0
+					if n.indexOf(".") < 0
+						expand_fields.push(n)
+					else
+						expand_fields.push(n.replace('.', '/'))
+	#		else if fields[n].type == 'grid'
+	#			expand_fields.push(n)
+		return expand_fields.join(",")
+	
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

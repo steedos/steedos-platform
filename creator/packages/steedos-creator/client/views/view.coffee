@@ -1,49 +1,8 @@
-_expandFields = (object_name, columns)->
-	expand_fields = []
-	fields = Creator.getObject(object_name).fields
-	_.each columns, (n)->
-		if fields[n]?.type == "master_detail" || fields[n]?.type == "lookup"
-			if fields[n].reference_to
-				ref = fields[n].reference_to
-				if _.isFunction(ref)
-					ref = ref()
-			else
-				ref = fields[n].optionsFunction({}).getProperty("value")
-
-			if !_.isArray(ref)
-				ref = [ref]
-
-			ref = _.map ref, (o)->
-				key = Creator.getObject(o)?.NAME_FIELD_KEY || "name"
-				return key
-
-			ref = _.compact(ref)
-
-			ref = _.uniq(ref)
-
-			ref = ref.join(",")
-			if ref && n.indexOf("$") < 0
-				if n.indexOf(".") < 0
-					expand_fields.push(n)
-				else
-					expand_fields.push(n.replace('.', '/'))
-#		else if fields[n].type == 'grid'
-#			expand_fields.push(n)
-	return expand_fields
-
 loadRecordFromOdata = (template, object_name, record_id)->
 	object = Creator.getObject(object_name)
-
-	_fields = object.fields
-
-	_keys = _.keys(_fields)
-	_keys = _keys.filter (k)->
-		if k.indexOf(".") < 0
-			return true
-		else
-			return false
-	expand = _expandFields(object_name, _.keys(_fields))
-	record = Creator.odata.get(object_name, record_id, _keys.join(","), expand.join(","))
+	selectFields = Creator.objectOdataSelectFields(object)
+	expand = Creator.objectOdataExpandFields(object)
+	record = Creator.odata.get(object_name, record_id, selectFields, expand)
 	template.record.set(record)
 
 

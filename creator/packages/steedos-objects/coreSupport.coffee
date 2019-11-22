@@ -30,6 +30,11 @@ Creator.loadObjects = (obj, object_name)->
 
 	if obj.space
 		object_name = 'c_' + obj.space + '_' + obj.name
+	if object_name == 'cfs_files_filerecord'
+		object_name = 'cfs.files.filerecord'
+		obj = _.clone(obj)
+		obj.name = object_name
+		Creator.Objects[object_name] = obj
 
 	Creator.convertObject(obj)
 	new Creator.Object(obj);

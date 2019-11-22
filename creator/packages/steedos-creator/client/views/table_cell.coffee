@@ -73,6 +73,8 @@ Template.creator_table_cell.onRendered ->
 			extraContainer = self.$(".cell-extra-field-container")
 			unless extraContainer.find(".creator_table_cell").length
 				currentDoc = self.data.doc
+				unless currentDoc
+					return
 				if extra_field.indexOf(".") > 0
 					# 子表字段取值
 					extraKeys = extra_field.split(".")
@@ -169,7 +171,7 @@ Template.creator_table_cell.helpers
 		else if _field.type == "url"
 			href = val
 			if !href?.startsWith("http")
-				href = "http://" + encodeURI(href)
+				href = Steedos.absoluteUrl(encodeURI(href))
 			data.push({value: val, href: href, id: this._id, isUrl: true})
 		else if _field.type == "email"
 			data.push({value: val, href: href, id: this._id, isEmail: true})

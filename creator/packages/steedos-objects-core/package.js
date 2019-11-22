@@ -40,7 +40,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('cfs/cfs.coffee');
 	api.addFiles('cfs/cfs_fix.coffee');
-	api.addFiles('cfs/cfs_files.coffee');
+	// api.addFiles('cfs/cfs_files.coffee');
 	api.addFiles('cfs/stores.coffee');
 
 });
