@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "5a843163282c9b8938e61146aae8f49985bb49b5.js",
+      "path": "1d83f5c62999037e5dcb3c64a018732bd2897335.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/5a843163282c9b8938e61146aae8f49985bb49b5.js?meteor_js_resource=true",
-      "size": 7678929,
-      "hash": "5a843163282c9b8938e61146aae8f49985bb49b5",
-      "sri": "xmXQmwpt58UpTUIy7Xz7+lbGxPzCw2QXT07n/aKWaadpNti6/5j7HzUaFv/HMbi54QCNIPgGXyzrm4u6ZtoU8Q=="
+      "url": "/1d83f5c62999037e5dcb3c64a018732bd2897335.js?meteor_js_resource=true",
+      "size": 7679470,
+      "hash": "1d83f5c62999037e5dcb3c64a018732bd2897335",
+      "sri": "OAe2hh9CU71d5NUOi532yYaPhp7rgNCnAVM/Uk4YLiR1t9MP4fDg4trWzuq09fFLdA6IBhJs0UFTuYlDrpOusA=="
     },
     {
-      "path": "5a843163282c9b8938e61146aae8f49985bb49b5.stats.json",
+      "path": "1d83f5c62999037e5dcb3c64a018732bd2897335.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/5a843163282c9b8938e61146aae8f49985bb49b5.stats.json?meteor_js_resource=true",
-      "size": 163621,
-      "hash": "b66bac366d473c5d248990e75cbec61800303815",
-      "sri": "ujXq7blIuwqzDbncO+PHVM19cjpJ907EJ8HNN5lABuenETUabM0j2CZEZ+jDTkZWonI2olxlkt8Llo+Fid1vsA=="
+      "url": "/1d83f5c62999037e5dcb3c64a018732bd2897335.stats.json?meteor_js_resource=true",
+      "size": 163579,
+      "hash": "3b40ffc7921f3bd7c6842988942245ed37474377",
+      "sri": "Hh30hzQeH150cQ1NSrDgoPscDnWaids/Y6b6d+iJHg9dyo9DLQ/5ra6kBUEW1iT+y8ersVH9jfzbHRnLjd69Kw=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -4806,12 +4806,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css?hash=ef1e7f18d4d422b051e6c1d8b90e732e506a1904",
+      "url": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css?hash=b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd",
       "sourceMap": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css.map",
-      "sourceMapUrl": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/ef1e7f18d4d422b051e6c1d8b90e732e506a1904.map",
-      "size": 958,
-      "hash": "ef1e7f18d4d422b051e6c1d8b90e732e506a1904",
-      "sri": "PfCUyc5G0ldbjYsoDKPKa0RlAG4345tXcqsFglGWf5sOqLnWj4zQoUhlh+l71dgyH3nQXPEyA4PCTps5O5rhvQ=="
+      "sourceMapUrl": "/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd.map",
+      "size": 1400,
+      "hash": "b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd",
+      "sri": "wOOygOf8PG8jedUhX1xiWFLeba1LOmQTWeBWlCI2950E/BiUsgxeyrxgywqqvOLCQxrd7QZdD8Gx882sGqM5JA=="
     },
     {
       "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize-pill.css",

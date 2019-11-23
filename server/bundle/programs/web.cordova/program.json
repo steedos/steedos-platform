@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "4ade5417664bf6d57582b9b91a4e445d9d4e736c.js",
+      "path": "1d1ab30e3067a8f66a225b214061d064b63a9449.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/4ade5417664bf6d57582b9b91a4e445d9d4e736c.js?meteor_js_resource=true",
-      "size": 10732686,
-      "hash": "4ade5417664bf6d57582b9b91a4e445d9d4e736c",
-      "sri": "Edysg3NdopLOsFH1Gc5Sk1esbFHUZtxc7vpQ49K/4bAr47SHIktK75pb4ej1CENkRF+Q2ddEIk/IriU8CQMVYA=="
+      "url": "/__cordova/1d1ab30e3067a8f66a225b214061d064b63a9449.js?meteor_js_resource=true",
+      "size": 10733270,
+      "hash": "1d1ab30e3067a8f66a225b214061d064b63a9449",
+      "sri": "dZznJdHIzYve594Pu8VYbnA0shpJJVFytsdt0qDKmy9e9wHOfF86bHJ+X9XBm2XUSGngw5A2U2bLOqX9AD7rrg=="
     },
     {
-      "path": "4ade5417664bf6d57582b9b91a4e445d9d4e736c.stats.json",
+      "path": "1d1ab30e3067a8f66a225b214061d064b63a9449.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/4ade5417664bf6d57582b9b91a4e445d9d4e736c.stats.json?meteor_js_resource=true",
-      "size": 174016,
-      "hash": "dc4081635f4c436b27ef14027316857cc51fb826",
-      "sri": "lEMQ13Hhe4nnYHlmKQL+ttrXKMxdh07I1G8IRsZEJsRH+rytD0krDEYVzQsLVoc72sxoj2t0wE6lB8m9sNunWw=="
+      "url": "/__cordova/1d1ab30e3067a8f66a225b214061d064b63a9449.stats.json?meteor_js_resource=true",
+      "size": 173974,
+      "hash": "fa63f64d8726a9819ddc96f45eed988de7619849",
+      "sri": "FDIf8cI5ouhaxqKcmN2Np+CKe1jhf/rohBXMZvlZ4TJDS9rhfLM2k7WqFOO0u0sjjFGYyf3Qx5gKKlrhiffQcg=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -1606,12 +1606,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css?hash=ef1e7f18d4d422b051e6c1d8b90e732e506a1904",
+      "url": "/__cordova/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css?hash=b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd",
       "sourceMap": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/ef1e7f18d4d422b051e6c1d8b90e732e506a1904.map",
-      "size": 958,
-      "hash": "ef1e7f18d4d422b051e6c1d8b90e732e506a1904",
-      "sri": "PfCUyc5G0ldbjYsoDKPKa0RlAG4345tXcqsFglGWf5sOqLnWj4zQoUhlh+l71dgyH3nQXPEyA4PCTps5O5rhvQ=="
+      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd.map",
+      "size": 1400,
+      "hash": "b7b7acc20d03af0b66b7b85957a3eb2c6f1d5ebd",
+      "sri": "wOOygOf8PG8jedUhX1xiWFLeba1LOmQTWeBWlCI2950E/BiUsgxeyrxgywqqvOLCQxrd7QZdD8Gx882sGqM5JA=="
     },
     {
       "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-selectize/coreform-selectize-pill.css",
