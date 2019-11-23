@@ -412,6 +412,11 @@ Creator.getObjectSchema = (obj) ->
 		if !field.required
 			fs.optional = true
 
+		# [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
+		# 后台始终设置required为false
+		if !Meteor.isClient
+			fs.optional = true
+
 		if field.unique
 			fs.unique = true
 
