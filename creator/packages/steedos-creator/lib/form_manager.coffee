@@ -15,7 +15,7 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 		if related_object_name == related_obj.object_name
 			relatedKey = related_obj.related_field_name
 
-#	main_record = Creator.odata.get(main_object_name, main_record_id)
+	main_record = Creator.odata.get(main_object_name, main_record_id, 'company_id')
 #
 #	related_object = Creator.getObject(related_object_name);
 #
@@ -30,6 +30,8 @@ FormManager.getRelatedInitialValues = (main_object_name, main_record_id, related
 			defaultValue[relatedKey] = Creator.getObjectRecord().name
 		else
 			defaultValue[relatedKey] = {o: main_object_name, ids: [main_record_id]}
+	if !_.has(defaultValue, "company_id") && main_record?.company_id
+		defaultValue['company_id'] = main_record.company_id
 
 	return defaultValue;
 
