@@ -149,10 +149,8 @@ fields:
         else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
           var company_ids = Creator.USER_CONTEXT.user.company_ids;
-          if(values.company_ids && values.company_ids.length){
-            var valueCompanyIds = values.company_ids.map(function(item){
-              return _.isObject(item) ? item._id : item;
-            });
+          if(values.company_id){
+            var valueCompanyIds = _.isObject(values.company_id) ? [values.company_id._id] : [values.company_id];
             company_ids = _.union(company_ids, valueCompanyIds);
           }
           if(!company_ids.length){
