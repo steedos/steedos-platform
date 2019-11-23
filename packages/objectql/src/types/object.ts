@@ -631,21 +631,23 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
-        if (!userSession) {
-            return
-        }
+        // 后台直接去掉uneditable_fields相关判断逻辑
+        // [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
+        // if (!userSession) {
+        //     return
+        // }
 
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
-        let userObjectUneditableFields = userObjectPermission.uneditable_fields
+        // let userObjectPermission = await this.getUserObjectPermission(userSession)
+        // let userObjectUneditableFields = userObjectPermission.uneditable_fields
 
-        let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
-        if (intersection.length > 0) {
-            throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
-        }
+        // let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
+        // if (intersection.length > 0) {
+        //     throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
+        // }
 
-        // _.each(userObjectUneditableFields, (name: string)=>{
-        //     delete doc[name]
-        // })
+        // // _.each(userObjectUneditableFields, (name: string)=>{
+        // //     delete doc[name]
+        // // })
     }
 
     private async callAdapter(method: string, ...args: any[]) {
