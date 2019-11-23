@@ -137,36 +137,40 @@ fields:
           return [];
         }
         var perms = object.permissions.get();
+        var options, result, companys;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        
         if(perms.modifyAllRecords){
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择单位时可以能从所有单位中选择。*/
-          var options, result, companys;
-          result = [];
-          options = {
-            $select: 'name'
-          };
-          companys = Creator.odata.query('company', options, true);
-          companys.forEach(function (item) {
-            result.push({
-              label: item.name,
-              value: item._id
-            });
-          });
-          return result;
         }
         else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
-          var companies = Creator.USER_CONTEXT.user.companies;
-          if(!companies.length){
+          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          if(values.company_ids && values.company_ids.length){
+            var valueCompanyIds = values.company_ids.map(function(item){
+              return _.isObject(item) ? item._id : item;
+            });
+            company_ids = _.union(company_ids, valueCompanyIds);
+          }
+          if(!company_ids.length){
             console.warn("当前用户不属于任何单位，无权修改该字段。");
             return [];
           }
-          return companies.map(function(item){
-            return {
-              label: item.name,
-              value: item._id
-            }
-          });
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(["_id", "in", company_ids]);
+          options.$filter = odataFilter;
         }
+        companys = Creator.odata.query('company', options, true);
+        companys.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
       }
     omit: true
     hidden: true
@@ -197,36 +201,40 @@ fields:
           return [];
         }
         var perms = object.permissions.get();
+        var options, result, companys;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        
         if(perms.modifyAllRecords){
           /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择单位时可以能从所有单位中选择。*/
-          var options, result, companys;
-          result = [];
-          options = {
-            $select: 'name'
-          };
-          companys = Creator.odata.query('company', options, true);
-          companys.forEach(function (item) {
-            result.push({
-              label: item.name,
-              value: item._id
-            });
-          });
-          return result;
         }
         else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
-          var companies = Creator.USER_CONTEXT.user.companies;
-          if(!companies.length){
+          var company_ids = Creator.USER_CONTEXT.user.company_ids;
+          if(values.company_ids && values.company_ids.length){
+            var valueCompanyIds = values.company_ids.map(function(item){
+              return _.isObject(item) ? item._id : item;
+            });
+            company_ids = _.union(company_ids, valueCompanyIds);
+          }
+          if(!company_ids.length){
             console.warn("当前用户不属于任何单位，无权修改该字段。");
             return [];
           }
-          return companies.map(function(item){
-            return {
-              label: item.name,
-              value: item._id
-            }
-          });
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(["_id", "in", company_ids]);
+          options.$filter = odataFilter;
         }
+        companys = Creator.odata.query('company', options, true);
+        companys.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
       }
     omit: true
     hidden: true
