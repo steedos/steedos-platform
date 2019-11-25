@@ -248,10 +248,10 @@ Template.creator_view.helpers
 	label: (key) ->
 		return AutoForm.getLabelForField(key)
 
-	hasPermission: (permissionName)->
-		permissions = Creator.getObject()?.permissions?.default
-		if permissions
-			return permissions[permissionName]
+	# hasPermission: (permissionName)->
+	# 	permissions = Creator.getObject()?.permissions?.default
+	# 	if permissions
+	# 		return permissions[permissionName]
 
 	record: ()->
 		return Creator.getObjectRecord()
