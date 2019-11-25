@@ -4,7 +4,7 @@ import path = require('path')
 import fs = require('fs')
 import { getRandomString } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
-import { isMeteor } from '../util'
+import { isMeteor, transformListenersToTriggers } from '../util'
 
 var util = require('../util')
 var clone = require('clone')
@@ -143,6 +143,9 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         delete json.listenTo
         json.name = getRandomString(10);
         object.listeners[json.name] = json
+        if(object.datasource === 'default'){
+            util.extend(object, {triggers: transformListenersToTriggers(object, json)})
+        }
     } else {
         throw new Error(`Error add listener, object not found: ${object_name}`);
     }

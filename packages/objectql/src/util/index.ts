@@ -7,7 +7,7 @@
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
 import { Validators } from '../validators';
-
+const Future  = require('fibers/future');
 
 const yaml = require('js-yaml');
 const fs = require("fs");
@@ -212,4 +212,21 @@ declare var Meteor:any;
 
 export const isMeteor = () => {
     return (typeof Meteor != "undefined")            
+}
+
+export function wrapAsync(fn, context){
+    let proxyFn = async function(_cb){
+        let value = null;
+        let error = null;
+        try {
+            value = await fn.call(context)
+        } catch (err) {
+            error = err
+        }
+        _cb(error, value)
+    }
+    let fut = new Future();
+    let callback = fut.resolver();
+    let result = proxyFn.apply(this, [callback]);
+    return fut ? fut.wait() : result;
 }
