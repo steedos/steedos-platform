@@ -681,9 +681,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-            if (method === 'insert' || method === 'update') {
-                afterTriggerContext.newDoc = returnValue
-            }
             await this.runAfterTriggers(method, afterTriggerContext)
         }
 
