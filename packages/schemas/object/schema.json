@@ -112,6 +112,10 @@
             "type": "boolean",
             "description": "历史步骤"
         },
+        "enable_follow": {
+            "type": "boolean",
+            "description": "允许关注"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
