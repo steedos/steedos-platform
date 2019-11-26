@@ -69,4 +69,8 @@ Meteor.startup ->
 #		if Session.get("action_object_name") and Session.get("action_record_id")
 #			Creator.subs["CreatorActionRecord"].subscribe "creator_object_record", Session.get("action_object_name"), Session.get("action_record_id"), Session.get('spaceId')
 
+Meteor.startup ->
+	Tracker.autorun (c)->
+		if Session.get("spaceId")
+			Meteor.subscribe("myFollows", Session.get("spaceId"))
 

@@ -103,5 +103,7 @@
 
 	"true": "YES",
 	"false": "NO",
-  	"dashboard": "Dashboard"
+  	"dashboard": "Dashboard",
+	"follow": "Follow",
+	"following": "Following"
 }

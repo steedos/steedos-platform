@@ -51,6 +51,9 @@
 							</div>
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+							{{#if canFollow}}
+							<button class="slds-button slds-button_stateful slds-button_neutral slds-not-selected qe-addToStreamButton list-action-follow">{{#if isFollowing}}{{_ "following"}}{{else}}{{_ "follow"}}{{/if}}</button>
+							{{/if}}
 							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
 								{{#each actions}}
 									<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-{{this.name}}">

@@ -83,6 +83,14 @@ isCalendarView = ()->
 	view = Creator.getListView(Session.get "object_name", Session.get("list_view_id"))
 	return view?.type == 'calendar'
 
+getFollowAction = ()->
+	actions = Creator.getActions()
+	return _.find actions, (action)->
+		return action.name == 'standard_follow'
+
+isFollowing = ()->
+	return Creator.getCollection("follows")?.findOne({object_name: Session.get("object_name"), owner: Meteor.userId()})
+
 Template.creator_list_wrapper.helpers
 
 	isCalendarView: ()->
@@ -176,6 +184,8 @@ Template.creator_list_wrapper.helpers
 		actions = _.filter actions, (action)->
 			if isCalendar && action.todo == "standard_query"
 				return false
+			if action.name == "standard_follow"
+				return false
 			if action.on == "list"
 				if typeof action.visible == "function"
 					return action.visible()
@@ -252,7 +262,16 @@ Template.creator_list_wrapper.helpers
 				isFiltering = true;
 			return !isFiltering;
 		return isFiltering
-
+	canFollow: ()->
+		objectName = Session.get("object_name")
+		object = Creator.getObject(objectName)
+		followAction = getFollowAction();
+		followActionVisible = followAction?.visible
+		if _.isFunction(followActionVisible)
+			followActionVisible = followActionVisible()
+		return (object?.enable_follow && followActionVisible) || isFollowing()
+	isFollowing : ()->
+		return isFollowing();
 
 transformFilters = (filters)->
 	_filters = []
@@ -411,6 +430,9 @@ Template.creator_list_wrapper.events
 				else
 					Session.set 'standard_query', null
 
+	'click .list-action-follow': (event, template)->
+		followAction = getFollowAction()
+		Creator.executeAction(Session.get("object_name"), followAction)
 Template.creator_list_wrapper.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
 	this.recordsListViewTotal = new ReactiveVar({})

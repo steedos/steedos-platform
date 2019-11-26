@@ -105,6 +105,8 @@
 
 	"true": "是",
 	"false": "否",
-  	"dashboard": "首页"
+  	"dashboard": "首页",
+  	"follow": "关注",
+  	"following": "正在关注"
 
 }
