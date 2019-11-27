@@ -33,7 +33,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 		else
 			record = null;
 
-	permissions = _.clone(Creator.getPermissions(object_name))
+	permissions = _.clone(Creator.getPermissions(object_name, spaceId, userId))
 
 	if record
 		isOwner = record.owner == userId || record.owner?._id == userId
