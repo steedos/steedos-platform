@@ -26,8 +26,16 @@ fields:
   url:
     label: 相对链接
     type: url
+  from:
+    label: 发送人
+    type: lookup
+    reference_to: users
+    sortable: true
+    index: true
+    omit: true
   owner:
     label: 通知对象
+    hidden: false
   is_read:
     label: 已读
     type: boolean
