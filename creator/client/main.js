@@ -9,8 +9,9 @@ import("./main.html");
 import * as UI from '../imports/ui';
 
 // 全局变量导入
-import { registerWindowLibraries } from '@steedos/react';
+import { registerWindowLibraries, registerDefaultPlugins } from '@steedos/react';
 registerWindowLibraries();
+registerDefaultPlugins();
 
 Template.preloadAssets.helpers({
     absoluteUrl(url){
