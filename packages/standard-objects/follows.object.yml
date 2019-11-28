@@ -1,0 +1,43 @@
+name: follows
+label: 关注
+icon: follow
+fields:
+  object_name:
+    label: 对象
+    type: lookup
+    optionsFunction: !!js/function |
+      function () {
+              var _options;
+              _options = [];
+              _.forEach(Creator.objectsByName, function (o, object_name) {
+                return _options.push({
+                  label: o.label,
+                  value: o.name,
+                  icon: o.icon
+                });
+              });
+              return _options;
+            }
+    filterable: true
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - object_name
+      - owner
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

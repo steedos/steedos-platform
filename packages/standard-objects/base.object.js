@@ -212,6 +212,19 @@ module.exports = {
                     }
                 });
             }
+        },
+        standard_follow: {
+            label: "关注",
+            visible: true,
+            on: "list",
+            todo: function () {
+                var follow = Creator.getCollection("follows").findOne({ object_name: Session.get("object_name") });
+                if (follow) {
+                    Creator.odata.delete('follows', follow._id, function(){});
+                } else {
+                    Creator.odata.insert('follows', { object_name: Session.get("object_name") });
+                }
+            }
         }
     },
 
