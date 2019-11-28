@@ -21,7 +21,6 @@ fields:
     label: 对象
     type: master_detail
     index: true
-    #reference_to: objects
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
