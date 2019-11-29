@@ -167,7 +167,6 @@ if(Meteor.isClient){
 				_value.name = field + "."+ index +"." + key;
 				_value.value = value[i]
 				_value.key = field + ".$." + key;
-				console.log('schema[_value.key]', schema[_value.key]);
 				if(schema[_value.key].type){
 					_value.type = 'field-type-' + schema[_value.key].type.name;
 				}
