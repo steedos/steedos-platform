@@ -215,7 +215,12 @@ module.exports = {
         },
         standard_follow: {
             label: "关注",
-            visible: true,
+            visible: function(){
+                if(Creator.getObject()){
+                    return Creator.getObject().enable_follow
+                }
+                return false;
+            },
             on: "list",
             todo: function () {
                 var follow = Creator.getCollection("follows").findOne({ object_name: Session.get("object_name") });
