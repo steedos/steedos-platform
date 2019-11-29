@@ -1,0 +1,17 @@
+
+// 修正记录显示页面，label宽度过大
+@media (min-width: 48em) {
+
+    .steedos {
+        .slds-form-element_horizontal .slds-form-element__control, .slds-form_horizontal .slds-form-element .slds-form-element__control, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__control {
+            padding-left: 18%;
+            clear: none;
+        }
+        .slds-form-element_horizontal .slds-form-element__label, .slds-form_horizontal .slds-form-element .slds-form-element__label, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__label {
+            max-width: calc(18% - 1.25rem);
+            -ms-flex-preferred-size: calc(18% - 1.25rem);
+            flex-basis: calc(18% - 1.25rem);
+        }
+    }
+    
+}
