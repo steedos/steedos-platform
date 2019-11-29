@@ -9,6 +9,7 @@ var path = require('path');
 
 import { Publish } from '../publish'
 import { getSteedosSchema } from '@steedos/objectql';
+import { coreExpress } from '../express-middleware'
 
 
 const extendSimpleSchema = () => {
@@ -144,6 +145,7 @@ export class Core {
     private static initRoutes() {
         // /api/v4/users/login, /api/v4/users/validate
         app.use(steedosAuth.authExpress);
+        app.use(coreExpress);
         
         let routers = objectql.getRouterConfigs()
         _.each(routers, (item)=>{
