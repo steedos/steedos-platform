@@ -162,11 +162,15 @@ if(Meteor.isClient){
 
 			var keys = CreatorTable.getKeys(field, formId);
 			keys = _.map(keys, function(key, i){
+
 				var _value = {};
 				_value.name = field + "."+ index +"." + key;
 				_value.value = value[i]
 				_value.key = field + ".$." + key;
-				_value.type = 'field-type-' + schema[_value.key].type.name;
+				console.log('schema[_value.key]', schema[_value.key]);
+				if(schema[_value.key].type){
+					_value.type = 'field-type-' + schema[_value.key].type.name;
+				}
 				return _value
 			});
 			return keys
