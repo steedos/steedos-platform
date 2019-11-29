@@ -6,9 +6,10 @@
   "private": false,
   "scripts": {
     "debug": "nodemon server.js",
-    "start": "node server",
-    "build": "yarn buildClient",
+    "start": "yarn build && node server",
+    "build": "yarn buildClient && yarn buildPackages",
     "buildClient": "cd webapp && yarn && yarn build && cd ..",
+    "buildPackages": "cd ../../ && yarn compile && cd apps/contracts/",
     "prepare": "yarn build",
     "clear": "rd /s /q node_modules\\@steedos\\auth\\node_modules\\@steedos node_modules\\@steedos\\core\\node_modules\\@steedos node_modules\\@steedos\\objectql\\node_modules\\@steedos node_modules\\@steedos\\plugin-jsreport\\node_modules\\@steedos"
   },
