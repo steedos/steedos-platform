@@ -52,7 +52,26 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							{{#if canFollow}}
-							<button class="slds-button slds-button_stateful slds-button_neutral slds-not-selected qe-addToStreamButton list-action-follow">{{#if isFollowing}}{{_ "following"}}{{else}}{{_ "follow"}}{{/if}}</button>
+								{{#if isFollowing}}
+								<button class="slds-button slds-button_neutral slds-button_stateful slds-is-selected list-action-follow" aria-live="assertive">
+									<span class="slds-text-selected">
+									  {{> steedos_icon class="slds-button__icon slds-button__icon_small slds-button__icon_left" source="utility-sprite" name="check"}}
+									  {{_ "following"}}
+									</span>
+									<span class="slds-text-selected-focus">
+									  {{> steedos_icon class="slds-button__icon slds-button__icon_small slds-button__icon_left" source="utility-sprite" name="close"}}
+									  {{_ "unfollow"}}
+									</span>
+								  </button>
+								{{else}}
+								<button class="slds-button slds-button_neutral slds-button_stateful slds-not-selected list-action-follow" aria-live="assertive">
+									<span class="slds-text-not-selected">
+										{{> steedos_icon class="slds-button__icon slds-button__icon_small slds-button__icon_left" source="utility-sprite" name="add"}}
+										{{_ "follow"}}
+									</span>
+								</button>
+								{{/if}}
+							
 							{{/if}}
 							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
 								{{#each actions}}

@@ -107,6 +107,7 @@
 	"false": "否",
   	"dashboard": "首页",
   	"follow": "关注",
-  	"following": "正在关注"
+  	"unfollow": "取消关注",
+  	"following": "已关注"
 
 }
