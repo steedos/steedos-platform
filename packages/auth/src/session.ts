@@ -161,6 +161,16 @@ async function getObjectDataByIds(objectName: string, ids: string[], fields?: st
   return await getSteedosSchema().getObject(objectName).find(query)
 }
 
+async function getUserPermissionShares(spaceUser){
+  let userFilter = `(users eq '${spaceUser.user}')`;
+  let orgFilter = [];
+  _.each(spaceUser.organizations_parents, (orgId)=>{
+    orgFilter.push(`(organizations eq '${orgId}')`);
+  })
+  let filters = `((${userFilter} or ${orgFilter.join(' or ')}) and space eq '${spaceUser.space}')`
+  return await getSteedosSchema().getObject('permission_shares').find({filters: filters, fields: ['_id', 'object_name']});
+}
+
 export async function getSession(token: string, spaceId?: string): Promise<SteedosUserSession> {
   if (!token) {
     return
@@ -191,7 +201,7 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
     let user = await getUser(token);
     if (user) {
       let su = null;
-      let suFields = ['space', 'company_id', 'company_ids', 'organization', 'organizations'];
+      let suFields = ['space', 'company_id', 'company_ids', 'organization', 'organizations', 'organizations_parents', 'user'];
       let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${user._id}')`, fields: suFields });
       // 如果spaceid和user不匹配，则取用户的第一个工作区
       let spaceUsers = await getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${user._id}')`, fields: suFields });
@@ -221,6 +231,7 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
         if (spaceSession.companies) {
           spaceSession.company_ids = spaceSession.companies.map(function (company: any) { return company._id});
         }
+        spaceSession.permission_shares = await getUserPermissionShares(su);
         addSpaceSessionToCache(token, userSpaceId, spaceSession);
         return assignSession(userSpaceId, session, spaceSession);
       }
