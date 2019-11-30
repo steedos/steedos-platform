@@ -1,4 +1,4 @@
-
+clone = require('clone');
 Creator.objectsByName = {}   # 此对象只能在确保所有Object初始化完成后调用， 否则获取到的object不全
 
 Creator.formatObjectName = (object_name)->
@@ -51,7 +51,7 @@ Creator.Object = (options)->
 		console.error(options)
 		throw new Error('Creator.Object options must specify name');
 
-	self.fields = _.clone(options.fields)
+	self.fields = clone(options.fields)
 
 	_.each self.fields, (field, field_name)->
 		if field_name == 'name' || field.is_name
