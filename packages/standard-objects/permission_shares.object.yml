@@ -8,7 +8,6 @@ fields:
     required: true
     searchable: true
     index: true
-    name: name
   object_name:
     label: 对象
     type: lookup
@@ -30,37 +29,18 @@ fields:
               return _options;
             }
     required: true
-    name: object_name
     filterable: true
   filters:
     label: 过滤条件
-    type: grid
-    name: filters
-  filters.$.field:
-    label: 字段名
-    type: text
-    name: filters.$.field
-  filters.$.operation:
-    label: 操作符
-    type: select
-    defaultValue: =
-    options: !<tag:yaml.org,2002:js/function> |-
-      function () {
-                return Creator.getFieldOperation();
-            }
-    name: filters.$.operation
-    filterable: true
-  filters.$.value:
-    label: 字段值
-    blackbox: true
-    name: filters.$.value
+    type: textarea
+    inlineHelpText: 格式为odata filters
+    is_wide: true
   organizations:
     label: 授权组织
     type: lookup
     reference_to: organizations
     multiple: true
     defaultValue: []
-    name: organizations
     filterable: true
   users:
     label: 授权用户
@@ -68,7 +48,6 @@ fields:
     reference_to: users
     multiple: true
     defaultValue: []
-    name: users
     filterable: true
 list_views:
   all:
