@@ -16,6 +16,11 @@ export type SteedosUserSessionOrganization = {
     fullname: string
 }
 
+export type SteedosUserSessionPermissionShares = {
+    _id: string,
+    object_name: string
+}
+
 export type SteedosUserSession = {
     userId: SteedosIDType,
     spaceId: string,
@@ -31,4 +36,5 @@ export type SteedosUserSession = {
     companies?: SteedosUserSessionCompany[],
     organization: SteedosUserSessionOrganization,
     organizations: SteedosUserSessionOrganization[],
+    permission_shares: SteedosUserSessionPermissionShares[]
 }
