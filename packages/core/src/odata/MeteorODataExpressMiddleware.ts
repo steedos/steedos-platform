@@ -44,37 +44,11 @@ const getObjectList = async function (req: Request, res: Response) {
             let entities = [];
             let filters = queryParams.$filter || '';
             let fields = [];
-            // if (collection.table_name === 'cfs.files.filerecord') {
-            //     filters = filters ? `(${filters}) and (metadata/space eq \'${spaceId}\')` : `(metadata/space eq \'${spaceId}\')`;
-            // } else {
-            //     filters = filters ? `(${filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
-            // }
 
             if (queryParams.$select) {
                 fields = _.keys(createQuery.projection)
             }
-            if (!permissions.viewAllRecords && !permissions.viewCompanyRecords) {
-                if (collection.enable_share) {
-                    // 满足共享规则中的记录也要搜索出来
-                    // delete createQuery.query.owner
-                    // shares = []
-                    // orgs = Steedos.getUserOrganizations(spaceId, @userId, true)
-                    // shares.push {"owner": @userId}
-                    // shares.push { "sharing.u": @userId }
-                    // shares.push { "sharing.o": { $in: orgs } }
-                    // createQuery.query["$or"] = shares
-                    filters = filters.replace(`(owner eq '${userId}')`, '').replace(` and (owner eq '${userId}')`, '').replace(`(owner eq '${userId}') and `, '').replace(`() and `, '')
-                    let orgs = await getODataManager().getUserOrganizations(spaceId, userId, true)
-                    let orgsFilters = _.map(orgs, function (orgId) {
-                        return `(sharing/o eq '${orgId}')`
-                    }).join(' or ')
-                    let or = `(owner eq '${userId}') or (sharing/u eq '${userId}') or ${orgsFilters}`
-                    filters = filters ? `(${filters}) and (${or})` : `(${or})`;
-                    console.log('enable_share filters: ', filters)
-                } else {
-                    filters = filters ? `(${filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
-                }
-            }
+
             filters = getODataManager().excludeDeleted(filters);
 
             if (queryParams.$top !== '0') {
@@ -254,7 +228,6 @@ const createObjectData = async function (req: Request, res: Response) {
 
 const getObjectData = async function (req: Request, res: Response) {
     let userSession = req.user;
-    let userId = userSession.userId;
     let urlParams = req.params;
     let queryParams = req.query;
     let key = urlParams.objectName;
@@ -351,27 +324,7 @@ const getObjectData = async function (req: Request, res: Response) {
                 let entity = await collection.findOne(recordId, { fields: fields }, userSession);
                 let entities = [];
                 if (entity) {
-                    let recordData = await collection.findOne(recordId, { fields: ['owner', 'company_id'] }, userSession);
-                    let isAllowed = (recordData.owner == userId) || permissions.viewAllRecords || (permissions.viewCompanyRecords);
-                    // if object.enable_share and !isAllowed
-                    //   shares = []
-                    //   orgs = Steedos.getUserOrganizations(@urlParams.spaceId, @userId, true)
-                    //   shares.push { "sharing.u": @userId }
-                    //   shares.push { "sharing.o": { $in: orgs } }
-                    //   isAllowed = collection.findOne({ _id: @urlParams._id, "$or": shares }, { fields: { _id: 1 } })
-                    if (collection.enable_share && !isAllowed) {
-                        let orgs = await getODataManager().getUserOrganizations(spaceId, userId, true);
-                        let orgsFilters = _.map(orgs, function (orgId) {
-                            return `(sharing/o eq '${orgId}')`
-                        }).join(' or ')
-                        let or = `sharing/u eq '${userId}' or ${orgsFilters}`;
-                        let filters = `(_id eq '${recordId}')`;
-                        filters = `(${filters}) and (${or})`;
-                        console.log('enable_share filters: ', filters)
-                        isAllowed = await collection.count({ filters: filters, fields: ['_id'] }, userSession)
-                    }
-                    if (isAllowed) {
-                        let body = {};
+                    let body = {};
                         entities.push(entity);
                         await getODataManager().dealWithExpand(createQuery, entities, key, spaceId, userSession);
                         body['@odata.context'] = getCreator().getODataContextPath(spaceId, key) + '/$entity';
@@ -379,9 +332,6 @@ const getObjectData = async function (req: Request, res: Response) {
                         _.extend(body, entity_OdataProperties[0]);
                         getODataManager().setHeaders(res);
                         res.send(body);
-                    } else {
-                        res.status(403).send(setErrorMessage(403, collection, key, 'get'));
-                    }
                 } else {
                     res.status(404).send(setErrorMessage(404, collection, key, 'get'));
                 }
