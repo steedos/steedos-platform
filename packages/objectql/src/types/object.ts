@@ -1,5 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
+import { getUserObjectSharesFilters } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -719,21 +720,53 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
-                if (spaceId) { // 工作区级
-                    query.filters = query.filters ? `(${query.filters}) and (space eq \'${spaceId}\')` : `(space eq \'${spaceId}\')`;
+                let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
+
+                if(spaceId){
+                    spaceFilter = `(space eq '${spaceId}')`;
                 }
+
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
-                    let companyFilters = _.map(userSession.companies, function (comp: any) {
+                    companyFilter = _.map(userSession.companies, function (comp: any) {
                         return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
-                    }).join(' or ')
-                    if (companyFilters) {
-                        query.filters = query.filters ? `(${query.filters}) and (${companyFilters})` : `(${companyFilters})`;
-                    }
+                    });
                 }
 
                 if (!objPm.viewAllRecords && !objPm.viewCompanyRecords && objPm.allowRead) { // owner
-                    query.filters = query.filters ? `(${query.filters}) and (owner eq \'${userId}\')` : `(owner eq \'${userId}\')`;
+                    ownerFilter = `(owner eq '${userId}')`;
                 }
+
+                sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+
+                if(!_.isEmpty(companyFilter)){
+                    permissionFilters.push(`(${companyFilter.join(' or ')})`);
+                }
+
+                if(ownerFilter){
+                    permissionFilters.push(ownerFilter);
+                }
+
+                if(!_.isEmpty(sharesFilter)){
+                    permissionFilters.push(`(${sharesFilter.join(' or ')})`);
+                }
+
+                if(clientFilter){
+                    userFilters.push(clientFilter);
+                }
+
+                if(spaceFilter){
+                    userFilters.push(spaceFilter);
+                }
+
+                if(!_.isEmpty(permissionFilters)){
+                    filters = permissionFilters.join(' or ');
+                }
+
+                if(!_.isEmpty(userFilters)){
+                    filters = filters ? `(${filters}) and (${userFilters.join(' and ')})` : userFilters.join(' and ')
+                }
+
+                query.filters = filters;
             }
             else if (method === 'insert') {
                 if (!objPm.allowCreate) {
