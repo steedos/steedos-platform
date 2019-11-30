@@ -1,3 +1,5 @@
+const objectql = require('@steedos/objectql');
+
 Creator.Objects['permission_shares'].triggers = {
   "before.insert.server.sharing": {
     on: "server",
@@ -28,116 +30,28 @@ Creator.Objects['permission_shares'].triggers = {
         throw new Meteor.Error(500, errMsg);
       }
     }
-  },
-  "after.insert.server.sharing": {
-    on: "server",
-    when: "after.insert",
-    todo: function (userId, doc) {
-      var bulk, collection, filters, object_name, push, selector;
-      object_name = doc.object_name;
-      collection = Creator.getCollection(object_name);
-      bulk = collection.rawCollection().initializeUnorderedBulkOp();
-      selector = {
-        space: doc.space
-      };
-      if (doc.filters) {
-        filters = Creator.formatFiltersToMongo(doc.filters, {
-          extend: false
-        });
-        selector["$and"] = filters;
-      }
-      push = {
-        sharing: {
-          "u": doc.users,
-          "o": doc.organizations,
-          "r": doc._id
-        }
-      };
-      bulk.find(selector).update({
-        $push: push
-      });
-      return bulk.execute();
-    }
-  },
-  "after.update.server.sharing": {
-    on: "server",
-    when: "after.update",
-    todo: function (userId, doc, fieldNames, modifier, options) {
-      var bulk, collection, filters, object_name, preBulk, preCollection, preObjectName, pull, push, selector;
-      object_name = doc.object_name;
-      collection = Creator.getCollection(object_name);
-      preObjectName = this.previous.object_name;
-      if (preObjectName !== object_name) {
-        preCollection = Creator.getCollection(preObjectName);
-      } else {
-        preCollection = collection;
-      }
-      preBulk = preCollection.rawCollection().initializeUnorderedBulkOp();
-      bulk = collection.rawCollection().initializeUnorderedBulkOp();
-      selector = {
-        space: doc.space,
-        "sharing": {
-          $elemMatch: {
-            r: doc._id
-          }
-        }
-      };
-      pull = {
-        sharing: {
-          r: doc._id
-        }
-      };
-      preBulk.find(selector).update({
-        $pull: pull
-      });
-      preBulk.execute();
-      selector = {
-        space: doc.space
-      };
-      if (doc.filters) {
-        filters = Creator.formatFiltersToMongo(doc.filters, {
-          extend: false
-        });
-        selector["$and"] = filters;
-      }
-      push = {
-        sharing: {
-          "u": doc.users,
-          "o": doc.organizations,
-          "r": doc._id
-        }
-      };
-      bulk.find(selector).update({
-        $push: push
-      });
-      return bulk.execute();
-    }
-  },
-  "after.remove.server.sharing": {
-    on: "server",
-    when: "after.remove",
-    todo: function (userId, doc) {
-      var bulk, collection, object_name, pull, selector;
-      object_name = doc.object_name;
-      collection = Creator.getCollection(object_name);
-      bulk = collection.rawCollection().initializeUnorderedBulkOp();
-      selector = {
-        space: doc.space,
-        "sharing": {
-          $elemMatch: {
-            r: doc._id
-          }
-        }
-      };
-      pull = {
-        sharing: {
-          r: doc._id
-        }
-      };
-      bulk.find(selector).update({
-        $pull: pull
-      });
-      return bulk.execute();
-    }
   }
+}
+
+if(Meteor.isServer){
+  Meteor.startup(function() {
+    let objectName = 'permission_shares';
+    Creator.getCollection(objectName).find({}, {
+      fields: {
+        _id: 1,
+        object_name: 1,
+        filters: 1
+      }
+    }).observe({
+      added: function(doc){
+        objectql.addConfig(objectName, doc)
+      },
+      changed: function(doc){
+        objectql.addConfig(objectName, doc)
+      },
+      removed: function(doc){
+        objectql.removeConfig(objectName, doc)
+      }
+    })
+  });
 }
