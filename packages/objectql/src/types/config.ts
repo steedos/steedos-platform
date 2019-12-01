@@ -56,6 +56,14 @@ export const addConfig = (objectName: string, record: any) => {
     records.push(record)
 }
 
+export const removeConfig = (objectName: string, record: any) => {
+    if(!record._id){
+        throw new Error(`Error adding record to ${objectName}, record._id required`);
+    }
+    let records = getConfigs(objectName);
+    _.remove(records, {_id: record._id});
+}
+
 export const getConfigDatabase = (objectName: string) => {
     return LOADED_OBJECT_RECORDS
 }
