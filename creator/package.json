@@ -11,7 +11,7 @@
     "prepare": "node .scripts/npm-postinstall.js",
     "clear": "rm -rf node_modules/@steedos/auth/node_modules/@steedos node_modules/@steedos/core/node_modules/@steedos node_modules/@steedos/objectql/node_modules/@steedos node_modules/@steedos/plugin-jsreport/node_modules/@steedos node_modules/@steedos/accounts/node_modules/@steedos",
     "osy": "cd ../object-server/ && yarn",
-    "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && yarn start",
+    "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/",
     "oss": "cp -r ../object-server/packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start"
   },
   "dependencies": {
@@ -94,7 +94,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@steedos/react": "1.11.1",
+    "@steedos/react": "1.11.2",
     "@salesforce-ux/design-system": "^2.7.4",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
