@@ -83,6 +83,19 @@ list_views:
       - - state
         - =
         - completed
+  all:
+    label: 所有任务
+    columns:
+      - name
+      - due_date
+      - state
+      - assignees
+      - related_to
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+    filter_scope: space
   created_tasks:
     label: 交办任务
     filter_scope: space
@@ -90,21 +103,21 @@ list_views:
       - - owner
         - =
         - '{userId}'
-  # all:
-  #   label: 所有任务
-  #   columns:
-  #     - name
-  #     - due_date
-  #     - state
-  #     - assignees
-  #     - related_to
-  #   filter_scope: space
+  recent:
+    label: 最近查看
   calendar_view:
     type: calendar
     label: 日历视图
     filter_scope: space
+    filters:
+      - - assignees
+        - =
+        - '{userId}'
+      - - owner
+        - =
+        - '{userId}'
     options:
-      startDateExpr: created
+      startDateExpr: due_date
       endDateExpr: due_date
       textExpr: name
       title:
@@ -113,23 +126,6 @@ list_views:
         - assignees
         - state
       currentView: month
-      groups:
-        - state
-      resources:
-        - fieldExpr: state
-          dataSource:
-            - text: 未开始
-              id: not_started
-              color: 'rgb(118, 118, 118)'
-            - text: 进行中
-              id: in_progress
-              color: 'rgb(29, 186, 174)'
-            - text: 已完成
-              id: completed
-              color: 'rgb(32, 194, 46)'
-            - text: 暂停
-              id: paused
-              color: 'rgb(118, 118, 118)'
 permission_set:
   user:
     allowCreate: true
