@@ -9,7 +9,7 @@ var addNotifications = function(userId, doc, assignees){
             name: 1
         }
     });
-    var notificationTitle = fromUser.name + " 已为您分配任务";
+    var notificationTitle = fromUser.name + " 为您分配了任务";
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,
@@ -32,8 +32,8 @@ var removeNotifications = function(doc, assignees){
     var collection = Creator.getCollection("notifications");
     assignees.forEach(function(assignee){
         collection.remove({
-            o: "tasks",
-            ids: [doc._id],
+            "related_to.o": "tasks",
+            "related_to.ids": doc._id,
             owner: assignee
         });
     });
@@ -65,10 +65,10 @@ Creator.Objects['tasks'].triggers = {
             var addAssignees = _.difference(setAssignees, docAssignees);
             var removedAssignees = _.difference(docAssignees, setAssignees);
             if(addAssignees.length){
-                addNotifications(userId, doc, doc.assignees);
+                addNotifications(userId, doc, addAssignees);
             }
             if(removedAssignees.length){
-                removeNotifications(doc, doc.assignees);
+                removeNotifications(doc, removedAssignees);
             }
         }
     },
