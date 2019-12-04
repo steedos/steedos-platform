@@ -17,7 +17,7 @@ v1.11.0
 v1.12.0
 
 - [共享规则调整](https://github.com/steedos/object-server/issues/181)
-- [新增通知中心]](https://github.com/steedos/creator/issues/1434)
+- [新增通知中心](https://github.com/steedos/creator/issues/1434)
 - [meteor datasource 的 object 提供三个函数 directUpdate, directInsert, directDelete](https://github.com/steedos/object-server/issues/169)
 - [用户个人信息界面，编辑信息后不会立即更新到界面，需要刷新浏览器](https://github.com/steedos/creator/issues/1448)
 - [除当前登录用户外，其他用户详细界面都是坏的](https://github.com/steedos/creator/issues/1447)
