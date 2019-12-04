@@ -90,15 +90,15 @@ list_views:
       - - owner
         - =
         - '{userId}'
-  all:
-    label: 所有任务
-    columns:
-      - name
-      - due_date
-      - state
-      - assignees
-      - related_to
-    filter_scope: space
+  # all:
+  #   label: 所有任务
+  #   columns:
+  #     - name
+  #     - due_date
+  #     - state
+  #     - assignees
+  #     - related_to
+  #   filter_scope: space
   calendar_view:
     type: calendar
     label: 日历视图
