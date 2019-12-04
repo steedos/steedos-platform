@@ -1,5 +1,5 @@
-loadRecordFromOdata = (template, object_name, record_id)->
-	if template.record.get()?._id == record_id
+loadRecordFromOdata = (template, object_name, record_id, force)->
+	if !force && template.record.get()?._id == record_id
 		return
 	object = Creator.getObject(object_name)
 	selectFields = Creator.objectOdataSelectFields(object)
@@ -17,9 +17,9 @@ Template.user.onCreated ->
 		spaceId = Session.get "spaceId"
 		userId = Session.get "record_id"
 		space_record = Creator.getCollection("space_users").findOne({space: spaceId, user: userId})
-		loadRecordFromOdata(template, "space_users", space_record._id)
+		loadRecordFromOdata(template, "space_users", space_record._id, true)
 		$('#afModal').modal('hide')
-	AutoForm.hooks creatorEditForm:
+	AutoForm.hooks editSpaceUser:
 		onSuccess: onEditSuccess
 	,false
 
