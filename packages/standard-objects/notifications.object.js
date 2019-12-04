@@ -10,7 +10,7 @@ Creator.Objects['notifications'].methods = {
             [["is_read", "=", null], 'or', ["is_read", "=", false]]
         ], {
             is_read: true
-        }, userSession).catch((ex) => {
+        }).catch((ex) => {
             console.error(ex);
             error = ex;
             return 0;
