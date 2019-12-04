@@ -144,7 +144,6 @@ install("cfs:http-methods");
 install("tap:i18n");
 install("raix:eventstate");
 install("raix:push");
-install("steedos:cors");
 install("templating-compiler");
 install("templating-runtime");
 install("templating");
@@ -360,7 +359,34 @@ module.useNode();
     ".json"
   ]
 });
-meteorInstall({"node_modules":{"fibers":{"package.json":function(require,exports,module){
+meteorInstall({"node_modules":{"cors":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/cors/package.json                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "cors",
+  "version": "2.8.5",
+  "main": "./lib/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/cors/lib/index.js                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"fibers":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -469,34 +495,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"cors":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/cors/package.json                                                                   //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "cors",
-  "version": "2.8.5",
-  "main": "./lib/index.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/cors/lib/index.js                                                                   //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"length-stream":{"package.json":function(require,exports,module){
+}},"length-stream":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -830,7 +829,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.10.4",
+  "version": "1.11.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -847,10 +846,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.10.4",
-    "@steedos/migrate": "^1.10.4",
-    "@steedos/objectql": "^1.10.4",
-    "@steedos/standard-objects": "^1.10.4",
+    "@steedos/auth": "^1.11.0",
+    "@steedos/migrate": "^1.11.0",
+    "@steedos/objectql": "^1.11.0",
+    "@steedos/standard-objects": "^1.11.0",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -880,7 +879,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.10.4",
+    "@steedos/meteor-bundle-runner": "^1.11.0",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -923,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.10.4",
+  "version": "1.11.0",
   "main": "lib/index.js"
 };
 
@@ -983,7 +982,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.10.4",
+  "version": "1.11.0",
   "main": "lib/index.js"
 };
 
@@ -1000,7 +999,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}},"combined-stream":{"package.json":function(require,exports,module){
+}}}},"clone":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/clone/package.json                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "clone",
+  "version": "2.1.1",
+  "main": "clone.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"clone.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/clone/clone.js                                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"combined-stream":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //

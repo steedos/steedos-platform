@@ -319,10 +319,6 @@
       "path": "packages/raix_push.js"
     },
     {
-      "sourceMap": "packages/steedos_cors.js.map",
-      "path": "packages/steedos_cors.js"
-    },
-    {
       "path": "packages/templating-compiler.js"
     },
     {
@@ -796,6 +792,7 @@
     },
     {
       "node_modules": "npm/node_modules",
+      "sourceMap": "app/app.js.map",
       "path": "app/app.js"
     },
     {

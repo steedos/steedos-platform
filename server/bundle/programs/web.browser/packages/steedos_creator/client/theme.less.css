@@ -175,17 +175,6 @@ body button {
   min-height: auto;
   padding-bottom: 0.75rem;
 }
-.steedos.fixed .slds-page-header {
-  background: #f3f2f2;
-}
-.steedos.fixed .slds-button_neutral,
-.steedos.fixed .slds-button--neutral,
-.steedos.fixed .slds-button_icon-border-filled,
-.steedos.fixed .slds-button--icon-border-filled,
-.steedos.fixed .slds-button_icon-border,
-.steedos.fixed .slds-button--icon-border {
-  border-color: #e7e7eb;
-}
 .steedos.fixed .slds-form-element .control-label {
   font-weight: normal;
   color: #706e6b;
