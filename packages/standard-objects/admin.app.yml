@@ -53,6 +53,12 @@ admin_menus:
       - organization_admin
     object_name: space_users
     parent: menu_users
+  - _id: roles
+    name: 角色
+    permission_sets:
+      - admin
+    object_name: roles
+    parent: menu_users
   - _id: permission_set
     name: 权限组
     permission_sets:
