@@ -11,6 +11,7 @@ fields:
   object_name:
     label: 对象
     type: lookup
+    multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function () {
                 var _options;
