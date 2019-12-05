@@ -29,7 +29,7 @@ Meteor.methods
 		if !this.userId
 			return
 
-		ins = db.instances.findOne({_id: ins_id, $or: [{submitter: this.userId}, {applicant: this.userId}]}, {fields: {state: 1}})
+		ins = db.instances.findOne({_id: ins_id, $or: [{submitter: this.userId}, {applicant: this.userId}, {inbox_users: this.userId}, {cc_users: this.userId}]}, {fields: {state: 1}})
 
 		if ins
 			set_obj = new Object;

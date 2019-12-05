@@ -44,5 +44,8 @@ RelatedInstances.helpers =
 		if !Meteor.isClient
 			return false
 		else
-			ins = WorkflowManager.getInstance();
-			return ins.state == 'draft'
+			if Session.get("box") == "draft" || Session.get("box") == 'inbox'
+				current_step = InstanceManager.getCurrentStep()
+				if current_step
+					if (current_step.can_edit_main_attach || current_step.can_edit_normal_attach == true || current_step.can_edit_normal_attach == undefined)
+						return true
