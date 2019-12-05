@@ -7,7 +7,6 @@ fields:
     type: text
     required: true
     searchable: true
-    index: true
   parent:
     label: 上级角色
     type: lookup
