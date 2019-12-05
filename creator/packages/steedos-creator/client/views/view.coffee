@@ -417,6 +417,9 @@ Template.creator_view.helpers
 
 	agreement: ()->
 		return Template.instance().agreement.get()
+	
+	showRightSidebar: ()->
+		return false
 
 	showEditIcon: ()->
 		return Steedos.isMobile() && this.name == 'standard_edit'
@@ -663,6 +666,17 @@ Template.creator_view.events
 					return
 			i++
 		$(event.target).val("")
+	
+	'click .slds-tabs_card .slds-tabs_default__item': (event) ->
+		currentTarget = $(event.currentTarget)
+		if currentTarget.hasClass("slds-is-active")
+			return
+		currentIndex = currentTarget.index()
+		currentTabContainer = currentTarget.closest(".slds-tabs_card")
+		currentTarget.siblings(".slds-is-active").removeClass("slds-is-active").end().addClass("slds-is-active")
+		currentTabContainer.find(">.slds-tabs_default__content.slds-show").toggleClass("slds-show").toggleClass("slds-hide")
+		currentTabContainer.find(">.slds-tabs_default__content").eq(currentIndex).toggleClass("slds-show").toggleClass("slds-hide")
+
 
 Template.creator_view.onDestroyed ()->
 	self = this

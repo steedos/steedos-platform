@@ -72,17 +72,27 @@
 				</div>
 
 				<div class="row row-main">
-					<div class="column {{#if enable_chatter}}region-main{{/if}}">
+					<div class="column {{#if showRightSidebar}}region-main{{/if}}">
 						<div class="slds-tabs_default slds-tabs_card">
 							<ul class="slds-tabs_default__nav" role="tablist">
-								<li class="slds-tabs_default__item slds-is-active" title="Item One" role="presentation">
-									<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true"
-										aria-controls="tab-default-1" id="tab-default-1__item">
+								<li class="slds-tabs_default__item slds-is-active" title="详细" role="presentation">
+									<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="true"
+										aria-controls="tab-default-details">
 										详细
 									</a>
 								</li>
+								{{#if enable_chatter}}
+									{{#if show_chatter}}
+										<li class="slds-tabs_default__item" title="详细" role="presentation">
+											<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false"
+												aria-controls="tab-default-chatter">
+												评论
+											</a>
+										</li>
+									{{/if}}
+								{{/if}}
 							</ul>
-							<div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+							<div class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-details__item">
 								<div id="creator-quick-form" class="{{#if form_horizontal}} slds-form_horizontal{{else}}  slds-form_stacked{{/if}} slds-form" role="tabpanel">
 									<div class="">
 									{{#if detail_info_visible}}
@@ -245,16 +255,18 @@
 									</div>
 								{{/if}}
 							</div>
+							{{#if enable_chatter}}
+								{{#if show_chatter}}
+									<div class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-chatter__item">
+										{{> steedos_record_chat object_name=object_name record_id=record._id}}
+									</div>
+								{{/if}}
+							{{/if}}
 						</div>
 					</div>
-					{{#if enable_chatter}}
-						{{#if show_chatter}}
-							<div class="column {{#if related_list}}region-sidebar-right{{/if}}">
-								<div class="slds-card slds-card_boundary forceRelatedListCardDesktop">
-									{{> steedos_record_chat object_name=object_name record_id=record._id}}
-								</div>
-							</div>
-						{{/if}}
+					{{#if showRightSidebar}}
+						<div class="column region-sidebar-right">
+						</div>
 					{{/if}}
 				</div>
 			</div>
