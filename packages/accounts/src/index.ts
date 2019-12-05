@@ -16,6 +16,11 @@ import { getSteedosConfig } from '@steedos/objectql'
 const config = getSteedosConfig();
 
 function getAccountsServer (context){
+
+  let accountsConfig = config.accounts || {}
+  let tokenSecret = accountsConfig.tokenSecret || "secret";
+  let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
+  let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   
   mongoose.connect(mongoUrl, { useNewUrlParser: true });
   const db = mongoose.connection;
@@ -32,7 +37,15 @@ function getAccountsServer (context){
         // },
       }),
       sendMail: sendMail,
-      tokenSecret: 'secret',
+      tokenSecret: tokenSecret,
+      tokenConfigs: {
+        accessToken: {
+          expiresIn: accessTokenExpiresIn,
+        },
+        refreshToken: {
+          expiresIn: refreshTokenExpiresIn,
+        },
+      }
     },
     {
       password: new AccountsPassword({
