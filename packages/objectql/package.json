@@ -1,7 +1,7 @@
 {
   "name": "@steedos/objectql",
   "private": false,
-  "version": "1.12.1",
+  "version": "1.12.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
