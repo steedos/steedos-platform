@@ -19,11 +19,19 @@
 
 	.slds-tabs_default__content {
 		.related-object-tabular {
+			.related_list_themed_border_top{
+				border-top-width: 3px;
+				border-top-color: var(--lwc-colorGray7,rgb(176, 173, 171));
+				border-top-style: solid;
+				border-top-left-radius: var(--lwc-borderRadiusMedium,0.25rem);
+				border-top-right-radius: var(--lwc-borderRadiusMedium,0.25rem);
+			}
 			.dx-datagrid-headers {
 				border-top: 1px solid #ddd;
+				/*
 				.dx-datagrid-table .dx-row > td {
 					border-bottom: 0;
-				}
+				}*/
 			}
 			.dataTable {
 				thead > tr > th {
@@ -120,7 +128,8 @@ form.two-columns-form{
 }
 
 #creator-quick-form {
-	border-top: 1px solid #dddbda !important;
+	margin-bottom: 2rem;
+	margin-top: -1rem;
 	.slds-section__title {
 		font-size: 0.8rem;
 		font-weight: inherit;
