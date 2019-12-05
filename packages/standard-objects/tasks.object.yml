@@ -14,6 +14,7 @@ fields:
     label: 分派给
     type: lookup
     reference_to: users
+    defaultValue: "{userId}"
     multiple: true
     name: assignees
     filterable: true
@@ -34,6 +35,7 @@ fields:
         value: completed
       - label: 暂停
         value: paused
+    defaultValue: not_started
     sortable: true
     required: true
     name: state
