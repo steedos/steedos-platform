@@ -212,14 +212,9 @@ body button {
 .steedos.fixed .slds-tabs--default__nav {
   border-bottom: 1px solid #e7e7eb;
 }
-.steedos.fixed .slds-tabs_default__nav .slds-tabs_default__item:after,
-.steedos.fixed .slds-tabs--default__nav .slds-tabs_default__item:after,
-.steedos.fixed .slds-tabs_default__nav .slds-tabs--default__item:after,
-.steedos.fixed .slds-tabs--default__nav .slds-tabs--default__item:after {
-  height: 1px;
-}
-.steedos.fixed .objectViewManager .slds-tabs_default {
-  background: transparent;
+.steedos.fixed .slds-tabs_default__nav .slds-tabs_default__item .slds-tabs_default__link,
+.steedos.fixed .slds-tabs--default__nav .slds-tabs_default__item .slds-tabs_default__link {
+  margin-top: -0.75rem;
 }
 .steedos.fixed .slds-modal__header {
   background-color: #F4F4F4;

@@ -17,11 +17,63 @@
 .creator_view .objectViewManager .table-grid-content .creator-view-tabs_default {
   max-height: 100%;
 }
+.creator_view .objectViewManager .slds-page-header .slds-page-header__icon {
+  width: 2rem;
+  height: 2rem;
+}
+.creator_view .objectViewManager .slds-page-header .slds-page-header__detail-row {
+  padding: 0.8rem 1rem;
+}
+@media (max-width: 767px) {
+  .creator_view .objectViewManager .slds-page-header .slds-page-header__detail-row {
+    border-radius: 0;
+    display: none;
+  }
+}
+.creator_view .objectViewManager .slds-page-header .slds-page-header__detail-row ul.slds-list_horizontal {
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-bottom: -0.75rem;
+}
+.creator_view .objectViewManager .slds-page-header .slds-page-header__detail-row ul.slds-list_horizontal > li {
+  width: 175px;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.creator_view .objectViewManager .slds-page-header .slds-page-header__detail-row ul.slds-list_horizontal > li .themeIcon .forceEntityIcon.extraSmall {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 0.2rem;
+}
+@media (max-width: 767px) {
+  .creator_view .objectViewManager .row .column > .slds-tabs_card {
+    border-radius: 0;
+    border-top: 0;
+  }
+}
+.creator_view .slds-tabs_default__content .related-object-tabular .related_list_themed_border_top {
+  border-top-width: 3px;
+  border-top-color: #b0adab;
+  border-top-style: solid;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+@media (max-width: 767px) {
+  .creator_view .slds-tabs_default__content .related-object-tabular .related_list_themed_border_top {
+    border-radius: 0;
+  }
+}
 .creator_view .slds-tabs_default__content .related-object-tabular .dx-datagrid-headers {
   border-top: 1px solid #ddd;
-}
-.creator_view .slds-tabs_default__content .related-object-tabular .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
-  border-bottom: 0;
+  /*
+				.dx-datagrid-table .dx-row > td {
+					border-bottom: 0;
+				}*/
 }
 .creator_view .slds-tabs_default__content .related-object-tabular .dataTable thead > tr > th {
   position: relative;
@@ -55,9 +107,6 @@
 .creator_view .slds-tabs_default__content .related-object-tabular .dataTable thead .sorting_desc_disabled:after {
   display: none;
   bottom: 4px;
-}
-.creator_view .steedos-record_chat {
-  padding: .75rem 1rem;
 }
 .creator_view .steedos-record_chat .slds-tabs_default__content {
   padding: 0 0;
@@ -101,7 +150,8 @@ form.two-columns-form .form-group {
   width: 100%!important;
 }
 #creator-quick-form {
-  border-top: 1px solid #dddbda !important;
+  margin-bottom: 1.3rem;
+  margin-top: -0.6rem;
 }
 #creator-quick-form .slds-section__title {
   font-size: 0.8rem;
