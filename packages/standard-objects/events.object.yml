@@ -43,6 +43,7 @@ fields:
     label: 分派给
     type: lookup
     reference_to: users
+    defaultValue: "{userId}"
     multiple: true
     name: assignees
     filterable: true
