@@ -2,6 +2,10 @@ var objectql = require('@steedos/objectql');
 var _ = require("underscore");
 
 var addNotifications = function(userId, doc, assignees){
+    assignees = _.difference(assignees, [userId]);
+    if(!assignees.length){
+        return;
+    }
     var fromUser = Creator.getCollection("users").findOne({
         _id: userId
     }, {
