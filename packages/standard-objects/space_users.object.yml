@@ -142,6 +142,8 @@ fields:
     type: text
     label: 用户名
     name: username
+    searchable: true
+    index: true
 list_views:
   all:
     label: 所有
