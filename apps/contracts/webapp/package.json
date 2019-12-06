@@ -16,6 +16,7 @@
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
-    "react": "^16.11.0"
+    "react": "^16.11.0",
+    "@steedos/react": "^1.11.6"
   }
 }
