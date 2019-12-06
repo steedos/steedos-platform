@@ -1,7 +1,12 @@
+env:
+  PORT: 5000
+  ROOT_URL: http://127.0.0.1:${PORT}/dzgy
+  DB_SERVER: 127.0.0.1
+  MONGO_URL: mongodb://${DB_SERVER}/steedos
 datasources:
   default:
     connection:
-      url: mongodb://127.0.0.1/steedos
+      url: ${MONGO_URL}
     objectFiles: 
       - "../../apps/contracts/src/**"
 public:
