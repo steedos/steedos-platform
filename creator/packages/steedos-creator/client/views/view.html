@@ -69,25 +69,27 @@
 							</div>
 						</div>
 					</div>
-					<div class="slds-page-header__detail-row">
-						<ul class="slds-list_horizontal">
-							{{#each related_list}}
-								<li>
-									<div class="slds-media truncate-label">
-										<div class="themeIcon">
-											{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
+					{{#if related_list}}
+						<div class="slds-page-header__detail-row">
+							<ul class="slds-list_horizontal">
+								{{#each related_list}}
+									<li>
+										<div class="slds-media truncate-label">
+											<div class="themeIcon">
+												{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
+											</div>
+											<div class="slds-media__body slds-m-left--x-small">
+												<a href="{{related_object_url}}" class="slds-truncate" title="{{_ related_object.name}}">
+													<span class="">相关 {{ related_object.label}}</span>
+													<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
+												</a>
+											</div>
 										</div>
-										<div class="slds-media__body slds-m-left--x-small">
-											<a href="{{related_object_url}}" class="slds-truncate" title="{{_ related_object.name}}">
-												<span class="">相关 {{ related_object.label}}</span>
-												<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
-											</a>
-										</div>
-									</div>
-								</li>
-							{{/each}}
-						</ul>
-					</div>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+					{{/if}}
 				</div>
 
 				<div class="row row-main">
