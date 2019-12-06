@@ -3,6 +3,7 @@ var os = require("os")
 var path = require("path")
 var _ = require("underscore")
 var yaml = require("js-yaml")
+var objectql = require("@steedos/objectql");
 
 
 var getServerDir = function(){
@@ -37,31 +38,12 @@ var getServerDir = function(){
 
 var getSettings = function(){
   
-  var settingsFileName = 'steedos-config.yml'
-  var settingsPath = path.join(projectDir, settingsFileName)
-  var settings = {
-  };
-  if(fs.existsSync(settingsPath)){
-    try {
-      settings = yaml.safeLoad(fs.readFileSync(settingsPath, 'utf8'));
-    } catch (error) {
-      console.error(`Invalid steedos-config.yml`, error)
-    }
-  }
+  let settings = objectql.getSteedosConfig();
 
   if(settings){
     process.env.METEOR_SETTINGS = JSON.stringify(settings)
   }
-
-  // 环境变量，以settings中定义的为准
-  if (settings.env){
-    _.each(settings.env, function(item, key){
-      process.env[key] = item
-    })
-  }
-
   return settings;
-
 }
   
 var projectDir = process.cwd();   

@@ -16,7 +16,7 @@ const _ = require("underscore");
 const globby = require("globby");
 var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
-
+let STEEDOSCONFIG:any = {};
 const configName = 'steedos-config.yml'
 
 export * from './transform'
@@ -187,15 +187,55 @@ export function getBaseDirectory(){
     return cwd;
 }
 
+function calcString(str: string, content: any = process.env): string{
+
+    if(!_.isString(str)){
+        return str;
+    }
+
+    let calcFun: Function;
+    var reg = /(\${[^{}]*\})/g;
+    let rev = str.replace(reg,function(m,$1){
+        return $1.replace(/\{\s*/,"{args[\"").replace(/\s*\}/,"\"]}");
+    })
+    eval(`calcFun = function(args){return \`${rev}\`}`);
+    return calcFun.call({}, content)
+}
+
+function calcSteedosConfig(config: JsonMap){
+    _.each(config, (v:never, k: string)=>{
+        if(isJsonMap(v)){
+            let _d = getJsonMap(config, k);
+            if(isJsonMap(_d)){
+                config[k] = calcSteedosConfig(clone(_d))
+            }else{
+                config[k] = calcString(v)
+            }
+        }else{
+            config[k] = calcString(v)
+        }
+    })
+    return config
+}
+
 export function getSteedosConfig(){
+    if(!_.isEmpty(STEEDOSCONFIG)){
+        return STEEDOSCONFIG;
+    }
     let config: any;
     let configPath = path.join(getBaseDirectory(), configName)
     if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
         config = this.loadFile(configPath)
+        if (config.env){
+            _.each(config.env, function(item, key){
+                process.env[key] = calcString(item)
+            })
+        }
+        STEEDOSCONFIG = calcSteedosConfig(config);
     // }else{
     //     throw new Error('Config file not found: ' + configPath);
     }
-    return config;
+    return STEEDOSCONFIG;
 }
 
 export function getRandomString(length) {
