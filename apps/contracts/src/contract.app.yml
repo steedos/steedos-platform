@@ -66,6 +66,7 @@ dashboard:
     position: RIGHT
     type: apps
     mobile: true
+    ignoreApps: ['contracts']
   workflow: 
     label: 待审核文件
     position: CENTER_TOP
@@ -106,7 +107,7 @@ dashboard:
       }
     columns:
       - field: name
-        label: 名称
+        label: 主题
         href: true
       - field: priority
         label: 优先级
@@ -127,7 +128,7 @@ dashboard:
     filters: [['created', '<=', '{now}']]
     columns:
       - field: name
-        label: 名称
+        label: 主题
         href: true
     unborderedRow: true
     showAllLink: true
