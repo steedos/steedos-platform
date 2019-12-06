@@ -215,8 +215,8 @@ module.exports = {
         },
         standard_follow: {
             label: "关注",
-            visible: function(){
-                if(Creator.getObject()){
+            visible: function () {
+                if (Creator.getObject()) {
                     return Creator.getObject().enable_follow
                 }
                 return false;
@@ -225,7 +225,7 @@ module.exports = {
             todo: function () {
                 var follow = Creator.getCollection("follows").findOne({ object_name: Session.get("object_name") });
                 if (follow) {
-                    Creator.odata.delete('follows', follow._id, function(){});
+                    Creator.odata.delete('follows', follow._id, function () { });
                 } else {
                     Creator.odata.insert('follows', { object_name: Session.get("object_name") });
                 }
@@ -470,6 +470,37 @@ module.exports = {
                     });
                 }
                 return;
+            }
+        },
+        "after.update.server.masterDetail": {
+            "on": "server",
+            when: "after.update",
+            todo: function (userId, doc, fieldNames, modifier, options) {
+                /* Master-Detail 规则确认 #189 */
+                let docOwner = doc.owner;
+                if (docOwner !== this.previous.owner) {
+                    let object_name = this.object_name;
+                    let docId = doc._id;
+                    let objField = {};
+                    /* 当主表的owner改变，调整所有子表的owner以保持一致 */
+                    _.each(Creator.Objects, function (obj) {
+                        let objName = obj.name;
+                        if (objField[objName]) {
+                            return;
+                        }
+                        _.each(obj.fields, function (f, k) {
+                            if (f.type === 'master_detail' && f.reference_to === object_name) {
+                                objField[objName] = k;
+                            }
+                        });
+                    });
+                    _.each(objField, function (fieldName, objName) {
+                        let selector = { space: doc.space };
+                        selector[fieldName] = docId;
+                        Creator.getCollection(objName).direct.update(selector, { $set: { owner: docOwner } }, { multi: true });
+                    });
+
+                }
             }
         }
     }
