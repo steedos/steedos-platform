@@ -391,7 +391,7 @@ Template.steedosLookups.helpers({
 
 	selectedReferenceObject: function () {
     	if(Template.instance().data.objectSwitche){
-			return Template.instance().uniSelectize.selectedReference.get().object
+			return Template.instance().uniSelectize.selectedReference.get() ? Template.instance().uniSelectize.selectedReference.get().object : ''
 		}
 	},
 
