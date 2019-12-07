@@ -3,27 +3,28 @@
 	{{#autoForm qfAutoFormContext}}
 		{{#if schemaFields.grouplessFields}}
 			{{#each schemaFields.grouplessFields}}
-				<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{else}}{{#if has_wide_field this}}wide-fields{{/if}}{{/if}}">
+				<div class="slds-grid view-page-section-row {{#if has_wide_field this}}wide-fields{{/if}}">
 					{{#each this}}
-						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
+						<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
 							<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
-								{{#if this}}
-									{{#if hasInlineHelpText this}}
-										<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
-									{{/if}}
-									{{#unless isDisabled this}}
-										{{#if horizontal}}
-											{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-										{{else}}
-											{{> afQuickField name=this class="form-control"}}
+								{{#if is_range this}}
+									{{> range_field}}
+								{{else}}
+									{{#unless is_renge_end this}}
+										{{#if this}}
+											{{#if hasInlineHelpText this}}
+												<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+											{{/if}}
+											{{#if horizontal}}
+												{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+											{{else}}
+												{{> afQuickField name=this class="form-control"}}
+											{{/if}}
 										{{/if}}
 									{{/unless}}
 								{{/if}}
 							</div>
 						</div>
-						{{#if is_range this}}
-							<span class="to"></span>
-						{{/if}}
 					{{/each}}
 				</div>
 			{{/each}}
@@ -41,27 +42,28 @@
 						</h3>
 						<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
 							{{#each this.fields}}
-								<div class="slds-grid view-page-section-row {{#if is_range_fields this}}range-fields{{else}}{{#if has_wide_field this}}wide-fields{{/if}}{{/if}}">
+								<div class="slds-grid view-page-section-row {{#if has_wide_field this}}wide-fields{{/if}}">
 									{{#each this}}
-										<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item {{#if is_range this}}range{{/if}}">
-											<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
+									<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+										<div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput {{#if hasInlineHelpText this}}has-inline-text{{/if}}">
+										{{#if is_range this}}
+											{{> range_field}}
+										{{else}}
+											{{#unless is_renge_end this}}
 												{{#if this}}
 													{{#if hasInlineHelpText this}}
 														<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
 													{{/if}}
-													{{#unless isDisabled this}}
-														{{#if horizontal}}
-															{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-														{{else}}
-															{{> afQuickField name=this class="form-control"}}
-														{{/if}}
-													{{/unless}}
+													{{#if horizontal}}
+														{{> afQuickField name=this class="form-control" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+													{{else}}
+														{{> afQuickField name=this class="form-control"}}
+													{{/if}}
 												{{/if}}
-											</div>
-										</div>
-										{{#if is_range this}}
-											<span class="to"></span>
+											{{/unless}}
 										{{/if}}
+										</div>
+									</div>
 									{{/each}}
 								</div>
 							{{/each}}
@@ -107,5 +109,22 @@
 			</div>
 		{{/if}}
 	{{/autoForm}}
+	</div>
+</template>
+
+
+<template name="range_field">
+	<div class="range-field field-code-{{startName}}">
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="dao2yaGvD4SFjifBi">
+				{{afFieldLabelText name=startName class="col-sm-3"}}
+			</label>
+			<div class="col-sm-9">
+				<div class="row show-grid">
+					<div class="col-sm-6 start">{{> afQuickField name=startName class="form-control" label=false}}</div>
+					<div class="col-sm-6 end">{{> afQuickField name=endName class="form-control" label=false}}</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

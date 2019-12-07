@@ -612,7 +612,6 @@ Template.CreatorAfModal.events
 						schemaInstance = getSimpleSchema(cmCollection)
 						schema = schemaInstance._schema
 						disabledFields = Creator.getDisabledFields(schema)
-						console.log('disabledFields', disabledFields);
 						_.each disabledFields, (disabledField)->
 							delete insertDoc[disabledField]
 

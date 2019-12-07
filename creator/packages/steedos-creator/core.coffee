@@ -572,51 +572,55 @@ Creator.getFieldsInFirstLevel = (firstLevelKeys, keys) ->
 Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 	fields = []
 	i = 0
-	while i < keys.length
-		sc_1 = _.pick(schema, keys[i])
-		sc_2 = _.pick(schema, keys[i+1])
+	_keys = _.filter(keys, (key)->
+		return !key.endsWith('_endLine')
+	);
+	while i < _keys.length
+		sc_1 = _.pick(schema, _keys[i])
+		sc_2 = _.pick(schema, _keys[i+1])
 
 		is_wide_1 = false
 		is_wide_2 = false
 
-		is_range_1 = false
-		is_range_2 = false
+#		is_range_1 = false
+#		is_range_2 = false
 
 		_.each sc_1, (value) ->
 			if value.autoform?.is_wide || value.autoform?.type == "table"
 				is_wide_1 = true
 
-			if value.autoform?.is_range
-				is_range_1 = true
+#			if value.autoform?.is_range
+#				is_range_1 = true
 
 		_.each sc_2, (value) ->
 			if value.autoform?.is_wide || value.autoform?.type == "table"
 				is_wide_2 = true
 
-			if value.autoform?.is_range
-				is_range_2 = true
+#			if value.autoform?.is_range
+#				is_range_2 = true
 
 		if isSingle
-			fields.push keys.slice(i, i+1)
+			fields.push _keys.slice(i, i+1)
 			i += 1
 		else
-			if !is_range_1 && is_range_2
-				childKeys = keys.slice(i, i+1)
-				childKeys.push undefined
-				fields.push childKeys
-				i += 1
-			else if is_wide_1
-				fields.push keys.slice(i, i+1)
+#			if !is_range_1 && is_range_2
+#				childKeys = _keys.slice(i, i+1)
+#				childKeys.push undefined
+#				fields.push childKeys
+#				i += 1
+#			else
+			if is_wide_1
+				fields.push _keys.slice(i, i+1)
 				i += 1
 			else if !is_wide_1 and is_wide_2
-				childKeys = keys.slice(i, i+1)
+				childKeys = _keys.slice(i, i+1)
 				childKeys.push undefined
 				fields.push childKeys
 				i += 1
 			else if !is_wide_1 and !is_wide_2
-				childKeys = keys.slice(i, i+1)
-				if keys[i+1]
-					childKeys.push keys[i+1]
+				childKeys = _keys.slice(i, i+1)
+				if _keys[i+1]
+					childKeys.push _keys[i+1]
 				else
 					childKeys.push undefined
 				fields.push childKeys

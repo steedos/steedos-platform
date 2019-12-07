@@ -11,6 +11,8 @@ Template.quickForm_slds.helpers
 
 	is_range: (key)->
 		return Template.instance()?.data?.qfAutoFormContext.schema._schema[key]?.autoform?.is_range
+	is_renge_end: (key)->
+		return key?.endsWith("_endLine");
 
 	schemaFields: ()->
 		object_name = this.atts.object_name
@@ -123,3 +125,9 @@ Template.quickForm_slds.onRendered ->
 					to: 0
 				}
 			}
+
+Template.range_field.helpers
+	startName: ()->
+		return this.toString()
+	endName: ()->
+		return this.toString() + '_endLine'
