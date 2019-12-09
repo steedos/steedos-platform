@@ -429,6 +429,18 @@ Template.creator_view.helpers
 		fields = Creator.getObject(object_name).fields
 		return fields[key]?.inlineHelpText
 
+	illustration: ()->
+		return ReactDesignSystem.Illustration
+
+	notFoundPath: ()->
+		return Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
+
+	notFoundHeading: ()->
+		return "似乎出现了一个问题。"
+
+	notFoundMessageBody: ()->
+		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或可能发生了系统错误。请向您的管理员寻求帮助。"
+
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->

@@ -3,293 +3,318 @@
 	<div class="steedos-brand-band slds-brand-band_medium slds-template_bottom-magnet creator_view">
 		<div class="slds-template__container">
 			<div class="objectViewManager slds-grid slds-grid--vertical flexipageBaseRecordHomeTemplateDesktop">
-				<div class="slds-page-header slds-page-header_bleed">
-					<div class="slds-grid">
-						<div class="slds-col slds-has-flexi-truncate">
-							<div class="slds-media slds-no-space slds-grow">
-								<div class="slds-media__figure">
-									<span class="slds-icon_container">
-										<div class="slds-icon crm-header-icon">
-											<span class="uiImage">
-												{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object.icon}}
-											</span>
+				{{#if record}}
+					<div class="slds-page-header slds-page-header_bleed">
+						<div class="slds-grid">
+							<div class="slds-col slds-has-flexi-truncate">
+								<div class="slds-media slds-no-space slds-grow">
+									<div class="slds-media__figure">
+										<span class="slds-icon_container">
+											<div class="slds-icon crm-header-icon">
+												<span class="uiImage">
+													{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=object.icon}}
+												</span>
+											</div>
+										</span>
+									</div>
+									<div class="slds-media__body">
+										<nav>
+											<ol class="slds-breadcrumb slds-line-height_reset">
+												<li class="slds-breadcrumb__item crm-breadcrumb-item">
+													<span>{{_ object.label}}</span>
+												</li>
+											</ol>
+										</nav>
+										<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+											<div class="">
+												<span class="">{{record_name}}</span>
+											</div>
+										</h1>
+									</div>
+								</div>
+							</div>
+							<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
+								<div class="slds-button-group" role="group">
+									{{#each actions}}
+										<li class="slds-button slds-button--neutral slds-truncate record-action-custom">
+											<a href="javascript:void(0);" title="{{this.label}}" class="">
+												{{#if this.is_file}}
+													{{this.label}}
+													<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}" data-target-object-name="cfs-files-filerecord">
+												{{else}}
+													<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+													<div class="record-edit-text slds-truncate" title="{{this.label}}">{{this.label}}</div>
+												{{/if}}
+											</a>
+										</li>
+									{{/each}}
+									{{#if moreActions}}
+										<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+											<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+												{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
+												<span class="slds-assistive-text">Show More</span>
+											</button>
+											<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+												<ul class="slds-dropdown__list slds-show">
+													{{#each moreActions}}
+														<li class="slds-dropdown__item crm-header-menu-item record-action-custom" role="presentation">
+															<a href="javascript:void(0);" title="{{this.label}}" class="" role="option" tabindex="-1">
+																<span>{{this.label}}</span>
+															</a>
+														</li>
+													{{/each}}
+												</ul>
+											</div>
 										</div>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+						{{#if related_list}}
+							<div class="slds-page-header__detail-row">
+								<ul class="slds-list_horizontal">
+									{{#each related_list}}
+										<li>
+											<div class="slds-media truncate-label">
+												<div class="themeIcon">
+													{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
+												</div>
+												<div class="slds-media__body slds-m-left--x-small">
+													<a href="{{related_object_url}}" class="slds-truncate" title="{{_ related_object.name}}">
+														<span class="">相关 {{ related_object.label}}</span>
+														<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
+													</a>
+												</div>
+											</div>
+										</li>
+									{{/each}}
+								</ul>
+							</div>
+						{{/if}}
+					</div>
+
+					<div class="row row-main">
+						<div class="column {{#if showRightSidebar}}region-main{{/if}}">
+							<div class="slds-tabs_default slds-tabs_card">
+								<ul class="slds-tabs_default__nav" role="tablist">
+									<li class="slds-tabs_default__item slds-is-active" title="详细" role="presentation">
+										<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="true"
+											aria-controls="tab-default-details">
+											详细
+										</a>
+									</li>
+									{{#if enable_chatter}}
+										{{#if show_chatter}}
+											<li class="slds-tabs_default__item" title="详细" role="presentation">
+												<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false"
+													aria-controls="tab-default-chatter">
+													评论
+												</a>
+											</li>
+										{{/if}}
+									{{/if}}
+								</ul>
+								<div class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-details__item">
+									<div id="creator-quick-form" class="{{#if form_horizontal}} slds-form_horizontal{{else}}  slds-form_stacked{{/if}} slds-form" role="tabpanel">
+										<div class="">
+										{{#if detail_info_visible}}
+											{{#if showForm}}
+												{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
+													{{#if schemaFields.grouplessFields}}
+														{{#each schemaFields.grouplessFields}}
+															{{#each this}}
+																{{#if isObjectField this}}
+																	<!--{{> afQuickField name=this}}-->
+																	{{#with objectField this}}
+																		<div class="slds-section group-section">
+																			<h3 class="slds-section__title group-section-control">
+																				<a aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+																					{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+																					<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+																				</a>
+																			</h3>
+																			<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+																				{{#each this.fields}}
+																					<div class="slds-form__row">
+																						{{#each this}}
+																							{{#if this}}
+																								<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
+																									{{#if hasInlineHelpText this}}
+																										<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																									{{/if}}
+																									<div class="slds-form-element slds-form-element_readonly {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} ">
+			
+																											<span class="slds-form-element__label">{{label this}}</span>
+																											<div class="slds-form-element__control">
+																									<span class="test-id__field-value slds-form-element__static slds-grow">
+																										{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
+																									</span>
+																											</div>
+			
+																									</div>
+																								</div>
+																							{{/if}}
+																						{{/each}}
+																					</div>
+																				{{/each}}
+																			</div>
+																		</div>
+																	{{/with}}
+																{{/if}}
+															{{/each}}
+															{{#if hasUnObjectField this}}
+															<div class="slds-form__row">
+																{{#each this}}
+																	{{#unless isObjectField this}}
+																		<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
+																			{{#if this}}
+																				{{#if hasInlineHelpText this}}
+																					<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
+																				{{/if}}
+																				<div class="slds-form-element {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} slds-form-element_readonly slds-hint-parent">
+																					<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																					<div class="slds-form-element__control">
+																					<span class="test-id__field-value slds-form-element__static slds-grow">
+																						{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
+																					</span>
+																				</div>
+																			</div>
+																			{{/if}}
+																		</div>
+																	{{/unless}}
+																{{/each}}
+															</div>
+															{{/if}}
+														{{/each}}
+													{{/if}}
+			
+													{{#if schemaFields.groupFields}}
+														{{#each schemaFields.groupFields}}
+															{{#if this.fields}}
+																<div class="slds-section group-section">
+																	<h3 class="slds-section__title group-section-control">
+																		<button type="button" aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+																		{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
+																		<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
+																		</button>
+																	</h3>
+																	<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+																		{{#each this.fields}}
+																			<div class="slds-grid view-page-section-row">
+																				{{#each this}}
+																					<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
+																						{{#if this}}
+																						<div class="slds-form-element slds-form-element_readonly slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput ">
+																								<div class="test-id__field-label-container">
+																									<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
+																								</div>
+																								<div class="slds-form-element__control itemBody">
+																									<span class="test-id__field-value slds-form-element__static slds-grow ">
+																										{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
+																									</span>
+																								</div>
+																						</div>
+																						{{/if}}
+																					</div>
+																				{{/each}}
+																			</div>
+																		{{/each}}
+																	</div>
+																</div>
+															{{/if}}
+														{{/each}}
+													{{/if}}
+			
+												{{/autoForm}}
+											{{/if}}
+										{{/if}}
+										</div>
+									</div>
+									{{#if related_list}}
+										<div id="creator-tabular" class="">
+											{{#each related_list}}
+												<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
+													<div class="related_list_themed_border_top"></div>
+													<div class="slds-card__header slds-grid">
+														<header class="slds-media slds-media_center slds-has-flexi-truncate">
+															<div class="slds-media__figure">
+																{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
+															</div>
+															<div class="slds-media__body">
+																<h2>
+																	<a href="{{related_object_url}}" class="slds-card__header-link slds-truncate" title="{{_ related_object.name}}">
+																		<span class="">相关 {{ related_object.label}}</span>
+																		<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
+																	</a>
+																</h2>
+															</div>
+														</header>
+														<div class="slds-no-flex">
+															{{#if allowCreate}}
+																{{#if this.is_file}}
+																	{{#if isUnlocked}}
+																	{{#if hasPermission 'allowEdit' }}
+																	<button class="slds-button slds-button_neutral btn-upload-file">
+																		{{_ "creator_actions_upload_file"}}
+																		<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
+																	</button>
+																	{{/if}}
+																	{{/if}}
+																{{else}}
+																	<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
+																{{/if}}
+															{{/if}}
+														</div>
+													</div>
+													<div class="slds-card__body">
+														{{#if record}}
+															{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+														{{/if}}
+													</div>
+													<footer class="slds-card__footer"></footer>
+												</div>
+											{{/each}}
+										</div>
+									{{/if}}
+								</div>
+								{{#if enable_chatter}}
+									{{#if show_chatter}}
+										<div class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-chatter__item">
+											{{> steedos_record_chat object_name=object_name record_id=record._id}}
+										</div>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+						{{#if showRightSidebar}}
+							<div class="column region-sidebar-right">
+							</div>
+						{{/if}}
+					</div>
+				{{else}}
+					<article class="slds-card">
+						<div class="slds-card__header slds-grid">
+							<header class="slds-media slds-media_center slds-has-flexi-truncate">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container slds-icon-standard-task" title="task">
+										{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object.icon}}
+										<span class="slds-assistive-text">{{object.icon}}</span>
 									</span>
 								</div>
 								<div class="slds-media__body">
-									<nav>
-										<ol class="slds-breadcrumb slds-line-height_reset">
-											<li class="slds-breadcrumb__item crm-breadcrumb-item">
-												<span>{{_ object.label}}</span>
-											</li>
-										</ol>
-									</nav>
-									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
-										<div class="">
-											<span class="">{{record_name}}</span>
-										</div>
-									</h1>
-								</div>
-							</div>
-						</div>
-						<div class="slds-col slds-no-flex slds-grid slds-align-middle actionsContainer">
-							<div class="slds-button-group" role="group">
-								{{#each actions}}
-									<li class="slds-button slds-button--neutral slds-truncate record-action-custom">
-										<a href="javascript:void(0);" title="{{this.label}}" class="">
-											{{#if this.is_file}}
-												{{this.label}}
-												<input type="file" name="file" class="input-file-upload" data-parent="{{record._id}}" data-target-object-name="cfs-files-filerecord">
-											{{else}}
-												<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
-												<div class="record-edit-text slds-truncate" title="{{this.label}}">{{this.label}}</div>
-											{{/if}}
+									<h2 class="slds-card__header-title">
+										<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
+											<span>{{_ object.label}}</span>
 										</a>
-									</li>
-								{{/each}}
-								{{#if moreActions}}
-									<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-										<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-											{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-											<span class="slds-assistive-text">Show More</span>
-										</button>
-										<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-											<ul class="slds-dropdown__list slds-show">
-												 {{#each moreActions}}
-													<li class="slds-dropdown__item crm-header-menu-item record-action-custom" role="presentation">
-														<a href="javascript:void(0);" title="{{this.label}}" class="" role="option" tabindex="-1">
-															<span>{{this.label}}</span>
-														</a>
-													</li>
-												{{/each}}
-											</ul>
-										</div>
-									</div>
-								{{/if}}
-							</div>
-						</div>
-					</div>
-					{{#if related_list}}
-						<div class="slds-page-header__detail-row">
-							<ul class="slds-list_horizontal">
-								{{#each related_list}}
-									<li>
-										<div class="slds-media truncate-label">
-											<div class="themeIcon">
-												{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
-											</div>
-											<div class="slds-media__body slds-m-left--x-small">
-												<a href="{{related_object_url}}" class="slds-truncate" title="{{_ related_object.name}}">
-													<span class="">相关 {{ related_object.label}}</span>
-													<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
-												</a>
-											</div>
-										</div>
-									</li>
-								{{/each}}
-							</ul>
-						</div>
-					{{/if}}
-				</div>
-
-				<div class="row row-main">
-					<div class="column {{#if showRightSidebar}}region-main{{/if}}">
-						<div class="slds-tabs_default slds-tabs_card">
-							<ul class="slds-tabs_default__nav" role="tablist">
-								<li class="slds-tabs_default__item slds-is-active" title="详细" role="presentation">
-									<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="true"
-										aria-controls="tab-default-details">
-										详细
-									</a>
-								</li>
-								{{#if enable_chatter}}
-									{{#if show_chatter}}
-										<li class="slds-tabs_default__item" title="详细" role="presentation">
-											<a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false"
-												aria-controls="tab-default-chatter">
-												评论
-											</a>
-										</li>
-									{{/if}}
-								{{/if}}
-							</ul>
-							<div class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-details__item">
-								<div id="creator-quick-form" class="{{#if form_horizontal}} slds-form_horizontal{{else}}  slds-form_stacked{{/if}} slds-form" role="tabpanel">
-									<div class="">
-									{{#if detail_info_visible}}
-										{{#if showForm}}
-											{{#autoForm collection=collection type="disabled" id="viewRecordForm" schema=schema doc=record}}
-												{{#if schemaFields.grouplessFields}}
-													{{#each schemaFields.grouplessFields}}
-														{{#each this}}
-															{{#if isObjectField this}}
-																<!--{{> afQuickField name=this}}-->
-																{{#with objectField this}}
-																	<div class="slds-section group-section">
-																		<h3 class="slds-section__title group-section-control">
-																			<a aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-																				{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-																				<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-																			</a>
-																		</h3>
-																		<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
-																			{{#each this.fields}}
-																				<div class="slds-form__row">
-																					{{#each this}}
-																						{{#if this}}
-																							<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
-																								{{#if hasInlineHelpText this}}
-																									<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
-																								{{/if}}
-																								<div class="slds-form-element slds-form-element_readonly {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} ">
-		
-																										<span class="slds-form-element__label">{{label this}}</span>
-																										<div class="slds-form-element__control">
-																								<span class="test-id__field-value slds-form-element__static slds-grow">
-																									{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
-																								</span>
-																										</div>
-		
-																								</div>
-																							</div>
-																						{{/if}}
-																					{{/each}}
-																				</div>
-																			{{/each}}
-																		</div>
-																	</div>
-																{{/with}}
-															{{/if}}
-														{{/each}}
-														{{#if hasUnObjectField this}}
-														<div class="slds-form__row">
-															{{#each this}}
-																{{#unless isObjectField this}}
-																	<div class="slds-form__item slds-has-flexi-truncate {{#if hasInlineHelpText this}}has-inline-text{{/if}}" for="field_{{this}}">
-																		{{#if this}}
-																			{{#if hasInlineHelpText this}}
-																				<div class="info-popover" id="info_popover_{{this}}" style="display: none">{{hasInlineHelpText this}}</div>
-																			{{/if}}
-																			<div class="slds-form-element {{#if form_horizontal}}slds-form-element_horizontal{{else}}slds-form-element_stacked{{/if}} {{#if is_wide this}} slds-form-element_1-col {{/if}} slds-form-element_readonly slds-hint-parent">
-																				<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
-																				<div class="slds-form-element__control">
-																				<span class="test-id__field-value slds-form-element__static slds-grow">
-																					{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true parent_view='record_details' full_screen=(full_screen this) is_detail_view=true}}
-																				</span>
-																			</div>
-																		</div>
-																		{{/if}}
-																	</div>
-																{{/unless}}
-															{{/each}}
-														</div>
-														{{/if}}
-													{{/each}}
-												{{/if}}
-		
-												{{#if schemaFields.groupFields}}
-													{{#each schemaFields.groupFields}}
-														{{#if this.fields}}
-															<div class="slds-section group-section">
-																<h3 class="slds-section__title group-section-control">
-																	<button type="button" aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
-																	{{> steedos_icon class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" source="utility-sprite" name="switch"}}
-																	<span class="slds-truncate" title="{{this.name}}">{{this.name}}</span>
-																	</button>
-																</h3>
-																<div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
-																	{{#each this.fields}}
-																		<div class="slds-grid view-page-section-row">
-																			{{#each this}}
-																				<div class="slds-has-flexi-truncate slds-p-horizontal_x-small full view-page-block-item">
-																					{{#if this}}
-																					<div class="slds-form-element slds-form-element_readonly slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element uiInput ">
-																							<div class="test-id__field-label-container">
-																								<span class="test-id__field-label slds-form-element__label">{{label this}}</span>
-																							</div>
-																							<div class="slds-form-element__control itemBody">
-																								<span class="test-id__field-value slds-form-element__static slds-grow ">
-																									{{> creator_table_cell agreement=agreement _id=record._id val=(keyValue this) doc=record field=(keyField this) field_name=this object_name=object_name disabled=true is_detail_view=true}}
-																								</span>
-																							</div>
-																					</div>
-																					{{/if}}
-																				</div>
-																			{{/each}}
-																		</div>
-																	{{/each}}
-																</div>
-															</div>
-														{{/if}}
-													{{/each}}
-												{{/if}}
-		
-											{{/autoForm}}
-										{{/if}}
-									{{/if}}
-									</div>
+									</h2>
 								</div>
-								{{#if related_list}}
-									<div id="creator-tabular" class="">
-										{{#each related_list}}
-											<div class="slds-card slds-card_boundary forceRelatedListCardDesktop related-object-tabular">
-												<div class="related_list_themed_border_top"></div>
-												<div class="slds-card__header slds-grid">
-													<header class="slds-media slds-media_center slds-has-flexi-truncate">
-														<div class="slds-media__figure">
-															{{> steedos_icon class="extraSmall forceEntityIcon slds-icon" source="standard-sprite" name=related_object.icon}}
-														</div>
-														<div class="slds-media__body">
-															<h2>
-																<a href="{{related_object_url}}" class="slds-card__header-link slds-truncate" title="{{_ related_object.name}}">
-																	<span class="">相关 {{ related_object.label}}</span>
-																	<span class=" slds-shrink-none slds-m-right--xx-small" title="{{related_list_count}}"> ({{related_list_count this}})</span>
-																</a>
-															</h2>
-														</div>
-													</header>
-													<div class="slds-no-flex">
-														{{#if allowCreate}}
-															{{#if this.is_file}}
-																{{#if isUnlocked}}
-																{{#if hasPermission 'allowEdit' }}
-																<button class="slds-button slds-button_neutral btn-upload-file">
-																	{{_ "creator_actions_upload_file"}}
-																	<input type="file" name="file" class="input-file-upload" data-target-object-name="cms_files">
-																</button>
-																{{/if}}
-																{{/if}}
-															{{else}}
-																<button class="slds-button slds-button_neutral add-related-object-record" data-object-name="{{this.object_name}}">{{_ "New"}}</button>
-															{{/if}}
-														{{/if}}
-													</div>
-												</div>
-												<div class="slds-card__body">
-													{{#if record}}
-														{{> Template.dynamic template="creator_grid" data=(list_data this)}}
-													{{/if}}
-												</div>
-												<footer class="slds-card__footer"></footer>
-											</div>
-										{{/each}}
-									</div>
-								{{/if}}
-							</div>
-							{{#if enable_chatter}}
-								{{#if show_chatter}}
-									<div class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-chatter__item">
-										{{> steedos_record_chat object_name=object_name record_id=record._id}}
-									</div>
-								{{/if}}
-							{{/if}}
+							</header>
 						</div>
-					</div>
-					{{#if showRightSidebar}}
-						<div class="column region-sidebar-right">
+						<div class="slds-card__body slds-card__body_inner">
+							{{> React component=illustration path=notFoundPath heading=notFoundHeading messageBody=notFoundMessageBody}}
 						</div>
-					{{/if}}
-				</div>
+					</article>
+				{{/if}}
 			</div>
 		</div>
 	</div>
