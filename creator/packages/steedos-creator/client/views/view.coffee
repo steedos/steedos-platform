@@ -439,7 +439,7 @@ Template.creator_view.helpers
 		return "似乎出现了一个问题。"
 
 	notFoundMessageBody: ()->
-		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或可能发生了系统错误。请向您的管理员寻求帮助。"
+		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。"
 
 Template.creator_view.events
 
