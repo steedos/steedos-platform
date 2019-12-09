@@ -1,7 +1,7 @@
 datasources:
   default:
     connection: 
-      url: mongodb://192.168.0.21/dzgy
+      url: mongodb://127.0.0.1/steedos
 public:
   cfs:
     store: "local"
