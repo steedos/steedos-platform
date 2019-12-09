@@ -35,10 +35,27 @@
 						margin-right: 0.75rem;
 						margin-bottom: 0.75rem;
 						.themeIcon{
+							display: flex;
+							align-items: center;
 							.forceEntityIcon.extraSmall{
 								width: 1.1rem;
 								height: 1.1rem;
 								border-radius: 0.2rem;
+							}
+						}
+						.slds-media__body{
+							display: flex;
+							a.slds-truncate{
+								display: flex;
+								border-bottom: 1px dotted;
+								span{
+									overflow: hidden;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+								}
+								&:hover{
+									text-decoration: none;
+								}
 							}
 						}
 					}
