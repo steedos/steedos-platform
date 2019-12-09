@@ -221,6 +221,7 @@ var s_autoform = function (schema, field) {
             autoform.disabled = (permission === 'readonly');
             autoform.related_object = field.related_object;
             autoform.url = field.url;
+            autoform.detail_url = field.detail_url;
             autoform.filters = field.filters;
             autoform.formula = field.formula;
             autoform.search_field = field.search_field;

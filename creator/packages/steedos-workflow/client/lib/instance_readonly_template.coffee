@@ -227,7 +227,12 @@ InstanceReadOnlyTemplate.init = (steedosData) ->
 		InstanceReadOnlyTemplate.createImageSign(steedosData)
 		InstanceReadOnlyTemplate.createInstanceSignText(steedosData)
 
-
+getLinkText = (item, label, detail_url)->
+	if detail_url
+		detail_url = detail_url.replace("{_id}", item._id)
+		return '<a href="'+detail_url+'" target="_blank">'+label+'</a>';
+	else
+		return label
 
 InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 	if !value && value != false
@@ -291,10 +296,12 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = value.toFixed(field.digits)
 				value = Steedos.numberToString value, locale
 		when 'odata'
+			detail_url = field.detail_url
 			if field.is_multiselect
-				value = _.pluck(value, '@label').toString()
+				value = _.map value, (item)->
+					return getLinkText(item, item['@label'], detail_url)
 			else
-				value = value['@label']
+				value = getLinkText(value, value['@label'], detail_url)
 
 	return value;
 

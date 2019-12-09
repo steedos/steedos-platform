@@ -175,7 +175,13 @@ getTypeUserAttrs = ()->
 						type: 'textarea',
 						required: 'true',
 						value: ''
-					}
+					},
+					detail_url: {
+						label: '详细页面URL',
+						type: 'textarea',
+						placeholder: '必须包含{_id}标识，示例：http://127.0.0.1/app/-/contracts/view/{_id}',
+						value: ''
+					},
 					filters: {
 						label: '过滤条件',
 						type: 'textarea',

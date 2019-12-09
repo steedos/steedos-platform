@@ -10,6 +10,16 @@ getSelected = (tag)->
 				return _.include(vals, item._id)
 			)
 
+getLinkText = (item, label, detail_url)->
+	if detail_url
+		detail_url = detail_url.replace("{_id}", item._id)
+		return '<a href="'+detail_url+'" target="_blank">'+label+'</a>';
+	else
+		return label
+
+getItemContext = (item, label, detail_url)->
+	return '<div class="item" data-value="'+item._id+'">'+getLinkText(item, label, detail_url)+'</div>';
+
 getArgumentsList = (func) ->
 	if _.isFunction(func)
 		funcString = func.toString();
@@ -61,11 +71,13 @@ Template.afSteedosSelectize.helpers
 	readonlyValue: ()->
 		value = this.value
 		is_multiselect = this.atts.multiple
+		detail_url = this.atts.detail_url
 		if value
 			if is_multiselect
-				value = _.pluck(value, '@label').toString()
+				value = _.map value, (item)->
+					return getLinkText(item, item['@label'], detail_url)
 			else
-				value = value['@label']
+				value = getLinkText(value, value['@label'], detail_url)
 			return value
 		return ''
 	description: ()->
@@ -91,6 +103,7 @@ Template.afSteedosSelectize.onRendered ()->
 	search_field = this.data.atts.search_field
 	filters = this.data.atts.filters
 	multiple = this.data.atts.multiple
+	detail_url = this.data.atts.detail_url
 
 	maxItems = 1
 	if multiple
@@ -128,11 +141,15 @@ Template.afSteedosSelectize.onRendered ()->
 				'</div>';
 	}
 
+	if detail_url
+		selectizeRender.item = (item, escape)->
+			return getItemContext(item, escape(item[key]), detail_url)
+
 	if multiple
 		selectizeRender.item = (item, escape) ->
 			return '<span class="slds-pill slds-pill_link">
-							<a href="javascript:void(0);" class="slds-pill__action">
-							<span class="slds-pill__label">' + escape(item[key]) + '</span></a>
+							<div class="slds-pill__action">
+							<span class="slds-pill__label">' + getLinkText(item, escape(item[key]), detail_url) + '</span></div>
 							<button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" type="button">
 								<svg class="slds-button__icon" aria-hidden="true">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="close">
