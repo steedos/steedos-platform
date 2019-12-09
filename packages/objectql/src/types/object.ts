@@ -716,7 +716,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     query.filters = formatFiltersToODataQuery(query.filters);
                 }
 
-                if (this.table_name == 'cfs.files.filerecord') {
+                if (this.table_name == 'cfs.files.filerecord' || this.table_name == 'cfs.instances.filerecord') {
                     return;
                 }
 
