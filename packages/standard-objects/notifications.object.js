@@ -60,10 +60,13 @@ const read = async (req, res) => {
     if (userSession.userId) {
         let record = await getSteedosSchema().getObject("notifications").findOne(id, { fields: ['owner', 'is_read', 'related_to', 'space', 'url'] });
         if(!record){
-            return res.status(404).send({
-                "error": "Validate Request -- Not Found",
-                "success": false
-            });
+            // return res.status(404).send({
+            //     "error": "Validate Request -- Not Found",
+            //     "success": false
+            // });
+            // 跳转到通知记录界面会显示为404效果
+            let redirectUrl = util.getObjectRecordUrl("notifications", id);
+            return res.redirect(redirectUrl);
         }
         if(record.owner !== userSession.userId){
             return res.status(401).send({

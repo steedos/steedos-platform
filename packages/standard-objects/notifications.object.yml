@@ -1,5 +1,6 @@
 name: notifications
 label: 通知
+icon: quick_text
 fields:
   name: 
     label: 通知标题
