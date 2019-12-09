@@ -60,19 +60,9 @@ const read = async (req, res) => {
     if (userSession.userId) {
         let record = await getSteedosSchema().getObject("notifications").findOne(id, { fields: ['owner', 'is_read', 'related_to', 'space', 'url'] });
         if(!record){
-            // return res.status(404).send({
-            //     "error": "Validate Request -- Not Found",
-            //     "success": false
-            // });
             // 跳转到通知记录界面会显示为404效果
             let redirectUrl = util.getObjectRecordUrl("notifications", id);
             return res.redirect(redirectUrl);
-        }
-        if(record.owner !== userSession.userId){
-            return res.status(401).send({
-                "error": "Validate Request -- Missing Access",
-                "success": false
-            });
         }
         if(!record.related_to && !record.url){
             return res.status(401).send({
@@ -80,7 +70,8 @@ const read = async (req, res) => {
                 "success": false
             });
         }
-        if(!record.is_read){
+        if(!record.is_read && record.owner === userSession.userId){
+            // 没有权限时，只是不修改is_read值，但是允许跳转到相关记录查看
             await getSteedosSchema().getObject('notifications').update(id, { 'is_read': true })
         }
         let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space);
