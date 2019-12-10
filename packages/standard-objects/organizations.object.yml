@@ -36,6 +36,7 @@ fields:
     multiple: true
     omit: true
     group: 系统
+    hidden: true
     blackbox: true
     name: parents
     filterable: true
@@ -45,6 +46,7 @@ fields:
     reference_to: organizations
     multiple: true
     omit: true
+    hidden: true
     group: 系统
     name: children
     filterable: true
@@ -70,7 +72,7 @@ fields:
     name: users
     filterable: true
   company_id:
-    group: 系统
+    label: 所属单位
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -82,6 +84,7 @@ fields:
     omit: true
     hidden: false
   company_ids:
+    label: 所属单位
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -93,8 +96,9 @@ fields:
     omit: true
     hidden: true
   is_company:
-    label: 公司级
+    label: 单位级
     type: boolean
+    hidden: true
     index: true
     name: is_company
     omit: true
@@ -106,11 +110,9 @@ list_views:
   all:
     columns:
       - name
-      - company_id
       - sort_no
-      - is_company
-      - admins
       - hidden
+      - company_id
     label: 所有
     filter_scope: space
     sort:
