@@ -22,3 +22,12 @@ v1.12.0
 - [用户个人信息界面，编辑信息后不会立即更新到界面，需要刷新浏览器](https://github.com/steedos/creator/issues/1448)
 - [除当前登录用户外，其他用户详细界面都是坏的](https://github.com/steedos/creator/issues/1447)
 - [对象的关注功能](https://github.com/steedos/creator/issues/1441)
+
+v1.12.5
+
+- .object.yml新增relatedList属性
+- 日历新增通知触发器
+- 记录查看页面增加返回按钮
+- 审批王 odata 数据类型可以配置链接, 用于指定点击选中项后，进入的详细页面
+- 子表 master_detail 字段类型新增属性 sharing
+- IE 11 访问报错
