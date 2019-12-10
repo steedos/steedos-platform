@@ -829,7 +829,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.12.1",
+  "version": "1.12.4",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -846,10 +846,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.12.1",
-    "@steedos/migrate": "^1.12.1",
-    "@steedos/objectql": "^1.12.1",
-    "@steedos/standard-objects": "^1.12.1",
+    "@steedos/auth": "^1.12.4",
+    "@steedos/migrate": "^1.12.4",
+    "@steedos/objectql": "^1.12.4",
+    "@steedos/standard-objects": "^1.12.4",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -879,7 +879,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.12.1",
+    "@steedos/meteor-bundle-runner": "^1.12.4",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -896,7 +896,7 @@ module.exports = {
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9783dd355c0692862d68659edf042dd26181b797"
+  "gitHead": "239c96e246e777a9cc9d6cb8230fc45c2380997b"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -922,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.12.1",
+  "version": "1.12.4",
   "main": "lib/index.js"
 };
 
@@ -982,7 +982,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.12.1",
+  "version": "1.12.4",
   "main": "lib/index.js"
 };
 

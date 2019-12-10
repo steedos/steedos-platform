@@ -23,7 +23,11 @@
     display: none !important;
   }
   a[href]:after {
-    content: "";
+    content: "" !important;
+  }
+  a,
+  a:visited {
+    text-decoration: none !important;
   }
   .table-bordered {
     border: 1px solid #000 !important;
@@ -64,6 +68,9 @@
   tfoot {
     display: table-footer-group;
   }
+}
+.instance-print {
+  font-size: 14px;
 }
 .instance-print .hidden-xs {
   display: inline !important;

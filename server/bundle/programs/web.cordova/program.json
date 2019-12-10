@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "671281208fda28c7870299e31b638f206e9ea7d7.js",
+      "path": "e192e427db21fb8505855ceae1740e1b00799602.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/671281208fda28c7870299e31b638f206e9ea7d7.js?meteor_js_resource=true",
-      "size": 10761760,
-      "hash": "671281208fda28c7870299e31b638f206e9ea7d7",
-      "sri": "gK+MSRURGdcq5khruivPmhjXFFFqXPqfzqH4guNgzmes4dg+zaoBXHsLPPP7iqv4XOjqfdtv8ePC9ukPZ0QEQg=="
+      "url": "/__cordova/e192e427db21fb8505855ceae1740e1b00799602.js?meteor_js_resource=true",
+      "size": 10773073,
+      "hash": "e192e427db21fb8505855ceae1740e1b00799602",
+      "sri": "DsAQJrzJ1hwvBlRxzyasDOF+/dVniWF/pmk7fMA/lWsQJ5WCBhq2NlCa6W9KOPfnFah9LUm6KVUrtnYtOUtwkw=="
     },
     {
-      "path": "671281208fda28c7870299e31b638f206e9ea7d7.stats.json",
+      "path": "e192e427db21fb8505855ceae1740e1b00799602.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/671281208fda28c7870299e31b638f206e9ea7d7.stats.json?meteor_js_resource=true",
-      "size": 174486,
-      "hash": "7834c23896beca320c07742479255ab6ef859e9e",
-      "sri": "HnIpHpg8hdRAncYElgGyGCksVhzhPrjqE33orb28b4v6WNIGkzciEwmU39fbbYb78mqvttYmEOVcgMW4dUk/lQ=="
+      "url": "/__cordova/e192e427db21fb8505855ceae1740e1b00799602.stats.json?meteor_js_resource=true",
+      "size": 174621,
+      "hash": "670641d5edc9f29bc86fc28a9fa1d75b4c016417",
+      "sri": "DIqdJh5xnLBxuIg8VULI0d3uBzIlmjyDCMZEWrQOtQvIdwxm+TxR+adePvMDDZRBMtF5eQi1LLGuCxUJikcqeQ=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -972,12 +972,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css?hash=c7349eb022a9552ed363de8c0c0a738162b8acfa",
+      "url": "/__cordova/packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css?hash=934edf896245a48430254cb163da9657a49d2e16",
       "sourceMap": "packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_autoform/client/coreform/components/slds-quickForm/c7349eb022a9552ed363de8c0c0a738162b8acfa.map",
-      "size": 444,
-      "hash": "c7349eb022a9552ed363de8c0c0a738162b8acfa",
-      "sri": "xc9mOJe+hf9jm7yBwM8p7gJTawZuo7OMMDHvWvmj3W9Z/6hAP0/TsUNgYpQeY73qf4ib1a7xZ1DyJgrQ/hQzeA=="
+      "sourceMapUrl": "/__cordova/packages/steedos_autoform/client/coreform/components/slds-quickForm/934edf896245a48430254cb163da9657a49d2e16.map",
+      "size": 703,
+      "hash": "934edf896245a48430254cb163da9657a49d2e16",
+      "sri": "hBUyjf0+xtMIJykbSbmt3q6VfteSenOXN/2/WXh7Xg818PgRFmQzYroNUNLcXAJf28e7AXx+F4bnhIkQcqXqAQ=="
     },
     {
       "path": "packages/steedos_autoform/client/coreform/inputTypes/coreform-typeahead/af-typeahead.less.css",
@@ -1198,12 +1198,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_creator/client/views/view.less.css?hash=6d1fc911462a05827eb2c79d0cbed83c033db840",
+      "url": "/__cordova/packages/steedos_creator/client/views/view.less.css?hash=571417ae2d96187b689af0efaf2f7c1c4c4d7c15",
       "sourceMap": "packages/steedos_creator/client/views/view.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_creator/client/views/6d1fc911462a05827eb2c79d0cbed83c033db840.map",
-      "size": 6234,
-      "hash": "6d1fc911462a05827eb2c79d0cbed83c033db840",
-      "sri": "CCfeh8CxCpsmFhZO0sLKJ9X4Q+MzE3WOaF3jVxdSczkuTRqgM8R1QUTbHyp0warK1kZCTiHVCozPHDkYa6vZ5Q=="
+      "sourceMapUrl": "/__cordova/packages/steedos_creator/client/views/571417ae2d96187b689af0efaf2f7c1c4c4d7c15.map",
+      "size": 7591,
+      "hash": "571417ae2d96187b689af0efaf2f7c1c4c4d7c15",
+      "sri": "El6Fj+rY+Dw2tZfXcwOhAulFfgu7W3PshLyGPOgQZtud/hNOvD6JROBeiraB6QSV1r0COaDKjRE+4DsQ2E9UXg=="
     },
     {
       "path": "packages/steedos_creator/client/views/grid_sidebar_organizations.less.css",
@@ -1570,12 +1570,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_workflow/client/layout/master_print.less.css?hash=d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
+      "url": "/__cordova/packages/steedos_workflow/client/layout/master_print.less.css?hash=3abe0729c59e0a43c168d62ade3511d3516dfb82",
       "sourceMap": "packages/steedos_workflow/client/layout/master_print.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/layout/d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c.map",
-      "size": 3219,
-      "hash": "d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
-      "sri": "maE4ihkkdLHky4/1lhwZ7xCn/2eKM6UAj9muAfs/JGgPy4QtMYR1S2X19yEy5ORXhBlJHO28z4JtIRz8OBzmaw=="
+      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/layout/3abe0729c59e0a43c168d62ade3511d3516dfb82.map",
+      "size": 3330,
+      "hash": "3abe0729c59e0a43c168d62ade3511d3516dfb82",
+      "sri": "UPBeFGAIE+xkUEBHzEhI8N8Xoc5bAkeYDb0Q+rIHA/q5nE8kKQcxrssXgpf0jQ3DmPks6m7d6hXhsRDkv8bTdg=="
     },
     {
       "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-section/steedos-section.less.css",
@@ -1794,12 +1794,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/packages/steedos_workflow/client/views/workflow_main.less.css?hash=f20da922bb664f16e9c91b9d9fbe867dacaf980a",
+      "url": "/__cordova/packages/steedos_workflow/client/views/workflow_main.less.css?hash=198a18b7779d6b5bc9e2b0fb6a004874467c2276",
       "sourceMap": "packages/steedos_workflow/client/views/workflow_main.less.css.map",
-      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/views/f20da922bb664f16e9c91b9d9fbe867dacaf980a.map",
-      "size": 15793,
-      "hash": "f20da922bb664f16e9c91b9d9fbe867dacaf980a",
-      "sri": "wsuGPqUgZESQvxXu27Kkj97CfNkZja1BV9zLNUUQ+UJisdxNq5S2f08y6Gl3dFF1BRGWA92vKdsX68hgcdevQg=="
+      "sourceMapUrl": "/__cordova/packages/steedos_workflow/client/views/198a18b7779d6b5bc9e2b0fb6a004874467c2276.map",
+      "size": 15855,
+      "hash": "198a18b7779d6b5bc9e2b0fb6a004874467c2276",
+      "sri": "Mogmnt/RYztG5+n7ojzGpsLiBOHkQwK16hObS+2FDpEp4rqxi1nb86trmh3T+S4HaGdA0KQ3++r3YPZw97+1yA=="
     },
     {
       "path": "packages/steedos_workflow/client/views/flow/admin_flows.less.css",

@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "d380db7ad29437bcffba2b6577597d95ed2fd50d.js",
+      "path": "30b3fc6e4cd370f443e4b22d61747ac3d343a786.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/d380db7ad29437bcffba2b6577597d95ed2fd50d.js?meteor_js_resource=true",
-      "size": 7918634,
-      "hash": "d380db7ad29437bcffba2b6577597d95ed2fd50d",
-      "sri": "1tHPPHApIhSfz2L67ruH9ftccz/KtRb0U2LzaHo/0jGGph+vCIrmQEnANWlZalbqrb1Abr3IEyws3bgkJ69DUw=="
+      "url": "/30b3fc6e4cd370f443e4b22d61747ac3d343a786.js?meteor_js_resource=true",
+      "size": 7929947,
+      "hash": "30b3fc6e4cd370f443e4b22d61747ac3d343a786",
+      "sri": "6tzjOCzI5SzVDVdCwkhUIeDkVtq+FHhX8CR/9xzMu7dUmdmh0+QSGQzTE7HGsPqjAkP0hD1fk6QONaw1L0S0FA=="
     },
     {
-      "path": "d380db7ad29437bcffba2b6577597d95ed2fd50d.stats.json",
+      "path": "30b3fc6e4cd370f443e4b22d61747ac3d343a786.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/d380db7ad29437bcffba2b6577597d95ed2fd50d.stats.json?meteor_js_resource=true",
-      "size": 173967,
-      "hash": "b88f310531441d27274baa4a55dfcfcc8608465e",
-      "sri": "0mJkZTIquABbvk4zoWicHgdxx3cGrbjQJco7eh9+HHBb7np0x6A3ScYt5dYazpXSpe85MdCt8HoYXumuuZZkEA=="
+      "url": "/30b3fc6e4cd370f443e4b22d61747ac3d343a786.stats.json?meteor_js_resource=true",
+      "size": 174102,
+      "hash": "fef7216e4ec9055160ce2e4b347153bca32e1ca4",
+      "sri": "gw8zaU12j9zl2UX9BU++d4zTuMbGbg3wkPRloNv0DwFQiHzQz3WfJbedwXZUCOusjFye/5psy0f06WVuJiMrvg=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -4172,12 +4172,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css?hash=c7349eb022a9552ed363de8c0c0a738162b8acfa",
+      "url": "/packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css?hash=934edf896245a48430254cb163da9657a49d2e16",
       "sourceMap": "packages/steedos_autoform/client/coreform/components/slds-quickForm/slds-quickForm.less.css.map",
-      "sourceMapUrl": "/packages/steedos_autoform/client/coreform/components/slds-quickForm/c7349eb022a9552ed363de8c0c0a738162b8acfa.map",
-      "size": 444,
-      "hash": "c7349eb022a9552ed363de8c0c0a738162b8acfa",
-      "sri": "xc9mOJe+hf9jm7yBwM8p7gJTawZuo7OMMDHvWvmj3W9Z/6hAP0/TsUNgYpQeY73qf4ib1a7xZ1DyJgrQ/hQzeA=="
+      "sourceMapUrl": "/packages/steedos_autoform/client/coreform/components/slds-quickForm/934edf896245a48430254cb163da9657a49d2e16.map",
+      "size": 703,
+      "hash": "934edf896245a48430254cb163da9657a49d2e16",
+      "sri": "hBUyjf0+xtMIJykbSbmt3q6VfteSenOXN/2/WXh7Xg818PgRFmQzYroNUNLcXAJf28e7AXx+F4bnhIkQcqXqAQ=="
     },
     {
       "path": "packages/steedos_autoform/client/coreform/inputTypes/coreform-typeahead/af-typeahead.less.css",
@@ -4398,12 +4398,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/views/view.less.css?hash=6d1fc911462a05827eb2c79d0cbed83c033db840",
+      "url": "/packages/steedos_creator/client/views/view.less.css?hash=571417ae2d96187b689af0efaf2f7c1c4c4d7c15",
       "sourceMap": "packages/steedos_creator/client/views/view.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/views/6d1fc911462a05827eb2c79d0cbed83c033db840.map",
-      "size": 6234,
-      "hash": "6d1fc911462a05827eb2c79d0cbed83c033db840",
-      "sri": "CCfeh8CxCpsmFhZO0sLKJ9X4Q+MzE3WOaF3jVxdSczkuTRqgM8R1QUTbHyp0warK1kZCTiHVCozPHDkYa6vZ5Q=="
+      "sourceMapUrl": "/packages/steedos_creator/client/views/571417ae2d96187b689af0efaf2f7c1c4c4d7c15.map",
+      "size": 7591,
+      "hash": "571417ae2d96187b689af0efaf2f7c1c4c4d7c15",
+      "sri": "El6Fj+rY+Dw2tZfXcwOhAulFfgu7W3PshLyGPOgQZtud/hNOvD6JROBeiraB6QSV1r0COaDKjRE+4DsQ2E9UXg=="
     },
     {
       "path": "packages/steedos_creator/client/views/grid_sidebar_organizations.less.css",
@@ -4770,12 +4770,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_workflow/client/layout/master_print.less.css?hash=d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
+      "url": "/packages/steedos_workflow/client/layout/master_print.less.css?hash=3abe0729c59e0a43c168d62ade3511d3516dfb82",
       "sourceMap": "packages/steedos_workflow/client/layout/master_print.less.css.map",
-      "sourceMapUrl": "/packages/steedos_workflow/client/layout/d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c.map",
-      "size": 3219,
-      "hash": "d2e0b3c15c237c0374ff2038e8d07a70e4a55e2c",
-      "sri": "maE4ihkkdLHky4/1lhwZ7xCn/2eKM6UAj9muAfs/JGgPy4QtMYR1S2X19yEy5ORXhBlJHO28z4JtIRz8OBzmaw=="
+      "sourceMapUrl": "/packages/steedos_workflow/client/layout/3abe0729c59e0a43c168d62ade3511d3516dfb82.map",
+      "size": 3330,
+      "hash": "3abe0729c59e0a43c168d62ade3511d3516dfb82",
+      "sri": "UPBeFGAIE+xkUEBHzEhI8N8Xoc5bAkeYDb0Q+rIHA/q5nE8kKQcxrssXgpf0jQ3DmPks6m7d6hXhsRDkv8bTdg=="
     },
     {
       "path": "packages/steedos_workflow/client/coreform/inputTypes/coreform-section/steedos-section.less.css",
@@ -4994,12 +4994,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_workflow/client/views/workflow_main.less.css?hash=f20da922bb664f16e9c91b9d9fbe867dacaf980a",
+      "url": "/packages/steedos_workflow/client/views/workflow_main.less.css?hash=198a18b7779d6b5bc9e2b0fb6a004874467c2276",
       "sourceMap": "packages/steedos_workflow/client/views/workflow_main.less.css.map",
-      "sourceMapUrl": "/packages/steedos_workflow/client/views/f20da922bb664f16e9c91b9d9fbe867dacaf980a.map",
-      "size": 15793,
-      "hash": "f20da922bb664f16e9c91b9d9fbe867dacaf980a",
-      "sri": "wsuGPqUgZESQvxXu27Kkj97CfNkZja1BV9zLNUUQ+UJisdxNq5S2f08y6Gl3dFF1BRGWA92vKdsX68hgcdevQg=="
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/198a18b7779d6b5bc9e2b0fb6a004874467c2276.map",
+      "size": 15855,
+      "hash": "198a18b7779d6b5bc9e2b0fb6a004874467c2276",
+      "sri": "Mogmnt/RYztG5+n7ojzGpsLiBOHkQwK16hObS+2FDpEp4rqxi1nb86trmh3T+S4HaGdA0KQ3++r3YPZw97+1yA=="
     },
     {
       "path": "packages/steedos_workflow/client/views/flow/admin_flows.less.css",

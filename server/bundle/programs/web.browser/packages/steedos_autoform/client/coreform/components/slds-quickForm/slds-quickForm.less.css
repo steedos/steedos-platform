@@ -11,6 +11,18 @@
   color: #706e6b;
   padding-left: 6px;
 }
+.quickForm_slds .range-field .start {
+  padding-right: 3px;
+}
+.quickForm_slds .range-field .end {
+  padding-left: 3px;
+}
+.quickForm_slds .form-group {
+  margin-bottom: 0px !important;
+}
+.quickForm_slds div#listbox-selections-unique-id {
+  line-height: 0px;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
