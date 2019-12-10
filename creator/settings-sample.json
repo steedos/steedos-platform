@@ -3,6 +3,9 @@
         "webservices": {
             "workflow": {
                 "url": "http://steedos.ticp.net:8821/"
+            },
+            "steedos":{
+                "url": "http://192.168.3.2:5001" //当前服务地址，用于react 组件获取数据
             }
         },
         "cfs": {
