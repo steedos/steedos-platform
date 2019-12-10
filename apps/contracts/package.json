@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "debug": "nodemon server.js",
-    "start": "yarn build && node server",
+    "start": "node server",
     "build": "yarn buildClient && yarn buildPackages",
     "buildClient": "cd webapp && yarn && yarn build && cd ..",
     "buildPackages": "cd ../../ && yarn compile && cd apps/contracts/",
