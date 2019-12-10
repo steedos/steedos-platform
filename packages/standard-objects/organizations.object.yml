@@ -1,5 +1,5 @@
 name: organizations
-label: 部门
+label: 组织
 icon: team_member
 enable_search: true
 enable_tree: true
@@ -13,7 +13,7 @@ fields:
     sortable: true
     name: name
   fullname:
-    label: 部门全称
+    label: 组织全称
     type: text
     omit: true
     hidden: true
@@ -21,7 +21,7 @@ fields:
     name: fullname
     searchable: true
   parent:
-    label: 上级部门
+    label: 上级组织
     type: lookup
     reference_to: organizations
     sortable: true
@@ -30,7 +30,7 @@ fields:
     name: parent
     filterable: true
   parents:
-    label: 上级部门
+    label: 上级组织
     type: lookup
     reference_to: organizations
     multiple: true
@@ -40,7 +40,7 @@ fields:
     name: parents
     filterable: true
   children:
-    label: 下级部门
+    label: 下级组织
     type: lookup
     reference_to: organizations
     multiple: true
@@ -55,7 +55,7 @@ fields:
     sortable: true
     name: sort_no
   admins:
-    label: 部门管理员
+    label: 组织管理员
     type: lookup
     reference_to: users
     multiple: true
@@ -125,7 +125,7 @@ actions:
     'on': list
     todo: standard_query
   addSubOrganization:
-    label: 添加子部门
+    label: 添加子组织
     visible: !!js/function |
       function () {
               var permissions;

@@ -40,7 +40,7 @@ admin_menus:
     object_name: company
     parent: menu_users
   - _id: organizations
-    name: 部门
+    name: 组织机构
     permission_sets:
       - admin
       - organization_admin
