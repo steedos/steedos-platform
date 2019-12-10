@@ -93,6 +93,7 @@ if Meteor.isClient
 		_.each related_objects, (related_object_item) ->
 			related_object_name = related_object_item.object_name
 			related_field_name = related_object_item.foreign_key
+			sharing = related_object_item.sharing
 			related_object = Creator.getObject(related_object_name)
 			unless related_object
 				return
@@ -110,6 +111,7 @@ if Meteor.isClient
 				columns: columns
 				related_field_name: related_field_name
 				is_file: related_object_name == "cms_files"
+				sharing: sharing
 
 			list.push related
 

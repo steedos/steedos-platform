@@ -200,7 +200,7 @@ Creator.getObjectRelateds = (object_name)->
 		_.each Creator.Objects, (related_object, related_object_name)->
 			_.each related_object.fields, (related_field, related_field_name)->
 				if (related_field.type == "master_detail" || related_field.type == "lookup") and related_field.reference_to and related_field.reference_to == object_name and relatedListMap[related_object_name]
-					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name }
+					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name, sharing: related_field.sharing }
 		if relatedListMap['cms_files']
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
 		if relatedListMap['instances']
