@@ -11,7 +11,7 @@ Meteor.startup(function(c){
         }
     });
 
-    Meteor.autorun(()=>{
+    Meteor.autorun(function(){
         if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
             var spaceId = Steedos.spaceId();
             var userId = Steedos.userId();
