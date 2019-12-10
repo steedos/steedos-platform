@@ -162,12 +162,11 @@ async function getObjectDataByIds(objectName: string, ids: string[], fields?: st
 }
 
 async function getUserPermissionShares(spaceUser){
-  let userFilter = `(users eq '${spaceUser.user}')`;
-  let orgFilter = [];
+  let userFilters = [`(users eq '${spaceUser.user}')`];
   _.each(spaceUser.organizations_parents, (orgId)=>{
-    orgFilter.push(`(organizations eq '${orgId}')`);
+    userFilters.push(`(organizations eq '${orgId}')`);
   })
-  let filters = `((${userFilter} or ${orgFilter.join(' or ')}) and space eq '${spaceUser.space}')`
+  let filters = `((${userFilters.join(' or ')}) and space eq '${spaceUser.space}')`
   return await getSteedosSchema().getObject('permission_shares').find({filters: filters, fields: ['_id', 'object_name']});
 }
 
