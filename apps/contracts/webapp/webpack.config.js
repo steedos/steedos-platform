@@ -25,7 +25,8 @@ module.exports = {
                                 {
                                     "modules": "commonjs",
                                     "targets": {
-                                        "node": "current"
+                                        "chrome": "58",
+                                        "ie": "11"
                                     }
                                 }
                             ]
