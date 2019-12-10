@@ -48,7 +48,7 @@ const Login = ({ history, settings, tenant }: any) => {
     try {
       let data = {
         user: {
-          email,
+          email: email.trim(),
         },
         password,
         code,
