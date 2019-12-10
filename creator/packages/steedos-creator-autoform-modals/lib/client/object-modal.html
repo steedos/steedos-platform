@@ -5,13 +5,7 @@
 				<header class="slds-modal__header">
 					{{#if isMobile}}
 						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
-						{{#if $eq cmOperation 'insert'}}
-							<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
-						{{/if}}
-
-						{{#if $eq cmOperation 'update'}}
-							<button class="slds-button slds-button_brand btn-update">保存</button>
-						{{/if}}
+						<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
 
 						<h2 class="title slds-text-heading--medium">
 							{{{title}}}
