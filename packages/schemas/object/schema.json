@@ -225,7 +225,7 @@
         },
         "relatedList": {
             "type": "array",
-            "description": "对象字段"
+            "description": "主表想在详细页显示的相关子表"
         }
     },
     "definitions": {
@@ -474,6 +474,14 @@
                         "string"
                     ],
                     "description": "过滤条件"
+                },
+                "sharing": {
+                    "type": "string",
+                    "description": "配置当用户对主表记录有何种权限时对本表记录可以增删改",
+                    "enum": [
+                        "masterRead",
+                        "masterWrite"
+                    ]
                 }
             }
         },
