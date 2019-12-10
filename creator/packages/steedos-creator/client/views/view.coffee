@@ -689,19 +689,14 @@ Template.creator_view.events
 		currentTabContainer.find(">.slds-tabs_default__content.slds-show").toggleClass("slds-show").toggleClass("slds-hide")
 		currentTabContainer.find(">.slds-tabs_default__content").eq(currentIndex).toggleClass("slds-show").toggleClass("slds-hide")
 	'click .back-icon': (event)->
-		lastUrl = urlQuery[urlQuery.length - 2]
-		urlQuery.pop()
-		if lastUrl
-			FlowRouter.go lastUrl
+		app_id = Session.get("app_id")
+		object = Session.get("object_name")
+		if app_id && object
+			FlowRouter.go Creator.getObjectRouterUrl(object, undefined, app_id)
+		else if app_id
+			FlowRouter.go "/app/#{app_id}"
 		else
-			app_id = Session.get("app_id")
-			object = Session.get("object_name")
-			if app_id && object
-				FlowRouter.go Creator.getObjectRouterUrl(object, undefined, app_id)
-			else if app_id
-				FlowRouter.go "/app/#{app_id}"
-			else
-				FlowRouter.go "/app"
+			FlowRouter.go "/app"
 
 Template.creator_view.onDestroyed ()->
 	self = this
