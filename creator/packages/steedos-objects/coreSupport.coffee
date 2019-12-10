@@ -191,6 +191,25 @@ Creator.getObjectRelateds = (object_name)->
 	_object = Creator.Objects[object_name]
 	if !_object
 		return related_objects
+	
+	relatedList = _object.relatedList
+	if !_.isEmpty relatedList
+		relatedListMap = {}
+		_.each relatedList, (objName)->
+			relatedListMap[objName] = {}
+		_.each Creator.Objects, (related_object, related_object_name)->
+			_.each related_object.fields, (related_field, related_field_name)->
+				if (related_field.type == "master_detail" || related_field.type == "lookup") and related_field.reference_to and related_field.reference_to == object_name and relatedListMap[related_object_name]
+					relatedListMap[related_object_name] = { object_name: related_object_name, foreign_key: related_field_name }
+		if relatedListMap['cms_files']
+			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
+		if relatedListMap['instances']
+			relatedListMap['cms_files'] = { object_name: "instances", foreign_key: "record_ids" }
+		_.each ['tasks', 'notes', 'events', 'approvals', 'audit_records'], (enableObjName)->
+			if relatedListMap[enableObjName]
+				relatedListMap[enableObjName] = { object_name: enableObjName, foreign_key: "related_to" }
+		related_objects = _.values relatedListMap
+		return related_objects
 
 	if _object.enable_files
 		related_objects.push {object_name:"cms_files", foreign_key: "parent"}
