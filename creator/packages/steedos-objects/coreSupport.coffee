@@ -204,7 +204,7 @@ Creator.getObjectRelateds = (object_name)->
 		if relatedListMap['cms_files']
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
 		if relatedListMap['instances']
-			relatedListMap['cms_files'] = { object_name: "instances", foreign_key: "record_ids" }
+			relatedListMap['instances'] = { object_name: "instances", foreign_key: "record_ids" }
 		_.each ['tasks', 'notes', 'events', 'approvals'], (enableObjName)->
 			if relatedListMap[enableObjName]
 				relatedListMap[enableObjName] = { object_name: enableObjName, foreign_key: "related_to" }
