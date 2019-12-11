@@ -222,7 +222,7 @@ Creator.getObjectRelateds = (object_name)->
 
 	_.each Creator.Objects, (related_object, related_object_name)->
 		_.each related_object.fields, (related_field, related_field_name)->
-			if related_field.type == "master_detail" and related_field.reference_to and related_field.reference_to == object_name
+			if (related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) and related_field.reference_to and related_field.reference_to == object_name
 				if related_object_name == "object_fields"
 					#TODO 待相关列表支持排序后，删除此判断
 					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
