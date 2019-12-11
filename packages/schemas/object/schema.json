@@ -482,6 +482,10 @@
                         "masterRead",
                         "masterWrite"
                     ]
+                },
+                "relatedList": {
+                    "type": "boolean",
+                    "description": "用于表示是否在相关表的详细页面中作为子表显示"
                 }
             }
         },
