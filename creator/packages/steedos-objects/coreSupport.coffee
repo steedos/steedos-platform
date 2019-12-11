@@ -205,9 +205,15 @@ Creator.getObjectRelateds = (object_name)->
 			relatedListMap['cms_files'] = { object_name: "cms_files", foreign_key: "parent" }
 		if relatedListMap['instances']
 			relatedListMap['cms_files'] = { object_name: "instances", foreign_key: "record_ids" }
-		_.each ['tasks', 'notes', 'events', 'approvals', 'audit_records'], (enableObjName)->
+		_.each ['tasks', 'notes', 'events', 'approvals'], (enableObjName)->
 			if relatedListMap[enableObjName]
 				relatedListMap[enableObjName] = { object_name: enableObjName, foreign_key: "related_to" }
+		if relatedListMap['audit_records']
+			#record 详细下的audit_records仅modifyAllRecords权限可见
+			if Meteor.isClient
+				permissions = Creator.getPermissions(object_name)
+				if _object.enable_audit && permissions?.modifyAllRecords
+					relatedListMap['audit_records'] = { object_name:"audit_records", foreign_key: "related_to" }
 		related_objects = _.values relatedListMap
 		return related_objects
 
