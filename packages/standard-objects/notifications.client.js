@@ -32,7 +32,7 @@ var handleMyNotifications = function(id, notification){
     var options = {
         iconUrl: '',
         title: notification.name,
-        body: notification.text,
+        body: notification.body,
         timeout: 15 * 1000,
         onClick: function(event){
             console.log(event)
