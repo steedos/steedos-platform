@@ -437,20 +437,20 @@
     saml-idp "^1.1.0"
     tslib "1.10.0"
 
-"@steedos/app-contracts@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.12.6.tgz#59f6267a7e9d791bfadd0b29c643033fbafdb44a"
-  integrity sha512-cAfwjwToFWKXluxG79MfoUf4ou7RPbkmmQBa/scl0GQnOXvfDaolYo+sS1vg9pdWEXhFQfyDX/LYW7yw0VCdVQ==
+"@steedos/app-contracts@^1.13.2":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.13.2.tgz#bfa53b48e2003a905aa19a849133a5e5139b1cc8"
+  integrity sha512-7gEkcM8Bxp1LOEKwryJ+SZqnbRF56PRU44lkctvBnARgn+5XKWxufpGa5pWLSowh7La2CZLabrutiF8b0ggFBg==
   dependencies:
     dotenv "^8.2.0"
     dotenv-flow "^3.1.0"
 
-"@steedos/auth@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.12.6.tgz#e94d045742b34105c408e966b77707469a373f3f"
-  integrity sha512-X0YW1nJMJM7t6bdek/SjjF1o3Ggh2gkpJMi8JulLZstAHHQdyJVaQms1YgKkjDOXwQwQsrmIoHHRyOcOe7ik4g==
+"@steedos/auth@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.13.1.tgz#4ade0bc324fb4d91324d0df31a95094a861e849f"
+  integrity sha512-ybXK2d70qVI5r5SMDQuFY7Ogqh+hZjbqgiEtZ8vuWNo8XwaxeEJi/dhSz48hNui5cXBB7iz/sS/dVbfSXBM0qg==
   dependencies:
-    "@steedos/objectql" "^1.12.6"
+    "@steedos/objectql" "^1.13.1"
     bcrypt "^3.0.6"
     cookies "^0.7.3"
     express "^4.16.4"
@@ -459,18 +459,18 @@
     sha256 "^0.2.0"
     underscore "^1.9.1"
 
-"@steedos/core@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.12.6.tgz#a9a279fdab041fc61387bd5981a4b457daccb6fe"
-  integrity sha512-w7O96F0gvDg7EWG4ZpIDM4liETmFgQ1U++eE3Z1whAvKFyyKsZCjA6ZQfi5aBimmJ2mOzobdhPbAhSN7SrcdmQ==
+"@steedos/core@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.13.1.tgz#b2ff063a928984646f9190a0ece37032dd8c6a0b"
+  integrity sha512-87P3xsCqzODy4ZtLRC9IT1Ju/2UJJZvgnFMja28iQFigJf0o4rabz+kllaYFl1KjM/wFq++F7eAGKywqAIJ0Mg==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.12.6"
-    "@steedos/migrate" "^1.12.6"
-    "@steedos/objectql" "^1.12.6"
-    "@steedos/standard-objects" "^1.12.6"
+    "@steedos/auth" "^1.13.1"
+    "@steedos/migrate" "^1.13.1"
+    "@steedos/objectql" "^1.13.1"
+    "@steedos/standard-objects" "^1.13.1"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -498,33 +498,33 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/filters@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.12.6.tgz#47222667b6d0e1f76b89ccc21012e1b296942100"
-  integrity sha512-EYHaS4bHEpmTYyoH0IbSwELj5B1jKJeQFyCBbWJltaBQGjaQkSb4cb/fEL2a0OD+F4FzUPe31mkOUIg3FL2buw==
+"@steedos/filters@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.13.1.tgz#f007c36d29cf4c231d9ed5a51c806d6b8eee749e"
+  integrity sha512-r7WihYa9YESiSD3EHGjfP/rX49N/Q7Pjr/PqHod+aGMA3hij8AaJvm4Z2KQnYnVmOY3UXJRAYVJcDy6ojqjiJQ==
   dependencies:
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/migrate@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.12.6.tgz#5231de6e20cceaaf31ea2fc1e481c873936224ba"
-  integrity sha512-9eytTX0zI6n3yaOFxLZPq0gMeKGEMjNpsmsoGop6RpJyAQsTLz0ucx6VY96vKYdWbEZx4adIEQnEDwXj1ybW+Q==
+"@steedos/migrate@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.13.1.tgz#511ce563553dfe7a974af723fddd32246a6cb15c"
+  integrity sha512-6LSZBCEV6LXq6t2/ZoXW7Iy7xa8l+6Y050Yvfi1FnOdT6hFySz+X8kQvHFDhjoazli/uTPZkjWCBLAvjnPzcmQ==
   dependencies:
     migrate "^1.6.2"
 
-"@steedos/objectql@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.12.6.tgz#5537ca850a772df25c6b936f4091c782766bb740"
-  integrity sha512-c1r0EBCl6VT2X8jZe0tlOJveShd7mFNv/8hhKvKondLl4a9TdKx01E5rjQ4rnGHVju18ZNrWLX7Ys24l4I6XJA==
+"@steedos/objectql@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.13.1.tgz#a819b78c91a8822b5615eadeb9379f5231848540"
+  integrity sha512-irDaZNygJz3F6W9jEwMJkZ2P3uu2wwc7mVs7i6olxteOORvLwvdmnx7n77/sivaywmBiWFJLVFZWCeOdv/5KMw==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.12.6"
+    "@steedos/filters" "^1.13.1"
     "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/schemas" "^1.12.6"
-    "@steedos/standard-objects" "^1.12.6"
+    "@steedos/schemas" "^1.13.1"
+    "@steedos/standard-objects" "^1.13.1"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -581,15 +581,15 @@
     ts-odata-client "^1.0.2"
     underscore "^1.9.1"
 
-"@steedos/schemas@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.12.6.tgz#909174039f0641a1113366fe90dad8797d96bd60"
-  integrity sha512-u1cgwHzl0XYJl5veNQKhYW2HYlaVVplo0afMyqM+s73A4Lq1iMlba2jh3NFjxxZXNeY1qqUlrBg/L48XygEKqw==
+"@steedos/schemas@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.13.1.tgz#db35bc602ae7f631de6d6024547b5eec3529e3ee"
+  integrity sha512-Bb/ISeYXw4EotWVuXrddvVEVOCuHsI5Yj8/pQxZnYWCoeXKgNYsL/esQ+n+KQqESU4s1T4vHOV9DxVLbAKR10w==
 
-"@steedos/standard-objects@^1.12.6":
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.12.6.tgz#47fa6e902ca3f4b97180c04be90602fe7ca86d25"
-  integrity sha512-HUQY3S6SyEYuOiHr3FpH23+E1rFgF7/a2zLWXbVcO1GSvY+tojjr8Uq2wtR2iryx+pJs1Wo1/rS31IBOHQogiw==
+"@steedos/standard-objects@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.13.1.tgz#98dbe69eb6fa2b9d3f883617fdb09cb277fcd0f9"
+  integrity sha512-oMlgSGcGOhKjn7Q73zb8Uxi2xOHZb8FQ8lfjagTf7Ofab9lpHnmSav2VdZABxF8l1EOXhkVBsfTqrpM9ruQDCA==
 
 "@steedos/steedos-plugin-workflow@^1.10.1":
   version "1.10.1"
