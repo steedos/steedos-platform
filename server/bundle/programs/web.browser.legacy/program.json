@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "1e6bcb249aa449a4b85f7c3c767f84039fe45be3.js",
+      "path": "927da74f0e4b562ecccc21808612018ac05b12a8.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/1e6bcb249aa449a4b85f7c3c767f84039fe45be3.js?meteor_js_resource=true",
-      "size": 7933302,
-      "hash": "1e6bcb249aa449a4b85f7c3c767f84039fe45be3",
-      "sri": "BOl/jwPKQHFpGs1gOfAcvXj+LeMxMNq9XH+4BER6ycPNOJ5zCTj8BnnyzR2DW2yUyPwJwTDS0SPAjNVdGGbB7w=="
+      "url": "/927da74f0e4b562ecccc21808612018ac05b12a8.js?meteor_js_resource=true",
+      "size": 7933683,
+      "hash": "927da74f0e4b562ecccc21808612018ac05b12a8",
+      "sri": "voYKPTC1dzmGZ8G789+ZQq3vJ7Qk2LEp3TaHwh5TSKxk/+e9J9+jZIRWIJEjK8RPTyBA4L/QrXAEotyVORDOvA=="
     },
     {
-      "path": "1e6bcb249aa449a4b85f7c3c767f84039fe45be3.stats.json",
+      "path": "927da74f0e4b562ecccc21808612018ac05b12a8.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/1e6bcb249aa449a4b85f7c3c767f84039fe45be3.stats.json?meteor_js_resource=true",
+      "url": "/927da74f0e4b562ecccc21808612018ac05b12a8.stats.json?meteor_js_resource=true",
       "size": 174287,
-      "hash": "342f83d4461fa5d18e1c54d74b3d3d353a9a1d5e",
-      "sri": "9h2TRZt2yvpKVuYCZQEmWQ6biIjDr0Fvg/2LJeY771MqlS8jmfblzDSYY1ZWlogcFxrndQ809Y8Wk/AtFUTPrw=="
+      "hash": "02c4a056562eb673e8fea297ee29fb827e9a627f",
+      "sri": "2qPXQHiuvwES5bSX8wUvaxyFJcKBUZ69g47eJ7Sq2eSH03GD1bTdgoKlYohBVHFxG375w7V2LMoJZ/I2wio2XA=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -4244,12 +4244,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/layout/header.less.css?hash=79af0473420fb91b0ccbbbe6905ac719d758917a",
+      "url": "/packages/steedos_creator/client/layout/header.less.css?hash=3113254dd1a6427992afe9a05fe3dace19624e08",
       "sourceMap": "packages/steedos_creator/client/layout/header.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/layout/79af0473420fb91b0ccbbbe6905ac719d758917a.map",
-      "size": 1561,
-      "hash": "79af0473420fb91b0ccbbbe6905ac719d758917a",
-      "sri": "wk16Id+Q1rr6W+jxmMPlV/Geu2e4YT2QJlkrKeLuYHNbwT05wuWcmjek6YJSr7FiIYbXg5RehHyVP36yIwCYCw=="
+      "sourceMapUrl": "/packages/steedos_creator/client/layout/3113254dd1a6427992afe9a05fe3dace19624e08.map",
+      "size": 2077,
+      "hash": "3113254dd1a6427992afe9a05fe3dace19624e08",
+      "sri": "b7CgL3RrmXZlC97cNvM/I39raRbHgTLqDyuAvvEU1BEWdcQHCdN+ugn7I27NRYiPIBFddP5ic49e7vQAkGmyaA=="
     },
     {
       "path": "packages/steedos_creator/client/layout/sidebar.less.css",
