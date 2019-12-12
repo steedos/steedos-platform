@@ -30,6 +30,20 @@
                 line-height: 36px;
                 padding-left: 10px;
                 font-weight: 400;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 20rem;
+                @media (max-width: 1024px) {
+                    min-width: 10rem;
+                }
+            }
+        }
+        .slds-global-header__item--search{
+            flex: 0 1 0;
+            min-width: 33.5rem;
+            @media (max-width: 1024px) {
+                min-width: 20rem;
             }
         }
 
