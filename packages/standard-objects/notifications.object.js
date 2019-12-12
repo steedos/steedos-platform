@@ -41,7 +41,12 @@ Meteor.publish('my_notifications', function(spaceId){
     if(!collection){
         return this.ready()
     }
-    return collection.find({space: spaceId, owner: this.userId}, {fields: {space: 1, owner: 1, name: 1, body: 1, is_read: 1}})
+    var now = new Date();
+    return collection.find({space: spaceId, owner: this.userId, created: {
+        $gte: now
+    }}, {
+        fields: {space: 1, owner: 1, name: 1, body: 1, is_read: 1}
+    })
 })
 
 
