@@ -10,17 +10,6 @@ Meteor.startup(function(){
             Creator.subs["CreatorNotifications"].subscribe("my_notifications", spaceId);
         }
     });
-
-    Meteor.autorun(function(){
-        if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
-            var spaceId = Steedos.spaceId();
-            var userId = Steedos.userId();
-            if(spaceId && userId && loadNotificationsData){
-                Creator.getCollection("notifications").find({space: spaceId, owner: userId}).fetch();
-                store.dispatch(loadNotificationsData({id: "steedos-header-notifications"}))
-            }
-        }
-    });
 });
 
 var handleMyNotifications = function(id, notification){
@@ -65,6 +54,10 @@ var handleMyNotifications = function(id, notification){
     return;
 }
 
+var fetchMyNotifications = function(){
+    store.dispatch(loadNotificationsData({id: "steedos-header-notifications"}))
+}
+
 Meteor.startup(function(c){
     if(!Steedos.isMobile()){
         if(Push.debug){
@@ -85,6 +78,7 @@ Meteor.startup(function(c){
                 handle = query.observeChanges({
                     added: function(id, notification){
                         handleMyNotifications(id, notification);
+                        fetchMyNotifications();
                     }
                 });
             }
