@@ -23,8 +23,9 @@ fields:
     required: true
   payable_id:
     label: 应付记录
-    type: master_detail
+    type: lookup
     reference_to: account_receivable
+    relatedList: true
     required: true
   contract_id:
     label: 合同

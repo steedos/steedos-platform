@@ -139,7 +139,8 @@ fields:
     name: a_signed
   account:
     label: 对方单位
-    type: master_detail
+    type: lookup
+    relatedList: true
     reference_to: accounts
     name: account
   othercompany:
@@ -148,7 +149,8 @@ fields:
     name: othercompany
   customer_contact:
     label: 联系人
-    type: master_detail
+    type: lookup
+    relatedList: true
     reference_to: contacts
     filterable: false
     name: customer_contact

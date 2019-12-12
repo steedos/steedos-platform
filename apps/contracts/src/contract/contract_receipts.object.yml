@@ -16,7 +16,8 @@ fields:
     name: description
   account:
     label: 付款方
-    type: master_detail
+    type: lookup
+    relatedList: true
     reference_to: accounts
     sortable: true
     name: account

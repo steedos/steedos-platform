@@ -472,6 +472,23 @@ module.exports = {
                 return;
             }
         },
+        "before.insert.server.masterDetail": {
+            on: "server",
+            when: "before.insert",
+            todo: function (userId, doc) {
+                /*子表 master_detail 字段类型新增属性 sharing #1461*/
+                setDetailOwner(doc, this.object_name, userId);
+            }
+        },
+        "before.update.server.masterDetail": {
+            on: "server",
+            when: "before.update",
+            todo: function (userId, doc, fieldNames, modifier, options) {
+                modifier.$set = modifier.$set || {};
+                /*子表 master_detail 字段类型新增属性 sharing #1461*/
+                setDetailOwner(modifier.$set, this.object_name, userId);
+            }
+        },
         "after.update.server.masterDetail": {
             "on": "server",
             when: "after.update",
@@ -505,3 +522,41 @@ module.exports = {
         }
     }
 };
+function setDetailOwner(doc, object_name, userId) {
+    let obj = Creator.getObject(object_name);
+    let masterRecordOwner = '';
+    _.each(obj.fields, function (f, k) {
+        if (f.type === 'master_detail' && doc[k]) { /* 如果本次修改的是master_detail字段 */
+            let masterObjectName = f.reference_to;
+            let masterCollection = Creator.getCollection(masterObjectName);
+            let masterId = doc[k];
+            if (masterId && _.isString(masterId)) { /* 排除字段属性multiple:true的情况 */
+                let masterObject = Creator.getObject(masterObjectName);
+                let nameFieldKey = masterObject.NAME_FIELD_KEY;
+                let fields = { owner: 1, space: 1 };
+                fields[nameFieldKey] = 1;
+                let masterRecord = masterCollection.findOne(doc[k], { fields: fields });
+                if (masterRecord) {
+                    if (userId && masterRecord.space) { /* 新增和修改子表记录中的master_detial字段时需要根据sharing校验是否有权限新增和修改 */
+                        let sharing = f.sharing || 'masterWrite'; /* 默认对主表有编辑权限才可新建或者编辑子表 */
+                        let masterAllow = false;
+                        let masterRecordPerm = Creator.getRecordPermissions(masterObjectName, masterRecord, userId, masterRecord.space);
+                        if (sharing == 'masterRead') {
+                            masterAllow = masterRecordPerm.allowRead;
+                        }
+                        else if (sharing == 'masterWrite') {
+                            masterAllow = masterRecordPerm.allowEdit;
+                        }
+                        if (!masterAllow) {
+                            throw new Meteor.Error(400, `不能选择主表记录： ${masterRecord[nameFieldKey]}。`);
+                        }
+                    }
+                    masterRecordOwner = masterRecord.owner;
+                }
+            }
+        }
+    });
+    if (masterRecordOwner) {
+        doc.owner = masterRecordOwner;
+    }
+}

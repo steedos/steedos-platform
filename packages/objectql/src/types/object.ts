@@ -140,9 +140,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private checkField() {
         let driverSupportedColumnTypes = this._datasource.adapter.getSupportedColumnTypes()
+        let masterDetailFieldCount = 0
         _.each(this.fields, (field: SteedosFieldType, key: string) => {
             if (SteedosFieldDBType[field.fieldDBType] && !driverSupportedColumnTypes.includes(field.fieldDBType)) {
                 throw new Error(`driver ${this._datasource.driver} can not support field ${key} config`)
+            }
+            if (field.type === 'master_detail') {
+                masterDetailFieldCount++
+                if (masterDetailFieldCount > 1) {
+                    throw new Error(`object ${this._name} can not set multiple master_detail field type.`)
+                }
             }
         })
     }

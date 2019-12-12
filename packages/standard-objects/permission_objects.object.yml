@@ -19,7 +19,7 @@ fields:
     filterable: true
   object_name:
     label: 对象
-    type: master_detail
+    type: lookup
     index: true
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
