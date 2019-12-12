@@ -338,7 +338,7 @@ Template.creator_view.helpers
 	allowCreate: ()->
 		sharing = this.sharing || 'masterWrite'
 		masterAllow = false
-		masterRecordPerm = Creator.getRecordPermissions()
+		masterRecordPerm = Creator.getRecordPermissions(Session.get('object_name'), Creator.getObjectRecord(), Meteor.userId(), Session.get('spaceId'))
 		if sharing == 'masterRead'
 			masterAllow = masterRecordPerm.allowRead
 		else if sharing == 'masterWrite'
