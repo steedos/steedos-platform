@@ -34,7 +34,9 @@
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="search"}}
 							</span>
 							</button>
-							{{> notifications}}
+							{{#if isMobile}}
+								{{> notifications}}
+							{{/if}}
 						</div>
 					</div>
 				</nav>
