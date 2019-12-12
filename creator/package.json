@@ -95,7 +95,7 @@
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.7.4",
     "@steedos/app-contracts": "^1.12.6",
-    "@steedos/react": "1.11.7",
+    "@steedos/react": "1.12.6",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^6.0.0",
