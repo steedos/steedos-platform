@@ -41,6 +41,6 @@ router.put('/:spaceId/:objectName/:_id', updateObjectData);
 
 router.delete('/:spaceId/:objectName/:_id', deleteObjectData);
 
-router.post('/:spaceId/:objectName/:_id/:methodName', excuteObjectMethod);
+router.all('/:spaceId/:objectName/:_id/:methodName', excuteObjectMethod);
 
 export default router
