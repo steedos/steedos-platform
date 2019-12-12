@@ -1,5 +1,5 @@
 require('url-search-params-polyfill');
-
+clone = require('clone')
 getCookie = (name)->
 	pattern = RegExp(name + "=.[^;]*")
 	matched = document.cookie.match(pattern)
@@ -170,12 +170,83 @@ Meteor.startup ->
 
 Creator.bootstrapLoaded = new ReactiveVar(false)
 
-Setup.bootstrap = (spaceId, callback)->
-	console.log("bootstrap")
+handleBootstrapData = (result, callback)->
+	Creator.Objects = result.objects
+	object_listviews = result.object_listviews
+	Creator.object_workflows = result.object_workflows
+	isSpaceAdmin = Steedos.isSpaceAdmin()
 
+	Session.set "user_permission_sets", result.user_permission_sets
+
+	_.each Creator.Objects, (object, object_name)->
+		_object_listviews = object_listviews[object_name]
+		_.each _object_listviews, (_object_listview)->
+			if _.isString(_object_listview.options)
+				_object_listview.options = JSON.parse(_object_listview.options)
+			if _object_listview.api_name
+				_key = _object_listview.api_name
+			else
+				_key = _object_listview._id
+			object.list_views[_key] = _object_listview
+		Creator.loadObjects object, object_name
+
+	_.each result.apps, (app, key) ->
+		if !app._id
+			app._id = key
+		if app.is_creator
+			if isSpaceAdmin
+# 如果是工作区管理员应该强制把is_creator的应该显示出来
+				app.visible = true
+		else
+# 非creator应该一律不显示
+			app.visible = false
+
+	sortedApps = _.sortBy _.values(result.apps), 'sort'
+	# 按钮sort排序次序设置Creator.Apps值
+	Creator.Apps = {}
+	adminApp = {}
+	_.each sortedApps, (n) ->
+		if n._id == "admin"
+			adminApp = n
+		else
+			Creator.Apps[n._id] = n
+
+	# admin菜单显示在最后
+	Creator.Apps.admin = adminApp
+
+	apps = result.assigned_apps
+	if apps.length
+		_.each Creator.Apps, (app, key)->
+			if apps.indexOf(key) > -1
+				app.visible = app.is_creator
+			else
+				app.visible = false
+
+	Creator.Menus = result.assigned_menus
+
+	appIds = _.pluck(Creator.getVisibleApps(true), "_id")
+	if (appIds && appIds.length>0)
+		if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
+			Session.set("app_id", appIds[0])
+	Creator.Plugins = result.plugins;
+
+	if _.isFunction(callback)
+		callback()
+
+	Creator.bootstrapLoaded.set(true)
+	if (!FlowRouter._initialized)
+		FlowRouter.initialize();
+
+	if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
+		if FlowRouter.current()?.queryParams?.redirect
+			document.location.href = FlowRouter.current().queryParams.redirect;
+			return
+		else
+			FlowRouter.go("/")
+
+requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()
 		return
-
 	userId = Meteor.userId()
 	authToken = Accounts._storedLoginToken()
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
@@ -189,91 +260,32 @@ Setup.bootstrap = (spaceId, callback)->
 		dataType: "json"
 		headers: headers
 		error: (jqXHR, textStatus, errorThrown) ->
-				FlowRouter.initialize();
-				error = jqXHR.responseJSON
-				console.error error
-				if error?.reason
-					toastr?.error?(TAPi18n.__(error.reason))
-				else if error?.message
-					toastr?.error?(TAPi18n.__(error.message))
-				else
-					toastr?.error?(error)
+			FlowRouter.initialize();
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
 		success: (result) ->
-			# if result.space._id != spaceId
-			# 	Steedos.setSpaceId(result.space._id)
+			handleBootstrapData(result, callback);
 
-			Creator.Objects = result.objects
-			object_listviews = result.object_listviews
-			Creator.object_workflows = result.object_workflows
-			isSpaceAdmin = Steedos.isSpaceAdmin()
 
-			Session.set "user_permission_sets", result.user_permission_sets
+requestBootstrapDataUseAction = ()->
+	SteedosReact = require('@steedos/react');
+	store.dispatch(SteedosReact.loadBootstrapEntitiesData({}))
 
-			_.each Creator.Objects, (object, object_name)->
-				_object_listviews = object_listviews[object_name]
-				_.each _object_listviews, (_object_listview)->
-					if _.isString(_object_listview.options)
-						_object_listview.options = JSON.parse(_object_listview.options)
-					if _object_listview.api_name
-						_key = _object_listview.api_name
-					else
-						_key = _object_listview._id
-					object.list_views[_key] = _object_listview
-				Creator.loadObjects object, object_name
+requestBootstrapData = (spaceId, callback)->
+	if window.store
+		requestBootstrapDataUseAction();
+	else
+		requestBootstrapDataUseAjax(spaceId, callback);
 
-			_.each result.apps, (app, key) ->
-				if !app._id
-					app._id = key
-				if app.is_creator
-					if isSpaceAdmin
-						# 如果是工作区管理员应该强制把is_creator的应该显示出来
-						app.visible = true
-				else
-					# 非creator应该一律不显示
-					app.visible = false
-			
-			sortedApps = _.sortBy _.values(result.apps), 'sort'
-			# 按钮sort排序次序设置Creator.Apps值
-			Creator.Apps = {}
-			adminApp = {}
-			_.each sortedApps, (n) ->
-				if n._id == "admin"
-					adminApp = n
-				else
-					Creator.Apps[n._id] = n
-			
-			# admin菜单显示在最后
-			Creator.Apps.admin = adminApp
+Setup.bootstrap = (spaceId, callback)->
+	requestBootstrapData(spaceId, callback)
 
-			apps = result.assigned_apps
-			if apps.length
-				_.each Creator.Apps, (app, key)->
-					if apps.indexOf(key) > -1
-						app.visible = app.is_creator
-					else
-						app.visible = false
-			
-			Creator.Menus = result.assigned_menus
-
-			appIds = _.pluck(Creator.getVisibleApps(true), "_id")
-			if (appIds && appIds.length>0)
-				if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
-					Session.set("app_id", appIds[0])
-			Creator.Plugins = result.plugins;				
-
-			if _.isFunction(callback)
-				callback()
-
-			Creator.bootstrapLoaded.set(true)
-			if (!FlowRouter._initialized)
-				FlowRouter.initialize();
-
-			if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
-				if FlowRouter.current()?.queryParams?.redirect
-					document.location.href = FlowRouter.current().queryParams.redirect;
-					return
-				else
-					FlowRouter.go("/")
 
 FlowRouter.route '/steedos/logout',
 	action: (params, queryParams)->
@@ -281,3 +293,16 @@ FlowRouter.route '/steedos/logout',
 		$("body").addClass('loading')
 		Meteor.logout ()->
 			return
+
+Meteor.startup ()->
+	SteedosReact = require('@steedos/react');
+	RequestStatusOption = SteedosReact.RequestStatusOption
+	lastBootStrapRequestStatus = '';
+	window.store?.subscribe ()->
+		state = store.getState();
+		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
+			lastBootStrapRequestStatus = SteedosReact.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
+			if SteedosReact.isRequestSuccess(state)
+				handleBootstrapData(clone(SteedosReact.getBootstrapData(state)));
+		else
+			lastBootStrapRequestStatus = SteedosReact.getRequestStatus(state);
