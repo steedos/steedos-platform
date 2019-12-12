@@ -1,26 +1,41 @@
-name: department
-label: 经办部门
+extend: company
+label: 我方单位
 icon: account
 enable_api: true
 enable_trash: true
 fields:
   name:
-    label: 部门名称
+    label: 公司名称
     type: text
   code:
-    label: 部门代码
+    label: 公司代码
     type: text
-  company_id:
-    label: 上级部门
+  abbreviation:
+    label: 简称
+    type: text
+  parent:
+    label: 上级公司
     type: lookup
     reference_to: company
-    omit: false
-    hidden: false
-    required: true
+  organization:
+    label: 关联组织
+    type: lookup
+    reference_to: organizations
+  currency_type:
+    label: 本位币
+    type: text
   description:
     label: 备注
     type: textarea
     is_wide: true
+  bill_created_by:
+    label: 开票人员
+    type: lookup
+    reference_to: users
+    index: true
+  hidden:
+    label: 隐藏
+    type: boolean
   enablestate:
     label: 启用状态
     type: select
@@ -33,14 +48,31 @@ fields:
         value: "3"
     omit: true
     readonly: true
+  cashier:
+    label: 出纳
+    type: lookup
+    reference_to: users
+    multiple: true
+  financial_director:
+    label: 财务总监
+    type: lookup
+    reference_to: users
+    multiple: true
+  manager:
+    label: 总经理
+    type: lookup
+    reference_to: users
+    multiple: true
 list_views:
   all:
     label: 所有
     columns:
       - name
+      - abbreviation
       - code
-      - company_id
-      - modified
+      - organization
+      - bill_created_by
+      - cashier
 permission_set:
   user:
     allowCreate: false
@@ -48,7 +80,7 @@ permission_set:
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
     modifyCompanyRecords: false
     viewCompanyRecords: true
   admin:

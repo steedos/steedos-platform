@@ -33,7 +33,7 @@ permission_set:
     allowEdit: false
     allowRead: true
     modifyAllRecords: false
-    viewAllRecords: false
+    viewAllRecords: true
     modifyCompanyRecords: false
     viewCompanyRecords: true
   admin:
