@@ -153,7 +153,8 @@ Meteor.startup ->
 			Steedos.redirectToSignIn()
 
 	Tracker.autorun (c)->
-		if Setup.lastSpaceId && (Setup.lastSpaceId != Session.get("spaceId"))
+		spaceId = Session.get("spaceId");
+		if Setup.lastSpaceId && (Setup.lastSpaceId != spaceId)
 			console.log("spaceId change from " + Setup.lastSpaceId + " to " + Session.get("spaceId"))
 			Setup.validate()
 		return
