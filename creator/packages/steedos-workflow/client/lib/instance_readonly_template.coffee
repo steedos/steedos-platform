@@ -230,6 +230,8 @@ InstanceReadOnlyTemplate.init = (steedosData) ->
 getLinkText = (item, label, detail_url)->
 	if detail_url
 		detail_url = detail_url.replace("{_id}", item._id)
+		if !/^http(s?):\/\//.test(detail_url)
+			detail_url = Steedos.absoluteUrl(detail_url)
 		return '<a href="'+detail_url+'" target="_blank">'+label+'</a>';
 	else
 		return label
