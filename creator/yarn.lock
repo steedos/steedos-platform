@@ -437,10 +437,10 @@
     saml-idp "^1.1.0"
     tslib "1.10.0"
 
-"@steedos/app-contracts@^1.13.2":
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.13.2.tgz#bfa53b48e2003a905aa19a849133a5e5139b1cc8"
-  integrity sha512-7gEkcM8Bxp1LOEKwryJ+SZqnbRF56PRU44lkctvBnARgn+5XKWxufpGa5pWLSowh7La2CZLabrutiF8b0ggFBg==
+"@steedos/app-contracts@^1.13.3":
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.13.3.tgz#d42daff34be68f2814d810a6d642c0196f8863b0"
+  integrity sha512-U2CzHVoyWD88cixNSRvKZjJ6O74+d/06EHvsLFcWYO9BciDcpqGlOC89Evr4YddqSlBuTYh2fN4N2UD91XYlNQ==
   dependencies:
     dotenv "^8.2.0"
     dotenv-flow "^3.1.0"
@@ -559,10 +559,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.13.3":
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.3.tgz#d16bd6edc147df2f6283af88e86475d6e0a04ddc"
-  integrity sha512-SIoB23ahBakiWvik2dSy3S2HDn9jJT812bbo/hLtkok0Q7iLyhfryQ7bGNGgv+umkhjUa3gAIHE9B/cBjnKeug==
+"@steedos/react@1.13.4":
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.4.tgz#533e7dfcc4c717c9883af17dd64dfb246fb1bd42"
+  integrity sha512-squ9wyHaVNcG7B44MdbtwE2qJbzbl4lW661xHeGuITswDtlJBH8hQZo4EyWTN1605K14a7MICjiwotvYPfVchQ==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
@@ -590,6 +590,11 @@
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.13.1.tgz#98dbe69eb6fa2b9d3f883617fdb09cb277fcd0f9"
   integrity sha512-oMlgSGcGOhKjn7Q73zb8Uxi2xOHZb8FQ8lfjagTf7Ofab9lpHnmSav2VdZABxF8l1EOXhkVBsfTqrpM9ruQDCA==
+
+"@steedos/standard-objects@^1.13.2":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.13.2.tgz#bbe308e3253fa41f8f0a6fecbda9d2c4baf6fc11"
+  integrity sha512-Kgv69Z39s4imrBFe1H9aqqMBewkBWW2eQeSUYK9soGXTbVUqhMFHZ12XeKEEdB7Ik8WdbLq0rsOI6p0mQRUqJw==
 
 "@steedos/steedos-plugin-workflow@^1.10.1":
   version "1.10.1"
