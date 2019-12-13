@@ -559,10 +559,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.13.4":
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.4.tgz#533e7dfcc4c717c9883af17dd64dfb246fb1bd42"
-  integrity sha512-squ9wyHaVNcG7B44MdbtwE2qJbzbl4lW661xHeGuITswDtlJBH8hQZo4EyWTN1605K14a7MICjiwotvYPfVchQ==
+"@steedos/react@1.13.6":
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.6.tgz#21fa4cccf462b939d3b4782340469e72278f61b8"
+  integrity sha512-DHl5PwU3bWZ3iuYfKd5k7X9oheZOKn+oqGHV9mokNSG+A3ADndTexDuqyEk9v4LPIUT7uOlhcC8D8kRvMYyJ6Q==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
@@ -580,6 +580,7 @@
     styled-components "^4.4.0"
     ts-odata-client "^1.0.2"
     underscore "^1.9.1"
+    whatwg-fetch "^3.0.0"
 
 "@steedos/schemas@^1.13.1":
   version "1.13.1"
@@ -8014,7 +8015,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
