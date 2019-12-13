@@ -40,18 +40,22 @@ BASEUSERATTRS = {
 	default_value: {
 		label: '默认值'
 		type: 'text'
+		value: ''
 	},
 	is_wide: {
 		label: '宽字段',
 		type: 'checkbox'
+		value: false
 	},
 	is_list_display: {
 		label: '列表显示',
 		type: 'checkbox'
+		value: false
 	},
 	is_searchable: {
 		label: '内容可搜',
 		type: 'checkbox'
+		value: false
 	}
 }
 
@@ -61,13 +65,16 @@ CODEUSERATTRS = {
 		label: '字段名'
 		type: 'text'
 		required: 'true'
+		value: ''
 	},
 	label: {
 		type: 'text'
+		value: ''
 	},
 	description: {
 		label: '描述',
 		type: 'textarea'
+		value: ''
 	}
 }
 
@@ -76,6 +83,7 @@ FORMULAUSERATTRS = {
 	formula: {
 		label: '公式',
 		type: 'textarea'
+		value: ''
 	}
 }
 
@@ -83,7 +91,8 @@ FORMULAUSERATTRS_REQUIRED = {
 	formula: {
 		label: '公式',
 		type: 'textarea',
-		required: 'true'
+		required: 'true',
+		value: ''
 	}
 }
 
@@ -126,6 +135,7 @@ getTypeUserAttrs = ()->
 						label: "小数位数"
 						type: 'number'
 						min: '0'
+						value: 0
 					}
 				}, BASEUSERATTRS, FORMULAUSERATTRS
 			when 'password'
