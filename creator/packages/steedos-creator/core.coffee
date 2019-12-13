@@ -599,6 +599,10 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 #			if value.autoform?.is_range
 #				is_range_2 = true
 
+		if Steedos.isMobile()
+			is_wide_1 = true
+			is_wide_2 = true
+
 		if isSingle
 			fields.push _keys.slice(i, i+1)
 			i += 1
