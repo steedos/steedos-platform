@@ -59,18 +59,16 @@ if Meteor.isClient
 		if accountBgBodyValue.url
 			if url == avatar
 				avatarUrl = 'api/files/avatars/' + avatar
-				$("body").css "backgroundImage","url(#{if Meteor.isCordova then avatarUrl else Meteor.absoluteUrl(avatarUrl)})"
+				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(avatarUrl)})"
 			else
-				# 这里不可以用Steedos.absoluteUrl，因为app中要从本地抓取资源可以加快速度并节约流量
-				$("body").css "backgroundImage","url(#{if Meteor.isCordova then url else Meteor.absoluteUrl(url)})"
+				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(url)})"
 		else
-			# 这里不可以用Steedos.absoluteUrl，因为app中要从本地抓取资源可以加快速度并节约流量
 			background = Meteor.settings?.public?.admin?.background
 			if background
-				$("body").css "backgroundImage","url(#{if Meteor.isCordova then background else Meteor.absoluteUrl(background)})"
+				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
 			else
 				background = "/packages/steedos_theme/client/background/sea.jpg"
-				$("body").css "backgroundImage","url(#{if Meteor.isCordova then background else Meteor.absoluteUrl(background)})"
+				$("body").css "backgroundImage","url(#{Steedos.absoluteUrl(background)})"
 
 		if isNeedToLocal
 			if Meteor.loggingIn()
