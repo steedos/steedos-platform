@@ -128,7 +128,9 @@ function fetchMissing(missingTree) {
   // import() request, so it's a good idea for ROOT_URL to match
   // location.host if possible, though not strictly necessary.
   var url = Meteor.absoluteUrl(fetchURL);
-
+  if (Steedos && Steedos.absoluteUrl) {
+    url = Steedos.absoluteUrl(fetchURL);
+  }
   if (secretKey) {
     url += "key=" + secretKey;
   }
