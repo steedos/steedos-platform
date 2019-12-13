@@ -559,10 +559,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.13.1":
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.1.tgz#7750c6e23296ab8b9ebf7ca7981c16b53112af4b"
-  integrity sha512-nbuj9JzkF0KeoTbX/KT2Xh2vKwKMq3ndmNglsLY/P+xNTmGyJBs6SghHW4QWtap3WvfJiN46/RUPNheSLaATjQ==
+"@steedos/react@1.13.2":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.2.tgz#371f08db9b473e61f3f2edfa87a12a358dc1b0ca"
+  integrity sha512-0YAeIobpK7mfqE20ejRfQuHq3X7NxNS4nhrEfqJZNfr4240VvuUWLepJWQNZMcj8iHNfn0Si4BmyNON6KcVwlw==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
