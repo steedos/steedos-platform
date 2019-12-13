@@ -155,6 +155,9 @@ Meteor.startup ->
 	Tracker.autorun (c)->
 		spaceId = Session.get("spaceId");
 		if Setup.lastSpaceId && (Setup.lastSpaceId != spaceId)
+			# 一定要在spaceId变化时立即设置bootstrapLoaded为false，而不可以在请求bootstrap之前才设置为false
+			# 否则有订阅的话，在请求bootsrtrap前，会先触发订阅的变化，订阅又会触发Creator.bootstrapLoaded.get()值的变化，而且是true变为true
+			# 这样的话在autorun中监听Creator.bootstrapLoaded.get()变化就会多进入一次
 			Creator.bootstrapLoaded.set(false)
 			console.log("spaceId change from " + Setup.lastSpaceId + " to " + Session.get("spaceId"))
 			Setup.validate()
