@@ -155,6 +155,7 @@ Meteor.startup ->
 	Tracker.autorun (c)->
 		spaceId = Session.get("spaceId");
 		if Setup.lastSpaceId && (Setup.lastSpaceId != spaceId)
+			Creator.bootstrapLoaded.set(false)
 			console.log("spaceId change from " + Setup.lastSpaceId + " to " + Session.get("spaceId"))
 			Setup.validate()
 		return
