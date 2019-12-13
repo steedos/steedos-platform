@@ -12,3 +12,6 @@ if (process.platform == "darwin")
     execSync('cp -r .scripts/bcrypt-57-darwin-x64/* node_modules/bcrypt/');
 else if (process.platform == "win32")
     execSync('cp -r .scripts/bcrypt-57-win32-x64/* node_modules/bcrypt/');
+
+// 修正 旧版 windows 客户端
+execSync('cp -r .scripts/iconv-lite/* node_modules/iconv-lite/');
