@@ -42,7 +42,10 @@ valOutformat = (val)->
 	getService: (data)->
 		spaceId = Steedos.getSpaceId()
 		if data.url
-			return data.url
+			if /^http(s?):\/\//.test(data.url)
+				return data.url
+			else
+				return Steedos.absoluteUrl(data.url)
 		creatorService = SelectizeManager.getCreatorService(data)
 		return Meteor.absoluteUrl("api/odata/v4/#{spaceId}", {rootUrl :creatorService})
 	getHeaders: ($element)->
