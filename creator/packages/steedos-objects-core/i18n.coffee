@@ -23,11 +23,29 @@ sprintf = require('sprintf-js').sprintf;
 @tr = t
 
 @trl = t
-
+absoluteUrl = (url)->
+	if url
+		# url以"/"开头的话，去掉开头的"/"
+		url = url.replace(/^\//,"")
+	if (Meteor.isCordova)
+		return Meteor.absoluteUrl(url);
+	else
+		if Meteor.isClient
+			try
+				root_url = new URL(Meteor.absoluteUrl())
+				if url
+					return root_url.pathname + url
+				else
+					return root_url.pathname
+			catch e
+				return Meteor.absoluteUrl(url)
+		else
+			Meteor.absoluteUrl(url)
 # 重写tap:i18n函数，向后兼容
 i18n.setOptions
 	purify: null
 	defaultLocale: 'zh-CN'
+	hostUrl: absoluteUrl()
 
 if TAPi18n?
 	TAPi18n.__original = TAPi18n.__
@@ -46,7 +64,7 @@ if TAPi18n?
 		path = if @.conf.cdn_path? then @.conf.cdn_path else @.conf.i18n_files_route
 		path = path.replace /\/$/, ""
 		if path[0] == "/"
-			path = Meteor.absoluteUrl().replace(/\/+$/, "") + path
+			path = absoluteUrl().replace(/\/+$/, "") + path
 
 		return "#{path}/#{lang_tag}.json"
 
