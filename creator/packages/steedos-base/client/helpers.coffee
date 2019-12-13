@@ -197,7 +197,7 @@ TemplateHelpers =
 	session: (v)->
 		return Session.get(v)
 
-	absoluteUrl: (url)->
+	absoluteUrl: (url, realAbsolute)->
 		if url
 			# url以"/"开头的话，去掉开头的"/"
 			url = url.replace(/^\//,"")
@@ -207,10 +207,11 @@ TemplateHelpers =
 			if Meteor.isClient
 				try
 					root_url = new URL(Meteor.absoluteUrl())
+					origin = if realAbsolute then window.location.origin else ''
 					if url
-						return root_url.pathname + url
+						return origin + root_url.pathname + url
 					else
-						return root_url.pathname
+						return origin + root_url.pathname
 				catch e
 					return Meteor.absoluteUrl(url)
 			else
