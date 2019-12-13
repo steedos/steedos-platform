@@ -74,13 +74,16 @@ Meteor.startup(function(c){
                     console.log("Request my_notifications push permission failed.")
                 }
                 Steedos.Push.Permission.request(onRequestSuccess, onRequestFailed);
-                
+
                 handle = query.observeChanges({
                     added: function(id, notification){
                         handleMyNotifications(id, notification);
+                        // 订阅到新通知过来时，重新请求通知数据
                         fetchMyNotifications();
                     }
                 });
+                // 初始化界面及切换工作区时，需要请求通知数据
+                fetchMyNotifications();
             }
         });
     }
