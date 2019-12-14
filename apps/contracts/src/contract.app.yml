@@ -133,6 +133,7 @@ dashboard:
         href: true
       - field: start
         label: 开始时间
+        type: datatime
     unborderedRow: true
     showAllLink: true
     hrefTarget: _blank
