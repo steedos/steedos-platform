@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "react": "^16.11.0",
-    "@steedos/react": "^1.13.1"
+    "@steedos/react": "^1.13.7"
   }
 }

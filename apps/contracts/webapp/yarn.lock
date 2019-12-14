@@ -903,10 +903,10 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos/react@^1.13.1":
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.1.tgz#7750c6e23296ab8b9ebf7ca7981c16b53112af4b"
-  integrity sha512-nbuj9JzkF0KeoTbX/KT2Xh2vKwKMq3ndmNglsLY/P+xNTmGyJBs6SghHW4QWtap3WvfJiN46/RUPNheSLaATjQ==
+"@steedos/react@^1.13.7":
+  version "1.13.7"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.7.tgz#613b55a516039eb3cf8b286ad749287b10cfd88e"
+  integrity sha512-m3DHE1L0jcGR8ZRYsAEUK9RpaIotMI9COndNxzx1nRq5eocKhn4ik8fiiZDuBidADJZMeRQ4Xnsyo8/wAcC1IQ==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
@@ -924,6 +924,7 @@
     styled-components "^4.4.0"
     ts-odata-client "^1.0.2"
     underscore "^1.9.1"
+    whatwg-fetch "^3.0.0"
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -4599,7 +4600,7 @@ webpack@^4.41.2:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
