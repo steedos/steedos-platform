@@ -91,6 +91,7 @@ dashboard:
     noHeader: false
     unborderedRow: true
     showAllLink: true
+    hrefTarget: _blank
     illustration:
       messageBody: "您没有待审核文件"
     sort: "modified desc, name"
@@ -111,7 +112,8 @@ dashboard:
       - field: priority
         label: 优先级
     unborderedRow: true
-    # showAllLink: true
+    showAllLink: true
+    hrefTarget: _blank
     illustration:
       messageBody: "您今天没有待办任务"
     sort: [["created", "desc"], ["name"]]
@@ -120,7 +122,7 @@ dashboard:
         return "aaa"
       }
   calendar:
-    label: 日历事件
+    label: 我的日程
     position: CENTER_BOTTOM_RIGHT
     type: object
     objectName: events
@@ -129,9 +131,10 @@ dashboard:
       - field: name
         label: 主题
         href: true
+      - field: start
+        label: 开始时间
     unborderedRow: true
     showAllLink: true
     hrefTarget: _blank
-    noHeader: true
     illustration:
       messageBody: "您今天没有日程"
