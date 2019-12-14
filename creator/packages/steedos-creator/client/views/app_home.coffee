@@ -1,7 +1,8 @@
 Template.creator_app_home.onRendered ()->
 	this.autorun ->
+		isBootstrapLoaded = Creator.bootstrapLoaded.get()
 		appId = Session.get('app_id')
-		if appId
+		if isBootstrapLoaded && appId
 			app = Creator.getApp()
 			if app?.dashboard
 				FlowRouter.go "/app/#{appId}/home"
