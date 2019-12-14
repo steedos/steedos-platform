@@ -73,3 +73,15 @@
 .standard-query-modal .modal-lg .wide-fields .col-sm-9 {
   width: 87.82308522114347% !important;
 }
+@media (max-width: 767px) {
+  .standard-query-modal .slds-p-around--medium,
+  .standard-query-modal .slds-p-around_medium {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  .standard-query-modal .steedos-lookups .steedos-lookups-input {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+  }
+}

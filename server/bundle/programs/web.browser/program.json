@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "157b7384c7c265db1388f3ff057eace6f14d496f.js",
+      "path": "614a1d85a3ee23d7be0fce5783046b58484cd0ba.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/157b7384c7c265db1388f3ff057eace6f14d496f.js?meteor_js_resource=true",
-      "size": 7722857,
-      "hash": "157b7384c7c265db1388f3ff057eace6f14d496f",
-      "sri": "762MY+ibjYnj41OBb8IrxgREvTGdwrKTC0eNUjyQIJxAjyTvo0W3W+8f8s5uY5vrkkexWdRewoHAxYOSp1r0uA=="
+      "url": "/614a1d85a3ee23d7be0fce5783046b58484cd0ba.js?meteor_js_resource=true",
+      "size": 7776698,
+      "hash": "614a1d85a3ee23d7be0fce5783046b58484cd0ba",
+      "sri": "9iAAVIZVlCiW2na3QzzpPd3q5YvtyI92/j0Jvi5NqreMGxfasvdUENTKnt8gHC63gJVzFu1vy23i33+qb0wmIg=="
     },
     {
-      "path": "157b7384c7c265db1388f3ff057eace6f14d496f.stats.json",
+      "path": "614a1d85a3ee23d7be0fce5783046b58484cd0ba.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/157b7384c7c265db1388f3ff057eace6f14d496f.stats.json?meteor_js_resource=true",
-      "size": 164411,
-      "hash": "e497b5474fc0ee586ead485d5a4d093e0917ef76",
-      "sri": "fcp36yslZPyxVtonUzBqQuY5HxdBd797PLDDgNaGZ/22PczjKE8BB/zBe7KOvKTaOr7E4Mevye206QEI9hEbVg=="
+      "url": "/614a1d85a3ee23d7be0fce5783046b58484cd0ba.stats.json?meteor_js_resource=true",
+      "size": 168458,
+      "hash": "d372ac282bb1a884dbf1370ead8f793571f6da55",
+      "sri": "7KAnj0MU3FxxpLGBiZcYWbWQhimD2e+t8UapdGNyDzxRK8QWL2mvoKcysM5Rc6ZC9zGryvzfAk+Pt/4ptPjMFg=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -3308,12 +3308,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator-autoform-modals/lib/client/modals.less?hash=b41463209447e4db3631e41917eed57c88359a5f",
+      "url": "/packages/steedos_creator-autoform-modals/lib/client/modals.less?hash=f893baec3d83c305f6034d1fb0ca6150da518bed",
       "sourceMap": "packages/steedos_creator-autoform-modals/lib/client/modals.less.map",
-      "sourceMapUrl": "/packages/steedos_creator-autoform-modals/lib/client/b41463209447e4db3631e41917eed57c88359a5f.map",
-      "size": 11183,
-      "hash": "b41463209447e4db3631e41917eed57c88359a5f",
-      "sri": "Q2r1709i2mCMTI3I2BIuOINiMgxND60XkrdYjp5Oph6CrDSfzmFB9hrYBu4eFzTCZLQrI45Nx9svCUwiSF3WXA=="
+      "sourceMapUrl": "/packages/steedos_creator-autoform-modals/lib/client/f893baec3d83c305f6034d1fb0ca6150da518bed.map",
+      "size": 11811,
+      "hash": "f893baec3d83c305f6034d1fb0ca6150da518bed",
+      "sri": "y7LCbaThT6b1Zna5kOCL+CN/WYrqkxTLc0Bnna/XSsFYV/7kpBeBy/NbDpDe+9vOJ9dSeGufpS8DmxmA/e4MWQ=="
     },
     {
       "path": "packages/steedos_creator-autoform-modals/lib/client/coreform-table/steedos-table.less",
@@ -4244,12 +4244,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/layout/header.less.css?hash=3113254dd1a6427992afe9a05fe3dace19624e08",
+      "url": "/packages/steedos_creator/client/layout/header.less.css?hash=33e3d627d28e2b7cca2b2721abbf41f917dc1171",
       "sourceMap": "packages/steedos_creator/client/layout/header.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/layout/3113254dd1a6427992afe9a05fe3dace19624e08.map",
-      "size": 2077,
-      "hash": "3113254dd1a6427992afe9a05fe3dace19624e08",
-      "sri": "b7CgL3RrmXZlC97cNvM/I39raRbHgTLqDyuAvvEU1BEWdcQHCdN+ugn7I27NRYiPIBFddP5ic49e7vQAkGmyaA=="
+      "sourceMapUrl": "/packages/steedos_creator/client/layout/33e3d627d28e2b7cca2b2721abbf41f917dc1171.map",
+      "size": 2230,
+      "hash": "33e3d627d28e2b7cca2b2721abbf41f917dc1171",
+      "sri": "OGRsfpmlIRBw4NmxKIt+BJcmPNfREYLR2ZoRglITfYYcVplS03bgwl+2liB3ekL8a6PEc2mrN9mu1KMOR9e/SA=="
     },
     {
       "path": "packages/steedos_creator/client/layout/sidebar.less.css",
@@ -4570,12 +4570,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/views/standard_query.less.css?hash=c00fc6dd37e7131bb2558a9f329ea69a2a806676",
+      "url": "/packages/steedos_creator/client/views/standard_query.less.css?hash=deb62871249fe5e708dbaa40dc8a499a3244e35a",
       "sourceMap": "packages/steedos_creator/client/views/standard_query.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/views/c00fc6dd37e7131bb2558a9f329ea69a2a806676.map",
-      "size": 2155,
-      "hash": "c00fc6dd37e7131bb2558a9f329ea69a2a806676",
-      "sri": "Jw/axlTYyO46gO2/lqweYkavlbypM0W1xSEL3ZZdDpMTqCpjsq2PXMLD8O9ux33KeK0+vlxzWfodWc1fcOxymw=="
+      "sourceMapUrl": "/packages/steedos_creator/client/views/deb62871249fe5e708dbaa40dc8a499a3244e35a.map",
+      "size": 2519,
+      "hash": "deb62871249fe5e708dbaa40dc8a499a3244e35a",
+      "sri": "vZyro6NrlW00o3bKFJFZHL60LNOew6qw1Vd8pnGtlchLex1lLboQayoEpSuz6jw5F3zaPnUH/ZreNXnvuVWuIQ=="
     },
     {
       "path": "packages/steedos_creator/client/views/user.less.css",
