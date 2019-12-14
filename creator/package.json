@@ -37,7 +37,7 @@
     "connect": "^3.6.6",
     "connect-route": "^0.1.5",
     "cookies": "^0.6.2",
-    "core-js": "^2.5.3",
+    "core-js": "^3.5.0",
     "cors": "^2.8.5",
     "csv": "^5.1.2",
     "devextreme": "^18.2.6",
