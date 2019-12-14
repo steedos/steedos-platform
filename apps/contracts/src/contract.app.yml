@@ -126,7 +126,7 @@ dashboard:
     position: CENTER_BOTTOM_RIGHT
     type: object
     objectName: events
-    filters: [['created', '<=', '{now}']]
+    filters: [['start', 'between', 'today'], ['assignees', '=', '{userId}']]
     columns:
       - field: name
         label: 主题
