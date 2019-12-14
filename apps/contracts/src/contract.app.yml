@@ -78,7 +78,7 @@ dashboard:
       ]
     ]
     columns: 
-      - label: 名称
+      - label: 标题
         field: name
         href: true
       - label: 提交人
@@ -104,7 +104,7 @@ dashboard:
     sort: due_date
     columns:
       - field: name
-        label: 主题
+        label: 标题
         href: true
       - field: due_date
         label: 截止时间
@@ -124,7 +124,7 @@ dashboard:
     sort: start desc, end
     columns:
       - field: name
-        label: 主题
+        label: 标题
         href: true
       - field: start
         label: 开始时间
