@@ -100,33 +100,28 @@ dashboard:
     position: CENTER_BOTTOM_LEFT
     type: object
     objectName: tasks
-    # filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete']]
-    filters: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-        return [['assignees', '=', '{userId}'], ['state', '<>', 'complete']];
-      }
+    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete'], ['created', 'between', 'last_7_days']]
+    sort: due_date
     columns:
       - field: name
         label: 主题
         href: true
-      - field: priority
-        label: 优先级
+      - field: due_date
+        label: 截止时间
+        width: 10rem
+        type: datetime
     unborderedRow: true
     showAllLink: true
     hrefTarget: _blank
     illustration:
-      messageBody: "您今天没有待办任务"
-    sort: [["created", "desc"], ["name"]]
-    footer: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-        return "aaa"
-      }
+      messageBody: "您最近7天没有待办任务"
   calendar:
     label: 我的日程
     position: CENTER_BOTTOM_RIGHT
     type: object
     objectName: events
-    filters: [['start', 'between', 'today'], ['assignees', '=', '{userId}']]
+    filters: [['start', 'between', 'today'], [['owner', '=', '{userId}'], 'or', ['assignees', '=', '{userId}']]]
+    sort: start desc, end
     columns:
       - field: name
         label: 主题
