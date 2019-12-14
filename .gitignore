@@ -1,7 +1,11 @@
 **/.DS_Store
 **/.idea
 
-**/node_modules
+/packages/**/node_modules
+/apps/**/node_modules
+/server/node_modules
+/node_modules
+
 **/package-lock.json
 
 **/npm-error.log
