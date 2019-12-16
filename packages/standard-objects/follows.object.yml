@@ -1,6 +1,6 @@
 name: follows
 label: 关注
-icon: follow
+icon: action.following
 fields:
   object_name:
     label: 对象
@@ -19,6 +19,11 @@ fields:
               return _options;
             }
     filterable: true
+  owner:
+    disabled: false
+    readonly: false
+    omit: false
+    hidden: false
 list_views:
   all:
     label: 全部
