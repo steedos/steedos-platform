@@ -165,6 +165,10 @@ Template.workflowMenuByFlow.events
 	'click .inbox>a': (event, template)->
 		event.preventDefault()
 		inboxUrl = $(event.currentTarget).attr("href")
+		urlPrefix = Steedos.urlPrefix();
+		if urlPrefix
+			# 移除urlPrefix前缀
+			inboxUrl = inboxUrl.replace(new RegExp("^" + urlPrefix), "")
 		Session.set("workflowCategory", undefined)
 		FlowRouter.go inboxUrl
 		if Steedos.isMobile()
@@ -173,6 +177,10 @@ Template.workflowMenuByFlow.events
 
 	'click .workflow-category>a': (event, template)->
 		inboxUrl = $(event.currentTarget).attr("href")
+		urlPrefix = Steedos.urlPrefix();
+		if urlPrefix
+			# 移除urlPrefix前缀
+			inboxUrl = inboxUrl.replace(new RegExp("^" + urlPrefix), "")
 		Session.set("flowId", false)
 		Session.set("workflowCategory",this._id || "-1")
 		FlowRouter.go inboxUrl
