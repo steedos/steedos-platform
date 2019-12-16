@@ -182,6 +182,31 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id)->
 					delete step.approver_roles_name
 					if _.isEmpty(step.approver_roles)
 						step.approver_roles = []
+					if !_.isEmpty(step.approver_hr_roles_name)
+						approver_hr_roles = new Array()
+						step.approver_hr_roles_name.forEach (role_name) ->
+							role_query = {space: spaceId, name: role_name}
+							role = db.roles.findOne(role_query, {fields: {_id: 1}})
+							if _.isEmpty(role)
+								role_id = db.roles._makeNewID()
+								role = {
+									_id: role_id
+									name: role_name
+									space: spaceId
+									created: new Date
+									created_by: uid
+									owner: uid
+								}
+
+								db.roles.direct.insert(role)
+
+								approver_hr_roles.push(role_id)
+							else
+								approver_hr_roles.push(role._id)
+
+						step.approver_hr_roles = approver_hr_roles
+
+						delete step.approver_roles_name
 				else
 					approve_roles = new Array()
 					step.approver_roles_name.forEach (role_name) ->

@@ -21,6 +21,11 @@ _getFlowByForm = (form, flowId, is_copy, company_id)->
 
 				step.approver_roles_name = roles_name
 
+				hr_roles_name = []
+				if !_.isEmpty(step.approver_hr_roles)
+					hr_roles_name = db.roles.find({_id: {$in: step.approver_hr_roles}}, {fields: {name: 1}}).fetch().getProperty("name");
+				step.approver_hr_roles_name = hr_roles_name
+
 				step.approver_users = []
 
 				step.approver_orgs = []
