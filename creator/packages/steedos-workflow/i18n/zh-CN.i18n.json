@@ -568,6 +568,7 @@
 	"next_step_users_not_found": {
 		"aplicant_superior": "申请人上级未配置，请联系管理员。",
 		"applicant_role": "您要找的「{$role_name}」还未配置，请联系管理员。",
+	  	"hr_role": "您要找的「{$role_name}」角色还未配置，请联系管理员。",
 		"field_value_empty": "获取处理人，请先填写「{$field_name}」。",
 		"org_no_members": "下一步需「{$org_name}」处理，请联系管理员。"
 	},
@@ -645,6 +646,7 @@
 	"flow_positions_update_failed": "更新失败",
 	"flow_positions_delete_suceess": "删除成功",
 	"instance_role_set_is_complete": "岗位设置完成？",
+  	"instance_hr_role_set_is_complete": "角色设置完成？",
 	"instance_set_is_complete": "设置完成？",
 
 	"flow_roles_help": "帮助",

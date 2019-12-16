@@ -33,6 +33,11 @@ JsonRoutes.add("post", "/api/workflow/nextStepUsers", function(req, res, next) {
 			if (applicant)
 				nextStepUsers = WorkflowManager.getRoleUsersByOrgsAndRoles(spaceId, applicant.organizations, approveRoleIds);
 			break;
+		case 'hrRole':
+			var approveHrRoleIds = body.approveHrRoleIds;
+			if (approveHrRoleIds)
+				nextStepUsers = WorkflowManager.getHrRolesUsers(spaceId, approveHrRoleIds);
+			break;
 		case 'applicantSuperior':
 			var applicantId = body.applicantId;
 			var applicant = WorkflowManager.getUser(spaceId, applicantId);

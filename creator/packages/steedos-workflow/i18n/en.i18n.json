@@ -553,6 +553,7 @@
 	"next_step_users_not_found": {
 		"aplicant_superior": "The applicant's superior is not configured, please contact the Administrator.",
 		"applicant_role": "The <{$role_name}> you are looking for have not configured,Please contact the administrator.",
+	  	"hr_role": "The <{$role_name}> you are looking for have not configured,Please contact the administrator.",
 		"field_value_empty": "Please enter the value of the <{$field_name}>field",
 		"org_no_members": "The next step need <{$org_name}> processing,Please contact the administrator."
 	},
@@ -625,7 +626,8 @@
 	"flow_positions_update_suceess": "Update successfully",
 	"flow_positions_update_failed": "Be failed to update",
 	"flow_positions_delete_suceess": "Delete successfully",
-	"instance_role_set_is_complete": "Role set up?",
+	"instance_role_set_is_complete": "Flow Role set up?",
+  	"instance_hr_role_set_is_complete": "Role set up?",
 	"instance_set_is_complete": "set up?",
 
 	"flow_roles_help": "Help",

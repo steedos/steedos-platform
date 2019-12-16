@@ -148,6 +148,12 @@ getHandlersManager.getHandlers = (instance_id, step_id) ->
 
 		else
 			throw new Meteor.Error('error!', "Instance的提交人为空")
+	else if deal_type is "hrRole"
+		approveHrRoleIds = current_step.approver_hr_roles;
+		if (approveHrRoleIds)
+			return _.pluck(WorkflowManager.getHrRolesUsers(space_id, approveHrRoleIds), 'user');
+		else
+			throw new Meteor.Error('error!', "角色未指定")
 	else if deal_type is "applicant"
 		# 2.***********申请人***********
 		applicant = instance.applicant

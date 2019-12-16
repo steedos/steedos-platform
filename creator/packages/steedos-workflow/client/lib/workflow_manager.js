@@ -6,6 +6,7 @@ if (Meteor.isClient) {
 	WorkflowManager.remoteSpaceUsers = new AjaxCollection('space_users');
 	WorkflowManager.remoteOrganizations = new AjaxCollection('organizations');
 	WorkflowManager.remoteFlowRoles = new AjaxCollection('flow_roles');
+	WorkflowManager.remoteHrRoles = new AjaxCollection('roles');
 }
 /*-------------------data source------------------*/
 

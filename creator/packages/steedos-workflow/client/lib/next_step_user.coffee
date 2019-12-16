@@ -65,6 +65,8 @@ NextStepUser.handleException = (e)->
 	switch e.error
 		when 'applicantRole'
 			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'app/admin/flow_roles', t('instance_role_set_is_complete'))
+		when 'hrRole'
+			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), '/app/admin/roles', t('instance_hr_role_set_is_complete'))
 		when 'applicantSuperior'
 			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'app/admin/organizations', t('instance_set_is_complete'))
 		when 'userField'

@@ -286,6 +286,28 @@ WorkflowManager.getUsers = function (spaceId, userIds, notNeedDetails) {
 	return users;
 };
 
+WorkflowManager.getHrRolesUsers = function(spaceId, hrRoleIds){
+	var hrRolesUsers = [];
+
+	if(!_.isArray(hrRoleIds)){
+		return [];
+	}
+	var hrRoles = db.roles.find({space: spaceId, _id: {$in: hrRoleIds}}).fetch();
+	_.each(hrRoles, function(hrRole){
+		hrRolesUsers = hrRolesUsers.concat(hrRole.users || [])
+	});
+
+	var spaceUsers = db.space_users.find({
+		space: spaceId,
+		user: {$in: hrRolesUsers}
+	}, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}}).fetch();
+
+	_.each(spaceUsers, function(spaceUser){
+		spaceUser.id = spaceUser.user
+	});
+	return spaceUsers
+}
+
 WorkflowManager.getFormulaUsers = function (spaceId, userIds) {
 	var spaceUsers = [];
 	var users = WorkflowManager.getUsers(spaceId, userIds);

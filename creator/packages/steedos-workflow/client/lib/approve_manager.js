@@ -246,6 +246,29 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                             });
                         }
                         break;
+					case 'hrRole': //指定角色
+						var approveHrRoleIds = nextStep.approver_hr_roles;
+						var data = {
+							'approveHrRoleIds': approveHrRoleIds
+						};
+						nextStepUsers = UUflow_api.caculate_nextstep_users('hrRole', Session.get('spaceId'), data);
+						if (!nextStepUsers.length) {
+							var roles = WorkflowManager.remoteHrRoles.find({
+								_id: {
+									$in: approveHrRoleIds
+								}
+							}, {
+								fields: {
+									name: 1
+								}
+							});
+							var hr_roles_name = _.pluck(roles, 'name').toString();
+							ApproveManager.error.nextStepUsers = TAPi18n.__('next_step_users_not_found.hr_role', {
+								step_name: nextStep.name,
+								role_name: hr_roles_name
+							});
+						}
+						break;
                     case 'applicantSuperior': //申请人上级
                         var data = {
                             'applicantId': applicantId

@@ -29,7 +29,7 @@ JsonRoutes.add "post", "/api/collection/find", (req, res, next) ->
         options = req.body.options;
         space = req.body.space;
         data = [];
-        allow_models = ['space_users', 'organizations', 'flow_roles']
+        allow_models = ['space_users', 'organizations', 'flow_roles', 'roles']
 
         if !space
             JsonRoutes.sendResult res, 
@@ -115,7 +115,7 @@ JsonRoutes.add "post", "/api/collection/findone", (req, res, next) ->
         options = req.body.options;
         space = req.body.space;
         data = [];
-        allow_models = ['space_users', 'organizations', 'flow_roles', 'mail_accounts']
+        allow_models = ['space_users', 'organizations', 'flow_roles', 'mail_accounts', 'roles']
 
         if !space
             JsonRoutes.sendResult res, 
