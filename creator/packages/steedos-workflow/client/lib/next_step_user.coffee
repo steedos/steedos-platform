@@ -64,9 +64,9 @@ NextStepUser.handleException = (e)->
 
 	switch e.error
 		when 'applicantRole'
-			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'admin/workflow/flow_roles', t('instance_role_set_is_complete'))
+			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'app/admin/flow_roles', t('instance_role_set_is_complete'))
 		when 'applicantSuperior'
-			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'admin/organizations', t('instance_set_is_complete'))
+			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'app/admin/organizations', t('instance_set_is_complete'))
 		when 'userField'
 			_fieldEmpty('approver_user_field')
 		when 'orgField'
@@ -81,14 +81,14 @@ NextStepUser.handleException = (e)->
 				_fieldEmpty('approver_org_field')
 		when 'specifyOrg'
 
-			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'admin/organizations', t('instance_set_is_complete'))
+			_swal_guide(e.reason, t('instanc_set_applicant_role_text'), 'app/admin/organizations', t('instance_set_is_complete'))
 
 		when 'userFieldRole'
 			if e.error_code == 'ROLE_NO_MEMBERS'
 				roles = WorkflowManager.remoteFlowRoles.find({_id: {$in: step.approver_roles}}, {fields: {name:1} });
 				roles_name = _.pluck(roles, 'name').toString();
 				text = TAPi18n.__('next_step_users_not_found.applicant_role', {step_name: step.name, role_name: roles_name});
-				_swal_guide(text, t('instanc_set_applicant_role_text'), 'admin/workflow/flow_roles', t('instance_set_is_complete'))
+				_swal_guide(text, t('instanc_set_applicant_role_text'), 'app/admin/flow_roles', t('instance_set_is_complete'))
 			else
 				_fieldEmpty('approver_user_field')
 		when 'orgFieldRole'
@@ -96,7 +96,7 @@ NextStepUser.handleException = (e)->
 				roles = WorkflowManager.remoteFlowRoles.find({_id: {$in: step.approver_roles}}, {fields: {name:1} });
 				roles_name = _.pluck(roles, 'name').toString();
 				text = TAPi18n.__('next_step_users_not_found.applicant_role', {step_name: step.name, role_name: roles_name});
-				_swal_guide(text, t('instanc_set_applicant_role_text'), 'admin/workflow/flow_roles', t('instance_set_is_complete'))
+				_swal_guide(text, t('instanc_set_applicant_role_text'), 'app/admin/flow_roles', t('instance_set_is_complete'))
 			else
 				_fieldEmpty('approver_org_field')
 		else
