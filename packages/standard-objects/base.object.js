@@ -526,7 +526,7 @@ function setDetailOwner(doc, object_name, userId) {
     let obj = Creator.getObject(object_name);
     let masterRecordOwner = '';
     _.each(obj.fields, function (f, k) {
-        if (f.type === 'master_detail' && doc[k]) { /* 如果本次修改的是master_detail字段 */
+        if (f.type === 'master_detail' && doc[k] && f.reference_to) { /* 如果本次修改的是master_detail字段 */
             let masterObjectName = f.reference_to;
             let masterCollection = Creator.getCollection(masterObjectName);
             let masterId = doc[k];
