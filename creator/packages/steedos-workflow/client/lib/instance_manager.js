@@ -1706,7 +1706,7 @@ var getCalculateSteps = function (step, track) {
 		autoFormDoc = Session.get("instance_form_values").values
 	}
 	_steps.push(step);
-	var nextSteps = ApproveManager.getNextSteps(WorkflowManager.getInstance(), step, judge, autoFormDoc, form_version.fields);
+	var nextSteps = ApproveManager.getNextSteps(WorkflowManager.getInstance(), step, judge, autoFormDoc, form_version.fields, true);
 	_.each(nextSteps, function (nextStep) {
 		if(!_.contains(track, nextStep._id)){
 			_steps = _steps.concat(getCalculateSteps(nextStep, track.concat(_.pluck(_steps, '_id'))))
