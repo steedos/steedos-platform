@@ -172,8 +172,6 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
 
 ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 
-	console.log("ApproveManager.getStepApproveUsers run...")
-
 	var nextStepUsers = new Array();
 
 	var nextStep = WorkflowManager.getInstanceStep(nextStepId);
