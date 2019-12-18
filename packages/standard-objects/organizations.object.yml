@@ -98,7 +98,7 @@ fields:
   is_company:
     label: 单位级
     type: boolean
-    hidden: true
+    hidden: false
     index: true
     name: is_company
     omit: true
