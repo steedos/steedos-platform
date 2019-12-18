@@ -1688,6 +1688,7 @@ InstanceManager.getDistributeStep = function() {
 	return step;
 }
 
+//track：防止计算陷入死循环
 var getCalculateSteps = function (step, track) {
 	if(!step){
 		step = InstanceManager.getStartStep();
