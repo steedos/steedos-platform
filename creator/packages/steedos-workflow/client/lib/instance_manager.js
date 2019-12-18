@@ -1690,7 +1690,7 @@ InstanceManager.getDistributeStep = function() {
 
 //track：防止计算陷入死循环
 var getCalculateSteps = function (step, track) {
-	var instance_form_values = Session.get("instance_form_values"); //申请单上的值发生变化是，重新计算步骤
+	var instance_form_values = Session.get("instance_form_values"); //申请单上的值发生变化时，重新计算步骤
 	if(!step){
 		step = InstanceManager.getStartStep();
 	}
