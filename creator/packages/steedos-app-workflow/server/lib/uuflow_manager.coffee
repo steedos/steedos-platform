@@ -329,6 +329,8 @@ uuflowManager.setFormFieldVariable = (fields, __values, space_id) ->
 		)
 	catch e
 		console.error e.stack
+isSkipStep = (instance, step)->
+	return _.contains(instance.skip_steps, step._id)
 
 # 应用场景：此函数用于返回备选的所有下一步的id
 uuflowManager.getNextSteps = (instance, flow, step, judge) ->
@@ -502,7 +504,15 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 	)
 
 	nextSteps = _.uniq(nextSteps)
-	return nextSteps
+	rev_nextSteps = new Array();
+	_.each nextSteps, (nextStepId)->
+		_step = uuflowManager.getStep(instance, flow, nextStepId);
+		if isSkipStep(instance, _step)
+			rev_nextSteps = rev_nextSteps.concat(uuflowManager.getNextSteps(instance, flow, _step, judge))
+		else
+			rev_nextSteps.push(nextStepId);
+	rev_nextSteps = _.uniq(rev_nextSteps)
+	return rev_nextSteps
 
 uuflowManager.getUpdatedValues = (instance) ->
 

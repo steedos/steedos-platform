@@ -35,15 +35,30 @@ Template.instance_pick_approve_users.helpers
 
 		return new SimpleSchema(schema)
 
+	canPickApprove: ()->
+		return this.allow_pick_approve_users;
+	canPickSkip: ()->
+		return this.allow_skip;
+	skipStepValue: ()->
+		return !_.contains(WorkflowManager.getInstance().skip_steps, this._id)
+
 Template.instance_pick_approve_users.events
 	'change .selectUser': (event, template)->
 		formValue = AutoForm.getFormValues("pick_approve_users").insertDoc
-
-		console.log("change .selectUser............................", formValue);
-
 		Meteor.call 'set_instance_step_approve', Session.get("instanceId"), formValue, ()->
 			Meteor.setTimeout ()->
 				uuidv1 = require('uuid/v1');
 				Session.set("instance_next_user_recalculate", uuidv1())
 			, 100
 
+	'change #skipStep': (event, template)->
+		stepId = event.currentTarget.value;
+		skip = !event.currentTarget.checked;
+		action = 'pull';
+		if skip
+			action = 'push';
+		Meteor.call 'set_instance_skip_steps', Session.get("instanceId"), stepId, action, ()->
+			Meteor.setTimeout ()->
+				uuidv1 = require('uuid/v1');
+				Session.set("instance_next_user_recalculate", uuidv1())
+			, 100

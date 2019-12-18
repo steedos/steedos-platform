@@ -9,17 +9,30 @@
 					<table class='table table-condensed traces'>
 						<thead>
 							<tr class="title">
+								<th class="step">执行当前步骤</th>
 								<th class="step">步骤名称</th>
 								<th class="approves">处理人</th>
 							</tr>
 						</thead>
 						<tbody>
 						{{#each instanceSteps}}
-
 							<tr class="step-item">
+								<td class="td-stepname">
+									<div class="checkbox-group">
+										{{#if canPickSkip}}
+											<input type="checkbox" id="skipStep" value="{{this._id}}" checked="{{skipStepValue}}"/>
+										{{else}}
+											<input type="checkbox" disabled checked="true"/>
+										{{/if}}
+
+
+									</div>
+								</td>
 								<td class="td-stepname">{{name}}</td>
 								<td class="td-approve">
+								{{#if canPickApprove}}
 									{{> afQuickField name=_id disabled=false readonly=true}}
+								{{/if}}
 								</td>
 							</tr>
 						{{/each}}

@@ -29,6 +29,10 @@ ApproveManager.isReadOnly = function() {
         return true;
 }
 
+var isSkipStep = function(instance, step){
+    return _.contains(instance.skip_steps, step._id)
+}
+
 ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc, fields) {
     ApproveManager.error.nextSteps = '';
     if (!currentStep)
@@ -145,10 +149,16 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     var rev_nextSteps = new Array();
 
     nextSteps.forEach(function(nextStep) {
-        if (nextStep.step_type != "condition")
-            rev_nextSteps.push(nextStep);
-    });
+        if (nextStep.step_type != "condition"){
+            if(isSkipStep(instance, nextStep)){
+				rev_nextSteps = rev_nextSteps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields))
+            }else{
+				rev_nextSteps.push(nextStep);
+            }
 
+        }
+
+    });
 
     //去除重复
     rev_nextSteps = rev_nextSteps.uniqById();
