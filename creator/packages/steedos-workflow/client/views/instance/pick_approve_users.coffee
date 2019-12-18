@@ -21,8 +21,8 @@ Template.instance_pick_approve_users.helpers
 			fs = {}
 			fs.autoform = {}
 			fs.optional = true
-#			fs.autoform.multiple = s.step_type == 'counterSign'
-			fs.autoform.multiple = true
+			fs.autoform.multiple = s.step_type == 'counterSign'
+#			fs.autoform.multiple = true
 
 			fs.type = String
 
@@ -50,7 +50,6 @@ Template.instance_pick_approve_users.helpers
 		return !_.contains(WorkflowManager.getInstance().skip_steps, this._id)
 
 	stepApproveUsers: ()->
-		console.log('stepApproveU12121212sers1111', this);
 		stepId = this._id;
 		stepApproves = ApproveManager.getStepApproveUsers(WorkflowManager.getInstance(), stepId);
 		selectedStepApproves = getStepApproves(stepId)
@@ -58,8 +57,6 @@ Template.instance_pick_approve_users.helpers
 		diff = _.difference(selectedStepApproves, _.pluck(stepApproves, 'id'));
 		if !_.isEmpty(diff)
 			spaceUsers = WorkflowManager.remoteSpaceUsers.find({user: {$in: diff}}, {fields: {user:1, name:1}})
-		console.log('diff', diff)
-		console.log('spaceUsers2', spaceUsers)
 		_.each spaceUsers, (spaceUser)->
 			stepApproves.push {id: spaceUser.user, name: spaceUser.name};
 		_.each stepApproves, (stepApprove)->
@@ -70,6 +67,14 @@ Template.instance_pick_approve_users.helpers
 		selectedStepApproves = getStepApproves(this.stepId)
 		return _.contains(selectedStepApproves, this.id)
 
+	inputType: (step)->
+		if step.step_type == 'counterSign'
+			return 'checkbox';
+		else
+			return 'radio';
+
+
+
 Template.instance_pick_approve_users.events
 	'change .selectUser': (event, template)->
 		formValue = AutoForm.getFormValues("pick_approve_users").insertDoc
@@ -79,15 +84,20 @@ Template.instance_pick_approve_users.events
 				Session.set("instance_next_user_recalculate", uuidv1())
 			, 100
 	'change #stepApproveUser': (event, template)->
-		console.log('change #stepApproveUser');
 		userElement = $("[name='#{this.stepId}']")
 		if event.currentTarget.checked
-			values = userElement[0].dataset.values?.split(',') || []
-			values.push(this.id);
+			if event.target.type == 'radio'
+				values = [this.id]
+			else
+				values = userElement[0].dataset.values?.split(',') || []
+				values.push(this.id);
 			userElement[0].dataset.values = values.join(',');
 		else
-			values = userElement[0].dataset.values?.split(',') || []
-			values.remove(_.indexOf(values, this.id))
+			if event.target.type == 'radio'
+				values = []
+			else
+				values = userElement[0].dataset.values?.split(',') || []
+				values.remove(_.indexOf(values, this.id))
 			userElement[0].dataset.values = values.join(',');
 		userElement.trigger('change')
 
@@ -103,9 +113,7 @@ Template.instance_pick_approve_users.events
 				Session.set("instance_next_user_recalculate", uuidv1())
 			, 100
 	'click .action-select-in-range': (event, template)->
-		console.log('click .action-select-in-range');
 		stepApproves = ApproveManager.getStepApproveUsers(WorkflowManager.getInstance(), this._id)
-		console.log('stepApproves', stepApproves);
 		userElement = $("[name='#{this._id}']")
 		if !_.isEmpty(stepApproves)
 			userElement[0].dataset.userOptions = stepApproves.getProperty("id")
