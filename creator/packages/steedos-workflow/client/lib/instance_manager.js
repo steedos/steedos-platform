@@ -1690,6 +1690,7 @@ InstanceManager.getDistributeStep = function() {
 
 //track：防止计算陷入死循环
 var getCalculateSteps = function (step, track) {
+	var instance_form_values = Session.get("instance_form_values"); //申请单上的值发生变化是，重新计算步骤
 	if(!step){
 		step = InstanceManager.getStartStep();
 	}
@@ -1703,8 +1704,8 @@ var getCalculateSteps = function (step, track) {
 	var autoFormDoc = {};
 	if (AutoForm.getFormValues("instanceform")) {
 		autoFormDoc = AutoForm.getFormValues("instanceform").insertDoc;
-	} else if (Session.get("instance_form_values")) {
-		autoFormDoc = Session.get("instance_form_values").values
+	} else if (instance_form_values) {
+		autoFormDoc = instance_form_values.values
 	}
 	_steps.push(step);
 	var nextSteps = ApproveManager.getNextSteps(WorkflowManager.getInstance(), step, judge, autoFormDoc, form_version.fields, true);
@@ -1743,7 +1744,6 @@ InstanceManager.pickApproveSteps = function () {
 	// 	console.log('step to nextSteps...', step, nextSteps);
 	// 	_steps = _steps.concat(nextSteps)
 	// })
-	Session.get("instance_form_values"); //申请单上的值发生变化是，重新计算步骤
 	return getCalculateSteps();
 }
 
