@@ -2,7 +2,6 @@ extend: company
 label: 我方单位
 icon: account
 enable_api: true
-enable_trash: true
 fields:
   name:
     label: 公司名称

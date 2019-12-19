@@ -1,8 +1,6 @@
 const objectql = require('@steedos/objectql')
 
 const checkRepeatCompany = function(orgId, spaceId){
-    console.log("==checkRepeatCompany====orgId=", orgId);
-    console.log("==checkRepeatCompany====spaceId=", spaceId);
     var repeatCompany = Creator.getCollection("company").findOne({
         space: spaceId,
         organization: orgId
@@ -89,25 +87,10 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "before.remove",
         todo: function (userId, doc) {
-            var existsOrg = Creator.getCollection("organizations").findOne({
-                space: doc.space,
-                parent: doc.organization
-            }, {
-                fields: {
-                    _id: 1
-                }
-            });
-
-            if (existsOrg) {
+            if (doc.organization) {
                 // throw new Meteor.Error(400, "company_error_company_name_exists");
                 // 还不支持i18n
-                throw new Meteor.Error(400, "关联组织有下级组织，请先删除相关下级组织");
-            }
-            else {
-                // 有关联数据时，比如组织下有用户，触发器中已作判断了会自动报错
-                Creator.getCollection("organizations").remove({
-                    _id: doc.organization
-                });
+                throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
             }
         }
     },
@@ -129,8 +112,6 @@ Creator.Objects['company'].triggers = {
         on: "server",
         when: "after.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
-            console.log("==after.update.server.company====doc.organization==", doc.organization);
-            console.log("==after.update.server.company====this.previous.organization==", this.previous.organization);
             if (this.previous.organization !== doc.organization) {
                 if (doc.organization) {
                     /* 设置了关联组织值，则更新相关属性*/
