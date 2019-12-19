@@ -112,11 +112,7 @@ Template.instance_view.helpers
 		return true
 
 	showPickApproveUsers: ()->
-		if Meteor.settings?.public?.is_group_company
-			steps = InstanceManager.pickApproveSteps()
-			return steps.length > 0
-
-		return false
+		return InstanceManager.AllowSelectStep();
 
 Template.instance_view.onCreated ->
 	Form_formula.initFormScripts()

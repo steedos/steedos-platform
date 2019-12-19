@@ -101,7 +101,8 @@ Meteor.publish 'flow', (spaceId, flowId)->
 			distribute_to_self: 1,
 			upload_after_being_distributed: 1,
 			distribute_end_notification: 1,
-			company_id: 1
+			company_id: 1,
+			allow_select_step: 1
 		}
 	})
 

@@ -1747,6 +1747,19 @@ InstanceManager.pickApproveSteps = function () {
 	return getCalculateSteps();
 }
 
+InstanceManager.AllowSelectStep = function () {
+	if(WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step){
+		var steps = WorkflowManager.getInstanceSteps();
+		var selectStep = _.find(steps, function (step) {
+			return step.allow_pick_approve_users || step.allow_skip
+		})
+		if(!_.isEmpty(selectStep)){
+			return true;
+		}
+	}
+	return false;
+}
+
 InstanceManager.ccHasEditPermission = function () {
 	var ccStep = InstanceManager.getCCStep();
 	return ccStep.cc_has_edit_permission;
