@@ -1,3 +1,5 @@
+require('dotenv-flow').config();
+
 var server = require('@steedos/meteor-bundle-runner');
 var steedos = require('@steedos/core')
 
