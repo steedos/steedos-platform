@@ -308,6 +308,11 @@ fields:
     type: boolean
     group: 高级
     name: timeout_auto_submit
+  allow_select_step:
+    label: 指定步骤、审批人
+    inlineHelpText: 允许提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性.
+    type: boolean
+    group: 高级
 list_views:
   all:
     label: 所有
