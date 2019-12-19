@@ -179,6 +179,10 @@ let update_org_company_id = async function (_id, company_id, space_id, cachedCom
         fields: ["children", "is_company"]
     });
 
+    if(!org){
+        return;
+    }
+
     if (org.is_company) {
         const orgCompany = cachedCompanys.find(function(company){
             return company.organization === _id;

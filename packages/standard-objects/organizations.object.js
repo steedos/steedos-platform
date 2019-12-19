@@ -709,12 +709,6 @@ if (Meteor.isServer) {
                 }
             });
         }
-        if (doc.is_company) {
-            // 删除单位级组织关联单位，只删除单位与组织_id值相等的关联记录，_id值不相等的记录不执行级联删除
-            Creator.getCollection("company").direct.remove({
-                _id: doc._id
-            });
-        }
         sUser = db.space_users.findOne({
             space: doc.space,
             user: userId
