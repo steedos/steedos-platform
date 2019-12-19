@@ -145,6 +145,17 @@
 		white-space: nowrap;
 		width: 100%;
 		color: rgba(255, 255, 255, 0.7);
+		&>.icon{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		&>.right-badge-container{
+			flex: 1;
+			.slds-badge{
+				float: right;
+			}
+		}
 	}
 
 	.sidebar--left .nav li .sidebar-item .status {

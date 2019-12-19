@@ -45,6 +45,9 @@
 					<li class="slds-context-bar__item {{object_class_name this}}">
 						<a href="{{object_url}}" class="slds-context-bar__label-action">
 							<span class="slds-truncate">{{_ object_i.label}}</span>
+							{{#if getObjectBadge object_i}}
+								<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{getObjectBadge object_i}}</span>
+							{{/if}}
 						</a>
 					</li>
 				{{/each}}

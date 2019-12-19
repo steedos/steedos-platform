@@ -27,6 +27,11 @@
 													{{> steedos_icon class="extraSmall slds-icon" source="standard-sprite" name=object_i.icon}}
 													<span>{{_ object_i.label}}</span>
 												</span>
+												{{#if getObjectBadge object_i}}
+													<span class="right-badge-container">
+														<span class="slds-badge slds-badge_inverse slds-m-left_x-small">{{getObjectBadge object_i}}</span>
+													</span>
+												{{/if}}
 											</a>
 										</li>
 									{{/each}}

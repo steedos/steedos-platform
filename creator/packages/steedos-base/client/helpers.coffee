@@ -181,6 +181,11 @@ Steedos.Helpers =
 		company_ids = Steedos.getUserCompanyOrganizationIds()
 		return if company_ids?.length then company_ids else null
 
+	getObjectBadge: (object)->
+		spaceId = Steedos.getSpaceId()
+		if object.name == "instances"
+			return Steedos.getBadge("workflow", spaceId)
+
 _.extend Steedos, Steedos.Helpers
 
 Template.registerHelpers = (dict) ->

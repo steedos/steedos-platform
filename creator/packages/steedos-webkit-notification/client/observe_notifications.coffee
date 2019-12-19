@@ -1,5 +1,21 @@
 Steedos.pushSpace = new SubsManager();
 
+Steedos.isElectron = ()->
+	# mac上华信客户端nw为空造成Steedos.isElectron函数目前返回结果不对 #1487
+	return Steedos.isNode() && nw.ipcRenderer
+
+Steedos.isNewWindow = ()->
+	if Steedos.isNode()
+		if Steedos.isElectron() && window.opener
+			# 新版本客户端
+			return true
+		else if window.opener.opener
+			# 老版本客户端
+			# window.opener.opener不为空说明是新窗口，用两层opener是因为主窗口本来就有一层opener
+			return true
+	else if (window.opener)
+		return true;
+
 Tracker.autorun (c)->
 	# Steedos.pushSpace.reset();
 	Steedos.pushSpace.subscribe("raix_push_notifications");
@@ -23,7 +39,8 @@ Meteor.startup ->
 			console.log(notification)
 
 			# 非主窗口不弹推送消息
-			if (window.opener)
+			# 为解决老客户端跑workflow/creator项目需要写window.opener.opener两层的判断，调用isNewWindow函数
+			if Steedos.isNewWindow()
 				return;
 			
 			options = 

@@ -22,7 +22,7 @@ Template.creatorSidebarLeft.helpers
 		return objects
 
 	isActive: (obj)->
-		if (obj == FlowRouter.getParam("object_name"))
+		if (obj == Session.get("object_name"))
 			return true
 
 	hideObjects: (_id)->
