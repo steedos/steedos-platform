@@ -30,6 +30,7 @@ fields:
     type: number
     defaultValue: 100
     sortable: true
+    omit: true
   company_id:
     defaultValue: !!js/function |
       function () {

@@ -70,7 +70,8 @@ Creator.Objects['company'].triggers = {
                     parent: rootOrg._id,
                     space: doc.space,
                     company_id: doc._id,
-                    is_company: true
+                    is_company: true,
+                    sort_no: 100
                 });
                 Creator.getCollection("company").update({
                     _id: doc._id
