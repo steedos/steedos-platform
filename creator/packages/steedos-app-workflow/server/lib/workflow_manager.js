@@ -214,6 +214,29 @@ WorkflowManager.getOrganizations = function (orgIds) {
 	}, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}}).fetch();
 };
 
+WorkflowManager.getCompany = function (companyId) {
+	if (!companyId) {
+		return;
+	}
+	return Creator.getCollection("company").findOne(companyId, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}});
+}
+
+WorkflowManager.getCompanys = function (companyIds) {
+	if (!companyIds) {
+		return [];
+	}
+
+	if ("string" == typeof (companyIds)) {
+		return [WorkflowManager.getCompany(companyIds)]
+	}
+	return Creator.getCollection("company").find({
+		_id: {
+			$in: companyIds
+		}
+	}, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}}).fetch();
+};
+
+
 WorkflowManager.getUser = function (spaceId, userId, notNeedDetails) {
 	if (!userId || !spaceId) {
 		return;
@@ -240,6 +263,10 @@ WorkflowManager.getUser = function (spaceId, userId, notNeedDetails) {
 		if (!spaceUser.organization) {
 			return;
 		}
+
+		spaceUser.company = WorkflowManager.getCompany(spaceUser.company_id);
+		spaceUser.companys = WorkflowManager.getCompanys(spaceUser.company_ids);
+
 		spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
 	}
 
@@ -273,6 +300,9 @@ WorkflowManager.getUsers = function (spaceId, userIds, notNeedDetails) {
 				spaceUser.organization = WorkflowManager.getOrganization(spaceUser.organization);
 
 				spaceUser.organizations = WorkflowManager.getOrganizations(spaceUser.organizations);
+
+				spaceUser.company = WorkflowManager.getCompany(spaceUser.company_id);
+				spaceUser.companys = WorkflowManager.getCompanys(spaceUser.company_ids);
 
 				if (spaceUser.organization) {
 					spaceUser.roles = WorkflowManager.getUserRoles(spaceId, spaceUser.organization.id, spaceUser.id);
@@ -325,6 +355,18 @@ WorkflowManager.getFormulaUsers = function (spaceId, userIds) {
 			'id': user.organizations.getProperty("_id"),
 			'name': user.organizations.getProperty("name"),
 			'fullname': user.organizations.getProperty("fullname")
+		}
+
+		userObject['company'] = {
+			'id': user.company._id,
+			'name': user.company.name,
+			'code': user.company.code,
+		}
+
+		userObject['companys'] = {
+			'id': user.companys.getProperty("_id"),
+			'name': user.companys.getProperty("name"),
+			'code': user.companys.getProperty("code"),
 		}
 
 		userObject.hr = {}
