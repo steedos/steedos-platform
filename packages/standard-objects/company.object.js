@@ -90,7 +90,16 @@ Creator.Objects['company'].triggers = {
             if (doc.organization) {
                 // throw new Meteor.Error(400, "company_error_company_name_exists");
                 // 还不支持i18n
-                throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
+                var org = Creator.getCollection("organizations").findOne({
+                    _id: doc.organization
+                }, {
+                    fields: {
+                        _id: 1
+                    }
+                });
+                if(org){
+                    throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
+                }
             }
         }
     },
