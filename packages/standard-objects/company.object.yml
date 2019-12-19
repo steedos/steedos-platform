@@ -25,6 +25,12 @@ fields:
     label: 备注
     type: textarea
     is_wide: true
+  sort_no:
+    label: 排序号
+    type: number
+    defaultValue: 100
+    sortable: true
+    omit: true
   company_id:
     defaultValue: !!js/function |
       function () {
@@ -56,6 +62,7 @@ list_views:
       - parent
       - organization
       - modified
+      - sort_no
     filter_scope: space
 permission_set:
   user:

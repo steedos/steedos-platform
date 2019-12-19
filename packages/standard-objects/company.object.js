@@ -70,7 +70,8 @@ Creator.Objects['company'].triggers = {
                     parent: rootOrg._id,
                     space: doc.space,
                     company_id: doc._id,
-                    is_company: true
+                    is_company: true,
+                    sort_no: 100
                 });
                 Creator.getCollection("company").update({
                     _id: doc._id
@@ -90,7 +91,16 @@ Creator.Objects['company'].triggers = {
             if (doc.organization) {
                 // throw new Meteor.Error(400, "company_error_company_name_exists");
                 // 还不支持i18n
-                throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
+                var org = Creator.getCollection("organizations").findOne({
+                    _id: doc.organization
+                }, {
+                    fields: {
+                        _id: 1
+                    }
+                });
+                if(org){
+                    throw new Meteor.Error(400, "请先清空关联组织值再删除该单位");
+                }
             }
         }
     },
@@ -179,6 +189,10 @@ let update_org_company_id = async function (_id, company_id, space_id, cachedCom
         fields: ["children", "is_company"]
     });
 
+    if(!org){
+        return;
+    }
+
     if (org.is_company) {
         const orgCompany = cachedCompanys.find(function(company){
             return company.organization === _id;
@@ -213,7 +227,6 @@ let update_all_company_org = async function (space_id, cachedCompanys) {
 
     for (let company of cachedCompanys) {
         if (company.organization) {
-            // company.organization为自身_id值说明单company是新建出来的，不是其他方式同步过来的数据，不需要再修正其is_company、company值
             await this.getObject("organizations").directUpdate(company.organization, {
                 is_company: true,
                 company_id: company._id
@@ -238,6 +251,22 @@ let update_all_company_org = async function (space_id, cachedCompanys) {
     }
 }
 
+let update_all_company_sort_no = async function (cachedCompanys, cachedOrganizations) {
+    let org = null;
+    for (let company of cachedCompanys) {
+        if (company.organization) {
+            org = cachedOrganizations.find(function(item){
+                return company.organization === item._id;
+            });
+            if(org && _.isNumber(org.sort_no)){
+                await this.getObject("company").directUpdate(company._id, {
+                    sort_no: org.sort_no
+                });
+            }
+        }
+    }
+}
+
 Creator.Objects['company'].methods = {
     updateOrgs: async function (req, res) {
         let { _id: record_id } = req.params
@@ -255,6 +284,8 @@ Creator.Objects['company'].methods = {
             throw new Meteor.Error(400, "该单位的关联组织未设置");
         }
 
+        // 在使用cachedCompanys过程中一定要注意内部程序是否会变更cachedCompanys中的值，
+        // 如果会则不能使用cachedCompanys而应该用getObject...find的方式即时更新到最新数据
         const cachedCompanys = await objectql.getObject("company").find({
             filters: [["space", "=", company.space]],
             fields: ["_id", "organization"]
@@ -270,14 +301,19 @@ Creator.Objects['company'].methods = {
             fields: ["organizations", "organization", "company_id", "space"]
         });
 
+        // 在使用cachedOrganizations过程中一定要注意内部程序是否会变更cachedOrganizations中的值，
+        // 如果会则不能使用cachedOrganizations而应该用getObject...find的方式即时更新到最新数据
         const cachedOrganizations = await objectql.getObject("organizations").find({
             filters: [["space", "=", company.space]],
-            fields: ["company_id", "_id"]
+            fields: ["_id", "company_id", "sort_no"]
         });
 
         for (let su of sus) {
             await update_su_company_ids.call(callThis, su._id, su, cachedOrganizations);
         }
+
+        // 单位没有上下层级关系，只能每次都更新所有单位的排序号
+        await update_all_company_sort_no.call(callThis, cachedCompanys, cachedOrganizations);
 
         return res.send({
             updatedOrgs: updatedOrgs.count,
@@ -346,6 +382,8 @@ Creator.Objects['company'].actions = {
                             var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
                             console.log(logInfo);
                             toastr.success(logInfo);
+                            /* 更新组织后刷新单位列表，直接显示新的关联组织、排序号等列表信息 */
+                            $(".slds-page-header--object-home .btn-refresh").trigger("click");
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             $("body").removeClass("loading");
