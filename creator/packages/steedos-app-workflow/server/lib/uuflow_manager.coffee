@@ -508,6 +508,8 @@ uuflowManager.getNextSteps = (instance, flow, step, judge) ->
 	_.each nextSteps, (nextStepId)->
 		_step = uuflowManager.getStep(instance, flow, nextStepId);
 		if isSkipStep(instance, _step)
+			if !judge && _step.step_type == 'sign'
+				judge = 'approved'
 			rev_nextSteps = rev_nextSteps.concat(uuflowManager.getNextSteps(instance, flow, _step, judge))
 		else
 			rev_nextSteps.push(nextStepId);

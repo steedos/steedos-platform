@@ -140,7 +140,10 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     var condition_next_steps = new Array();
     nextSteps.forEach(function(nextStep) {
         if (nextStep.step_type == "condition") {
-            condition_next_steps = condition_next_steps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields));
+        	if(!judge && nextStep.step_type == 'sign'){
+				judge = 'approved'
+			}
+            condition_next_steps = condition_next_steps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields, showSkipStep));
         }
     })
 
@@ -151,7 +154,10 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     nextSteps.forEach(function(nextStep) {
         if (nextStep.step_type != "condition"){
             if(!showSkipStep && isSkipStep(instance, nextStep)){
-				rev_nextSteps = rev_nextSteps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields))
+				if(!judge && nextStep.step_type == 'sign'){
+					judge = 'approved'
+				}
+				rev_nextSteps = rev_nextSteps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields, showSkipStep))
             }else{
 				rev_nextSteps.push(nextStep);
             }
