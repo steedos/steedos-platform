@@ -382,6 +382,8 @@ Creator.Objects['company'].actions = {
                             var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
                             console.log(logInfo);
                             toastr.success(logInfo);
+                            /* 更新组织后刷新单位列表，直接显示新的关联组织、排序号等列表信息 */
+                            $(".slds-page-header--object-home .btn-refresh").trigger("click");
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             $("body").removeClass("loading");
