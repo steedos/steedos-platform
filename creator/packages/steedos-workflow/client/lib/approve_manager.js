@@ -418,9 +418,6 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 };
 
 ApproveManager.getNextStepUsers = function(instance, nextStepId) {
-
-    console.log("ApproveManager.getNextStepUsers run...")
-
     ApproveManager.error.nextStepUsers = '';
     ApproveManager.error.type = '';
     ApproveManager.error.code = '';

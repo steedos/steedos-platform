@@ -1,3 +1,11 @@
+getStepsApproves = ()->
+	return WorkflowManager.getInstance()?.step_approve || {}
+getStepApproves = (stepId)->
+	selectedStepApproves = getStepsApproves()[stepId]
+	if !_.isArray(selectedStepApproves)
+		selectedStepApproves = [selectedStepApproves]
+	return selectedStepApproves;
+
 Template.instance_suggestion.helpers
 
 	step_selected: ()->
@@ -118,6 +126,8 @@ Template.instance_suggestion.helpers
 		if users.length == 1 && selectedUser.length < 1
 			selectedUser = [users[0]];
 
+		if nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
+			selectedUser = users
 
 		if next_user && next_user.length > 0
 
