@@ -903,10 +903,10 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos/react@^1.13.7":
-  version "1.13.7"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.7.tgz#613b55a516039eb3cf8b286ad749287b10cfd88e"
-  integrity sha512-m3DHE1L0jcGR8ZRYsAEUK9RpaIotMI9COndNxzx1nRq5eocKhn4ik8fiiZDuBidADJZMeRQ4Xnsyo8/wAcC1IQ==
+"@steedos/react@^1.13.9":
+  version "1.13.9"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.9.tgz#dad3d3dc8df3958022bebf846d68fdd076c10e5f"
+  integrity sha512-niR0qRqotiyJeOOVffyyryWLI/jY4TdMwfNsq+R4Fvu3vUeVAZZfE+OV9aLbIdYzV4K1r01Gu9KNSQKuyNys1Q==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
@@ -915,8 +915,8 @@
     immer "^4.0.1"
     moment "^2.24.0"
     prop-types "^15.7.2"
-    react "^16.9.0"
-    react-dom "^16.9.0"
+    react "^16.12.0"
+    react-dom "^16.12.0"
     react-redux "^7.1.1"
     redux "^4.0.4"
     redux-devtools-extension "^2.13.8"
@@ -3630,7 +3630,7 @@ react-contenteditable@^3.3.1:
     fast-deep-equal "^2.0.1"
     prop-types "^15.7.1"
 
-react-dom@^16.9.0:
+react-dom@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
   integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
@@ -3714,16 +3714,7 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^16.11.0:
-  version "16.11.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
-  integrity sha512-M5Y8yITaLmU0ynd0r1Yvfq98Rmll6q8AxaEe88c8e7LxO8fZ2cNgmFt0aGAS9wzf1Ao32NKXtCl+/tVVtkxq6g==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-
-react@^16.9.0:
+react@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
