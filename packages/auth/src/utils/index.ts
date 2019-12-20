@@ -73,3 +73,7 @@ export const clearAuthCookies = function (req, res) {
   cookies.set("X-Space-Token", null, options);
   return;
 }
+
+export function isExpried(expiredAt: number) {
+  return expiredAt <= new Date().getTime();
+}

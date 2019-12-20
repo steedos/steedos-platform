@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { addSessionToCache, getSessionFromCache, addSpaceSessionToCache, getSpaceSessionFromCache } from '../../src/session';
+import { addSessionToCache, getSessionFromCache, addSpaceSessionToCache, getSpaceSessionFromCache } from '../../src/index';
 // import { getSession } from '../../src/session';
 
 describe('test session', () => {
