@@ -7,7 +7,6 @@ fields:
     label: 用户
     reference_to: users
     required: true
-    is_name: true
     name: user
     filterable: true
     searchable: true
