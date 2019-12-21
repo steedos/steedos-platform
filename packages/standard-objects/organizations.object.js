@@ -405,7 +405,7 @@ if (Meteor.isServer) {
             if (!parentOrg) {
                 throw new Meteor.Error(400, "organizations_error_parent_is_not_found");
             }
-            if (doc._id === parentOrg._id || parentOrg.parents.indexOf(doc._id) >= 0) {
+            if (doc._id === parentOrg._id || (parentOrg.parents && parentOrg.parents.indexOf(doc._id) >= 0)) {
                 throw new Meteor.Error(400, "organizations_error_parent_is_self");
             }
             // 允许重名，去掉重名判断
