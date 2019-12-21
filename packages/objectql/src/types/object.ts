@@ -765,7 +765,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     userFilters.push(spaceFilter);
                 }
 
-                if(!_.isEmpty(permissionFilters)){
+                if(!userSession.is_space_admin && !_.isEmpty(permissionFilters)){
                     filters = permissionFilters.join(' or ');
                 }
 
