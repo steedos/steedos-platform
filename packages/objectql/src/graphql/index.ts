@@ -135,7 +135,6 @@ export function buildGraphQLSchema(steedosSchema: SteedosSchema, datasource?: St
                 resolve: async function (source, args, context, info) {
                     let object = steedosSchema.getObject(`${obj.name}`);
                     let userSession = context ? context.user : null;
-                    console.log('context.user: ', userSession);
                     return object.find(args, userSession);
                 }
             }
