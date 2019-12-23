@@ -111,6 +111,9 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 		delete field.required
 		delete field.value
 
+		if _.isEmpty(field._id)
+			field._id = db.forms._makeNewID()
+
 		field.is_multiselect = field.is_multiselect || false
 		field.is_searchable = field.is_searchable || false
 		field.is_list_display = field.is_list_display || false
