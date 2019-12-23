@@ -27,6 +27,7 @@ fields:
     type: date
     sortable: true
     filterable: true
+    defaultValue: "{now}"
   company_id:
     label: 我方单位
     required: true

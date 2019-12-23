@@ -65,6 +65,7 @@ fields:
     unique: true
     name: credit_code
     required: true
+    searchable: true
   description:
     label: 其他
     type: textarea
