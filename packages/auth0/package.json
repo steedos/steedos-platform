@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@steedos/auth0",
-  "version": "1.13.4",
+  "version": "1.14.0",
   "main": "index.js",
   "author": "Jack Zhuang",
   "license": "MIT",
