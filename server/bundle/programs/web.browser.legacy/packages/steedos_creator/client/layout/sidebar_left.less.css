@@ -162,6 +162,20 @@
   width: 100%;
   color: rgba(255, 255, 255, 0.7);
 }
+.creator-sidebar-left .sidebar--left .nav li .sidebar-item > .icon {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.creator-sidebar-left .sidebar--left .nav li .sidebar-item > .right-badge-container {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.creator-sidebar-left .sidebar--left .nav li .sidebar-item > .right-badge-container .slds-badge {
+  float: right;
+}
 .creator-sidebar-left .sidebar--left .nav li .sidebar-item .status {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;

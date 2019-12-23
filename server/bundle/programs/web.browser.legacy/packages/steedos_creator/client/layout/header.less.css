@@ -79,3 +79,7 @@
 .steedos .slds-context-bar .slds-context-bar__item.slds-is-active:before {
   background: #00a1df;
 }
+.steedos .slds-context-bar .slds-context-bar__item .slds-notification-badge {
+  top: .2rem;
+  right: .2rem;
+}
