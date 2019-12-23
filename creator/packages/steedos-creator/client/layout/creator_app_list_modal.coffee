@@ -63,3 +63,8 @@ Template.creator_app_list_modal.events
 		rootName = FlowRouter.current().path.split("/")[1]
 		FlowRouter.go("/#{rootName}")
 		Modal.hide(template)
+	
+	'click .app-sction-part-1 .slds-section__content .app-launcher-link': (event)->
+		appid = event.currentTarget.dataset.appid
+		if appid && Creator.openApp
+			Creator.openApp appid, event

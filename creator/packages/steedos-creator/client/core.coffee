@@ -357,6 +357,72 @@ if Meteor.isClient
 	#			expand_fields.push(n)
 		return expand_fields.join(",")
 	
+	Creator.relatedObjectFileUploadHandler = (event, gridContainerWrap)->
+		dataset = event.currentTarget.dataset
+		parent = dataset?.parent
+		targetObjectName = dataset?.targetObjectName
+		files = event.currentTarget.files
+		i = 0
+		record_id = Session.get("record_id")
+		object_name = Session.get("object_name")
+		spaceId = Session.get("spaceId")
+		dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
+		while i < files.length
+			file = files[i]
+			if !file.name
+				continue
+			fileName = file.name
+			if [
+					'image.jpg'
+					'image.gif'
+					'image.jpeg'
+					'image.png'
+				].includes(fileName.toLowerCase())
+				fileName = 'image-' + moment(new Date).format('YYYYMMDDHHmmss') + '.' + fileName.split('.').pop()
+			# Session.set 'filename', fileName
+			# $('.loading-text').text TAPi18n.__('workflow_attachment_uploading') + fileName + '...'
+			fd = new FormData
+			fd.append 'Content-Type', cfs.getContentType(fileName)
+			fd.append 'file', file
+			fd.append 'record_id', record_id
+			fd.append 'object_name', object_name
+			fd.append 'space', spaceId
+			fd.append 'owner', Meteor.userId()
+			fd.append 'owner_name', Meteor.user().name
+			if parent
+				fd.append 'parent', parent
+			$(document.body).addClass 'loading'
+			$.ajax
+				url: Steedos.absoluteUrl('s3/')
+				type: 'POST'
+				async: true
+				data: fd
+				dataType: 'json'
+				processData: false
+				contentType: false
+				success: (responseText, status) ->
+					fileObj = undefined
+					$(document.body).removeClass 'loading'
+					if responseText.errors
+						responseText.errors.forEach (e) ->
+							toastr.error e.errorMessage
+							return
+						return
+					toastr.success TAPi18n.__('Attachment was added successfully')
+					Template.creator_grid.refresh dxDataGridInstance
+					return
+				error: (xhr, msg, ex) ->
+					$(document.body).removeClass 'loading'
+					if ex
+						msg = ex
+					if msg == "Request Entity Too Large"
+						msg = "creator_request_oversized"
+					toastr.error t(msg)
+					return
+			i++
+		$(event.target).val("")
+
+	
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
