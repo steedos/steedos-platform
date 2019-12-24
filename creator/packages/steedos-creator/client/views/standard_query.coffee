@@ -64,13 +64,15 @@ Template.standard_query_modal.helpers
 			if Creator.checkFieldTypeSupportBetweenQuery(object_fields[field].type)
 				schema[field + "_endLine"] =  clone(obj_schema[field])
 				obj_schema[field].autoform.is_range = true
+				if schema[field + "_endLine"].defaultValue
+					delete schema[field + "_endLine"].defaultValue
 				if schema[field + "_endLine"].autoform
 					schema[field + "_endLine"].autoform.readonly = false
 					schema[field + "_endLine"].autoform.disabled = false
 					schema[field + "_endLine"].autoform.omit = false
 					schema[field + "_endLine"].autoform.is_range = false
 					schema[field + "_endLine"].autoform.label = '至'
-
+					delete schema[field + "_endLine"].autoform.defaultValue
 					if object_fields[field].type == 'date'
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
 						schema[field + "_endLine"].autoform.outFormat = 'yyyy-MM-ddT23:59:59.000Z';
@@ -78,7 +80,6 @@ Template.standard_query_modal.helpers
 							# dx-date-box控件不支持outFormat，需要单独处理
 							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
 							schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
-			
 			if ["boolean"].includes(object_fields[field].type)
 				schema[field].type = String
 				group = schema[field].autoform?.group
@@ -152,6 +153,9 @@ Template.standard_query_modal.events
 #		$(".btn-filter-list").toggleClass("slds-is-selected", true)
 #		$(".filter-list-container").toggleClass("slds-hide", false)
 #		Session.set 'standard_query', {object_name: object_name, query: query, is_mini: false}
-		$(".filter-list-wraper #grid-search").val("")
 		Modal.hide(template)
+
+		isFiltering = Creator.getIsFiltering()
+		if isFiltering
+			$(".filter-list-container").removeClass("slds-hide")
 

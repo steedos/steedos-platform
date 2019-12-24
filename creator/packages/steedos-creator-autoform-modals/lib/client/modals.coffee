@@ -103,7 +103,7 @@ Template.CreatorAutoformModals.rendered = ->
 	$('#afModal').modal(show: false)
 
 	onEscKey = (e) ->
-		if e.keyCode == 27
+		if e.keyCode == 27 && $('#creatorObjectModal').length < 1
 			$('#afModal').modal 'hide'
 
 	$('#afModal').on 'show.bs.modal', ->

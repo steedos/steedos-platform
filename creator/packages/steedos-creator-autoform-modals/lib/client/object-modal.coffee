@@ -77,6 +77,17 @@ Template.CreatorObjectModal.onRendered ()->
 	onError = @data.onError
 	#清理hooks，否则会多次执行
 	delete AutoForm._hooks[formId]
+
+	onEscKey = (e) ->
+		if e.keyCode == 27
+			$('#creatorObjectModal').modal 'hide'
+
+	$('#creatorObjectModal').on 'shown.bs.modal', ->
+		$(window).bind 'keyup', onEscKey
+
+	$('#creatorObjectModal').on 'hidden.bs.modal', ->
+		$(window).unbind 'keyup', onEscKey
+
 	#添加当前form的hooks
 	AutoForm.addHooks formId,
 		before:

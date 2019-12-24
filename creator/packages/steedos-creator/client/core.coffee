@@ -422,6 +422,14 @@ if Meteor.isClient
 			i++
 		$(event.target).val("")
 
+	Creator.getIsFiltering = ()->
+		filter_items = Session.get("filter_items")
+		isFiltering = false;
+		_.every filter_items, (filter_item)->
+			if filter_item.value
+				isFiltering = true;
+			return !isFiltering;
+		return isFiltering
 	
 
 # 切换工作区时，重置下拉框的选项

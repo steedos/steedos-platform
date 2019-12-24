@@ -227,7 +227,7 @@ Creator.getObjectRelateds = (object_name)->
 					#TODO 待相关列表支持排序后，删除此判断
 					related_objects.splice(0, 0, {object_name:related_object_name, foreign_key: related_field_name})
 				else
-					related_objects.push {object_name:related_object_name, foreign_key: related_field_name}
+					related_objects.push {object_name:related_object_name, foreign_key: related_field_name, sharing: related_field.sharing}
 
 	if _object.enable_tasks
 		related_objects.push {object_name:"tasks", foreign_key: "related_to"}

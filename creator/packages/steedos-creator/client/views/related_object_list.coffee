@@ -24,12 +24,18 @@ Template.related_object_list.helpers
 		record_id = Session.get "record_id"
 		return Creator.getObjectUrl(object_name, record_id)
 
-	allow_create: ()->
+	allowCreate: ()->
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
-		# if related_object_name == "cms_files"
-		# 	# 附件列表及相关列表的新建按钮应该去掉 #940，先去掉，以后有需要可以再改为上传附件功能
-		# 	return false
-		return Creator.getPermissions(related_object_name).allowCreate
+		related_object = relatedList.find((item)-> return item.object_name == related_object_name )
+		sharing = related_object?.sharing || 'masterWrite'
+		masterAllow = false
+		masterRecordPerm = Creator.getRecordPermissions(Session.get('object_name'), Creator.getObjectRecord(), Meteor.userId(), Session.get('spaceId'))
+		if sharing == 'masterRead'
+			masterAllow = masterRecordPerm.allowRead
+		else if sharing == 'masterWrite'
+			masterAllow = masterRecordPerm.allowEdit
+		return masterAllow && Creator.getPermissions(related_object_name).allowCreate
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords

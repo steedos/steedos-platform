@@ -18,7 +18,8 @@ Template.creator_list_wrapper.onRendered ->
 	self.autorun ->
 		list_view_id = Session.get("list_view_id")
 		object_name = Session.get("object_name")
-		if list_view_id
+		isSubReady = Creator.subs["CreatorListViews"].ready()
+		if isSubReady and list_view_id
 			list_view_obj = Creator.Collections.object_listviews.findOne(list_view_id)
 			filter_target = Tracker.nonreactive ->
 				return Session.get("filter_target")
@@ -42,16 +43,8 @@ Template.creator_list_wrapper.onRendered ->
 					return
 				Session.set("filter_scope", null)
 				Session.set("filter_items", null)
-				
-	self.autorun ->
-		# 同步标记过滤条件关联的视图及对象
-		filter_items = Session.get("filter_items")
-		filter_scope = Session.get("filter_scope")
-		if filter_items or filter_scope
-			list_view_id = Tracker.nonreactive ->
-				return Session.get("list_view_id")
-			object_name = Tracker.nonreactive ->
-				return Session.get("object_name")
+			
+			# list_view_id、object_name变化时，标记过滤条件关联的视图及对象
 			Session.set("filter_target", {
 				list_view_id: list_view_id,
 				object_name: object_name
@@ -255,13 +248,7 @@ Template.creator_list_wrapper.helpers
 		else
 			return ''
 	isFiltering: ()->
-		filter_items = Session.get("filter_items")
-		isFiltering = false;
-		_.every filter_items, (filter_item)->
-			if filter_item.value
-				isFiltering = true;
-			return !isFiltering;
-		return isFiltering
+		return Creator.getIsFiltering()
 	canFollow: ()->
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
