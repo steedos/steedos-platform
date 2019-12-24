@@ -24,7 +24,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
   let userIdCookie = get(req.cookies, 'X-User-Id') 
   let userAccessTokenCookie = get(req.cookies, 'X-Access-Token') 
   if (userId && (userIdCookie== userId)) {
-    if (redirect_uri.indexOf("?"))
+    if (redirect_uri.indexOf("?") > -1)
       redirect_uri += "&token=" + userAccessTokenCookie
     else 
       redirect_uri += "?token=" + userAccessTokenCookie
