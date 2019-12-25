@@ -30,25 +30,25 @@
 									</div>
 								</td>
 								<td class="td-stepname">{{name}}</td>
-								{{#if canPickApprove}}
-								<td class="td-step-approves">
-									<div class="af-checkbox-group">
-										{{#each stepApproveUsers}}
-											<div class="{{inputType ..}}-inline fix-indent">
-												<label><input type="{{inputType ..}}" id="stepApproveUser" checked="{{hasSelectedUser}}">{{name}}</label>
-											</div>
-										{{/each}}
-									</div>
-								</td>
+								{{#if showStepApproves}}
+									<td class="td-step-approves">
+										<div class="af-checkbox-group">
+											{{#each stepApproveUsers}}
+												<div class="{{inputType ..}}-inline fix-indent">
+													<label><input type="{{inputType ..}}" id="{{stepId}}" class="stepApproveUser" checked="{{hasSelectedUser}}" value="{{id}}">{{name}}</label>
+												</div>
+											{{/each}}
+										</div>
+									</td>
 								{{else}}
-								<td></td>
+									<td></td>
 								{{/if}}
 
 								<td class="action">
+									<div style="display: none">
+										{{> afQuickField name=_id disabled=false readonly=true}}
+									</div>
 									{{#if canPickApprove}}
-										<div style="display: none">
-											{{> afQuickField name=_id disabled=false readonly=true}}
-										</div>
 										<div>
 											<button type="button" class="btn btn-default action-select-in-all" data-placement="bottom" data-original-title="" title="">
 												<i class="ion ion-person-add"></i>

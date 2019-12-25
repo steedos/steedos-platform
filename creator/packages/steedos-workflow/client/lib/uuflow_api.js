@@ -508,7 +508,24 @@ UUflow_api.getSpaceUsers = function (spaceId, userIds) {
 				return;
 			}
 
-			spaceUsers = responseText.spaceUsers;
+			_spaceUsers = responseText.spaceUsers;
+
+			spaceUsers = [];
+
+			if(_.isArray(userIds)){
+				_.each(userIds, function(uid){
+					var stepApprove = _.find(_spaceUsers, function(su){
+						return su.id == uid;
+					})
+					if(stepApprove){
+						spaceUsers.push(stepApprove)
+					}
+				})
+			}else{
+				spaceUsers = _spaceUsers
+			}
+
+
 		},
 		error: function (xhr, msg, ex) {
 			toastr.error(msg);

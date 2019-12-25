@@ -118,11 +118,15 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<div class="form-group" id="nextStepUsers_div">
+							<div class="form-group{{#if showSelsectInAllUsers}} select-approve-in-all-users{{/if}}" id="nextStepUsers_div">
 								{{#if isReady}}
 									<div class="input-group">
 										<div class="input-group-addon">{{_ "instance_next_step_users"}}</div>
 										{{>afSelectUser next_user_context}}
+										{{#if showSelsectInAllUsers}}
+											<span class="input-group-addon select-all-users-btn"><i class="ion ion-person-add"></i></span>
+											{{>afSelectUser all_users_context}}
+										{{/if}}
 									</div>
 								{{/if}}
 							</div>

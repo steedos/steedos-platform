@@ -431,7 +431,21 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
 
     if(instance.step_approve && instance.step_approve[nextStepId]){
 		Session.set("next_step_users_showOrg", false); //如果有指定处理人,则不能选择其他人
-        return WorkflowManager.getUsers(instance.step_approve[nextStepId])
+		var step_approve = instance.step_approve[nextStepId];
+		if(!_.isArray(step_approve)){
+			step_approve = [step_approve];
+		}
+		var currentApprove = InstanceManager.getCurrentApprove();
+		if(currentApprove){
+			var current_next_steps = currentApprove.next_steps;
+			if(current_next_steps && current_next_steps.length > 0 && current_next_steps[0].step == nextStepId){
+				if(InstanceManager.getCurrentStep().step_type != 'start'){
+					step_approve = _.uniq((current_next_steps[0].users || []).concat(step_approve))
+				}
+			}
+		}
+
+        return WorkflowManager.getUsers(step_approve)
     }
 
     var applicantId = InstanceManager.getApplicantUserId();

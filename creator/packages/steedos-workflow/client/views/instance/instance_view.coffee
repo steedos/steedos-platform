@@ -112,7 +112,7 @@ Template.instance_view.helpers
 		return true
 
 	showPickApproveUsers: ()->
-		return InstanceManager.AllowSelectStep();
+		return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
 
 Template.instance_view.onCreated ->
 	Form_formula.initFormScripts()
