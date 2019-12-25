@@ -6,11 +6,6 @@ getStepApproves = (stepId)->
 		selectedStepApproves = [selectedStepApproves]
 	return selectedStepApproves;
 
-showSelsectInAllUsers = ()->
-	if WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
-		nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"));
-		return nextStep.allow_pick_approve_users
-
 Template.instance_suggestion.helpers
 
 	step_selected: ()->
@@ -74,6 +69,7 @@ Template.instance_suggestion.helpers
 	#next_user_options: ->
 	#    return InstanceManager.getNextUserOptions();
 	all_users_context: ->
+		nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"))
 		return {
 			dataset: {},
 			name: 'selectNextStepUsersInAllUsers',
@@ -83,6 +79,7 @@ Template.instance_suggestion.helpers
 				class: 'selectUser selectNextStepUsersInAllUsers form-control',
 				placeholder: t("instance_next_step_users_placeholder"),
 				title: t("instance_next_step_users_placeholder")
+				multiple: nextStep.step_type == 'counterSign'
 			}
 		}
 	next_user_context: ->
@@ -317,7 +314,11 @@ Template.instance_suggestion.helpers
 		else
 			return InstanceManager.getCurrentApprove()?.description || InstanceSignText.helpers.getLastSignApprove()?.description || ""
 
-
+	showSelsectInAllUsers: ()->
+		if WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
+			nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"));
+			return nextStep.allow_pick_approve_users
+		return false
 Template.instance_suggestion.events
 
 	'change .suggestion': (event) ->
