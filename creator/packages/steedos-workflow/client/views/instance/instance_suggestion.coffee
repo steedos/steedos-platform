@@ -140,8 +140,8 @@ Template.instance_suggestion.helpers
 			selectedUser = [users[0]];
 
 		currentApprove = Tracker.nonreactive(InstanceManager.getCurrentApprove);
-
-		if !currentApprove.next_steps && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
+		currentStep = InstanceManager.getCurrentStep();
+		if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
 			selectedUser = users
 
 		if next_user && next_user.length > 0
@@ -187,7 +187,6 @@ Template.instance_suggestion.helpers
 
 			data.value = selectedUser
 			data.dataset['values'] = selectedUser.getProperty("id").toString()
-		console.log('next_user_context', data);
 		return data;
 
 	judge: ->
@@ -317,7 +316,7 @@ Template.instance_suggestion.helpers
 	showSelsectInAllUsers: ()->
 		if WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
 			nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"));
-			return nextStep.allow_pick_approve_users
+			return nextStep?.allow_pick_approve_users
 		return false
 Template.instance_suggestion.events
 

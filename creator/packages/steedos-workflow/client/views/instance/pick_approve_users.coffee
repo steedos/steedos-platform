@@ -59,9 +59,9 @@ Template.instance_pick_approve_users.helpers
 		stepApproves = ApproveManager.getStepApproveUsers(WorkflowManager.getInstance(), stepId);
 		selectedStepApproves = getStepApproves(stepId)
 		stepApprovesOptions = getStepApproveOptions(stepId);
-		console.log('stepApprovesOptions', stepApprovesOptions);
-		console.log('selectedStepApproves', selectedStepApproves);
-		console.log('-------', _.uniq(stepApprovesOptions))
+		console.debug('stepApprovesOptions', stepApprovesOptions);
+		console.debug('selectedStepApproves', selectedStepApproves);
+		console.debug('-------', _.uniq(stepApprovesOptions))
 		diff = _.difference(_.uniq(stepApprovesOptions), _.pluck(stepApproves, 'id'));
 		if !_.isEmpty(diff)
 			spaceUsers = WorkflowManager.remoteSpaceUsers.find({user: {$in: diff}}, {fields: {user:1, name:1}})
@@ -70,18 +70,18 @@ Template.instance_pick_approve_users.helpers
 			stepApproves.push {id: spaceUser.user, name: spaceUser.name};
 		_.each stepApproves, (stepApprove)->
 			stepApprove.stepId = stepId;
-		console.log('diff', diff);
+		console.debug('diff', diff);
 		rvalue = [];
 		orderRvalueIds = stepApprovesOptions;
 		if _.isEmpty(orderRvalueIds)
 			orderRvalueIds = _.pluck(stepApproves, 'id')
 		_.each orderRvalueIds, (uid)->
-			console.log('uid', uid);
+			console.debug('uid', uid);
 			stepApprove = _.find stepApproves, (su)->
 				return su.id == uid;
 			if stepApprove
 				rvalue.push(stepApprove)
-		console.log('rvalue', rvalue);
+		console.debug('rvalue', rvalue);
 		return rvalue
 
 	hasSelectedUser: ()->
@@ -162,13 +162,13 @@ Template.instance_pick_approve_users.events
 		delete userElement[0].dataset.showOrg
 		userElement.click();
 
-Template.instance_pick_approve_users.onRendered ()->
-	console.log('Template.instance_pick_approve_users.onRendered...');
-	this.autorun ()->
-		pickApproveSteps = InstanceManager.pickApproveSteps()
-		Meteor.defer ()->
-			_.each pickApproveSteps, (step)->
-				if($("[id='#{step._id}']").length == 1)
-					console.log('step._id', step._id);
-					if !$("[id='#{step._id}']")[0].checked
-						$("[id='#{step._id}']").trigger('click')
+#Template.instance_pick_approve_users.onRendered ()->
+#	console.debug('Template.instance_pick_approve_users.onRendered...');
+#	this.autorun ()->
+#		pickApproveSteps = InstanceManager.pickApproveSteps()
+#		Meteor.defer ()->
+#			_.each pickApproveSteps, (step)->
+#				if($("[id='#{step._id}']").length == 1)
+#					console.debug('step._id', step._id);
+#					if !$("[id='#{step._id}']")[0].checked
+#						$("[id='#{step._id}']").trigger('click')
