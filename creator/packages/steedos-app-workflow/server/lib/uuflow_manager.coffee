@@ -26,6 +26,13 @@ uuflowManager.check_authorization = (req, res) ->
 
 	return user
 
+uuflowManager.checkNestStepUsersIsValid = (selected, scope, nextStep)->
+	if nextStep?.allow_pick_approve_users
+		return true;
+	if _.difference(selected, scope).length > 0
+		return false
+	return true
+
 uuflowManager.getInstance = (instance_id) ->
 	ins = db.instances.findOne(instance_id)
 	if not ins
@@ -914,7 +921,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 			else
 				# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
 				next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
-				if _.difference(next_step_users, next_user_ids).length > 0
+				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
 					# 若合法，执行流转操作
@@ -1124,7 +1131,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
 						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
-						if _.difference(next_step_users, next_user_ids).length > 0
+						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
 							# 若合法，执行流转操作
@@ -1329,7 +1336,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 						else
 							# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
 							next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
-							if _.difference(next_step_users, next_user_ids).length > 0
+							if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_step)
 								throw new Meteor.Error('error!', "指定的下一步处理人有误")
 							else
 								# 若合法，执行流转操作
@@ -1546,7 +1553,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 					else
 						# 验证next_user是否合法，调用getHandlersManager.getHandlers(:instance_id,当前trace对应的step_id),判断next_user是否在其返回的结果中
 						next_user_ids = getHandlersManager.getHandlers(instance_id, next_step_id)
-						if _.difference(next_step_users, next_user_ids).length > 0
+						if !uuflowManager.checkNestStepUsersIsValid(next_step_users, next_user_ids, next_steps)
 							throw new Meteor.Error('error!', "指定的下一步处理人有误")
 						else
 							# 插入下一步trace记录
@@ -2155,7 +2162,7 @@ uuflowManager.submit_instance = (instance_from_client, user_info) ->
 			else
 				# 验证下一步处理人next_user是否合法
 				checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"])
-				if _.difference(next_step_users, checkUsers).length > 0
+				if !uuflowManager.checkNestStepUsersIsValid(next_step_users, checkUsers, next_step)
 					throw new Meteor.Error('error!', "指定的下一步处理人有误")
 				else
 					# 若合法，执行流转操作
