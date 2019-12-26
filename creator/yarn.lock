@@ -592,10 +592,10 @@
   resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.14.0.tgz#a0da83a10864db9ec1375c6b61cb250d16fbb362"
   integrity sha512-dvSY5Q4ak2ZoRQ3TrP3INVtrkaTXWxjP2qqTu9CexkJVQa6VwI1N+HSFuI4C2GsDSGIK2McsvjJyj7opAFE+OQ==
 
-"@steedos/steedos-plugin-workflow@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.0.2.tgz#208d6266aa9b7caea93e7569d9b0abfd432f8dd9"
-  integrity sha512-x8CHozrJ1ZUBJr7aT0u0NeMKZG04aBfr8Pya3cTiTycbaA9sAMmF2VuoInJCtT6HnCqNT4XuErExbaCF7skXGw==
+"@steedos/steedos-plugin-workflow@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.0.3.tgz#ac5a146d6a5069829b6d7bbf4d6cb8b51d1231e5"
+  integrity sha512-sUnMGdpFDhk3M0rc2qCz92EIiDsfDwgkql0dRC0Fg40VN33Rb9ril2ZBCSoQA9WYHw0i5sMz0Ko9MrPPZVBn+g==
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
