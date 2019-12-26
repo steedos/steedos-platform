@@ -533,9 +533,7 @@ function setDetailOwner(doc, object_name, userId) {
             if (masterId && _.isString(masterId)) { /* 排除字段属性multiple:true的情况 */
                 let masterObject = Creator.getObject(masterObjectName);
                 let nameFieldKey = masterObject.NAME_FIELD_KEY;
-                let fields = { owner: 1, space: 1 };
-                fields[nameFieldKey] = 1;
-                let masterRecord = masterCollection.findOne(doc[k], { fields: fields });
+                let masterRecord = masterCollection.findOne(doc[k]);
                 if (masterRecord) {
                     if (userId && masterRecord.space) { /* 新增和修改子表记录中的master_detial字段时需要根据sharing校验是否有权限新增和修改 */
                         let sharing = f.sharing || 'masterWrite'; /* 默认对主表有编辑权限才可新建或者编辑子表 */
