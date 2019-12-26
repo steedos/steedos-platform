@@ -59,9 +59,6 @@ Template.instance_pick_approve_users.helpers
 		stepApproves = ApproveManager.getStepApproveUsers(WorkflowManager.getInstance(), stepId);
 		selectedStepApproves = getStepApproves(stepId)
 		stepApprovesOptions = getStepApproveOptions(stepId);
-		console.debug('stepApprovesOptions', stepApprovesOptions);
-		console.debug('selectedStepApproves', selectedStepApproves);
-		console.debug('-------', _.uniq(stepApprovesOptions))
 		diff = _.difference(_.uniq(stepApprovesOptions), _.pluck(stepApproves, 'id'));
 		if !_.isEmpty(diff)
 			spaceUsers = WorkflowManager.remoteSpaceUsers.find({user: {$in: diff}}, {fields: {user:1, name:1}})
@@ -70,18 +67,15 @@ Template.instance_pick_approve_users.helpers
 			stepApproves.push {id: spaceUser.user, name: spaceUser.name};
 		_.each stepApproves, (stepApprove)->
 			stepApprove.stepId = stepId;
-		console.debug('diff', diff);
 		rvalue = [];
 		orderRvalueIds = stepApprovesOptions;
 		if _.isEmpty(orderRvalueIds)
 			orderRvalueIds = _.pluck(stepApproves, 'id')
 		_.each orderRvalueIds, (uid)->
-			console.debug('uid', uid);
 			stepApprove = _.find stepApproves, (su)->
 				return su.id == uid;
 			if stepApprove
 				rvalue.push(stepApprove)
-		console.debug('rvalue', rvalue);
 		return rvalue
 
 	hasSelectedUser: ()->
