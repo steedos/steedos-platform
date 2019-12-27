@@ -1,6 +1,7 @@
 name: notes
 label: 备忘
 icon: note
+enable_search: true
 fields:
   name:
     label: 标题

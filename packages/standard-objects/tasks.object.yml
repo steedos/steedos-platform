@@ -1,6 +1,7 @@
 name: tasks
 label: 任务
 icon: task
+enable_search: true
 fields:
   name:
     label: 主题

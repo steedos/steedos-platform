@@ -1,6 +1,7 @@
 name: events
 label: 日程
 icon: event
+enable_search: true
 fields:
   name:
     label: 主题
