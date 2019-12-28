@@ -34,7 +34,7 @@ Creator.Objects['company'].triggers = {
         todo: function (userId, doc) {
             if (doc.organization) {
                 /* 设置了关联组织值，则更新相关属性*/
-                Creator.getCollection("organizations").update({
+                Creator.getCollection("organizations").direct.update({
                     _id: doc.organization
                 }, {
                     $set: {
@@ -42,7 +42,7 @@ Creator.Objects['company'].triggers = {
                         is_company: true
                     }
                 });
-                Creator.getCollection("company").update({
+                Creator.getCollection("company").direct.update({
                     _id: doc._id
                 }, {
                     $set: {
@@ -73,7 +73,7 @@ Creator.Objects['company'].triggers = {
                     is_company: true,
                     sort_no: 100
                 });
-                Creator.getCollection("company").update({
+                Creator.getCollection("company").direct.update({
                     _id: doc._id
                 }, {
                     $set: {
@@ -125,7 +125,7 @@ Creator.Objects['company'].triggers = {
             if (this.previous.organization !== doc.organization) {
                 if (doc.organization) {
                     /* 设置了关联组织值，则更新相关属性*/
-                    Creator.getCollection("organizations").update({
+                    Creator.getCollection("organizations").direct.update({
                         _id: doc.organization
                     }, {
                         $set: {
@@ -133,7 +133,7 @@ Creator.Objects['company'].triggers = {
                             is_company: true
                         }
                     });
-                    Creator.getCollection("company").update({
+                    Creator.getCollection("company").direct.update({
                         _id: doc._id
                     }, {
                         $set: {

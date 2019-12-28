@@ -422,6 +422,7 @@ if (Meteor.isServer) {
             //     }
             // }
         }
+        // 这里增加doc.parent判断是因为编辑根组织时modifier.$set.parent为空，通过doc.parent来判断原来是否有父组织来区别下
         if(doc.parent && (!modifier.$set.parent || (modifier.$unset && modifier.$unset.parent))){
             throw new Meteor.Error(400, "organizations_error_organizations_parent_required");
         }
