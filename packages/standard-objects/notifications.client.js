@@ -61,34 +61,38 @@ var fetchMyNotifications = function(){
 Meteor.startup(function(c){
     Meteor.autorun(function(){
         if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
-            if(Steedos.isMobile()){
-                // 初始化界面及切换工作区时，需要请求通知数据
-                fetchMyNotifications();
-            }
-            else{
-                var query = Creator.getCollection("notifications").find();
+            var query = Creator.getCollection("notifications").find();
+            if(!Steedos.isMobile()){
+                // 手机上不走push.js
                 if(Push.debug){
                     console.log("init my_notifications observeChanges");
                 }
                 // 发起获取发送通知权限请求
-                onRequestSuccess = function(){
+                var onRequestSuccess = function(){
                     console.log("Request my_notifications push permission success.")
                 }
-                onRequestFailed = function(){
+                var onRequestFailed = function(){
                     console.log("Request my_notifications push permission failed.")
                 }
                 Steedos.Push.Permission.request(onRequestSuccess, onRequestFailed);
-
-                query.observeChanges({
-                    added: function(id, notification){
-                        handleMyNotifications(id, notification);
-                        // 订阅到新通知过来时，重新请求通知数据
-                        fetchMyNotifications();
-                    }
-                });
-                // 初始化界面及切换工作区时，需要请求通知数据
-                fetchMyNotifications();
             }
+
+            query.observeChanges({
+                added: function(id, notification){
+                    // 订阅到新通知过来时，重新请求通知数据
+                    fetchMyNotifications();
+                    if(!Steedos.isMobile()){
+                        // 手机上不走push.js
+                        handleMyNotifications(id, notification);
+                    }
+                },
+                changed: function(id, notification){
+                    // 订阅到新通知过来时，重新请求通知数据
+                    fetchMyNotifications();
+                }
+            });
+            // 初始化界面及切换工作区时，需要请求通知数据
+            fetchMyNotifications();
         }
     });
 });
