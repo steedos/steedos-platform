@@ -59,13 +59,17 @@ var fetchMyNotifications = function(){
 }
 
 Meteor.startup(function(c){
-    if(!Steedos.isMobile()){
-        if(Push.debug){
-            console.log("init my_notifications observeChanges");
-        }
-        Meteor.autorun(function(){
-            if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
+    Meteor.autorun(function(){
+        if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
+            if(Steedos.isMobile()){
+                // 初始化界面及切换工作区时，需要请求通知数据
+                fetchMyNotifications();
+            }
+            else{
                 var query = Creator.getCollection("notifications").find();
+                if(Push.debug){
+                    console.log("init my_notifications observeChanges");
+                }
                 // 发起获取发送通知权限请求
                 onRequestSuccess = function(){
                     console.log("Request my_notifications push permission success.")
@@ -75,7 +79,7 @@ Meteor.startup(function(c){
                 }
                 Steedos.Push.Permission.request(onRequestSuccess, onRequestFailed);
 
-                handle = query.observeChanges({
+                query.observeChanges({
                     added: function(id, notification){
                         handleMyNotifications(id, notification);
                         // 订阅到新通知过来时，重新请求通知数据
@@ -85,6 +89,6 @@ Meteor.startup(function(c){
                 // 初始化界面及切换工作区时，需要请求通知数据
                 fetchMyNotifications();
             }
-        });
-    }
+        }
+    });
 });
