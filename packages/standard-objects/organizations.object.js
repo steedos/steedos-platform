@@ -422,7 +422,7 @@ if (Meteor.isServer) {
             //     }
             // }
         }
-        if(!modifier.$set.parent || (modifier.$unset && modifier.$unset.parent)){
+        if(doc.parent && (!modifier.$set.parent || (modifier.$unset && modifier.$unset.parent))){
             throw new Meteor.Error(400, "organizations_error_organizations_parent_required");
         }
         // else if (modifier.$set.name != doc.name)
