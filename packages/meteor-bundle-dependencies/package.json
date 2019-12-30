@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-dependencies",
-  "version": "1.14.2",
+  "version": "1.14.5",
   "description": "",
   "main": "index.js",
   "private": false,
