@@ -188,6 +188,7 @@ install("dburles:collection-helpers");
 install("mrt:moment");
 install("mrt:moment-timezone");
 install("steedos:loaders-css");
+install("matb33:collection-hooks");
 install("steedos:smsqueue");
 install("steedos:useraccounts-core");
 install("steedos:accounts-t9n");
@@ -205,7 +206,6 @@ install("steedos:cfs-filesystem");
 install("steedos:cfs-standard-packages");
 install("steedos:cfs-aliyun");
 install("steedos:cfs-s3");
-install("matb33:collection-hooks");
 install("simple:json-routes");
 install("steedos:ionicons");
 install("steedos:theme");
@@ -478,7 +478,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "bcrypt",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "main": "./bcrypt"
 };
 
@@ -636,7 +636,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"mkdirp":{"package.json":function(require,exports,module){
+}},"superagent":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/superagent/package.json                                                             //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "superagent",
+  "version": "3.8.3",
+  "main": "./lib/node/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"node":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/superagent/lib/node/index.js                                                        //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}}},"mkdirp":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -829,7 +856,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.14.0",
+  "version": "1.14.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -846,10 +873,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.14.0",
-    "@steedos/migrate": "^1.14.0",
-    "@steedos/objectql": "^1.14.0",
-    "@steedos/standard-objects": "^1.14.0",
+    "@steedos/auth": "^1.14.2",
+    "@steedos/migrate": "^1.14.2",
+    "@steedos/objectql": "^1.14.2",
+    "@steedos/standard-objects": "^1.14.2",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -879,7 +906,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.14.0",
+    "@steedos/meteor-bundle-runner": "^1.14.2",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -922,7 +949,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.14.0",
+  "version": "1.14.2",
   "main": "lib/index.js"
 };
 
@@ -982,7 +1009,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.14.0",
+  "version": "1.14.2",
   "main": "lib/index.js"
 };
 
@@ -1252,34 +1279,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"superagent":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/superagent/package.json                                                             //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "superagent",
-  "version": "3.8.3",
-  "main": "./lib/node/index.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"node":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/superagent/lib/node/index.js                                                        //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}}},"sha256":{"package.json":function(require,exports,module){
+}}},"sha256":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //

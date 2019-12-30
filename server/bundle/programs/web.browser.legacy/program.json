@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "69c15806460884f5b39f4ab98c75060b841f3b68.js",
+      "path": "c0701274305117a19d05c04ecf43146af131637f.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/69c15806460884f5b39f4ab98c75060b841f3b68.js?meteor_js_resource=true",
-      "size": 7993348,
-      "hash": "69c15806460884f5b39f4ab98c75060b841f3b68",
-      "sri": "cJhsZm06eF9LCPmxYZDlAg0aBm/KRIvdFlQcbqw7Qwt9a+mDjzfNzJkfe5n7tD9EqPj/B8mHFhUR3z4M8GYg4g=="
+      "url": "/c0701274305117a19d05c04ecf43146af131637f.js?meteor_js_resource=true",
+      "size": 8007421,
+      "hash": "c0701274305117a19d05c04ecf43146af131637f",
+      "sri": "Jcpa1VSf2Cc+Yz/PA0FqmUdMn0QUDzM88bho+8M+HoSjdkc//vAsFbL47beH6xWo6pPQpVBEiILA1sJf29kufg=="
     },
     {
-      "path": "69c15806460884f5b39f4ab98c75060b841f3b68.stats.json",
+      "path": "c0701274305117a19d05c04ecf43146af131637f.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/69c15806460884f5b39f4ab98c75060b841f3b68.stats.json?meteor_js_resource=true",
-      "size": 178335,
-      "hash": "35b4e6d5856b12af5e561ca8c1fdc85fcfb34eaa",
-      "sri": "qtLnC3RdO+FI9NTy0gOzySnB7zhIeqjuSsjjEiIlLafX34x9Z2xW8rfFhG/vIzAovNmEOw4z5l3kkzkqtZcVKg=="
+      "url": "/c0701274305117a19d05c04ecf43146af131637f.stats.json?meteor_js_resource=true",
+      "size": 178337,
+      "hash": "b2e836ecc33e727492ced3a17aa90c89e1db1986",
+      "sri": "sV/qj7ZcEsgL42WdIhhIPnONZRf6HIqq6ww8mbOUIDFGrCVAcdyL0Zpb965AZIpv7QfU47DiShFtcHEH+mIJ7Q=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/scheduler.js",
@@ -4386,12 +4386,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/views/grid.less.css?hash=950c8e2a058d2e0648b36a085dd344b356adb548",
+      "url": "/packages/steedos_creator/client/views/grid.less.css?hash=5f129fb3c246b66bbb7185d8ced8ffe030a18a5a",
       "sourceMap": "packages/steedos_creator/client/views/grid.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/views/950c8e2a058d2e0648b36a085dd344b356adb548.map",
-      "size": 3305,
-      "hash": "950c8e2a058d2e0648b36a085dd344b356adb548",
-      "sri": "uErJLQB+dbI7CQWe8jqkHLirxT+JuYJEicZTsPNdtUE0FOFwxtRP8m2WIUDXcuOSnqta617lLwd/QplIQ4zZUA=="
+      "sourceMapUrl": "/packages/steedos_creator/client/views/5f129fb3c246b66bbb7185d8ced8ffe030a18a5a.map",
+      "size": 6678,
+      "hash": "5f129fb3c246b66bbb7185d8ced8ffe030a18a5a",
+      "sri": "pEhrnMr3R28nM/UClsCSL7/STyl0l6lPcDBqyckedeWjYfVgTpBLB+ardNLAVlqxsZqIufTaqhDGuLadfTTe2A=="
     },
     {
       "path": "packages/steedos_creator/client/views/view.less.css",
@@ -4898,12 +4898,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_workflow/client/views/instance/pick_approve_users.less.css?hash=eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7",
+      "url": "/packages/steedos_workflow/client/views/instance/pick_approve_users.less.css?hash=78e92445fabe5b9e048ed2863fe6b4f235cf4351",
       "sourceMap": "packages/steedos_workflow/client/views/instance/pick_approve_users.less.css.map",
-      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7.map",
-      "size": 423,
-      "hash": "eef4530ec9449c1d9d941e0bfb2c452e8ccef6c7",
-      "sri": "ij1no8Q0DAjgSR5Nmk8JZaCdl6BwHJ/grAQVqz4njCVacWu1DfxMJse8NRLazwexO5K5WkJgJIFz6CrIKbig+w=="
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/instance/78e92445fabe5b9e048ed2863fe6b4f235cf4351.map",
+      "size": 1102,
+      "hash": "78e92445fabe5b9e048ed2863fe6b4f235cf4351",
+      "sri": "V5pjpXEY6apU39fGDlpwTUAEhFWYotpPLmEBdUimwzsKDGGH2urPvTbXwyez1MZuv3mPd1W4Erms5xfq2N8d4g=="
     },
     {
       "path": "packages/steedos_workflow/client/views/list/flow_list_box.less.css",
@@ -4994,12 +4994,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_workflow/client/views/workflow_main.less.css?hash=198a18b7779d6b5bc9e2b0fb6a004874467c2276",
+      "url": "/packages/steedos_workflow/client/views/workflow_main.less.css?hash=4c54e07a81a7341544fae7c29ce534a9f47daeaa",
       "sourceMap": "packages/steedos_workflow/client/views/workflow_main.less.css.map",
-      "sourceMapUrl": "/packages/steedos_workflow/client/views/198a18b7779d6b5bc9e2b0fb6a004874467c2276.map",
-      "size": 15855,
-      "hash": "198a18b7779d6b5bc9e2b0fb6a004874467c2276",
-      "sri": "Mogmnt/RYztG5+n7ojzGpsLiBOHkQwK16hObS+2FDpEp4rqxi1nb86trmh3T+S4HaGdA0KQ3++r3YPZw97+1yA=="
+      "sourceMapUrl": "/packages/steedos_workflow/client/views/4c54e07a81a7341544fae7c29ce534a9f47daeaa.map",
+      "size": 16256,
+      "hash": "4c54e07a81a7341544fae7c29ce534a9f47daeaa",
+      "sri": "OAlgKuSF2FY3ciOTmT+cbDBUq4jHajO2zaS35hOGY7oc/8hYLYJSEt9iwCpFF525DX0gZFPCl+X8ZTqPG0nVvg=="
     },
     {
       "path": "packages/steedos_workflow/client/views/flow/admin_flows.less.css",

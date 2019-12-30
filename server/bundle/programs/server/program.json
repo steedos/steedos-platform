@@ -465,6 +465,9 @@
       "path": "packages/steedos_loaders-css.js"
     },
     {
+      "path": "packages/matb33_collection-hooks.js"
+    },
+    {
       "sourceMap": "packages/steedos_smsqueue.js.map",
       "path": "packages/steedos_smsqueue.js"
     },
@@ -519,9 +522,6 @@
     {
       "sourceMap": "packages/steedos_cfs-s3.js.map",
       "path": "packages/steedos_cfs-s3.js"
-    },
-    {
-      "path": "packages/matb33_collection-hooks.js"
     },
     {
       "sourceMap": "packages/simple_json-routes.js.map",
