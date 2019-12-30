@@ -271,6 +271,9 @@ pushManager.get_title = (parameters, lang="zh-CN")->
 		title["email"] = TAPi18n.__ 'instance.email.title.return_pending_inbox', {from_username: from_username,instance_name: instance_name,applicant_name: applicant_name,approve_type: approve_type}, lang
 	return title
 
+pushManager.getSmsBody  = (parameters, lang="zh-CN")->
+	return TAPi18n.__ 'instance.sms.submit_pending_inbox', parameters, lang
+
 pushManager.get_badge = (send_from, user_id)->
 	if not ['first_submit_inbox', 'submit_pending_rejected_inbox', 'submit_pending_inbox', 'current_user', 'terminate_approval', 'reassign_new_inbox_users', 'trace_approve_cc', 'trace_approve_cc_submit', 'auto_submit_pending_inbox', 'return_pending_inbox'].includes(send_from)
 		return null
@@ -495,6 +498,17 @@ pushManager.send_message = (steedos_ids, body, current_user_info)->
 
 	pushManager.send_to_imo(steedos_ids, body, current_user_info) if body
 
+
+pushManager.send_to_sms = (to_user, message, current_user_info, spaceId)->
+	if Meteor.settings?.workflow?.sms_notification && to_user?.mobile
+		spaceUser = db.space_users.findOne({user: to_user._id, space: spaceId}, {fields: {sms_notification: 1}})
+		if spaceUser?.sms_notification
+			SMSQueue.send({
+				RecNum: to_user.mobile,
+				msg: message
+				createdBy: current_user_info._id
+			}, spaceId)
+
 #通知服务
 pushManager.send_instance_notification = (send_from, instance, description, current_user_info, cc_user_ids)->
 		# Meteor.defer ()->
@@ -630,6 +644,10 @@ pushManager.send_instance_notification = (send_from, instance, description, curr
 					pushManager.send_email_to_SMTP(title["email"], content, to_user, from_user)
 					# 发送消息到push service 服务
 					pushManager.send_message([to_user.steedos_id], push_body, current_user_info)
+					# 给下一步处理人发送短信
+					if ['reassign_new_inbox_users', 'submit_pending_rejected_applicant_inbox', 'submit_pending_rejected_inbox', 'submit_pending_inbox', 'first_submit_inbox', 'return_pending_inbox'].includes(send_from)
+						pushManager.send_to_sms(to_user, pushManager.getSmsBody(parameters, lang), current_user_info, space_id);
+
 					# qq企业用户则发送客户端tips
 					pushManager.send_to_qq(to_user, from_user, space_id, instance_id, instance.state, push_body, lang)
 			catch e

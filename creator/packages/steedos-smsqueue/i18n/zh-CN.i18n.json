@@ -1,0 +1,32 @@
+{
+	"sms": {
+		"remind": {
+			"code": "SMS_67200967",
+			"template": "催办通知：__instance_name__，办结时限：__deadline__。申请单：__open_app_url__"
+		},
+		"notify_wenshu": {
+			"code": "SMS_61725087",
+			"template": "您好，用户__handler__在申请单__instance__中填写的批阅意见为：__description__。"
+		},
+		"chnage_mobile": {
+			"code": "SMS_67660108",
+			"template": "通讯录中您的手机号已被__name__修改为__number__。"
+		},
+		"mobile_verification_code": {
+			"code": "SMS_63370455",
+			"template": "验证码：__code__"
+		},
+		"meeting_cc": {
+			"code": "SMS_71335682",
+			"template": "会议通知：__instance_name__，申请单：__open_app_url__"
+		},
+		"calendar_event": {
+			"code": "SMS_67200967",
+			"template": "会议通知：__event_action__,标题：__event_title__,时间：__event_time__,地点：__event_location__"
+		},
+		"change_password": {
+			"code": "SMS_67200967",
+			"template": "系统通知：__name__修改了您的登录密码"
+		}
+	}
+}

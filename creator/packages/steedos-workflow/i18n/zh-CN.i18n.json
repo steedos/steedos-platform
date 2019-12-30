@@ -393,6 +393,9 @@
 				"return_pending_inbox": "{$to_username}:<br/><br/>您好！<br/><br/>您的{$instance_name}被退回。<br/>退回的理由是：{$description}。"
 			}
 		},
+	  	"sms": {
+		  "submit_pending_inbox": "您有新的待审核：{$instance_name}，提交人：{$applicant_name}"
+		},
 		"remindMessage": {
 			"update_failed": "申请单状态已更新，您的操作未能执行。",
 			"has_deleted": "申请单已删除。"

@@ -9,17 +9,17 @@ initTrigger = (object_name, trigger)->
 			  this.object_name = object_name
 			  return trigger.todo.apply(this, arguments)
 		if trigger.when == "before.insert"
-			  return collection.before.insert(todoWrapper)
+			  return collection?.before?.insert(todoWrapper)
 		  else if trigger.when == "before.update"
-			  return collection.before.update(todoWrapper)
+			  return collection?.before?.update(todoWrapper)
 		  else if trigger.when == "before.remove"
-			  return collection.before.remove(todoWrapper)
+			  return collection?.before?.remove(todoWrapper)
 		  else if trigger.when == "after.insert"
-			  return collection.after.insert(todoWrapper)
+			  return collection?.after?.insert(todoWrapper)
 		  else if trigger.when == "after.update"
-			  return collection.after.update(todoWrapper)
+			  return collection?.after?.update(todoWrapper)
 		  else if trigger.when == "after.remove"
-			  return collection.after.remove(todoWrapper)
+			  return collection?.after?.remove(todoWrapper)
 	catch error
 		console.error('initTrigger error', error)
 

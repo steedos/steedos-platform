@@ -23,6 +23,9 @@ Creator.createCollection = (object)->
 		if object.custom
 			return new Meteor.Collection(collection_key, Creator._CREATOR_DATASOURCE)
 		else
+			if Meteor.isServer
+				if collection_key == '_sms_queue' && SMSQueue?.collection
+					return SMSQueue.collection
 			return new Meteor.Collection(collection_key)
 
 

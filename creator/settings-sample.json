@@ -88,6 +88,12 @@
             "sdkappid": "xxx",
             "appkey": "xxx",
             "signname": "xxx" // 短信签名
+        },
+        "webservice": {
+            "url": "",  //短信平台接口地址
+            "smsqueue_interval": 1000, //发送间隔
+            "space_token": "",
+            "signname": "xxx" // 短信签名
         }
     },
     //同步OA表单
@@ -145,6 +151,9 @@
             "client_id": "4e1bmtawsf89fquf8pb1btjadr",
             "client_secret": "hjx5dwp6m38mt89g44s6fguhho"
         }
+    },
+    "workflow": {
+        "sms_notification": false //提交申请单后，给下一步处理人发送短信提醒消息。 true: 发送， false：不发送。
     },
     "plugins": ["@steedos/plugin-stimulsoft-report"] //配置使用的插件， 程序将自动调用其init函数。需要手动安装插件，eg: npm i xxx  ; yarn add xxx
 }

@@ -391,7 +391,10 @@
 				"return_pending_inbox": "Hi {$to_username},<br/><br/>Your request for {$instance_name} has been returned by {$current_username}.He / She has attached the following comments with the request.<br/>Comments : {$description}."
 			}
 		},
-		"remindMessage": {
+		"sms": {
+		  "submit_pending_inbox": "您有新的待审核：{$instance_name}，提交人：{$applicant_name}"
+		},
+	  	"remindMessage": {
 			"update_failed": "Requested action not taken, because this request has been updated.",
 			"has_deleted": "This report has been deleted."
 		},
