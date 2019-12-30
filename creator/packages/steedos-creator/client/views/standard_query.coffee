@@ -60,6 +60,8 @@ Template.standard_query_modal.helpers
 					if _.isArray(_reference_to)
 						schema[field].type = Object
 						schema[field].blackbox = true
+					if !_.isEmpty(_reference_to)
+						delete schema[field].optionsFunction
 
 			if Creator.checkFieldTypeSupportBetweenQuery(object_fields[field].type)
 				schema[field + "_endLine"] =  clone(obj_schema[field])

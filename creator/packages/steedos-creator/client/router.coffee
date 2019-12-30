@@ -248,7 +248,8 @@ objectRoutes.route '/grid/:list_view_id',
 	action: (params, queryParams)->
 		Session.set("record_id", null)
 		# 每次进视图应该把过滤器关联的视图及对象清空，否则有bug：刷新浏览器时过滤器中已保存条件未能显示出来 #1167
-		Session.set("filter_target", null)
+		if Session.get("object_name") != FlowRouter.getParam("object_name") or Session.get("list_view_id") != FlowRouter.getParam("list_view_id")
+			Session.set("filter_target", null)
 
 		if Session.get("object_name") != FlowRouter.getParam("object_name")
 			Session.set("list_view_id", null)

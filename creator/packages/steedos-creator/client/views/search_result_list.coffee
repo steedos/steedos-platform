@@ -139,8 +139,9 @@ _expandFields = (object_name, columns)->
 			ref = _.compact(ref)
 			
 			ref = ref.join(",")
-			expand_fields.push(n + "($select=" + ref + ")")
-			# expand_fields.push n + "($select=name)"
+			if ref
+				expand_fields.push(n + "($select=" + ref + ")")
+				# expand_fields.push n + "($select=name)"
 	return expand_fields
 
 Template.search_result_list.onRendered -> 

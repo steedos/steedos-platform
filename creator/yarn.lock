@@ -412,10 +412,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.10.2":
-  version "1.10.2"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.10.2.tgz#0a06cc692587b28c27ffe62b107cbf138da50641"
-  integrity sha1-CgbMaSWHsown/+YrEHy/E42lBkE=
+"@steedos/accounts@^1.10.4":
+  version "1.10.4"
+  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.10.4.tgz#df3131de8761534fbfd033bc0f661459a11f9110"
+  integrity sha1-3zEx3odhU0+/0DO8D2YUWaEfkRA=
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/password" "^0.19.0"
@@ -437,20 +437,20 @@
     saml-idp "^1.1.0"
     tslib "1.10.0"
 
-"@steedos/app-contracts@^1.13.3":
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.13.3.tgz#d42daff34be68f2814d810a6d642c0196f8863b0"
-  integrity sha512-U2CzHVoyWD88cixNSRvKZjJ6O74+d/06EHvsLFcWYO9BciDcpqGlOC89Evr4YddqSlBuTYh2fN4N2UD91XYlNQ==
+"@steedos/app-contracts@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.14.2.tgz#9c1ba2bd3e0b0704731af334bbbe987345e0b8c4"
+  integrity sha512-oJjuASTGA6JEjoRVF+Dp3Gb49jeKUt83xiWwx3sKkwDZ7AQmjUfd9EpceKd3zSRVXQ/FFxGa6Us6wgVb3U+kNQ==
   dependencies:
     dotenv "^8.2.0"
     dotenv-flow "^3.1.0"
 
-"@steedos/auth@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.14.0.tgz#6118731b8ddf2dbb63f434675132159225132e85"
-  integrity sha512-gQJf2MuH5JsU31GVZDdXll8LGjFMdZS2vPcBqfXMqEJKLvAfVnVIEfikUIaKJGBKWt+a9ltZLYC4xVUprO+oUA==
+"@steedos/auth@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.14.2.tgz#1fdd65eefdf81bdba4510b877cf5dd76efa50afe"
+  integrity sha512-11EyE10KGfbdr2szQg3XmWgwK1JpPgJQTtw71GsKVUM30Af1e3HmELEbPVJ65C+Cg39KMSPzjMx/BvGN7R9NBA==
   dependencies:
-    "@steedos/objectql" "^1.14.0"
+    "@steedos/objectql" "^1.14.2"
     bcrypt "^3.0.6"
     cookies "^0.7.3"
     express "^4.16.4"
@@ -459,18 +459,18 @@
     sha256 "^0.2.0"
     underscore "^1.9.1"
 
-"@steedos/core@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.14.0.tgz#a9e46b26b9bda966924eda4b3468b70f59be9a24"
-  integrity sha512-mXk7iMfWiw8picKPmcRTZzfgv+UqJP4yAIprtP0f6y8eJ148WFU8+7h2bY68vArLQKGIwwmGncJ+7zqKwNJBHQ==
+"@steedos/core@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.14.2.tgz#483b71aebc6740d69acdd53c03e4fe3e48373f51"
+  integrity sha512-YoBTXEHOwq4GrzzciW9WYtWu5Lt9Ce1yVthh/VIwJDLMVVH9ebI1OzyqPpXMr5CBu/YAOAabuZJIA7Dq4qzxgw==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.14.0"
-    "@steedos/migrate" "^1.14.0"
-    "@steedos/objectql" "^1.14.0"
-    "@steedos/standard-objects" "^1.14.0"
+    "@steedos/auth" "^1.14.2"
+    "@steedos/migrate" "^1.14.2"
+    "@steedos/objectql" "^1.14.2"
+    "@steedos/standard-objects" "^1.14.2"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -498,33 +498,33 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/filters@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.14.0.tgz#a8eebd8e1e3ea23c5122251d11ef038e029437d8"
-  integrity sha512-m4sDpOZJaWe4w/Dk6wt+XddUvE+d/lZj3ZG5RS+mhMjDt6zfJ8H/6vDgIVyYWavtYOxQut4/6LhqASnL3S3ZVw==
+"@steedos/filters@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.14.2.tgz#475d9ad3f23ff4acb6d7ef382fbe1be6eda80d47"
+  integrity sha512-Ima5TqQS6W545C5SGQQNGPjlT78edYS9Vpd3QbHHvQPPfht1nvQPTVHqT/9T/oIMbmPlVQyCpG4dWkrD9Sf8eA==
   dependencies:
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/migrate@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.14.0.tgz#85bf4232f32fda446e25d53466cd1b08f7996039"
-  integrity sha512-aRtbIGA4lVPKoS0z394TZef+C/mTiKBHSmJHqzxycJGRKzgykaswYf5b+ic8YNeBXZ2GEzSy2ztllEnmzjjswQ==
+"@steedos/migrate@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.14.2.tgz#7d0169a2a3aa9da087096d97d2688bc3bdbec7a9"
+  integrity sha512-GTZDyFlJkDL1BnnWQmE9UvFlA2kbcmAfRddnlWOBLi3u28MBhU0GxgE9Fu+S8MMo6+k2T4Fwf6mhKIa4AOQZYw==
   dependencies:
     migrate "^1.6.2"
 
-"@steedos/objectql@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.14.0.tgz#cc20110640e23a3d59216d7678a8ec3a2fe11364"
-  integrity sha512-+fQ+rnKGaEPBw4C5YdEKjYKOS7nB2FibS8pmpv7Vjoi7DzoEycxHVn+4Tmg0sGBzYi5rwUPrY1j5e9PN5nuTwA==
+"@steedos/objectql@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.14.2.tgz#14a8efa3b8994932bd1f299c577cd4e6e7f15372"
+  integrity sha512-OSv2rhN9RwqGc5wdwEtL44Wlh63fra1V3Bn9iOsaaBZsQetuoOSc9ztOKmuTYHpeO9BWkGpNubdrloQ2RtAufQ==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.14.0"
+    "@steedos/filters" "^1.14.2"
     "@steedos/odata-v4-typeorm" "^0.0.24"
-    "@steedos/schemas" "^1.14.0"
-    "@steedos/standard-objects" "^1.14.0"
+    "@steedos/schemas" "^1.14.2"
+    "@steedos/standard-objects" "^1.14.2"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -582,25 +582,21 @@
     underscore "^1.9.1"
     whatwg-fetch "^3.0.0"
 
-"@steedos/schemas@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.14.0.tgz#d4b72c28fc3ce335c082e2910d8411670d98847a"
-  integrity sha512-gHXYR3XrpEGTQAsSu3jjbH9/BRnruyTbFgoYHf48mcH1yvIATkhK7+mL5tIIWLNMysmVfJrcqj0w28/akqwUAQ==
+"@steedos/schemas@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.14.2.tgz#d0ac49ef32489a412bf16b72b202f0dd22d6a395"
+  integrity sha512-Z3WOKla06RrSOBOOjoxdT/ZqavRFyCYtP0KZGv+5hSNAkqB1brgegazAZ+zmvxDpL/Lj/WzhMOXsgQq0CPvPdg==
 
-"@steedos/standard-objects@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.14.0.tgz#a0da83a10864db9ec1375c6b61cb250d16fbb362"
-  integrity sha512-dvSY5Q4ak2ZoRQ3TrP3INVtrkaTXWxjP2qqTu9CexkJVQa6VwI1N+HSFuI4C2GsDSGIK2McsvjJyj7opAFE+OQ==
-
-"@steedos/standard-objects@^1.14.1":
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.14.1.tgz#4fc1b0d81a1abba3ef12b179addd5c21aedaa1d3"
-  integrity sha512-x3NecEIA1/8MjX4xgKu0BaE/BTiE2Qq11gk9qLDKc1eUUFY/YDmnfmbjqjSCfkBPrvKGIKQbQgiLNaGDnvQq+Q==
+"@steedos/standard-objects@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.14.2.tgz#c3079f4eb3b9683e054de41f5222e7267f48ba8c"
+  integrity sha512-8a7/CzzTiZi7/zYmCLHhe3pAcKwmhhvn/3DHQ1lfgpzmDy4Uz7X64veiK+VcFFGaUf21yDRPkRUbIq3CGyEH3A==
 
 "@steedos/steedos-plugin-workflow@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.0.3.tgz#ac5a146d6a5069829b6d7bbf4d6cb8b51d1231e5"
   integrity sha512-sUnMGdpFDhk3M0rc2qCz92EIiDsfDwgkql0dRC0Fg40VN33Rb9ril2ZBCSoQA9WYHw0i5sMz0Ko9MrPPZVBn+g==
+
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
@@ -1180,6 +1176,14 @@ bcrypt-pbkdf@^1.0.0:
   integrity sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
   dependencies:
     tweetnacl "^0.14.3"
+
+bcrypt@3.0.5:
+  version "3.0.5"
+  resolved "https://registry.npm.taobao.org/bcrypt/download/bcrypt-3.0.5.tgz#37a296c48ebf39fe6b28e4da3a221bf80da5aa26"
+  integrity sha1-N6KWxI6/Of5rKOTaOiIb+A2lqiY=
+  dependencies:
+    nan "2.13.1"
+    node-pre-gyp "0.12.0"
 
 bcrypt@^3.0.6:
   version "3.0.6"
@@ -5126,6 +5130,11 @@ mz@^2.4.0, mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+nan@2.13.1:
+  version "2.13.1"
+  resolved "https://registry.npm.taobao.org/nan/download/nan-2.13.1.tgz#a15bee3790bde247e8f38f1d446edcdaeb05f2dd"
+  integrity sha1-oVvuN5C94kfo848dRG7c2usF8t0=
 
 nan@2.13.2:
   version "2.13.2"

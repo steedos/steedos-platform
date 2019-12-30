@@ -101,7 +101,7 @@
 										<li role="presentation" data-value={{value}} data-index={{@index}} data-selectable
 											class="listbox__item {{isPlaceholder}}">
 											<span id="{{value}}"
-												  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+												  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta {{#if activeOption @index}}slds-has-focus{{/if}}"
 												  role="option">
 												{{!----}}
 												{{#if isShowIcon}}
@@ -120,7 +120,7 @@
 									{{/each}}
 									{{#if canCreate}}
 									<li role="presentation">
-										<span class="createNew slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+										<span class="createNew slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta {{#if activeOption 'create'}}slds-has-focus{{/if}}"
 											  role="option">
 											<span class="slds-media__figure">
 												<span class="slds-icon_container steedos-icon-add slds-button__icon">

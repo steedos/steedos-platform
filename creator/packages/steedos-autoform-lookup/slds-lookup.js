@@ -459,7 +459,7 @@ Template.steedosLookups.events({
 			template.uniSelectize.getOptionsFromMethod();
 		}
     },
-    'keydown input.js-universeSelectizeInput': function (e, template) {
+    'keydown input.steedos-lookups-input': function (e, template) {
         var uniSelectize = template.uniSelectize;
         var itemsSelected = uniSelectize.itemsSelected.get();
         var itemsUnselected = uniSelectize.getItemsUnselectedFiltered();
@@ -472,7 +472,6 @@ Template.steedosLookups.events({
         var width = template.uniSelectize.measureString($input.val(), $input) + 10;
 
         $input.width(width);
-
         switch (e.keyCode) {
             case 8: // backspace
                 if ($input.val() === '') {
@@ -499,6 +498,7 @@ Template.steedosLookups.events({
 
             case 13: // enter
                 e.preventDefault();
+                e.stopPropagation();
 
                 if (activeOption === -1 && $input.val() === '') {
                     break;
@@ -536,12 +536,23 @@ Template.steedosLookups.events({
             case 38:    // up
                 if (activeOption > -1) {
                     uniSelectize.activeOption.set(activeOption - 1);
+                    if(activeOption - 1 > -1){
+						Meteor.defer(function () {
+							var focusElement = $(template.find('.slds-has-focus'));
+							focusElement.offsetParent().scrollTop(focusElement.offsetParent().scrollTop() + (focusElement.offset().top-focusElement.offsetParent().offset().top))
+						})
+					}
                 }
                 break;
             case 40:    // down
                 if (activeOption < itemsUnselected.length - 1 ||
                     (activeOption < itemsUnselected.length && uniSelectize.create)) {
+                	// console.debug('activeOption.set', activeOption + 1);
                     uniSelectize.activeOption.set(activeOption + 1);
+					Meteor.defer(function () {
+						var focusElement = $(template.find('.slds-has-focus'));
+						focusElement.offsetParent().scrollTop(focusElement.offsetParent().scrollTop() + (focusElement.offset().top-focusElement.offsetParent().offset().top))
+					})
                 }
                 break;
         }
@@ -612,13 +623,13 @@ Template.steedosLookups.events({
             template.uniSelectize.open.set(false);
         }, 500);
     },
-    // 'scroll .selectize-dropdown-content':  function (e, template) {
+    // 'scroll .slds-listbox_vertical':  function (e, template) {
     //     Meteor.clearTimeout(template.uniSelectize.timeoutId);
     //     template.uniSelectize.timeoutId = Meteor.setTimeout(function () {
     //         template.uniSelectize.open.set(false);
     //     }, 5000);
     // },
-    // 'mouseenter .selectize-dropdown-content > div': function (e, template) {
+    // 'mouseenter .slds-listbox_vertical > li': function (e, template) {
     //     var $el = $(e.target);
     //     var elIndex = $el.attr('data-index');
     //     var itemsUnselected = template.uniSelectize.getItemsUnselectedFiltered();

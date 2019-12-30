@@ -272,8 +272,17 @@ Template.creator_table_cell.helpers
 							val = selectedOptions.getProperty("label")
 			else if _field.type == "filesize"
 				val = formatFileSize(val)
-			else if _field.type == "number" && _.isNumber(val)
-				val = Number(val).toFixed(_field.scale)
+			else if ["number", "currency"].indexOf(_field.type) > -1 && _.isNumber(val)
+				fieldScale = 0
+				if _field.scale
+					fieldScale = _field.scale
+				else if _field.scale != 0
+					fieldScale = if _field.type == "currency" then 2 else 0
+				val = Number(val).toFixed(fieldScale)
+				reg = /(\d)(?=(\d{3})+\.)/g
+				if fieldScale == 0
+					reg = /(\d)(?=(\d{3})+\b)/g
+				val = val.replace(reg, '$1,')
 			else if _field.type == "markdown"
 				val = Spacebars.SafeString(marked(val))
 

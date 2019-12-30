@@ -632,6 +632,9 @@ Creator.getFieldsForReorder = (schema, keys, isSingle) ->
 
 	return fields
 
+Creator.isFilterValueEmpty = (v) ->
+	return typeof v == "undefined" || v == null || Number.isNaN(v) || v.length == 0
+
 # END
 
 if Meteor.isServer

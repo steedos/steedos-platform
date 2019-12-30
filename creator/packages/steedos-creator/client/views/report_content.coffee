@@ -979,7 +979,7 @@ renderReport = (reportObject)->
 	innerStackingBox = $(".filter-list-wraper .innerStacking") #tabular/summary/matrix三种dx控件报表容器
 	jsreportBox = $(".filter-list-wraper #jsreport") #jsreport报表容器
 	emptyBox = $(".filter-list-wraper .creator-report-empty")
-	if filter_items and filter_items.length and filter_items.find((n)-> return n.is_required && _.isEmpty(n.value))
+	if filter_items and filter_items.length and filter_items.find((n)-> return n.is_required && Creator.isFilterValueEmpty(n.value))
 		# 存在未填写的必要过滤条件则显示提示
 		innerStackingBox.hide();
 		jsreportBox.hide()
