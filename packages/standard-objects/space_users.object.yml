@@ -113,6 +113,9 @@ fields:
     omit: true
     name: organization
     filterable: true
+  sms_notification:
+    label: 接收短信提醒
+    type: boolean
   user_accepted:
     type: boolean
     label: 有效
