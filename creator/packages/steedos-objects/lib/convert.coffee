@@ -5,7 +5,31 @@
 		else
 			return {label: foo[0], value: foo[0]}
 
-	Creator.convertObject = (object)->
+	convertField = (object_name, field_name, field, spaceId)->
+		if Meteor.isServer && spaceId && field.type == 'select'
+			code = field.picklist || "#{object_name}.#{field_name}";
+			if code
+				picklist = Creator.getPicklist(code, spaceId);
+				if picklist
+					options = [];
+					allOptions = [];
+					picklistOptions = Creator.getPickListOptions(picklist)
+					picklistOptions = _.sortBy(picklistOptions, 'sort_no')?.reverse();
+					_.each picklistOptions, (item)->
+						label = item.name
+						value = item.value || item.name
+						allOptions.push({label: label, value: value, enable: item.enable})
+						if item.enable
+							options.push({label: label, value: value})
+						if item.default
+							field.defaultValue = value
+					if options.length > 0
+						field.options = options
+					if allOptions.length > 0
+						field.allOptions = allOptions
+		return field;
+
+	Creator.convertObject = (object, spaceId)->
 		_.forEach object.triggers, (trigger, key)->
 
 			if (Meteor.isServer && trigger.on == "server") || (Meteor.isClient && trigger.on == "client")
@@ -69,6 +93,9 @@
 					action._visible = _visible.toString()
 
 		_.forEach object.fields, (field, key)->
+
+			field = convertField(object.name, key, field, spaceId);
+
 			if field.options && _.isString(field.options)
 				try
 					_options = []

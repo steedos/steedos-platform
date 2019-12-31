@@ -1,3 +1,5 @@
+clone = require('clone')
+
 Creator.getPermissions = (object_name, spaceId, userId)->
 	if Meteor.isClient
 		if !object_name
@@ -147,7 +149,7 @@ if Meteor.isServer
 		_.each Creator.objectsByName, (object, object_name)->
 			_i++
 			if !_.has(object, 'space') || !object.space || object.space == spaceId
-				permissions.objects[object_name] = _.clone Creator.convertObject(Creator.Objects[object_name])
+				permissions.objects[object_name] = Creator.convertObject(clone(Creator.Objects[object_name]), spaceId)
 				permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 		return permissions
 

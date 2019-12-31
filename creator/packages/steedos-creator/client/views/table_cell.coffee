@@ -241,7 +241,7 @@ Template.creator_table_cell.helpers
 				else
 					val = "否"
 			else if _field.type == "select"
-				_options = _field.options
+				_options = _field.allOptions || _field.options
 				_values = this.doc || {}
 				_record_val = this.record_val
 				if _.isFunction(_field.options)
