@@ -245,9 +245,13 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 		var instance_name = "";
 		var name_forumla = form.current.name_forumla;
 		if (name_forumla) {
-			var iscript = name_forumla.replace(/\{/g, "(new_values['").replace(/\}/g, "'] || '')");
-			var rev = eval(iscript);
-			instance_name = rev || flow.name;
+			try {
+				var iscript = name_forumla.replace(/\{/g, "(new_values['").replace(/\}/g, "'] || '')");
+				var rev = eval(iscript);
+				instance_name = rev || flow.name;
+			} catch (error) {
+				throw new Meteor.Error('caculate_instance_name', "计算申请单标题出错请检查表单标题脚本。");
+			}
 		} else {
 			instance_name = flow.name;
 		}
@@ -396,9 +400,10 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 			ins_obj.current_step_name = start_step.name;
 
 			ins_obj.flow_name = flow.name;
-			if (category_name)
+			if (category_name) {
 				ins_obj.category_name = category.name;
 				ins_obj.category = category._id;
+			}
 
 			new_ins_id = db.instances.insert(ins_obj);
 
