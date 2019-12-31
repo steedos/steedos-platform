@@ -561,7 +561,7 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 
 		JsonRoutes.sendResult(res, {
 			code: 200,
-			data: {}
+			data: { new_ins_ids: new_ins_ids }
 		})
 	} catch (e) {
 		console.error(e.stack)
