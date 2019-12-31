@@ -226,6 +226,10 @@
         "relatedList": {
             "type": "array",
             "description": "主表想在详细页显示的相关子表"
+        },
+        "picklist": {
+            "type": "string",
+            "description": "指定字段的选项列表值集"
         }
     },
     "definitions": {

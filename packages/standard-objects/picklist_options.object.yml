@@ -1,0 +1,57 @@
+name: picklist_options
+label: 选项列表值
+icon: order_item
+fields:
+  picklist:
+    type: master_detail
+    label: 选项列表值集
+    reference_to: picklists
+    required: true
+  name:
+    type: text
+    label: 选项名称
+    required: true
+  value:
+    type: text
+    label: 选项值
+    inlineHelpText: 此字段如果没有值， 选项值 = 选项名称
+  sort_no:
+    type: number
+    label: 排序号
+    inlineHelpText: 数值大的显示在前面
+  enable:
+    type: boolean
+    label: 启用
+    defaultValue: true
+  default:
+    type: boolean
+    label: 默认
+    defaultValue: false
+    inlineHelpText: 将此值作为选项列表的默认值
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    sort: [["sort_no", "desc"]]
+    columns:
+      - picklist
+      - name
+      - value
+      - sort_no
+      - enable
+      - default
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
