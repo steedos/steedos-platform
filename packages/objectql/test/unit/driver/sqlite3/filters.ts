@@ -227,7 +227,7 @@ describe('filters for sqlite3 database', () => {
                 }
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init()
         await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;

@@ -60,6 +60,7 @@ describe('crud for sqlserver database', () => {
     before(async () => {
         let datasourceDefault: any = {
             driver: SteedosDatabaseDriverType.SqlServer,
+            logging: true,
             objects: {
                 test: {
                     label: 'SqlServer Schema',
@@ -89,10 +90,10 @@ describe('crud for sqlserver database', () => {
         datasourceDefault = { ...datasourceDefault, ...connectConfig }
         let mySchema = new SteedosSchema({
             datasources: {
-                default: datasourceDefault
+                DatasourcesDriverTest: datasourceDefault
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosSqlServerDriver>datasource.adapter;
     });

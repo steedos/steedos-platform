@@ -109,10 +109,10 @@ describe('fetch records for postgres with sort arguments as a string that comply
         datasourceDefault = { ...datasourceDefault, ...connectConfig };
         let mySchema = new SteedosSchema({
             datasources: {
-                default: datasourceDefault
+                DatasourcesDriverTest: datasourceDefault
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosPostgresDriver>datasource.adapter;
     });
