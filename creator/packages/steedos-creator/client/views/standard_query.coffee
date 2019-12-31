@@ -153,7 +153,8 @@ Template.standard_query_modal.events
 #		Session.set 'standard_query', {object_name: object_name, query: query, is_mini: false}
 		Modal.hide(template)
 
-		isFiltering = Creator.getIsFiltering()
-		if isFiltering
-			$(".filter-list-container").removeClass("slds-hide")
+		unless Steedos.isMobile()
+			isFiltering = Creator.getIsFiltering()
+			if isFiltering
+				$(".filter-list-container").removeClass("slds-hide")
 
