@@ -32,17 +32,6 @@ AutoForm.addInputType("boolean-select", {
       },
       {
         name: context.name,
-        value: "false",
-        // _id must be included because it is a special property that
-        // #each uses to track unique list items when adding and removing them
-        // See https://github.com/meteor/meteor/issues/2174
-        _id: "false",
-        selected: (context.value === false),
-        label: context.atts.falseLabel || "False",
-        atts: atts
-      },
-      {
-        name: context.name,
         value: "true",
         // _id must be included because it is a special property that
         // #each uses to track unique list items when adding and removing them
@@ -50,6 +39,17 @@ AutoForm.addInputType("boolean-select", {
         _id: "true",
         selected: (context.value === true),
         label: context.atts.trueLabel || "True",
+        atts: atts
+      },
+      {
+        name: context.name,
+        value: "false",
+        // _id must be included because it is a special property that
+        // #each uses to track unique list items when adding and removing them
+        // See https://github.com/meteor/meteor/issues/2174
+        _id: "false",
+        selected: (context.value === false),
+        label: context.atts.falseLabel || "False",
         atts: atts
       }
     ];
