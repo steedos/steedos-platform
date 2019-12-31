@@ -420,6 +420,8 @@
 	"sogo_mail_account": "Hot mail account",
 
 	"downloading": "Downloading",
-	"download_progress": "Download progress"
+	"download_progress": "Download progress",
+	"True": "YES",
+	"False": "NO"
 
 }

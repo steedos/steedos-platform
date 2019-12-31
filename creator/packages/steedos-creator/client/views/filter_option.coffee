@@ -132,6 +132,8 @@ Template.filter_option.helpers
 			
 			else if ["boolean"].includes(filter_field_type)
 				schema.value.autoform.type = "boolean-select"
+				schema.value.autoform.trueLabel = t("True")
+				schema.value.autoform.falseLabel = t("False")
 		new SimpleSchema(schema)
 
 	filter_item: ()->

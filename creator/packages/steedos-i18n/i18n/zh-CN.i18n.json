@@ -440,5 +440,7 @@
 	"sogo_mail_account": "邮件账户",
 	
 	"downloading": "正在下载",
-	"download_progress": "进度"
+	"download_progress": "进度",
+	"True": "是",
+	"False": "否"
 }

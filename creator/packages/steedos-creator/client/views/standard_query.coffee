@@ -82,6 +82,12 @@ Template.standard_query_modal.helpers
 							# dx-date-box控件不支持outFormat，需要单独处理
 							# 注意不可以用'yyyy-MM-ddT23:59:59Z'，因日期类型字段已经用timezoneId: "utc"处理了时区问题，后面带Z的话，会做时区转换
 							schema[field + "_endLine"].autoform.afFieldInput.dxDateBoxOptions.dateSerializationFormat = 'yyyy-MM-ddT23:59:59';
+			if ["boolean"].includes(object_fields[field].type)
+				group = schema[field].autoform?.group
+				schema[field].autoform = {group: group}
+				schema[field].autoform.type = "boolean-select"
+				schema[field].autoform.trueLabel = t("True")
+				schema[field].autoform.falseLabel = t("False")
 
 			if ["code", "textarea"].includes(object_fields[field].type)
 				group = schema[field].autoform?.group
