@@ -129,6 +129,9 @@ Template.filter_option.helpers
 				else
 					if schema.value.autoform
 						schema.value.autoform.outFormat = 'yyyy-MM-dd';
+			
+			else if ["boolean"].includes(filter_field_type)
+				schema.value.autoform.type = "boolean-select"
 		new SimpleSchema(schema)
 
 	filter_item: ()->
