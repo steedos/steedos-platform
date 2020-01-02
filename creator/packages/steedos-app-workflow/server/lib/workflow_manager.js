@@ -216,9 +216,9 @@ WorkflowManager.getOrganizations = function (orgIds) {
 
 WorkflowManager.getCompany = function (companyId) {
 	if (!companyId) {
-		return;
+		return {};
 	}
-	return Creator.getCollection("company").findOne(companyId, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}});
+	return Creator.getCollection("company").findOne(companyId, {fields: {created: 0, created_by: 0, modified: 0, modified_by: 0}}) || {};
 }
 
 WorkflowManager.getCompanys = function (companyIds) {
