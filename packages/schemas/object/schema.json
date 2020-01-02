@@ -401,12 +401,12 @@
                     "description": "字段选项函数名称"
                 },
                 "min": {
-                    "type": "integer",
-                    "description": "最小长度"
+                    "type": ["integer", "string"],
+                    "description": "最小长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "max": {
-                    "type": "integer",
-                    "description": "最大长度"
+                    "type": ["integer", "string"],
+                    "description": "最大长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "blackbox": {
                     "type": "boolean",
