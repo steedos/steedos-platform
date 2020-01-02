@@ -142,6 +142,30 @@
 						console.error "convert error #{object.name} -> #{field.name}", error
 
 			if Meteor.isServer
+				min = field.min
+				if _.isFunction(min)
+					field._min = min.toString()
+			else
+				min = field._min
+				if _.isString(min)
+					try
+						field.min = Creator.eval("(#{min})")
+					catch error
+						console.error "convert error #{object.name} -> #{field.name}", error
+
+			if Meteor.isServer
+				max = field.max
+				if _.isFunction(max)
+					field._max = max.toString()
+			else
+				max = field._max
+				if _.isString(max)
+					try
+						field.max = Creator.eval("(#{max})")
+					catch error
+						console.error "convert error #{object.name} -> #{field.name}", error
+
+			if Meteor.isServer
 				if field.autoform
 					_type = field.autoform.type
 					if _type && _.isFunction(_type) && _type != Object && _type != String && _type != Number && _type != Boolean && !_.isArray(_type)

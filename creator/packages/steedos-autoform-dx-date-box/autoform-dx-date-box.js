@@ -152,6 +152,14 @@ Template.dxDateBox.rendered = function () {
         dti.option("value", null); // clear
       }
 
+      if(_.isFunction(data.min)){
+        data.min = data.min()
+      }
+
+      if(_.isFunction(data.max)){
+        data.max = data.max()
+      }
+
       // set start date if there's a min in the schema
       if (data.min instanceof Date && !isNaN(data.min)) {
         dti.option("min", data.min);

@@ -463,6 +463,11 @@ Creator.getObjectSchema = (obj) ->
 		if field.blackbox
 			fs.blackbox = true
 
+		if _.has(field, 'min')
+			fs.min = field.min
+		if _.has(field, 'max')
+			fs.max = field.max
+
 		# 只有生产环境才重建索引
 		if Meteor.isProduction
 			if field.index

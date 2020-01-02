@@ -136,6 +136,12 @@ Template.filter_option.helpers
 				schema.value.autoform.type = "boolean-select"
 				schema.value.autoform.trueLabel = t("True")
 				schema.value.autoform.falseLabel = t("False")
+		delete schema.value?.min
+		delete schema.value?.max
+		delete schema.start_value?.min
+		delete schema.start_value?.max
+		delete schema.end_value?.min
+		delete schema.end_value?.max
 		new SimpleSchema(schema)
 
 	filter_item: ()->

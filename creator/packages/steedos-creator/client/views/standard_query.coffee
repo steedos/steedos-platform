@@ -37,6 +37,8 @@ Template.standard_query_modal.helpers
 		canSearchFields = _.intersection(first_level_keys, canSearchFields)
 		_.each canSearchFields, (field)->
 			schema[field] = obj_schema[field]
+			delete schema[field].min
+			delete schema[field].max
 			if !(object_fields[field].searchable || object_fields[field].filterable)
 				schema[field].autoform.group = '高级'
 			if object_fields[field].searchable || object_fields[field].filterable
