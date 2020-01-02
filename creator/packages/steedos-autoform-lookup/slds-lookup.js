@@ -134,7 +134,7 @@ Template.steedosLookups.onRendered(function () {
 			var _values = AutoForm.getFormValues(formId).insertDoc
 
 			if(_.isFunction(optionsFunction)){
-				options = optionsFunction(_values)
+				options = optionsFunction.call(template.uniSelectize, _values)
 				template.uniSelectize.setItems(options, _values[template.data.atts.dataSchemaKey] || value);
 			}
 		}
