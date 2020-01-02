@@ -724,6 +724,14 @@ Template.creator_grid.onRendered ->
 										utcOffset = moment().utcOffset() / 60
 										val = moment(val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
 										r.values[index] = val
+								else
+									dataField = col[index]?.dataField
+									if fields and fields[dataField]?.type == "select"
+										options = fields[dataField].options
+										valOpt = _.find options, (opt)->
+											return opt.value == val
+										if valOpt
+											r.values[index] = valOpt.label
 				onCellClick: (e)->
 					if e.column?.dataField ==  "_id_actions"
 						_itemClick.call(self, e, curObjectName, list_view_id)
