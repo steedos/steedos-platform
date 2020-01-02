@@ -241,13 +241,13 @@ Template.filter_option_list.onCreated ->
 								filterValue = builtinValue.values
 						if _.isArray(filterValue)
 							if filterValue.length
-								if filterValue[0] || filterValue[1]
+								if !Creator.isFilterValueEmpty(filterValue[0]) || !Creator.isFilterValueEmpty(filterValue[1])
 									startLabel = if _.isNumber(filterValue[0]) then filterValue[0] else filterValue[0] || ""
 									endLabel = if _.isNumber(filterValue[1]) then filterValue[1] else filterValue[1] || ""
 									if fieldType == 'datetime' or fieldType == 'date'
 										startLabel = if filterValue[0] then formatFun(filterValue[0], fieldType) else ""
 										endLabel = if filterValue[1] then formatFun(filterValue[1], fieldType) else ""
-									if startLabel and endLabel
+									if !Creator.isFilterValueEmpty(startLabel) and !Creator.isFilterValueEmpty(endLabel)
 										filter.valuelabel = "#{startLabel} ~ #{endLabel}"
 									else if startLabel
 										filter.valuelabel = ">= #{startLabel}"
