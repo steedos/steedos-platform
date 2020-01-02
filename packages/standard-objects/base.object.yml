@@ -137,7 +137,7 @@ fields:
           return [];
         }
         var perms = object.permissions.get();
-        var options, result, companys;
+        var options, result, companys, queryFilters;
         result = [];
         options = {
           $select: 'name'
@@ -157,8 +157,20 @@ fields:
             console.warn("当前用户不属于任何单位，无权修改该字段。");
             return [];
           }
+          queryFilters = ["_id", "in", company_ids];
+        }
+        var customFilters = this.filters;
+        if(!_.isEmpty(customFilters)){
+          if(_.isEmpty(queryFilters)){
+            queryFilters = customFilters;
+          }
+          else{
+            queryFilters = [customFilters, 'and', queryFilters];
+          }
+        }
+        if(!_.isEmpty(queryFilters)){
           var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(["_id", "in", company_ids]);
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
           options.$filter = odataFilter;
         }
         companys = Creator.odata.query('company', options, true);
@@ -199,7 +211,7 @@ fields:
           return [];
         }
         var perms = object.permissions.get();
-        var options, result, companys;
+        var options, result, companys, queryFilters;
         result = [];
         options = {
           $select: 'name'
@@ -221,8 +233,20 @@ fields:
             console.warn("当前用户不属于任何单位，无权修改该字段。");
             return [];
           }
+          queryFilters = ["_id", "in", company_ids];
+        }
+        var customFilters = this.filters;
+        if(!_.isEmpty(customFilters)){
+          if(_.isEmpty(queryFilters)){
+            queryFilters = customFilters;
+          }
+          else{
+            queryFilters = [customFilters, 'and', queryFilters];
+          }
+        }
+        if(!_.isEmpty(queryFilters)){
           var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(["_id", "in", company_ids]);
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
           options.$filter = odataFilter;
         }
         companys = Creator.odata.query('company', options, true);
