@@ -9,9 +9,6 @@ fields:
   code: 
     label: 公司代码
     type: text
-  abbreviation:
-    label: 简称
-    type: text
   parent:
     label: 上级公司
     type: lookup
@@ -61,7 +58,6 @@ list_views:
     label: 所有
     columns:
       - name
-      - abbreviation
       - code
       - parent
       - organization
