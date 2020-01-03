@@ -149,15 +149,12 @@ fields:
         else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
           var company_ids = Creator.USER_CONTEXT.user.company_ids;
-          if(values.company_id){
-            var valueCompanyIds = _.isObject(values.company_id) ? [values.company_id._id] : [values.company_id];
-            company_ids = _.union(company_ids, valueCompanyIds);
-          }
           if(!company_ids.length){
             console.warn("当前用户不属于任何单位，无权修改该字段。");
-            return [];
+            queryFilters = ["_id", "=", -1];
+          }else{
+            queryFilters = ["_id", "in", company_ids];
           }
-          queryFilters = ["_id", "in", company_ids];
         }
         var customFilters = this.filters;
         if(!_.isEmpty(customFilters)){
@@ -167,6 +164,14 @@ fields:
           else{
             queryFilters = [customFilters, 'and', queryFilters];
           }
+        }
+        if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
+          var _value = this.template.data._value;
+          /* 
+            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
+            values.company_id 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
+          */
+          queryFilters = [queryFilters, 'or', ["_id", "=", _value]];
         }
         if(!_.isEmpty(queryFilters)){
           var steedosFilters = require("@steedos/filters");
@@ -223,17 +228,12 @@ fields:
         else{
           /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择单位时只能从当前用户所属单位中选择。*/
           var company_ids = Creator.USER_CONTEXT.user.company_ids;
-          if(values.company_ids && values.company_ids.length){
-            var valueCompanyIds = values.company_ids.map(function(item){
-              return _.isObject(item) ? item._id : item;
-            });
-            company_ids = _.union(company_ids, valueCompanyIds);
-          }
           if(!company_ids.length){
             console.warn("当前用户不属于任何单位，无权修改该字段。");
-            return [];
+            queryFilters = ["_id", "=", -1];
+          }else{
+            queryFilters = ["_id", "in", company_ids];
           }
-          queryFilters = ["_id", "in", company_ids];
         }
         var customFilters = this.filters;
         if(!_.isEmpty(customFilters)){
@@ -243,6 +243,14 @@ fields:
           else{
             queryFilters = [customFilters, 'and', queryFilters];
           }
+        }
+        if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
+          var _value = this.template.data._value;
+          /* 
+            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
+            values.company_ids 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
+          */
+          queryFilters = [queryFilters, 'or', ["_id", "in", _value]];
         }
         if(!_.isEmpty(queryFilters)){
           var steedosFilters = require("@steedos/filters");
