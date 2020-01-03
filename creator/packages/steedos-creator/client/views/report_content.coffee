@@ -902,7 +902,7 @@ renderMatrixReport = (reportObject)->
 	module.dynamicImport('devextreme/ui/popup').then (dxPopup)->
 		DevExpress.ui.dxPopup = dxPopup;
 		salesPopup = $('#drill-down-popup').dxPopup(
-			width: 600
+			width: "60%"
 			height: 400
 			contentTemplate: (contentElement) ->
 				drillDownFields = _.union reportObject.rows, reportObject.columns, reportObject.values, reportObject.fields
@@ -918,11 +918,12 @@ renderMatrixReport = (reportObject)->
 						dataField: gridFieldItem.dataField
 						caption: gridFieldItem.caption
 						sortingMethod: Creator.sortingMethod
+						minWidth: 100
 					}
 					module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 						DevExpress.ui.dxDataGrid = dxDataGrid;
 						$('<div />').addClass('drill-down-content').dxDataGrid(
-							width: 560
+							width: "100%"
 							height: 300
 							columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
