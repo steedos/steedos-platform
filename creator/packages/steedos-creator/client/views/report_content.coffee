@@ -909,6 +909,7 @@ renderMatrixReport = (reportObject)->
 				drillDownFields = _.without drillDownFields, null, undefined
 				drillDownColumns = []
 				gridFields = self.pivotGridInstance.get().getDataSource()._fields
+				object = Creator.getObject(reportObject.object_name)
 				drillDownFields.forEach (n)->
 					if n == "_id"
 						return
@@ -919,6 +920,50 @@ renderMatrixReport = (reportObject)->
 						caption: gridFieldItem.caption
 						sortingMethod: Creator.sortingMethod
 						minWidth: 100
+						cellTemplate: (container, options) ->
+							object_name = object.name
+							doc = options.data
+							column = n
+							field_name = column
+							if /\w+\.\$\.\w+/g.test(field_name)
+								# object类型带子属性的field_name要去掉中间的美元符号，否则显示不出字段值
+								field_name = column.replace(/\$\./,"")
+							fieldLevels = field_name.split(".");
+							fieldFirstLevelKey = fieldLevels[0]
+							fieldFirstLevelValue = doc[fieldFirstLevelKey]
+							field = object.fields[fieldFirstLevelKey]
+							# 需要考虑field_name为 a.b 这种格式，不需要考虑a.b.c这种格式
+							if fieldFirstLevelValue
+								# fieldFirstLevelValue为空时，eval会报错
+								field_val = eval("doc." + field_name)
+							else
+								field_val = fieldFirstLevelValue
+							if fieldLevels.length > 1
+								# 报表只支持fieldLevels.length最多为2层
+								if field?.reference_to and _.isString(field.reference_to)
+									referenceObject = Creator.getObject(field.reference_to)
+									if referenceObject
+										if referenceObject.NAME_FIELD_KEY == fieldLevels[1]
+											# name字段则显示为lookup、master_detail类型，带链接
+											field_val = fieldFirstLevelValue
+											field_name = fieldFirstLevelKey
+										else
+											# 否则按referenceObject对应的类型来显示
+											field_val = if fieldFirstLevelValue then fieldFirstLevelValue[fieldLevels[1]] else fieldFirstLevelValue
+											doc = fieldFirstLevelValue
+											field_name = fieldLevels[1]
+											object_name = referenceObject.name
+											field = referenceObject.fields[field_name]
+
+							cellOption = {
+								_id: doc._id, val: field_val, doc: doc, 
+								field: field, field_name: field_name, 
+								object_name: object_name, agreement: "odata", 
+								is_related: false, open_window: true, hideIcon: true
+							}
+							if field.type is "markdown"
+								cellOption["full_screen"] = true
+							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 					}
 					module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 						DevExpress.ui.dxDataGrid = dxDataGrid;
