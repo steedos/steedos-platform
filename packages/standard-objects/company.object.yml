@@ -61,6 +61,7 @@ list_views:
     label: 所有
     columns:
       - name
+      - abbreviation
       - code
       - parent
       - organization
