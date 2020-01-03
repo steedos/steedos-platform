@@ -52,10 +52,34 @@
 
 .dx-overlay-content{
 	.dx-popup-content{
+		padding: 0;
+		margin-top: 4px;
 		.creator_table_cell{
 			&.field-number, &.field-currency{
 				/* 字段靠右对齐 */
 				display: block;
+			}
+		}
+		.dx-datagrid-headers{
+			.dx-datagrid-table{
+				.dx-row > td{
+					padding-top: 7px;
+					padding-bottom: 7px;
+				}
+			}
+		}
+		.dx-datagrid-content{
+			.dx-datagrid-table{
+				.dx-row>td{
+					padding-top: 7px;
+					padding-bottom: 7px;
+					&:first-of-type{
+						padding-left: 24px;
+					}
+					&:last-of-type{
+						padding-right: 24px;
+					}
+				}
 			}
 		}
 	}

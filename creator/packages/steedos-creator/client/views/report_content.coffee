@@ -969,7 +969,7 @@ renderMatrixReport = (reportObject)->
 						DevExpress.ui.dxDataGrid = dxDataGrid;
 						$('<div />').addClass('drill-down-content').dxDataGrid(
 							width: "100%"
-							height: 300
+							height: 320
 							columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
 				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
