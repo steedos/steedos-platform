@@ -208,13 +208,19 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id)->
 
 						delete step.approver_roles_name
 				else
-					approve_roles = new Array()
-					step.approver_roles_name.forEach (role_name) ->
-
+					approve_roles = new Array();
+					approveRolesByIds = [];
+					if _.isArray(step.approver_roles) && !_.isEmpty(step.approver_roles)
+						approveRolesByIds = db.flow_roles.find({_id: {$in: step.approver_roles}, space: spaceId}, {fields: {_id: 1, name: 1, company_id: 1}}).fetch()
+					step.approver_roles_name.forEach (role_name, _index) ->
+						approveRoleById = _.find approveRolesByIds, (_role)->
+							return _role._id == step.approver_roles[_index]
 						flow_role_query = {space: spaceId, name: role_name}
 
-						if company_id
+						if approveRoleById?.company_id && company_id
 							flow_role_query.company_id = company_id
+						else
+							flow_role_query.company_id = {$exists: false}
 
 						role = db.flow_roles.findOne(flow_role_query, {fields: {_id: 1}})
 						if _.isEmpty(role)
