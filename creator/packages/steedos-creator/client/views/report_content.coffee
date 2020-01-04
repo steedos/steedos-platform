@@ -984,6 +984,7 @@ renderMatrixReport = (reportObject)->
 				popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
 				drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
 				salesPopup.option 'title', popupTitle
+				salesPopup.content().addClass("dx-popup-content-report")
 				salesPopup.show()
 
 		module.dynamicImport('devextreme/ui/pivot_grid').then (dxPivotGrid)->
