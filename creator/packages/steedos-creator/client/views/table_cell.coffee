@@ -171,13 +171,15 @@ Template.creator_table_cell.helpers
 					val = if val then [val] else []
 				_.each val, (v)->
 					reference_to = v["reference_to._o"] || reference_to
-					if _.isString v
-						# 如果未能取到expand数据，则直接用_id作为值显示出来，且href能指向正确的url
-						rid = v
-						rvalue = v
-					else
-						rid = v._id
-						rvalue = v['_NAME_FIELD_VALUE']
+					rid = v._id
+					rvalue = v['_NAME_FIELD_VALUE']
+					# 因数据库中存在一些被删除的关联对象会显示为id链接但是点开是内容为空的界面，比如签约对象详细界面中创建人被删除的情况
+					# 所以改为不显示reference_to的id值，只在expand到其name时显示name
+					# 比如报表下钻窗口的列表中不支持合同的`签约对象.录入人`这种字段显示，但是支持合同的`签约对象.名称`、`签约对象.创建时间`，`签约对象.注册资金`等显示
+					# if _.isString v
+					# 	# 如果未能取到expand数据，则直接用_id作为值显示出来，且href能指向正确的url
+					# 	rid = v
+					# 	rvalue = v
 					href = Creator.getObjectUrl(reference_to, rid)
 					data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: this._id}
 
