@@ -916,6 +916,7 @@ renderMatrixReport = (reportObject)->
 					# gridFieldItem = _.findWhere(gridFields,{dataField:n.replace(/\./g,"*%*")})
 					gridFieldItem = _.findWhere(gridFields,{dataField:n})
 					drillDownColumns.push {
+						cssClass: "cell-wrap"
 						dataField: gridFieldItem.dataField
 						caption: gridFieldItem.caption
 						sortingMethod: Creator.sortingMethod

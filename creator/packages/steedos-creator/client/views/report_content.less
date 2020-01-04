@@ -89,5 +89,28 @@
 				}
 			}
 		}
+		.cell-wrap{
+			.slds-truncate{
+				overflow-wrap: break-word;
+				word-wrap: break-word;
+				-webkit-hyphens: none;
+				-ms-hyphens: none;
+				hyphens: none;
+				white-space: normal;
+				overflow: hidden;
+				position: relative;
+				max-height: 3.65625rem;
+			}
+	
+			.slds-truncate:after {
+				content: "";
+				position: absolute;
+				top: 2.25rem;
+				bottom: 0;
+				right: 0;
+				width: 25%;
+				background: linear-gradient(to right, rgba(255,255,255,0.4) 0%,rgba(255,255,255,1) 69%);
+			}
+		}
 	}
 }
