@@ -954,16 +954,32 @@ renderMatrixReport = (reportObject)->
 											field_name = fieldLevels[1]
 											object_name = referenceObject.name
 											field = referenceObject.fields[field_name]
-
-							cellOption = {
-								_id: doc._id, val: field_val, doc: doc, 
-								field: field, field_name: field_name, 
-								object_name: object_name, agreement: "odata", 
-								is_related: false, open_window: true, hideIcon: true
-							}
-							if field.type is "markdown"
-								cellOption["full_screen"] = true
-							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
+							if _.isArray doc
+								cellDocs = doc
+							else
+								cellDocs = [doc]
+							
+							cellDocs.forEach (docItem, docIndex)->
+								# 因为fieldFirstLevelValue可能是数组，所以需要分别对每项调用Template.creator_table_cell来加载
+								if _.isArray doc
+									# 值为数组时，从指定索引中分别取出对应项的值
+									field_val = fieldFirstLevelValue[docIndex]
+									field_val = if field_val then field_val[field_name] else field_val
+								
+								cellOption = {
+									_id: docItem._id, val: field_val, doc: docItem, 
+									field: field, field_name: field_name, 
+									object_name: object_name, agreement: "odata", 
+									is_related: false, open_window: true, hideIcon: true
+								}
+								if field.type is "markdown"
+									cellOption["full_screen"] = true
+								
+								if docIndex > 0
+									cellContainer = $(container[0]).find(".creator_table_cell .cell-container")[0]
+								else
+									cellContainer = container[0]
+								Blaze.renderWithData Template.creator_table_cell, cellOption, cellContainer
 					}
 				if drillDownFields.length
 					$('<div />').addClass('drill-down-content').dxDataGrid(
