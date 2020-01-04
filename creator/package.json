@@ -96,7 +96,7 @@
     "@salesforce-ux/design-system": "^2.7.4",
     "@steedos/app-contracts": "^1.14.2",
     "@steedos/react": "1.13.9",
-    "@steedos/steedos-plugin-workflow": "^2.0.3",
+    "@steedos/steedos-plugin-workflow": "^2.0.4",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^6.0.0",
