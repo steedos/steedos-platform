@@ -171,8 +171,15 @@ Template.creator_table_cell.helpers
 					val = if val then [val] else []
 				_.each val, (v)->
 					reference_to = v["reference_to._o"] || reference_to
-					href = Creator.getObjectUrl(reference_to, v._id)
-					data.push {reference_to: reference_to, rid: v._id, value: v['_NAME_FIELD_VALUE'], href: href, id: this._id}
+					if _.isString v
+						# 如果未能取到expand数据，则直接用_id作为值显示出来，且href能指向正确的url
+						rid = v
+						rvalue = v
+					else
+						rid = v._id
+						rvalue = v['_NAME_FIELD_VALUE']
+					href = Creator.getObjectUrl(reference_to, rid)
+					data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: this._id}
 
 		else if _field.type == "image"
 			if typeof val is "string"
