@@ -965,16 +965,13 @@ renderMatrixReport = (reportObject)->
 								cellOption["full_screen"] = true
 							Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 					}
-					module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
-						DevExpress.ui.dxDataGrid = dxDataGrid;
-						$('<div />').addClass('drill-down-content').dxDataGrid(
-							width: "100%"
-							height: "100%"
-							columns: drillDownColumns).appendTo contentElement
+				if drillDownFields.length
+					$('<div />').addClass('drill-down-content').dxDataGrid(
+						width: "100%"
+						height: "100%"
+						columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
-				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
-					DevExpress.ui.dxDataGrid = dxDataGrid;
-					$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
+				$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
 		).dxPopup('instance')
 		dxOptions.onCellClick = (e)->
 			if e.area == 'data'
@@ -983,9 +980,11 @@ renderMatrixReport = (reportObject)->
 				rowPathName = e.cell.rowPath[rowPathLength - 1]
 				popupTitle = (if rowPathName then rowPathName else t('creator_report_drill_down_total_label')) + t('creator_report_drill_down_label')
 				drillDownDataSource = pivotGridDataSource.createDrillDownDataSource(e.cell)
-				salesPopup.option 'title', popupTitle
-				salesPopup.content().addClass("dx-popup-content-report")
-				salesPopup.show()
+				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
+					DevExpress.ui.dxDataGrid = dxDataGrid;
+					salesPopup.option 'title', popupTitle
+					salesPopup.content().addClass("dx-popup-content-report")
+					salesPopup.show()
 
 		module.dynamicImport('devextreme/ui/pivot_grid').then (dxPivotGrid)->
 			DevExpress.ui.dxPivotGrid = dxPivotGrid;
