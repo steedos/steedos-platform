@@ -976,6 +976,7 @@ renderMatrixReport = (reportObject)->
 									cellOption["full_screen"] = true
 								
 								if docIndex > 0
+									# lookup、master_detail类型数组，显示为一行
 									cellContainer = $(container[0]).find(".creator_table_cell .cell-container")[0]
 								else
 									cellContainer = container[0]
