@@ -988,6 +988,8 @@ renderMatrixReport = (reportObject)->
 					$('<div />').addClass('drill-down-content').dxDataGrid(
 						width: "100%"
 						height: "100%"
+						allowColumnResizing: true
+						columnResizingMode: "widget"
 						columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
 				$('.drill-down-content').dxDataGrid('instance').pageIndex(0)
