@@ -990,6 +990,7 @@ renderMatrixReport = (reportObject)->
 						height: "100%"
 						columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
+				$('.drill-down-content').dxDataGrid('instance').pageIndex(0)
 				$('.drill-down-content').dxDataGrid('instance').option 'dataSource', drillDownDataSource
 		).dxPopup('instance')
 		dxOptions.onCellClick = (e)->
