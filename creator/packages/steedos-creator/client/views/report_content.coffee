@@ -990,6 +990,7 @@ renderMatrixReport = (reportObject)->
 						height: "100%"
 						allowColumnResizing: true
 						columnResizingMode: "widget"
+						columnAutoWidth: true
 						columns: drillDownColumns).appendTo contentElement
 			onShowing: ->
 				$('.drill-down-content').dxDataGrid('instance').pageIndex(0)
