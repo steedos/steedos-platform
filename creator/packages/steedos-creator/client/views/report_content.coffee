@@ -966,7 +966,8 @@ renderMatrixReport = (reportObject)->
 									# 值为数组时，从指定索引中分别取出对应项的值
 									field_val = fieldFirstLevelValue[docIndex]
 									field_val = if field_val then field_val[field_name] else field_val
-								
+								unless docItem
+									return
 								cellOption = {
 									_id: docItem._id, val: field_val, doc: docItem, 
 									field: field, field_name: field_name, 
