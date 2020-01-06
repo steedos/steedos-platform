@@ -47,3 +47,55 @@
 .reportsReportPage .pageBody .scrollarea #jsreport iframe {
   position: absolute;
 }
+.dx-overlay-content .dx-popup-content.dx-popup-content-report {
+  padding: 0;
+  margin-top: 4px;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .creator_table_cell.field-number,
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .creator_table_cell.field-currency {
+  /* 字段靠右对齐 */
+  display: block;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .creator_table_cell .creator_table_cell {
+  /* lookup、master_detail类型数组，显示为一行 */
+  display: inline;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .creator_table_cell .creator_table_cell .cell-container {
+  display: inline;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .dx-datagrid-content .dx-datagrid-table .dx-row > td {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .dx-datagrid-content .dx-datagrid-table .dx-row > td:first-of-type {
+  padding-left: 24px;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .dx-datagrid-content .dx-datagrid-table .dx-row > td:last-of-type {
+  padding-right: 24px;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .cell-wrap .slds-truncate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  -moz-hyphens: none;
+       hyphens: none;
+  white-space: normal;
+  overflow: hidden;
+  position: relative;
+  max-height: 3.65625rem;
+}
+.dx-overlay-content .dx-popup-content.dx-popup-content-report .cell-wrap .slds-truncate:after {
+  content: "";
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.4) 0%, #ffffff 69%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.4) 0%, #ffffff 69%);
+}

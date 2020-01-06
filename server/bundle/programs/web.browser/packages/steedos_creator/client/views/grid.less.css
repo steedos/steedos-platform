@@ -54,30 +54,50 @@
 }
 .list-table-container .dx-scrollable-wrapper .cell-type-number,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-number,
+.list-table-container .dx-datagrid-nowrap .cell-type-number,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-number,
 .list-table-container .dx-scrollable-wrapper .cell-type-currency,
-.related-object-tabular .dx-scrollable-wrapper .cell-type-currency {
+.related-object-tabular .dx-scrollable-wrapper .cell-type-currency,
+.list-table-container .dx-datagrid-nowrap .cell-type-currency,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-currency {
   text-align: right !important;
 }
 .list-table-container .dx-scrollable-wrapper .cell-type-number .field-number,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-number .field-number,
+.list-table-container .dx-datagrid-nowrap .cell-type-number .field-number,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-number .field-number,
 .list-table-container .dx-scrollable-wrapper .cell-type-currency .field-number,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-currency .field-number,
+.list-table-container .dx-datagrid-nowrap .cell-type-currency .field-number,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-currency .field-number,
 .list-table-container .dx-scrollable-wrapper .cell-type-number .field-currency,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-number .field-currency,
+.list-table-container .dx-datagrid-nowrap .cell-type-number .field-currency,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-number .field-currency,
 .list-table-container .dx-scrollable-wrapper .cell-type-currency .field-currency,
-.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .field-currency {
+.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .field-currency,
+.list-table-container .dx-datagrid-nowrap .cell-type-currency .field-currency,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-currency .field-currency {
   display: block !important;
 }
 .list-table-container .dx-scrollable-wrapper .cell-type-number .cell-container,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-number .cell-container,
+.list-table-container .dx-datagrid-nowrap .cell-type-number .cell-container,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-number .cell-container,
 .list-table-container .dx-scrollable-wrapper .cell-type-currency .cell-container,
-.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .cell-container {
+.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .cell-container,
+.list-table-container .dx-datagrid-nowrap .cell-type-currency .cell-container,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-currency .cell-container {
   float: right;
 }
 .list-table-container .dx-scrollable-wrapper .cell-type-number .table-cell-edit,
 .related-object-tabular .dx-scrollable-wrapper .cell-type-number .table-cell-edit,
+.list-table-container .dx-datagrid-nowrap .cell-type-number .table-cell-edit,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-number .table-cell-edit,
 .list-table-container .dx-scrollable-wrapper .cell-type-currency .table-cell-edit,
-.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .table-cell-edit {
+.related-object-tabular .dx-scrollable-wrapper .cell-type-currency .table-cell-edit,
+.list-table-container .dx-datagrid-nowrap .cell-type-currency .table-cell-edit,
+.related-object-tabular .dx-datagrid-nowrap .cell-type-currency .table-cell-edit {
   float: right;
 }
 .list-table-container .dx-datagrid-headers .cell-type-number,
