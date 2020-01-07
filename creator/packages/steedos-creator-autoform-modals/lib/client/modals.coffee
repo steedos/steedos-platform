@@ -107,6 +107,10 @@ Template.CreatorAutoformModals.rendered = ->
 			$('#afModal').modal 'hide'
 
 	$('#afModal').on 'show.bs.modal', ->
+		# 设置dxOverlay的zIndex值，解决dxOverlay弹出窗口被creator-auotform-modals窗口覆盖的问题
+		# 比如弹出的时间、日期控件，popup控件等
+		# 因creator-auotform-modals的z-index值为2000，所以这里要比它大
+		DevExpress.ui.dxOverlay.baseZIndex(2100);
 		self.shouldUpdateQuickForm.set(true)
 
 		operation = Session.get 'cmOperation'
@@ -124,6 +128,8 @@ Template.CreatorAutoformModals.rendered = ->
 		, 100
 
 	$('#afModal').on 'hidden.bs.modal', ->
+		# 还原dxOverlay原来默认的zIndex值
+		DevExpress.ui.dxOverlay.baseZIndex(1500);
 		Session.set("cmSaving", false)
 		$(window).unbind 'keyup', onEscKey
 
