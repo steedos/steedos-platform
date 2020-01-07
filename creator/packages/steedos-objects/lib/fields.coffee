@@ -38,7 +38,7 @@ Creator.getObjectSchema = (obj) ->
 		else if field.type == "textarea"
 			fs.type = String
 			fs.autoform.type = "widearea"
-			fs.autoform.rows = field.rows || 6
+			fs.autoform.rows = field.rows || 2
 		else if field.type == "password"
 			fs.type = String
 			fs.autoform.type = "password"
