@@ -87,7 +87,8 @@ Creator.getObjectLookupFieldOptions = (object_name, is_deep, is_skip_hide, is_re
 		_.forEach fields, (f, k)->
 			if is_skip_hide and f.hidden
 				return
-			if (f.type == "lookup" || f.type == "master_detail") && f.reference_to
+			if (f.type == "lookup" || f.type == "master_detail") && f.reference_to && _.isString(f.reference_to)
+				# 不支持f.reference_to为function的情况，有需求再说
 				r_object = Creator.getObject(f.reference_to)
 				if r_object
 					_.forEach r_object.fields, (f2, k2)->
