@@ -62,10 +62,10 @@
 
 				<footer class="slds-modal__footer">
 					{{#if $eq cmOperation 'insert'}}
-						<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+						<button type="submit" class="slds-button slds-button_brand btn-insert" disabled={{cmSaving}}>保存</button>
 
 						{{#if cmSaveAndInsert}}
-							<button class="slds-button slds-button_neutral btn-insert-and-create">保存并新建</button>
+							<button class="slds-button slds-button_neutral btn-insert-and-create" disabled={{cmSaving}}>保存并新建</button>
 						{{/if}}
 
 						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
@@ -77,10 +77,10 @@
 							<button class="slds-button slds-button_destructive btn-remove">删除</button>
 						{{/if}}
 
-						<button class="slds-button slds-button_brand btn-update">保存</button>
+						<button class="slds-button slds-button_brand btn-update" disabled={{cmSaving}}>保存</button>
 
 						{{#if cmSaveAndInsert}}
-							<button class="slds-button slds-button_neutral btn-update-and-create">保存并新建</button>
+							<button class="slds-button slds-button_neutral btn-update-and-create" disabled={{cmSaving}}>保存并新建</button>
 						{{/if}}
 
 						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>

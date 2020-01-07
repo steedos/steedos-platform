@@ -124,6 +124,7 @@ Template.CreatorAutoformModals.rendered = ->
 		, 100
 
 	$('#afModal').on 'hidden.bs.modal', ->
+		Session.set("cmSaving", false)
 		$(window).unbind 'keyup', onEscKey
 
 		doc = Session.get 'cmDoc'
@@ -327,6 +328,9 @@ helpers =
 	cmIsMultipleUpdate: ()->
 		isMultiple = Session.get('cmIsMultipleUpdate') and Session.get('cmTargetIds')?.length > 1
 		return isMultiple
+
+	cmSaving: ()->
+		Session.get 'cmSaving'
 
 	isUseMethod: ()->
 		if Session.get 'cmMeteorMethod'
@@ -588,6 +592,10 @@ Template.CreatorAfModal.events
 										trigger.todo.apply({object_name: object_name},[userId, result])
 						return result
 				onSubmit: (insertDoc, updateDoc, currentDoc)->
+					if Session.get 'cmSaving'
+						return false
+
+					Session.set 'cmSaving', true
 
 					userId = Meteor.userId()
 					cmCollection = Session.get 'cmCollection'
@@ -674,6 +682,7 @@ Template.CreatorAfModal.events
 					return false
 
 				onSuccess: (operation,result)->
+					Session.set 'cmSaving', false
 					console.log('onSuccess hide......');
 					$('#afModal').modal 'hide'
 					# if result.type == "post"
@@ -684,6 +693,8 @@ Template.CreatorAfModal.events
 					# 	FlowRouter.go url
 
 				onError: (operation,error) ->
+					Session.set 'cmSaving', false
+					console.log('onError......');
 					console.error error
 					if error.reason
 						toastr?.error?(TAPi18n.__(error.reason))
