@@ -4,7 +4,7 @@ Template.creator_app_home.onRendered ()->
 		appId = Session.get('app_id')
 		if isBootstrapLoaded && appId
 			app = Creator.getApp()
-			if app?.dashboard
+			if app?.dashboard and !Steedos.isMobile()
 				FlowRouter.go "/app/#{appId}/home"
 			else
 				first_app_obj = _.first(Creator.getAppObjectNames(appId))

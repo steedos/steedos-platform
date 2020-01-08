@@ -187,10 +187,11 @@ Creator.getApp = (app_id)->
 
 Creator.getAppObjectNames = (app_id)->
 	app = Creator.getApp(app_id)
-
+	isMobile = Steedos.isMobile()
+	appObjects = if isMobile then app.mobile_objects else app.objects
 	objects = []
 	if app
-		_.each app.objects, (v)->
+		_.each appObjects, (v)->
 			obj = Creator.getObject(v)
 			if obj?.permissions.get().allowRead and !obj.hidden
 				objects.push v
