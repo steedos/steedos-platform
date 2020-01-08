@@ -207,6 +207,9 @@ renderChart = (self)->
 			return
 		dataSourceItems = DevExpress.data.query(gridLoadedArray).groupBy(firstRowField.dataField).toArray()
 		objectGroupField = objectFields[firstRowField.dataField]
+		unless objectGroupField
+			toastr.error "未找到对象#{objectName}的字段#{firstRowField.dataField}，请确认该报表中指定的字段名是否正确"
+			return
 		isSelectType = objectGroupField?.type == "select"
 		isDateType = objectGroupField?.type == "date"
 		isDatetimeType = objectGroupField?.type == "datetime"
@@ -326,6 +329,9 @@ renderTabularReport = (reportObject)->
 				expandFields[fieldKeys[0]] = []
 			expandFields[fieldKeys[0]].push fieldKeys[1]
 		itemField = objectFields[fieldKeys[0]]
+		unless itemField
+			toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+			return
 		caption = getFieldLabel itemField, item
 		field = {
 			caption: caption
@@ -456,6 +462,9 @@ renderSummaryReport = (reportObject)->
 				expandFields[fieldKeys[0]] = []
 			expandFields[fieldKeys[0]].push fieldKeys[1]
 		itemField = objectFields[fieldKeys[0]]
+		unless itemField
+			toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+			return
 		itemLabel = getFieldLabel itemField, item
 		field = {
 			caption: itemLabel
@@ -495,6 +504,9 @@ renderSummaryReport = (reportObject)->
 				expandFields[fieldKeys[0]] = []
 			expandFields[fieldKeys[0]].push fieldKeys[1]
 		groupField = objectFields[fieldKeys[0]]
+		unless groupField
+			toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+			return
 		groupLabel = getFieldLabel groupField, group
 		field = {
 			caption: groupLabel
@@ -563,6 +575,9 @@ renderSummaryReport = (reportObject)->
 					expandFields[fieldKeys[0]] = []
 				expandFields[fieldKeys[0]].push fieldKeys[1]
 			valueField = objectFields[fieldKeys[0]]
+			unless valueField
+				toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+				return
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
 			if valueField.type == "number" or valueField.type == "currency"
@@ -707,6 +722,9 @@ renderMatrixReport = (reportObject)->
 					expandFields[fieldKeys[0]] = []
 				expandFields[fieldKeys[0]].push fieldKeys[1]
 			rowField = objectFields[fieldKeys[0]]
+			unless rowField
+				toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+				return
 			caption = getFieldLabel rowField, row
 			field = {
 				caption: caption
@@ -736,6 +754,9 @@ renderMatrixReport = (reportObject)->
 					expandFields[fieldKeys[0]] = []
 				expandFields[fieldKeys[0]].push fieldKeys[1]
 			columnField = objectFields[fieldKeys[0]]
+			unless columnField
+				toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+				return
 			caption = getFieldLabel columnField, column
 			field = {
 				caption: caption
@@ -781,6 +802,9 @@ renderMatrixReport = (reportObject)->
 					expandFields[fieldKeys[0]] = []
 				expandFields[fieldKeys[0]].push fieldKeys[1]
 			valueField = objectFields[fieldKeys[0]]
+			unless valueField
+				toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+				return
 			operation = "count"
 			# 数值类型就定为sum统计，否则默认为计数统计
 			if valueField.type == "number" or valueField.type == "currency"
@@ -816,6 +840,9 @@ renderMatrixReport = (reportObject)->
 					expandFields[fieldKeys[0]] = []
 				expandFields[fieldKeys[0]].push fieldKeys[1]
 			itemField = objectFields[fieldKeys[0]]
+			unless itemField
+				toastr.error "未找到对象#{objectName}的字段#{fieldKeys[0]}，请确认该报表中指定的字段名是否正确"
+				return
 			caption = getFieldLabel itemField, item
 			field = {
 				caption: caption
