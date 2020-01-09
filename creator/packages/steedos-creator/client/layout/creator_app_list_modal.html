@@ -103,7 +103,7 @@
 							<ul class="slds-grid slds-wrap">
 								{{#each app_objects}}
 								<li class="slds-col--padded slds-p-vertical_xx-small slds-size_1-of-5 slds-grow-none oneAppLauncherItem">
-									<a href="{{object_url}}" class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate">
+									<a data-object-name="{{name}}" href="{{object_url}}" class="app-launcher-link slds-text-link--reset slds-app-launcher__tile--small slds-truncate creator-object-nav-{{name}}">
 										<span class="slds-truncate slds-text-link">{{label}}</span>
 									</a>
 								</li>

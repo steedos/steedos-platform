@@ -21,7 +21,7 @@
 								{{#unless hideObjects _id}}
 									{{#each app_objects _id}}
 										<li class="{{#if isActive this}}active{{/if}}">
-											<a id="sidebarItem_town-square" class="sidebar-item"
+											<a id="sidebarItem_town-square" data-object-name="{{this}}" class="sidebar-item creator-object-nav-{{this}}"
 											href="{{object_url}}">
 												<span class="icon icon__globe">
 													{{> steedos_icon class="extraSmall slds-icon" source="standard-sprite" name=object_i.icon}}
