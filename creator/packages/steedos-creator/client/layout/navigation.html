@@ -43,7 +43,7 @@
 
 				{{#each app_objects}}
 					<li class="slds-context-bar__item {{object_class_name this}}">
-						<a href="{{object_url}}" class="slds-context-bar__label-action">
+						<a id="creator_object_nav_{{this}}" href="{{object_url}}" class="slds-context-bar__label-action">
 							<span class="slds-truncate">{{_ object_i.label}}</span>
 							{{#if getObjectBadge object_i}}
 								<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{getObjectBadge object_i}}</span>
