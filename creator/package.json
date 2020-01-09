@@ -23,7 +23,7 @@
     "@steedos/filters": "^1.14.5",
     "@steedos/objectql": "^1.14.5",
     "@steedos/odata-v4-typeorm": "^0.0.24",
-    "@steedos/standard-objects": "^1.15.1",
+    "@steedos/standard-objects": "^1.15.2",
     "@steedos/schemas": "^1.14.6",
     "aliyun-sdk": "^1.11.12",
     "basic-auth": "^2.0.1",
