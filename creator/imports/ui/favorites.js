@@ -39,7 +39,6 @@ Template.favorites.helpers({
 				}
 
 			}
-			console.log('onToggleActionSelected', e, d);
 		}
 	},
 	recordOnClick: function(){
