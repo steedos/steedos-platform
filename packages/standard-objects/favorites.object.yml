@@ -6,7 +6,6 @@ fields:
     type: text
     label: 标题
     required: true
-    inlineHelpText: 记录的isName字段值或者视图label
     min: 1
     max: 300
   object_name:
