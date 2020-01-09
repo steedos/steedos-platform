@@ -278,13 +278,13 @@ requestBootstrapDataUseAjax = (spaceId, callback)->
 			handleBootstrapData(result, callback);
 
 
-requestBootstrapDataUseAction = ()->
+requestBootstrapDataUseAction = (spaceId)->
 	SteedosReact = require('@steedos/react');
-	store.dispatch(SteedosReact.loadBootstrapEntitiesData({}))
+	store.dispatch(SteedosReact.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
 	if window.store
-		requestBootstrapDataUseAction();
+		requestBootstrapDataUseAction(spaceId);
 	else
 		requestBootstrapDataUseAjax(spaceId, callback);
 
