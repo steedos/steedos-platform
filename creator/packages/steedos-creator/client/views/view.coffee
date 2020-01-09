@@ -260,7 +260,9 @@ Template.creator_view.helpers
 		record = Creator.getObjectRecord()
 		name_field_key = Creator.getObject()?.NAME_FIELD_KEY
 		if record and name_field_key
-			return record.label || record[name_field_key]
+			record_name = record.label || record[name_field_key]
+			Session.set('record_name', record_name)
+		return record_name;
 
 	backUrl: ()->
 		return Creator.getObjectUrl(Session.get("object_name"), null)

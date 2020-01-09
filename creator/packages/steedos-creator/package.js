@@ -197,6 +197,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/calendarNew.coffee', 'client');
 
 	api.addFiles('client/core.coffee', 'client');
+	api.addFiles('client/favorites.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
 

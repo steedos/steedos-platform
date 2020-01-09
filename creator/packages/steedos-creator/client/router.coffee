@@ -4,6 +4,7 @@ checkUserSigned = (context, redirect) ->
 		currentPath = FlowRouter.current().path
 		if currentPath != urlQuery[urlQuery.length - 1]
 			urlQuery.push currentPath
+		Meteor.defer(Favorites.changeState);
 	return
 	# listTreeCompany = localStorage.getItem("listTreeCompany")
 	# if listTreeCompany

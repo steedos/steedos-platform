@@ -3,7 +3,10 @@ Template.creator_report.helpers Creator.helpers
 Template.creator_report.helpers
 	reportObject: ->
 		record_id = Session.get "record_id"
-		return Creator.Reports[record_id] or Creator.getObjectRecord()
+		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
+		if reportObject
+			Session.set('record_name', reportObject.name)
+		return reportObject
 
 	actions: ()->
 		obj = Creator.getObject()
