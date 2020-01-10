@@ -903,10 +903,10 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos/react@^1.13.9":
-  version "1.13.9"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.13.9.tgz#dad3d3dc8df3958022bebf846d68fdd076c10e5f"
-  integrity sha512-niR0qRqotiyJeOOVffyyryWLI/jY4TdMwfNsq+R4Fvu3vUeVAZZfE+OV9aLbIdYzV4K1r01Gu9KNSQKuyNys1Q==
+"@steedos/react@^1.14.4":
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.14.4.tgz#3464964ddd60c284b7d145d147eb4f740645be3e"
+  integrity sha512-zyvHDzKCUXPQlmJ+ysVHocdHXr53qtUcx0LAREHptdtpoAUa0JdSMNW5xmZCBzpNAgQ22V1PuksueiyT1fumgA==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
