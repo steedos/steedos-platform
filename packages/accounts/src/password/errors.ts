@@ -1,4 +1,4 @@
-import { ErrorMessages } from './password';
+import { ErrorMessages } from './types';
 
 export const errors: ErrorMessages = {
   userNotFound: 'User not found',
@@ -12,7 +12,7 @@ export const errors: ErrorMessages = {
   invalidPassword: 'Invalid password',
   invalidNewPassword: 'Invalid new password',
   invalidToken: 'Invalid token',
-  invalidCredentials: 'accounts.invalid_credentials',
+  invalidCredentials: 'Invalid credentials',
   verifyEmailLinkExpired: 'Verify email link expired',
   verifyEmailLinkUnknownAddress: 'Verify email link is for unknown address',
   resetPasswordLinkExpired: 'Reset password link expired',

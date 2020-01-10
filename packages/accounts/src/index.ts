@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
 import { AccountsServer } from '@accounts/server';
-import { AccountsPassword } from '@accounts/password';
+import { AccountsPassword } from './password';
 import { errors } from './errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';

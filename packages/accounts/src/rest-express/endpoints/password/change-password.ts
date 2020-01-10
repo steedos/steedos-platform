@@ -5,7 +5,7 @@ import { getSteedosConfig } from '@steedos/objectql'
 
 const config = getSteedosConfig();
 
-import { hashPassword } from '@accounts/password/lib/utils'
+import { hashPassword } from '../../../password/utils';
 
 export const changePassword = (accountsServer: AccountsServer) => async (
   req: express.Request,
