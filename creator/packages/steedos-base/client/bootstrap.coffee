@@ -203,10 +203,10 @@ handleBootstrapData = (result, callback)->
 			app._id = key
 		if app.is_creator
 			if isSpaceAdmin
-# 如果是工作区管理员应该强制把is_creator的应该显示出来
+				# 如果是工作区管理员应该强制把is_creator的应用显示出来
 				app.visible = true
 		else
-# 非creator应该一律不显示
+			# 非creator应该一律不显示
 			app.visible = false
 
 	sortedApps = _.sortBy _.values(result.apps), 'sort'
