@@ -26,13 +26,16 @@ Steedos.redirectToSignIn = (redirect)->
 				signInUrl += "&redirect=#{redirect}"
 			else
 				signInUrl += "?redirect=#{redirect}"
-		window.location.href = Steedos.absoluteUrl signInUrl
+		if (!FlowRouter._initialized)
+			FlowRouter.initialize();
+		FlowRouter.go signInUrl
 		
 Setup.validate = (onSuccess)->
 
-	if window.location.pathname.indexOf('/steedos/sign-in')>=0
-		FlowRouter.initialize();
-		return;
+	# if window.location.pathname.indexOf('/steedos/sign-in')>=0
+	# 	if (!FlowRouter._initialized)
+	# 		FlowRouter.initialize();
+	# 	return;
 
 	console.log("Validating user...")
 	searchParams = new URLSearchParams(window.location.search);
@@ -75,7 +78,7 @@ Setup.validate = (onSuccess)->
 			Accounts.loginWithToken data.authToken, (err) ->
 				if (err)
 					Meteor._debug("Error logging in with token: " + err);
-					document.location.href = Steedos.absoluteUrl("/steedos/logout");
+					FlowRouter.go "/steedos/logout"
 					return
 
 		if data.webservices
@@ -129,7 +132,7 @@ Meteor.startup ->
 	Setup.validate();
 	Accounts.onLogin ()->
 		console.log("onLogin")
-
+		
 		if Meteor.userId() != Setup.lastUserId
 			Setup.validate();
 		else 
@@ -298,6 +301,7 @@ FlowRouter.route '/steedos/logout',
 		#AccountsTemplates.logout();
 		$("body").addClass('loading')
 		Meteor.logout ()->
+			FlowRouter.go("/steedos/sign-in")
 			return
 
 Meteor.startup ()->

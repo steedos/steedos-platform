@@ -57,7 +57,7 @@ AccountsTemplates.configureRoute 'signIn',
     if FlowRouter.current().queryParams?.redirect 
       document.location.href = FlowRouter.current().queryParams?.redirect 
     else
-      document.location.href = Steedos.absoluteUrl "/"
+      FlowRouter.go("/")
       
 AccountsTemplates.configureRoute 'signUp',
   path: '/steedos/sign-up'

@@ -1,34 +1,38 @@
 <template name="creatorLayout">
-	<div class="steedos skin-blue-light creator">
-		{{#unless hiddenHeader}}
-			{{> creatorMobileHeader}}
-			{{> creatorHeader}}
-		{{/unless}}
+	{{#if isloading}}
+	{{else}}
+		<div class="steedos skin-blue-light creator">
+			{{#unless hiddenHeader}}
+				{{> creatorMobileHeader}}
+				{{> creatorHeader}}
+			{{/unless}}
 
-		{{> creatorSidebarLeft}}
+			{{> creatorSidebarLeft}}
 
-		<div class="creator-content-wrapper {{#if split}}split{{/if}}" style="{{#if hiddenHeader}}top: 0px !important;{{/if}}">
-			{{#if split}}
-				<div class="split-left">
-					{{> Template.dynamic template="creatorSidebar"}}
-				</div>
-				<div class="split-right">
+			<div class="creator-content-wrapper {{#if split}}split{{/if}}" style="{{#if hiddenHeader}}top: 0px !important;{{/if}}">
+				{{#if split}}
+					<div class="split-left">
+						{{> Template.dynamic template="creatorSidebar"}}
+					</div>
+					<div class="split-right">
+						{{> Template.dynamic template=main}}
+					</div>
+				{{else}}
 					{{> Template.dynamic template=main}}
-				</div>
-			{{else}}
-				{{> Template.dynamic template=main}}
-			{{/if}}
+				{{/if}}
+			</div>
 		</div>
-	</div>
 
-	<div class="connection-status">
-		{{> status}}
-	</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
 
-	{{> CreatorAutoformModals}}
-	{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+		{{> CreatorAutoformModals}}
+		{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+		{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
+		{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
 
-	{{#CreatorAfModal formId="creatorAddRelatedForm" meteormethod="af_insert" class="btn btn-primary creator-add-related hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+		{{#CreatorAfModal formId="creatorAddRelatedForm" meteormethod="af_insert" class="btn btn-primary creator-add-related hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+
+	{{/if}}
 </template>
