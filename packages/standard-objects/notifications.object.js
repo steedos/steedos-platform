@@ -4,6 +4,7 @@ const core = require('@steedos/core');
 const auth = steedosAuth.auth;
 const getSteedosSchema = objectql.getSteedosSchema;
 const util = core.Util;
+const _ = require('underscore');
 
 Creator.Objects['notifications'].methods = {
     markReadAll: async function (req, res) {
@@ -36,12 +37,20 @@ Creator.Objects['notifications'].methods = {
     read: async function (req, res) {
         let { _id: record_id } = req.params;
         let userSession = await auth(req, res);
+        let req_async = _.has(req.query, 'async');
         if (userSession.userId) {
             let record = await getSteedosSchema().getObject("notifications").findOne(record_id, { fields: ['owner', 'is_read', 'related_to', 'space', 'url'] });
             if(!record){
                 // 跳转到通知记录界面会显示为404效果
                 let redirectUrl = util.getObjectRecordUrl("notifications", record_id);
-                return res.redirect(redirectUrl);
+                if(req.get("X-Requested-With") === 'XMLHttpRequest'){
+                    return res.status(200).send({
+                        "status": 404,
+                        "redirect": redirectUrl
+                    });
+                }else{
+                    return res.redirect(redirectUrl);
+                }
             }
             if(!record.related_to && !record.url){
                 return res.status(401).send({
@@ -54,7 +63,14 @@ Creator.Objects['notifications'].methods = {
                 await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true })
             }
             let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space);
-            return res.redirect(redirectUrl);
+            if(req_async){ // || req.get("X-Requested-With") === 'XMLHttpRequest'
+                return res.status(200).send({
+                    "status": 302,
+                    "redirect": redirectUrl
+                });
+            }else{
+                return res.redirect(redirectUrl);
+            }
         }
         return res.status(401).send({
             "error": "Validate Request -- Missing X-Auth-Token",
