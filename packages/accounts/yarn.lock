@@ -12,16 +12,6 @@
     mongodb "^3.3.1"
     tslib "1.10.0"
 
-"@accounts/password@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.npmjs.org/@accounts/password/-/password-0.19.0.tgz#adee06287f836672ad5231cb1984b90abed22cc2"
-  integrity sha512-IFzO/6hdAqssbwT4zVEnikQK4lxCMKU0A62Hyv3PZ6IuYftMFHo/mlz5jd5ccPSFSImRFmXUbwDD93Wzvr7y0w==
-  dependencies:
-    "@accounts/two-factor" "^0.19.0"
-    bcryptjs "^2.4.3"
-    lodash "^4.17.15"
-    tslib "1.10.0"
-
 "@accounts/rest-express@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/rest-express/-/rest-express-0.19.0.tgz#f3b8fffab5e21058e285fc6d0f2095f68851e4cf"
@@ -46,13 +36,13 @@
     lodash "4.17.15"
     tslib "1.10.0"
 
-"@accounts/two-factor@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.npmjs.org/@accounts/two-factor/-/two-factor-0.19.0.tgz#2d177c1b1ee2abaebbc18ef1fa1203b561b1bc66"
-  integrity sha512-sBo2ZG09EjjNjFilXSHgfP5lG4/2uEsU/WFYMBRKbbLdLzGe2DWFglHfmdYVYKV7RZ14yCEjWxeHHmCMreG8jg==
+"@accounts/two-factor@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.npm.taobao.org/@accounts/two-factor/download/@accounts/two-factor-0.20.1.tgz#653ba6a400abb0a512543097e3bfc233cb27cbc7"
+  integrity sha1-ZTumpACrsKUSVDCX47/CM8sny8c=
   dependencies:
-    "@accounts/types" "^0.19.0"
-    "@types/lodash" "^4.14.137"
+    "@accounts/types" "^0.20.1"
+    "@types/lodash" "^4.14.138"
     "@types/speakeasy" "2.0.2"
     lodash "^4.17.15"
     speakeasy "^2.0.0"
@@ -62,6 +52,13 @@
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.19.0.tgz#283e5a236ad79e37a017ef843254ff6699ccbe78"
   integrity sha512-Su72qBZN2SpNrlC5yIFg/eyV18dEIDvfKyqmiPNlwFlIFAzNUoQCFr9i3+r/F5Zz3DFzvHb7dYFRCzFgtozPCg==
+  dependencies:
+    tslib "1.10.0"
+
+"@accounts/types@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.npm.taobao.org/@accounts/types/download/@accounts/types-0.20.1.tgz#134de1586713844a926398b0cc081ecb8747cc90"
+  integrity sha1-E03hWGcThEqSY5iwzAgey4dHzJA=
   dependencies:
     tslib "1.10.0"
 
@@ -254,10 +251,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.137":
+"@types/lodash@^4.14.138":
   version "4.14.149"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
-  integrity sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
+  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
+  integrity sha1-E0LWPZSMYGKDj7+WEBL3TU5jhEA=
 
 "@types/mime@*":
   version "2.0.1"
@@ -307,8 +304,8 @@
 
 "@types/speakeasy@2.0.2":
   version "2.0.2"
-  resolved "https://registry.npmjs.org/@types/speakeasy/-/speakeasy-2.0.2.tgz#153ec3636eea0562209b0a2f1fdf8b479286919b"
-  integrity sha512-h8KW3wSd3/l4oKRGYPxExCaos5VmjcnwDG3RK25tfcoWQR9iLmM9UbwvF1Pd+UT5aY1Z3LdQGt4xU0u9Zk/C2Q==
+  resolved "https://registry.npm.taobao.org/@types/speakeasy/download/@types/speakeasy-2.0.2.tgz#153ec3636eea0562209b0a2f1fdf8b479286919b"
+  integrity sha1-FT7DY27qBWIgmwovH9+LR5KGkZs=
 
 "@types/underscore@^1.8.13":
   version "1.9.2"
@@ -558,7 +555,7 @@ balanced-match@^1.0.0:
 
 base32.js@0.0.1:
   version "0.0.1"
-  resolved "https://registry.npmjs.org/base32.js/-/base32.js-0.0.1.tgz#d045736a57b1f6c139f0c7df42518a84e91bb2ba"
+  resolved "https://registry.npm.taobao.org/base32.js/download/base32.js-0.0.1.tgz#d045736a57b1f6c139f0c7df42518a84e91bb2ba"
   integrity sha1-0EVzalex9sE58MffQlGKhOkbsro=
 
 base64-js@^1.0.2:
@@ -595,7 +592,7 @@ bcrypt-pbkdf@^1.0.0:
 
 bcryptjs@^2.4.3:
   version "2.4.3"
-  resolved "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
+  resolved "https://registry.npm.taobao.org/bcryptjs/download/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
   integrity sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=
 
 binary-extensions@^1.0.0:
@@ -4074,7 +4071,7 @@ sparse-bitfield@^3.0.3:
 
 speakeasy@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npmjs.org/speakeasy/-/speakeasy-2.0.0.tgz#85c91a071b09a5cb8642590d983566165f57613a"
+  resolved "https://registry.npm.taobao.org/speakeasy/download/speakeasy-2.0.0.tgz#85c91a071b09a5cb8642590d983566165f57613a"
   integrity sha1-hckaBxsJpcuGQlkNmDVmFl9XYTo=
   dependencies:
     base32.js "0.0.1"

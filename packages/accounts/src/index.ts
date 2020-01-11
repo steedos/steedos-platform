@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
 import { AccountsServer } from '@accounts/server';
 import { AccountsPassword } from './password';
-import { errors } from './errors';
+import { errors } from './password/errors';
 import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
