@@ -34,7 +34,12 @@ Template.creator_list_wrapper.onRendered ->
 				else
 					Session.set("filter_scope", null)
 				if list_view_obj.filters
-					Session.set("filter_items", list_view_obj.filters)
+					if Creator.isListViewFilterEditable(list_view_obj)
+						# 当视图不是共享的，或者当前用户本身有权限编辑当前视图时才把过滤条件显示在右侧过滤器中
+						# 这样普通用户查看共享视图时，就相当于共享视图是定义在yml文件中一样，视图的过滤条件是必要的过滤条件且不可以被编辑
+						Session.set("filter_items", list_view_obj.filters)
+					else
+						Session.set("filter_items", null)
 				else
 					Session.set("filter_items", null)
 			else

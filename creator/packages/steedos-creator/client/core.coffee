@@ -57,6 +57,10 @@ if Meteor.isClient
 			else if selectedLength == checkboxs.length
 				checkboxAll.prop("checked",true)
 
+	Creator.isListViewFilterEditable = (list_view_obj)->
+		# 传入的list_view_obj是自定义视图才有意义，否则请不要调用该函数
+		# 当视图不是共享的，或者当前用户本身有权限编辑当前视图时才把过滤条件显示在右侧过滤器中，允许用户修改或删除视图本身的过滤条件
+		return !list_view_obj.shared || (list_view_obj.shared && list_view_obj.owner == Steedos.userId())
 	### TO DO LIST
 		1.支持$in操作符，实现recent视图
 		$eq, $ne, $lt, $gt, $lte, $gte
@@ -68,11 +72,19 @@ if Meteor.isClient
 		spaceId = Session.get("spaceId")
 		custom_list_view = Creator.Collections.object_listviews.findOne(list_view_id)
 		if custom_list_view
+			isListViewFilterEditable = Creator.isListViewFilterEditable(custom_list_view)
+			if !isListViewFilterEditable
+				# 视图不可编辑时，把视图本身的过滤条件视为yml文件这样的代码级过滤条件，与用户设置的过滤条件取AND
+				code_filters_set = {}
+				code_filters_set.filter_scope = custom_list_view.filter_scope
+				code_filters_set.filters = custom_list_view.filters
 			unless filters_set
 				filters_set = {}
-				filters_set.filter_logic = custom_list_view.filter_logic
-				filters_set.filter_scope = custom_list_view.filter_scope
-				filters_set.filters = custom_list_view.filters
+				if isListViewFilterEditable
+					# 视图可编辑时才直接把过滤条件加载了odata请求中，因为不可编辑时有code_filters_set就够了
+					filters_set.filter_logic = custom_list_view.filter_logic
+					filters_set.filter_scope = custom_list_view.filter_scope
+					filters_set.filters = custom_list_view.filters
 		else
 			code_filters_set = {}
 			if spaceId and userId
@@ -82,6 +94,8 @@ if Meteor.isClient
 
 				code_filters_set.filter_scope = list_view.filter_scope
 				code_filters_set.filters = list_view.filters
+		
+		if code_filters_set
 			# 如果过虑器存在临时变更的过虑条件(即过虑器中过虑条件未保存到视图中)，则与代码中配置的过虑条件取AND连接逻辑
 			# 反之则直接应用代码中配置的过虑条件
 			if filters_set
