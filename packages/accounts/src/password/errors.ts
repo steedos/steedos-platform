@@ -20,4 +20,5 @@ export const errors: ErrorMessages = {
   usernameAlreadyExists: 'Username already exists',
   emailAlreadyExists: 'Email already exists',
   usernameOrEmailRequired: 'Username or Email is required',
+  emailRequired: 'Email is required'
 };

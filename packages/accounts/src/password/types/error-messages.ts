@@ -75,4 +75,8 @@ export interface ErrorMessages {
    * Default to 'Username or Email is required'
    */
   usernameOrEmailRequired: string;
+  /**
+   * Default to 'Email is required'
+   */
+  emailRequired: string;
 }
