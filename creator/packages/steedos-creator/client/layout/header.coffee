@@ -4,7 +4,7 @@ Template.creatorHeader.helpers
 	logoUrl: ()->
 		avatar = db.spaces.findOne(Steedos.getSpaceId())?.avatar_square
 		if avatar
-			return Creator.getRelativeUrl("/api/files/avatars/#{avatar}")
+			return Steedos.absoluteUrl("/api/files/avatars/#{avatar}")
 		else
 			logo_url = "/packages/steedos_creator/assets/logo-square.png"
 			return Creator.getRelativeUrl(logo_url)
