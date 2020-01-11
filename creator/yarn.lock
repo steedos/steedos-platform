@@ -12,16 +12,6 @@
     mongodb "^3.3.1"
     tslib "1.10.0"
 
-"@accounts/password@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@accounts/password/-/password-0.19.0.tgz#adee06287f836672ad5231cb1984b90abed22cc2"
-  integrity sha512-IFzO/6hdAqssbwT4zVEnikQK4lxCMKU0A62Hyv3PZ6IuYftMFHo/mlz5jd5ccPSFSImRFmXUbwDD93Wzvr7y0w==
-  dependencies:
-    "@accounts/two-factor" "^0.19.0"
-    bcryptjs "^2.4.3"
-    lodash "^4.17.15"
-    tslib "1.10.0"
-
 "@accounts/rest-express@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/rest-express/-/rest-express-0.19.0.tgz#f3b8fffab5e21058e285fc6d0f2095f68851e4cf"
@@ -46,13 +36,13 @@
     lodash "4.17.15"
     tslib "1.10.0"
 
-"@accounts/two-factor@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@accounts/two-factor/-/two-factor-0.19.0.tgz#2d177c1b1ee2abaebbc18ef1fa1203b561b1bc66"
-  integrity sha512-sBo2ZG09EjjNjFilXSHgfP5lG4/2uEsU/WFYMBRKbbLdLzGe2DWFglHfmdYVYKV7RZ14yCEjWxeHHmCMreG8jg==
+"@accounts/two-factor@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.npmjs.org/@accounts/two-factor/-/two-factor-0.20.1.tgz#653ba6a400abb0a512543097e3bfc233cb27cbc7"
+  integrity sha512-x8NqXWBp7jJp+bv18oewr7Yu2bh6PmFAdpDCrHlJAId3adgPEJMmJxjBh/6ucvPnaktiloqdlCZFUsFI2kKiqA==
   dependencies:
-    "@accounts/types" "^0.19.0"
-    "@types/lodash" "^4.14.137"
+    "@accounts/types" "^0.20.1"
+    "@types/lodash" "^4.14.138"
     "@types/speakeasy" "2.0.2"
     lodash "^4.17.15"
     speakeasy "^2.0.0"
@@ -62,6 +52,13 @@
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.19.0.tgz#283e5a236ad79e37a017ef843254ff6699ccbe78"
   integrity sha512-Su72qBZN2SpNrlC5yIFg/eyV18dEIDvfKyqmiPNlwFlIFAzNUoQCFr9i3+r/F5Zz3DFzvHb7dYFRCzFgtozPCg==
+  dependencies:
+    tslib "1.10.0"
+
+"@accounts/types@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.npmjs.org/@accounts/types/-/types-0.20.1.tgz#134de1586713844a926398b0cc081ecb8747cc90"
+  integrity sha512-k0c9XiePI9BU5WtgkB2WNwnqc13AUKmtlQxAtqdGIemMsHql1LUIuaV5TyhSAxEA6phe88dhlFW5Brlt2VRWrQ==
   dependencies:
     tslib "1.10.0"
 
@@ -412,17 +409,18 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.10.4":
-  version "1.10.4"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.10.4.tgz#df3131de8761534fbfd033bc0f661459a11f9110"
-  integrity sha1-3zEx3odhU0+/0DO8D2YUWaEfkRA=
+"@steedos/accounts@^1.10.5":
+  version "1.10.5"
+  resolved "https://registry.npmjs.org/@steedos/accounts/-/accounts-1.10.5.tgz#86684ad9427ada3721e03576af8bf607327004cf"
+  integrity sha512-7VBsd74NIjPf66WHJz20I3BEVkVp5l6m1fgKBlqIJM2q0PQEbW4oNQB2HQImphub8P5gylzpv9PSAU5Oi4ASPw==
   dependencies:
     "@accounts/mongo" "^0.19.0"
-    "@accounts/password" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
     "@accounts/server" "^0.19.0"
+    "@accounts/two-factor" "^0.20.1"
     "@babel/runtime" "^7.6.0"
     app-root-path "^2.2.1"
+    bcryptjs "^2.4.3"
     body-parser "1.19.0"
     cookies "^0.7.3"
     cors "2.8.5"
@@ -661,10 +659,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.137":
-  version "4.14.140"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.140.tgz#8d2bd55e6a22221cd662bbb85969eb00ec283da6"
-  integrity sha512-OU57uYCUUv9s8lgQTYuQlL6xkttWtz8VLCJSnt8ikla9+UXqMGJ8adCprSw7egJHSHwGvFpGhfpQDtHm/NQ3Cw==
+"@types/lodash@^4.14.138":
+  version "4.14.149"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
+  integrity sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
 
 "@types/long@^4.0.0":
   version "4.0.0"
