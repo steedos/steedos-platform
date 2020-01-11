@@ -7,7 +7,7 @@
   "scripts": {
     "debug": "nodemon server.js",
     "start": "node server",
-    "build": "yarn buildClient && yarn buildPackages",
+    "build": "yarn buildPackages",
     "buildClient": "cd webapp && yarn && yarn build && cd ..",
     "buildPackages": "cd ../../ && yarn compile && cd apps/contracts/",
     "prepare": "yarn build",
