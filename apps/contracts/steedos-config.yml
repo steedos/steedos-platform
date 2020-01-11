@@ -11,8 +11,7 @@ public:
       folder: "./storage"
 cron:
   instancerecordqueue_interval: 10000
-plugins: 
-  - "@steedos/accounts"
+
 webservices:
   steedos: /
 tenant: 

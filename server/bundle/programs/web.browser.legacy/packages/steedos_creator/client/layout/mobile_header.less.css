@@ -154,3 +154,20 @@
 .creator-mobile-header .navbar-toggle .icon-bar {
   background-color: transparent !important;
 }
+.creator-mobile-header .steedos-header-favorites .bootstrap-container {
+  margin-top: 12px;
+}
+.creator-mobile-header .steedos-header-favorites .slds-global-actions__favorites-action,
+.creator-mobile-header .steedos-header-favorites .slds-global-actions__favorites-more {
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+}
+.creator-mobile-header .steedos-header-favorites .slds-dropdown-trigger_click {
+  line-height: 1rem;
+}
+.creator-mobile-header .steedos-header-favorites .slds-text-heading_small {
+  font-size: 1rem;
+}
+.creator-mobile-header .header-notifications .slds-popover {
+  left: -300px;
+}

@@ -7,7 +7,7 @@ import {initPublicStaticRouter} from '../routes'
 
 export async function init() {
     getSteedosSchema();
-    WebAppInternals.setInlineScriptsAllowed(false);
+    WebAppInternals.setInlineScriptsAllowed(true);
     initDesignSystem()
     Plugins.init();
     initCreator();

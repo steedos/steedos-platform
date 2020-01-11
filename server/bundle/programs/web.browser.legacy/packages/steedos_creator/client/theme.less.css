@@ -165,7 +165,7 @@ body button {
 }
 .steedos.fixed .creator-content-wrapper {
   top: 90px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.8);
   overflow: auto;
   position: absolute;
   left: 0;
@@ -174,6 +174,9 @@ body button {
   padding-top: 0px;
   min-height: auto;
   padding-bottom: 0.75rem;
+}
+.steedos.fixed .creator-content-wrapper .content-wrapper {
+  background: transparent;
 }
 .steedos.fixed .slds-form-element .control-label {
   font-weight: normal;
