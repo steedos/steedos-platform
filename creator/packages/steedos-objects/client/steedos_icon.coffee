@@ -7,7 +7,7 @@ helpers =
 				source += "-sprite"
 			name = foo[1]
 		url = "/assets/icons/#{source}/svg/symbols.svg##{name}"
-		return url 
+		return Steedos.absoluteUrl(url)
 
 	formatName: (name) ->
 		foo = name?.split(".")
