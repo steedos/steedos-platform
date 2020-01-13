@@ -18,6 +18,8 @@ Steedos.redirectToSignIn = (redirect)->
 	if accountsUrl 
 		window.location.href = accountsUrl + "/authorize?redirect_uri=/";
 	else
+		if (!FlowRouter._initialized)
+			FlowRouter.initialize();
 		if window.location.pathname.indexOf('/steedos/sign-in')>=0
 			return
 		signInUrl = AccountsTemplates.getRoutePath("signIn")
@@ -26,8 +28,6 @@ Steedos.redirectToSignIn = (redirect)->
 				signInUrl += "&redirect=#{redirect}"
 			else
 				signInUrl += "?redirect=#{redirect}"
-		if (!FlowRouter._initialized)
-			FlowRouter.initialize();
 		FlowRouter.go signInUrl
 		
 Setup.validate = (onSuccess)->
