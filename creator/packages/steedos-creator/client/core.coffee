@@ -78,13 +78,10 @@ if Meteor.isClient
 				code_filters_set = {}
 				code_filters_set.filter_scope = custom_list_view.filter_scope
 				code_filters_set.filters = custom_list_view.filters
-			unless filters_set
-				filters_set = {}
-				if isListViewFilterEditable
-					# 视图可编辑时才直接把过滤条件加载了odata请求中，因为不可编辑时有code_filters_set就够了
-					filters_set.filter_logic = custom_list_view.filter_logic
-					filters_set.filter_scope = custom_list_view.filter_scope
-					filters_set.filters = custom_list_view.filters
+			
+			# 这里当isListViewFilterEditable为true且filters_set为空时，没必要也不可以把custom_list_view.filters值设置到filters_set中
+			# 没必要是因为list_wrapper.coffee文件中已经处理了，把custom_list_view.filters值设置到Session中了
+			# 不可以是因为：自定义视图，当过滤器中删除掉数据库中已经存在的某项过滤条件时，列表请求未删除该条件 #1570
 		else
 			code_filters_set = {}
 			if spaceId and userId
@@ -110,7 +107,9 @@ if Meteor.isClient
 					filters_set.filters = code_filters_set.filters
 			else
 				filters_set = code_filters_set
-			
+
+		unless filters_set
+			filters_set = {}
 
 		filter_logic = filters_set.filter_logic
 		filter_scope = filters_set.filter_scope
