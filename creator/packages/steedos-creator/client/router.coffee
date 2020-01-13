@@ -251,6 +251,9 @@ objectRoutes.route '/grid/:list_view_id',
 		# 每次进视图应该把过滤器关联的视图及对象清空，否则有bug：刷新浏览器时过滤器中已保存条件未能显示出来 #1167
 		if Session.get("object_name") != FlowRouter.getParam("object_name") or Session.get("list_view_id") != FlowRouter.getParam("list_view_id")
 			Session.set("filter_target", null)
+			# 进入某个视图应该把上一个视图的过滤条件清空
+			# 见issue：过滤器，在对象的某个yml文件定义的视图中设置过滤条件后，切换到另一个yml视图，刚设置的过滤条件应该清除掉 #1571
+			Session.set("filter_items", null)
 
 		if Session.get("object_name") != FlowRouter.getParam("object_name")
 			Session.set("list_view_id", null)
