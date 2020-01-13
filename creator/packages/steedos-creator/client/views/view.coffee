@@ -1,4 +1,5 @@
 loadRecordFromOdata = (template, object_name, record_id)->
+	template.record.set({});
 	object = Creator.getObject(object_name)
 	selectFields = Creator.objectOdataSelectFields(object)
 	expand = Creator.objectOdataExpandFields(object)
@@ -95,8 +96,10 @@ Template.creator_view.onRendered ->
 
 			$(".creator-view-tabs-content").removeClass("slds-show").addClass("slds-hide")
 			$("#creator-quick-form").addClass("slds-show")
-
-	loadRecord()
+	this.autorun ->
+		record_id = Session.get("record_id")
+		if record_id
+			loadRecord()
 	# if Steedos.isMobile()
 	# 	this.autorun ->
 	# 		loadRecord()
