@@ -442,7 +442,7 @@ Template.creator_view.helpers
 		return ReactDesignSystem.Illustration
 
 	notFoundPath: ()->
-		return Steedos.absoluteUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
+		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
 
 	notFoundHeading: ()->
 		return "似乎出现了一个问题。"
