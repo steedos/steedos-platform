@@ -61,6 +61,12 @@ var fetchMyNotifications = function(){
 Meteor.startup(function(c){
     Meteor.autorun(function(){
         if(Creator.subs["CreatorNotifications"].ready("my_notifications") && Creator.bootstrapLoaded.get()){
+            if(Meteor.loggingIn() || Meteor.loggingOut()){
+                return;
+            }
+            if(!Meteor.userId()){
+                return;
+            }
             var query = Creator.getCollection("notifications").find();
             if(!Steedos.isMobile()){
                 // 手机上不走push.js
