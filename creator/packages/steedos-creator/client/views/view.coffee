@@ -34,6 +34,10 @@ loadRecord = ()->
 	object_name = Session.get "object_name"
 	record_id = Session.get "record_id"
 	object = Creator.getObject(object_name)
+
+	if Meteor.loggingIn() || Meteor.loggingOut() || !Meteor.userId()
+		return;
+
 	object_fields = object.fields
 #	if object_name and record_id
 #		if !object.database_name || !object.database_name == 'meteor-mongo'
