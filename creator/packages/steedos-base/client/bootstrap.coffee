@@ -14,9 +14,11 @@ Blaze._allowJavascriptUrls()
 FlowRouter.wait();
 
 Steedos.redirectToSignIn = (redirect)->
+	if !redirect
+		redirect = location.href.replace("/steedos/sign-in", "")
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
-		window.location.href = accountsUrl + "/authorize?redirect_uri=/";
+		window.location.href = accountsUrl + "/authorize?redirect_uri=" + redirect;
 	else
 		if (!FlowRouter._initialized)
 			FlowRouter.initialize();
