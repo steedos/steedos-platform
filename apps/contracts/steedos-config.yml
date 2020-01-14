@@ -9,9 +9,9 @@ public:
     store: "local"
     local:
       folder: "./storage"
+
 cron:
   instancerecordqueue_interval: 10000
-
 webservices:
   steedos: /
 tenant: 
