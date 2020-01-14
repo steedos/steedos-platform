@@ -82,3 +82,13 @@ Autoupdate._retrySubscription = function () {
 };
 
 Meteor.startup(Autoupdate._retrySubscription);
+
+window.WebAppLocalServer = {};
+WebAppLocalServer.onNewVersionReady = function() {
+};
+WebAppLocalServer.startupDidComplete = function(a,b,c) {
+};
+WebAppLocalServer.checkForUpdates = function(a,b,c) {
+};
+WebAppLocalServer.onError = function(a,b,c) {
+};
