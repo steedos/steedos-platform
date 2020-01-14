@@ -325,6 +325,8 @@ Meteor.startup(function () {
       const value = program && program[key]; // If this is the first time we have calculated this hash,
       // program[key] will be a thunk (lazy function with no parameters)
       // that we should call to do the actual computation.
+      console.log("xxxxxx")
+      console.log(value)
 
       return typeof value === "function" ? program[key] = value() : value;
     };
@@ -747,6 +749,7 @@ function runWebAppServer() {
     let programJson;
 
     try {
+      console.log(programJsonPath)
       programJson = JSON.parse(readFileSync(programJsonPath));
     } catch (e) {
       if (e.code === "ENOENT") return;

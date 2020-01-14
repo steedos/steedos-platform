@@ -1,5 +1,6 @@
 {
   "format": "web-program-pre1",
+  "hello": "world",
   "manifest": [
     {
       "path": "c7f94f24aac60da16c31c13f357d5b6fe15dda10.js",
