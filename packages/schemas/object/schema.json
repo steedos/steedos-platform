@@ -479,6 +479,10 @@
                     ],
                     "description": "过滤条件"
                 },
+                "filtersFunction": {
+                    "type": "string",
+                    "description": "过滤条件函数名称"
+                },
                 "sharing": {
                     "type": "string",
                     "description": "配置当用户对主表记录有何种权限时对本表记录可以增删改",
