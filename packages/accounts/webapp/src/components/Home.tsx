@@ -27,6 +27,16 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getCookie = (name: string) => {
+    let pattern = RegExp(name + "=.[^;]*")
+    let matched = document.cookie.match(pattern)
+    if(matched){
+        let cookie = matched[0].split('=')
+        return cookie[1]
+    }
+    return ''
+  }
+
   const fetchUser = async () => {
     // refresh the session to get a new accessToken if expired
     const tokens = await accountsClient.refreshSession();
@@ -49,7 +59,9 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
         redirect_uri = window.location.origin + redirect_uri
       }
       let u = new URL(redirect_uri);
-      u.searchParams.append("token", tokens.accessToken)
+      u.searchParams.append("token", tokens.accessToken);
+      u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
+      u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
       window.location.href = u.toString();
     }
   };

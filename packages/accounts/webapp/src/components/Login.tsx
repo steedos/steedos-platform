@@ -41,7 +41,15 @@ const Login = ({ history, settings, tenant }: any) => {
   document.title = "Login | " + tenant.name;
   const searchParams = new URLSearchParams(window.location.search);
   let redirect_uri = searchParams.get("redirect_uri");
-
+  const getCookie = (name: string) => {
+    let pattern = RegExp(name + "=.[^;]*")
+    let matched = document.cookie.match(pattern)
+    if(matched){
+        let cookie = matched[0].split('=')
+        return cookie[1]
+    }
+    return ''
+  }
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -80,6 +88,8 @@ const Login = ({ history, settings, tenant }: any) => {
         }
         let u = new URL(redirect_uri);
         u.searchParams.append("token", result.tokens.accessToken)
+        u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
+        u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
         window.location.href = u.toString();
       }
       else
