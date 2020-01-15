@@ -294,7 +294,7 @@ Creator.getUserContext = (userId, spaceId, isUnSafeMode)->
 
 Creator.getRelativeUrl = (url)->
 
-	if _.isFunction(Steedos.isCordova) && Steedos.isCordova() && (url?.startsWith("/assets") || url?.startsWith("assets"))
+	if _.isFunction(Steedos.isCordova) && Steedos.isCordova() && (url?.startsWith("/assets") || url?.startsWith("assets") || url?.startsWith("/packages"))
 		if !/^\//.test(url)
 			url = "/" + url
 		return url
