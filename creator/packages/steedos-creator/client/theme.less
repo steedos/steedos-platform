@@ -529,4 +529,23 @@ margin-left: 216px; }
 	}
 }
 
+/* ios safari hack......start:右上角通知组件、收藏组件等的popover在手机safari上样式没对齐*/
+/* 注意该hack语法不支持less嵌套*/
+_::-webkit-full-page-media,_:future, :root .slds-popover .slds-popover__close{ 
+	@media (max-width: 767px) {
+		margin: 0px!important;
+	}
+}
 
+_::-webkit-full-page-media,_:future, :root .slds-popover .slds-text-heading_small .slds-text-link{ 
+	@media (max-width: 767px) {
+		margin-top: 0.3rem!important;
+	}
+}
+
+_::-webkit-full-page-media,_:future, :root .slds-popover .slds-popover__body{ 
+	@media (max-width: 767px) {
+		top: -0.2rem!important;
+	}
+}
+/* ios safari hack.....end*/
