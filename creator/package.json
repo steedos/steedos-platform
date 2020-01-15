@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@salesforce/design-system-react": "^0.10.12",
-    "@steedos/accounts": "^1.10.5",
+    "@steedos/accounts": "^1.10.6",
     "@steedos/auth": "^1.15.0",
     "@steedos/core": "^1.15.0",
     "@steedos/filters": "^1.15.0",
