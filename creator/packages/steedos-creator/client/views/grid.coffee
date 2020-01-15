@@ -77,7 +77,7 @@ _standardQuery = (curObjectName, standard_query)->
 		options = is_logic_or: is_logic_or
 		return Creator.formatFiltersToDev(query_arr, object_name, options)
 
-_itemClick = (e, curObjectName, list_view_id)->
+_itemClick = (e, curObjectName, list_view_id, isGridReadonly)->
 	self = this
 	record = e.data
 	if !record
@@ -87,7 +87,7 @@ _itemClick = (e, curObjectName, list_view_id)->
 		record._id = record._id._value
 
 	record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
-	actions = _actionItems(curObjectName, record._id, record_permissions)
+	actions = _actionItems(curObjectName, record._id, record_permissions, isGridReadonly)
 
 	if actions.length
 		actionSheetItems = _.map actions, (action)->
@@ -130,10 +130,15 @@ _itemClick = (e, curObjectName, list_view_id)->
 	actionSheet.option("target", e.event.target);
 	actionSheet.option("visible", true);
 
-_actionItems = (object_name, record_id, record_permissions)->
+_actionItems = (object_name, record_id, record_permissions, isGridReadonly)->
 	obj = Creator.getObject(object_name)
 	actions = Creator.getActions(object_name)
 	actions = _.filter actions, (action)->
+		if isGridReadonly
+			# 只读是排除掉编辑和删除按钮
+			standardEditActions = ["standard_edit", "standard_delete"]
+			if standardEditActions.indexOf(action.name) > -1 or standardEditActions.indexOf(action.todo) > -1
+				return false
 		if action.on == "record" or action.on == "record_more" or action.on == "list_item"
 			if typeof action.visible == "function"
 				return action.visible(object_name, record_id, record_permissions)
@@ -241,7 +246,7 @@ _expandFields = (object_name, columns)->
 			# expand_fields.push n + "($select=name)"
 	return expand_fields
 
-getColumnItem = (object, list_view, column, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)->
+getColumnItem = (object, list_view, column, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth, isGridReadonly)->
 
 	field = object.fields[column]
 	listViewColumns = list_view.columns
@@ -281,6 +286,8 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 			cellOption = {_id: options.data._id, val: field_val, doc: options.data, field: field, field_name: field_name, object_name: object.name, agreement: "odata", is_related: is_related}
 			if field.type is "markdown"
 				cellOption["full_screen"] = true
+			if isGridReadonly
+				cellOption.readonly = true
 			Blaze.renderWithData Template.creator_table_cell, cellOption, container[0]
 	if listViewColumn?.wrap
 		columnItem.cssClass += " cell-wrap"
@@ -309,7 +316,7 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 
 	return columnItem;
 
-_columns = (object_name, columns, list_view_id, is_related)->
+_columns = (object_name, columns, list_view_id, is_related, isGridReadonly)->
 	object = Creator.getObject(object_name)
 	grid_settings = Creator.getCollection("settings").findOne({object_name: object_name, record_id: "object_gridviews"})
 	column_default_sort = Creator.transformSortToDX(Creator.getObjectDefaultSort(object_name))
@@ -327,7 +334,7 @@ _columns = (object_name, columns, list_view_id, is_related)->
 		list_view_sort = column_default_sort
 	result = columns.map (n,i)->
 		defaultWidth = _defaultWidth(columns, object.enable_tree, i)
-		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth)
+		return getColumnItem(object, list_view, n, list_view_sort, column_default_sort, column_sort_settings, is_related, defaultWidth, isGridReadonly)
 	if !_.isEmpty(list_view_sort)
 		_.each list_view_sort, (sort,index)->
 			sortColumn = _.findWhere(result,{dataField:sort[0]})
@@ -361,25 +368,26 @@ Template.creator_grid.onRendered ->
 		# Template.currentData() 这个代码不能删除，用于更新self.data中的数据
 		templateData = Template.currentData()
 		is_related = self.data.is_related
+		object_name = self.data.object_name
+		creator_obj = Creator.getObject(object_name)
+		if !creator_obj
+			return
+		related_object_name = self.data.related_object_name
+		related_object = self.data.related_object
 		if is_related
-			list_view_id = Creator.getListView(self.data.related_object_name, "all")._id
+			list_view_id = Creator.getListView(related_object_name, "all")._id
+			isGridReadonly = !Creator.getRecordRelatedListPermissions(object_name, related_object).allowEdit
 		else
 			list_view_id = Session.get("list_view_id")
 		unless list_view_id
 			toastr.error t("creator_list_view_permissions_lost")
 			return
 
-		object_name = self.data.object_name
-		creator_obj = Creator.getObject(object_name)
-
-		if !creator_obj
-			return
 		if !is_related
 			grid_paging = Tracker.nonreactive ()->
 							_grid_paging = Session.get('grid_paging')
 							if _grid_paging?.object_name == object_name && _grid_paging.list_view_id == list_view_id
 								return _grid_paging
-		related_object_name = self.data.related_object_name
 		curObjectName = if is_related then related_object_name else object_name
 		curObject = Creator.getObject(curObjectName)
 
@@ -532,7 +540,7 @@ Template.creator_grid.onRendered ->
 			expand_fields = _expandFields(curObjectName, selectColumns)
 
 			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
-			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related)
+			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, isGridReadonly)
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
 			selectColumns = _.union(selectColumns, extra_columns)
 			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
@@ -734,7 +742,7 @@ Template.creator_grid.onRendered ->
 											r.values[index] = valOpt.label
 				onCellClick: (e)->
 					if e.column?.dataField ==  "_id_actions"
-						_itemClick.call(self, e, curObjectName, list_view_id)
+						_itemClick.call(self, e, curObjectName, list_view_id, isGridReadonly)
 
 				onContentReady: (e)->
 					if self.data.total

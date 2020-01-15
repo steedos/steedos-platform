@@ -300,6 +300,9 @@ Template.creator_table_cell.helpers
 		return data;
 
 	editable: ()->
+		if this.readonly
+			return false
+
 		if !this.field
 			return false
 

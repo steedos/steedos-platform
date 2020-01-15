@@ -27,15 +27,8 @@ Template.related_object_list.helpers
 	allowCreate: ()->
 		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
-		related_object = relatedList.find((item)-> return item.object_name == related_object_name )
-		sharing = related_object?.sharing || 'masterWrite'
-		masterAllow = false
-		masterRecordPerm = Creator.getRecordPermissions(Session.get('object_name'), Creator.getObjectRecord(), Meteor.userId(), Session.get('spaceId'))
-		if sharing == 'masterRead'
-			masterAllow = masterRecordPerm.allowRead
-		else if sharing == 'masterWrite'
-			masterAllow = masterRecordPerm.allowEdit
-		return masterAllow && Creator.getPermissions(related_object_name).allowCreate
+		related_object = relatedList.find((item)-> return item.object_name == related_object_name)
+		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), related_object).allowCreate
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -50,11 +43,13 @@ Template.related_object_list.helpers
 
 	recordsTotalCount: ()->
 		return Template.instance().recordsTotal.get()
-		
-	list_data: ()->
+	
+	list_data: () ->
 		object_name = Session.get "object_name"
-		related_object_name = Session.get("related_object_name")
-		return {related_object_name:related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true}
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		related_object_name = Session.get "related_object_name"
+		related_object = relatedList.find((item)-> return item.object_name == related_object_name)
+		return {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_object: related_object}
 
 
 Template.related_object_list.events

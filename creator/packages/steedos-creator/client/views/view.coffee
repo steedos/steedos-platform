@@ -345,14 +345,7 @@ Template.creator_view.helpers
 		return Creator.getObject(this.object_name)
 
 	allowCreate: ()->
-		sharing = this.sharing || 'masterWrite'
-		masterAllow = false
-		masterRecordPerm = Creator.getRecordPermissions(Session.get('object_name'), Creator.getObjectRecord(), Meteor.userId(), Session.get('spaceId'))
-		if sharing == 'masterRead'
-			masterAllow = masterRecordPerm.allowRead
-		else if sharing == 'masterWrite'
-			masterAllow = masterRecordPerm.allowEdit
-		return masterAllow && Creator.getPermissions(this.object_name).allowCreate
+		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), this).allowCreate
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -422,8 +415,9 @@ Template.creator_view.helpers
 
 	list_data: (obj) ->
 		object_name = Session.get "object_name"
+		related_object = obj
 		related_object_name = obj.object_name
-		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true}
+		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_object: related_object}
 
 	enable_chatter: ()->
 		return Creator.getObject(Session.get("object_name"))?.enable_chatter
