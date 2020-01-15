@@ -99,6 +99,7 @@ export function init(context){
     }
     context.settings.public.webservices.accounts = { url: '/accounts' }
   }
-  let accountsRouter = getAccountsRouter(context)
+  let accountsRouter = getAccountsRouter(context);
+  context.app.use("/accounts", accountsRouter);
   WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
 }
