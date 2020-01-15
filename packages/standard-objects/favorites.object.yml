@@ -39,6 +39,9 @@ fields:
     type: number
     label: 排序号
     inlineHelpText: 数值大的显示在前面
+actions:
+  standard_new:
+    visible: false
 list_views:
   all:
     label: 全部
