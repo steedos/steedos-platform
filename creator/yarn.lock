@@ -409,10 +409,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.10.6":
-  version "1.10.6"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.10.6.tgz#00f044f62f9c3ce0f4e3c29e78c55be2286dffb1"
-  integrity sha512-0zOfd17gtivDckLIXoo8z9qEYn3rYW0uAjp6XLZJFsWTHxsmHjCMWM+7bYU6XJDB2dAvXvEZweeTC0gPwdCSxA==
+"@steedos/accounts@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.10.7.tgz#d27dc96268c1e570df7f5e22b085805bbfce76f1"
+  integrity sha512-gF5u7Lg7dK5guLklpOdYwf4ztV9/3wmdQEVjxUOgYiYUwrTKE+IVZgykIJ8ODtgZ2D+3Zss5b2I2+/GlCsyQQA==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
