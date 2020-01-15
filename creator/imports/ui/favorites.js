@@ -1,8 +1,16 @@
 import './favorites.html';
 import FavoritesContainer from './containers/FavoritesContainer.jsx'
 
-deleteCallBack = function(){
+var deleteCallBack = function(){
 
+}
+
+var getFlowRouterPath = function(url){
+	var ROOT_URL_PATH_PREFIX = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+	if(ROOT_URL_PATH_PREFIX && url.startsWith(ROOT_URL_PATH_PREFIX)){
+		url = url.replace(ROOT_URL_PATH_PREFIX, '');
+	}
+	return url;
 }
 
 Template.favorites.helpers({
@@ -45,11 +53,13 @@ Template.favorites.helpers({
 		return function(record){
 			if(record.record_type == 'LIST_VIEW'){
 				if(record.object_name && record.record_id){
-					FlowRouter.go(Creator.getListViewUrl(record.object_name, '-', record.record_id));
+					var viewUrl = Creator.getListViewUrl(record.object_name, '-', record.record_id);
+					FlowRouter.go(getFlowRouterPath(viewUrl));
 				}
 			}else if(record.record_type == 'RECORD'){
 				if(record.object_name && record.record_id){
-					FlowRouter.go(Creator.getObjectUrl(record.object_name, record.record_id, '-'));
+					var recordUrl = Creator.getObjectUrl(record.object_name, record.record_id, '-');
+					FlowRouter.go(getFlowRouterPath(recordUrl));
 				}
 			}
 
@@ -57,7 +67,8 @@ Template.favorites.helpers({
 	},
 	editOnClick: function () {
 		return function(){
-			FlowRouter.go(Creator.getObjectUrl("favorites", null, '-'));
+			var url =Creator.getObjectUrl("favorites", null, '-')
+			FlowRouter.go(getFlowRouterPath(url));
 		}
 	}
 });
