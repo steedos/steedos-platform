@@ -373,10 +373,10 @@ Template.creator_grid.onRendered ->
 		if !creator_obj
 			return
 		related_object_name = self.data.related_object_name
-		related_object = self.data.related_object
+		related_list_item_props = self.data.related_list_item_props
 		if is_related
 			list_view_id = Creator.getListView(related_object_name, "all")._id
-			isGridReadonly = !Creator.getRecordRelatedListPermissions(object_name, related_object).allowEdit
+			isGridReadonly = !Creator.getRecordRelatedListPermissions(object_name, related_list_item_props).allowEdit
 		else
 			list_view_id = Session.get("list_view_id")
 		unless list_view_id

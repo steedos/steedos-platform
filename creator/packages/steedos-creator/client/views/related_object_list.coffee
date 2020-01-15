@@ -27,8 +27,8 @@ Template.related_object_list.helpers
 	allowCreate: ()->
 		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
-		related_object = relatedList.find((item)-> return item.object_name == related_object_name)
-		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), related_object).allowCreate
+		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		return Creator.getRecordRelatedListPermissions(Session.get('object_name'), related_list_item_props).allowCreate
 
 	isUnlocked: ()->
 		if Creator.getPermissions(Session.get('object_name')).modifyAllRecords
@@ -48,8 +48,8 @@ Template.related_object_list.helpers
 		object_name = Session.get "object_name"
 		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
-		related_object = relatedList.find((item)-> return item.object_name == related_object_name)
-		return {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_object: related_object}
+		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
+		return {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
 
 
 Template.related_object_list.events

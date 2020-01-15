@@ -413,11 +413,11 @@ Template.creator_view.helpers
 		data.parent_view = "record_details"
 		return data
 
-	list_data: (obj) ->
+	list_data: (item) ->
 		object_name = Session.get "object_name"
-		related_object = obj
-		related_object_name = obj.object_name
-		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_object: related_object}
+		related_list_item_props = item
+		related_object_name = item.object_name
+		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
 
 	enable_chatter: ()->
 		return Creator.getObject(Session.get("object_name"))?.enable_chatter
