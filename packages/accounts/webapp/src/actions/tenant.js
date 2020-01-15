@@ -8,7 +8,7 @@ export function loadTenant() {
         if (!tenant) 
             tenant = localStorage.getItem("spaceId")
         if (tenant) {
-            accountsRest.fetch("/tenant/" + tenant).then((tenantDoc) => {
+            accountsRest.fetch("tenant/" + tenant).then((tenantDoc) => {
                 dispatch({
                     type: "RECEIVED_TENANT",
                     data: tenantDoc,

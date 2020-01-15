@@ -18,8 +18,7 @@ export function loadTranslations(locale, url) {
     }
     
     return (dispatch) => {
-
-        accountsRest.fetch(url).then((translations) => {
+        accountsRest.fetch(url.startsWith("/") ? url.replace("/","") : url).then((translations) => {
             dispatch({
                 type:"RECEIVED_TRANSLATIONS",
                 data: {

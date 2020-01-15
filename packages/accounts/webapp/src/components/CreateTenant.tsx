@@ -35,7 +35,7 @@ const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
     try {
       
       // refresh the session to get a new accessToken if expired
-      const res = await accountsRest.authFetch( '/tenant', {
+      const res = await accountsRest.authFetch( 'tenant', {
         method: "POST",
         body: JSON.stringify({
           name: tenantName

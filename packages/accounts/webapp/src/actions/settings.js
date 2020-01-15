@@ -5,7 +5,7 @@ import { loadTenant } from './tenant';
 export function loadSettings() {
     return (dispatch) => {
 
-        accountsRest.fetch("/settings").then((configs) => {
+        accountsRest.fetch("settings").then((configs) => {
             dispatch({
                 type:"RECEIVED_SETTINGS",
                 data: configs,

@@ -44,7 +44,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
       history.push('/login');
       return;
     }
-    const data = await accountsRest.authFetch( '/user', {});
+    const data = await accountsRest.authFetch( 'user', {});
   
     if (!data) {
       history.push('/login');

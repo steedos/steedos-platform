@@ -61,7 +61,7 @@ const Login = ({ history, settings, tenant }: any) => {
         password,
         code,
       }
-      let result: any = await accountsRest.authFetch( '/password/authenticate', {
+      let result: any = await accountsRest.authFetch( 'password/authenticate', {
         method: 'POST',
         body: JSON.stringify({
           ...data,
@@ -71,7 +71,7 @@ const Login = ({ history, settings, tenant }: any) => {
       accountsClient.setTokens(result.tokens);
       
 
-      const user = await accountsRest.authFetch( '/user', {});
+      const user = await accountsRest.authFetch( 'user', {});
 
       if(user.password_expired){
         return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});

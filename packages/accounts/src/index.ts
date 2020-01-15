@@ -13,6 +13,8 @@ import { mongoUrl } from './db';
 import { sendMail } from './mail';
 import { getSteedosConfig } from '@steedos/objectql'
 
+declare var WebApp;
+
 const config = getSteedosConfig();
 
 function getAccountsServer (context){
@@ -98,5 +100,5 @@ export function init(context){
     context.settings.public.webservices.accounts = { url: '/accounts' }
   }
   let accountsRouter = getAccountsRouter(context)
-  context.app.use("/accounts", accountsRouter)
+  WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
 }
