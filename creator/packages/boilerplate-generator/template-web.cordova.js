@@ -64,7 +64,7 @@ export const headTemplate = ({
           contents,
         })
         : template('  <script type="text/javascript" src="<%- src %>"></script>')({
-          src: rootUrlPathPrefix + pathname,
+          src: Meteor.absoluteUrl(pathname)
         })
     )),
     '',
