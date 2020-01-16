@@ -7,7 +7,7 @@
     "server"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap; yarn run link",
+    "bootstrap": "lerna bootstrap && yarn run link",
     "link": "lerna exec -- yarn link",
     "unlink": "lerna exec -- yarn unlink",
     "ver": "lerna version --force-publish",
