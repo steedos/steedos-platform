@@ -12,16 +12,6 @@
     mongodb "^3.3.1"
     tslib "1.10.0"
 
-"@accounts/password@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@accounts/password/-/password-0.19.0.tgz#adee06287f836672ad5231cb1984b90abed22cc2"
-  integrity sha512-IFzO/6hdAqssbwT4zVEnikQK4lxCMKU0A62Hyv3PZ6IuYftMFHo/mlz5jd5ccPSFSImRFmXUbwDD93Wzvr7y0w==
-  dependencies:
-    "@accounts/two-factor" "^0.19.0"
-    bcryptjs "^2.4.3"
-    lodash "^4.17.15"
-    tslib "1.10.0"
-
 "@accounts/rest-express@^0.19.0":
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/rest-express/-/rest-express-0.19.0.tgz#f3b8fffab5e21058e285fc6d0f2095f68851e4cf"
@@ -46,13 +36,13 @@
     lodash "4.17.15"
     tslib "1.10.0"
 
-"@accounts/two-factor@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@accounts/two-factor/-/two-factor-0.19.0.tgz#2d177c1b1ee2abaebbc18ef1fa1203b561b1bc66"
-  integrity sha512-sBo2ZG09EjjNjFilXSHgfP5lG4/2uEsU/WFYMBRKbbLdLzGe2DWFglHfmdYVYKV7RZ14yCEjWxeHHmCMreG8jg==
+"@accounts/two-factor@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/@accounts/two-factor/-/two-factor-0.20.1.tgz#653ba6a400abb0a512543097e3bfc233cb27cbc7"
+  integrity sha512-x8NqXWBp7jJp+bv18oewr7Yu2bh6PmFAdpDCrHlJAId3adgPEJMmJxjBh/6ucvPnaktiloqdlCZFUsFI2kKiqA==
   dependencies:
-    "@accounts/types" "^0.19.0"
-    "@types/lodash" "^4.14.137"
+    "@accounts/types" "^0.20.1"
+    "@types/lodash" "^4.14.138"
     "@types/speakeasy" "2.0.2"
     lodash "^4.17.15"
     speakeasy "^2.0.0"
@@ -62,6 +52,13 @@
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.19.0.tgz#283e5a236ad79e37a017ef843254ff6699ccbe78"
   integrity sha512-Su72qBZN2SpNrlC5yIFg/eyV18dEIDvfKyqmiPNlwFlIFAzNUoQCFr9i3+r/F5Zz3DFzvHb7dYFRCzFgtozPCg==
+  dependencies:
+    tslib "1.10.0"
+
+"@accounts/types@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/@accounts/types/-/types-0.20.1.tgz#134de1586713844a926398b0cc081ecb8747cc90"
+  integrity sha512-k0c9XiePI9BU5WtgkB2WNwnqc13AUKmtlQxAtqdGIemMsHql1LUIuaV5TyhSAxEA6phe88dhlFW5Brlt2VRWrQ==
   dependencies:
     tslib "1.10.0"
 
@@ -2118,17 +2115,18 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@steedos/accounts@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.7.5.tgz#0d442a4ebcc955e75dbccaa86a888d82b1d82fda"
-  integrity sha512-1AGmNBhkG3EmfQQoNeGKosJY4y9t8YJMwl0hioTJrz/zy1T3ZYvhX5C4/8Lk+AYkZYSugwLwsI30Z7qUQ47lcA==
+"@steedos/accounts@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.10.7.tgz#d27dc96268c1e570df7f5e22b085805bbfce76f1"
+  integrity sha512-gF5u7Lg7dK5guLklpOdYwf4ztV9/3wmdQEVjxUOgYiYUwrTKE+IVZgykIJ8ODtgZ2D+3Zss5b2I2+/GlCsyQQA==
   dependencies:
     "@accounts/mongo" "^0.19.0"
-    "@accounts/password" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
     "@accounts/server" "^0.19.0"
+    "@accounts/two-factor" "^0.20.1"
     "@babel/runtime" "^7.6.0"
     app-root-path "^2.2.1"
+    bcryptjs "^2.4.3"
     body-parser "1.19.0"
     cookies "^0.7.3"
     cors "2.8.5"
@@ -2302,10 +2300,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.110", "@types/lodash@^4.14.137":
+"@types/lodash@*", "@types/lodash@^4.14.110":
   version "4.14.138"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
   integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
+
+"@types/lodash@^4.14.138":
+  version "4.14.149"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
+  integrity sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
 
 "@types/long@^4.0.0":
   version "4.0.0"

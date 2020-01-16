@@ -4,6 +4,7 @@ description: 合同、收付款、单位、联系人、任务、日历
 icon_slds: approval
 is_creator: true
 objects: 
+  - contracts_home
   - contracts
   - accounts
   - contacts
@@ -16,6 +17,7 @@ objects:
   - events
   - reports
 mobile_objects: 
+  - contracts_home
   - instances
   - contracts
   - accounts
