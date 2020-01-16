@@ -6,18 +6,20 @@
 					<div class="user slds-p-left--large">
 						<div class="media media--rec-home iconTitleAndChatterActions slds-grid slds-grid--vertical-align-start slds-m-left--x-large slds-m-right--medium">
 							<div class="media__figure profile-pic-wrapper">
-								<div class="profile-pic">
+								<div class="profile-pic {{#if showEditBtn}}editable{{/if}}">
 									<div class="pic-container" style="background: url({{avatarUrl}})">
 										<!-- <img src="/creator/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png"
 										 alt=""> -->
 
 										<img src="{{avatarUrl}}" alt="">
 									</div>
-									<div class="circular">
-										<span class="slds-icon_container slds-icon-utility-photo photoIcon slds-text-align--center slds-button__icon forceIcon">
-											{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="photo"}}
-										</span>
-									</div>
+									{{#if showEditBtn}}
+										<div class="circular">
+											<span class="slds-icon_container slds-icon-utility-photo photoIcon slds-text-align--center slds-button__icon forceIcon">
+												{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="photo"}}
+											</span>
+										</div>
+									{{/if}}
 								</div>
 							</div>
 							<div class="slds-p-left--x-large slds-no-space user-name">

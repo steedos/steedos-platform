@@ -20,10 +20,11 @@ Tracker.autorun (c)->
 	# Steedos.pushSpace.reset();
 	Steedos.pushSpace.subscribe("raix_push_notifications");
 
+if !Steedos.isMobile()
+	Steedos.Push = require("push.js");
+
 Meteor.startup ->
 	if !Steedos.isMobile()
-		Steedos.Push = require("push.js");
-		
 		if Push.debug
 			console.log("init notification observeChanges")
 
