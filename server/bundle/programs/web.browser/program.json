@@ -2,24 +2,224 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "08519e85bcff31e9b6e35edb6b548f4e4e9c567d.js",
+      "path": "e77d7733292eabb54a7357bd1507e36089df7917.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/08519e85bcff31e9b6e35edb6b548f4e4e9c567d.js?meteor_js_resource=true",
-      "size": 7822457,
-      "hash": "08519e85bcff31e9b6e35edb6b548f4e4e9c567d",
-      "sri": "TQpp/NkVNqE/Z0w46B/Q6p5c5Xbf8R9/Zt5twH7BKDdooHAT/atB+rgoeh81IvwQSrMiP8Uo44gSWqe/wSYp8A=="
+      "url": "/e77d7733292eabb54a7357bd1507e36089df7917.js?meteor_js_resource=true",
+      "size": 7825253,
+      "hash": "e77d7733292eabb54a7357bd1507e36089df7917",
+      "sri": "POK3SpF0TfZw0JoV1OCcCyiBOyUZmAOT5KiG0b6tfWlrFBCPaIj0PIV6nfcEkgBnC53n2NDeYWxYPSee7nALHA=="
     },
     {
-      "path": "08519e85bcff31e9b6e35edb6b548f4e4e9c567d.stats.json",
+      "path": "e77d7733292eabb54a7357bd1507e36089df7917.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/08519e85bcff31e9b6e35edb6b548f4e4e9c567d.stats.json?meteor_js_resource=true",
-      "size": 168989,
-      "hash": "1842b44cefcaab00cd140cd9d5dee65ad61e261e",
-      "sri": "mdcd0e2U1yKMEHoKEFvF8C/wW4CqRnVcHqFBr0DcLVmjapNmeZQ5VhxytNfCt8L0y7Ung1qpB6KzxUQMo04mbw=="
+      "url": "/e77d7733292eabb54a7357bd1507e36089df7917.stats.json?meteor_js_resource=true",
+      "size": 170490,
+      "hash": "a0638178bba801e1b728a3b1d73130a1aef0f84b",
+      "sri": "scTmDjInhdvKw+/80vgjW3HiDr4MiruEWryOjVCBhiBFU+OYd/647Buxsku7PKMi1Mff+77Ts1jiHQclU6U7uQ=="
+    },
+    {
+      "path": "dynamic/node_modules/simplemde/package.json",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/simplemde/package.json?hash=de4fd2035745536780983c3e43edcdf5a4cbb767",
+      "size": 93,
+      "hash": "de4fd2035745536780983c3e43edcdf5a4cbb767",
+      "sri": "FbS/ZjEEZGJMauCOr+ahbi8B+IqEoMvPvP15aOvpdtEAyqKpwYfipyUb11Rs+nNdJFmfnfHS7t/sYhJKITTAZQ=="
+    },
+    {
+      "path": "dynamic/node_modules/simplemde/src/js/simplemde.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/simplemde/src/js/simplemde.js?hash=2a40ee7b6740093d3b63edb9de2bcef3d09834a6",
+      "size": 27681,
+      "hash": "2a40ee7b6740093d3b63edb9de2bcef3d09834a6",
+      "sri": "71SiQW4tfSA5wQpTDM5My9AaypKmcaCiQ2tjruzONBX8OXMFfUpulrIrPwHBkzjnfkZPMaiUrLSr2cwoqm1l+A=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/package.json",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/package.json?hash=9008cef6d60676246687bb3b22a3040f74e36edf",
+      "size": 90,
+      "hash": "9008cef6d60676246687bb3b22a3040f74e36edf",
+      "sri": "Pvw6LgkF6DEVrFMkKdrre7nt8UeRWp8OiHOM3w7A5rmstQu7nFE09XpLma3lW67bvvJS5qscQdvnSEs0ggcCqQ=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/lib/codemirror.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/lib/codemirror.js?hash=978c3d5794e2d41e38921387efba25f67a76ec76",
+      "size": 170159,
+      "hash": "978c3d5794e2d41e38921387efba25f67a76ec76",
+      "sri": "vVqiC+VdXutNRFlCeH3qdCXJHVN5/OFpTlVJu5dc0dQiizGIQk79GeKHZzfM/5fpN/cQsenttrzyLj6snq5QXA=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/addon/edit/continuelist.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/addon/edit/continuelist.js?hash=68dd7fb2569a374510298992465009d2d7e4a155",
+      "size": 1481,
+      "hash": "68dd7fb2569a374510298992465009d2d7e4a155",
+      "sri": "8WHM1wwVxDShLyOLLzV2aRWfc7FQ+zjju1hMHPQv56HDQvYa6FnDdj/tUyUnyuJ80eYuOkvyuKHBvoftJt6WEA=="
+    },
+    {
+      "path": "dynamic/node_modules/simplemde/src/js/codemirror/tablist.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/simplemde/src/js/codemirror/tablist.js?hash=b1f1f2b0eecbd232c5e68f36d4a25a730bdbc592",
+      "size": 611,
+      "hash": "b1f1f2b0eecbd232c5e68f36d4a25a730bdbc592",
+      "sri": "g5cWcZSX55UOfOlckQ5X5D/4uw9i5FdRrCzWBjFuvZVHpx9gtkxBtxXZ5kFPULUQ5avXAlh0dDINU3BD5tdL8w=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/addon/display/fullscreen.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/addon/display/fullscreen.js?hash=ddb6c1e61deddf39a23f6d0abb58352641d68d85",
+      "size": 887,
+      "hash": "ddb6c1e61deddf39a23f6d0abb58352641d68d85",
+      "sri": "GKgPWRudWSoPrPWiDwD7puz23gQMzOhilnEh4WxrC5WqLKq3lPPj/ZvL2qfut39LPUIpHCztvTPRPDejU9nYEA=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/mode/markdown/markdown.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/mode/markdown/markdown.js?hash=7c096e7b1a6c393f8e775b17a82e5c224a5d8736",
+      "size": 14869,
+      "hash": "7c096e7b1a6c393f8e775b17a82e5c224a5d8736",
+      "sri": "QYdi0lx59aDwp2yZMDyAI4VH1frPEF+SXtdu3aGktKuztudlpMjBLLjdmG3H51NbTID5QppalVMNUSHyhsjKHQ=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/mode/xml/xml.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/mode/xml/xml.js?hash=75d9fb24b9929886dd724739489a36c8382f052c",
+      "size": 6000,
+      "hash": "75d9fb24b9929886dd724739489a36c8382f052c",
+      "sri": "jaLjXdJHIBSQ2bbAHFohVViup6OVb821l2wNA/3OxqLykzBW09GwBhBc/3hTqTLuTyJDRJj0+BSwIbaDPfA0bw=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/mode/meta.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/mode/meta.js?hash=dc66626f128667145df51689f3b6ef0214f0f83d",
+      "size": 12600,
+      "hash": "dc66626f128667145df51689f3b6ef0214f0f83d",
+      "sri": "jqgZtF5gSzNhlXSaBIK2sCeU/J4cF5TD3+5Hdwz0pYluHrH86nUcnK7if6JkP3aseQ7mQlI5PxnPQ/KyK4mX/A=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/addon/mode/overlay.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/addon/mode/overlay.js?hash=46ee9e87ef98885d4efae7d5f9fb969066b14ef4",
+      "size": 1318,
+      "hash": "46ee9e87ef98885d4efae7d5f9fb969066b14ef4",
+      "sri": "2unzHm7UxStGHZN+SN392IKW22cweggwnBZ581ySPjNdNuIQ4CGKHGshAEdLA18O49L9JxjafAwNFg6tW5A32g=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/addon/display/placeholder.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/addon/display/placeholder.js?hash=8ecebf3c5b44746fe688367e3e0abc30dc043fb7",
+      "size": 1251,
+      "hash": "8ecebf3c5b44746fe688367e3e0abc30dc043fb7",
+      "sri": "Qmkxi3mCCOrgByWSMX9DPSEnnmjf7P+bpk+GH2IMyBFp5NU2BFcbzzFk/wT4Zop38LTA+Tl3uID8d7BbTkqIEQ=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/addon/selection/mark-selection.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/addon/selection/mark-selection.js?hash=b1687c996f36bff46f23a4acc5775542acd87527",
+      "size": 1772,
+      "hash": "b1687c996f36bff46f23a4acc5775542acd87527",
+      "sri": "xmOBYhNz9bw9NFpA+bAieNzVASDXG3oX74N44Pba/xWfa4UMQd8IUReVOomJ5bcv75v9Z2Yjeeud+Iu5YNWaQA=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror/mode/gfm/gfm.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror/mode/gfm/gfm.js?hash=9f0df4ad65cdff487853fd2312c52324e78a69bc",
+      "size": 2738,
+      "hash": "9f0df4ad65cdff487853fd2312c52324e78a69bc",
+      "sri": "H4U7laVcQbF/KVum6g45KBpB/xFV8hJZj+zFjPBbioBUt7X04eYefOBqPzAQJqGQnSTvZ3H47C29cZ8Ycpec6w=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror-spell-checker/package.json",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror-spell-checker/package.json?hash=90a58cca585d7348fe86857901f0f694d12bb366",
+      "size": 111,
+      "hash": "90a58cca585d7348fe86857901f0f694d12bb366",
+      "sri": "AEktmekQqOXM2tLOmIPmlT2c3VPrLYcwKqCH6YiO1AMBO5sy+O+E+ICl+Ide3+MLMeSf1zTd7UTs1Bgv9+X3hA=="
+    },
+    {
+      "path": "dynamic/node_modules/codemirror-spell-checker/src/js/spell-checker.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/codemirror-spell-checker/src/js/spell-checker.js?hash=be583d43b7d7b928047fbd8c79840ec8ab479695",
+      "size": 1580,
+      "hash": "be583d43b7d7b928047fbd8c79840ec8ab479695",
+      "sri": "iw37t/TdI8mnLU9rFVWAXKKhYa0ZsG/eI8SzuaXpUyP6E7IuMLgepfwYQ3KSvWbR8I0xwrssQrAPJyfnLJH5tA=="
+    },
+    {
+      "path": "dynamic/node_modules/typo-js/package.json",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/typo-js/package.json?hash=e0941784817bb51505e37b94e4541892aa27c521",
+      "size": 92,
+      "hash": "e0941784817bb51505e37b94e4541892aa27c521",
+      "sri": "O7mrw9qI+25aKfealkfyFdHZNXACsh2VOR4XshWR4tg3U6ya+1Gd8l+LVVlBG0vPfFwdBEq6a2d2xbPC7g5nhw=="
+    },
+    {
+      "path": "dynamic/node_modules/typo-js/typo.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/typo-js/typo.js?hash=d935fdb3367713644ff57e18e81a5346e8d46bb7",
+      "size": 7509,
+      "hash": "d935fdb3367713644ff57e18e81a5346e8d46bb7",
+      "sri": "DO3E9Mofi6nbni3zkMe+s/RVIOIBgKodcVEz7eWKIfYZ97VA72+vDLfwyPaHOUKcEVsf3UTPMeI7dU9PzuBacg=="
+    },
+    {
+      "path": "dynamic/node_modules/marked/package.json",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/marked/package.json?hash=e84f63457cdfaa5f70f6294fb16c196f9c3c72ba",
+      "size": 83,
+      "hash": "e84f63457cdfaa5f70f6294fb16c196f9c3c72ba",
+      "sri": "s7/lEAMM2AVEx4MOO2UNX5T1GXO82CJMNszVQ3dS7COe2S7I6ahlod9141J7tEluy9Vln+gxzOyYaH0+QKU52g=="
+    },
+    {
+      "path": "dynamic/node_modules/marked/lib/marked.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/marked/lib/marked.js?hash=c6423bd139f2ef2bab5ebaad99b2950b1523363b",
+      "size": 24016,
+      "hash": "c6423bd139f2ef2bab5ebaad99b2950b1523363b",
+      "sri": "CUNSVDfYSPEQY3mxZrn+h56E82dR5jSlrhcvZJtPDRdNp8s+lXRR4DSSvpQ4A2IK+aqXFiIirjr+3IwNDehm4A=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
@@ -4592,12 +4792,12 @@
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/packages/steedos_creator/client/views/user.less.css?hash=aba3b56642d0abf6be5a4884d02640aa0ca33c5c",
+      "url": "/packages/steedos_creator/client/views/user.less.css?hash=371f1e76f614c16236b2529ef42f3b0db33542f6",
       "sourceMap": "packages/steedos_creator/client/views/user.less.css.map",
-      "sourceMapUrl": "/packages/steedos_creator/client/views/aba3b56642d0abf6be5a4884d02640aa0ca33c5c.map",
-      "size": 1987,
-      "hash": "aba3b56642d0abf6be5a4884d02640aa0ca33c5c",
-      "sri": "0UUXe7zCn06GQZARXo/B7eTi9aumNY7S5BRGT5JecRd9FZtgY5yut2iXeDJ5bCSMlSS9P3Vz0NtrPjUdyFtIIg=="
+      "sourceMapUrl": "/packages/steedos_creator/client/views/371f1e76f614c16236b2529ef42f3b0db33542f6.map",
+      "size": 2046,
+      "hash": "371f1e76f614c16236b2529ef42f3b0db33542f6",
+      "sri": "MQU+pDpAc+Un6rUF4Q45eXhDzEqFkOTPxu3glNSSErCnb92s0YJUA8dMdTNoNvhcryIFsQGuq8Ju2NI7tBpaaQ=="
     },
     {
       "path": "packages/steedos_creator/client/views/calendar.less.css",
@@ -5168,6 +5368,16 @@
       "size": 6102,
       "hash": "3efa6adc356d2af8f8c7d795ba6936b1cc969c32",
       "sri": "D+1hvQEBDF4GtUcmsbr5Vdq6JvNfluA1zJhl49vw0e0kIDs/BUlxlKvDYceCbR8CNH2KaMmK7mP5G/AVeUKTmg=="
+    },
+    {
+      "path": "app/client/compatibility/simplemde.min.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/client/compatibility/simplemde.min.css?hash=4da13fb68014d8c137a46b52d8053068590056de",
+      "size": 10929,
+      "hash": "4da13fb68014d8c137a46b52d8053068590056de",
+      "sri": "lB03MbtC3LxImQ+BKnZIyvVHTQ8SSmQ15AhVh5U/+CCp4wKtZMvgLGXbZIjIBBbnKsmk3/6n2vcF8a9CtVVSfA=="
     },
     {
       "path": "app/client/theme.less",
