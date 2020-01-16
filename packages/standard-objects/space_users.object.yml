@@ -15,10 +15,12 @@ fields:
     searchable: true
     index: true
     name: name
+    sortable: true
   position:
     type: text
     label: 职务
     name: position
+    sortable: true
   organizations:
     type: lookup
     label: 所属部门
@@ -106,6 +108,7 @@ fields:
     label: 排序号
     group: '-'
     name: sort_no
+    sortable: true
   organization:
     label: 主部门
     type: lookup
@@ -155,6 +158,11 @@ list_views:
       - position
       - sort_no
     filter_scope: space
+    sort:
+      - - sort_no
+        - desc
+      - - name
+        - asc
 permission_set:
   user:
     allowCreate: false
