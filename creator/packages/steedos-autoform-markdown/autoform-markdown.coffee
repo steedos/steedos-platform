@@ -4,8 +4,8 @@ Template.steedosAfMarkdown.helpers
 
 Template.steedosAfMarkdown.onRendered ->
 	element = $('#'+ this.data.atts.id)[0]
-	Meteor.setTimeout ()->
-		simplemde = new SimpleMDE({
+	module.dynamicImport('simplemde').then (SimpleMDE)->
+		simplemde = new SimpleMDE.default({
 			element: element,
 			toolbar:[
 				{
@@ -100,10 +100,12 @@ Template.steedosAfMarkdown.onRendered ->
 		});
 		#simplemde.value(this.data.value)
 		element._simplemde = simplemde
-	, 200
 
 AutoForm.addInputType "steedos-markdown", {
 	template: "steedosAfMarkdown"
 	valueOut: ()->
-		return this[0]._simplemde.value()
+		if this[0]._simplemde
+			return this[0]._simplemde.value()
+		else
+			return this[0].value
 }

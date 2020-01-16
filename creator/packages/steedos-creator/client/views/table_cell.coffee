@@ -290,7 +290,8 @@ Template.creator_table_cell.helpers
 					reg = /(\d)(?=(\d{3})+\b)/g
 				val = val.replace(reg, '$1,')
 			else if _field.type == "markdown"
-				val = Spacebars.SafeString(marked(val))
+				if !_.isEmpty(val)
+					val = Spacebars.SafeString(marked(val))
 
 			if this.parent_view != 'record_details' && this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
