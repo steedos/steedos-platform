@@ -2,6 +2,9 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		Steedos.redirectToSignIn(context.path)
 
+	if Meteor.userId()
+		Meteor.defer(Favorites.changeState);
+
 Meteor.startup ()->
 	Tracker.autorun ()->
 		workflow_categories = null

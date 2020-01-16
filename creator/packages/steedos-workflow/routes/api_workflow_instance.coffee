@@ -2,7 +2,7 @@ JsonRoutes.add 'get', '/api/workflow/instance/:instanceId', (req, res, next) ->
 	try
 		current_user_info = uuflowManager.check_authorization(req, res)
 		current_user_id = current_user_info._id
-
+		req_async = _.has(req.query, 'async');
 		insId = req.params.instanceId
 
 		ins = db.instances.findOne(insId, { fields: { space: 1, flow: 1, state: 1, inbox_users: 1, cc_users: 1, outbox_users: 1, submitter: 1, applicant: 1 } })
@@ -36,12 +36,18 @@ JsonRoutes.add 'get', '/api/workflow/instance/:instanceId', (req, res, next) ->
 				throw new Meteor.Error('error', "no permission.")
 			box = 'monitor'
 
-		redirectTo = Meteor.absoluteUrl "workflow/space/#{spaceId}/#{box}/#{insId}"
-
-		res.setHeader "Location", redirectTo
-		res.writeHead 302
-		res.end()
-		return
+		redirectTo = "workflow/space/#{spaceId}/#{box}/#{insId}"
+		redirectToUrl = Meteor.absoluteUrl(redirectTo)
+		if req_async # || req.get("X-Requested-With") === 'XMLHttpRequest'
+			return res.status(200).send({
+				"status": 302,
+				"redirect": redirectTo
+			});
+		else
+			res.setHeader "Location", redirectToUrl
+			res.writeHead 302
+			res.end()
+			return
 	catch e
 		console.error e.stack
 		JsonRoutes.sendResult res,
