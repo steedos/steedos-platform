@@ -9,7 +9,7 @@ Steedos.isNewWindow = ()->
 		if Steedos.isElectron() && window.opener
 			# 新版本客户端
 			return true
-		else if window.opener.opener
+		else if window.opener and window.opener.opener
 			# 老版本客户端
 			# window.opener.opener不为空说明是新窗口，用两层opener是因为主窗口本来就有一层opener
 			return true
