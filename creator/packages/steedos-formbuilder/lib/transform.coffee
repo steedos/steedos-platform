@@ -12,6 +12,9 @@ getFormFieldOptions = (field)->
 			values.push {label: option, value: option}
 	return values
 
+TablePropKeys = ['_id', 'code', 'label', 'type', 'name', 'description', 'fields', 'is_wide', 'is_required']
+SectionPropKeys = ['_id', 'code', 'label', 'type', 'name', 'description', 'fields', 'is_wide']
+
 Creator.formBuilder.transformFormFieldsIn = (formFields)->
 	fields = []
 	_.each formFields, (f)->
@@ -133,11 +136,19 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 
 		switch field.type
 			when 'table'
+				_.each _.keys(field), (key)->
+					if !_.include(TablePropKeys, key)
+						delete field[key]
 				field.is_wide = true
 				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder').actions.getData())
+
 			when 'section'
+				_.each _.keys(field), (key)->
+					if !_.include(SectionPropKeys, key)
+						delete field[key]
 				field.is_wide = true
 				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder').actions.getData())
+
 			when 'textarea'
 				field.type = 'input'
 				field.is_textarea = true
