@@ -14,8 +14,10 @@ Meteor.startup(function(){
 
 var handleMyNotifications = function(id, notification){
     console.log(notification);
+
     // 非主窗口不弹推送消息
-    if(window.opener)
+    // 为解决老客户端跑workflow/creator项目需要写window.opener.opener两层的判断，调用isNewWindow函数
+    if(Steedos.isNewWindow())
         return;
 
     var options = {
