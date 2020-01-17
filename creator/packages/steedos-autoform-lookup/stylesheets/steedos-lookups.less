@@ -72,6 +72,14 @@
 
 	.slds-listbox_inline{
 		margin-left: 0px;
+		max-width:100%;
+		li{
+			max-width:100%;
+		}
+		.slds-pill .slds-pill__label {
+			/* 这行不加的话lookup控件的选项如果Label超长时左侧icon显示不全 */
+			flex:1;
+		}
 	}
 
 	.slds-listbox__item{
