@@ -1038,6 +1038,7 @@ renderMatrixReport = (reportObject)->
 
 		module.dynamicImport('devextreme/ui/pivot_grid').then (dxPivotGrid)->
 			DevExpress.ui.dxPivotGrid = dxPivotGrid;
+			self.pivotGridInstance?.get()?.dispose()
 			pivotGrid = $('#pivotgrid').show().dxPivotGrid(dxOptions).dxPivotGrid('instance')
 			self.pivotGridInstance?.set pivotGrid
 
