@@ -36,6 +36,8 @@ Package.onUse(function(api) {
 
 	api.addFiles('checkNpm.js', 'server');
 
+	api.addFiles('parse_files.coffee', 'server');
+
 	// api.addFiles('routes_middleware_config.coffee', 'server');
 
 	api.addFiles('lib/restivus/auth.coffee', 'server');
