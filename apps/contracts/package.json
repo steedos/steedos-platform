@@ -29,8 +29,7 @@
     "@steedos/steedos-plugin-workflow": "^1.0.2",
     "nodemon": "^1.19.1",
     "steedos-server": "^1.15.5",
-    "@salesforce-ux/design-system": "^2.11.0",
-    "@salesforce/design-system-react": "^0.10.17"
+    "@salesforce-ux/design-system": "^2.11.0"
   },
   "bugs": {
     "url": "https://github.com/steedos/steedos-contracts-app/issues"
