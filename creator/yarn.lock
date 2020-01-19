@@ -346,10 +346,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@salesforce-ux/design-system@^2.7.4":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.10.0.tgz#a7291c0f335cdece3f1a6d4a610f84a7e2f80d30"
-  integrity sha512-lHzZ41l24XdcsDYD/Je0ScxgAqlta7Tb1kgY67sQ/u2SP9jxapunHToRmso9BaM1n37cPgyaakQmKcG0G6dl2Q==
+"@salesforce-ux/design-system@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.11.0.tgz#35f7e6a4c4fcac63f72bb63ee403ace7027bba49"
+  integrity sha512-a4WeszSk8WQDGA/eMubG+yeOAOMQrPrNH6HZ4O/dIFJmKNOFuV2R3DFPjHNSiXr1GPjTWyznTtj8B4WgcPj0FQ==
 
 "@salesforce/babel-preset-design-system-react@^3.0.0":
   version "3.0.0"
@@ -360,6 +360,35 @@
   version "0.10.12"
   resolved "https://registry.yarnpkg.com/@salesforce/design-system-react/-/design-system-react-0.10.12.tgz#92916cc4ae7dde48a5c5908cc7b91fd31ce38186"
   integrity sha512-p6Wbs/b2gMoNpmbprbNCevFtyUfIZ3dX/IW6pSv0rb+miHNi3ls7xh/5+l+54D+OQa/CZB2HQiBHIraI0GHrvg==
+  dependencies:
+    "@salesforce/babel-preset-design-system-react" "^3.0.0"
+    classnames "^2.2.6"
+    create-react-class "^15.6.0"
+    lodash.assign "^4.0.9"
+    lodash.escaperegexp "^4.1.1"
+    lodash.find "^4.3.0"
+    lodash.findindex "^4.3.0"
+    lodash.isdate "^4.0.1"
+    lodash.isequal "^4.2.0"
+    lodash.isfunction "^3.0.8"
+    lodash.memoize "^4.1.1"
+    lodash.reject "^4.3.0"
+    popper.js "^1.10.8"
+    prop-types ">=15.5.8"
+    react-contenteditable "^3.3.1"
+    react-highlighter "^0.4.3"
+    react-modal "3.8.1"
+    react-onclickoutside "^6.9.0"
+    react-required-if "^1.0.3"
+    react-text-truncate "^0.14.1"
+    shortid "^2.2.14"
+    warning "^4.0.3"
+    webpack-cli "^3.x"
+
+"@salesforce/design-system-react@^0.10.17":
+  version "0.10.17"
+  resolved "https://registry.yarnpkg.com/@salesforce/design-system-react/-/design-system-react-0.10.17.tgz#fbf5fa2e350f53555fba687bbcf7bed217146f7e"
+  integrity sha512-FYpLULu+5JZfOM+qD1oCMeGY6Mpujg35ILsao4YSoBMwXO7VEen1gNYzuuF0m9PqUepEPgHwzQKk5zdQcr3gNg==
   dependencies:
     "@salesforce/babel-preset-design-system-react" "^3.0.0"
     classnames "^2.2.6"
@@ -435,20 +464,20 @@
     saml-idp "^1.1.0"
     tslib "1.10.0"
 
-"@steedos/app-contracts@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/app-contracts/-/app-contracts-1.15.0.tgz#0f636c3f3258d670b6596e335730dfec7d23edae"
-  integrity sha512-9DdYsCB4CtbPy3lKG7bQhYwjrwe7G3e71sdXFhfVDIJ925TcxCCi+BBALvk7YxZ0Ys/vWlYu5b7dcSIqOPW0Ww==
+"@steedos/app-contracts@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.15.5.tgz#0579e940133f2b0ddb5e1caaa85c2317f5f11ed5"
+  integrity sha512-GVq+NTxu2FOVXKCcZTK54MFH93u4Eo7xz0sz0BY1Qt1pTPKpyTLfJB8gC917QeywuFd7YRbBZfMXbYJNSJ5E1w==
   dependencies:
     dotenv "^8.2.0"
     dotenv-flow "^3.1.0"
 
-"@steedos/auth@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/auth/-/auth-1.15.0.tgz#3c3390638adfa2672095e847289bd00bc159ee5c"
-  integrity sha512-u6u3PnsZAbELci5JZKIsDE9dS5x9mSqvPa+v/LIYokhpzaCgR5XG14X28gySsAjVKcV5jgXPJv6wvJ4MGsNWIg==
+"@steedos/auth@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.15.5.tgz#f97d5fa896eacab7d9225f5558f449106cbe8ccb"
+  integrity sha512-LLfkqKN2MGiMoB9a/htN/ZLR2npKVZqxFIwglkaAMSl5Z1U10JWJme+QoTyVN1o+un+cabTD5A3kIqRheo2dww==
   dependencies:
-    "@steedos/objectql" "^1.15.0"
+    "@steedos/objectql" "^1.15.5"
     bcrypt "^3.0.6"
     cookies "^0.7.3"
     express "^4.16.4"
@@ -457,18 +486,18 @@
     sha256 "^0.2.0"
     underscore "^1.9.1"
 
-"@steedos/core@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/core/-/core-1.15.0.tgz#06927bd937f4a0e370bc5b685804b392e61e26c9"
-  integrity sha512-D8pgmGBEi82+obeiqzm6BWJrHj3KmxO4JkaRQS2mPl66TtZu0aAPF69obHcQ91EhQW5Y65pYesUmEVDA3v19Jw==
+"@steedos/core@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/core/-/core-1.15.5.tgz#9c6c3cfc0b02570d371adaa5f74fa7a0bf42a73e"
+  integrity sha512-dvEYA1ZInKa+qvoravwN/ql65kZRwYEcJLyj9nhrSQ772MoalVF4VVxrkqMI0c+3ay8R4skGan2EBxIAgFUM6A==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/auth" "^1.15.0"
-    "@steedos/migrate" "^1.15.0"
-    "@steedos/objectql" "^1.15.0"
-    "@steedos/standard-objects" "^1.15.0"
+    "@steedos/auth" "^1.15.5"
+    "@steedos/migrate" "^1.15.5"
+    "@steedos/objectql" "^1.15.5"
+    "@steedos/standard-objects" "^1.15.5"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -496,33 +525,33 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/filters@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/filters/-/filters-1.15.0.tgz#9b0c9e8fd3cda8832e137ab3695c46f1bb56004f"
-  integrity sha512-9iNERbNbfQPfeEMRI49LX65DLjeTn342h2nQOJmob3xQwwFnTrNNsRkR37tbdhRj7mHgRgP0nQ/UzY/J8e8qmA==
+"@steedos/filters@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.15.5.tgz#61feac6b590756b7454935be167083fa64756e99"
+  integrity sha512-6dXC4PMihQfQuUmY9b6NANNECjlOzKywJgwD20wx/eBhao+SQGAR0tZpzJefnG2mp8w5bOk5wX/8aZc9nq0twQ==
   dependencies:
     moment "^2.24.0"
     underscore "^1.9.1"
 
-"@steedos/migrate@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/migrate/-/migrate-1.15.0.tgz#8fa6be31a541852206c09a9b535aee93ad193e64"
-  integrity sha512-eICEUaJKGbKs25AI0BnIgpZlAXcg5MKfMlGC8kjn9xhgMRHzPLj8aXyyQpXHF4G0TrM1CjRIWHFfHY6KatNdSw==
+"@steedos/migrate@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/migrate/-/migrate-1.15.5.tgz#0c3e8b6562d06ccadef800a30fdbf81882d43590"
+  integrity sha512-qc6xoFosgCgpJcztlnYWDqJ3WvSdTIl+jPJUl0Qwp+DI+weK1pj7gLmOOV4iAsLbfjGzNA1pj7uUskl91PEkHg==
   dependencies:
     migrate "^1.6.2"
 
-"@steedos/objectql@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/objectql/-/objectql-1.15.0.tgz#f8abb7094f1f1408c4fd45b994f9e24ae06f5bb2"
-  integrity sha512-V5bIO3TO+MO3Oy11+HM4gOTlyI7r2urmLN9ImT0xzjvXJTlRF1vWE5rTvw12Zw9vxbWIVkiAXXHvF9w2Vsw2FQ==
+"@steedos/objectql@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.15.5.tgz#fff1867f2b0521bc6532449decba65ca916116d2"
+  integrity sha512-hR1VARoaSWkvIWSdhWoPiR+lCVGE+Q2pGA3/wXrodDGkkJASKF3xd7U7+ISeJEe/XRUfsudPKut7H9jshJ8FSg==
   dependencies:
     "@salesforce/dev-config" "^1.4.4"
     "@salesforce/kit" "^1.0.4"
     "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.15.0"
+    "@steedos/filters" "^1.15.5"
     "@steedos/odata-v4-typeorm" "^0.1.0"
-    "@steedos/schemas" "^1.15.0"
-    "@steedos/standard-objects" "^1.15.0"
+    "@steedos/schemas" "^1.15.5"
+    "@steedos/standard-objects" "^1.15.5"
     "@types/express" "^4.16.1"
     "@types/mongodb" "^3.1.22"
     "@types/node" "^11.10.4"
@@ -580,15 +609,15 @@
     underscore "^1.9.1"
     whatwg-fetch "^3.0.0"
 
-"@steedos/schemas@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@steedos/schemas/-/schemas-1.15.0.tgz#7d80931213484d6777a0bb2baee3f6f5b61479ca"
-  integrity sha512-wPGBoIbg2xykyeoe/OB7GAuFzm7RTkNw13FM1wV3DNigmrvb7trcnjSwaugAJu+/p6CVexS8KRsIpzNNsWttQg==
+"@steedos/schemas@^1.15.5":
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.15.5.tgz#fb2823ef2a0a1e7d30f11982b3c94c1f81a0c9ed"
+  integrity sha512-1QPJGBJsgD67icVhTrBFod72HJMCL2yxkCddyVaM3Z75VYdMMVfqYWENa5GUr01yaCIEW35K4kKqcywZVWFj5A==
 
-"@steedos/standard-objects@^1.15.0", "@steedos/standard-objects@^1.15.2":
-  version "1.15.2"
-  resolved "https://registry.npmjs.org/@steedos/standard-objects/-/standard-objects-1.15.2.tgz#dbcff486ccddff5587387a15659fb80ffb037fc8"
-  integrity sha512-oarE0P2+sCr1tFrCGsvwtKyIbsUPfhJiVVi89gIbHXTDFyC9AxprXzJy8LJ8zo4jbqGm1nhlDuO1NTr6Kik11A==
+"@steedos/standard-objects@^1.15.5", "@steedos/standard-objects@^1.15.6":
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.15.6.tgz#6da0396e2d1bab67e67a801b5e35ea032494494c"
+  integrity sha512-B3Sv5GMAAQOkEcDhc8AteG760m2/qIW03vmfIV8SW2AYiYhReQjNsAab7cR2w97ctOmYO364/o1lAWEAwFxR0Q==
 
 "@steedos/steedos-plugin-workflow@^2.0.4":
   version "2.0.4"
