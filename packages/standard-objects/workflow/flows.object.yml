@@ -449,6 +449,32 @@ actions:
                 }
               });
             }
+  exportFlows:
+    label: 导出流程
+    visible: true
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var ids = Creator.TabularSelectedIds["flows"]
+              if(ids && ids.length > 0){
+                window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
+              }else{
+                toastr.warning("请选择要导出的流程");
+              }
+            }
+  upgradeFlow:
+    label: 导入流程(升级)
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return Modal.show("admin_import_flow_modal", {
+                flowId: record_id,
+                onSuccess: function () {
+                  toastr.success("流程升级成功")
+                }
+              });
+            }
   copyFlow:
     label: 复制流程
     visible: true
