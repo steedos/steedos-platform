@@ -10,18 +10,18 @@
 
 				<div class="slds-modal__content slds-p-around_medium">
 					<div class="form-group slds-form-element" style="padding: 0 .75rem;">
-						<label for="bcw4CJa57Ls3rRDq7" class="control-label">流程文件</label>
-						<div class="">
+						<label class="control-label">流程文件</label>
+						<div class="import-files">
 							<div>
 								<div class="btn btn-default js-af-select-file" style="width: 100%">
-									<input type="file" name="importFlowFile" id="importFlowFile">
+									<input type="file" name="importFlowFile" id="importFlowFile" multiple="{{#unless isUpgrade}}multiple{{/unless}}" accept=".json,.JSON">
 								</div>
 								<input type="hidden" class="js-value" data-schema-key="sign">
 							</div>
 							<span class="help-block"></span>
 						</div>
 					</div>
-
+					{{#unless isUpgrade}}
 					{{#autoForm schema=schema id="importFlowForm"}}
 						{{#each fields}}
 							<div class="slds-grid view-page-section-row">
@@ -33,6 +33,7 @@
 							</div>
 						{{/each}}
 					{{/autoForm}}
+					{{/unless}}
 				</div>
 
 				<footer class="slds-modal__footer">

@@ -1,4 +1,21 @@
 Cookies = require("cookies")
+JSZip = require("jszip");
+
+exportByFlowIds = (flowIds, res)->
+	flows = db.flows.find({_id: {$in: flowIds}}, {fields: {form: 1}}).fetch();
+	zip = new JSZip();
+	_.each flows, (flow)->
+		data = steedosExport.form(flow.form);
+		if _.isEmpty(data)
+			fileName = 'null'
+		else
+			fileName = data.name
+		zip.file("#{fileName}.json", new Buffer(JSON.stringify(data), 'utf-8'));
+	res.setHeader('Content-type', 'application/octet-stream');
+	res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI('导出的流程文件')+'.zip');
+	zip.generateNodeStream().pipe(res).on('finish', ()->
+		console.log("text file written.");
+	);
 
 Meteor.startup ->
 	WebApp.connectHandlers.use "/api/workflow/export/form", (req, res, next)->
@@ -20,6 +37,12 @@ Meteor.startup ->
 				"success": false
 			})
 			return ;
+
+
+		flowIds = req.query?.flows
+		if flowIds
+			return exportByFlowIds(flowIds.split(','), res)
+
 
 		formId = req.query?.form;
 

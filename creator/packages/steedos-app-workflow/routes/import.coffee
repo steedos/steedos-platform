@@ -1,5 +1,26 @@
 Cookies = require("cookies")
 
+importWorkflow = (jsonStr, uid, spaceId, company_id, flowId)->
+	try
+		form = JSON.parse(jsonStr)
+	catch e
+		throw new Meteor.Error('error', "无效的JSON文件");
+
+	options = {}
+
+	if flowId
+		options.flowId = flowId
+		options.upgrade = true
+		flow = db.flows.findOne({_id: flowId, space: spaceId}, {fields: {form: 1}})
+		if !flow
+			throw new Meteor.Error("error", "无效的flowId")
+		else
+			options.formId = flow.form
+
+	new_flowIds = steedosImport.workflow(uid, spaceId, form, false, company_id, options);
+	return {new_flows: new_flowIds}
+
+
 JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 	cookies = new Cookies( req, res );
 
@@ -26,6 +47,13 @@ JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 
 	company_id = req.query?.company_id;
 
+	flowId = req.query?.flowId;
+
+	if flowId
+		flow = db.flows.findOne({_id: flowId, space: spaceId}, {fields: {company_id: 1}})
+		if flow
+			company_id = flow.company_id
+
 	space = db.spaces.findOne(spaceId, { fields: { is_paid: 1 } })
 
 	if !space?.is_paid
@@ -47,28 +75,33 @@ JsonRoutes.add "post", "/api/workflow/import/form", (req, res, next) ->
 	try
 		JsonRoutes.parseFiles req, res, ()->
 			try
-				if req.files and req.files[0]
+				files = req.files
+				fail = {}
+				success = {}
+				multiple = false
+				if files.length > 1
+					multiple = true
 
-					jsonData = req.files[0].data.toString("utf-8")
+				if flowId && files.length > 0
+					files = [files[0]]
+
+				_.each files, (file)->
+					filename = file.filename
 					try
-						form = JSON.parse(jsonData)
-						new_flowIds = steedosImport.workflow(uid, spaceId, form, false, company_id);
-						msg = JSON.stringify({new_flows: new_flowIds})
-						res.statusCode = 200;
+						jsonData = file.data.toString("utf-8");
+						success[filename] = importWorkflow(jsonData, uid, spaceId, company_id, flowId)
 					catch e
 						console.error e
-						msg = e.reason
-						res.statusCode = 500;
-					res.end(msg)
-					return
+						fail[filename] = e.reason || e.message
+				if _.isEmpty(fail)
+					res.statusCode = 200;
 				else
-					msg = "无效的附件"
 					res.statusCode = 500;
-					res.end(msg);
+				res.end(JSON.stringify({multiple: multiple, fail: fail, success: success}))
 			catch e1
 				msg = "无效的JSON文件"
 				res.statusCode = 500;
 				res.end(msg);
 	catch e
-		console.log(e)
+		console.error(e)
 
