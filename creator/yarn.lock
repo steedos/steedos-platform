@@ -356,35 +356,6 @@
   resolved "https://registry.yarnpkg.com/@salesforce/babel-preset-design-system-react/-/babel-preset-design-system-react-3.0.0.tgz#b8334d14fc3801064ac5b6e5349145dc057bc17f"
   integrity sha512-NM3aObtfYl9RpfVu5eDU96fmTW7Mj2V1Y1O5b8dpLGESgXxqHiGIV7d4bKHzmD8O00g1qjPAPusd0f2IB7Yi0Q==
 
-"@salesforce/design-system-react@^0.10.12":
-  version "0.10.12"
-  resolved "https://registry.yarnpkg.com/@salesforce/design-system-react/-/design-system-react-0.10.12.tgz#92916cc4ae7dde48a5c5908cc7b91fd31ce38186"
-  integrity sha512-p6Wbs/b2gMoNpmbprbNCevFtyUfIZ3dX/IW6pSv0rb+miHNi3ls7xh/5+l+54D+OQa/CZB2HQiBHIraI0GHrvg==
-  dependencies:
-    "@salesforce/babel-preset-design-system-react" "^3.0.0"
-    classnames "^2.2.6"
-    create-react-class "^15.6.0"
-    lodash.assign "^4.0.9"
-    lodash.escaperegexp "^4.1.1"
-    lodash.find "^4.3.0"
-    lodash.findindex "^4.3.0"
-    lodash.isdate "^4.0.1"
-    lodash.isequal "^4.2.0"
-    lodash.isfunction "^3.0.8"
-    lodash.memoize "^4.1.1"
-    lodash.reject "^4.3.0"
-    popper.js "^1.10.8"
-    prop-types ">=15.5.8"
-    react-contenteditable "^3.3.1"
-    react-highlighter "^0.4.3"
-    react-modal "3.8.1"
-    react-onclickoutside "^6.9.0"
-    react-required-if "^1.0.3"
-    react-text-truncate "^0.14.1"
-    shortid "^2.2.14"
-    warning "^4.0.3"
-    webpack-cli "^3.x"
-
 "@salesforce/design-system-react@^0.10.17":
   version "0.10.17"
   resolved "https://registry.yarnpkg.com/@salesforce/design-system-react/-/design-system-react-0.10.17.tgz#fbf5fa2e350f53555fba687bbcf7bed217146f7e"
@@ -586,14 +557,14 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/react@1.14.8":
-  version "1.14.8"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.14.8.tgz#adcbd4ff9afd110af33da333bd025392a29b0580"
-  integrity sha512-hfp9EWIjn2PP5i1O4/cT7MB4/EAwuIF5Lx225LR37P2Np03Fq8NsKWJNvjXJLdoZvapM5wKyuct3zOVJ6IfEFw==
+"@steedos/react@1.14.9":
+  version "1.14.9"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.14.9.tgz#d1669cd59a201b17e16881c4aeda1ae0816f89ab"
+  integrity sha512-SOq6C/bYwEruG0AUW6u2nJ4kqgLjUifgC0bL+uqqpc2e/D2IvELdqPvzgffI6SCgXwwjufGMwqaoTHwweLXkcQ==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
-    "@salesforce/design-system-react" "^0.10.12"
+    "@salesforce/design-system-react" "^0.10.17"
     dotenv-flow "^3.1.0"
     immer "^4.0.1"
     moment "^2.24.0"
