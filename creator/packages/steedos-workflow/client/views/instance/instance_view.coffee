@@ -106,7 +106,8 @@ Template.instance_view.helpers
 	notDistributeAndDraft: (state)->
 		ins = WorkflowManager.getInstance()
 		if ins
-			if state is 'draft' and !ins.distribute_from_instance
+			step_type = InstanceManager.getCurrentStep()?.step_type
+			if (state is 'draft' || step_type == 'start') and !ins.distribute_from_instance
 				return false
 
 		return true
