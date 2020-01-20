@@ -304,10 +304,12 @@
 			padding-bottom: 0.3rem;
 			overflow-y: auto;
 		}
-		.steedos-lookups{
-			.steedos-lookups-input{
-				line-height: 30px;
-			}
-		}
 	} 
 }
+
+/* safari hack......start:IPAD,iPhone，新建编辑窗口lookup文本框行高没对齐，PC上是好的 #1595*/
+/* 注意该hack语法不支持less嵌套*/
+_::-webkit-full-page-media,_:future, :root #afModal .view-page-section-row .uiInput.slds-form-element .steedos-lookups .steedos-lookups-input{ 
+	line-height: 30px;
+}
+/* safari hack.....end*/
