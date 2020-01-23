@@ -138,18 +138,18 @@ Creator.Object = (options)->
 				permissions.disabled_list_views = _.map disabled_list_views, (list_view_item) ->
 					return if defaultListViewId == list_view_item then "all" else list_view_item
 		self.permissions = new ReactiveVar(permissions)
-		_.each self.fields, (field, field_name)->
-			if field
-				if _.indexOf(permissions?.unreadable_fields, field_name) < 0
-					if field.hidden
-						return
-					if _.indexOf(permissions?.uneditable_fields, field_name) > -1
-						field.readonly = true
-						field.disabled = true
-						# 当只读时，如果不去掉必填字段，autoform是会报错的
-						field.required = false
-				else
-					field.hidden = true
+#		_.each self.fields, (field, field_name)->
+#			if field
+#				if _.indexOf(permissions?.unreadable_fields, field_name) < 0
+#					if field.hidden
+#						return
+#					if _.indexOf(permissions?.uneditable_fields, field_name) > -1
+#						field.readonly = true
+#						field.disabled = true
+#						# 当只读时，如果不去掉必填字段，autoform是会报错的
+#						field.required = false
+#				else
+#					field.hidden = true
 	else
 		self.permissions = null
 

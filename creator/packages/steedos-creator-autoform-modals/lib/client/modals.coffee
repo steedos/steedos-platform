@@ -59,7 +59,8 @@ getSimpleSchema = (collectionName)->
 		object_fields = Creator.getObject(object_name).fields
 		_fields = Creator.getFields(object_name)
 		#schema = collectionObj("Creator.Collections."+Creator.getObject(object_name)._collection_name).simpleSchema()._schema
-		schema = Creator.Collections[Creator.getObject(object_name)._collection_name].simpleSchema()._schema
+#		schema = Creator.Collections[Creator.getObject(object_name)._collection_name].simpleSchema()._schema
+		schema = Creator.getRecordSafeObjectSchema(Session.get('cmDoc'), object_name)
 		fields = Session.get("cmFields")
 
 		final_schema = {}
@@ -432,7 +433,7 @@ helpers =
 		cmCollection = Session.get 'cmCollection'
 		if cmCollection
 			object_name = getObjectName(cmCollection)
-			fields = Creator.getObject(object_name).fields
+			fields = Creator.getRecordSafeFields(Session.get('cmDoc'), object_name)
 			return fields[key].disabled
 
 	disabledFieldsValue: (key)->

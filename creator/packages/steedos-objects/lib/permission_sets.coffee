@@ -482,6 +482,9 @@ if Meteor.isServer
 			permissions.modifyCompanyRecords = false
 			permissions.disabled_actions = []
 		Creator.processPermissions permissions
+
+		if object.permission_set.owner
+			permissions.owner = object.permission_set.owner
 		return permissions
 
 

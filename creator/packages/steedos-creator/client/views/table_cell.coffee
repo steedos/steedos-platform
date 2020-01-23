@@ -303,11 +303,12 @@ Template.creator_table_cell.helpers
 	editable: ()->
 		if !this.field
 			return false
+		safeField = Creator.getRecordSafeField(this.field, this.doc, this.object_name);
 
-		if this.field.omit or this.field.readonly
+		if safeField.omit or safeField.readonly
 			return false
 
-		if this.field.type == "filesize"
+		if safeField.type == "filesize"
 			return false
 
 		permission = Creator.getRecordPermissions(this.object_name, this.doc, Meteor.userId())
