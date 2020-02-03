@@ -46,6 +46,7 @@
     "js-yaml": "^3.13.1",
     "latest-version": "^5.1.0",
     "reflect-metadata": "^0.1.13",
+    "request-promise": "^4.2.5",
     "typescript": "^3.3.3333",
     "yargs": "^13.2.1",
     "yn": "^2.0.0"
