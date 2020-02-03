@@ -81,14 +81,13 @@ let config = {
         type: "object",
         objectName: "events",
         filters: function(){
-            let utcOffset = entityStateSelector(store.getState(), "user").utcOffset;
             let start = new Date();
-            start.setHours(utcOffset);
+            start.setHours(0);
             start.setMinutes(0);
             start.setSeconds(0);
             start.setMilliseconds(0);
             let end = new Date();
-            end.setHours(23 + utcOffset);
+            end.setHours(23);
             end.setMinutes(59);
             end.setSeconds(59);
             end.setMilliseconds(0);
