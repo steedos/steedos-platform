@@ -1,7 +1,7 @@
 Clone = require('clone')
 
 ### owner 权限使用规则(对象配置了owner权限)###
-# 1 当record 为空时，则认为是新建，使用owner权限
+# 1 当record 为空或record._id不存在时，则认为是新建，使用owner权限
 # 2 当record.owner 等于当前用户时， 使用owner权限
 
 Creator._recordSafeObjectCache = []
@@ -22,13 +22,11 @@ getCache = (record, object_name)->
 	return Creator._recordSafeObjectCache[object_name]?[cacheKey]
 
 isMyRecord = (record)->
-	if _.isEmpty(record)
+	if _.isEmpty(record) || !_.has(record, '_id')
 		return true
-	if _.isEmpty(record.owner)
-		return false
 	if _.isString(record.owner) && record.owner == Meteor.userId()
 		return true
-	if _.has(record.owner, '_id') && record.owner._id == Meteor.userId()
+	if record.owner && _.has(record.owner, '_id') && record.owner._id == Meteor.userId()
 		return true
 	return false
 
