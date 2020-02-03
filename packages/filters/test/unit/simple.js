@@ -23,6 +23,14 @@ describe('format filters to a simple odata query', () => {
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("(name ne 'ptr')");
     });
+    it('ne !=', async () => {
+        let filters = [
+            ["name", "!=", "ptr"]
+        ];
+        let result = formatFiltersToODataQuery(filters);
+        console.log("odata filters query result:", result);
+        expect(result).to.be.eq("(name ne 'ptr')");
+    });
     it('gt >', async () => {
         let filters = [
             ["name", ">", "ptr"]

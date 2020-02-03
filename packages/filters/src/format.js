@@ -99,6 +99,10 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     if (_.isFunction(value)) {
                         value = value();
                     }
+                    if(option === "!="){
+                        // 支持!=为不等于操作
+                        option = "<>";
+                    }
                     value = formula.evaluateFormula(value, userContext)
                     sub_selector = [];
                     isBetweenOperation = utils.isBetweenFilterOperation(option);
