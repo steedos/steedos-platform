@@ -24,6 +24,8 @@ getCache = (record, object_name)->
 isMyRecord = (record)->
 	if _.isEmpty(record)
 		return true
+	if _.isEmpty(record.owner)
+		return false
 	if _.isString(record.owner) && record.owner == Meteor.userId()
 		return true
 	if _.has(record.owner, '_id') && record.owner._id == Meteor.userId()
