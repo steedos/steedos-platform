@@ -674,6 +674,14 @@
       "path": "packages/steedos_webhookqueue.js"
     },
     {
+      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
+      "path": "packages/steedos_api-authenticate-user.js"
+    },
+    {
+      "sourceMap": "packages/steedos_api.js.map",
+      "path": "packages/steedos_api.js"
+    },
+    {
       "path": "packages/meteorhacks_ssr.js"
     },
     {
@@ -726,14 +734,6 @@
     {
       "sourceMap": "packages/steedos_object-webhooks-queue.js.map",
       "path": "packages/steedos_object-webhooks-queue.js"
-    },
-    {
-      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
-      "path": "packages/steedos_api-authenticate-user.js"
-    },
-    {
-      "sourceMap": "packages/steedos_api.js.map",
-      "path": "packages/steedos_api.js"
     },
     {
       "sourceMap": "packages/steedos_autoform-modals.js.map",

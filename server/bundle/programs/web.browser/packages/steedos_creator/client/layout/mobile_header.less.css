@@ -168,6 +168,9 @@
 .creator-mobile-header .steedos-header-favorites .slds-text-heading_small {
   font-size: 1rem;
 }
+.creator-mobile-header .header-notifications {
+  margin-right: 6px;
+}
 .creator-mobile-header .header-notifications .slds-popover {
   left: -300px;
 }
