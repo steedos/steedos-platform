@@ -59,6 +59,20 @@ getUnEditableFields = (record, permissions)->
 			return _.intersection(uneditable_fields, owner_permissions.uneditable_fields)
 	return uneditable_fields
 
+getUnEditableRelatedList = (record, permissions)->
+	if !permissions
+		return
+	uneditable_related_list = permissions?.uneditable_related_list
+
+	if !_.has(permissions, 'owner')
+		return uneditable_related_list
+
+	owner_permissions = permissions.owner
+	if isMyRecord(record)
+		if _.has(owner_permissions, 'uneditable_related_list')
+			return _.intersection(uneditable_related_list, owner_permissions.uneditable_related_list)
+	return uneditable_related_list
+
 Creator.getRecordSafeObject = (record, object_name)->
 
 	dataCache = getCache(record, object_name);
@@ -70,6 +84,7 @@ Creator.getRecordSafeObject = (record, object_name)->
 	permissions = object.permissions.get()
 	unreadable_fields = getUnReadableFields(record, permissions)
 	uneditable_fields = getUnEditableFields(record, permissions)
+	uneditable_related_list = getUnEditableRelatedList(record, permissions);
 	_.each object.fields, (field, field_name)->
 		if field
 			if _.indexOf(unreadable_fields, field_name) < 0
@@ -82,7 +97,7 @@ Creator.getRecordSafeObject = (record, object_name)->
 					field.required = false
 			else
 				field.hidden = true
-
+	object.uneditable_related_list = uneditable_related_list
 	setCache(record, object_name, object)
 	return object
 
@@ -98,3 +113,7 @@ Creator.getRecordSafeField = (field, record, object_name)->
 Creator.getRecordSafeObjectSchema = (record, object_name)->
 	safeObject = Creator.getRecordSafeObject(record, object_name)
 	return Creator.getObjectSchema(safeObject)
+
+Creator.getRecordSafeRelatedList = (record, object_name)->
+	safeObject = Creator.getRecordSafeObject(record, object_name)
+	return safeObject.uneditable_related_list || []

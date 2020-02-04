@@ -89,39 +89,40 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 # currentObjectName：当前主对象
 # relatedListItem：Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))中取related_object_name对应的值
 # currentRecord当前主对象的详细记录
-Creator.getRecordRelatedListPermissions = (currentObjectName, relatedListItem, currentRecord, userId, spaceId)->
-	if !currentObjectName and Meteor.isClient
-		currentObjectName = Session.get("object_name")
+if Meteor.isClient
+	Creator.getRecordRelatedListPermissions = (currentObjectName, relatedListItem, currentRecord, userId, spaceId)->
+		if !currentObjectName and Meteor.isClient
+			currentObjectName = Session.get("object_name")
 
-	if !relatedListItem
-		console.error("relatedListItem must not be empty for the function Creator.getRecordRelatedListPermissions");
-		return {}
+		if !relatedListItem
+			console.error("relatedListItem must not be empty for the function Creator.getRecordRelatedListPermissions");
+			return {}
 
-	if !currentRecord and Meteor.isClient
-		currentRecord = Creator.getObjectRecord()
+		if !currentRecord and Meteor.isClient
+			currentRecord = Creator.getObjectRecord()
 
-	if !userId and Meteor.isClient
-		userId = Meteor.userId()
+		if !userId and Meteor.isClient
+			userId = Meteor.userId()
 
-	if !spaceId and Meteor.isClient
-		spaceId = Session.get("spaceId")
+		if !spaceId and Meteor.isClient
+			spaceId = Session.get("spaceId")
 
-	sharing = relatedListItem.sharing || 'masterWrite'
-	masterAllow = false
-	masterRecordPerm = Creator.getRecordPermissions(currentObjectName, currentRecord, userId, spaceId)
-	if sharing == 'masterRead'
-		masterAllow = masterRecordPerm.allowRead
-	else if sharing == 'masterWrite'
-		masterAllow = masterRecordPerm.allowEdit
-	
-	currentObjectPermissions = Creator.getPermissions(currentObjectName)
-	relatedObjectPermissions = Creator.getPermissions(relatedListItem.object_name)
-	isRelateObjectUneditable = currentObjectPermissions.uneditable_related_list?.indexOf(relatedListItem.object_name) > -1
+		sharing = relatedListItem.sharing || 'masterWrite'
+		masterAllow = false
+		masterRecordPerm = Creator.getRecordPermissions(currentObjectName, currentRecord, userId, spaceId)
+		if sharing == 'masterRead'
+			masterAllow = masterRecordPerm.allowRead
+		else if sharing == 'masterWrite'
+			masterAllow = masterRecordPerm.allowEdit
 
-	result = _.clone relatedObjectPermissions
-	result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
-	result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
-	return result
+		uneditable_related_list = Creator.getRecordSafeRelatedList(currentRecord, currentObjectName)
+		relatedObjectPermissions = Creator.getPermissions(relatedListItem.object_name)
+		isRelateObjectUneditable = uneditable_related_list.indexOf(relatedListItem.object_name) > -1
+
+		result = _.clone relatedObjectPermissions
+		result.allowCreate = masterAllow && relatedObjectPermissions.allowCreate && !isRelateObjectUneditable
+		result.allowEdit = masterAllow && relatedObjectPermissions.allowEdit && !isRelateObjectUneditable
+		return result
 
 if Meteor.isServer
 
