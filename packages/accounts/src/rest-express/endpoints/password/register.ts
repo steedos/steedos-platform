@@ -8,6 +8,11 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
 ) => {
   try {
     const password: any = accountsServer.getServices().password;
+    if(!password.options.validateNewUser){
+      password.options.validateNewUser = function(user: any) {
+        return user;
+      };
+    }
     const userId = await password.createUser(req.body.user);
     res.json(accountsServer.options.ambiguousErrorMessages ? null : userId);
   } catch (err) {

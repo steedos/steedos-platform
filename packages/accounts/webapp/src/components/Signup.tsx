@@ -29,13 +29,24 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
   const [name, setName] = useState<string | "">("");
   const [email, setEmail] = useState<string | undefined>(undefined);
   const [password, setPassword] = useState<string | "">("");
+  const getBrowserLocale = function() {
+    var l, locale;
+    var navigator: any = window.navigator;
+    l = navigator.userLanguage || navigator.language || 'en';
+    if (l.indexOf("zh") >= 0) {
+      locale = "zh-cn";
+    } else {
+      locale = "en-us";
+    }
+    return locale;
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
     setError(null);
     try {
       await accountsPassword.createUser({
+        locale: getBrowserLocale(),
         username: name,
         email: email,
         password: password,
