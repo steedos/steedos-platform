@@ -11,9 +11,10 @@ import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { db } from './db';
 import { sendMail } from './mail';
-import { getSteedosConfig } from '@steedos/objectql'
+import { getSteedosConfig, SteedosMongoDriver } from '@steedos/objectql'
 
 declare var WebApp;
+declare var Meteor;
 
 const config = getSteedosConfig();
 
@@ -24,8 +25,14 @@ async function getAccountsServer (context){
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   
-  await db.connect();
-  const connection = db;
+  let connection = null;
+
+  if (db instanceof SteedosMongoDriver) {
+    await db.connect();
+    connection = db._client.db();
+  } else {
+    connection = Meteor.users.rawDatabase();
+  }
   
   const accountsServer = new AccountsServer(
     {
