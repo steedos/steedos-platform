@@ -25,7 +25,7 @@ async function getAccountsServer (context){
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   
   await db.connect();
-  const connection = db._client.db();
+  const connection = db;
   
   const accountsServer = new AccountsServer(
     {
