@@ -2,6 +2,8 @@ datasources:
   default:
     connection:
       url: mongodb://127.0.0.1/steedos
+    objectFiles: 
+      - ./src/**
 tenant:
   _id: 
   name: Steedos

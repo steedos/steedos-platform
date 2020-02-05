@@ -1,37 +1,42 @@
 name: connected_apps
-label: 连接的应用程序
+label: 外部应用
+icon: entity
+enable_api: true
 fields:
   name: 
     label: 名称
     type: text
     required: true
-  api_name:
+  code:
     label: API 名称
     type: text
     required: true
-  contact_email: 
-    label: 联系人名称
-    type: text
-    required: true
-  contact_phone: 
-    label: 联系人电话
-    type: text
-  app_logo:
-    label: 图标
-    type: avatar
-  app_website:
-    label: 应用介绍
-    type: url
-  description:
-    label: 描述
-    type: textarea
-  start_url:
-    label: 开始 URL
-    type: text
+  # contact_email: 
+  #   label: 联系人名称
+  #   type: text
+  #   required: false
+  # contact_phone: 
+  #   label: 联系人电话
+  #   type: text
   active:
     label: 激活
     type: boolean
     defaultValue: true
+  app_logo:
+    label: 图标
+    type: avatar
+  description:
+    label: 描述
+    type: textarea
+    rows: 3
+    is_wide: true
+  app_website:
+    label: 应用官网
+    type: url
+  start_url:
+    label: 开始 URL
+    type: text
+
   mobile_start_url:
     label: 移动开始 URL
     type: text
@@ -115,4 +120,30 @@ fields:
         value: redirect
       - label: HTTP Post
         value: post
-  
+list_views:
+  all:
+    label: 所有
+    columns:
+      - name
+      - code
+      - description
+      - active
+      - modified
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+    modifyCompanyRecords: false
+    viewCompanyRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

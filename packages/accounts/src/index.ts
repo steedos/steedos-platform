@@ -11,7 +11,7 @@ import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { db } from './db';
 import { sendMail } from './mail';
-import { getSteedosConfig, SteedosMongoDriver } from '@steedos/objectql'
+import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
 
 declare var WebApp;
 declare var Meteor;
@@ -28,6 +28,8 @@ async function getAccountsServer (context){
   let connection = null;
 
   if (db instanceof SteedosMongoDriver) {
+    await getConnection().connect();
+    // TODO: objectql 升级后，去掉下面一行
     await db.connect();
     connection = db._client.db();
   } else {
