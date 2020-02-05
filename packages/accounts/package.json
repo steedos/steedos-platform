@@ -41,7 +41,7 @@
     "tslib": "1.10.0"
   },
   "devDependencies": {
-    "@steedos/objectql": "^1.6.4",
+    "@steedos/objectql": "^1.16.2",
     "@types/node": "12.6.8",
     "cross-env": "^5.2.0",
     "nodemon": "1.19.1",
