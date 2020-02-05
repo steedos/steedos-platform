@@ -101,5 +101,6 @@ export function init(context){
   }
   let accountsRouter = getAccountsRouter(context);
   context.app.use("/accounts", accountsRouter);
-  WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
+  if (typeof WebApp !== 'undefined')
+    WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
 }
