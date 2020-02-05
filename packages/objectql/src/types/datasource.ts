@@ -350,10 +350,10 @@ export class SteedosDataSourceType implements Dictionary {
         this.initObjects();
         // init typeorm
         if (this._adapter.connect) 
-            this._adapter.connect()
+            await this._adapter.connect()
         // init typeorm
         if (this._adapter.init) 
-            this._adapter.init(this._objects)
+            await this._adapter.init(this._objects)
     }
 
     async close() {
