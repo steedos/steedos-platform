@@ -9,7 +9,7 @@ import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
-import { mongoUrl } from './db';
+import { db } from './db';
 import { sendMail } from './mail';
 import { getSteedosConfig } from '@steedos/objectql'
 
@@ -17,19 +17,19 @@ declare var WebApp;
 
 const config = getSteedosConfig();
 
-function getAccountsServer (context){
+async function getAccountsServer (context){
 
   let accountsConfig = config.accounts || {}
   let tokenSecret = accountsConfig.tokenSecret || "secret";
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   
-  mongoose.connect(mongoUrl, { useNewUrlParser: true });
-  const db = mongoose.connection;
+  await db.connect();
+  const connection = db._client.db();
   
   const accountsServer = new AccountsServer(
     {
-      db: new MongoDBInterface(db, {
+      db: new MongoDBInterface(connection, {
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
         idProvider: () => new mongodb.ObjectId().toString(),
@@ -61,9 +61,9 @@ function getAccountsServer (context){
   return accountsServer;
 }
 
-function getAccountsRouter(context){
+async function getAccountsRouter(context){
 
-  let accountsServer = getAccountsServer(context)
+  let accountsServer = await getAccountsServer(context)
 
   const router = accountsExpress(accountsServer, {
     path: '/',
@@ -99,8 +99,9 @@ export function init(context){
     }
     context.settings.public.webservices.accounts = { url: '/accounts' }
   }
-  let accountsRouter = getAccountsRouter(context);
-  context.app.use("/accounts", accountsRouter);
-  if (typeof WebApp !== 'undefined')
-    WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
+  getAccountsRouter(context).then( (accountsRouter) => {
+    context.app.use("/accounts", accountsRouter);
+    if (typeof WebApp !== 'undefined')
+      WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
+  })
 }
