@@ -590,7 +590,8 @@ InstanceRecordQueue.Configure = function (options) {
 			applicant: 1,
 			space: 1,
 			form: 1,
-			form_version: 1
+			form_version: 1,
+			traces: 1
 		};
 		self.syncInsFields.forEach(function (f) {
 			fields[f] = 1;
