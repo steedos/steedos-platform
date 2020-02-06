@@ -35,7 +35,7 @@ async function getAccountsServer (context){
   } else {
     connection = Meteor.users.rawDatabase();
   }
-  
+  const issuer = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
   const accountsServer = new AccountsServer(
     {
       db: new MongoDBInterface(connection, {
@@ -48,6 +48,7 @@ async function getAccountsServer (context){
         // },
       }),
       sendMail: sendMail,
+      siteUrl: issuer,
       tokenSecret: tokenSecret,
       tokenConfigs: {
         accessToken: {
@@ -62,7 +63,8 @@ async function getAccountsServer (context){
       password: new AccountsPassword({
         errors: errors,
         passwordHashAlgorithm: 'sha256',
-        notifyUserAfterPasswordChanged: config.password ? config.password.notifyUserAfterPasswordChanged : true
+        notifyUserAfterPasswordChanged: config.password ? config.password.notifyUserAfterPasswordChanged : true,
+        sendVerificationEmailAfterSignup: config.password ? config.password.sendVerificationEmailAfterSignup : false
       }),
     }
   );

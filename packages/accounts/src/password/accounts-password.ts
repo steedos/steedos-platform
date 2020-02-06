@@ -22,6 +22,7 @@ import {
 } from './utils';
 import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
 import { errors } from './errors';
+import { getSteedosConfig } from '@steedos/objectql';
 
 export interface AccountsPasswordOptions {
   /**
@@ -412,11 +413,13 @@ export default class AccountsPassword implements AuthenticationService {
     const token = generateRandomToken();
     await this.db.addEmailVerificationToken(user.id, address, token);
 
+    const config = getSteedosConfig().email
+    const pathFragment = config ? config.pathFragment : 'verify-email';
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      'verify-email',
+      pathFragment,
       this.server.options.emailTemplates.verifyEmail,
       this.server.options.emailTemplates.from
     );
