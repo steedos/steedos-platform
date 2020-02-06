@@ -48,3 +48,47 @@ if (Meteor.isServer) {
         return modifier.$set = modifier.$set || {};
     });
 }
+
+Fiber = require('fibers')
+
+var getUserOrganizations = function(userId, spaceId){
+    var space_user = db.space_users.findOne({user:userId,space:spaceId}, {fields:{organizations:1}})
+    if(!space_user){
+        return []
+    }
+    var organizations = space_user.organizations
+    if(!organizations){
+        return []
+    }
+    var userOrgs = db.organizations.find({_id:{$in:organizations}}).fetch()
+    var parents = _.flatten(_.pluck(userOrgs, 'parents'))
+	return _.union(organizations,parents)
+}
+
+var getUserApps = function (userId, spaceId) {
+    var userOrgs = getUserOrganizations(userId, spaceId);
+    var selector = {
+        $or: [
+            {$or: [{space: {$exists: false}}, {space: spaceId}]},
+            { 'members.organizations': {$in: userOrgs} },
+            { 'members.users': {$in: [ userId ]} }
+        ]
+    }
+    return db.apps.find(selector, {sort: {sort: 1}}).fetch();
+};
+
+Creator.Objects['apps'].methods = {
+    safe_apps: function (req, res) {
+        return Fiber(function () {
+            var userSession = req.user
+            console.log('userSession', userSession);
+            var userId = userSession.userId
+            var spaceId = userSession.spaceId
+            var apps = getUserApps(userId, spaceId);
+            return res.send({
+                "@odata.count": apps.length,
+                value: apps
+            });
+        }).run();
+    }
+}
