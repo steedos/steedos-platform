@@ -31,3 +31,11 @@ v1.12.5
 - 审批王 odata 数据类型可以配置链接, 用于指定点击选中项后，进入的详细页面
 - 子表 master_detail 字段类型新增属性 sharing
 - IE 11 访问报错
+
+v1.16.0
+
+- Permission Set 新增 owner ，可配置 uneditable_fields, unreadable_fields
+
+v1.16.3
+
+- Permission Set中 owner ，可配置 uneditable_related_list
