@@ -1,0 +1,64 @@
+<template name="cms_post_detail">
+	{{> cms_post_buttons}}
+	<div class="cms post-detail content">
+		{{#with Post}}
+			<div class="post-body">
+				<p class="post-date">
+					<span>{{author_name}} {{dateFormat postDate "YYYY-MM-DD HH:mm"}}</span>
+					<span> · </span>
+					<span class="ion ion-eye icon-post-view-count"></span>
+					<span>
+						{{#if viewCount}}
+							{{viewCount}}
+						{{else}}
+							0
+						{{/if}}
+					</span>
+				</p>
+
+				<div class="post-content">
+					{{#if htmlBody}}
+						<p>{{SafeString htmlBody}}</p>
+					{{else}}
+						<p>{{Markdown body}}</p>
+					{{/if}}
+
+					{{#if PostAttachmentsCount}}
+						<div class="post-attachments">
+							<ul class="list-unstyled">
+							{{#each PostAttachments}}
+								<li>
+									<span>{{original.name}}</span>
+									{{#if isAndroidApp}}
+										<a href="#" data-downloadurl="{{PostAttachmentUrl this}}" class="post-attachment-android-app">{{#if original.name}}{{_ "CMS_attachment_download"}}{{else}}{{_id}}{{/if}}</a>
+									{{else}}
+										<a href="{{PostAttachmentUrl this}}" class="post-attachment" target="_parent" title="{{this.name}}">{{#if original.name}}{{_ "CMS_attachment_download"}}{{else}}{{_id}}{{/if}}</a>
+									{{/if}}
+									{{#if IsImageAttachment this}}
+										<a href="{{PostAttachmentUrl this}}" class="swipebox">
+											{{_ "CMS_attachment_view"}}
+										</a>
+									{{else}}
+										{{#if IsHtmlAttachment this}}
+											<a href="{{PostAttachmentUrl this true}}" class="post-attachment-html" target="_blank">
+												{{_ "CMS_attachment_view"}}
+											</a>
+										{{/if}}
+									{{/if}}
+								</li>
+							{{/each}}
+							</ul>
+						</div>
+					{{/if}}
+
+					{{#if members}}
+						<div class="members-box">
+							{{_ 'cms_posts_members'}}：{{members}}
+						</div>
+					{{/if}}
+				</div>
+				
+			</div>
+		{{/with}}
+	</div>
+</template>

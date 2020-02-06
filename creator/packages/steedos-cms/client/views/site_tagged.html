@@ -1,0 +1,30 @@
+<template name="cms_site_tagged">
+
+	{{> cms_site_header}}
+
+	<div class="content cms post-list home">
+
+		<div class="post-list row">
+
+			<div class="col-sm-8">
+				{{#if PostsCount}}
+					{{#each Posts 20}}
+						{{> cms_post_list_item}}
+					{{/each}}
+				{{else}}
+					<div class="box box-widget">
+			            <div class="box-body">
+			              {{_ "cms_posts_none"}}
+			            </div>
+			        </div>
+				{{/if}}
+			</div>
+
+			<div class="col-sm-4">
+				{{> cms_site_menu}}
+			</div>
+		</div>
+
+	</div>
+
+</template>

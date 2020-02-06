@@ -1,0 +1,73 @@
+<template name="cmsSidebar">
+    <aside class="main-sidebar">
+        <div class="sidebar" id="scrollspy">
+          {{> sidebarUserPanel}}
+          <ul class="nav sidebar-menu">
+            <li class="header header-app">
+                <span>{{_ "Steedos CMS"}}</span>
+            </li>
+            {{#each spaces}}
+              <!--<li class="header header-cms">-->
+                  <!--<span data-original-title="{{name}}" data-toggle="tooltip" data-placement="bottom" class="space-name">{{name}}</span>-->
+                  <!--&lt;!&ndash; <span class="pull-right-container">-->
+                    <!--<span class="label btn-new-site pull-right" data-space="{{_id}}"><i class="ion ion-plus-round"></i></span>-->
+                  <!--</span> &ndash;&gt;-->
+              <!--</li>-->
+              {{#each Sites spaceId}}
+                <li class="{{liActive _id}}">
+                  <a href="{{urlPrefix}}/cms/s/{{_id}}" class="site-item text-overflow" title="{{name}}">
+                    <i class="ion ion-ios-book-outline"></i>
+                    <span>{{name}}</span>
+                    {{#if unReadCountBySite _id}}
+                      <span class="pull-right-container ">
+                        <span class="label pull-right label-warning">{{unReadCountBySite _id}}</span>
+                      </span>
+                    {{/if}}
+                  </a>
+                </li>
+              {{/each}}
+            {{/each}}
+
+            {{#if isSpaceAdmin}}
+              <li class="header header-cms btn-new-site">
+                <i class="ion ion-plus-round"></i>{{_ "cms_new_site"}}
+              </li>
+            {{/if}}
+
+            <li class="sidebar-form">
+              <div class="input-group">
+                <input id="post_search" type="text" class="form-control" placeholder={{_ "Search"}}>
+                <!--<span class="input-group-btn">-->
+                  <!--<span class="btn btn-flat"><i class="fa fa-search"></i>-->
+                  <!--</span>-->
+                <!--</span>-->
+              </div>
+            </li>
+            <!-- <li class="header header-cms">
+              {{_ "cms_sites"}}
+              <span class="pull-right-container">
+                <span class="label btn-new-site pull-right"><i class="ion ion-plus-round"></i></span>
+              </span>
+            </li>
+            {{#each Sites}}
+              <li class="{{liActive _id}}">
+                <a href="{{urlPrefix}}/cms/s/{{_id}}" class="site-item text-overflow" title="{{name}}">
+                  <i class="ion ion-ios-book-outline"></i>
+                  <span>{{name}}</span>
+                  {{#if unReadCountBySite _id}}
+                    <span class="pull-right-container ">
+                      <span class="label pull-right label-warning">{{unReadCountBySite _id}}</span>
+                    </span>
+                  {{/if}}
+                </a>
+              </li>
+            {{/each}} -->
+
+          </ul>
+        </div>
+    </aside>
+    {{> contentWrapperShadow}}
+    {{#afModal class="btn btn-primary btn-add-site hidden" collection="db.cms_sites" omitFields="created,created_by,modified,modified_by,cover,avatar" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=afModalInsert}}
+      {{_ "cms_new_site"}}
+    {{/afModal}}
+</template>

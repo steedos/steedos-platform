@@ -1,0 +1,10 @@
+<template name="cms_home">
+	{{#if homeSubsReady}}
+		<div class="cms-main cms-home">
+			<div class="post-list-wrapper">
+				{{>home_post_list}}
+			</div>
+		</div>
+	{{/if}}
+	{{> baseTabbar}}
+</template>

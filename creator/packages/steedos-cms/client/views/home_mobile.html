@@ -1,0 +1,32 @@
+<template name="cms_home_mobile">
+	<div class="cms-main cms-home-mobile">
+		<div class="post-list-wrapper">
+			<div class="navigation-bar">
+				<button type="button" class="btn btn-default" data-toggle="offcanvas">
+					<i class="fa fa-bars"></i>
+				</button>
+				<span class="navigation-title text-overflow">{{_ "Steedos CMS"}}</span>
+			</div>
+			<div class="post-list">
+				<div class="weui-panel">
+					<div class="weui-panel__hd">{{_ "cms_home_mobile_top_title"}}</div>
+					<div class="weui-panel__bd">
+						<div class="weui-media-box weui-media-box_small-appmsg">
+							<div class="weui-cells">
+								{{#each Sites}}
+									<a class="weui-cell weui-cell_access" href="{{urlPrefix}}/cms/s/{{_id}}">
+										<div class="weui-cell__bd weui-cell_primary">
+											<p>{{this.name}}</p>
+										</div>
+										<span class="weui-cell__ft"></span>
+									</a>
+								{{/each}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{> baseTabbar}}
+</template>

@@ -1,0 +1,21 @@
+<template name="cmsLayout">
+
+	{{#if subsReady}}
+		<div class="steedos app-wrapper steedos-cms">
+			{{# AdminLTE skin="blue" sidebarMini="true" }}
+				{{> steedosHeader}}
+				{{> cmsSidebar}}
+
+				<div class="content-wrapper">
+					{{> Template.dynamic template=main}}
+				</div>
+			{{/ AdminLTE}}
+		</div>
+		<div class="connection-status">
+			{{> status}}
+		</div>
+	{{/if}}
+
+	{{> autoformModals}}
+</template>
+

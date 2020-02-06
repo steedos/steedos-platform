@@ -1,0 +1,55 @@
+<template name="home_post_list">
+	<div class="navigation-bar">
+		<button type="button" class="btn btn-default" data-toggle="offcanvas">
+			<i class="fa fa-bars"></i>
+		</button>
+		<span class="navigation-title text-overflow">{{_ "Steedos CMS"}}</span>
+	</div>
+	<div class="post-list">
+		<div class="box-body">
+			{{#each Sites}}
+				<div class="home-post-body">
+					<div class="home-post-title">
+						<a href="{{urlPrefix}}/cms/s/{{_id}}" class="site-item" title="{{name}}">
+							{{#if unReadCountBySite _id}}
+								<span class="pull-right-container ">
+									<span class="label pull-right label-warning">{{unReadCountBySite _id}}
+									</span>
+								</span>
+							{{/if}}
+							<span class="site-name text-overflow">
+								{{name}}
+							</span>
+						</a>
+					</div>
+					<ul class="home-post-list">
+						{{#if homePostsSubsReady}}
+							{{#if homeSitesPosts _id}}
+								{{#each homeSitesPosts _id}}
+									{{#if isPostsUnread _id}}
+										<div class="ion ion-record unread"></div>
+									{{/if}}
+									<li>
+										{{#if category}}
+											<a href="{{urlPrefix}}/cms/s/{{site}}/c/{{category}}/p/{{_id}}" class="posts-title">
+												<span>{{title}}</span>
+											</a>
+										{{else}}
+											<a href="{{urlPrefix}}/cms/s/{{site}}/p/{{_id}}" class="posts-title">
+												<span>{{title}}</span>
+											</a>
+										{{/if}}
+									</li>
+								{{/each}}
+							{{else}}
+								<li class="empty-site-item">
+									{{_ "cms_site_empty_help"}}
+								</li>
+							{{/if}}
+						{{/if}}
+					</ul>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>

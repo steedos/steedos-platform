@@ -1,0 +1,75 @@
+.steedos-cms{
+  .sidebar-form{
+    .btn{
+      cursor:default;
+      border-left:none;
+    }
+  }
+
+  .main-sidebar .sidebar-menu{
+    .header-space-switcher {
+      overflow: visible;
+      background: transparent;
+      color: #b8c7ce;
+    }
+
+    .header {
+      color: #b8c7ce;
+    }
+
+    .header.header-cms{
+      .space-name{
+          display: inline-block;
+          max-width: 90%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+    }
+
+    a {
+      .hover {
+        display: none;
+      }
+    }
+
+    a:hover, a:active {
+      .hover {
+        display: block;
+      }
+      .dropdown-menu {
+        a, a:hover, a:active {
+          color: black
+        }
+      }
+    }
+  }
+  .btn-new-site{
+    cursor:pointer;
+  }
+  .sidebar-menu{
+    .header{
+      &.btn-new-site{
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        .ion{
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}
+
+/*当站点标题过长时要显示省略号*/
+.sidebar-collapse{
+  .site-item{
+    overflow: visible;
+    span{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      &.pull-right-container{
+        overflow: visible;
+      }
+    }
+  }
+}

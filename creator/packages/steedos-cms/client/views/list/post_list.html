@@ -1,0 +1,76 @@
+<template name="cms_post_list">
+		<div class="navigation-bar">
+			<button type="button" class="btn btn-default" data-toggle="offcanvas">
+				<i class="fa fa-bars"></i>
+			</button>
+			<span class="navigation-title text-overflow" title="{{Site.name}}">{{Site.name}}</span>
+			<div class="pull-right">
+				{{#if isSiteDropdownMenuNotEmpty}}
+					<div class="btn-group">
+						{{#if isSiteAdmin}}
+							<button type="button" class="btn btn-default btn-new-post">
+								<i class="ion ion-plus"></i>
+							</button>
+						{{/if}}
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							{{#if isSitePublic}}
+								<li><a class="btn-preview-post"><i class="ion ion-ios-upload-outline"></i>{{_ 'cms_sites_preview'}}</a></li>
+							{{/if}}
+							{{#if isSiteAdmin}}
+								{{#if isSitePublic}}
+									<li role="separator" class="divider"></li>
+								{{/if}}
+								<li><a class="btn-new-category"><i class="ion ion-ios-folder-outline"></i>{{_ "cms_categories_new"}}</a></li>
+								{{#if Category}}
+									<li><a class="btn-edit-category" data-id = "{{Category._id}}"><i class="ion ion-ios-folder-outline"></i>{{_ "cms_categories_edit"}}</a></li>
+									<li><a class="btn-remove-category" data-id = "{{Category._id}}"><i class="ion ion-ios-folder-outline"></i>{{_ "cms_categories_remove"}}</a></li>
+								{{/if}}
+							{{/if}}
+							{{#if isSpaceAdmin}}
+								<li role="separator" class="divider"></li>
+								<li><a class="btn-edit-site" data-id = "{{Site._id}}"><i class="ion ion-ios-book-outline"></i>{{_ 'cms_sites_edit'}}</a></li>
+								<li><a class="btn-remove-site" data-id = "{{Site._id}}"><i class="ion ion-ios-book-outline"></i>{{_ 'cms_sites_remove'}}</a></li>
+							{{/if}}
+						</ul>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+		<div class="post-list">
+			<div class="breadcrumb-bar">
+				<ol class="breadcrumb">
+					<li class = "breadcrumb-home"><a href="{{urlPrefix}}/cms/s/{{SiteId}}/"><i class="ion ion-android-home home-icon"></i></a></li>
+					{{#if Category.parent}}
+						{{#if ParentCategory.parent}}
+							<li>...</li>
+						{{/if}}
+						<li><a href="{{urlPrefix}}/cms/s/{{SiteId}}/c/{{ParentCategory._id}}/">{{ParentCategory.name}}</a></li>
+					{{/if}}
+					{{#if CategoryId}}
+						<li class="active">{{Category.name}}</li>
+					{{/if}}
+				</ol>
+			</div>
+			{{#if SubCategoriesCount CategoryId}}
+			<ul class="category-list list-group">
+				{{#each SubCategories CategoryId true}}
+					<a href="{{urlPrefix}}/cms/s/{{SiteId}}/c/{{_id}}" class="category-list-item list-group-item">
+						<i class="ion ion-ios-folder-outline"></i>
+						<span class="category-title">{{name}}</span>
+					</a>
+				{{/each}}
+			</ul>
+			{{/if}}
+			{{> tabular table=TabularTables.cms_posts_tabular selector=PostListSelector class="table table-striped table-condensed datatable-posts"}}
+		</div>
+		{{#afModal class="btn btn-primary btn-add-post hidden" collection="db.cms_posts" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=afModalInsert}}
+			{{_ "cms_posts_new"}}
+		{{/afModal}}
+		{{#afModal class="btn btn-primary btn-site-edit hidden" collection="db.cms_sites" operation="update" omitFields="space,created,created_by,modified,modified_by" dialogClass="modal-lg modal-body-zoom" buttonContent=afModalUpdate}}
+			{{_ "cms_sites_edit"}}
+		{{/afModal}}
+</template>
