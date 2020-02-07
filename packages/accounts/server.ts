@@ -6,9 +6,6 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { init } from "./src";
-import { config as dotenvConfig } from "dotenv-flow";
-
-dotenvConfig();
 
 const app = express();
 app.engine('handlebars', hbs.__express);
