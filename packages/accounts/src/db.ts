@@ -1,5 +1,9 @@
-import { getSteedosConfig, getConnection } from '@steedos/objectql';
+import { getSteedosConfig, SteedosMongoDriver } from '@steedos/objectql';
 
- // @ts-ignore _adapter is private
-export const db = getConnection()._adapter; 
+let url = process.env.MONGO_URL;
+if (!url)
+    url = getSteedosConfig().datasources.default.connection.url;
 
+export const db = new SteedosMongoDriver({ url: url });
+
+export const mongoUrl = url

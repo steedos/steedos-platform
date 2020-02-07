@@ -6,14 +6,20 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { init } from "./src";
+import { isMeteor } from '@steedos/objectql';
 
 var server = require('@steedos/meteor-bundle-runner');
 var steedos = require('@steedos/core')
+
+declare var Meteor;
+
 server.Fiber(function () {
     try {
         server.Profile.run("Server startup", function () {
             server.loadServerBundles();
             steedos.init();
+
+            server.callStartupHooks();
 
             const app = express();
             app.engine('handlebars', hbs.__express);
@@ -24,14 +30,8 @@ server.Fiber(function () {
             app.use(bodyParser.urlencoded({ extended: true }));
             app.use(cors({origin: true, credentials: true}));
 
-            app.get('/', (req, res) => {
-              res.redirect("/accounts/a");
-              res.end();
-            });
+            init({app: app, settings: Meteor.settings});
 
-            init({app});
-
-            server.callStartupHooks();
             server.runMain();
         })
     } catch (error) {

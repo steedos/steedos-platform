@@ -863,13 +863,6 @@
     uglify-js "^3.6.0"
     underscore "1.5.2"
 
-"@steedos/filters@^1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.16.3.tgz#a8139dd7eb50fe11897d43ab8fadcd25a7d48bab"
-  dependencies:
-    moment "^2.24.0"
-    underscore "^1.9.1"
-
 "@steedos/filters@^1.16.4":
   version "1.16.4"
   resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-1.16.4.tgz#50ee2726a364dd282f5efd786974a0fd7966c3fb"
@@ -949,43 +942,6 @@
   dependencies:
     migrate "^1.6.2"
 
-"@steedos/objectql@^1.16.2":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.16.3.tgz#5ee62470a873342bd4cb967c96ac2c89f5b65782"
-  dependencies:
-    "@salesforce/dev-config" "^1.4.4"
-    "@salesforce/kit" "^1.0.4"
-    "@salesforce/ts-types" "^1.1.1"
-    "@steedos/filters" "^1.16.3"
-    "@steedos/odata-v4-typeorm" "^0.1.0"
-    "@steedos/schemas" "^1.16.3"
-    "@steedos/standard-objects" "^1.16.3"
-    "@types/express" "^4.16.1"
-    "@types/mongodb" "^3.1.22"
-    "@types/node" "^11.10.4"
-    "@types/underscore" "^1.8.13"
-    app-root-path "^2.2.1"
-    body-parser "^1.18.1"
-    bunyan-sfdx-no-dtrace "^1.8.2"
-    chai "^4.2.0"
-    clone "^2.1.2"
-    cookies "^0.6.1"
-    express "^4.15.4"
-    express-graphql "^0.7.1"
-    fibers "^3.1.1"
-    globby "^9.1.0"
-    graphql "^14.1.1"
-    graphql-type-json "^0.2.2"
-    jsen "^0.6.6"
-    lodash "^4.17.15"
-    mongodb "^3.0.8"
-    odata-v4-mongodb "^0.1.12"
-    odata-v4-sql "^0.1.2"
-    reflect-metadata "^0.1.10"
-    routing-controllers "^0.7.7"
-    typeorm "^0.2.16"
-    underscore "1.5.2"
-
 "@steedos/objectql@^1.16.4":
   version "1.16.4"
   resolved "https://registry.yarnpkg.com/@steedos/objectql/-/objectql-1.16.4.tgz#228525107eae95f692f3ceed4164db69146d8006"
@@ -1031,18 +987,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/schemas@^1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.16.3.tgz#2248fabb0dc41623dfc2f9cb2623f2158b2f2b82"
-
 "@steedos/schemas@^1.16.4":
   version "1.16.4"
   resolved "https://registry.yarnpkg.com/@steedos/schemas/-/schemas-1.16.4.tgz#636d0422d8594c01059fb8b6d8ab71582c2c8cd3"
   integrity sha512-GZK7+/ROQAfvsOfGIdrMNN/CzSCeB3ZxLrilCtjrellQzaMyv4Z979rKhHaRPojY9BWBmTdixkQd4tvDXOxx6Q==
-
-"@steedos/standard-objects@^1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@steedos/standard-objects/-/standard-objects-1.16.3.tgz#1c07fc8023b11002c400e5b930c9ceb0461564ae"
 
 "@steedos/standard-objects@^1.16.4":
   version "1.16.4"
@@ -1077,6 +1025,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cors@^2.8.6":
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.6.tgz#cfaab33c49c15b1ded32f235111ce9123009bd02"
+  integrity sha512-invOmosX0DqbpA+cE2yoHGUlF/blyf7nB0OGYBBiH27crcVm5NmFaZkLP4Ta1hGaesckCi5lVLlydNJCxkTOSg==
+  dependencies:
+    "@types/express" "*"
+
 "@types/dotenv-flow@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv-flow/-/dotenv-flow-3.0.0.tgz#2d25e66d2e99a8a1a1051f86392768ee391521aa"
@@ -1094,18 +1049,18 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.16.1":
-  version "4.17.1"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.1.tgz#4cf7849ae3b47125a567dfee18bfca4254b88c5c"
+"@types/express@*", "@types/express@^4.17.2":
+  version "4.17.2"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
+  integrity sha512-5mHFNyavtLoJmnusB8OKJ5bshSzw+qkMIBAobLrIM48HJvunFva9mOa6aBwh64lBFyNwBbs0xiEFuj4eU/NjCA==
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/express@^4.17.2":
-  version "4.17.2"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
-  integrity sha512-5mHFNyavtLoJmnusB8OKJ5bshSzw+qkMIBAobLrIM48HJvunFva9mOa6aBwh64lBFyNwBbs0xiEFuj4eU/NjCA==
+"@types/express@^4.16.1":
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.1.tgz#4cf7849ae3b47125a567dfee18bfca4254b88c5c"
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"

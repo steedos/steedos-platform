@@ -9,7 +9,7 @@ import accountsExpress from './rest-express';
 import MongoDBInterface from './database-mongo';
 import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
-import { db } from './db';
+import { mongoUrl } from './db';
 import { sendMail } from './mail';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
 
@@ -25,16 +25,9 @@ async function getAccountsServer (context){
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   
-  let connection = null;
-
-  if (db instanceof SteedosMongoDriver) {
-    await getConnection().connect();
-    // TODO: objectql 升级后，去掉下面一行
-    await db.connect();
-    connection = db._client.db();
-  } else {
-    connection = Meteor.users.rawDatabase();
-  }
+  mongoose.connect(mongoUrl, { useNewUrlParser: true });
+  const connection = mongoose.connection;
+  
   const rootUrl = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
   var emailFrom = "Steedos <noreply@message.steedos.com>";
   if(config.email && config.email.from){
