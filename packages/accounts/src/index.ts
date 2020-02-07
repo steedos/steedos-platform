@@ -65,28 +65,30 @@ async function getAccountsServer (context){
       emailTemplates: {
         from: emailFrom,
         verifyEmail: {
-          subject: () => 'Verify your account email',
+          subject: () => '验证您的帐户电子邮件',
           text: (user: any, url: string) =>
-            `To verify your account email please click on this link: ${url}`,
+            `请点击此链接来验证您的帐户电子邮件: ${url}`,
           html: (user: any, url: string) =>
-            `To verify your account email please <a href="${url}">click here</a>.`,
+            `请点击<a href="${url}">此链接</a>来验证您的帐户电子邮件。`,
         },
         resetPassword: {
-          subject: () => 'Reset your password',
-          text: (user: any, url: string) => `To reset your password please click on this link: ${url}`,
+          subject: () => '重置您的账户密码',
+          text: (user: any, url: string) => 
+            `请点击此链接来重置您的账户密码: ${url}`,
           html: (user: any, url: string) =>
-            `To reset your password please <a href="${url}">click here</a>.`,
+            `请点击<a href="${url}">此链接</a>来重置您的账户密码。`,
         },
         enrollAccount: {
-          subject: () => 'Set your password',
-          text: (user: any, url: string) => `To set your password please click on this link: ${url}`,
+          subject: () => '设置您的账户密码',
+          text: (user: any, url: string) => 
+            `请点击此链接来设置您的账户密码: ${url}`,
           html: (user: any, url: string) =>
-            `To set your password please <a href="${url}">click here</a>.`,
+            `请点击<a href="${url}">此链接</a>来设置您的账户密码。`,
         },
         passwordChanged: {
-          subject: () => 'Your password has been changed',
-          text: () => `Your account password has been successfully changed`,
-          html: () => `Your account password has been successfully changed.`,
+          subject: () => '您的账户密码已被更改',
+          text: () => `您的帐户密码已更改成功。`,
+          html: () => `您的帐户密码已更改成功。`,
         }
       }
     },
