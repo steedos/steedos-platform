@@ -36,6 +36,10 @@ async function getAccountsServer (context){
     connection = Meteor.users.rawDatabase();
   }
   const issuer = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
+  var emailFrom = "Steedos <noreply@message.steedos.com>";
+  if(config.email && config.email.from){
+    emailFrom = config.email.from;
+  }
   const accountsServer = new AccountsServer(
     {
       db: new MongoDBInterface(connection, {
@@ -57,6 +61,33 @@ async function getAccountsServer (context){
         refreshToken: {
           expiresIn: refreshTokenExpiresIn,
         },
+      },
+      emailTemplates: {
+        from: emailFrom,
+        verifyEmail: {
+          subject: () => 'Verify your account email',
+          text: (user: any, url: string) =>
+            `To verify your account email please click on this link: ${url}`,
+          html: (user: any, url: string) =>
+            `To verify your account email please <a href="${url}">click here</a>.`,
+        },
+        resetPassword: {
+          subject: () => 'Reset your password',
+          text: (user: any, url: string) => `To reset your password please click on this link: ${url}`,
+          html: (user: any, url: string) =>
+            `To reset your password please <a href="${url}">click here</a>.`,
+        },
+        enrollAccount: {
+          subject: () => 'Set your password',
+          text: (user: any, url: string) => `To set your password please click on this link: ${url}`,
+          html: (user: any, url: string) =>
+            `To set your password please <a href="${url}">click here</a>.`,
+        },
+        passwordChanged: {
+          subject: () => 'Your password has been changed',
+          text: () => `Your account password has been successfully changed`,
+          html: () => `Your account password has been successfully changed.`,
+        }
       }
     },
     {
