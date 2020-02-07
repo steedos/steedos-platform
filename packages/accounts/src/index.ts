@@ -35,7 +35,7 @@ async function getAccountsServer (context){
   } else {
     connection = Meteor.users.rawDatabase();
   }
-  const issuer = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
+  const rootUrl = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
   var emailFrom = "Steedos <noreply@message.steedos.com>";
   if(config.email && config.email.from){
     emailFrom = config.email.from;
@@ -52,7 +52,7 @@ async function getAccountsServer (context){
         // },
       }),
       sendMail: sendMail,
-      siteUrl: issuer,
+      siteUrl: rootUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {
         accessToken: {
