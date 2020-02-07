@@ -414,7 +414,7 @@ export default class AccountsPassword implements AuthenticationService {
     await this.db.addEmailVerificationToken(user.id, address, token);
 
     const config = getSteedosConfig().email
-    const pathFragment = config ? config.pathFragment : 'verify-email';
+    const pathFragment = config ? config.pathFragment : 'accounts/a/password/verifyEmail';
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
