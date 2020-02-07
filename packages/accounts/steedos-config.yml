@@ -13,12 +13,8 @@ tenant:
   enable_forget_password: true
   enable_create_tenant: true
 email:
-  host: ${EMAIL_HOST}
-  port: 465
-  username: ${EMAIL_USERNAME}
-  password: ${EMAIL_PASSWORD}
-  secure: true
-  from: ${EMAIL_FROM}
+  url: ${MAIL_URL}
+  from: ${MAIL_FROM}
   pathFragment: "accounts/a/password/verifyEmail"
 password:
   minimum_length: 10
