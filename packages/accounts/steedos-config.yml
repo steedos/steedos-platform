@@ -13,12 +13,13 @@ tenant:
   enable_forget_password: true
   enable_create_tenant: true
 email:
-  host: 
+  host: ${EMAIL_HOST}
   port: 465
-  username: 
-  password: 
+  username: ${EMAIL_USERNAME}
+  password: ${EMAIL_PASSWORD}
   secure: true
-  from: support@steedos.com
+  from: ${EMAIL_FROM}
+  pathFragment: "accounts/a/password/verifyEmail"
 password:
   minimum_length: 10
   lowercase: true
@@ -28,5 +29,6 @@ password:
   policy: ^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\d+$)\S{8,}$
   policyError: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
   notifyUserAfterPasswordChanged: false
+  sendVerificationEmailAfterSignup: true
 webservices:
   steedos: http://127.0.0.1:5000/
