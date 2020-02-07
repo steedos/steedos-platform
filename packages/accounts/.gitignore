@@ -13,3 +13,4 @@ build/
 
 .DS_Store
 .history/*
+.env.local

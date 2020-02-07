@@ -42,8 +42,11 @@
   },
   "devDependencies": {
     "@steedos/objectql": "^1.16.2",
+    "@types/dotenv-flow": "^3.0.0",
     "@types/node": "12.6.8",
     "cross-env": "^5.2.0",
+    "dotenv": "^8.2.0",
+    "dotenv-flow": "^3.1.0",
     "nodemon": "1.19.1",
     "ts-node": "8.3.0",
     "typescript": "3.5.3"
