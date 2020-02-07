@@ -978,6 +978,7 @@ dot-prop@^4.1.0:
 dotenv-flow@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/dotenv-flow/-/dotenv-flow-3.1.0.tgz#2abcb4661cf2d0ca5b46d8ff5e95c1045ade9938"
+  integrity sha512-BMA8vfu2DbAx5x5G3C+tgb1hCbONggZTSpBE7B4yCPG5vziKX/lA3CzsjdGKlPvLxZgTbP1qb+KlWux8pYqsmA==
   dependencies:
     dotenv "^8.0.0"
 

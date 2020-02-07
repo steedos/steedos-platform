@@ -1,3 +1,5 @@
+require('dotenv-flow').config();
+
 import * as express from 'express';
 import * as hbs from 'hbs';
 import * as path from 'path';
