@@ -125,6 +125,15 @@ const defaultOptions = {
   sendVerificationEmailAfterSignup: false,
 };
 
+const getPathFragmentPrefix = function(){
+  const config = getSteedosConfig().email
+  let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
+  if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
+    pathFragmentPrefix += "/";
+  }
+  return pathFragmentPrefix;
+}
+
 export default class AccountsPassword implements AuthenticationService {
   public serviceName = 'password';
   public server!: AccountsServer;
@@ -413,16 +422,11 @@ export default class AccountsPassword implements AuthenticationService {
     const token = generateRandomToken();
     await this.db.addEmailVerificationToken(user.id, address, token);
 
-    const config = getSteedosConfig().email
-    let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
-    if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
-      pathFragmentPrefix += "/";
-    }
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      pathFragmentPrefix + 'verify-email',
+      getPathFragmentPrefix() + 'verify-email',
       this.server.options.emailTemplates.verifyEmail,
       this.server.options.emailTemplates.from
     );
@@ -453,16 +457,11 @@ export default class AccountsPassword implements AuthenticationService {
     const token = generateRandomToken();
     await this.db.addResetPasswordToken(user.id, address, token, 'reset');
 
-    const config = getSteedosConfig().email
-    let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
-    if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
-      pathFragmentPrefix += "/";
-    }
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      pathFragmentPrefix + 'reset-password',
+      getPathFragmentPrefix() + 'reset-password',
       this.server.options.emailTemplates.resetPassword,
       this.server.options.emailTemplates.from
     );
@@ -494,7 +493,7 @@ export default class AccountsPassword implements AuthenticationService {
       address,
       token,
       this.server.sanitizeUser(user),
-      'enroll-account',
+      getPathFragmentPrefix() + 'enroll-account',
       this.server.options.emailTemplates.enrollAccount,
       this.server.options.emailTemplates.from
     );
