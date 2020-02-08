@@ -9,7 +9,10 @@ interface RouteMatchProps {
   token: string;
 }
 
-const HomeLink = (props: any) => <Link to="/" {...props} />;
+// const HomeLink = (props: any) => <Link to="/" {...props} />;
+const onHome = async () => {
+  window.location.href="/";
+};
 
 const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
   const [success, setSuccess] = useState(false);
@@ -33,7 +36,7 @@ const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
     <div>
       {error && <FormError error={error!} />}
       {success && <Typography>您的邮件已被验证。</Typography>}
-      <Button component={HomeLink}>返回首页</Button>
+      <Button onClick={onHome}>返回首页</Button>
     </div>
   );
 };

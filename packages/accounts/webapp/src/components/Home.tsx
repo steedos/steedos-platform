@@ -76,7 +76,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
   };
 
   const onHome = async () => {
-    window.location.href="/"
+    window.location.href="/";
   };
 
   if (!user) {
