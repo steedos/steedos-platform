@@ -32,8 +32,8 @@ const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
   return (
     <div>
       {error && <FormError error={error!} />}
-      {success && <Typography>Your email has been verified</Typography>}
-      <Button component={HomeLink}>Go Home</Button>
+      {success && <Typography>您的邮件已被验证。</Typography>}
+      <Button component={HomeLink}>返回首页</Button>
     </div>
   );
 };
