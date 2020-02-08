@@ -15,7 +15,6 @@ tenant:
 email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}
-  pathFragment: "accounts/a/password/verifyEmail"
 password:
   minimum_length: 10
   lowercase: true
