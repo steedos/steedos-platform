@@ -150,8 +150,8 @@ const Login = ({ history, settings, tenant }: any) => {
       {tenant.enable_forget_password &&
       <Button component={ResetPasswordLink}>
         <FormattedMessage
-            id='accounts.reset_password'
-            defaultMessage='Reset Password'
+            id='accounts.forget_password'
+            defaultMessage='Forget Password'
         />
       </Button>
       }
