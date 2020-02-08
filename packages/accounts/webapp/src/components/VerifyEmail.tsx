@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { FormattedMessage } from 'react-intl';
 
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
+
+const useStyles = makeStyles({
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    margin: "0 auto",
+    textAlign: "center"
+  }
+});
 
 interface RouteMatchProps {
   token: string;
@@ -15,6 +30,7 @@ const onHome = async () => {
 };
 
 const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
+  const classes = useStyles();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,10 +49,31 @@ const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
   }, []);
 
   return (
-    <div>
-      {error && <FormError error={error!} />}
-      {success && <Typography>您的邮件已被验证。</Typography>}
-      <Button onClick={onHome}>返回首页</Button>
+    <div className={classes.formContainer}>
+      { 
+        error && 
+        <h4 className={classes.title}>
+          <FormError error={error!} />
+        </h4>
+      }
+      {
+        success && 
+        <Typography>
+          <h4 className={classes.title}>
+            <FormattedMessage
+              id='accounts.emailVerifiedSuccess'
+              defaultMessage='Your email has been verified' 
+            />
+          </h4>
+        </Typography>
+      }
+      <br/><br/>
+      <Button onClick={onHome} variant="contained" color="primary">
+        <FormattedMessage
+          id='accounts.goHome'
+          defaultMessage='Go Home' 
+        />
+      </Button>
     </div>
   );
 };
