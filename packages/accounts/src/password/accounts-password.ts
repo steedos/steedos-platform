@@ -414,12 +414,15 @@ export default class AccountsPassword implements AuthenticationService {
     await this.db.addEmailVerificationToken(user.id, address, token);
 
     const config = getSteedosConfig().email
-    const pathFragment = config && config.pathFragment ? config.pathFragment : 'accounts/a/verify-email';
+    let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
+    if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
+      pathFragmentPrefix += "/";
+    }
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      pathFragment,
+      pathFragmentPrefix + 'verify-email',
       this.server.options.emailTemplates.verifyEmail,
       this.server.options.emailTemplates.from
     );
@@ -450,11 +453,16 @@ export default class AccountsPassword implements AuthenticationService {
     const token = generateRandomToken();
     await this.db.addResetPasswordToken(user.id, address, token, 'reset');
 
+    const config = getSteedosConfig().email
+    let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
+    if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
+      pathFragmentPrefix += "/";
+    }
     const resetPasswordMail = this.server.prepareMail(
       address,
       token,
       this.server.sanitizeUser(user),
-      'reset-password',
+      pathFragmentPrefix + 'reset-password',
       this.server.options.emailTemplates.resetPassword,
       this.server.options.emailTemplates.from
     );
