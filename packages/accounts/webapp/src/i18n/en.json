@@ -3,5 +3,19 @@
     "accounts.goHome": "Go Home",
     "accounts.emailVerifiedSuccess": "Your email has been verified",
     "accounts.emailSent": "Email sent",
-    "accounts.passwordResetSuccessfully": "Your password has been reset successfully"
+    "accounts.passwordResetSuccessfully": "Your password has been reset successfully",
+    "accounts.incorrectPassword": "Incorrect password",
+    "accounts.unrecognizedOptionsForLogin": "Unrecognized options for login request",
+    "accounts.matchFailed": "Match failed",
+    "accounts.invalidUsername": "Invalid username",
+    "accounts.invalidEmail": "Invalid email",
+    "accounts.invalidPassword": "Invalid password",
+    "accounts.invalidNewPassword": "Invalid new password",
+    "accounts.invalidToken": "Invalid token",
+    "accounts.verifyEmailLinkExpired": "Verify email link expired",
+    "accounts.resetPasswordLinkExpired": "Reset password link expired",
+    "accounts.usernameAlreadyExists": "Username already exists",
+    "accounts.emailAlreadyExists": "Email already exists",
+    "accounts.usernameOrEmailRequired": "Username or Email is required",
+    "accounts.emailRequired": "Email is required"
 }

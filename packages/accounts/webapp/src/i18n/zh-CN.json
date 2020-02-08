@@ -27,5 +27,19 @@
     "accounts.goHome": "返回首页",
     "accounts.emailVerifiedSuccess": "您的邮件已被验证",
     "accounts.emailSent": "邮件已发送",
-    "accounts.passwordResetSuccessfully": "您的密码已被重置成功"
+    "accounts.passwordResetSuccessfully": "您的密码已被重置成功",
+    "accounts.incorrectPassword": "密码错误",
+    "accounts.unrecognizedOptionsForLogin": "无法识别的登录请求选项",
+    "accounts.matchFailed": "匹配失败",
+    "accounts.invalidUsername": "无效的用户名",
+    "accounts.invalidEmail": "无效的邮件",
+    "accounts.invalidPassword": "无效的密码",
+    "accounts.invalidNewPassword": "无效的新密码",
+    "accounts.invalidToken": "无效的token",
+    "accounts.verifyEmailLinkExpired": "该邮箱验证链接已失效",
+    "accounts.resetPasswordLinkExpired": "该重置密码链接已失效",
+    "accounts.usernameAlreadyExists": "该用户名已被注册使用",
+    "accounts.emailAlreadyExists": "该邮件已被注册使用",
+    "accounts.usernameOrEmailRequired": "用户名或邮箱不能为空",
+    "accounts.emailRequired": "邮箱必填"
 }
