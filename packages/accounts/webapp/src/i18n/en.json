@@ -1,5 +1,7 @@
 {
     "accounts.signin": "Sign In",
     "accounts.goHome": "Go Home",
-    "accounts.emailVerifiedSuccess": "Your email has been verified"
+    "accounts.emailVerifiedSuccess": "Your email has been verified",
+    "accounts.emailSent": "Email sent",
+    "accounts.passwordResetSuccessfully": "Your password has been reset successfully"
 }

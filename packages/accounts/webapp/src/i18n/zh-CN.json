@@ -25,5 +25,7 @@
     "accounts.access_denied": "您无权执行此操作。",
     "accounts.updatePassword_invalid_credentials": "旧密码错误",
     "accounts.goHome": "返回首页",
-    "accounts.emailVerifiedSuccess": "您的邮件已被验证"
+    "accounts.emailVerifiedSuccess": "您的邮件已被验证",
+    "accounts.emailSent": "邮件已发送",
+    "accounts.passwordResetSuccessfully": "您的密码已被重置成功"
 }

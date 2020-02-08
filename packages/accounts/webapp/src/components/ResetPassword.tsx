@@ -3,6 +3,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
+import { localizeMessage } from '../utils/utils';
 
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
@@ -41,11 +42,13 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
       // If no tokens send email to user
       if (!token) {
         await accountsRest.sendResetPasswordEmail(email);
-        setSnackbarMessage('Email sent');
+        // Email sent
+        setSnackbarMessage(localizeMessage('accounts.emailSent'));
       } else {
         // If token try to change user password
         await accountsRest.resetPassword(token, newPassword);
-        setSnackbarMessage('Your password has been reset successfully');
+        // Your password has been reset successfully
+        setSnackbarMessage(localizeMessage('accounts.passwordResetSuccessfully'));
       }
     } catch (err) {
       setError(err.message);
@@ -74,7 +77,12 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
       )}
       {match.params.token && (
         <FormControl margin="normal">
-          <InputLabel htmlFor="new-password">New Password</InputLabel>
+          <InputLabel htmlFor="new-password">
+            <FormattedMessage
+              id='accounts.newPassword'
+              defaultMessage='New Password'
+            />
+          </InputLabel>
           <Input
             id="new-password"
             type="password"
