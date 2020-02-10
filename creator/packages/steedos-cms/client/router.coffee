@@ -12,7 +12,7 @@ cmsSpaceRoutes = FlowRouter.group
 cmsSpaceRoutes.route '/', 
 	action: (params, queryParams)->
 		if Steedos.isMobile()
-			BlazeLayout.render 'cmsLayout',
+			BlazeLayout.render Creator.getLayout(),
 				main: "cms_home_mobile"
 		else
 			Tracker.autorun (c)->
@@ -38,7 +38,7 @@ cmsSpaceRoutes.route '/s/:siteId/',
 		Session.set("siteTag", null)
 		Session.set("postId", null)
 
-		BlazeLayout.render 'cmsLayout',
+		BlazeLayout.render Creator.getLayout(),
 			main: "cms_main"
 		
 		$(".cms-main").removeClass("post-show")
@@ -53,7 +53,7 @@ cmsSpaceRoutes.route '/s/:siteId/p/:postId',
 		Session.set("siteCategoryId", null)
 		Session.set("postId", params.postId)
 
-		BlazeLayout.render 'cmsLayout',
+		BlazeLayout.render Creator.getLayout(),
 			main: "cms_main"
 
 		Tracker.afterFlush ->
@@ -66,7 +66,7 @@ cmsSpaceRoutes.route '/s/:siteId/c/:siteCategoryId',
 		Session.set("siteCategoryId", params.siteCategoryId)
 		Session.set("postId", null)
 
-		BlazeLayout.render 'cmsLayout',
+		BlazeLayout.render Creator.getLayout(),
 			main: "cms_main"
 
 		$(".cms-main").removeClass("post-show")
@@ -81,7 +81,7 @@ cmsSpaceRoutes.route '/s/:siteId/c/:siteCategoryId/p/:postId',
 		Session.set("siteCategoryId", params.siteCategoryId)
 		Session.set("postId", params.postId)
 
-		BlazeLayout.render 'cmsLayout',
+		BlazeLayout.render Creator.getLayout(),
 			main: "cms_main"
 
 		Tracker.afterFlush ->
