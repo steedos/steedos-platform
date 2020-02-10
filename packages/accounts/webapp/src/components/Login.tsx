@@ -69,7 +69,15 @@ const Login = ({ history, settings, tenant }: any) => {
         credentials: "include"
       });
       accountsClient.setTokens(result.tokens);
-      
+
+      if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
+        //消息参数必须为string
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          "X-Auth-Token": getCookie('X-Auth-Token'),
+          "X-User-Id": getCookie('X-User-Id'),
+          "X-Access-Token": result.tokens.accessToken
+        }))
+      }
 
       const user = await accountsRest.authFetch( 'user', {});
 
