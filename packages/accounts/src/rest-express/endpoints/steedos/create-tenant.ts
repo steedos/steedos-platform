@@ -68,6 +68,7 @@ export const createTenant = (accountsServer: AccountsServer) => async (
       user: userDoc._id, 
       username: userDoc.username, 
       name: userDoc.name, 
+      email: userDoc.email, 
       user_accepted: true, 
       organization: orgDoc._id, 
       organizations: [orgDoc._id], 

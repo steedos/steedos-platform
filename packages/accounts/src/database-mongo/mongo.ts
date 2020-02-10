@@ -225,6 +225,7 @@ export class Mongo implements DatabaseInterface {
       {
         $set: {
           'emails.$.verified': true,
+          'email': email,
           [this.options.timestamps.updatedAt]: this.options.dateProvider(),
         },
         $pull: { 'services.email.verificationTokens': { address: email } },
