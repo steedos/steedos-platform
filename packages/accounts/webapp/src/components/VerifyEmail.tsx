@@ -3,6 +3,8 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { getTenant, getSettings } from '../selectors';
 
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
@@ -24,12 +26,7 @@ interface RouteMatchProps {
   token: string;
 }
 
-// const HomeLink = (props: any) => <Link to="/" {...props} />;
-const onHome = async () => {
-  window.location.href="/";
-};
-
-const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
+const VerifyEmail = ({ match, settings, tenant }: any) => {
   const classes = useStyles();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +44,10 @@ const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
     verifyEmail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onHome = async () => {
+    window.location.href = settings.root_url ? settings.root_url : "/";
+  };
 
   return (
     <div className={classes.formContainer}>
@@ -78,4 +79,11 @@ const VerifyEmail = ({ match }: RouteComponentProps<RouteMatchProps>) => {
   );
 };
 
-export default VerifyEmail;
+function mapStateToProps(state: any) {
+  return {
+    tenant: getTenant(state),
+    settings: getSettings(state),
+  };
+}
+
+export default connect(mapStateToProps)(VerifyEmail);

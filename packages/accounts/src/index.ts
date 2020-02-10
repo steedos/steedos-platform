@@ -12,6 +12,7 @@ import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
 import { sendMail } from './mail';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
+import { URL } from 'url';
 
 declare var WebApp;
 declare var Meteor;
@@ -29,6 +30,8 @@ async function getAccountsServer (context){
   const connection = mongoose.connection;
   
   const rootUrl = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
+  const rootUrlInstance = new URL(rootUrl);
+  const siteUrl = rootUrlInstance.origin;
   var emailFrom = "Steedos <noreply@message.steedos.com>";
   if(config.email && config.email.from){
     emailFrom = config.email.from;
@@ -45,7 +48,7 @@ async function getAccountsServer (context){
         // },
       }),
       sendMail: sendMail,
-      siteUrl: rootUrl,
+      siteUrl: siteUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {
         accessToken: {

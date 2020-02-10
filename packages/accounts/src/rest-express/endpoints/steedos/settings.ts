@@ -41,5 +41,6 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   res.json({
     tenant: tenant,
     password: config.password?config.password:{},
+    root_url: process.env.ROOT_URL
   })
 }

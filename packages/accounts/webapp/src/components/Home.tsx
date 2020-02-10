@@ -3,6 +3,8 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
+import { connect } from 'react-redux';
+import { getTenant, getSettings } from '../selectors';
 
 import { accountsClient, accountsRest } from '../accounts';
 
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Home = ({ history }: RouteComponentProps<{}>) => {
+const Home = ({ history, settings, tenant }: any) => {
   const classes = useStyles();
   const [user, setUser] = useState();
 
@@ -76,7 +78,7 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
   };
 
   const onHome = async () => {
-    window.location.href="/";
+    window.location.href = settings.root_url ? settings.root_url : "/";
   };
 
   if (!user) {
@@ -119,4 +121,11 @@ const Home = ({ history }: RouteComponentProps<{}>) => {
   );
 };
 
-export default Home;
+function mapStateToProps(state: any) {
+  return {
+    tenant: getTenant(state),
+    settings: getSettings(state),
+  };
+}
+
+export default connect(mapStateToProps)(Home);
