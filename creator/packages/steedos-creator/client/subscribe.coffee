@@ -4,6 +4,7 @@ Creator.subs["TabularSetting"] = new SubsManager()
 Creator.subs["CreatorRecord"] = new SubsManager()
 Creator.subs["CreatorActionRecord"] = new SubsManager()
 Creator.subs["objectRecentViewed"] = new SubsManager()
+Steedos.subs["PendingSpace"] = new SubsManager();
 
 Meteor.startup ->
 	
@@ -73,4 +74,43 @@ Meteor.startup ->
 	Tracker.autorun (c)->
 		if Session.get("spaceId")
 			Meteor.subscribe("myFollows", Session.get("spaceId"))
+
+
+Meteor.startup ->
+	Tracker.autorun (c)->
+		if Meteor.userId()
+			Steedos.subs["PendingSpace"].subscribe "space_need_to_confirm"
+			spaceNeedToConfirm = db.space_users.find({user: Meteor.userId(), invite_state: "pending"}).fetch() || []
+			spaceNeedToConfirm.forEach (obj) ->
+				Meteor.call 'getPendingSpaceInfo', obj.created_by, obj.space, (error,result) ->
+					console.log("getPendingSpaceInfo=====", result);
+					if error
+						console.log error
+					else
+						swal {
+							title: t("pending_space_invite_info", {inviter: result.inviter, space: result.space})
+							type: "info"
+							showCancelButton: true
+							cancelButtonText: "拒绝"
+							confirmButtonColor: "#2196f3"
+							confirmButtonText: t('OK')
+							closeOnConfirm: true
+							allowEscapeKey: false
+							allowOutsideClick: false
+						}, (option)->
+							if option
+								Meteor.call 'acceptJoinSpace', obj._id, (error,result) ->
+									if error
+										console.log error
+									else 
+										console.log 'acceptJoinSpace'
+							else
+								Meteor.call 'refuseJoinSpace', obj._id, (error,result) ->
+									if error
+										console.log error
+									else 
+										console.log 'refuseJoinSpace'
+									
+			
+
 

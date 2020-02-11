@@ -155,5 +155,8 @@
     "workflow": {
         "sms_notification": false //提交申请单后，给下一步处理人发送短信提醒消息。 true: 发送， false：不发送。
     },
+    "tenant":{
+        "saas": false //是否是云版本，默认为落地版本，即false
+    },
     "plugins": ["@steedos/plugin-stimulsoft-report"] //配置使用的插件， 程序将自动调用其init函数。需要手动安装插件，eg: npm i xxx  ; yarn add xxx
 }

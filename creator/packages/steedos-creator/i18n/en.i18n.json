@@ -106,5 +106,7 @@
   	"dashboard": "Dashboard",
 	"follow": "Follow",
 	"unfollow": "Unfollow",
-	"following": "Following"
+	"following": "Following",
+
+	"pending_space_invite_info": "{$inviter} invite you to join {$space}"
 }

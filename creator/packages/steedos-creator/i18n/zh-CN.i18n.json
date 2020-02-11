@@ -108,6 +108,8 @@
   	"dashboard": "首页",
   	"follow": "关注",
   	"unfollow": "取消关注",
-  	"following": "已关注"
+  	"following": "已关注",
+
+	"pending_space_invite_info": "{$inviter} 邀请您加入 {$space}"
 
 }

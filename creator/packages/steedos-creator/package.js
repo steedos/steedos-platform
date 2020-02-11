@@ -110,6 +110,7 @@ Package.onUse(function (api) {
 	api.addFiles('server/methods/object_export2xml.coffee', 'server');
 	api.addFiles('server/methods/object_import_jobs.coffee', 'server');
 	api.addFiles('server/methods/related_objects_records.coffee', 'server');
+	api.addFiles('server/methods/pending_space.coffee', 'server');
 
 	api.addFiles('server/publications/object.coffee', 'server');
 	api.addFiles('server/publications/object_tabular.coffee', 'server');
@@ -120,6 +121,7 @@ Package.onUse(function (api) {
 
 	api.addFiles('server/publications/contacts_view_limits.coffee', 'server');
 	api.addFiles('server/publications/contacts_no_force_phone_users.coffee', 'server');
+	api.addFiles('server/publications/space_need_to_confirm.coffee', 'server');
 
 	api.addFiles('server/lib/permission_manager.coffee', 'server');
 	api.addFiles('server/lib/uuflow_manager.coffee', 'server');
