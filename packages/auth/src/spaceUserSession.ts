@@ -76,9 +76,9 @@ export async function getSpaceUserSession(spaceId, userId) {
         let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
         let su = null;
         let suFields = ['_id', 'space', 'company_id', 'company_ids', 'organization', 'organizations', 'organizations_parents', 'user'];
-        let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${userId}')`, fields: suFields });
+        let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
         // 如果spaceid和user不匹配，则取用户的第一个工作区
-        let spaceUsers = await getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${userId}')`, fields: suFields });
+        let spaceUsers = await getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
         if (spaceUser && spaceUser[0]) {
             su = spaceUser[0];
         } else {
