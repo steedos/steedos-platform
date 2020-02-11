@@ -169,6 +169,14 @@ FlowRouter.route '/app/:app_id/instances/grid/all',
 		FlowRouter.go '/workflow'
 		return
 
+FlowRouter.route '/app/:app_id/cms_posts/grid/all',
+	action: (params, queryParams)->
+		app_id = FlowRouter.getParam("app_id")
+		if (app_id != "-")
+			Session.set("app_id", app_id)
+		Session.set("object_name", "cms_posts")
+		FlowRouter.go '/cms'
+
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
