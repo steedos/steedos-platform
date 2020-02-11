@@ -313,15 +313,15 @@ Meteor.startup(function () {
                         doc.user_accepted = true;
                     }
                 } else {
-                    if (!doc.invite_state) {
-                        doc.invite_state = "pending";
-                    }
                     if(Meteor.settings.tenant && Meteor.settings.tenant.saas){
-                        // 云版则强制设置user_accepted为false
+                        // 云版要求用户接受邀请才让用户在新加入的工作区生效
+                        doc.invite_state = "pending";
+                        // 云版强制设置user_accepted为false
                         doc.user_accepted = false;
                     }
                     else{
-                        // 落地版本则设置为传入的值
+                        // 落地版本不需要用户接受邀请才让用户在新加入的工作区生效，而是直接生效
+                        // 落地版本设置user_accepted为传入的值，由管理员在新建用户的界面设置
                         if (!doc.user_accepted) {
                             doc.user_accepted = false;
                         }
