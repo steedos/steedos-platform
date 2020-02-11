@@ -12,6 +12,7 @@ tenant:
   enable_register: true
   enable_forget_password: true
   enable_create_tenant: true
+  saas: false 
 email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}
