@@ -316,8 +316,15 @@ Meteor.startup(function () {
                     if (!doc.invite_state) {
                         doc.invite_state = "pending";
                     }
-                    if (!doc.user_accepted) {
+                    if(Meteor.settings.tenant && Meteor.settings.tenant.saas){
+                        // 云版则强制设置user_accepted为false
                         doc.user_accepted = false;
+                    }
+                    else{
+                        // 落地版本则设置为传入的值
+                        if (!doc.user_accepted) {
+                            doc.user_accepted = false;
+                        }
                     }
                 }
                 if (userObj) {
