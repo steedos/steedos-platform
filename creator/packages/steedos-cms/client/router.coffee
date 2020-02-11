@@ -15,21 +15,22 @@ cmsSpaceRoutes.route '/',
 			BlazeLayout.render Creator.getLayout(),
 				main: "cms_home_mobile"
 		else
-			Tracker.autorun (c)->
-				if Steedos.subsBootstrap.ready() and Steedos.subs["Sites"].ready()
-					spaceId = Steedos.spaceId()
-					if spaceId
-						siteId = Session.get("siteId")
-						if siteId
-							unless db.cms_sites.findOne({space:spaceId, _id: siteId})
-								siteId = null
+			Meteor.startup ()->
+				Tracker.autorun (c)->
+					if Steedos.subsBootstrap.ready() and Steedos.subs["Sites"].ready()
+						spaceId = Steedos.spaceId()
+						if spaceId
+							siteId = Session.get("siteId")
+							if siteId
+								unless db.cms_sites.findOne({space:spaceId, _id: siteId})
+									siteId = null
 
-						unless siteId
-							site = db.cms_sites.findOne({space:spaceId}, {sort: {order: 1, created: 1}})
-							siteId = site?._id
-						if siteId
-							c.stop()
-							FlowRouter.go "/cms/s/#{siteId}"
+							unless siteId
+								site = db.cms_sites.findOne({space:spaceId}, {sort: {order: 1, created: 1}})
+								siteId = site?._id
+							if siteId
+								c.stop()
+								FlowRouter.go "/cms/s/#{siteId}"
 
 cmsSpaceRoutes.route '/s/:siteId/', 
 	action: (params, queryParams)->
