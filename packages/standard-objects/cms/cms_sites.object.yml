@@ -1,0 +1,88 @@
+name: cms_sites
+icon: task
+label: 站点
+fields:
+  type:
+    label: 类型
+    type: select
+    omit: true
+    defaultValue: "space"
+    options:
+      - label: 工作区
+        value: space
+      - label: 用户
+        value: user
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    is_wide: true
+  description:
+    label: 描述
+    type: textarea
+    rows: 3
+    is_wide: true
+  owner:
+    required: true
+  visibility:
+    label: 可见性
+    type: select
+    defaultValue: "private"
+    required: true
+    optionsFunction: !!js/function |
+      function(){
+        var visibilitys = [
+          /*{label: t("cms_sites_visibility_private"), value: "private"},*/
+          {label: t("cms_sites_visibility_team"), value: "team"},
+          {label: t("cms_sites_visibility_public"), value: "public"}
+        ];
+        return visibilitys;
+      }
+  admins:
+    type: lookup
+    label: 站点成员
+    reference_to: users
+    multiple: true
+    required: true
+    defaultValue: "[{userId}]"
+  cover:
+    label: 封面图片
+    type: avatar
+  avatar:
+    label: Logo图片
+    type: avatar
+  order:
+    label: 排序号
+    type: number
+  layout:
+    label: 排版
+    type: textarea
+    rows: 10
+    is_wide: true
+    omit: true
+    hidden: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

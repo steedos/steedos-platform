@@ -1,0 +1,228 @@
+name: cms_posts
+icon: task
+label: 文章
+fields:
+  site:
+    label: 所属站点
+    type: lookup
+    reference_to: cms_sites
+    required: true
+    sortable: true
+    index: true
+    defaultValue: !!js/function |
+      function () {
+        return Session.get("siteId");
+      }
+    hidden: true
+  title:
+    label: 标题
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    is_wide: true
+  summary:
+    type: textarea
+    label: 摘要
+    rows: 2
+    is_wide: true
+    omit: true
+  body:
+    type: textarea
+    label: 正文
+    rows: 5
+    is_wide: true
+    omit: true
+  htmlBody:
+    type: textarea
+    label: 正文
+    rows: 5
+    required: true
+    is_wide: true
+  image:
+    label: 照片
+    type: avatar
+    multiple: true
+    omit: true
+    is_wide: true
+  attachments:
+    label: 附件
+    type: 'avatar'
+    multiple: true
+    is_wide: true
+  # attachments:
+  #   label: 附件
+  #   type: '[Object]'
+  #   blackbox: true
+  #   multiple: true
+  # attachments:
+  #   label: 附件
+  #   type: [String]
+  # attachments.$:
+  #   autoform:
+  category:
+    label: 栏目
+    type: lookup
+    reference_to: cms_categories
+    sortable: true
+    is_wide: true
+    defaultValue: !!js/function |
+      function () {
+        return Session.get("siteCategoryId");
+      }
+    # filters: [["enablestate", "eq", "2"]]
+    filtersFunction: !!js/function |
+      function () {
+        return "site eq '" + Session.get("siteId") + "'";
+      }
+  visibility:
+    label: 可见性
+    type: select
+    hidden: true
+    defaultValue: "private"
+    is_wide: true
+    optionsFunction: !!js/function |
+      function(){
+        var visibilitys = [
+          {label: t("cms_posts_visibility_private"), value: "private"},
+          {label: t("cms_posts_visibility_space"), value: "space"},
+          /*{label: t("cms_posts_visibility_public"), value: "public"}*/
+        ];
+        if(Steedos && Steedos.isSpaceAdmin()){
+          return visibilitys;
+        }
+        else{
+          return visibilitys[0];
+        }
+      }
+  members:
+    type: object
+    label: 授权对象
+    is_wide: true
+  members.users:
+    type: lookup
+    label: 授权人员(文章对这些人员可见)
+    reference_to: users
+    multiple: true
+    filterable: true
+  members.organizations:
+    type: lookup
+    label: 授权部门(文章对这些部门及下属部门可见)
+    reference_to: organizations
+    multiple: true
+    filterable: true
+  postDate:
+    type: datetime
+    label: 发布日期
+    required: true
+    is_wide: true
+    defaultValue: !!js/function |
+      function () {
+        return new Date();
+      }
+  # The post author's name
+  tags:
+    type: "[text]"
+    omit: true
+  author_name:
+    label: 作者
+    type: "text"
+    omit: true
+  author:
+    label: 作者
+    type: lookup
+    reference_to: users
+    index: true
+    omit: true
+  viewCount:
+    label: 阅读次数
+    type: number
+    omit: true
+  commentCount:
+    label: 评论次数
+    type: number
+    omit: true
+  commenters:
+    label: 评论者
+    type: lookup
+    reference_to: users
+    multiple: true
+    omit: true
+  lastCommentedAt:
+    label: 最后评论时间
+    type: datetime
+    omit: true
+  clickCount:
+    label: 点击次数
+    type: number
+    omit: true
+  baseScore:
+    type: number
+    scale: 2
+    omit: true
+  upvotes:
+    type: number
+    omit: true
+  upvoters:
+    type: lookup
+    reference_to: users
+    multiple: true
+    omit: true
+  downvotes:
+    type: number
+    omit: true
+  downvoters:
+    type: lookup
+    reference_to: users
+    multiple: true
+    omit: true
+  score:
+    type: number
+    scale: 2
+    omit: true
+  # The post's status. 
+  status:
+    type: number
+    omit: true
+  featured:
+    type: boolean
+    defaultValue: false
+    hidden: true
+    omit: true
+  # Whether the post is inactive. Inactive posts see their score recalculated less often
+  inactive:
+    type: boolean
+    omit: true
+  # Save info for later spam checking on a post. We will use this for the akismet package
+  userIP:
+    type: "text"
+    omit: true
+  userAgent:
+    type: "text"
+    omit: true
+  referrer:
+    type: "text"
+    omit: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - title
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
