@@ -17,7 +17,7 @@ Template.cms_post_list.events
 		row.addClass('selected');
 		FlowRouter.go "#{CMS.helpers.PostURL(rowData._id)}"
 
-	'click .btn-new-post': (event, template) -
+	'click .btn-new-post': (event, template) ->
 		objectName = "cms_posts"
 		object = Creator.getObject(objectName)
 		collection_name = object.label
