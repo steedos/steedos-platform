@@ -67,9 +67,6 @@
 			{{/if}}
 			{{> tabular table=TabularTables.cms_posts_tabular selector=PostListSelector class="table table-striped table-condensed datatable-posts"}}
 		</div>
-		{{#afModal class="btn btn-primary btn-add-post hidden" collection="db.cms_posts" operation="insert" dialogClass="modal-lg modal-body-zoom" buttonContent=afModalInsert}}
-			{{_ "cms_posts_new"}}
-		{{/afModal}}
 		{{#afModal class="btn btn-primary btn-site-edit hidden" collection="db.cms_sites" operation="update" omitFields="space,created,created_by,modified,modified_by" dialogClass="modal-lg modal-body-zoom" buttonContent=afModalUpdate}}
 			{{_ "cms_sites_edit"}}
 		{{/afModal}}

@@ -136,7 +136,7 @@ if Meteor.isClient
 							if isOpenerRemove or !dxDataGridInstance
 								if isOpenerRemove
 									window.close()
-								else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
+								else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar' and object_name != "cms_posts"
 									appid = Session.get("app_id")
 									unless list_view_id
 										list_view_id = Session.get("list_view_id")

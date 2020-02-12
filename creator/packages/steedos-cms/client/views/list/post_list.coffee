@@ -17,9 +17,15 @@ Template.cms_post_list.events
 		row.addClass('selected');
 		FlowRouter.go "#{CMS.helpers.PostURL(rowData._id)}"
 
-	'click .btn-new-post': (event, template) ->
-		Session.set "is_create_new_post",true
-		$('.btn-add-post').click();
+	'click .btn-new-post': (event, template) -
+		objectName = "cms_posts"
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Creator.executeAction objectName, {todo: "standard_new"}
 
 	'click .btn-new-category': (event, template) ->
 		doc = {}

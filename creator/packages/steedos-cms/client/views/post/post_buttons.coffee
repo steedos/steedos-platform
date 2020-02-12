@@ -10,14 +10,28 @@ Template.cms_post_buttons.events
 		FlowRouter.go(backURL)
 
 	'click .btn-edit-post': (event, template) ->
-		postId = Session.get("postId")
-		target = db.cms_posts.findOne({_id:postId})
-		Session.set "cmDoc",target
-		Session.set "is_create_new_post",false
-		$('.btn-post-edit').click()
+		recordId = Session.get("postId")
+		# record = db.cms_posts.findOne({_id:recordId})
+		objectName = "cms_posts"
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{object._collection_name}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Creator.executeAction objectName, {todo: "standard_edit"}, recordId
 
 	'click .btn-remove-post': (event, template) ->
-		AdminDashboard.modalDelete 'cms_posts', event.currentTarget.dataset.id,->
+		recordId = Session.get("postId")
+		record = db.cms_posts.findOne({_id:recordId})
+		objectName = "cms_posts"
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{object._collection_name}")
+		Session.set("action_collection_name", collection_name)
+		action_record_title = record[object.NAME_FIELD_KEY]
+		Creator.executeAction objectName, {todo: "standard_delete"}, recordId, action_record_title, null, ()-> 
 			# just route to the parent router path
 			currentPath = FlowRouter.current().path
 			FlowRouter.go currentPath.substr(0,currentPath.lastIndexOf("/p/"))

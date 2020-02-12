@@ -246,6 +246,11 @@ objectRoutes.route '/view/:record_id',
 		data = {app_id: app_id, object_name: object_name, record_id: record_id}
 		ObjectRecent.insert(object_name, record_id)
 		Session.set("detail_info_visible", true)
+		if object_name == "cms_posts"
+			# 文章有自己单独的详细界面
+			siteId = Session.get("siteId")
+			FlowRouter.go "/cms/s/#{siteId}/p/#{record_id}"
+			return;
 		if object_name == "users"
 			main = "user"
 		else
@@ -308,3 +313,4 @@ FlowRouter.route '/app/admin/page/:template_name',
 			Session.set("admin_template_name", template_name)
 			BlazeLayout.render Creator.getLayout(),
 				main: template_name
+
