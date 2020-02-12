@@ -82,5 +82,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: true
+    modifyAllRecords: false
     viewAllRecords: true
