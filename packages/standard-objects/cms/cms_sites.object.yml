@@ -5,6 +5,7 @@ fields:
   type:
     label: 类型
     type: select
+    hidden: true
     omit: true
     defaultValue: "space"
     options:
