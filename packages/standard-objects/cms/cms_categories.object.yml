@@ -2,19 +2,7 @@ name: cms_categories
 icon: task
 label: 栏目
 fields:
-  site:
-    label: 所属站点
-    type: lookup
-    reference_to: cms_sites
-    required: true
-    sortable: true
     index: true
-    defaultValue: !!js/function |
-      function () {
-        return Session.get("siteId");
-      }
-    omit: true
-    hidden: true
   name:
     label: 名称
     type: text
@@ -29,14 +17,48 @@ fields:
     type: textarea
     rows: 3
     is_wide: true
+  site:
+    label: 所属站点
+    type: lookup
+    reference_to: cms_sites
+    required: true
+    sortable: true
+    index: true
   parent:
     label: 上级栏目
     type: lookup
     reference_to: cms_categories
     sortable: true
-    filtersFunction: !!js/function |
-      function () {
-        return [["site", "eq", Session.get("siteId")]]
+    depend_on:
+      - site
+    optionsFunction: !!js/function |
+      function (values) {
+        debugger;
+        if (!values || !values.site) {
+          return [];
+        }
+        var object = Creator.getObject(values._object_name);
+        if(!object){
+          console.error("未找到当前对象：" + values._object_name);
+          return [];
+        }
+        var options, result, companys, queryFilters;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        queryFilters = ["site", "=", values.site];
+        var steedosFilters = require("@steedos/filters");
+        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        options.$filter = odataFilter;
+        companys = Creator.odata.query(values._object_name, options, true);
+        companys.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
       }
   parents:
     label: 上级栏目（多层）

@@ -26,12 +26,10 @@ fields:
     type: textarea
     rows: 3
     is_wide: true
-  owner:
-    required: true
   visibility:
     label: 可见性
-    type: select
-    defaultValue: "private"
+    type: lookup
+    defaultValue: "team"
     required: true
     optionsFunction: !!js/function |
       function(){

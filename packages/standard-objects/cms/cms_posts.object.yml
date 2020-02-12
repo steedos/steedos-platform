@@ -79,7 +79,7 @@ fields:
       }
   visibility:
     label: 可见性
-    type: select
+    type: lookup
     hidden: true
     defaultValue: "private"
     is_wide: true
