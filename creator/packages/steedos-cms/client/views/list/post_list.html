@@ -1,8 +1,5 @@
 <template name="cms_post_list">
 		<div class="navigation-bar">
-			<button type="button" class="btn btn-default" data-toggle="offcanvas">
-				<i class="fa fa-bars"></i>
-			</button>
 			<span class="navigation-title text-overflow" title="{{Site.name}}">{{Site.name}}</span>
 			<div class="pull-right">
 				{{#if isSiteDropdownMenuNotEmpty}}
@@ -20,7 +17,7 @@
 							{{#if isSitePublic}}
 								<li><a class="btn-preview-post"><i class="ion ion-ios-upload-outline"></i>{{_ 'cms_sites_preview'}}</a></li>
 							{{/if}}
-							{{#if isSiteAdmin}}
+							<!-- {{#if isSiteAdmin}}
 								{{#if isSitePublic}}
 									<li role="separator" class="divider"></li>
 								{{/if}}
@@ -29,12 +26,12 @@
 									<li><a class="btn-edit-category" data-id = "{{Category._id}}"><i class="ion ion-ios-folder-outline"></i>{{_ "cms_categories_edit"}}</a></li>
 									<li><a class="btn-remove-category" data-id = "{{Category._id}}"><i class="ion ion-ios-folder-outline"></i>{{_ "cms_categories_remove"}}</a></li>
 								{{/if}}
-							{{/if}}
-							{{#if isSpaceAdmin}}
+							{{/if}} -->
+							<!-- {{#if isSpaceAdmin}}
 								<li role="separator" class="divider"></li>
 								<li><a class="btn-edit-site" data-id = "{{Site._id}}"><i class="ion ion-ios-book-outline"></i>{{_ 'cms_sites_edit'}}</a></li>
 								<li><a class="btn-remove-site" data-id = "{{Site._id}}"><i class="ion ion-ios-book-outline"></i>{{_ 'cms_sites_remove'}}</a></li>
-							{{/if}}
+							{{/if}} -->
 						</ul>
 					</div>
 				{{/if}}
