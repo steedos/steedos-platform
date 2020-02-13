@@ -33,7 +33,6 @@ fields:
       - site
     optionsFunction: !!js/function |
       function (values) {
-        debugger;
         if (!values || !values.site) {
           return [];
         }
