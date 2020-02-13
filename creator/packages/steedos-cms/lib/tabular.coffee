@@ -18,8 +18,8 @@ Meteor.startup ()->
 					postDateString = moment(doc.postDate).format('YYYY-MM-DD');
 					postDateFromNow = Steedos.momentReactiveFromNow(doc.postDate);
 					unreadClass = ""
-					if db.cms_unreads.findOne({user: Steedos.userId(), post: doc._id})
-						unreadClass = "unread"
+					# if db.cms_unreads.findOne({user: Steedos.userId(), post: doc._id})
+					# 	unreadClass = "unread"
 					return """
 						<div class="ion ion-record #{unreadClass}"></div>
 						<div class="post-name #{unreadClass}">#{doc.title}</div>

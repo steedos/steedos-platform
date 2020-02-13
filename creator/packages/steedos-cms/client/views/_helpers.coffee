@@ -136,8 +136,8 @@ CMS.helpers =
 		else
 			return db.cms_categories.find({site: siteId, parent: null}).count()
 
-	unReadCountBySite: (siteId)->
-		return db.cms_unreads.find({user: Meteor.userId(),site: siteId}).count()
+	# unReadCountBySite: (siteId)->
+	# 	return db.cms_unreads.find({user: Meteor.userId(),site: siteId}).count()
 
 	SiteId: ->
 		siteId = Session.get("siteId")
@@ -224,7 +224,7 @@ CMS.helpers =
 			return Spacebars.SafeString(text)
 
 	subsReady: ()->
-		return Steedos.subsBootstrap.ready() and Steedos.subs["Site"].ready() and Steedos.subs["Sites"].ready() and Steedos.subs["CmsUnreads"].ready()
+		return Steedos.subsBootstrap.ready() and Steedos.subs["Site"].ready() and Steedos.subs["Sites"].ready()
 
 	PostListSelector: ->
 		siteId = Session.get("siteId")
@@ -269,6 +269,7 @@ CMS.helpers =
 
 		if categoryId
 			query.$and.push(category: categoryId)
+		console.log("====query====", query);
 
 		return query
 
@@ -303,8 +304,8 @@ CMS.helpers =
 	homeSitesPosts: (siteId)->
 		return db.cms_posts.find({site:siteId}).fetch()
 
-	isPostsUnread: (postId)->
-		return db.cms_unreads.find({post:postId}).fetch()
+	# isPostsUnread: (postId)->
+	# 	return db.cms_unreads.find({post:postId}).fetch()
 
 	isSpaceAdmin: ()->
 		userId = Meteor.userId()

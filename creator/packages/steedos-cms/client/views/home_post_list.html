@@ -11,12 +11,12 @@
 				<div class="home-post-body">
 					<div class="home-post-title">
 						<a href="{{urlPrefix}}/cms/s/{{_id}}" class="site-item" title="{{name}}">
-							{{#if unReadCountBySite _id}}
+							<!-- {{#if unReadCountBySite _id}}
 								<span class="pull-right-container ">
 									<span class="label pull-right label-warning">{{unReadCountBySite _id}}
 									</span>
 								</span>
-							{{/if}}
+							{{/if}} -->
 							<span class="site-name text-overflow">
 								{{name}}
 							</span>
@@ -26,9 +26,9 @@
 						{{#if homePostsSubsReady}}
 							{{#if homeSitesPosts _id}}
 								{{#each homeSitesPosts _id}}
-									{{#if isPostsUnread _id}}
+									<!-- {{#if isPostsUnread _id}}
 										<div class="ion ion-record unread"></div>
-									{{/if}}
+									{{/if}} -->
 									<li>
 										{{#if category}}
 											<a href="{{urlPrefix}}/cms/s/{{site}}/c/{{category}}/p/{{_id}}" class="posts-title">

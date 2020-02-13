@@ -45,14 +45,14 @@ Template.cms_post_detail.onRendered ->
 					console.error error
 					toastr.error(error)
 
-		# cms_unreads相关逻辑
-		if postId
-			selection = 
-				post: postId
-				user: Meteor.userId()
-			unread = db.cms_unreads.findOne selection,{fields:{_id:1}}
-			if unread
-				db.cms_unreads.remove unread._id
+		# # cms_unreads相关逻辑
+		# if postId
+		# 	selection = 
+		# 		post: postId
+		# 		user: Meteor.userId()
+		# 	unread = db.cms_unreads.findOne selection,{fields:{_id:1}}
+		# 	if unread
+		# 		db.cms_unreads.remove unread._id
 
 	if Steedos.isMobile()
 		Steedos.bindSwipeBackEvent(".post-wrapper", (event,options)->

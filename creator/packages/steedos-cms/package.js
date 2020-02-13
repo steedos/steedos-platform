@@ -125,13 +125,13 @@ Package.onUse(function(api) {
     api.addFiles('server/publications/cms_sites.coffee', 'server');
     api.addFiles('server/publications/cms_tags.coffee', 'server');
     api.addFiles('server/publications/cms_themes.coffee', 'server');
-    api.addFiles('server/publications/cms_unreads.coffee', 'server');
+    // api.addFiles('server/publications/cms_unreads.coffee', 'server');
     api.addFiles('server/publications/cms_posts_home.coffee', 'server');
     api.addFiles('server/publications/get_posts_members_names.coffee', 'server');
 
     api.addFiles('server/routes/site.coffee', 'server');
     api.addFiles('server/routes/avatar.coffee', 'server');
-    api.addFiles('server/routes/unread_posts.coffee', 'server');
+    // api.addFiles('server/routes/unread_posts.coffee', 'server');
     api.addAssets('themes/default.html', 'server');
 
     // EXPORT
