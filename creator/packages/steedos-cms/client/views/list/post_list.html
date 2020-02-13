@@ -9,10 +9,12 @@
 								<i class="ion ion-plus"></i>
 							</button>
 						{{/if}}
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Dropdown</span>
-						</button>
+						{{#if isSitePublic}}
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+						{{/if}}
 						<ul class="dropdown-menu dropdown-menu-right" role="menu">
 							{{#if isSitePublic}}
 								<li><a class="btn-preview-post"><i class="ion ion-ios-upload-outline"></i>{{_ 'cms_sites_preview'}}</a></li>
