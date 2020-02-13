@@ -39,3 +39,7 @@ v1.16.0
 v1.16.3
 
 - Permission Set中 owner ，可配置 uneditable_related_list
+
+v1.16.5
+
+- apps 添加 methods 获取用户在当前工作区有权限的apps
