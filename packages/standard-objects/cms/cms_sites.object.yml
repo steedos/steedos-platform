@@ -70,6 +70,8 @@ list_views:
     filter_scope: space
     columns:
       - name
+      - visibility
+      - order
 permission_set:
   user:
     allowCreate: false

@@ -81,6 +81,9 @@ list_views:
     filter_scope: space
     columns:
       - name
+      - site
+      - parent
+      - order
 permission_set:
   user:
     allowCreate: false

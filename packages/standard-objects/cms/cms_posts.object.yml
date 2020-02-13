@@ -1,19 +1,8 @@
 name: cms_posts
 icon: task
 label: 文章
+enable_files: true
 fields:
-  site:
-    label: 所属站点
-    type: lookup
-    reference_to: cms_sites
-    required: true
-    sortable: true
-    index: true
-    defaultValue: !!js/function |
-      function () {
-        return Session.get("siteId");
-      }
-    hidden: true
   title:
     label: 标题
     type: text
@@ -22,6 +11,7 @@ fields:
     inlineHelpText: ''
     required: true
     searchable: true
+    is_name: true
     is_wide: true
   summary:
     type: textarea
@@ -47,35 +37,65 @@ fields:
     multiple: true
     omit: true
     is_wide: true
-  attachments:
-    label: 附件
-    type: 'avatar'
-    multiple: true
-    is_wide: true
   # attachments:
   #   label: 附件
-  #   type: '[Object]'
-  #   blackbox: true
+  #   type: 'avatar'
   #   multiple: true
-  # attachments:
-  #   label: 附件
-  #   type: [String]
-  # attachments.$:
-  #   autoform:
+  #   is_wide: true
+  site:
+    label: 所属站点
+    type: lookup
+    reference_to: cms_sites
+    required: true
+    sortable: true
+    index: true
+    defaultValue: !!js/function |
+      function () {
+        return Session.get("siteId");
+      }
   category:
-    label: 栏目
+    label: 所属栏目
     type: lookup
     reference_to: cms_categories
     sortable: true
-    is_wide: true
     defaultValue: !!js/function |
       function () {
         return Session.get("siteCategoryId");
       }
-    # filters: [["enablestate", "eq", "2"]]
-    filtersFunction: !!js/function |
-      function () {
-        return "site eq '" + Session.get("siteId") + "'";
+    # filtersFunction: !!js/function |
+    #   function () {
+    #     return "site eq '" + Session.get("siteId") + "'";
+    #   }
+    depend_on:
+      - site
+    optionsFunction: !!js/function |
+      function (values) {
+        if (!values || !values.site) {
+          return [];
+        }
+        var objectName = "cms_categories";
+        var object = Creator.getObject(objectName);
+        if(!object){
+          console.error("未找到当前对象：" + objectName);
+          return [];
+        }
+        var options, result, companys, queryFilters;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        queryFilters = ["site", "=", values.site];
+        var steedosFilters = require("@steedos/filters");
+        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        options.$filter = odataFilter;
+        companys = Creator.odata.query(objectName, options, true);
+        companys.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
       }
   visibility:
     label: 可见性
@@ -117,7 +137,6 @@ fields:
     type: datetime
     label: 发布日期
     required: true
-    is_wide: true
     defaultValue: !!js/function |
       function () {
         return new Date();
@@ -125,6 +144,7 @@ fields:
   # The post author's name
   tags:
     type: "[text]"
+    hidden: true
     omit: true
   author_name:
     label: 作者
@@ -143,48 +163,59 @@ fields:
   commentCount:
     label: 评论次数
     type: number
+    hidden: true
     omit: true
   commenters:
     label: 评论者
     type: lookup
     reference_to: users
     multiple: true
+    hidden: true
     omit: true
   lastCommentedAt:
     label: 最后评论时间
     type: datetime
+    hidden: true
     omit: true
   clickCount:
     label: 点击次数
     type: number
+    hidden: true
     omit: true
   baseScore:
     type: number
     scale: 2
+    hidden: true
     omit: true
   upvotes:
     type: number
+    hidden: true
     omit: true
   upvoters:
     type: lookup
     reference_to: users
     multiple: true
+    hidden: true
     omit: true
   downvotes:
     type: number
+    hidden: true
     omit: true
   downvoters:
     type: lookup
     reference_to: users
     multiple: true
+    hidden: true
     omit: true
   score:
     type: number
     scale: 2
+    hidden: true
     omit: true
   # The post's status. 
   status:
     type: number
+    hidden: true
     omit: true
   featured:
     type: boolean
@@ -194,16 +225,20 @@ fields:
   # Whether the post is inactive. Inactive posts see their score recalculated less often
   inactive:
     type: boolean
+    hidden: true
     omit: true
   # Save info for later spam checking on a post. We will use this for the akismet package
   userIP:
     type: "text"
+    hidden: true
     omit: true
   userAgent:
     type: "text"
+    hidden: true
     omit: true
   referrer:
     type: "text"
+    hidden: true
     omit: true
 list_views:
   all:
@@ -211,6 +246,9 @@ list_views:
     filter_scope: space
     columns:
       - title
+      - category
+      - site
+      - postDate
 permission_set:
   user:
     allowCreate: true
