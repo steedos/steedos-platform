@@ -227,9 +227,9 @@ if (Meteor.isServer) {
     if (!userId) {
       throw new Meteor.Error(400, "cms_error_login_required");
     }
-    db.cms_reads.remove({
-      post: doc._id
-    });
+    // db.cms_reads.remove({
+    //   post: doc._id
+    // });
     // return db.cms_unreads.remove({
     //   post: doc._id
     // });
