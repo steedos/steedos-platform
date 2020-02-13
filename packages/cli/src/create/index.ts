@@ -70,7 +70,7 @@ async function createProject(retVal){
                 data = data + '\r\n' + 'steedos-config.yml'
                 fs.outputFileSync(gitignorePath, data)
             }else{
-                fs.outputFileSync(gitignorePath, 'steedos-config.yml')
+                fs.outputFileSync(gitignorePath, 'node_modules' + '\r\n' +'steedos-config.yml')
             }
             spinner.succeed()
             // spinner.info(`Please execute the command: cd ${retVal.projectOptions.name} && yarn && yarn start`);
