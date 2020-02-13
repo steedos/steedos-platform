@@ -269,7 +269,6 @@ CMS.helpers =
 
 		if categoryId
 			query.$and.push(category: categoryId)
-		console.log("====query====", query);
 
 		return query
 
