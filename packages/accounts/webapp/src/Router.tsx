@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route } from 'react-router-dom';
 import { CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -65,7 +65,7 @@ const Router = ({tenant}:any) => {
   const classes = useStyles();
 
   return (
-    <BrowserRouter basename="/accounts/a">
+    <HashRouter basename="">
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <Grid className={classes.container} container id="container">
@@ -89,7 +89,7 @@ const Router = ({tenant}:any) => {
           <div className={classes.rootBackgroundFade}></div>
         </div>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
