@@ -54,7 +54,7 @@ const Home = ({ history, settings, tenant }: any) => {
     }
     setUser(data);
     
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf("?")));
     let redirect_uri = searchParams.get("redirect_uri");
     if (redirect_uri){
       if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){

@@ -34,7 +34,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
     res.end();
   } else {
     clearAuthCookies(req, res);
-    res.redirect("/accounts/a/login?" + query);
+    res.redirect("/accounts/a/#/login?" + query);
     res.end();
   }
 };

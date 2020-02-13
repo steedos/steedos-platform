@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   }
 });
 
-const LogInLink = (props: any) => <Link to={{pathname: "/login", search: window.location.search}} {...props} />;
+const LogInLink = (props: any) => <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} />;
 
 interface RouteMatchProps {
   token: string;

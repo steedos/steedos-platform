@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login", search: window.location.search}} {...props} ref={ref} />
+  <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
 ));
 
 const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
@@ -64,7 +64,7 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
     try {
       await accountsPassword.changePassword(oldPassword, newPassword);
       await accountsClient.logout();
-      history.push('/login' + window.location.search);
+      history.push('/login' + window.location.hash.substring(window.location.hash.indexOf("?")));
     } catch (err) {
       if(err.message === 'accounts.invalid_credentials'){
         err.message = 'accounts.updatePassword_invalid_credentials'

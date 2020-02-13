@@ -3,7 +3,7 @@ import { getSettings } from '../selectors';
 
 export function loadTenant() {
     return (dispatch) => {
-        const searchParams = new URLSearchParams(window.location.search);
+        const searchParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf("?")));
         let tenant = searchParams.get("tenant");
         if (!tenant) 
             tenant = localStorage.getItem("spaceId")

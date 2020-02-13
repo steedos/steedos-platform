@@ -24,10 +24,10 @@ const useStyles = makeStyles({
 });
 
 const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/signup", search: window.location.search}} {...props}  ref={ref} />
+  <Link to={{pathname: "/signup", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props}  ref={ref} />
 ));
 const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/reset-password", search: window.location.search}} {...props} ref={ref} />
+  <Link to={{pathname: "/reset-password", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
 ));
 
 const Login = ({ history, settings, tenant }: any) => {
@@ -39,7 +39,7 @@ const Login = ({ history, settings, tenant }: any) => {
   const [error, setError] = useState<string | null>(null);
 
   document.title = "Login | " + tenant.name;
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf("?")));
   let redirect_uri = searchParams.get("redirect_uri");
   const getCookie = (name: string) => {
     let pattern = RegExp(name + "=.[^;]*")
@@ -82,12 +82,12 @@ const Login = ({ history, settings, tenant }: any) => {
       const user = await accountsRest.authFetch( 'user', {});
 
       if(user.password_expired){
-        return history.push('/update-password' + window.location.search, {error: localizeMessage('accounts.passwordExpired')});
+        return history.push('/update-password' + window.location.hash.substring(window.location.hash.indexOf("?")), {error: localizeMessage('accounts.passwordExpired')});
       }
 
       if (tenant.enable_create_tenant && user.spaces.length == 0)
       {
-        return history.push('/create-tenant' + window.location.search);
+        return history.push('/create-tenant' + window.location.hash.substring(window.location.hash.indexOf("?")));
       }
 
       if (redirect_uri){

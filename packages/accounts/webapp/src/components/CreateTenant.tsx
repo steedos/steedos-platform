@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login", search: window.location.search}} {...props} ref={ref} />
+  <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
 ));
 
 const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
@@ -41,7 +41,7 @@ const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
           name: tenantName
         })
       });
-      history.push('/' + window.location.search);
+      history.push('/' + window.location.hash.substring(window.location.hash.indexOf("?")));
     } catch (err) {
       setError(err.message);
     }
