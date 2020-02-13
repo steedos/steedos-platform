@@ -93,22 +93,22 @@ if (Meteor.isServer) {
         }
       });
     }
-    members = CMS.getPostMembers(doc);
-    siteId = doc.site;
-    postId = doc._id;
-    if (members.length) {
-      created = new Date();
-      bulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
-      members.forEach(function(member) {
-        return bulk.insert({
-          user: member,
-          site: siteId,
-          post: postId,
-          created: created
-        });
-      });
-      return bulk.execute();
-    }
+    // members = CMS.getPostMembers(doc);
+    // siteId = doc.site;
+    // postId = doc._id;
+    // if (members.length) {
+    //   created = new Date();
+    //   bulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
+    //   members.forEach(function(member) {
+    //     return bulk.insert({
+    //       user: member,
+    //       site: siteId,
+    //       post: postId,
+    //       created: created
+    //     });
+    //   });
+    //   return bulk.execute();
+    // }
   });
   db.cms_posts.before.update(function(userId, doc, fieldNames, modifier, options) {
     var addBulk, addMembers, atts, created, isMembersChanged, isVisibilityPrivateChanged, newMembers, newMembersOrganizations, newMembersUsers, newVisibilityPrivate, oldMembers, oldMembersOrganizations, oldMembersUsers, oldVisibilityPrivate, postId, ref, ref1, siteId, subBulk, subMembers;
@@ -135,66 +135,66 @@ if (Meteor.isServer) {
     if (modifier.$set.body) {
       modifier.$set.summary = modifier.$set.body.substring(0, 400);
     }
-    oldVisibilityPrivate = doc.visibility === "private";
-    newVisibilityPrivate = modifier.$set.visibility === "private";
-    if (oldVisibilityPrivate !== newVisibilityPrivate) {
-      isVisibilityPrivateChanged = true;
-    }
-    if (!isVisibilityPrivateChanged) {
-      oldMembersOrganizations = (ref = doc.members) != null ? ref.organizations : void 0;
-      oldMembersUsers = (ref1 = doc.members) != null ? ref1.users : void 0;
-      // newMembersOrganizations = modifier.$set["members.organizations"];
-      newMembersOrganizations = modifier.$set["members"] && modifier.$set["members"].organizations;
-      // newMembersUsers = modifier.$set["members.users"];
-      newMembersUsers = modifier.$set["members"] && modifier.$set["members"].users;
-      if ((!newMembersUsers) && (!newMembersOrganizations)) {
-        throw new Meteor.Error(400, "cms_error_required_members_value");
-      }
-      if ((newMembersOrganizations != null ? newMembersOrganizations.length : void 0) !== (oldMembersOrganizations != null ? oldMembersOrganizations.length : void 0)) {
-        isMembersChanged = true;
-      }
-      if (!isMembersChanged && (newMembersUsers != null ? newMembersUsers.length : void 0) !== (oldMembersUsers != null ? oldMembersUsers.length : void 0)) {
-        isMembersChanged = true;
-      }
-      if (!isMembersChanged && (newMembersOrganizations != null ? newMembersOrganizations.sort().join(",") : void 0) !== (oldMembersOrganizations != null ? oldMembersOrganizations.sort().join(",") : void 0)) {
-        isMembersChanged = true;
-      }
-      if (!isMembersChanged && (newMembersUsers != null ? newMembersUsers.sort().join(",") : void 0) !== (oldMembersUsers != null ? oldMembersUsers.sort().join(",") : void 0)) {
-        isMembersChanged = true;
-      }
-    }
-    if (isVisibilityPrivateChanged || isMembersChanged) {
-      oldMembers = CMS.getPostMembers(doc);
-      newMembers = CMS.getPostMembers(modifier.$set, true);
-      addMembers = _.difference(newMembers, oldMembers);
-      subMembers = _.difference(oldMembers, newMembers);
-      siteId = doc.site;
-      postId = doc._id;
-      if (addMembers.length) {
-        created = new Date();
-        addBulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
-        addMembers.forEach(function(member) {
-          return addBulk.insert({
-            user: member,
-            site: siteId,
-            post: postId,
-            created: created
-          });
-        });
-        addBulk.execute();
-      }
-      if (subMembers.length) {
-        created = new Date();
-        subBulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
-        subBulk.find({
-          post: postId,
-          user: {
-            $in: subMembers
-          }
-        }).remove();
-        return subBulk.execute();
-      }
-    }
+    // oldVisibilityPrivate = doc.visibility === "private";
+    // newVisibilityPrivate = modifier.$set.visibility === "private";
+    // if (oldVisibilityPrivate !== newVisibilityPrivate) {
+    //   isVisibilityPrivateChanged = true;
+    // }
+    // if (!isVisibilityPrivateChanged) {
+    //   oldMembersOrganizations = (ref = doc.members) != null ? ref.organizations : void 0;
+    //   oldMembersUsers = (ref1 = doc.members) != null ? ref1.users : void 0;
+    //   // newMembersOrganizations = modifier.$set["members.organizations"];
+    //   newMembersOrganizations = modifier.$set["members"] && modifier.$set["members"].organizations;
+    //   // newMembersUsers = modifier.$set["members.users"];
+    //   newMembersUsers = modifier.$set["members"] && modifier.$set["members"].users;
+    //   if ((!newMembersUsers) && (!newMembersOrganizations)) {
+    //     throw new Meteor.Error(400, "cms_error_required_members_value");
+    //   }
+    //   if ((newMembersOrganizations != null ? newMembersOrganizations.length : void 0) !== (oldMembersOrganizations != null ? oldMembersOrganizations.length : void 0)) {
+    //     isMembersChanged = true;
+    //   }
+    //   if (!isMembersChanged && (newMembersUsers != null ? newMembersUsers.length : void 0) !== (oldMembersUsers != null ? oldMembersUsers.length : void 0)) {
+    //     isMembersChanged = true;
+    //   }
+    //   if (!isMembersChanged && (newMembersOrganizations != null ? newMembersOrganizations.sort().join(",") : void 0) !== (oldMembersOrganizations != null ? oldMembersOrganizations.sort().join(",") : void 0)) {
+    //     isMembersChanged = true;
+    //   }
+    //   if (!isMembersChanged && (newMembersUsers != null ? newMembersUsers.sort().join(",") : void 0) !== (oldMembersUsers != null ? oldMembersUsers.sort().join(",") : void 0)) {
+    //     isMembersChanged = true;
+    //   }
+    // }
+    // if (isVisibilityPrivateChanged || isMembersChanged) {
+    //   oldMembers = CMS.getPostMembers(doc);
+    //   newMembers = CMS.getPostMembers(modifier.$set, true);
+    //   addMembers = _.difference(newMembers, oldMembers);
+    //   subMembers = _.difference(oldMembers, newMembers);
+    //   siteId = doc.site;
+    //   postId = doc._id;
+    //   if (addMembers.length) {
+    //     created = new Date();
+    //     addBulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
+    //     addMembers.forEach(function(member) {
+    //       return addBulk.insert({
+    //         user: member,
+    //         site: siteId,
+    //         post: postId,
+    //         created: created
+    //       });
+    //     });
+    //     addBulk.execute();
+    //   }
+    //   if (subMembers.length) {
+    //     created = new Date();
+    //     subBulk = db.cms_unreads.rawCollection().initializeUnorderedBulkOp();
+    //     subBulk.find({
+    //       post: postId,
+    //       user: {
+    //         $in: subMembers
+    //       }
+    //     }).remove();
+    //     return subBulk.execute();
+    //   }
+    // }
   });
   db.cms_posts.after.update(function(userId, doc, fieldNames, modifier, options) {
     var self;
@@ -230,9 +230,9 @@ if (Meteor.isServer) {
     db.cms_reads.remove({
       post: doc._id
     });
-    return db.cms_unreads.remove({
-      post: doc._id
-    });
+    // return db.cms_unreads.remove({
+    //   post: doc._id
+    // });
   });
 }
 
