@@ -10,7 +10,7 @@ Meteor.startup ()->
 	Tracker.autorun (c)->
 		if Session.get("postId")
 			Steedos.subs["SitePost"].subscribe "cms_post", Session.get("siteId"), Session.get("postId")
-			Steedos.subs["SitePost"].subscribe "cfs_posts", Session.get("postId")
+			# Steedos.subs["SitePost"].subscribe "cfs_posts", Session.get("postId")
 
 Steedos.subs["Sites"] = new SubsManager()
 

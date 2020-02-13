@@ -65,25 +65,25 @@ CMS.helpers =
 			if post?.images?.length>0
 				return post.images[0]
 
-	PostImages: ()->
-		postId = FlowRouter.current().params.postId
-		if postId
-			post = db.cms_posts.findOne({_id: postId})
-			if post?.images?.length>0
-				return cfs.posts.find({_id: {$in: post.images}}).fetch()
+	# PostImages: ()->
+	# 	postId = FlowRouter.current().params.postId
+	# 	if postId
+	# 		post = db.cms_posts.findOne({_id: postId})
+	# 		if post?.images?.length>0
+	# 			return cfs.posts.find({_id: {$in: post.images}}).fetch()
 
-	PostAttachments: ()->
-		postId = FlowRouter.current().params.postId
-		if postId
-			post = db.cms_posts.findOne({_id: postId})
-			if post and post.attachments
-				return cfs.posts.find({_id: {$in: post.attachments}},{sort: {"uploadedAt": -1}}).fetch()
+	# PostAttachments: ()->
+	# 	postId = FlowRouter.current().params.postId
+	# 	if postId
+	# 		post = db.cms_posts.findOne({_id: postId})
+	# 		if post and post.attachments
+	# 			return cfs.posts.find({_id: {$in: post.attachments}},{sort: {"uploadedAt": -1}}).fetch()
 
-	PostAttachmentsCount: ()->
-		postId = FlowRouter.current().params.postId
-		if postId
-			post = db.cms_posts.findOne({_id: postId})
-			return post?.attachments?.length
+	# PostAttachmentsCount: ()->
+	# 	postId = FlowRouter.current().params.postId
+	# 	if postId
+	# 		post = db.cms_posts.findOne({_id: postId})
+	# 		return post?.attachments?.length
 
 	PostAttachmentUrl: (attachment,isPreview)->
 		if Steedos.isNode()

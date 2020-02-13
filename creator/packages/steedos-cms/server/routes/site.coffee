@@ -120,12 +120,12 @@ Template.registerHelper 'Post', ->
 		return db.cms_posts.findOne({_id: postId})
 
 
-Template.registerHelper 'Attachments', ()->
-	postId = Template.instance().data.params.postId
-	if postId
-		post = db.cms_posts.findOne({_id: postId})
-		if post and post.attachments
-			return cfs.posts.find({_id: {$in: post.attachments}},{sort: {"uploadedAt": -1}}).fetch()
+# Template.registerHelper 'Attachments', ()->
+# 	postId = Template.instance().data.params.postId
+# 	if postId
+# 		post = db.cms_posts.findOne({_id: postId})
+# 		if post and post.attachments
+# 			return cfs.posts.find({_id: {$in: post.attachments}},{sort: {"uploadedAt": -1}}).fetch()
 
 Template.registerHelper 'SiteId', ->
 	siteId = Template.instance().data.params.siteId
