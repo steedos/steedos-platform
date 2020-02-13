@@ -81,7 +81,6 @@ Creator.Objects['apps'].methods = {
     safe_apps: function (req, res) {
         return Fiber(function () {
             var userSession = req.user
-            console.log('userSession', userSession);
             var userId = userSession.userId
             var spaceId = userSession.spaceId
             var apps = getUserApps(userId, spaceId);
