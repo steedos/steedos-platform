@@ -54,45 +54,45 @@ if (Meteor.isServer) {
     if (doc.body) {
       doc.summary = doc.body.substring(0, 400);
     }
-    if (doc && doc.attachments) {
-      doc.attachments = _.compact(doc.attachments);
-      atts = cfs.posts.find({
-        _id: {
-          $in: doc.attachments
-        }
-      }).fetch();
-      doc.images = [];
-      return _.each(atts, function(att) {
-        if (att.isImage()) {
-          return doc.images.push(att._id);
-        }
-      });
-    }
+    // if (doc && doc.attachments) {
+    //   doc.attachments = _.compact(doc.attachments);
+    //   atts = cfs.posts.find({
+    //     _id: {
+    //       $in: doc.attachments
+    //     }
+    //   }).fetch();
+    //   doc.images = [];
+    //   return _.each(atts, function(att) {
+    //     if (att.isImage()) {
+    //       return doc.images.push(att._id);
+    //     }
+    //   });
+    // }
   });
   db.cms_posts.after.insert(function(userId, doc) {
-    var bulk, created, members, postId, siteId;
-    if (doc && doc.attachments) {
-      cfs.posts.update({
-        _id: {
-          $in: doc.attachments
-        }
-      }, {
-        $set: {
-          site: doc.site,
-          post: doc._id
-        }
-      }, {
-        multi: true
-      });
-      cfs.posts.remove({
-        post: doc._id,
-        _id: {
-          $not: {
-            $in: doc.attachments
-          }
-        }
-      });
-    }
+    // var bulk, created, members, postId, siteId;
+    // if (doc && doc.attachments) {
+    //   cfs.posts.update({
+    //     _id: {
+    //       $in: doc.attachments
+    //     }
+    //   }, {
+    //     $set: {
+    //       site: doc.site,
+    //       post: doc._id
+    //     }
+    //   }, {
+    //     multi: true
+    //   });
+    //   cfs.posts.remove({
+    //     post: doc._id,
+    //     _id: {
+    //       $not: {
+    //         $in: doc.attachments
+    //       }
+    //     }
+    //   });
+    // }
     // members = CMS.getPostMembers(doc);
     // siteId = doc.site;
     // postId = doc._id;
@@ -118,20 +118,20 @@ if (Meteor.isServer) {
     modifier.$set = modifier.$set || {};
     modifier.$set.modified_by = userId;
     modifier.$set.modified = new Date();
-    if (modifier.$set.attachments) {
-      modifier.$set.attachments = _.compact(modifier.$set.attachments);
-      atts = cfs.posts.find({
-        _id: {
-          $in: modifier.$set.attachments
-        }
-      }).fetch();
-      modifier.$set.images = [];
-      _.each(atts, function(att) {
-        if (att.isImage()) {
-          return modifier.$set.images.push(att._id);
-        }
-      });
-    }
+    // if (modifier.$set.attachments) {
+    //   modifier.$set.attachments = _.compact(modifier.$set.attachments);
+    //   atts = cfs.posts.find({
+    //     _id: {
+    //       $in: modifier.$set.attachments
+    //     }
+    //   }).fetch();
+    //   modifier.$set.images = [];
+    //   _.each(atts, function(att) {
+    //     if (att.isImage()) {
+    //       return modifier.$set.images.push(att._id);
+    //     }
+    //   });
+    // }
     if (modifier.$set.body) {
       modifier.$set.summary = modifier.$set.body.substring(0, 400);
     }
@@ -197,31 +197,31 @@ if (Meteor.isServer) {
     // }
   });
   db.cms_posts.after.update(function(userId, doc, fieldNames, modifier, options) {
-    var self;
-    self = this;
-    modifier.$set = modifier.$set || {};
-    if (modifier.$set && modifier.$set.attachments) {
-      cfs.posts.update({
-        _id: {
-          $in: modifier.$set.attachments
-        }
-      }, {
-        $set: {
-          site: doc.site,
-          post: doc._id
-        }
-      }, {
-        multi: true
-      });
-      return cfs.posts.remove({
-        post: doc._id,
-        _id: {
-          $not: {
-            $in: modifier.$set.attachments
-          }
-        }
-      });
-    }
+    // var self;
+    // self = this;
+    // modifier.$set = modifier.$set || {};
+    // if (modifier.$set && modifier.$set.attachments) {
+    //   cfs.posts.update({
+    //     _id: {
+    //       $in: modifier.$set.attachments
+    //     }
+    //   }, {
+    //     $set: {
+    //       site: doc.site,
+    //       post: doc._id
+    //     }
+    //   }, {
+    //     multi: true
+    //   });
+    //   return cfs.posts.remove({
+    //     post: doc._id,
+    //     _id: {
+    //       $not: {
+    //         $in: modifier.$set.attachments
+    //       }
+    //     }
+    //   });
+    // }
   });
   db.cms_posts.before.remove(function(userId, doc) {
     if (!userId) {
