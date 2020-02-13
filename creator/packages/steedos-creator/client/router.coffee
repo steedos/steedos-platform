@@ -169,13 +169,13 @@ FlowRouter.route '/app/:app_id/instances/grid/all',
 		FlowRouter.go '/workflow'
 		return
 
-FlowRouter.route '/app/:app_id/cms_posts/grid/all',
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		if (app_id != "-")
-			Session.set("app_id", app_id)
-		Session.set("object_name", "cms_posts")
-		FlowRouter.go '/cms'
+# FlowRouter.route '/app/:app_id/cms_posts/grid/all',
+# 	action: (params, queryParams)->
+# 		app_id = FlowRouter.getParam("app_id")
+# 		if (app_id != "-")
+# 			Session.set("app_id", app_id)
+# 		Session.set("object_name", "cms_posts")
+# 		FlowRouter.go '/cms'
 
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
@@ -246,11 +246,11 @@ objectRoutes.route '/view/:record_id',
 		data = {app_id: app_id, object_name: object_name, record_id: record_id}
 		ObjectRecent.insert(object_name, record_id)
 		Session.set("detail_info_visible", true)
-		if object_name == "cms_posts"
-			# 文章有自己单独的详细界面
-			siteId = Session.get("siteId")
-			FlowRouter.go "/cms/s/#{siteId}/p/#{record_id}"
-			return;
+		# if object_name == "cms_posts"
+		# 	# 文章有自己单独的详细界面
+		# 	siteId = Session.get("siteId")
+		# 	FlowRouter.go "/cms/s/#{siteId}/p/#{record_id}"
+		# 	return;
 		if object_name == "users"
 			main = "user"
 		else
