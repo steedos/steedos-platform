@@ -2,6 +2,8 @@ name: cms_posts
 icon: task
 label: 文章
 enable_files: true
+sidebar:
+  template_name: creator_grid_sidebar_sites
 fields:
   title:
     label: 标题
