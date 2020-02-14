@@ -110,6 +110,14 @@
   	"unfollow": "取消关注",
   	"following": "已关注",
 
-	"pending_space_invite_info": "{$inviter} 邀请您加入 {$space}"
+	"pending_space_invite_info": "{$inviter} 邀请您加入 {$space}",
+
+    "cms_sites_visibility": "可见性",
+    "cms_sites_visibility_private": "私有（此站点不公开，只有站点成员可见。）",
+    "cms_sites_visibility_team": "工作区（此工作区的所有用户都可见，但只有站点成员可以编辑。）",
+    "cms_sites_visibility_public": "公开（发布到互联网，所有人都可见，但只有站点成员可以编辑。）",
+    "cms_posts_visibility": "可见性",
+    "cms_posts_visibility_private": "私有（文章作者及发布对象可见，且只有作者或站点成员可以编辑。）",
+    "cms_posts_visibility_space": "工作区（此工作区的所有用户都可见，但只有作者或站点成员可以编辑。）"
 
 }

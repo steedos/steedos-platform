@@ -108,5 +108,14 @@
 	"unfollow": "Unfollow",
 	"following": "Following",
 
-	"pending_space_invite_info": "{$inviter} invite you to join {$space}"
+	"pending_space_invite_info": "{$inviter} invite you to join {$space}",
+
+    "cms_sites_visibility": "Visibility",
+    "cms_sites_visibility_private": "Private(Only the site's collaborators and owner can see.)",
+    "cms_sites_visibility_team": "Team(All users in the space can see.)",
+    "cms_sites_visibility_public": "Public(Will publish to the internet and everyone can see.)",
+    "cms_posts_visibility": "Visibility",
+    "cms_posts_visibility_private": "Private(Only the post's author and published members can see and only the site's collaborators can edit it.)",
+    "cms_posts_visibility_space": "Space(All users in the space can see, but only the site's collaborators can edit it)"
+
 }

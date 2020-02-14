@@ -42,6 +42,9 @@ Package.onUse(function (api) {
 	api.use('steedos:bootstrap3-datetimepicker@4.17.47');
 	api.use('steedos:autoform-bs-minicolors@1.0.0');
 
+	api.use('summernote:summernote@0.8.1');
+	api.use('mpowaga:autoform-summernote@0.4.3');
+
 	api.use('meteorhacks:ssr@2.2.0');
 	api.use('meteorhacks:subs-manager@1.6.4');
 

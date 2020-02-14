@@ -64,6 +64,9 @@ steedos:autoform-dx-date-box
 
 vazco:universe-autoform-select
 
+summernote:summernote@0.8.1
+mpowaga:autoform-summernote@0.4.4
+
 steedos:devexpress
 
 gwendall:simple-schema-i18n
@@ -204,4 +207,5 @@ steedos:slipjs
 react-template-helper
 
 steedos:webkit-notification
-steedos:cms
+# steedos:cms
+
