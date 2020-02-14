@@ -247,7 +247,9 @@ list_views:
     filter_scope: space
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
-        var isAdmin = Steedos.isSpaceAdmin();/* or CMS.helpers.isSiteOwner(siteId)*/
+        var gridSidebarSelected = Session.get("grid_sidebar_selected");
+        var isSiteAdmin = gridSidebarSelected && gridSidebarSelected.is_site_admin;
+        var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
         var organizations = Steedos.getUserOrganizations(true);
         if(!isAdmin){
           return [
