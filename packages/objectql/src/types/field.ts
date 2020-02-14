@@ -175,6 +175,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             case 'textarea':
                 this._fieldDBType = SteedosFieldDBType.text
                 break;
+            case 'html':
+                this._fieldDBType = SteedosFieldDBType.text
+                break;
             case 'select':
                 if(this.multiple){
                     this._fieldDBType = SteedosFieldDBType.array

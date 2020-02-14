@@ -26,9 +26,8 @@ fields:
     is_wide: true
     omit: true
   htmlBody:
-    type: textarea
+    type: html
     label: 正文
-    rows: 5
     required: true
     is_wide: true
   image:
