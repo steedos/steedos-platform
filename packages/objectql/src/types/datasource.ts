@@ -56,6 +56,7 @@ export type SteedosDataSourceTypeConfig = {
     objectFiles?: string[]
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
     getRoles?: Function //TODO 尚未开放此功能
+    enable_space?: boolean
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -86,6 +87,11 @@ export class SteedosDataSourceType implements Dictionary {
     private _logging: boolean | Array<any>;
     private _graphQLSchema: GraphQLSchema;
     private _config: SteedosDataSourceTypeConfig;
+    private _enable_space: boolean;
+    public get enable_space(): boolean {
+        return this._enable_space;
+    }
+
     public get config(): SteedosDataSourceTypeConfig {
         return this._config;
     }
@@ -190,6 +196,16 @@ export class SteedosDataSourceType implements Dictionary {
         this._schema = schema
         this._driver = config.driver
         this._logging = config.logging
+
+        if(_.has(config, 'enable_space')){
+            this._enable_space = config.enable_space
+        }else{
+            if(this._driver == SteedosDatabaseDriverType.MeteorMongo || this._driver == SteedosDatabaseDriverType.Mongo){
+                this._enable_space = true
+            }else{
+                this._enable_space = false
+            }
+        }
 
         this.initDriver();
 

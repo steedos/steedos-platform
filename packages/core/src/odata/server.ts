@@ -1,6 +1,6 @@
 import { getFromContainer } from "../container";
 import { ODataManager } from "./ODataManager";
-import { SteedosDatabaseDriverType, getSteedosSchema } from "@steedos/objectql";
+import { getSteedosSchema } from "@steedos/objectql";
 import { oDataExpressMiddleware } from "./ODataExpressMiddleware";
 import { meteorODataExpressMiddleware } from './MeteorODataExpressMiddleware';
 
@@ -70,6 +70,5 @@ function _isMeteorDriver(req) {
    let urlParams = req.params;
    let key = urlParams.objectName;
    let collection = getSteedosSchema().getObject(key);
-   let driveName = collection.datasource.driver;
-   return (driveName == SteedosDatabaseDriverType.MeteorMongo || driveName == SteedosDatabaseDriverType.Mongo);
+   return collection.datasource.enable_space;
 }
