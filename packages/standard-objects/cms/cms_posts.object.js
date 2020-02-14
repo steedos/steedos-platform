@@ -135,6 +135,13 @@ if (Meteor.isServer) {
     if (modifier.$set.body) {
       modifier.$set.summary = modifier.$set.body.substring(0, 400);
     }
+    // newMembersOrganizations = modifier.$set["members.organizations"];
+    newMembersOrganizations = modifier.$set["members"] && modifier.$set["members"].organizations;
+    // newMembersUsers = modifier.$set["members.users"];
+    newMembersUsers = modifier.$set["members"] && modifier.$set["members"].users;
+    if ((!newMembersUsers) && (!newMembersOrganizations)) {
+      throw new Meteor.Error(400, "cms_error_required_members_value");
+    }
     // oldVisibilityPrivate = doc.visibility === "private";
     // newVisibilityPrivate = modifier.$set.visibility === "private";
     // if (oldVisibilityPrivate !== newVisibilityPrivate) {
