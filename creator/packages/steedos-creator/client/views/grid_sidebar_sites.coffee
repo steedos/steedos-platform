@@ -23,23 +23,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
 		if spaceId and userId
-			isSpaceAdmin = Creator.isSpaceAdmin()
-			user_permission_sets = Session.get("user_permission_sets")
-			userCompanyOrganizationId = Steedos.getUserCompanyOrganizationId()
-			isOrganizationAdmin = _.include(user_permission_sets,"organization_admin")
-			unless isSpaceAdmin
-				# 如果不是工作区管理员左侧选中组织需要有默认值userCompanyOrganizationId
-				selectedKeys = null
-				if isOrganizationAdmin and userCompanyOrganizationId
-					selectedKeys = [userCompanyOrganizationId]
-				Session.set "grid_sidebar_selected", selectedKeys
-				if selectedKeys and selectedKeys.length
-					setGridSidebarFilters(selectedKeys)
-				else
-					# 没有权限时，应该看不到右侧列表相关数据
-					setGridSidebarFilters([-1])
-				if isOrganizationAdmin and !userCompanyOrganizationId
-					toastr.error("您的单位信息未设置，请联系系统管理员。");
+			# 默认不显示右侧数据，只有选中站点后才显示
+			setGridSidebarFilters([-1])
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
 				searchEnabled: false
@@ -54,14 +39,15 @@ Template.creator_grid_sidebar_sites.onRendered ->
 							loadOptions.select = ["name"]
 						onLoaded: (results)->
 							if results and _.isArray(results)
-								_.each results, (item)->
+								_.each results, (item, index)->
+									if index == 0
+										# 默认选中第一个站点，并按第一个站点过滤文章
+										item.selected = true
+										setGridSidebarFilters([item._id])
 									# 判断是否有下级节点
 									item.hasItems = false
 									if item.children?.length > 0
 										item.hasItems = true
-									# 根节点自动展开
-									if !item.parent
-										item.expanded = true
 						beforeSend: (request) ->
 							request.headers['X-User-Id'] = userId
 							request.headers['X-Space-Id'] = spaceId
@@ -95,23 +81,12 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				selectedKeys = selectionInfo.component.getSelectedNodesKeys()
-				if isSpaceAdmin or (selectedKeys and selectedKeys.length)
+				if selectedKeys and selectedKeys.length
 					Session.set "grid_sidebar_selected", selectedKeys
 					setGridSidebarFilters(selectedKeys)
 				else
-					# 如果不是工作区管理员，清空选项时，左侧选中组织需要有默认值userCompanyOrganizationId
-					selectedKeys = null
-					if isOrganizationAdmin and userCompanyOrganizationId
-						selectedKeys = [userCompanyOrganizationId]
-					Session.set "grid_sidebar_selected", selectedKeys
-					if selectedKeys and selectedKeys.length
-						setGridSidebarFilters(selectedKeys)
-					else
-						# 没有权限时，应该看不到右侧列表相关数据
-						setGridSidebarFilters([-1])
-				
-				if isOrganizationAdmin and !userCompanyOrganizationId
-					toastr.error("您的单位信息未设置，请联系系统管理员。");
+					# 未设置站点时应该看不到右侧列表相关数据
+					setGridSidebarFilters([-1])
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
@@ -120,15 +95,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.rootValue = null
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
-			
-			unless isSpaceAdmin
-				if isOrganizationAdmin
-					if userCompanyOrganizationId
-						dxOptions.rootValue = userCompanyOrganizationId
-					else
-						dxOptions.rootValue = "-1"
-				else
-					dxOptions.rootValue = "-1"
+			# dxOptions.onInitialized = ()->
+			# dxOptions.onContentReady = ()->
 
 			self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
 			
