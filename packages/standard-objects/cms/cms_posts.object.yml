@@ -245,6 +245,20 @@ list_views:
   all:
     label: 所有
     filter_scope: space
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var isAdmin = Steedos.isSpaceAdmin();/* or CMS.helpers.isSiteOwner(siteId)*/
+        var organizations = Steedos.getUserOrganizations(true);
+        if(!isAdmin){
+          return [
+            ["owner","=","{userId}"],
+            "or",
+            ["members.organizations","=",organizations],
+            "or",
+            ["members.users","=","{userId}"]
+          ];
+        }
+      }
     columns:
       - title
       - category
