@@ -1,14 +1,7 @@
-setGridSidebarFilters = (selectedKeys)->
-	if selectedKeys and selectedKeys.length
+setGridSidebarFilters = (selectedItem)->
+	if selectedItem and selectedItem.site_id
 		sidebar_filter_key = "site"
-		if selectedKeys.length == 1
-			sidebarFilter = [ sidebar_filter_key, "=", selectedKeys[0] ]
-		else if selectedKeys.length > 1
-			sidebarFilter = []
-			selectedKeys.forEach (value_item)->
-				sidebarFilter.push [ sidebar_filter_key, "=", value_item ]
-				sidebarFilter.push "or"
-			sidebarFilter.pop()
+		sidebarFilter = [ sidebar_filter_key, "=", selectedItem.site_id ]
 		Session.set "grid_sidebar_filters", sidebarFilter
 	else
 		Session.set "grid_sidebar_filters", null
@@ -24,7 +17,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 		loginToken = Accounts._storedLoginToken()
 		if spaceId and userId
 			# 默认不显示右侧数据，只有选中站点后才显示
-			setGridSidebarFilters([-1])
+			setGridSidebarFilters({site_id: -1})
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
 				searchEnabled: false
@@ -36,14 +29,19 @@ Template.creator_grid_sidebar_sites.onRendered ->
 						withCredentials: false
 						onLoading: (loadOptions)->
 							# loadOptions.select = ["name", "parent", "children"]
-							loadOptions.select = ["name"]
+							loadOptions.select = ["name", "admins"]
 						onLoaded: (results)->
 							if results and _.isArray(results)
 								_.each results, (item, index)->
 									if index == 0
 										# 默认选中第一个站点，并按第一个站点过滤文章
 										item.selected = true
-										setGridSidebarFilters([item._id])
+										selectedItem = {
+											site_id: item._id,
+											is_site_admin: item?.admins.indexOf(userId) > -1
+										}
+										Session.set "grid_sidebar_selected", selectedItem
+										setGridSidebarFilters(selectedItem)
 									# 判断是否有下级节点
 									item.hasItems = false
 									if item.children?.length > 0
@@ -80,13 +78,18 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				selectedKeys = selectionInfo.component.getSelectedNodesKeys()
-				if selectedKeys and selectedKeys.length
-					Session.set "grid_sidebar_selected", selectedKeys
-					setGridSidebarFilters(selectedKeys)
+				debugger;
+				selectionItemData = selectionInfo.itemData;
+				if selectionItemData?._id
+					selectedItem = {
+						site_id: selectionItemData._id,
+						is_site_admin: selectionItemData?.admins.indexOf(userId) > -1
+					}
+					Session.set "grid_sidebar_selected", selectedItem
+					setGridSidebarFilters(selectedItem)
 				else
 					# 未设置站点时应该看不到右侧列表相关数据
-					setGridSidebarFilters([-1])
+					setGridSidebarFilters({site_id: -1})
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
