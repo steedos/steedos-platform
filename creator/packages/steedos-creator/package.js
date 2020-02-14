@@ -230,6 +230,9 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/grid_sidebar_organizations.html', 'client');
 	api.addFiles('client/views/grid_sidebar_organizations.coffee', 'client');
 	api.addFiles('client/views/grid_sidebar_organizations.less', 'client');
+	api.addFiles('client/views/grid_sidebar_sites.html', 'client');
+	api.addFiles('client/views/grid_sidebar_sites.coffee', 'client');
+	api.addFiles('client/views/grid_sidebar_sites.less', 'client');
 
 	api.addFiles('client/views/filter_logic.html', 'client');
 	api.addFiles('client/views/filter_logic.coffee', 'client');
