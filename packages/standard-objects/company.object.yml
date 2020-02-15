@@ -2,7 +2,6 @@ name: company
 label: 单位
 icon: account
 enable_api: true
-enable_chatter: true
 fields:
   name:
     label: 公司名称
