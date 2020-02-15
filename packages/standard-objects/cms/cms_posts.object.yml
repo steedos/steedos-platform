@@ -22,10 +22,11 @@ fields:
     is_wide: true
     omit: true
   body:
-    type: textarea
+    type: markdown
     label: 正文
     rows: 5
     is_wide: true
+    hidden: true
     omit: true
   htmlBody:
     type: html
@@ -36,6 +37,7 @@ fields:
     label: 照片
     type: avatar
     multiple: true
+    hidden: true
     omit: true
     is_wide: true
   # attachments:
