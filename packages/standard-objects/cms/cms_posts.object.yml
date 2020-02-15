@@ -149,16 +149,16 @@ fields:
     type: "[text]"
     hidden: true
     omit: true
-  author_name:
-    label: 作者
-    type: "text"
-    omit: true
-  author:
-    label: 作者
-    type: lookup
-    reference_to: users
-    index: true
-    omit: true
+  # author_name:
+  #   label: 作者
+  #   type: "text"
+  #   omit: true
+  # author:
+  #   label: 作者
+  #   type: lookup
+  #   reference_to: users
+  #   index: true
+  #   omit: true
   viewCount:
     label: 阅读次数
     type: number

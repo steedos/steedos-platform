@@ -44,13 +44,13 @@ if (Meteor.isServer) {
       doc.postDate = new Date();
     }
     doc.status = db.cms_posts.config.STATUS_APPROVED;
-    doc.author = userId;
-    user = db.users.findOne({
-      _id: userId
-    });
-    if (user) {
-      doc.author_name = user.name;
-    }
+    // doc.author = userId;
+    // user = db.users.findOne({
+    //   _id: userId
+    // });
+    // if (user) {
+    //   doc.author_name = user.name;
+    // }
     if (doc.body) {
       doc.summary = doc.body.substring(0, 400);
     }
