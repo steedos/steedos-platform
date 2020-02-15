@@ -196,14 +196,14 @@ renderSite = (req, res, next) ->
 		layout = Assets.getText('themes/default.html')
 	SSR.compileTemplate('site_theme_' + site.theme, layout);
 
-	postId = req.params.postId
-	if postId
-		isPostIncSuc = db.cms_posts.direct.update {
-			_id: postId
-		}, $inc:
-			viewCount: 1
-		unless isPostIncSuc
-			console.error "addPostViewer while previewing site post Failed. cms_posts.update.$inc ...#{postId}"
+	# postId = req.params.postId
+	# if postId
+	# 	isPostIncSuc = db.cms_posts.direct.update {
+	# 		_id: postId
+	# 	}, $inc:
+	# 		viewCount: 1
+	# 	unless isPostIncSuc
+	# 		console.error "addPostViewer while previewing site post Failed. cms_posts.update.$inc ...#{postId}"
 
 	html = SSR.render templateName, 
 		params: req.params

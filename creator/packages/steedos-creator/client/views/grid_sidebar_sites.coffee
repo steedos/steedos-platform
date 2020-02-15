@@ -79,7 +79,6 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				debugger;
 				selectionItemData = selectionInfo.itemData;
 				if selectionItemData?._id
 					selectedItem = {
