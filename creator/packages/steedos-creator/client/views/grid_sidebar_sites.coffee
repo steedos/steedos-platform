@@ -29,7 +29,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 						withCredentials: false
 						onLoading: (loadOptions)->
 							# loadOptions.select = ["name", "parent", "children"]
-							loadOptions.select = ["name", "admins"]
+							loadOptions.select = ["name", "admins", "visibility"]
 						onLoaded: (results)->
 							if results and _.isArray(results)
 								_.each results, (item, index)->
@@ -38,7 +38,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 										item.selected = true
 										selectedItem = {
 											site_id: item._id,
-											is_site_admin: item?.admins.indexOf(userId) > -1
+											is_site_admin: item?.admins.indexOf(userId) > -1,
+											is_site_public: item?.visibility == "public"
 										}
 										Session.set "grid_sidebar_selected", selectedItem
 										setGridSidebarFilters(selectedItem)
@@ -83,7 +84,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 				if selectionItemData?._id
 					selectedItem = {
 						site_id: selectionItemData._id,
-						is_site_admin: selectionItemData?.admins.indexOf(userId) > -1
+						is_site_admin: selectionItemData?.admins.indexOf(userId) > -1,
+						is_site_public: selectionItemData?.visibility == "public"
 					}
 					Session.set "grid_sidebar_selected", selectedItem
 					setGridSidebarFilters(selectedItem)
