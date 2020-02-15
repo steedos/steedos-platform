@@ -33,12 +33,12 @@ fields:
     label: 正文
     required: true
     is_wide: true
-  image:
+  images:
     label: 照片
     type: avatar
     multiple: true
-    hidden: true
-    omit: true
+    hidden: false
+    omit: false
     is_wide: true
   # attachments:
   #   label: 附件
