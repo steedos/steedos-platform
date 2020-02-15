@@ -17,11 +17,13 @@ Meteor.autorun(function(){
         todo: function (object_name, record_id, fields) {
           var gridSidebarSelected = Session.get("grid_sidebar_selected");
           if(!gridSidebarSelected){
-            toastr.warning("请先在左侧列表选中一个站点！")
+            toastr.warning("请先在左侧列表选中一个站点！");
+            return;
           }
           var isSitePublic = gridSidebarSelected.is_site_public;
           if(!isSitePublic){
-            toastr.warning("该站点未公开发布到互联网")
+            toastr.warning("该站点未公开发布到互联网");
+            return;
           }
           var siteId = gridSidebarSelected.site_id;
           // site/awqTrDfQt3uQtGtKi
@@ -35,20 +37,42 @@ Meteor.autorun(function(){
         label: "预览",
         visible: function (object_name, record_id, record_permissions) {
           var gridSidebarSelected = Session.get("grid_sidebar_selected");
-          var isSitePublic = gridSidebarSelected && gridSidebarSelected.is_site_public;
+          var isSitePublic = false;
+          if(gridSidebarSelected){
+            // 在列表界面可以直接从左侧拿到当前选中站点
+            isSitePublic = gridSidebarSelected && gridSidebarSelected.is_site_public;
+          }
+          else{
+            //否则需要请求文章所属站点是否为Public
+            var record = Creator.getObjectRecord();
+            if(record && record.site){
+              var siteId = typeof record.site === "string" ? record.site : record.site._id;
+              var site = Creator.odata.get("cms_sites", siteId, "visibility");
+              isSitePublic = site ? site.visibility === "public" : false;
+            }
+          }
           return isSitePublic;
         },
         on: "record",
         todo: function (object_name, record_id, fields) {
           var gridSidebarSelected = Session.get("grid_sidebar_selected");
-          if(!gridSidebarSelected){
-            toastr.warning("请先在左侧列表选中一个站点！")
+          var siteId;
+          if(gridSidebarSelected){
+            // 在列表界面可以直接从左侧拿到当前选中站点
+            var isSitePublic = gridSidebarSelected.is_site_public;
+            if(!isSitePublic){
+              toastr.warning("该站点未公开发布到互联网");
+              return;
+            }
+            siteId = gridSidebarSelected.site_id;
           }
-          var isSitePublic = gridSidebarSelected.is_site_public;
-          if(!isSitePublic){
-            toastr.warning("该站点未公开发布到互联网")
+          if(!siteId){
+            //否则需要从详细记录中取出所属站点Id
+            var record = Creator.getObjectRecord();
+            if(record && record.site){
+              siteId = typeof record.site === "string" ? record.site : record.site._id;
+            }
           }
-          var siteId = gridSidebarSelected.site_id;
           // site/awqTrDfQt3uQtGtKi/p/BjSLK6TTpX49bsQ7r
           var url = '/site/' + siteId + '/p/' + record_id;
           url = Steedos.absoluteUrl(url);
