@@ -292,6 +292,9 @@ Template.creator_table_cell.helpers
 			else if _field.type == "markdown"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(marked(val))
+			else if _field.type == "html"
+				if !_.isEmpty(val)
+					val = Spacebars.SafeString(val)
 
 			if this.parent_view != 'record_details' && this.field_name == this_name_field_key
 				href = Creator.getObjectUrl(this.object_name, this._id)
