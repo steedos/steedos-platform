@@ -62,8 +62,6 @@ fields:
     type: textarea
     rows: 10
     is_wide: true
-    omit: true
-    hidden: true
 list_views:
   all:
     label: 所有

@@ -2,10 +2,11 @@ name: cms_posts
 icon: task
 label: 文章
 enable_files: true
+enable_chatter: true
 sidebar:
   template_name: creator_grid_sidebar_sites
 fields:
-  title:
+  name:
     label: 标题
     type: text
     defaultValue: ''
@@ -13,7 +14,6 @@ fields:
     inlineHelpText: ''
     required: true
     searchable: true
-    is_name: true
     is_wide: true
   summary:
     type: textarea
@@ -98,26 +98,26 @@ fields:
         });
         return result;
       }
-  visibility:
-    label: 可见性
-    type: lookup
-    hidden: true
-    defaultValue: "private"
-    is_wide: true
-    optionsFunction: !!js/function |
-      function(){
-        var visibilitys = [
-          {label: t("cms_posts_visibility_private"), value: "private"},
-          {label: t("cms_posts_visibility_space"), value: "space"},
-          /*{label: t("cms_posts_visibility_public"), value: "public"}*/
-        ];
-        if(Steedos && Steedos.isSpaceAdmin()){
-          return visibilitys;
-        }
-        else{
-          return visibilitys[0];
-        }
-      }
+  # visibility:
+  #   label: 可见性
+  #   type: lookup
+  #   hidden: true
+  #   defaultValue: "private"
+  #   is_wide: true
+  #   optionsFunction: !!js/function |
+  #     function(){
+  #       var visibilitys = [
+  #         {label: t("cms_posts_visibility_private"), value: "private"},
+  #         {label: t("cms_posts_visibility_space"), value: "space"},
+  #         /*{label: t("cms_posts_visibility_public"), value: "public"}*/
+  #       ];
+  #       if(Steedos && Steedos.isSpaceAdmin()){
+  #         return visibilitys;
+  #       }
+  #       else{
+  #         return visibilitys[0];
+  #       }
+  #     }
   members:
     type: object
     label: 授权对象
@@ -157,32 +157,32 @@ fields:
     reference_to: users
     index: true
     omit: true
-  viewCount:
-    label: 阅读次数
-    type: number
-    omit: true
-  commentCount:
-    label: 评论次数
-    type: number
-    hidden: true
-    omit: true
-  commenters:
-    label: 评论者
-    type: lookup
-    reference_to: users
-    multiple: true
-    hidden: true
-    omit: true
-  lastCommentedAt:
-    label: 最后评论时间
-    type: datetime
-    hidden: true
-    omit: true
-  clickCount:
-    label: 点击次数
-    type: number
-    hidden: true
-    omit: true
+  # viewCount:
+  #   label: 阅读次数
+  #   type: number
+  #   omit: true
+  # commentCount:
+  #   label: 评论次数
+  #   type: number
+  #   hidden: true
+  #   omit: true
+  # commenters:
+  #   label: 评论者
+  #   type: lookup
+  #   reference_to: users
+  #   multiple: true
+  #   hidden: true
+  #   omit: true
+  # lastCommentedAt:
+  #   label: 最后评论时间
+  #   type: datetime
+  #   hidden: true
+  #   omit: true
+  # clickCount:
+  #   label: 点击次数
+  #   type: number
+  #   hidden: true
+  #   omit: true
   baseScore:
     type: number
     scale: 2
@@ -262,7 +262,7 @@ list_views:
         }
       }
     columns:
-      - title
+      - name
       - category
       - site
       - postDate
