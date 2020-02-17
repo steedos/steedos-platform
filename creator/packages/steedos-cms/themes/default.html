@@ -273,8 +273,8 @@
 											</div>
 										</a>
 										<div class="post-images ">
-											{{#each images}}
-												<a href="/api/files/posts/{{this}}" class="swipebox" style="background-image: url('/api/files/posts/{{this}}')">
+											{{#each images _id}}
+												<a href="/api/files/files/{{this}}" class="swipebox" style="background-image: url('/api/files/files/{{this}}')">
 												</a>
 											{{/each}} 
 										</div>
@@ -318,8 +318,8 @@
 											</div>
 										</a>
 										<div class="post-images ">
-											{{#each images}}
-												<a href="/api/files/posts/{{this}}" class="swipebox" style="background-image: url('/api/files/posts/{{this}}')">
+											{{#each images _id}}
+												<a href="/api/files/files/{{this}}" class="swipebox" style="background-image: url('/api/files/files/{{this}}')">
 												</a>
 											{{/each}} 
 										</div>

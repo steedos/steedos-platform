@@ -99,7 +99,7 @@ Template.registerHelpers
 			return Spacebars.SafeString(text)
 
 	PostAttachmentUrl: (attachment,isPreview)-> 
-		url = Meteor.absoluteUrl("api/files/posts/#{attachment._id}/#{attachment.original.name}")
+		url = Meteor.absoluteUrl("api/files/files/#{attachment._id}/#{attachment.original.name}")
 		if !(typeof isPreview == "boolean" and isPreview) and !Steedos.isMobile()
 			url += "?download=true"
 		return url
@@ -120,12 +120,25 @@ Template.registerHelper 'Post', ->
 		return db.cms_posts.findOne({_id: postId})
 
 
-# Template.registerHelper 'Attachments', ()->
-# 	postId = Template.instance().data.params.postId
-# 	if postId
-# 		post = db.cms_posts.findOne({_id: postId})
-# 		if post and post.attachments
-# 			return cfs.posts.find({_id: {$in: post.attachments}},{sort: {"uploadedAt": -1}}).fetch()
+Template.registerHelper 'images', (postId)->
+	if postId
+		postAttachments = Creator.getCollection("cms_files").find({'parent.o': 'cms_posts', 'parent.ids': postId}, {fields: {_id:1, versions: 1}}).fetch();
+		fileIds = []
+		postAttachments.forEach (att)->
+			if att?.versions.length > 0
+				fileIds.push(att.versions[0])
+		return _.pluck(cfs.files.find({_id: {$in: fileIds}, "original.type": /image\//},{sort: {"uploadedAt": -1}}).fetch(), '_id')
+
+Template.registerHelper 'Attachments', ()->
+	postId = Template.instance().data.params.postId
+	if postId
+		postAttachments = Creator.getCollection("cms_files").find({'parent.o': 'cms_posts', 'parent.ids': postId}, {fields: {_id:1, versions: 1}}).fetch();
+		fileIds = []
+		postAttachments.forEach (att)->
+			if att?.versions.length > 0
+				fileIds.push(att.versions[0])
+
+		return cfs.files.find({_id: {$in: fileIds}},{sort: {"uploadedAt": -1}}).fetch()
 
 Template.registerHelper 'SiteId', ->
 	siteId = Template.instance().data.params.siteId
