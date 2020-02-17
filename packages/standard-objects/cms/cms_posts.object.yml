@@ -271,8 +271,7 @@ list_views:
       - category
       - site
       - postDate
-      - field: created 
-        hidden: true
+      - created
     sort:
       - - created
         - desc
