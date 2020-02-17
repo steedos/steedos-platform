@@ -65,76 +65,76 @@ Package.onUse(function(api) {
     tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
     api.addFiles(tapi18nFiles, ['client', 'server']);
 
-    api.addFiles('lib/core.coffee');
-    api.addFiles('lib/modals/categories.coffee');
-    api.addFiles('lib/modals/cfs_posts.coffee');
-    api.addFiles('lib/modals/comments.coffee');
-    api.addFiles('lib/modals/pages.coffee');
-    api.addFiles('lib/modals/posts.coffee');
-    api.addFiles('lib/modals/sites.coffee');
-    api.addFiles('lib/modals/tags.coffee');
-    api.addFiles('lib/modals/themes.coffee');
-    api.addFiles('lib/modals/reads.coffee');
-    api.addFiles('lib/modals/unreads.coffee');
-    api.addFiles('lib/admin.coffee');
-    api.addFiles('lib/tabular.coffee');
+    // api.addFiles('lib/core.coffee');
+    // api.addFiles('lib/modals/categories.coffee');
+    // api.addFiles('lib/modals/cfs_posts.coffee');
+    // api.addFiles('lib/modals/comments.coffee');
+    // api.addFiles('lib/modals/pages.coffee');
+    // api.addFiles('lib/modals/posts.coffee');
+    // api.addFiles('lib/modals/sites.coffee');
+    // api.addFiles('lib/modals/tags.coffee');
+    // api.addFiles('lib/modals/themes.coffee');
+    // api.addFiles('lib/modals/reads.coffee');
+    // api.addFiles('lib/modals/unreads.coffee');
+    // api.addFiles('lib/admin.coffee');
+    // api.addFiles('lib/tabular.coffee');
 
-    api.addFiles('client/views/_helpers.coffee', 'client');
+    // api.addFiles('client/views/_helpers.coffee', 'client');
 
-    api.addFiles('client/layout/master.html', 'client');
-    api.addFiles('client/layout/master.coffee', 'client');
-    api.addFiles('client/layout/master.less', 'client');
-    api.addFiles('client/layout/sidebar.html', 'client');
-    api.addFiles('client/layout/sidebar.coffee', 'client');
-    api.addFiles('client/layout/sidebar.less', 'client');
+    // api.addFiles('client/layout/master.html', 'client');
+    // api.addFiles('client/layout/master.coffee', 'client');
+    // api.addFiles('client/layout/master.less', 'client');
+    // api.addFiles('client/layout/sidebar.html', 'client');
+    // api.addFiles('client/layout/sidebar.coffee', 'client');
+    // api.addFiles('client/layout/sidebar.less', 'client');
 
-    api.addFiles('client/views/home_mobile.html', 'client');
-    api.addFiles('client/views/home_mobile.coffee', 'client');
-    api.addFiles('client/views/home_mobile.less', 'client');
-    api.addFiles('client/views/home_post_list.html', 'client');
-    api.addFiles('client/views/home_post_list.coffee', 'client');
-    api.addFiles('client/views/home.html', 'client');
-    api.addFiles('client/views/home.coffee', 'client');
-    api.addFiles('client/views/home.less', 'client');
-    api.addFiles('client/views/site_tagged.html', 'client');
-    api.addFiles('client/views/site_tagged.coffee', 'client');
-    api.addFiles('client/views/main.html', 'client');
-    api.addFiles('client/views/main.coffee', 'client');
-    api.addFiles('client/views/main.less', 'client');
-    api.addFiles('client/views/list/post_list.html', 'client');
-    api.addFiles('client/views/list/post_list.coffee', 'client');
-    api.addFiles('client/views/list/post_list.less', 'client');
-    api.addFiles('client/views/post/post_buttons.html', 'client');
-    api.addFiles('client/views/post/post_buttons.coffee', 'client');
-    api.addFiles('client/views/post/post_detail.html', 'client');
-    api.addFiles('client/views/post/post_detail.coffee', 'client');
-    api.addFiles('client/views/post/post_detail.less', 'client');
+    // api.addFiles('client/views/home_mobile.html', 'client');
+    // api.addFiles('client/views/home_mobile.coffee', 'client');
+    // api.addFiles('client/views/home_mobile.less', 'client');
+    // api.addFiles('client/views/home_post_list.html', 'client');
+    // api.addFiles('client/views/home_post_list.coffee', 'client');
+    // api.addFiles('client/views/home.html', 'client');
+    // api.addFiles('client/views/home.coffee', 'client');
+    // api.addFiles('client/views/home.less', 'client');
+    // api.addFiles('client/views/site_tagged.html', 'client');
+    // api.addFiles('client/views/site_tagged.coffee', 'client');
+    // api.addFiles('client/views/main.html', 'client');
+    // api.addFiles('client/views/main.coffee', 'client');
+    // api.addFiles('client/views/main.less', 'client');
+    // api.addFiles('client/views/list/post_list.html', 'client');
+    // api.addFiles('client/views/list/post_list.coffee', 'client');
+    // api.addFiles('client/views/list/post_list.less', 'client');
+    // api.addFiles('client/views/post/post_buttons.html', 'client');
+    // api.addFiles('client/views/post/post_buttons.coffee', 'client');
+    // api.addFiles('client/views/post/post_detail.html', 'client');
+    // api.addFiles('client/views/post/post_detail.coffee', 'client');
+    // api.addFiles('client/views/post/post_detail.less', 'client');
 
-    api.addFiles('client/router.coffee', 'client');
-    api.addFiles('client/subscribe.coffee', 'client');
+    // api.addFiles('client/router.coffee', 'client');
+    // api.addFiles('client/subscribe.coffee', 'client');
 
-    api.addFiles('server/methods/cms_init.coffee', 'server');
-    api.addFiles('server/methods/cms_site_build.coffee', 'server');
-    api.addFiles('server/methods/cms_post_add_viewers.coffee', 'server');
-    api.addFiles('server/methods/cms_find_organizations_name.coffee', 'server');
+    // api.addFiles('server/methods/cms_init.coffee', 'server');
+    // api.addFiles('server/methods/cms_site_build.coffee', 'server');
+    // api.addFiles('server/methods/cms_post_add_viewers.coffee', 'server');
+    // api.addFiles('server/methods/cms_find_organizations_name.coffee', 'server');
 
-    api.addFiles('server/publications/cfs_posts.coffee', 'server');
-    api.addFiles('server/publications/cms_categories.coffee', 'server');
-    api.addFiles('server/publications/cms_post.coffee', 'server');
-    api.addFiles('server/publications/cms_posts.coffee', 'server');
-    api.addFiles('server/publications/cms_sites.coffee', 'server');
-    api.addFiles('server/publications/cms_tags.coffee', 'server');
-    api.addFiles('server/publications/cms_themes.coffee', 'server');
+    // api.addFiles('server/publications/cfs_posts.coffee', 'server');
+    // api.addFiles('server/publications/cms_categories.coffee', 'server');
+    // api.addFiles('server/publications/cms_post.coffee', 'server');
+    // api.addFiles('server/publications/cms_posts.coffee', 'server');
+    // api.addFiles('server/publications/cms_sites.coffee', 'server');
+    // api.addFiles('server/publications/cms_tags.coffee', 'server');
+    // api.addFiles('server/publications/cms_themes.coffee', 'server');
     // api.addFiles('server/publications/cms_unreads.coffee', 'server');
-    api.addFiles('server/publications/cms_posts_home.coffee', 'server');
-    api.addFiles('server/publications/get_posts_members_names.coffee', 'server');
+    // api.addFiles('server/publications/cms_posts_home.coffee', 'server');
+    // api.addFiles('server/publications/get_posts_members_names.coffee', 'server');
 
     api.addFiles('server/routes/site.coffee', 'server');
     api.addFiles('server/routes/avatar.coffee', 'server');
     // api.addFiles('server/routes/unread_posts.coffee', 'server');
     api.addAssets('themes/default.html', 'server');
 
-    // EXPORT
+    // EXPORT 
     api.export('CMS');
 });
 
