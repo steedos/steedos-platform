@@ -134,8 +134,8 @@ Package.onUse(function(api) {
     // api.addFiles('server/routes/unread_posts.coffee', 'server');
     api.addAssets('themes/default.html', 'server');
 
-    // EXPORT 
-    api.export('CMS');
+    // // EXPORT 
+    // api.export('CMS');
 });
 
 Package.onTest(function(api) {
