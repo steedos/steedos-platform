@@ -6,7 +6,7 @@
 					<div class="cellGridContainer slds-table_edit slds-hint-parent"></div>
 				{{else if isImages}}
 					{{#each value}}
-						<img class="creator-table-cell-image" src="{{baseUrl}}/{{this}}"/>
+						<img class="creator-table-cell-image" src="{{../baseUrl}}/{{this}}"/>
 					{{/each}}
 				{{else if isImage}}
 					<img class="creator-table-cell-image" src="{{baseUrl}}/{{value}}"/>
