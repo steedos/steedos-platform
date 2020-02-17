@@ -54,7 +54,8 @@ fields:
     index: true
     defaultValue: !!js/function |
       function () {
-        return Session.get("siteId");
+        var gridSidebarSelected = Session.get("grid_sidebar_selected");
+        return gridSidebarSelected ? gridSidebarSelected.site_id : null;
       }
   category:
     label: 所属栏目
@@ -63,7 +64,9 @@ fields:
     sortable: true
     defaultValue: !!js/function |
       function () {
-        return Session.get("siteCategoryId");
+        /*gridSidebarSelected.category_id暂未实现，后续把左侧站点列表改为树结构界面时再实现*/
+        var gridSidebarSelected = Session.get("grid_sidebar_selected");
+        return gridSidebarSelected ? gridSidebarSelected.category_id : null;
       }
     # filtersFunction: !!js/function |
     #   function () {
