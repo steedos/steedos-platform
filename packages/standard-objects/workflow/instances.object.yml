@@ -1,6 +1,6 @@
 name: instances
 icon: task
-label: 审批单
+label: 审批
 fields:
   name:
     label: 文件标题
