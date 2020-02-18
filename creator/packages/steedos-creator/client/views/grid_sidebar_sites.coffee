@@ -31,18 +31,22 @@ Template.creator_grid_sidebar_sites.onRendered ->
 							# loadOptions.select = ["name", "parent", "children"]
 							loadOptions.select = ["name", "admins", "visibility"]
 						onLoaded: (results)->
-							if results and _.isArray(results)
-								_.each results, (item, index)->
-									if index == 0
-										# 默认选中第一个站点，并按第一个站点过滤文章
+							if results and _.isArray(results) and results.length
+								selectedItem = Session.get "grid_sidebar_selected"
+								unless selectedItem
+									# 默认选中第一个站点，并按第一个站点过滤文章
+									selectedItem = {
+										site_id: results[0]._id,
+										is_site_admin: results[0]?.admins.indexOf(userId) > -1,
+										is_site_public: results[0]?.visibility == "public"
+									}
+									# selectedItem = results[0]
+								Session.set "grid_sidebar_selected", selectedItem
+								setGridSidebarFilters(selectedItem)
+
+								_.each results, (item)->
+									if item._id == selectedItem.site_id
 										item.selected = true
-										selectedItem = {
-											site_id: item._id,
-											is_site_admin: item?.admins.indexOf(userId) > -1,
-											is_site_public: item?.visibility == "public"
-										}
-										Session.set "grid_sidebar_selected", selectedItem
-										setGridSidebarFilters(selectedItem)
 									# 判断是否有下级节点
 									item.hasItems = false
 									if item.children?.length > 0
@@ -113,5 +117,5 @@ Template.creator_grid_sidebar_sites.events
 Template.creator_grid_sidebar_sites.onCreated ->
 
 Template.creator_grid_sidebar_sites.onDestroyed ->
-	Session.set "grid_sidebar_selected", null
-	Session.set "grid_sidebar_filters", null
+	# Session.set "grid_sidebar_selected", null
+	# Session.set "grid_sidebar_filters", null
