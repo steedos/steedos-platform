@@ -1,7 +1,7 @@
 setGridSidebarFilters = (selectedItem)->
-	if selectedItem and selectedItem.site_id
+	if selectedItem and selectedItem._id
 		sidebar_filter_key = "site"
-		sidebarFilter = [ sidebar_filter_key, "=", selectedItem.site_id ]
+		sidebarFilter = [ sidebar_filter_key, "=", selectedItem._id ]
 		Session.set "grid_sidebar_filters", sidebarFilter
 	else
 		Session.set "grid_sidebar_filters", null
@@ -17,7 +17,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 		loginToken = Accounts._storedLoginToken()
 		if spaceId and userId
 			# 默认不显示右侧数据，只有选中站点后才显示
-			setGridSidebarFilters({site_id: -1})
+			setGridSidebarFilters({_id: -1})
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
 				searchEnabled: false
@@ -32,20 +32,15 @@ Template.creator_grid_sidebar_sites.onRendered ->
 							loadOptions.select = ["name", "admins", "visibility"]
 						onLoaded: (results)->
 							if results and _.isArray(results) and results.length
-								selectedItem = Session.get "grid_sidebar_selected"
+								selectedItem = Session.get "site"
 								unless selectedItem
 									# 默认选中第一个站点，并按第一个站点过滤文章
-									selectedItem = {
-										site_id: results[0]._id,
-										is_site_admin: results[0]?.admins.indexOf(userId) > -1,
-										is_site_public: results[0]?.visibility == "public"
-									}
-									# selectedItem = results[0]
-								Session.set "grid_sidebar_selected", selectedItem
+									selectedItem = results[0]
+								Session.set "site", selectedItem
 								setGridSidebarFilters(selectedItem)
 
 								_.each results, (item)->
-									if item._id == selectedItem.site_id
+									if item._id == selectedItem._id
 										item.selected = true
 									# 判断是否有下级节点
 									item.hasItems = false
@@ -85,16 +80,11 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				selectionItemData = selectionInfo.itemData;
 				if selectionItemData?._id
-					selectedItem = {
-						site_id: selectionItemData._id,
-						is_site_admin: selectionItemData?.admins.indexOf(userId) > -1,
-						is_site_public: selectionItemData?.visibility == "public"
-					}
-					Session.set "grid_sidebar_selected", selectedItem
-					setGridSidebarFilters(selectedItem)
+					Session.set "site", selectionItemData
+					setGridSidebarFilters(selectionItemData)
 				else
 					# 未设置站点时应该看不到右侧列表相关数据
-					setGridSidebarFilters({site_id: -1})
+					setGridSidebarFilters({_id: -1})
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
@@ -117,5 +107,4 @@ Template.creator_grid_sidebar_sites.events
 Template.creator_grid_sidebar_sites.onCreated ->
 
 Template.creator_grid_sidebar_sites.onDestroyed ->
-	# Session.set "grid_sidebar_selected", null
-	# Session.set "grid_sidebar_filters", null
+	Session.set "grid_sidebar_filters", null
