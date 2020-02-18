@@ -120,14 +120,14 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
 			
-			unless isSpaceAdmin
-				if isOrganizationAdmin
-					if userCompanyOrganizationId
-						dxOptions.rootValue = userCompanyOrganizationId
-					else
-						dxOptions.rootValue = "-1"
-				else
-					dxOptions.rootValue = "-1"
+#			unless isSpaceAdmin
+#				if isOrganizationAdmin
+#					if userCompanyOrganizationId
+#						dxOptions.rootValue = userCompanyOrganizationId
+#					else
+#						dxOptions.rootValue = "-1"
+#				else
+#					dxOptions.rootValue = "-1"
 
 			self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
 			
