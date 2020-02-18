@@ -178,6 +178,8 @@ install("q42:autoform-markdown");
 install("steedos:markdown");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
+install("summernote:summernote");
+install("mpowaga:autoform-summernote");
 install("steedos:devexpress");
 install("gwendall:simple-schema-i18n");
 install("francocatena:status");
@@ -274,6 +276,8 @@ install("jeremy:selectize");
 install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
+install("vazco:universe-selectize");
+install("steedos:cms");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -856,7 +860,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.16.4",
+  "version": "1.16.5",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -873,10 +877,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.16.4",
-    "@steedos/migrate": "^1.16.4",
-    "@steedos/objectql": "^1.16.4",
-    "@steedos/standard-objects": "^1.16.4",
+    "@steedos/auth": "^1.16.5",
+    "@steedos/migrate": "^1.16.5",
+    "@steedos/objectql": "^1.16.5",
+    "@steedos/standard-objects": "^1.16.5",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -906,7 +910,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.16.4",
+    "@steedos/meteor-bundle-runner": "^1.16.5",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -949,7 +953,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.16.4",
+  "version": "1.16.5",
   "main": "lib/index.js"
 };
 
@@ -1009,7 +1013,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.16.4",
+  "version": "1.16.5",
   "main": "lib/index.js"
 };
 

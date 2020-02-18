@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "ba02fb83b264c2bfa82cacb69999d1f665572157.js",
+      "path": "88d882b926d446cc6d1a294aceb8306d8330c344.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/ba02fb83b264c2bfa82cacb69999d1f665572157.js?meteor_js_resource=true",
-      "size": 7844204,
-      "hash": "ba02fb83b264c2bfa82cacb69999d1f665572157",
-      "sri": "cEIl5YOCp9vLS7Az3yIMmPEZH77SAU5C/VdRm6IK10SNXTLkW9SVsQSq5uSuzfdyJ7eSZnrp9arrnRzroYWb8Q=="
+      "url": "/88d882b926d446cc6d1a294aceb8306d8330c344.js?meteor_js_resource=true",
+      "size": 8032843,
+      "hash": "88d882b926d446cc6d1a294aceb8306d8330c344",
+      "sri": "uD1hOzxtnTrtjNYxZzd7B7u+vzlHrU+gQmQ6CqigcrqSZAH2e+VUry7kzqa+oyE+2qjQXkWNBaLOgjyWIVNdEw=="
     },
     {
-      "path": "ba02fb83b264c2bfa82cacb69999d1f665572157.stats.json",
+      "path": "88d882b926d446cc6d1a294aceb8306d8330c344.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/ba02fb83b264c2bfa82cacb69999d1f665572157.stats.json?meteor_js_resource=true",
-      "size": 170325,
-      "hash": "4bc37d6c14b35a61d013f0d93c7bc87445fd7a0e",
-      "sri": "HJxvX6nCHkTrusNaAVIKSdcWCJP2RkumRrAHbVXJyqYosAg9pW29/owMymqPfqGrvM0m8oDraVpnZ8+EcMHMtQ=="
+      "url": "/88d882b926d446cc6d1a294aceb8306d8330c344.stats.json?meteor_js_resource=true",
+      "size": 170621,
+      "hash": "810c1a03d2ad955a21e3a4425b4de62073695521",
+      "sri": "q9wCKUjpc5cm8myhSbACvDyGUq7KuZTSJG1fG5ZcmmDgZZNxKuhj2lnJNWCdf011T9mhvd5nlgI0MRXIDljzmw=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3674,6 +3674,38 @@
       "sri": "fIF4NUrrs59AVGMf8OV+ZPQdNrsIsR/NJQ2eArNfM5FkbfNyq4HGlKg83PNSBamd4/y0LYfcizz5502oYS4Ncw=="
     },
     {
+      "path": "packages/twbs_bootstrap/bootstrap.less",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/twbs_bootstrap/bootstrap.less?hash=7b8c275c9bdd883ba703d6daf51cd8ff018cee7c",
+      "sourceMap": "packages/twbs_bootstrap/bootstrap.less.map",
+      "sourceMapUrl": "/packages/twbs_bootstrap/7b8c275c9bdd883ba703d6daf51cd8ff018cee7c.map",
+      "size": 130490,
+      "hash": "7b8c275c9bdd883ba703d6daf51cd8ff018cee7c",
+      "sri": "wf+00nr6s3ugWUPSNZ4/TLb7j2KWdHuDlexKZ9ZW5WLkr5Hq0IUiM2Uw3q8pE9c6mc315I6j1ZKexTr1VLwcYQ=="
+    },
+    {
+      "path": "packages/summernote_summernote/dist/summernote.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/summernote_summernote/dist/summernote.css?hash=6742b9299488433ce84f8d325d9bf34c7bdb750d",
+      "size": 13198,
+      "hash": "6742b9299488433ce84f8d325d9bf34c7bdb750d",
+      "sri": "lWVAPvfEmXAvJoU8uzLe3cOiGOFCfoBpO0MJazFkciCP4FsdgM7a/t93934ENv45uDTvNPWX9TH16fQtxQlb3w=="
+    },
+    {
+      "path": "packages/summernote_standalone/dist/summernote.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/summernote_standalone/dist/summernote.css?hash=6742b9299488433ce84f8d325d9bf34c7bdb750d",
+      "size": 13198,
+      "hash": "6742b9299488433ce84f8d325d9bf34c7bdb750d",
+      "sri": "lWVAPvfEmXAvJoU8uzLe3cOiGOFCfoBpO0MJazFkciCP4FsdgM7a/t93934ENv45uDTvNPWX9TH16fQtxQlb3w=="
+    },
+    {
       "path": "packages/steedos_devexpress/client/css/dx.spa.css",
       "where": "client",
       "type": "css",
@@ -3742,18 +3774,6 @@
       "size": 2896,
       "hash": "e75fba4fdc6a834af464f4e5429837cf3580f749",
       "sri": "BW19kZYuGMYnj7gJgKL0hDBvpDkpjcLnLU/AV9k1R1LsGhQwQcn6/l1cF8Zgn8sEE/2FNvpKzo08RSZcxfd6Cg=="
-    },
-    {
-      "path": "packages/twbs_bootstrap/bootstrap.less",
-      "where": "client",
-      "type": "css",
-      "cacheable": true,
-      "url": "/packages/twbs_bootstrap/bootstrap.less?hash=7b8c275c9bdd883ba703d6daf51cd8ff018cee7c",
-      "sourceMap": "packages/twbs_bootstrap/bootstrap.less.map",
-      "sourceMapUrl": "/packages/twbs_bootstrap/7b8c275c9bdd883ba703d6daf51cd8ff018cee7c.map",
-      "size": 130490,
-      "hash": "7b8c275c9bdd883ba703d6daf51cd8ff018cee7c",
-      "sri": "wf+00nr6s3ugWUPSNZ4/TLb7j2KWdHuDlexKZ9ZW5WLkr5Hq0IUiM2Uw3q8pE9c6mc315I6j1ZKexTr1VLwcYQ=="
     },
     {
       "path": "packages/steedos_adminlte/css/AdminLTE.css",
@@ -4621,6 +4641,16 @@
       "type": "css",
       "cacheable": true,
       "url": "/packages/steedos_creator/client/views/grid_sidebar_organizations.less.css?hash=70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "size": 146,
+      "hash": "70e5a2f6da8f25b906029adbdbba548b023f78a6",
+      "sri": "/zNhRNXU672OzfacMbuOX7jurEQ0IhVkvFxwB/1bYJ+C9UMuNt7CFAYdhCBTJojnZyA05tzRy0u9r7Pafq308w=="
+    },
+    {
+      "path": "packages/steedos_creator/client/views/grid_sidebar_sites.less.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/packages/steedos_creator/client/views/grid_sidebar_sites.less.css?hash=70e5a2f6da8f25b906029adbdbba548b023f78a6",
       "size": 146,
       "hash": "70e5a2f6da8f25b906029adbdbba548b023f78a6",
       "sri": "/zNhRNXU672OzfacMbuOX7jurEQ0IhVkvFxwB/1bYJ+C9UMuNt7CFAYdhCBTJojnZyA05tzRy0u9r7Pafq308w=="
@@ -5530,6 +5560,66 @@
       "size": 1456,
       "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
       "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
+    },
+    {
+      "path": "packages/summernote_summernote/dist/font/summernote.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_summernote/dist/font/summernote.eot",
+      "size": 13238,
+      "hash": "5f1e6815c671797ee4acf489a2a9c1b84be4b757",
+      "sri": "swjAgDSjXBBclYZWLNG25CTs6DWixJno+7y/aFFgHVeVxlVOhtT5InKdxBSVtbxO54gQGwUGMuazVCSInKc/gg=="
+    },
+    {
+      "path": "packages/summernote_summernote/dist/font/summernote.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_summernote/dist/font/summernote.ttf",
+      "size": 13052,
+      "hash": "b8914e913bfc0b84dcdae4e31c20896859e98902",
+      "sri": "sDfZDnYHS9Vp0QKUZ0rVg/96MzaFaYWLnrALvLoyjLhYrvMWVIIVZN9uI1Z41FggyEUVkxsjyACcIVjQ+vWN+A=="
+    },
+    {
+      "path": "packages/summernote_summernote/dist/font/summernote.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_summernote/dist/font/summernote.woff",
+      "size": 8332,
+      "hash": "0f64029e1e5d49cbce0f4c53a5980431b578ff09",
+      "sri": "BsJcOlivELrLflwQ1X+FdeTlMMsPrytp55ETMvCW2ymvEFNdXlJam6WSpnKkWSd/tSEsfq42D3Czug3dOTX8+w=="
+    },
+    {
+      "path": "packages/summernote_standalone/dist/font/summernote.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_standalone/dist/font/summernote.eot",
+      "size": 13238,
+      "hash": "5f1e6815c671797ee4acf489a2a9c1b84be4b757",
+      "sri": "swjAgDSjXBBclYZWLNG25CTs6DWixJno+7y/aFFgHVeVxlVOhtT5InKdxBSVtbxO54gQGwUGMuazVCSInKc/gg=="
+    },
+    {
+      "path": "packages/summernote_standalone/dist/font/summernote.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_standalone/dist/font/summernote.ttf",
+      "size": 13052,
+      "hash": "b8914e913bfc0b84dcdae4e31c20896859e98902",
+      "sri": "sDfZDnYHS9Vp0QKUZ0rVg/96MzaFaYWLnrALvLoyjLhYrvMWVIIVZN9uI1Z41FggyEUVkxsjyACcIVjQ+vWN+A=="
+    },
+    {
+      "path": "packages/summernote_standalone/dist/font/summernote.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/summernote_standalone/dist/font/summernote.woff",
+      "size": 8332,
+      "hash": "0f64029e1e5d49cbce0f4c53a5980431b578ff09",
+      "sri": "BsJcOlivELrLflwQ1X+FdeTlMMsPrytp55ETMvCW2ymvEFNdXlJam6WSpnKkWSd/tSEsfq42D3Czug3dOTX8+w=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.ttf",
