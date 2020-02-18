@@ -54,20 +54,14 @@ fields:
     index: true
     defaultValue: !!js/function |
       function () {
-        var gridSidebarSelected = Session.get("grid_sidebar_selected");
-        return gridSidebarSelected ? gridSidebarSelected.site_id : null;
+        var site = Session.get("site");
+        return site ? site._id : null;
       }
   category:
     label: 所属栏目
     type: lookup
     reference_to: cms_categories
     sortable: true
-    defaultValue: !!js/function |
-      function () {
-        /*gridSidebarSelected.category_id暂未实现，后续把左侧站点列表改为树结构界面时再实现*/
-        var gridSidebarSelected = Session.get("grid_sidebar_selected");
-        return gridSidebarSelected ? gridSidebarSelected.category_id : null;
-      }
     # filtersFunction: !!js/function |
     #   function () {
     #     return "site eq '" + Session.get("siteId") + "'";
@@ -252,8 +246,9 @@ list_views:
     filter_scope: space
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
-        var gridSidebarSelected = Session.get("grid_sidebar_selected");
-        var isSiteAdmin = gridSidebarSelected && gridSidebarSelected.is_site_admin;
+        var userId = Steedos.userId();
+        var site = Session.get("site");
+        var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
         var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
         var organizations = Steedos.getUserOrganizations(true);
         if(!isAdmin){

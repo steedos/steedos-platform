@@ -9,23 +9,23 @@ Meteor.autorun(function(){
       previewSite: {
         label: "预览",
         visible: function (object_name, record_id, record_permissions) {
-          var gridSidebarSelected = Session.get("grid_sidebar_selected");
-          var isSitePublic = gridSidebarSelected && gridSidebarSelected.is_site_public;
+          var site = Session.get("site");
+          var isSitePublic = site && site.visibility === "public";
           return isSitePublic;
         },
         on: "list",
         todo: function (object_name, record_id, fields) {
-          var gridSidebarSelected = Session.get("grid_sidebar_selected");
-          if(!gridSidebarSelected){
+          var site = Session.get("site");
+          if(!site){
             toastr.warning("请先在左侧列表选中一个站点！");
             return;
           }
-          var isSitePublic = gridSidebarSelected.is_site_public;
+          var isSitePublic = site.visibility === "public";
           if(!isSitePublic){
             toastr.warning("该站点未公开发布到互联网");
             return;
           }
-          var siteId = gridSidebarSelected.site_id;
+          var siteId = site._id;
           // site/awqTrDfQt3uQtGtKi
           var url = '/site/' + siteId;
           url = Steedos.absoluteUrl(url);
@@ -36,11 +36,11 @@ Meteor.autorun(function(){
       previewPost: {
         label: "预览",
         visible: function (object_name, record_id, record_permissions) {
-          var gridSidebarSelected = Session.get("grid_sidebar_selected");
+          var site = Session.get("site");
           var isSitePublic = false;
-          if(gridSidebarSelected){
+          if(site){
             // 在列表界面可以直接从左侧拿到当前选中站点
-            isSitePublic = gridSidebarSelected && gridSidebarSelected.is_site_public;
+            isSitePublic = site && site.visibility === "public";
           }
           else{
             //否则需要请求文章所属站点是否为Public
@@ -55,16 +55,16 @@ Meteor.autorun(function(){
         },
         on: "record",
         todo: function (object_name, record_id, fields) {
-          var gridSidebarSelected = Session.get("grid_sidebar_selected");
+          var site = Session.get("site");
           var siteId;
-          if(gridSidebarSelected){
+          if(site){
             // 在列表界面可以直接从左侧拿到当前选中站点
-            var isSitePublic = gridSidebarSelected.is_site_public;
+            var isSitePublic = site.visibility === "public";
             if(!isSitePublic){
               toastr.warning("该站点未公开发布到互联网");
               return;
             }
-            siteId = gridSidebarSelected.site_id;
+            siteId = site._id;
           }
           if(!siteId){
             //否则需要从详细记录中取出所属站点Id
