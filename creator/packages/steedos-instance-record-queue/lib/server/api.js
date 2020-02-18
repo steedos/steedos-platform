@@ -621,7 +621,6 @@ InstanceRecordQueue.Configure = function (options) {
 				try {
 					var syncValues = self.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record)
 					var setObj = syncValues.mainObjectValue;
-					setObj.locked = false;
 
 					var instance_state = ins.state;
 					if (ins.state === 'completed' && ins.final_decision) {
@@ -661,7 +660,6 @@ InstanceRecordQueue.Configure = function (options) {
 					}, {
 						$set: {
 							'instances.$.state': 'pending',
-							'locked': true,
 							'instance_state': 'pending'
 						}
 					})
