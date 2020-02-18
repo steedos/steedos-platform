@@ -14,6 +14,7 @@ fields:
     required: true
     searchable: true
     index: true
+    sortable: true
     name: name
     sortable: true
   position:
