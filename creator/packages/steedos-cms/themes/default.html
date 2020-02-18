@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>{{#if Post}}{{Post.title}} - {{/if}}{{#if Tag}}{{Tag}} - {{/if}} {{Site.name}}</title>
+	<title>{{#if Post}}{{Post.name}} - {{/if}}{{#if Tag}}{{Tag}} - {{/if}} {{Site.name}}</title>
 	<meta name="description" content="{{site.metaDescription}}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	{{#if isProduction}}
@@ -261,12 +261,12 @@
 							{{#each Posts "" 20}}
 								<div class="box box-widget">
 									<!-- <div class="box-header with-border">
-									  <h3 class="box-title"><a href="/site/{{SiteId}}/p/{{_id}}">{{title}}</a></h3>
+									  <h3 class="box-title"><a href="/site/{{SiteId}}/p/{{_id}}">{{name}}</a></h3>
 									  <span>{{fromNow modified}}</span>
 									</div> -->
 									<div class="box-body">
 										<a href="/site/{{SiteId}}/p/{{_id}}">
-											<p class="post-title"><b>{{title}}</b></p>
+											<p class="post-title"><b>{{name}}</b></p>
 											<p class="post-date">{{fromNow postDate}}</p>
 											<div class="post-summary ">
 												{{{PostSummary}}}
@@ -306,12 +306,12 @@
 							{{#each Posts Category._id 200}}
 								<div class="box box-widget">
 									<!-- <div class="box-header with-border">
-									  <h3 class="box-title"><a href="/site/{{SiteId}}/p/{{_id}}">{{title}}</a></h3>
+									  <h3 class="box-title"><a href="/site/{{SiteId}}/p/{{_id}}">{{name}}</a></h3>
 									  <p>{{fromNow modified}}</p>
 									</div> -->
 									<div class="box-body">
 										<a href="/site/{{SiteId}}/p/{{_id}}">
-											<p class="post-title"><b>{{title}}</b></p>
+											<p class="post-title"><b>{{name}}</b></p>
 											<p class="post-date">{{fromNow modified}}</p>
 											<div class="post-summary ">
 												{{{PostSummary}}}
@@ -345,12 +345,12 @@
 
 					<div class="box box-widget">
 						<!-- <div class="box-header with-border">
-						  <h3 class="box-title">{{Post.title}}</h3>
+						  <h3 class="box-title">{{Post.name}}</h3>
 						  <p>{{fromNow modified}}</p>
 						</div> -->
 						<div class="box-body">
 							
-							<p class="post-title"><b>{{Post.title}}</b></p>
+							<p class="post-title"><b>{{Post.name}}</b></p>
 							<p class="post-date">
 								<span>{{DateFormat Post.postDate "YYYY-MM-DD HH:mm"}}</span>
 								<span> · </span>
