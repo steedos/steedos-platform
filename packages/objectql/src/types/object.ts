@@ -727,6 +727,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
+                if('cloud_admin' === spaceId){
+                    return 
+                }
+
                 let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
                 if(spaceId){
