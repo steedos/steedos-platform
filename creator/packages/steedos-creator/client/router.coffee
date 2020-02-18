@@ -251,7 +251,7 @@ objectRoutes.route '/view/:record_id',
 		# 	siteId = Session.get("siteId")
 		# 	FlowRouter.go "/cms/s/#{siteId}/p/#{record_id}"
 		# 	return;
-		if object_name == "users"
+		if object_name == "users" && Session.get("spaceId") != 'cloud_admin'
 			main = "user"
 		else
 			main = "creator_view"

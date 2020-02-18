@@ -62,6 +62,12 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 			oitem.columns = default_columens
 	if !oitem.columns
 		oitem.columns = ["name"]
+
+	if Meteor.isClient
+		if Session.get("spaceId") == 'cloud_admin' && !_.include(oitem.columns, 'space')
+			oitem.columns.push('space')
+
+
 	if !oitem.filter_scope
 		# listview视图的filter_scope默认值改为space #131
 		oitem.filter_scope = "space"

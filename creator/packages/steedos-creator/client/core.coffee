@@ -91,6 +91,9 @@ if Meteor.isClient
 
 				code_filters_set.filter_scope = list_view.filter_scope
 				code_filters_set.filters = list_view.filters
+
+		if spaceId == 'cloud_admin' && _.include(['users', 'space_users', 'spaces'], object_name)
+			delete code_filters_set.filters
 		
 		if code_filters_set
 			# 如果过虑器存在临时变更的过虑条件(即过虑器中过虑条件未保存到视图中)，则与代码中配置的过虑条件取AND连接逻辑
@@ -149,7 +152,7 @@ if Meteor.isClient
 						selector.push filter
 		else
 			if spaceId and userId
-				if object_name == "users"
+				if object_name == "users" && spaceId != 'cloud_admin'
 					selector.push ["_id", "=", userId]
 				if filters
 					filters = Creator.formatFiltersToDev(filters, object_name)

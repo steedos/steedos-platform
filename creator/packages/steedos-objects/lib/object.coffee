@@ -34,11 +34,18 @@ Creator.Object = (options)->
 	self.custom = options.custom
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
-	self.enable_tree = options.enable_tree
+	if Meteor.isClient
+		if Session.get("spaceId") == 'cloud_admin'
+			self.enable_tree = false
+		else
+			self.enable_tree = options.enable_tree
+			self.sidebar = _.clone(options.sidebar)
+	else
+		self.sidebar = _.clone(options.sidebar)
+		self.enable_tree = options.enable_tree
 	self.open_window = options.open_window
 	self.filter_company = options.filter_company
 	self.calendar = _.clone(options.calendar)
-	self.sidebar = _.clone(options.sidebar)
 	self.enable_chatter = options.enable_chatter
 	self.enable_trash = options.enable_trash
 	self.enable_space_global = options.enable_space_global
@@ -58,6 +65,11 @@ Creator.Object = (options)->
 			self.NAME_FIELD_KEY = field_name
 		if field.primary
 			self.idFieldName = field_name
+		if Meteor.isClient
+			if Session.get("spaceId") == 'cloud_admin'
+				if field_name == 'space'
+					field.filterable = true
+					field.hidden = false
 
 	if !options.database_name || options.database_name == 'meteor-mongo'
 		_.each Creator.baseObject.fields, (field, field_name)->
