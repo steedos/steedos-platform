@@ -2,6 +2,34 @@
 	//flex-wrap: wrap;
 	flex-direction: row;
 
+	&.field-html{
+		.cell-container{
+			overflow: auto;
+			/*html片段直接放到cms文章的正文代码编辑框中，结果显示效果不对 #1613*/
+			/*把bootstrap/less/core.less、bootstrap/less/type.less、steedos-theme/client/core.less部分被其他样式库覆盖的样式强行再加上*/
+			pre{
+				background-color: #f5f5f5;
+				border: 1px solid #ccc;
+				padding: 9.5px;
+				margin: 0 0 10px;
+			}
+			h2, .h2 {
+				font-size: 22px;
+			}
+			h1, .h1, h2, .h2, h3, .h3 {
+				margin-top: 20px;
+				margin-bottom: 10px;
+			}
+			h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+				font-weight: bold;
+				font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+			}
+			p {
+				margin: 0 0 10px;
+			}
+		}
+	}
+
 	.cell-container{
 		& > a:not(:last-of-type):after {
 			content: ",";
