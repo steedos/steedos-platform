@@ -23,30 +23,34 @@
 											</li>
 										</ol>
 									</nav>
-									<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
-										<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
-											<div class="triggerLinkTextAndIconWrapper">
-												<span class="triggerLinkText selectedListView uiOutputText">{{list_view_label list_view}}</span>
-												<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
-													<span class="lightningPrimitiveIcon">
-														{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+									{{#if isMobile and sidebar_data}}
+										{{> Template.dynamic template=sidebar_data.template_name}}
+									{{else}}
+										<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+											<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+												<div class="triggerLinkTextAndIconWrapper">
+													<span class="triggerLinkText selectedListView uiOutputText">{{list_view_label list_view}}</span>
+													<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+														<span class="lightningPrimitiveIcon">
+															{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+														</span>
 													</span>
-												</span>
+												</div>
+											</a>
+											<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
+												<ul class="slds-dropdown__list slds-show">
+													{{#each list_views}}
+													<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
+														<a role="option" tabindex="-1" class="list-view-switch" href="{{list_view_url this}}">
+															<span>{{list_view_label this}}</span>
+															<span class="slds-badge">{{list_view_count this}}</span>
+														</a>
+													</li>
+													{{/each}}
+												</ul>
 											</div>
-										</a>
-										<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
-											<ul class="slds-dropdown__list slds-show">
-												{{#each list_views}}
-												<li class="slds-dropdown__item crm-header-menu-item" role="presentation">
-													<a role="option" tabindex="-1" class="list-view-switch" href="{{list_view_url this}}">
-														<span>{{list_view_label this}}</span>
-														<span class="slds-badge">{{list_view_count this}}</span>
-													</a>
-												</li>
-												{{/each}}
-											</ul>
-										</div>
-									</h1>
+										</h1>
+									{{/if}}
 								</div>
 							</div>
 						</div>
@@ -192,18 +196,20 @@
 				</div>
 				<div class="weui-flex" style="height: 100%;">
 					<div style="overflow: hidden;" class="slds-grid table-grid-content weui-flex__item">
-						<div class="slds-col slds-no-space {{#if sidebar_data}}sidebar-open{{/if}}">
+						<div class="slds-col slds-no-space {{#unless isMobile}}{{#if sidebar_data}}sidebar-open{{/if}}{{/unless}}">
 						{{#if list_view_visible}}
 							{{#if isCalendarView}}
 								<div class="tale-content list-table-container td-cell-wrap">
 									{{> Template.dynamic template='creator_calendarNew' data=list_data}}
 								</div>
 							{{else}}
-								{{#if sidebar_data}}
-									<div class="slds-table tale-content list-table-container td-cell-wrap list-table-sidebar">
-										{{> Template.dynamic template=sidebar_data.template_name}}
-									</div>
-								{{/if}}
+								{{#unless isMobile}}
+									{{#if sidebar_data}}
+										<div class="slds-table tale-content list-table-container td-cell-wrap list-table-sidebar">
+											{{> Template.dynamic template=sidebar_data.template_name}}
+										</div>
+									{{/if}}
+								{{/unless}}
 								<div class="slds-table tale-content list-table-container td-cell-wrap">
 									{{> Template.dynamic template=list_template data=list_data}}
 								</div>

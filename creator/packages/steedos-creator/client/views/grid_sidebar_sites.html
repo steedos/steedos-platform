@@ -1,4 +1,25 @@
 <template name="creator_grid_sidebar_sites">
-	<div class="gridSidebarContainer slds-table_edit slds-hint-parent"></div>
-	<div class="action-sheet"></div>
+	{{#if isMobile}}
+		<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
+			<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+				<div class="triggerLinkTextAndIconWrapper">
+					<span class="triggerLinkText selectedListView uiOutputText">{{site.name}}</span>
+					<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+						<span class="lightningPrimitiveIcon">
+							{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+						</span>
+					</span>
+				</div>
+			</a>
+			<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu" style="position: relative;">
+				<div class="slds-dropdown__list slds-show">
+					<div class="gridSidebarContainer slds-table_edit slds-hint-parent"></div>
+					<div class="action-sheet"></div>
+				</div>
+			</div>
+		</h1>
+	{{else}}
+		<div class="gridSidebarContainer slds-table_edit slds-hint-parent"></div>
+		<div class="action-sheet"></div>
+	{{/if}}
 </template>

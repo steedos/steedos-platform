@@ -101,6 +101,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 Template.creator_grid_sidebar_sites.helpers Creator.helpers
 
 Template.creator_grid_sidebar_sites.helpers 
+	site:() -> 
+		return Session.get("site")
 
 Template.creator_grid_sidebar_sites.events
 
