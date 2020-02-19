@@ -29,8 +29,12 @@ fields:
     index: true
     defaultValue: !!js/function |
       function () {
-              return Session.get('grid_sidebar_selected');
-            }
+        var organization = Session.get('organization');
+        var orgId = organization && organization._id;
+        if(orgId){
+          return [orgId];
+        }
+      }
     required: true
     name: organizations
     filterable: true

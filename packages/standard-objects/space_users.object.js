@@ -1083,6 +1083,9 @@ Creator.Objects['space_users'].actions = {
         label: "导入",
         on: "list",
         visible: function (object_name, record_id, record_permissions) {
+            if(Steedos.isMobile()){
+                return false;
+            }
             return Creator.isSpaceAdmin();
         },
         todo: function () {
@@ -1097,12 +1100,16 @@ Creator.Objects['space_users'].actions = {
         label: "导出",
         on: "list",
         visible: function (object_name, record_id, record_permissions) {
+            if(Steedos.isMobile()){
+                return false;
+            }
             return Creator.isSpaceAdmin();
         },
         todo: function () {
-            var orgId, ref, spaceId, uobj, url;
+            var orgId, spaceId, uobj, url;
             spaceId = Session.get('spaceId');
-            orgId = (ref = Session.get('grid_sidebar_selected')) != null ? ref[0] : void 0;
+            var organization = Session.get('organization');
+            orgId = organization && organization._id;
 
             if (spaceId && orgId) {
                 uobj = {};
