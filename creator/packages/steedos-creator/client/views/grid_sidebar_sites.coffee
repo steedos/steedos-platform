@@ -78,11 +78,12 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				selectionItemData = selectionInfo.itemData;
+				selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
 				if selectionItemData?._id
 					Session.set "site", selectionItemData
 					setGridSidebarFilters(selectionItemData)
 				else
+					Session.set "site", null
 					# 未设置站点时应该看不到右侧列表相关数据
 					setGridSidebarFilters({_id: -1})
 

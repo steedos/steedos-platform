@@ -28,8 +28,6 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						onLoading: (loadOptions)->
 							loadOptions.select = ["name", "parent", "children"]
 						onLoaded: (results)->
-							console.log("===onLoaded======results===", results);
-							debugger;
 							if results and _.isArray(results) and results.length
 								selectedItem = Session.get "organization"
 								if selectedItem
@@ -78,10 +76,13 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				selectionItemData = selectionInfo.itemData;
+				selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
 				if selectionItemData?._id
 					Session.set "organization", selectionItemData
-					setGridSidebarFilters(selectionItemData)
+				else
+					Session.set "organization", null
+				setGridSidebarFilters(selectionItemData)
+
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
