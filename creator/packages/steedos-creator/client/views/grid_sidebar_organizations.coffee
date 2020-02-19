@@ -1,14 +1,7 @@
-setGridSidebarFilters = (selectedKeys)->
-	if selectedKeys and selectedKeys.length
+setGridSidebarFilters = (selectedItem)->
+	if selectedItem and selectedItem._id
 		sidebar_filter_key = "organizations"
-		if selectedKeys.length == 1
-			sidebarFilter = [ sidebar_filter_key, "=", selectedKeys[0] ]
-		else if selectedKeys.length > 1
-			sidebarFilter = []
-			selectedKeys.forEach (value_item)->
-				sidebarFilter.push [ sidebar_filter_key, "=", value_item ]
-				sidebarFilter.push "or"
-			sidebarFilter.pop()
+		sidebarFilter = [ sidebar_filter_key, "=", selectedItem._id ]
 		Session.set "grid_sidebar_filters", sidebarFilter
 	else
 		Session.set "grid_sidebar_filters", null
@@ -23,23 +16,6 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
 		if spaceId and userId
-			isSpaceAdmin = Creator.isSpaceAdmin()
-			user_permission_sets = Session.get("user_permission_sets")
-			userCompanyOrganizationId = Steedos.getUserCompanyOrganizationId()
-			isOrganizationAdmin = _.include(user_permission_sets,"organization_admin")
-			unless isSpaceAdmin
-				# 如果不是工作区管理员左侧选中组织需要有默认值userCompanyOrganizationId
-				selectedKeys = null
-				if isOrganizationAdmin and userCompanyOrganizationId
-					selectedKeys = [userCompanyOrganizationId]
-				Session.set "grid_sidebar_selected", selectedKeys
-				if selectedKeys and selectedKeys.length
-					setGridSidebarFilters(selectedKeys)
-				else
-					# 没有权限时，应该看不到右侧列表相关数据
-					setGridSidebarFilters([-1])
-				if isOrganizationAdmin and !userCompanyOrganizationId
-					toastr.error("您的单位信息未设置，请联系系统管理员。");
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
 				searchEnabled: false
@@ -52,8 +28,17 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						onLoading: (loadOptions)->
 							loadOptions.select = ["name", "parent", "children"]
 						onLoaded: (results)->
-							if results and _.isArray(results)
+							console.log("===onLoaded======results===", results);
+							debugger;
+							if results and _.isArray(results) and results.length
+								selectedItem = Session.get "organization"
+								if selectedItem
+									Session.set "organization", selectedItem
+									setGridSidebarFilters(selectedItem)
+
 								_.each results, (item)->
+									if selectedItem and item._id == selectedItem._id
+										item.selected = true
 									# 判断是否有下级节点
 									item.hasItems = false
 									if item.children?.length > 0
@@ -93,24 +78,10 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				selectedKeys = selectionInfo.component.getSelectedNodesKeys()
-				if isSpaceAdmin or (selectedKeys and selectedKeys.length)
-					Session.set "grid_sidebar_selected", selectedKeys
-					setGridSidebarFilters(selectedKeys)
-				else
-					# 如果不是工作区管理员，清空选项时，左侧选中组织需要有默认值userCompanyOrganizationId
-					selectedKeys = null
-					if isOrganizationAdmin and userCompanyOrganizationId
-						selectedKeys = [userCompanyOrganizationId]
-					Session.set "grid_sidebar_selected", selectedKeys
-					if selectedKeys and selectedKeys.length
-						setGridSidebarFilters(selectedKeys)
-					else
-						# 没有权限时，应该看不到右侧列表相关数据
-						setGridSidebarFilters([-1])
-				
-				if isOrganizationAdmin and !userCompanyOrganizationId
-					toastr.error("您的单位信息未设置，请联系系统管理员。");
+				selectionItemData = selectionInfo.itemData;
+				if selectionItemData?._id
+					Session.set "organization", selectionItemData
+					setGridSidebarFilters(selectionItemData)
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
@@ -119,26 +90,18 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.rootValue = null
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
-			
-#			unless isSpaceAdmin
-#				if isOrganizationAdmin
-#					if userCompanyOrganizationId
-#						dxOptions.rootValue = userCompanyOrganizationId
-#					else
-#						dxOptions.rootValue = "-1"
-#				else
-#					dxOptions.rootValue = "-1"
 
 			self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
 			
 Template.creator_grid_sidebar_organizations.helpers Creator.helpers
 
 Template.creator_grid_sidebar_organizations.helpers 
+	organization:() -> 
+		return Session.get("organization")
 
 Template.creator_grid_sidebar_organizations.events
 
 Template.creator_grid_sidebar_organizations.onCreated ->
 
 Template.creator_grid_sidebar_organizations.onDestroyed ->
-	Session.set "grid_sidebar_selected", null
 	Session.set "grid_sidebar_filters", null
