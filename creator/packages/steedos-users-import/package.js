@@ -34,7 +34,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('checkNpm.js', 'server');
 	
-	api.addFiles('space_users_actions.coffee', 'server');
+	// api.addFiles('space_users_actions.coffee', 'server');
 	
 	api.addFiles('client/views/import_users_modal.less', 'client');
 	api.addFiles('client/views/import_users_modal.html', 'client');
