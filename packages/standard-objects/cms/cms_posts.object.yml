@@ -1,6 +1,6 @@
 name: cms_posts
 icon: task
-label: 文章
+label: 信息
 enable_files: true
 enable_chatter: true
 sidebar:
