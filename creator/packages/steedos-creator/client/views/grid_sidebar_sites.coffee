@@ -77,6 +77,11 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.selectByClick = true
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
+			dxOptions.onItemClick = (selectionInfo)->
+				if selectionInfo.node.selected
+					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
+					selectionInfo.event.preventDefault()
+
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
 				if selectionItemData?._id
