@@ -56,13 +56,6 @@ fields:
     defaultValue: 100
     sortable: true
     name: sort_no
-  admins:
-    label: 组织管理员
-    type: lookup
-    reference_to: users
-    multiple: true
-    name: admins
-    filterable: true
   users:
     label: 成员
     type: lookup

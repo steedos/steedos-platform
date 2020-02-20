@@ -69,15 +69,15 @@ Meteor.startup(function () {
             if (!space) {
                 throw new Meteor.Error(400, "space_users_error_space_not_found");
             }
-            if (!doc.is_registered_from_space && !doc.is_logined_from_space) {
-                if (space.admins.indexOf(userId) < 0) {
-                    // 要添加用户，需要至少有一个组织权限
-                    isAllOrgAdmin = Steedos.isOrgAdminByAllOrgIds(doc.organizations, userId);
-                    if (!isAllOrgAdmin) {
-                        throw new Meteor.Error(400, "organizations_error_org_admins_only");
-                    }
-                }
-            }
+            // if (!doc.is_registered_from_space && !doc.is_logined_from_space) {
+            //     if (space.admins.indexOf(userId) < 0) {
+            //         // 要添加用户，需要至少有一个组织权限
+            //         isAllOrgAdmin = Steedos.isOrgAdminByAllOrgIds(doc.organizations, userId);
+            //         if (!isAllOrgAdmin) {
+            //             throw new Meteor.Error(400, "organizations_error_org_admins_only");
+            //         }
+            //     }
+            // }
             // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
             selector = [];
             if (doc.email) {
@@ -179,26 +179,26 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "email_format_error");
                 }
             }
-            if (space.admins.indexOf(userId) < 0) {
-                isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
-                if (!isOrgAdmin) {
-                    throw new Meteor.Error(400, "organizations_error_org_admins_only");
-                }
-                oldOrgs = doc.organizations;
-                newOrgs = (ref1 = modifier.$set) != null ? ref1.organizations : void 0;
-                if (newOrgs) {
-                    subOrgs = _.difference(oldOrgs, newOrgs);
-                    addOrgs = _.difference(newOrgs, oldOrgs);
-                    isAllSubOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(subOrgs, userId);
-                    isAllAddOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(addOrgs, userId);
-                    if (!isAllSubOrgsAdmin) {
-                        throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员移出该组织");
-                    }
-                    if (!isAllAddOrgsAdmin) {
-                        throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员添加到该组织");
-                    }
-                }
-            }
+            // if (space.admins.indexOf(userId) < 0) {
+            //     isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
+            //     if (!isOrgAdmin) {
+            //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
+            //     }
+            //     oldOrgs = doc.organizations;
+            //     newOrgs = (ref1 = modifier.$set) != null ? ref1.organizations : void 0;
+            //     if (newOrgs) {
+            //         subOrgs = _.difference(oldOrgs, newOrgs);
+            //         addOrgs = _.difference(newOrgs, oldOrgs);
+            //         isAllSubOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(subOrgs, userId);
+            //         isAllAddOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(addOrgs, userId);
+            //         if (!isAllSubOrgsAdmin) {
+            //             throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员移出该组织");
+            //         }
+            //         if (!isAllAddOrgsAdmin) {
+            //             throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员添加到该组织");
+            //         }
+            //     }
+            // }
             if (((ref2 = modifier.$set) != null ? ref2.user_accepted : void 0) !== void 0 && !modifier.$set.user_accepted) {
                 if (space.admins.indexOf(doc.user) > 0 || doc.user === space.owner) {
                     throw new Meteor.Error(400, "organizations_error_can_not_set_checkbox_true");
@@ -742,13 +742,13 @@ Meteor.startup(function () {
             if (!space) {
                 throw new Meteor.Error(400, "space_users_error_space_not_found");
             }
-            if (space.admins.indexOf(userId) < 0) {
-                // 要删除用户，需要至少有一个组织权限
-                isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
-                if (!isOrgAdmin) {
-                    throw new Meteor.Error(400, "organizations_error_org_admins_only");
-                }
-            }
+            // if (space.admins.indexOf(userId) < 0) {
+            //     // 要删除用户，需要至少有一个组织权限
+            //     isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
+            //     if (!isOrgAdmin) {
+            //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
+            //     }
+            // }
             // 不能删除当前工作区的拥有者
             if (space.owner === doc.user) {
                 throw new Meteor.Error(400, "space_users_error_remove_space_owner");
@@ -1178,6 +1178,91 @@ Creator.Objects['space_users'].actions = {
                 }
                 doUpdate(inputValue);
             });
+        }
+    },
+    standard_new: {
+        visible: function (object_name, record_id, record_permissions) {
+            var organization = Session.get("organization");
+            var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+            if(!allowCreate){
+                // permissions配置没有权限则不给权限
+                return false
+            }
+            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            if(Steedos.isSpaceAdmin()){
+                return true;
+            }
+            else{
+                var userId = Steedos.userId();
+                //当前选中组织所属单位的管理员才有权限
+                if(organization && organization.company_id && organization.company_id.admins){
+                    return organization.company_id.admins.indexOf(userId) > -1;
+                }
+            }
+        }
+    },
+    standard_edit: {
+        visible: function (object_name, record_id, record_permissions) {
+            var organization = Session.get("organization");
+            var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+            if(!allowEdit){
+                // permissions配置没有权限则不给权限
+                return false
+            }
+            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            if(Steedos.isSpaceAdmin()){
+                return true;
+            }
+            else{
+                var userId = Steedos.userId();
+                if(organization){
+                    //当前选中组织所属单位的管理员才有权限
+                    if(organization.company_id && organization.company_id.admins){
+                        return organization.company_id.admins.indexOf(userId) > -1;
+                    }
+                }
+                else{
+                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
+                    var record = Creator.getObjectRecord(object_name, record_id);
+                    if(record && record.company_ids && record.company_ids.length){
+                        return _.any(record.company_ids,function(item){
+                            return item.admins && item.admins.indexOf(userId) > -1
+                        });
+                    }
+                }
+            }
+        }
+    },
+    standard_delete: {
+        visible: function (object_name, record_id, record_permissions) {
+            var organization = Session.get("organization");
+            var allowDelete = Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
+            if(!allowDelete){
+                // permissions配置没有权限则不给权限
+                return false
+            }
+            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            if(Steedos.isSpaceAdmin()){
+                return true;
+            }
+            else{
+                var userId = Steedos.userId();
+                if(organization){
+                    //当前选中组织所属单位的管理员才有权限
+                    if(organization.company_id && organization.company_id.admins){
+                        return organization.company_id.admins.indexOf(userId) > -1;
+                    }
+                }
+                else{
+                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
+                    var record = Creator.getObjectRecord(object_name, record_id);
+                    if(record && record.company_ids && record.company_ids.length){
+                        return _.any(record.company_ids,function(item){
+                            return item.admins && item.admins.indexOf(userId) > -1
+                        });
+                    }
+                }
+            }
         }
     }
 }

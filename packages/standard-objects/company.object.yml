@@ -21,6 +21,13 @@ fields:
   currency_type:
     label: 本位币
     type: text
+  admins:
+    label: 组织管理员
+    type: lookup
+    reference_to: users
+    multiple: true
+    name: admins
+    filterable: true
   description:
     label: 备注
     type: textarea
