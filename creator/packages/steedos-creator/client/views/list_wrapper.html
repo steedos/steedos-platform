@@ -23,8 +23,8 @@
 											</li>
 										</ol>
 									</nav>
-									{{#if isMobile and sidebar_data}}
-										{{> Template.dynamic template=sidebar_data.template_name}}
+									{{#if sidebarDropdownMenu}}
+										{{> Template.dynamic template=sidebarDropdownMenu.template_name}}
 									{{else}}
 										<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title">
 											<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
@@ -196,20 +196,18 @@
 				</div>
 				<div class="weui-flex" style="height: 100%;">
 					<div style="overflow: hidden;" class="slds-grid table-grid-content weui-flex__item">
-						<div class="slds-col slds-no-space {{#unless isMobile}}{{#if sidebar_data}}sidebar-open{{/if}}{{/unless}}">
+						<div class="slds-col slds-no-space {{#if sidebar}}sidebar-open{{/if}}">
 						{{#if list_view_visible}}
 							{{#if isCalendarView}}
 								<div class="tale-content list-table-container td-cell-wrap">
 									{{> Template.dynamic template='creator_calendarNew' data=list_data}}
 								</div>
 							{{else}}
-								{{#unless isMobile}}
-									{{#if sidebar_data}}
-										<div class="slds-table tale-content list-table-container td-cell-wrap list-table-sidebar">
-											{{> Template.dynamic template=sidebar_data.template_name}}
-										</div>
-									{{/if}}
-								{{/unless}}
+								{{#if sidebar}}
+									<div class="slds-table tale-content list-table-container td-cell-wrap list-table-sidebar">
+										{{> Template.dynamic template=sidebar.template_name}}
+									</div>
+								{{/if}}
 								<div class="slds-table tale-content list-table-container td-cell-wrap">
 									{{> Template.dynamic template=list_template data=list_data}}
 								</div>

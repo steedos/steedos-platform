@@ -118,9 +118,13 @@ Template.creator_list_wrapper.helpers
 	recordsTotalCount: ()->
 		return Template.instance().recordsTotal.get()
 	
-	sidebar_data: ()->
+	sidebar: ()->
 		object_name = Session.get "object_name"
-		return Creator.getObject(object_name)?.sidebar
+		return !Steedos.isMobile() and Creator.getObject(object_name)?.sidebar
+	
+	sidebarDropdownMenu: ()->
+		object_name = Session.get "object_name"
+		return Steedos.isMobile() and Creator.getObject(object_name)?.sidebar
 	
 	list_data: ()->
 		object_name = Session.get "object_name"
