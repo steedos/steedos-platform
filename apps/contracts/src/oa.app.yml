@@ -1,0 +1,12 @@
+_id: oa
+name: 华炎办公
+description: '云办公平台，实现实时在线审批。'
+icon_slds: approval
+is_creator: true
+sort: 100
+objects: 
+  - instances
+  - cms_posts
+  - space_users
+  - tasks
+  - events
