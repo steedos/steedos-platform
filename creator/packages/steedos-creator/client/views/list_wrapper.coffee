@@ -429,6 +429,13 @@ Template.creator_list_wrapper.events
 	'click .list-action-follow': (event, template)->
 		followAction = getFollowAction()
 		Creator.executeAction(Session.get("object_name"), followAction)
+
+	'click .slds-page-header--object-home .slds-page-header__title .dx-treeview-toggle-item-visibility': (event) ->
+		# 视图下拉菜单中如果有dxTreeView，则应该让点击展开折叠树节点时不隐藏弹出层
+		event.stopPropagation()
+
+
+
 Template.creator_list_wrapper.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
 	this.recordsListViewTotal = new ReactiveVar({})
