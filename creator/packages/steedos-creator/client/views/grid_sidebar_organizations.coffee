@@ -26,7 +26,8 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						url: Steedos.absoluteUrl(url)
 						withCredentials: false
 						onLoading: (loadOptions)->
-							loadOptions.select = ["name", "parent", "children"]
+							loadOptions.select = ["name", "parent", "children", "company_id"]
+							loadOptions.expand = ["company_id($select=admins)"]
 						onLoaded: (results)->
 							if results and _.isArray(results) and results.length
 								selectedItem = Session.get "organization"

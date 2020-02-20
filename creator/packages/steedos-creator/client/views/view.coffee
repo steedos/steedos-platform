@@ -3,6 +3,9 @@ loadRecordFromOdata = (template, object_name, record_id)->
 	object = Creator.getObject(object_name)
 	selectFields = Creator.objectOdataSelectFields(object)
 	expand = Creator.objectOdataExpandFields(object)
+	if object_name == "space_users"
+		# 用户详细界面额外请求company_ids对应的admins，以方便确认当前用户是否有权限编辑、删除该记录
+		expand = expand.replace(/\bcompany_ids\b/,"company_ids($select=name,admins)")
 	record = Creator.odata.get(object_name, record_id, selectFields, expand)
 	template.record.set(record)
 
