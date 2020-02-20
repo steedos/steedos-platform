@@ -18,7 +18,7 @@ fields:
     rows: 3
     is_wide: true
   site:
-    label: 所属站点
+    label: 站点
     type: lookup
     reference_to: cms_sites
     required: true

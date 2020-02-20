@@ -46,7 +46,7 @@ fields:
   #   multiple: true
   #   is_wide: true
   site:
-    label: 所属站点
+    label: 站点
     type: lookup
     reference_to: cms_sites
     required: true
@@ -58,7 +58,7 @@ fields:
         return site ? site._id : null;
       }
   category:
-    label: 所属栏目
+    label: 栏目
     type: lookup
     reference_to: cms_categories
     sortable: true
@@ -119,17 +119,17 @@ fields:
   #     }
   members:
     type: object
-    label: 授权对象
+    label: 发布对象
     is_wide: true
   members.users:
     type: lookup
-    label: 授权人员(文章对这些人员可见)
+    label: 人员
     reference_to: users
     multiple: true
     filterable: true
   members.organizations:
     type: lookup
-    label: 授权部门(文章对这些部门及下属部门可见)
+    label: 部门
     reference_to: organizations
     multiple: true
     filterable: true
