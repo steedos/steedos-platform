@@ -136,10 +136,24 @@
 	}
 }
 
-/*统一把手机上视图下拉菜单显示为全屏下拉效果*/
 @media (max-width: 767px) {
 	.slds-page-header--object-home{
 		.slds-page-header__title{
+			/*手机上标题过长时省略号显示*/
+			.triggerLink{
+				max-width: 100%;
+				.triggerLinkTextAndIconWrapper{
+					max-width: 100%;
+					.triggerLinkText{
+						max-width: 90%;
+						overflow: hidden;
+						display: inline-block;
+						text-overflow: ellipsis;
+						float: left;
+					}
+				}
+			}
+			/*统一把手机上视图下拉菜单显示为全屏下拉效果*/
 			.dropdown-menu{
 				position: fixed;
 				top: 113px;
