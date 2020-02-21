@@ -126,8 +126,9 @@ const defaultOptions = {
 };
 
 const getPathFragmentPrefix = function(){
-  const config = getSteedosConfig().email
-  let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : 'accounts/a/';
+  const config = getSteedosConfig().email;
+  const defaultPathPrefix = 'accounts/a/#';
+  let pathFragmentPrefix = config && config.pathFragmentPrefix ? config.pathFragmentPrefix : defaultPathPrefix;
   if(pathFragmentPrefix && !/\/$/.test(pathFragmentPrefix)){
     pathFragmentPrefix += "/";
   }
