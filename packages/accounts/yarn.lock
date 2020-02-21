@@ -722,6 +722,13 @@
   dependencies:
     tslib "^1.10.0"
 
+"@steedos/app-contracts@^1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@steedos/app-contracts/-/app-contracts-1.17.0.tgz#0f8d346bf48a2a50f8bba211884323bf22590d5f"
+  dependencies:
+    dotenv "^8.2.0"
+    dotenv-flow "^3.1.0"
+
 "@steedos/auth@^1.17.0":
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/@steedos/auth/-/auth-1.17.0.tgz#38d663ccf02db76c4f3c274e7f5956976511b041"

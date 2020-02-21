@@ -43,6 +43,7 @@
     "tslib": "1.10.0"
   },
   "devDependencies": {
+    "@steedos/app-contracts": "^1.17.0",
     "@steedos/meteor-bundle-runner": "^1.17.0",
     "@steedos/objectql": "^1.17.0",
     "@steedos/steedos-plugin-workflow": "^2.0.4",
