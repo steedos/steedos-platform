@@ -42,10 +42,13 @@ async function getAccountsServer (context){
         convertUserIdToMongoObjectId: false,
         convertSessionIdToMongoObjectId: false,
         idProvider: () => new mongodb.ObjectId().toString(),
-        // timestamps: {
-        //   createdAt: 'created',
-        //   updatedAt: 'modified',
-        // },
+        timestamps: {
+          createdAt: 'created',
+          updatedAt: 'modified',
+        },
+        dateProvider: (date?: Date) => {
+          return date ? date : new Date()
+        },
       }),
       sendMail: sendMail,
       siteUrl: siteUrl,
