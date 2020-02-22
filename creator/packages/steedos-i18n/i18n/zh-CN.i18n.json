@@ -290,7 +290,7 @@
 	"Change username successfully": "更改用户名成功",
 	"username-invalid": "用户名非法，仅使用汉字，字母，数字，点，连字符和下划线",
 	"username-unavailable": "此用户名已经被使用，请填写其他用户名",
-	"username-minrequiredlength": "最小长度不能小于6位字符",
+	"username-minrequiredlength": "用户名最小长度不能小于6位字符",
 	"refresh": "刷新",
 
 	"afModal_insert": "保存",
