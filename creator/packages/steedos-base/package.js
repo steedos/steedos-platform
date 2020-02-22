@@ -168,6 +168,8 @@ Package.onUse(function(api) {
 		'client/layout/layout.less',
 		'client/layout/content_wrapper_shadow.html',
 		'client/layout/sidebar.html',
+		'client/layout/select_users_layout.html',
+		'client/layout/select_users_layout.less',
 		'client/views/app_list_box_modal.html',
 		'client/views/app_list_box_modal.coffee',
 		'client/views/app_list_box_modal.less',

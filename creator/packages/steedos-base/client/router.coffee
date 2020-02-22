@@ -6,6 +6,10 @@ FlowRouter.triggers.enter (context, redirect, stop)->
 	if context?.queryParams?.app_id
 		Session.set('current_app_id', context.queryParams.app_id)
 
+FlowRouter.route '/select-users',
+	action: (params, queryParams)->
+		BlazeLayout.render 'selectUsersLayout',
+			main: "reactSelectUsers"
 
 FlowRouter.route '/apps/iframe/:app_id',
 	triggersEnter: [ checkUserSigned ],
