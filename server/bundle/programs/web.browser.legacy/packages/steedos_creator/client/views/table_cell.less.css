@@ -1,9 +1,133 @@
+.fix-note-editor-in-steedos {
+  /*html片段直接放到cms文章的正文代码编辑框中，结果显示效果不对 #1613*/
+  /*把bootstrap/less/core.less、bootstrap/less/type.less、steedos-theme/client/core.less部分被其他样式库覆盖的样式强行再加上*/
+}
+.fix-note-editor-in-steedos pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 9.5px;
+  margin: 0 0 10px;
+}
+.fix-note-editor-in-steedos h2,
+.fix-note-editor-in-steedos .h2 {
+  font-size: 22px;
+}
+.fix-note-editor-in-steedos h1,
+.fix-note-editor-in-steedos .h1,
+.fix-note-editor-in-steedos h2,
+.fix-note-editor-in-steedos .h2,
+.fix-note-editor-in-steedos h3,
+.fix-note-editor-in-steedos .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.fix-note-editor-in-steedos h1,
+.fix-note-editor-in-steedos h2,
+.fix-note-editor-in-steedos h3,
+.fix-note-editor-in-steedos h4,
+.fix-note-editor-in-steedos h5,
+.fix-note-editor-in-steedos h6,
+.fix-note-editor-in-steedos .h1,
+.fix-note-editor-in-steedos .h2,
+.fix-note-editor-in-steedos .h3,
+.fix-note-editor-in-steedos .h4,
+.fix-note-editor-in-steedos .h5,
+.fix-note-editor-in-steedos .h6 {
+  font-weight: bold;
+  font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+}
+.fix-note-editor-in-steedos p {
+  margin: 0 0 10px;
+}
+.note-editor {
+  /*html片段直接放到cms文章的正文代码编辑框中，结果显示效果不对 #1613*/
+  /*把bootstrap/less/core.less、bootstrap/less/type.less、steedos-theme/client/core.less部分被其他样式库覆盖的样式强行再加上*/
+}
+.note-editor pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 9.5px;
+  margin: 0 0 10px;
+}
+.note-editor h2,
+.note-editor .h2 {
+  font-size: 22px;
+}
+.note-editor h1,
+.note-editor .h1,
+.note-editor h2,
+.note-editor .h2,
+.note-editor h3,
+.note-editor .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.note-editor h1,
+.note-editor h2,
+.note-editor h3,
+.note-editor h4,
+.note-editor h5,
+.note-editor h6,
+.note-editor .h1,
+.note-editor .h2,
+.note-editor .h3,
+.note-editor .h4,
+.note-editor .h5,
+.note-editor .h6 {
+  font-weight: bold;
+  font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+}
+.note-editor p {
+  margin: 0 0 10px;
+}
 .creator_table_cell {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+.creator_table_cell.field-html .cell-container {
+  overflow: auto;
+  /*html片段直接放到cms文章的正文代码编辑框中，结果显示效果不对 #1613*/
+  /*把bootstrap/less/core.less、bootstrap/less/type.less、steedos-theme/client/core.less部分被其他样式库覆盖的样式强行再加上*/
+}
+.creator_table_cell.field-html .cell-container pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 9.5px;
+  margin: 0 0 10px;
+}
+.creator_table_cell.field-html .cell-container h2,
+.creator_table_cell.field-html .cell-container .h2 {
+  font-size: 22px;
+}
+.creator_table_cell.field-html .cell-container h1,
+.creator_table_cell.field-html .cell-container .h1,
+.creator_table_cell.field-html .cell-container h2,
+.creator_table_cell.field-html .cell-container .h2,
+.creator_table_cell.field-html .cell-container h3,
+.creator_table_cell.field-html .cell-container .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.creator_table_cell.field-html .cell-container h1,
+.creator_table_cell.field-html .cell-container h2,
+.creator_table_cell.field-html .cell-container h3,
+.creator_table_cell.field-html .cell-container h4,
+.creator_table_cell.field-html .cell-container h5,
+.creator_table_cell.field-html .cell-container h6,
+.creator_table_cell.field-html .cell-container .h1,
+.creator_table_cell.field-html .cell-container .h2,
+.creator_table_cell.field-html .cell-container .h3,
+.creator_table_cell.field-html .cell-container .h4,
+.creator_table_cell.field-html .cell-container .h5,
+.creator_table_cell.field-html .cell-container .h6 {
+  font-weight: bold;
+  font-family: Helvetica, Arial, Microsoft Yahei, SimHei;
+}
+.creator_table_cell.field-html .cell-container p {
+  margin: 0 0 10px;
 }
 .creator_table_cell .cell-container > a:not(:last-of-type):after {
   content: ",";
