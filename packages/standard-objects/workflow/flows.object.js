@@ -7,7 +7,7 @@ if (Meteor.isServer) {
         var company_id, flow, form, newFlowName, newName, ref;
         flow = db.flows.findOne({
             _id: flowId,
-            space: spaceId
+            $or:[{space:"template"}, {space:spaceId}],
         }, {
                 fields: {
                     _id: 1,
@@ -16,7 +16,7 @@ if (Meteor.isServer) {
                 }
             });
         if (!flow) {
-            throw Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
+            throw new Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
         }
         newFlowName = options != null ? options.name : void 0;
         company_id = options != null ? options.company_id : void 0;
@@ -27,7 +27,7 @@ if (Meteor.isServer) {
         }
         form = steedosExport.form(flow.form, flow._id, true, company_id);
         if (_.isEmpty(form)) {
-            throw Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
+            throw new Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
         }
         form.name = newName;
         if ((ref = form.flows) != null) {

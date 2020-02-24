@@ -349,6 +349,41 @@ actions:
       function (object_name, record_id, fields) {
               return Modal.show('new_flow_modal');
             }
+  standard_new_by_template:
+    label: 从模板新建
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              if(true){
+                return false;
+              }
+              var permissions;
+              permissions = Creator.getPermissions();
+
+              if (permissions) {
+                return permissions["allowCreate"];
+              }
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        Template.templateFlowsModal.show({onConfirm: function(selection){
+          if(selection && selection.length > 0){
+            var templateFlowId = selection[0]._id;
+            if(templateFlowId){
+              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {}, function(error, result){
+                if(error){
+                  toastr.error('error');
+                }else{
+                  toastr.success(t('workflow_copy_flow_success'));
+                  if (result.length > 0) {
+                    return FlowRouter.go("/app/admin/flows/view/" + result[0]);
+                  }
+                }
+              })
+            }
+          }
+        }})
+      }
   design:
     label: 流程设计器
     visible: !<tag:yaml.org,2002:js/function> |-
