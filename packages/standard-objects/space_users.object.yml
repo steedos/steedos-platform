@@ -16,11 +16,27 @@ fields:
     index: true
     name: name
     sortable: true
-  position:
+  username:
     type: text
-    label: 职务
-    name: position
-    sortable: true
+    label: 用户名
+    name: username
+    searchable: true
+    index: true
+    required: true
+    
+  email:
+    type: text
+    label: 邮件
+    searchable: true
+    name: email
+    required: true
+  mobile:
+    type: text
+    label: 手机
+    searchable: true
+    group: '-'
+    name: mobile
+
   organizations:
     type: lookup
     label: 所属部门
@@ -38,6 +54,7 @@ fields:
     required: true
     name: organizations
     filterable: true
+
   organizations_parents:
     label: 所属部门（含上级）
     type: lookup
@@ -46,20 +63,15 @@ fields:
     omit: true
     name: organizations_parents
     filterable: true
-  company_id:
-    label: 主单位
+    hidden: true
+  organization:
+    label: 主部门
     type: lookup
+    reference_to: organizations
     omit: true
-    hidden: false
-    readonly: true
-    defaultValue: !!js/function |
-      function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
-      }
-    optionsFunction: !!js/function |
-      function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
-      }
+    name: organization
+    filterable: true
+
   company_ids:
     label: 所属单位
     type: lookup
@@ -79,47 +91,49 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
+  company_id:
+    label: 主单位
+    type: lookup
+    omit: true
+    readonly: true
+    hidden: false
+    defaultValue: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+    optionsFunction: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+
+  position:
+    type: text
+    label: 职务
+    name: position
+    sortable: true
   manager:
     type: lookup
     label: 上级主管
     reference_to: users
     name: manager
     filterable: true
-  mobile:
-    type: text
-    label: 手机
-    searchable: true
-    group: '-'
-    name: mobile
-  email:
-    type: text
-    label: 邮件
-    searchable: true
-    name: email
   work_phone:
     type: text
     label: 工作电话
     searchable: true
     name: work_phone
-  company:
-    type: text
-    label: 单位
-    group: '-'
-    hidden: true
-    name: company
+  # company:
+  #   type: text
+  #   label: 单位
+  #   group: '-'
+  #   hidden: true
+  #   name: company
   sort_no:
     type: number
     label: 排序号
     group: '-'
     name: sort_no
     sortable: true
-  organization:
-    label: 主部门
-    type: lookup
-    reference_to: organizations
-    omit: true
-    name: organization
-    filterable: true
   sms_notification:
     label: 接收短信提醒
     type: boolean
@@ -148,18 +162,15 @@ fields:
     omit: true
     hidden: true
     name: hr
-  username:
-    type: text
-    label: 用户名
-    name: username
-    searchable: true
-    index: true
 list_views:
   all:
     label: 所有
     columns:
       - name
       - position
+      - mobile
+      - email
+      - user_accepted
       - sort_no
     filter_scope: space
     sort:
