@@ -33,6 +33,6 @@
 		{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
 
 		{{#CreatorAfModal formId="creatorAddRelatedForm" meteormethod="af_insert" class="btn btn-primary creator-add-related hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-
+		{{> templateFlowsModal}}
 	{{/if}}
 </template>

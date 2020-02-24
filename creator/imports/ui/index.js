@@ -4,3 +4,4 @@ export * from "./object_home";
 export * from "./notifications";
 export * from './favorites';
 export * from './select_users'
+export * from './template_flows_modal'
