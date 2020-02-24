@@ -72,7 +72,9 @@ export async function auth(request: Request, response: Response): Promise<any> {
     || request.headers['x-space-id'];
   if (authorization && authorization.split(' ')[0] == 'Bearer') {
     let spaceAuthToken = authorization.split(' ')[1];
-    spaceId = spaceAuthToken.split(',')[0];
+    if(!spaceId){
+      spaceId = spaceAuthToken.split(',')[0];
+    }
     authToken = spaceAuthToken.split(',')[1];
   }
 
@@ -86,7 +88,12 @@ export async function auth(request: Request, response: Response): Promise<any> {
   }
 
   let user = await getSession(authToken, spaceId);
-  return Object.assign({ authToken: authToken }, user);
+  if(spaceId === 'template'){
+    return Object.assign({ authToken: authToken }, user, {spaceId: spaceId});
+  }else{
+    return Object.assign({ authToken: authToken }, user);
+  }
+  
 }
 
 // 给Request对象添加user属性，值为SteedosUserSession类型

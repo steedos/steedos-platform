@@ -443,6 +443,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 })
             }
         })
+
+        let spaceId = userSession.spaceId
+        if(spaceId === 'template'){
+            return Object.assign({}, userObjectPermission, {allowRead: true, viewAllRecords: true, viewCompanyRecords: true})
+        }
+
         return userObjectPermission;
     }
 

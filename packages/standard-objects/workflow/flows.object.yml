@@ -368,9 +368,10 @@ actions:
       function (object_name, record_id, fields) {
         Template.templateFlowsModal.show({onConfirm: function(selection){
           if(selection && selection.length > 0){
-            var templateFlowId = selection[0]._id;
+            var flow = selection[0];
+            var templateFlowId = flow._id;
             if(templateFlowId){
-              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {}, function(error, result){
+              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name}, function(error, result){
                 if(error){
                   toastr.error('error');
                 }else{
