@@ -164,20 +164,44 @@ fields:
     name: hr
 list_views:
   all:
-    label: 所有
+    label: 有效用户
+    columns:
+      - name
+      - organizations
+      - position
+      - mobile
+      - email
+    filter_scope: space
+    filters: [["user_accepted","=",true]]
+    sort:
+      - - name
+        - asc
+  disabled:
+    label: 禁用用户
     columns:
       - name
       - position
       - mobile
       - email
       - user_accepted
-      - sort_no
     filter_scope: space
+    filters: [["user_accepted","!=",true]]
     sort:
-      - - sort_no
+      - - created
         - desc
-      - - name
-        - asc
+  inviting:
+    label: 邀请待确认用户
+    columns:
+      - name
+      - position
+      - mobile
+      - email
+      - invite_state
+    filter_scope: space
+    filters: [["invite_state","!=",'accepted']]
+    sort:
+      - - created
+        - desc
 permission_set:
   user:
     allowCreate: false
