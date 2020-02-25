@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -445,7 +445,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
 
         let spaceId = userSession.spaceId
-        if(spaceId === 'template'){
+        if(isTemplateSpace(spaceId)){
             return Object.assign({}, userObjectPermission, {allowRead: true, viewAllRecords: true, viewCompanyRecords: true})
         }
 
@@ -733,7 +733,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
-                if('cloud_admin' === spaceId){
+                if(isCloudAdminSpace(spaceId)){
                     return 
                 }
 

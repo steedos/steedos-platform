@@ -271,3 +271,35 @@ export function wrapAsync(fn, context){
     let result = proxyFn.apply(this, [callback]);
     return fut ? fut.wait() : result;
 }
+
+export function getTemplateSpaceId(){
+    let steedosConfig = getSteedosConfig();
+    if(steedosConfig && steedosConfig.public && steedosConfig.public.templateSpaceId){
+        return steedosConfig.public.templateSpaceId
+    }
+}
+
+export function getCloudAdminSpaceId(){
+    let steedosConfig = getSteedosConfig();
+    if(steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId){
+        return steedosConfig.public.cloudAdminSpaceId
+    }
+}
+
+export function isTemplateSpace(spaceId){
+    let steedosConfig = getSteedosConfig();
+
+    if(spaceId && steedosConfig && steedosConfig.public && steedosConfig.public.templateSpaceId && spaceId === steedosConfig.public.templateSpaceId){
+        return true
+    }
+
+    return false
+}
+
+export function isCloudAdminSpace(spaceId){
+    let steedosConfig = getSteedosConfig();
+    if(spaceId && steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId && spaceId === steedosConfig.public.cloudAdminSpaceId){
+        return true
+    }
+    return false
+}

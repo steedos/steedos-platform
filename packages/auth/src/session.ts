@@ -1,4 +1,4 @@
-import { SteedosUserSession } from '@steedos/objectql';
+import { SteedosUserSession, isTemplateSpace } from '@steedos/objectql';
 import { Response } from "express";
 import { getUserIdByToken } from './tokenMap'
 import { getUserSession } from './userSession'
@@ -88,7 +88,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
   }
 
   let user = await getSession(authToken, spaceId);
-  if(spaceId === 'template'){
+  if(isTemplateSpace(spaceId)){
     return Object.assign({ authToken: authToken }, user, {spaceId: spaceId});
   }else{
     return Object.assign({ authToken: authToken }, user);

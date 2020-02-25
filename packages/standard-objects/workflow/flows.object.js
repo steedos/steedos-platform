@@ -5,10 +5,16 @@ if (!db.flows) {
 if (Meteor.isServer) {
     db.flows.copy = function (userId, spaceId, flowId, options, enabled) {
         var company_id, flow, form, newFlowName, newName, ref;
-        flow = db.flows.findOne({
-            _id: flowId,
-            $or:[{space:"template"}, {space:spaceId}],
-        }, {
+        var templateSpaceId = Creator.getTemplateSpaceId();
+        var flowQuery = {
+            _id: flowId
+        }
+        if(templateSpaceId){
+            flowQuery["$or"] = [{space:templateSpaceId}, {space:spaceId}]
+        }else{
+            flowQuery.space = spaceId
+        }
+        flow = db.flows.findOne(flowQuery, {
                 fields: {
                     _id: 1,
                     name: 1,

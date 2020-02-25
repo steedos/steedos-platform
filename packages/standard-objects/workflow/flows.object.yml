@@ -353,13 +353,9 @@ actions:
     label: 从模板新建
     visible: !<tag:yaml.org,2002:js/function> |-
       function () {
-              if(true){
-                return false;
-              }
               var permissions;
               permissions = Creator.getPermissions();
-
-              if (permissions) {
+              if (Creator.getTemplateSpaceId() && permissions) {
                 return permissions["allowCreate"];
               }
             }
@@ -383,6 +379,18 @@ actions:
               })
             }
           }
+        }, gridProp: {
+          columns: [
+            {
+                field: 'name',
+                label: '流程名',
+                width: '30%'
+              },{
+                  field: 'description',
+                  type: 'markdown',
+                  label: '描述'
+              }
+            ]
         }})
       }
   design:
