@@ -3,18 +3,17 @@ import { pluginComponentSelector, store, viewStateSelector, createFlowsModalActi
 import FlowsModalContainer from './containers/FlowsModal'
 var _ = require("underscore");
 
-var templateSpace = "template";
 var gridId = "templateFlowsModalGridId";
 var modalId = "templateFlowsModal";
-
 var onConfirm = '';
+var gridProp = ReactiveVar({});
 
 Template.templateFlowsModal.helpers({
 	component: function(){
 		return FlowsModalContainer;
 	},
 	spaceId: function () {
-		return templateSpace;
+		return Creator.getTemplateSpaceId();
 	},
 	multiple: function(){
 		return false;
@@ -32,6 +31,9 @@ Template.templateFlowsModal.helpers({
 				onConfirm(viewStateSelector(store.getState(), gridId).selection);
 			}
 		}
+	},
+	gridProp: function(){
+		return gridProp.get();
 	}
 });
 
@@ -40,5 +42,9 @@ Template.templateFlowsModal.show = function(options){
 	if(options && _.isFunction(options.onConfirm)){
 		onConfirm = options.onConfirm;
 	}
+	if(options && options.gridProp){
+		gridProp.set(options.gridProp);
+	}
+
 	store.dispatch(createFlowsModalAction('isOpen', true, {id: modalId}))
 };

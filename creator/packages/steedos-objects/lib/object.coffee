@@ -35,7 +35,7 @@ Creator.Object = (options)->
 	self.enable_share = options.enable_share
 	self.enable_instances = options.enable_instances
 	if Meteor.isClient
-		if Session.get("spaceId") == 'cloud_admin'
+		if Creator.isCloudAdminSpace(Session.get("spaceId"))
 			self.enable_tree = false
 		else
 			self.enable_tree = options.enable_tree
@@ -66,7 +66,7 @@ Creator.Object = (options)->
 		if field.primary
 			self.idFieldName = field_name
 		if Meteor.isClient
-			if Session.get("spaceId") == 'cloud_admin'
+			if Creator.isCloudAdminSpace(Session.get("spaceId"))
 				if field_name == 'space'
 					field.filterable = true
 					field.hidden = false

@@ -92,7 +92,7 @@ if Meteor.isClient
 				code_filters_set.filter_scope = list_view.filter_scope
 				code_filters_set.filters = list_view.filters
 
-		if spaceId == 'cloud_admin' && _.include(['users', 'space_users', 'spaces'], object_name)
+		if Creator.isCloudAdminSpace(spaceId) && _.include(['users', 'space_users', 'spaces'], object_name)
 			delete code_filters_set.filters
 		
 		if code_filters_set
@@ -152,7 +152,7 @@ if Meteor.isClient
 						selector.push filter
 		else
 			if spaceId and userId
-				if object_name == "users" && spaceId != 'cloud_admin'
+				if object_name == "users" && !Creator.isCloudAdminSpace(spaceId)
 					selector.push ["_id", "=", userId]
 				if filters
 					filters = Creator.formatFiltersToDev(filters, object_name)

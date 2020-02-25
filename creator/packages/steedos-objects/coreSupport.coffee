@@ -351,6 +351,22 @@ Creator.processPermissions = (po)->
 		po.viewCompanyRecords = true
 	return po
 
+Creator.getTemplateSpaceId = ()->
+	return Meteor.settings.public?.templateSpaceId
+
+Creator.getCloudAdminSpaceId = ()->
+	return Meteor.settings.public?.cloudAdminSpaceId
+
+Creator.isTemplateSpace = (spaceId)->
+	if spaceId && Meteor.settings.public?.templateSpaceId == spaceId
+		return true
+	return false
+
+Creator.isCloudAdminSpace = (spaceId)->
+	if spaceId && Meteor.settings.public?.cloudAdminSpaceId == spaceId
+		return true
+	return false
+
 if Meteor.isServer
 	if process.env.STEEDOS_STORAGE_DIR
 		Creator.steedosStorageDir = process.env.STEEDOS_STORAGE_DIR

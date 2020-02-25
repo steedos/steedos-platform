@@ -64,7 +64,7 @@ Creator.convertListView = (default_columens, list_view, list_view_name)->
 		oitem.columns = ["name"]
 
 	if Meteor.isClient
-		if Session.get("spaceId") == 'cloud_admin' && !_.include(oitem.columns, 'space')
+		if Creator.isCloudAdminSpace(Session.get("spaceId")) && !_.include(oitem.columns, 'space')
 			oitem.columns.push('space')
 
 
