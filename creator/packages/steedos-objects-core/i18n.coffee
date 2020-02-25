@@ -78,15 +78,17 @@ if Meteor.isClient
 		return locale
 
 
+	# 停用业务对象翻译
 	SimpleSchema.prototype.i18n = (prefix) ->
-		self = this
-		_.each(self._schema, (value, key) ->
-			if (!value)
-				return
-			if !self._schema[key].label
-				self._schema[key].label = ()->
-					return t(prefix + "_" + key.replace(/\./g,"_"))
-		)
+		return
+		# self = this
+		# _.each(self._schema, (value, key) ->
+		# 	if (!value)
+		# 		return
+		# 	if !self._schema[key].label
+		# 		self._schema[key].label = ()->
+		# 			return t(prefix + "_" + key.replace(/\./g,"_"))
+		# )
 
 	Template.registerHelper '_', (key, args)->
 		return TAPi18n.__(key, args);
@@ -143,14 +145,16 @@ if Meteor.isClient
 						"sortAscending":  t("dataTables.aria.sortAscending"),
 						"sortDescending": t("dataTables.aria.sortDescending")
 
-			_.each Tabular.tablesByName, (table) ->
-				_.each table.options.columns, (column) ->
-					if (!column.data || column.data == "_id")
-						return
-					column.sTitle = t("" + table.collection._name + "_" + column.data.replace(/\./g,"_"));
-					if !table.options.language
-						table.options.language = {}
-					table.options.language.zeroRecords = t("dataTables.zero") + t(table.collection._name)
-					return 
+			# 停用业务对象翻译
+			# _.each Tabular.tablesByName, (table) ->
+			# 	_.each table.options.columns, (column) ->
+			# 		if (!column.data || column.data == "_id")
+			# 			return
+
+			# 		# column.sTitle = t("" + table.collection._name + "_" + column.data.replace(/\./g,"_"));
+			# 		if !table.options.language
+			# 			table.options.language = {}
+			# 		table.options.language.zeroRecords = t("dataTables.zero") + t(table.collection._name)
+			# 		return 
 
 

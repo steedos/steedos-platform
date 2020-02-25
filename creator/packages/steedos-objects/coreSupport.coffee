@@ -193,7 +193,7 @@ Creator.getObjectRelateds = (object_name)->
 		return related_objects
 	
 	relatedList = _object.relatedList
-	if !_.isEmpty relatedList
+	if Meteor.isClient && !_.isEmpty relatedList
 		relatedListMap = {}
 		_.each relatedList, (objName)->
 			relatedListMap[objName] = {}
@@ -210,10 +210,9 @@ Creator.getObjectRelateds = (object_name)->
 				relatedListMap[enableObjName] = { object_name: enableObjName, foreign_key: "related_to" }
 		if relatedListMap['audit_records']
 			#record 详细下的audit_records仅modifyAllRecords权限可见
-			if Meteor.isClient
-				permissions = Creator.getPermissions(object_name)
-				if _object.enable_audit && permissions?.modifyAllRecords
-					relatedListMap['audit_records'] = { object_name:"audit_records", foreign_key: "related_to" }
+			permissions = Creator.getPermissions(object_name)
+			if _object.enable_audit && permissions?.modifyAllRecords
+				relatedListMap['audit_records'] = { object_name:"audit_records", foreign_key: "related_to" }
 		related_objects = _.values relatedListMap
 		return related_objects
 

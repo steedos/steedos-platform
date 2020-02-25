@@ -47,6 +47,14 @@ checkAppPermission = (context, redirect)->
 		Session.set("app_id", Creator.getVisibleApps(true)[0]._id)
 		redirect "/"
 
+checkAppId = (context, redirect)->
+	app_id = context.params.app_id
+	if app_id == "admin" and Steedos.isMobile()
+		# 手机上不支持admin应用，直接跳转到用户设置界面
+		redirect "/user_settings"
+		# urlQuery.pop的原因是手机上user_settings界面返回按钮应该正常返回到上个界面而不是返回到/app/admin
+		urlQuery.pop()
+
 checkObjectPermission = (context, redirect)->
 	object_name = context.params.object_name
 	allowRead = Creator.getObject(object_name)?.permissions?.get()?.allowRead
@@ -65,27 +73,28 @@ FlowRouter.route '/app',
 FlowRouter.route '/app/menu',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		return
+		main = 'app_object_menu'
+		Session.set("hidden_header",true)
+		BlazeLayout.render Creator.getLayout(),
+			main: main
+	triggersExit: [(context, redirect) ->
+		if Steedos.isMobile()
+			Session.set("hidden_header", undefined)
+	]
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	triggersEnter: [ checkUserSigned, checkAppPermission, checkAppId ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
 			Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
-		if FlowRouter.getParam("app_id") is "meeting"
+		if app_id is "meeting"
 			FlowRouter.go('/app/' + app_id + '/meeting/calendar')
 		else
 			main = 'creator_app_home'
-			if Steedos.isMobile()
-				Session.set('hidden_header', true)
 			BlazeLayout.render Creator.getLayout(),
 				main: main
-	triggersExit: [(context, redirect) ->
-		if Steedos.isMobile()
-			Session.set("hidden_header", undefined)
-	]
 
 FlowRouter.route '/app/:app_id/home',
 	triggersEnter: [ checkUserSigned, checkAppPermission ],

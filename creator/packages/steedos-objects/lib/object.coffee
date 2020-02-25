@@ -191,36 +191,36 @@ Creator.Object = (options)->
 
 	return self
 
-Creator.Object.prototype.i18n = ()->
-	# set object label
-	self = this
+# Creator.Object.prototype.i18n = ()->
+# 	# set object label
+# 	self = this
 
-	key = self.name
-	if t(key) == key
-		if !self.label
-			self.label = self.name
-	else
-		self.label = t(key)
+# 	key = self.name
+# 	if t(key) == key
+# 		if !self.label
+# 			self.label = self.name
+# 	else
+# 		self.label = t(key)
 
-	# set field labels
-	_.each self.fields, (field, field_name)->
-		fkey = self.name + "_" + field_name
-		if t(fkey) == fkey
-			if !field.label
-				field.label = field_name
-		else
-			field.label = t(fkey)
-		self.schema?._schema?[field_name]?.label = field.label
+# 	# set field labels
+# 	_.each self.fields, (field, field_name)->
+# 		fkey = self.name + "_" + field_name
+# 		if t(fkey) == fkey
+# 			if !field.label
+# 				field.label = field_name
+# 		else
+# 			field.label = t(fkey)
+# 		self.schema?._schema?[field_name]?.label = field.label
 
 
-	# set listview labels
-	_.each self.list_views, (item, item_name)->
-		i18n_key = self.name + "_listview_" + item_name
-		if t(i18n_key) == i18n_key
-			if !item.label
-				item.label = item_name
-		else
-			item.label = t(i18n_key)
+# 	# set listview labels
+# 	_.each self.list_views, (item, item_name)->
+# 		i18n_key = self.name + "_listview_" + item_name
+# 		if t(i18n_key) == i18n_key
+# 			if !item.label
+# 				item.label = item_name
+# 		else
+# 			item.label = t(i18n_key)
 
 
 Creator.getObjectODataRouterPrefix = (object)->
@@ -230,13 +230,13 @@ Creator.getObjectODataRouterPrefix = (object)->
 		else
 			return "/api/odata/#{object.database_name}"
 
-if Meteor.isClient
+# if Meteor.isClient
 
-	Meteor.startup ->
-		Tracker.autorun ->
-			if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
-				_.each Creator.objectsByName, (object, object_name)->
-					object.i18n()
+# 	Meteor.startup ->
+# 		Tracker.autorun ->
+# 			if Session.get("steedos-locale") && Creator.bootstrapLoaded?.get()
+# 				_.each Creator.objectsByName, (object, object_name)->
+# 					object.i18n()
 
 Meteor.startup ->
 	if !Creator.bootstrapLoaded && Creator.Objects
