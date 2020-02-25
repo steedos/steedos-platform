@@ -80,7 +80,6 @@ FlowRouter.route '/app/:app_id',
 			main = 'creator_app_home'
 			if Steedos.isMobile()
 				Session.set('hidden_header', true)
-				main = 'app_object_menu'
 			BlazeLayout.render Creator.getLayout(),
 				main: main
 	triggersExit: [(context, redirect) ->
