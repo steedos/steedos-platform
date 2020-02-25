@@ -158,10 +158,11 @@ fields:
   #   reference_to: users
   #   index: true
   #   omit: true
-  # viewCount:
-  #   label: 阅读次数
-  #   type: number
-  #   omit: true
+  viewCount:
+    label: 阅读次数
+    type: number
+    omit: true
+    hidden: true
   # commentCount:
   #   label: 评论次数
   #   type: number
