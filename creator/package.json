@@ -97,7 +97,7 @@
   },
   "devDependencies": {
     "@steedos/app-contracts": "^1.16.1",
-    "@steedos/react": "1.14.11",
+    "@steedos/react": "1.14.12",
     "@steedos/steedos-plugin-workflow": "^2.0.4",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
