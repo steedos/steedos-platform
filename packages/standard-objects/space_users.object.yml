@@ -1,5 +1,5 @@
 name: space_users
-label: 人员
+label: 用户
 icon: user
 enable_search: true
 sidebar:
