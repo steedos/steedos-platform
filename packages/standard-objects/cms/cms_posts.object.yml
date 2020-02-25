@@ -21,6 +21,7 @@ fields:
     rows: 2
     is_wide: true
     omit: true
+    hidden: true
   body:
     type: markdown
     label: 正文
@@ -136,16 +137,17 @@ fields:
   postDate:
     type: datetime
     label: 发布日期
-    required: true
+    hidden: true
+    required: false
     defaultValue: !!js/function |
       function () {
         return new Date();
       }
   # The post author's name
-  tags:
-    type: "[text]"
-    hidden: true
-    omit: true
+  # tags:
+  #   type: "[text]"
+  #   hidden: true
+  #   omit: true
   # author_name:
   #   label: 作者
   #   type: "text"
@@ -156,10 +158,10 @@ fields:
   #   reference_to: users
   #   index: true
   #   omit: true
-  viewCount:
-    label: 阅读次数
-    type: number
-    omit: true
+  # viewCount:
+  #   label: 阅读次数
+  #   type: number
+  #   omit: true
   # commentCount:
   #   label: 评论次数
   #   type: number
@@ -182,64 +184,64 @@ fields:
   #   type: number
   #   hidden: true
   #   omit: true
-  baseScore:
-    type: number
-    scale: 2
-    hidden: true
-    omit: true
-  upvotes:
-    type: number
-    hidden: true
-    omit: true
-  upvoters:
-    type: lookup
-    reference_to: users
-    multiple: true
-    hidden: true
-    omit: true
-  downvotes:
-    type: number
-    hidden: true
-    omit: true
-  downvoters:
-    type: lookup
-    reference_to: users
-    multiple: true
-    hidden: true
-    omit: true
-  score:
-    type: number
-    scale: 2
-    hidden: true
-    omit: true
+  # baseScore:
+  #   type: number
+  #   scale: 2
+  #   hidden: true
+  #   omit: true
+  # upvotes:
+  #   type: number
+  #   hidden: true
+  #   omit: true
+  # upvoters:
+  #   type: lookup
+  #   reference_to: users
+  #   multiple: true
+  #   hidden: true
+  #   omit: true
+  # downvotes:
+  #   type: number
+  #   hidden: true
+  #   omit: true
+  # downvoters:
+  #   type: lookup
+  #   reference_to: users
+  #   multiple: true
+  #   hidden: true
+  #   omit: true
+  # score:
+  #   type: number
+  #   scale: 2
+  #   hidden: true
+  #   omit: true
   # The post's status. 
-  status:
-    type: number
-    hidden: true
-    omit: true
-  featured:
-    type: boolean
-    defaultValue: false
-    hidden: true
-    omit: true
+  # status:
+  #   type: number
+  #   hidden: true
+  #   omit: true
+  # featured:
+  #   type: boolean
+  #   defaultValue: false
+  #   hidden: true
+  #   omit: true
   # Whether the post is inactive. Inactive posts see their score recalculated less often
-  inactive:
-    type: boolean
-    hidden: true
-    omit: true
+  # inactive:
+  #   type: boolean
+  #   hidden: true
+  #   omit: true
   # Save info for later spam checking on a post. We will use this for the akismet package
-  userIP:
-    type: "text"
-    hidden: true
-    omit: true
-  userAgent:
-    type: "text"
-    hidden: true
-    omit: true
-  referrer:
-    type: "text"
-    hidden: true
-    omit: true
+  # userIP:
+  #   type: "text"
+  #   hidden: true
+  #   omit: true
+  # userAgent:
+  #   type: "text"
+  #   hidden: true
+  #   omit: true
+  # referrer:
+  #   type: "text"
+  #   hidden: true
+  #   omit: true
 list_views:
   all:
     label: 所有
