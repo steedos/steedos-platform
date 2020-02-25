@@ -1089,10 +1089,10 @@ Creator.Objects['space_users'].actions = {
             return Creator.isSpaceAdmin();
         },
         todo: function () {
-            if (!Steedos.isPaidSpace()) {
-                Steedos.spaceUpgradedModal();
-                return;
-            }
+            // if (!Steedos.isPaidSpace()) {
+            //     Steedos.spaceUpgradedModal();
+            //     return;
+            // }
             return Modal.show('import_users_modal');
         }
     },
