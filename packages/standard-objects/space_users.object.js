@@ -1086,50 +1086,53 @@ Creator.Objects['space_users'].actions = {
             if(Steedos.isMobile()){
                 return false;
             }
+            // if (!Steedos.isPaidSpace()) {
+            //     return false;
+            // }
             return Creator.isSpaceAdmin();
         },
         todo: function () {
-            // if (!Steedos.isPaidSpace()) {
-            //     Steedos.spaceUpgradedModal();
-            //     return;
-            // }
             return Modal.show('import_users_modal');
         }
     },
-    export: {
-        label: "导出",
-        on: "list",
-        visible: function (object_name, record_id, record_permissions) {
-            if(Steedos.isMobile()){
-                return false;
-            }
-            return Creator.isSpaceAdmin();
-        },
-        todo: function () {
-            var orgId, spaceId, uobj, url;
-            spaceId = Session.get('spaceId');
-            var organization = Session.get('organization');
-            orgId = organization && organization._id;
+    // 与列表视图导出功能重复
+    // export: {
+    //     label: "导出",
+    //     on: "list",
+    //     visible: function (object_name, record_id, record_permissions) {
+    //         if(Steedos.isMobile()){
+    //             return false;
+    //         }
+    //         if (!Steedos.isPaidSpace()) {
+    //             return false;
+    //         }
+    //         return Creator.isSpaceAdmin();
+    //     },
+    //     todo: function () {
+    //         var orgId, spaceId, uobj, url;
+    //         spaceId = Session.get('spaceId');
+    //         var organization = Session.get('organization');
+    //         orgId = organization && organization._id;
 
-            if (spaceId && orgId) {
-                uobj = {};
-                uobj['X-User-Id'] = Meteor.userId();
-                uobj['X-Auth-Token'] = Accounts._storedLoginToken();
-                uobj.space_id = spaceId;
-                uobj.org_id = orgId;
-                url = Steedos.absoluteUrl() + 'api/export/space_users?' + $.param(uobj);
-                return window.open(url, '_parent', 'EnableViewPortScale=yes');
-            } else {
-                return swal({
-                    title: '左侧未选中任何组织',
-                    text: '请在左侧组织机构树中选中一个组织后再执行导出操作',
-                    html: true,
-                    type: 'warning',
-                    confirmButtonText: TAPi18n.__('OK')
-                });
-            }
-        }
-    },
+    //         if (spaceId && orgId) {
+    //             uobj = {};
+    //             uobj['X-User-Id'] = Meteor.userId();
+    //             uobj['X-Auth-Token'] = Accounts._storedLoginToken();
+    //             uobj.space_id = spaceId;
+    //             uobj.org_id = orgId;
+    //             url = Steedos.absoluteUrl() + 'api/export/space_users?' + $.param(uobj);
+    //             return window.open(url, '_parent', 'EnableViewPortScale=yes');
+    //         } else {
+    //             return swal({
+    //                 title: '左侧未选中任何组织',
+    //                 text: '请在左侧组织机构树中选中一个组织后再执行导出操作',
+    //                 html: true,
+    //                 type: 'warning',
+    //                 confirmButtonText: TAPi18n.__('OK')
+    //             });
+    //         }
+    //     }
+    // },
     setPassword: {
         label: "更改密码",
         on: "record",
