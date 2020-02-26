@@ -59,22 +59,12 @@ const removeNotifications = function (doc, members) {
 
 module.exports = {
     listenTo: 'announcements',
-    afterInsert: async function (userId, doc) {
+    afterInsert: async function () {
+        const doc = this.doc;
+        const userId = this.userId;
         const members = doc.members;
         if (members && members.length) {
             addNotifications(userId, doc, members);
-        }
-    },
-    beforeUpdate: async function (userId, doc, fieldNames, modifier, options) {
-        let oldMembers = doc.members;
-        let newMembers = modifier.$set.members;
-        let addMembers = _.difference(newMembers, oldMembers);
-        let subMembers = _.difference(oldMembers, newMembers);
-        if (addMembers.length) {
-            addNotifications(userId, doc, addMembers);
-        }
-        if (subMembers.length) {
-            removeNotifications(doc, subMembers);
         }
     }
 }
