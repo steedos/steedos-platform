@@ -231,6 +231,20 @@ list_views:
   all:
     label: 所有
     filter_scope: space
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var userId = Steedos.userId();
+        var site = Session.get("site");
+        var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
+        var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
+        var isSitePublic = site && site.visibility !== "private";
+        if(!isAdmin && !isSitePublic){
+          /*私有站点下文档只能被站点成员site.admins看到，不是站点成员则只能看自己owner的文档*/
+          return [
+            ["owner","=","{userId}"]
+          ];
+        }
+      }
     columns:
       - name
       - category

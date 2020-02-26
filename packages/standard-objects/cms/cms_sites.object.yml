@@ -35,7 +35,7 @@ fields:
     optionsFunction: !!js/function |
       function(){
         var visibilitys = [
-          /*{label: t("cms_sites_visibility_private"), value: "private"},*/
+          {label: t("cms_sites_visibility_private"), value: "private"},
           {label: t("cms_sites_visibility_team"), value: "team"},
           {label: t("cms_sites_visibility_public"), value: "public"}
         ];
