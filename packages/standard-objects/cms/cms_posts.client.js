@@ -81,5 +81,25 @@ Meteor.autorun(function(){
         }
       }
     });
+
+    // standard_new等baseObject中的actions用上面的`Object.assign(actions`写法不会生效，只能单独拿出来写
+    actions.standard_new.visible = function (object_name, record_id, record_permissions) {
+      var site = Session.get("site");
+      var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
+      if(!allowCreate){
+          // permissions配置没有权限则不给权限
+          return false
+      }
+      var userId = Steedos.userId();
+      var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
+      var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
+      // 管理员要单独判断，只给到有对应站点成员的权限
+      if(isAdmin){
+          return true;
+      }
+      else{
+        return false;
+      }
+    }
   }
 });
