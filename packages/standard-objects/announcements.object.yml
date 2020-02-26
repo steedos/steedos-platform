@@ -2,6 +2,7 @@ name: announcements
 icon: task
 label: 公告
 enable_files: true
+enable_chatter: true
 fields:
   name:
     label: 标题
@@ -26,12 +27,18 @@ fields:
     multiple: true
     filterable: true
     is_wide: true
+  created: 
+    label: 发布时间
+  created_by:
+    label: 发布人
 list_views:
   all:
-    label: 所有
+    label: 所有公告
     filter_scope: space
     columns:
       - name
+      - created
+      - created_by
 permission_set:
   user:
     allowCreate: false
