@@ -31,6 +31,8 @@ fields:
     label: 发布时间
   created_by:
     label: 发布人
+  modified_by:
+    label: 修改人
 list_views:
   all:
     label: 所有公告
@@ -41,9 +43,9 @@ list_views:
       - created_by
 permission_set:
   user:
-    allowCreate: false
-    allowDelete: false
-    allowEdit: false
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
@@ -52,5 +54,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true
