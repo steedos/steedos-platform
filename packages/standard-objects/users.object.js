@@ -232,43 +232,43 @@ if (Meteor.isServer) {
                 space: newId
             });
         }
-        try {
-            if (!doc.services || !doc.services.password || !doc.services.password.bcrypt) {
-                // 发送让用户设置密码的邮件
-                // Accounts.sendEnrollmentEmail(doc._id, doc.emails[0].address)
-                if (doc.emails) {
-                    token = Random.secret();
-                    email = doc.emails[0].address;
-                    now = new Date();
-                    tokenRecord = {
-                        token: token,
-                        email: email,
-                        when: now
-                    };
-                    db.users.update(doc._id, {
-                        $set: {
-                            "services.password.reset": tokenRecord
-                        }
-                    });
-                    Meteor._ensure(doc, 'services', 'password').reset = tokenRecord;
-                    enrollAccountUrl = Accounts.urls.enrollAccount(token);
-                    url = Accounts.urls.enrollAccount(token);
-                    locale = Steedos.locale(doc._id, true);
-                    subject = TAPi18n.__("users_email_create_account", {}, locale);
-                    greeting = TAPi18n.__('users_email_hello', {}, locale) + "&nbsp;" + doc.name + ",";
-                    content = greeting + "</br>" + TAPi18n.__('users_email_start_service', {}, locale) + "</br>" + url + "</br>" + TAPi18n.__("users_email_thanks", {}, locale) + "</br>";
-                    return MailQueue.send({
-                        to: email,
-                        from: Meteor.settings.email.from,
-                        subject: subject,
-                        html: content
-                    });
-                }
-            }
-        } catch (error) {
-            e = error;
-            return console.log("after insert user: sendEnrollmentEmail, id: " + doc._id + ", " + e);
-        }
+        // try {
+        //     if (!doc.services || !doc.services.password || !doc.services.password.bcrypt) {
+        //         // 发送让用户设置密码的邮件
+        //         // Accounts.sendEnrollmentEmail(doc._id, doc.emails[0].address)
+        //         if (doc.emails) {
+        //             token = Random.secret();
+        //             email = doc.emails[0].address;
+        //             now = new Date();
+        //             tokenRecord = {
+        //                 token: token,
+        //                 email: email,
+        //                 when: now
+        //             };
+        //             db.users.update(doc._id, {
+        //                 $set: {
+        //                     "services.password.reset": tokenRecord
+        //                 }
+        //             });
+        //             Meteor._ensure(doc, 'services', 'password').reset = tokenRecord;
+        //             enrollAccountUrl = Accounts.urls.enrollAccount(token);
+        //             url = Accounts.urls.enrollAccount(token);
+        //             locale = Steedos.locale(doc._id, true);
+        //             subject = TAPi18n.__("users_email_create_account", {}, locale);
+        //             greeting = TAPi18n.__('users_email_hello', {}, locale) + "&nbsp;" + doc.name + ",";
+        //             content = greeting + "</br>" + TAPi18n.__('users_email_start_service', {}, locale) + "</br>" + url + "</br>" + TAPi18n.__("users_email_thanks", {}, locale) + "</br>";
+        //             return MailQueue.send({
+        //                 to: email,
+        //                 from: Meteor.settings.email.from,
+        //                 subject: subject,
+        //                 html: content
+        //             });
+        //         }
+        //     }
+        // } catch (error) {
+        //     e = error;
+        //     return console.log("after insert user: sendEnrollmentEmail, id: " + doc._id + ", " + e);
+        // }
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
         var newNumber;
