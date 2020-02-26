@@ -7,6 +7,7 @@ sort: 100
 objects: 
   - instances
   - cms_posts
+  - announcements
   - space_users
   - tasks
   - events

@@ -1,0 +1,50 @@
+name: announcements
+icon: task
+label: 公告
+fields:
+  name:
+    label: 标题
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    is_wide: true
+  body:
+    type: html
+    label: 正文
+    rows: 5
+    required: true
+    is_wide: true
+  members:
+    type: lookup
+    label: 发布对象
+    reference_to: users
+    required: true
+    multiple: true
+    filterable: true
+    is_wide: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - visibility
+      - order
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
