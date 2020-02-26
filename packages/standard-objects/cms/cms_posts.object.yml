@@ -260,7 +260,7 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true
   admin:
     allowCreate: true
