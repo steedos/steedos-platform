@@ -26,7 +26,6 @@ Template.templateFlowsModal.helpers({
 	},
 	onConfirm: function(){
 		return function(){
-			console.log('on confirm...');
 			if(_.isFunction(onConfirm)){
 				onConfirm(viewStateSelector(store.getState(), gridId).selection);
 			}
