@@ -118,22 +118,6 @@ fields:
   #         return visibilitys[0];
   #       }
   #     }
-  members:
-    type: object
-    label: 发布对象
-    is_wide: true
-  members.users:
-    type: lookup
-    label: 人员
-    reference_to: users
-    multiple: true
-    filterable: true
-  members.organizations:
-    type: lookup
-    label: 部门
-    reference_to: organizations
-    multiple: true
-    filterable: true
   postDate:
     type: datetime
     label: 发布日期
@@ -247,23 +231,6 @@ list_views:
   all:
     label: 所有
     filter_scope: space
-    filters: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        var userId = Steedos.userId();
-        var site = Session.get("site");
-        var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
-        var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
-        var organizations = Steedos.getUserOrganizations(true);
-        if(!isAdmin){
-          return [
-            ["owner","=","{userId}"],
-            "or",
-            ["members.organizations","=",organizations],
-            "or",
-            ["members.users","=","{userId}"]
-          ];
-        }
-      }
     columns:
       - name
       - category
