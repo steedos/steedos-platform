@@ -335,7 +335,7 @@ actions:
                 id: 'reports_object_grid',
                 objectName: 'reports',
                 enableSearch: true,
-                selectRows: 'checkbox',
+                selectRows: 'radio',
                 spaceId: Creator.getTemplateSpaceId(),
                 columns: [{
                     field: 'name',
