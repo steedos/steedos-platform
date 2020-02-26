@@ -41,6 +41,18 @@ list_views:
       - name
       - created
       - created_by
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var userId = Steedos.userId();
+        var isAdmin = Steedos.isSpaceAdmin();
+        if(!isAdmin){
+          return [
+            ["owner","=","{userId}"],
+            "or",
+            ["members","=","{userId}"]
+          ];
+        }
+      }
 permission_set:
   user:
     allowCreate: true
