@@ -1,7 +1,7 @@
 const _ = require("underscore");
 
 const addNotifications = function (userId, doc, members) {
-    members = _.difference(members, [userId]);
+    // members = _.difference(members, [userId]);
     if (!members.length) {
         return;
     }
