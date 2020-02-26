@@ -280,6 +280,75 @@ list_views:
     filter_fields:
       - report_type
       - created
+actions:
+  standard_new_by_template:
+    label: 从模板新建
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var permissions;
+              permissions = Creator.getPermissions();
+              if (Creator.getTemplateSpaceId() && permissions) {
+                return permissions["allowCreate"];
+              }
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        Template.gridModal.show({
+            id: 'gridModal',
+            heading: '请选择报表',
+            onConfirm: function (selection) {
+                if (selection && selection.length > 0) {
+                    var record = selection[0];
+                    var recordId = record._id;
+                    var url = Meteor.absoluteUrl("/api/v4/reports/all/copy");
+                    var data = {
+                        recordId: recordId
+                    };
+                    if (recordId) {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            async: true,
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            processData: false,
+                            contentType: 'application/json',
+                            success: function (data) {
+                                if (data.errors) {
+                                    data.errors.forEach(function (e) {
+                                        toastr.error(e.errorMessage);
+                                    });
+                                    return;
+                                } else if (data.value) {
+                                    FlowRouter.go("/app/-/reports/view/" + data.value._id);
+                                }
+                            },
+                            error: function (xhr, msg, ex) {
+                                toastr.error(msg);
+                            }
+                        })
+                    }
+                }
+            },
+            gridProp: {
+                id: 'reports_object_grid',
+                objectName: 'reports',
+                enableSearch: true,
+                selectRows: 'checkbox',
+                spaceId: Creator.getTemplateSpaceId(),
+                columns: [{
+                    field: 'name',
+                    label: '名称',
+                    width: '30%'
+                }, {
+                    field: 'description',
+                    type: 'markdown',
+                    label: '描述'
+                }]
+            }
+        })
+      }
 permission_set:
   user:
     allowCreate: true
