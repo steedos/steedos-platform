@@ -1,6 +1,7 @@
 name: announcements
 icon: task
 label: 公告
+enable_files: true
 fields:
   name:
     label: 标题
