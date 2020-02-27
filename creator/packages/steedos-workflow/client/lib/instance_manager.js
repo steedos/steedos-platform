@@ -547,10 +547,10 @@ function adjustFieldValue(field, value) {
 				value = value; //$.format.date(value,"yyyy-MM-ddTHH:mm'Z");
 				break;
 			case 'group':
-				value = CFDataManager.getFormulaOrganizations(value);
+				value = CFDataManager.getFormulaOrganizations(value) || '';
 				break;
 			case 'user':
-				value = WorkflowManager.getFormulaUserObjects(value);
+				value = WorkflowManager.getFormulaUserObjects(value) || '';
 				break;
 		}
 	}
