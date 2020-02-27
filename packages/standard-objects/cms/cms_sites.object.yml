@@ -70,6 +70,12 @@ list_views:
       - name
       - visibility
       - order
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        if(!Steedos.isSpaceAdmin()){
+          return [["visibility","<>","private"], "or", ["owner","=","{userId}"], "or", ["admins","=","{userId}"]];
+        }
+      }
 permission_set:
   user:
     allowCreate: true
