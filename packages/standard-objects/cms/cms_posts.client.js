@@ -44,7 +44,7 @@ Meteor.autorun(function(){
           }
           else{
             //否则需要请求文章所属站点是否为Public
-            var record = Creator.getObjectRecord();
+            var record = Creator.getObjectRecord(object_name, record_id, "site");
             if(record && record.site){
               var siteId = typeof record.site === "string" ? record.site : record.site._id;
               var site = Creator.odata.get("cms_sites", siteId, "visibility");
@@ -68,7 +68,7 @@ Meteor.autorun(function(){
           }
           if(!siteId){
             //否则需要从详细记录中取出所属站点Id
-            var record = Creator.getObjectRecord();
+            var record = Creator.getObjectRecord(object_name, record_id, "site");
             if(record && record.site){
               siteId = typeof record.site === "string" ? record.site : record.site._id;
             }
@@ -116,7 +116,7 @@ Meteor.autorun(function(){
         var userId = Steedos.userId();
         if(!site){
           // 文档详细界面拿不到当前选中站点时，只能请求记录本身所属站点的信息来判断
-          var record = Creator.getObjectRecord();
+          var record = Creator.getObjectRecord(object_name, record_id, "site");
           if(record && record.site){
             var siteId = typeof record.site === "string" ? record.site : record.site._id;
             site = Creator.odata.get("cms_sites", siteId, "admins");
@@ -142,7 +142,7 @@ Meteor.autorun(function(){
         var userId = Steedos.userId();
         if(!site){
           // 文档详细界面拿不到当前选中站点时，只能请求记录本身所属站点的信息来判断
-          var record = Creator.getObjectRecord();
+          var record = Creator.getObjectRecord(object_name, record_id, "site");
           if(record && record.site){
             var siteId = typeof record.site === "string" ? record.site : record.site._id;
             site = Creator.odata.get("cms_sites", siteId, "admins");

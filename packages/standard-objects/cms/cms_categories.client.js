@@ -56,7 +56,7 @@ Meteor.autorun(function(){
         var userId = Steedos.userId();
         if(!site){
           // 栏目详细界面拿不到当前选中站点时，只能请求记录本身所属站点的信息来判断
-          var record = Creator.getObjectRecord();
+          var record = Creator.getObjectRecord(object_name, record_id, "site");
           if(record && record.site){
             var siteId = typeof record.site === "string" ? record.site : record.site._id;
             site = Creator.odata.get("cms_sites", siteId, "admins");
@@ -82,7 +82,7 @@ Meteor.autorun(function(){
         var userId = Steedos.userId();
         if(!site){
           // 栏目详细界面拿不到当前选中站点时，只能请求记录本身所属站点的信息来判断
-          var record = Creator.getObjectRecord();
+          var record = Creator.getObjectRecord(object_name, record_id, "site");
           if(record && record.site){
             var siteId = typeof record.site === "string" ? record.site : record.site._id;
             site = Creator.odata.get("cms_sites", siteId, "admins");
