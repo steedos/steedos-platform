@@ -45,9 +45,9 @@ if (Meteor.isServer) {
   db.cms_sites.after.insert(function(userId, doc) {});
   db.cms_sites.before.update(function(userId, doc, fieldNames, modifier, options) {
     modifier.$set = modifier.$set || {};
-    if (doc.owner !== userId) {
-      throw new Meteor.Error(400, "cms_sites_error_site_owner_only");
-    }
+    // if (doc.owner !== userId) {
+    //   throw new Meteor.Error(400, "cms_sites_error_site_owner_only");
+    // }
     if (modifier.$set.admins) {
       if (modifier.$set.admins.indexOf(userId) < 0) {
         modifier.$set.admins.push(userId);
