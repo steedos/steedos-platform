@@ -72,9 +72,9 @@ list_views:
       - order
 permission_set:
   user:
-    allowCreate: false
-    allowDelete: false
-    allowEdit: false
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
@@ -83,5 +83,5 @@ permission_set:
     allowDelete: true
     allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true
