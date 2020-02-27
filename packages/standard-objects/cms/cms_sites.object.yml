@@ -73,7 +73,7 @@ list_views:
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
         if(!Steedos.isSpaceAdmin()){
-          return [["visibility","<>","private"], "or", ["owner","=","{userId}"], "or", ["admins","=","{userId}"]];
+          return [["owner","=","{userId}"], "or", ["admins","=","{userId}"]];
         }
       }
 permission_set:

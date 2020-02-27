@@ -32,7 +32,7 @@ fields:
           console.error("未找到当前对象：" + siteObjectName);
           return [];
         }
-        var options, result, companys, queryFilters;
+        var options, result, sites, queryFilters;
         result = [];
         options = {
           $select: 'name'
@@ -44,8 +44,8 @@ fields:
           var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
           options.$filter = odataFilter;
         }
-        companys = Creator.odata.query(siteObjectName, options, true);
-        companys.forEach(function (item) {
+        sites = Creator.odata.query(siteObjectName, options, true);
+        sites.forEach(function (item) {
           result.push({
             label: item.name,
             value: item._id
@@ -70,7 +70,7 @@ fields:
           console.error("未找到当前对象：" + values._object_name);
           return [];
         }
-        var options, result, companys, queryFilters;
+        var options, result, parents, queryFilters;
         result = [];
         options = {
           $select: 'name'
@@ -79,8 +79,8 @@ fields:
         var steedosFilters = require("@steedos/filters");
         var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
         options.$filter = odataFilter;
-        companys = Creator.odata.query(values._object_name, options, true);
-        companys.forEach(function (item) {
+        parents = Creator.odata.query(values._object_name, options, true);
+        parents.forEach(function (item) {
           result.push({
             label: item.name,
             value: item._id
@@ -113,6 +113,23 @@ list_views:
       - site
       - parent
       - order
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        if(!Steedos.isSpaceAdmin()){
+          var siteObjectName = "cms_sites";
+          var options, sites, queryFilters;
+          options = {
+            $select: 'name'
+          };
+          var userId = Steedos.userId();
+          queryFilters = ["admins", "=", userId];
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          options.$filter = odataFilter;
+          var sites = Creator.odata.query(siteObjectName, options, true);
+          return [["site", "in", _.pluck(sites, "_id")]];
+        }
+      }
 permission_set:
   user:
     allowCreate: true
