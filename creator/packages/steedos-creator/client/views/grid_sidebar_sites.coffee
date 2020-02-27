@@ -19,6 +19,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			# 默认不显示右侧数据，只有选中站点后才显示
 			setGridSidebarFilters({_id: -1})
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
+			steedosFilters = require("@steedos/filters")
+			dxFilter = steedosFilters.formatFiltersToDev [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
 			dxOptions = 
 				searchEnabled: false
 				dataSource: 
@@ -64,6 +66,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 						fieldTypes: {
 							'_id': 'String'
 						}
+					filter: dxFilter,
 					sort: [ {
 						selector: 'order'
 						desc: false
