@@ -9,7 +9,7 @@ objects:
   - cms_posts
 admin_menus:
   - _id: menu_cms
-    name: 信息发布
+    name: 文档
     permission_sets:
       - user
     expanded: false
