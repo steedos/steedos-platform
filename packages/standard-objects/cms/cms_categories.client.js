@@ -20,8 +20,24 @@ Meteor.autorun(function(){
       }
       else{
         var userId = Steedos.userId();
-        var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
-        return isSiteAdmin;
+        if(!site){
+          // 没有选中站点，请求接口判断是否至少属于一个站点成员
+          var options, queryFilters;
+          options = {
+            $select: '_id'
+          };
+          queryFilters = ["admins", "=", userId];
+          var siteObjectName = "cms_sites";
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          options.$filter = odataFilter;
+          var sites = Creator.odata.query(siteObjectName, options, true);
+          return sites && sites.length;
+        }
+        else{
+          var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
+          return isSiteAdmin;
+        }
       }
     }
 
