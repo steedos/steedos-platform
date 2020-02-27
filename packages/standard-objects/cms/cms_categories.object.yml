@@ -24,6 +24,35 @@ fields:
     required: true
     sortable: true
     index: true
+    optionsFunction: !!js/function |
+      function (values) {
+        var siteObjectName = "cms_sites";
+        var object = Creator.getObject(siteObjectName);
+        if(!object){
+          console.error("未找到当前对象：" + siteObjectName);
+          return [];
+        }
+        var options, result, companys, queryFilters;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        if(!Steedos.isSpaceAdmin()){
+          var userId = Steedos.userId();
+          queryFilters = ["admins", "=", userId];
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          options.$filter = odataFilter;
+        }
+        companys = Creator.odata.query(siteObjectName, options, true);
+        companys.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
+      }
   parent:
     label: 上级栏目
     type: lookup
