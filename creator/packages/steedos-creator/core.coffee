@@ -197,14 +197,16 @@ Creator.getAppObjectNames = (app_id)->
 				objects.push v
 	return objects
 
-Creator.getVisibleApps = (includeAdmin)->
+Creator.getVisibleApps = (includeAdmin, includeEmptyObjectsApp)->
 	apps = []
 	_.each Creator.Apps, (v, k)->
-		if (v.visible != false and v._id != "admin") or (includeAdmin and v._id == "admin")
-			# 应用下面的objects为空则不显示应用
+		# 应用下面的objects为空则不显示应用
+		if includeEmptyObjectsApp
+			hasObjects = true
+		else
 			hasObjects = if Steedos.isMobile() then v.mobile_objects?.length else v.objects?.length
-			if hasObjects
-				apps.push v
+		if (v.visible != false and v._id != "admin" and hasObjects) or (includeAdmin and v._id == "admin")
+			apps.push v
 	return apps;
 
 Creator.getVisibleAppsObjects = ()->
