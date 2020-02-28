@@ -136,13 +136,14 @@ Template.creator_grid_sidebar_sites.onRendered ->
 					if selectionInfo.itemData.isRoot
 						Session.set "site", selectionInfo.itemData
 					else
+						siteId = selectionInfo.itemData.site
+						sites = self.sites.get()
+						Session.set "site", sites.find((n)-> return n._id == siteId)
 						Session.set "category", selectionInfo.itemData
 				else
 					if selectionInfo.itemData.isRoot
-						# 选中站点后，再选中栏目时，会把站点设置为未选中，这时应该保持站点为选中状态
-						# Session.set "site", null
+						Session.set "site", null
 					else
-						# 选中栏目后，再选中站点时，会把栏目设置为未选中，这时应该清除栏目选中状态
 						Session.set "category", null
 				setGridSidebarFilters()
 
