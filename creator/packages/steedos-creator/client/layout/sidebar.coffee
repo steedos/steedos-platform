@@ -12,7 +12,7 @@ setParentMenuExpanded = (currentMenu)->
 			setParentMenuExpanded parentMenu
 
 Template.creatorSidebar.onRendered ->
-	current_object_name = Creator.getObject()?.name
+	current_object_name = FlowRouter.current()?.queryParams?.ref || Creator.getObject()?.name
 	current_admin_template_name = Session.get("admin_template_name")
 	# 根据当前所在界面实现自动选中相关菜单，同时展开父层菜单（支持任意多层）
 	if current_object_name
@@ -48,8 +48,7 @@ Template.creatorSidebar.onRendered ->
 					spaceId = Steedos.spaceId()
 					menuUrl = "/app/admin/spaces/view/#{spaceId}"
 				else if object_name == "users"
-					userId = Steedos.userId()
-					menuUrl = "/app/admin/users/view/#{userId}"
+					menuUrl = Steedos.getUserRouter()
 				else
 					listViews = Creator.getListViews(object_name)
 					if listViews && listViews.length > 0

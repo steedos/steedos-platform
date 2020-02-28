@@ -66,7 +66,7 @@ Template.creatorHeader.events
 		Modal.show("list_tree_modal")
 
 	'click .current-user-link': (e, t)->
-		url = "/app/admin/users/view/#{Steedos.userId()}"
+		url = Steedos.getUserRouter();
 		FlowRouter.go(url)
 
 	'click .history-back': ()->

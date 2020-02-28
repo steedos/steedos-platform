@@ -185,6 +185,11 @@ Steedos.Helpers =
 		spaceId = Steedos.getSpaceId()
 		if object.name == "instances"
 			return Steedos.getBadge("workflow", spaceId)
+	getUserRouter: (userId)->
+		if !userId
+			userId = Steedos.userId();
+			space_userId = db.space_users.findOne({user: userId, space: Steedos.spaceId()})._id;
+		return "/app/admin/space_users/view/#{space_userId}?ref=users"
 
 _.extend Steedos, Steedos.Helpers
 

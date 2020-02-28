@@ -454,6 +454,11 @@ Template.creator_view.helpers
 	notFoundMessageBody: ()->
 		return "我们无法找到您尝试访问的记录。此记录可能已被其他用户删除，或您没有此记录的访问权限，也可能发生了系统错误。请向您的管理员寻求帮助。"
 
+	showBack: ()->
+		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))
+			return false
+		return true
+
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
