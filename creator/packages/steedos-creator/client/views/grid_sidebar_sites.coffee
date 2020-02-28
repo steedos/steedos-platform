@@ -56,7 +56,7 @@ loadStoreItems = (self)->
 			Session.set "site", selectedItem
 		sites.forEach (item)->
 			item.isRoot = true
-			item.icon = 'ion ion-ios-bookmarks-outline' 
+			item.icon = 'ion ion-ios-book-outline' 
 			if item._id == selectedItem?._id
 				item.selected = true
 			item.hasItems = !!categories.find((n)-> return n.site == item._id)
