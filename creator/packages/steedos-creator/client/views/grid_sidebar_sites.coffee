@@ -15,17 +15,14 @@ setGridSidebarFilters = ()->
 		Session.set "grid_sidebar_filters", [ "_id", "=", "-1" ]
 
 loadCategories = (self)->
+	sites = self.sites.get()
 	options = $select: 'name,parent,site'
-	# queryFilters = []
-	# steedosFilters = require('@steedos/filters')
-	# odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
-	# options.$filter = odataFilter
+	queryFilters = [["site", "in", _.pluck(sites, "_id")]];
+	steedosFilters = require('@steedos/filters')
+	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
+	options.$filter = odataFilter
 	options.$orderby = "order,name"
-	# categories = Creator.odata.query("cms_categories", options, true)
-	# console.log(categories);
-	# self.categories.set(categories);
 	Creator.odata.query("cms_categories", options, true, (result)->
-		console.log("===result=", result);
 		self.categories.set(result);
 	)
 
@@ -37,11 +34,7 @@ loadSites = (self)->
 	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
 	options.$filter = odataFilter
 	options.$orderby = "order,name"
-	# sites = Creator.odata.query("cms_sites", options, true)
-	# console.log(sites);
-	# self.sites.set(sites);
 	Creator.odata.query("cms_sites", options, true, (result)->
-		console.log("===result=", result);
 		self.sites.set(result);
 	)
 
@@ -50,12 +43,10 @@ loadStoreItems = (self)->
 	categories = self.categories.get()
 	if !sites
 		loadSites(self)
-	if !categories
+	if sites and !categories
 		loadCategories(self)
-	console.log("====loadStoreItems==nooo==")
 
 	if sites and categories
-		console.log("====loadStoreItems==yes==")
 		if _.isArray(sites) and sites.length
 			selectedItem = Tracker.nonreactive ()->
 				return Session.get("site")
@@ -65,20 +56,27 @@ loadStoreItems = (self)->
 			Session.set "site", selectedItem
 		sites.forEach (item)->
 			item.isRoot = true
-			if item._id == selectedItem._id
+			if item._id == selectedItem?._id
 				item.selected = true
 			item.hasItems = !!categories.find((n)-> return n.site == item._id)
 		if _.isArray(categories) and categories.length
 			selectedItem = Tracker.nonreactive ()->
 				return Session.get("category")
-			# unless selectedItem
-			# 	# 默认选中第一个站点，并按第一个站点过滤文章
-			# 	selectedItem = sites[0]
 			if selectedItem
 				Session.set "category", selectedItem
 			else
 				Session.set "category", null
 		categories.forEach (item)->
+			if item._id == selectedItem?._id
+				item.selected = true
+				parentSite = sites.find((n)-> return n._id == item.site)
+				if parentSite
+					parentSite.expanded = true
+					parentSite.selected = false
+				parentCategory = categories.find((n)-> return n._id == item.parent)
+				if parentCategory
+					parentCategory.expanded = true
+					parentCategory.selected = false
 			item.hasItems = !!categories.find((n)-> return n.parent == item._id)
 			if !item.parent
 				item.parent = item.site
@@ -102,7 +100,6 @@ getDataSource = ()->
 			return d.promise()
 	)
 
-
 Template.creator_grid_sidebar_sites.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -116,9 +113,6 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			setGridSidebarFilters()
 			loadStoreItems(self)
 			storeItems = self.storeItems.get()
-			debugger;
-			# sites = self.sites.get()
-			# categories = self.categories.get()
 			if !storeItems
 				return;
 			dxOptions = 
@@ -138,8 +132,6 @@ Template.creator_grid_sidebar_sites.onRendered ->
 					selectionInfo.event.preventDefault()
 
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				console.log("====onItemSelectionChanged==", selectionInfo);
-				# selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
 				if selectionInfo.node.selected
 					if selectionInfo.itemData.isRoot
 						Session.set "site", selectionInfo.itemData
@@ -161,8 +153,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.rootValue = null
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
-			dxOptions.onItemExpanded = ()->
-				console.log("===onItemExpanded====");
+			# dxOptions.onItemExpanded = ()->
 			# dxOptions.onContentReady = ()->
 
 			self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
