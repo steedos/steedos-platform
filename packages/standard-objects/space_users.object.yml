@@ -156,12 +156,20 @@ fields:
     hidden: true
     name: user
     filterable: true
+  avatar:
+    label: 头像
+    type: avatar
   hr:
     type: object
     blackbox: true
     omit: true
     hidden: true
     name: hr
+  last_logon:
+    type: date
+    omit: true
+    hidden: true
+    name: last_logon
 list_views:
   all:
     label: 有效用户
@@ -206,20 +214,20 @@ permission_set:
   user:
     allowCreate: false
     allowDelete: false
-    allowEdit: false
+    allowEdit: true
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
   admin:
     allowCreate: true
-    allowDelete: true
+    allowDelete: false
     allowEdit: true
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
   organization_admin:
     allowCreate: true
-    allowDelete: true
+    allowDelete: false
     allowEdit: true
     allowRead: true
     modifyCompanyRecords: true

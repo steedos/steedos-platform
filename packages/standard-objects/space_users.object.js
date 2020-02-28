@@ -1,56 +1,9 @@
+const spaceUserCore = require('./space_users.core')
 db.space_users = new Meteor.Collection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
 
 Meteor.startup(function () {
-    if (Meteor.isClient) {
-        db.space_users._simpleSchema.i18n("space_users");
-        db.space_users._sortFunction = function (doc1, doc2) {
-            var ref;
-            if (doc1.sort_no === doc2.sort_no) {
-                return (ref = doc1.name) != null ? ref.localeCompare(doc2.name) : void 0;
-            } else if (doc1.sort_no === void 0) {
-                return 1;
-            } else if (doc2.sort_no === void 0) {
-                return -1;
-            } else if (doc1.sort_no > doc2.sort_no) {
-                return -1;
-            } else {
-                return 1;
-            }
-        };
-        db.space_users.before.find(function (userId, query, options) {
-            if (!options) {
-                options = {};
-            }
-            return options.sort = db.space_users._sortFunction;
-        });
-        db.space_users.attachSchema(db.space_users._simpleSchema);
-        db.space_users.helpers({
-            space_name: function () {
-                var space;
-                space = db.spaces.findOne({
-                    _id: this.space
-                });
-                return space != null ? space.name : void 0;
-            },
-            organization_name: function () {
-                var organizations;
-                if (this.organizations) {
-                    organizations = SteedosDataManager.organizationRemote.find({
-                        _id: {
-                            $in: this.organizations
-                        }
-                    }, {
-                            fields: {
-                                fullname: 1
-                            }
-                        });
-                    return organizations != null ? organizations.getProperty('fullname').join('<br/>') : void 0;
-                }
-            }
-        });
-    }
     if (Meteor.isServer) {
         db.space_users.insertVaildate = function (userId, doc) {
             var currentUserPhonePrefix, isAllOrgAdmin, phoneNumber, selector, space, spaceUserExisted, user, userExist;
@@ -69,101 +22,43 @@ Meteor.startup(function () {
             if (!space) {
                 throw new Meteor.Error(400, "space_users_error_space_not_found");
             }
-            // if (!doc.is_registered_from_space && !doc.is_logined_from_space) {
-            //     if (space.admins.indexOf(userId) < 0) {
-            //         // 要添加用户，需要至少有一个组织权限
-            //         isAllOrgAdmin = Steedos.isOrgAdminByAllOrgIds(doc.organizations, userId);
-            //         if (!isAllOrgAdmin) {
-            //             throw new Meteor.Error(400, "organizations_error_org_admins_only");
-            //         }
-            //     }
-            // }
             // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
             selector = [];
             if (doc.email) {
                 selector.push({
-                    "emails.address": doc.email
+                    "email": doc.email
                 });
             }
             if (doc.mobile) {
-                // 新建用户时，用当前创建人的手机号前缀去搜索查找是否手机号重复
-                currentUserPhonePrefix = Accounts.getPhonePrefix(userId);
-                phoneNumber = currentUserPhonePrefix + doc.mobile;
                 selector.push({
-                    "phone.number": phoneNumber
+                    "mobile": doc.mobile
+                });
+            }
+            if (doc.username) {
+                selector.push({
+                    "username": doc.username
                 });
             }
             userExist = db.users.find({
                 $or: selector
             });
-            if (userExist.count() > 1) {
-                throw new Meteor.Error(400, "邮箱和手机号不匹配");
-            } else if (userExist.count() === 1) {
-                user = userExist.fetch()[0]._id;
+
+            if(userExist.count() > 0){
+                throw new Meteor.Error(400, "用户已存在, 请使用邀请功能");
             }
-            // 检验当前工作区下有没有邮件或手机号重复的成员，禁止重复添加
-            if (doc.email && doc.mobile) {
-                spaceUserExisted = db.space_users.find({
-                    space: doc.space,
-                    $or: [
-                        {
-                            email: doc.email
-                        },
-                        {
-                            mobile: doc.mobile
-                        }
-                    ]
-                }, {
-                        fields: {
-                            _id: 1
-                        }
-                    });
-                if (spaceUserExisted.count() > 0) {
-                    throw new Meteor.Error(400, "邮箱或手机号已存在");
+
+            spaceUserExisted = db.space_users.find({
+                space: doc.space,
+                $or: selector
+            }, {
+                fields: {
+                    _id: 1
                 }
-            } else if (doc.email) {
-                spaceUserExisted = db.space_users.find({
-                    space: doc.space,
-                    email: doc.email
-                }, {
-                        fields: {
-                            _id: 1
-                        }
-                    });
-                if (spaceUserExisted.count() > 0) {
-                    throw new Meteor.Error(400, "该邮箱已存在");
-                }
-            } else if (doc.mobile) {
-                spaceUserExisted = db.space_users.find({
-                    space: doc.space,
-                    mobile: doc.mobile
-                }, {
-                        fields: {
-                            _id: 1
-                        }
-                    });
-                if (spaceUserExisted.count() > 0) {
-                    throw new Meteor.Error(400, "该手机号已存在");
-                }
+            });
+
+            if (spaceUserExisted.count() > 0) {
+                throw new Meteor.Error(400, "该用户已在此工作区");
             }
-            if (user) {
-                spaceUserExisted = db.space_users.find({
-                    space: doc.space,
-                    user: user
-                }, {
-                        fields: {
-                            _id: 1
-                        }
-                    });
-                if (spaceUserExisted.count() > 0) {
-                    throw new Meteor.Error(400, "该用户已在此工作区");
-                }
-            }
-            // if (doc.username) {
-            //     if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-            //         throw new Meteor.Error(400, "space_paid_info_title");
-            //     }
-            // }
         };
         db.space_users.updatevaildate = function (userId, doc, modifier) {
             var addOrgs, currentUserPhonePrefix, isAllAddOrgsAdmin, isAllSubOrgsAdmin, isOrgAdmin, newOrgs, oldOrgs, phoneNumber, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, repeatEmailUser, repeatNumberUser, space, subOrgs;
@@ -179,26 +74,6 @@ Meteor.startup(function () {
                     throw new Meteor.Error(400, "email_format_error");
                 }
             }
-            // if (space.admins.indexOf(userId) < 0) {
-            //     isOrgAdmin = Steedos.isOrgAdminByOrgIds(doc.organizations, userId);
-            //     if (!isOrgAdmin) {
-            //         throw new Meteor.Error(400, "organizations_error_org_admins_only");
-            //     }
-            //     oldOrgs = doc.organizations;
-            //     newOrgs = (ref1 = modifier.$set) != null ? ref1.organizations : void 0;
-            //     if (newOrgs) {
-            //         subOrgs = _.difference(oldOrgs, newOrgs);
-            //         addOrgs = _.difference(newOrgs, oldOrgs);
-            //         isAllSubOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(subOrgs, userId);
-            //         isAllAddOrgsAdmin = Steedos.isOrgAdminByAllOrgIds(addOrgs, userId);
-            //         if (!isAllSubOrgsAdmin) {
-            //             throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员移出该组织");
-            //         }
-            //         if (!isAllAddOrgsAdmin) {
-            //             throw new Meteor.Error(400, "您没有该组织的权限，不能将此成员添加到该组织");
-            //         }
-            //     }
-            // }
             if (((ref2 = modifier.$set) != null ? ref2.user_accepted : void 0) !== void 0 && !modifier.$set.user_accepted) {
                 if (space.admins.indexOf(doc.user) > 0 || doc.user === space.owner) {
                     throw new Meteor.Error(400, "organizations_error_can_not_set_checkbox_true");
@@ -215,57 +90,28 @@ Meteor.startup(function () {
                 }
             }
             if (((ref5 = modifier.$unset) != null ? ref5.email : void 0) !== void 0) {
-                if (db.users.findOne({
-                    _id: doc.user,
-                    "emails.verified": true
-                })) {
-                    throw new Meteor.Error(400, "用户已验证邮箱，不能修改");
-                }
+                throw new Meteor.Error(400, "必须填写邮件");
             }
             if (((ref6 = modifier.$set) != null ? ref6.email : void 0) && modifier.$set.email !== doc.email) {
-                if (db.users.findOne({
-                    _id: doc.user,
-                    "emails.verified": true
-                })) {
-                    throw new Meteor.Error(400, "用户已验证邮箱，不能修改");
-                }
                 repeatEmailUser = db.users.findOne({
-                    "emails.address": modifier.$set.email
+                    "email": modifier.$set.email
                 });
                 if (repeatEmailUser && repeatEmailUser._id !== doc.user) {
                     throw new Meteor.Error(400, "该邮箱已被占用");
                 }
             }
-            if (((ref7 = modifier.$unset) != null ? ref7.mobile : void 0) !== void 0) {
-                if (db.users.findOne({
-                    _id: doc.user,
-                    "phone.verified": true
-                })) {
-                    throw new Meteor.Error(400, "用户已验证手机，不能修改");
-                }
-            }
-            // 修改用户时，用被修改人之前的手机号前缀去搜索查找是否手机号重复
-            currentUserPhonePrefix = Accounts.getPhonePrefix(doc.user);
             if (((ref8 = modifier.$set) != null ? ref8.mobile : void 0) && modifier.$set.mobile !== doc.mobile) {
-                phoneNumber = currentUserPhonePrefix + modifier.$set.mobile;
-                if (db.users.findOne({
-                    _id: doc.user,
-                    "phone.verified": true
-                })) {
-                    throw new Meteor.Error(400, "用户已验证手机，不能修改");
-                }
-                repeatNumberUser = db.users.findOne({
-                    "phone.number": phoneNumber
+                mobileUser = db.users.findOne({
+                    "mobile": modifier.$set.mobile
                 });
-                if (repeatNumberUser && repeatNumberUser._id !== doc.user) {
+                if (mobileUser && mobileUser._id !== doc.user) {
                     throw new Meteor.Error(400, "space_users_error_phone_already_existed");
                 }
             }
-            // if (((ref9 = modifier.$set) != null ? ref9.hasOwnProperty('username') : void 0) || (((ref10 = modifier.$unset) != null ? ref10.hasOwnProperty('username') : void 0) && doc.username)) {
-            //     if (!Steedos.isLegalVersion(doc.space, "workflow.professional")) {
-            //         throw new Meteor.Error(400, "space_paid_info_title");
-            //     }
-            // }
+
+            if(modifier.$set && modifier.$set.username){
+                db.users.validateUsername(modifier.$set.username, doc.user)
+            }
         };
         db.space_users.before.insert(function (userId, doc) {
             var creator, currentUserPhonePrefix, email, id, options, organization, phone, phoneNumber, user, userObj, userObjs;
@@ -277,34 +123,34 @@ Meteor.startup(function () {
             creator = db.users.findOne(userId);
             if ((!doc.user) && (doc.email || doc.mobile)) {
                 // 新建用户时，用户的手机号前缀用当前创建人的手机号前缀
-                currentUserPhonePrefix = Accounts.getPhonePrefix(userId);
-                if (doc.email && doc.mobile) {
-                    phoneNumber = currentUserPhonePrefix + doc.mobile;
-                    userObjs = db.users.find({
-                        $or: [
-                            {
-                                "emails.address": doc.email
-                            },
-                            {
-                                "phone.number": phoneNumber
-                            }
-                        ]
-                    }).fetch();
-                    if (userObjs.length > 1) {
-                        throw new Meteor.Error(400, "contact_mail_not_match_phine");
-                    } else {
-                        userObj = userObjs[0];
-                    }
-                } else if (doc.email) {
-                    userObj = db.users.findOne({
-                        "emails.address": doc.email
-                    });
-                } else if (doc.mobile) {
-                    phoneNumber = currentUserPhonePrefix + doc.mobile;
-                    userObj = db.users.findOne({
-                        "phone.number": phoneNumber
-                    });
-                }
+                // currentUserPhonePrefix = Accounts.getPhonePrefix(userId);
+                // if (doc.email && doc.mobile) {
+                //     phoneNumber = currentUserPhonePrefix + doc.mobile;
+                //     userObjs = db.users.find({
+                //         $or: [
+                //             {
+                //                 "emails.address": doc.email
+                //             },
+                //             {
+                //                 "phone.number": phoneNumber
+                //             }
+                //         ]
+                //     }).fetch();
+                //     if (userObjs.length > 1) {
+                //         throw new Meteor.Error(400, "contact_mail_not_match_phine");
+                //     } else {
+                //         userObj = userObjs[0];
+                //     }
+                // } else if (doc.email) {
+                //     userObj = db.users.findOne({
+                //         "emails.address": doc.email
+                //     });
+                // } else if (doc.mobile) {
+                //     phoneNumber = currentUserPhonePrefix + doc.mobile;
+                //     userObj = db.users.findOne({
+                //         "phone.number": phoneNumber
+                //     });
+                // }
                 if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
                     if (!doc.invite_state) {
                         doc.invite_state = "accepted";
@@ -345,23 +191,21 @@ Meteor.startup(function () {
                         steedos_id: doc.email || id
                     };
                     if (doc.mobile) {
-                        phoneNumber = currentUserPhonePrefix + doc.mobile;
-                        phone = {
-                            number: phoneNumber,
-                            mobile: doc.mobile,
-                            verified: false,
-                            modified: new Date()
-                        };
-                        options.phone = phone;
+                        doc.mobile_verified = false;
+                        options.mobile = doc.mobile;
+                        options.mobile_verified  = doc.mobile_verified;
                     }
                     if (doc.email) {
+                        doc.email_verified = false
                         email = [
                             {
                                 address: doc.email,
-                                verified: false
+                                verified: doc.email_verified
                             }
                         ];
                         options.emails = email;
+                        options.email = doc.email;
+                        options.email_verified = doc.email_verified;
                     }
                     if (doc.username) {
                         options.username = doc.username;
@@ -401,48 +245,48 @@ Meteor.startup(function () {
                     return organizationObj.updateUsers();
                 });
             }
-            if (!doc.is_registered_from_space) {
-                user = db.users.findOne(doc.user, {
-                    fields: {
-                        name: 1,
-                        phone: 1,
-                        mobile: 1,
-                        emails: 1,
-                        email: 1
-                    }
-                });
-                unset = {};
-                // 同步mobile和email到space_user，没有值的话，就清空space_user的mobile和email字段
-                if (!user.phone) {
-                    unset.mobile = "";
-                }
-                if (!user.mobile && user.phone) {
-                    user.mobile = user.phone.mobile;
-                }
-                if (!user.emails) {
-                    unset.email = "";
-                }
-                if (!user.email && user.emails) {
-                    user.email = user.emails[0].address;
-                }
-                delete user._id;
-                delete user.emails;
-                delete user.phone;
-                if (_.isEmpty(unset)) {
-                    db.space_users.direct.update({
-                        _id: doc._id
-                    }, {
-                            $set: user
-                        });
-                } else {
-                    db.space_users.direct.update({
-                        _id: doc._id
-                    }, {
-                            $set: user,
-                            $unset: unset
-                        });
-                }
-            }
+            // if (!doc.is_registered_from_space) {
+            //     user = db.users.findOne(doc.user, {
+            //         fields: {
+            //             name: 1,
+            //             phone: 1,
+            //             mobile: 1,
+            //             emails: 1,
+            //             email: 1
+            //         }
+            //     });
+            //     unset = {};
+            //     // 同步mobile和email到space_user，没有值的话，就清空space_user的mobile和email字段
+            //     if (!user.phone) {
+            //         unset.mobile = "";
+            //     }
+            //     if (!user.mobile && user.phone) {
+            //         user.mobile = user.phone.mobile;
+            //     }
+            //     if (!user.emails) {
+            //         unset.email = "";
+            //     }
+            //     if (!user.email && user.emails) {
+            //         user.email = user.emails[0].address;
+            //     }
+            //     delete user._id;
+            //     delete user.emails;
+            //     delete user.phone;
+            //     if (_.isEmpty(unset)) {
+            //         db.space_users.direct.update({
+            //             _id: doc._id
+            //         }, {
+            //                 $set: user
+            //             });
+            //     } else {
+            //         db.space_users.direct.update({
+            //             _id: doc._id
+            //         }, {
+            //                 $set: user,
+            //                 $unset: unset
+            //             });
+            //     }
+            // }
             db.users_changelogs.direct.insert({
                 operator: userId,
                 space: doc.space,
@@ -463,6 +307,7 @@ Meteor.startup(function () {
             }
         });
         db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
+            console.log('db.space_users.before.update', modifier);
             var currentUserPhonePrefix, email_val, emails, emails_val, euser, isEmailCleared, isMobileCleared, lang, newEmail, newMobile, number, organization, paramString, params, ref, ref1, ref2, steedos_id, user_set, user_unset;
             modifier.$set = modifier.$set || {};
             db.space_users.updatevaildate(userId, doc, modifier);
@@ -491,51 +336,11 @@ Meteor.startup(function () {
             // 当把手机号设置为空值时，newMobile为undefined，modifier.$unset.mobile为空字符串
             isMobileCleared = ((ref = modifier.$unset) != null ? ref.mobile : void 0) !== void 0;
             if (newMobile !== doc.mobile) {
-                if (newMobile) {
-                    // 支持手机号短信相关功能时，不可以直接修改user的mobile字段，因为只有验证通过的时候才能更新user的mobile字段
-                    // 而用户手机号验证通过后会走db.users.before.update逻辑来把mobile字段同步为phone.number值
-                    // 系统中除了验证验证码外，所有发送短信相关都是直接用的mobile字段，而不是phone.number字段
-                    // 修改用户时，保留用户被修改人之前的手机号前缀
-                    currentUserPhonePrefix = Accounts.getPhonePrefix(doc.user);
-                    number = currentUserPhonePrefix + newMobile;
-                    user_set = {};
-                    user_set.phone = {};
-                    // 因为只有验证通过的时候才能更新user的mobile字段，所以这里不可以直接修改user的mobile字段
-                    // user_set.mobile = newMobile
-                    user_set.phone.number = number;
-                    user_set.phone.mobile = newMobile;
-                    // 变更手机号设置verified为false，以让用户重新验证手机号
-                    user_set.phone.verified = false;
-                    user_set.phone.modified = new Date();
-                    if (!_.isEmpty(user_set)) {
-                        db.users.update({
-                            _id: doc.user
-                        }, {
-                                $set: user_set
-                            });
-                    }
-                    // 因为只有验证通过的时候才能更新user的mobile字段，所以这里不可以通过修改user的mobile字段来同步所有工作区的mobile字段
-                    // 只能通过额外单独更新所有工作区的mobile字段，此时user表中mobile没有变更，也不允许直接变更
-                    db.space_users.direct.update({
-                        user: doc.user
-                    }, {
-                            $set: {
-                                mobile: newMobile
-                            }
-                        }, {
-                            multi: true
-                        });
-                } else if (isMobileCleared) {
-                    user_unset = {};
-                    user_unset.phone = "";
-                    user_unset.mobile = "";
-                    // 更新users表中的相关字段，不可以用direct.update，因为需要更新所有工作区的相关数据
-                    db.users.update({
-                        _id: doc.user
-                    }, {
-                            $unset: user_unset
-                        });
+
+                if(newMobile){
+                    modifier.$set.mobile_verified = false
                 }
+
                 if (newMobile || isMobileCleared) {
                     // 修改人
                     lang = Steedos.locale(doc.user, true);
@@ -578,118 +383,17 @@ Meteor.startup(function () {
                 }
             }
             newEmail = modifier.$set.email;
-            // 当把邮箱设置为空值时，newEmail为undefined，modifier.$unset.email为空字符串
-            isEmailCleared = ((ref1 = modifier.$unset) != null ? ref1.email : void 0) !== void 0;
             if (newEmail && newEmail !== doc.email) {
-                emails = [];
-                email_val = {
-                    address: newEmail,
-                    verified: false
-                };
-                emails.push(email_val);
-                steedos_id = newEmail;
-                db.users.update({
-                    _id: doc.user
-                }, {
-                        $set: {
-                            emails: emails,
-                            steedos_id: steedos_id
-                        }
-                    });
-                db.space_users.direct.update({
-                    user: doc.user
-                }, {
-                        $set: {
-                            email: newEmail
-                        }
-                    }, {
-                        multi: true
-                    });
-            } else if (isEmailCleared) {
-                emails = [];
-                emails_val = {
-                    address: "",
-                    verified: ""
-                };
-                db.users.update({
-                    _id: doc.user
-                }, {
-                        $unset: {
-                            emails: emails
-                        },
-                        $set: {
-                            steedos_id: doc.user
-                        }
-                    });
-                db.space_users.direct.update({
-                    user: doc.user
-                }, {
-                        $unset: {
-                            email: ""
-                        }
-                    }, {
-                        multi: true
-                    });
-            }
-            if (modifier.$set.username && modifier.$set.username !== doc.username) {
-                db.users.update({
-                    _id: doc.user
-                }, {
-                        $set: {
-                            username: modifier.$set.username
-                        }
-                    });
-            }
-            if ((ref2 = modifier.$unset) != null ? ref2.hasOwnProperty('username') : void 0) {
-                return db.users.update({
-                    _id: doc.user
-                }, {
-                        $unset: {
-                            username: 1
-                        }
-                    });
+                modifier.$set.email_verified = false;
             }
         });
         db.space_users.after.update(function (userId, doc, fieldNames, modifier, options) {
-            var ref, user_set, user_unset;
+            var ref;
             modifier.$set = modifier.$set || {};
             modifier.$unset = modifier.$unset || {};
-            user_set = {};
-            user_unset = {};
-            if (modifier.$set.name !== void 0) {
-                user_set.name = modifier.$set.name;
-            }
-            if (modifier.$unset.name !== void 0) {
-                user_unset.name = modifier.$unset.name;
-            }
-            // 更新users表中的相关字段
-            if (!_.isEmpty(user_set)) {
-                // 这里不可以更新mobile字段，因该字段是用于发短信的，只有验证通过后才可以同步
-                db.users.update({
-                    _id: doc.user
-                }, {
-                        $set: user_set
-                    });
-            }
-            if (!_.isEmpty(user_unset)) {
-                // 这里需要更新mobile字段，删除mobile字段的相关逻辑在[db.space_users.before.update]中已经有了
-                db.users.update({
-                    _id: doc.user
-                }, {
-                        $unset: user_unset
-                    });
-            }
-            if (modifier.$set.mobile && this.previous.mobile !== modifier.$set.mobile) {
-                // 只要管理员改过手机号，那么users.mobile就应该清除，否则该users.mobile可能与其他用户的users.mobile值重复
-                // 这时只能单独用direct.update，否则users.update又会进一步把清空后的手机号同步回space_users。
-                db.users.direct.update({
-                    _id: doc.user
-                }, {
-                        $unset: {
-                            mobile: 1
-                        }
-                    });
-            }
+            console.log('db.space_users.before.update', modifier);
+            spaceUserCore.syncUserInfo(this.previous, modifier);
+
             if (modifier.$set.organizations) {
                 modifier.$set.organizations.forEach(function (org) {
                     var organizationObj;
@@ -728,12 +432,6 @@ Meteor.startup(function () {
                 db.space_users.update_organizations_parents(doc._id, modifier.$set.organizations);
                 db.space_users.update_company_ids(doc._id, doc);
             }
-            // // 设置主单位后更新单位字段
-            // old_company_id = this.previous.company_id;
-            // new_company_id = doc.company_id;
-            // if (new_company_id !== old_company_id) {
-            //     return db.space_users.update_company(doc._id, new_company_id);
-            // }
         });
         db.space_users.before.remove(function (userId, doc) {
             var isOrgAdmin, space;
@@ -869,29 +567,6 @@ Meteor.startup(function () {
                     }
                 });
         };
-        // db.space_users.update_company = function (id, companyId) {
-        //     var org, user;
-        //     org = db.company.findOne({
-        //         _id: companyId
-        //     }, {
-        //             fields: {
-        //                 fullname: 1
-        //             }
-        //         });
-        //     user = db.space_users.findOne(id);
-        //     if (!user) {
-        //         console.error("db.space_users.update_company,can't find space_users by _id of:", id);
-        //     }
-        //     if (org) {
-        //         return db.space_users.direct.update({
-        //             _id: id
-        //         }, {
-        //                 $set: {
-        //                     company: org.fullname
-        //                 }
-        //             });
-        //     }
-        // };
         Meteor.publish('space_users', function (spaceId) {
             var selector, user;
             if (!this.userId) {
@@ -926,6 +601,7 @@ Meteor.startup(function () {
             });
         });
     }
+    //创建数据库索引
     if (Meteor.isServer) {
         db.space_users._ensureIndex({
             "user": 1
@@ -1137,9 +813,21 @@ Creator.Objects['space_users'].actions = {
         label: "更改密码",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
+            if(Session.get("app_id") === 'admin'){
+                var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
+                if(space_userId === record_id){
+                    return true
+                }
+            }
             return Creator.isSpaceAdmin();
         },
         todo: function (object_name, record_id, fields) {
+
+            if(!Creator.isSpaceAdmin()){
+                Modal.show("reset_password_modal");
+                return;
+            }
+
             var doUpdate = function (inputValue) {
                 $("body").addClass("loading");
                 var userSession = Creator.USER_CONTEXT;
@@ -1206,6 +894,13 @@ Creator.Objects['space_users'].actions = {
     },
     standard_edit: {
         visible: function (object_name, record_id, record_permissions) {
+            console.log('standard_edit......');
+            if(Session.get("app_id") === 'admin'){
+                var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
+                if(space_userId === record_id){
+                    return true
+                }
+            }
             var organization = Session.get("organization");
             var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
@@ -1238,34 +933,35 @@ Creator.Objects['space_users'].actions = {
     },
     standard_delete: {
         visible: function (object_name, record_id, record_permissions) {
-            var organization = Session.get("organization");
-            var allowDelete = Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
-            if(!allowDelete){
-                // permissions配置没有权限则不给权限
-                return false
-            }
-            // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
-            if(Steedos.isSpaceAdmin()){
-                return true;
-            }
-            else{
-                var userId = Steedos.userId();
-                if(organization){
-                    //当前选中组织所属单位的管理员才有权限
-                    if(organization.company_id && organization.company_id.admins){
-                        return organization.company_id.admins.indexOf(userId) > -1;
-                    }
-                }
-                else{
-                    // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
-                    var record = Creator.getObjectRecord(object_name, record_id);
-                    if(record && record.company_ids && record.company_ids.length){
-                        return _.any(record.company_ids,function(item){
-                            return item.admins && item.admins.indexOf(userId) > -1
-                        });
-                    }
-                }
-            }
+            return false
+            // var organization = Session.get("organization");
+            // var allowDelete = Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
+            // if(!allowDelete){
+            //     // permissions配置没有权限则不给权限
+            //     return false
+            // }
+            // // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
+            // if(Steedos.isSpaceAdmin()){
+            //     return true;
+            // }
+            // else{
+            //     var userId = Steedos.userId();
+            //     if(organization){
+            //         //当前选中组织所属单位的管理员才有权限
+            //         if(organization.company_id && organization.company_id.admins){
+            //             return organization.company_id.admins.indexOf(userId) > -1;
+            //         }
+            //     }
+            //     else{
+            //         // 用户详细界面拿不到当前选中组织时，只能从记录本身所属单位的管理员中判断，只要当前用户是任何一个所属单位的管理员则有权限
+            //         var record = Creator.getObjectRecord(object_name, record_id);
+            //         if(record && record.company_ids && record.company_ids.length){
+            //             return _.any(record.company_ids,function(item){
+            //                 return item.admins && item.admins.indexOf(userId) > -1
+            //             });
+            //         }
+            //     }
+            // }
         }
     }
 }

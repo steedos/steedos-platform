@@ -1,3 +1,4 @@
+const _ = require('underscore');
 db.users = Meteor.users;
 
 db.users.allow({
@@ -116,6 +117,7 @@ if (Meteor.isServer) {
         }
     };
     db.users.before.insert(function (userId, doc) {
+        console.log('db.users.before.insert....');
         var ref, ref1, ref2, ref3, ref4, ref5, space, space_registered;
         space_registered = (ref = doc.profile) != null ? ref.space_registered : void 0;
         // # 从工作区特定的注册界面注册的用户，需要先判断下工作区是否存在
@@ -193,6 +195,7 @@ if (Meteor.isServer) {
         });
     });
     db.users.after.insert(function (userId, doc) {
+        console.log('db.users.after.insert....');
         var content, e, email, enrollAccountUrl, greeting, locale, newId, now, ref, ref1, ref2, rootOrg, space_name, space_registered, subject, token, tokenRecord, url, user_email;
         space_registered = (ref = doc.profile) != null ? ref.space_registered : void 0;
         if (space_registered) {
@@ -271,74 +274,48 @@ if (Meteor.isServer) {
         // }
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
-        var newNumber;
-        db.users.validatePhone(userId, doc, modifier);
-        if (modifier.$unset && modifier.$unset.steedos_id === "") {
-            throw new Meteor.Error(400, "users_error_steedos_id_required");
+        console.log('user before update modifier', modifier);
+        let setKeys = _.keys(modifier.$set || {});
+        if(!_.isEmpty(setKeys) && !_.find(setKeys, function(key){
+            return key.startsWith('services') || key.startsWith('$') || _.includes(['last_logon'], key)
+        })){
+            throw new Meteor.Error(500, '禁止修改');
         }
-        modifier.$set = modifier.$set || {};
-        if (modifier.$set.username) {
-            db.users.validateUsername(modifier.$set.username, doc._id);
-        }
-        // if doc.steedos_id && modifier.$set.steedos_id
-        // 	if modifier.$set.steedos_id != doc.steedos_id
-        // 		throw new Meteor.Error(400, "users_error_steedos_id_readonly");
-        if (userId) {
-            modifier.$set.modified_by = userId;
-        }
-        if (modifier.$set['phone.verified'] === true) {
-            newNumber = modifier.$set['phone.mobile'];
-            if (!newNumber) {
-                newNumber = doc.phone.mobile;
-            }
-            modifier.$set.mobile = newNumber;
-        }
-        return modifier.$set.modified = new Date();
+        
+
+        // var newNumber;
+        // db.users.validatePhone(userId, doc, modifier);
+        // if (modifier.$unset && modifier.$unset.steedos_id === "") {
+        //     throw new Meteor.Error(400, "users_error_steedos_id_required");
+        // }
+        // modifier.$set = modifier.$set || {};
+        // if (modifier.$set.username) {
+        //     db.users.validateUsername(modifier.$set.username, doc._id);
+        // }
+        // // if doc.steedos_id && modifier.$set.steedos_id
+        // // 	if modifier.$set.steedos_id != doc.steedos_id
+        // // 		throw new Meteor.Error(400, "users_error_steedos_id_readonly");
+        // if (userId) {
+        //     modifier.$set.modified_by = userId;
+        // }
+        // if (modifier.$set['phone.verified'] === true) {
+        //     newNumber = modifier.$set['phone.mobile'];
+        //     if (!newNumber) {
+        //         newNumber = doc.phone.mobile;
+        //     }
+        //     modifier.$set.mobile = newNumber;
+        // }
+        // return modifier.$set.modified = new Date();
     });
     db.users.after.update(function (userId, doc, fieldNames, modifier, options) {
-        var newNumber, user_set, user_unset;
-        modifier.$set = modifier.$set || {};
-        modifier.$unset = modifier.$unset || {};
-        if (modifier.$set['phone.verified'] === true) {
-            // db.users.before.update中对modifier.$set.mobile的修改这里识别不到，所以只能重新设置其值
-            newNumber = modifier.$set['phone.mobile'];
-            if (!newNumber) {
-                newNumber = doc.phone.mobile;
-            }
-            modifier.$set.mobile = newNumber;
-        }
-        user_set = {};
-        user_unset = {};
-        if (modifier.$set.name !== void 0) {
-            user_set.name = modifier.$set.name;
-        }
-        if (modifier.$set.mobile !== void 0) {
-            user_set.mobile = modifier.$set.mobile;
-        }
-        if (modifier.$unset.name !== void 0) {
-            user_unset.name = modifier.$unset.name;
-        }
-        if (modifier.$unset.mobile !== void 0) {
-            user_unset.mobile = modifier.$unset.mobile;
-        }
-        // 更新users表中的相关字段，所有工作区信息同步
-        if (!_.isEmpty(user_set)) {
-            db.space_users.direct.update({
-                user: doc._id
-            }, {
-                    $set: user_set
-                }, {
-                    multi: true
-                });
-        }
-        if (!_.isEmpty(user_unset)) {
-            return db.space_users.direct.update({
-                user: doc._id
-            }, {
-                    $unset: user_unset
-                }, {
-                    multi: true
-                });
+        console.log('db.users.after.update....', modifier);
+        modifier.$set = modifier.$set || {}
+        if(modifier.$set.last_logon){
+            console.log('db.space_users.direct.update', {user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}});
+            db.space_users.direct.update({user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}}, {
+                multi: true
+            });
+            console.log('update space users end...');
         }
     });
     db.users.before.remove(function (userId, doc) {
