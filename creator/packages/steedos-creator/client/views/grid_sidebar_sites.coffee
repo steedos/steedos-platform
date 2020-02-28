@@ -121,6 +121,11 @@ Template.creator_grid_sidebar_sites.onRendered ->
 				# dataSource: getDataSource()
 				dataSource: 
 					store: storeItems
+				# itemTemplate: (itemData, itemIndex, itemElement)->
+				# 	debugger;
+				# 	if itemData.icon
+				# 		itemElement.append("<i class=\"dx-icon #{itemData.icon}\"></i>");
+				# 	itemElement.append("<span>" + itemData.name + "</span>");
 			
 			sidebar_multiple = false
 			dxOptions.selectNodesRecursive = false
