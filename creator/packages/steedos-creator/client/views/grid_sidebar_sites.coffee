@@ -1,10 +1,106 @@
-setGridSidebarFilters = (selectedItem)->
-	if selectedItem and selectedItem._id
-		sidebar_filter_key = "site"
-		sidebarFilter = [ sidebar_filter_key, "=", selectedItem._id ]
+setGridSidebarFilters = ()->
+	site = Tracker.nonreactive ()->
+		return Session.get("site")
+	category = Tracker.nonreactive ()->
+		return Session.get("category")
+	sidebarFilter = []
+	if site and site._id
+		sidebarFilter.push [ "site", "=", site._id ]
+	if category and category._id
+		sidebarFilter.push [ "category", "=", category._id ]
+	if sidebarFilter.length
 		Session.set "grid_sidebar_filters", sidebarFilter
 	else
-		Session.set "grid_sidebar_filters", null
+		# 未选中站点时，不显示右侧文档列表
+		Session.set "grid_sidebar_filters", [ "_id", "=", "-1" ]
+
+loadCategories = (self)->
+	options = $select: 'name,parent,site'
+	# queryFilters = []
+	# steedosFilters = require('@steedos/filters')
+	# odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
+	# options.$filter = odataFilter
+	options.$orderby = "order,name"
+	# categories = Creator.odata.query("cms_categories", options, true)
+	# console.log(categories);
+	# self.categories.set(categories);
+	Creator.odata.query("cms_categories", options, true, (result)->
+		console.log("===result=", result);
+		self.categories.set(result);
+	)
+
+loadSites = (self)->
+	userId = Meteor.userId()
+	options = $select: ["name", "admins", "visibility"].toString()
+	queryFilters = [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
+	steedosFilters = require('@steedos/filters')
+	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
+	options.$filter = odataFilter
+	options.$orderby = "order,name"
+	# sites = Creator.odata.query("cms_sites", options, true)
+	# console.log(sites);
+	# self.sites.set(sites);
+	Creator.odata.query("cms_sites", options, true, (result)->
+		console.log("===result=", result);
+		self.sites.set(result);
+	)
+
+loadStoreItems = (self)->
+	sites = self.sites.get()
+	categories = self.categories.get()
+	if !sites
+		loadSites(self)
+	if !categories
+		loadCategories(self)
+	console.log("====loadStoreItems==nooo==")
+
+	if sites and categories
+		console.log("====loadStoreItems==yes==")
+		if _.isArray(sites) and sites.length
+			selectedItem = Tracker.nonreactive ()->
+				return Session.get("site")
+			unless selectedItem
+				# 默认选中第一个站点，并按第一个站点过滤文章
+				selectedItem = sites[0]
+			Session.set "site", selectedItem
+		sites.forEach (item)->
+			item.isRoot = true
+			if item._id == selectedItem._id
+				item.selected = true
+			item.hasItems = !!categories.find((n)-> return n.site == item._id)
+		if _.isArray(categories) and categories.length
+			selectedItem = Tracker.nonreactive ()->
+				return Session.get("category")
+			# unless selectedItem
+			# 	# 默认选中第一个站点，并按第一个站点过滤文章
+			# 	selectedItem = sites[0]
+			if selectedItem
+				Session.set "category", selectedItem
+			else
+				Session.set "category", null
+		categories.forEach (item)->
+			item.hasItems = !!categories.find((n)-> return n.parent == item._id)
+			if !item.parent
+				item.parent = item.site
+		
+		setGridSidebarFilters()
+		self.storeItems.set(_.union sites, categories);
+
+getDataSource = ()->
+	return new (DevExpress.data.DataSource)(
+		load: (loadOptions) ->
+			d = $.Deferred()
+			userId = Meteor.userId()
+			options = {}
+			options.$select = ["name", "admins", "visibility"].toString()
+			steedosFilters = require("@steedos/filters")
+			dxFilter = steedosFilters.formatFiltersToODataQuery [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
+			options.$filter = dxFilter
+			Creator.odata.query("cms_sites", options, true, (result)->
+				d.resolve result
+			)
+			return d.promise()
+	)
 
 
 Template.creator_grid_sidebar_sites.onRendered ->
@@ -17,63 +113,19 @@ Template.creator_grid_sidebar_sites.onRendered ->
 		loginToken = Accounts._storedLoginToken()
 		if spaceId and userId
 			# 默认不显示右侧数据，只有选中站点后才显示
-			setGridSidebarFilters({_id: -1})
-			url = "/api/odata/v4/#{spaceId}/#{object_name}"
-			steedosFilters = require("@steedos/filters")
-			dxFilter = steedosFilters.formatFiltersToDev [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
+			setGridSidebarFilters()
+			loadStoreItems(self)
+			storeItems = self.storeItems.get()
+			debugger;
+			# sites = self.sites.get()
+			# categories = self.categories.get()
+			if !storeItems
+				return;
 			dxOptions = 
 				searchEnabled: false
+				# dataSource: getDataSource()
 				dataSource: 
-					store: 
-						type: "odata"
-						version: 4
-						url: Steedos.absoluteUrl(url)
-						withCredentials: false
-						onLoading: (loadOptions)->
-							# loadOptions.select = ["name", "parent", "children"]
-							loadOptions.select = ["name", "admins", "visibility"]
-						onLoaded: (results)->
-							if results and _.isArray(results) and results.length
-								selectedItem = Session.get "site"
-								unless selectedItem
-									# 默认选中第一个站点，并按第一个站点过滤文章
-									selectedItem = results[0]
-								Session.set "site", selectedItem
-								setGridSidebarFilters(selectedItem)
-
-								_.each results, (item)->
-									if item._id == selectedItem._id
-										item.selected = true
-									# 判断是否有下级节点
-									item.hasItems = false
-									if item.children?.length > 0
-										item.hasItems = true
-						beforeSend: (request) ->
-							request.headers['X-User-Id'] = userId
-							request.headers['X-Space-Id'] = spaceId
-							request.headers['X-Auth-Token'] = loginToken
-						errorHandler: (error) ->
-							if error.httpStatus == 404 || error.httpStatus == 400
-								error.message = t "creator_odata_api_not_found"
-							else if error.httpStatus == 401
-								error.message = t "creator_odata_unexpected_character"
-							else if error.httpStatus == 403
-								error.message = t "creator_odata_user_privileges"
-							else if error.httpStatus == 500
-								if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
-									error.message = t "creator_odata_unexpected_character"
-							toastr.error(error.message)
-						fieldTypes: {
-							'_id': 'String'
-						}
-					filter: dxFilter,
-					sort: [ {
-						selector: 'order'
-						desc: false
-					},{
-						selector: 'name'
-						desc: false
-					} ]
+					store: storeItems
 			
 			sidebar_multiple = false
 			dxOptions.selectNodesRecursive = false
@@ -86,14 +138,21 @@ Template.creator_grid_sidebar_sites.onRendered ->
 					selectionInfo.event.preventDefault()
 
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
-				if selectionItemData?._id
-					Session.set "site", selectionItemData
-					setGridSidebarFilters(selectionItemData)
+				console.log("====onItemSelectionChanged==", selectionInfo);
+				# selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
+				if selectionInfo.node.selected
+					if selectionInfo.itemData.isRoot
+						Session.set "site", selectionInfo.itemData
+					else
+						Session.set "category", selectionInfo.itemData
 				else
-					Session.set "site", null
-					# 未设置站点时应该看不到右侧列表相关数据
-					setGridSidebarFilters({_id: -1})
+					if selectionInfo.itemData.isRoot
+						# 选中站点后，再选中栏目时，会把站点设置为未选中，这时应该保持站点为选中状态
+						# Session.set "site", null
+					else
+						# 选中栏目后，再选中站点时，会把栏目设置为未选中，这时应该清除栏目选中状态
+						Session.set "category", null
+				setGridSidebarFilters()
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
@@ -102,7 +161,8 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			dxOptions.rootValue = null
 			dxOptions.dataStructure = "plain"
 			dxOptions.virtualModeEnabled = true 
-			# dxOptions.onInitialized = ()->
+			dxOptions.onItemExpanded = ()->
+				console.log("===onItemExpanded====");
 			# dxOptions.onContentReady = ()->
 
 			self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
@@ -116,6 +176,9 @@ Template.creator_grid_sidebar_sites.helpers
 Template.creator_grid_sidebar_sites.events
 
 Template.creator_grid_sidebar_sites.onCreated ->
+	this.categories = new ReactiveVar(null)
+	this.sites = new ReactiveVar(null)
+	this.storeItems = new ReactiveVar(null)
 
 Template.creator_grid_sidebar_sites.onDestroyed ->
 	Session.set "grid_sidebar_filters", null
