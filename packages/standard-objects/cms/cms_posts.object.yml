@@ -63,6 +63,11 @@ fields:
     type: lookup
     reference_to: cms_categories
     sortable: true
+    defaultValue: !!js/function |
+      function () {
+        var category = Session.get("category");
+        return category ? category._id : null;
+      }
     # filtersFunction: !!js/function |
     #   function () {
     #     return "site eq '" + Session.get("siteId") + "'";
