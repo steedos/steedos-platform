@@ -123,15 +123,15 @@ fields:
   #         return visibilitys[0];
   #       }
   #     }
-  postDate:
-    type: datetime
-    label: 发布日期
-    hidden: true
-    required: false
-    defaultValue: !!js/function |
-      function () {
-        return new Date();
-      }
+  # postDate:
+  #   type: datetime
+  #   label: 发布日期
+  #   hidden: true
+  #   required: false
+  #   defaultValue: !!js/function |
+  #     function () {
+  #       return new Date();
+  #     }
   # The post author's name
   # tags:
   #   type: "[text]"
@@ -252,12 +252,10 @@ list_views:
       }
     columns:
       - name
-      - category
-      - site
-      - postDate
-      - created
+      - modified
+      - modified_by
     sort:
-      - - created
+      - - modified
         - desc
 permission_set:
   user:
