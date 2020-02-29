@@ -1,3 +1,4 @@
+Fiber = require('fibers')
 db.spaces = new Meteor.Collection('spaces');
 
 db.spaces.helpers({
@@ -30,6 +31,68 @@ db.spaces.helpers({
     }
 });
 
+function onCreateSpace(spaceDoc){
+    let spaceName = spaceDoc.name;
+    let spaceId = spaceDoc._id;
+    let userId = spaceDoc.owner;
+    let now = new Date();
+
+    let companyDB = Creator.getCollection("company");
+    let companyId = companyDB._makeNewID();
+    let companyDoc = {
+        _id: companyId, 
+        name: spaceName, 
+        organization: companyId,
+        company_id: companyId,
+        space: spaceId, 
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
+      }
+    companyDB.direct.insert(companyDoc);
+
+    let orgDB = Creator.getCollection("organizations");
+    let orgDoc = {
+        _id: companyId,
+        name: spaceName, 
+        fullname: spaceName, 
+        is_company: true, 
+        users: [userId],
+        company_id: companyId,
+        space: spaceId, 
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
+    }
+    orgDB.direct.insert(orgDoc);
+
+    let spaceUsersDB = db.space_users;
+    let userDoc = db.users.findOne({_id: userId});
+    let spaceUsersDoc = {
+        user: userDoc._id, 
+        username: userDoc.username, 
+        name: userDoc.name, 
+        email: userDoc.email, 
+        user_accepted: true, 
+        organization: orgDoc._id, 
+        organizations: [orgDoc._id], 
+        organizations_parents: [orgDoc._id],
+        company_id: companyDoc._id,
+        company_ids: [companyDoc._id],
+        space: spaceId,
+        // owner: userId,
+        // created_by: userId,
+        // created: now,
+        // modified_by: userId,
+        // modified: now
+      }
+    spaceUsersDB.insert(spaceUsersDoc)
+}
+
 if (Meteor.isServer) {
     db.spaces.before.insert(function (userId, doc) {
         if (!userId && doc.owner) {
@@ -43,6 +106,11 @@ if (Meteor.isServer) {
         if (!userId) {
             throw new Meteor.Error(400, "spaces_error_login_required");
         }
+
+        if(doc._id){
+            doc.space = doc._id
+        }
+
         doc.owner = userId;
         return doc.admins = [userId];
     });
@@ -51,7 +119,7 @@ if (Meteor.isServer) {
     // 	if _.indexOf(doc.apps_enabled, "admin")<0
     // 		doc.apps_enabled.push("admin")
     db.spaces.after.insert(function (userId, doc) {
-        db.spaces.createTemplateOrganizations(doc);
+        onCreateSpace(doc);
     });
     db.spaces.before.update(function (userId, doc, fieldNames, modifier, options) {
         modifier.$set = modifier.$set || {};
@@ -337,4 +405,47 @@ if (Meteor.isServer) {
             }
         };
     });
+}
+
+Creator.Objects['spaces'].methods = {
+    "create-tenant": function (req, res) {
+        return Fiber(function () {
+            let error = '';
+            try {
+                let userSession = req.user;
+                let spaceName = req.body.name;
+                if(!spaceName){
+                    throw new Error("名称不能为空")
+                }
+                
+                if(userSession){
+                    let userId = userSession.userId
+                    let spaceId = db.spaces._makeNewID()
+                    let spaceDoc = {
+                        _id: spaceId,
+                        space: spaceId,
+                        name: spaceName, 
+                        owner: userId
+                    }
+                    let newSpace = db.spaces.insert(spaceDoc);
+                    return res.send({
+                        value: newSpace
+                    });
+                }else{
+                    if(!userSession){
+                        return res.status(401).send({
+                            "success": false
+                        });
+                    }
+                }
+            } catch (err) {
+                error = err
+            }
+
+            return res.status(500).send({
+                "error": error,
+                "success": false
+            });
+        }).run();
+    }
 }

@@ -24,7 +24,6 @@ getNeedSyncUnSet = function(doc, modifierUnset){
 
 //当space_users的特定属性[:NEEDSYNCATTRIBUTES]变化时，同步到users、非当前space_users
 exports.syncUserInfo = function (doc, modifier) {
-    console.log('syncUserInfo modifier', modifier);
     let modifierSet = modifier.$set || {};
     let modifierUnset = modifier.$unset || {};
     let needSyncProp = getNeedSyncSet(doc, modifierSet);
@@ -48,12 +47,13 @@ exports.syncUserInfo = function (doc, modifier) {
         }else{
             userProp = needSyncProp
         }
-        console.log('userProp', userProp);
-        console.log('needSyncProp', needSyncProp);
-	    console.log('needSyncUnProp', needSyncUnProp);
         db.users.direct.update({_id: doc.user}, {$set: userProp, $unset: needSyncUnProp});
         db.space_users.direct.update({_id: {$ne: doc._id}, user: doc.user}, {$set: needSyncProp, $unset: needSyncUnProp}, {
             multi: true
         });
     }
+}
+
+exports.pickNeedSyncProp = function(doc){
+    return _.pick(doc, NEEDSYNCATTRIBUTES);
 }

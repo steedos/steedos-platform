@@ -117,7 +117,6 @@ if (Meteor.isServer) {
         }
     };
     db.users.before.insert(function (userId, doc) {
-        console.log('db.users.before.insert....');
         var ref, ref1, ref2, ref3, ref4, ref5, space, space_registered;
         space_registered = (ref = doc.profile) != null ? ref.space_registered : void 0;
         // # 从工作区特定的注册界面注册的用户，需要先判断下工作区是否存在
@@ -195,7 +194,6 @@ if (Meteor.isServer) {
         });
     });
     db.users.after.insert(function (userId, doc) {
-        console.log('db.users.after.insert....');
         var content, e, email, enrollAccountUrl, greeting, locale, newId, now, ref, ref1, ref2, rootOrg, space_name, space_registered, subject, token, tokenRecord, url, user_email;
         space_registered = (ref = doc.profile) != null ? ref.space_registered : void 0;
         if (space_registered) {
@@ -274,7 +272,6 @@ if (Meteor.isServer) {
         // }
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
-        console.log('user before update modifier', modifier);
         let setKeys = _.keys(modifier.$set || {});
         if(!_.isEmpty(setKeys) && !_.find(setKeys, function(key){
             return key.startsWith('services') || key.startsWith('$') || _.includes(['last_logon'], key)
@@ -308,14 +305,11 @@ if (Meteor.isServer) {
         // return modifier.$set.modified = new Date();
     });
     db.users.after.update(function (userId, doc, fieldNames, modifier, options) {
-        console.log('db.users.after.update....', modifier);
         modifier.$set = modifier.$set || {}
         if(modifier.$set.last_logon){
-            console.log('db.space_users.direct.update', {user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}});
             db.space_users.direct.update({user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}}, {
                 multi: true
             });
-            console.log('update space users end...');
         }
     });
     db.users.before.remove(function (userId, doc) {

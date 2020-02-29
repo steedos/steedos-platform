@@ -10,51 +10,60 @@ Meteor.startup(function () {
             if (!doc.space) {
                 throw new Meteor.Error(400, "space_users_error_space_required");
             }
-            if (!doc.email && !doc.mobile) {
-                throw new Meteor.Error(400, "contact_need_phone_or_email");
-            }
-            if (doc.email) {
-                if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(doc.email)) {
-                    throw new Meteor.Error(400, "email_format_error");
-                }
-            }
             space = db.spaces.findOne(doc.space);
             if (!space) {
                 throw new Meteor.Error(400, "space_users_error_space_not_found");
             }
-            // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
-            selector = [];
-            if (doc.email) {
-                selector.push({
-                    "email": doc.email
-                });
-            }
-            if (doc.mobile) {
-                selector.push({
-                    "mobile": doc.mobile
-                });
-            }
-            if (doc.username) {
-                selector.push({
-                    "username": doc.username
-                });
-            }
-            userExist = db.users.find({
-                $or: selector
-            });
 
-            if(userExist.count() > 0){
-                throw new Meteor.Error(400, "用户已存在, 请使用邀请功能");
-            }
-
-            spaceUserExisted = db.space_users.find({
-                space: doc.space,
-                $or: selector
-            }, {
-                fields: {
-                    _id: 1
+            if(doc.user){
+                user = db.users.findOne({ _id: doc.user }, {fields: { _id: 1}})
+                if(!user){
+                    throw new Meteor.Error(400, "未找到用户");
                 }
-            });
+                spaceUserExisted = db.space_users.find({space: doc.space,user: doc.user}, {fields: { _id: 1}});
+
+            }else{
+                if (!doc.email && !doc.mobile) {
+                    throw new Meteor.Error(400, "contact_need_phone_or_email");
+                }
+                if (doc.email) {
+                    if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(doc.email)) {
+                        throw new Meteor.Error(400, "email_format_error");
+                    }
+                }
+                // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
+                selector = [];
+                if (doc.email) {
+                    selector.push({
+                        "email": doc.email
+                    });
+                }
+                if (doc.mobile) {
+                    selector.push({
+                        "mobile": doc.mobile
+                    });
+                }
+                if (doc.username) {
+                    selector.push({
+                        "username": doc.username
+                    });
+                }
+                userExist = db.users.find({
+                    $or: selector
+                });
+    
+                if(userExist.count() > 0){
+                    throw new Meteor.Error(400, "用户已存在, 请使用邀请功能");
+                }
+                spaceUserExisted = db.space_users.find({
+                    space: doc.space,
+                    $or: selector
+                }, {
+                    fields: {
+                        _id: 1
+                    }
+                });
+            }
 
             if (spaceUserExisted.count() > 0) {
                 throw new Meteor.Error(400, "该用户已在此工作区");
@@ -120,104 +129,82 @@ Meteor.startup(function () {
             doc.modified_by = userId;
             doc.modified = new Date();
             db.space_users.insertVaildate(userId, doc);
-            creator = db.users.findOne(userId);
-            if ((!doc.user) && (doc.email || doc.mobile)) {
-                // 新建用户时，用户的手机号前缀用当前创建人的手机号前缀
-                // currentUserPhonePrefix = Accounts.getPhonePrefix(userId);
-                // if (doc.email && doc.mobile) {
-                //     phoneNumber = currentUserPhonePrefix + doc.mobile;
-                //     userObjs = db.users.find({
-                //         $or: [
-                //             {
-                //                 "emails.address": doc.email
-                //             },
-                //             {
-                //                 "phone.number": phoneNumber
-                //             }
-                //         ]
-                //     }).fetch();
-                //     if (userObjs.length > 1) {
-                //         throw new Meteor.Error(400, "contact_mail_not_match_phine");
-                //     } else {
-                //         userObj = userObjs[0];
-                //     }
-                // } else if (doc.email) {
-                //     userObj = db.users.findOne({
-                //         "emails.address": doc.email
-                //     });
-                // } else if (doc.mobile) {
-                //     phoneNumber = currentUserPhonePrefix + doc.mobile;
-                //     userObj = db.users.findOne({
-                //         "phone.number": phoneNumber
-                //     });
-                // }
-                if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
-                    if (!doc.invite_state) {
-                        doc.invite_state = "accepted";
-                    }
-                    if (!doc.user_accepted) {
-                        doc.user_accepted = true;
-                    }
-                } else {
-                    if(Meteor.settings.tenant && Meteor.settings.tenant.saas){
-                        // 云版要求用户接受邀请才让用户在新加入的工作区生效
-                        doc.invite_state = "pending";
-                        // 云版强制设置user_accepted为false
-                        doc.user_accepted = false;
-                    }
-                    else{
-                        // 落地版本不需要用户接受邀请才让用户在新加入的工作区生效，而是直接生效
-                        // 落地版本设置user_accepted为传入的值，由管理员在新建用户的界面设置
+
+            if(doc.user){
+                let userDoc = db.users.findOne({_id: userId});
+                let syncProp = spaceUserCore.pickNeedSyncProp(userDoc);
+                Object.assign(doc, syncProp);
+            }else{
+                creator = db.users.findOne(userId);
+                if ((!doc.user) && (doc.email || doc.mobile)) {
+                    if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
+                        if (!doc.invite_state) {
+                            doc.invite_state = "accepted";
+                        }
                         if (!doc.user_accepted) {
+                            doc.user_accepted = true;
+                        }
+                    } else {
+                        if(Meteor.settings.tenant && Meteor.settings.tenant.saas){
+                            // 云版要求用户接受邀请才让用户在新加入的工作区生效
+                            doc.invite_state = "pending";
+                            // 云版强制设置user_accepted为false
                             doc.user_accepted = false;
                         }
-                    }
-                }
-                if (userObj) {
-                    doc.user = userObj._id;
-                    doc.name = userObj.name;
-                } else {
-                    if (!doc.name) {
-                        doc.name = doc.email.split('@')[0];
-                    }
-                    // 将用户插入到users表
-                    user = {};
-                    id = db.users._makeNewID();
-                    options = {
-                        name: doc.name,
-                        locale: creator.locale,
-                        spaces_invited: [doc.space],
-                        _id: id,
-                        steedos_id: doc.email || id
-                    };
-                    if (doc.mobile) {
-                        doc.mobile_verified = false;
-                        options.mobile = doc.mobile;
-                        options.mobile_verified  = doc.mobile_verified;
-                    }
-                    if (doc.email) {
-                        doc.email_verified = false
-                        email = [
-                            {
-                                address: doc.email,
-                                verified: doc.email_verified
+                        else{
+                            // 落地版本不需要用户接受邀请才让用户在新加入的工作区生效，而是直接生效
+                            // 落地版本设置user_accepted为传入的值，由管理员在新建用户的界面设置
+                            if (!doc.user_accepted) {
+                                doc.user_accepted = false;
                             }
-                        ];
-                        options.emails = email;
-                        options.email = doc.email;
-                        options.email_verified = doc.email_verified;
+                        }
                     }
-                    if (doc.username) {
-                        options.username = doc.username;
+                    if (userObj) {
+                        doc.user = userObj._id;
+                        doc.name = userObj.name;
+                    } else {
+                        if (!doc.name) {
+                            doc.name = doc.email.split('@')[0];
+                        }
+                        // 将用户插入到users表
+                        user = {};
+                        id = db.users._makeNewID();
+                        options = {
+                            name: doc.name,
+                            locale: creator.locale,
+                            spaces_invited: [doc.space],
+                            _id: id,
+                            steedos_id: doc.email || id
+                        };
+                        if (doc.mobile) {
+                            doc.mobile_verified = false;
+                            options.mobile = doc.mobile;
+                            options.mobile_verified  = doc.mobile_verified;
+                        }
+                        if (doc.email) {
+                            doc.email_verified = false
+                            email = [
+                                {
+                                    address: doc.email,
+                                    verified: doc.email_verified
+                                }
+                            ];
+                            options.emails = email;
+                            options.email = doc.email;
+                            options.email_verified = doc.email_verified;
+                        }
+                        if (doc.username) {
+                            options.username = doc.username;
+                        }
+                        doc.user = db.users.insert(options);
                     }
-                    doc.user = db.users.insert(options);
                 }
-            }
-            if (!doc.user) {
-                throw new Meteor.Error(400, "space_users_error_user_required");
-            }
-            if (!doc.name) {
-                throw new Meteor.Error(400, "space_users_error_name_required");
+                if (!doc.user) {
+                    throw new Meteor.Error(400, "space_users_error_user_required");
+                }
+                if (!doc.name) {
+                    throw new Meteor.Error(400, "space_users_error_name_required");
+                }
             }
             if (doc.organizations && doc.organizations.length > 0) {
                 // 如果主组织未设置或设置的值不在doc.organizations内，则自动设置为第一个组织
@@ -307,7 +294,6 @@ Meteor.startup(function () {
             }
         });
         db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
-            console.log('db.space_users.before.update', modifier);
             var currentUserPhonePrefix, email_val, emails, emails_val, euser, isEmailCleared, isMobileCleared, lang, newEmail, newMobile, number, organization, paramString, params, ref, ref1, ref2, steedos_id, user_set, user_unset;
             modifier.$set = modifier.$set || {};
             db.space_users.updatevaildate(userId, doc, modifier);
@@ -391,7 +377,6 @@ Meteor.startup(function () {
             var ref;
             modifier.$set = modifier.$set || {};
             modifier.$unset = modifier.$unset || {};
-            console.log('db.space_users.before.update', modifier);
             spaceUserCore.syncUserInfo(this.previous, modifier);
 
             if (modifier.$set.organizations) {
@@ -894,19 +879,19 @@ Creator.Objects['space_users'].actions = {
     },
     standard_edit: {
         visible: function (object_name, record_id, record_permissions) {
-            console.log('standard_edit......');
-            if(Session.get("app_id") === 'admin'){
-                var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
-                if(space_userId === record_id){
-                    return true
-                }
-            }
             var organization = Session.get("organization");
             var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
             if(!allowEdit){
                 // permissions配置没有权限则不给权限
                 return false
             }
+            if(Session.get("app_id") === 'admin'){
+                var space_userId = db.space_users.findOne({user: Steedos.userId(), space: Steedos.spaceId()})._id
+                if(space_userId === record_id){
+                    return true
+                }
+            }
+
             // 组织管理员要单独判断，只给到有对应单位的组织管理员权限
             if(Steedos.isSpaceAdmin()){
                 return true;
