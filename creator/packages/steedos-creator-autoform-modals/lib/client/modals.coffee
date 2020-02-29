@@ -124,9 +124,10 @@ Template.CreatorAutoformModals.rendered = ->
 			Steedos.setModalMaxHeight()
 		$(window).bind 'keyup', onEscKey
 
-		setTimeout ->
-			$("#afModal .form-control:first").focus()
-		, 100
+		unless Steedos.isMobile()
+			setTimeout ->
+				$("#afModal .form-control:first").focus()
+			, 100
 
 	$('#afModal').on 'hidden.bs.modal', ->
 		# 还原dxOverlay原来默认的zIndex值
