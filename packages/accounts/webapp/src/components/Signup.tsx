@@ -47,7 +47,7 @@ const Signup = ({ history }: RouteComponentProps<{}>) => {
     try {
       await accountsPassword.createUser({
         locale: getBrowserLocale(),
-        username: name,
+        name: name,
         email: email,
         password: password,
       });

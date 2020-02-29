@@ -7,7 +7,7 @@
     "accounts.username_or_email": "用户名或邮箱",
     "accounts.create_tenant": "创建企业",
     "accounts.tenant_name": "企业名称",
-    "accounts.name": "用户名",
+    "accounts.name": "姓名",
     "accounts.email": "邮箱",
     "accounts.password": "密码",
     "accounts.logout": "注销",

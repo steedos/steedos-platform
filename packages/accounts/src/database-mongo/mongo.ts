@@ -86,6 +86,8 @@ export class Mongo implements DatabaseInterface {
       user.name = username;
     }
     if (email) {
+      user.email = email.toLowerCase();
+      user.mobile_verified = false;
       user.emails = [{ address: email.toLowerCase(), verified: false }];
       user.steedos_id = email.toLowerCase();
     }
