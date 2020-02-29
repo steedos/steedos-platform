@@ -12,7 +12,7 @@
     "prepare": "node .scripts/npm-postinstall.js",
     "clear": "rm -rf node_modules/@steedos/auth/node_modules/@steedos node_modules/@steedos/core/node_modules/@steedos node_modules/@steedos/objectql/node_modules/@steedos node_modules/@steedos/plugin-jsreport/node_modules/@steedos node_modules/@steedos/accounts/node_modules/@steedos",
     "osy": "cd ../object-server/ && yarn",
-    "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
+    "os": "cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
     "oss": "cp -r ../object-server/packages/standard-objects/* node_modules/@steedos/standard-objects/ && yarn start"
   },
   "dependencies": {
@@ -97,7 +97,7 @@
   },
   "devDependencies": {
     "@steedos/app-contracts": "^1.16.1",
-    "@steedos/react": "1.14.12",
+    "@steedos/react": "1.14.13",
     "@steedos/steedos-plugin-workflow": "^2.0.4",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
