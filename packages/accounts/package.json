@@ -17,6 +17,8 @@
     "server": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc && yarn buildClient",
     "buildClient": "cd webapp && yarn && yarn build && cd ..",
+    "osy": "cd ../object-server/ && yarn",
+    "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
     "prepare": "yarn build"
   },
   "dependencies": {
