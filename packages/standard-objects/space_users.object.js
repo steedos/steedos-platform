@@ -124,17 +124,18 @@ Meteor.startup(function () {
         };
         db.space_users.before.insert(function (userId, doc) {
             var creator, currentUserPhonePrefix, email, id, options, organization, phone, phoneNumber, user, userObj, userObjs;
-            doc.created_by = userId;
-            doc.created = new Date();
-            doc.modified_by = userId;
-            doc.modified = new Date();
+            
             db.space_users.insertVaildate(userId, doc);
 
             if(doc.user){
-                let userDoc = db.users.findOne({_id: userId});
+                let userDoc = db.users.findOne({_id: doc.user});
                 let syncProp = spaceUserCore.pickNeedSyncProp(userDoc);
                 Object.assign(doc, syncProp);
             }else{
+                doc.created_by = userId;
+                doc.created = new Date();
+                doc.modified_by = userId;
+                doc.modified = new Date();
                 creator = db.users.findOne(userId);
                 if ((!doc.user) && (doc.email || doc.mobile)) {
                     if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {

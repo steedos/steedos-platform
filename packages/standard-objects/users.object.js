@@ -273,8 +273,9 @@ if (Meteor.isServer) {
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
         let setKeys = _.keys(modifier.$set || {});
-        if(!_.isEmpty(setKeys) && !_.find(setKeys, function(key){
-            return key.startsWith('services') || key.startsWith('$') || _.includes(['last_logon'], key)
+        if(!_.isEmpty(setKeys) && _.find(setKeys, function(key){
+            return _.include(['name', 'username', 'email', 'email_verified', 'mobile', 
+            'mobile_verified', 'locale', 'avatar', 'email_notification', 'sms_notification'], key)
         })){
             throw new Meteor.Error(500, '禁止修改');
         }

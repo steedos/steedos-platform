@@ -71,12 +71,12 @@ function onCreateSpace(spaceDoc){
     orgDB.direct.insert(orgDoc);
 
     let spaceUsersDB = db.space_users;
-    let userDoc = db.users.findOne({_id: userId});
+    // let userDoc = db.users.findOne({_id: userId});
     let spaceUsersDoc = {
-        user: userDoc._id, 
-        username: userDoc.username, 
-        name: userDoc.name, 
-        email: userDoc.email, 
+        user: userId, 
+        // username: userDoc.username, 
+        // name: userDoc.name, 
+        // email: userDoc.email, 
         user_accepted: true, 
         organization: orgDoc._id, 
         organizations: [orgDoc._id], 
@@ -84,11 +84,11 @@ function onCreateSpace(spaceDoc){
         company_id: companyDoc._id,
         company_ids: [companyDoc._id],
         space: spaceId,
-        // owner: userId,
-        // created_by: userId,
-        // created: now,
-        // modified_by: userId,
-        // modified: now
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
       }
     spaceUsersDB.insert(spaceUsersDoc)
 }
@@ -439,9 +439,8 @@ Creator.Objects['spaces'].methods = {
                     }
                 }
             } catch (err) {
-                error = err
+                error = err.message
             }
-
             return res.status(500).send({
                 "error": error,
                 "success": false
