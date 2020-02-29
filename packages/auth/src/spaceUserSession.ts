@@ -109,6 +109,8 @@ export async function getSpaceUserSession(spaceId, userId) {
             spaceSession.permission_shares = await getUserPermissionShares(su);
             addSpaceSessionToCache(spaceId, userId, spaceSession);
             return spaceSession;
+        }else{
+            spaceSession = { roles: ['guest'], expiredAt: expiredAt };
         }
     }
     return spaceSession;
