@@ -408,7 +408,7 @@ if (Meteor.isServer) {
 }
 
 Creator.Objects['spaces'].methods = {
-    "create-tenant": function (req, res) {
+    "tenant": function (req, res) {
         return Fiber(function () {
             let error = '';
             try {
