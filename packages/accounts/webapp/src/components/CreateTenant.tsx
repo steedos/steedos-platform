@@ -3,9 +3,11 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
-
+import { connect } from 'react-redux';
+import { getSettings } from '../selectors';
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
+import { getCookie } from '../utils/utils';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -23,24 +25,29 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
 ));
 
-const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
+const CreateTenant = ({ settings, history }: any) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [tenantName, setTenantName] = useState<string | "">("");
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
     setError(null);
     try {
-      
-      // refresh the session to get a new accessToken if expired
-      const res = await accountsRest.authFetch( 'tenant', {
+      const route = 'api/v4/spaces/register/tenant';
+      const fetchOptions = {
+        headers: {
+          "X-User-Id": getCookie("X-User-Id"),
+          "X-Auth-Token": getCookie("X-Auth-Token")
+        },
         method: "POST",
         body: JSON.stringify({
           name: tenantName
         })
-      });
+      };
+      const res = await fetch(
+        `${settings.root_url}/${route}`,
+        fetchOptions
+      );
       history.push('/' + window.location.hash.substring(window.location.hash.indexOf("?")));
     } catch (err) {
       setError(err.message);
@@ -87,4 +94,11 @@ const CreateTenant = ({ history }: RouteComponentProps<{}>) => {
   );
 };
 
-export default CreateTenant;
+
+function mapStateToProps(state: any) {
+  return {
+    settings: getSettings(state),
+  };
+}
+
+export default connect(mapStateToProps)(CreateTenant);
