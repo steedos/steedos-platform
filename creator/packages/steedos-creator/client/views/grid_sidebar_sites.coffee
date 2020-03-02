@@ -282,21 +282,26 @@ Template.creator_grid_sidebar_sites.onRendered ->
 						itemElement.append("<i class=\"dx-icon #{itemData.icon}\"></i>");
 					itemElement.append("<span>" + itemData.name + "</span>");
 
-					htmlText = """
-						<span class="slds-grid slds-grid--align-spread creator-table-actions">
-							<div class="forceVirtualActionMarker forceVirtualAction">
-								<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
-									<span class="slds-icon_container slds-icon-utility-down">
-										<span class="lightningPrimitiveIcon">
-											#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"threedots_vertical"}}
+					record = itemData
+					curObjectName = if record.isRoot then "cms_sites" else "cms_categories"
+					record_permissions = Creator.getRecordPermissions curObjectName, record, Meteor.userId()
+					actions = _actionItems.bind(self)(curObjectName, record._id, record_permissions)
+					if actions.length
+						htmlText = """
+							<span class="slds-grid slds-grid--align-spread creator-table-actions">
+								<div class="forceVirtualActionMarker forceVirtualAction">
+									<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+										<span class="slds-icon_container slds-icon-utility-down">
+											<span class="lightningPrimitiveIcon">
+												#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"threedots_vertical"}}
+											</span>
+											<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
 										</span>
-										<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
-									</span>
-								</a>
-							</div>
-						</span>
-					"""
-					itemElement.append(htmlText)
+									</a>
+								</div>
+							</span>
+						"""
+						itemElement.append(htmlText)
 			
 			sidebar_multiple = false
 			dxOptions.selectNodesRecursive = false
