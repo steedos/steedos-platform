@@ -21,6 +21,11 @@
 	{{else}}
 		<div class="gridSidebarContainer slds-table_edit slds-hint-parent"></div>
 		<div class="action-sheet"></div>
+		<div class="creator-grid-sidebar-bottom">
+			<button class="slds-button slds-button_neutral slds-is-selected btn-new-site" title="新建站点">
+				{{> steedos_icon class="slds-button__icon slds-button__icon_left" source="utility-sprite" name="add"}} 新建站点
+			</button>
+		</div>
 	{{/if}}
 	{{#CreatorAfModal formId="creatorSidebarSitesAddForm" meteormethod="af_insert" class="btn btn-primary creator-sidebar-sites-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
 	{{#CreatorAfModal formId="creatorSidebarSitesEditForm" meteormethod="af_update" class="btn btn-primary creator-sidebar-sites-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}

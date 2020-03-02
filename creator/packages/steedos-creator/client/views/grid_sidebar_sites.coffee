@@ -378,6 +378,16 @@ Template.creator_grid_sidebar_sites.helpers
 			return false
 
 Template.creator_grid_sidebar_sites.events
+	'click .btn-new-site': (event) ->
+		objectName = "cms_sites"
+		object = Creator.getObject(objectName)
+		collection_name = object.label
+		Session.set("action_fields", undefined)
+		Session.set("action_collection", "Creator.Collections.#{objectName}")
+		Session.set("action_collection_name", collection_name)
+		Session.set("action_save_and_insert", true)
+		Meteor.defer ()->
+			$(".creator-sidebar-sites-add").click()
 
 Template.creator_grid_sidebar_sites.onCreated ->
 	this.categories = new ReactiveVar(null)
