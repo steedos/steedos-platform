@@ -376,6 +376,11 @@ Template.creator_grid_sidebar_sites.helpers
 			return Creator.getPermissions(objectName)?.allowCreate
 		else
 			return false
+	
+	allowCreateSite: ()->
+		if Steedos.isMobile()
+			return false
+		return Creator.getPermissions("cms_sites")?.allowCreate
 
 Template.creator_grid_sidebar_sites.events
 	'click .btn-new-site': (event) ->
