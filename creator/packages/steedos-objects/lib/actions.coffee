@@ -90,7 +90,7 @@ if Meteor.isClient
 						Meteor.defer ()->
 							$(".btn.creator-edit").click()
 
-		"standard_delete": (object_name, record_id, record_title, list_view_id, call_back)->
+		"standard_delete": (object_name, record_id, record_title, list_view_id, record, call_back)->
 			console.log("standard_delete", object_name, record_id, record_title, list_view_id)
 			object = Creator.getObject(object_name)
 
