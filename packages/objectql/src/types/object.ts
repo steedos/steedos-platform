@@ -744,6 +744,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
 
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
+                    if (_.isEmpty(userSession.companies)) {
+                        throw new Error("user not belong any company!");
+                    }
                     companyFilter = _.map(userSession.companies, function (comp: any) {
                         return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     });
