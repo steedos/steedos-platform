@@ -23,11 +23,12 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
 ));
 
-const Signup = ({ history }: RouteComponentProps<{}>) => {
+const Signup = ({ history, location }: RouteComponentProps<{}>) => {
+  const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | "">("");
-  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [email, setEmail] = useState<string | undefined>(_email);
   const [password, setPassword] = useState<string | "">("");
   const getBrowserLocale = function() {
     var l, locale;

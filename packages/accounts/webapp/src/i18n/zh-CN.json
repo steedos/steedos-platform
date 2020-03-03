@@ -43,5 +43,9 @@
     "accounts.usernameOrEmailRequired": "用户名或邮箱不能为空",
     "accounts.emailRequired": "邮箱不能为空",
     "accounts.usernameRequired": "用户名不能为空",
-    "accounts.passwordRequired": "密码不能为空"
+    "accounts.passwordRequired": "密码不能为空",
+    "accounts.verify": "验证",
+    "accounts.verify_email": "验证邮件",
+    "accounts.verify_mobile": "验证手机号",
+    "accounts.verifyCode":"验证码"
 }

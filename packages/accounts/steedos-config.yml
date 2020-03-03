@@ -12,7 +12,10 @@ tenant:
   enable_register: true
   enable_forget_password: true
   enable_create_tenant: true
-  saas: false 
+  saas: false
+  enable_password_login: false
+  enable_email_code_login: true
+  enable_mobile_code_login: true
 email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}

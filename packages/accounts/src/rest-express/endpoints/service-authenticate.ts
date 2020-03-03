@@ -25,7 +25,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
       }
     }
 
-    if(email.indexOf("@") < 0){
+    if(email && email.indexOf("@") < 0){
       req.body.user.username = email
     }
     const loggedInUser: any = await accountsServer.loginWithService(serviceName, req.body, {

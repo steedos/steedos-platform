@@ -19,6 +19,8 @@ import { AccountsExpressOptions } from './types';
 import { getTenant } from './endpoints/steedos/get-tenant';
 import { createTenant } from './endpoints/steedos/create-tenant';
 import { getSettings } from './endpoints/steedos/settings';
+import { emailExists } from './endpoints/get-email-exists';
+import { applyCode, verifyCodeAPI, getUserIdByToken } from './endpoints/steedos/verify_code';
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -38,14 +40,16 @@ const accountsExpress = (
 
   const router = express.Router();
   router.use(cookieParser());
-
   router.post(`${path}/impersonate`, impersonate(accountsServer));
 
   router.get(`${path}/authorize`, userLoader(accountsServer), authorize(accountsServer));
 
   router.get(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
-
+  router.get(`${path}/user/email/exists`, emailExists());
+  router.post(`${path}/code/apply`, applyCode());
+  router.post(`${path}/code/verify`, verifyCodeAPI());
+  router.get(`${path}/code/id`, getUserIdByToken());
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
   router.get(`${path}/tenant/:id`, userLoader(accountsServer), getTenant(accountsServer));

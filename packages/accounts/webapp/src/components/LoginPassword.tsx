@@ -8,8 +8,7 @@ import { accountsClient, accountsRest, accountsPassword } from '../accounts';
 import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import FormError from './FormError';
-
-import { localizeMessage } from '../utils/utils';
+import { Login } from '../client'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -24,32 +23,23 @@ const useStyles = makeStyles({
 });
 
 const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/signup", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props}  ref={ref} />
+  <Link to={{pathname: "/signup"}} {...props}  ref={ref} />
 ));
 const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/reset-password", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
+  <Link to={{pathname: "/login-code"}} {...props} ref={ref} />
 ));
 
-const Login = ({ history, settings, tenant }: any) => {
+const LoginPassword = ({ history, settings, tenant, location }: any) => {
+  const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [enableCode] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(_email || '');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   document.title = "Login | " + tenant.name;
-  const searchParams = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf("?")));
-  let redirect_uri = searchParams.get("redirect_uri");
-  const getCookie = (name: string) => {
-    let pattern = RegExp(name + "=.[^;]*")
-    let matched = document.cookie.match(pattern)
-    if(matched){
-        let cookie = matched[0].split('=')
-        return cookie[1]
-    }
-    return ''
-  }
+  
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -61,47 +51,7 @@ const Login = ({ history, settings, tenant }: any) => {
         password,
         code,
       }
-      let result: any = await accountsRest.authFetch( 'password/authenticate', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...data,
-        }),
-        credentials: "include"
-      });
-      accountsClient.setTokens(result.tokens);
-
-      if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
-        //消息参数必须为string
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          "X-Auth-Token": getCookie('X-Auth-Token'),
-          "X-User-Id": getCookie('X-User-Id'),
-          "X-Access-Token": result.tokens.accessToken
-        }))
-      }
-
-      const user = await accountsRest.authFetch( 'user', {});
-
-      if(user.password_expired){
-        return history.push('/update-password' + window.location.hash.substring(window.location.hash.indexOf("?")), {error: localizeMessage('accounts.passwordExpired')});
-      }
-
-      if (tenant.enable_create_tenant && user.spaces.length == 0)
-      {
-        return history.push('/create-tenant' + window.location.hash.substring(window.location.hash.indexOf("?")));
-      }
-
-      if (redirect_uri){
-        if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
-          redirect_uri = window.location.origin + redirect_uri
-        }
-        let u = new URL(redirect_uri);
-        u.searchParams.append("token", result.tokens.accessToken)
-        u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
-        u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
-        window.location.href = u.toString();
-      }
-      else
-        history.push('/');
+      await Login(data, history, tenant)
     } catch (err) {
       setError(err.message);
     }
@@ -175,4 +125,4 @@ function mapStateToProps(state: any) {
   };
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(LoginPassword);

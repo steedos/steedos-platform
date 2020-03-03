@@ -8,19 +8,21 @@ import { getTenant } from './selectors';
 
 import Logo from './components/Logo';
 import Signup from './components/Signup';
-import Login from './components/Login';
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import TwoFactor from './components/TwoFactor';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './components/CreateTenant';
+import Verify from './components/Verify';
+import LoginCode from './components/LoginCode';
+import LoginMethod from './components/LoginMethod'
+import LoginPassword from './components/LoginPassword';
 
 import theme from './theme';
 
 
 const Router = ({tenant}:any) => {
-
   let backgroundUrl = require("./assets/background.svg");
   if (tenant.background_url) {
     backgroundUrl = tenant.background_url 
@@ -64,6 +66,11 @@ const Router = ({tenant}:any) => {
 
   const classes = useStyles();
 
+  let loginComponent = LoginPassword;
+  if(tenant && tenant.enable_password_login === false){
+    loginComponent = LoginCode;
+  }
+
   return (
     <HashRouter basename="">
       <ThemeProvider theme={theme}>
@@ -77,12 +84,16 @@ const Router = ({tenant}:any) => {
                 <Route path="/two-factor" component={TwoFactor} />
 
                 <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
+                <Route path="/login" component={loginComponent} />
+                <Route path="/login-password" component={LoginPassword} />
                 <Route path="/create-tenant" component={CreateTenant} />
                 <Route exact path="/reset-password" component={ResetPassword} />
                 <Route exact path="/update-password" component={UpdatePassword} />
                 <Route path="/reset-password/:token" component={ResetPassword} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
+                <Route path="/verify/:token" component={Verify} />
+                <Route path="/login-code" component={LoginCode} />
+                <Route path="/login-method" component={LoginMethod} />
               </Paper>
             </Grid>
           </Grid>

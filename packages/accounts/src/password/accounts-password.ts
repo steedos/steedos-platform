@@ -23,6 +23,7 @@ import {
 import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
 import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
+import { verifyCode } from '../rest-express/endpoints/steedos/verify_code';
 
 export interface AccountsPasswordOptions {
   /**
@@ -152,8 +153,16 @@ export default class AccountsPassword implements AuthenticationService {
     this.twoFactor.setStore(store);
   }
 
-  public async authenticate(params: PasswordLoginType): Promise<User> {
-    const { user, password, code } = params;
+  public async authenticate(params: any): Promise<User> {
+    const { user, password, code, token, token_code } = params;
+
+    if(token){
+      if (!user) {
+        throw new Error(this.options.errors.unrecognizedOptionsForLogin);
+      }
+      return await this.codeAuthenticator(user, token, token_code);
+    }
+
     if (!user || !password) {
       throw new Error(this.options.errors.unrecognizedOptionsForLogin);
     }
@@ -605,6 +614,48 @@ export default class AccountsPassword implements AuthenticationService {
     const isPasswordValid = await verifyPassword(pass, hash);
 
     if (!isPasswordValid) {
+      throw new Error(
+        this.server.options.ambiguousErrorMessages
+          ? this.options.errors.invalidCredentials
+          : this.options.errors.incorrectPassword
+      );
+    }
+
+    return foundUser;
+  }
+
+  private async codeAuthenticator(
+    user, token, token_code
+  ): Promise<User> {
+    const { username, email, id } = isString(user)
+      ? this.toUsernameAndEmail({ user })
+      : this.toUsernameAndEmail({ ...user });
+
+    let foundUser: User | null = null;
+
+    if (id) {
+      // this._validateLoginWithField('id', user);
+      foundUser = await this.db.findUserById(id);
+    } else if (username) {
+      // this._validateLoginWithField('username', user);
+      foundUser = await this.db.findUserByUsername(username);
+    } else if (email) {
+      // this._validateLoginWithField('email', user);
+      foundUser = await this.db.findUserByEmail(email);
+    }
+
+    if (!foundUser) {
+      throw new Error(
+        this.server.options.ambiguousErrorMessages
+          ? this.options.errors.invalidCredentials
+          : this.options.errors.userNotFound
+      );
+    }
+
+    
+    const isCodeValid = await verifyCode(token, token_code);
+
+    if (!isCodeValid) {
       throw new Error(
         this.server.options.ambiguousErrorMessages
           ? this.options.errors.invalidCredentials
