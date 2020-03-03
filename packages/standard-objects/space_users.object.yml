@@ -1,5 +1,5 @@
 name: space_users
-label: 用户
+label: 人员
 icon: user
 enable_search: true
 sidebar:
@@ -172,7 +172,7 @@ fields:
     name: last_logon
 list_views:
   all:
-    label: 有效用户
+    label: 全部人员
     columns:
       - name
       - organizations
@@ -185,7 +185,7 @@ list_views:
       - - name
         - asc
   disabled:
-    label: 禁用用户
+    label: 离职停用人员
     columns:
       - name
       - position
@@ -197,19 +197,19 @@ list_views:
     sort:
       - - created
         - desc
-  inviting:
-    label: 邀请待确认用户
-    columns:
-      - name
-      - position
-      - mobile
-      - email
-      - invite_state
-    filter_scope: space
-    filters: [["invite_state","!=",'accepted']]
-    sort:
-      - - created
-        - desc
+  # inviting:
+  #   label: 邀请待确认用户
+  #   columns:
+  #     - name
+  #     - position
+  #     - mobile
+  #     - email
+  #     - invite_state
+  #   filter_scope: space
+  #   filters: [["invite_state","!=",'accepted']]
+  #   sort:
+  #     - - created
+  #       - desc
 permission_set:
   user:
     allowCreate: false
