@@ -8,6 +8,7 @@ const EFFECTIVE_TIME = 30; //30分钟
 const CODE_LENGTH = 6;
 declare var MailQueue;
 declare var Meteor;
+declare var Steedos;
 /**
  * Return random 1-9 digit
  * @returns {number}
@@ -189,6 +190,15 @@ export const verifyCode = async (token: string, code: string) => {
 
     if (record) {
         await db.updateOne('users_verify_code', record._id, { verifiedAt: now });
+        try {
+            if (record.action.startsWith("email")) {
+                Steedos.setEmailVerified(record.owner, record.name, true);
+            } else if (record.action.startsWith("mobile")) {
+                Steedos.setMobileVerified(record.owner, record.name, true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
         return true
     } else {
         throw new Error("验证码无效");
