@@ -462,3 +462,23 @@ if (Meteor.isServer) {
             background: true
         });
 }
+
+Steedos.setEmailVerified = function (userId, email, value){
+    let user = db.users.findOne({_id: userId, email: email}, {fields: {email_verified: 1}});
+    if(user && _.isBoolean(value) && user.email_verified != value){
+        db.space_users.direct.update({user: userId}, {$set: {email_verified: value}}, {
+            multi: true
+        });
+        db.users.direct.update({_id: userId}, {$set: {email_verified: value}})
+    }
+}
+
+Steedos.setMobileVerified = function (userId, mobile, value){
+    let user = db.users.findOne({_id: userId, mobile: mobile}, {fields: {mobile_verified: 1}});
+    if(user && _.isBoolean(value) && user.mobile_verified != value){
+        db.space_users.direct.update({user: userId}, {$set: {mobile_verified: value}}, {
+            multi: true
+        });
+        db.users.direct.update({_id: userId}, {$set: {mobile_verified: value}})
+    }
+}

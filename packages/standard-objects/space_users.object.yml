@@ -30,13 +30,24 @@ fields:
     searchable: true
     name: email
     required: true
+  email_verified:
+    type: boolean
+    label: 邮件已验证
+    readonly: true
+    omit: true
+    hidden: true
   mobile:
     type: text
     label: 手机
     searchable: true
     group: '-'
     name: mobile
-
+  mobile_verified:
+    type: boolean
+    label: 手机已验证
+    readonly: true
+    omit: true
+    hidden: true
   organizations:
     type: lookup
     label: 所属部门
@@ -172,7 +183,7 @@ fields:
     type: date
     omit: true
     hidden: true
-    name: last_logon
+    name: last_logon    
 list_views:
   all:
     label: 全部人员
