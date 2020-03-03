@@ -44,6 +44,7 @@ async function syncUserInfoToSpaceUserInfo(){
         spaceUserSet.email_notification = user.email_notification || false;
         spaceUserSet.avatar = user.avatar;
         spaceUserSet.last_logon = user.last_logon;
+        spaceUserSet.username = user.username;
         await db.updateMany('space_users', [['user', '=', user._id]], spaceUserSet);
         i++;
     }
