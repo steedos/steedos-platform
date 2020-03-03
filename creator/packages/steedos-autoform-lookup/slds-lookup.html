@@ -6,7 +6,7 @@
 					{{#each _readonlyValues}}
 						<a class="{{#if hasLink}}textUnderline outputLookupLink {{/if}}slds-truncate forceOutputLookup"
 						   data-refid="recordId"
-						   data-recordid="{{value}}" data-special-link="true" rel="noreferrer" title=""
+						   data-recordid="{{value}}" data-special-link="true" rel="noreferrer" title="{{label}}"
 						   data-aura-class="forceOutputLookup" href="{{outPutLookupHref value}}">{{label}}</a>{{#unless
 							(isLast @index)}},{{/unless}}
 					{{/each}}
@@ -37,7 +37,8 @@
 										<span class="slds-icon_container reference-icon slds-icon_object steedos-icon-{{object}}">
 											{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=(getIcon icon)}}
 										</span>
-												<span class="reference-name">{{#if label}}{{label}}{{else}}{{_
+												<span class="reference-name" title="{{#if label}}{{label}}{{else}}{{_
+													object}}{{/if}}">{{#if label}}{{label}}{{else}}{{_
 														object}}{{/if}}</span>
 											</a>
 										</li>
@@ -55,7 +56,7 @@
 								data-old-value="{{value}}">
 							<option value=""></option>
 							{{#each getItems}}
-								<option value={{value}} selected={{selected}}>{{label}}</option>
+								<option value={{value}} selected={{selected}} title="{{label}}">{{label}}</option>
 							{{/each}}
 						</select>
 
@@ -113,7 +114,7 @@
 												{{/if}}
 
 												<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
-													<span class="slds-listbox__option-text slds-listbox__option-text_entity">{{label}}</span>
+													<span class="slds-listbox__option-text slds-listbox__option-text_entity" title="{{label}}">{{label}}</span>
 												</span>
 											</span>
 										</li>
@@ -156,8 +157,8 @@
 											</span>
 										</span>
 										{{/if}}
-										<span class="slds-pill__label">{{label}}</span>
-										<span class="slds-icon_container slds-pill__remove" title="Remove">
+										<span class="slds-pill__label" title="{{label}}">{{label}}</span>
+										<span class="slds-icon_container slds-pill__remove" title="{{_ "Delete"}}">
 											{{> steedos_icon class="slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="close"}}
 										</span>
 									</span>
