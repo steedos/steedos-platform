@@ -134,6 +134,9 @@ fields:
     group: '-'
     name: sort_no
     sortable: true
+  email_notification:
+    label: 接收邮件通知
+    type: boolean
   sms_notification:
     label: 接收短信提醒
     type: boolean

@@ -161,6 +161,8 @@ actions:
       function () {
               return Modal.show('space_recharge_modal');
             }
+  standard_new:
+    visible: false
 permission_set:
   user:
     allowCreate: true

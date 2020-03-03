@@ -1,0 +1,85 @@
+name: users_verify_code
+label: 验证码
+icon: custom.custom76
+fields:
+  name:
+    type: text
+  code:
+    label: 验证码
+    type: text
+    min: 6
+    max: 6
+    required: true
+  action:
+    label: 验证类型
+    type: select
+    options: 验证邮箱:verifyEmail,验证手机号:verifyMobile,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin
+    required: true
+  owner:
+    label: 所有者
+    type: lookup
+    reference_to: users
+    sortable: true
+    filterable: true
+    index: true
+    hidden: false
+    omit: false
+    required: true
+  expiredAt:
+    label: 过期时间
+    type: datetime
+    readonly: true
+  verifiedAt:
+    label: 验证成功时间
+    type: datetime
+list_views:
+  all:
+    label: 所有
+    columns:
+      - code
+      - type
+      - owner
+      - expiredAt
+      - isUsed
+  unUsed:
+    label: 未使用
+    columns:
+      - code
+      - type
+      - owner
+      - expiredAt
+      - isUsed
+    filters:
+      - ["isUsed", "<>", true]
+  used:
+    label: 已使用
+    columns:
+      - code
+      - type
+      - owner
+      - expiredAt
+      - isUsed
+    filters:
+      - ["isUsed", "=", true]
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  guest:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
