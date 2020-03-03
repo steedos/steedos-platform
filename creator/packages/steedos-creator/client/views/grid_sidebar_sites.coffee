@@ -347,7 +347,6 @@ Template.creator_grid_sidebar_sites.onRendered ->
 			# dxOptions.onContentReady = ()->
 
 			self.dxTreeViewInstance = self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
-			window.dxTreeViewInstance = self.dxTreeViewInstance
 			
 Template.creator_grid_sidebar_sites.helpers Creator.helpers
 
