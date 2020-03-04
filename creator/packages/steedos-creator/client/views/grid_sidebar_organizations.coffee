@@ -44,6 +44,9 @@ _itemDropdownClick = (e, selectionInfo)->
 			curObjectName = value.itemData.object_name
 			collectionName = object.label
 			name_field_key = object.NAME_FIELD_KEY
+			if curObjectName == "organizations"
+				# 显示组织列表时，特殊处理name_field_key为name字段
+				name_field_key = "name"
 			Session.set("action_fields", undefined)
 			Session.set("action_collection", "Creator.Collections.#{curObjectName}")
 			Session.set("action_collection_name", collectionName)
