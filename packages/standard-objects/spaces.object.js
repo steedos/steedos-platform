@@ -69,20 +69,31 @@ function onCreateSpace(spaceDoc){
         modified: now
     }
     orgDB.direct.insert(orgDoc);
+    
+    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id)
+}
 
+Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
+    let now = new Date();
     let spaceUsersDB = db.space_users;
-    // let userDoc = db.users.findOne({_id: userId});
+
+    if(!organization_id){
+        let root_org = db.organizations.findOne({
+            space: spaceId,
+            parent: null
+        });
+        organization_id = root_org._id
+    }
+
+    //company_id,company_ids,organizations_parents由triggers维护
     let spaceUsersDoc = {
         user: userId, 
-        // username: userDoc.username, 
-        // name: userDoc.name, 
-        // email: userDoc.email, 
-        user_accepted: true, 
-        organization: orgDoc._id, 
-        organizations: [orgDoc._id], 
-        organizations_parents: [orgDoc._id],
-        company_id: companyDoc._id,
-        company_ids: [companyDoc._id],
+        user_accepted: user_accepted, 
+        organization: organization_id, 
+        organizations: [organization_id], 
+        // organizations_parents: [organization_id],
+        // company_id: company_id,
+        // company_ids: [company_id],
         space: spaceId,
         owner: userId,
         created_by: userId,
