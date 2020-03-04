@@ -62,6 +62,20 @@ _itemDropdownClick = (e, selectionInfo)->
 				Session.set 'cmDoc', record
 				Meteor.defer ()->
 					$(".btn.creator-sidebar-orgs-edit").click()
+			else if action.name == "addSubOrganization"
+				Session.set 'action_object_name', curObjectName
+				Session.set 'action_record_id', recordId
+				
+				if recordId
+					if Steedos.isMobile()
+						Session.set 'cmDoc', parent: recordId
+						Session.set 'reload_dxlist', false
+						Meteor.defer ()->
+							$('.btn.creator-add').click()
+					else
+						Session.set 'cmDoc', parent: recordId
+						Meteor.defer ()->
+							$(".btn.creator-sidebar-orgs-add").click()
 			else
 				Creator.executeAction curObjectName, action, recordId, value.itemElement
 	if actions.length
@@ -239,7 +253,7 @@ Template.creator_grid_sidebar_organizations.onCreated ->
 			# 新建组织，重新加载左侧树
 			if result.object_name == "organizations"
 				self.dxTreeViewInstance.dispose()
-				self.needToRefreshTree.set(true)
+				self.needToRefreshTree.set(new Date())
 
 Template.creator_grid_sidebar_organizations.onDestroyed ->
 	Session.set "grid_sidebar_filters", null
