@@ -23,13 +23,13 @@ const useStyles = makeStyles({
 });
 
 const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/signup"}} {...props}  ref={ref} />
+  <Link to={{pathname: "/signup", search: props.location.search}} {...props}  ref={ref} />
 ));
 const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login-code"}} {...props} ref={ref} />
+  <Link to={{pathname: "/reset-password", search: props.location.search}} {...props} ref={ref} />
 ));
 
-const LoginPassword = ({ history, settings, tenant, location }: any) => {
+const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [enableCode] = useState('');
@@ -51,7 +51,7 @@ const LoginPassword = ({ history, settings, tenant, location }: any) => {
         password,
         code,
       }
-      await Login(data, history, tenant)
+      await Login(data, history, tenant, location)
     } catch (err) {
       setError(err.message);
     }
@@ -98,7 +98,7 @@ const LoginPassword = ({ history, settings, tenant, location }: any) => {
         />
       </Button>
       {tenant.enable_register &&
-      <Button component={SignUpLink}>
+      <Button component={SignUpLink} location={location}>
         <FormattedMessage
             id='accounts.signup'
             defaultMessage='Sign Up'
@@ -106,7 +106,7 @@ const LoginPassword = ({ history, settings, tenant, location }: any) => {
       </Button>
       }
       {tenant.enable_forget_password &&
-      <Button component={ResetPasswordLink}>
+      <Button component={ResetPasswordLink} location={location}>
         <FormattedMessage
             id='accounts.forget_password'
             defaultMessage='Forget Password'

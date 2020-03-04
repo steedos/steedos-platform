@@ -3,6 +3,8 @@ import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 
+declare var Creator;
+
 export const registerPassword = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response
@@ -15,13 +17,16 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
         if (!user.name) {
           throw new Error('accounts.name');
         }
-        if (!user.password) {
-          throw new Error('accounts.passwordRequired');
-        }
+        // if (!user.password) {
+        //   throw new Error('accounts.passwordRequired');
+        // }
         return pick(user, ['name', 'email', 'password', 'locale']);
       };
     }
     const userId = await password.createUser(req.body.user);
+    if(req.body.user.space){
+      Creator.addSpaceUsers(req.body.user.space, userId, true)
+    }
     res.json(accountsServer.options.ambiguousErrorMessages ? null : userId);
   } catch (err) {
     sendError(res, err);

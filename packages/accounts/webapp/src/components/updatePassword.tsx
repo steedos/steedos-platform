@@ -20,10 +20,10 @@ const useStyles = makeStyles({
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
+  <Link to={{pathname: "/login", search: props.location.search}} {...props} ref={ref} />
 ));
 
-const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
+const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(history.location.state ? (history.location.state.error || '') : '');
   const [email, setEmail] = useState<string | undefined>('');
@@ -64,7 +64,10 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
     try {
       await accountsPassword.changePassword(oldPassword, newPassword);
       await accountsClient.logout();
-      history.push('/login' + window.location.hash.substring(window.location.hash.indexOf("?")));
+      history.push({
+        pathname: `/login`,
+        search: location.search
+      })
     } catch (err) {
       if(err.message === 'accounts.invalid_credentials'){
         err.message = 'accounts.updatePassword_invalid_credentials'
@@ -131,7 +134,7 @@ const UpdatePassword = ({ history }: RouteComponentProps<{}>) => {
         />
       </Button>
       {error && <FormError error={error!} />}
-      <Button component={LogInLink}>
+      <Button component={LogInLink} location={location}>
         <FormattedMessage
             id='accounts.signin'
             defaultMessage='Sign In'

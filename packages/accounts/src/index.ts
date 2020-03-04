@@ -50,7 +50,7 @@ async function getAccountsServer (context){
           return date ? date : new Date()
         },
       }),
-      sendMail: sendMail,
+      // sendMail: sendMail,
       siteUrl: siteUrl,
       tokenSecret: tokenSecret,
       tokenConfigs: {

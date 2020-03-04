@@ -6,14 +6,14 @@ datasources:
       - ./src/**
 tenant:
   _id: 
-  name: Steedos
+  name: 华炎云
   logo_url:
   background_url: 
   enable_register: true
   enable_forget_password: true
   enable_create_tenant: true
   saas: false
-  enable_password_login: false
+  enable_password_login: true
   enable_email_code_login: true
   enable_mobile_code_login: true
 email:

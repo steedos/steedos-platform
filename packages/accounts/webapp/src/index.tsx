@@ -11,14 +11,14 @@ import IntlProvider from './components/intl_provider';
 import store from './stores/redux_store';
 import { createBrowserHistory } from "history";
 
-import { setLocationSearch } from './utils/utils'
+// import { setLocationSearch } from './utils/utils'
 
-const history = createBrowserHistory();
-setLocationSearch(history.location);
+// const history = createBrowserHistory();
+// setLocationSearch(history.location);
 
-history.listen((location, action) => {
-    setLocationSearch(location.search)
-});
+// history.listen((location, action) => {
+//     setLocationSearch(location.search)
+// });
 
 ReactDOM.render(
     <Provider store={store}>

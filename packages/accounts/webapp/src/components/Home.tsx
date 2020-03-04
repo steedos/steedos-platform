@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 
 import { accountsClient, accountsRest } from '../accounts';
-import { getLocationSearch } from '../utils/utils';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Home = ({ history, settings, tenant }: any) => {
+const Home = ({ history, settings, tenant, location }: any) => {
   const classes = useStyles();
   const [user, setUser] = useState();
 
@@ -55,7 +54,7 @@ const Home = ({ history, settings, tenant }: any) => {
     }
     setUser(data);
     
-    const searchParams = new URLSearchParams(getLocationSearch());
+    const searchParams = new URLSearchParams(location.search);
     let redirect_uri = searchParams.get("redirect_uri");
     if (redirect_uri){
       if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){

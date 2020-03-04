@@ -4,7 +4,7 @@ import { db } from '../../../db';
 const moment = require('moment');
 
 const ALLOW_ACTIONS = ['emailVerify', 'mobileVerify', 'emailLogin', 'mobileLogin'];
-const EFFECTIVE_TIME = 30; //30分钟
+const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 declare var MailQueue;
 declare var Meteor;
@@ -68,6 +68,13 @@ async function sendCode(owner: string, name: string, action: string) {
         record = await db.insert('users_verify_code', doc);
     }
     if (action.startsWith("email")) {
+        //TODO 如果没有配置发送邮件服务，则打印log
+        console.log({
+            to: name,
+            from: Meteor.settings.email.from || "华炎云",
+            subject: getEmailSubject(action),
+            html: getEmailBody(action, record.code)
+        })
         MailQueue.send({
             to: name,
             from: Meteor.settings.email.from || "华炎云",
@@ -140,7 +147,8 @@ export const verifyCodeAPI = () => async (
     try {
         let token = req.body.token;
         let code = req.body.code;
-        let verified = await verifyCode(token, code);
+        let userId = req.body.userId;
+        let verified = await verifyCode(userId, token, code);
         if (verified) {
             return res.send({
                 verified
@@ -169,6 +177,8 @@ export const getUserIdByToken = () => async (
         
         return res.send({
             id: record.owner,
+            name: record.name,
+            action: record.action,
             expired: !isEffective
         });
         
@@ -178,7 +188,7 @@ export const getUserIdByToken = () => async (
 };
 
 
-export const verifyCode = async (token: string, code: string) => {
+export const verifyCode = async (owner: string, token: string, code: string) => {
     const now: any = new Date();
     if (!token) {
         throw new Error("token不能为空")
@@ -186,7 +196,7 @@ export const verifyCode = async (token: string, code: string) => {
     if (!code) {
         throw new Error("code不能为空")
     }
-    const record = await db.findOne('users_verify_code', token, { filters: [['code', '=', code], ['verifiedAt', '=', null], ['expiredAt', '>', now]] })
+    const record = await db.findOne('users_verify_code', token, { filters: [['owner', '=', owner], ['code', '=', code], ['verifiedAt', '=', null], ['expiredAt', '>', now]] })
 
     if (record) {
         await db.updateOne('users_verify_code', record._id, { verifiedAt: now });

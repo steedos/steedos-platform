@@ -54,6 +54,9 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
   const [code, setCode] = useState<string | "">("");
   const [id, setId] = useState<string | "">("");
   const [token, setToken] = useState<string | "">(_token);
+  const [action, setAction] = useState<string | "">("");
+  const [name, setName] = useState<string | "">("");
+  const [actionLabel, setActionLabel] = useState<string | "">("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,7 +74,7 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
         token: token,
         token_code: code.trim(),
       }
-      await Login(data, history, tenant)
+      await Login(data, history, tenant, location)
     } catch (err) {
       setError(err.message);
     }
@@ -82,13 +85,15 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       const data = await accountsRest.fetch(`code/id?token=${token}`, {});
       if (data.id) {
         setId(data.id);
+        setAction(data.action);
+        setName(data.name);
       }
       if (data.expired) {
         setError("验证码已失效");
       }
     } catch (err) {
       setError(err.message);
-      history.push('/')
+      history.push('/login')
     }
   }
 
@@ -111,14 +116,29 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
     getCodeId();
   }, []);
 
+  useEffect(() => {
+
+    if(action.startsWith("email")){
+      setActionLabel('邮箱');
+    }
+
+    if(action.startsWith("mobile")){
+      setActionLabel('手机号');
+    }
+    
+  }, [action,name]);
+
+  //TODO bug;
   const back = function(){
     if(tenant.enable_password_login === false){
       history.push({
-        pathname: `/login`
+        pathname: `/login`,
+        search: location.search,
       })
     }else{
       history.push({
-        pathname: `/login-code`
+        pathname: `/login-code`,
+        search: location.search,
       })
     }
 }
@@ -128,8 +148,9 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       <h4 className={classes.title}>
         <FormattedMessage
           id="accounts.verify"
-        />
+        />{actionLabel}
       </h4>
+      <Typography variant="body2" gutterBottom>请输入发送至 <b>{name}</b> 的 6 位验证码，有效期十分钟。如未收到，请尝试重新获取验证码。</Typography>
       <FormControl margin="normal">
         <InputLabel htmlFor="verifyCode">
           <FormattedMessage

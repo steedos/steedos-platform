@@ -1,6 +1,6 @@
 import ClientClass4 from './client4.js';
 import { accountsClient, accountsRest } from '../accounts';
-import { localizeMessage, getLocationSearch } from '../utils/utils';
+import { localizeMessage } from '../utils/utils';
 const Client4 = new ClientClass4();
 
 const getCookie = (name) => {
@@ -13,9 +13,9 @@ const getCookie = (name) => {
     return ''
   }
 
-const Login = async (data, history, tenant)=>{
+const Login = async (data, history, tenant, location)=>{
 
-    const searchParams = new URLSearchParams(getLocationSearch());
+    const searchParams = new URLSearchParams(location.search);
     let redirect_uri = searchParams.get("redirect_uri");
 
     let result = await accountsRest.authFetch( 'password/authenticate', {
@@ -28,7 +28,7 @@ const Login = async (data, history, tenant)=>{
     await LoginAfter(history, tenant, result, redirect_uri);
 };
 
-const LoginAfter = async (history, tenant, result, redirect_uri)=>{
+const LoginAfter = async (history, tenant, result, redirect_uri, location)=>{
     accountsClient.setTokens(result.tokens);
 
     if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
@@ -43,12 +43,12 @@ const LoginAfter = async (history, tenant, result, redirect_uri)=>{
     const user = await accountsRest.authFetch( 'user', {});
 
     if(user.password_expired){
-      return history.push('/update-password' + window.location.hash.substring(window.location.hash.indexOf("?")), {error: localizeMessage('accounts.passwordExpired')});
+      return history.push('/update-password' + location.search, {error: localizeMessage('accounts.passwordExpired')});
     }
 
     if (tenant.enable_create_tenant && user.spaces.length == 0)
     {
-      return history.push('/create-tenant' + window.location.hash.substring(window.location.hash.indexOf("?")));
+      return history.push('/create-tenant' + location.search);
     }
 
     if (redirect_uri){

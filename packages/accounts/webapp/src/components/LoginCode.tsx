@@ -43,9 +43,10 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
           });
           if (data.token) {
               history.push({
-                  pathname: `/verify/${data.token}`,
-                  state: { email: email }
-              })
+                pathname: `/verify/${data.token}`,
+                search: location.search,
+                state: { email: email.trim() }
+            })
           }
       }else{
         throw new Error("未找到您的账户，请先注册");
@@ -56,28 +57,28 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
   };
 
   const goSignup = ()=>{
-    history.push(
-      {
-        pathname: '/signup',
-        state: {email: email.trim()}
-      }
-    )
+    history.push({
+      pathname: `/signup`,
+      search: location.search,
+      state: { email: email }
+  })
   }
 
   const back = function(){
       history.push({
           pathname: `/login`,
+          search: location.search,
           state: { email: email }
       })
   }
   return (
       <form onSubmit={onSubmit} className={classes.formContainer}>
-        <h4 className={classes.title}>
+        {/* <h4 className={classes.title}>
           <FormattedMessage
-            id='accounts.login_with_email'
-            defaultMessage='邮箱登录'
+            id='accounts.login'
+            defaultMessage='登录'
           />
-        </h4>
+        </h4> */}
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
             <FormattedMessage

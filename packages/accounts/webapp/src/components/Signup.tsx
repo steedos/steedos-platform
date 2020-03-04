@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
+import { FormControl, InputLabel, Input, Button, Typography, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import {FormattedMessage} from 'react-intl';
-
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { accountsPassword } from '../accounts';
 import FormError from './FormError';
+
+import { loadTranslations } from '../actions/i18n';
+import { loadSettings } from '../actions/settings';
+import { loadTenant } from '../actions/tenant';
+import { getSettings, getTenant } from '../selectors';
+import { ApplyCode } from '../client'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -19,18 +26,30 @@ const useStyles = makeStyles({
   }
 });
 
-const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
-));
+const LogInLink = React.forwardRef<Link, any>((props, ref) => {
+  console.log('LogInLink props', props, ref)
+  return (
+    <Link to={{ pathname: "/login", search: props.location.search}} {...props} ref={ref} />
+  )
+});
 
-const Signup = ({ history, location }: RouteComponentProps<{}>) => {
+const Signup = ({ match, history, location, actions, tenant }: any) => {
   const _email = location && location.state ? location.state.email : '';
+  console.log('location', location);
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | "">("");
   const [email, setEmail] = useState<string | undefined>(_email);
   const [password, setPassword] = useState<string | "">("");
-  const getBrowserLocale = function() {
+  const searchParams = new URLSearchParams(location.search);
+  let spaceId = searchParams.get("X-Space-Id");
+  // useEffect(() => {
+  //   if(spaceId){
+  //     actions.loadTenant(spaceId);
+  //   }
+  // }, []);
+
+  const getBrowserLocale = function () {
     var l, locale;
     var navigator: any = window.navigator;
     l = navigator.userLanguage || navigator.language || 'en';
@@ -51,47 +70,68 @@ const Signup = ({ history, location }: RouteComponentProps<{}>) => {
         name: name,
         email: email,
         password: password,
+        space: spaceId
       });
-      history.push('/login' + window.location.hash.substring(window.location.hash.indexOf("?")));
+      if(tenant.enable_password_login === false){
+        const data = await ApplyCode({
+          name: email,
+          action: 'emailLogin',
+        });
+        if (data.token) {
+            history.push({
+                pathname: `/verify/${data.token}`,
+                search: location.search,
+                state: { email: email }
+            })
+        }
+      }else{
+        history.push({
+          pathname: `/login`,
+          search: location.search
+        })
+      }
     } catch (err) {
       setError(err.message);
     }
   };
 
+  useEffect(() => {
+    console.log('tenant.exists', tenant.exists);
+    if(tenant.exists === false){
+      console.log('handleClick', tenant.exists);
+      history.push('/signup'); //TODO xxx
+    }
+  }, [tenant]);
+
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <h4 className={classes.title}>
+    <FormControl margin="normal">
+      <InputLabel htmlFor="name">
         <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
+          id='accounts.name'
+          defaultMessage='Name'
         />
-      </h4>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="name">
-          <FormattedMessage
-              id='accounts.name'
-              defaultMessage='Name'
-            />
-        </InputLabel>
-        <Input
-          id="name"
-          value={name}
-          onChange={e => setName(e.target.value)} 
+      </InputLabel>
+      <Input
+        id="name"
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+    </FormControl>
+    <FormControl margin="normal">
+      <InputLabel htmlFor="email">
+        <FormattedMessage
+          id='accounts.email'
+          defaultMessage='Email'
         />
-      </FormControl>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="email">          
-          <FormattedMessage
-            id='accounts.email'
-            defaultMessage='Email'
-          />
-        </InputLabel>
-        <Input
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)} 
-        />
-      </FormControl>
+      </InputLabel>
+      <Input
+        id="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+      />
+    </FormControl>
+    {tenant.enable_password_login != false &&
       <FormControl margin="normal">
         <InputLabel htmlFor="password">
           <FormattedMessage
@@ -103,24 +143,41 @@ const Signup = ({ history, location }: RouteComponentProps<{}>) => {
           id="password"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)} 
+          onChange={e => setPassword(e.target.value)}
         />
       </FormControl>
-      <Button variant="contained" color="primary" type="submit">
-        <FormattedMessage
-            id='accounts.signup'
-            defaultMessage='Sign Up'
-        />
-      </Button>
-      {error && <FormError error={error!} />}
-      <Button component={LogInLink}>
-        <FormattedMessage
-            id='accounts.signin'
-            defaultMessage='Sign In'
-        />
-      </Button>
-    </form>
+    }
+
+    <Button variant="contained" color="primary" type="submit">
+      <FormattedMessage
+        id='accounts.signup'
+        defaultMessage='Sign Up'
+      />
+    </Button>
+    {error && <FormError error={error!} />}
+    <Button component={LogInLink} location={location}>
+      <FormattedMessage
+        id='accounts.signin'
+        defaultMessage='Sign In'
+      />
+    </Button>
+  </form>
   );
 };
 
-export default Signup;
+function mapStateToProps(state: any) {
+  return {
+    settings: getSettings(state),
+    tenant: getTenant(state)
+  };
+}
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actions: bindActionCreators({
+      loadTenant,
+      loadSettings,
+      loadTranslations,
+    }, dispatch),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

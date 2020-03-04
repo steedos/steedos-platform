@@ -18,7 +18,7 @@ import Verify from './components/Verify';
 import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
-
+import Title from './components/Title';
 import theme from './theme';
 
 
@@ -67,6 +67,7 @@ const Router = ({tenant}:any) => {
   const classes = useStyles();
 
   let loginComponent = LoginPassword;
+  let resetPasswordComponent = LoginCode || ResetPassword;
   if(tenant && tenant.enable_password_login === false){
     loginComponent = LoginCode;
   }
@@ -80,16 +81,19 @@ const Router = ({tenant}:any) => {
               <Paper className={classes.paper} id="paper">
                 <CssBaseline />
                 <Logo></Logo>
-                <Route exact path="/" component={Home} />
+                <Route path="/" component={Title}/>
+                <Route exact path="/" component={Home}/>
                 <Route path="/two-factor" component={TwoFactor} />
 
                 <Route path="/signup" component={Signup} />
+                {/* <Route path="/signup/:spaceId" component={Signup} /> */}
                 <Route path="/login" component={loginComponent} />
+                {/* <Route path="/login/:spaceId" component={loginComponent} /> */}
                 <Route path="/login-password" component={LoginPassword} />
                 <Route path="/create-tenant" component={CreateTenant} />
-                <Route exact path="/reset-password" component={ResetPassword} />
+                <Route exact path="/reset-password" component={resetPasswordComponent} />
                 <Route exact path="/update-password" component={UpdatePassword} />
-                <Route path="/reset-password/:token" component={ResetPassword} />
+                <Route path="/reset-password/:token" component={resetPasswordComponent} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:token" component={Verify} />
                 <Route path="/login-code" component={LoginCode} />

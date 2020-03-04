@@ -18,6 +18,12 @@ export const getTenant = (accountsServer: AccountsServer) => async (
     
     const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "enable_forget_password", "enable_create_tenant"]})
 
+    if(!spaceDoc){
+      return res.send({
+          exists: false
+      });
+    }
+
     if (config.webservices && config.webservices.steedos) {
       if (!config.webservices.steedos.endsWith("/"))
         config.webservices.steedos += "/"

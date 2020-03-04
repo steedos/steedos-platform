@@ -651,9 +651,8 @@ export default class AccountsPassword implements AuthenticationService {
           : this.options.errors.userNotFound
       );
     }
-
     
-    const isCodeValid = await verifyCode(token, token_code);
+    const isCodeValid = await verifyCode(foundUser.id, token, token_code);
 
     if (!isCodeValid) {
       throw new Error(

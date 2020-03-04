@@ -24,20 +24,20 @@ export const getCookie = (name) => {
     return ''
 }
 
-export const setLocationSearch = (location)=>{
-    let value = '';
-    if(location){
-        if(location.search){
-            value = location.search
-        }else if(location.hash && location.hash.indexOf("?") > -1){
-            value = location.hash.substring(location.hash.indexOf("?"))
-        }
-    }
-    if(!window._AccountsLocationSearch && value){
-        window._AccountsLocationSearch = value
-    }
-};
+// export const setLocationSearch = (location)=>{
+//     let value = '';
+//     if(location){
+//         if(location.search){
+//             value = location.search
+//         }else if(location.hash && location.hash.indexOf("?") > -1){
+//             value = location.hash.substring(location.hash.indexOf("?"))
+//         }
+//     }
+//     if(!window._AccountsLocationSearch && value){
+//         window._AccountsLocationSearch = value
+//     }
+// };
 
-export const getLocationSearch = ()=>{
-    return window._AccountsLocationSearch || ""
-}
+// export const getLocationSearch = ()=>{
+//     return window._AccountsLocationSearch || ""
+// }
