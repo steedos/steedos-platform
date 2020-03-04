@@ -267,7 +267,7 @@ TemplateHelpers =
 		if !spaceId
 			spaceId = Steedos.getSpaceId()
 		if spaceId
-			s = db.spaces.findOne(spaceId)
+			s = db.spaces.findOne(spaceId,{fields:{admins:1}})
 			if s
 				return s.admins?.includes(Meteor.userId())
 

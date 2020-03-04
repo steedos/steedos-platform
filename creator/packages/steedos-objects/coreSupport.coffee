@@ -96,7 +96,7 @@ Creator.isSpaceAdmin = (spaceId, userId)->
 		if !userId
 			userId = Meteor.userId()
 
-	space = Creator.getObject("spaces")?.db?.findOne(spaceId)
+	space = Creator.getObject("spaces")?.db?.findOne(spaceId,{fields:{admins:1}})
 	if space?.admins
 		return space.admins.indexOf(userId) >= 0
 
