@@ -404,7 +404,7 @@ Template.creator_grid_sidebar_sites.onCreated ->
 		onSuccess: (formType,result)->
 			# 编辑站点或栏目时，重新加载相关列表数据
 			if result.object_name == "cms_sites"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				loadSites.call(self)
 			if result.object_name == "cms_categories"
 				self.dxTreeViewInstance.dispose()
@@ -414,7 +414,7 @@ Template.creator_grid_sidebar_sites.onCreated ->
 		onSuccess: (formType,result)->
 			# 新建站点或栏目时，重新加载相关列表数据
 			if result.object_name == "cms_sites"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				loadSites.call(self)
 			if result.object_name == "cms_categories"
 				self.dxTreeViewInstance.dispose()

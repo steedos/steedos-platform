@@ -248,14 +248,14 @@ Template.creator_grid_sidebar_organizations.onCreated ->
 		onSuccess: (formType,result)->
 			# 编辑组织，重新加载左侧树
 			if result.object_name == "organizations"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				self.needToRefreshTree.set(new Date())
 	
 	AutoForm.hooks creatorSidebarOrgsAddForm:
 		onSuccess: (formType,result)->
 			# 新建组织，重新加载左侧树
 			if result.object_name == "organizations"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				self.needToRefreshTree.set(new Date())
 
 Template.creator_grid_sidebar_organizations.onDestroyed ->
