@@ -267,6 +267,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 		spaceId = Steedos.spaceId()
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
+		needToRefreshTree = self.needToRefreshTree.get()
 		if spaceId and userId
 			# 默认不显示右侧数据，只有选中站点后才显示
 			setGridSidebarFilters()
@@ -394,31 +395,43 @@ Template.creator_grid_sidebar_sites.events
 			$(".creator-sidebar-sites-add").click()
 
 Template.creator_grid_sidebar_sites.onCreated ->
-	this.categories = new ReactiveVar(null)
-	this.sites = new ReactiveVar(null)
-	this.storeItems = new ReactiveVar(null)
-
 	self = this
+	self.categories = new ReactiveVar(null)
+	self.sites = new ReactiveVar(null)
+	self.storeItems = new ReactiveVar(null)
+	self.needToRefreshTree = new ReactiveVar(null)
 
 	AutoForm.hooks creatorSidebarSitesEditForm:
 		onSuccess: (formType,result)->
 			# 编辑站点或栏目时，重新加载相关列表数据
 			if result.object_name == "cms_sites"
 				self.dxTreeViewInstance?.dispose()
-				loadSites.call(self)
+				Tracker.nonreactive ()->
+					self.sites.set(null)
+					self.storeItems.set(null)
+				self.needToRefreshTree.set(new Date())
 			if result.object_name == "cms_categories"
 				self.dxTreeViewInstance?.dispose()
-				loadCategories.call(self)
+				Tracker.nonreactive ()->
+					self.categories.set(null)
+					self.storeItems.set(null)
+				self.needToRefreshTree.set(new Date())
 	
 	AutoForm.hooks creatorSidebarSitesAddForm:
 		onSuccess: (formType,result)->
 			# 新建站点或栏目时，重新加载相关列表数据
 			if result.object_name == "cms_sites"
 				self.dxTreeViewInstance?.dispose()
-				loadSites.call(self)
+				Tracker.nonreactive ()->
+					self.sites.set(null)
+					self.storeItems.set(null)
+				self.needToRefreshTree.set(new Date())
 			if result.object_name == "cms_categories"
 				self.dxTreeViewInstance?.dispose()
-				loadCategories.call(self)
+				Tracker.nonreactive ()->
+					self.categories.set(null)
+					self.storeItems.set(null)
+				self.needToRefreshTree.set(new Date())
 
 Template.creator_grid_sidebar_sites.onDestroyed ->
 	Session.set "grid_sidebar_filters", null
