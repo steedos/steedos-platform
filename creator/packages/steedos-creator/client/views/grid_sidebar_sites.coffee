@@ -407,7 +407,7 @@ Template.creator_grid_sidebar_sites.onCreated ->
 				self.dxTreeViewInstance?.dispose()
 				loadSites.call(self)
 			if result.object_name == "cms_categories"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				loadCategories.call(self)
 	
 	AutoForm.hooks creatorSidebarSitesAddForm:
@@ -417,7 +417,7 @@ Template.creator_grid_sidebar_sites.onCreated ->
 				self.dxTreeViewInstance?.dispose()
 				loadSites.call(self)
 			if result.object_name == "cms_categories"
-				self.dxTreeViewInstance.dispose()
+				self.dxTreeViewInstance?.dispose()
 				loadCategories.call(self)
 
 Template.creator_grid_sidebar_sites.onDestroyed ->
