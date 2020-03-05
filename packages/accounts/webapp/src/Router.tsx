@@ -19,6 +19,7 @@ import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
 import Title from './components/Title';
+import GoBack from './components/GoBack'
 import theme from './theme';
 
 
@@ -60,6 +61,9 @@ const Router = ({tenant}:any) => {
       minWidth: 320,
       '@media only screen and (max-width: 480px)': {
         borderRadius: 0
+      },
+      "& [type='submit']": {
+        marginTop: 20
       }
     },
   });
@@ -80,6 +84,7 @@ const Router = ({tenant}:any) => {
             <Grid item xs={12}>
               <Paper className={classes.paper} id="paper">
                 <CssBaseline />
+                <Route path="/" component={GoBack}/>
                 <Logo></Logo>
                 <Route path="/" component={Title}/>
                 <Route exact path="/" component={Home}/>

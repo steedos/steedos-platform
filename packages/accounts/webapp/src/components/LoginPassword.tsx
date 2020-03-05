@@ -37,8 +37,6 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
-
-  document.title = "Login | " + tenant.name;
   
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,8 +57,6 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      {error && <FormError error={error!} />}
-
       <FormControl margin="normal">
         <InputLabel htmlFor="email">
           <FormattedMessage
@@ -90,11 +86,11 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
         <Input id="code" value={code} onChange={e => setCode(e.target.value)} />       
       </FormControl>
       } 
-      <br/>
+      {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-            id='accounts.signin'
-            defaultMessage='Sign In'
+            id='accounts.next'
+            defaultMessage='Next'
         />
       </Button>
       {tenant.enable_register &&

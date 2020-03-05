@@ -48,22 +48,15 @@ const LoginMethod = ({ match, settings, history, location }: any) => {
         }
     };
 
-    const back = function(){
-        history.push({
-            pathname: `/login`,
-            state: { email: email }
-        })
-    }
-
     return (
         <form onSubmit={onSubmit} className={classes.formContainer}>
+            {error && <FormError error={error!} />}
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage
                     id='accounts.loginWithCode'
                     defaultMessage='使用验证码登录'
                 />
             </Button>
-            <br />
             <Button variant="contained" onClick={e => {
                 history.push({
                     pathname: `/login-password`,
@@ -73,14 +66,6 @@ const LoginMethod = ({ match, settings, history, location }: any) => {
                 <FormattedMessage
                     id='accounts.loginWithPassword'
                     defaultMessage='使用密码登录'
-                />
-            </Button>
-            {error && <FormError error={error!} />}
-            <br />
-            <Button onClick={back}>
-                <FormattedMessage
-                    id='accounts.back'
-                    defaultMessage='返回'
                 />
             </Button>
         </form>

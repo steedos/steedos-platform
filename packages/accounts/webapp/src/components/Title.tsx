@@ -6,8 +6,11 @@ import { makeStyles } from '@material-ui/styles';
 
 const pathMap:any = {
     "/login": "登录",
+    "/login-code": "登录",
+    "/login-password": "登录",
+    "/login/home": "首页",
+    "/": "首页",
     "/signup": "注册",
-    "/login-password": "忘记密码",
     "/create-tenant": "创建工作区",
     "/reset-password": "重置密码",
     "/update-password": "修改密码",
@@ -25,8 +28,16 @@ const pathMap:any = {
     }
   });
 const Title = ({ tenant, location }: any) => {
-    console.log('Title',location);
     const classes = useStyles();
+
+    let pathTitle = pathMap[location.pathname];
+
+    if(location.pathname.startsWith("/verify/")){
+        pathTitle = "验证";
+    }
+
+    document.title = `${pathTitle} | ${tenant.name}`;
+
   return (
       <div className={classes.container}>
         <h4 className={classes.title}>

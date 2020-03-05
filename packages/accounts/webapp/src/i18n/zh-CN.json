@@ -47,5 +47,8 @@
     "accounts.verify": "验证",
     "accounts.verify_email": "验证邮件",
     "accounts.verify_mobile": "验证手机号",
-    "accounts.verifyCode":"验证码"
+    "accounts.verifyCode":"验证码",
+    "accounts.next":"下一步",
+    "accounts.reSendCode": "获取验证码",
+    "accounts.goBack": "返回"
 }

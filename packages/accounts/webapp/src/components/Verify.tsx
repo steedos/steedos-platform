@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
+import { FormControl, InputLabel, Input, Button, Typography, InputAdornment, Link , Theme} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { Login, ApplyCode } from '../client'
 import { useCountDown } from "./countdown";
 const totalSeconds = 60;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -19,16 +19,31 @@ const useStyles = makeStyles({
     fontSize: 18,
     fontWeight: "bold",
     margin: "0 auto",
+  },
+  back: {
+    marginTop: theme.spacing(1)
+  }
+}));
+
+const reApplyCodeBtnStyles = makeStyles({
+  btn: {
+    padding: 0
+  },
+  text: {
+    textAlign: "right",
+    whiteSpace: "nowrap"
   }
 });
 
 const ReApplyCodeBtn = ({ onClick }: any) => {
+  const classes:any = reApplyCodeBtnStyles();
   const [restTime, resetCountdown] = useCountDown("cnt1", {
     total: totalSeconds,
     lifecycle: "session"
   });
   return (
     <Button
+    className={classes.btn}
       disabled={restTime > 0}
       onClick={() => {
         resetCountdown();
@@ -37,10 +52,12 @@ const ReApplyCodeBtn = ({ onClick }: any) => {
         }
       }}
     >
+      <span className={classes.text}>
       <FormattedMessage
           id='accounts.reSendCode'
-          defaultMessage='重新获取验证码' 
+          defaultMessage='获取验证码' 
         />{restTime > 0 ? ` (${restTime}s)` : null}
+        </span>
     </Button>
   );
 };
@@ -128,21 +145,6 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
     
   }, [action,name]);
 
-  //TODO bug;
-  const back = function(){
-    if(tenant.enable_password_login === false){
-      history.push({
-        pathname: `/login`,
-        search: location.search,
-      })
-    }else{
-      history.push({
-        pathname: `/login-code`,
-        search: location.search,
-      })
-    }
-}
-
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
       <h4 className={classes.title}>
@@ -150,7 +152,7 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
           id="accounts.verify"
         />{actionLabel}
       </h4>
-      <Typography variant="body2" gutterBottom>请输入发送至 <b>{name}</b> 的 6 位验证码，有效期十分钟。如未收到，请尝试重新获取验证码。</Typography>
+      <Typography variant="body2" gutterBottom>请输入发送至 <b>{name}</b> 的 6 位验证码，有效期十分钟。如未收到，请重新获取验证码。</Typography>
       <FormControl margin="normal">
         <InputLabel htmlFor="verifyCode">
           <FormattedMessage
@@ -162,23 +164,20 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
           id="code"
           value={code}
           onChange={e => setCode(e.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <ReApplyCodeBtn onClick={reApplyCode}/>
+            </InputAdornment>
+          }
         />
       </FormControl>
-      <br />
+      {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
           id='accounts.submit'
           defaultMessage='Submit'
         />
       </Button>
-      {error && <FormError error={error!} />}
-      <ReApplyCodeBtn onClick={reApplyCode}/>
-      <Button onClick={back}>
-                <FormattedMessage
-                    id='accounts.back'
-                    defaultMessage='返回'
-                />
-            </Button>
     </form>
   );
 };

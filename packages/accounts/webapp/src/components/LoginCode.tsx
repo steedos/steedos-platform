@@ -63,22 +63,8 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       state: { email: email }
   })
   }
-
-  const back = function(){
-      history.push({
-          pathname: `/login`,
-          search: location.search,
-          state: { email: email }
-      })
-  }
   return (
       <form onSubmit={onSubmit} className={classes.formContainer}>
-        {/* <h4 className={classes.title}>
-          <FormattedMessage
-            id='accounts.login'
-            defaultMessage='登录'
-          />
-        </h4> */}
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
             <FormattedMessage
@@ -92,14 +78,13 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
             onChange={e => setEmail(e.target.value)}
           />
         </FormControl>
-        <br />
+        {error && <FormError error={error!} />}
         <Button variant="contained" color="primary" type="submit">
           <FormattedMessage
             id='accounts.next'
             defaultMessage='下一步'
           />
         </Button>
-        {error && <FormError error={error!} />}
         {tenant.enable_register && tenant.enable_password_login === false &&
         <Button onClick={goSignup}>
           <FormattedMessage
@@ -107,14 +92,6 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
               defaultMessage='Sign Up'
           />
         </Button>
-        }
-        {tenant.enable_password_login != false && 
-                    <Button onClick={back}>
-                    <FormattedMessage
-                        id='accounts.back'
-                        defaultMessage='返回'
-                    />
-                </Button>
         }
       </form>
   );

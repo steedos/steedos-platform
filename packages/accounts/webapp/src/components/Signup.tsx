@@ -27,7 +27,6 @@ const useStyles = makeStyles({
 });
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => {
-  console.log('LogInLink props', props, ref)
   return (
     <Link to={{ pathname: "/login", search: props.location.search}} {...props} ref={ref} />
   )
@@ -35,7 +34,6 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
 
 const Signup = ({ match, history, location, actions, tenant }: any) => {
   const _email = location && location.state ? location.state.email : '';
-  console.log('location', location);
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | "">("");
@@ -96,10 +94,8 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
   };
 
   useEffect(() => {
-    console.log('tenant.exists', tenant.exists);
     if(tenant.exists === false){
-      console.log('handleClick', tenant.exists);
-      history.push('/signup'); //TODO xxx
+      history.replace('/signup');
     }
   }, [tenant]);
 
@@ -147,14 +143,13 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
         />
       </FormControl>
     }
-
+    {error && <FormError error={error!} />}
     <Button variant="contained" color="primary" type="submit">
       <FormattedMessage
         id='accounts.signup'
         defaultMessage='Sign Up'
       />
     </Button>
-    {error && <FormError error={error!} />}
     <Button component={LogInLink} location={location}>
       <FormattedMessage
         id='accounts.signin'

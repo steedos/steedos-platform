@@ -75,15 +75,13 @@ const CreateTenant = ({ settings, history }: any) => {
           onChange={e => setTenantName(e.target.value)} 
         />
       </FormControl>
-      <br/>
+      {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-            id='accounts.submit'
-            defaultMessage='Submit'
+            id='accounts.next'
+            defaultMessage='Next'
         />
       </Button>
-      {error && <FormError error={error!} />}
-      <br/>
       <Button component={LogInLink}>
         <FormattedMessage
             id='accounts.signin'
