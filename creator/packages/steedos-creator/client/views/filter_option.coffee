@@ -105,6 +105,8 @@ Template.filter_option.helpers
 						if _.isArray(_reference_to)
 							schema.value.type = Object
 							schema.value.blackbox = true
+						if !_.isEmpty(_reference_to)
+							delete schema.value.optionsFunction
 
 				if schema.value.autoform
 					schema.value.autoform.readonly = false
