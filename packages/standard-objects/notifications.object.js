@@ -60,7 +60,7 @@ Creator.Objects['notifications'].methods = {
             }
             if(!record.is_read && record.owner === userSession.userId){
                 // 没有权限时，只是不修改is_read值，但是允许跳转到相关记录查看
-                await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true })
+                await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true, modified: new Date() })
             }
             let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space);
             if(req_async){ // || req.get("X-Requested-With") === 'XMLHttpRequest'
