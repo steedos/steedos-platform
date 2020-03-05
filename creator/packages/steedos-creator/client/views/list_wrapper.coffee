@@ -401,7 +401,12 @@ Template.creator_list_wrapper.events
 
 	'click .btn-refresh': (event, template)->
 		$(".slds-icon-standard-refresh", event.currentTarget).animateCss("rotate")
-		dxDataGridInstance = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+		object = Creator.getObject()
+		gridContainer = $(event.currentTarget).closest(".filter-list-wraper").find(".gridContainer")
+		if object?.enable_tree
+			dxDataGridInstance = gridContainer.dxTreeList().dxTreeList('instance')
+		else
+			dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance')
 		Template["creator_grid"]?.refresh(dxDataGridInstance)
 
 	'keydown input#grid-search': (event, template)->
