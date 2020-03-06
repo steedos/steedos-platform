@@ -77,6 +77,17 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
     let now = new Date();
     let spaceUsersDB = db.space_users;
 
+
+    let spaceUserObj = spaceUsersDB.direct.findOne({
+        user: userId,
+        space: spaceId
+    });
+
+    if(spaceUserObj){
+        return ;
+    }
+
+
     if(!organization_id){
         let root_org = db.organizations.findOne({
             space: spaceId,
