@@ -49,16 +49,21 @@ Creator.Objects['instances'].methods = {
             } else if (record.state === 'completed' && record.submitter === current_user_id) {
                 box = 'completed';
             } else {
-                permissions = permissionManager.getFlowPermissions(record.flow, current_user_id);
-                space = db.spaces.findOne(record.space, {
-                  fields: {
-                    admins: 1
-                  }
-                });
-                if ((!permissions.includes("admin")) && (!space.admins.includes(current_user_id))) {
-                  throw new Meteor.Error('error', "no permission.");
-                }
+                // permissions = permissionManager.getFlowPermissions(record.flow, current_user_id);
+                // space = db.spaces.findOne(record.space, {
+                //   fields: {
+                //     admins: 1
+                //   }
+                // });
+                // if ((!permissions.includes("admin")) && (!space.admins.includes(current_user_id))) {
+                //   throw new Meteor.Error('error', "no permission.");
+                // }
+                // 监控箱不跳转，直接报错
                 box = 'monitor';
+                return res.status(404).send({
+                    "error": "Validate Request -- Monitor not support yet",
+                    "success": false
+                })
             }
             let redirectUrl = Creator.getRelativeUrl(`/workflow/space/${record.space}/${box}/${record_id}`);
             if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
