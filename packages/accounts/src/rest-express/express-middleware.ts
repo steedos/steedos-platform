@@ -48,7 +48,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.get(`${path}/user/email/exists`, emailExists());
   router.post(`${path}/code/apply`, applyCode());
-  router.post(`${path}/code/verify`, verifyCodeAPI());
+  // router.post(`${path}/code/verify`, verifyCodeAPI());
   router.get(`${path}/code/id`, getUserIdByToken());
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));

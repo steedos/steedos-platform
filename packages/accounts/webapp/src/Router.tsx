@@ -102,7 +102,7 @@ const Router = ({tenant}:any) => {
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:token" component={Verify} />
                 <Route path="/login-code" component={LoginCode} />
-                <Route path="/login-method" component={LoginMethod} />
+                {/* <Route path="/login-method" component={LoginMethod} /> */}
               </Paper>
             </Grid>
           </Grid>
