@@ -36,7 +36,7 @@ const Title = ({ tenant, location }: any) => {
         pathTitle = "验证";
     }
 
-    document.title = `${pathTitle} | ${tenant.name}`;
+    document.title = pathTitle ? `${pathTitle} | ${tenant.name}` : tenant.name;
 
   return (
       <div className={classes.container}>
