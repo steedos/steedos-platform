@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/app/bootstrap/client/customize.less"],"names":[],"mappings":"AAAA;EACI,eAAA;;AAGJ;EACI,mBAAA;;AAGJ;EACI,qBAAA","sourcesContent":[".form-control {\n    font-size: 1rem;\n}\n\n.btn {\n    font-size: 0.875rem;\n}\n\nlabel {\n    font-weight: 0.875rem;\n}"]}

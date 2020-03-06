@@ -38,8 +38,8 @@
   width: 100%;
   padding: 9px;
   height: 51px;
-  border-bottom: 1px solid #d2d6de;
-  background-color: #ecf0f5;
+  border-bottom: 1px solid #dddbda;
+  background-color: #f3f2f2;
 }
 .steedos .navigation-bar .navigation-title {
   height: 40px;
@@ -54,35 +54,6 @@
 }
 .steedos .navigation-bar .navigation-title a {
   color: black;
-}
-@media (max-width: 767px) {
-  .steedos .navigation-bar {
-    background-color: rgba(22, 84, 150, 0.84);
-    border-bottom: 1px solid rgba(22, 84, 150, 0.84);
-  }
-  .steedos .navigation-bar button {
-    color: #fff;
-  }
-  .steedos .navigation-bar .btn-default {
-    color: #fff !important;
-  }
-  .steedos .navigation-bar .navigation-title {
-    color: #fff;
-  }
-  .steedos .navigation-bar .navigation-title > a {
-    color: #fff !important;
-  }
-  .steedos .navigation-bar .dropdown-toggle {
-    color: #fff !important;
-  }
-  .steedos .navigation-bar .dropdown-toggle li a {
-    color: #000 !important;
-  }
-  .steedos .navigation-bar .open > .dropdown-toggle.btn-default,
-  .steedos .navigation-bar .dropdown-toggle.btn-default:active {
-    background: rgba(0, 0, 0, 0.2);
-    border-color: transparent;
-  }
 }
 .steedos .toolbar {
   padding: 8px;

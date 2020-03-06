@@ -1,0 +1,2 @@
+)]}'
+{"version":3,"sources":["meteor://💻app/app/devextreme/client/customize.less"],"names":[],"mappings":"AAAA;EACI,mBAAA;;AAGJ,YAAa,QAAQ;EACjB,mBAAA;;AAGJ,oBAAqB,mBAAmB,QAAQ;EAC5C,oBAAA","sourcesContent":[".dx-widget {\n    font-size: 0.875rem;\n}\n\n.dx-datagrid .dx-row > td {\n    font-size: 0.875rem;\n}\n\n.dx-datagrid-headers .dx-datagrid-table .dx-row > td {\n    font-size: 0.8125rem;\n}"]}

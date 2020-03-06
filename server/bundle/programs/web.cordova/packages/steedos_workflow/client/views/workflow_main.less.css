@@ -181,12 +181,6 @@
   margin-top: 2px;
 }
 @media (max-width: 767px) {
-  .instance-wrapper .navigation-bar .instance-left-buttons .btn-instance-submit {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-color: rgba(0, 0, 0, 0.2);
-  }
-}
-@media (max-width: 767px) {
   .instance-wrapper .navigation-bar .instance-left-buttons {
     height: 50px;
     top: -9px;
@@ -391,6 +385,7 @@
 }
 .instance-wrapper .instance-view .instance.instance-default .form-group .control-label {
   margin-bottom: 3px;
+  font-size: 0.875rem;
 }
 .instance-wrapper .instance-view .instance .box-body {
   padding-left: 15px;
@@ -414,6 +409,7 @@
 }
 .instance-wrapper .instance-view .instance .instance-traces {
   margin-bottom: 0px;
+  margin-top: 10px;
 }
 .instance-wrapper .select-approve-in-all-users .selectUser-box {
   border-right: none !important;
@@ -451,10 +447,6 @@ _:-ms-fullscreen #instance_flow_opinions,
   .steedos .toggle-columns-box {
     display: block;
   }
-}
-.workflow-menu-by-flow,
-.workflow-main {
-  font-size: 14px;
 }
 .workflow-main .instance-list-wrapper {
   display: block;

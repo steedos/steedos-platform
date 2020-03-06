@@ -413,10 +413,12 @@ textarea {
 .instance-sign .instance-sign-text {
   clear: both;
 }
+.instance-traces {
+  max-width: 700px;
+}
 .instance-table .instance-template,
 .traces_table_modal .instance-template {
   max-width: 700px;
-  margin: auto;
 }
 .instance-table .instance .form-group .form-control,
 .traces_table_modal .instance .form-group .form-control {

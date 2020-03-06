@@ -112,6 +112,12 @@
           transition: all .3s;
   max-width: none;
 }
+.instance-print .instance-table .instance-traces,
+.instance-print .traces_table_modal .instance-traces {
+  -webkit-transition: all .3s;
+          transition: all .3s;
+  max-width: none;
+}
 .instance-print .instance-table .steedos-table table thead .title,
 .instance-print .traces_table_modal .steedos-table table thead .title {
   min-width: auto;
