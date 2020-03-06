@@ -41,3 +41,11 @@ export const getCookie = (name) => {
 // export const getLocationSearch = ()=>{
 //     return window._AccountsLocationSearch || ""
 // }
+
+export const setHistoryLength = ()=>{
+    window.HistoryLength = (window.HistoryLength || 0) + 1;
+}
+
+export const canBack = ()=>{
+    return window.HistoryLength > 0;
+}

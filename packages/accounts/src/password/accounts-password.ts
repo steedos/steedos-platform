@@ -575,6 +575,10 @@ export default class AccountsPassword implements AuthenticationService {
     return Number(tokenRecord.when) + expiryDate < Date.now();
   }
 
+  public async verifyUserPasswordByEmail(email, password){
+    return await this.passwordAuthenticator({email: email}, password);
+  }
+
   private async passwordAuthenticator(
     user: string | LoginUserIdentity,
     password: PasswordType

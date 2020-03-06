@@ -6,6 +6,7 @@ import { getSettings, getTenant } from '../selectors';
 import { FormattedMessage } from 'react-intl';
 import { ArrowBackIosOutlined } from '@material-ui/icons';
 import clsx from 'clsx';
+import { canBack } from '../utils/utils'
 
 const useStyles = makeStyles((theme: Theme) => {
     const getColor = theme.palette.type === 'light' ? darken : lighten;
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const GoBack = ({ tenant, history, location }: any) => {
     const classes:any = useStyles();
     const goBack = function () {
-        if (history.length < 2) {
+        if (history.length < 2 || !canBack()) {
             history.replace({
                 pathname: `/login`,
                 search: location.search,

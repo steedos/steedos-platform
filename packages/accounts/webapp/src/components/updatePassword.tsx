@@ -130,8 +130,8 @@ const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
       {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-            id='accounts.update_password'
-            defaultMessage='Update Password'
+            id='accounts.next'
+            defaultMessage='Next'
         />
       </Button>
       <Button component={LogInLink} location={location}>

@@ -68,12 +68,13 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
         name: name,
         email: email,
         password: password,
-        space: spaceId
+        spaceId: spaceId
       });
       if(tenant.enable_password_login === false){
         const data = await ApplyCode({
           name: email,
-          action: 'emailLogin',
+          action: 'emailSignupAccount',
+          spaceId: spaceId
         });
         if (data.token) {
             history.push({
@@ -146,8 +147,8 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
     {error && <FormError error={error!} />}
     <Button variant="contained" color="primary" type="submit">
       <FormattedMessage
-        id='accounts.signup'
-        defaultMessage='Sign Up'
+        id='accounts.next'
+        defaultMessage='Next'
       />
     </Button>
     <Button component={LogInLink} location={location}>

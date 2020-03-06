@@ -25,7 +25,7 @@ const Login = async (data, history, tenant, location)=>{
         }),
         credentials: "include"
       });
-    await LoginAfter(history, tenant, result, redirect_uri);
+    await LoginAfter(history, tenant, result, redirect_uri, location);
 };
 
 const LoginAfter = async (history, tenant, result, redirect_uri, location)=>{

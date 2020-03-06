@@ -27,7 +27,8 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string | "">(_email);
   const type = match.params.type || 'email';
-
+  const searchParams = new URLSearchParams(location.search);
+  let spaceId = searchParams.get("X-Space-Id");
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -40,6 +41,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
           const data = await ApplyCode({
               name: email,
               action: 'emailLogin',
+              spaceId: spaceId
           });
           if (data.token) {
               history.push({

@@ -94,8 +94,8 @@ const ResetPassword = ({ match }: RouteComponentProps<RouteMatchProps>) => {
       {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-            id='accounts.reset_password'
-            defaultMessage='Reset Password'
+            id='accounts.next'
+            defaultMessage='Next'
         />
       </Button>
       <Button component={LogInLink}>

@@ -91,8 +91,10 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
         token: token,
         token_code: code.trim(),
       }
-      await Login(data, history, tenant, location)
+      await Login(data, history, tenant, location);
+      setCode('');
     } catch (err) {
+      setCode('');
       setError(err.message);
     }
   };
@@ -119,7 +121,7 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
     try {
       const data = await ApplyCode({
         token: token,
-        action: 'emailLogin',
+        action: action,
       });
       if (data.token) {
         setToken(data.token)
@@ -174,8 +176,8 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       {error && <FormError error={error!} />}
       <Button variant="contained" color="primary" type="submit">
         <FormattedMessage
-          id='accounts.submit'
-          defaultMessage='Submit'
+          id='accounts.next'
+          defaultMessage='Next'
         />
       </Button>
     </form>

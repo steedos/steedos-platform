@@ -50,5 +50,6 @@
     "accounts.verifyCode":"验证码",
     "accounts.next":"下一步",
     "accounts.reSendCode": "获取验证码",
-    "accounts.goBack": "返回"
+    "accounts.goBack": "返回",
+    "accounts.unenableRegister": "禁止注册"
 }
