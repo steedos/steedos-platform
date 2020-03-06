@@ -29,18 +29,18 @@
                             {{/if}}
                         {{/if}}
 
+                        {{#if notDistributeAndDraft instance.state}}
+                            {{#if (showTracesView instance.form instance.form_version)}}
+                                {{> Template.dynamic template=(tracesTemplateName instance.form) data=(tracesListData instance)}}
+                            {{/if}}
+                        {{else}}
+                            {{#if showPickApproveUsers}}
+                                {{> Template.dynamic template="instance_pick_approve_users"}}
+                            {{/if}}
+                        {{/if}}
                     </div>
                 </div>
             </div>
-            {{#if notDistributeAndDraft instance.state}}
-				{{#if (showTracesView instance.form instance.form_version)}}
-                	{{> Template.dynamic template=(tracesTemplateName instance.form) data=(tracesListData instance)}}
-				{{/if}}
-			{{else}}
-				{{#if showPickApproveUsers}}
-					{{> Template.dynamic template="instance_pick_approve_users"}}
-				{{/if}}
-			{{/if}}
         </div>
     </div>
 </template>
