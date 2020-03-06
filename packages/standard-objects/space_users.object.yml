@@ -21,9 +21,7 @@ fields:
     label: 用户名
     name: username
     searchable: true
-    index: true
-    required: true
-    
+    index: true    
   email:
     type: text
     label: 邮件
