@@ -4,209 +4,236 @@
 			&nbsp;<i class="ion ion-android-arrow-back"></i>&nbsp;
 		</button>
 		{{#if enabled_submit}}
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-primary btn-instance-submit" data-for="btn-instance-submit" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-paper-plane"></i>
-				<span>{{_ 'Send'}}</span>
-			</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="slds-button slds-button_brand slds-button--neutral slds-truncate btn-instance-submit">
+				<a href="javascript:void(0);" title="{{_ 'Send'}}" class="">
+					<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+					<div class="record-edit-text slds-truncate" title="{{_ 'Send'}}">{{_ 'Send'}}</div>
+				</a>
+			</div>
 		{{/if}}
-		{{#if enabled_cc}}
-			<button type="button" class="btn btn-default btn-instance-cc" data-for="btn-instance-cc" data-toggle="tooltip" data-placement="bottom">
-				<i class=" fa fa-user-plus" aria-hidden="true"></i>
-				<span>{{_ 'instance_cc_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_suggest}}
-			<button type="button" class="btn btn-default btn-suggestion-toggle" data-for="btn-suggestion-toggle" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-ios-compose-outline"></i>
-				<span>{{_ 'instance_suggestion_toggle'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_save}}
-			<button type="button" class="btn btn-default btn-instance-update" data-for="btn-instance-update" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-save"></i>
-				<span>{{_ 'instance_save'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_return}}
-			<button type="button" class="btn btn-default btn-instance-return" data-for="btn-instance-return" data-toggle="tooltip" data-placement="bottom" >
-				<i class="ion ion-reply"></i>
-				<span>{{_ "instance_return"}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_relocate}}
-			<button type="button" class="btn btn-default btn-instance-relocate" data-for="btn-instance-relocate" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-arrow-shrink"></i>
-				<span>{{_ 'instance_relocate'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_reassign}}
-			<button type="button" class="btn btn-default btn-instance-reassign" data-for="btn-instance-reassign" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-android-contact"></i>
-				<span>{{_ 'instance_reassign'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_delete}}
-			<button type="button" class="btn btn-default btn-instance-remove" data-for="btn-instance-remove" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-close-circled"></i>
-				<span>{{_ 'instance_delete'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_print}}
-			<button type="button" class="btn btn-default btn-instance-to-print" data-for="btn-instance-to-print" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-printer"></i>
-				<span>{{_ 'instance_print'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_retrieve}}
-			<button type="button" class="btn btn-default btn-instance-retrieve" data-for="btn-instance-retrieve" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-undo"></i>
-				<span>{{_ 'instance_retrieve'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_traces}}
-			<button type="button" class="btn btn-default btn-trace-list" data-for="btn-trace-list" data-toggle="tooltip" data-placement="bottom">
-				<i class="ion ion-arrow-return-left"></i>
-				<span>{{_ 'instance_approval_history'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_forward}}
-			<button type="button" class="btn btn-default btn-instance-forward" data-for="btn-instance-forward" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-clone"></i>
-				<span>{{_ 'instance_forward_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_distribute}}
-			<button type="button" class="btn btn-default btn-instance-distribute" data-for="btn-instance-distribute" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-clone"></i>
-				<span>{{_ 'instance_distribute_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_terminate}}
-			<button type="button" class="btn btn-default btn-instance-force-end" data-for="btn-instance-force-end" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-ban"></i>
-				<span>{{_ 'instance_cancel'}}</span>
-			</button>
-		{{/if}}
-			<!--{{#if enabled_copy}}-->
-		<!--<button type="button" class="btn btn-default btn-instance-readonly-view-url-copy" data-toggle="tooltip" data-placement="bottom" data-clipboard-text="{{instance_readonly_view_url}}">-->
-		<!--<i class="ion ion-ios-copy"></i>-->
-		<!--<span>{{_ 'instance_readonly_view_url_copy'}}</span>-->
-		<!--</button>-->
-			<!--{{/if}}-->
-		{{#if enabled_related}}
-			<button type="button" class="btn btn-default btn-instance-related-instances" data-for="btn-instance-related-instances" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-link"></i>
-				<span>{{_ 'instance_related_instances_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_remind}}
-			<button type="button" class="btn btn-default btn-instance-remind" data-for="btn-instance-remind" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="ion ion-ios-bell"></i>
-				<span>{{_ 'instance_remind_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_hide}}
-			<button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-lock"></i>
-				<span>{{_ 'instance_hide_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_reopen}}
-			<button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
-					data-placement="bottom">
-				<i class="fa fa-unlock"></i>
-				<span>{{_ 'instance_reopen_title'}}</span>
-			</button>
-		{{/if}}
-		{{#if enabled_workflow_chart}}
-			<button type="button" class="btn btn-default btn-workflow-chart" data-for="btn-workflow-chart" data-toggle="tooltip" data-placement="bottom">
-				<i class="ion ion-network"></i>
-				<span>{{_ 'workflow_chart'}}</span>
-			</button>
-		{{/if}}
+		<div class="slds-button-group" role="group">
+			<!-- 传阅、取回、重定位、流程图四个按钮放外面，会同时出现的只有发送和传阅  -->
+			{{#if enabled_cc}}
+				<div class="slds-button slds-button--neutral slds-truncate btn-instance-cc">
+					<a href="javascript:void(0);" title="{{_ 'instance_cc_title'}}" class="">
+						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+						<div class="record-edit-text slds-truncate" title="{{_ 'instance_cc_title'}}">{{_ 'instance_cc_title'}}</div>
+					</a>
+				</div>
+			{{/if}}
+			{{#if enabled_retrieve}}
+				<div class="slds-button slds-button--neutral slds-truncate btn-instance-retrieve">
+					<a href="javascript:void(0);" title="{{_ 'instance_retrieve'}}" class="">
+						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+						<div class="record-edit-text slds-truncate" title="{{_ 'instance_retrieve'}}">{{_ 'instance_retrieve'}}</div>
+					</a>
+				</div>
+			{{/if}}
+			{{#if enabled_relocate}}
+				<div class="slds-button slds-button--neutral slds-truncate btn-instance-relocate">
+					<a href="javascript:void(0);" title="{{_ 'instance_relocate'}}" class="">
+						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+						<div class="record-edit-text slds-truncate" title="{{_ 'instance_relocate'}}">{{_ 'instance_relocate'}}</div>
+					</a>
+				</div>
+			{{/if}}
+			{{#if enabled_workflow_chart}}
+				<div class="slds-button slds-button--neutral slds-truncate btn-workflow-chart">
+					<a href="javascript:void(0);" title="{{_ 'workflow_chart'}}" class="">
+						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
+						<div class="record-edit-text slds-truncate" title="{{_ 'workflow_chart'}}">{{_ 'workflow_chart'}}</div>
+					</a>
+				</div>
+				<!-- <button type="button" class="btn btn-default btn-workflow-chart" data-for="btn-workflow-chart" data-toggle="tooltip" data-placement="bottom">
+					<i class="ion ion-network"></i>
+					<span>{{_ 'workflow_chart'}}</span>
+				</button> -->
+			{{/if}}
+			<!-- 其他按钮放折叠菜单里面  -->
+			<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+				<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+					{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
+					<span class="slds-assistive-text">Show More</span>
+				</button>
+				<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+					<ul class="slds-dropdown__list slds-show">
+						{{#if enabled_save}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-update" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_save'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_save'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-update" data-for="btn-instance-update" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-save"></i>
+								<span>{{_ 'instance_save'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_suggest}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-suggestion-toggle" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_suggestion_toggle'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_suggestion_toggle'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-suggestion-toggle" data-for="btn-suggestion-toggle" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="ion ion-ios-compose-outline"></i>
+								<span>{{_ 'instance_suggestion_toggle'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_return}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-return" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_return'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_return'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-return" data-for="btn-instance-return" data-toggle="tooltip" data-placement="bottom" >
+								<i class="ion ion-reply"></i>
+								<span>{{_ "instance_return"}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_reassign}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-reassign" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_reassign'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_reassign'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-reassign" data-for="btn-instance-reassign" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="ion ion-android-contact"></i>
+								<span>{{_ 'instance_reassign'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_delete}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remove" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_delete'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_delete'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-remove" data-for="btn-instance-remove" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="ion ion-close-circled"></i>
+								<span>{{_ 'instance_delete'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_print}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-to-print" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_print'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_print'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-to-print" data-for="btn-instance-to-print" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="ion ion-printer"></i>
+								<span>{{_ 'instance_print'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_traces}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-trace-list" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_approval_history'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_approval_history'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-trace-list" data-for="btn-trace-list" data-toggle="tooltip" data-placement="bottom">
+								<i class="ion ion-arrow-return-left"></i>
+								<span>{{_ 'instance_approval_history'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_forward}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-forward" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_forward_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_forward_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-forward" data-for="btn-instance-forward" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-clone"></i>
+								<span>{{_ 'instance_forward_title'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_distribute}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-distribute" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_distribute_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_distribute_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-distribute" data-for="btn-instance-distribute" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-clone"></i>
+								<span>{{_ 'instance_distribute_title'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_terminate}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-force-end" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_cancel'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_cancel'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-force-end" data-for="btn-instance-force-end" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-ban"></i>
+								<span>{{_ 'instance_cancel'}}</span>
+							</button> -->
+						{{/if}}
+							<!--{{#if enabled_copy}}-->
+						<!--<button type="button" class="btn btn-default btn-instance-readonly-view-url-copy" data-toggle="tooltip" data-placement="bottom" data-clipboard-text="{{instance_readonly_view_url}}">-->
+						<!--<i class="ion ion-ios-copy"></i>-->
+						<!--<span>{{_ 'instance_readonly_view_url_copy'}}</span>-->
+						<!--</button>-->
+							<!--{{/if}}-->
+						{{#if enabled_related}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-related-instances" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_related_instances_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_related_instances_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-related-instances" data-for="btn-instance-related-instances" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-link"></i>
+								<span>{{_ 'instance_related_instances_title'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_remind}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remind" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_remind_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_remind_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-remind" data-for="btn-instance-remind" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="ion ion-ios-bell"></i>
+								<span>{{_ 'instance_remind_title'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_hide}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_hide_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_hide_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-lock"></i>
+								<span>{{_ 'instance_hide_title'}}</span>
+							</button> -->
+						{{/if}}
+						{{#if enabled_reopen}}
+							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
+								<a href="javascript:void(0);" title="{{_ 'instance_reopen_title'}}" class="" role="option" tabindex="-1">
+									<span>{{_ 'instance_reopen_title'}}</span>
+								</a>
+							</li>
+							<!-- <button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
+									data-placement="bottom">
+								<i class="fa fa-unlock"></i>
+								<span>{{_ 'instance_reopen_title'}}</span>
+							</button> -->
+						{{/if}}
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="pull-right">
-		<div class="btn-group instance-dropdown-menu">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<span class="fa fa-ellipsis-h fa-1"></span>
-				<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				{{#if enabled_cc}}
-					<li><a class="btn-instance-cc"><i class="fa fa-user-plus" aria-hidden="true"></i>{{_
-							'instance_cc_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_save}}
-					<li><a class="btn-instance-update"><i class="fa fa-save"></i>{{_ 'instance_save'}}</a></li>
-				{{/if}}
-				{{#if enabled_return}}
-					<li><a class="btn-instance-return"><i class="ion ion-reply" aria-hidden="true"></i>{{_
-							'instance_return'}}</a></li>
-				{{/if}}
-				{{#if enabled_relocate}}
-					<li><a class="btn-instance-relocate"><i class="ion ion-arrow-shrink"></i>{{_ 'instance_relocate'}}</a></li>
-				{{/if}}
-				{{#if enabled_reassign}}
-					<li><a class="btn-instance-reassign"><i class="ion ion-android-contact"></i>{{_ 'instance_reassign'}}</a></li>
-				{{/if}}
-				{{#if enabled_delete}}
-					<li><a class="btn-instance-remove"><i class="ion ion-close-circled"></i>{{_ 'instance_delete'}}</a></li>
-				{{/if}}
-				{{#if enabled_print}}
-					<li><a class="btn-instance-to-print"><i class="ion ion-printer"></i>{{_ 'instance_print'}}</a></li>
-				{{/if}}
-				{{#if enabled_retrieve}}
-					<li><a class="btn-instance-retrieve"><i class="fa fa-undo"></i>{{_ 'instance_retrieve'}}</a></li>
-				{{/if}}
-				{{#if enabled_traces}}
-					<li><a class="btn-trace-list"><i class="ion ion-arrow-return-left"></i>{{_
-							'instance_approval_history'}}</a></li>
-				{{/if}}
-				{{#if enabled_forward}}
-					<li><a class="btn-instance-forward"><i class="fa fa-clone" aria-hidden="true"></i>{{_
-							'instance_forward_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_distribute}}
-					<li><a class="btn-instance-distribute"><i class="fa fa-clone"></i>{{_ 'instance_distribute_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_terminate}}
-					<li><a class="btn-instance-force-end"><i class="fa fa-ban"></i>{{_ 'instance_cancel'}}</a></li>
-				{{/if}}
-					<!--{{#if enabled_copy}}-->
-				<!--<li><a class="li-instance-readonly-view-url-copy"><i class="ion ion-ios-copy"></i>{{_
-						'instance_readonly_view_url_copy'}}</a></li>-->
-					<!--{{/if}}-->
-				{{#if enabled_related}}
-					<li><a class="btn-instance-related-instances"><i class="fa fa-link"></i>{{_
-							'instance_related_instances_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_remind}}
-					<li><a class="btn-instance-remind"><i class="ion ion-ios-bell"></i>{{_ 'instance_remind_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_hide}}
-					<li><a class="btn-instance-hide"><i class="fa fa-lock"></i>{{_ 'instance_hide_title'}}</a></li>
-				{{/if}}
-				{{#if enabled_reopen}}
-					<li><a class="btn-instance-hide"><i class="fa fa-unlock"></i>{{_ 'instance_reopen_title'}}</a></li>
-				{{/if}}
-				<li><a class="btn-workflow-chart"><i class="ion ion-network"></i>{{_ 'workflow_chart'}}</a></li>
-			</ul>
-		</div>
 	</div>
 </template>
