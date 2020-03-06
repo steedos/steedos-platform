@@ -13,7 +13,7 @@ fields:
   action:
     label: 验证类型
     type: select
-    options: 验证邮箱:verifyEmail,验证手机号:verifyMobile,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin,注册账户:signupAccount
+    options: 验证邮箱:verifyEmail,验证手机号:verifyMobile,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin,邮箱注册账户:emailSignupAccount
     required: true
   owner:
     label: 所有者
@@ -32,6 +32,9 @@ fields:
   verifiedAt:
     label: 验证成功时间
     type: datetime
+  failureCount:
+    label: 验证失败次数
+    type: number
 list_views:
   all:
     label: 所有
