@@ -22,46 +22,48 @@ fields:
     required: true
     searchable: true
     is_wide: true
+  visibility:
+    label: 可见性
+    type: select
+    defaultValue: team
+    required: true
+    options:
+      - label: 私有 - 只有站点成员可见
+        value: private
+      - label: 公开 - 所有用户可见，只有站点成员可编辑
+        value: team
+      - label: 网站 - 匿名可访问，只有站点成员可编辑
+        value: public
+  order:
+    label: 排序号
+    type: number
+  admins:
+    type: lookup
+    label: 站点成员
+    is_wide: true
+    reference_to: users
+    multiple: true
+    required: true
+    defaultValue: "[{userId}]"
   description:
     label: 描述
     type: textarea
     rows: 3
     is_wide: true
-  visibility:
-    label: 可见性
-    type: lookup
-    defaultValue: "team"
-    required: true
-    optionsFunction: !!js/function |
-      function(){
-        var visibilitys = [
-          {label: t("cms_sites_visibility_private"), value: "private"},
-          {label: t("cms_sites_visibility_team"), value: "team"},
-          {label: t("cms_sites_visibility_public"), value: "public"}
-        ];
-        return visibilitys;
-      }
-  admins:
-    type: lookup
-    label: 站点成员
-    reference_to: users
-    multiple: true
-    required: true
-    defaultValue: "[{userId}]"
   cover:
     label: 封面图片
     type: avatar
+    group: 网站
   avatar:
     label: Logo图片
     type: avatar
-  order:
-    label: 排序号
-    type: number
+    group: 网站
   layout:
-    label: 排版
+    label: 网站模版
     type: textarea
-    rows: 10
+    rows: 3
     is_wide: true
+    group: 网站
 list_views:
   all:
     label: 所有
