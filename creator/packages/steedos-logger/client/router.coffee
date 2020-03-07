@@ -5,5 +5,5 @@ checkUserSigned = (context, redirect) ->
 FlowRouter.route '/admin/view-logs',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
-		BlazeLayout.render 'adminLayout',
+		BlazeLayout.render Creator.getLayout(),
 			main: "viewLogs"
