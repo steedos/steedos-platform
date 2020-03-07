@@ -46,7 +46,7 @@ loadStoreItems = ()->
 	categories = self.categories.get()
 	if !sites
 		loadSites.call(self)
-	if sites and !categories
+	if sites?.length and !categories
 		loadCategories.call(self)
 
 	if sites and categories
