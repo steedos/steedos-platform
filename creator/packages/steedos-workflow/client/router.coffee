@@ -27,7 +27,10 @@ FlowRouter.route '/workflow',
 workflowSpaceRoutes = FlowRouter.group
 	prefix: '/workflow/space/:spaceId',
 	name: 'workflowSpace',
-	triggersEnter: [checkUserSigned],
+	triggersEnter: [checkUserSigned, ()->
+		# 申请单界面直接刷新或从首页直接进入申请单时未高亮选中”审批“为当前对象
+		Session.set("object_name", "instances")
+	],
 # subscriptions: (params, queryParams) ->
 # 	if params.spaceId
 # 		this.register 'apps', Meteor.subscribe("apps", params.spaceId)
