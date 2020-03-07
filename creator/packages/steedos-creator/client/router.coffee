@@ -169,6 +169,7 @@ FlowRouter.route '/app/:app_id/reports/view/:record_id',
 			main: "creator_report"
 
 FlowRouter.route '/app/:app_id/instances/grid/all',
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
@@ -176,6 +177,15 @@ FlowRouter.route '/app/:app_id/instances/grid/all',
 		Session.set("object_name", "instances")
 		FlowRouter.go '/workflow'
 		return
+
+FlowRouter.route '/app/:app_id/instances/view/:record_id',
+	triggersEnter: [ checkUserSigned ],
+	action: (params, queryParams)->
+		record_id = FlowRouter.getParam("record_id")
+		# FlowRouter.go Steedos.absoluteUrl("/api/v4/instances/#{record_id}/view")
+		# FlowRouter.redirect("/api/v4/instances/#{record_id}/view")
+		window.location.href = Steedos.absoluteUrl("/api/v4/instances/#{record_id}/view")
+
 
 # FlowRouter.route '/app/:app_id/cms_posts/grid/all',
 # 	action: (params, queryParams)->
