@@ -44,10 +44,6 @@
 						<div class="record-edit-text slds-truncate" title="{{_ 'workflow_chart'}}">{{_ 'workflow_chart'}}</div>
 					</a>
 				</div>
-				<!-- <button type="button" class="btn btn-default btn-workflow-chart" data-for="btn-workflow-chart" data-toggle="tooltip" data-placement="bottom">
-					<i class="ion ion-network"></i>
-					<span>{{_ 'workflow_chart'}}</span>
-				</button> -->
 			{{/if}}
 			<!-- 其他按钮放折叠菜单里面  -->
 			<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
@@ -63,11 +59,6 @@
 									<span>{{_ 'instance_save'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-update" data-for="btn-instance-update" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-save"></i>
-								<span>{{_ 'instance_save'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_suggest}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-suggestion-toggle" role="presentation">
@@ -75,11 +66,6 @@
 									<span>{{_ 'instance_suggestion_toggle'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-suggestion-toggle" data-for="btn-suggestion-toggle" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="ion ion-ios-compose-outline"></i>
-								<span>{{_ 'instance_suggestion_toggle'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_return}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-return" role="presentation">
@@ -87,10 +73,6 @@
 									<span>{{_ 'instance_return'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-return" data-for="btn-instance-return" data-toggle="tooltip" data-placement="bottom" >
-								<i class="ion ion-reply"></i>
-								<span>{{_ "instance_return"}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_reassign}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-reassign" role="presentation">
@@ -98,11 +80,6 @@
 									<span>{{_ 'instance_reassign'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-reassign" data-for="btn-instance-reassign" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="ion ion-android-contact"></i>
-								<span>{{_ 'instance_reassign'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_delete}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remove" role="presentation">
@@ -110,11 +87,6 @@
 									<span>{{_ 'instance_delete'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-remove" data-for="btn-instance-remove" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="ion ion-close-circled"></i>
-								<span>{{_ 'instance_delete'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_print}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-to-print" role="presentation">
@@ -122,11 +94,6 @@
 									<span>{{_ 'instance_print'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-to-print" data-for="btn-instance-to-print" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="ion ion-printer"></i>
-								<span>{{_ 'instance_print'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_traces}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-trace-list" role="presentation">
@@ -134,10 +101,6 @@
 									<span>{{_ 'instance_approval_history'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-trace-list" data-for="btn-trace-list" data-toggle="tooltip" data-placement="bottom">
-								<i class="ion ion-arrow-return-left"></i>
-								<span>{{_ 'instance_approval_history'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_forward}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-forward" role="presentation">
@@ -145,11 +108,6 @@
 									<span>{{_ 'instance_forward_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-forward" data-for="btn-instance-forward" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-clone"></i>
-								<span>{{_ 'instance_forward_title'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_distribute}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-distribute" role="presentation">
@@ -157,11 +115,6 @@
 									<span>{{_ 'instance_distribute_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-distribute" data-for="btn-instance-distribute" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-clone"></i>
-								<span>{{_ 'instance_distribute_title'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_terminate}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-force-end" role="presentation">
@@ -169,11 +122,6 @@
 									<span>{{_ 'instance_cancel'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-force-end" data-for="btn-instance-force-end" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-ban"></i>
-								<span>{{_ 'instance_cancel'}}</span>
-							</button> -->
 						{{/if}}
 							<!--{{#if enabled_copy}}-->
 						<!--<button type="button" class="btn btn-default btn-instance-readonly-view-url-copy" data-toggle="tooltip" data-placement="bottom" data-clipboard-text="{{instance_readonly_view_url}}">-->
@@ -187,11 +135,6 @@
 									<span>{{_ 'instance_related_instances_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-related-instances" data-for="btn-instance-related-instances" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-link"></i>
-								<span>{{_ 'instance_related_instances_title'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_remind}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remind" role="presentation">
@@ -199,11 +142,6 @@
 									<span>{{_ 'instance_remind_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-remind" data-for="btn-instance-remind" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="ion ion-ios-bell"></i>
-								<span>{{_ 'instance_remind_title'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_hide}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
@@ -211,11 +149,6 @@
 									<span>{{_ 'instance_hide_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-lock"></i>
-								<span>{{_ 'instance_hide_title'}}</span>
-							</button> -->
 						{{/if}}
 						{{#if enabled_reopen}}
 							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
@@ -223,11 +156,6 @@
 									<span>{{_ 'instance_reopen_title'}}</span>
 								</a>
 							</li>
-							<!-- <button type="button" class="btn btn-default btn-instance-hide" data-for="btn-instance-hide" data-toggle="tooltip"
-									data-placement="bottom">
-								<i class="fa fa-unlock"></i>
-								<span>{{_ 'instance_reopen_title'}}</span>
-							</button> -->
 						{{/if}}
 					</ul>
 				</div>
