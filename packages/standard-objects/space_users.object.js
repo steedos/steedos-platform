@@ -949,5 +949,34 @@ Creator.Objects['space_users'].actions = {
             //     }
             // }
         }
+    },
+    invite_space_users: {
+        label: "团队邀请",
+        on: "list",
+        visible: function(){
+            return Creator.isSpaceAdmin();
+        },
+        todo: function(){
+            // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
+            var address = window.location.origin + "/accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId();
+            var clipboard = new Clipboard('.list-action-custom-invite_space_users');
+
+            $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
+
+            clipboard.on('success', function(e) {
+                toastr.success("邀请链接已复制到粘贴板， 请发送给您的同事");
+                e.clearSelection();
+                clipboard.destroy();
+            });
+            
+            clipboard.on('error', function(e) {
+                toastr.error("团队邀请链接复制失败");
+                console.error('Action:', e.action);
+                console.error('Trigger:', e.trigger);
+                console.log('address', address);
+                clipboard.destroy();
+            });
+            
+        }
     }
 }
