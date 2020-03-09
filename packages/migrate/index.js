@@ -4,6 +4,8 @@ var path = require('path');
 var stateStore = path.join(process.cwd(), '.migrate');
 var migrationsDirectory = path.join(__dirname, 'migrations'); 
 
+// let Fiber = require('fibers');
+
 const up = async function() {
 
     migrate.load({
@@ -45,8 +47,23 @@ const down = async function() {
     })
 }
 
+// const upSync = function(){
+//   Fiber(function(){
+//       let fiber = Fiber.current;
+//       up.then(result => {
+//           fiber.run();
+//       }).catch(result => {
+//           console.error(result)
+//           fiber.run();
+//       })
+//       Fiber.yield();
+//   }).run();
+// }
+
+
 module.exports = {
     init: init,
     up: up,
+    // upSync: upSync,
     down: down
 }
