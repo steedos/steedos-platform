@@ -58,11 +58,12 @@ Template.creator_app_list_modal.events
 		Modal.hide(template)
 
 	'click .switchSpace': (event, template)->
-		Steedos.setSpaceId(this._id)
-		# 获取路由路径中第一个单词，即根目录
-		rootName = FlowRouter.current().path.split("/")[1]
-		FlowRouter.go("/#{rootName}")
 		Modal.hide(template)
+		switchToSpaceId = this._id
+		Meteor.defer ()->
+			Steedos.setSpaceId(switchToSpaceId)
+			FlowRouter.go("/")
+
 	
 	'click .app-sction-part-1 .slds-section__content .app-launcher-link': (event)->
 		appid = event.currentTarget.dataset.appid
