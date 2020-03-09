@@ -52,9 +52,9 @@ Template.admin_import_flow_modal.events
 		if filesLength == 0
 			toastr.warning(t("workflow_import_flow_info"))
 			return;
-		if !Steedos.isLegalVersion('',"workflow.professional")
-			Steedos.spaceUpgradedModal()
-			return;
+#		if !Steedos.isLegalVersion('',"workflow.professional")
+#			Steedos.spaceUpgradedModal()
+#			return;
 		formData = new FormData();
 
 		url = "api/workflow/import/form?space=" + Session.get("spaceId")
