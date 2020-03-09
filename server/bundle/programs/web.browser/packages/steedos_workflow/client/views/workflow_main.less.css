@@ -168,11 +168,24 @@
   left: auto;
 }
 .instance-wrapper .navigation-bar .instance-left-buttons {
-  overflow: hidden;
-  width: 82%;
   height: 38px;
   position: relative;
   top: -2px;
+  /*max-width: 72%;*/
+  min-width: 50px;
+}
+.instance-wrapper .navigation-bar .instance-left-buttons .btn-instance-submit {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.instance-wrapper .navigation-bar .instance-left-buttons .slds-button-group {
+  vertical-align: middle;
+  margin-left: 10px;
+}
+@media (min-width: 767px) {
+  .instance-wrapper .navigation-bar .instance-left-buttons .slds-button-group .dropdown-menu-right {
+    left: 0;
+  }
 }
 .instance-wrapper .navigation-bar .instance-left-buttons .btn {
   margin-right: -6px;

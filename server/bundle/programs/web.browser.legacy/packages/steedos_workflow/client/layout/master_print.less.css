@@ -1,4 +1,8 @@
 @media print {
+  html,
+  body {
+    position: static !important;
+  }
   .instance-print * {
     color: inherit !important;
   }
@@ -71,6 +75,9 @@
 }
 .instance-print {
   font-size: 14px;
+}
+.instance-print table {
+  margin: auto;
 }
 .instance-print .hidden-xs {
   display: inline !important;
