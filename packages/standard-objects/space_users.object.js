@@ -951,7 +951,7 @@ Creator.Objects['space_users'].actions = {
         }
     },
     invite_space_users: {
-        label: "团队邀请",
+        label: "邀请注册",
         on: "list",
         visible: function(){
             return Creator.isSpaceAdmin();
@@ -964,7 +964,7 @@ Creator.Objects['space_users'].actions = {
             $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
 
             clipboard.on('success', function(e) {
-                toastr.success("邀请链接已复制到粘贴板， 请发送给您的同事");
+                toastr.success("企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。");
                 e.clearSelection();
                 clipboard.destroy();
             });
