@@ -100,10 +100,10 @@ _itemClick = (e, curObjectName, list_view_id)->
 		showTitle: false
 		usePopover: true
 		onItemClick: (value)->
-			object = Creator.getObject(objectName)
 			action = value.itemData.action
 			recordId = value.itemData.record._id
 			objectName = value.itemData.object_name
+			object = Creator.getObject(objectName)
 			collectionName = object.label
 			name_field_key = object.NAME_FIELD_KEY
 			if objectName == "organizations"
@@ -116,7 +116,11 @@ _itemClick = (e, curObjectName, list_view_id)->
 			if action.todo == "standard_delete"
 				action_record_title = value.itemData.record[name_field_key]
 				Creator.executeAction objectName, action, recordId, action_record_title, list_view_id, value.itemData.record, ()->
-					self.dxDataGridInstance.refresh()
+					# 移除列表勾选中的id值，并刷新列表保持列表原来选中的id值集合状态
+					selectedIds = Creator.TabularSelectedIds[objectName]
+					Creator.TabularSelectedIds[objectName] = _.without(selectedIds, recordId)
+					self.dxDataGridInstance?.refresh().done (result)->
+						Creator.remainCheckboxState(self.dxDataGridInstance.$element())
 			else
 				Creator.executeAction objectName, action, recordId, value.itemElement
 	if actions.length
