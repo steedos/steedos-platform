@@ -39,8 +39,7 @@ let config = {
         "unborderedRow": true,
         "showAllLink": true,
         "illustration": {
-            "messageBody": "您没有待审核文件",
-            "path": "/assets/images/illustrations/empty-state-no-results.svg#no-results"
+            "messageBody": "您没有待审核文件"
         },
         rowIcon: {
             category: "standard",
