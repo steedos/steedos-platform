@@ -199,7 +199,13 @@ function calcString(str: string, content: any = process.env): string{
         return $1.replace(/\{\s*/,"{args[\"").replace(/\s*\}/,"\"]}");
     })
     eval(`calcFun = function(args){return \`${rev}\`}`);
-    return calcFun.call({}, content)
+    let val = calcFun.call({}, content);
+
+    if(_.isString(val) && val){
+        return val.replace(/\\r/g, '\r').replace(/\\n/g, '\n')
+    }else{
+        return rev;
+    }
 }
 
 function calcSteedosConfig(config: JsonMap){
