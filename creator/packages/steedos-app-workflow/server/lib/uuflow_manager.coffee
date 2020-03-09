@@ -2602,10 +2602,9 @@ uuflowManager.checkValueFieldsRequire = (values, form, form_version) ->
 
 	return require_but_empty_fields
 
-uuflowManager.triggerRecordInstanceQueue = (ins_id, record_ids, step_name) ->
+uuflowManager.triggerRecordInstanceQueue = (ins_id, record_ids, step_name, flow_id) ->
 
-	if Meteor.settings.cron?.instancerecordqueue_interval
-
+	if Creator.getCollection('object_workflows').find({ flow_id: flow_id }).count() > 0
 		newObj = {
 			info: {
 				instance_id: ins_id
