@@ -89,17 +89,17 @@ steedos:loaders-css
 
 steedos:smsqueue@0.0.1
 
-steedos:useraccounts-core
-steedos:useraccounts-bootstrap
-steedos:useraccounts-flow-routing
-steedos:accounts-t9n
+# steedos:useraccounts-core
+# steedos:useraccounts-bootstrap
+# steedos:useraccounts-flow-routing
+# steedos:accounts-t9n
 
 steedos:ui
 
 steedos:adminlte@2.3.12_2
 steedos:i18n
 steedos:base
-steedos:accounts
+# steedos:accounts
 steedos:theme
 steedos:jstree
 rubaxa:sortable

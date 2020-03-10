@@ -6,6 +6,11 @@ FlowRouter.triggers.enter (context, redirect, stop)->
 	if context?.queryParams?.app_id
 		Session.set('current_app_id', context.queryParams.app_id)
 
+FlowRouter.route '/steedos/sign-in',
+	triggersEnter: [ (context, redirect)->
+		Steedos.redirectToSignIn()
+	]
+
 FlowRouter.route '/select-users',
 	action: (params, queryParams)->
 		BlazeLayout.render 'selectUsersLayout',

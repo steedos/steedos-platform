@@ -33,9 +33,3 @@ if Meteor.isClient
 		logo_login_custome = Meteor?.settings?.public?.theme?.logo_login_custome
 		if logo_login_custome
 			Theme.logo = logo_login_custome
-		# 登录窗口标题
-		if AccountsTemplates.texts?.title?.signIn
-			if Steedos.isMobile()
-				AccountsTemplates.texts.title.signIn = "login_title_mobile"
-			else
-				AccountsTemplates.texts.title.signIn = "login_title"

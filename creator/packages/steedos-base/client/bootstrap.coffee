@@ -22,19 +22,7 @@ Steedos.redirectToSignIn = (redirect)->
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
 		window.location.href = accountsUrl + "/authorize?redirect_uri=" + redirect;
-	else
-		if (!FlowRouter._initialized)
-			FlowRouter.initialize();
-		if window.location.pathname.indexOf('/steedos/sign-in')>=0
-			return
-		signInUrl = AccountsTemplates.getRoutePath("signIn")
-		if redirect
-			if signInUrl.indexOf("?") > 0
-				signInUrl += "&redirect=#{redirect}"
-			else
-				signInUrl += "?redirect=#{redirect}"
-		FlowRouter.go signInUrl
-		
+
 Setup.validate = (onSuccess)->
 
 	# if window.location.pathname.indexOf('/steedos/sign-in')>=0

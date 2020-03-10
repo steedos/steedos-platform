@@ -33,10 +33,10 @@ Package.onUse(function(api) {
 
 	api.use('steedos:e164-phones-countries@1.0.3');
 	api.use('steedos:i18n-iso-countries@3.3.0');
-	api.use('steedos:accounts-t9n@1.14.2_7');
-	api.use('steedos:useraccounts-bootstrap@1.14.2_8');
-	api.use('steedos:useraccounts-core@1.14.2_6');
-	api.use('steedos:useraccounts-flow-routing@1.14.2_4');
+	// api.use('steedos:accounts-t9n@1.14.2_7');
+	// api.use('steedos:useraccounts-bootstrap@1.14.2_8');
+	//api.use('steedos:useraccounts-core@1.14.2_6');
+	// api.use('steedos:useraccounts-flow-routing@1.14.2_4');
 	api.use('steedos:accounts-phone@0.0.5');
 
 	api.use('steedos:base@0.1.4');
@@ -85,8 +85,8 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/accounts_admin_register.coffee', 'client');
 	api.addFiles('client/views/accounts_admin_register.less', 'client');
 
-	api.addFiles('client/views/at_form.coffee', "client");
-	api.addFiles('client/views/at_form.less', "client");
+	// api.addFiles('client/views/at_form.coffee', "client");
+	// api.addFiles('client/views/at_form.less', "client");
 
 	api.addFiles('client/views/accounts.less', 'client');
 

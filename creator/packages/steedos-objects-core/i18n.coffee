@@ -104,13 +104,11 @@ if Meteor.isClient
 			if Session.get("steedos-locale") != "en-us"
 				if TAPi18n?
 					TAPi18n.setLanguage("zh-CN")
-				T9n.setLanguage("zh-CN")
 				i18n.setLocale("zh-CN")
 				moment.locale("zh-cn")
 			else
 				if TAPi18n?
 					TAPi18n.setLanguage("en")
-				T9n.setLanguage("en")
 				i18n.setLocale("en")
 				moment.locale("en")
 
