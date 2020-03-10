@@ -1,7 +1,0 @@
-/* TODO: https://github.com/brianreavis/selectize.js/issues/671*/
-.form-control > .selectize-input {
-	-webkit-transition: inherit;
-	-moz-transition: inherit;
-	-o-transition: inherit;
-	transition: inherit;
-}

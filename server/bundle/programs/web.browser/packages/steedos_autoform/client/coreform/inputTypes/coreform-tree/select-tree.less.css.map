@@ -1,2 +1,0 @@
-)]}'
-{"version":3,"sources":["meteor://💻app/packages/steedos:autoform/client/coreform/inputTypes/coreform-tree/select-tree.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EAGY,iBAAA;CCDX","file":"to.css","sourcesContent":[".steedos {\n    .creator-auotform-modals {\n        .dx-texteditor-input {\n            min-height: auto;\n        }\n    }\n}",".steedos .creator-auotform-modals .dx-texteditor-input {\n  min-height: auto;\n}\n"]}

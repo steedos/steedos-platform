@@ -1,2 +1,0 @@
-)]}'
-{"version":3,"sources":["meteor://💻app/packages/steedos:app-chat/client/record_chat.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EAEE,gBAAA;EACA,iBAAA;CCAD;ADHD;EAOE,oBAAA;CCDD","file":"to.css","sourcesContent":[".steedos-record_chat{\n\t.chat-message-actions-menu{\n\t\tmin-width: 6rem;\n\t\tmax-width: 20rem;\n\t}\n\n\t.slds-feed__item{\n\t\tpadding-bottom: 0px;\n\t}\n}\n\n",".steedos-record_chat .chat-message-actions-menu {\n  min-width: 6rem;\n  max-width: 20rem;\n}\n.steedos-record_chat .slds-feed__item {\n  padding-bottom: 0px;\n}\n"]}

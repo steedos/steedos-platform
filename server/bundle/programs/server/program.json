@@ -266,6 +266,9 @@
       "path": "packages/spacebars-compiler.js"
     },
     {
+      "path": "packages/standard-minifier-css.js"
+    },
+    {
       "path": "packages/standard-minifier-js.js"
     },
     {
