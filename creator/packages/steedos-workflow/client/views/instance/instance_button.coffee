@@ -34,7 +34,7 @@ Template.instance_button.helpers
 		if !organizations
 			return false
 
-		if Session.get("box") == "draft" || (Session.get("box") == "monitor" && (space.admins.contains(Meteor.userId()) || WorkflowManager.canAdmin(fl, curSpaceUser, organizations)))
+		if Session.get("box") == "draft" || (Session.get("box") == "monitor" && (space.admins.contains(Meteor.userId()) || WorkflowManager.canAdmin(fl, curSpaceUser, organizations))) || (Session.get("box") == "inbox" && ins.state == 'draft' && ins.forward_from_instance)
 			return true
 		else
 			return false

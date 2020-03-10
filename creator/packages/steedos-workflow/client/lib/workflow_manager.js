@@ -548,7 +548,7 @@ WorkflowManager.getCategoriesForms = function(categorieId) {
 };
 
 WorkflowManager.getUnCategoriesForms = function() {
-	if(!Session.get("workflow_categories")){
+	if(_.isEmpty(Session.get("workflow_categories"))){
 		return forms = db.forms.find({
 			category: {
 				$in: [null, ""]
