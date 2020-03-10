@@ -53,30 +53,19 @@ fields:
     label: 启用创建企业
     type: boolean
     group: 登录界面
-  location:
-    label: 地址
-    type: location
-    system: gcj02
-    omit: true
-    hidden: true
-  apps:
-    label: 启用应用
-    type: lookup
-    reference_to: apps
-    multiple: true
-    hidden: true
-    filterable: true
 
-  hostname:
-    label: 绑定域名
-    type: 'text'
-    hidden: true
   is_paid:
     label: 已付费
     type: boolean
     group: 账务
     omit: true
     readonly: true
+    
+  hostname:
+    label: 绑定域名
+    type: 'text'
+    group: 账务
+    
   apps_paid:
     label: 已付费应用
     type: '[text]'
