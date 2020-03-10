@@ -1,10 +1,7 @@
 JsonRoutes.add "post", "/api/v4/instances/s3/",  (req, res, next) ->
-
+  collection = cfs.instances
   JsonRoutes.parseFiles req, res, ()->
-    collection = cfs.instances
-
     if req.files and req.files[0]
-
       newFile = new FS.File();
       newFile.attachData req.files[0].data, {type: req.files[0].mimeType}, (err) ->
         filename = req.files[0].filename
@@ -64,22 +61,21 @@ JsonRoutes.add "post", "/api/v4/instances/s3/",  (req, res, next) ->
         # 兼容老版本
         else
           fileObj = collection.insert newFile
+        return
 
-
-        size = fileObj.original.size
+      newFile.on 'stored', (storeName)->
+        size = newFile.original.size
         if !size
           size = 1024
-
         resp =
-          version_id: fileObj._id,
+          version_id: newFile._id,
           size: size
-
-        res.setHeader("x-amz-version-id",fileObj._id);
         res.end(JSON.stringify(resp));
         return
     else
       res.statusCode = 500;
       res.end();
+      return
 
 
 JsonRoutes.add "delete", "/api/v4/instances/s3/",  (req, res, next) ->
