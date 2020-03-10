@@ -1,5 +1,5 @@
 name: cms_posts
-icon: task
+icon: knowledge
 label: 知识
 enable_files: true
 enable_chatter: true

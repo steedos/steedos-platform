@@ -1,6 +1,6 @@
 name: tasks
 label: 任务
-icon: task
+icon: timesheet_entry
 enable_search: true
 fields:
   name:

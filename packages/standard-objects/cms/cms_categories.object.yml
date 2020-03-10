@@ -1,5 +1,5 @@
 name: cms_categories
-icon: task
+icon: folder
 label: 栏目
 fields:
   name:

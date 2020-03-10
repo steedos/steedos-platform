@@ -1,5 +1,5 @@
 name: announcements
-icon: task
+icon: announcement
 label: 公告
 enable_files: true
 enable_chatter: true

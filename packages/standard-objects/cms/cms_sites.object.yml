@@ -1,5 +1,5 @@
 name: cms_sites
-icon: task
+icon: app
 label: 站点
 fields:
   type:
