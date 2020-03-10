@@ -52,5 +52,8 @@
     "accounts.next":"下一步",
     "accounts.reSendCode": "获取验证码",
     "accounts.goBack": "返回",
-    "accounts.unenableRegister": "禁止注册"
+    "accounts.unenableRegister": "禁止注册",
+    "accounts.userNotFound": "未找到账户信息",
+    "accounts.noPasswordSet": "账户未设置密码",
+    "accounts.noEmailSet": "账户未设置邮箱"
 }

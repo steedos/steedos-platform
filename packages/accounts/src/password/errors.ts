@@ -1,9 +1,9 @@
 import { ErrorMessages } from './types';
 
 export const errors: ErrorMessages = {
-  userNotFound: 'User not found',
-  noPasswordSet: 'User has no password set',
-  noEmailSet: 'User has no email set',
+  userNotFound: 'accounts.userNotFound',
+  noPasswordSet: 'accounts.noPasswordSet',
+  noEmailSet: 'accounts.noEmailSet',
   incorrectPassword: 'accounts.incorrectPassword',
   unrecognizedOptionsForLogin: 'accounts.unrecognizedOptionsForLogin',
   matchFailed: 'accounts.matchFailed',
