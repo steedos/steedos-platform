@@ -37,7 +37,7 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | "">("");
-  const [email, setEmail] = useState<string | undefined>(_email);
+  const [email, setEmail] = useState<string | "">(_email || '');
   const [password, setPassword] = useState<string | "">("");
   const searchParams = new URLSearchParams(location.search);
   let spaceId = searchParams.get("X-Space-Id");
@@ -63,6 +63,21 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
     e.preventDefault();
     setError(null);
     try {
+      
+      if(!name.trim()){
+        throw new Error('accounts.nameRequired');
+      }
+
+      if(!email.trim()){
+        throw new Error('accounts.emailRequired');
+      }
+
+      if(tenant.enable_password_login != false && !password.trim()){
+        throw new Error('accounts.passwordRequired');
+      }
+
+
+
       await accountsPassword.createUser({
         locale: getBrowserLocale(),
         name: name,
