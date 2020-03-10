@@ -10,3 +10,10 @@ objects:
   - space_users
   - tasks
   - events
+mobile_objects: 
+  - instances
+  - cms_posts
+  - announcements
+  - space_users
+  - tasks
+  - events
