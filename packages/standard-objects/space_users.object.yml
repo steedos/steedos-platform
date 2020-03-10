@@ -187,7 +187,6 @@ list_views:
     label: 全部人员
     columns:
       - name
-      - organizations
       - position
       - mobile
       - email

@@ -1,5 +1,5 @@
 name: object_webhooks
-label: ObjectWebhooks
+label: 对象触发器
 icon: account
 fields:
   object_name:

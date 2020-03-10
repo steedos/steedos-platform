@@ -1,5 +1,5 @@
 name: organizations
-label: 组织
+label: 部门
 icon: team_member
 enable_search: true
 enable_tree: true
@@ -13,7 +13,7 @@ fields:
     sortable: true
     name: name
   fullname:
-    label: 组织全称
+    label: 部门全称
     type: text
     omit: true
     hidden: true
@@ -21,7 +21,7 @@ fields:
     name: fullname
     searchable: true
   parent:
-    label: 上级组织
+    label: 上级部门
     type: lookup
     reference_to: organizations
     sortable: true
@@ -30,7 +30,7 @@ fields:
     name: parent
     filterable: true
   parents:
-    label: 上级组织
+    label: 上级部门
     type: lookup
     reference_to: organizations
     multiple: true
@@ -41,7 +41,7 @@ fields:
     name: parents
     filterable: true
   children:
-    label: 下级组织
+    label: 下级部门
     type: lookup
     reference_to: organizations
     multiple: true

@@ -1,20 +1,21 @@
 name: company
-label: 单位
+label: 分部
 icon: account
 enable_api: true
 fields:
   name:
-    label: 公司名称
+    label: 分部名称
     type: text
   code: 
-    label: 公司代码
+    label: 分部代码
     type: text
   parent:
-    label: 上级公司
+    label: 上级分部
     type: lookup
     reference_to: company
+    hidden: true
   organization:
-    label: 关联组织
+    label: 关联部门
     type: lookup
     reference_to: organizations
     omit: false
@@ -22,7 +23,7 @@ fields:
     label: 本位币
     type: text
   admins:
-    label: 组织管理员
+    label: 管理员
     type: lookup
     reference_to: users
     multiple: true
@@ -66,10 +67,8 @@ list_views:
     columns:
       - name
       - code
-      - parent
       - organization
       - modified
-      - sort_no
     filter_scope: space
 permission_set:
   user:

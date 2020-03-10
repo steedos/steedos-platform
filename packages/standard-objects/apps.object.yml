@@ -1,5 +1,5 @@
 name: apps
-label: 应用
+label: 应用程序
 icon: apps
 fields:
   name:
@@ -11,6 +11,10 @@ fields:
     required: true
     searchable: true
     index: true
+  code:
+    label: API 名称
+    type: text
+    required: true    
   icon_slds:
     label: 图标
     type: lookup
@@ -31,19 +35,16 @@ fields:
         return options;
       }
     filterable: true
+  visible:
+    label: 启用
+    type: boolean
+    defaultValue: true
   description:
     label: 描述
     type: textarea
     is_wide: true
-  visible:
-    label: 是否可见
-    type: boolean
-    defaultValue: true
-  url:
-    label: 外部链接
-    type: url
   objects:
-    label: 对象
+    label: 主菜单项
     type: lookup
     multiple: true
     optionsFunction: !!js/function |
@@ -63,47 +64,23 @@ fields:
               return _options;
             }
     filterable: true
+  icon:
+    label: 旧版图标
+    type: text
+    hidden: true
   sort:
     label: 排序
     type: number
     defaultValue: 9100
   is_creator:
     type: boolean
-    label: creator应用
+    label: 显示在应用菜单中
     defaultValue: true
-  icon:
-    label: 审批王图标
-    type: text
-  auth_name:
-    label: 验证域名
-    type: text
-  secret:
-    label: API 密钥
-    type: text
-    max: 16
-    min: 16
-    is_wide: true
   mobile:
     type: boolean
-    label: 在移动应用中显示
+    label: 显示在移动应用中
     defaultValue: false
-  is_use_ie:
-    type: boolean
-    label: 使用IE打开(需使用Steedos桌面客户端)
-    defaultValue: false
-  is_use_iframe:
-    type: boolean
-    label: 使用iframe打开
-    defaultValue: false
-  is_new_window:
-    type: boolean
-    label: 新窗口打开
-    defaultValue: false
-  on_click:
-    type: textarea
-    label: 链接脚本
-    rows: 10
-    is_wide: true
+
   members:
     type: object
     label: 授权对象
@@ -120,13 +97,122 @@ fields:
     reference_to: organizations
     multiple: true
     filterable: true
+
+  url:
+    label: 外部链接
+    type: url
+    group: 外接应用
+  is_use_ie:
+    type: boolean
+    label: 使用IE打开(需使用Steedos桌面客户端)
+    defaultValue: false
+    group: 外接应用
+  is_use_iframe:
+    type: boolean
+    label: 使用iframe打开
+    defaultValue: false
+    group: 外接应用
+  is_new_window:
+    type: boolean
+    label: 在新窗口打开
+    defaultValue: false
+    group: 外接应用
+  on_click:
+    type: textarea
+    label: 链接脚本
+    rows: 2
+    is_wide: true
+    group: 外接应用
+
+  auth_name:
+    label: 验证域名
+    type: text
+    group: 外接应用
+  secret:
+    label: API 密钥
+    type: text
+    max: 16
+    min: 16
+    group: 外接应用
+
+  oauth2_enabled:
+    group: OAuth2
+    label: 启用 OAuth2
+    type: boolean
+  oauth2_callback_url:
+    group: OAuth2
+    label: 回调 URL
+    type: text
+  oauth2_scopes:
+    group: OAuth2
+    label: 范围
+    type: select
+    multiple: true
+    options:
+      - label: 允许访问您的唯一标志符 (openid)
+        value: openid
+      - label: 访问基本信息 (id, profile, email, address, phone)
+        value: profile
+      - label: 完全访问权限 (full)
+        value: full
+  oauth2_logout_enabled: 
+    group: OAuth2
+    label: 启用单点注销
+    type: boolean
+  oauth2_logout_url:
+    group: OAuth2
+    label: 单点注销 URL
+    type: url
+  
+  saml_enabled:
+    group: SAML
+    label: 启用 SAML
+    type: boolean
+  saml_entity_id:
+    group: SAML
+    label: Entity Id
+    type: text
+  saml_issuer:
+    group: SAML
+    label: Issuer
+    type: text
+  saml_idp_cert:
+    group: SAML
+    label: IDP Cert
+    type: text
+  saml_acs_url:
+    group: SAML
+    label: ACS Url
+    type: url
+  saml_name_id_format:
+    group: SAML
+    label: Name
+    type: text
+  saml_logout_enabled: 
+    group: SAML
+    label: 启用单点注销
+    type: boolean
+  saml_logout_url:
+    group: SAML
+    label: 单点注销 URL
+    type: url
+  saml_logout_block:
+    group: SAML
+    label: 单点注销绑定
+    type: select
+    options: 
+      - label: HTTP Redirect
+        value: redirect
+      - label: HTTP Post
+        value: post
+
 list_views:
   all:
     label: 所有
     filter_scope: space
     columns:
       - name
-      - objects
+      - description
       - visible
       - sort
 permission_set:

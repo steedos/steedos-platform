@@ -1,5 +1,5 @@
 name: spaces
-label: 租户
+label: 公司
 icon: groups
 fields:
   name:
@@ -11,36 +11,48 @@ fields:
     required: true
     searchable: true
     index: true
+  avatar_square:
+    label: Logo(正方形)
+    type: avatar
+  owner:
+    label: 所有者
+    type: lookup
+    reference_to: users
+    readonly: true
+    omit: false
+    hidden: false
   admins:
     label: 管理员
     type: lookup
     reference_to: users
     index: true
     multiple: true
-    is_wide: true
     filterable: true
   avatar:
     label: 浅色公司Logo
     type: avatar
+    hidden: true
   avatar_dark:
     label: 深色公司Logo
     type: avatar
-  avatar_square:
-    label: 正方形Logo
-    type: avatar
+    hidden: true
   background:
-    label: 背景图
+    label: 登录页背景图
     type: avatar
+    group: 登录界面
   enable_register:
     label: 启用用户注册
     type: boolean
+    group: 登录界面
   enable_forget_password: 
     label: 启用忘记密码
     type: boolean
+    group: 登录界面
     defaultValue: true
   enable_create_tenant: 
     label: 启用创建企业
     type: boolean
+    group: 登录界面
   location:
     label: 地址
     type: location
@@ -54,10 +66,7 @@ fields:
     multiple: true
     hidden: true
     filterable: true
-  apps_paid:
-    label: 已付费应用
-    type: '[text]'
-    omit: true
+
   hostname:
     label: 绑定域名
     type: 'text'
@@ -68,6 +77,11 @@ fields:
     group: 账务
     omit: true
     readonly: true
+  apps_paid:
+    label: 已付费应用
+    type: '[text]'
+    omit: true
+    group: 账务
   balance:
     label: 账户余额
     type: number
@@ -103,13 +117,6 @@ fields:
     type: '[text]'
     omit: true
     hidden: true
-  owner:
-    label: 所有者
-    type: lookup
-    reference_to: users
-    readonly: true
-    omit: false
-    hidden: false
   company_id:
     defaultValue: !!js/function |
       function () {

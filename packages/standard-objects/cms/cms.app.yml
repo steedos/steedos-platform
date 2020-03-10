@@ -7,21 +7,21 @@ objects:
   - cms_sites
   - cms_categories
   - cms_posts
-admin_menus:
-  - _id: menu_cms
-    name: 知识
-    permission_sets:
-      - user
-    expanded: false
-  - _id: cms_sites
-    name: 站点
-    permission_sets:
-      - user
-    object_name: cms_sites
-    parent: menu_cms
-  - _id: cms_categories
-    name: 栏目
-    permission_sets:
-      - user
-    object_name: cms_categories
-    parent: menu_cms
+# admin_menus:
+#   - _id: menu_cms
+#     name: 知识
+#     permission_sets:
+#       - user
+#     expanded: false
+#   - _id: cms_sites
+#     name: 站点
+#     permission_sets:
+#       - user
+#     object_name: cms_sites
+#     parent: menu_cms
+#   - _id: cms_categories
+#     name: 栏目
+#     permission_sets:
+#       - user
+#     object_name: cms_categories
+#     parent: menu_cms

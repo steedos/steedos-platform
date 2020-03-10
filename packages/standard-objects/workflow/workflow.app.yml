@@ -5,7 +5,7 @@ is_creator: false
 admin_menus:
   # 单位管理员可以创建和设置流程及相关参数。
   - _id: menu_workflow
-    name: 审批
+    name: 业务流程
     permission_sets:
       - user
     expanded: false
@@ -59,7 +59,7 @@ admin_menus:
     object_name: instances_statistic
     parent: menu_workflow
   - _id: webhooks
-    name: Webhooks
+    name: 流程触发器
     permission_sets:
       - admin
     object_name: webhooks
@@ -69,4 +69,16 @@ admin_menus:
     permission_sets:
       - user
     object_name: process_delegation_rules
+    parent: menu_workflow
+  - _id: object_workflows
+    name: 对象与流程映射关系
+    permission_sets:
+      - admin
+    object_name: object_workflows
+    parent: menu_workflow
+  - _id: roles
+    name: 审批角色
+    permission_sets:
+      - admin
+    object_name: roles
     parent: menu_workflow
