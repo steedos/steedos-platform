@@ -41,6 +41,7 @@
     "accounts.usernameAlreadyExists": "该用户名已被注册使用",
     "accounts.emailAlreadyExists": "该邮件已被注册使用",
     "accounts.usernameOrEmailRequired": "用户名或邮箱不能为空",
+    "accounts.nameRequired": "姓名不能为空",
     "accounts.emailRequired": "邮箱不能为空",
     "accounts.usernameRequired": "用户名不能为空",
     "accounts.passwordRequired": "密码不能为空",
