@@ -42,6 +42,15 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
     e.preventDefault();
     setError(null);
     try {
+
+      if(!email.trim()){
+        throw new Error('accounts.usernameOrEmailRequired');
+      }
+
+      if(!password.trim()){
+        throw new Error('accounts.passwordRequired');
+      }
+
       let data = {
         user: {
           email: email.trim(),
