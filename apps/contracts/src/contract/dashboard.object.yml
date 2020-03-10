@@ -1,6 +1,6 @@
 name: contracts_home
 label: 首页
-icon: contract
+icon: home
 fields:
   name:
     label: name
