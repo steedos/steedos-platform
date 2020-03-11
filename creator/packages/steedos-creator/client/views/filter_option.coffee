@@ -179,6 +179,23 @@ Template.filter_option.helpers
 		filter_item_operation = Template.instance().filter_item_operation.get()
 		return Creator.isBetweenFilterOperation(filter_item_operation)
 
+focusFieldValueInput = (filter_field_type)->
+	Meteor.defer ->
+		console.log "will focus the value field input,the field type is", filter_field_type
+		switch filter_field_type
+			when "number"
+				$("#filter-option [name=start_value]").focus()
+			when 'datetime'
+				$("#filter-option [name=start_value] .dx-texteditor-input").focus()
+			when 'date'
+				$("#filter-option [name=start_value] .dx-texteditor-input").focus()
+			when 'select'
+				$("#filter-option [name=value]").next().find(".steedos-lookups-input").focus()
+			when 'lookup'
+				$("#filter-option [name=value]").next().find(".steedos-lookups-input").focus()
+			else
+				$("#filter-option [name=value]").focus()
+
 Template.filter_option.events 
 	'click .save-filter': (event, template) ->
 		fields = Creator.getObject(template.data.object_name).fields
@@ -220,6 +237,7 @@ Template.filter_option.events
 			object_name = Session.get("object_name")
 		field = $(event.currentTarget).val()
 		if field != filter_item?.field
+			filter_item.field = field
 			delete filter_item.operation
 			filter_item.value = ""
 			template.filter_item.set(filter_item)
@@ -237,8 +255,10 @@ Template.filter_option.events
 		template.schema_obj.set(_schema[field])
 		Meteor.defer ->
 			template.show_form.set(true)
+			focusFieldValueInput filter_field_type
 	
 	'change select[name="operation"]': (event, template) ->
+		object_name = template.data?.object_name
 		filter_item = template.filter_item.get()
 		operation = $(event.currentTarget).val()
 		if Creator.isBetweenFilterOperation(operation) || Creator.isBetweenFilterOperation(filter_item?.operation)
@@ -246,6 +266,12 @@ Template.filter_option.events
 			filter_item.operation = operation
 			filter_item.value = ""
 			template.filter_item.set(filter_item)
+		Meteor.defer ->
+			field = filter_item?.field
+			if field
+				object_fields = Creator.getObject(object_name).fields
+				filter_field_type = object_fields[field]?.type
+				focusFieldValueInput filter_field_type
 
 Template.filter_option.onCreated ->
 	is_edit_scope = this.data.is_edit_scope
