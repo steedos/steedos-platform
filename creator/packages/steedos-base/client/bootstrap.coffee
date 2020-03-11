@@ -17,7 +17,7 @@ Steedos.redirectToSignIn = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
 		if !redirect
-			redirect = location.href.replace("/steedos/sign-in", "")
+			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
 		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
 			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
 			accountsUrl = rootUrl.origin + accountsUrl
@@ -295,7 +295,7 @@ FlowRouter.route '/steedos/logout',
 		#AccountsTemplates.logout();
 		$("body").addClass('loading')
 		Meteor.logout ()->
-			FlowRouter.go("/steedos/sign-in")
+#			FlowRouter.go("/steedos/sign-in")
 			return
 
 Meteor.startup ()->
