@@ -42,6 +42,7 @@
     "core-js": "^3.5.0",
     "cors": "^2.8.5",
     "csv": "^5.1.2",
+    "detect-browser": "^5.0.0",
     "devextreme": "^18.2.6",
     "ejs": "^2.5.5",
     "ejs-lint": "^0.2.0",

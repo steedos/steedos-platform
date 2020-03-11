@@ -1,3 +1,4 @@
+import("./browser");
 require("./theme.less");
 import 'core-js/proposals/url';
 // IE11支持SVG图标
