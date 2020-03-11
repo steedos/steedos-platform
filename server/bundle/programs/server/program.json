@@ -481,19 +481,6 @@
       "path": "packages/steedos_smsqueue.js"
     },
     {
-      "path": "packages/steedos_useraccounts-core.js"
-    },
-    {
-      "sourceMap": "packages/steedos_accounts-t9n.js.map",
-      "path": "packages/steedos_accounts-t9n.js"
-    },
-    {
-      "path": "packages/steedos_useraccounts-flow-routing.js"
-    },
-    {
-      "path": "packages/steedos_useraccounts-bootstrap.js"
-    },
-    {
       "path": "packages/flemay_less-autoprefixer.js"
     },
     {
@@ -608,15 +595,6 @@
     {
       "sourceMap": "packages/steedos_base.js.map",
       "path": "packages/steedos_base.js"
-    },
-    {
-      "sourceMap": "packages/steedos_accounts-phone.js.map",
-      "path": "packages/steedos_accounts-phone.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_accounts/node_modules",
-      "sourceMap": "packages/steedos_accounts.js.map",
-      "path": "packages/steedos_accounts.js"
     },
     {
       "path": "packages/steedos_jstree.js"

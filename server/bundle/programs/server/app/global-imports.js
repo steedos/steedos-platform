@@ -34,7 +34,6 @@ BlazeLayout = Package['kadira:blaze-layout'].BlazeLayout;
 SubsManager = Package['meteorhacks:subs-manager'].SubsManager;
 moment = Package['momentjs:moment'].moment;
 SMSQueue = Package['steedos:smsqueue'].SMSQueue;
-AccountsTemplates = Package['steedos:useraccounts-core'].AccountsTemplates;
 ServerSession = Package['steedos:base'].ServerSession;
 Selector = Package['steedos:base'].Selector;
 Steedos = Package['steedos:base'].Steedos;
