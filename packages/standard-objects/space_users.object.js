@@ -958,7 +958,11 @@ Creator.Objects['space_users'].actions = {
         },
         todo: function(){
             // var address = window.location.origin + "/accounts/a/#/signup?redirect_uri=" + encodeURIComponent(window.location.origin + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX) + "&X-Space-Id=" + Steedos.getSpaceId();
-            var address = window.location.origin + "/accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId();
+            let address = window.location.origin + "/accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId();
+            if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){
+                address = Meteor.absoluteUrl("accounts/a/#/signup?&X-Space-Id=" + Steedos.getSpaceId())
+            }
+            
             var clipboard = new Clipboard('.list-action-custom-invite_space_users');
 
             $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
