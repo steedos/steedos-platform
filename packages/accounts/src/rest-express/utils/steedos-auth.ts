@@ -20,6 +20,11 @@ export const hashStampedToken = function (stampedToken) {
     };
 }
 
+export const getAuthTokenCookie = function(req, res){
+  let cookies = new Cookies(req, res);
+  return cookies.get('X-Auth-Token');
+}
+
 export const setAuthCookies = function (req, res, userId, authToken, accessToken, spaceId?) {
     let cookies = new Cookies(req, res);
     let options = {

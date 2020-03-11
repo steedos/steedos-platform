@@ -5,9 +5,9 @@ import { makeStyles } from '@material-ui/styles';
 import {FormattedMessage} from 'react-intl';
 import { connect } from 'react-redux';
 import { getSettings } from '../selectors';
-import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { getCookie } from '../utils/utils';
+import { accountsClient, accountsRest } from '../accounts';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -33,8 +33,13 @@ const CreateTenant = ({ settings, history }: any) => {
     e.preventDefault();
     setError(null);
     try {
+
+      if(!tenantName.trim()){
+        throw new Error('企业名称不能为空');
+      }
+
       const route = 'api/v4/spaces/register/tenant';
-      const fetchOptions = {
+      const fetchOptions:any = {
         headers: {
           "X-User-Id": getCookie("X-User-Id"),
           "X-Auth-Token": getCookie("X-Auth-Token")
@@ -42,12 +47,37 @@ const CreateTenant = ({ settings, history }: any) => {
         method: "POST",
         body: JSON.stringify({
           name: tenantName
-        })
+        }),
+        credentials: 'include' 
       };
-      const res = await fetch(
+      const res:any = await fetch(
         `${settings.root_url}/${route}`,
         fetchOptions
       );
+      if (res) {
+        if (res.status >= 400 && res.status < 600) {
+          const { message } = await res.json();
+          throw new Error(message);
+        }
+        const resJson = await res.json();
+        let spaceId = resJson.value;
+        const token:any = await accountsClient.getTokens();
+        try {
+          let result = await accountsRest.authFetch( 'password/session', {
+            method: 'POST',
+            body: JSON.stringify({
+              spaceId,
+              accessToken: token.accessToken
+            }),
+            credentials: "include"
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        throw new Error('Server did not return a response');
+      }
+     
       history.push('/' + window.location.hash.substring(window.location.hash.indexOf("?")));
     } catch (err) {
       setError(err.message);

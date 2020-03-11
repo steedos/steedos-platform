@@ -6,26 +6,7 @@ import { sendError } from '../utils/send-error';
 import { setAuthCookies, hashStampedToken } from '../utils/steedos-auth';
 import { db } from '../../db';
 import * as _ from 'lodash';
-
-const getUserSpaces = async (userId) =>{
-  return await db.find("space_users", {
-    filters: [["user", "=", userId]],
-    fields: ["space"]
-  });
-}
-
-const getUserSpace = async (userId, spaceId)=>{
-  const userSpaces = await getUserSpaces(userId);
-  if(!userSpaces || userSpaces.length < 1){
-    return ;
-  }
-  
-  if(spaceId && _.find(userSpaces, function(o) { return o.space === spaceId; })){
-    return spaceId
-  }
-
-  return userSpaces[0].space
-}
+import { getUserSpace } from '../utils/users'
 
 export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
   req: express.Request,
