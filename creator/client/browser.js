@@ -1,6 +1,6 @@
 import { detect } from 'detect-browser';
 const browser = detect();
-console.log(`The browser detected by "detect-browser" is `, browser);
+console.log(`The browser detected by "detect-browser" is ${JSON.stringify(browser)}`);
 if(browser){
     const browserName = browser.name && browser.name.toLowerCase();
     const browserOs = browser.os && browser.os.toLowerCase();
