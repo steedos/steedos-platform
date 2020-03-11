@@ -11,7 +11,7 @@ const pathMap:any = {
     "/login/home": "首页",
     "/": "首页",
     "/signup": "注册",
-    "/create-tenant": "创建工作区",
+    "/create-tenant": "创建企业",
     "/reset-password": "验证码登录",
     "/update-password": "修改密码",
     "/verify-email": "验证邮箱"

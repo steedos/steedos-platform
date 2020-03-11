@@ -86,12 +86,6 @@ const CreateTenant = ({ settings, history }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <h4 className={classes.title}>
-        <FormattedMessage
-            id='accounts.create_tenant'
-            defaultMessage='Create Company'
-        />
-      </h4>
       <FormControl margin="normal">
         <InputLabel htmlFor="tenantName">
           <FormattedMessage
