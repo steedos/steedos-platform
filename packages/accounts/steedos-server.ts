@@ -7,6 +7,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { init } from "./src";
 import { isMeteor } from '@steedos/objectql';
+const initConfig = require("@steedos/core/lib/init/init-config.json");
 
 var server = require('@steedos/meteor-bundle-runner');
 var steedos = require('@steedos/core')
@@ -17,6 +18,9 @@ server.Fiber(function () {
     try {
         server.Profile.run("Server startup", function () {
             server.loadServerBundles();
+
+            initConfig.built_in_plugins = ["@steedos/steedos-plugin-workflow"]
+
             steedos.init();
 
             server.callStartupHooks();

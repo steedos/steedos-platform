@@ -55,5 +55,6 @@
     "accounts.unenableRegister": "禁止注册",
     "accounts.userNotFound": "未找到账户信息",
     "accounts.noPasswordSet": "账户未设置密码",
-    "accounts.noEmailSet": "账户未设置邮箱"
+    "accounts.noEmailSet": "账户未设置邮箱",
+    "accounts.loginCode.email_or_mobile": "邮箱或手机号"
 }

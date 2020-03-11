@@ -148,7 +148,7 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
   }, [action,name]);
 
   return (
-    <form onSubmit={onSubmit} className={classes.formContainer}>
+    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
       <h4 className={classes.title}>
         <FormattedMessage
           id="accounts.verify"

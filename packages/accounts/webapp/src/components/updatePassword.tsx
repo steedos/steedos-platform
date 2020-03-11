@@ -77,7 +77,7 @@ const UpdatePassword = ({ history, location }: RouteComponentProps<{}>) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className={classes.formContainer}>
+    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
       <h4 className={classes.title}>
         <FormattedMessage
             id='accounts.update_password'

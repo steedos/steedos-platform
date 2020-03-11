@@ -49,7 +49,7 @@ const LoginMethod = ({ match, settings, history, location }: any) => {
     };
 
     return (
-        <form onSubmit={onSubmit} className={classes.formContainer}>
+        <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
             {error && <FormError error={error!} />}
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage

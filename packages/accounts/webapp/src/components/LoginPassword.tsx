@@ -65,7 +65,7 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className={classes.formContainer}>
+    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
       <FormControl margin="normal">
         <InputLabel htmlFor="email">
           <FormattedMessage

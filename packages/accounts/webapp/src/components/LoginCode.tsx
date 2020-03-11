@@ -66,7 +66,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
   })
   }
   return (
-      <form onSubmit={onSubmit} className={classes.formContainer}>
+      <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
             <FormattedMessage

@@ -116,7 +116,7 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
   }, [tenant]);
 
   return (
-    <form onSubmit={onSubmit} className={classes.formContainer}>
+    <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
     <FormControl margin="normal">
       <InputLabel htmlFor="name">
         <FormattedMessage
