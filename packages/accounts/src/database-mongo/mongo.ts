@@ -314,17 +314,36 @@ export class Mongo implements DatabaseInterface {
     );
   }
 
+  private resolveInfo(connection: ConnectionInformations= {}){
+    let ip = connection.ip;
+    let userAgent = connection.userAgent;
+    let space = '';
+    if(userAgent){
+      const foo = userAgent.split(' Space/');
+      if(foo.length > 1){
+        userAgent = foo[0];
+        space =  foo[1];
+      }
+    }
+
+    if(space){
+      return { ip, userAgent, space }
+    }
+
+    return { ip, userAgent }
+  }
+
   public async createSession(
     userId: string,
     token: string,
     connection: ConnectionInformations = {},
     extraData?: object
   ): Promise<string> {
-    const session = {
+    const infos = this.resolveInfo(connection);
+    const session: any = {
       userId,
       token,
-      userAgent: connection.userAgent,
-      ip: connection.ip,
+      ...infos,
       extraData,
       valid: true,
       [this.options.timestamps.createdAt]: this.options.dateProvider(),
@@ -341,14 +360,20 @@ export class Mongo implements DatabaseInterface {
 
   public async updateSession(sessionId: string, connection: ConnectionInformations): Promise<void> {
     const _id = this.options.convertSessionIdToMongoObjectId ? toMongoID(sessionId) : sessionId;
+    const infos = this.resolveInfo(connection);
+    let _set = {
+      userAgent: infos.userAgent,
+      ip: infos.ip,
+      [this.options.timestamps.updatedAt]: this.options.dateProvider(),
+    }
+    if(infos.space){
+      _set.space = infos.space
+    }
+
     await this.sessionCollection.updateOne(
       { _id },
       {
-        $set: {
-          userAgent: connection.userAgent,
-          ip: connection.ip,
-          [this.options.timestamps.updatedAt]: this.options.dateProvider(),
-        },
+        $set: _set,
       }
     );
   }

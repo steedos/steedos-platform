@@ -4,6 +4,28 @@ import { AccountsServer } from '@accounts/server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';
 import { setAuthCookies, hashStampedToken } from '../utils/steedos-auth';
+import { db } from '../../db';
+import * as _ from 'lodash';
+
+const getUserSpaces = async (userId) =>{
+  return await db.find("space_users", {
+    filters: [["user", "=", userId]],
+    fields: ["space"]
+  });
+}
+
+const getUserSpace = async (userId, spaceId)=>{
+  const userSpaces = await getUserSpaces(userId);
+  if(!userSpaces || userSpaces.length < 1){
+    return ;
+  }
+  
+  if(spaceId && _.find(userSpaces, function(o) { return o.space === spaceId; })){
+    return spaceId
+  }
+
+  return userSpaces[0].space
+}
 
 export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -11,10 +33,10 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
 ) => {
   try {
     const serviceName = req.params.service;
-    const userAgent = getUserAgent(req);
+    let userAgent = getUserAgent(req) || '';
     const ip = requestIp.getClientIp(req);
-    const email = req.body.user.email
-
+    const email = req.body.user.email;
+    const spaceId = req.body.spaceId;
     let services: any = accountsServer.getServices()
     let db = services[serviceName].db
 
@@ -28,13 +50,26 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     if(email && email.indexOf("@") < 0){
       req.body.user.username = email
     }
+
     const loggedInUser: any = await accountsServer.loginWithService(serviceName, req.body, {
       ip,
-      userAgent,
+      userAgent
     });
 
     //获取user session
     let session:any = await accountsServer.findSessionByAccessToken(loggedInUser.tokens.accessToken)
+
+    //TODO 获取用户有效的工作区Id，并且写入Sessions中
+
+    let validSpaceId = await getUserSpace(session.userId, spaceId);
+
+    if(validSpaceId){
+      userAgent = `${userAgent} Space/${validSpaceId}`
+    
+      db.updateSession(loggedInUser.sessionId, {
+        ip,
+        userAgent});
+    }
 
     //确认用户密码是否过期
     let user = await db.collection.findOne({_id: session.userId}, { password_expired: 1 })
@@ -58,7 +93,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     let data = { services: _user['services'] }
     await db.collection.updateOne({_id: session.userId}, {$set: data});
     // 设置cookies
-    setAuthCookies(req, res, session.userId, authToken, loggedInUser.tokens.accessToken, null);
+    setAuthCookies(req, res, session.userId, authToken, loggedInUser.tokens.accessToken, validSpaceId);
 
     res.json(loggedInUser);
   } catch (err) {

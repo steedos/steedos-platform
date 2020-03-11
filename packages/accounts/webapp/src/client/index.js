@@ -18,6 +18,10 @@ const Login = async (data, history, tenant, location)=>{
     const searchParams = new URLSearchParams(location.search);
     let redirect_uri = searchParams.get("redirect_uri");
 
+    if(tenant._id){
+      data.spaceId = tenant._id
+    }
+
     let result = await accountsRest.authFetch( 'password/authenticate', {
         method: 'POST',
         body: JSON.stringify({
