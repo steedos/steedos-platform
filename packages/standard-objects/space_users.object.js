@@ -978,6 +978,7 @@ Creator.Objects['space_users'].actions = {
                 console.error('Action:', e.action);
                 console.error('Trigger:', e.trigger);
                 console.log('address', address);
+                console.log('clipboard error', e)
                 clipboard.destroy();
             });
             
