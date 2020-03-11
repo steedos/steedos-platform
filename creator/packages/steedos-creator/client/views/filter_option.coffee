@@ -180,6 +180,7 @@ Template.filter_option.helpers
 		return Creator.isBetweenFilterOperation(filter_item_operation)
 
 focusFieldValueInput = (filter_field_type)->
+	# 根据字段类型不同，把字段值文本框焦点光标自动加上
 	Meteor.defer ->
 		console.log "will focus the value field input,the field type is", filter_field_type
 		switch filter_field_type
@@ -306,6 +307,9 @@ Template.filter_option.onCreated ->
 			if builtinOperation
 				operation = builtinOperation
 				filter_item.operation = builtinOperation
+		
+		Meteor.defer ->
+			focusFieldValueInput filter_field_type
 		
 		this.schema_key = new ReactiveVar(key)
 		this.schema_obj = new ReactiveVar(key_obj)
