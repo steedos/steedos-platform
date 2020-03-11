@@ -114,7 +114,7 @@ Creator.getObjectFilterFieldOptions = (object_name)->
 	icon = _object?.icon
 	_.forEach fields, (f, k)->
 		# hidden,grid等类型的字段，不需要过滤
-		if !_.include(["grid","object", "[Object]", "[object]", "Object"], f.type) and !f.hidden
+		if !_.include(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type) and !f.hidden
 			# filters.$.field及flow.current等子字段也不需要过滤
 			if !/\w+\./.test(k) and _.indexOf(permission_fields, k) > -1
 				_options.push {label: f.label || k, value: k, icon: icon}
