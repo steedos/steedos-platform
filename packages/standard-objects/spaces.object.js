@@ -125,6 +125,7 @@ if (Meteor.isServer) {
         doc.modified_by = userId;
         doc.modified = new Date();
         doc.is_deleted = false;
+        doc.services = doc.services || {};
         if (!userId) {
             throw new Meteor.Error(400, "spaces_error_login_required");
         }
