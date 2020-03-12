@@ -431,6 +431,12 @@
       "path": "packages/vazco_universe-autoform-select.js"
     },
     {
+      "path": "packages/summernote_summernote.js"
+    },
+    {
+      "path": "packages/mpowaga_autoform-summernote.js"
+    },
+    {
       "path": "packages/steedos_devexpress.js"
     },
     {
@@ -775,6 +781,17 @@
     {
       "sourceMap": "packages/steedos_webkit-notification.js.map",
       "path": "packages/steedos_webkit-notification.js"
+    },
+    {
+      "path": "packages/vazco_universe-selectize.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/steedos_cms/node_modules",
+      "sourceMap": "packages/steedos_cms.js.map",
+      "path": "packages/steedos_cms.js",
+      "assets": {
+        "themes/default.html": "assets/packages/steedos_cms/themes/default.html"
+      }
     },
     {
       "path": "packages/hot-code-push.js"

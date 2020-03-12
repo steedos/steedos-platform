@@ -1,0 +1,32 @@
+.react-select-users-layout {
+  background: #fafaf9;
+  width: 100%;
+  height: 100%;
+}
+.react-select-users-layout .select-users .organizations {
+  border-right: 1px solid #D5D5D5;
+  width: 20rem;
+}
+.react-select-users-layout .select-users .organizations,
+.react-select-users-layout .select-users .users .slds-grid_vertical {
+  margin-bottom: 49px;
+}
+.react-select-users-layout .select-users .users {
+  margin-left: 20rem;
+}
+.react-select-users-layout .select-users .users #combobox-base-selected-listbox {
+  max-height: 100px;
+  overflow-y: auto;
+}
+.react-select-users-layout .select-users .users .slds-grid {
+  width: calc(100% - 20rem);
+}
+.react-select-users-layout .slds-docked-form-footer {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 30px;
+  box-shadow: none;
+  border-top: 1px solid #D5D5D5;
+}

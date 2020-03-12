@@ -14,6 +14,10 @@ body {
 body button {
   margin-right: 0px;
 }
+.steedos label {
+  /*#1621 fix 全局label样式的margin-bottom属性可能被devexpress/client/css/dx.spa.css覆盖*/
+  margin-bottom: 5px;
+}
 .steedos .steedos-brand-band {
   display: -ms-flexbox;
   display: -webkit-box;
