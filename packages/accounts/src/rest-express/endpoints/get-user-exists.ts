@@ -2,16 +2,24 @@ import * as express from 'express';
 import { sendError } from '../utils/send-error';
 import { db } from '../../db';
 
-export const emailExists = () => async (
+export const userExists = () => async (
   req: express.Request,
   res: express.Response
 ) => {
   try {
-    let email = req.query.email;
-    if(!email){
-        throw new Error("邮箱不能为空")
+    let id = req.query.id;
+    if(!id){
+        throw new Error("邮箱或手机号不能为空")
     }
-    const count = await db.count('users', {filters: [['email', '=', email]]})
+    let filters = [];
+
+    if(id.indexOf("@") > 0){
+      filters.push(['email', '=', id])
+    }else{
+      filters.push(['mobile', '=', id])
+    }
+
+    const count = await db.count('users', {filters: filters})
     if(count > 0){
         return res.send({
             exists: true

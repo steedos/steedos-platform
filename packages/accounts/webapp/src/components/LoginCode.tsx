@@ -34,13 +34,20 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
     setError(null);
     try {
       if(!email.trim()){
-        throw new Error("请输入邮箱");
+        throw new Error("请输入邮箱或手机号");
       }
-      const data = await accountsRest.fetch( `user/email/exists?email=${email.trim()}`, {});
+      if(email.trim().indexOf("@") == 0){
+        throw new Error("无效的邮箱地址");
+      }
+      const data = await accountsRest.fetch( `user/exists?id=${email.trim()}`, {});
+      let action = 'emailLogin';
+      if(email.trim().indexOf("@") < 0){
+        action = 'mobileLogin'
+      }
       if(data.exists){
           const data = await ApplyCode({
               name: email,
-              action: 'emailLogin',
+              action: action,
               spaceId: spaceId
           });
           if (data.token) {
@@ -59,10 +66,14 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
   };
 
   const goSignup = ()=>{
+    let state = {};
+    if(email.trim().indexOf("@") > 0){
+      state =  { email: email }
+    }
     history.push({
       pathname: `/signup`,
       search: location.search,
-      state: { email: email }
+      state: state
   })
   }
   return (
@@ -70,8 +81,8 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
             <FormattedMessage
-              id='accounts.email'
-              defaultMessage='Email'
+              id='accounts.loginCode.email_or_mobile'
+              defaultMessage='Email or Phone Number'
             />
           </InputLabel>
           <Input

@@ -13,6 +13,7 @@ declare var MailQueue;
 declare var Meteor;
 declare var Steedos;
 declare var Creator;
+declare var SMSQueue;
 /**
  * Return random 1-9 digit
  * @returns {number}
@@ -93,6 +94,14 @@ function sendEmail(to, subject, html){
     }
 }
 
+function sendSMS(mobile, code, spaceId){
+    let message = `验证码：${code}, 有效期${EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。`
+    SMSQueue.send({
+        RecNum: mobile,
+        msg: message
+    }, spaceId)
+}
+
 async function sendCode(owner: string, name: string, action: string, spaceId: string) {
     const now: any = new Date();
     let filters = [['verifiedAt', '=', null]];
@@ -127,7 +136,7 @@ async function sendCode(owner: string, name: string, action: string, spaceId: st
     if (action.startsWith("email")) {
         sendEmail(name, getEmailSubject(action), getEmailBody(action, record.code))
     } else if (action.startsWith("mobile")) {
-        //TODO 发送手机短信
+        sendSMS(name, record.code, spaceId);
     }
     return record._id;
 }
