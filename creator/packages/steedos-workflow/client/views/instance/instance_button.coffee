@@ -618,7 +618,7 @@ Template.instance_button.events
 			return
 		ins = WorkflowManager.getInstance()
 		flow = db.flows.findOne(ins.flow)
-		Steedos.openWindow(Steedos.absoluteUrl("/packages/steedos_workflow-chart/assets/index.html?instance_id=#{ins._id}&title=#{encodeURIComponent(encodeURIComponent(flow.name))}"),'workflow_chart')
+		Steedos.openWindow(Steedos.absoluteUrl("/api/workflow/chart/traces?instance_id=#{ins._id}&title=#{encodeURIComponent(encodeURIComponent(flow.name))}"),'workflow_chart')
 
 	'click .btn-suggestion-toggle': (event, template)->
 		$(".instance-wrapper .instance-view").addClass("suggestion-active")
