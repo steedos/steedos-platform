@@ -87,7 +87,7 @@ mrt:moment-timezone
 
 steedos:loaders-css
 
-steedos:smsqueue@0.0.1
+steedos:smsqueue
 
 steedos:ui
 
