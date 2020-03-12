@@ -64,6 +64,9 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     authToken = stampedAuthToken.token;
     let hashedToken = hashStampedToken(stampedAuthToken);
     let _user = await db.collection.findOne({_id: session.userId}, { services:1 })
+    if(!_user['services']){
+      _user['services'] = {}
+    }
     if (!_user['services']['resume']) {
       _user['services']['resume'] = {loginTokens: []}
     }
