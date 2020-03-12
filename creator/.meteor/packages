@@ -14,7 +14,7 @@ dynamic-import@0.3.0
 ecmascript@0.10.6
 ejson@1.1.0
 email@1.2.3
-fastclick@1.0.13
+
 http@1.4.0
 jquery@1.11.10
 logging@1.1.19
