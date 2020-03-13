@@ -18,7 +18,7 @@ fields:
     name: form
     filterable: true
   category:
-    label: 流程分类
+    label: 分类
     type: lookup
     reference_to: categories
     name: category
@@ -319,17 +319,15 @@ list_views:
     filter_scope: space
     columns:
       - name
-      - modified
-      - modified_by
-      - auto_remind
       - state
-      - is_deleted
-      - company_id
-      - form
+      - category
       - sort_no
+      - modified
+    filter_fields:
+      - state
+      - category
+      - company_id
     sort:
-      - - sort_no
-        - desc
       - - modified
         - desc
 actions:
@@ -427,14 +425,14 @@ actions:
       function (object_name, record_id, record_permissions) {
               return true;
             }
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId());
             }
   export_default_template:
     label: 导出默认模板
-    'on': record
+    'on': record_more
     visible: !<tag:yaml.org,2002:js/function> |-
       function () {
               return true;
@@ -457,7 +455,7 @@ actions:
   exportFlow:
     label: 导出流程
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               var flow, form_id, ref2, ref3, ref4;
@@ -509,7 +507,7 @@ actions:
   upgradeFlow:
     label: 导入流程(升级)
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("admin_import_flow_modal", {
@@ -522,7 +520,7 @@ actions:
   copyFlow:
     label: 复制流程
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("copy_flow_modal", {
@@ -537,7 +535,7 @@ actions:
   distributeAdmin:
     label: 设置分发
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("distribute_edit_flow_modal", {

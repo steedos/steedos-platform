@@ -118,7 +118,7 @@ fields:
     omit: true
     hidden: true
   company_id:
-    label: 主分部
+    label: 分部
     type: lookup
     reference_to: company
     sortable: true
@@ -190,7 +190,7 @@ fields:
     omit: true
     hidden: true
   company_ids:
-    label: 所属分部
+    label: 分部
     type: lookup
     reference_to: company
     sortable: true

@@ -35,6 +35,11 @@ list_views:
       - role
       - org
       - users
+      - modified
+    filter_fields:
+      - role
+      - users
+      - org
       - company_id
     label: 所有
 permission_set:

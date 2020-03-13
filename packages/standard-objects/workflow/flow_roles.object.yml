@@ -16,6 +16,8 @@ list_views:
     filter_scope: space
     columns:
       - name
+      - modified
+    filter_fields:
       - company_id
     label: 所有
 permission_set:
