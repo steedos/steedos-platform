@@ -105,7 +105,7 @@ fields:
     type: lookup
     omit: true
     readonly: true
-    hidden: false
+    # hidden: false
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
