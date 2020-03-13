@@ -13,7 +13,7 @@ fields:
   action:
     label: 验证类型
     type: select
-    options: 验证邮箱:verifyEmail,验证手机号:verifyMobile,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin,邮箱注册账户:emailSignupAccount
+    options: 验证邮箱:verifyEmail,验证手机号:verifyMobile,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin,邮箱注册账户:emailSignupAccount,手机号注册账户:mobileSignupAccount
     required: true
   owner:
     label: 所有者
@@ -38,32 +38,15 @@ fields:
 list_views:
   all:
     label: 所有
+    sort: [["expiredAt", "desc"]]
     columns:
+      - name
       - code
-      - type
+      - action
       - owner
       - expiredAt
-      - isUsed
-  unUsed:
-    label: 未使用
-    columns:
-      - code
-      - type
-      - owner
-      - expiredAt
-      - isUsed
-    filters:
-      - ["isUsed", "<>", true]
-  used:
-    label: 已使用
-    columns:
-      - code
-      - type
-      - owner
-      - expiredAt
-      - isUsed
-    filters:
-      - ["isUsed", "=", true]
+      - verifiedAt
+      - failureCount
 permission_set:
   user:
     allowCreate: false
