@@ -408,20 +408,50 @@
 	"no_force_phone_tips": "In addition to not mandatory binding phone number of users, require binding phone number before entering the system",
 
 
-    "creator_odata_post_fail": "the record added fail",
-    "creator_odata_record_query_fail": "the record does not exist for the given query",
-    "creator_odata_collection_query_fail": "Collection not found for the segment",
-    "creator_odata_authentication_required": "Authentication is required and has not been provided",
-    "creator_odata_user_access_fail": "User does not have privileges to access the entity",
-    "creator_odata_user_create_fail": "User does not have privileges to create the entity",
-    "creator_odata_user_update_fail": "User does not have privileges to update the entity",
-    "creator_odata_user_remove_fail": "User does not have privileges to remove the entity",	
+	"creator_odata_post_fail": "the record added fail",
+	"creator_odata_record_query_fail": "the record does not exist for the given query",
+	"creator_odata_collection_query_fail": "Collection not found for the segment",
+	"creator_odata_authentication_required": "Authentication is required and has not been provided",
+	"creator_odata_user_access_fail": "User does not have privileges to access the entity",
+	"creator_odata_user_create_fail": "User does not have privileges to create the entity",
+	"creator_odata_user_update_fail": "User does not have privileges to update the entity",
+	"creator_odata_user_remove_fail": "User does not have privileges to remove the entity",	
 	"Steedos Sogo": "Hot Mail",
 	"sogo_mail_account": "Hot mail account",
 
 	"downloading": "Downloading",
 	"download_progress": "Download progress",
 	"True": "YES",
-	"False": "NO"
+	"False": "NO",
+	"sms": {
+		"remind": {
+			"code": "SMS_67200967",
+			"template": "催办通知：{$instance_name}，办结时限：{$deadline}。申请单：{$open_app_url}"
+		},
+		"notify_wenshu": {
+			"code": "SMS_61725087",
+			"template": "您好，用户{$handler}在申请单{$instance}中填写的批阅意见为：{$description}。"
+		},
+		"chnage_mobile": {
+			"code": "SMS_67660108",
+			"template": "通讯录中您的手机号已被{$name}修改为{$number}。"
+		},
+		"mobile_verification_code": {
+			"code": "SMS_63370455",
+			"template": "验证码：{$code}"
+		},
+		"meeting_cc": {
+			"code": "SMS_71335682",
+			"template": "会议通知：{$instance_name}，申请单：{$open_app_url}"
+		},
+		"calendar_event": {
+			"code": "SMS_67200967",
+			"template": "会议通知：{$event_action},标题：{$event_title},时间：{$event_time},地点：{$event_location}"
+		},
+		"change_password": {
+			"code": "SMS_67200967",
+			"template": "系统通知：{$name}修改了您的登录密码"
+		}
+	}
 
 }
