@@ -54,10 +54,10 @@ fields:
     type: textarea
     is_wide: true
     name: help_text
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
   created_by:
     label: 创建人
   modified_by:

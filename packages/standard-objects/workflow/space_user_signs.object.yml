@@ -14,10 +14,10 @@ fields:
     type: avatar
     label: 签名
     name: sign
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
 list_views:
   all:
     filter_scope: space

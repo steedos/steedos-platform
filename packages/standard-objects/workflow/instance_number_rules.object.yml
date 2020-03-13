@@ -34,10 +34,10 @@ fields:
     label: 编号规则
     required: true
     name: rules
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
 list_views:
   all:
     filter_scope: space

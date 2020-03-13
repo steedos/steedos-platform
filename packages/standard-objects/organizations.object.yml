@@ -74,8 +74,8 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
-    omit: true
-    hidden: false
+    # omit: true
+    # hidden: false
   company_ids:
     label: 所属分部
     defaultValue: !!js/function |
@@ -86,8 +86,8 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
-    omit: true
-    hidden: true
+    # omit: true
+    # hidden: true
   is_company:
     label: 分部级
     type: boolean

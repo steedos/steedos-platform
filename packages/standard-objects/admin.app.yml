@@ -57,12 +57,12 @@ admin_menus:
       - admin
     object_name: apps
     parent: menu_users
-  - _id: company
-    name: 分部
-    permission_sets:
-      - admin
-    object_name: company
-    parent: menu_users
+  # - _id: company
+  #   name: 分部
+  #   permission_sets:
+  #     - admin
+  #   object_name: company
+  #   parent: menu_users
   - _id: sessions
     name: 登录会话
     permission_sets:

@@ -187,10 +187,10 @@ fields:
     type: '[text]'
     hidden: true
     name: record_ids.$.ids
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
   current_step_auto_submit:
     label: 当前步骤超时自动流转
     type: boolean

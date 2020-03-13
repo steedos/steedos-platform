@@ -7,10 +7,10 @@ fields:
     label: 名称
     name: name
     searchable: true
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
 list_views:
   all:
     filter_scope: space
