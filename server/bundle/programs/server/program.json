@@ -105,9 +105,6 @@
       "path": "packages/email.js"
     },
     {
-      "path": "packages/fastclick.js"
-    },
-    {
       "path": "packages/url.js"
     },
     {
