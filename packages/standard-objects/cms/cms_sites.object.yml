@@ -1,7 +1,6 @@
 name: cms_sites
 icon: app
 label: 站点
-enable_search: true
 fields:
   type:
     label: 类型
