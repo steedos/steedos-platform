@@ -70,12 +70,12 @@ admin_menus:
       - user
     object_name: process_delegation_rules
     parent: menu_workflow
-  - _id: object_workflows
-    name: 对象与流程映射关系
-    permission_sets:
-      - admin
-    object_name: object_workflows
-    parent: menu_workflow
+  # - _id: object_workflows
+  #   name: 对象与流程映射关系
+  #   permission_sets:
+  #     - admin
+  #   object_name: object_workflows
+  #   parent: menu_workflow
   - _id: roles
     name: 审批角色
     permission_sets:

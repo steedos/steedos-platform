@@ -93,12 +93,12 @@ admin_menus:
       - admin
     object_name: audit_records
     parent: menu_advanced
-  - _id: queue_import
-    name: 数据导入
-    permission_sets:
-      - admin
-    object_name: queue_import
-    parent: menu_advanced
+  # - _id: queue_import
+  #   name: 数据导入
+  #   permission_sets:
+  #     - admin
+  #   object_name: queue_import
+  #   parent: menu_advanced
   - _id: object_webhooks
     name: 事件触发器
     permission_sets:
