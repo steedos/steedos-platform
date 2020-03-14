@@ -58,12 +58,13 @@ Creator.Objects['instances'].methods = {
                 // if ((!permissions.includes("admin")) && (!space.admins.includes(current_user_id))) {
                 //   throw new Meteor.Error('error', "no permission.");
                 // }
-                // 监控箱不跳转，直接报错
+                // 监控箱这里不判断权限，因为相关权限的判断应该是申请单详细界面内部的逻辑
                 box = 'monitor';
-                return res.status(404).send({
-                    "error": "Validate Request -- Monitor not support yet",
-                    "success": false
-                })
+                // 因为可能需要兼顾点开一个最近查看的申请单正好是监控箱申请单的情况，这里直接允许正常跳转过去
+                // return res.status(404).send({
+                //     "error": "Validate Request -- Monitor not support yet",
+                //     "success": false
+                // })
             }
             let redirectUrl = Creator.getRelativeUrl(`/workflow/space/${record.space}/${box}/${record_id}`);
             if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
