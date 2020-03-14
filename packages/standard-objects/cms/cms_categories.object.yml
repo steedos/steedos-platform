@@ -1,6 +1,7 @@
 name: cms_categories
 icon: folder
 label: 栏目
+enable_search: true
 fields:
   name:
     label: 名称

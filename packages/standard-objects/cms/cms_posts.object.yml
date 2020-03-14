@@ -3,6 +3,7 @@ icon: knowledge
 label: 知识
 enable_files: true
 enable_chatter: true
+enable_search: true
 sidebar:
   template_name: creator_grid_sidebar_sites
 fields:
