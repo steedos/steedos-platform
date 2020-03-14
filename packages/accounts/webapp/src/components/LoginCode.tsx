@@ -43,17 +43,16 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       if(email.trim().indexOf("@") == 0){
         throw new Error("无效的邮箱地址");
       }
-      const data = await accountsRest.fetch( `user/exists?id=${email.trim()}`, {});
-      let action = 'emailLogin';
       
+      let action = 'emailLogin';
       if(email.trim().indexOf("@") < 0){
         action = 'mobileLogin'
       }
-
       if(!tenant.enable_mobile_code_login && action === 'mobileLogin'){
           throw new Error("无效的邮箱地址");
       }
 
+      const data = await accountsRest.fetch( `user/exists?id=${email.trim()}`, {});
       if(data.exists){
           const data = await ApplyCode({
               name: email,
@@ -90,8 +89,6 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
-            
-
             {tenant.enable_mobile_code_login &&
                 <FormattedMessage
                 id='accounts.loginCode.email_or_mobile'
