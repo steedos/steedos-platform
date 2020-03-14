@@ -87,8 +87,8 @@ fields:
     reference_to: company
     multiple: true
     index: true
-    omit: true
-    hidden: false
+    # omit: true
+    # hidden: false
     readonly: true
     name: company_ids
     filterable: true
