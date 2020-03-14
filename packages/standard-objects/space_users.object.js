@@ -124,7 +124,9 @@ Meteor.startup(function () {
         };
         db.space_users.before.insert(function (userId, doc) {
             var creator, currentUserPhonePrefix, email, id, options, organization, phone, phoneNumber, user, userObj, userObjs;
-            
+            if(doc.email){
+                doc.email = doc.email.toLowerCase();
+            }
             db.space_users.insertVaildate(userId, doc);
 
             if(doc.user){
@@ -297,6 +299,9 @@ Meteor.startup(function () {
         db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
             var currentUserPhonePrefix, email_val, emails, emails_val, euser, isEmailCleared, isMobileCleared, lang, newEmail, newMobile, number, organization, paramString, params, ref, ref1, ref2, steedos_id, user_set, user_unset;
             modifier.$set = modifier.$set || {};
+            if(modifier.$set.email){
+                modifier.$set.email = modifier.$set.email.toLowerCase();
+            }
             db.space_users.updatevaildate(userId, doc, modifier);
             if (modifier.$set.organizations && modifier.$set.organizations.length > 0) {
                 // 修改所有组织后，强制把主组织自动设置为第一个组织
