@@ -110,6 +110,9 @@ workflowSpaceRoutes.route '/:box/:instanceId',
 		Session.set("next_user_multiple", null);
 		Session.set("box", params.box);
 
+		if ObjectRecent and ObjectRecent.insert
+			ObjectRecent.insert("instances", params.instanceId)
+
 		BlazeLayout.render Creator.getLayout(),
 			main: "workflow_main"
 
