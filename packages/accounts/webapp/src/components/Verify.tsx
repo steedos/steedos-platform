@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 18,
     fontWeight: "bold",
     margin: "0 auto",
+    marginBottom: 16
   },
   back: {
     marginTop: theme.spacing(1)
