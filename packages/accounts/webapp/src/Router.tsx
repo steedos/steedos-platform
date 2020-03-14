@@ -22,7 +22,8 @@ import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
 import Title from './components/Title';
 import GoBack from './components/GoBack';
-import SetName from './components/SetName'
+import SetName from './components/SetName';
+import GlobalMessage from './components/GlobalMessage';
 import theme from './theme';
 
 
@@ -83,6 +84,7 @@ const Router = ({tenant}:any) => {
     <HashRouter basename="">
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
+          <GlobalMessage></GlobalMessage>
           <Grid className={classes.container} container id="container">
             <Grid item xs={12}>
               <Paper className={classes.paper} id="paper">

@@ -38,9 +38,18 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   } else if (config.tenant) {
       _.assignIn(tenant, config.tenant)
   }
+
+  let already_mail_service = false;
+
+  if(config.email && config.email.url && config.email.from ){
+    console.log('config.email', config.email);
+    already_mail_service = true;
+  }
+
   res.json({
     tenant: tenant,
     password: config.password?config.password:{},
-    root_url: process.env.ROOT_URL
+    root_url: process.env.ROOT_URL,
+    already_mail_service: already_mail_service
   })
 }
