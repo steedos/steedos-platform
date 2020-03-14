@@ -51,13 +51,13 @@ Template.creatorHeader.helpers
 			if space
 				return space.name
 
+	helpUrl: ()->
+		return "https://www.steedos.com/docs/help/home";
+
 Template.creatorHeader.events
 
 	'click .creator-button-setup': (e, t)->
 		FlowRouter.go("/app/admin")
-
-	'click .creator-button-help': (e, t)->
-		Steedos.openWindow("https://www.steedos.com/cn/help/creator/")
 
 	'click .creator-button-shopping': (e, t)->
 		Modal.show('template_apps_list_modal')
