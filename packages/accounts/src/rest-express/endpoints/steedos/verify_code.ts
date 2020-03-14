@@ -152,7 +152,7 @@ export const applyCode = () => async (
     try {
         const steedosConfig = getSteedosConfig()
         const tenantConfig = steedosConfig.tenant
-        const config = steedosConfig.accounts;
+        const config = steedosConfig.accounts || {};
         let action = req.body.action;
         let name = req.body.name;
         let token = req.body.token;
