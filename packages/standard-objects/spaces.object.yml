@@ -14,6 +14,13 @@ fields:
   avatar_square:
     label: Logo(正方形)
     type: avatar
+  avatar:
+    label: 浅色公司Logo
+    type: avatar
+    hidden: true
+  avatar_dark:
+    label: 深色公司Logo
+    type: avatar
   owner:
     label: 所有者
     type: lookup
@@ -28,14 +35,6 @@ fields:
     index: true
     multiple: true
     filterable: true
-  avatar:
-    label: 浅色公司Logo
-    type: avatar
-    hidden: true
-  avatar_dark:
-    label: 深色公司Logo
-    type: avatar
-    hidden: true
   background:
     label: 登录页背景图
     type: avatar
