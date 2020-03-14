@@ -56,6 +56,8 @@
     "accounts.userNotFound": "未找到账户信息",
     "accounts.noPasswordSet": "账户未设置密码",
     "accounts.noEmailSet": "账户未设置邮箱",
+    "accounts.loginCode.email": "邮箱",
+    "accounts.signupCode.email": "邮箱",
     "accounts.loginCode.email_or_mobile": "邮箱或手机号",
     "accounts.signupCode.email_or_mobile": "邮箱或手机号",
     "accounts.set_fullname": "请填写姓名"

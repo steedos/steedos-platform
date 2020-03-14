@@ -40,7 +40,12 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         setError(null);
         try {
             if (!email.trim()) {
-                throw new Error("请输入邮箱或手机号");
+                if(tenant.enable_mobile_code_login){
+                    throw new Error("请输入邮箱或手机号");
+                }else{
+                    throw new Error("请输入邮箱");
+                }
+                
             }
             if (email.trim().indexOf("@") == 0) {
                 throw new Error("无效的邮箱地址");
@@ -50,6 +55,11 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
             if (email.trim().indexOf("@") < 0) {
                 action = 'mobileSignupAccount'
             }
+
+            if(!tenant.enable_mobile_code_login && action === 'mobileSignupAccount'){
+                throw new Error("无效的邮箱地址");
+            }
+
             const data = await ApplyCode({
                 name: email,
                 action: action,
@@ -71,10 +81,18 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
             <FormControl margin="normal">
                 <InputLabel htmlFor="verifyCode">
-                    <FormattedMessage
-                        id='accounts.signupCode.email_or_mobile'
-                        defaultMessage='Email or Phone Number'
-                    />
+                    {tenant.enable_mobile_code_login &&
+                        <FormattedMessage
+                            id='accounts.signupCode.email_or_mobile'
+                            defaultMessage='Email or Phone Number'
+                        />
+                    }
+                    {!tenant.enable_mobile_code_login &&
+                        <FormattedMessage
+                            id='accounts.signupCode.email'
+                            defaultMessage='Email'
+                        />
+                    }
                 </InputLabel>
                 <Input
                     id="email"

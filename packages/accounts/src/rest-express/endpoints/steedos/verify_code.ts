@@ -150,7 +150,9 @@ export const applyCode = () => async (
     res: express.Response
 ) => {
     try {
-        const config = getSteedosConfig().accounts;
+        const steedosConfig = getSteedosConfig()
+        const tenantConfig = steedosConfig.tenant
+        const config = steedosConfig.accounts;
         let action = req.body.action;
         let name = req.body.name;
         let token = req.body.token;
@@ -188,6 +190,13 @@ export const applyCode = () => async (
         }
 
         if(action.startsWith("mobile")){
+
+            if(tenantConfig && !tenantConfig.enable_mobile_code_login){
+                if(['mobileLogin', 'mobileSignupAccount'].indexOf(action) > -1){
+                    throw new Error("请输入有效的邮箱");
+                }
+            }
+
             if(name.startsWith('+') || !validator.isMobilePhone(name, config.mobile_phone_locales || ['zh-CN'])){
                 throw new Error("请输入有效的手机号");
             }

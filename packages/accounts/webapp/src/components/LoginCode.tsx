@@ -34,16 +34,26 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
     setError(null);
     try {
       if(!email.trim()){
-        throw new Error("请输入邮箱或手机号");
+        if(tenant.enable_mobile_code_login){
+          throw new Error("请输入邮箱或手机号");
+        }else{
+            throw new Error("请输入邮箱");
+        }
       }
       if(email.trim().indexOf("@") == 0){
         throw new Error("无效的邮箱地址");
       }
       const data = await accountsRest.fetch( `user/exists?id=${email.trim()}`, {});
       let action = 'emailLogin';
+      
       if(email.trim().indexOf("@") < 0){
         action = 'mobileLogin'
       }
+
+      if(!tenant.enable_mobile_code_login && action === 'mobileLogin'){
+          throw new Error("无效的邮箱地址");
+      }
+
       if(data.exists){
           const data = await ApplyCode({
               name: email,
@@ -80,10 +90,20 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
-            <FormattedMessage
-              id='accounts.loginCode.email_or_mobile'
-              defaultMessage='Email or Phone Number'
-            />
+            
+
+            {tenant.enable_mobile_code_login &&
+                <FormattedMessage
+                id='accounts.loginCode.email_or_mobile'
+                defaultMessage='Email or Phone Number'
+              />
+            }
+            {!tenant.enable_mobile_code_login &&
+                <FormattedMessage
+                id='accounts.loginCode.email'
+                defaultMessage='Email'
+              />
+            }
           </InputLabel>
           <Input
             id="email"
