@@ -41,8 +41,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
 
   let already_mail_service = false;
 
-  if(config.email && config.email.url && config.email.from ){
-    console.log('config.email', config.email);
+  if(config.email && config.email.url && config.email.from && !config.email.url.startsWith("${")){
     already_mail_service = true;
   }
 
