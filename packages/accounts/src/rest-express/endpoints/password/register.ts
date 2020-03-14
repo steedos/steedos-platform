@@ -17,6 +17,10 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       spaceId = req.body.user.spaceId
     }
 
+    if(req.body.user && req.body.user.password){
+      throw new Error('禁止密码注册');
+    }
+
     if(!(await canRegister(spaceId))){
       throw new Error('accounts.unenableRegister');
     }
