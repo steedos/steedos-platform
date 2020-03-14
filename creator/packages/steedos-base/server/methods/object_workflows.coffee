@@ -16,19 +16,23 @@ Meteor.methods
         ows = Creator.getCollection('object_workflows').find({ space: spaceId }, { fields: { object_name: 1, flow_id: 1, space: 1 } }).fetch()
         _.each ows,(o) ->
             fl = Creator.getCollection('flows').findOne(o.flow_id, { fields: { name: 1, perms: 1 } })
-            o.flow_name = fl.name
-            o.can_add = false
+            if fl
+                o.flow_name = fl.name
+                o.can_add = false
 
-            perms = fl.perms
-            if perms
-                if perms.users_can_add && perms.users_can_add.includes(userId)
-                    o.can_add = true
-                else if perms.orgs_can_add && perms.orgs_can_add.length > 0
-                    if curSpaceUser && curSpaceUser.organizations && _.intersection(curSpaceUser.organizations, perms.orgs_can_add).length > 0
+                perms = fl.perms
+                if perms
+                    if perms.users_can_add && perms.users_can_add.includes(userId)
                         o.can_add = true
-                    else
-                        if organizations
-                            o.can_add = _.some organizations, (org)->
-                                return org.parents && _.intersection(org.parents, perms.orgs_can_add).length > 0
+                    else if perms.orgs_can_add && perms.orgs_can_add.length > 0
+                        if curSpaceUser && curSpaceUser.organizations && _.intersection(curSpaceUser.organizations, perms.orgs_can_add).length > 0
+                            o.can_add = true
+                        else
+                            if organizations
+                                o.can_add = _.some organizations, (org)->
+                                    return org.parents && _.intersection(org.parents, perms.orgs_can_add).length > 0
+
+        ows = ows.filter (n)->
+            return n.flow_name
 
         return ows
