@@ -90,18 +90,19 @@ export class Mongo implements DatabaseInterface {
       user.email = email.toLowerCase();
       user.email_verified = false;
       user.emails = [{ address: email.toLowerCase(), verified: false }];
-      user.steedos_id = email.toLowerCase();
     }
 
     if(mobile){
       user.mobile = mobile;
       user.mobile_verified = false;
-      user.steedos_id = user.mobile;
     }
 
     if (this.options.idProvider) {
       user._id = this.options.idProvider();
     }
+
+    user.steedos_id = user._id;
+
     const ret = await this.collection.insertOne(user);
     return ret.ops[0]._id.toString();
   }
