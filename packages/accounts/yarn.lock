@@ -6062,7 +6062,7 @@ node-gyp@3.6.0:
     tar "^2.0.0"
     which "1"
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.npm.taobao.org/node-pre-gyp/download/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha1-mgWWUzuHcom8rU4UOYLKPZBN3IM=
@@ -7635,7 +7635,7 @@ saml-idp@^1.1.0:
     xmldom "=0.1.27"
     xpath "0.0.27"
 
-"samlp@github:mcguinness/node-samlp":
+samlp@mcguinness/node-samlp:
   version "3.4.1"
   resolved "https://codeload.github.com/mcguinness/node-samlp/tar.gz/7bfb7c29be520f249beff6a9e933b63a628e31a1"
   dependencies:
@@ -9090,6 +9090,11 @@ validator@9.2.0:
   version "9.2.0"
   resolved "https://registry.npm.taobao.org/validator/download/validator-9.2.0.tgz#ad216eed5f37cac31a6fe00ceab1f6b88bded03e"
   integrity sha1-rSFu7V83ysMab+AM6rH2uIve0D4=
+
+validator@^12.2.0:
+  version "12.2.0"
+  resolved "https://registry.npm.taobao.org/validator/download/validator-12.2.0.tgz#660d47e96267033fd070096c3b1a6f2db4380a0a"
+  integrity sha1-Zg1H6WJnAz/QcAlsOxpvLbQ4Cgo=
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"

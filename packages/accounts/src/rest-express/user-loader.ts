@@ -1,7 +1,9 @@
 import * as express from 'express';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, map } from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { db } from '../db';
+import { getSteedosConfig } from '@steedos/objectql'
+const config = getSteedosConfig();
 
 export const userLoader = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -27,19 +29,34 @@ export const userLoader = (accountsServer: AccountsServer) => async (
       (req as any).userId = user.id;
       const spaces = [];
 
-      const dbspaces = await db.find("space_users", {
+      const userSpaces = await db.find("space_users", {
         filters: [["user", "=", user.id]],
         fields: ["space"]
       });
 
-      for (let space of dbspaces) {
-        spaces.push({_id: space.space})
+      if(userSpaces && userSpaces.length > 0){
+        const dbSpaces = await db.find('spaces', {
+          filters: [['_id', 'in', map(userSpaces, 'space')]],
+          fields: ["_id", "name", "avatar", "avatar_dark"]
+        });
+
+        for (let space of dbSpaces) {
+          let logo_url = '';
+          if (space.avatar_dark) {
+            logo_url = config.webservices.steedos + "api/files/avatars/" + space.avatar_dark
+          } else if (space.avatar) {
+            logo_url = config.webservices.steedos + "api/files/avatars/" + space.avatar
+          } 
+          spaces.push({
+            _id: space._id,
+            name: space.name,
+            logo_url
+          })
+        }
       }
-
-      (req as any).user.spaces = spaces;
-
+      (req as any).user.spaces = spaces
     } catch (e) {
-      // Do nothing
+      console.log(e);
     }
   }
   return next();

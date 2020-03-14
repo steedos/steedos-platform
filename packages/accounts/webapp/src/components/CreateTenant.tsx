@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { FormControl, InputLabel, Input, Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import {FormattedMessage} from 'react-intl';
+import { createStyles, Theme, makeStyles, FormControl, InputLabel, Input, Button} from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getSettings } from '../selectors';
+import { getSettings, getTenant } from '../selectors';
 import FormError from './FormError';
 import { getCookie } from '../utils/utils';
+import { goInSystem } from '../client/index';
 import { accountsClient, accountsRest } from '../accounts';
 
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    margin: "0 auto",
-  }
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "bold",
+      margin: "0 auto",
+    }
+  }),
+);
+
 
 const LogInLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?"))}} {...props} ref={ref} />
+  <Link to={{ pathname: "/login", search: window.location.hash.substring(window.location.hash.indexOf("?")) }} {...props} ref={ref} />
 ));
 
-const CreateTenant = ({ settings, history }: any) => {
+const CreateTenant = ({ settings, history, tenant, location }: any) => {
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
   const [tenantName, setTenantName] = useState<string | "">("");
@@ -34,12 +37,12 @@ const CreateTenant = ({ settings, history }: any) => {
     setError(null);
     try {
 
-      if(!tenantName.trim()){
+      if (!tenantName.trim()) {
         throw new Error('企业名称不能为空');
       }
 
       const route = 'api/v4/spaces/register/tenant';
-      const fetchOptions:any = {
+      const fetchOptions: any = {
         headers: {
           "X-User-Id": getCookie("X-User-Id"),
           "X-Auth-Token": getCookie("X-Auth-Token")
@@ -48,12 +51,13 @@ const CreateTenant = ({ settings, history }: any) => {
         body: JSON.stringify({
           name: tenantName
         }),
-        credentials: 'include' 
+        credentials: 'include'
       };
-      const res:any = await fetch(
+      const res: any = await fetch(
         `${settings.root_url}/${route}`,
         fetchOptions
       );
+      const token: any = await accountsClient.getTokens();
       if (res) {
         if (res.status >= 400 && res.status < 600) {
           const { message } = await res.json();
@@ -61,9 +65,8 @@ const CreateTenant = ({ settings, history }: any) => {
         }
         const resJson = await res.json();
         let spaceId = resJson.value;
-        const token:any = await accountsClient.getTokens();
         try {
-          let result = await accountsRest.authFetch( 'password/session', {
+          let result = await accountsRest.authFetch('password/session', {
             method: 'POST',
             body: JSON.stringify({
               spaceId,
@@ -71,14 +74,14 @@ const CreateTenant = ({ settings, history }: any) => {
             }),
             credentials: "include"
           });
+          localStorage.setItem("spaceId", spaceId);
         } catch (error) {
           console.log(error);
         }
       } else {
         throw new Error('Server did not return a response');
       }
-     
-      history.push('/' + window.location.hash.substring(window.location.hash.indexOf("?")));
+      goInSystem(history, location, token.accessToken, settings.root_url, true);
     } catch (err) {
       setError(err.message);
     }
@@ -86,33 +89,33 @@ const CreateTenant = ({ settings, history }: any) => {
 
   return (
     <form onSubmit={onSubmit} className={classes.formContainer}>
-      <FormControl margin="normal">
-        <InputLabel htmlFor="tenantName">
-          <FormattedMessage
+        <FormControl margin="normal">
+          <InputLabel htmlFor="tenantName">
+            <FormattedMessage
               id='accounts.tenant_name'
               defaultMessage='Company Name'
             />
-        </InputLabel>
-        <Input
-          id="tenantName"
-          value={tenantName}
-          onChange={e => setTenantName(e.target.value)} 
-        />
-      </FormControl>
-      {error && <FormError error={error!} />}
-      <Button variant="contained" color="primary" type="submit">
-        <FormattedMessage
+          </InputLabel>
+          <Input
+            id="tenantName"
+            value={tenantName}
+            onChange={e => setTenantName(e.target.value)}
+          />
+        </FormControl>
+        {error && <FormError error={error!} />}
+        <Button variant="contained" color="primary" type="submit">
+          <FormattedMessage
             id='accounts.next'
             defaultMessage='Next'
-        />
-      </Button>
-      <Button component={LogInLink}>
-        <FormattedMessage
+          />
+        </Button>
+        {/* <Button component={LogInLink}>
+          <FormattedMessage
             id='accounts.signin'
             defaultMessage='Sign In'
-        />
-      </Button>
-    </form>
+          />
+        </Button> */}
+      </form>
   );
 };
 
@@ -120,6 +123,7 @@ const CreateTenant = ({ settings, history }: any) => {
 function mapStateToProps(state: any) {
   return {
     settings: getSettings(state),
+    tenant: getTenant(state)
   };
 }
 

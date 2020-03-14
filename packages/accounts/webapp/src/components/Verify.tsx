@@ -91,7 +91,7 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
         token: token,
         token_code: code.trim(),
       }
-      await Login(data, history, tenant, location);
+      await Login(data, history, tenant, location, action);
       setCode('');
     } catch (err) {
       setCode('');
@@ -104,9 +104,9 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       const data = await accountsRest.fetch(`code/id?token=${token}`, {});
       if (data.id) {
         setId(data.id);
-        setAction(data.action);
-        setName(data.name);
       }
+      setAction(data.action);
+      setName(data.name);
       if (data.expired) {
         setError("验证码已失效");
       }

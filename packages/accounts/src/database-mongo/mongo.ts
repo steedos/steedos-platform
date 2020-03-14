@@ -6,7 +6,7 @@ import {
   Session,
   User,
 } from '@accounts/types';
-import { get, merge } from 'lodash';
+import { get, merge, trim } from 'lodash';
 import { Collection, Db, ObjectID } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
@@ -70,6 +70,7 @@ export class Mongo implements DatabaseInterface {
     password,
     username,
     email,
+    mobile,
     ...cleanUser
   }: CreateUser): Promise<string> {
     const user: MongoUser = {
@@ -87,10 +88,17 @@ export class Mongo implements DatabaseInterface {
     }
     if (email) {
       user.email = email.toLowerCase();
-      user.mobile_verified = false;
+      user.email_verified = false;
       user.emails = [{ address: email.toLowerCase(), verified: false }];
       user.steedos_id = email.toLowerCase();
     }
+
+    if(mobile){
+      user.mobile = mobile;
+      user.mobile_verified = false;
+      user.steedos_id = user.mobile;
+    }
+
     if (this.options.idProvider) {
       user._id = this.options.idProvider();
     }

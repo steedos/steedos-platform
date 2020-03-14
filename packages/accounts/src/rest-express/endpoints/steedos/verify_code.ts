@@ -3,9 +3,11 @@ import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
 import { canRegister } from '../../../core';
+import { AccountsServer } from '@accounts/server';
+import validator from 'validator';
 const moment = require('moment');
 
-const ALLOW_ACTIONS = ['emailVerify', 'mobileVerify', 'emailLogin', 'mobileLogin', 'emailSignupAccount'];
+const ALLOW_ACTIONS = ['emailVerify', 'mobileVerify', 'emailLogin', 'mobileLogin', 'emailSignupAccount', 'mobileSignupAccount'];
 const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
@@ -95,7 +97,7 @@ function sendEmail(to, subject, html){
 }
 
 function sendSMS(mobile, code, spaceId){
-    let message = `验证码：${code}, 有效期${EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。`
+    let message = `您的验证码为：${code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`
     SMSQueue.send({
         RecNum: mobile,
         msg: message
@@ -105,7 +107,9 @@ function sendSMS(mobile, code, spaceId){
 async function sendCode(owner: string, name: string, action: string, spaceId: string) {
     const now: any = new Date();
     let filters = [['verifiedAt', '=', null]];
-    filters.push(['owner', '=', owner]);
+    if(owner){
+        filters.push(['owner', '=', owner]);
+    }
     filters.push(['name', '=', name]);
     filters.push(['action', '=', action]);
     filters.push(['expiredAt', '>', now]);
@@ -146,6 +150,7 @@ export const applyCode = () => async (
     res: express.Response
 ) => {
     try {
+        const config = getSteedosConfig().accounts;
         let action = req.body.action;
         let name = req.body.name;
         let token = req.body.token;
@@ -164,16 +169,30 @@ export const applyCode = () => async (
         if (!action) {
             throw new Error("action不能为空")
         }
-        if (!name) {
+        if (!name || !name.trim()) {
             throw new Error("name不能为空")
         }
         if (ALLOW_ACTIONS.indexOf(action) < 0) {
             throw new Error("无效的action")
         }
-        if(action === 'emailSignupAccount' && !(await canRegister(spaceId))){
+        if(action.endsWith('SignupAccount') && !(await canRegister(spaceId))){
             throw new Error('accounts.unenableRegister');
         }
 
+        name = name.trim().toLowerCase();
+
+        if(action.startsWith("email")){
+            if(!validator.isEmail(name)){
+                throw new Error("请输入有效的邮箱");
+            }
+        }
+
+        if(action.startsWith("mobile")){
+            if(name.startsWith('+') || !validator.isMobilePhone(name, config.mobile_phone_locales || ['zh-CN'])){
+                throw new Error("请输入有效的手机号");
+            }
+        }
+        
         let filters;
 
         if (action.startsWith("email")) {
@@ -184,7 +203,12 @@ export const applyCode = () => async (
 
         if(filters.length > 0){
             const users = await db.find("users", { filters: filters });
-            if (users.length === 1) {
+            if(users.length === 0 && action.endsWith('SignupAccount')){
+                token = await sendCode(null, name, action, spaceId);
+                return res.send({
+                    token
+                });
+            }else if (users.length === 1) {
                 const user = users[0];
                 token = await sendCode(user._id, name, action, spaceId);
                 return res.send({
@@ -203,25 +227,25 @@ export const applyCode = () => async (
     }
 };
 
-export const verifyCodeAPI = () => async (
-    req: express.Request,
-    res: express.Response
-) => {
-    const now: any = new Date();
-    try {
-        let token = req.body.token;
-        let code = req.body.code;
-        let userId = req.body.userId;
-        let verified = await verifyCode(userId, token, code);
-        if (verified) {
-            return res.send({
-                verified
-            });
-        }
-    } catch (err) {
-        sendError(res, err);
-    }
-};
+// export const verifyCodeAPI = () => async (
+//     req: express.Request,
+//     res: express.Response
+// ) => {
+//     const now: any = new Date();
+//     try {
+//         let token = req.body.token;
+//         let code = req.body.code;
+//         let userId = req.body.userId;
+//         let verified = await verifyCode(userId, token, code);
+//         if (verified) {
+//             return res.send({
+//                 verified
+//             });
+//         }
+//     } catch (err) {
+//         sendError(res, err);
+//     }
+// };
 
 export const getUserIdByToken = () => async (
     req: express.Request,
@@ -251,8 +275,12 @@ export const getUserIdByToken = () => async (
     }
 };
 
+export const getVerifyRecord = async (token: string)=>{
+    return await db.findOne('users_verify_code', token, {})
+}
 
-export const verifyCode = async (owner: string, token: string, code: string) => {
+
+export const verifyCode = async (owner: string, token: string, code: string, options: any = {}) => {
     const now: any = new Date();
     if (!token) {
         throw new Error("token不能为空")
@@ -269,26 +297,26 @@ export const verifyCode = async (owner: string, token: string, code: string) => 
     if(failureCount >= MAX_FAILURE_COUNT){
         throw new Error(`验证次数过多，请${EFFECTIVE_TIME}分钟后再试!`);
     }
-    
 
-    const record = await db.findOne('users_verify_code', token, { filters: [['owner', '=', owner], ['code', '=', code], ['verifiedAt', '=', null], ['expiredAt', '>', now]] })
+    let filters = [['code', '=', code], ['verifiedAt', '=', null], ['expiredAt', '>', now]]
+    if(owner){
+        filters.push(['owner', '=', owner])
+    }
+
+    const record = await db.findOne('users_verify_code', token, { filters:  filters})
 
     if (record) {
         await db.updateOne('users_verify_code', record._id, { verifiedAt: now });
         try {
-
-            if(record.action === 'emailSignupAccount' &&  record.space && record.owner){
-                Creator.addSpaceUsers(record.space, record.owner, true)
-            }
-            if (record.action.startsWith("email")) {
-                Steedos.setEmailVerified(record.owner, record.name, true);
-            } else if (record.action.startsWith("mobile")) {
-                Steedos.setMobileVerified(record.owner, record.name, true);
+            let userId = await handleAction(token, options);
+            return {
+                verified:true,
+                userId: userId
             }
         } catch (error) {
             console.log(error);
+            throw new Error("服务异常");
         }
-        return true
     } else {
         if(recordByToken){
             db.updateOne('users_verify_code', token, {failureCount: failureCount + 1})
@@ -296,3 +324,57 @@ export const verifyCode = async (owner: string, token: string, code: string) => 
         throw new Error("验证码无效");
     }
 };
+
+/**
+ * 返回userId
+ * @param token 
+ * @param options 
+ */
+export const handleAction = async function(token: string, options: any = {}){
+    const record = await getVerifyRecord(token);
+    let handleUserId = record.owner;
+    //如果是注册
+    if(record.action.endsWith('SignupAccount')){
+        if(record.owner){
+            if(record.space){
+                Creator.addSpaceUsers(record.space, record.owner, true)
+            }
+        }else{
+            //创建user
+            let user: any = {
+                locale: options.locale || 'zh-cn',
+                name: options.name,
+            }
+            let filters = [];
+            if(record.action.startsWith('email')){
+                user.email = record.name
+                user.email_verified = true
+                filters.push(['email','=', user.email]);
+            }else if(record.action.startsWith('mobile')){
+                user.mobile = record.name
+                user.mobile_verified = true
+                filters.push(['mobile','=', user.mobile]);
+            }
+            
+            let findUsers = await db.find('users', {filters: filters, fields: ['_id']});
+
+            if(findUsers.length > 0){
+                handleUserId = findUsers[0]._id;
+            }else{
+                const userId = await options.server.createUser(user);
+                handleUserId = userId;
+            }
+            
+            if(record.space){
+                Creator.addSpaceUsers(record.space, handleUserId, true)
+            }
+        }
+    }
+
+    if (record.action.startsWith("email")) {
+        Steedos.setEmailVerified(handleUserId, record.name, true);
+    } else if (record.action.startsWith("mobile")) {
+        Steedos.setMobileVerified(handleUserId, record.name, true);
+    }
+    return handleUserId;
+} 

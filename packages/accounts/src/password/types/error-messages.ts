@@ -79,4 +79,6 @@ export interface ErrorMessages {
    * Default to 'Email is required'
    */
   emailRequired: string;
+
+  emailOrMobileRequired: string
 }

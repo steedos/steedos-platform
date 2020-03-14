@@ -14,7 +14,6 @@ export const authorize = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response
 ) => {
-  console.log('authorize...');
   const response_type = req.query.response_type || "code"
   const client_id = req.query.client_id || "steedos"
   const connection = req.query.connection || "steedos"
@@ -47,7 +46,6 @@ export const authorize = (accountsServer: AccountsServer) => async (
   }
 
   if (userId && (userIdCookie== userId)) {
-    console.log('authorize', 'to home....');
     if (redirect_uri.indexOf("?") > -1)
       redirect_uri += "&token=" + userAccessTokenCookie
     else 
@@ -64,7 +62,6 @@ export const authorize = (accountsServer: AccountsServer) => async (
         query = `X-Space-Id=${userSpaceId}`
       }
     }
-    console.log('authorize', 'to login....');
     clearAuthCookies(req, res);
     res.redirect("/accounts/a/#/login?" + query);
     res.end();

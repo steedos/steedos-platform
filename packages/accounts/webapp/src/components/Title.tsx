@@ -8,13 +8,13 @@ const pathMap:any = {
     "/login": "登录",
     "/login-code": "登录",
     "/login-password": "登录",
-    "/login/home": "首页",
-    "/": "首页",
     "/signup": "注册",
     "/create-tenant": "创建企业",
     "/reset-password": "验证码登录",
     "/update-password": "修改密码",
-    "/verify-email": "验证邮箱"
+    "/verify-email": "验证邮箱",
+    "/set-name": "填写姓名",
+    "/choose-tenant": "选择企业",
   }
   const useStyles = makeStyles({
     container: {

@@ -13,10 +13,7 @@ const getCookie = (name) => {
     return ''
   }
 
-const Login = async (data, history, tenant, location)=>{
-
-    const searchParams = new URLSearchParams(location.search);
-    let redirect_uri = searchParams.get("redirect_uri");
+const Login = async (data, history, tenant, location, action)=>{
 
     if(tenant._id){
       data.spaceId = tenant._id
@@ -29,10 +26,10 @@ const Login = async (data, history, tenant, location)=>{
         }),
         credentials: "include"
       });
-    await LoginAfter(history, tenant, result, redirect_uri, location);
+    await LoginAfter(history, tenant, result, location, action);
 };
 
-const LoginAfter = async (history, tenant, result, redirect_uri, location)=>{
+const LoginAfter = async (history, tenant, result, location, action)=>{
     accountsClient.setTokens(result.tokens);
 
     if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
@@ -45,6 +42,15 @@ const LoginAfter = async (history, tenant, result, redirect_uri, location)=>{
     }
 
     const user = await accountsRest.authFetch( 'user', {});
+    if(action && action.endsWith('SignupAccount')){
+      if(!user.name){
+        return history.push('/set-name' + location.search);
+      }else {
+        if(user.spaces.length > 0){
+          return history.push('/choose-tenant' + location.search);
+        }
+      }
+    }
 
     if(user.password_expired){
       return history.push('/update-password' + location.search, {error: localizeMessage('accounts.passwordExpired')});
@@ -55,19 +61,33 @@ const LoginAfter = async (history, tenant, result, redirect_uri, location)=>{
       return history.push('/create-tenant' + location.search);
     }
 
-    if (redirect_uri){
-      if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
-        redirect_uri = window.location.origin + redirect_uri
-      }
-      let u = new URL(redirect_uri);
-      u.searchParams.append("token", result.tokens.accessToken)
-      u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
-      u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
-      window.location.href = u.toString();
-    }
-    else
-      history.push('/');
+    goInSystem(history, location, result.tokens.accessToken);
 }
+
+const goInSystem = (history, location, accessToken, root_url, canGoHome)=>{
+
+  const searchParams = new URLSearchParams(location.search);
+  let redirect_uri = searchParams.get("redirect_uri");
+
+  if (redirect_uri){
+    if(!redirect_uri.startsWith("http://") && !redirect_uri.startsWith("https://")){
+      redirect_uri = window.location.origin + redirect_uri
+    }
+    let u = new URL(redirect_uri);
+    u.searchParams.append("token", accessToken);
+    u.searchParams.append("X-Auth-Token", getCookie('X-Auth-Token'));
+    u.searchParams.append("X-User-Id", getCookie('X-User-Id'));
+    window.location.href = u.toString();
+  }
+  else{
+    if(canGoHome){
+      history.push('/' + window.location.hash.substring(window.location.hash.indexOf("?")));
+    }else{
+      window.location.href = root_url ? root_url : "/";
+    }
+  }
+}
+
 
 const ApplyCode = async (data) =>{
     return await accountsRest.fetch(`code/apply`, {
@@ -79,5 +99,6 @@ const ApplyCode = async (data) =>{
 export {
     Client4,
     Login,
-    ApplyCode
+    ApplyCode,
+    goInSystem
 };

@@ -23,7 +23,7 @@ import {
 import { PasswordCreateUserType, PasswordLoginType, PasswordType, ErrorMessages } from './types';
 import { errors } from './errors';
 import { getSteedosConfig } from '@steedos/objectql';
-import { verifyCode } from '../rest-express/endpoints/steedos/verify_code';
+import { verifyCode, getVerifyRecord } from '../rest-express/endpoints/steedos/verify_code';
 
 export interface AccountsPasswordOptions {
   /**
@@ -517,8 +517,8 @@ export default class AccountsPassword implements AuthenticationService {
    * @returns Return the id of user created.
    */
   public async createUser(user: PasswordCreateUserType): Promise<string> {
-    if (!user.email) {
-      throw new Error(this.options.errors.emailRequired);
+    if (!user.email && !user.mobile) {
+      throw new Error(this.options.errors.emailOrMobileRequired);
     }
 
     if (user.username && !this.options.validateUsername(user.username)) {
@@ -547,15 +547,15 @@ export default class AccountsPassword implements AuthenticationService {
     // If user does not provide the validate function only allow some fields
     user = this.options.validateNewUser
       ? await this.options.validateNewUser(user)
-      : pick<PasswordCreateUserType, 'username' | 'email' | 'password'>(user, [
+      : pick<PasswordCreateUserType, 'username' | 'email' | 'password' | 'mobile'>(user, [
           'username',
           'email',
           'password',
+          'mobile'
         ]);
 
     try {
       const userId = await this.db.createUser(user);
-
       defer(async () => {
         if (this.options.sendVerificationEmailAfterSignup && user.email)
           this.sendVerificationEmail(user.email);
@@ -634,6 +634,11 @@ export default class AccountsPassword implements AuthenticationService {
     const { username, email, id } = isString(user)
       ? this.toUsernameAndEmail({ user })
       : this.toUsernameAndEmail({ ...user });
+    const verifyRecord: any = await getVerifyRecord(token);
+
+    if(!verifyRecord){
+      throw new Error('无效的请求');
+    }
 
     let foundUser: User | null = null;
 
@@ -648,6 +653,16 @@ export default class AccountsPassword implements AuthenticationService {
       foundUser = await this.db.findUserByEmail(email);
     }
 
+    let hasVerified = false;
+
+    if(!foundUser && verifyRecord.action.endsWith('SignupAccount')){
+      hasVerified = true;
+      const result = await verifyCode(null, token, token_code, {server: this});
+      if(result.verified){
+        foundUser = await this.db.findUserById(result.userId);
+      }
+    }
+
     if (!foundUser) {
       throw new Error(
         this.server.options.ambiguousErrorMessages
@@ -655,17 +670,16 @@ export default class AccountsPassword implements AuthenticationService {
           : this.options.errors.userNotFound
       );
     }
-    
-    const isCodeValid = await verifyCode(foundUser.id, token, token_code);
-
-    if (!isCodeValid) {
-      throw new Error(
-        this.server.options.ambiguousErrorMessages
-          ? this.options.errors.invalidCredentials
-          : this.options.errors.incorrectPassword
-      );
+    if(!hasVerified){
+      const result = await verifyCode(foundUser.id, token, token_code, {createUser: this.createUser})
+      if (!result.verified) {
+        throw new Error(
+          this.server.options.ambiguousErrorMessages
+            ? this.options.errors.invalidCredentials
+            : this.options.errors.incorrectPassword
+        );
+      }
     }
-
     return foundUser;
   }
 

@@ -8,18 +8,21 @@ import { getTenant } from './selectors';
 
 import Logo from './components/Logo';
 import Signup from './components/Signup';
+import SignupCode from './components/SignupCode';
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import TwoFactor from './components/TwoFactor';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './components/CreateTenant';
+import ChooseTenant from './components/ChooseTenant';
 import Verify from './components/Verify';
 import LoginCode from './components/LoginCode';
 import LoginMethod from './components/LoginMethod'
 import LoginPassword from './components/LoginPassword';
 import Title from './components/Title';
-import GoBack from './components/GoBack'
+import GoBack from './components/GoBack';
+import SetName from './components/SetName'
 import theme from './theme';
 
 
@@ -90,18 +93,21 @@ const Router = ({tenant}:any) => {
                 <Route exact path="/" component={Home}/>
                 <Route path="/two-factor" component={TwoFactor} />
 
-                <Route path="/signup" component={Signup} />
+                <Route path="/signup-password" component={Signup} />
+                <Route path="/signup" component={SignupCode} />
                 {/* <Route path="/signup/:spaceId" component={Signup} /> */}
                 <Route path="/login" component={loginComponent} />
                 {/* <Route path="/login/:spaceId" component={loginComponent} /> */}
                 <Route path="/login-password" component={LoginPassword} />
                 <Route path="/create-tenant" component={CreateTenant} />
+                <Route path="/choose-tenant" component={ChooseTenant} />
                 <Route exact path="/reset-password" component={resetPasswordComponent} />
                 <Route exact path="/update-password" component={UpdatePassword} />
                 <Route path="/reset-password/:token" component={resetPasswordComponent} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/verify/:token" component={Verify} />
                 <Route path="/login-code" component={LoginCode} />
+                <Route path="/set-name" component={SetName} />
                 {/* <Route path="/login-method" component={LoginMethod} /> */}
               </Paper>
             </Grid>

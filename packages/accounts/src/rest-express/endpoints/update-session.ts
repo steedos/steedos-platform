@@ -22,11 +22,10 @@ export const updateSession = (accountsServer: AccountsServer) => async (
     const spaceId = req.body.spaceId;
     let accessToken = req.body.accessToken;
     let session:any = await accountsServer.findSessionByAccessToken(accessToken)
-    //TODO 获取用户有效的工作区Id，并且写入Sessions中
+    //获取用户有效的工作区Id，并且写入Sessions中
     let validSpaceId = await getUserSpace(userId, spaceId);
     if(validSpaceId){
       userAgent = `${userAgent} Space/${validSpaceId}`
-    
       db.updateSession(session.id, {
         ip,
         userAgent});

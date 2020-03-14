@@ -42,7 +42,8 @@
     "oauth2-server": "^2.4.1",
     "redux-thunk": "^2.3.0",
     "saml-idp": "^1.1.0",
-    "tslib": "1.10.0"
+    "tslib": "1.10.0",
+    "validator": "^12.2.0"
   },
   "devDependencies": {
     "@steedos/app-contracts": "^1.18.4",

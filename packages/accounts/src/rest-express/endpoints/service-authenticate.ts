@@ -40,13 +40,10 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     //获取user session
     let session:any = await accountsServer.findSessionByAccessToken(loggedInUser.tokens.accessToken)
 
-    //TODO 获取用户有效的工作区Id，并且写入Sessions中
-
+    //获取用户有效的工作区Id，并且写入Sessions中
     let validSpaceId = await getUserSpace(session.userId, spaceId);
-
     if(validSpaceId){
       userAgent = `${userAgent} Space/${validSpaceId}`
-    
       db.updateSession(loggedInUser.sessionId, {
         ip,
         userAgent});

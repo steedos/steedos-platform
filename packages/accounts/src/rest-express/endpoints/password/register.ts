@@ -31,7 +31,7 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
         // if (!user.password) {
         //   throw new Error('accounts.passwordRequired');
         // }
-        return pick(user, ['name', 'email', 'password', 'locale']);
+        return pick(user, ['name', 'email', 'password', 'locale', 'mobile']);
       };
     }
     const userId = await password.createUser(req.body.user);

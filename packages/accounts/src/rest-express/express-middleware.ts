@@ -21,7 +21,9 @@ import { getTenant } from './endpoints/steedos/get-tenant';
 import { createTenant } from './endpoints/steedos/create-tenant';
 import { getSettings } from './endpoints/steedos/settings';
 import { userExists } from './endpoints/get-user-exists'
-import { applyCode, verifyCodeAPI, getUserIdByToken } from './endpoints/steedos/verify_code';
+import { applyCode, getUserIdByToken } from './endpoints/steedos/verify_code';
+import { changeUserFullname } from './endpoints/put-user-name';
+
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -47,9 +49,9 @@ const accountsExpress = (
 
   router.get(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
+  router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
   router.post(`${path}/code/apply`, applyCode());
-  // router.post(`${path}/code/verify`, verifyCodeAPI());
   router.get(`${path}/code/id`, getUserIdByToken());
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
