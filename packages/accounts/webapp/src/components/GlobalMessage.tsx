@@ -10,7 +10,11 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        position: 'absolute'
+        position: 'absolute',
+        '& $div': {
+            borderRadius: 0,
+            flexDirection: 'column',
+        },
     }
 });
 const GlobalMessage = ({ settings, location }: any) => {
