@@ -93,7 +93,7 @@ const Router = ({tenant}:any) => {
                 <Route exact path="/" component={Home}/>
                 <Route path="/two-factor" component={TwoFactor} />
 
-                <Route path="/signup-password" component={Signup} />
+                {/* <Route path="/signup-password" component={Signup} /> */}
                 <Route path="/signup" component={SignupCode} />
                 {/* <Route path="/signup/:spaceId" component={Signup} /> */}
                 <Route path="/login" component={loginComponent} />
