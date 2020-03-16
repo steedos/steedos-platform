@@ -36,14 +36,15 @@ const reApplyCodeBtnStyles = makeStyles({
   }
 });
 
-const ReApplyCodeBtn = ({ onClick }: any) => {
+const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
   const classes:any = reApplyCodeBtnStyles();
-  const [restTime, resetCountdown] = useCountDown("cnt1", {
+  const [restTime, resetCountdown] = useCountDown(name || "cnt1", {
     total: totalSeconds,
     lifecycle: "session"
   });
   return (
     <Button
+    id={id}
     className={classes.btn}
       disabled={restTime > 0}
       onClick={() => {
@@ -110,6 +111,11 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       setName(data.name);
       if (data.expired) {
         setError("验证码已失效");
+      }else{
+        let reApplyCodeBtn: any = document.getElementById('reApplyCodeBtn')
+        if(reApplyCodeBtn){
+          reApplyCodeBtn.click();
+        }
       }
     } catch (err) {
       setError(err.message);
@@ -167,9 +173,9 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
           id="code"
           value={code}
           onChange={e => setCode(e.target.value)}
-          endAdornment={
+          endAdornment={ id && 
             <InputAdornment position="end">
-              <ReApplyCodeBtn onClick={reApplyCode}/>
+              <ReApplyCodeBtn onClick={reApplyCode} id="reApplyCodeBtn" name={_token}/>
             </InputAdornment>
           }
         />
