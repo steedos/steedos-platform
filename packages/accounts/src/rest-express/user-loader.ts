@@ -30,8 +30,9 @@ export const userLoader = (accountsServer: AccountsServer) => async (
       const spaces = [];
 
       const userSpaces = await db.find("space_users", {
-        filters: [["user", "=", user.id]],
-        fields: ["space"]
+        filters: [["user", "=", user.id],["user_accepted", "=", true]],
+        fields: ["space"],
+
       });
 
       if(userSpaces && userSpaces.length > 0){
