@@ -29,9 +29,19 @@ if (Meteor.isServer) {
     }
   });
   db.cms_posts.before.insert(function(userId, doc) {
-    var atts, ref, ref1, user;
     if (!userId) {
       throw new Meteor.Error(400, "cms_error_login_required");
+    }
+    if(doc.site){
+      var site = db.cms_sites.findOne({_id: doc.site}, {fields:{enable_post_permissions:1}})
+      if(site && site.enable_post_permissions){
+        // 站点启用文章级权限时判断members必填
+        var isMemberUsersEmpty = !doc.members || !doc.members.users || !doc.members.users.length;
+        var isMemberOrgsEmpty = !doc.members || !doc.members.organizations || !doc.members.organizations.length;
+        if (isMemberUsersEmpty && isMemberOrgsEmpty) {
+          throw new Meteor.Error(400, "cms_error_required_members_value");
+        }
+      }
     }
     doc.created_by = userId;
     doc.created = new Date();
@@ -40,6 +50,7 @@ if (Meteor.isServer) {
     if (!doc.postDate) {
       doc.postDate = new Date();
     }
+
     doc.status = db.cms_posts.config.STATUS_APPROVED;
     // doc.author = userId;
     // user = db.users.findOne({
@@ -73,6 +84,17 @@ if (Meteor.isServer) {
       throw new Meteor.Error(400, "cms_error_login_required");
     }
     modifier.$set = modifier.$set || {};
+    if(modifier.$set.site){
+      var site = db.cms_sites.findOne({_id: modifier.$set.site}, {fields:{enable_post_permissions:1}})
+      if(site && site.enable_post_permissions){
+        // 站点启用文章级权限时判断members必填
+        var isMemberUsersEmpty = !modifier.$set.members || !modifier.$set.members.users || !modifier.$set.members.users.length;
+        var isMemberOrgsEmpty = !modifier.$set.members || !modifier.$set.members.organizations || !modifier.$set.members.organizations.length;
+        if (isMemberUsersEmpty && isMemberOrgsEmpty) {
+          throw new Meteor.Error(400, "cms_error_required_members_value");
+        }
+      }
+    }
     modifier.$set.modified_by = userId;
     modifier.$set.modified = new Date();
     if (modifier.$set.body) {

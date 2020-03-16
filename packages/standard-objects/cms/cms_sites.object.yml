@@ -25,6 +25,7 @@ fields:
   visibility:
     label: 可见性
     type: select
+    is_wide: true
     defaultValue: team
     required: true
     options:
@@ -34,6 +35,10 @@ fields:
         value: team
       - label: 网站 - 匿名可访问，只有站点成员可编辑
         value: public
+  enable_post_permissions: 
+    label: 启用文章级权限
+    type: boolean
+    defaultValue: false
   order:
     label: 排序号
     type: number

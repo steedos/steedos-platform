@@ -123,6 +123,22 @@ fields:
   #         return visibilitys[0];
   #       }
   #     }
+  members:
+    type: object
+    label: 授权查看
+    is_wide: true
+  members.users:
+    type: lookup
+    label: 人员
+    reference_to: users
+    multiple: true
+    filterable: true
+  members.organizations:
+    type: lookup
+    label: 部门
+    reference_to: organizations
+    multiple: true
+    filterable: true
   # postDate:
   #   type: datetime
   #   label: 发布日期
@@ -243,13 +259,44 @@ list_views:
         var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
         var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
         var isSitePublic = site && site.visibility !== "private";
-        if(!isAdmin && !isSitePublic){
-          /*私有站点下文档只能被站点成员site.admins看到，不是站点成员则只能看自己owner的文档*/
-          return [
-            ["owner","=","{userId}"]
-          ];
+        var isSiteEnablePostPermissions = site && site.enable_post_permissions;
+        var organizations = Steedos.getUserOrganizations(true);
+        if(!isAdmin){
+          if(isSiteEnablePostPermissions){
+            /*启用文章级权限时，权限跟站点可见性没关系，只走members权限*/
+            return [
+              ["owner","=","{userId}"],
+              "or",
+              ["members.organizations","=",organizations],
+              "or",
+              ["members.users","=","{userId}"]
+            ];
+          }
+          else if(!isSitePublic){
+            /*私有站点下文档只能被站点成员site.admins看到，不是站点成员则只能看自己owner的文档*/
+            return [
+              ["owner","=","{userId}"]
+            ];
+          }
         }
       }
+    # filters: !<tag:yaml.org,2002:js/function> |-
+    #   function () {
+    #     var userId = Steedos.userId();
+    #     var site = Session.get("site");
+    #     var isSiteAdmin = site && site.admins && site.admins.indexOf(userId) > -1;
+    #     var isAdmin = Steedos.isSpaceAdmin() || isSiteAdmin;
+    #     var organizations = Steedos.getUserOrganizations(true);
+    #     if(!isAdmin){
+    #       return [
+    #         ["owner","=","{userId}"],
+    #         "or",
+    #         ["members.organizations","=",organizations],
+    #         "or",
+    #         ["members.users","=","{userId}"]
+    #       ];
+    #     }
+    #   }
     columns:
       - name
       - modified
