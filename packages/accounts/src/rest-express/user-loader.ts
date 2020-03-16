@@ -35,6 +35,16 @@ export const userLoader = (accountsServer: AccountsServer) => async (
 
       });
 
+      let steedosService = "";
+
+      if (config.webservices && config.webservices.steedos) {
+        if (!config.webservices.steedos.endsWith("/")){
+          steedosService = config.webservices.steedos+  "/"
+        }else{
+          steedosService = config.webservices.steedos;
+        }
+      }
+
       if(userSpaces && userSpaces.length > 0){
         const dbSpaces = await db.find('spaces', {
           filters: [['_id', 'in', map(userSpaces, 'space')]],
@@ -43,11 +53,13 @@ export const userLoader = (accountsServer: AccountsServer) => async (
 
         for (let space of dbSpaces) {
           let logo_url = '';
-          if (space.avatar_dark) {
-            logo_url = config.webservices.steedos + "api/files/avatars/" + space.avatar_dark
-          } else if (space.avatar) {
-            logo_url = config.webservices.steedos + "api/files/avatars/" + space.avatar
-          } 
+          if(steedosService){
+            if (space.avatar_dark) {
+              logo_url = steedosService + "api/files/avatars/" + space.avatar_dark
+            } else if (space.avatar) {
+              logo_url = steedosService + "api/files/avatars/" + space.avatar
+            }
+          }
           spaces.push({
             _id: space._id,
             name: space.name,
