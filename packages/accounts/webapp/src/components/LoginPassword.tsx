@@ -113,8 +113,8 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
       {tenant.enable_forget_password &&
       <Button component={ResetPasswordLink} location={location}>
         <FormattedMessage
-            id='accounts.forget_password'
-            defaultMessage='Forget Password'
+            id='accounts.loginCode'
+            defaultMessage='Validity Code Login'
         />
       </Button>
       }
