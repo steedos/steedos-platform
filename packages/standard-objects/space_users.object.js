@@ -749,15 +749,16 @@ Creator.Objects['space_users'].actions = {
     import: {
         label: "导入",
         on: "list",
-        visible: function (object_name, record_id, record_permissions) {
-            if(Steedos.isMobile()){
-                return false;
-            }
-            // if (!Steedos.isPaidSpace()) {
-            //     return false;
-            // }
-            return Creator.isSpaceAdmin();
-        },
+        visible: false,
+        // visible: function (object_name, record_id, record_permissions) {
+        //     if(Steedos.isMobile()){
+        //         return false;
+        //     }
+        //     // if (!Steedos.isPaidSpace()) {
+        //     //     return false;
+        //     // }
+        //     return Creator.isSpaceAdmin();
+        // },
         todo: function () {
             return Modal.show('import_users_modal');
         }
