@@ -10,14 +10,15 @@ Creator.Objects['instances'].methods = {
     view: async function (req, res) {
         let { _id: record_id } = req.params;
         let userSession = await auth(req, res);
+        // async表示不直接重定向，而是返回要重定向的地址供异步函数自行处理重定向逻辑
         let req_async = _.has(req.query, 'async');
         if (userSession.userId) {
             let fields = ["space", "flow", "state", "inbox_users", "cc_users", "outbox_users", "submitter", "applicant"];
             let record = await getSteedosSchema().getObject("instances").findOne(record_id, { fields: fields });
             if (!record) {
                 // 跳转到记录界面会显示为404效果
-                let redirectUrl = util.getObjectRecordUrl("instances", record_id);
-                if (req.get("X-Requested-With") === 'XMLHttpRequest') {
+                let redirectUrl = Creator.getRelativeUrl(`/workflow/`);
+                if (req_async) { // || req.get("X-Requested-With") === 'XMLHttpRequest'
                     return res.status(200).send({
                         "status": 404,
                         "redirect": redirectUrl
