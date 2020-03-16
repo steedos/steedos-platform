@@ -118,7 +118,17 @@ export class Mongo implements DatabaseInterface {
 
   public async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.collection.findOne({
-      'emails.address': email.toLowerCase(),
+      'email': email.toLowerCase(),
+    });
+    if (user) {
+      user.id = user._id.toString();
+    }
+    return user;
+  }
+
+  public async findUserByMobile(mobile: string): Promise<User | null> {
+    const user = await this.collection.findOne({
+      'mobile': mobile,
     });
     if (user) {
       user.id = user._id.toString();
@@ -177,20 +187,20 @@ export class Mongo implements DatabaseInterface {
     return user;
   }
 
-  public async findUserByMobile(mobile: string): Promise<User | null>{
+  // public async findUserByMobile(mobile: string): Promise<User | null>{
 
-    if(!/^\+\d+/g.test(mobile)){
-      mobile = "+86" + mobile;
-    }
+  //   if(!/^\+\d+/g.test(mobile)){
+  //     mobile = "+86" + mobile;
+  //   }
 
-    const user = await this.collection.findOne({
-      'phone.number': mobile,
-    });
-    if (user) {
-      user.id = user._id.toString();
-    }
-    return user;
-  }
+  //   const user = await this.collection.findOne({
+  //     'phone.number': mobile,
+  //   });
+  //   if (user) {
+  //     user.id = user._id.toString();
+  //   }
+  //   return user;
+  // }
 
   public async addEmail(userId: string, newEmail: string, verified: boolean): Promise<void> {
     const id = this.options.convertUserIdToMongoObjectId ? toMongoID(userId) : userId;

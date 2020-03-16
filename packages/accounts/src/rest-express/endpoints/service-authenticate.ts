@@ -24,6 +24,9 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     if(/^\+?\d+$/g.test(email)){
       const mobileUser = await db.findUserByMobile(email)
       if(mobileUser && mobileUser._id){
+        if(!(mobileUser as any).mobile_verified){
+          throw new Error("你的手机号未验证，请使用验证码登录");
+        }
         req.body.user.id = mobileUser._id;
       }
     }

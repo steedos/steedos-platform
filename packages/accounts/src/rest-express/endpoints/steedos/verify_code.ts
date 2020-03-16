@@ -61,7 +61,7 @@ const getEmailBody = function (action: string, code: string) {
 }
 
 function sendEmail(to, subject, html){
-    const config = getSteedosConfig().email;
+    const config = getSteedosConfig().email || {};
     let canSend = true;
     if(!config){
         canSend = false;

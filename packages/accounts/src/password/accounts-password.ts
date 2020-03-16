@@ -598,6 +598,9 @@ export default class AccountsPassword implements AuthenticationService {
     } else if (email) {
       // this._validateLoginWithField('email', user);
       foundUser = await this.db.findUserByEmail(email);
+      if(foundUser && !(foundUser as any).email_verified){
+        throw new Error("你的邮箱未验证，请使用验证码登录");
+      }
     }
 
     if (!foundUser) {
