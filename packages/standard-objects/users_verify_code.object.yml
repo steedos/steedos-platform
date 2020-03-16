@@ -3,6 +3,7 @@ label: 验证码
 icon: custom.custom76
 fields:
   name:
+    label: 标识
     type: text
   code:
     label: 验证码
