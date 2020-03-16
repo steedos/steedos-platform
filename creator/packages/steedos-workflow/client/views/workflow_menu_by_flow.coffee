@@ -126,6 +126,9 @@ Template.workflowMenuByFlow.helpers
 	_getBadge: (appId, spaceId)->
 		if _.isEmpty(Session.get("workflow_categories"))
 			categorys = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
+			if categorys?.length
+				# 有分类时，数量只显示在分类下面的子菜单，即流程菜单链接的右侧，总菜单不计算和显示数量
+				return ""
 
 			return Steedos.getBadge(appId, spaceId)
 		else

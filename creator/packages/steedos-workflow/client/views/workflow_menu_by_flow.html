@@ -4,14 +4,14 @@
 			{{_ "Steedos Workflow"}}
 		</li>
 		<li class="inbox {{boxActive 'inbox'}}">
-			<a href="/workflow/space/{{spaceId}}/inbox/">
+			<a href="{{urlPrefix}}/workflow/space/{{spaceId}}/inbox/">
 				<i class="ion ion-archive"></i>
 				<span>{{_ "inbox"}}</span>
 				<span class="pull-right-container">
 					<span class="label pull-right bg-red">{{_getBadge "workflow" getSpaceId}}</span>
 				</span>
 			</a>
-			<!-- {{#if hasInbox}}
+			{{#if hasInbox}}
 			<ul class="treeview-menu menu-open" style="display: block;">
 	
 				{{#each categorys}}
@@ -27,6 +27,7 @@
 						<li class="{{#if (equals selected_flow _id)}}active{{/if}}">
 							<a class="inbox-flow text-overflow" href="{{urlPrefix}}/workflow/space/{{space}}/inbox"
 								undefined="">
+								<!--<i class="ion ion-clipboard"></i>-->
 								<span class="flow-name text-overflow">{{name}}</span>
 								<span class="pull-right-container">
 									<span class="label pull-right bg-red">{{inbox_count}}</span>
@@ -51,6 +52,7 @@
 						<li class="{{#if (equals selected_flow _id)}}active{{/if}}">
 							<a class="inbox-flow text-overflow" href="{{urlPrefix}}/workflow/space/{{space}}/inbox"
 								undefined="">
+								<!--<i class="ion ion-clipboard"></i>-->
 								<span class="flow-name text-overflow">{{name}}</span>
 								<span class="pull-right-container">
 									<span class="label pull-right bg-red">{{inbox_count}}</span>
@@ -63,7 +65,7 @@
 				{{/if}}
 				{{/with}}
 			</ul>
-			{{/if}} -->
+			{{/if}}
 		</li>
 	
 	
