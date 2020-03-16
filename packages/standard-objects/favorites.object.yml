@@ -27,6 +27,7 @@ fields:
     required: true
     readonly: true
   record_type:
+    label: 类型
     type: select
     options: 记录:RECORD,列表:LIST_VIEW
     readonly: true
