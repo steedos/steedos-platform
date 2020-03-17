@@ -357,6 +357,7 @@ loadStoreItems = ()->
 			if item._id == selectedItem
 				item.selected = true
 			item.hasItems = item._id == "inbox" && !!categories.length
+			item.expanded = item.hasItems 
 
 			if item._id == "draft"
 				item.draft_count = getDraftCount()
@@ -438,7 +439,7 @@ Template.workflowTreeMenu.onRendered ->
 					itemElement.append("<span>" + itemData.name + "</span>");
 					count = if itemData.draft_count then itemData.draft_count else itemData.inbox_count
 					if count
-						if itemData._id == "draft"
+						if itemData._id == "draft" or itemData.isFlow
 							bg = "bg-special"
 						else if itemData.isRoot
 							bg = "bg-red"
