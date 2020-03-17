@@ -30,6 +30,7 @@ exports.syncUserInfo = function (doc, modifier) {
     let needSyncUnProp = getNeedSyncUnSet(doc, modifierUnset);
     if(!_.isEmpty(needSyncProp)){
         let userProp = {};
+        let userUnProp = {};
         
         if(needSyncProp.email){
 			needSyncProp.email_verified = false
@@ -37,6 +38,13 @@ exports.syncUserInfo = function (doc, modifier) {
 
 		if(needSyncProp.mobile){
 			needSyncProp.mobile_verified = false
+        }
+
+        if(_.has(needSyncProp, 'email') && !needSyncProp.email){
+            needSyncProp.email_verified = false
+            userUnProp = Object.assign({emails: 1}, needSyncUnProp)
+        }else{
+            userUnProp = needSyncUnProp
         }
         
         if(needSyncProp.email){
@@ -47,7 +55,7 @@ exports.syncUserInfo = function (doc, modifier) {
         }else{
             userProp = needSyncProp
         }
-        db.users.direct.update({_id: doc.user}, {$set: userProp, $unset: needSyncUnProp});
+        db.users.direct.update({_id: doc.user}, {$set: userProp, $unset: userUnProp});
         db.space_users.direct.update({_id: {$ne: doc._id}, user: doc.user}, {$set: needSyncProp, $unset: needSyncUnProp}, {
             multi: true
         });
