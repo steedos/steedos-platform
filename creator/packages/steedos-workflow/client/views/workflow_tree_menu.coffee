@@ -257,6 +257,8 @@ Template.workflowTreeMenu.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemClick = (selectionInfo)->
+				# 点击任意a标签，跳转路由，应该关闭菜单
+				$("body").removeClass("sidebar-open")
 				if selectionInfo.node.selected
 					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
 					selectionInfo.event.preventDefault()
