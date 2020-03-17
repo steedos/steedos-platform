@@ -30,7 +30,7 @@ loadCategories = ()->
 loadSites = ()->
 	self = this
 	userId = Meteor.userId()
-	options = $select: ["name", "admins", "visibility"].toString()
+	options = $select: ["name", "admins", "visibility", "enable_post_permissions"].toString()
 	queryFilters = [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
 	steedosFilters = require('@steedos/filters')
 	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
@@ -94,7 +94,7 @@ getDataSource = ()->
 			d = $.Deferred()
 			userId = Meteor.userId()
 			options = {}
-			options.$select = ["name", "admins", "visibility"].toString()
+			options.$select = ["name", "admins", "visibility", "enable_post_permissions"].toString()
 			steedosFilters = require("@steedos/filters")
 			dxFilter = steedosFilters.formatFiltersToODataQuery [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
 			options.$filter = dxFilter

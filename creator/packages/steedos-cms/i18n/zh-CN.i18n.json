@@ -80,7 +80,7 @@
     "cms_sites_error_site_owner_only": "所有者才能进行修改",
     "cms_sites_error_has_categories": "该站点下有栏目，不能删除",
     "cms_sites_error_has_posts": "该站点下有文章，不能删除",
-    "cms_error_required_members_value": "发布对象不能为空",
+    "cms_error_required_members_value": "授权查看不能为空",
 
     "cms_sites_is_needto_limit_unit": "文章只能发布到单位",
     "cms_sites_visibility": "可见性",
