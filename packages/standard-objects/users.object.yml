@@ -19,6 +19,7 @@ fields:
     required: true
     readonly: true
     name: mobile
+    index: true
   email:
     type: text
     label: 邮件

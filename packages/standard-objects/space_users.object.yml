@@ -27,6 +27,7 @@ fields:
     label: 邮件
     searchable: true
     name: email
+    index: true
   email_verified:
     type: boolean
     label: 邮件已验证
@@ -40,6 +41,7 @@ fields:
     group: '-'
     name: mobile
     required: true
+    index: true
   mobile_verified:
     type: boolean
     label: 手机已验证
