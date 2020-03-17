@@ -108,7 +108,7 @@ getBoxs = ()->
 		boxs.push 
 			_id: "monitor"
 			name: t("monitor")
-			url: "/workflow/space/#{spaceId}/inbox/"
+			url: "/workflow/space/#{spaceId}/monitor/"
 	
 	otherInboxs = getInboxSpaces()
 	otherInboxs.forEach (n, i)->
@@ -117,7 +117,7 @@ getBoxs = ()->
 		otherItem = 
 			_id: n._id
 			name: spaceName
-			url: "/workflow/space/#{n.space}/monitor/"
+			url: "/workflow/space/#{n.space}/inbox/"
 			inbox_count: count
 			isOtherInbox: true
 		if i == 0
