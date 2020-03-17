@@ -7,7 +7,6 @@ getInboxCount = (categoryIds)->
 				count += _f?.count || 0
 	return count
 
-
 getInboxCategory = (category_id)->
 	inboxInstancesFlow = []
 	category = db.categories.findOne({_id: category_id})
@@ -143,7 +142,6 @@ getStoreItems = ()->
 			unless selectedItem
 				# 默认选中第一个菜单，即Inbox
 				selectedItem = "inbox"
-			# Session.set "box", selectedItem
 		boxs.forEach (item)->
 			item.isRoot = true
 			switch item._id
@@ -161,9 +159,6 @@ getStoreItems = ()->
 					item.icon = 'ion ion-eye'
 				else
 					item.icon = 'ion ion-archive'
-					
-			if item._id == selectedItem
-				item.selected = true
 			item.hasItems = item._id == "inbox" && !!categories.length
 			item.expanded = item.hasItems 
 
@@ -171,29 +166,13 @@ getStoreItems = ()->
 				item.draft_count = getDraftCount()
 			else if item._id == "inbox"
 				item.inbox_count = getInboxBadge()
-		# if _.isArray(categories) and categories.length
-		# 	selectedItem = Tracker.nonreactive ()->
-		# 		return Session.get("category")
-		# 	if selectedItem
-		# 		Session.set "category", selectedItem
-		# 	else
-		# 		Session.set "category", null
 
-		# selectedItem = Tracker.nonreactive ()->
-		# 	return Session.get("category")
+			if item._id == selectedItem
+				item.selected = true
+
+		selectedItem = Tracker.nonreactive ()->
+			return Session.get("workflowCategory")
 		categories.forEach (item)->
-			# if item._id == selectedItem?._id
-			# 	item.selected = true
-			# 	parentBox = boxs.find((n)-> return n._id == "inbox")
-			# 	if parentBox
-			# 		parentBox.expanded = true
-			# 		parentBox.selected = false
-			# 	# parentCategory = categories.find((n)-> return n._id == item.parent)
-			# 	# if parentCategory
-			# 	# 	parentCategory.expanded = true
-			# 	# 	parentCategory.selected = false
-			# # item.hasItems = !!categories.find((n)-> return n.parent == item._id)
-			
 			item.parent = "inbox"
 			item.isCategory = true
 			item.url = "/workflow/space/#{spaceId}/inbox/"
@@ -201,26 +180,34 @@ getStoreItems = ()->
 			item.inbox_count = categoryItemData?.inbox_count
 			item.hasItems = item.inbox_count > 0
 
+			if item._id == selectedItem
+				item.selected = true
+				parentBox = boxs.find((n)-> return n._id == item.parent)
+				if parentBox
+					parentBox.expanded = true
+					parentBox.selected = false
+
+			selectedItem = Tracker.nonreactive ()->
+				return Session.get("flowId")
 			categoryItemData?.inboxInstancesFlow?.forEach (flow)->
 				flow.parent = item._id
 				flow.isFlow = true
 				flow.url = "/workflow/space/#{spaceId}/inbox/"
 				flow.hasItems = false
+
+				if flow._id == selectedItem
+					flow.selected = true
+					parentCategory = categories.find((n)-> return n._id == flow.parent)
+					if parentCategory
+						parentCategory.expanded = true
+						parentCategory.selected = false
 				flows.push flow
 
 		categories = categories.filter (n)-> return n.hasItems
 		
-		# setGridSidebarFilters()
 		return _.union boxs, categories, flows
 
-
-
 Template.workflowTreeMenu.onCreated ->
-	# self = this
-	# self.categories = new ReactiveVar(null)
-	# self.boxs = new ReactiveVar(null)
-	# self.storeItems = new ReactiveVar(null)
-	# self.needToRefreshTree = new ReactiveVar(null)
 
 Template.workflowTreeMenu.onRendered ->
 	self = this
@@ -228,7 +215,6 @@ Template.workflowTreeMenu.onRendered ->
 		spaceId = Steedos.spaceId()
 		userId = Meteor.userId()
 		loginToken = Accounts._storedLoginToken()
-		# needToRefreshTree = self.needToRefreshTree.get()
 		if spaceId and userId
 			self.dxTreeViewInstance?.dispose()
 			storeItems = getStoreItems()
@@ -274,28 +260,17 @@ Template.workflowTreeMenu.onRendered ->
 				if selectionInfo.node.selected
 					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
 					selectionInfo.event.preventDefault()
-				# targetDropdown = $(event.target).closest(".creator-table-actions")
-				# if targetDropdown.length
-				# 	# 如果点击的是右侧下拉箭头，则弹出菜单
-				# 	selectionInfo.event.preventDefault()
-				# 	# _itemDropdownClick.call(self, event, selectionInfo)
 
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				if selectionInfo.node.selected
 					if selectionInfo.itemData.isRoot
 						# 切换箱子的时候清空搜索条件
 						$("#instance_search_tip_close_btn").click()
-						# Session.set "box", selectionInfo.itemData._id
 						url = selectionInfo.itemData.url
 						if url
 							Session.set("workflowCategory", undefined)
 							FlowRouter.go url
 					else if selectionInfo.itemData.isCategory
-						# siteId = selectionInfo.itemData.site
-						# sites = self.sites.get()
-						# Session.set "site", sites.find((n)-> return n._id == siteId)
-						# Session.set "category", selectionInfo.itemData
-
 						url = selectionInfo.itemData.url
 						if url
 							Session.set("flowId", false)
@@ -307,12 +282,6 @@ Template.workflowTreeMenu.onRendered ->
 							Session.set("workflowCategory",selectionInfo.itemData.parent || "-1")
 							Session.set("flowId", selectionInfo.itemData._id);
 							FlowRouter.go url
-				# else
-				# 	if selectionInfo.itemData.isRoot
-				# 		Session.set "site", null
-				# 	else
-				# 		Session.set "category", null
-				# # setGridSidebarFilters()
 
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
