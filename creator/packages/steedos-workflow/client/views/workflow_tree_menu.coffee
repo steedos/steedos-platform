@@ -338,7 +338,22 @@ loadStoreItems = ()->
 			Session.set "box", selectedItem
 		boxs.forEach (item)->
 			item.isRoot = true
-			item.icon = 'ion ion-ios-book-outline' 
+			switch item._id
+				when "inbox"
+					item.icon = 'ion ion-archive'
+				when "outbox"
+					item.icon = 'ion ion-android-done-all'
+				when "draft"
+					item.icon = 'ion ion-compose'
+				when "pending"
+					item.icon = 'ion ion-ios-loop'
+				when "completed"
+					item.icon = 'ion ion-android-checkbox-outline'
+				when "monitor"
+					item.icon = 'ion ion-eye'
+				else
+					item.icon = 'ion ion-archive'
+					
 			if item._id == selectedItem
 				item.selected = true
 			item.hasItems = item._id == "inbox" && !!categories.length
@@ -375,7 +390,8 @@ loadStoreItems = ()->
 			item.url = "/workflow/space/#{spaceId}/inbox/"
 			categoryItemData = getInboxCategory item._id
 			console.log("====categoryItemData===", categoryItemData)
-			item.hasItems = categoryItemData?.inbox_count > 0
+			item.inbox_count = categoryItemData?.inbox_count
+			item.hasItems = item.inbox_count > 0
 
 			categoryItemData.inboxInstancesFlow.forEach (flow)->
 				flow.parent = item._id
@@ -422,7 +438,13 @@ Template.workflowTreeMenu.onRendered ->
 					itemElement.append("<span>" + itemData.name + "</span>");
 					count = if itemData.draft_count then itemData.draft_count else itemData.inbox_count
 					if count
-						bg = if itemData._id == "draft" then "bg-special" else "bg-red"
+						if itemData._id == "draft"
+							bg = "bg-special"
+						else if itemData.isRoot
+							bg = "bg-red"
+						else
+							bg = "bg-gray"
+
 						htmlText = """
 							<span class="pull-right-container">
 								<span class="label pull-right #{bg}">#{count}</span>
