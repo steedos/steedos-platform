@@ -287,11 +287,15 @@ fields:
     type: text
     group: 高级
     name: name_formula
+    omit: true
+    hidden: true
   code_formula:
     label: 系统公式
     type: text
     group: 高级
     name: code_formula
+    omit: true
+    hidden: true
   auto_remind:
     label: 自动催办
     type: boolean
