@@ -43,3 +43,40 @@
 		display: block;
 	}
 }
+
+.gridSidebarContainer.dx-treeview{
+	.dx-treeview-node{
+		.dx-treeview-item{
+			.dx-treeview-item-content{
+				display: flex;
+				align-items: center;
+				.dx-icon{
+					height: 18px;
+					font-size: 18px;
+					line-height: 18px;
+				}
+				span{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					flex: 1;
+					&.creator-table-actions{
+						flex: 0.1;
+						text-align: right;
+						margin-top: -3px;
+						display: inline-block;
+					}
+				}
+			}
+		}
+		.dx-treeview-toggle-item-visibility{
+			line-height: 22px;
+			&.dx-treeview-toggle-item-visibility-opened{
+				line-height: 24px;
+			}
+		}
+	}
+	[aria-level="1"] > .dx-treeview-item {
+		padding-left: 20px;
+	}
+}

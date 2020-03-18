@@ -1,4 +1,4 @@
-JsonRoutes.add 'post', '/api/workflow/drafts', (req, res, next) ->
+JsonRoutes.add 'post', '/api/object/workflow/drafts', (req, res, next) ->
 	try
 		current_user_info = uuflowManager.check_authorization(req)
 		current_user_id = current_user_info._id

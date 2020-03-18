@@ -1,7 +1,7 @@
 _eval = require('eval')
-uuflowManager = {}
+uuflowManagerForInitApproval = {}
 
-uuflowManager.check_authorization = (req) ->
+uuflowManagerForInitApproval.check_authorization = (req) ->
 	query = req.query
 	userId = query["X-User-Id"]
 	authToken = query["X-Auth-Token"]
@@ -19,25 +19,25 @@ uuflowManager.check_authorization = (req) ->
 
 	return user
 
-uuflowManager.getSpace = (space_id) ->
+uuflowManagerForInitApproval.getSpace = (space_id) ->
 	space = Creator.Collections.spaces.findOne(space_id)
 	if not space
 		throw new Meteor.Error('error!', "space_id有误或此space已经被删除")
 	return space
 
-uuflowManager.getFlow = (flow_id) ->
+uuflowManagerForInitApproval.getFlow = (flow_id) ->
 	flow = Creator.Collections.flows.findOne(flow_id)
 	if not flow
 		throw new Meteor.Error('error!', "id有误或此流程已经被删除")
 	return flow
 
-uuflowManager.getSpaceUser = (space_id, user_id) ->
+uuflowManagerForInitApproval.getSpaceUser = (space_id, user_id) ->
 	space_user = Creator.Collections.space_users.findOne({ space: space_id, user: user_id })
 	if not space_user
 		throw new Meteor.Error('error!', "user_id对应的用户不属于当前space")
 	return space_user
 
-uuflowManager.getSpaceUserOrgInfo = (space_user) ->
+uuflowManagerForInitApproval.getSpaceUserOrgInfo = (space_user) ->
 	info = new Object
 	info.organization = space_user.organization
 	org = Creator.Collections.organizations.findOne(space_user.organization, { fields: { name: 1 , fullname: 1 } })
@@ -45,32 +45,32 @@ uuflowManager.getSpaceUserOrgInfo = (space_user) ->
 	info.organization_fullname = org.fullname
 	return info
 
-uuflowManager.isFlowEnabled = (flow) ->
+uuflowManagerForInitApproval.isFlowEnabled = (flow) ->
 	if flow.state isnt "enabled"
 		throw new Meteor.Error('error!', "流程未启用,操作失败")
 
-uuflowManager.isFlowSpaceMatched = (flow, space_id) ->
+uuflowManagerForInitApproval.isFlowSpaceMatched = (flow, space_id) ->
 	if flow.space isnt space_id
 		throw new Meteor.Error('error!', "流程和工作区ID不匹配")
 
-uuflowManager.getForm = (form_id) ->
+uuflowManagerForInitApproval.getForm = (form_id) ->
 	form = Creator.Collections.forms.findOne(form_id)
 	if not form
 		throw new Meteor.Error('error!', '表单ID有误或此表单已经被删除')
 
 	return form
 
-uuflowManager.getCategory = (category_id) ->
+uuflowManagerForInitApproval.getCategory = (category_id) ->
 	return Creator.Collections.categories.findOne(category_id)
 
-uuflowManager.create_instance = (instance_from_client, user_info) ->
+uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info) ->
 	check instance_from_client["applicant"], String
 	check instance_from_client["space"], String
 	check instance_from_client["flow"], String
 	check instance_from_client["record_ids"], [{o: String, ids: [String]}]
 
 	# 校验是否record已经发起的申请还在审批中
-	uuflowManager.checkIsInApproval(instance_from_client["record_ids"][0], instance_from_client["space"])
+	uuflowManagerForInitApproval.checkIsInApproval(instance_from_client["record_ids"][0], instance_from_client["space"])
 
 	space_id = instance_from_client["space"]
 	flow_id = instance_from_client["flow"]
@@ -85,19 +85,19 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 			approve_from_client = instance_from_client["traces"][0]["approves"][0]
 
 	# 获取一个space
-	space = uuflowManager.getSpace(space_id)
+	space = uuflowManagerForInitApproval.getSpace(space_id)
 	# 获取一个flow
-	flow = uuflowManager.getFlow(flow_id)
+	flow = uuflowManagerForInitApproval.getFlow(flow_id)
 	# 获取一个space下的一个user
-	space_user = uuflowManager.getSpaceUser(space_id, user_id)
+	space_user = uuflowManagerForInitApproval.getSpaceUser(space_id, user_id)
 	# 获取space_user所在的部门信息
-	space_user_org_info = uuflowManager.getSpaceUserOrgInfo(space_user)
+	space_user_org_info = uuflowManagerForInitApproval.getSpaceUserOrgInfo(space_user)
 	# 判断一个flow是否为启用状态
-	uuflowManager.isFlowEnabled(flow)
+	uuflowManagerForInitApproval.isFlowEnabled(flow)
 	# 判断一个flow和space_id是否匹配
-	uuflowManager.isFlowSpaceMatched(flow, space_id)
+	uuflowManagerForInitApproval.isFlowSpaceMatched(flow, space_id)
 
-	form = uuflowManager.getForm(flow.form)
+	form = uuflowManagerForInitApproval.getForm(flow.form)
 
 	permissions = permissionManager.getFlowPermissions(flow_id, user_id)
 
@@ -168,7 +168,7 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	appr_obj.is_read = true
 	appr_obj.is_error = false
 	appr_obj.description = ''
-	appr_obj.values = uuflowManager.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields)
+	appr_obj.values = uuflowManagerForInitApproval.initiateValues(ins_obj.record_ids[0], flow_id, space_id, form.current.fields)
 
 	trace_obj.approves = [appr_obj]
 	ins_obj.traces = [trace_obj]
@@ -183,20 +183,20 @@ uuflowManager.create_instance = (instance_from_client, user_info) ->
 	# 新建申请单时，instances记录流程名称、流程分类名称 #1313
 	ins_obj.flow_name = flow.name
 	if form.category
-		category = uuflowManager.getCategory(form.category)
+		category = uuflowManagerForInitApproval.getCategory(form.category)
 		if category
 			ins_obj.category_name = category.name
 			ins_obj.category = category._id
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
 
-	uuflowManager.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
+	uuflowManagerForInitApproval.initiateAttach(ins_obj.record_ids[0], space_id, ins_obj._id, appr_obj._id)
 
-	uuflowManager.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
+	uuflowManagerForInitApproval.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
 
 	return new_ins_id
 
-uuflowManager.initiateValues = (recordIds, flowId, spaceId, fields) ->
+uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, fields) ->
 	fieldCodes = []
 	_.each fields, (f)->
 		if f.type == 'section'
@@ -259,7 +259,7 @@ uuflowManager.initiateValues = (recordIds, flowId, spaceId, fields) ->
 
 		# 如果配置了脚本则执行脚本
 		if ow.field_map_script
-			_.extend(values, uuflowManager.evalFieldMapScript(ow.field_map_script, recordIds.o, spaceId, recordIds.ids[0]))
+			_.extend(values, uuflowManagerForInitApproval.evalFieldMapScript(ow.field_map_script, recordIds.o, spaceId, recordIds.ids[0]))
 
 	# 过滤掉values中的非法key
 	filterValues = {}
@@ -269,7 +269,7 @@ uuflowManager.initiateValues = (recordIds, flowId, spaceId, fields) ->
 
 	return filterValues
 
-uuflowManager.evalFieldMapScript = (field_map_script, objectName, spaceId, objectId)->
+uuflowManagerForInitApproval.evalFieldMapScript = (field_map_script, objectName, spaceId, objectId)->
 	record = Creator.getCollection(objectName, spaceId).findOne(objectId)
 	script = "module.exports = function (record) { " + field_map_script + " }"
 	func = _eval(script, "field_map_script")
@@ -282,7 +282,7 @@ uuflowManager.evalFieldMapScript = (field_map_script, objectName, spaceId, objec
 
 
 
-uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
+uuflowManagerForInitApproval.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 
 	Creator.Collections['cms_files'].find({
 		space: spaceId,
@@ -317,7 +317,7 @@ uuflowManager.initiateAttach = (recordIds, spaceId, insId, approveId) ->
 
 	return
 
-uuflowManager.initiateRecordInstanceInfo = (recordIds, insId, spaceId) ->
+uuflowManagerForInitApproval.initiateRecordInstanceInfo = (recordIds, insId, spaceId) ->
 	Creator.getCollection(recordIds.o, spaceId).update(recordIds.ids[0], {
 		$push: {
 			instances: {
@@ -336,7 +336,7 @@ uuflowManager.initiateRecordInstanceInfo = (recordIds, insId, spaceId) ->
 
 	return
 
-uuflowManager.checkIsInApproval = (recordIds, spaceId) ->
+uuflowManagerForInitApproval.checkIsInApproval = (recordIds, spaceId) ->
 	record = Creator.getCollection(recordIds.o, spaceId).findOne({
 		_id: recordIds.ids[0], instances: { $exists: true }
 	}, { fields: { instances: 1 } })

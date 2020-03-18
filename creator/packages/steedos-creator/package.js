@@ -355,6 +355,6 @@ Package.onUse(function (api) {
 	api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
 
-	api.export(['uuflowManager', 'permissionManager'], ['server']);
+	api.export(['permissionManagerForInitApproval', 'permissionManagerForInitApproval'], ['server']);
 
 });

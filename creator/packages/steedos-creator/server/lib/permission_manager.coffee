@@ -1,8 +1,8 @@
-permissionManager = {}
+permissionManagerForInitApproval = {}
 
-permissionManager.getFlowPermissions = (flow_id, user_id) ->
+permissionManagerForInitApproval.getFlowPermissions = (flow_id, user_id) ->
 	# 根据:flow_id查到对应的flow
-	flow = uuflowManager.getFlow(flow_id)
+	flow = uuflowManagerForInitApproval.getFlow(flow_id)
 	space_id = flow.space
 	# 根据space_id和:user_id到organizations表中查到用户所属所有的org_id（包括上级组ID）
 	org_ids = new Array

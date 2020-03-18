@@ -138,7 +138,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/user_object_view.coffee', 'server');
 
 	api.addFiles('lib/server_session.js');
-	api.export('ServerSession');
 
 	api.addFiles('server/schedule/statistics.js', 'server');
 	api.addFiles('server/schedule/billing.coffee', 'server');
