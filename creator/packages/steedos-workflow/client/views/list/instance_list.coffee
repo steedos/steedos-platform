@@ -6,15 +6,8 @@ Template.instance_list.helpers
 	is_inbox: ->
 		return Session.get("box") == "inbox"
 
-	boxName: ->
-		if Session.get("box")
-			return t(Session.get("box"))
-
 	spaceId: ->
 		return Session.get("spaceId");
-
-	hasFlowId: ->
-		return !!Session.get("flowId");
 
 	selector: ->
 		unless Meteor.user()
@@ -96,24 +89,6 @@ Template.instance_list.helpers
 			query.is_hidden = { $ne: true }
 
 		return query
-	enabled_export: ->
-		spaceId = Session.get("spaceId");
-		if !spaceId
-			return "display: none;";
-		space = db.spaces.findOne(spaceId);
-		if !space
-			return "display: none;";
-		if Session.get("box") == "monitor"
-			if space.admins.contains(Meteor.userId())
-				return "";
-			else
-				if Session.get("flowId")
-					flow_ids = WorkflowManager.getMyAdminOrMonitorFlows()
-					if flow_ids.includes(Session.get("flowId"))
-						return ""
-				return "display: none;";
-		else
-			return "display: none;";
 
 	is_display_search_tip: ->
 		if Session.get('instance_more_search_selector') or Session.get('instance_search_val') or Session.get("flowId") or Session.get("workflowCategory")
@@ -128,15 +103,6 @@ Template.instance_list.helpers
 
 	maxHeight: ->
 		return Template.instance()?.maxHeight.get() + 'px'
-
-	isShowMenu: ->
-		# if Session.get("box") == 'inbox'
-		# 	inboxInstances = InstanceManager.getUserInboxInstances();
-		# 	if inboxInstances.length > 0
-		# 		return true
-
-		# return false;
-		return Steedos.isMobile()
 
 	hasApproves: ->
 		if InstanceManager.getUserInboxInstances().length > 0
@@ -187,17 +153,6 @@ Template.instance_list.helpers
 	showBatchBtn: ()->
 		return Session.get("workflow_batch_instances_count") > 0
 
-	objectIcon: ->
-		return "task"
-
-	objectLabel: ->
-		return "Workflow"
-
-	objectSearchLabel: ->
-		return "申请单"
-
-	btnToggleColumnsIcon: ->
-		return Template.instance()?.btnToggleColumnsIcon.get()
 
 Template.instance_list._changeOrder = ()->
 
@@ -290,7 +245,6 @@ Template.instance_list._tableColumns = ()->
 
 Template.instance_list.onCreated ->
 	self = this;
-	self.btnToggleColumnsIcon = new ReactiveVar("expand_alt")
 
 	self.maxHeight = new ReactiveVar(
 		$(window).height());
@@ -338,9 +292,6 @@ Template.instance_list.onRendered ->
 		$(".instance-list").perfectScrollbar();
 		# $(".instance-list .dataTables_container").perfectScrollbar();
 
-	unless $("body").hasClass("three-columns")
-		self.btnToggleColumnsIcon.set("contract_alt")
-
 #	Template.instance_list._changeOrder()
 
 	self.autorun ()->
@@ -376,66 +327,6 @@ Template.instance_list.events
 			FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + rowData._id);
 		, 1
 
-	'click .dropdown-menu li a.export-thismonth': (event) ->
-		InstanceManager.exportIns(event.currentTarget.type);
-
-	'click .dropdown-menu li a.export-pro': (event) ->
-		if !Steedos.isLegalVersion('',"workflow.professional")
-			Steedos.spaceUpgradedModal()
-			return;
-		InstanceManager.exportIns(event.currentTarget.type);
-
-	'click #instance_search_button': (event) ->
-		dataTable = $(".datatable-instances").DataTable();
-		dataTable.search(
-			Steedos.convertSpecialCharacter($('#instance_search').val()),
-		).draw();
-		Session.set('instance_search_val', $('#instance_search').val())
-
-	'keypress #instance_search': (event, template) ->
-		if event.keyCode == 13
-			dataTable = $(".datatable-instances").DataTable();
-			dataTable.search(
-				$('#instance_search').val(),
-			).draw();
-			Session.set('instance_search_val', $('#instance_search').val())
-
-	'click [name="show_all_ins"]': (event) ->
-		Session.set("flowId", undefined);
-
-	'click .list-action-custom-standard_new': (event) ->
-		#判断是否为欠费工作区
-		if WorkflowManager.isArrearageSpace()
-			toastr.error(t("spaces_isarrearageSpace"));
-			return;
-
-		WorkflowManager.alertFlowListModel
-			title: t("Fill in form")
-			subTitle: t("Select a flow")
-			helpUrl: t("new_help")
-			callBack: (options)->
-				if options?.flow
-					InstanceManager.newIns(options.flow)
-
-	'click [name="show_flows_btn"]': (event) ->
-		WorkflowManager.alertFlowListModel
-			title: t("workflow_export_filter")
-			showType: "show"
-			clearable: true
-			callBack: (options)->
-				if options?.flow
-					Session.set("flowId", options.flow)
-				else
-					Session.set("flowId", undefined)
-				
-				if options?.categorie
-					Session.set("categorie_id", options.categorie)
-				else
-					Session.set("categorie_id", undefined)
-
-	'click .list-action-custom-standard_query': (event, template) ->
-		Modal.show("instance_more_search_modal")
-
 	'click #instance_search_tip_close_btn': (event, template) ->
 		Session.set("instance_more_search_selector", undefined)
 		Session.set("flowId", undefined)
@@ -450,59 +341,5 @@ Template.instance_list.events
 		$('#instance_search').val('')
 		$('#instance_search_button').click()
 
-	'click #sidebarOffcanvas': ()->
-		if !Steedos.isMobile() && !Steedos.isPad()
-			if !$("body").hasClass("sidebar-collapse")
-				$(".treeview-menu").perfectScrollbar()
-			else
-				$('.treeview-menu').perfectScrollbar('destroy');
-
-	'click .btn-toggle-columns': (event, template)->
-		if Session.get("instanceId")
-			backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
-			FlowRouter.go(backURL)
-		currentTarget = $(event.currentTarget)
-		icon = currentTarget.find("i")
-		$("body").toggleClass("three-columns")
-		$(window).trigger("resize")
-		if $("body").hasClass("three-columns")
-			template.btnToggleColumnsIcon.set("expand_alt")
-			localStorage.removeItem("workflow_three_columns")
-		else
-			template.btnToggleColumnsIcon.set("contract_alt")
-			localStorage.setItem("workflow_three_columns", "off")
-
-	'click .btn-toggle-workflow-menu': (event, template)->
-		$("body").toggleClass("sidebar-open")
-
-	'click .tabular-introduction': ()->
-		Modal.show("tableau_introduction_modal")
-
 	'click .batch_instances_view > button': ()->
 		Modal.show("batch_instances_modal")
-
-	'click th.flow-filter,.tabular-filter-by-flow': ()->
-		WorkflowManager.alertFlowListModel
-			title: t("workflow_export_filter")
-			showType: "show"
-			clearable: true
-			helpUrl: t("export_filter_help")
-			categorie: Session.get("categorie_id")
-			flow: Session.get("flowId")
-			callBack: (options)->
-				if options?.flow
-					Session.set("flowId", options.flow)
-				else
-					Session.set("flowId", undefined)
-				
-				if options?.categorie
-					Session.set("categorie_id", options.categorie)
-				else
-					Session.set("categorie_id", undefined)
-
-
-	'click .set-process-delegation-rules': ()->
-		if !Steedos.isLegalVersion('',"workflow.professional")
-			Steedos.spaceUpgradedModal()
-			return;
-		FlowRouter.go('/admin/workflow/process_delegation_rules')

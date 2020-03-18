@@ -1,11 +1,9 @@
 <template name="workflow_main">
 
-	{{> workflowSidebar}}
+	<!-- {{> workflowSidebar}} -->
 	<div class="content-wrapper">
 		<div class="workflow-main">
-			<div class="instance-list-wrapper">
-				{{> instance_list}}
-			</div>
+			{{> instance_list_wrapper}}
 			{{#if instanceId}}
 			<div class="instance-wrapper">
 				{{#if isNeedToShowInstance}}

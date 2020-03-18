@@ -1,0 +1,149 @@
+<template name="instance_list_wrapper">
+	<div class="instance-list-wrapper">
+		<div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
+			<div class="slds-grid grid-info-actions">
+				<div class="slds-col slds-has-flexi-truncate">
+					<div class="slds-media slds-no-space slds-grow">
+						<div class="slds-media__figure">
+							<span class="slds-icon_container">
+								<div class="slds-icon crm-header-icon">
+									<span class="uiImage">
+										{{> steedos_icon class="slds-icon slds-page-header__icon" source="standard-sprite" name=objectIcon}}
+									</span>
+								</div>
+							</span>
+						</div>
+						<div class="slds-media__body">
+							<nav>
+								<ol class="slds-breadcrumb slds-line-height_reset">
+									<li class="slds-breadcrumb__item crm-breadcrumb-item">
+										<span>{{_ objectLabel}}</span>
+									</li>
+								</ol>
+							</nav>
+							<h1 class="slds-page-header__title slds-text-color--default slds-p-right--x-small crm-header-title dropdown">
+								{{#if isShowMenu}}
+									<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+										<div class="triggerLinkTextAndIconWrapper">
+											<span class="triggerLinkText selectedListView uiOutputText">{{boxName}}</span>
+											<span class="slds-icon_container slds-icon-utility-down downIcon slds-button__icon forceIcon">
+												<span class="lightningPrimitiveIcon">
+													{{> steedos_icon class="slds-icon slds-icon-text-default slds-icon--x-small" source="utility-sprite" name="down"}}
+												</span>
+											</span>
+										</div>
+									</a>
+									<div class="dropdown-menu dropdown-menu-left crm-header-menu" role="menu">
+										<div class="slds-dropdown__list slds-show">
+											{{> workflowTreeMenu}}
+										</div>
+									</div>
+								{{else}}
+									<a class="triggerLink slds-button slds-button--reset slds-type-focus slds-truncate forceListViewPicker" role="button"
+										title="" href="javascript:void(0);">
+										<div class="triggerLinkTextAndIconWrapper">
+											<span class="triggerLinkText selectedListView uiOutputText">{{boxName}}</span>
+										</div>
+									</a>
+								{{/if}}
+							</h1>
+						</div>
+					</div>
+				</div>
+				<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+					<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
+						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_query">
+							<a href="javascript:void(0);" title="查找">
+								<div class="slds-truncate" title="查找">查找</div>
+							</a>
+						</li>
+						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_new">
+							<a href="javascript:void(0);" title="新建">
+								<div class="slds-truncate" title="新建">新建</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="slds-grid">
+				<div class="slds-col slds-align-middle">
+					<p class="slds-text-body_small tabular_info"></p>
+				</div>
+				<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink grid-search-div">
+					<div>
+						<div class="search-in-list slds-m-left_large slds-is-relative">
+							<div force-list-view-manager-search-bar_list-view-manager-search-bar="" class="slds-form-element">
+								<label for="instance_search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索{{_ objectSearchLabel}}</label>
+								<div class="slds-form-element__control slds-grow slds-input-has-icon slds-input-has-icon_left-right">
+									<input type="search" value="{{search_text}}" id="instance_search" placeholder="搜索{{_ objectSearchLabel}}" name="search-input" class="slds-input">
+									<button class="btn btn-default hide" type="button" id="instance_search_button">
+										<i class="fa fa-search"></i>
+									</button>
+									<div>
+										{{> steedos_icon class="slds-input__icon slds-input__icon_left" source="utility-sprite" name="search"}}
+									</div>
+									<div class="slds-input__icon-group slds-input__icon-group_right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slds-col slds-no-flex slds-grid slds-align-bottom grid-actions">
+					{{#if hasFlowId}}
+						<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
+							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+								title="{{_ "workflow_export_data"}}" data-toggle="dropdown" style="{{enabled_export}}">
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download"}}
+								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
+							</button>
+							<div class="dropdown-menu dropdown-menu-right" role="menu">
+								<ul class="slds-dropdown__list list-view-controls">
+									<li class="slds-dropdown__header" role="separator">
+										<span class="slds-text-title--caps">{{_ "workflow_export_data"}}</span>
+									</li>
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="javascript:void(0);" class="export-thismonth" type="0" role="option" tabindex="-1">
+											<span>{{_ "workflow_export_thismonth"}}</span>
+										</a>
+									</li>
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="javascript:void(0);" class="export-pro" type="1" role="option" tabindex="-1">
+											<span>{{_ "workflow_export_lastmonth"}}</span>
+										</a>
+									</li>
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="javascript:void(0);" class="export-pro" type="2" role="option" tabindex="-1">
+											<span>{{_ "workflow_export_thisyear"}}</span>
+										</a>
+									</li>
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="javascript:void(0);" class="export-pro" type="3" role="option" tabindex="-1">
+											<span>{{_ "workflow_export_all"}}</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					{{/if}}
+					<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-filter-list tabular-filter-by-flow slds-m-left_x-small" title="{{_ "workflow_export_filter"}}">
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
+					</button>
+					<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-columns">
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name=btnToggleColumnsIcon}}
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="instance-list-body {{#if sidebar}}sidebar-open{{/if}}">
+			{{#if sidebar}}
+				<div class="instance-list-sidebar">
+					{{> workflowTreeMenu}}
+				</div>
+			{{/if}}
+			<div class="instance-list-content">
+				{{> instance_list}}
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,4 +1,7 @@
 .steedos {
+	.content-wrapper{
+		margin-left: 0;
+	}
 }
 
 .workflow-main {
@@ -98,6 +101,7 @@
 		border-bottom: 1px solid #eee;
 		padding: 10px 20px;
 		height: 40px;
+		margin-top: 2px;
 		.result-container {
 			width: calc(~"100% - 30px");
 		}
@@ -117,18 +121,18 @@
 		background-color: white;
 
 		&.selectbar-is-show {
-			top: 139px;
+			top: 40px;
 		}
 		&.selectbar-is-hide {
-			top: 99px;
+			top: 0;
 		}
 		@media (max-width: 767px) {
 			&.selectbar-is-show {
-				top: 104px;
+				top: 40px;
 			}
 
 			&.selectbar-is-hide {
-				top: 64px;
+				top: 0px;
 			}
 		}
 
@@ -628,7 +632,7 @@ _:-ms-fullscreen,
 		.workflow-main {
 			.instance-list-wrapper {
 				display: block;
-				right: 61%;
+				right: 46%;
 
 				// margin: 10px 10px 10px 10px;
 				// border-radius: 5px;
@@ -638,7 +642,7 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				width: 61%;
+				width: 46%;
 				transform: translate(0, 0);
 
 				margin: 0;
@@ -657,12 +661,12 @@ _:-ms-fullscreen,
 		.workflow-main.instance-show {
 			.instance-list-wrapper {
 				display: block;
-				right: 61%;
+				right: 46%;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				width: 61%;
-				left: 39%;
+				width: 46%;
+				left: 54%;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}

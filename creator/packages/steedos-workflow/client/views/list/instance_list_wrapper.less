@@ -1,0 +1,73 @@
+.instance-list-wrapper{
+	.slds-page-header--object-home {
+		border-radius: 0px;
+		border-left: 0px;
+		border-right: 0px;
+		height: 100px;
+		@media (max-width: 768px) {
+			height: 65px;
+		}
+		.slds-media__figure {
+			margin-top: -2px;
+		}
+		.dropdown-workflow-menu-by-flow {
+			width: 140%;
+			ul{
+				background: #fff!important;
+			}
+		}
+		.slds-button {
+			cursor: pointer;
+		}
+	}
+
+	// 用devexpress grid中的图标，dx-sort dx-sort-down sorting代替原来的sort图标
+	.instance-list {
+		table.dataTable thead .sorting_asc:after {
+			font: 14px/1 DXIcons;
+			content: "\f051";
+			opacity: 0.6;
+			bottom: 10px;
+		}
+
+		table.dataTable thead .sorting_desc:after {
+			font: 14px/1 DXIcons;
+			content: "\f052";
+			opacity: 0.6;
+			bottom: 10px;
+		}
+
+		table.dataTable thead .sorting:after {
+			font: 14px/1 DXIcons;
+			content: "\f055";
+			opacity: 0; //不显示未排序时图标
+			bottom: 10px;
+		}
+	}
+
+	.instance-list-body{
+		.instance-list-sidebar{
+			position: absolute;
+			left: 0;
+			top: 99px;
+			bottom: 0;
+			width: 280px;
+			border-right: 1px solid #e0e5ee;
+		}
+		.instance-list-content{
+			position: absolute;
+			left: 0;
+			right: 0px;
+			top: 99px;
+			bottom: 0;
+			@media (max-width: 768px) {
+				top: 64px;
+			}
+		}
+		&.sidebar-open{
+			.instance-list-content{
+				margin-left: 280px;
+			}
+		}
+	}
+}

@@ -248,6 +248,10 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/list/attachments_sign_modal.html', 'client');
 	api.addFiles('client/views/list/attachments_sign_modal.coffee', 'client');
 
+	api.addFiles('client/views/list/instance_list_wrapper.less', 'client');
+	api.addFiles('client/views/list/instance_list_wrapper.html', 'client');
+	api.addFiles('client/views/list/instance_list_wrapper.coffee', 'client');
+
 	api.addFiles('client/views/list/instance_list.less', 'client');
 	api.addFiles('client/views/list/instance_list.html', 'client');
 	api.addFiles('client/views/list/instance_list.coffee', 'client');
