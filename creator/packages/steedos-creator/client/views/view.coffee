@@ -106,7 +106,7 @@ Template.creator_view.onRendered ->
 	this.autorun ->
 		record_id = Session.get("record_id")
 		if record_id
-			loadRecord()
+			Tracker.nonreactive(loadRecord)
 	# if Steedos.isMobile()
 	# 	this.autorun ->
 	# 		loadRecord()

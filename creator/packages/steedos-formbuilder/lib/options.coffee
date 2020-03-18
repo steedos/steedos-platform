@@ -189,7 +189,7 @@ getTypeUserAttrs = ()->
 					detail_url: {
 						label: '详细页面URL',
 						type: 'textarea',
-						placeholder: '必须包含{_id}标识，示例：http://127.0.0.1/app/-/contracts/view/{_id}',
+						placeholder: '必须包含{_id}标识，示例：https://cn.steedos.com/app/-/contracts/view/{_id}',
 						value: ''
 					},
 					filters: {
@@ -489,8 +489,9 @@ Creator.formBuilder.optionsForFormFields = (is_sub)->
 			field.label = field.label.replace('\r', '')
 			formFields = Creator.formBuilder.transformFormFieldsOut(fb.actions.getData())
 			fieldsCode = Creator.formBuilder.getFieldsCode(formFields) || []
-			fieldCode = getFieldCode(fieldsCode, field.label)
-			field.label = field.code = fieldCode
+			if !field.code
+				fieldCode = getFieldCode(fieldsCode, field.label)
+				field.label = field.code = fieldCode
 			Meteor.defer ()->
 				$("#" + fieldId).attr('contentEditable', 'true')
 		disabledFieldButtons: {

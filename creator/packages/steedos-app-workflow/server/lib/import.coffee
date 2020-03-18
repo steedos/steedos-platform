@@ -430,6 +430,20 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 			flow.current.modified_by = uid
 
 			flow.current?.steps.forEach (step)->
+				if _.isArray(step.approver_users)
+					_accepted_approve_users = [];
+					_.each step.approver_users, (uid)->
+						if db.space_users.findOne({user: uid, user_accepted: true, space: spaceId})
+							_accepted_approve_users.push(uid);
+					step.approver_users = _accepted_approve_users;
+
+				if _.isArray(step.approver_orgs)
+					_accepted_approver_orgs = [];
+					_.each step.approver_orgs, (oid)->
+						if db.organizations.findOne({_id: oid, space: spaceId})
+							_accepted_approver_orgs.push(oid);
+					step.approver_orgs = _accepted_approver_orgs;
+
 				if _.isEmpty(step.approver_roles_name)
 					delete step.approver_roles_name
 					if _.isEmpty(step.approver_roles)

@@ -26,9 +26,9 @@ _getFlowByForm = (form, flowId, is_copy, company_id)->
 					hr_roles_name = db.roles.find({_id: {$in: step.approver_hr_roles}}, {fields: {name: 1}}).fetch().getProperty("name");
 				step.approver_hr_roles_name = hr_roles_name
 
-				step.approver_users = []
-
-				step.approver_orgs = []
+#				step.approver_users = []
+#
+#				step.approver_orgs = []
 
 		if !is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id != flow.company_id)
 			delete flow.perms
