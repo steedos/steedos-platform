@@ -116,6 +116,10 @@
             "type": "boolean",
             "description": "允许关注"
         },
+        "enable_workflow": {
+            "type": "boolean",
+            "description": "允许对象流程同步"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"

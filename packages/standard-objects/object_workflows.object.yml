@@ -17,11 +17,14 @@ fields:
               _options = [];
 
               _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
+                if (o.enable_workflow) {
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
+                
               });
 
               return _options;
