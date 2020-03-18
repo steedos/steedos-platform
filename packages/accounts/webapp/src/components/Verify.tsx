@@ -47,10 +47,14 @@ const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
     id={id}
     className={classes.btn}
       disabled={restTime > 0}
-      onClick={() => {
-        resetCountdown();
-        if(onClick){
-          onClick();
+      onClick={(e:any) => {
+        if(e.target && e.target.dataset && e.target.dataset.onlyCountDown === "1"){
+          resetCountdown();
+        }else{
+          resetCountdown();
+          if(onClick){
+            onClick();
+          }
         }
       }}
     >
@@ -112,10 +116,12 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
       if (data.expired) {
         setError("验证码已失效");
       }else{
-        // let reApplyCodeBtn: any = document.getElementById('reApplyCodeBtn')
-        // if(reApplyCodeBtn){
-        //   reApplyCodeBtn.click();
-        // }
+        let reApplyCodeBtn: any = document.getElementById('reApplyCodeBtn')
+        if(reApplyCodeBtn){
+          reApplyCodeBtn.dataset.onlyCountDown = "1";
+          reApplyCodeBtn.click();
+          reApplyCodeBtn.dataset.onlyCountDown = "0";
+        }
       }
     } catch (err) {
       setError(err.message);
