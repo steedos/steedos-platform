@@ -632,8 +632,8 @@ _:-ms-fullscreen,
 		.workflow-main {
 			.instance-list-wrapper {
 				display: block;
-				right: 60%;
-
+				// right: 60%;
+				width: 450px;
 				// margin: 10px 10px 10px 10px;
 				// border-radius: 5px;
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -642,7 +642,9 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				width: 60%;
+				// width: 60%;
+				// left: 450px;
+				right: 0;
 				transform: translate(0, 0);
 
 				margin: 0;
@@ -661,12 +663,15 @@ _:-ms-fullscreen,
 		.workflow-main.instance-show {
 			.instance-list-wrapper {
 				display: block;
-				right: 60%;
+				// right: 60%;
+				width: 450px;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				width: 60%;
-				left: 40%;
+				// width: 60%;
+				// left: 40%;
+				left: 450px;
+				right: 0;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
@@ -679,7 +684,8 @@ _:-ms-fullscreen,
 		.workflow-main {
 			.instance-list-wrapper {
 				display: block;
-				right: 46%;
+				// right: 46%;
+				width: 700px;
 
 				// margin: 10px 10px 10px 10px;
 				// border-radius: 5px;
@@ -689,7 +695,9 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				width: 46%;
+				// width: 46%;
+				// left: 700px;
+				right: 0;
 				transform: translate(0, 0);
 
 				margin: 0;
@@ -708,12 +716,15 @@ _:-ms-fullscreen,
 		.workflow-main.instance-show {
 			.instance-list-wrapper {
 				display: block;
-				right: 46%;
+				// right: 46%;
+				width: 700px;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				width: 46%;
-				left: 54%;
+				// width: 46%;
+				// left: 54%;
+				left: 700px;
+				right: 0;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
