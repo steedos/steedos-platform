@@ -140,14 +140,14 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 					if !_.include(TablePropKeys, key)
 						delete field[key]
 				field.is_wide = true
-				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder').actions.getData())
+				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder')?.actions.getData())
 
 			when 'section'
 				_.each _.keys(field), (key)->
 					if !_.include(SectionPropKeys, key)
 						delete field[key]
 				field.is_wide = true
-				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder').actions.getData())
+				field.fields = Creator.formBuilder.transformFormFieldsOut($("##{_fieldName}-preview").data('formBuilder')?.actions.getData())
 
 			when 'textarea'
 				field.type = 'input'

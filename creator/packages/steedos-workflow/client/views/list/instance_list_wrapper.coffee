@@ -1,3 +1,9 @@
+checkIsWorkflowSidebarOpen = ()->
+	if $(window).width() >= 1280
+		Session.set("isWorkflowSidebarOpen", true)
+	else
+		Session.set("isWorkflowSidebarOpen", false)
+	
 Template.instance_list_wrapper.helpers
 
 	objectIcon: ->
@@ -45,15 +51,21 @@ Template.instance_list_wrapper.helpers
 		# 		return true
 
 		# return false;
-		return Steedos.isMobile() or $(window).width() < 1280;
+		# return Steedos.isMobile() or $(window).width() < 1280;
+		return !Session.get("isWorkflowSidebarOpen");
 
 	sidebar: ()->
+		# return $(window).width() >= 1280;
 		# return !Steedos.isMobile()
-		return $(window).width() >= 1280;
+		return Session.get("isWorkflowSidebarOpen")
 
 Template.instance_list_wrapper.onCreated ->
 	self = this;
 	self.btnToggleColumnsIcon = new ReactiveVar("expand_alt")
+	if !Steedos.isMobile()
+		checkIsWorkflowSidebarOpen()
+		$(window).resize ->
+			checkIsWorkflowSidebarOpen()
 
 Template.instance_list_wrapper.onRendered ->
 	self = this;
