@@ -360,10 +360,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.11.2":
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.11.2.tgz#616b17f61f03f620440b9e7d55c7552e69e0b971"
-  integrity sha512-VQPGJqhNaWbOxcXb4k2WVGYWjSV3G194MX/XzCvl0sHVCWf6VU/wMuc1io4N1pJKg4oyHqPL5cEyZzLQkATI6w==
+"@steedos/accounts@^1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.11.6.tgz#4ca009fdc02dc337d4646eb813cd4d4f979c7784"
+  integrity sha512-A9H7Dn7/cSXTO3g0bCmlois71MpfyDNqShp3uvUiZgmw32uRbMC12G3KMhROaHCqsHGdLzpd0WMQZ+cYUEH11Q==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -386,6 +386,7 @@
     redux-thunk "^2.3.0"
     saml-idp "^1.1.0"
     tslib "1.10.0"
+    validator "^12.2.0"
 
 "@steedos/app-contracts@^1.18.1":
   version "1.18.1"
@@ -6829,6 +6830,11 @@ validate-npm-package-license@^3.0.1:
 validator@9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-9.2.0.tgz#ad216eed5f37cac31a6fe00ceab1f6b88bded03e"
+
+validator@^12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-12.2.0.tgz#660d47e96267033fd070096c3b1a6f2db4380a0a"
+  integrity sha512-jJfE/DW6tIK1Ek8nCfNFqt8Wb3nzMoAbocBF6/Icgg1ZFSBpObdnwVY2jQj6qUqzhx5jc71fpvBWyLGO7Xl+nQ==
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"

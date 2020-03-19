@@ -173,7 +173,8 @@ Template.instance_list._tableColumns = ()->
 	show = false
 
 	winWidth = $(window).width()
-	if (winWidth > 766) and (winWidth < 1441 or !$("body").hasClass("three-columns"))
+	# if (winWidth > 766) and (winWidth < 1441 or !$("body").hasClass("three-columns"))
+	if (winWidth > 766) and (!$("body").hasClass("three-columns"))
 		show = true
 
 	if show

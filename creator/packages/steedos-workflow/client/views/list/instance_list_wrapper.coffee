@@ -45,10 +45,11 @@ Template.instance_list_wrapper.helpers
 		# 		return true
 
 		# return false;
-		return Steedos.isMobile()
+		return Steedos.isMobile() or $(window).width() <= 1024;
 
 	sidebar: ()->
-		return !Steedos.isMobile()
+		# return !Steedos.isMobile()
+		return $(window).width() > 1024;
 
 Template.instance_list_wrapper.onCreated ->
 	self = this;
