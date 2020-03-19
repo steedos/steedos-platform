@@ -24,5 +24,9 @@ Meteor.startup(function(){
     if (Steedos.isMobile() && Meteor.settings.public && Meteor.settings.public.tenant && Meteor.settings.public.tenant.enable_mobile == false) {
         $('head meta[name=viewport]').remove();
         $('head').append('<meta name="viewport" content="">');
+    } else if (screen.width>360){
+        // 手机上自动放大
+        $('head meta[name=viewport]').remove();
+        $('head').append('<meta name="viewport" content="user-scalable=no, initial-scale=1.1, maximum-scale=1.1, minimum-scale=1.1">');        
     }
 });
