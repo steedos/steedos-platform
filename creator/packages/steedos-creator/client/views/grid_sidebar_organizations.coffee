@@ -156,6 +156,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 						desc: false
 					} ]
 				itemTemplate: (itemData, itemIndex, itemElement)->
+					itemElement.attr("title", itemData.name)
 					if itemData.icon
 						itemElement.append("<i class=\"dx-icon #{itemData.icon}\"></i>");
 					itemElement.append("<span>" + itemData.name + "</span>");

@@ -281,6 +281,7 @@ Template.creator_grid_sidebar_sites.onRendered ->
 				dataSource: 
 					store: storeItems
 				itemTemplate: (itemData, itemIndex, itemElement)->
+					itemElement.attr("title", itemData.name)
 					if itemData.icon
 						itemElement.append("<i class=\"dx-icon #{itemData.icon}\"></i>");
 					itemElement.append("<span>" + itemData.name + "</span>");
