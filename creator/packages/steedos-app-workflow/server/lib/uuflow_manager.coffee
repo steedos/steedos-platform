@@ -1,4 +1,5 @@
 Cookies = require("cookies")
+_eval = require('eval');
 
 uuflowManager = {}
 
@@ -601,8 +602,10 @@ uuflowManager.getInstanceName = (instance, vals) ->
 #		console.log(iscript)
 
 		try
+			script = "module.exports = function (applicant, values, flow, form) { return " + iscript + " }"
+			func = _eval(script, "getInstanceName")
 
-			rev = eval(iscript) || default_value
+			rev = func(applicant, values, flow, form) || default_value
 
 			#文件名中不能包含特殊字符: '? * : " < > \ / |'， 直接替换为空
 			rev = rev.replace(/\?|\*|\:|\"|\<|\>|\\|\/|\|/g, "")
