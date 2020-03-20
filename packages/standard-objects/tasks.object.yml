@@ -2,6 +2,8 @@ name: tasks
 label: 任务
 icon: timesheet_entry
 enable_search: true
+enable_files: true
+enable_chatter: true
 fields:
   name:
     label: 主题

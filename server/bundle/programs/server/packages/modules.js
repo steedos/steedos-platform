@@ -606,7 +606,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "react",
-  "version": "16.13.0",
+  "version": "16.12.0",
   "main": "index.js"
 };
 
@@ -767,7 +767,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "qs",
-  "version": "6.9.1",
+  "version": "6.9.0",
   "main": "lib/index.js"
 };
 
@@ -843,7 +843,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.18.6",
+  "version": "1.18.8",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -860,10 +860,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.18.6",
-    "@steedos/migrate": "^1.18.6",
-    "@steedos/objectql": "^1.18.6",
-    "@steedos/standard-objects": "^1.18.6",
+    "@steedos/auth": "^1.18.8",
+    "@steedos/migrate": "^1.18.8",
+    "@steedos/objectql": "^1.18.8",
+    "@steedos/standard-objects": "^1.18.8",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -893,7 +893,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.18.6",
+    "@steedos/meteor-bundle-runner": "^1.18.8",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -936,7 +936,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.18.6",
+  "version": "1.18.8",
   "main": "lib/index.js"
 };
 
@@ -996,7 +996,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.18.6",
+  "version": "1.18.8",
   "main": "lib/index.js"
 };
 
@@ -1157,7 +1157,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "xml2js",
-  "version": "0.4.23",
+  "version": "0.4.22",
   "main": "./lib/xml2js"
 };
 
@@ -1503,7 +1503,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "ejs",
-  "version": "2.7.4",
+  "version": "2.7.1",
   "main": "./lib/ejs.js"
 };
 
