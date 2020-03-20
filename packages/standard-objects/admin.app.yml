@@ -1,7 +1,7 @@
 _id: admin
 url: /app/admin
 name: 设置
-description: 系统管理员可以设置组织结构、人员、应用、权限等全局参数。
+description: 管理员设置公司、人员、权限等。
 icon: ion-ios-people-outline
 icon_slds: settings
 is_creator: true
