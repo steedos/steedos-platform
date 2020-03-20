@@ -22,8 +22,8 @@ fields:
     name: assignees
     filterable: true
   due_date:
-    label: 截止时间
-    type: datetime
+    label: 到期日期
+    type: date
     sortable: true
     name: due_date
   state:
@@ -109,6 +109,7 @@ list_views:
       - name
       - due_date
       - state
+      - priority
       - assignees
       - related_to
     filters:
