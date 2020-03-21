@@ -12,24 +12,26 @@ Template.instance_list_wrapper.helpers
 	btnToggleColumnsIcon: ->
 		return Template.instance()?.btnToggleColumnsIcon.get()
 	
-	enabled_export: ->
+	enabledExport: ->
+		flowId = Session.get("flowId")
+		unless flowId
+			return false
 		spaceId = Session.get("spaceId");
 		if !spaceId
-			return "display: none;";
+			return false;
 		space = db.spaces.findOne(spaceId);
 		if !space
-			return "display: none;";
+			return false;
 		if Session.get("box") == "monitor"
 			if space.admins.contains(Meteor.userId())
-				return "";
+				return true;
 			else
-				if Session.get("flowId")
-					flow_ids = WorkflowManager.getMyAdminOrMonitorFlows()
-					if flow_ids.includes(Session.get("flowId"))
-						return ""
-				return "display: none;";
+				flow_ids = WorkflowManager.getMyAdminOrMonitorFlows()
+				if flow_ids.includes(flowId)
+					return true
+				return false;
 		else
-			return "display: none;";
+			return false;
 
 	boxName: ->
 		if Session.get("box")

@@ -90,10 +90,10 @@
 					</div>
 				</div>
 				<div class="slds-col slds-no-flex slds-grid slds-align-bottom grid-actions">
-					{{#if hasFlowId}}
+					{{#if enabledExport}}
 						<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
 							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
-								title="{{_ "workflow_export_data"}}" data-toggle="dropdown" style="{{enabled_export}}">
+								title="{{_ "workflow_export_data"}}" data-toggle="dropdown">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download"}}
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 							</button>
