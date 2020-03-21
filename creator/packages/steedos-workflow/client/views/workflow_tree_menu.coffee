@@ -88,24 +88,32 @@ getBoxs = ()->
 			url: "/workflow/space/#{spaceId}/outbox/"
 		}
 		{
+			_id: "mybox"
+			name: t("my_instances")
+		}
+		{
 			_id: "draft"
 			name: t("draft")
 			url: "/workflow/space/#{spaceId}/draft/"
+			parent: "mybox"
 		}
 		{
 			_id: "pending"
 			name: t("pending")
 			url: "/workflow/space/#{spaceId}/pending/"
+			parent: "mybox"
 		}
 		{
 			_id: "completed"
 			name: t("completed")
 			url: "/workflow/space/#{spaceId}/completed/"
+			parent: "mybox"
 		}
 	]
 
 	if getIsShowMonitorBox()
-		boxs.push 
+		# 把监控箱插入到已审批后面
+		boxs.splice 2, 0, 
 			_id: "monitor"
 			name: t("monitor")
 			url: "/workflow/space/#{spaceId}/monitor/"
@@ -149,6 +157,8 @@ getStoreItems = ()->
 					item.icon = 'ion ion-archive'
 				when "outbox"
 					item.icon = 'ion ion-android-done-all'
+				when "mybox"
+					item.icon = 'ion ion-android-person'
 				when "draft"
 					item.icon = 'ion ion-compose'
 				when "pending"
@@ -160,6 +170,8 @@ getStoreItems = ()->
 				else
 					item.icon = 'ion ion-archive'
 			item.hasItems = item._id == "inbox" && !!categories.length
+			if item._id == "mybox"
+				item.hasItems = true
 			item.expanded = item.hasItems 
 
 			if item._id == "draft"
@@ -258,8 +270,9 @@ Template.workflowTreeMenu.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemClick = (selectionInfo)->
-				# 点击任意a标签，跳转路由，应该关闭菜单
-				$("body").removeClass("sidebar-open")
+				if selectionInfo.itemData._id == "mybox"
+					# 我的文件菜单不需要选中
+					selectionInfo.event.preventDefault()
 				if selectionInfo.node.selected
 					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
 					selectionInfo.event.preventDefault()
