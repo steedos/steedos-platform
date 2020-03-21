@@ -9,3 +9,14 @@
 .dx-texteditor.dx-editor-underlined.dx-state-hover:after {
     border-bottom: none;
 }
+.dx-widget {
+    font-size: 0.875rem;
+}
+
+.dx-datagrid .dx-row > td {
+    font-size: 0.875rem;
+}
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    font-size: 0.8125rem;
+}
