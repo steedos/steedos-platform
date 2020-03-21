@@ -25,8 +25,8 @@ Meteor.startup(function(){
         $('head meta[name=viewport]').remove();
         $('head').append('<meta name="viewport" content="">');
     } else if (screen.width>360){
-        // 手机上自动放大
-        $('head meta[name=viewport]').remove();
-        $('head').append('<meta name="viewport" content="user-scalable=no, initial-scale=1.1, maximum-scale=1.1, minimum-scale=1.1">');        
+        // 手机上自动放大停用，iPad也有问题
+        // $('head meta[name=viewport]').remove();
+        // $('head').append('<meta name="viewport" content="user-scalable=no, initial-scale=1.1, maximum-scale=1.1, minimum-scale=1.1">');        
     }
 });
