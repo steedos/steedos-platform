@@ -69,7 +69,7 @@ FlowversionAPI =
 		# 		C-->A
 		# 		D-->C
 		# 	'''
-		nodes = ["graph TB"]
+		nodes = ["graph TD"]
 		steps.forEach (step)->
 			lines = step.lines
 			if lines?.length
@@ -296,7 +296,7 @@ FlowversionAPI =
 		# 		C-->A
 		# 		D-->C
 		# 	'''
-		nodes = ["graph LR"]
+		nodes = ["graph TD"]
 		lastTrace = null
 		lastApproves = []
 		traces.forEach (trace)->
@@ -402,7 +402,7 @@ FlowversionAPI =
 			<html>
 				<head>
 					<meta charset="utf-8">
-					<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+					<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
 					<title>#{title}</title>
 					<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
 					<link rel="manifest" href="/favicons/manifest.json">
