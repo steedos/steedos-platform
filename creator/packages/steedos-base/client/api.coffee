@@ -16,8 +16,10 @@ _.extend Steedos,
 				else
 					url = url + "&" + $.param(authToken)
 
-
-		window.open(url, target, options);
+		if Steedos.isCordova()
+			window.AppBrowserOpen(url, target, options)
+		else
+			window.open(url, target, options);
 
 	# 左侧sidebar滚动条自适应
 	fixSideBarScroll: ()->

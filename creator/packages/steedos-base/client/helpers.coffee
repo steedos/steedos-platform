@@ -687,14 +687,14 @@ TemplateHelpers =
 				fileEntry.file ((file) ->
 					if file.size == size
 						$(document.body).removeClass 'loading'
-						window.open fileEntry.toURL(), '_system', 'EnableViewPortScale=yes'
+						window.fileOpen fileEntry.toURL()
 					else
 						sPath = fileEntry.toURL()
 						fileTransfer = new FileTransfer
 						fileEntry.remove()
 						fileTransfer.download url, sPath, ((theFile) ->
 							$(document.body).removeClass 'loading'
-							window.open theFile.toURL(), '_system', 'EnableViewPortScale=yes'
+							window.fileOpen theFile.toURL()
 						), (error) ->
 							$(document.body).removeClass 'loading'
 							console.error 'download error source' + error.source
