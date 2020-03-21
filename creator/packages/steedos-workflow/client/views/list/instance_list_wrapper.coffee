@@ -1,9 +1,3 @@
-checkIsWorkflowSidebarOpen = ()->
-	if $(window).width() >= 1280
-		Session.set("isWorkflowSidebarOpen", true)
-	else
-		Session.set("isWorkflowSidebarOpen", false)
-	
 Template.instance_list_wrapper.helpers
 
 	objectIcon: ->
@@ -59,13 +53,12 @@ Template.instance_list_wrapper.helpers
 		# return !Steedos.isMobile()
 		return Session.get("isWorkflowSidebarOpen")
 
+	isWorkflowShowAsItemSelected: (item)->
+		return Session.get("workflow_show_as") == item
+
 Template.instance_list_wrapper.onCreated ->
 	self = this;
 	self.btnToggleColumnsIcon = new ReactiveVar("expand_alt")
-	if !Steedos.isMobile()
-		checkIsWorkflowSidebarOpen()
-		$(window).resize ->
-			checkIsWorkflowSidebarOpen()
 
 Template.instance_list_wrapper.onRendered ->
 	self = this;
@@ -155,6 +148,18 @@ Template.instance_list_wrapper.events
 		else
 			template.btnToggleColumnsIcon.set("contract_alt")
 			localStorage.setItem("workflow_three_columns", "off")
+
+	'click .btn-toggle-show-as': (event, template)->
+		if Session.get("instanceId")
+			backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
+			FlowRouter.go(backURL)
+		columns = event.currentTarget.dataset?.columns
+		Workflow.renderListLayout columns
+		if $("body").hasClass("three-columns")
+			template.btnToggleColumnsIcon.set("expand_alt")
+		else
+			template.btnToggleColumnsIcon.set("contract_alt")
+		localStorage.setItem("workflow_show_as", columns)
 
 	'click .btn-toggle-workflow-menu': (event, template)->
 		$("body").toggleClass("sidebar-open")

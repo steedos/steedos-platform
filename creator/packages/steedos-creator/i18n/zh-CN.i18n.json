@@ -118,6 +118,10 @@
     "cms_sites_visibility_public": "公开（发布到互联网，所有人都可见，但只有站点成员可以编辑。）",
     "cms_posts_visibility": "可见性",
     "cms_posts_visibility_private": "私有（文章作者及发布对象可见，且只有作者或站点成员可以编辑。）",
-    "cms_posts_visibility_space": "工作区（此工作区的所有用户都可见，但只有作者或站点成员可以编辑。）"
+    "cms_posts_visibility_space": "工作区（此工作区的所有用户都可见，但只有作者或站点成员可以编辑。）",
 
+	"creator_list_show_as": "显示为",
+	"creator_list_show_as_one_column": "列表",
+	"creator_list_show_as_two_columns": "列表 ｜ 记录",
+	"creator_list_show_as_three_columns": "菜单 ｜ 列表 ｜ 记录"
 }

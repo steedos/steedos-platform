@@ -113,6 +113,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/lib/next_step_user.coffee', 'client');
 
+	api.addFiles('client/lib/workflow_layout.coffee', 'client');
 
 	//add client file
 	api.addFiles('client/layout/master_print.less', 'client');

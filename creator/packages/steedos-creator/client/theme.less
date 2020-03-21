@@ -532,3 +532,28 @@ margin-left: 216px; }
 		height: 14px;
 	}
 }
+
+
+.dropdown-menu{
+	&.dropdown-menu-redio{
+		.slds-dropdown__item{
+			&> a{
+				color: #777;
+				.slds-truncate{
+					.slds-button__icon{
+						visibility: hidden;
+						margin-right: 0.2rem;
+					}
+				}
+			}
+			&.slds-is-selected > a{
+				color: #333;
+				.slds-truncate{
+					.slds-button__icon{
+						visibility: visible;
+					}
+				}
+			}
+		}
+	}
+}

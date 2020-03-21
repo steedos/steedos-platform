@@ -253,10 +253,7 @@ Template.instance_list.onCreated ->
 	self.maxHeight?.set($(".instance-list", $(".steedos")).height());
 
 	self.autorun ()->
-		$(window).resize ->
-			Template.instance_list._tableColumns();
-			if !Steedos.isMobile() and !Steedos.isPad()
-				$(".instance-list").perfectScrollbar("update");
+		Workflow.renderListColumns()
 
 	# 只有是企业版时，才支持批量审批
 	if Steedos.isLegalVersion('',"workflow.enterprise")

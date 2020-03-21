@@ -18,15 +18,6 @@ Workflow = {}
 
 @TracesManager = {};
 
-if Meteor.isClient
-	Meteor.startup ->
-		workflow_three_columns = localStorage.getItem("workflow_three_columns")
-		if workflow_three_columns and workflow_three_columns == "off"
-			$("body").removeClass("three-columns")
-		else
-			$("body").addClass("three-columns")
-
-
 InstanceSignText.isOpinionField_from_string = (field_formula)->
 	return (field_formula?.indexOf("{traces.") > -1 || field_formula?.indexOf("{signature.traces.") > -1 || field_formula?.indexOf("{yijianlan:") > -1 || field_formula?.indexOf("{\"yijianlan\":") > -1 || field_formula?.indexOf("{'yijianlan':") > -1)
 
