@@ -107,7 +107,7 @@ JsonRoutes.add 'post', '/api/workflow/terminate', (req, res, next) ->
 				setObj.state = "completed"
 				setObj.final_decision = "terminated"
 				old_inbox_users = instance.inbox_users
-				old_cc_users = instance.cc_users
+				old_cc_users = instance.cc_users || []
 				old_outbox_users = instance.outbox_users
 				tempUsers = new Array
 				_.each(instance_trace.approves, (nft_approve)->
