@@ -57,8 +57,10 @@ Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 			maxUnfoldedCount = 3
 		else if width < 500
 			maxUnfoldedCount = 4
-		else
+		else if width < 600
 			maxUnfoldedCount = 6
+		else
+			maxUnfoldedCount = 7
 	Session.set("workflow_max_unfolded_buttons_count", maxUnfoldedCount)
 
 Meteor.startup ->
