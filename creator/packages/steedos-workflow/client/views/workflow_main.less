@@ -650,11 +650,9 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				width: 60%;
+				// width: 60%;
 				transform: translate(0, 0);
 
-				margin: 0;
-				border-radius: 0 5px 5px 0;
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 				.navigation-bar{
 					.btn-instance-back{
@@ -677,9 +675,9 @@ _:-ms-fullscreen,
 						}
 					}
 				}
-				.instance-wrapper {
-					width: 46%;
-				}
+				// .instance-wrapper {
+				// 	width: 46%;
+				// }
 			}
 		}
 		.workflow-main.instance-show {
@@ -689,7 +687,7 @@ _:-ms-fullscreen,
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				width: 60%;
+				// width: 60%;
 				left: 40%;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
@@ -699,7 +697,7 @@ _:-ms-fullscreen,
 					right: 46%;
 				}
 				.instance-wrapper {
-					width: 46%;
+					// width: 46%;
 					left: 54%;
 				}
 			}
@@ -721,11 +719,8 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				width: 54%;
+				// width: 54%;
 				transform: translate(0, 0);
-
-				margin: 0;
-				border-radius: 0 5px 5px 0;
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 				.navigation-bar{
 					.btn-instance-back{
@@ -748,9 +743,9 @@ _:-ms-fullscreen,
 						}
 					}
 				}
-				.instance-wrapper {
-					width: 50%;
-				}
+				// .instance-wrapper {
+				// 	width: 50%;
+				// }
 			}
 		}
 		.workflow-main.instance-show {
@@ -760,7 +755,7 @@ _:-ms-fullscreen,
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				width: 54%;
+				// width: 54%;
 				left: 46%;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
@@ -770,7 +765,7 @@ _:-ms-fullscreen,
 					right: 50%;
 				}
 				.instance-wrapper {
-					width: 50%;
+					// width: 50%;
 					left: 50%;
 				}
 			}
@@ -790,16 +785,26 @@ _:-ms-fullscreen,
 					border-top:solid 1px #ffffff;
 				}
 			}
-			.instance-wrapper {
-				margin: 0px 0px 0px 0px;
-				border-radius: 0px;
-			}
 		}
 		.workflow-menu{
 			width: 250px;
 			left: 50%;
 			margin-left: -125px;
 			overflow-y: auto;
+		}
+	}
+}
+
+
+@media (min-width: 768px) {
+	.workflow-main {
+		.instance-list-wrapper {
+			margin: .75rem;
+			border-radius: .25rem;
+		}
+		.instance-wrapper{
+			margin: .75rem .75rem 0.75rem 0;
+			border-radius: .25rem;
 		}
 	}
 }
