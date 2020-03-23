@@ -54,12 +54,14 @@ Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 	else
 		width = $(".creator-content-wrapper .instance-wrapper").outerWidth()
 		if width < 400
-			maxUnfoldedCount = 3
+			maxUnfoldedCount = 2
 		else if width < 500
-			maxUnfoldedCount = 4
+			maxUnfoldedCount = 3
 		else if width < 600
-			maxUnfoldedCount = 5
+			maxUnfoldedCount = 4
 		else if width < 700
+			maxUnfoldedCount = 5
+		else if width < 800
 			maxUnfoldedCount = 6
 		else
 			maxUnfoldedCount = 7
@@ -70,5 +72,5 @@ Meteor.startup ->
 		if !Steedos.isMobile()
 			Workflow.renderListLayout localStorage.getItem("workflow_show_as") 
 			$(window).resize ->
-				Workflow.renderListLayout()
+				Workflow.renderListLayout localStorage.getItem("workflow_show_as") 
 				Workflow.checkInstanceMaxUnfoldedButtonsCount()
