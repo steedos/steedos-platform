@@ -58,6 +58,8 @@ Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 		else if width < 500
 			maxUnfoldedCount = 4
 		else if width < 600
+			maxUnfoldedCount = 5
+		else if width < 700
 			maxUnfoldedCount = 6
 		else
 			maxUnfoldedCount = 7
