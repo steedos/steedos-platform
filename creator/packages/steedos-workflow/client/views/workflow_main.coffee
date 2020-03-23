@@ -38,6 +38,9 @@ Template.workflow_main.helpers
 				FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box") + "/")
 		return false
 
+	isWorkflowSidebarOpen: ()->
+		return Session.get("isWorkflowSidebarOpen")
+
 Template.workflow_main.onCreated ->
 
 

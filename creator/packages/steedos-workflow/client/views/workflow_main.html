@@ -2,7 +2,7 @@
 
 	<!-- {{> workflowSidebar}} -->
 	<div class="content-wrapper">
-		<div class="workflow-main">
+		<div class="workflow-main {{#if isWorkflowSidebarOpen}}sidebar-open{{/if}}">
 			{{> instance_list_wrapper}}
 			{{#if instanceId}}
 			<div class="instance-wrapper">

@@ -10,6 +10,15 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
+	&.sidebar-open{
+		.instance-list-wrapper {
+			.instance-list-body{
+				.instance-list-content{
+					margin-left: 260px;
+				}
+			}
+		}
+	}
 }
 
 .instance-list-wrapper {
@@ -632,8 +641,7 @@ _:-ms-fullscreen,
 		.workflow-main {
 			.instance-list-wrapper {
 				display: block;
-				// right: 60%;
-				width: 450px;
+				right: 60%;
 				// margin: 10px 10px 10px 10px;
 				// border-radius: 5px;
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -642,9 +650,7 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				// width: 60%;
-				// left: 450px;
-				right: 0;
+				width: 60%;
 				transform: translate(0, 0);
 
 				margin: 0;
@@ -659,21 +665,43 @@ _:-ms-fullscreen,
 					}
 				}
 			}
+			&.sidebar-open{
+				.instance-list-wrapper {
+					right: 46%;
+					.instance-list-body{
+						.instance-list-sidebar{
+							width: 230px;
+						}
+						.instance-list-content{
+							margin-left: 230px;
+						}
+					}
+				}
+				.instance-wrapper {
+					width: 46%;
+				}
+			}
 		}
 		.workflow-main.instance-show {
 			.instance-list-wrapper {
 				display: block;
-				// right: 60%;
-				width: 450px;
+				right: 60%;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				// width: 60%;
-				// left: 40%;
-				left: 450px;
-				right: 0;
+				width: 60%;
+				left: 40%;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
+			}
+			&.sidebar-open{
+				.instance-list-wrapper {
+					right: 46%;
+				}
+				.instance-wrapper {
+					width: 46%;
+					left: 54%;
+				}
 			}
 		}
 	}
@@ -684,9 +712,7 @@ _:-ms-fullscreen,
 		.workflow-main {
 			.instance-list-wrapper {
 				display: block;
-				// right: 46%;
-				width: 700px;
-
+				right: 54%;
 				// margin: 10px 10px 10px 10px;
 				// border-radius: 5px;
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -695,9 +721,7 @@ _:-ms-fullscreen,
 			}
 			.instance-wrapper {
 				left: 100%;
-				// width: 46%;
-				// left: 700px;
-				right: 0;
+				width: 54%;
 				transform: translate(0, 0);
 
 				margin: 0;
@@ -712,21 +736,35 @@ _:-ms-fullscreen,
 					}
 				}
 			}
+			&.sidebar-open{
+				.instance-list-wrapper {
+					right: 50%;
+				}
+				.instance-wrapper {
+					width: 50%;
+				}
+			}
 		}
 		.workflow-main.instance-show {
 			.instance-list-wrapper {
 				display: block;
-				// right: 46%;
-				width: 700px;
+				right: 54%;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
 			}
 			.instance-wrapper {
-				// width: 46%;
-				// left: 54%;
-				left: 700px;
-				right: 0;
+				width: 54%;
+				left: 46%;
 				background: white;
 				transition: 0.3s ease-in-out, width 0.3s ease-in-out;
+			}
+			&.sidebar-open{
+				.instance-list-wrapper {
+					right: 50%;
+				}
+				.instance-wrapper {
+					width: 50%;
+					left: 50%;
+				}
 			}
 		}
 	}
