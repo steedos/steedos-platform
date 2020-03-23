@@ -13,153 +13,34 @@
 		{{/if}}
 		<div class="slds-button-group" role="group">
 			<!-- 传阅、取回、重定位、流程图四个按钮放外面，会同时出现的只有发送和传阅  -->
-			{{#if enabled_cc}}
-				<div class="slds-button slds-button--neutral slds-truncate btn-instance-cc">
-					<a href="javascript:void(0);" title="{{_ 'instance_cc_title'}}" class="">
-						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
-						<div class="record-edit-text slds-truncate" title="{{_ 'instance_cc_title'}}">{{_ 'instance_cc_title'}}</div>
+			{{#each mainButtons}}
+				<div class="slds-button slds-button--neutral slds-truncate {{classNames}}">
+					<a href="javascript:void(0);" title="{{name}}" class="">
+						<!-- <div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div> -->
+						<div class="record-edit-text slds-truncate" title="{{name}}">{{name}}</div>
 					</a>
 				</div>
-			{{/if}}
-			{{#if enabled_retrieve}}
-				<div class="slds-button slds-button--neutral slds-truncate btn-instance-retrieve">
-					<a href="javascript:void(0);" title="{{_ 'instance_retrieve'}}" class="">
-						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
-						<div class="record-edit-text slds-truncate" title="{{_ 'instance_retrieve'}}">{{_ 'instance_retrieve'}}</div>
-					</a>
-				</div>
-			{{/if}}
-			{{#if enabled_relocate}}
-				<div class="slds-button slds-button--neutral slds-truncate btn-instance-relocate">
-					<a href="javascript:void(0);" title="{{_ 'instance_relocate'}}" class="">
-						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
-						<div class="record-edit-text slds-truncate" title="{{_ 'instance_relocate'}}">{{_ 'instance_relocate'}}</div>
-					</a>
-				</div>
-			{{/if}}
-			{{#if enabled_workflow_chart}}
-				<div class="slds-button slds-button--neutral slds-truncate btn-workflow-chart">
-					<a href="javascript:void(0);" title="{{_ 'workflow_chart'}}" class="">
-						<div class="record-edit-icon">{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="edit"}}</div>
-						<div class="record-edit-text slds-truncate" title="{{_ 'workflow_chart'}}">{{_ 'workflow_chart'}}</div>
-					</a>
-				</div>
-			{{/if}}
+			{{/each}}
 			<!-- 其他按钮放折叠菜单里面  -->
-			<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
-				<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
-					{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
-					<span class="slds-assistive-text">Show More</span>
-				</button>
-				<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-					<ul class="slds-dropdown__list slds-show">
-						{{#if enabled_save}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-update" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_save'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_save'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_suggest}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-suggestion-toggle" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_suggestion_toggle'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_suggestion_toggle'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_return}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-return" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_return'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_return'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_reassign}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-reassign" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_reassign'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_reassign'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_delete}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remove" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_delete'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_delete'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_print}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-to-print" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_print'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_print'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_traces}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-trace-list" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_approval_history'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_approval_history'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_forward}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-forward" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_forward_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_forward_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_distribute}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-distribute" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_distribute_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_distribute_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_terminate}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-force-end" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_cancel'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_cancel'}}</span>
-								</a>
-							</li>
-						{{/if}}
-							<!--{{#if enabled_copy}}-->
-						<!--<button type="button" class="btn btn-default btn-instance-readonly-view-url-copy" data-toggle="tooltip" data-placement="bottom" data-clipboard-text="{{instance_readonly_view_url}}">-->
-						<!--<i class="ion ion-ios-copy"></i>-->
-						<!--<span>{{_ 'instance_readonly_view_url_copy'}}</span>-->
-						<!--</button>-->
-							<!--{{/if}}-->
-						{{#if enabled_related}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-related-instances" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_related_instances_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_related_instances_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_remind}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-remind" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_remind_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_remind_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_hide}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_hide_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_hide_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-						{{#if enabled_reopen}}
-							<li class="slds-dropdown__item crm-header-menu-item btn-instance-hide" role="presentation">
-								<a href="javascript:void(0);" title="{{_ 'instance_reopen_title'}}" class="" role="option" tabindex="-1">
-									<span>{{_ 'instance_reopen_title'}}</span>
-								</a>
-							</li>
-						{{/if}}
-					</ul>
+			{{#if foldedButtons.length}}
+				<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last">
+					<button class="slds-button slds-button_icon slds-button_icon-border-filled" data-toggle="dropdown" aria-haspopup="true" title="Show More">
+						{{> steedos_button_icon class="slds-button__icon" source="utility-sprite" name="down"}}
+						<span class="slds-assistive-text">显示更多</span>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
+						<ul class="slds-dropdown__list slds-show">
+							{{#each foldedButtons}}
+								<li class="slds-dropdown__item crm-header-menu-item {{classNames}}" role="presentation">
+									<a href="javascript:void(0);" title="{{name}}" class="" role="option" tabindex="-1">
+										<span>{{name}}</span>
+									</a>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
 				</div>
-			</div>
+			{{/if}}
 		</div>
 	</div>
 	<div class="pull-right">

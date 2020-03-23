@@ -45,15 +45,26 @@ Workflow.renderListLayout = (columns)->
 		else
 			Session.set("workflow_show_as", "2")
 
+Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
+	# 刷新或第一次进入时判断为手机，则不执行该函数，workflow_max_unfolded_buttons_count值保持为空值
+	maxUnfoldedCount = 3
+	if Steedos.isMobile()
+		# 这里只是PC上窗口变小为手机时的效果
+		maxUnfoldedCount = 2
+	else
+		width = $(".creator-content-wrapper .instance-wrapper").outerWidth()
+		if width < 400
+			maxUnfoldedCount = 3
+		else if width < 500
+			maxUnfoldedCount = 4
+		else
+			maxUnfoldedCount = 6
+	Session.set("workflow_max_unfolded_buttons_count", maxUnfoldedCount)
+
 Meteor.startup ->
 	Meteor.defer ->
-		# workflow_three_columns = localStorage.getItem("workflow_three_columns")
-		# if workflow_three_columns and workflow_three_columns == "off"
-		# 	$("body").removeClass("three-columns")
-		# else
-		# 	$("body").addClass("three-columns")
-		# Workflow.renderListLayout localStorage.getItem("workflow_show_as")
 		if !Steedos.isMobile()
 			Workflow.renderListLayout localStorage.getItem("workflow_show_as") 
 			$(window).resize ->
 				Workflow.renderListLayout()
+				Workflow.checkInstanceMaxUnfoldedButtonsCount()

@@ -1,4 +1,128 @@
-Template.instance_button.helpers
+getDefaultButtonsMap = ()->
+	# 默认传阅、取回、重定位、流程图四个按钮放外面，unfolded默认值为true
+	# 会同时出现的只有发送和传阅
+	# 其他按钮放折叠菜单里面
+	cc: 
+		name: t("instance_cc_title")
+		classNames: "btn-instance-cc"
+		enabled: false
+		unfolded: true
+	retrieve: 
+		name: t("instance_retrieve")
+		classNames: "btn-instance-retrieve"
+		enabled: false
+		unfolded: true
+	relocate: 
+		name: t("instance_relocate")
+		classNames: "btn-instance-relocate"
+		enabled: false
+		unfolded: true
+	workflow_chart: 
+		name: t("workflow_chart")
+		classNames: "btn-workflow-chart"
+		enabled: false
+		unfolded: true
+	save: 
+		name: t("instance_save")
+		classNames: "btn-instance-update"
+		enabled: false
+	suggest: 
+		name: t("instance_suggestion_toggle")
+		classNames: "btn-suggestion-toggle"
+		enabled: false
+	return:
+		name: t("instance_return")
+		classNames: "btn-instance-return"
+		enabled: false
+	reassign:
+		name: t("instance_reassign")
+		classNames: "btn-instance-reassign"
+		enabled: false
+	delete:
+		name: t("instance_delete")
+		classNames: "btn-instance-remove"
+		enabled: false
+	print:
+		name: t("instance_print")
+		classNames: "btn-instance-to-print"
+		enabled: false
+	traces:
+		name: t("instance_approval_history")
+		classNames: "btn-trace-list"
+		enabled: false
+	forward:
+		name: t("instance_forward_title")
+		classNames: "btn-instance-forward"
+		enabled: false
+	distribute:
+		name: t("instance_distribute_title")
+		classNames: "btn-instance-distribute"
+		enabled: false
+	terminate:
+		name: t("instance_cancel")
+		classNames: "btn-instance-force-end"
+		enabled: false
+	related:
+		name: t("instance_related_instances_title")
+		classNames: "btn-instance-related-instances"
+		enabled: false
+	remind:
+		name: t("instance_remind_title")
+		classNames: "btn-instance-remind"
+		enabled: false
+	hide:
+		name: t("instance_reopen_title")
+		classNames: "btn-instance-hide"
+		enabled: false
+	reopen:
+		name: t("instance_reopen_title")
+		classNames: "btn-instance-hide"
+		enabled: false
+
+getButtonEnabled = (_id, button)->
+	return instanceButtonHelpers["enabled_#{_id}"]()
+
+getButtonUnfolded = (_id, button)->
+	unfoldedFun = instanceButtonHelpers["unfolded_#{_id}"]
+	return if unfoldedFun then unfoldedFun() else button?.unfolded
+
+getResponsiveButtons = (buttons, maxUnfoldedCount)->
+	# 根据屏幕宽度实现响应式buttons，动态变更其unfolded属性值
+	_.forEach buttons, (item, key)->
+		item.unfolded = getButtonUnfolded(key, item)
+	
+	# 手机上maxUnfoldedCount为空，写死为2
+	unless maxUnfoldedCount
+		maxUnfoldedCount = 2
+
+	if maxUnfoldedCount
+		# 未配置maxUnfoldedCount时不做响应式变更
+		enabledButtonKeys = []
+		unfoldedButtonKeys = []
+		foldedButtonKeys = []
+		_.forEach buttons, (item, key)->
+			if item.enabled
+				enabledButtonKeys.push key
+				if item.unfolded
+					unfoldedButtonKeys.push key
+				else
+					foldedButtonKeys.push key
+		
+		newUnfoldedButtonKeys = []
+		# newFoldedButtonKeys = []
+		if unfoldedButtonKeys.length > maxUnfoldedCount
+			newUnfoldedButtonKeys = unfoldedButtonKeys.slice(0, maxUnfoldedCount)
+			# newFoldedButtonKeys = _.union unfoldedButtonKeys.slice(maxUnfoldedCount), foldedButtonKeys
+		else if unfoldedButtonKeys.length < maxUnfoldedCount
+			newUnfoldedButtonKeys = _.union unfoldedButtonKeys, foldedButtonKeys.slice(0, maxUnfoldedCount - unfoldedButtonKeys.length)
+
+		if newUnfoldedButtonKeys.length
+			_.forEach buttons, (item, key)->
+				item.unfolded = newUnfoldedButtonKeys.indexOf(key) > -1
+
+	return buttons
+
+instanceButtonHelpers =
 
 	enabled_save: ->
 		ins = WorkflowManager.getInstance();
@@ -270,10 +394,10 @@ Template.instance_button.helpers
 		return "[#{instanceName}](#{href})"
 
 	enabled_suggest: ->
-#		isShow = !ApproveManager.isReadOnly() || InstanceManager.isInbox();
-#		if isShow
-#			isShow = WorkflowManager.getInstance().state != "draft"
-#		return isShow
+		# isShow = !ApproveManager.isReadOnly() || InstanceManager.isInbox();
+		# if isShow
+		# 	isShow = WorkflowManager.getInstance().state != "draft"
+		# return isShow
 		return false
 
 	enabled_remind: ->
@@ -288,8 +412,8 @@ Template.instance_button.helpers
 		if ins.state != "pending"
 			return false
 
-#		if !Steedos.isPaidSpace()
-#			return false
+		# if !Steedos.isPaidSpace()
+		# 	return false
 
 		values = ins.values || new Object
 
@@ -388,7 +512,24 @@ Template.instance_button.helpers
 	enabled_workflow_chart: ()->
 		return !Steedos.isIE()
 
+Template.instance_button.helpers instanceButtonHelpers
+
+Template.instance_button.helpers
+
+	mainButtons: ()->
+		buttons = Template.instance().buttons.get()
+		result = _.filter buttons, (item, key)->
+			return item.enabled and item.unfolded
+		return result
+
+	foldedButtons: ()->
+		buttons = Template.instance().buttons.get()
+		result = _.filter buttons, (item, key)->
+			return item.enabled and !item.unfolded
+		return result
+
 Template.instance_button.onRendered ->
+	self = this
 	$('[data-toggle="tooltip"]').tooltip();
 	copyUrlClipboard = new Clipboard('.btn-instance-readonly-view-url-copy');
 
@@ -397,6 +538,21 @@ Template.instance_button.onRendered ->
 	copyUrlClipboard.on 'success', (e) ->
 		toastr.success(t("instance_readonly_view_url_copy_success"))
 		e.clearSelection()
+	
+	Meteor.defer ->
+		# 这里加Meteor.defer是因为Workflow.checkInstanceMaxUnfoldedButtonsCount依赖了界面dom加载完成
+		if !Steedos.isMobile()
+			Workflow.checkInstanceMaxUnfoldedButtonsCount()
+		self.autorun ()->
+			buttons = getDefaultButtonsMap()
+			_.forEach buttons, (item, key)->
+				item.enabled = getButtonEnabled(key, item)
+			buttons = getResponsiveButtons buttons, Session.get("workflow_max_unfolded_buttons_count")
+			self.buttons.set buttons
+
+Template.instance_button.onCreated ->
+	self = this
+	self.buttons = new ReactiveVar()
 
 Template.instance_button.onDestroyed ->
 	Template.instance_button.copyUrlClipboard?.destroy();
