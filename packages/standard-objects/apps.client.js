@@ -1,6 +1,18 @@
 Creator.openApp = function(app_id, event){
-    app = Creator.getApp(app_id)
-    if(app && app.on_click){
+    var app = Creator.getApp(app_id)
+    if(!app){
+        /* 执行A标签浏览器默认行为 */
+        return true;
+    }
+    if(app.is_use_iframe){
+        /*
+            如果需要实现单点登录，可以定义app.on_click属性写脚本代码，它会在路由"/app/xxx"中执行
+            详情请见源码中Template.creator_app_iframe.onRendered相关代码
+        */
+        FlowRouter.go("/app/" + app_id);
+        event.preventDefault();
+    }
+    else if(app.on_click){
         /*
             这里执行的是一个不带参数的闭包函数，用来避免变量污染
             on_click脚本中可以直接调用变量app_id、app、event等上面字义过的变量
