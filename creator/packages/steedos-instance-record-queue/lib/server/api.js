@@ -51,7 +51,6 @@ InstanceRecordQueue.Configure = function (options) {
 			}).forEach(function (f) {
 				var newFile = new FS.File(),
 					cmsFileId = Creator.getCollection('cms_files')._makeNewID();
-
 				newFile.attachData(f.createReadStream('instances'), {
 					type: f.original.type
 				}, function (err) {
@@ -70,25 +69,32 @@ InstanceRecordQueue.Configure = function (options) {
 					};
 
 					newFile.metadata = metadata;
-					var fileObj = cfs.files.insert(newFile);
-					if (fileObj) {
+					cfs.files.insert(newFile);
+				});
+				Meteor.wrapAsync(function (newFile, Creator, cmsFileId, objectName, newRecordId, spaceId, f, cb) {
+					newFile.once('stored', function (storeName) {
 						Creator.getCollection('cms_files').insert({
 							_id: cmsFileId,
 							parent: {
 								o: objectName,
 								ids: [newRecordId]
 							},
-							size: fileObj.size(),
-							name: fileObj.name(),
-							extention: fileObj.extension(),
+							size: newFile.size(),
+							name: newFile.name(),
+							extention: newFile.extension(),
 							space: spaceId,
-							versions: [fileObj._id],
+							versions: [newFile._id],
 							owner: f.metadata.owner,
 							created_by: f.metadata.owner,
 							modified_by: f.metadata.owner
-						})
-					}
-				})
+						});
+
+						cb(null);
+					});
+					newFile.once('error', function (error) {
+						cb(error);
+					});
+				})(newFile, Creator, cmsFileId, objectName, newRecordId, spaceId, f);
 			})
 		} else if (sync_attachment == "all") {
 			var parents = [];
@@ -132,29 +138,35 @@ InstanceRecordQueue.Configure = function (options) {
 					};
 
 					newFile.metadata = metadata;
-					var fileObj = cfs.files.insert(newFile);
-					if (fileObj) {
-
+					cfs.files.insert(newFile);
+				});
+				Meteor.wrapAsync(function (newFile, Creator, cmsFileId, f, cb) {
+					newFile.once('stored', function (storeName) {
 						if (f.metadata.current == true) {
 							Creator.getCollection('cms_files').update(cmsFileId, {
 								$set: {
-									size: fileObj.size(),
-									name: fileObj.name(),
-									extention: fileObj.extension(),
+									size: newFile.size(),
+									name: newFile.name(),
+									extention: newFile.extension(),
 								},
 								$addToSet: {
-									versions: fileObj._id
+									versions: newFile._id
 								}
-							})
+							});
 						} else {
 							Creator.getCollection('cms_files').update(cmsFileId, {
 								$addToSet: {
-									versions: fileObj._id
+									versions: newFile._id
 								}
-							})
+							});
 						}
-					}
-				})
+
+						cb(null);
+					});
+					newFile.once('error', function (error) {
+						cb(error);
+					});
+				})(newFile, Creator, cmsFileId, f);
 			})
 		}
 	}
