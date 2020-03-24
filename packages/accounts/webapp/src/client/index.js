@@ -1,6 +1,8 @@
 import ClientClass4 from './client4.js';
 import { accountsClient, accountsRest } from '../accounts';
 import { localizeMessage } from '../utils/utils';
+import store from '../stores/redux_store';
+import { requests } from '../actions/requests'
 const Client4 = new ClientClass4();
 
 const getCookie = (name) => {
@@ -14,7 +16,6 @@ const getCookie = (name) => {
   }
 
 const Login = async (data, history, tenant, location, action)=>{
-
     if(tenant._id){
       data.spaceId = tenant._id
     }
@@ -44,24 +45,29 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
     const user = await accountsRest.authFetch( 'user', {});
     if(action && action.endsWith('SignupAccount')){
       if(!user.name){
-        return history.push('/set-name' + location.search);
+        return LoginAfterHistoryPush(history, '/set-name' + location.search);
       }else {
         if(user.spaces.length > 0){
-          return history.push('/choose-tenant' + location.search);
+          return LoginAfterHistoryPush(history, '/choose-tenant' + location.search);
         }
       }
     }
 
     if(user.password_expired){
-      return history.push('/update-password' + location.search, {error: localizeMessage('accounts.passwordExpired')});
+      return LoginAfterHistoryPush(history, '/update-password' + location.search, {error: localizeMessage('accounts.passwordExpired')});
     }
 
     if (tenant.enable_create_tenant && user.spaces.length == 0)
     {
-      return history.push('/create-tenant' + location.search);
+      return LoginAfterHistoryPush(history, '/create-tenant' + location.search);
     }
 
     goInSystem(history, location, result.tokens.accessToken);
+}
+
+const LoginAfterHistoryPush = (history, url, state) => {
+  store.dispatch(requests("no_started"));
+  history.push(url, state);
 }
 
 const goInSystem = (history, location, accessToken, root_url, canGoHome)=>{

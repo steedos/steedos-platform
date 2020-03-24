@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getTenant, getSettings } from '../selectors';
 import FormError from './FormError';
 import { Login } from '../client'
+import { requests } from '../actions/requests'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -29,7 +30,7 @@ const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/reset-password", search: props.location.search}} {...props} ref={ref} />
 ));
 
-const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
+const LoginPassword = ({ history, settings, tenant, location, title, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [enableCode] = useState('');
@@ -58,8 +59,10 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
         password,
         code,
       }
+      requestLoading();
       await Login(data, history, tenant, location)
     } catch (err) {
+      requestUnLoading();
       setError(err.message);
     }
   };
@@ -126,8 +129,15 @@ const LoginPassword = ({ history, settings, tenant, location, title }: any) => {
 function mapStateToProps(state: any) {
   return {
     tenant: getTenant(state),
-    settings: getSettings(state),
+    settings: getSettings(state)
   };
 }
 
-export default connect(mapStateToProps)(LoginPassword);
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+  return ({
+    requestLoading: () => dispatch(requests("started")),
+    requestUnLoading: () => dispatch(requests("no_started")),
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPassword);

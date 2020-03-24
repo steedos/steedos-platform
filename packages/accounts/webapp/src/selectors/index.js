@@ -12,3 +12,7 @@ export function getTenant(state) {
         tenant.name = "Steedos"
     return tenant;
 }
+
+export function getRequests(state){
+    return state.requests
+}

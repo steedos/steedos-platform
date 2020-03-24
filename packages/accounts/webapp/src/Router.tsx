@@ -24,6 +24,7 @@ import Title from './components/Title';
 import GoBack from './components/GoBack';
 import SetName from './components/SetName';
 import GlobalMessage from './components/GlobalMessage';
+import Loading from './components/Loading';
 import theme from './theme';
 
 
@@ -84,6 +85,7 @@ const Router = ({tenant}:any) => {
     <HashRouter basename="">
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
+          <Loading></Loading>
           <GlobalMessage></GlobalMessage>
           <Grid className={classes.container} container id="container">
             <Grid item xs={12}>

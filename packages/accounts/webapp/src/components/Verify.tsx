@@ -8,6 +8,8 @@ import { accountsRest } from '../accounts';
 import FormError from './FormError';
 import { Login, ApplyCode } from '../client'
 import { useCountDown } from "./countdown";
+import { requests } from '../actions/requests';
+
 const totalSeconds = 60;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -69,7 +71,7 @@ const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
 };
 
 
-const Verify = ({ match, settings, tenant, history, location, setState }: any) => {
+const Verify = ({ match, settings, tenant, history, location, setState, requestLoading, requestUnLoading }: any) => {
   // const email = location && location.state ? location.state.email : '';
   const _token = match.params.token;
   const classes = useStyles();
@@ -97,9 +99,11 @@ const Verify = ({ match, settings, tenant, history, location, setState }: any) =
         token: token,
         token_code: code.trim(),
       }
+      requestLoading();
       await Login(data, history, tenant, location, action);
       setCode('');
     } catch (err) {
+      requestUnLoading();
       setCode('');
       setError(err.message);
     }
@@ -204,4 +208,11 @@ function mapStateToProps(state: any) {
   };
 }
 
-export default connect(mapStateToProps)(Verify);
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+  return ({
+    requestLoading: () => dispatch(requests("started")),
+    requestUnLoading: () => dispatch(requests("no_started")),
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Verify);

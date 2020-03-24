@@ -18,6 +18,9 @@ const initialStore = {
         translations: {
             en: en
         }
+    },
+    requests: {
+        status: "not_started"
     }
 }
 
