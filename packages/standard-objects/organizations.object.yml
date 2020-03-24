@@ -91,7 +91,7 @@ fields:
   is_company:
     label: 分部级
     type: boolean
-    hidden: false
+    hidden: true
     index: true
     name: is_company
     omit: true
