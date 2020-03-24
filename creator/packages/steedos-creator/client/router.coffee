@@ -41,7 +41,7 @@ checkAppPermission = (context, redirect)->
 	app_id = context.params.app_id
 	if app_id == "admin" || app_id == "-"
 		return
-	apps = _.pluck(Creator.getVisibleApps(true),"_id")
+	apps = _.pluck(Creator.getVisibleApps(true, true),"_id")
 	if apps.indexOf(app_id) < 0
 		console.log(app_id + " app access denied")
 		Session.set("app_id", Creator.getVisibleApps(true)[0]._id)
@@ -89,10 +89,14 @@ FlowRouter.route '/app/:app_id',
 		if (app_id != "-")
 			Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
+		app = Creator.getApp(app_id)
 		if app_id is "meeting"
 			FlowRouter.go('/app/' + app_id + '/meeting/calendar')
 		else
-			main = 'creator_app_home'
+			if app and app.is_use_iframe
+				main = 'creator_app_iframe'
+			else
+				main = 'creator_app_home'
 			BlazeLayout.render Creator.getLayout(),
 				main: main
 

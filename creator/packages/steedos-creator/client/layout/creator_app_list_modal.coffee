@@ -4,7 +4,8 @@ Template.creator_app_list_modal.helpers Creator.helpers
 
 Template.creator_app_list_modal.helpers
 	apps: ()->
-		return Creator.getVisibleApps(true)
+		includeEmptyObjectsApp = !Steedos.isMobile()
+		return Creator.getVisibleApps(true, includeEmptyObjectsApp)
 
 	app_objects: ()->
 		objects = []
