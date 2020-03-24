@@ -33,6 +33,7 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular@1.6.1');
 	api.use('steedos:base');
 	api.use('steedos:api-authenticate-user');
+	api.use('steedos:huaweipush');
 
 	api.addFiles('checkNpm.js', 'server');
 
