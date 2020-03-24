@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "8e7569a8537ace0253d0a79f493df5d9a8fb21bb.js",
+      "path": "385beb2d77b93688f63567575cfc41daeecea548.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/8e7569a8537ace0253d0a79f493df5d9a8fb21bb.js?meteor_js_resource=true",
-      "size": 11410935,
-      "hash": "8e7569a8537ace0253d0a79f493df5d9a8fb21bb",
-      "sri": "HFqzXxKHo/I8KRwK3qQA2cMvaoOVQ4/hdhCZHFc7lviUO78beHqEIzu9ZLcSVx7Q2CLkvXDTFP5u6DN5+UdkJQ=="
+      "url": "/__cordova/385beb2d77b93688f63567575cfc41daeecea548.js?meteor_js_resource=true",
+      "size": 11411002,
+      "hash": "385beb2d77b93688f63567575cfc41daeecea548",
+      "sri": "aYpE/a2lMV59nx9robiGyNcxuSGqqSR1/XkbD03vB8obKDB+o365cyKCTWtlsHDLr/eJmLGpfGbEsIEmONc56g=="
     },
     {
-      "path": "8e7569a8537ace0253d0a79f493df5d9a8fb21bb.stats.json",
+      "path": "385beb2d77b93688f63567575cfc41daeecea548.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/8e7569a8537ace0253d0a79f493df5d9a8fb21bb.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/385beb2d77b93688f63567575cfc41daeecea548.stats.json?meteor_js_resource=true",
       "size": 181891,
-      "hash": "95f354abb811d6ee98a3a2e99813f6f5314aa435",
-      "sri": "IwzIvF1qxA2cL6aSRxDYeHb3YsKvoAuUh5TgMIuIKLvXSptdKgfPdNEN72iWgplJnG8o98CMVTSxNvclOlMk5A=="
+      "hash": "8a626e9ce0f6cdc68ca283dac8d7a229aa426f9e",
+      "sri": "rDq0VMkLUYmlTW2EqRHE5r8bqEXhVRUK4tM3isbCqA9aor+a0EpjpDzwGWfRCbjCV20PZZtSjOhdPmR3uvaDbA=="
     },
     {
       "path": "packages/accounts-ui/login_buttons.less",
@@ -5111,7 +5111,7 @@
     }
   ],
   "cordovaCompatibilityVersions": {
-    "android": "1922e308b8e8fca6e967789144d92dd3952988c8",
-    "ios": "75d9f5011e3a111fc8127d49bae4a5c07bc8029f"
+    "android": "4199e3ea375e62489d4d8b5636d35cdcff9d18f1",
+    "ios": "38bb91a84bf0bda400a4f858bfd70904cdd5f56f"
   }
 }
