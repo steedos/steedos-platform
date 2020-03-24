@@ -35,9 +35,9 @@ const Loading = ({ requests }: any) =>{
 
   return (
     <div>
-      {open && <Backdrop className={classes.backdrop} open={open}>
+      <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress />
-      </Backdrop>}
+      </Backdrop>
     </div>
   );
 }
