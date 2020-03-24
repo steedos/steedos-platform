@@ -68,7 +68,7 @@
 			</div>
 			<div class="slds-grid">
 				<div class="slds-col slds-align-middle">
-					<p class="slds-text-body_small tabular_info"></p>
+					<p class="slds-text-body_small tabular_info">{{#if recordsTotalCount}}{{_ "creator_list_item_counts" recordsTotalCount}}{{else}}{{_ "creator_list_item_counts" 0}}{{/if}}</p>
 				</div>
 				<div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink grid-search-div">
 					<div>

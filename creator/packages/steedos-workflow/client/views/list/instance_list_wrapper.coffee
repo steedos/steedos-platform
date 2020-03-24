@@ -58,6 +58,9 @@ Template.instance_list_wrapper.helpers
 	isWorkflowShowAsItemSelected: (item)->
 		return Session.get("workflow_show_as") == item
 
+	recordsTotalCount: ()->
+		return Tabular.tableRecords.find().fetch()[0]?.recordsTotal
+
 Template.instance_list_wrapper.onCreated ->
 	self = this;
 	self.btnToggleColumnsIcon = new ReactiveVar("expand_alt")
