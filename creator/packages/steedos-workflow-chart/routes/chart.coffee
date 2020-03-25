@@ -59,17 +59,8 @@ FlowversionAPI =
 			stepName = ""
 		return stepName
 
-	generateStepsGraphSyntax: (steps, currentStepId, isConvertToString)->
-		# 该函数返回以下格式的graph脚本
-		# graphSyntax = '''
-		# 	graph LR
-		# 		A-->B
-		# 		A-->C
-		# 		B-->C
-		# 		C-->A
-		# 		D-->C
-		# 	'''
-		nodes = ["graph TD"]
+	generateStepsGraphSyntax: (steps, currentStepId, isConvertToString, direction)->
+		nodes = ["graph #{direction}"]
 		steps.forEach (step)->
 			lines = step.lines
 			if lines?.length
@@ -286,17 +277,8 @@ FlowversionAPI =
 								tempHandlerNames.push approve.handler_name
 					nodes.push "	click #{toApproveId} callback \"#{tempHandlerNames.join(",")}\""
 
-	generateTracesGraphSyntax: (traces, isConvertToString)->
-		# 该函数返回以下格式的graph脚本
-		# graphSyntax = '''
-		# 	graph LR
-		# 		A-->B
-		# 		A-->C
-		# 		B-->C
-		# 		C-->A
-		# 		D-->C
-		# 	'''
-		nodes = ["graph TD"]
+	generateTracesGraphSyntax: (traces, isConvertToString, direction)->
+		nodes = ["graph #{direction}"]
 		lastTrace = null
 		lastApproves = []
 		traces.forEach (trace)->
@@ -356,6 +338,11 @@ FlowversionAPI =
 	sendHtmlResponse: (req, res, type)->
 		query = req.query
 		instance_id = query.instance_id
+		direction = query.direction || 'TD'
+		allowDirections = ['TB','BT','RL','LR','TD'];
+
+		if !_.include(allowDirections, direction)
+			return @writeResponse(res, 500, "Invalid direction. The value of direction should be in ['TB', 'BT', 'RL', 'LR', 'TD']");
 
 		unless instance_id
 			FlowversionAPI.sendInvalidURLResponse res 
@@ -378,7 +365,7 @@ FlowversionAPI =
 				if instance
 					traces = instance.traces
 					if traces?.length
-						graphSyntax = this.generateTracesGraphSyntax traces
+						graphSyntax = this.generateTracesGraphSyntax traces, false, direction
 					else
 						error_msg = "没有找到当前申请单的流程步骤数据"
 				else
@@ -390,7 +377,7 @@ FlowversionAPI =
 					flowversion = WorkflowManager.getInstanceFlowVersion(instance)
 					steps = flowversion?.steps
 					if steps?.length
-						graphSyntax = this.generateStepsGraphSyntax steps,currentStepId
+						graphSyntax = this.generateStepsGraphSyntax steps,currentStepId,false, direction
 					else
 						error_msg = "没有找到当前申请单的流程步骤数据"
 				else
