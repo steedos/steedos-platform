@@ -662,6 +662,10 @@
       "path": "packages/steedos_api-authenticate-user.js"
     },
     {
+      "sourceMap": "packages/steedos_huaweipush.js.map",
+      "path": "packages/steedos_huaweipush.js"
+    },
+    {
       "sourceMap": "packages/steedos_api.js.map",
       "path": "packages/steedos_api.js"
     },

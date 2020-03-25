@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "16c60aa4b03a403ca72fbdb17796e85e46fd5c28.js",
+      "path": "eb988461389fbca6068cb400bf654f89077f0603.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/16c60aa4b03a403ca72fbdb17796e85e46fd5c28.js?meteor_js_resource=true",
-      "size": 8180528,
-      "hash": "16c60aa4b03a403ca72fbdb17796e85e46fd5c28",
-      "sri": "es+/4lQDW5SOSbUCevHk52IPtv9pd53JEhld+akWqhwSTidHnZgLtv5ogiCX3S/Is2jfezn2N+MB5mBd1eRfAA=="
+      "url": "/eb988461389fbca6068cb400bf654f89077f0603.js?meteor_js_resource=true",
+      "size": 8203614,
+      "hash": "eb988461389fbca6068cb400bf654f89077f0603",
+      "sri": "F00Yv14wWmfN6ifNxtHDXNxPOQn1BCr3Z1BdqdrX9iy/lPd7mnSV0x1aXP2PPnF/osy4flmtC0S2TCAY7yJPmQ=="
     },
     {
-      "path": "16c60aa4b03a403ca72fbdb17796e85e46fd5c28.stats.json",
+      "path": "eb988461389fbca6068cb400bf654f89077f0603.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/16c60aa4b03a403ca72fbdb17796e85e46fd5c28.stats.json?meteor_js_resource=true",
-      "size": 180074,
-      "hash": "809734de16382a624e4ed95944597e3171181292",
-      "sri": "HjQi4mcYfDMmFmIWi7dX/OaAXU3Nqlfs+Vm1r+KofFPGGHhEslGmKOr8pYwdLwLVngwGf1tdHOKgXBSjOtexNg=="
+      "url": "/eb988461389fbca6068cb400bf654f89077f0603.stats.json?meteor_js_resource=true",
+      "size": 180241,
+      "hash": "ade62a8f2ff9d3404babea228137750f342eecb8",
+      "sri": "UUHx/XexXoTbyTeRxK4mHCFJt8K1WRlrL5Q666Kxpemz6U+thYV1sqHvnldnhslafwiubjSUtK4ovpr8cUVudQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3432,14 +3432,14 @@
       "sri": "icZXWHyR3Vlehv0YYyYu5HoCVWUOTkrG5EfAPM51WF9yPT0oWuOCxE1Dw47vHp8HbOXsxiLN2sh9yQxeeW13xw=="
     },
     {
-      "path": "c9ff895fb4c34640e4936cda1befec1a012c6f81.css",
+      "path": "7b6dfcdf164dffb35417d2c5119ceaf3ccedc2c8.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/c9ff895fb4c34640e4936cda1befec1a012c6f81.css?meteor_css_resource=true",
-      "size": 1644191,
-      "hash": "c9ff895fb4c34640e4936cda1befec1a012c6f81",
-      "sri": "UT2CvMn+PdiDzeNCTxpQnDa6B6CVQ3eX5utz3+kI346QK4dyHv+6TjcSebKB9/AZyozjmSAHwedUgRGr7tkUGQ=="
+      "url": "/7b6dfcdf164dffb35417d2c5119ceaf3ccedc2c8.css?meteor_css_resource=true",
+      "size": 1645180,
+      "hash": "7b6dfcdf164dffb35417d2c5119ceaf3ccedc2c8",
+      "sri": "bpcVIJxc5P7FWcA+c1/H1VoLpw+951kkT5gFVmcHh3VeDq4JCRaLnj5SsVAIMQRo1dK3eghk1eCYjKsQZjG7Tg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -4967,9 +4967,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/doctype-sprite/svg/symbols-rtl.svg",
-      "size": 32959,
-      "hash": "39ed46af81b5c5c0463699f2ee59782f77bebaa9",
-      "sri": "O0aqdvu/xPpJPKg+vOesOyKiK+zBmcUCWMf0r4JgUdhiOJXhX0KycZ48F0g7xhcfWtK2MJtmmDHoaLEmyqOZGw=="
+      "size": 33629,
+      "hash": "cb498bb70d0fadd373116b5e6253434cb71f3c40",
+      "sri": "nPLGOfhYz07/mi2/I4nsDl6GEZQTyjTxwyPj/nOAGhue63nw8couLg4SzeLYxaItgVlIvv732EzX3utJMkn6vQ=="
     },
     {
       "path": "assets/icons/doctype-sprite/svg/symbols.svg",
@@ -4977,9 +4977,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
-      "size": 32764,
-      "hash": "89c0ac56404619d4dcfd94560f53a8f2ed43ae61",
-      "sri": "YMLDZE8Sz0LgmbidBMXmsInPCBgYNB6vQZLG0sPVVlH5uT/FZbWHKDuR2bUKPC7eYomC8SkH1T3MxJEUrEMX/Q=="
+      "size": 33434,
+      "hash": "eb3b408f24d59da23ae179582675c44b59f3c80a",
+      "sri": "f258Jci5547Gg1gZ0+3kPicLH4bad65cUTFLWEJyUxN6j4HK/U2nyTuGpFE+vC/QobHD77bDbiPcyJEea4QEpg=="
     },
     {
       "path": "assets/icons/standard-sprite/svg/symbols-rtl.svg",
@@ -4987,9 +4987,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard-sprite/svg/symbols-rtl.svg",
-      "size": 178389,
-      "hash": "16e7de698c336c1eacd8b5636dfd203a76616863",
-      "sri": "QNY38QTVyceqOEO6A7+BQwTBsDgbmDvGRABkiEqJQgyZl7AWqTGjvuzxJPxIxf7B75Ae8UPku/EtIwS6Kd+Yrg=="
+      "size": 181139,
+      "hash": "f45637e10395702d058dc4b518d86f90c02867ba",
+      "sri": "4R3G7LNPrYj8StykVvIeA/FrR3M0ys5M5H/IFKiwJX0b1Zp0Cag63my+NwHhs0xp7rO1ckWWtfjT9uh7CbCmFQ=="
     },
     {
       "path": "assets/icons/standard-sprite/svg/symbols.svg",
@@ -4997,9 +4997,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard-sprite/svg/symbols.svg",
-      "size": 177915,
-      "hash": "c02099bd51dce6d0e6a95c759666ce2bd2da12d5",
-      "sri": "iz0LE+YJS+W+pUPJt0s6RPfB/8OMvqFpMYc/rDxrvW8UsH3IPG2pUmCOVAW4e176Fu8YyjnEBRKg65hJLIEtHQ=="
+      "size": 180665,
+      "hash": "d0dda383f9471c5baf54ec8424631374c8383dd3",
+      "sri": "k45a6yn7p1rW+szFGDqu3diItzZV7qKPLC1FaD2a1G0B8Rx7wFRM9XGvi/3kPTJOlGSvHJ5mihGnwVV8YHbqBg=="
     },
     {
       "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
@@ -5007,9 +5007,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
-      "size": 211968,
-      "hash": "196a1a079e433994a3ace743820d8ce85b560083",
-      "sri": "0U1eEJEySmuzSCZMTtDxnqHEcRVEBVDajsBOtbWL/7RUxuRtbOibPmjsAfSVcljYDHXXVj2fJ9KGDg4+k38JDA=="
+      "size": 215506,
+      "hash": "767545e5242766c3e2562651bf684028963e90ac",
+      "sri": "M67aobdeIb9o8pdRMFW6quDQBVe9HHRq9W6Lt8okldYNKeq3gizXyoVOp7UgEVt0ZMKNXdpwv/eQV8WCKabCPA=="
     },
     {
       "path": "assets/icons/utility-sprite/svg/symbols.svg",
@@ -5017,9 +5017,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility-sprite/svg/symbols.svg",
-      "size": 211783,
-      "hash": "c776eb8bedb31cc862ecbf97bae026fbf31f247b",
-      "sri": "HjcC8j5pbBwHB/DF6LtDqSHNhuFBhOCnxoxUzuX3+PrCyd2mgVG+GEwc3PvMU4mmb2ctnMkaHmcu8ACcY40D/g=="
+      "size": 215327,
+      "hash": "4923d7ff0bb9d79747dcd23981671ade15578ef5",
+      "sri": "ChzeuvU2nbDADlrTROXbS7MXWeSnyHlNiZH6lvLzyCHQtPT2n1UMPm5o0OhKbxKTa48z9uoOASyeViRNYp7n1Q=="
     },
     {
       "path": "app/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",

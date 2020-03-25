@@ -72,6 +72,7 @@ approveManager = Package['steedos:workflow'].approveManager;
 stepManager = Package['steedos:workflow'].stepManager;
 flowManager = Package['steedos:workflow'].flowManager;
 formManager = Package['steedos:workflow'].formManager;
+HuaweiPush = Package['steedos:huaweipush'].HuaweiPush;
 meteorBabelHelpers = Package['babel-runtime'].meteorBabelHelpers;
 Promise = Package.promise.Promise;
 Blaze = Package.ui.Blaze;
