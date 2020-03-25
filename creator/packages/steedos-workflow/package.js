@@ -68,6 +68,7 @@ Package.onUse(function(api) {
 
 	// api.addFiles('server/routes_middleware_config.coffee', 'server');
 
+	api.addFiles('lib/URI.js');
 	// COMMON
 	api.addFiles('lib/collection_helpers.js');
 
