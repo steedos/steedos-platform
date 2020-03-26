@@ -135,14 +135,19 @@ function sendPushs(message, from, to){
         "createdAt" : now,
         "createdBy" : "<SERVER>",
         "from" : appName,
-        "title" : message.body, //TODO
-        "text" : message.name, //TODO
+        "title" : message.body,
+        "text" : message.name,
         "payload" : {
             "space" : message.space,
-            [message.related_to.o] : message.related_to.ids[0],
-            "host" : Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
+            "host" : Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1),
         }
     }
+
+    if(message.space && message.related_to && message.related_to.o && message.related_to.ids && message.related_to.ids.length > 0){
+        data.payload.related_to = message.related_to
+        data.payload.url = "/app/-/"+message.related_to.o+"/view/" + message.related_to.ids[0]+"?X-Space-Id="+message.space
+    }
+
     if(message.badge > -1){
         data.badge = message.badge
     }
