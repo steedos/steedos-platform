@@ -36,13 +36,6 @@ Template.instance_pick_approve_users.helpers
 
 			fs.autoform.type = "selectuser"
 
-			fs.beforeOpenFunction = (event, template)->
-				company_id = WorkflowManager.getInstance()?.company_id
-				if company_id
-					company = Creator.odata.get("company", company_id, "organization")
-					if company.organization
-						event.currentTarget.dataset.rootOrg = company.organization
-
 			schema[s._id] = fs;
 
 		return new SimpleSchema(schema)
