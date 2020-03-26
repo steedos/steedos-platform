@@ -251,11 +251,11 @@ if Meteor.isServer
 			return n.admin_menus and n._id != 'admin'
 		), 'sort'
 		otherMenus = _.flatten(_.pluck(otherMenuApps, "admin_menus"))
-		# 菜单有三部分组成设置APP菜单、其他APP菜单以及about菜单
+		# 菜单有三部分组成，设置APP菜单、其他APP菜单以及about菜单
 		allMenus = _.union(adminMenus, otherMenus, [aboutMenu])
 		if isSpaceAdmin
 			# 工作区管理员有全部菜单功能
-			return allMenus
+			result = allMenus
 		else
 			currentPsetNames = psets.map (n) ->
 				return n.name
@@ -266,7 +266,9 @@ if Meteor.isServer
 					return true
 				# 否则取当前用户的权限集与menu菜单要求的权限集对比，如果交集大于1个则返回true
 				return _.intersection(currentPsetNames, psetsMenu).length
-			return menus
+			result = menus
+		
+		return _.sortBy(result,"sort")
 
 	findOne_permission_object = (permission_objects, object_name, permission_set_id)->
 
