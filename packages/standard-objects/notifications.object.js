@@ -104,5 +104,77 @@ Meteor.publish('my_notifications', function(spaceId){
     })
 });
 
+/**
+ * message: {name, body, related_to, related_name, from, space}
+ * from: userId
+ * to: [userId]
+ */
+Creator.addNotifications = function(message, from, to){
 
+    if(!_.isArray(to) && _.isString(to)){
+        to = [to]
+    }
 
+    try {
+        sendNotifications(message, from, to);
+    } catch (error) {
+        console.error("通知数据插入失败，错误信息：", error);
+    }
+
+    try {
+        sendPushs(message, from, to)
+    } catch (error) {
+        console.error("推送数据插入失败，错误信息：", error);
+    }
+}
+
+function sendPushs(message, from, to){
+    const appName = 'workflow'
+    let now = new Date();
+    let data = {
+        "createdAt" : now,
+        "createdBy" : "<SERVER>",
+        "from" : appName,
+        "title" : message.body, //TODO
+        "text" : message.name, //TODO
+        "payload" : {
+            "space" : message.space,
+            [message.related_to.o] : message.related_to.ids[0],
+            "host" : Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
+        }
+    }
+    if(message.badge > -1){
+        data.badge = message.badge
+    }
+    
+    _.each(to, function(toUserId){
+        if(toUserId){
+            try {
+                Push.send(Object.assign({}, data, {query: {"userId": toUserId,"appName": appName}}))
+            } catch (error) {
+                console.error("推送数据插入失败，错误信息：", error);
+            }
+        }
+    })
+}
+
+function sendNotifications(message, from, to){
+    let now = new Date();
+    const collection = Creator.getCollection("notifications");
+    let bulk = collection.rawCollection().initializeUnorderedBulkOp();
+
+    let doc = Object.assign({
+        created: now,
+        modified: now,
+        created_by: from,
+        modified_by: from
+    }, message)
+
+    _.each(to, function(userId){
+        bulk.insert(Object.assign({}, doc, {_id: collection._makeNewID(), owner: userId}));
+    })
+
+    bulk.execute().catch(function (error) {
+        console.error("通知数据插入失败，错误信息：", error);
+    });
+}

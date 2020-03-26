@@ -25,11 +25,7 @@ var addNotifications = function(userId, doc, assignees){
         from: userId,
         space: doc.space
     };
-    var collection = Creator.getCollection("notifications");
-    assignees.forEach(function(assignee){
-        notificationDoc.owner = assignee;
-        collection.insert(notificationDoc);
-    });
+    Creator.addNotifications(notificationDoc, userId, assignees);
 }
 
 var removeNotifications = function(doc, assignees){

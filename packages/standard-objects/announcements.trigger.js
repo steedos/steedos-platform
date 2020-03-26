@@ -1,7 +1,6 @@
 const _ = require("underscore");
 
 const addNotifications = function (userId, doc, members) {
-    // members = _.difference(members, [userId]);
     if (!members.length) {
         return;
     }
@@ -13,7 +12,6 @@ const addNotifications = function (userId, doc, members) {
             }
         });
     const notificationTitle = fromUser.name;
-    const now = new Date();
     let notificationDoc = {
         name: notificationTitle,
         body: doc.name,
@@ -23,23 +21,9 @@ const addNotifications = function (userId, doc, members) {
         },
         related_name: doc.name,
         from: userId,
-        space: doc.space,
-        created: now,
-        modified: now,
-        created_by: userId,
-        modified_by: userId
+        space: doc.space
     };
-    const collection = Creator.getCollection("notifications");
-    let bulk = collection.rawCollection().initializeUnorderedBulkOp();
-    members.forEach(function (member) {
-        let bulkDoc = _.clone(notificationDoc);
-        bulkDoc._id = collection._makeNewID();
-        bulkDoc.owner = member;
-        return bulk.insert(bulkDoc);
-    });
-    return bulk.execute().catch(function (error) {
-        console.error("公告通知数据插入失败，错误信息：", error);
-    });
+    Creator.addNotifications(notificationDoc, userId, members);
 }
 
 const removeNotifications = function (doc, members) {
