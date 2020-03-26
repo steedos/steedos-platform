@@ -263,6 +263,8 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->
+		if queryParams["X-Space-Id"]
+			Steedos.setSpaceId(queryParams["X-Space-Id"])
 		app_id = FlowRouter.getParam("app_id")
 		object_name = FlowRouter.getParam("object_name")
 		record_id = FlowRouter.getParam("record_id")
