@@ -27,7 +27,6 @@ Template.instance_pick_approve_users.helpers
 			fs.autoform = {}
 			fs.optional = true
 			fs.autoform.multiple = s.step_type == 'counterSign'
-#			fs.autoform.multiple = true
 
 			fs.type = String
 
