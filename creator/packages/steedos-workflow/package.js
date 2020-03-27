@@ -161,6 +161,11 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/instance/_image_sign.coffee', ['client', 'server']);
 	api.addFiles('client/views/instance/image_sign.coffee', 'client');
 
+	api.addFiles('client/views/instance/traces_handler.html', 'client');
+	api.addAssets('client/views/instance/traces_handler.html', 'server');
+	api.addFiles('client/views/instance/_traces_handler.coffee', ['client', 'server']);
+	api.addFiles('client/views/instance/traces_handler.js', 'client');
+
 	api.addFiles('client/views/instance/_instance_form.coffee', ['client', 'server']);
 
 	api.addFiles('client/views/instance/instance_attachments.html', 'client');

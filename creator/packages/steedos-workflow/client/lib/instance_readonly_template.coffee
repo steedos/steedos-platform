@@ -214,6 +214,14 @@ InstanceReadOnlyTemplate.createImageSign = (steedosData) ->
 	Template.imageSign.steedosData = steedosData
 	Template.imageSign.helpers ImageSign.helpers
 
+InstanceReadOnlyTemplate.createTracesHanlder = (steedosData) ->
+	tracesHanlderHtml = _getViewHtml('client/views/instance/traces_handler.html')
+	tracesHanlderCompiled = SpacebarsCompiler.compile(tracesHanlderHtml, {isBody: true});
+	tracesHanlderRenderFunction = eval(tracesHanlderCompiled);
+	Template.instance_traces_handler = new Blaze.Template("instance_traces_handler", tracesHanlderRenderFunction);
+	Template.instance_traces_handler.steedosData = steedosData
+	Template.instance_traces_handler.helpers TracesHandler.helpers
+
 
 InstanceReadOnlyTemplate.init = (steedosData) ->
 	InstanceReadOnlyTemplate.create("afSelectUserRead", steedosData);
@@ -225,6 +233,7 @@ InstanceReadOnlyTemplate.init = (steedosData) ->
 	if Meteor.isServer
 		InstanceReadOnlyTemplate.create("instance_attachment", {absolute: steedosData.absolute});
 		InstanceReadOnlyTemplate.createImageSign(steedosData)
+		InstanceReadOnlyTemplate.createTracesHanlder(steedosData);
 		InstanceReadOnlyTemplate.createInstanceSignText(steedosData)
 
 getLinkText = (item, label, detail_url)->

@@ -2,6 +2,8 @@ Workflow = {}
 
 @ImageSign = {};
 
+@TracesHandler = {};
+
 @TracesTemplate = {};
 
 @InstanceformTemplate = {};
