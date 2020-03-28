@@ -52,7 +52,7 @@ Template.creatorHeader.helpers
 				return space.name
 
 	helpUrl: ()->
-		return "https://www.steedos.com/docs/help/home";
+		return "https://www.steedos.com/help";
 
 Template.creatorHeader.events
 
