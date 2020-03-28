@@ -55,7 +55,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
+const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
 
 const properties = ['label', 'icon', 'enable_search', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_trash', 'enable_space_global', 'enable_tree', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods']
 
@@ -242,7 +242,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
-        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo) {
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind') {
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -576,6 +576,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
+        if(method === 'count'){
+            method = 'find';
+        }
         let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         return await this.runTriggers(when, context)
     }
@@ -589,7 +592,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined }
+        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId:  userSession ? userSession.spaceId : undefined}
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
