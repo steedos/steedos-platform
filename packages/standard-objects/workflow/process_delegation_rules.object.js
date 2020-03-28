@@ -18,11 +18,6 @@ db.process_delegation_rules.helpers({
 
 if (Meteor.isServer) {
   db.process_delegation_rules._ensureIndex({
-    "space": 1
-  }, {
-      background: true
-    });
-  db.process_delegation_rules._ensureIndex({
     "enabled": 1,
     "end_time": 1
   }, {

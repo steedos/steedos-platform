@@ -73,11 +73,5 @@ if (Meteor.isServer) {
   });
 }
 
-if (Meteor.isServer) {
-  db.cms_sites._ensureIndex({
-    "space": 1
-  }, {
-    background: true
-  });
-}
+
 
