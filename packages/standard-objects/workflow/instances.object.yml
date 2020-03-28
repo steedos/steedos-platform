@@ -1,6 +1,7 @@
 name: instances
 icon: task
 label: 审批
+enable_search: true
 fields:
   name:
     label: 文件标题
