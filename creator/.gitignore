@@ -29,3 +29,5 @@ package-lock.json
 .env.production.local
 .env.test.local
 .history/*
+.yalc
+yalc.lock
