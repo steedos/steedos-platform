@@ -19,7 +19,7 @@
     "@babel/runtime": "^7.2.0",
     "@salesforce-ux/design-system": "^2.11.0",
     "@salesforce/design-system-react": "^0.10.17",
-    "@steedos/accounts": "^1.11.7",
+    "@steedos/accounts": "^1.11.9",
     "@steedos/auth": "^1.18.9",
     "@steedos/core": "^1.18.9",
     "@steedos/filters": "^1.18.9",

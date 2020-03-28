@@ -360,10 +360,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.11.7":
-  version "1.11.7"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.11.7.tgz#0d9026327e30557731af877228a086e2d0f94975"
-  integrity sha1-DZAmMn4wVXcxr4dyKKCG4tD5SXU=
+"@steedos/accounts@^1.11.9":
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/@steedos/accounts/-/accounts-1.11.9.tgz#c07bcd48c49b450cf99b095a673b9ea64d1b0c68"
+  integrity sha512-PYi4rFsnflkWHzXPLlNninko5a0xZYrjkxL3OCpJZ199dcVEJN1+m565zqa5h+MLNzzwOtQyxPc73nwyTZQT6Q==
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
