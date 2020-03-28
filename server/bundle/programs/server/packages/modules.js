@@ -844,7 +844,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.18.10",
+  "version": "1.18.11",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -861,10 +861,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.18.10",
-    "@steedos/migrate": "^1.18.10",
-    "@steedos/objectql": "^1.18.10",
-    "@steedos/standard-objects": "^1.18.10",
+    "@steedos/auth": "^1.18.11",
+    "@steedos/migrate": "^1.18.11",
+    "@steedos/objectql": "^1.18.11",
+    "@steedos/standard-objects": "^1.18.11",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -894,7 +894,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.18.10",
+    "@steedos/meteor-bundle-runner": "^1.18.11",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -937,7 +937,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.18.10",
+  "version": "1.18.11",
   "main": "lib/index.js"
 };
 
@@ -997,7 +997,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.18.10",
+  "version": "1.18.11",
   "main": "lib/index.js"
 };
 
