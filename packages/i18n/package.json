@@ -1,0 +1,16 @@
+{
+  "name": "@steedos/i18n",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "i18next": "^19.3.4"
+  }
+}
