@@ -16,6 +16,7 @@ const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
+const _objectI18nConfigs: Array<any> = [];
 
 let standardObjectsLoaded: boolean = false;
 

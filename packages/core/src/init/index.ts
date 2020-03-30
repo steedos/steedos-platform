@@ -3,7 +3,8 @@ import { Core, initCreator, initDesignSystem } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
-import {initPublicStaticRouter} from '../routes'
+import {initPublicStaticRouter} from '../routes';
+import { I18nInit } from './i18n'
 
 export async function init() {
     getSteedosSchema();
@@ -14,5 +15,6 @@ export async function init() {
     await Datasources.init();
     await migrate.init();
     initPublicStaticRouter();
+    I18nInit();
     Core.run();
 }
