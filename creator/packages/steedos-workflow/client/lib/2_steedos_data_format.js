@@ -44,6 +44,10 @@ WorkflowManager_format = {};
 // };
 
 var number_step = function (digits) {
+    if (digits && typeof digits == 'string'){
+        // 兼容digits为字符串的情况
+        digits = parseInt(digits);
+    }
     if (digits && typeof (digits) == 'number' && digits > 0) {
         var step = '0.';
 
