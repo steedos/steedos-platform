@@ -4,6 +4,7 @@ description: 合同、收付款、单位、联系人、任务、日历
 icon_slds: approval
 is_creator: true
 objects: 
+  - contracts_home
   - contracts
   - accounts
   - contacts
@@ -16,6 +17,7 @@ objects:
   - events
   - reports
 mobile_objects: 
+  - contracts_home
   - instances
   - contracts
   - accounts
@@ -60,77 +62,3 @@ admin_menus:
     name: 税码
     object_name: account_tax
     parent: contracts
-dashboard:
-  apps:
-    label: 应用程序启动器
-    position: RIGHT
-    type: apps
-    mobile: true
-    ignoreApps: ['contracts']
-  workflow: 
-    label: 待审核文件
-    position: CENTER_TOP
-    type: object
-    objectName: "instances"
-    filters: [
-      [
-        ['inbox_users', '=', '{userId}'], 'or', ['cc_users', '=', '{userId}']
-      ]
-    ]
-    columns: 
-      - label: 标题
-        field: name
-        href: true
-      - label: 提交人
-        field: submitter_name
-        width: 10rem
-      - label: 修改时间
-        field: modified
-        type: datetime
-        width: 10rem
-    noHeader: false
-    unborderedRow: true
-    showAllLink: true
-    hrefTarget: _blank
-    illustration:
-      messageBody: "您没有待审核文件"
-    sort: "modified desc, name"
-  tasks:
-    label: 待办任务
-    position: CENTER_BOTTOM_LEFT
-    type: object
-    objectName: tasks
-    filters: [['assignees', '=', '{userId}'], ['state', '<>', 'complete'], ['created', 'between', 'last_7_days']]
-    sort: due_date
-    columns:
-      - field: name
-        label: 标题
-        href: true
-      - field: due_date
-        label: 截止时间
-        width: 10rem
-        type: datetime
-    unborderedRow: true
-    showAllLink: true
-    hrefTarget: _blank
-    illustration:
-      messageBody: "您最近7天没有待办任务"
-  calendar:
-    label: 我的日程
-    position: CENTER_BOTTOM_RIGHT
-    type: object
-    objectName: events
-    filters: [['start', 'between', 'today'], [['owner', '=', '{userId}'], 'or', ['assignees', '=', '{userId}']]]
-    sort: start desc, end
-    columns:
-      - field: name
-        label: 标题
-        href: true
-      - field: start
-        label: 开始时间
-        type: datetime
-    unborderedRow: true
-    showAllLink: true
-    hrefTarget: _blank
-    illustration:
-      messageBody: "您今天没有日程"

@@ -1,5 +1,5 @@
 name: organizations
-label: 组织
+label: 部门
 icon: team_member
 enable_search: true
 enable_tree: true
@@ -13,7 +13,7 @@ fields:
     sortable: true
     name: name
   fullname:
-    label: 组织全称
+    label: 部门全称
     type: text
     omit: true
     hidden: true
@@ -21,7 +21,7 @@ fields:
     name: fullname
     searchable: true
   parent:
-    label: 上级组织
+    label: 上级部门
     type: lookup
     reference_to: organizations
     sortable: true
@@ -30,7 +30,7 @@ fields:
     name: parent
     filterable: true
   parents:
-    label: 上级组织
+    label: 上级部门
     type: lookup
     reference_to: organizations
     multiple: true
@@ -41,7 +41,7 @@ fields:
     name: parents
     filterable: true
   children:
-    label: 下级组织
+    label: 下级部门
     type: lookup
     reference_to: organizations
     multiple: true
@@ -56,13 +56,6 @@ fields:
     defaultValue: 100
     sortable: true
     name: sort_no
-  admins:
-    label: 组织管理员
-    type: lookup
-    reference_to: users
-    multiple: true
-    name: admins
-    filterable: true
   users:
     label: 成员
     type: lookup
@@ -72,7 +65,7 @@ fields:
     name: users
     filterable: true
   company_id:
-    label: 所属单位
+    label: 所属分部
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -81,10 +74,10 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
-    omit: true
-    hidden: false
+    # omit: true
+    # hidden: false
   company_ids:
-    label: 所属单位
+    label: 所属分部
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -93,12 +86,12 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
-    omit: true
-    hidden: true
+    # omit: true
+    # hidden: true
   is_company:
-    label: 单位级
+    label: 分部级
     type: boolean
-    hidden: false
+    hidden: true
     index: true
     name: is_company
     omit: true
@@ -179,10 +172,4 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-  organization_admin:
-    allowCreate: true
-    allowDelete: true
-    allowEdit: true
-    allowRead: true
-    modifyCompanyRecords: true
-    viewAllRecords: true
+

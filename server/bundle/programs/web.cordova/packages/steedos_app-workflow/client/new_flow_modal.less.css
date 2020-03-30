@@ -1,5 +1,0 @@
-.new-flow-modal [data-required="true"] label:after,
-.copy-flow-modal [data-required="true"] label:after {
-  content: ' *';
-  color: red;
-}

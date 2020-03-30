@@ -1,0 +1,38 @@
+name: picklists
+label: 选项列表值集
+icon: orders
+fields:
+  name: 
+    type: text
+    label: 名称
+  code:
+    type: text
+    label: 唯一编码
+    inlineHelpText: '可以通过`对象名.字段名`的格式重写对象字段选项'
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: 全部
+    filter_scope: space
+    columns:
+      - name
+      - code
+      - description
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

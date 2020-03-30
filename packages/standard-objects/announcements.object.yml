@@ -1,0 +1,67 @@
+name: announcements
+icon: announcement
+label: 公告
+enable_files: true
+enable_chatter: true
+fields:
+  name:
+    label: 标题
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    required: true
+    searchable: true
+    is_wide: true
+  body:
+    type: html
+    label: 正文
+    rows: 5
+    required: true
+    is_wide: true
+  members:
+    type: lookup
+    label: 发布对象
+    reference_to: users
+    required: true
+    multiple: true
+    filterable: true
+    is_wide: true
+  created: 
+    label: 发布时间
+  created_by:
+    label: 发布人
+  modified_by:
+    label: 修改人
+list_views:
+  all:
+    label: 所有公告
+    filter_scope: space
+    columns:
+      - name
+      - created
+      - created_by
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        var userId = Steedos.userId();
+        return [
+          ["owner","=","{userId}"],
+          "or",
+          ["members","=","{userId}"]
+        ];
+      }
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

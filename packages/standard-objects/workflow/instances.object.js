@@ -126,16 +126,13 @@ if (Meteor.isServer) {
     modifier.$unset = modifier.$unset || {};
     return modifier.$unset.is_recorded = 1;
   });
-  var ref2;
-  if ((ref2 = Meteor.settings.cron) != null ? ref2.instancerecordqueue_interval : void 0) {
-    db.instances.after.update(function (userId, doc, fieldNames, modifier, options) {
-      if (doc.state === "pending" && this.previous.state === "draft") {
-        return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name);
-      } else if (!_.isEmpty(doc.record_ids) && doc.current_step_name !== this.previous.current_step_name) {
-        return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name);
-      }
-    });
-  }
+  db.instances.after.update(function (userId, doc, fieldNames, modifier, options) {
+    if (doc.state === "pending" && this.previous.state === "draft") {
+      return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow);
+    } else if (!_.isEmpty(doc.record_ids) && doc.current_step_name !== this.previous.current_step_name) {
+      return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow);
+    }
+  });
   db.instances._ensureIndex({
     "space": 1
   }, {

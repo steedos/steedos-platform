@@ -130,6 +130,10 @@ module.exports = {
         standard_approve: {
             label: "发起审批",
             visible: function (object_name, record_id, record_permissions) {
+                if(!Session.get("record_id")) {
+                    /*只在详细界面显示这个action*/
+                    return false;
+                }
                 var object_workflow, record;
                 if (record_permissions && !record_permissions["allowEdit"]) {
                     return false;
@@ -161,6 +165,10 @@ module.exports = {
         standard_view_instance: {
             label: "查看审批单",
             visible: function (object_name, record_id, record_permissions) {
+                if(!Session.get("record_id")) {
+                    /*只在详细界面显示这个action*/
+                    return false;
+                }
                 var record;
                 record = Creator.getObjectRecord(object_name, record_id);
                 if (record && !_.isEmpty(record.instances)) {

@@ -1,3 +1,4 @@
+const _ = require('underscore');
 db.users = Meteor.users;
 
 db.users.allow({
@@ -232,113 +233,84 @@ if (Meteor.isServer) {
                 space: newId
             });
         }
-        try {
-            if (!doc.services || !doc.services.password || !doc.services.password.bcrypt) {
-                // 发送让用户设置密码的邮件
-                // Accounts.sendEnrollmentEmail(doc._id, doc.emails[0].address)
-                if (doc.emails) {
-                    token = Random.secret();
-                    email = doc.emails[0].address;
-                    now = new Date();
-                    tokenRecord = {
-                        token: token,
-                        email: email,
-                        when: now
-                    };
-                    db.users.update(doc._id, {
-                        $set: {
-                            "services.password.reset": tokenRecord
-                        }
-                    });
-                    Meteor._ensure(doc, 'services', 'password').reset = tokenRecord;
-                    enrollAccountUrl = Accounts.urls.enrollAccount(token);
-                    url = Accounts.urls.enrollAccount(token);
-                    locale = Steedos.locale(doc._id, true);
-                    subject = TAPi18n.__("users_email_create_account", {}, locale);
-                    greeting = TAPi18n.__('users_email_hello', {}, locale) + "&nbsp;" + doc.name + ",";
-                    content = greeting + "</br>" + TAPi18n.__('users_email_start_service', {}, locale) + "</br>" + url + "</br>" + TAPi18n.__("users_email_thanks", {}, locale) + "</br>";
-                    return MailQueue.send({
-                        to: email,
-                        from: Meteor.settings.email.from,
-                        subject: subject,
-                        html: content
-                    });
-                }
-            }
-        } catch (error) {
-            e = error;
-            return console.log("after insert user: sendEnrollmentEmail, id: " + doc._id + ", " + e);
-        }
+        // try {
+        //     if (!doc.services || !doc.services.password || !doc.services.password.bcrypt) {
+        //         // 发送让用户设置密码的邮件
+        //         // Accounts.sendEnrollmentEmail(doc._id, doc.emails[0].address)
+        //         if (doc.emails) {
+        //             token = Random.secret();
+        //             email = doc.emails[0].address;
+        //             now = new Date();
+        //             tokenRecord = {
+        //                 token: token,
+        //                 email: email,
+        //                 when: now
+        //             };
+        //             db.users.update(doc._id, {
+        //                 $set: {
+        //                     "services.password.reset": tokenRecord
+        //                 }
+        //             });
+        //             Meteor._ensure(doc, 'services', 'password').reset = tokenRecord;
+        //             enrollAccountUrl = Accounts.urls.enrollAccount(token);
+        //             url = Accounts.urls.enrollAccount(token);
+        //             locale = Steedos.locale(doc._id, true);
+        //             subject = TAPi18n.__("users_email_create_account", {}, locale);
+        //             greeting = TAPi18n.__('users_email_hello', {}, locale) + "&nbsp;" + doc.name + ",";
+        //             content = greeting + "</br>" + TAPi18n.__('users_email_start_service', {}, locale) + "</br>" + url + "</br>" + TAPi18n.__("users_email_thanks", {}, locale) + "</br>";
+        //             return MailQueue.send({
+        //                 to: email,
+        //                 from: Meteor.settings.email.from,
+        //                 subject: subject,
+        //                 html: content
+        //             });
+        //         }
+        //     }
+        // } catch (error) {
+        //     e = error;
+        //     return console.log("after insert user: sendEnrollmentEmail, id: " + doc._id + ", " + e);
+        // }
     });
     db.users.before.update(function (userId, doc, fieldNames, modifier, options) {
-        var newNumber;
-        db.users.validatePhone(userId, doc, modifier);
-        if (modifier.$unset && modifier.$unset.steedos_id === "") {
-            throw new Meteor.Error(400, "users_error_steedos_id_required");
+        let setKeys = _.keys(modifier.$set || {});
+        if(!_.isEmpty(setKeys) && _.find(setKeys, function(key){
+            return _.include(['name', 'username', 'email', 'email_verified', 'mobile', 
+            'mobile_verified', 'locale', 'avatar', 'email_notification', 'sms_notification'], key)
+        })){
+            throw new Meteor.Error(500, '禁止修改');
         }
-        modifier.$set = modifier.$set || {};
-        if (modifier.$set.username) {
-            db.users.validateUsername(modifier.$set.username, doc._id);
-        }
-        // if doc.steedos_id && modifier.$set.steedos_id
-        // 	if modifier.$set.steedos_id != doc.steedos_id
-        // 		throw new Meteor.Error(400, "users_error_steedos_id_readonly");
-        if (userId) {
-            modifier.$set.modified_by = userId;
-        }
-        if (modifier.$set['phone.verified'] === true) {
-            newNumber = modifier.$set['phone.mobile'];
-            if (!newNumber) {
-                newNumber = doc.phone.mobile;
-            }
-            modifier.$set.mobile = newNumber;
-        }
-        return modifier.$set.modified = new Date();
+        
+
+        // var newNumber;
+        // db.users.validatePhone(userId, doc, modifier);
+        // if (modifier.$unset && modifier.$unset.steedos_id === "") {
+        //     throw new Meteor.Error(400, "users_error_steedos_id_required");
+        // }
+        // modifier.$set = modifier.$set || {};
+        // if (modifier.$set.username) {
+        //     db.users.validateUsername(modifier.$set.username, doc._id);
+        // }
+        // // if doc.steedos_id && modifier.$set.steedos_id
+        // // 	if modifier.$set.steedos_id != doc.steedos_id
+        // // 		throw new Meteor.Error(400, "users_error_steedos_id_readonly");
+        // if (userId) {
+        //     modifier.$set.modified_by = userId;
+        // }
+        // if (modifier.$set['phone.verified'] === true) {
+        //     newNumber = modifier.$set['phone.mobile'];
+        //     if (!newNumber) {
+        //         newNumber = doc.phone.mobile;
+        //     }
+        //     modifier.$set.mobile = newNumber;
+        // }
+        // return modifier.$set.modified = new Date();
     });
     db.users.after.update(function (userId, doc, fieldNames, modifier, options) {
-        var newNumber, user_set, user_unset;
-        modifier.$set = modifier.$set || {};
-        modifier.$unset = modifier.$unset || {};
-        if (modifier.$set['phone.verified'] === true) {
-            // db.users.before.update中对modifier.$set.mobile的修改这里识别不到，所以只能重新设置其值
-            newNumber = modifier.$set['phone.mobile'];
-            if (!newNumber) {
-                newNumber = doc.phone.mobile;
-            }
-            modifier.$set.mobile = newNumber;
-        }
-        user_set = {};
-        user_unset = {};
-        if (modifier.$set.name !== void 0) {
-            user_set.name = modifier.$set.name;
-        }
-        if (modifier.$set.mobile !== void 0) {
-            user_set.mobile = modifier.$set.mobile;
-        }
-        if (modifier.$unset.name !== void 0) {
-            user_unset.name = modifier.$unset.name;
-        }
-        if (modifier.$unset.mobile !== void 0) {
-            user_unset.mobile = modifier.$unset.mobile;
-        }
-        // 更新users表中的相关字段，所有工作区信息同步
-        if (!_.isEmpty(user_set)) {
-            db.space_users.direct.update({
-                user: doc._id
-            }, {
-                    $set: user_set
-                }, {
-                    multi: true
-                });
-        }
-        if (!_.isEmpty(user_unset)) {
-            return db.space_users.direct.update({
-                user: doc._id
-            }, {
-                    $unset: user_unset
-                }, {
-                    multi: true
-                });
+        modifier.$set = modifier.$set || {}
+        if(modifier.$set.last_logon){
+            db.space_users.direct.update({user: doc._id}, {$set: {last_logon: modifier.$set.last_logon}}, {
+                multi: true
+            });
         }
     });
     db.users.before.remove(function (userId, doc) {
@@ -489,4 +461,24 @@ if (Meteor.isServer) {
     }, {
             background: true
         });
+}
+
+Steedos.setEmailVerified = function (userId, email, value){
+    let user = db.users.findOne({_id: userId, email: email}, {fields: {email_verified: 1}});
+    if(user && _.isBoolean(value) && user.email_verified != value){
+        db.space_users.direct.update({user: userId}, {$set: {email_verified: value}}, {
+            multi: true
+        });
+        db.users.direct.update({_id: userId}, {$set: {email_verified: value}})
+    }
+}
+
+Steedos.setMobileVerified = function (userId, mobile, value){
+    let user = db.users.findOne({_id: userId, mobile: mobile}, {fields: {mobile_verified: 1}});
+    if(user && _.isBoolean(value) && user.mobile_verified != value){
+        db.space_users.direct.update({user: userId}, {$set: {mobile_verified: value}}, {
+            multi: true
+        });
+        db.users.direct.update({_id: userId}, {$set: {mobile_verified: value}})
+    }
 }

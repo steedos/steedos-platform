@@ -1,0 +1,147 @@
+name: cms_categories
+icon: folder
+label: 栏目
+fields:
+  name:
+    label: 名称
+    type: text
+    defaultValue: ''
+    description: ''
+    inlineHelpText: ''
+    index: true
+    required: true
+    searchable: true
+    is_wide: true
+  description:
+    label: 描述
+    type: textarea
+    rows: 3
+    is_wide: true
+  site:
+    label: 站点
+    type: lookup
+    reference_to: cms_sites
+    required: true
+    sortable: true
+    index: true
+    optionsFunction: !!js/function |
+      function (values) {
+        var siteObjectName = "cms_sites";
+        var object = Creator.getObject(siteObjectName);
+        if(!object){
+          console.error("未找到当前对象：" + siteObjectName);
+          return [];
+        }
+        var options, result, sites, queryFilters;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        if(!Steedos.isSpaceAdmin()){
+          var userId = Steedos.userId();
+          queryFilters = ["admins", "=", userId];
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          options.$filter = odataFilter;
+        }
+        sites = Creator.odata.query(siteObjectName, options, true);
+        sites.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
+      }
+  parent:
+    label: 上级栏目
+    type: lookup
+    reference_to: cms_categories
+    sortable: true
+    depend_on:
+      - site
+    optionsFunction: !!js/function |
+      function (values) {
+        if (!values || !values.site) {
+          return [];
+        }
+        var object = Creator.getObject(values._object_name);
+        if(!object){
+          console.error("未找到当前对象：" + values._object_name);
+          return [];
+        }
+        var options, result, parents, queryFilters;
+        result = [];
+        options = {
+          $select: 'name'
+        };
+        queryFilters = ["site", "=", values.site];
+        var steedosFilters = require("@steedos/filters");
+        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        options.$filter = odataFilter;
+        parents = Creator.odata.query(values._object_name, options, true);
+        parents.forEach(function (item) {
+          result.push({
+            label: item.name,
+            value: item._id
+          });
+        });
+        return result;
+      }
+  parents:
+    label: 上级栏目（多层）
+    type: lookup
+    reference_to: cms_categories
+    sortable: true
+    omit: true
+    hidden: true
+  order:
+    label: 排序号
+    type: number
+  # show post list on website homepage
+  featured:
+    type: boolean
+    defaultValue: true
+    hidden: true
+    omit: true
+list_views:
+  all:
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - site
+      - parent
+      - order
+    filters: !<tag:yaml.org,2002:js/function> |-
+      function () {
+        if(!Steedos.isSpaceAdmin()){
+          var siteObjectName = "cms_sites";
+          var options, sites, queryFilters;
+          options = {
+            $select: 'name'
+          };
+          var userId = Steedos.userId();
+          queryFilters = ["admins", "=", userId];
+          var steedosFilters = require("@steedos/filters");
+          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          options.$filter = odataFilter;
+          var sites = Creator.odata.query(siteObjectName, options, true);
+          return [["site", "in", _.pluck(sites, "_id")]];
+        }
+      }
+permission_set:
+  user:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

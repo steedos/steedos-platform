@@ -163,10 +163,10 @@ describe('fetch records by paging for sqlserver database', () => {
         datasourceDefault = { ...datasourceDefault, ...connectConfig }
         let mySchema = new SteedosSchema({
             datasources: {
-                default: datasourceDefault
+                DatasourcesDriverTest: datasourceDefault
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosSqlServerDriver>datasource.adapter;
         await driver.run(`DELETE FROM "${tableName}"`);

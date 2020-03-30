@@ -1,2 +1,0 @@
-)]}'
-{"version":3,"sources":["meteor://💻app/packages/steedos:app-workflow/client/new_flow_modal.less","meteor://💻app/"],"names":[],"mappings":"AAAA;;EAEE,cAAA;EACA,WAAA;CCCD","file":"to.css","sourcesContent":[".new-flow-modal,.copy-flow-modal {\n\t[data-required=\"true\"] label:after {\n\t\tcontent: ' *';\n\t\tcolor: red;\n\t}\n}",".new-flow-modal [data-required=\"true\"] label:after,\n.copy-flow-modal [data-required=\"true\"] label:after {\n  content: ' *';\n  color: red;\n}\n"]}

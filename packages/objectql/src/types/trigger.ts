@@ -7,6 +7,7 @@ import { SteedosQueryOptions } from ".";
 export type SteedosTriggerContextConfig = {
     id?: SteedosIDType,
     userId: SteedosIDType,
+    spaceId?: SteedosIDType,
     doc?: JsonMap,
     previousDoc?: JsonMap,  //仅afterUpdate, afterDelete时存在此属性
     query?: SteedosQueryOptions
@@ -20,7 +21,7 @@ export type SteedosTriggerTypeConfig = {
 }
 
 const ENUM_ON = ["client","server"]
-const ENUM_WHEN = ['beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
+const ENUM_WHEN = ['beforeFind','beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
 
 export class SteedosTriggerType implements Dictionary {
     [key: string]: unknown;

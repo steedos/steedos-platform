@@ -1,7 +1,9 @@
 name: tasks
 label: 任务
-icon: task
+icon: timesheet_entry
 enable_search: true
+enable_files: true
+enable_chatter: true
 fields:
   name:
     label: 主题
@@ -20,8 +22,8 @@ fields:
     name: assignees
     filterable: true
   due_date:
-    label: 截止时间
-    type: datetime
+    label: 到期日期
+    type: date
     sortable: true
     name: due_date
   state:
@@ -34,12 +36,27 @@ fields:
         value: in_progress
       - label: 已完成
         value: completed
-      - label: 暂停
-        value: paused
+      - label: 等待其他人
+        value: waiting
+      - label: 延期
+        value: deferred
     defaultValue: not_started
     sortable: true
     required: true
-    name: state
+    filterable: true
+  priority:
+    label: 优先级
+    type: select
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+    defaultValue: normal
+    sortable: true
+    required: true
     filterable: true
   related_to:
     label: 相关项
@@ -92,6 +109,7 @@ list_views:
       - name
       - due_date
       - state
+      - priority
       - assignees
       - related_to
     filters:

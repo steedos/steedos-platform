@@ -1,3 +1,4 @@
+Fiber = require('fibers')
 db.spaces = new Meteor.Collection('spaces');
 
 db.spaces.helpers({
@@ -30,6 +31,90 @@ db.spaces.helpers({
     }
 });
 
+function onCreateSpace(spaceDoc){
+    let spaceName = spaceDoc.name;
+    let spaceId = spaceDoc._id;
+    let userId = spaceDoc.owner;
+    let now = new Date();
+
+    let companyDB = Creator.getCollection("company");
+    let companyId = companyDB._makeNewID();
+    let companyDoc = {
+        _id: companyId, 
+        name: spaceName, 
+        organization: companyId,
+        company_id: companyId,
+        space: spaceId, 
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
+      }
+    companyDB.direct.insert(companyDoc);
+
+    let orgDB = Creator.getCollection("organizations");
+    let orgDoc = {
+        _id: companyId,
+        name: spaceName, 
+        fullname: spaceName, 
+        is_company: true, 
+        users: [userId],
+        company_id: companyId,
+        space: spaceId, 
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
+    }
+    orgDB.direct.insert(orgDoc);
+    
+    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id)
+}
+
+Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
+    let now = new Date();
+    let spaceUsersDB = db.space_users;
+
+
+    let spaceUserObj = spaceUsersDB.direct.findOne({
+        user: userId,
+        space: spaceId
+    });
+
+    if(spaceUserObj){
+        return ;
+    }
+
+
+    if(!organization_id){
+        let root_org = db.organizations.findOne({
+            space: spaceId,
+            parent: null
+        });
+        organization_id = root_org._id
+    }
+
+    //company_id,company_ids,organizations_parents由triggers维护
+    let spaceUsersDoc = {
+        user: userId, 
+        user_accepted: user_accepted, 
+        organization: organization_id, 
+        organizations: [organization_id], 
+        // organizations_parents: [organization_id],
+        // company_id: company_id,
+        // company_ids: [company_id],
+        space: spaceId,
+        owner: userId,
+        created_by: userId,
+        created: now,
+        modified_by: userId,
+        modified: now
+      }
+    spaceUsersDB.insert(spaceUsersDoc)
+}
+
 if (Meteor.isServer) {
     db.spaces.before.insert(function (userId, doc) {
         if (!userId && doc.owner) {
@@ -40,9 +125,15 @@ if (Meteor.isServer) {
         doc.modified_by = userId;
         doc.modified = new Date();
         doc.is_deleted = false;
+        doc.services = doc.services || {};
         if (!userId) {
             throw new Meteor.Error(400, "spaces_error_login_required");
         }
+
+        if(doc._id){
+            doc.space = doc._id
+        }
+
         doc.owner = userId;
         return doc.admins = [userId];
     });
@@ -51,7 +142,7 @@ if (Meteor.isServer) {
     // 	if _.indexOf(doc.apps_enabled, "admin")<0
     // 		doc.apps_enabled.push("admin")
     db.spaces.after.insert(function (userId, doc) {
-        db.spaces.createTemplateOrganizations(doc);
+        onCreateSpace(doc);
     });
     db.spaces.before.update(function (userId, doc, fieldNames, modifier, options) {
         modifier.$set = modifier.$set || {};
@@ -255,11 +346,6 @@ if (Meteor.isServer) {
 
 if (Meteor.isServer) {
     db.spaces._ensureIndex({
-        "is_deleted": 1
-    }, {
-            background: true
-        });
-    db.spaces._ensureIndex({
         "is_paid": 1
     }, {
             background: true
@@ -337,4 +423,46 @@ if (Meteor.isServer) {
             }
         };
     });
+}
+
+Creator.Objects['spaces'].methods = {
+    "tenant": function (req, res) {
+        return Fiber(function () {
+            let error = '';
+            try {
+                let userSession = req.user;
+                let spaceName = req.body.name;
+                if(!spaceName){
+                    throw new Error("名称不能为空")
+                }
+                
+                if(userSession){
+                    let userId = userSession.userId
+                    let spaceId = db.spaces._makeNewID()
+                    let spaceDoc = {
+                        _id: spaceId,
+                        space: spaceId,
+                        name: spaceName, 
+                        owner: userId
+                    }
+                    let newSpace = db.spaces.insert(spaceDoc);
+                    return res.send({
+                        value: newSpace
+                    });
+                }else{
+                    if(!userSession){
+                        return res.status(401).send({
+                            "success": false
+                        });
+                    }
+                }
+            } catch (err) {
+                error = err.message
+            }
+            return res.status(500).send({
+                "error": error,
+                "success": false
+            });
+        }).run();
+    }
 }

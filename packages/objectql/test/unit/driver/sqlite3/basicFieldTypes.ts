@@ -81,7 +81,7 @@ describe('basic field types for sqlite3 database', () => {
                 }
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.dropTables();
         await datasource.createTables();
         driver = <SteedosSqlite3Driver>datasource.adapter;

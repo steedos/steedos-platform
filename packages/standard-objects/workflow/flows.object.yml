@@ -18,7 +18,7 @@ fields:
     name: form
     filterable: true
   category:
-    label: 流程分类
+    label: 分类
     type: lookup
     reference_to: categories
     name: category
@@ -54,10 +54,10 @@ fields:
     type: textarea
     is_wide: true
     name: help_text
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
   created_by:
     label: 创建人
   modified_by:
@@ -287,11 +287,15 @@ fields:
     type: text
     group: 高级
     name: name_formula
+    omit: true
+    hidden: true
   code_formula:
     label: 系统公式
     type: text
     group: 高级
     name: code_formula
+    omit: true
+    hidden: true
   auto_remind:
     label: 自动催办
     type: boolean
@@ -319,17 +323,15 @@ list_views:
     filter_scope: space
     columns:
       - name
-      - modified
-      - modified_by
-      - auto_remind
       - state
-      - is_deleted
-      - company_id
-      - form
+      - category
       - sort_no
+      - modified
+    filter_fields:
+      - state
+      - category
+      - company_id
     sort:
-      - - sort_no
-        - desc
       - - modified
         - desc
 actions:
@@ -349,6 +351,50 @@ actions:
       function (object_name, record_id, fields) {
               return Modal.show('new_flow_modal');
             }
+  standard_new_by_template:
+    label: 从模板新建
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var permissions;
+              permissions = Creator.getPermissions();
+              if (Creator.getTemplateSpaceId() && permissions) {
+                return permissions["allowCreate"];
+              }
+            }
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        Template.templateFlowsModal.show({onConfirm: function(selection){
+          if(selection && selection.length > 0){
+            var flow = selection[0];
+            var templateFlowId = flow._id;
+            if(templateFlowId){
+              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name}, function(error, result){
+                if(error){
+                  toastr.error('error');
+                }else{
+                  toastr.success(t('workflow_copy_flow_success'));
+                  if (result.length > 0) {
+                    return FlowRouter.go("/app/admin/flows/view/" + result[0]);
+                  }
+                }
+              })
+            }
+          }
+        }, gridProp: {
+          columns: [
+            {
+                field: 'name',
+                label: '流程名',
+                width: '30%'
+              },{
+                  field: 'description',
+                  type: 'markdown',
+                  label: '描述'
+              }
+            ]
+        }})
+      }
   design:
     label: 流程设计器
     visible: !<tag:yaml.org,2002:js/function> |-
@@ -390,7 +436,7 @@ actions:
             }
   export_default_template:
     label: 导出默认模板
-    'on': record
+    'on': record_more
     visible: !<tag:yaml.org,2002:js/function> |-
       function () {
               return true;
@@ -413,7 +459,7 @@ actions:
   exportFlow:
     label: 导出流程
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               var flow, form_id, ref2, ref3, ref4;
@@ -449,10 +495,36 @@ actions:
                 }
               });
             }
+  exportFlows:
+    label: 导出流程
+    visible: true
+    'on': list
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var ids = Creator.TabularSelectedIds["flows"]
+              if(ids && ids.length > 0){
+                window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
+              }else{
+                toastr.warning("请选择要导出的流程");
+              }
+            }
+  upgradeFlow:
+    label: 导入流程(升级)
+    visible: true
+    'on': record_more
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return Modal.show("admin_import_flow_modal", {
+                flowId: record_id,
+                onSuccess: function () {
+                  toastr.success("流程升级成功")
+                }
+              });
+            }
   copyFlow:
     label: 复制流程
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("copy_flow_modal", {
@@ -467,13 +539,91 @@ actions:
   distributeAdmin:
     label: 设置分发
     visible: true
-    'on': record
+    'on': record_more
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("distribute_edit_flow_modal", {
                 flow: this.record
               });
             }
+  removeFlow:
+    label: 删除
+    visible: true
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+        var record = Creator.getObjectRecord(object_name, record_id, 'name,form');
+        var formId = _.isObject(record.form) ? record.form._id : record.form;
+        var flowName = record.name;
+        swal({
+          title: '为了确保安全，请输入您要删除的流程名(同时会删除相关的申请单)',
+          inputPlaceholder: '流程名',
+          type: "input",
+          confirmButtonText: t('OK'),
+          cancelButtonText: t('Cancel'),
+          showCancelButton: true,
+          closeOnConfirm: false
+        }, function (inputText) {
+          if (inputText == false) {
+            return false;
+          }
+
+          if (inputText != flowName) {
+            swal.showInputError('您输入的名称不正确');
+            return false;
+          }
+          $("body").addClass("loading");
+          var userSession = Creator.USER_CONTEXT;
+          var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
+          $.ajax({
+            type: "POST",
+            url: Steedos.absoluteUrl("/am/forms?methodOverride=DELETE"),
+            data: JSON.stringify({ 'Forms': [{ 'id': formId }] }),
+            dataType: "json",
+            contentType: 'application/json',
+            beforeSend: function (XHR) {
+              XHR.setRequestHeader('Content-Type', 'application/json');
+              XHR.setRequestHeader('Authorization', authorization);
+            },
+            success: function (data) {
+              $("body").removeClass("loading");
+              toastr.success("操作已成功！");
+              var gridObjectNameClass = object_name.replace(/\./g,"-");
+              var gridContainer = $(`.gridContainer.${gridObjectNameClass}`);
+              var dxDataGridInstance, isOpenerRemove;
+              if (!(gridContainer != null ? gridContainer.length : void 0)) {
+                if (window.opener) {
+                  isOpenerRemove = true;
+                  gridContainer = window.opener.$(`.gridContainer.${gridObjectNameClass}`);
+                }
+              }
+              if (gridContainer != null ? gridContainer.length : void 0) {
+                dxDataGridInstance = gridContainer.dxDataGrid().dxDataGrid('instance');
+              }
+              if (dxDataGridInstance) {
+                Template.creator_grid.refresh(dxDataGridInstance);
+              }
+              if (isOpenerRemove || !dxDataGridInstance) {
+                if (isOpenerRemove) {
+                  window.close();
+                } else if (record_id === Session.get("record_id") && !Steedos.isMobile() && list_view_id !== 'calendar' && object_name !== "cms_posts") {
+                  var appid = Session.get("app_id");
+                  var list_view_id = Session.get("list_view_id");
+                  if (!list_view_id) {
+                    list_view_id = "all";
+                  }
+                  FlowRouter.go(`/app/${appid}/${object_name}/grid/${list_view_id}`);
+                }
+              }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+              $("body").removeClass("loading");
+              toastr.error(XMLHttpRequest.responseJSON);
+            }
+          });
+          sweetAlert.close();
+        })
+      }
 permission_set:
   user:
     allowCreate: false

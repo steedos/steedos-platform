@@ -14,13 +14,40 @@ fields:
     required: true
     searchable: true
     index: true
-    sortable: true
     name: name
-  position:
-    type: text
-    label: 职务
-    name: position
     sortable: true
+  username:
+    type: text
+    label: 用户名
+    name: username
+    searchable: true
+    index: true    
+  email:
+    type: text
+    label: 邮件
+    searchable: true
+    name: email
+    index: true
+  email_verified:
+    type: boolean
+    label: 邮件已验证
+    readonly: true
+    omit: true
+    hidden: true
+  mobile:
+    type: text
+    label: 手机
+    searchable: true
+    group: '-'
+    name: mobile
+    required: true
+    index: true
+  mobile_verified:
+    type: boolean
+    label: 手机已验证
+    readonly: true
+    omit: true
+    hidden: true
   organizations:
     type: lookup
     label: 所属部门
@@ -29,11 +56,16 @@ fields:
     index: true
     defaultValue: !!js/function |
       function () {
-              return Session.get('grid_sidebar_selected');
-            }
+        var organization = Session.get('organization');
+        var orgId = organization && organization._id;
+        if(orgId){
+          return [orgId];
+        }
+      }
     required: true
     name: organizations
     filterable: true
+
   organizations_parents:
     label: 所属部门（含上级）
     type: lookup
@@ -42,28 +74,23 @@ fields:
     omit: true
     name: organizations_parents
     filterable: true
-  company_id:
-    label: 主单位
+    hidden: true
+  organization:
+    label: 主部门
     type: lookup
+    reference_to: organizations
     omit: true
-    hidden: false
-    readonly: true
-    defaultValue: !!js/function |
-      function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
-      }
-    optionsFunction: !!js/function |
-      function () {
-        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
-      }
+    name: organization
+    filterable: true
+
   company_ids:
-    label: 所属单位
+    label: 所属分部
     type: lookup
     reference_to: company
     multiple: true
     index: true
-    omit: true
-    hidden: false
+    # omit: true
+    # hidden: false
     readonly: true
     name: company_ids
     filterable: true
@@ -75,47 +102,55 @@ fields:
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
       }
+  company_id:
+    label: 主分部
+    type: lookup
+    omit: true
+    readonly: true
+    # hidden: false
+    defaultValue: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+    optionsFunction: !!js/function |
+      function () {
+        /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+      }
+
+  position:
+    type: text
+    label: 职务
+    name: position
+    sortable: true
   manager:
     type: lookup
     label: 上级主管
     reference_to: users
     name: manager
     filterable: true
-  mobile:
-    type: text
-    label: 手机
-    searchable: true
-    group: '-'
-    name: mobile
-  email:
-    type: text
-    label: 邮件
-    searchable: true
-    name: email
   work_phone:
     type: text
     label: 工作电话
     searchable: true
     name: work_phone
-  company:
-    type: text
-    label: 单位
-    group: '-'
-    hidden: true
-    name: company
+  # company:
+  #   type: text
+  #   label: 单位
+  #   group: '-'
+  #   hidden: true
+  #   name: company
   sort_no:
     type: number
     label: 排序号
     group: '-'
     name: sort_no
     sortable: true
-  organization:
-    label: 主部门
-    type: lookup
-    reference_to: organizations
-    omit: true
-    name: organization
-    filterable: true
+  email_notification:
+    label: 接收邮件通知
+    type: boolean
+  sms_notification:
+    label: 接收短信提醒
+    type: boolean
   user_accepted:
     type: boolean
     label: 有效
@@ -135,48 +170,77 @@ fields:
     hidden: true
     name: user
     filterable: true
+  avatar:
+    label: 头像
+    type: avatar
   hr:
     type: object
     blackbox: true
     omit: true
     hidden: true
     name: hr
-  username:
-    type: text
-    label: 用户名
-    name: username
-    searchable: true
-    index: true
+  last_logon:
+    type: date
+    omit: true
+    hidden: true
+    name: last_logon    
 list_views:
   all:
-    label: 所有
+    label: 全部人员
     columns:
       - name
       - position
-      - sort_no
+      - mobile
+      - email
     filter_scope: space
+    filters: [["user_accepted","=",true]]
     sort:
-      - - sort_no
+      - - name
+        - asc
+  disabled:
+    label: 离职停用人员
+    columns:
+      - name
+      - position
+      - mobile
+      - email
+      - user_accepted
+    filter_scope: space
+    filters: [["user_accepted","!=",true]]
+    sort:
+      - - created
         - desc
-          
+  # inviting:
+  #   label: 邀请待确认用户
+  #   columns:
+  #     - name
+  #     - position
+  #     - mobile
+  #     - email
+  #     - invite_state
+  #   filter_scope: space
+  #   filters: [["invite_state","!=",'accepted']]
+  #   sort:
+  #     - - created
+  #       - desc
 permission_set:
   user:
     allowCreate: false
     allowDelete: false
-    allowEdit: false
+    allowEdit: true
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
   admin:
     allowCreate: true
-    allowDelete: true
+    allowDelete: false
     allowEdit: true
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
   organization_admin:
     allowCreate: true
-    allowDelete: true
+    allowDelete: false
     allowEdit: true
     allowRead: true
     modifyCompanyRecords: true

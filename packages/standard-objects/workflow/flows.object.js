@@ -5,10 +5,16 @@ if (!db.flows) {
 if (Meteor.isServer) {
     db.flows.copy = function (userId, spaceId, flowId, options, enabled) {
         var company_id, flow, form, newFlowName, newName, ref;
-        flow = db.flows.findOne({
-            _id: flowId,
-            space: spaceId
-        }, {
+        var templateSpaceId = Creator.getTemplateSpaceId();
+        var flowQuery = {
+            _id: flowId
+        }
+        if(templateSpaceId){
+            flowQuery["$or"] = [{space:templateSpaceId}, {space:spaceId}]
+        }else{
+            flowQuery.space = spaceId
+        }
+        flow = db.flows.findOne(flowQuery, {
                 fields: {
                     _id: 1,
                     name: 1,
@@ -16,7 +22,7 @@ if (Meteor.isServer) {
                 }
             });
         if (!flow) {
-            throw Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
+            throw new Meteor.Error(`[flow.copy]未找到flow, space: ${spaceId}, flowId: ${flowId}`);
         }
         newFlowName = options != null ? options.name : void 0;
         company_id = options != null ? options.company_id : void 0;
@@ -27,7 +33,7 @@ if (Meteor.isServer) {
         }
         form = steedosExport.form(flow.form, flow._id, true, company_id);
         if (_.isEmpty(form)) {
-            throw Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
+            throw new Meteor.Error(`[flow.copy]未找到form, formId: ${flow.form}`);
         }
         form.name = newName;
         if ((ref = form.flows) != null) {

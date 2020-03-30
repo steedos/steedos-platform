@@ -86,7 +86,6 @@ install("tracker");
 install("retry", "meteor/retry/retry.js");
 install("ddp-common");
 install("email");
-install("fastclick");
 install("url", "meteor/url/url_server.js");
 install("http", "meteor/http/httpcall_server.js");
 install("jquery");
@@ -129,6 +128,7 @@ install("spacebars");
 install("html-tools");
 install("blaze-tools");
 install("spacebars-compiler");
+install("standard-minifier-css");
 install("standard-minifier-js");
 install("less");
 install("accounts-ui");
@@ -178,6 +178,8 @@ install("q42:autoform-markdown");
 install("steedos:markdown");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
+install("summernote:summernote");
+install("mpowaga:autoform-summernote");
 install("steedos:devexpress");
 install("gwendall:simple-schema-i18n");
 install("francocatena:status");
@@ -188,11 +190,8 @@ install("dburles:collection-helpers");
 install("mrt:moment");
 install("mrt:moment-timezone");
 install("steedos:loaders-css");
+install("matb33:collection-hooks");
 install("steedos:smsqueue");
-install("steedos:useraccounts-core");
-install("steedos:accounts-t9n");
-install("steedos:useraccounts-flow-routing");
-install("steedos:useraccounts-bootstrap");
 install("flemay:less-autoprefixer");
 install("steedos:ui");
 install("steedos:adminlte");
@@ -205,7 +204,6 @@ install("steedos:cfs-filesystem");
 install("steedos:cfs-standard-packages");
 install("steedos:cfs-aliyun");
 install("steedos:cfs-s3");
-install("matb33:collection-hooks");
 install("simple:json-routes");
 install("steedos:ionicons");
 install("steedos:theme");
@@ -228,8 +226,6 @@ install("steedos:cfs-worker");
 install("steedos:objects-core");
 install("steedos:objects-billing");
 install("steedos:base");
-install("steedos:accounts-phone");
-install("steedos:accounts");
 install("steedos:jstree");
 install("lai:collection-extensions");
 install("dburles:mongo-collection-instances");
@@ -249,6 +245,9 @@ install("steedos:mailqueue");
 install("chuangbo:cookie");
 install("steedos:sso");
 install("steedos:webhookqueue");
+install("steedos:api-authenticate-user");
+install("steedos:huaweipush");
+install("steedos:api");
 install("meteorhacks:ssr");
 install("steedos:autoform-filesize");
 install("steedos:autoform-location");
@@ -263,8 +262,6 @@ install("steedos:audit");
 install("steedos:formbuilder");
 install("steedos:app-workflow");
 install("steedos:object-webhooks-queue");
-install("steedos:api-authenticate-user");
-install("steedos:api");
 install("steedos:autoform-modals");
 install("steedos:slipjs");
 install("steedos:workflow");
@@ -274,6 +271,8 @@ install("jeremy:selectize");
 install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
+install("vazco:universe-selectize");
+install("steedos:cms");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -413,17 +412,6 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"future.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/fibers/future.js                                                                    //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }},"@babel":{"runtime":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -478,7 +466,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "bcrypt",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "main": "./bcrypt"
 };
 
@@ -636,7 +624,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"mkdirp":{"package.json":function(require,exports,module){
+}},"superagent":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/superagent/package.json                                                             //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "superagent",
+  "version": "3.8.3",
+  "main": "./lib/node/index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"node":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/superagent/lib/node/index.js                                                        //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}}},"mkdirp":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -829,7 +844,7 @@ module.useNode();
 module.exports = {
   "name": "@steedos/core",
   "private": false,
-  "version": "1.14.0",
+  "version": "1.18.11",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -846,10 +861,10 @@ module.exports = {
     "@salesforce/dev-config": "^1.4.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.14.0",
-    "@steedos/migrate": "^1.14.0",
-    "@steedos/objectql": "^1.14.0",
-    "@steedos/standard-objects": "^1.14.0",
+    "@steedos/auth": "^1.18.11",
+    "@steedos/migrate": "^1.18.11",
+    "@steedos/objectql": "^1.18.11",
+    "@steedos/standard-objects": "^1.18.11",
     "@types/express": "^4.16.1",
     "@types/mongodb": "^3.1.22",
     "@types/node": "^11.10.4",
@@ -879,7 +894,7 @@ module.exports = {
   },
   "devDependencies": {
     "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.14.0",
+    "@steedos/meteor-bundle-runner": "^1.18.11",
     "@steedos/migrate": "^1.6.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
@@ -922,7 +937,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.14.0",
+  "version": "1.18.11",
   "main": "lib/index.js"
 };
 
@@ -982,7 +997,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.14.0",
+  "version": "1.18.11",
   "main": "lib/index.js"
 };
 
@@ -1160,7 +1175,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"node-schedule":{"package.json":function(require,exports,module){
+}}},"weixin-pay":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/weixin-pay/package.json                                                             //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "weixin-pay",
+  "version": "1.1.7",
+  "main": "index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/weixin-pay/index.js                                                                 //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"node-schedule":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -1187,99 +1229,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"stream-buffers":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/stream-buffers/package.json                                                         //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"twilio":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/twilio/package.json                                                                 //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "twilio",
-  "version": "3.35.0",
-  "main": "./lib"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/twilio/lib/index.js                                                                 //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"phone":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/phone/package.json                                                                  //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "phone",
-  "version": "1.0.12",
-  "main": "./lib/index"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/phone/lib/index.js                                                                  //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"superagent":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/superagent/package.json                                                             //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "superagent",
-  "version": "3.8.3",
-  "main": "./lib/node/index.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"node":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/superagent/lib/node/index.js                                                        //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}}},"sha256":{"package.json":function(require,exports,module){
+}}},"sha256":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -1382,27 +1332,27 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"eval":{"package.json":function(require,exports,module){
+}}},"requestretry":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
-// node_modules/eval/package.json                                                                   //
+// node_modules/requestretry/package.json                                                           //
 //                                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                     //
 module.exports = {
-  "name": "eval",
-  "version": "0.1.2",
-  "main": "eval.js"
+  "name": "requestretry",
+  "version": "1.12.2",
+  "main": "index.js"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"eval.js":function(require,exports,module){
+},"index.js":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
-// node_modules/eval/eval.js                                                                        //
+// node_modules/requestretry/index.js                                                               //
 //                                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                     //
@@ -1436,88 +1386,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"socket.io":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/socket.io/package.json                                                              //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "socket.io",
-  "version": "2.3.0",
-  "main": "./lib/index"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/socket.io/lib/index.js                                                              //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"ejs":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/ejs/package.json                                                                    //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "ejs",
-  "version": "2.7.1",
-  "main": "./lib/ejs.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"ejs.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/ejs/lib/ejs.js                                                                      //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"ejs-lint":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/ejs-lint/package.json                                                               //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.exports = {
-  "name": "ejs-lint",
-  "version": "0.2.0",
-  "main": "index.js"
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"index.js":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/ejs-lint/index.js                                                                   //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"xinge":{"package.json":function(require,exports,module){
+}}},"xinge":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -1598,7 +1467,142 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}},{
+}},"eval":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/eval/package.json                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "eval",
+  "version": "0.1.2",
+  "main": "eval.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"eval.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/eval/eval.js                                                                        //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"socket.io":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/socket.io/package.json                                                              //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "socket.io",
+  "version": "2.3.0",
+  "main": "./lib/index"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/socket.io/lib/index.js                                                              //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"ejs":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/ejs/package.json                                                                    //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "ejs",
+  "version": "2.7.1",
+  "main": "./lib/ejs.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"ejs.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/ejs/lib/ejs.js                                                                      //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}},"ejs-lint":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/ejs-lint/package.json                                                               //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "ejs-lint",
+  "version": "0.2.0",
+  "main": "index.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/ejs-lint/index.js                                                                   //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"jszip":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/jszip/package.json                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "jszip",
+  "version": "3.2.2",
+  "main": "./lib/index"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"lib":{"index.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/jszip/lib/index.js                                                                  //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}}}}},{
   "extensions": [
     ".js",
     ".json",

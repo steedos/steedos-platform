@@ -6,11 +6,19 @@ const _ = require("underscore");
 const app = express();
 const router = express.Router();
 var path = require('path');
+import fs = require('fs')
 
 import { Publish } from '../publish'
 import { getSteedosSchema } from '@steedos/objectql';
 import { coreExpress } from '../express-middleware'
 
+import { createHash } from "crypto";
+
+export const sha1 = (contents) => {
+    var hash = createHash('sha1');
+    hash.update(contents);
+    return hash.digest('hex');
+};
 
 const extendSimpleSchema = () => {
     SimpleSchema.extendOptions({
@@ -52,13 +60,16 @@ export const initCreator = () => {
         require(scriptFile)
     });
 
-    let clientScripts = objectql.getClientScripts();
     let clientCodes = getClientBaseObject();
-    _.each(clientScripts, function (code) {
-        clientCodes += code
-        clientCodes += "\r\n";
+
+    let clientScripts = objectql.getClientScripts();
+    _.each(clientScripts, function (scriptFile) {
+        
+        let code = fs.readFileSync(scriptFile, 'utf8');
+
+        clientCodes = clientCodes + '\r\n' + code
     });
-    WebAppInternals.addStaticJs(clientCodes)
+    WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
 
     _.each(allObjects, function (obj) {
         if (obj.name != 'users')

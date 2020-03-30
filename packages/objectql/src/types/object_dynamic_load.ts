@@ -1,7 +1,6 @@
 import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
-import fs = require('fs')
 import { getRandomString } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
 import { isMeteor, transformListenersToTriggers } from '../util'
@@ -73,8 +72,7 @@ export const  addClientScriptFiles = (filePath: string) => {
     let matchedPaths: Array<string> = globby.sync(filePatten);
     matchedPaths = _.sortBy(matchedPaths)
     _.each(matchedPaths, (matchedPath) => {
-        let code = fs.readFileSync(matchedPath, 'utf8');
-        _clientScripts.push(code)
+        _clientScripts.push(matchedPath)
     })
 }
 

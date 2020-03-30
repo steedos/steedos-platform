@@ -12,7 +12,6 @@ var Mongo = Package.mongo.Mongo;
 var _ = Package.underscore._;
 var EJSON = Package.ejson.EJSON;
 var Random = Package.random.Random;
-var ServerSession = Package['steedos:base'].ServerSession;
 var Selector = Package['steedos:base'].Selector;
 var Steedos = Package['steedos:base'].Steedos;
 var AjaxCollection = Package['steedos:base'].AjaxCollection;
@@ -28,14 +27,14 @@ var WebhookQueue, __coffeescriptShare;
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                             //
-// packages/steedos_webhookqueue/lib/common/main.js                                                            //
-//                                                                                                             //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// packages/steedos_webhookqueue/lib/common/main.js                                                       //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
 WebhookQueue = new EventState();
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -46,12 +45,12 @@ WebhookQueue = new EventState();
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                             //
-// packages/steedos_webhookqueue/lib/common/webhooks.js                                                        //
-//                                                                                                             //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// packages/steedos_webhookqueue/lib/common/webhooks.js                                                   //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
 WebhookQueue.collection = new Mongo.Collection('_webhook_queue');
 
 var _validateDocument = function(webhook) {
@@ -85,7 +84,7 @@ WebhookQueue.send = function(options) {
 	return WebhookQueue.collection.insert(webhook);
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -96,12 +95,12 @@ WebhookQueue.send = function(options) {
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                             //
-// packages/steedos_webhookqueue/lib/server/api.js                                                             //
-//                                                                                                             //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// packages/steedos_webhookqueue/lib/server/api.js                                                        //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
 var isConfigured = false;
 var sendWorker = function(task, interval) {
 
@@ -168,6 +167,40 @@ WebhookQueue.Configure = function(options) {
 		}, function(error, result) {
 			if (error) {
 				console.error(error);
+				WebhookQueue.collection.update({
+					_id: webhook._id
+				}, {
+					$set: {
+						// error message
+						errMsg: error
+					}
+				});
+				return
+			}
+
+			if (!options.keepWebhooks) {
+				// Pr. Default we will remove webhooks
+				WebhookQueue.collection.remove({
+					_id: webhook._id,
+					errMsg: {
+						$exists: false
+					}
+				});
+			} else {
+				// Update the webhook
+				WebhookQueue.collection.update({
+					_id: webhook._id
+				}, {
+					$set: {
+						// Mark as sent
+						sent: true,
+						// Set the sent date
+						sentAt: new Date(),
+						// Not being sent anymore
+						sending: 0
+					}
+				});
+
 			}
 		});
 
@@ -247,36 +280,7 @@ WebhookQueue.Configure = function(options) {
 			if (reserved) {
 
 				// Send the webhook
-				var result = WebhookQueue.serverSend(webhook);
-
-				if (!options.keepWebhooks) {
-					// Pr. Default we will remove webhooks
-					WebhookQueue.collection.remove({
-						_id: webhook._id
-					});
-				} else {
-
-					// Update the webhook
-					WebhookQueue.collection.update({
-						_id: webhook._id
-					}, {
-						$set: {
-							// Mark as sent
-							sent: true,
-							// Set the sent date
-							sentAt: new Date(),
-							// Not being sent anymore
-							sending: 0
-						}
-					});
-
-				}
-
-				// Emit the send
-				self.emit('send', {
-					webhook: webhook._id,
-					result: result
-				});
+				WebhookQueue.serverSend(webhook);
 
 			} // Else could not reserve
 		}; // EO sendWebhook
@@ -305,6 +309,12 @@ WebhookQueue.Configure = function(options) {
 						sending: {
 							$lt: now
 						}
+					},
+					// And no error
+					{
+						errMsg: {
+							$exists: false
+						}
 					}
 				]
 			}, {
@@ -319,10 +329,16 @@ WebhookQueue.Configure = function(options) {
 				try {
 					sendWebhook(webhook);
 				} catch (error) {
-
-					if (WebhookQueue.debug) {
-						console.log('WebhookQueue: Could not send webhook id: "' + webhook._id + '", Error: ' + error.message);
-					}
+					console.error(error.stack);
+					console.log('WebhookQueue: Could not send doc id: "' + webhook._id + '", Error: ' + error.message);
+					WebhookQueue.collection.update({
+						_id: webhook._id
+					}, {
+						$set: {
+							// error message
+							errMsg: error.message
+						}
+					});
 				}
 			}); // EO forEach
 
@@ -338,7 +354,7 @@ WebhookQueue.Configure = function(options) {
 
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -349,12 +365,12 @@ WebhookQueue.Configure = function(options) {
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                             //
-// packages/steedos_webhookqueue/server/startup.coffee                                                         //
-//                                                                                                             //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                               //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                        //
+// packages/steedos_webhookqueue/server/startup.coffee                                                    //
+//                                                                                                        //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                          //
 __coffeescriptShare = typeof __coffeescriptShare === 'object' ? __coffeescriptShare : {}; var share = __coffeescriptShare;
 Meteor.startup(function () {
   var ref;
@@ -367,7 +383,7 @@ Meteor.startup(function () {
     });
   }
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -380,4 +396,4 @@ Package._define("steedos:webhookqueue", {
 })();
 
 //# sourceURL=meteor://💻app/packages/steedos_webhookqueue.js
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvc3RlZWRvc193ZWJob29rcXVldWUvc2VydmVyL3N0YXJ0dXAuY29mZmVlIiwibWV0ZW9yOi8v8J+Su2FwcC9zZXJ2ZXIvc3RhcnR1cC5jb2ZmZWUiXSwibmFtZXMiOlsiTWV0ZW9yIiwic3RhcnR1cCIsInJlZiIsInNldHRpbmdzIiwiY3JvbiIsIndlYmhvb2txdWV1ZV9pbnRlcnZhbCIsIldlYmhvb2tRdWV1ZSIsIkNvbmZpZ3VyZSIsInNlbmRJbnRlcnZhbCIsInNlbmRCYXRjaFNpemUiLCJrZWVwV2ViaG9va3MiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQUEsT0FBT0MsT0FBUCxDQUFlO0FBQ2QsTUFBQUMsR0FBQTs7QUFBQSxPQUFBQSxNQUFBRixPQUFBRyxRQUFBLENBQUFDLElBQUEsWUFBQUYsSUFBeUJHLHFCQUF6QixHQUF5QixNQUF6QjtBQ0VHLFdEREZDLGFBQWFDLFNBQWIsQ0FDQztBQUFBQyxvQkFBY1IsT0FBT0csUUFBUCxDQUFnQkMsSUFBaEIsQ0FBcUJDLHFCQUFuQztBQUNBSSxxQkFBZSxFQURmO0FBRUFDLG9CQUFjO0FBRmQsS0FERCxDQ0NFO0FBS0Q7QURSSCxHIiwiZmlsZSI6Ii9wYWNrYWdlcy9zdGVlZG9zX3dlYmhvb2txdWV1ZS5qcyIsInNvdXJjZXNDb250ZW50IjpbIk1ldGVvci5zdGFydHVwIC0+XHJcblx0aWYgTWV0ZW9yLnNldHRpbmdzLmNyb24/LndlYmhvb2txdWV1ZV9pbnRlcnZhbFxyXG5cdFx0V2ViaG9va1F1ZXVlLkNvbmZpZ3VyZVxyXG5cdFx0XHRzZW5kSW50ZXJ2YWw6IE1ldGVvci5zZXR0aW5ncy5jcm9uLndlYmhvb2txdWV1ZV9pbnRlcnZhbFxyXG5cdFx0XHRzZW5kQmF0Y2hTaXplOiAxMFxyXG5cdFx0XHRrZWVwV2ViaG9va3M6IGZhbHNlXHJcbiIsIk1ldGVvci5zdGFydHVwKGZ1bmN0aW9uKCkge1xuICB2YXIgcmVmO1xuICBpZiAoKHJlZiA9IE1ldGVvci5zZXR0aW5ncy5jcm9uKSAhPSBudWxsID8gcmVmLndlYmhvb2txdWV1ZV9pbnRlcnZhbCA6IHZvaWQgMCkge1xuICAgIHJldHVybiBXZWJob29rUXVldWUuQ29uZmlndXJlKHtcbiAgICAgIHNlbmRJbnRlcnZhbDogTWV0ZW9yLnNldHRpbmdzLmNyb24ud2ViaG9va3F1ZXVlX2ludGVydmFsLFxuICAgICAgc2VuZEJhdGNoU2l6ZTogMTAsXG4gICAgICBrZWVwV2ViaG9va3M6IGZhbHNlXG4gICAgfSk7XG4gIH1cbn0pO1xuIl19
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1ldGVvcjovL/CfkrthcHAvcGFja2FnZXMvc3RlZWRvc193ZWJob29rcXVldWUvc2VydmVyL3N0YXJ0dXAuY29mZmVlIiwibWV0ZW9yOi8v8J+Su2FwcC9zZXJ2ZXIvc3RhcnR1cC5jb2ZmZWUiXSwibmFtZXMiOlsiTWV0ZW9yIiwic3RhcnR1cCIsInJlZiIsInNldHRpbmdzIiwiY3JvbiIsIndlYmhvb2txdWV1ZV9pbnRlcnZhbCIsIldlYmhvb2tRdWV1ZSIsIkNvbmZpZ3VyZSIsInNlbmRJbnRlcnZhbCIsInNlbmRCYXRjaFNpemUiLCJrZWVwV2ViaG9va3MiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUFBLE9BQU9DLE9BQVAsQ0FBZTtBQUNkLE1BQUFDLEdBQUE7O0FBQUEsT0FBQUEsTUFBQUYsT0FBQUcsUUFBQSxDQUFBQyxJQUFBLFlBQUFGLElBQXlCRyxxQkFBekIsR0FBeUIsTUFBekI7QUNFRyxXRERGQyxhQUFhQyxTQUFiLENBQ0M7QUFBQUMsb0JBQWNSLE9BQU9HLFFBQVAsQ0FBZ0JDLElBQWhCLENBQXFCQyxxQkFBbkM7QUFDQUkscUJBQWUsRUFEZjtBQUVBQyxvQkFBYztBQUZkLEtBREQsQ0NDRTtBQUtEO0FEUkgsRyIsImZpbGUiOiIvcGFja2FnZXMvc3RlZWRvc193ZWJob29rcXVldWUuanMiLCJzb3VyY2VzQ29udGVudCI6WyJNZXRlb3Iuc3RhcnR1cCAtPlxyXG5cdGlmIE1ldGVvci5zZXR0aW5ncy5jcm9uPy53ZWJob29rcXVldWVfaW50ZXJ2YWxcclxuXHRcdFdlYmhvb2tRdWV1ZS5Db25maWd1cmVcclxuXHRcdFx0c2VuZEludGVydmFsOiBNZXRlb3Iuc2V0dGluZ3MuY3Jvbi53ZWJob29rcXVldWVfaW50ZXJ2YWxcclxuXHRcdFx0c2VuZEJhdGNoU2l6ZTogMTBcclxuXHRcdFx0a2VlcFdlYmhvb2tzOiBmYWxzZVxyXG4iLCJNZXRlb3Iuc3RhcnR1cChmdW5jdGlvbigpIHtcbiAgdmFyIHJlZjtcbiAgaWYgKChyZWYgPSBNZXRlb3Iuc2V0dGluZ3MuY3JvbikgIT0gbnVsbCA/IHJlZi53ZWJob29rcXVldWVfaW50ZXJ2YWwgOiB2b2lkIDApIHtcbiAgICByZXR1cm4gV2ViaG9va1F1ZXVlLkNvbmZpZ3VyZSh7XG4gICAgICBzZW5kSW50ZXJ2YWw6IE1ldGVvci5zZXR0aW5ncy5jcm9uLndlYmhvb2txdWV1ZV9pbnRlcnZhbCxcbiAgICAgIHNlbmRCYXRjaFNpemU6IDEwLFxuICAgICAga2VlcFdlYmhvb2tzOiBmYWxzZVxuICAgIH0pO1xuICB9XG59KTtcbiJdfQ==

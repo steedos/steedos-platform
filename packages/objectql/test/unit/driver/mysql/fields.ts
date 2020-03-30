@@ -95,10 +95,10 @@ describe('fetch records width specific fields for mysql database', () => {
         datasourceDefault = { ...datasourceDefault, ...connectConfig };
         let mySchema = new SteedosSchema({
             datasources: {
-                default: datasourceDefault
+                DatasourcesDriverTest: datasourceDefault
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosMySqlDriver>datasource.adapter;
         await driver.run(`SET SQL_SAFE_UPDATES = 0`);

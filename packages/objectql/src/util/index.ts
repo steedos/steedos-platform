@@ -199,7 +199,13 @@ function calcString(str: string, content: any = process.env): string{
         return $1.replace(/\{\s*/,"{args[\"").replace(/\s*\}/,"\"]}");
     })
     eval(`calcFun = function(args){return \`${rev}\`}`);
-    return calcFun.call({}, content)
+    let val = calcFun.call({}, content);
+
+    if(_.isString(val) && val){
+        return val.replace(/\\r/g, '\r').replace(/\\n/g, '\n')
+    }else{
+        return rev;
+    }
 }
 
 function calcSteedosConfig(config: JsonMap){
@@ -270,4 +276,36 @@ export function wrapAsync(fn, context){
     let callback = fut.resolver();
     let result = proxyFn.apply(this, [callback]);
     return fut ? fut.wait() : result;
+}
+
+export function getTemplateSpaceId(){
+    let steedosConfig = getSteedosConfig();
+    if(steedosConfig && steedosConfig.public && steedosConfig.public.templateSpaceId){
+        return steedosConfig.public.templateSpaceId
+    }
+}
+
+export function getCloudAdminSpaceId(){
+    let steedosConfig = getSteedosConfig();
+    if(steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId){
+        return steedosConfig.public.cloudAdminSpaceId
+    }
+}
+
+export function isTemplateSpace(spaceId){
+    let steedosConfig = getSteedosConfig();
+
+    if(spaceId && steedosConfig && steedosConfig.public && steedosConfig.public.templateSpaceId && spaceId === steedosConfig.public.templateSpaceId){
+        return true
+    }
+
+    return false
+}
+
+export function isCloudAdminSpace(spaceId){
+    let steedosConfig = getSteedosConfig();
+    if(spaceId && steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId && spaceId === steedosConfig.public.cloudAdminSpaceId){
+        return true
+    }
+    return false
 }

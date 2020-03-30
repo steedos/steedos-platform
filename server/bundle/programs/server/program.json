@@ -105,9 +105,6 @@
       "path": "packages/email.js"
     },
     {
-      "path": "packages/fastclick.js"
-    },
-    {
       "path": "packages/url.js"
     },
     {
@@ -264,6 +261,9 @@
     {
       "node_modules": "npm/node_modules/meteor/spacebars-compiler/node_modules",
       "path": "packages/spacebars-compiler.js"
+    },
+    {
+      "path": "packages/standard-minifier-css.js"
     },
     {
       "path": "packages/standard-minifier-js.js"
@@ -431,6 +431,12 @@
       "path": "packages/vazco_universe-autoform-select.js"
     },
     {
+      "path": "packages/summernote_summernote.js"
+    },
+    {
+      "path": "packages/mpowaga_autoform-summernote.js"
+    },
+    {
       "path": "packages/steedos_devexpress.js"
     },
     {
@@ -465,21 +471,11 @@
       "path": "packages/steedos_loaders-css.js"
     },
     {
+      "path": "packages/matb33_collection-hooks.js"
+    },
+    {
       "sourceMap": "packages/steedos_smsqueue.js.map",
       "path": "packages/steedos_smsqueue.js"
-    },
-    {
-      "path": "packages/steedos_useraccounts-core.js"
-    },
-    {
-      "sourceMap": "packages/steedos_accounts-t9n.js.map",
-      "path": "packages/steedos_accounts-t9n.js"
-    },
-    {
-      "path": "packages/steedos_useraccounts-flow-routing.js"
-    },
-    {
-      "path": "packages/steedos_useraccounts-bootstrap.js"
     },
     {
       "path": "packages/flemay_less-autoprefixer.js"
@@ -519,9 +515,6 @@
     {
       "sourceMap": "packages/steedos_cfs-s3.js.map",
       "path": "packages/steedos_cfs-s3.js"
-    },
-    {
-      "path": "packages/matb33_collection-hooks.js"
     },
     {
       "sourceMap": "packages/simple_json-routes.js.map",
@@ -601,15 +594,6 @@
       "path": "packages/steedos_base.js"
     },
     {
-      "sourceMap": "packages/steedos_accounts-phone.js.map",
-      "path": "packages/steedos_accounts-phone.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_accounts/node_modules",
-      "sourceMap": "packages/steedos_accounts.js.map",
-      "path": "packages/steedos_accounts.js"
-    },
-    {
       "path": "packages/steedos_jstree.js"
     },
     {
@@ -674,6 +658,18 @@
       "path": "packages/steedos_webhookqueue.js"
     },
     {
+      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
+      "path": "packages/steedos_api-authenticate-user.js"
+    },
+    {
+      "sourceMap": "packages/steedos_huaweipush.js.map",
+      "path": "packages/steedos_huaweipush.js"
+    },
+    {
+      "sourceMap": "packages/steedos_api.js.map",
+      "path": "packages/steedos_api.js"
+    },
+    {
       "path": "packages/meteorhacks_ssr.js"
     },
     {
@@ -728,14 +724,6 @@
       "path": "packages/steedos_object-webhooks-queue.js"
     },
     {
-      "sourceMap": "packages/steedos_api-authenticate-user.js.map",
-      "path": "packages/steedos_api-authenticate-user.js"
-    },
-    {
-      "sourceMap": "packages/steedos_api.js.map",
-      "path": "packages/steedos_api.js"
-    },
-    {
       "sourceMap": "packages/steedos_autoform-modals.js.map",
       "path": "packages/steedos_autoform-modals.js"
     },
@@ -747,6 +735,7 @@
       "path": "packages/steedos_workflow.js",
       "assets": {
         "client/views/instance/image_sign.html": "assets/packages/steedos_workflow/client/views/instance/image_sign.html",
+        "client/views/instance/traces_handler.html": "assets/packages/steedos_workflow/client/views/instance/traces_handler.html",
         "client/views/instance/instance_attachments.html": "assets/packages/steedos_workflow/client/views/instance/instance_attachments.html",
         "client/views/instance/traces.html": "assets/packages/steedos_workflow/client/views/instance/traces.html",
         "client/views/instance/traces_table.html": "assets/packages/steedos_workflow/client/views/instance/traces_table.html",
@@ -775,6 +764,17 @@
     {
       "sourceMap": "packages/steedos_webkit-notification.js.map",
       "path": "packages/steedos_webkit-notification.js"
+    },
+    {
+      "path": "packages/vazco_universe-selectize.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/steedos_cms/node_modules",
+      "sourceMap": "packages/steedos_cms.js.map",
+      "path": "packages/steedos_cms.js",
+      "assets": {
+        "themes/default.html": "assets/packages/steedos_cms/themes/default.html"
+      }
     },
     {
       "path": "packages/hot-code-push.js"

@@ -109,10 +109,10 @@ describe('fetch records for oracle with sort arguments as a string that comply w
         datasourceDefault = { ...datasourceDefault, ...connectConfig };
         let mySchema = new SteedosSchema({
             datasources: {
-                default: datasourceDefault
+                DatasourcesDriverTest: datasourceDefault
             }
         });
-        const datasource = mySchema.getDataSource("default");
+        const datasource = mySchema.getDataSource("DatasourcesDriverTest");
         await datasource.init();
         driver = <SteedosOracleDriver>datasource.adapter;
     });

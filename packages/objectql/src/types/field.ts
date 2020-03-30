@@ -38,7 +38,8 @@ const FIELDTYPES = [
     "function String() { [native code] }",
     "code",
     "Object",
-    "autonumber"
+    "autonumber",
+    "markdown"
 ]
 
 abstract class SteedosFieldProperties{
@@ -174,6 +175,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             case 'textarea':
                 this._fieldDBType = SteedosFieldDBType.text
                 break;
+            case 'html':
+                this._fieldDBType = SteedosFieldDBType.text
+                break;
             case 'select':
                 if(this.multiple){
                     this._fieldDBType = SteedosFieldDBType.array
@@ -306,6 +310,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 this._fieldDBType = SteedosFieldDBType.json
                 break;
             case 'autonumber':
+                this._fieldDBType = SteedosFieldDBType.varchar
+                break;
+            case 'markdown':
                 this._fieldDBType = SteedosFieldDBType.varchar
                 break;
             default:

@@ -24,10 +24,10 @@ fields:
     required: true
     name: org
     filterable: true
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
 list_views:
   all:
     filter_scope: space
@@ -35,6 +35,11 @@ list_views:
       - role
       - org
       - users
+      - modified
+    filter_fields:
+      - role
+      - users
+      - org
       - company_id
     label: 所有
 permission_set:

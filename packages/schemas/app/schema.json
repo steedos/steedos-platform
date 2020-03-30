@@ -59,6 +59,10 @@
             "type": "boolean",
             "description": "TODO....。"
         },
+        "sort": {
+            "type": "number",
+            "description": "排序"
+        },
         "objects": {
             "type": "array",
             "description": "用于指定此应用下有多少对象。",

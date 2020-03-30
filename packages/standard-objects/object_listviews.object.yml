@@ -79,6 +79,7 @@ fields:
     label: 显示的列
     type: grid
     is_wide: true
+    required: true
   columns.$:
     label: 显示的列
     blackbox: true

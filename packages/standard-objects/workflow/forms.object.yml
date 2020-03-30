@@ -170,10 +170,10 @@ fields:
     type: boolean
     readonly: true
     name: current.fields.$.is_multiselect
-  company_id:
-    required: false
-    omit: false
-    hidden: false
+  # company_id:
+  #   required: false
+  #   omit: false
+  #   hidden: false
 list_views:
   all:
     label: 所有

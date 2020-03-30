@@ -1,2 +1,0 @@
-)]}'
-{"version":3,"sources":["meteor://💻app/packages/steedos:creator/client/layout/creator_app_list_modal.less","meteor://💻app/"],"names":[],"mappings":"AAAA;EACI,WAAA;CCCH;ADFD;EAIE,gBAAA;CCCD","file":"to.css","sourcesContent":[".creator-modal .modal-dialog.modal-extra {\n    width: 90%;\n\n\t.slds-app-launcher__tile-body .appTileTitle {\n\t\tfont-size: 12pt;\n\t}\n}\n",".creator-modal .modal-dialog.modal-extra {\n  width: 90%;\n}\n.creator-modal .modal-dialog.modal-extra .slds-app-launcher__tile-body .appTileTitle {\n  font-size: 12pt;\n}\n"]}

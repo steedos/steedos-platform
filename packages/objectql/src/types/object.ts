@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters } from '../util'
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -55,7 +55,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
     permission_set?: Dictionary<SteedosObjectPermissionTypeConfig> //TODO remove ; 目前为了兼容现有object的定义保留
 }
 
-const _TRIGGERKEYS = ['beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
+const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterInsert', 'afterUpdate', 'afterDelete']
 
 const properties = ['label', 'icon', 'enable_search', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_trash', 'enable_space_global', 'enable_tree', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods']
 
@@ -83,7 +83,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_audit;
     }
     public set enable_audit(value: boolean) {
-        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
+        if (value && !this._datasource.enable_space) {
             throw new Error(`not support, please set ${this._name}.enable_audit to false or remove the enable_audit attribute`)
         }
         this._enable_audit = value;
@@ -94,7 +94,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_instances;
     }
     public set enable_instances(value: boolean) {
-        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
+        if (value && !this._datasource.enable_space) {
             throw new Error(`not support, please set ${this._name}.enable_instances to false or remove the enable_instances attribute`)
         }
         this._enable_instances = value;
@@ -105,7 +105,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_trash;
     }
     public set enable_trash(value: boolean) {
-        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
+        if (value && !this._datasource.enable_space) {
             throw new Error(`not support, please set ${this._name}.enable_trash to false or remove the enable_trash attribute`)
         }
         this._enable_trash = value;
@@ -116,7 +116,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return this._enable_share;
     }
     public set enable_share(value: boolean) {
-        if (value && (this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo && this._datasource.driver != SteedosDatabaseDriverType.Mongo)) {
+        if (value && !this._datasource.enable_space) {
             throw new Error(`not support, please set ${this._name}.enable_share to false or remove the enable_share attribute`)
         }
         this._enable_share = value;
@@ -242,7 +242,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     registerTrigger(trigger: SteedosTriggerType) {
         //如果是meteor mongo 则不做任何处理
-        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo) {
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind') {
             if (!this._triggersQueue[trigger.when]) {
                 this._triggersQueue[trigger.when] = {}
             }
@@ -443,6 +443,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 })
             }
         })
+
+        let spaceId = userSession.spaceId
+        if(isTemplateSpace(spaceId)){
+            return Object.assign({}, userObjectPermission, {allowRead: true, viewAllRecords: true, viewCompanyRecords: true})
+        }
+
         return userObjectPermission;
     }
 
@@ -570,6 +576,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
+        if(method === 'count'){
+            method = 'find';
+        }
         let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
         return await this.runTriggers(when, context)
     }
@@ -583,7 +592,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined }
+        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId:  userSession ? userSession.spaceId : undefined}
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
@@ -670,7 +679,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        if (this._datasource.driver == SteedosDatabaseDriverType.MeteorMongo || this._datasource.driver == SteedosDatabaseDriverType.Mongo) {
+        if (this._datasource.enable_space) {
             this.dealWithFilters(method, args);
             await this.dealWithMethodPermission(method, args);
         }
@@ -727,6 +736,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
+                if(isCloudAdminSpace(spaceId)){
+                    return 
+                }
+
                 let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
                 if(spaceId){
@@ -734,6 +747,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
 
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
+                    if (_.isEmpty(userSession.companies)) {
+                        throw new Error("user not belong any company!");
+                    }
                     companyFilter = _.map(userSession.companies, function (comp: any) {
                         return `(company_id eq '${comp._id}') or (company_ids eq '${comp._id}')`
                     });

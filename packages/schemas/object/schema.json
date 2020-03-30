@@ -116,6 +116,10 @@
             "type": "boolean",
             "description": "允许关注"
         },
+        "enable_workflow": {
+            "type": "boolean",
+            "description": "允许对象流程同步"
+        },
         "is_view": {
             "type": "boolean",
             "description": "此对象是否对应数据库中的视图"
@@ -226,6 +230,10 @@
         "relatedList": {
             "type": "array",
             "description": "主表想在详细页显示的相关子表"
+        },
+        "picklist": {
+            "type": "string",
+            "description": "指定字段的选项列表值集"
         }
     },
     "definitions": {
@@ -284,7 +292,8 @@
                                 "filesize",
                                 "file",
                                 "code",
-                                "autonumber"
+                                "autonumber",
+                                "markdown"
                             ]
                         }
                     ]
@@ -397,12 +406,12 @@
                     "description": "字段选项函数名称"
                 },
                 "min": {
-                    "type": "integer",
-                    "description": "最小长度"
+                    "type": ["integer", "string"],
+                    "description": "最小长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "max": {
-                    "type": "integer",
-                    "description": "最大长度"
+                    "type": ["integer", "string"],
+                    "description": "最大长度。支持字符串，数字，金额，日期类型字段"
                 },
                 "blackbox": {
                     "type": "boolean",
@@ -474,6 +483,10 @@
                         "string"
                     ],
                     "description": "过滤条件"
+                },
+                "filtersFunction": {
+                    "type": "string",
+                    "description": "过滤条件函数名称"
                 },
                 "sharing": {
                     "type": "string",
@@ -656,6 +669,10 @@
                 "unrelated_objects": {
                     "type": "array",
                     "description": "禁用关联对象"
+                },
+                "uneditable_related_list": {
+                    "type": "array",
+                    "description": "关联对象只读"
                 }
             }
         },

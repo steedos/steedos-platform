@@ -1,9 +1,0 @@
-.flow-list-box-org-modal {
-  z-index: 1050;
-}
-.flow-list-box-org-modal .modal-body .box-header {
-  padding: 10px;
-}
-.flow-list-box-org-modal .modal-body .contacts-list-wrapper {
-  overflow-y: auto;
-}
