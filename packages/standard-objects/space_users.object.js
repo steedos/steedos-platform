@@ -595,22 +595,7 @@ Meteor.startup(function () {
     //创建数据库索引
     if (Meteor.isServer) {
         db.space_users._ensureIndex({
-            "user": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
             "user_accepted": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "space": 1
-        }, {
-                background: true
-            });
-        db.space_users._ensureIndex({
-            "is_deleted": 1
         }, {
                 background: true
             });
@@ -663,16 +648,7 @@ Meteor.startup(function () {
         }, {
                 background: true
             });
-        db.space_users._ensureIndex({
-            "organizations": 1
-        }, {
-                background: true
-            });
-        return db.space_users._ensureIndex({
-            "mobile": 1
-        }, {
-                background: true
-            });
+        return;
     }
 });
 

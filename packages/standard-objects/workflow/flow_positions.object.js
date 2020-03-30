@@ -82,11 +82,6 @@ if (Meteor.isServer) {
     return modifier.$set.modified = new Date();
   });
   db.flow_positions._ensureIndex({
-    "space": 1
-  }, {
-      background: true
-    });
-  db.flow_positions._ensureIndex({
     "space": 1,
     "created": 1
   }, {
