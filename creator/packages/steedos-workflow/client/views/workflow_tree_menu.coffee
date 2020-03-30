@@ -219,6 +219,10 @@ getStoreItems = ()->
 		
 		return _.union boxs, categories, flows
 
+selectMenu = (_id)->
+	# 选中dxTreeView中某项
+	this.dxTreeViewInstance.selectItem(this.$(".dx-treeview-node[data-item-id=#{_id}]"))
+
 Template.workflowTreeMenu.onCreated ->
 
 Template.workflowTreeMenu.onRendered ->
@@ -276,9 +280,7 @@ Template.workflowTreeMenu.onRendered ->
 				if selectionInfo.node.selected
 					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
 					selectionInfo.event.preventDefault()
-
-			dxOptions.onItemSelectionChanged = (selectionInfo)->
-				if selectionInfo.node.selected
+				else
 					if selectionInfo.itemData.isRoot
 						# 切换箱子的时候清空搜索条件
 						$("#instance_search_tip_close_btn").click()
@@ -299,6 +301,8 @@ Template.workflowTreeMenu.onRendered ->
 							Session.set("flowId", selectionInfo.itemData._id);
 							FlowRouter.go url
 
+			dxOptions.onItemSelectionChanged = (selectionInfo)->
+
 			dxOptions.keyExpr = "_id"
 			dxOptions.parentIdExpr = "parent"
 			dxOptions.displayExpr = "name"
@@ -310,3 +314,10 @@ Template.workflowTreeMenu.onRendered ->
 			# dxOptions.onContentReady = ()->
 
 			self.dxTreeViewInstance = self.$(".gridSidebarContainer").dxTreeView(dxOptions).dxTreeView('instance')
+
+			selectMenu = selectMenu.bind(self)
+	
+	self.autorun (c)->
+		selectMenu Session.get("box")
+
+	
