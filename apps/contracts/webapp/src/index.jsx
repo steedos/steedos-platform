@@ -37,7 +37,7 @@ let config = {
         }],
         "noHeader": false,
         "unborderedRow": true,
-        "showAllLink": true,
+        "showAllLink": false,
         "illustration": {
             "messageBody": "您没有待审核文件"
         },

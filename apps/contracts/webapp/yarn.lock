@@ -804,10 +804,10 @@
     warning "^4.0.3"
     webpack-cli "^3.x"
 
-"@steedos/react@^1.14.14":
-  version "1.14.14"
-  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.14.14.tgz#2f1ffded84fcc8c80e62c6e415b82ee55c7ced73"
-  integrity sha512-Tl0PYK/1fzmkHz4Voeh4QqYuTnyElYgb7LB0ak0hLFfEbkO7FlozvLAFoQ2kTscqhJrzahqf2PALopKOlv3tLA==
+"@steedos/react@^1.14.17":
+  version "1.14.17"
+  resolved "https://registry.yarnpkg.com/@steedos/react/-/react-1.14.17.tgz#14e012ce691cab42e0d4cb61bd8dae239458f12c"
+  integrity sha512-QQueeqE1zeC3xsqUFpBSWU13BpP5s+sy/6O0uy08u7cG46KX2FGlcQDHamZEpaou3lz3RWvoIw49c7FK5c/dgA==
   dependencies:
     "@material-ui/core" "^4.4.0"
     "@material-ui/icons" "^4.2.1"
