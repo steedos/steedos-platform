@@ -107,7 +107,14 @@ Meteor.publish "instance_tabular", (tableName, ids, fields)->
 			instance.is_cc = instance.cc_users?.includes(self.userId) || false
 			instance.cc_count = instance.cc_users?.length || 0
 			delete instance.cc_users
-			self.changed("instances", id, instance);
+			try
+				self.changed("instances", id, instance);
+			catch error
+				console.log('instance observeChanges error: ', error.message);
+				console.log('self.userId: ', self.userId);
+				console.log('tableName: ', tableName);
+				console.log('ids: ', JSON.stringify(ids));
+				console.log('myApprove: ', JSON.stringify(myApprove));
 		removed: (id)->
 			self.removed("instances", id);
 	}
