@@ -230,7 +230,7 @@ handleBootstrapData = (result, callback)->
 	if (appIds && appIds.length>0)
 		if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
 			Session.set("app_id", appIds[0])
-	Creator.Plugins = result.plugins;
+	Creator.Plugins = if result.plugins then result.plugins else {};
 
 	if _.isFunction(callback)
 		callback()
