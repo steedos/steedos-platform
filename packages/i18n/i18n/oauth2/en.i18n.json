@@ -1,0 +1,7 @@
+{
+	"_namespace": "",
+
+	"authorize":"Authorize",
+	"get_user_info":"Get your account information",
+	"get_follow_permission":"will get the follow permission"
+}
