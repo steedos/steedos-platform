@@ -1,26 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Bootstrap, Dashboard, entityStateSelector, store } from '@steedos/react';
+import { getBetweenTimeBuiltinValueItem } from '@steedos/filters';
 
 let config = {
-    "apps": {
-        "label": "应用程序启动器",
-        "position": "RIGHT",
-        "type": "apps",
-        "mobile": true,
-        "ignoreApps": ["contracts"]
-    },
     "workflow": {
         "label": "待审核文件",
         "position": "CENTER_TOP",
         "type": "object",
         "objectName": "instances",
         "filters": [
-            ["space", "=", "{spaceId}"],
             [
                 ["inbox_users", "=", "{userId}"], "or", ["cc_users", "=", "{userId}"]
             ]
         ],
+        "sort": "modified desc",
         "columns": [{
             "label": "名称",
             "field": "name",
@@ -47,49 +41,84 @@ let config = {
             size: "small"
         }
     },
+    "apps": {
+        "label": "应用程序",
+        "position": "CENTER_TOP",
+        "type": "apps",
+        "mobile": false,
+        "ignoreApps": ["oa"]
+    },
+    "announcements": {
+        "label": "本周公告",
+        "position": "CENTER_TOP",
+        "type": "object",
+        "objectName": "announcements",
+        "filters": [
+            ["owner", "=", "{userId}"],
+            ["members", "=", "{userId}"],
+            ['created', 'between', 'last_7_days']
+        ],
+        "sort": "created desc",
+        "columns": [{
+            "field": "name",
+            "label": "标题",
+            "href": true
+        },{
+            "field": "created",
+            "label": "发布时间",
+            "width": "10rem",
+            "type": "datetime"
+        }],
+        "noHeader": false,
+        "unborderedRow": true,
+        "showAllLink": true,
+        "illustration": {
+            "messageBody": "本周没有新公告"
+        },
+        rowIcon: {
+            category: "standard",
+            name: "announcement",
+            size: "small"
+        }
+    },
     "tasks": {
-        "label": "待办任务",
-        "position": "CENTER_BOTTOM_LEFT",
+        "label": "今日任务",
+        "position": "RIGHT",
         "type": "object",
         "objectName": "tasks",
         "filters": [
             ["assignees", "=", "{userId}"],
             ["state", "<>", "complete"],
-            ['created', 'between', 'last_7_days']
+            ['due_date', 'between', 'last_30_days']
         ],
         "sort": "due_date",
         "columns": [{
             "field": "name",
             "label": "主题",
             "href": true
-        }, {
-            "field": "due_date",
-            "label": "截止时间",
-            "width": "10rem",
-            "type": "datetime"
         }],
         "unborderedRow": true,
         "showAllLink": true,
         "illustration": {
-            "messageBody": "您最近7天没有待办任务"
+            "messageBody": "您今天没有待办任务"
+        },
+        "noHeader": true,
+        rowIcon: {
+            category: "standard",
+            name: "timesheet_entry",
+            size: "small"
         }
     },
     "calendar": {
-        label: "日程",
-        position: "CENTER_BOTTOM_RIGHT",
+        label: "今日日程",
+        position: "RIGHT",
         type: "object",
         objectName: "events",
         filters: function(){
-            let start = new Date();
-            start.setHours(0);
-            start.setMinutes(0);
-            start.setSeconds(0);
-            start.setMilliseconds(0);
-            let end = new Date();
-            end.setHours(23);
-            end.setMinutes(59);
-            end.setSeconds(59);
-            end.setMilliseconds(0);
+            let utcOffset = Creator.USER_CONTEXT.user && Creator.USER_CONTEXT.user.utcOffset;
+            let today = getBetweenTimeBuiltinValueItem("today", utcOffset);
+            let start = today.values[0];
+            let end = today.values[1];
             return [[
                 ['owner', '=', '{userId}'], 
                 'or', 
@@ -104,21 +133,17 @@ let config = {
             field: "name",
             label: "主题",
             href: true
-        }, {
-            "field": "start",
-            "label": "开始时间",
-            "width": "10rem",
-            "type": "datetime"
-        }, {
-            "field": "end",
-            "label": "结束时间",
-            "width": "10rem",
-            "type": "datetime"
         }],
         unborderedRow: true,
         showAllLink: true,
         illustration:{
             messageBody: "您今天没有日程"
+        },
+        "noHeader": true,
+        rowIcon: {
+            category: "standard",
+            name: "event",
+            size: "small"
         }
     }
 };
@@ -133,7 +158,7 @@ const Home = () => (
 class ContractsAppPlugin {
     initialize(registry, store) {
         registry.registerObjectHomeComponent(
-            'contracts_home',
+            'oa_home',
             Home
         );
     }
