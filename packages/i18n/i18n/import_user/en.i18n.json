@@ -1,6 +1,4 @@
 {
-	"_namespace": "",
-
 	"steedos_contacts_import_users": "Import users",
 	"steedos_contacts_import_users_note": "Note",
 	"steedos_contacts_import_users_note_detail": "<p> The data file must be Excel </ p> <p> 1, the department must be full path. If the department does not exist, then automatically create </ p> <p> 2, import the user if it does not exist, then automatically created; only the new user support set password </ p> <p> 3, if the user exists, Join the current space to modify the user information. If the imported attribute is empty, do not modify this attribute value </ p>",
