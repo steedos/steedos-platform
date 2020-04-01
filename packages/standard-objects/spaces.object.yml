@@ -64,12 +64,20 @@ fields:
     label: 绑定域名
     type: 'text'
     group: 账务
-    
-  apps_paid:
+  modules:
     label: 已付费应用
-    type: '[text]'
-    omit: true
+    type: select
+    multiple: true
     group: 账务
+    options:
+      - label: 审批王标准版
+        value: workflow.standard
+      - label: 审批王专业版扩展包
+        value: workflow.professional
+      - label: 审批王企业版扩展包
+        value: workflow.enterprise
+    omit: true
+    hidden: false
   balance:
     label: 账户余额
     type: number
@@ -100,11 +108,6 @@ fields:
     type: datetime
     omit: true
     group: 账务
-  modules:
-    label: 模块
-    type: '[text]'
-    omit: true
-    hidden: true
   company_id:
     defaultValue: !!js/function |
       function () {
