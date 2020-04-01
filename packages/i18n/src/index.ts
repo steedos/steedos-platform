@@ -1,40 +1,27 @@
 import { locales } from './locales'
 const i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
+const XHR = require('i18next-xhr-backend');
 
-
-type StringMap = { [key: string]: any };
-type Callback = (error: any, t: Function) => void;
-type events = "initialized" | "loaded" | "failedLoading" | "missingKey" | 'added' | 'removed' | 'languageChanged' | string;
-
-const en = require('../resources/base/en.i18n.json');
-const zhCN = require('../resources/base/zh-CN.i18n.json');
-
-const en_creator = require('../resources/creator/en.i18n.json');
-const zhCN_creator = require('../resources/creator/zh-CN.i18n.json');
-
-const en_objectCore = require('../resources/object_core/en.i18n.json');
-const zhCN_objectCore = require('../resources/object_core/zh-CN.i18n.json');
-
-const en_workflow = require('../resources/workflow/en.i18n.json');
-const zhCN_workflow = require('../resources/workflow/zh-CN.i18n.json');
+const loadResources = {};
 
 i18next.use(sprintf).init({
     lng: 'en',
     debug: true,
-    fallbackNS: [], 
+    fallbackNS: [],  //'translation'
+    fallbackLng: [],
     interpolation: {
         prefix: "{$",
         suffix: "}"
     },
-    resources: {
-        en: {
-            translation: Object.assign({}, en, en_creator, en_objectCore, en_workflow)
-        },
-        'zh-CN': {
-            translation: Object.assign({}, zhCN, zhCN_creator, zhCN_objectCore, zhCN_workflow)
-        }
-    }
+    // resources: {
+    //     en: {
+    //         translation: {}
+    //     },
+    //     'zh-CN': {
+    //         translation: {}
+    //     }
+    // }
 }, function (err: any, t: any) {
     console.log('initialized and ready to go', err);
 });
@@ -61,12 +48,53 @@ export const getResourceBundle = function(lng: string, ns: string){
     return i18next.getResourceBundle(lng, ns);
 }
 
+export const getDataByLanguage = function(lng: string){
+    return i18next.getDataByLanguage(lng);
+}
+
 export const exists = function(key: string, options: StringMap){
     return i18next.exists(key, options);
 }
 
-export const changeLanguage = function(lng: string, callback?: Callback){
-    return i18next.changeLanguage(lng, callback);
+export const changeLanguage = function(lng: string, options: any = {}, callback?: Callback){
+    let rootUrl = options.rootUrl;
+    let ns = options.ns || 'translation';
+    console.log('changeLanguage', lng, ns, options);
+    if(typeof window != 'undefined' && rootUrl){
+        if(!rootUrl.endsWith('/')){
+            rootUrl = `${rootUrl}/`
+        }
+        // let connector = i18next.services.backendConnector;
+        // connector.backend = new XHR(i18next.services, {
+        //     loadPath: `${rootUrl}locales/${lng}/${ns}`
+        // });
+        // connector.load([lng],[ns],function(err){
+        //     i18next.changeLanguage(lng, callback);
+        // })
+        let loadPath = `${rootUrl}locales/${lng}/${ns}`
+        if(loadResources[loadPath] > 0){
+            i18next.changeLanguage(lng, callback);
+        }else if(loadResources[loadPath] != 0){
+            loadResources[loadPath] = 0;
+            let backend = new XHR(
+                i18next.services,
+                {
+                  loadPath: loadPath,
+                },
+              );
+            backend.read(lng, ns, function(err, data) {
+               if(err){
+                    loadResources[loadPath] = -1;
+               }else{
+                    loadResources[loadPath] = 1
+               }
+               addResourceBundle(lng, ns, data);
+               i18next.changeLanguage(lng, callback);
+            });
+        }
+    }else{
+        return i18next.changeLanguage(lng, callback);
+    }
 }
 
 export const format = function(value: any, format?: string, lng?: string){
@@ -75,6 +103,14 @@ export const format = function(value: any, format?: string, lng?: string){
 
 export const getLanguages = function(){
     return i18next.languages;
+}
+
+export const loadLanguages = function(lngs: any, callback: any){
+    return i18next.loadLanguages(lngs, callback);
+}
+
+export const loadNamespaces = function(ns: any, callback: any){
+    return i18next.loadNamespaces(ns, callback);
 }
 
 //Events
@@ -86,7 +122,11 @@ export const off = function(event: string, listener: (...args: any[]) => void){
     return i18next.off(event, listener)
 }
 
-export const init = function({ app }){
+
+
+export const initLocales = function({ app }){
     console.log('init.....');
     app.use("/locales/:lng/:ns", locales);
 }
+
+export * from './translation'

@@ -74,6 +74,39 @@ export const loadObjects = (filePath: string) => {
     return results
 }
 
+function getI18nLng(filePath){
+    try {
+        let pathJson = path.parse(filePath);
+        let filename = pathJson.base;
+        if(filename){
+            let f = filename.split('.');
+            if(f.length >= 3){
+                return f[f.length-3]
+            }
+        }
+        console.log(`getI18nLng warn: Invalid file: ${filePath}`);
+    } catch (error) {
+        console.error(`getI18nLng error: ${filePath}`, error)
+    }
+}
+
+export const loadI18n = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.i18n.yml"),
+        path.join(filePath, "*.i18n.json")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        console.log('loadI18n matchedPath', matchedPath);
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, data: json})
+        }
+    })
+    return results
+}
 
 export const loadTriggers = (filePath: string)=>{
     let results = []

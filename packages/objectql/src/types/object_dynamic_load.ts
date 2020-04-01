@@ -16,7 +16,7 @@ const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
-const _objectI18nConfigs: Array<any> = [];
+const _objectsI18n: Array<any> = [];
 
 let standardObjectsLoaded: boolean = false;
 
@@ -64,6 +64,21 @@ export const addServerScriptFiles = (filePath: string) => {
 
 export const getServerScripts = () => {
     return _serverScripts;
+}
+
+export const addObjectI18nFiles = (filePath: string)=>{
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+
+    let i18nData = util.loadI18n(filePath)
+    i18nData.forEach(element => {
+        _objectsI18n.push(element)
+    });
+}
+
+export const getObjectsI18n = ()=>{
+    return _objectsI18n;
 }
 
 export const  addClientScriptFiles = (filePath: string) => {
