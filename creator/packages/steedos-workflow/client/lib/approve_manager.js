@@ -90,7 +90,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
             }
             break;
         default: //start：开始、submit：填写、counterSign：会签
-            if (currentStep.step_type === 'counterSign' && currentStep.oneClickRejection && judge === "rejected" && Meteor.settings && Meteor.settings.public && Meteor.settings.public.is_group_company){
+            if (currentStep.step_type === 'counterSign' && currentStep.oneClickRejection && judge === "rejected"){
                 lines.forEach(function(line) {
                     if (line.state == "rejected") {
                         var rejected_step = WorkflowManager.getInstanceStep(line.to_step);
