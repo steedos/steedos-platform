@@ -29,6 +29,7 @@ var tabularOnRendered = function () {
 	template.tabular.docPub = new ReactiveVar(null);
 	template.tabular.collection = new ReactiveVar(null);
 	template.tabular.ready = new ReactiveVar(false);
+	template.tabular.idsReady = new ReactiveVar(false);
 	template.tabular.recordsTotal = 0;
 	template.tabular.recordsFiltered = 0;
 	template.tabular.isLoading = new ReactiveVar(true);
@@ -204,6 +205,7 @@ var tabularOnRendered = function () {
 		template.tabular.skip.get();
 		template.tabular.limit.get();
 		template.tabular.isLoading.set(true);
+		template.tabular.idsReady.set(false);
 	});
 
 	// First Subscription
@@ -218,8 +220,13 @@ var tabularOnRendered = function () {
 			return;
 		}
 
-		function onReady() {
-			template.tabular.isLoading.set(false);
+		function onReadyFirst() {
+			// We're ready to do the Second Subscription that subscribe to the documents with _ids given
+			// template.tabular.isLoading.set(false);
+			Meteor.defer(function(){
+				// ids订阅成功后不应该直接设置isLoading为false，而是通知进行第二步订阅
+				template.tabular.idsReady.set(true);
+			});
 		}
 
 		//console.log('tabular_getInfo autorun');
@@ -232,7 +239,7 @@ var tabularOnRendered = function () {
 			template.tabular.skip.get(),
 			template.tabular.limit.get(),
 			template.tabular.search_value.get(),
-			onReady
+			onReadyFirst
 		);
 	});
 
@@ -241,6 +248,9 @@ var tabularOnRendered = function () {
 	// fields to only those we need to display. It's not necessary to call stop
 	// on subscriptions that are within autorun computations.
 	template.autorun(function () {
+		if (!template.tabular.idsReady.get()) {
+			return;
+		}
 		// tableInfo is reactive and causes a rerun whenever the
 		// list of docs that should currently be in the table changes.
 		// It does not cause reruns based on the documents themselves
@@ -252,11 +262,17 @@ var tabularOnRendered = function () {
 
 		template.tabular.recordsTotal = tableInfo.recordsTotal || 0;
 		template.tabular.recordsFiltered = tableInfo.recordsFiltered || 0;
+		function onReadySecond() {
+			Meteor.defer(function(){
+				template.tabular.isLoading.set(false);
+			});
+		}
 
 		// In some cases, there is no point in subscribing to nothing
 		if (_.isEmpty(tableInfo) ||
 			template.tabular.recordsTotal === 0 ||
 			template.tabular.recordsFiltered === 0) {
+			onReadySecond();
 			return;
 		}
 
@@ -273,7 +289,8 @@ var tabularOnRendered = function () {
 			template.tabular.docPub.get(),
 			tableName,
 			tableInfo.ids || [],
-			fields
+			fields,
+			onReadySecond
 		);
 	});
 
@@ -399,7 +416,8 @@ var tabularOnRendered = function () {
 			}
 		}
 
-		template.tabular.isLoading.set(false);
+		// 只有订阅成功才设置isLoading为false
+		// template.tabular.isLoading.set(false);
 	});
 
 	// XXX Not working
@@ -414,10 +432,12 @@ var tabularOnRendered = function () {
 			template.$('.dataTables_processing').show();
 			template.$('.dataTable').hide();
 			template.$('.dataTables_paginate').hide();
+			template.$('.dataTables_length').hide();
 		} else {
 			template.$('.dataTables_processing').hide();
 			template.$('.dataTable').show();
 			template.$('.dataTables_paginate').show();
+			template.$('.dataTables_length').show();
 
 			if (tableInfo.recordsTotal < 10) {
 				$('div.dataTables_length').hide();
