@@ -27,7 +27,9 @@ const getObjectFieldLabelKey = function(objectName, name){
 
 //TODO ${objectName}_group_${key}
 const getObjectFieldGroupKey = function(objectName, name){
-    return `${objectName}${KEYSEPARATOR}field${KEYSEPARATOR}${name}${KEYSEPARATOR}group`
+    //转小写后，替换掉 % . 空格
+    let groupKey = name.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
+    return `${objectName}${KEYSEPARATOR}group${KEYSEPARATOR}${groupKey}`
 }
 
 const getObjectFieldOptionsLabelKey = function(objectName, name, value){
@@ -84,7 +86,7 @@ const translationObject = function(lng: string, objectName: string, object: Stri
     _.each(object.fields, function(field, fieldName){
         field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label);
         if(field.group){
-            field.group = getObjectFieldGroup(lng, objectName, fieldName, field.group);
+            field.group = getObjectFieldGroup(lng, objectName, field.group, field.group);
         }
         if(field.options){
             let _options = [];
@@ -127,7 +129,7 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, o
     _.each(object.fields, function(field, fieldName){
         template[getObjectFieldLabelKey(objectName, fieldName)] = getObjectFieldLabel(lng, objectName, fieldName, field.label);
         if(field.group){
-            template[getObjectFieldGroupKey(objectName, fieldName)] = getObjectFieldGroup(lng, objectName, fieldName, field.group);
+            template[getObjectFieldGroupKey(objectName, field.group)] = getObjectFieldGroup(lng, objectName, field.group, field.group);
         }
         if(field.options){
             _.each(field.options, function(op){
@@ -146,5 +148,5 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, o
         template[getObjectListviewLabelKey(objectName, viewName)] = getObjectListviewLabel(lng, objectName, viewName, list_view.label);
     })
 
-    return yaml.dump(template).replace(/: ''/g, ': ');
+    return yaml.dump(template, {sortKeys: true}).replace(/: ''/g, ': ');
 }
