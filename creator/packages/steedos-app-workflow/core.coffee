@@ -7,7 +7,10 @@ if Meteor.isClient
 			url = url + "&flowId=#{flow}"
 		if companyId && !Creator.isSpaceAdmin(space, Meteor.userId())
 			url = url + "&companyId=#{companyId}"
-		iframe_url = "/packages/steedos_workflow/assets/designer/index.html?url=#{Steedos.absoluteUrl(url)}"
+		
+		url = encodeURIComponent(Steedos.absoluteUrl(url))
+		iframe_url = "/packages/steedos_workflow/assets/designer/index.html?url=#{url}"
+
 		Steedos.openWindow Steedos.absoluteUrl(iframe_url)
 	WorkflowCore.openFormDesign = (locale, space, form, companyId)->
 		Modal.show('formDesign', {formId: form}, {keyboard:false, backdrop: "static"})

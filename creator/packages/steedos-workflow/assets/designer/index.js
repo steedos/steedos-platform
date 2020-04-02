@@ -7,6 +7,8 @@ var designer = {
 	},
 	run:function(){
 		var url = this.urlQuery("url");
+		url = decodeURIComponent(url);
+		
 		if(url){
 			$("#ifrDesigner").attr("src",url);
 		}
