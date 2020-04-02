@@ -1,6 +1,7 @@
 const i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
 const XHR = require('i18next-xhr-backend');
+const _ = require("underscore")
 
 const loadResources = {};
 
@@ -25,8 +26,19 @@ i18next.use(sprintf).init({
     console.log('initialized and ready to go', err);
 });
 
-export const t = function(key: any, options: StringMap){
+export const _t = function(key: any, options: StringMap){
     return i18next.t(key, options)
+}
+
+export const t = function(key: any, parameters: any, locale: string){
+    if (locale === "zh-cn") {
+        locale = "zh-CN";
+    }
+    if ((parameters != null) && !(_.isObject(parameters))) {
+        return _t(key, { lng: locale, postProcess: 'sprintf', sprintf: [parameters] });
+    } else {
+        return _t(key, Object.assign({lng: locale}, parameters));
+    }
 }
 
 /**
@@ -120,9 +132,5 @@ export const on = function(event: events, listener: (...args: any[]) => void){
 export const off = function(event: string, listener: (...args: any[]) => void){
     return i18next.off(event, listener)
 }
-
-
-
-
 
 export * from './translation'

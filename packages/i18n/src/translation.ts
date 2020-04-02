@@ -1,10 +1,11 @@
-import { t, exists } from './index';
+import { _t, exists, addResourceBundle } from './index';
 const yaml = require('js-yaml')
 const _ = require("underscore");
 
 const KEYSEPARATOR: string = '_';
 
-const OBJECTNS = 'objects';
+//translation 为默认的命名空间
+const OBJECTNS = 'translation'; // objects
 
 const objectT = function(key , lng){
     let options: any = {lng: lng, ns: OBJECTNS} // TODO remove ns
@@ -12,7 +13,7 @@ const objectT = function(key , lng){
         options.keySeparator = false
     }
     if(exists(key, options)){
-        return t(key, options)
+        return _t(key, options)
     }
 }
 
@@ -105,6 +106,12 @@ const translationObject = function(lng: string, objectName: string, object: Stri
 
     _.each(object.list_views, function(list_view, viewName){
         list_view.label = getObjectListviewLabel(lng, objectName, viewName, list_view.label);
+    })
+}
+
+export const addObjectsI18n = function(i18nArray){
+    _.each(i18nArray, function(item){
+        addResourceBundle(item.lng, OBJECTNS, item.data, true, true);
     })
 }
 
