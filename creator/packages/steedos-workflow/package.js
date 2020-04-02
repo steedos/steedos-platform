@@ -368,6 +368,10 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/views/list/admin_process_delegation_rules.html', 'client');
 	api.addFiles('client/views/list/admin_process_delegation_rules.coffee', 'client');
+	
+	api.addAssets("assets/designer/index.html", "client");
+	api.addAssets("assets/designer/index.js", "client");
+	api.addAssets("assets/designer/index.css", "client");
 
 	// app-workflow plugins
 	// api.addFiles('plugins/flow_import_action.coffee', 'client');
