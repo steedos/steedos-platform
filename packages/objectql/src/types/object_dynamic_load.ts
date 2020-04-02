@@ -12,6 +12,7 @@ var globby = require('globby');
 export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
 export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
+const _original_objectConfigs: Array<SteedosObjectTypeConfig> = []; //不包括继承部分
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
@@ -19,6 +20,15 @@ const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 
 let standardObjectsLoaded: boolean = false;
+
+const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
+    _.remove(_original_objectConfigs, {name: objectName, datasource: datasource});
+    _original_objectConfigs.push(config)
+}
+
+export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
+    return _.find(_original_objectConfigs, {name: object_name})
+}
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -114,7 +124,9 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
+        addOriginalObjectConfigs(object_name, datasource, clone(config));
     } else {
+        addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
         if (isMeteor() && (datasource === 'default')) {
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
@@ -216,8 +228,8 @@ export function addObjectMethod(objectName: string, methodName: string, method: 
     object.methods[methodName] = method
 }
 
+//TODO 写入到addOriginalObjectConfigs
 export function addObjectAction(objectName: string, actionConfig: SteedosActionTypeConfig){
-    
     if (!actionConfig.name) 
         throw new Error(`Error add action, name required`);
 

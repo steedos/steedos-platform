@@ -1,5 +1,6 @@
 import * as I18n from '@steedos/i18n';
 import { InitCoreI18n } from '@steedos/i18n/lib/core_i18n'
+import { initExportObjectI18nTemplateRouter, initLocalesRouter} from '@steedos/i18n/lib/router'
 const _ = require("underscore");
 const express = require('express');
 const objectql = require('@steedos/objectql')
@@ -8,15 +9,16 @@ const app = express();
 export const InitI18n = function(){
     InitCoreI18n();
     InitObjectI18n();
-    InitI18nLocales();
+    InitI18nRouter();
 }
 
-export const InitI18nLocales = function(){
+export const InitI18nRouter = function(){
     const pluginContext = {
         app,
         settings: Meteor.settings
     };
-    I18n.initLocales(pluginContext);
+    initExportObjectI18nTemplateRouter(pluginContext);
+    initLocalesRouter(pluginContext);
     WebApp.connectHandlers.use(pluginContext.app);
 }
 

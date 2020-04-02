@@ -1,4 +1,3 @@
-import { locales } from './locales'
 const i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
 const XHR = require('i18next-xhr-backend');
@@ -124,9 +123,6 @@ export const off = function(event: string, listener: (...args: any[]) => void){
 
 
 
-export const initLocales = function({ app }){
-    console.log('init.....');
-    app.use("/locales/:lng/:ns", locales);
-}
+
 
 export * from './translation'
