@@ -7,7 +7,6 @@ export const exportObjectI18n = async (req: any, res: any)=>{
     let objectName = req.params.objectName;
     console.log('exportObjectI18n', objectName);
     let object = objectql.getOriginalObjectConfig(objectName); //getOriginalObjectConfig
-    console.log('getOriginalObjectConfig', object);
     res.setHeader('Content-type', 'application/x-msdownload');
     res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(`${objectName}.${lng}.i18n.yml`));
     res.setHeader('Transfer-Encoding', '')
