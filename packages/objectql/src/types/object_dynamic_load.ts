@@ -22,8 +22,21 @@ const _objectsI18n: Array<any> = [];
 let standardObjectsLoaded: boolean = false;
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
+    // if(objectName === 'accounts'){
+    //     console.log('addOriginalObjectConfigs accounts config', datasource, config);
+    // }
+    config.datasource = datasource;
     _.remove(_original_objectConfigs, {name: objectName, datasource: datasource});
     _original_objectConfigs.push(config)
+}
+
+const extendOriginalObjectConfig = function(objectName: string, datasource: string, objectConfig: SteedosObjectTypeConfig){
+    let parentOriginalObjectConfig = getOriginalObjectConfig(objectName);
+    let originalObjectConfig = util.extend({
+        name: objectName,
+        fields: {}
+    }, clone(parentOriginalObjectConfig), objectConfig);
+    addOriginalObjectConfigs(objectName, datasource, clone(originalObjectConfig));
 }
 
 export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
@@ -109,6 +122,9 @@ export const getClientScripts = () => {
 
 export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
     let object_name = objectConfig.name;
+    if(object_name === 'company'){
+        console.log('company actions', objectConfig.actions);
+    }
     let config:SteedosObjectTypeConfig = {
         name: object_name,
         fields: {}
@@ -124,7 +140,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
-        addOriginalObjectConfigs(object_name, datasource, clone(config));
+        extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
         if (isMeteor() && (datasource === 'default')) {
