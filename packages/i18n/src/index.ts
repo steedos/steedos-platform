@@ -7,7 +7,7 @@ const loadResources = {};
 
 i18next.use(sprintf).init({
     lng: 'en',
-    debug: true,
+    debug: process.env.I18N_DEBUG || false,
     fallbackNS: [],  //'translation'
     fallbackLng: [],
     interpolation: {
