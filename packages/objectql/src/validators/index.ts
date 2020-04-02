@@ -16,6 +16,9 @@ export const ValidatorManager = {
     loadJSON(schema: JsonMap) {
         let _id = getString(schema, "id") || getString(schema, "name");
         if (_id) {
+            if(schema){
+                schema.properties['__filename'] = { type: 'string' }
+            }
             Validators[_id] = jsen(schema);
         }
         return schema;

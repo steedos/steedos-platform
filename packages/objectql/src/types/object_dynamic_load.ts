@@ -22,9 +22,6 @@ const _objectsI18n: Array<any> = [];
 let standardObjectsLoaded: boolean = false;
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
-    // if(objectName === 'accounts'){
-    //     console.log('addOriginalObjectConfigs accounts config', datasource, config);
-    // }
     config.datasource = datasource;
     _.remove(_original_objectConfigs, {name: objectName, datasource: datasource});
     _original_objectConfigs.push(config)
@@ -41,6 +38,14 @@ const extendOriginalObjectConfig = function(objectName: string, datasource: stri
 
 export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
     return _.find(_original_objectConfigs, {name: object_name})
+}
+
+export const getOriginalObjectConfigs = (datasource: string) => {
+    if (datasource) {
+        return _.filter(_original_objectConfigs, {datasource: datasource})
+    } else {
+        return _original_objectConfigs
+    }
 }
 
 export const getObjectConfigs = (datasource: string) => {
@@ -157,6 +162,7 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     }
     config.datasource = datasource;
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
+    delete config.__filename
     _objectConfigs.push(config)
 }
 

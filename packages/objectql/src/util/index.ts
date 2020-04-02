@@ -40,6 +40,9 @@ let loadFile = (filePath: string)=>{
             json = yaml.load(fs.readFileSync(filePath, 'utf8'));
         else if(extname.toLocaleLowerCase() == '.js')
             json = clone(require(filePath));
+        if(json){
+            json.__filename = filePath
+        }
     } catch (error) {
         console.error('loadFile error', filePath, error);
     }

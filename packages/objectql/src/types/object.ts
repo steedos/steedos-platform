@@ -47,6 +47,7 @@ abstract class SteedosObjectProperties {
 
 
 export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
+    __filename?: string
     name?: string
     datasource?: string
     fields: Dictionary<SteedosFieldTypeConfig>
