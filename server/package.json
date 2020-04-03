@@ -27,6 +27,7 @@
     "@steedos/meteor-bundle-runner": "^1.18.11",
     "@steedos/objectql": "^1.18.11",
     "@steedos/standard-objects": "^1.18.11",
+    "@steedos/i18n": "^1.18.11",
     "aliyun-sdk": "^1.12.3",
     "aws-sdk": "^2.533.0",
     "basic-auth": "^2.0.1",
