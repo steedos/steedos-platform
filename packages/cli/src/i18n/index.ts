@@ -2,6 +2,7 @@ import fs = require("fs-extra");
 import inquirer = require("inquirer");
 import path = require("path");
 const _ = require("underscore");
+const colors = require('colors/safe');
 
 export async function CliLogic(lng) {
     await updateObjectsI18n(lng)
@@ -19,17 +20,33 @@ async function updateObjectsI18n(lng){
     _.each(configs, function(config){
         let filename = config.__filename
         if(filename && filename.indexOf("node_modules") < 0){
-            let filePath = path.join(path.dirname(filename), `${lng}.i18n.yml`)
-            let data = I18n.getObjectI18nTemplate(lng, config.name, config);
+            let objectName = config.name;
+            let filePath = path.join(path.dirname(filename), `${objectName}.${lng}.i18n.yml`)
+            let data = I18n.getObjectI18nTemplate(lng, objectName, config);
             if(fs.existsSync(filePath)){
-                console.log('修改资源文件 filePath', filePath);
-                //fs.outputFileSync(filePath, data)
+                let _i18nData = objectql.loadFile(filePath);
+                //old keys
+                let oldKeys = _.keys(_i18nData);
+                //new keys
+                let keys = _.keys(data);
+                
+                let deleteKeys = _.difference(oldKeys, keys);
+                let newKeys = _.difference(keys, oldKeys);
+                
+                _.each(deleteKeys, function(key){
+                    delete _i18nData[key];
+                })
+
+                _.each(newKeys, function(key){
+                    _i18nData[key] = data[key];
+                })
+                fs.outputFileSync(filePath, I18n.toYml(_i18nData));
+                console.info(`${colors.magenta('Modify: ')} ${filePath}`);
             }else{
-                fs.outputFileSync(filePath, data);
+                fs.outputFileSync(filePath, I18n.toYml(data));
+                console.info(`${colors.cyan('Add   : ')} ${filePath}`);
             }
             
         }
     })
-
-    // console.log('objectql.getObjectConfigs ', _.pluck(configs, 'name'));
 }
