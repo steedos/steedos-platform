@@ -5,10 +5,10 @@ const _ = require("underscore");
 const KEYSEPARATOR: string = '_';
 
 //translation 为默认的命名空间
-const OBJECTNS = 'translation'; // objects
+const OBJECT_NS = 'translation'; // objects
 
 const objectT = function(key , lng){
-    let options: any = {lng: lng, ns: OBJECTNS} // TODO remove ns
+    let options: any = {lng: lng, ns: OBJECT_NS}
     if(KEYSEPARATOR === '.'){
         options.keySeparator = false
     }
@@ -18,7 +18,7 @@ const objectT = function(key , lng){
 }
 
 const getObjectLabelKey = function(objectName){
-    return `${objectName}_object`;
+    return `${objectName}__object`;
 }
 
 const getObjectFieldLabelKey = function(objectName, name){
@@ -81,6 +81,7 @@ const getObjectListviewLabel = function(lng, objectName, name, def){
     return objectT(key, lng) || def || ''
 }
 
+//TODO 处理继承字段base, core 的字段
 const translationObject = function(lng: string, objectName: string, object: StringMap){
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
@@ -113,7 +114,7 @@ const translationObject = function(lng: string, objectName: string, object: Stri
 
 export const addObjectsI18n = function(i18nArray){
     _.each(i18nArray, function(item){
-        addResourceBundle(item.lng, OBJECTNS, item.data, true, true);
+        addResourceBundle(item.lng, OBJECT_NS, item.data, true, true);
     })
 }
 
@@ -148,5 +149,9 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, o
         template[getObjectListviewLabelKey(objectName, viewName)] = getObjectListviewLabel(lng, objectName, viewName, list_view.label);
     })
 
-    return yaml.dump(template, {sortKeys: true}).replace(/: ''/g, ': ');
+    return template;
+}
+
+export const toYml = function(date: StringMap){
+    return yaml.dump(date, {sortKeys: true}).replace(/: ''/g, ': ');
 }
