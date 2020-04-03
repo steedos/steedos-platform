@@ -5,6 +5,9 @@ const clone = require("clone");
 
 const KEYSEPARATOR: string = '_';
 
+const BASE_OBJECT = 'base';
+const CORE_OBJECT = 'core';
+
 //translation 为默认的命名空间
 const OBJECT_NS = 'translation'; // objects
 
@@ -50,15 +53,37 @@ const getObjectListviewLabelKey = function(objectName, name){
 
 // }
 
+const isMeteor = () => {
+    return (typeof Meteor != "undefined")            
+}
+
+
+const getBaseObjectName = function(datasource){
+    if(!datasource){
+        return '';
+    }
+    let baseObjectName = CORE_OBJECT;
+    if(isMeteor() && (datasource === 'default')){
+        baseObjectName = BASE_OBJECT;
+    }
+    return baseObjectName;
+}
 
 const getObjectLabel = function(lng, name, def){
     let key = getObjectLabelKey(name);
     return objectT(key, lng) || def || ''
 }
 
-const getObjectFieldLabel = function(lng, objectName, name, def){
+const getObjectFieldLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectFieldLabelKey(objectName, name);
-    return objectT(key, lng) || def || ''
+    let label = objectT(key, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
+            label = getObjectFieldLabel(lng, baseObjectName, name, def, datasource)
+        }
+    }
+    return label || def || ''
 }
 
 const getObjectFieldGroup = function(lng, objectName, name, def){
@@ -66,20 +91,41 @@ const getObjectFieldGroup = function(lng, objectName, name, def){
     return objectT(key, lng) || def || ''
 }
 
-const getObjectFieldOptionsLabel = function(lng, objectName, name, value, def){
+const getObjectFieldOptionsLabel = function(lng, objectName, name, value, def, datasource?){
     let key = getObjectFieldOptionsLabelKey(objectName, name, value);
-    return objectT(key, lng) || def || ''
+    let label = objectT(key, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
+            label = getObjectFieldOptionsLabel(lng, baseObjectName, name, value, def, datasource)
+        }
+    }
+    return label || def || ''
 }
 
 
-const getObjectActionLabel = function(lng, objectName, name, def){
+const getObjectActionLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectActionLabelKey(objectName, name);
-    return objectT(key, lng) || def || ''
+    let label = objectT(key, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
+            label = getObjectActionLabel(lng, baseObjectName, name, def, datasource)
+        }
+    }
+    return label || def || ''
 }
 
-const getObjectListviewLabel = function(lng, objectName, name, def){
+const getObjectListviewLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectListviewLabelKey(objectName, name);
-    return objectT(key, lng) || def || ''
+    let label = objectT(key, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
+            label = getObjectListviewLabel(lng, baseObjectName, name, def, datasource)
+        }
+    }
+    return label || def || ''
 }
 
 const getOption = function (option) {
@@ -135,7 +181,7 @@ const convertObject = function (object: StringMap) {
 const translationObject = function(lng: string, objectName: string, object: StringMap){
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
-        field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label);
+        field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label, object.datasource);
         if(field.group){
             field.group = getObjectFieldGroup(lng, objectName, field.group, field.group);
         }
@@ -143,7 +189,7 @@ const translationObject = function(lng: string, objectName: string, object: Stri
             let _options = [];
             _.each(field.options, function(op){
                 if(_.has(op, 'value')){
-                    let _label = getObjectFieldOptionsLabel(lng, objectName, fieldName, op.value, op.label) 
+                    let _label = getObjectFieldOptionsLabel(lng, objectName, fieldName, op.value, op.label, object.datasource) 
                     _options.push({value: op.value, label: _label})
                 }else{
                     _options.push(op)
@@ -154,11 +200,11 @@ const translationObject = function(lng: string, objectName: string, object: Stri
     })
 
     _.each(object.actions, function(action, actionName){
-        action.label = getObjectActionLabel(lng, objectName, actionName, action.label);
+        action.label = getObjectActionLabel(lng, objectName, actionName, action.label, object.datasource);
     })
 
     _.each(object.list_views, function(list_view, viewName){
-        list_view.label = getObjectListviewLabel(lng, objectName, viewName, list_view.label);
+        list_view.label = getObjectListviewLabel(lng, objectName, viewName, list_view.label, object.datasource);
     })
 }
 
