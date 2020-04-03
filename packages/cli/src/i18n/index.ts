@@ -19,6 +19,9 @@ async function updateObjectsI18n(lng){
 
     _.each(configs, function(config){
         let filename = config.__filename
+        if(config.name != 'accounts' && config.name != 'base'){
+            return ;
+        }
         if(filename && filename.indexOf("node_modules") < 0){
             let objectName = config.name;
             let filePath = path.join(path.dirname(filename), `${objectName}.${lng}.i18n.yml`)
@@ -29,8 +32,15 @@ async function updateObjectsI18n(lng){
                 let oldKeys = _.keys(_i18nData);
                 //new keys
                 let keys = _.keys(data);
+
+                let inheritedObjectConfig = objectql.getObjectConfig(objectName);
+                let inheritedKeys = keys;
+                if(inheritedObjectConfig){
+                    let inheritedTemplateData = I18n.getObjectI18nTemplate(lng, objectName, inheritedObjectConfig);
+                    inheritedKeys = _.keys(inheritedTemplateData)
+                }
                 
-                let deleteKeys = _.difference(oldKeys, keys);
+                let deleteKeys = _.difference(oldKeys, inheritedKeys);
                 let newKeys = _.difference(keys, oldKeys);
                 
                 _.each(deleteKeys, function(key){
