@@ -72,7 +72,7 @@ export const exists = function(key: string, options: StringMap){
 export const changeLanguage = function(lng: string, options: any = {}, callback?: Callback){
     let rootUrl = options.rootUrl;
     let ns = options.ns || 'translation';
-    console.log('changeLanguage', lng, ns, options);
+    // console.log('changeLanguage', lng, ns, options);
     if(typeof window != 'undefined' && rootUrl){
         if(!rootUrl.endsWith('/')){
             rootUrl = `${rootUrl}/`
