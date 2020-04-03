@@ -9,8 +9,8 @@ export async function CliLogic(lng) {
 }
 
 async function updateObjectsI18n(lng){
-    const objectql = require('@steedos/objectql');
-    const I18n = require("@steedos/i18n");
+    const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
+    const I18n = require(require.resolve('@steedos/i18n', {paths: [process.cwd()]}));
     var steedosSchema = objectql.getSteedosSchema();
     for (let dataSource in steedosSchema.getDataSources()) {
         await steedosSchema.getDataSource(dataSource).init();
