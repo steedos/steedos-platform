@@ -105,7 +105,6 @@ export const loadI18n = (filePath: string)=>{
     ]
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
-        console.log('loadI18n matchedPath', matchedPath);
         let json = loadFile(matchedPath);
         let lng = getI18nLng(matchedPath);
         if(lng){

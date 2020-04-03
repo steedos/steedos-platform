@@ -23,7 +23,9 @@ i18next.use(sprintf).init({
     //     }
     // }
 }, function (err: any, t: any) {
-    console.log('initialized and ready to go', err);
+    if(process.env.I18N_DEBUG){
+        console.log('i18n initialized and ready to go');
+    }
 });
 
 export const _t = function(key: any, options: StringMap){

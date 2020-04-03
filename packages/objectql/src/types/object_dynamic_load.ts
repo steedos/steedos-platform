@@ -133,9 +133,6 @@ export const getClientScripts = () => {
 
 export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasource: string) => {
     let object_name = objectConfig.name;
-    if(object_name === 'company'){
-        console.log('company actions', objectConfig.actions);
-    }
     let config:SteedosObjectTypeConfig = {
         name: object_name,
         fields: {}
