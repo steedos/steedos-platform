@@ -19,9 +19,6 @@ async function updateObjectsI18n(lng){
 
     _.each(configs, function(config){
         let filename = config.__filename
-        if(config.name != 'accounts' && config.name != 'base'){
-            return ;
-        }
         if(filename && filename.indexOf("node_modules") < 0){
             let objectName = config.name;
             let filePath = path.join(path.dirname(filename), `${objectName}.${lng}.i18n.yml`)
