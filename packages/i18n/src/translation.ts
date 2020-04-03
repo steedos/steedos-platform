@@ -1,6 +1,7 @@
 import { _t, exists, addResourceBundle } from './index';
 const yaml = require('js-yaml')
 const _ = require("underscore");
+const clone = require("clone");
 
 const KEYSEPARATOR: string = '_';
 
@@ -81,8 +82,59 @@ const getObjectListviewLabel = function(lng, objectName, name, def){
     return objectT(key, lng) || def || ''
 }
 
+const getOption = function (option) {
+    var foo;
+    foo = option.split(":");
+    if (foo.length > 1) {
+        return {
+            label: foo[0],
+            value: foo[1]
+        };
+    } else {
+        return {
+            label: foo[0],
+            value: foo[0]
+        };
+    }
+};
+
+const convertObject = function (object: StringMap) {
+    _.forEach(object.fields, function (field, key) {
+        let _options = [];
+        if (field.options && _.isString(field.options)) {
+            try {
+                //支持\n或者英文逗号分割,
+                _.forEach(field.options.split("\n"), function (option) {
+                    var options;
+                    if (option.indexOf(",")) {
+                        options = option.split(",");
+                        return _.forEach(options, function (_option) {
+                            return _options.push(getOption(_option));
+                        });
+                    } else {
+                        return _options.push(getOption(option));
+                    }
+                });
+                field.options = _options;
+            } catch (error) {
+                console.error("convertFieldsOptions error: ", field.options, error);
+            }
+        } else if (field.options && !_.isFunction(field.options) && !_.isArray(field.options) && _.isObject(field.options)) {
+            _.each(field.options, function (v, k) {
+                return _options.push({
+                    label: v,
+                    value: k
+                });
+            });
+            field.options = _options;
+        }
+    })
+}
+
 //TODO 处理继承字段base, core 的字段
-const translationObject = function(lng: string, objectName: string, object: StringMap){
+const translationObject = function(lng: string, objectName: string, _object: StringMap){
+    let object = clone(_object);
+    convertObject(object);
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
         field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label);
@@ -124,7 +176,9 @@ export const translationObjects = function(lng: string, objects: StringMap){
     })
 }
 
-export const getObjectI18nTemplate = function(lng: string ,objectName: string, object: StringMap){
+export const getObjectI18nTemplate = function(lng: string ,objectName: string, _object: StringMap){
+    let object = clone(_object);
+    convertObject(object);
     let template = {};
     template[getObjectLabelKey(objectName)] = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
