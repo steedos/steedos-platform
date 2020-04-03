@@ -22,12 +22,18 @@ const _objectsI18n: Array<any> = [];
 let standardObjectsLoaded: boolean = false;
 
 const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
+    if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
+        return ;
+    }
     config.datasource = datasource;
     _.remove(_original_objectConfigs, {name: objectName, datasource: datasource});
     _original_objectConfigs.push(config)
 }
 
 const extendOriginalObjectConfig = function(objectName: string, datasource: string, objectConfig: SteedosObjectTypeConfig){
+    if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
+        return ;
+    }
     let parentOriginalObjectConfig = getOriginalObjectConfig(objectName);
     let originalObjectConfig = util.extend({
         name: objectName,

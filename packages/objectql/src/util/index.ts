@@ -40,9 +40,6 @@ let loadFile = (filePath: string)=>{
             json = yaml.load(fs.readFileSync(filePath, 'utf8'));
         else if(extname.toLocaleLowerCase() == '.js')
             json = clone(require(filePath));
-        if(json){
-            json.__filename = filePath
-        }
     } catch (error) {
         console.error('loadFile error', filePath, error);
     }
@@ -70,6 +67,13 @@ export const loadObjects = (filePath: string) => {
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        try {
+            if(json){
+                json.__filename = matchedPath
+            }
+        } catch (error) {
+            console.error('loadObjects error', matchedPath, error);
+        }
         if (validateObject(json)){
             results.push(json)
         }
