@@ -55,6 +55,13 @@ export const initCreator = () => {
         Creator.Apps[app._id] = app
     });
 
+    let allDashboards = objectql.getDashboardConfigs();
+    _.each(allDashboards, function (dashboard) {
+        if (!dashboard._id)
+          dashboard._id = dashboard.name
+        Creator.Dashboards[dashboard._id] = dashboard
+    });
+
     let allServerScripts = objectql.getServerScripts();
     _.each(allServerScripts, function (scriptFile) {
         require(scriptFile)

@@ -1,0 +1,10 @@
+_id: home
+name: 华炎办公
+apps: 
+  - oa
+  - contracts
+widgets: 
+  - type: instances_pendings
+    position: CENTER_TOP
+  - type: apps
+    position: RIGHT

@@ -1,8 +1,126 @@
 name: dashboard
-label: 首页
-icon: account
+label: 门户
+icon: dashboard_ea
 fields:
   name:
-    label: 标题
-    name: name
+    label: 名称
     type: text
+    searchable: true
+    index: true
+    required: true
+  apps:
+    label: 关联应用
+    type: lookup
+    reference_to: apps
+    multiple: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Apps, function (o, k) {
+                return _options.push({
+                  label: o.name,
+                  value: k,
+                  icon: o.icon_slds
+                });
+              });
+
+              return _options;
+            }
+    filterable: true
+  widgets:
+    label: 组件
+    type: grid
+    is_wide: true
+  widgets.$.type:
+    label: 类型
+    type: lookup
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        return [{
+            label: "待审核文件",
+            value: "instances_pendings",
+            icon: "all"
+          },
+          {
+            label: "应用程序",
+            value: "apps",
+            icon: "all"
+          },
+          {
+            label: "本周公告",
+            value: "announcements_week",
+            icon: "all"
+          },
+          {
+            label: "今日任务",
+            value: "tasks_today",
+            icon: "all"
+          },
+          {
+            label: "今日日程",
+            value: "events_today",
+            icon: "all"
+        }];
+      }
+  widgets.$.position:
+    label: 位置
+    type: lookup
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        return [{
+            label: "左上角",
+            value: "CENTER_TOP",
+            icon: "topic2"
+          },
+          {
+            label: "左下角左侧",
+            value: "CENTER_BOTTOM_LEFT",
+            icon: "topic2"
+          },
+          {
+            label: "左下角右侧",
+            value: "CENTER_BOTTOM_RIGHT",
+            icon: "topic2"
+          },
+          {
+            label: "右边栏",
+            value: "RIGHT",
+            icon: "topic2"
+          }];
+      }
+  widgets.$.html:
+    label: HTML
+    type: textarea
+    required: false
+  description:
+    label: 描述
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    columns:
+      - name
+      - app
+      - modified
+    label: 全部
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

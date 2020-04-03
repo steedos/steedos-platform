@@ -20,6 +20,7 @@ import {
     SteedosObjectPermissionTypeConfig,
     SteedosObjectPermissionType,
     getAppConfigs,
+    getDashboardConfigs,
     getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
@@ -360,6 +361,10 @@ export class SteedosDataSourceType implements Dictionary {
     // 暂时保留，兼容creator bootstrap接口
     getAppsConfig() {
         return getAppConfigs()
+    }
+
+    getDashboardsConfig() {
+        return getDashboardConfigs()
     }
 
     async connect() {
