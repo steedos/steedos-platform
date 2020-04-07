@@ -336,41 +336,44 @@ Meteor.startup(function () {
                 if (newMobile || isMobileCleared) {
                     // 修改人
                     lang = Steedos.locale(doc.user, true);
-                    euser = db.users.findOne({
-                        _id: userId
-                    }, {
-                            fields: {
-                                name: 1
-                            }
-                        });
-                    params = {
-                        name: euser.name,
-                        number: newMobile ? newMobile : TAPi18n.__('space_users_empty_phone', {}, lang)
-                    };
-                    paramString = JSON.stringify(params);
-                    if (doc.mobile) {
-                        // 发送手机短信给修改前的手机号
-                        SMSQueue.send({
-                            Format: 'JSON',
-                            Action: 'SingleSendSms',
-                            ParamString: paramString,
-                            RecNum: doc.mobile,
-                            SignName: 'OA系统',
-                            TemplateCode: 'SMS_67660108',
-                            msg: TAPi18n.__('sms.chnage_mobile.template', params, lang)
-                        });
-                    }
-                    if (newMobile) {
-                        // 发送手机短信给修改后的手机号
-                        SMSQueue.send({
-                            Format: 'JSON',
-                            Action: 'SingleSendSms',
-                            ParamString: paramString,
-                            RecNum: newMobile,
-                            SignName: 'OA系统',
-                            TemplateCode: 'SMS_67660108',
-                            msg: TAPi18n.__('sms.chnage_mobile.template', params, lang)
-                        });
+                    // euser = db.users.findOne({
+                    //     _id: userId
+                    // }, {
+                    //         fields: {
+                    //             name: 1
+                    //         }
+                    //     });
+                    console.log('newMobile', newMobile, (/^1[3456789]\d{9}$/.test(newMobile)));
+                    if(newMobile && (/^1[3456789]\d{9}$/.test(newMobile))){
+                        params = {
+                            name: "系统",
+                            number: newMobile ? newMobile : TAPi18n.__('space_users_empty_phone', {}, lang)
+                        };
+                        paramString = JSON.stringify(params);
+                        if (doc.mobile && doc.mobile_verified) {
+                            // 发送手机短信给修改前的手机号
+                            SMSQueue.send({
+                                Format: 'JSON',
+                                Action: 'SingleSendSms',
+                                ParamString: paramString,
+                                RecNum: doc.mobile,
+                                SignName: 'OA系统',
+                                TemplateCode: 'SMS_67660108',
+                                msg: TAPi18n.__('sms.chnage_mobile.template', params, lang)
+                            });
+                        }
+                        // if (newMobile) {
+                        //     // 发送手机短信给修改后的手机号
+                        //     SMSQueue.send({
+                        //         Format: 'JSON',
+                        //         Action: 'SingleSendSms',
+                        //         ParamString: paramString,
+                        //         RecNum: newMobile,
+                        //         SignName: 'OA系统',
+                        //         TemplateCode: 'SMS_67660108',
+                        //         msg: TAPi18n.__('sms.chnage_mobile.template', params, lang)
+                        //     });
+                        // }
                     }
                 }
             }
