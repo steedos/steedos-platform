@@ -343,7 +343,6 @@ Meteor.startup(function () {
                     //             name: 1
                     //         }
                     //     });
-                    console.log('newMobile', newMobile, (/^1[3456789]\d{9}$/.test(newMobile)));
                     if(newMobile && (/^1[3456789]\d{9}$/.test(newMobile))){
                         params = {
                             name: "系统",
