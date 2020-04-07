@@ -21,9 +21,9 @@
 								<td class="td-step-check">
 									<div class="checkbox-group">
 										{{#if canPickSkip}}
-											<input type="checkbox" id="skipStep" value="{{this._id}}" checked="{{skipStepValue}}"/>
+											<input type="checkbox" name="skipStep_{{this._id}}" id="skipStep" value="{{this._id}}" checked="{{skipStepValue}}"/>
 										{{else}}
-											<input type="checkbox" disabled checked="true"/>
+											<input type="checkbox" name="skipStep_{{this._id}}" disabled checked="true"/>
 										{{/if}}
 
 

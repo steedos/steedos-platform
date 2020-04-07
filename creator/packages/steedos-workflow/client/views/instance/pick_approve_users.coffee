@@ -10,6 +10,25 @@ getStepApproveOptions = (stepId)->
 	if selectedStepApproveOptions && !_.isArray(selectedStepApproveOptions)
 		selectedStepApproveOptions = [selectedStepApproveOptions]
 	return selectedStepApproveOptions;
+
+
+Template.instance_pick_approve_users.validate = ()->
+	isValid = true
+	if $("#pick_approve_users").length > 0
+		steps = InstanceManager.pickApproveSteps();
+		_.each steps, (step)->
+			if step.step_type != "start" && step.step_type != "end" && step.allow_pick_approve_users
+				$skipStep = $("[name='skipStep_#{step._id}']");
+				hasSkip = false;
+				if step.allow_skip && $skipStep.length > 0 && !$($skipStep[0]).prop('checked')
+					hasSkip = true
+				if !hasSkip
+					stepApproves = AutoForm.getFieldValue(step._id, "pick_approve_users");
+					if _.isEmpty(stepApproves)
+						isValid = false;
+						toastr.error("请选择「#{step.name}」步骤的处理人");
+	return isValid;
+
 Template.instance_pick_approve_users.helpers
 	instanceSteps: ()->
 		return InstanceManager.pickApproveSteps();
@@ -25,7 +44,7 @@ Template.instance_pick_approve_users.helpers
 		_.forEach steps, (s)->
 			fs = {}
 			fs.autoform = {}
-			fs.optional = true
+			fs.optional = false
 			fs.autoform.multiple = s.step_type == 'counterSign'
 
 			fs.type = String

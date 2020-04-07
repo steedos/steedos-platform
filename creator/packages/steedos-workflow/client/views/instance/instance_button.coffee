@@ -785,6 +785,8 @@ Template.instance_button.events
 		Modal.show 'remind_modal', param
 
 	'click .btn-instance-submit': (event, template) ->
+		if Session.get("box") == "draft" && !Template.instance_pick_approve_users.validate()
+			return
 		instance = WorkflowManager.getInstance()
 		if not InstanceManager.isCC(instance)
 			nextStepOptions = InstanceManager.getNextStepOptions()
