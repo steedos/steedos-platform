@@ -1,6 +1,6 @@
 steedosAuth = require("@steedos/auth");
 steedosCore = require("@steedos/core");
-
+clone = require("clone");
 JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	userId = req.headers['x-user-id']
 	spaceId = req.headers['x-space-id'] || req.params?.spaceId
@@ -27,7 +27,7 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	result = Creator.getAllPermissions(spaceId, userId)
 	result.user = userSession
 	result.space = space
-	result.apps = Creator.Apps
+	result.apps = clone(Creator.Apps);
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
 
