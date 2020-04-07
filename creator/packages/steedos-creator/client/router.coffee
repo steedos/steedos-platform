@@ -41,7 +41,7 @@ checkAppPermission = (context, redirect)->
 	app_id = context.params.app_id
 	if app_id == "admin" || app_id == "-"
 		return
-	apps = _.pluck(Creator.getVisibleApps(true, true),"_id")
+	apps = _.pluck(Creator.getVisibleApps(true),"_id")
 	if apps.indexOf(app_id) < 0
 		console.log(app_id + " app access denied")
 		Session.set("app_id", Creator.getVisibleApps(true)[0]._id)
