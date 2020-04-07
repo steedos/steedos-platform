@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Bootstrap, Dashboard, entityStateSelector, store } from '@steedos/react';
+import { Bootstrap, Dashboard, entityStateSelector } from '@steedos/react';
 import { getBetweenTimeBuiltinValueItem } from '@steedos/filters';
 
 let config = {
@@ -148,15 +148,15 @@ let config = {
     }
 };
 
-const Home = () => (
-    <Provider store={store}>
-        <Bootstrap>
-            <Dashboard config={config} />
-        </Bootstrap>
-    </Provider>
-)
 class ContractsAppPlugin {
     initialize(registry, store) {
+        const Home = () => (
+            <Provider store={store}>
+                <Bootstrap>
+                    <Dashboard config={config} />
+                </Bootstrap>
+            </Provider>
+        )
         registry.registerObjectHomeComponent(
             'oa_home',
             Home
