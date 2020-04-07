@@ -17,3 +17,5 @@ export { default as MeteorODataAPIV4Router } from './odata/MeteorODataAPIV4Route
 export {init} from './init'
 export * from './routes'
 export { default as Util } from './util'
+
+export * from './plugins'

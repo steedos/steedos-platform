@@ -42,6 +42,7 @@ module.exports = {
         "redux": 'Redux',
         "react-redux": 'ReactRedux',
         "prop-types": 'PropTypes',
+        "@steedos/react": 'ReactSteedos',
         "@salesforce/design-system-react": 'ReactDesignSystem',
     },
     output: {
