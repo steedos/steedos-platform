@@ -96,10 +96,19 @@ const goInSystem = (history, location, accessToken, root_url, canGoHome)=>{
 
 
 const ApplyCode = async (data) =>{
-    return await accountsRest.fetch(`code/apply`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-    });
+    try {
+      return await accountsRest.fetch(`code/apply`, {
+          method: 'POST',
+          body: JSON.stringify(data),
+      });
+    } catch (error) {
+      if(error.message === 'accounts.spaceUnExists'){
+        store.dispatch({
+          type: "UNEXISTS_TENANT"
+        })
+      }
+      throw error
+    }
 }
 
 export {

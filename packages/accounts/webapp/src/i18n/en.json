@@ -17,5 +17,6 @@
     "accounts.usernameAlreadyExists": "Username already exists",
     "accounts.emailAlreadyExists": "Email already exists",
     "accounts.usernameOrEmailRequired": "Username or Email is required",
-    "accounts.emailRequired": "Email is required"
+    "accounts.emailRequired": "Email is required",
+    "accounts.spaceUnExists": "Invalid Tenant Id"
 }

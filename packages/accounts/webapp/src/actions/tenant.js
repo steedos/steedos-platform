@@ -11,21 +11,16 @@ export function loadTenant(tenant) {
         }
         if (tenant) {
             accountsRest.fetch("tenant/" + tenant).then((tenantDoc) => {
-                // if(tenantDoc.exists === false){
-                //     dispatch({
-                //         type: "UNEXISTS_TENANT"
-                //     })
-                // }else{
-                //     dispatch({
-                //         type: "RECEIVED_TENANT",
-                //         data: tenantDoc,
-                //     });
-                // }
-
-                dispatch({
-                    type: "RECEIVED_TENANT",
-                    data: tenantDoc,
-                });
+                if(tenantDoc.exists === false){
+                    dispatch({
+                        type: "UNEXISTS_TENANT"
+                    })
+                }else{
+                    dispatch({
+                        type: "RECEIVED_TENANT",
+                        data: tenantDoc,
+                    });
+                }
                 
             }).catch((error) => {
                 console.warn('Actions - loadTenant - recreived error: ', error)

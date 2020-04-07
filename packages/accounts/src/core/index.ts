@@ -68,6 +68,14 @@ export const getTenant = async (spaceId)=>{
     return spaceDoc;
 }
 
+export const spaceExists = async(spaceId)=>{
+  const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "enable_forget_password", "enable_create_tenant"]})
+  if(spaceDoc){
+    return true;
+  }
+  return false;
+}
+
 export const getMergedTenant = async (spaceId?)=>{
     const settings: any = await getSettings();
     const tenant: any = await getTenant(spaceId);

@@ -2,7 +2,7 @@ import * as express from 'express';
 import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
-import { canRegister } from '../../../core';
+import { canRegister, spaceExists } from '../../../core';
 import { AccountsServer } from '@accounts/server';
 import validator from 'validator';
 const moment = require('moment');
@@ -187,6 +187,10 @@ export const applyCode = () => async (
             if(!validator.isEmail(name)){
                 throw new Error("请输入有效的邮箱");
             }
+        }
+
+        if(spaceId && !(await spaceExists(spaceId))){
+            throw new Error("accounts.spaceUnExists");
         }
 
         if(action.startsWith("mobile")){
