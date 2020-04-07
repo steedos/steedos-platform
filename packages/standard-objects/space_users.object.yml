@@ -33,7 +33,7 @@ fields:
     label: 邮件已验证
     readonly: true
     omit: true
-    hidden: true
+    hidden: false
   mobile:
     type: text
     label: 手机
@@ -47,7 +47,7 @@ fields:
     label: 手机已验证
     readonly: true
     omit: true
-    hidden: true
+    hidden: false
   organizations:
     type: lookup
     label: 所属部门
