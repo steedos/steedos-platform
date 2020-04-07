@@ -843,75 +843,8 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "private": false,
-  "version": "1.18.10",
-  "description": "",
-  "main": "lib/index.js",
-  "scripts": {
-    "start": "nodemon server.js",
-    "watch": "tsc --watch",
-    "debug": "nodemon --inspect server.js",
-    "compile": "tsc",
-    "test": "mocha test/**/*.ts",
-    "prepare": "tsc"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@salesforce/dev-config": "^1.4.4",
-    "@salesforce/kit": "^1.0.4",
-    "@salesforce/ts-types": "^1.1.1",
-    "@steedos/auth": "^1.18.10",
-    "@steedos/migrate": "^1.18.10",
-    "@steedos/objectql": "^1.18.10",
-    "@steedos/standard-objects": "^1.18.10",
-    "@types/express": "^4.16.1",
-    "@types/mongodb": "^3.1.22",
-    "@types/node": "^11.10.4",
-    "@types/underscore": "^1.8.13",
-    "body-parser": "^1.18.1",
-    "bunyan-sfdx-no-dtrace": "^1.8.2",
-    "chai": "^4.2.0",
-    "clone": "^2.1.2",
-    "cookies": "^0.6.1",
-    "devextreme": "^18.2.6",
-    "express": "^4.15.4",
-    "express-graphql": "^0.7.1",
-    "fibers": "^3.1.1",
-    "globby": "^9.1.0",
-    "graphql": "^14.1.1",
-    "graphql-type-json": "^0.2.2",
-    "js-yaml": ">=3.13.1",
-    "jsen": "^0.6.6",
-    "mongodb": "^3.0.8",
-    "odata-v4-mongodb": "^0.1.12",
-    "pg": "^7.8.2",
-    "reflect-metadata": "^0.1.10",
-    "routing-controllers": "^0.7.7",
-    "simpl-schema": "^1.5.5",
-    "uglify-js": "^3.6.0",
-    "underscore": "1.5.2"
-  },
-  "devDependencies": {
-    "@salesforce/dev-scripts": "0.3.12",
-    "@steedos/meteor-bundle-runner": "^1.18.10",
-    "@steedos/migrate": "^1.6.2",
-    "@types/chai": "^4.1.7",
-    "@types/chai-as-promised": "7.1.0",
-    "@types/mocha": "^5.2.6",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
-    "jslint": "^0.12.1",
-    "nodemon": "^1.18.10",
-    "sinon-chai": "^3.3.0",
-    "ts-node": "^8.0.3",
-    "typescript": "3.5.3"
-  },
-  "types": "lib/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "239c96e246e777a9cc9d6cb8230fc45c2380997b"
+  "version": "1.18.13",
+  "main": "lib/index.js"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -937,7 +870,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.18.10",
+  "version": "1.18.13",
   "main": "lib/index.js"
 };
 
@@ -954,40 +887,7 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"objectql":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/@steedos/objectql/package.json                                                      //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"accounts":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/@steedos/accounts/package.json                                                      //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"steedos-plugin-workflow":{"package.json":function(require,exports,module){
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                  //
-// node_modules/@steedos/steedos-plugin-workflow/package.json                                       //
-//                                                                                                  //
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                    //
-module.useNode();
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"filters":{"package.json":function(require,exports,module){
+}}},"filters":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -997,7 +897,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.18.10",
+  "version": "1.18.13",
   "main": "lib/index.js"
 };
 

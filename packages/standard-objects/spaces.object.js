@@ -346,11 +346,6 @@ if (Meteor.isServer) {
 
 if (Meteor.isServer) {
     db.spaces._ensureIndex({
-        "is_deleted": 1
-    }, {
-            background: true
-        });
-    db.spaces._ensureIndex({
         "is_paid": 1
     }, {
             background: true

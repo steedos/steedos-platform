@@ -735,6 +735,7 @@
       "path": "packages/steedos_workflow.js",
       "assets": {
         "client/views/instance/image_sign.html": "assets/packages/steedos_workflow/client/views/instance/image_sign.html",
+        "client/views/instance/traces_handler.html": "assets/packages/steedos_workflow/client/views/instance/traces_handler.html",
         "client/views/instance/instance_attachments.html": "assets/packages/steedos_workflow/client/views/instance/instance_attachments.html",
         "client/views/instance/traces.html": "assets/packages/steedos_workflow/client/views/instance/traces.html",
         "client/views/instance/traces_table.html": "assets/packages/steedos_workflow/client/views/instance/traces_table.html",

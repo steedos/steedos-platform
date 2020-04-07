@@ -98,14 +98,4 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.cms_categories._ensureIndex({
-    "site": 1
-  }, {
-    background: true
-  });
-  db.cms_categories._ensureIndex({
-    "parent": 1
-  }, {
-    background: true
-  });
 }

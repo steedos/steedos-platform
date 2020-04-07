@@ -50,7 +50,7 @@
 
                                         <tr class="approve-item">
                                             <td class="name">
-                                                {{this.handler_name}}
+												{{> instance_traces_handler handler=this.handler handler_name=this.handler_name}}
                                                 {{#if isCC this}}
                                                     <label class='cc-label'>
                                                         <span class="cc-label-title">({{_t "instance_cc_title"}})</span>

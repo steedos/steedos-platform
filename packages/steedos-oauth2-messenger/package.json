@@ -1,7 +1,7 @@
 {
   "name": "@steedos/oauth2-messenger",
   "private": true,
-  "version": "1.18.11",
+  "version": "1.18.14",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
