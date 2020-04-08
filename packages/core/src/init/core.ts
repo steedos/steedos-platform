@@ -51,14 +51,18 @@ export const initCreator = () => {
     let allApps = objectql.getAppConfigs();
     _.each(allApps, function (app) {
         if (!app._id)
-          app._id = app.name
+            app._id = app.name
         Creator.Apps[app._id] = app
     });
 
     let allDashboards = objectql.getDashboardConfigs();
+    if(!Creator.Dashboards){
+        // Creator新版本发包前Creator.Dashboards全局变量不存在
+        Creator.Dashboards = {}
+    }
     _.each(allDashboards, function (dashboard) {
         if (!dashboard._id)
-          dashboard._id = dashboard.name
+            dashboard._id = dashboard.name
         Creator.Dashboards[dashboard._id] = dashboard
     });
 
