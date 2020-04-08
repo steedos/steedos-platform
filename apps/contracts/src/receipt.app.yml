@@ -3,6 +3,7 @@ name: 收款
 description: 合同收款相关业务流程
 icon_slds: product_consumed
 is_creator: true
+sort: 400
 objects: 
   - contracts
   - contract_receipts
