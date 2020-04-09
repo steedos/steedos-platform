@@ -1,5 +1,5 @@
 {
-  "name": "steedos",
+  "name": "steedos-server",
   "private": true,
   "workspaces": [
     "packages/*",
