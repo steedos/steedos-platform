@@ -1,5 +1,6 @@
 {
   "name": "@steedos/i18n",
+  "private": false,
   "version": "1.18.14",
   "description": "",
   "main": "lib/index.js",
@@ -14,5 +15,11 @@
     "i18next": "^19.3.4",
     "i18next-sprintf-postprocessor": "^0.2.2",
     "i18next-xhr-backend": "^3.2.2"
+  },
+  "devDependencies": {
+    "typescript": "3.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
