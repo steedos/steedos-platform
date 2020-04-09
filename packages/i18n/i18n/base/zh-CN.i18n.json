@@ -456,7 +456,7 @@
 		},
 		"mobile_verification_code": {
 			"code": "SMS_63370455",
-			"template": "验证码：{$code}"
+			"template": "您的验证码为：{$code}。如非本人操作，请忽略本短信。"
 		},
 		"meeting_cc": {
 			"code": "SMS_71335682",
