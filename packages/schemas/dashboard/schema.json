@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "name": "steedos-schema_dashboard",
+    "type": "object",
+    "additionalProperties": false,
+    "oneOf": [
+        {
+            "properties": {
+                "type": {
+                    "enum": [
+                        "library"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "apps",
+                "widgets"
+            ]
+        },
+        {
+            "properties": {
+                "type": {
+                    "not": {
+                        "enum": [
+                            "library"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "properties": {
+        "_id": {
+            "type": "string",
+            "description": "门户的唯一标识。"
+        },
+        "name": {
+            "description": "门户名称。",
+            "type": "string"
+        },
+        "apps": {
+            "type": "array",
+            "description": "门户关联应用。",
+            "items": {
+                "type": "string",
+                "description": "应用唯一标识。"
+            }
+        },
+        "widgets": {
+            "type": "array",
+            "description": "门户组件。",
+            "items": {
+                "type": "object",
+                "description": "组件详细配置。"
+            }
+        },
+        "description": {
+            "type": "string",
+            "description": "门户描述。"
+        }
+    }
+}
