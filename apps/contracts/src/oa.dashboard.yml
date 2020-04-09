@@ -6,6 +6,7 @@ apps:
 widgets: 
   - position: CENTER_TOP
     type: instances_pendings
+    label: 待审批
   - position: CENTER_TOP
     type: apps
   - position: CENTER_TOP
@@ -14,4 +15,8 @@ widgets:
     type: tasks_today
   - position: RIGHT
     type: events_today
+  - position: RIGHT
+    type: html
+    label: 自定义html
+    content: <style>a.test-html-link{color:red;}</style><a class="test-html-link">左侧带Label效果，自定义样式为红色链接</a>
 
