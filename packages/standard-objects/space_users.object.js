@@ -476,10 +476,11 @@ Meteor.startup(function () {
                     fields: {
                         email: 1,
                         name: 1,
-                        steedos_id: 1
+                        steedos_id: 1,
+                        email_verified: 1
                     }
                 });
-                if (user.email) {
+                if (user.email && user.email_verified) {
                     locale = Steedos.locale(doc.user, true);
                     space = db.spaces.findOne(doc.space, {
                         fields: {

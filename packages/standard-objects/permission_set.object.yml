@@ -11,7 +11,6 @@ fields:
   assigned_apps:
     label: 授权应用
     type: lookup
-    reference_to: apps
     multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {

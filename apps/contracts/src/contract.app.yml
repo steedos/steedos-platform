@@ -3,6 +3,7 @@ name: 合同
 description: 合同、收付款、单位、联系人、任务、日历
 icon_slds: approval
 is_creator: true
+sort: 100
 objects: 
   - oa_home
   - contracts

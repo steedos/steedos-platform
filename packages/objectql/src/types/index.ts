@@ -3,6 +3,7 @@ export * from './config'
 export * from './object_dynamic_load'
 export * from "./schema";
 export * from "./datasource";
+export * from "./dashboard";
 export * from "./object";
 export * from "./connection";
 export { SteedosFieldType, SteedosFieldTypeConfig } from "./field";
