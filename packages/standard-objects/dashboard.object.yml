@@ -11,7 +11,6 @@ fields:
   apps:
     label: 关联应用
     type: lookup
-    reference_to: apps
     multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -108,7 +107,7 @@ list_views:
   all:
     columns:
       - name
-      - app
+      - apps
       - modified
     label: 全部
     filter_scope: space
