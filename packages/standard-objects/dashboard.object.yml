@@ -66,6 +66,11 @@ fields:
             label: "今日日程",
             value: "events_today",
             icon: "all"
+          },
+          {
+            label: "HTML",
+            value: "html",
+            icon: "all"
         }];
       }
   widgets.$.position:
