@@ -162,7 +162,7 @@
 	"reassign_help": "https://www.steedos.com/us/help/workflow/instance_reassign.html",
 	"forward_help": "https://www.steedos.com/us/help/workflow/instance_forward.html",
 	"export_filter_help": "https://www.steedos.com/us/help/workflow/instance_search.html",
-	"new_help": "https://www.steedos.com/us/help/workflow/instance_add.html",
+	"new_help": "https://www.steedos.com/help/workflow/instance_add",
 
 	"Inbox Suggestion NextSteps Label": "Next step: ",
 	"Inbox Suggestion NextSteps Handler Label": "Assignee: ",
