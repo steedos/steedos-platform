@@ -711,5 +711,9 @@
 	"flow_list_title_set_distribute": "Set Distribute",
 	"distribute_to_self": "can distribute to self",
 	"distribute_end_notification": "notificate user after distributed end",
-	"instance_approve_modal_modificationsave": "saved"
+	"instance_approve_modal_modificationsave": "saved",
+
+	"instance_print_traces_simplify": "Simplify",
+	"instance_print_a4_vertical": "A4Vertical",
+	"instance_print_a4_horizontal": "A4Horizontal"
 }

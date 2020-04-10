@@ -730,5 +730,9 @@
 	"flow_list_title_set_distribute": "设置分发",
 	"distribute_to_self": "分发时可分发给自己",
 	"distribute_end_notification": "分发结束后提醒发起人",
-	"instance_approve_modal_modificationsave": "您的修改保存成功"
+	"instance_approve_modal_modificationsave": "您的修改保存成功",
+
+	"instance_print_traces_simplify": "精简",
+	"instance_print_a4_vertical": "A4纵向",
+	"instance_print_a4_horizontal": "A4横向"
 }
