@@ -145,7 +145,7 @@ async function sendCode(owner: string, name: string, action: string, spaceId: st
     return record._id;
 }
 
-export const applyCode = () => async (
+export const applyCode = (accountsServer: AccountsServer) => async (
     req: express.Request,
     res: express.Response
 ) => {
@@ -157,6 +157,8 @@ export const applyCode = () => async (
         let name = req.body.name;
         let token = req.body.token;
         let spaceId = req.body.spaceId;
+        let accessToken = req.body.accessToken;
+
         if (token) {
             const record = await db.findOne("users_verify_code", token, {});
             if (record) {
@@ -177,7 +179,7 @@ export const applyCode = () => async (
         if (ALLOW_ACTIONS.indexOf(action) < 0) {
             throw new Error("无效的action")
         }
-        if(action.endsWith('SignupAccount') && !(await canRegister(spaceId))){
+        if(action.endsWith('SignupAccount') && !(await canRegister(spaceId, action))){
             throw new Error('accounts.unenableRegister');
         }
 
@@ -205,6 +207,25 @@ export const applyCode = () => async (
                 throw new Error("请输入有效的手机号");
             }
         }
+
+        let verifyMobileUser: any = null;
+        if(action === 'mobileVerify'){
+            if(!accessToken){
+                throw new Error("缺少参数");
+            }
+            let session:any = await accountsServer.findSessionByAccessToken(accessToken)
+            if(!session){
+                throw new Error("无效参数");
+            }
+            verifyMobileUser = await accountsServer.findUserById(session.userId);
+            if(!verifyMobileUser){
+                throw new Error("未找到用户");
+            }
+            const users = await db.find("users", { filters: [['mobile', '=', name],['_id', '<>', verifyMobileUser.id]] });
+            if(users.length > 0){
+                throw new Error("该手机号已被其他用户注册");
+            }
+        }
         
         let filters;
 
@@ -212,6 +233,10 @@ export const applyCode = () => async (
             filters = ['email', '=', name]
         } else if (action.startsWith("mobile")) {
             filters = ['mobile', '=', name]
+        }
+
+        if(action === "mobileVerify"){
+            filters = ['_id', '=', verifyMobileUser.id]
         }
 
         if(filters.length > 0){
@@ -382,6 +407,10 @@ export const handleAction = async function(token: string, options: any = {}){
                 Creator.addSpaceUsers(record.space, handleUserId, true)
             }
         }
+    }
+
+    if(record.action === 'mobileVerify'){
+        Steedos.setMobile(handleUserId, record.name);
     }
 
     if (record.action.startsWith("email")) {

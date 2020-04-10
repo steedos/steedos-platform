@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { getTenant } from './selectors';
 
 import Logo from './components/Logo';
-import Signup from './components/Signup';
 import SignupCode from './components/SignupCode';
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
+import VerifyMobile from './components/VerifyMobile';
 import TwoFactor from './components/TwoFactor';
 import UpdatePassword from './components/updatePassword';
 import CreateTenant from './components/CreateTenant';
@@ -26,6 +26,7 @@ import SetName from './components/SetName';
 import GlobalMessage from './components/GlobalMessage';
 import Loading from './components/Loading';
 import theme from './theme';
+// import Signup from './components/Signup';
 
 
 const Router = ({tenant}:any) => {
@@ -112,6 +113,7 @@ const Router = ({tenant}:any) => {
                 <Route path="/verify/:token" component={Verify} />
                 <Route path="/login-code" component={LoginCode} />
                 <Route path="/set-name" component={SetName} />
+                <Route path="/verify-mobile/:token" component={VerifyMobile} />
                 {/* <Route path="/login-method" component={LoginMethod} /> */}
               </Paper>
             </Grid>

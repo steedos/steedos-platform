@@ -43,7 +43,18 @@ const LoginAfter = async (history, tenant, result, location, action)=>{
     }
 
     const user = await accountsRest.authFetch( 'user', {});
-    if(action && action.endsWith('SignupAccount')){
+
+    if(tenant.enable_bind_mobile && (!user.mobile || !user.mobile_verified)){
+      store.dispatch(requests("no_started"));
+      history.push({
+        pathname: `/verify-mobile/${result.tokens.accessToken}`,
+        search: location.search,
+        state: {mobile: user.mobile}
+      })
+      return
+    }
+
+    if(action && (action.endsWith('SignupAccount') || action.endsWith('mobileVerify'))){
       if(!user.name){
         return LoginAfterHistoryPush(history, '/set-name' + location.search);
       }else {

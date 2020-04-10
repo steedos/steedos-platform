@@ -82,7 +82,10 @@ export const getMergedTenant = async (spaceId?)=>{
     return Object.assign({}, settings.tenant, tenant);
 }
 
-export const canRegister = async (spaceId?)=>{
+export const canRegister = async (spaceId, action)=>{
     const tenant: any = await getMergedTenant(spaceId);
+    if(action === 'emailSignupAccount' && tenant.disable_email_register){
+      return false
+    }
     return tenant.enable_register;
 }

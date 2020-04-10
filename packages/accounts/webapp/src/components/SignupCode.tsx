@@ -40,7 +40,9 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         setError(null);
         try {
             if (!email.trim()) {
-                if(tenant.enable_mobile_code_login){
+                if(tenant.disable_email_register){
+                    throw new Error("请输入手机号");
+                }else if(tenant.enable_mobile_code_login){
                     throw new Error("请输入邮箱或手机号");
                 }else{
                     throw new Error("请输入邮箱");
@@ -54,6 +56,10 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
             let action = 'emailSignupAccount';
             if (email.trim().indexOf("@") < 0) {
                 action = 'mobileSignupAccount'
+            }
+
+            if(tenant.disable_email_register && action === 'emailSignupAccount'){
+                throw new Error("无效的手机号");
             }
 
             if(!tenant.enable_mobile_code_login && action === 'mobileSignupAccount'){
@@ -81,13 +87,19 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
             <FormControl margin="normal">
                 <InputLabel htmlFor="verifyCode">
-                    {tenant.enable_mobile_code_login &&
+                    {tenant.disable_email_register && 
+                        <FormattedMessage
+                            id='accounts.signupCode.mobile'
+                            defaultMessage='Phone Number'
+                        />
+                    }
+                    {!tenant.disable_email_register && tenant.enable_mobile_code_login &&
                         <FormattedMessage
                             id='accounts.signupCode.email_or_mobile'
                             defaultMessage='Email or Phone Number'
                         />
                     }
-                    {!tenant.enable_mobile_code_login &&
+                    {!tenant.disable_email_register && !tenant.enable_mobile_code_login &&
                         <FormattedMessage
                             id='accounts.signupCode.email'
                             defaultMessage='Email'

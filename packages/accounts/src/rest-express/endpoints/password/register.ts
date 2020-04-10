@@ -21,7 +21,7 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       throw new Error('禁止密码注册');
     }
 
-    if(!(await canRegister(spaceId))){
+    if(!(await canRegister(spaceId, 'registerPassword'))){
       throw new Error('accounts.unenableRegister');
     }
     

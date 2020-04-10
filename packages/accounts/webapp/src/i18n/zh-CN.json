@@ -62,5 +62,7 @@
     "accounts.loginCode.email_or_mobile": "邮箱或手机号",
     "accounts.signupCode.email_or_mobile": "邮箱或手机号",
     "accounts.set_fullname": "请填写姓名",
-    "accounts.spaceUnExists": "无效的企业标识"
+    "accounts.spaceUnExists": "无效的企业标识",
+    "accounts.mobile": "手机号",
+    "accounts.signupCode.mobile": "手机号"
 }

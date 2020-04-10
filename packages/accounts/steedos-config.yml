@@ -10,13 +10,15 @@ tenant:
   logo_url:
   background_url: 
   enable_register: true
+  disable_email_register: true
+  enable_bind_mobile: true
   enable_forget_password: true
   enable_create_tenant: true
   saas: false
   enable_password_login: true
   enable_email_code_login: true
   enable_mobile_code_login: true
-email:
+-email:
   url: ${MAIL_URL}
   from: ${MAIL_FROM}
 password:
@@ -29,9 +31,15 @@ password:
   policyError: 密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位
   notifyUserAfterPasswordChanged: false
   sendVerificationEmailAfterSignup: true
-accounts:
+-accounts:
   mobile_phone_locales: ['zh-CN']
 webservices:
   steedos: http://127.0.0.1:5000/
 plugins:
   - "@steedos/app-contracts"
+-sms:
+  qcloud:
+    smsqueue_interval: 1000
+    sdkappid: ${ENV_SMS_QCLOUD_SDKAPPID}
+    appkey: ${ENV_SMS_QCLOUD_APPKEY}
+    signname: ${ENV_SMS_QCLOUD_SIGNNAME}

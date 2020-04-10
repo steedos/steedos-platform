@@ -51,7 +51,7 @@ const accountsExpress = (
   router.post(`${path}/user`, userLoader(accountsServer), getUser(accountsServer));
   router.put(`${path}/user`, userLoader(accountsServer), changeUserFullname(accountsServer));
   router.get(`${path}/user/exists`, userExists());
-  router.post(`${path}/code/apply`, applyCode());
+  router.post(`${path}/code/apply`, applyCode(accountsServer));
   router.get(`${path}/code/id`, getUserIdByToken());
   
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));

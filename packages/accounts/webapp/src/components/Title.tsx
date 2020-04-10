@@ -15,6 +15,8 @@ const pathMap:any = {
     "/verify-email": "验证邮箱",
     "/set-name": "填写姓名",
     "/choose-tenant": "选择企业",
+    "/verify-mobile": "绑定手机号",
+    "/verify": "验证"
   }
   const useStyles = makeStyles({
     container: {
@@ -27,22 +29,32 @@ const pathMap:any = {
       margin: "0 auto",
     }
   });
+
+const getTitle = (key: string)=>{
+  let pathTitle = pathMap[key];
+
+  if(key.startsWith("/verify/")){
+      pathTitle = pathMap['/verify'];
+  }
+
+  if(key.startsWith("/verify-mobile/")){
+    pathTitle = pathMap['/verify-mobile'];
+  }
+  return pathTitle;
+}
+
 const Title = ({ tenant, location }: any) => {
     const classes = useStyles();
 
-    let pathTitle = pathMap[location.pathname];
-
-    if(location.pathname.startsWith("/verify/")){
-        pathTitle = "验证";
-    }
+    let pathTitle = getTitle(location.pathname);
 
     document.title = pathTitle ? `${pathTitle} | ${tenant.name}` : tenant.name;
 
   return (
       <div className={classes.container}>
-        <h4 className={classes.title}>
-            {pathMap[location.pathname]}
-        </h4>
+        {!location.pathname.startsWith("/verify/") && <h4 className={classes.title}>
+            {getTitle(location.pathname)}
+        </h4>}
       </div>
   )
 };
