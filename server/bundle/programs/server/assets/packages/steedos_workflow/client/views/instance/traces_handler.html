@@ -1,6 +1,6 @@
 <template name="instance_traces_handler">
 	{{#if (showSignImage handler)}}
-		{{> imageSign user=handler}}
+		{{> imageSign user=handler user_name=handler_name}}
 	{{else}}
 		{{handler_name}}
 	{{/if}}
