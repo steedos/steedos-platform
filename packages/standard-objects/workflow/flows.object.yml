@@ -441,17 +441,7 @@ actions:
             }
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              var ref2, ref3, url, workflowUrl;
-              workflowUrl = (ref2 = Meteor.settings["public"].webservices) != null ? (ref3 = ref2.workflow) != null ? ref3.url : void 0 : void 0;
-
-              if (!workflowUrl) {
-                toastr.error("settings.public.webservices.workflow.url", "缺少配置");
-                return;
-              }
-
-              url = Meteor.absoluteUrl("/api/workflow/export/talbe_template?flow=" + record_id, {
-                rootUrl: workflowUrl
-              });
+              var url = Meteor.absoluteUrl("/api/workflow/export/talbe_template?flow=" + record_id);
               return window.open(url, '_blank');
             }
   exportFlow:
