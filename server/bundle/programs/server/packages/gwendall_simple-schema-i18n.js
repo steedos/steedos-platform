@@ -1,8 +1,5 @@
 (function () {
 
-/* Package-scope variables */
-var I18n, _regEx, local_reg;
-
 
 
 /* Exports */
