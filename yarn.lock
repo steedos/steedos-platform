@@ -7604,7 +7604,7 @@ length-stream@^0.1.1:
   dependencies:
     pass-stream "~0.1.0"
 
-lerna@^3.16.5:
+lerna@^3.16.4:
   version "3.20.2"
   resolved "https://registry.npm.taobao.org/lerna/download/lerna-3.20.2.tgz#abf84e73055fe84ee21b46e64baf37b496c24864"
   integrity sha1-q/hOcwVf6E7iG0bmS683tJbCSGQ=
