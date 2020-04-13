@@ -1,7 +1,7 @@
 const i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
-const XHR = require('i18next-xhr-backend');
-const _ = require("underscore")
+const _ = require("underscore");
+// const XHR = require('i18next-xhr-backend');
 
 const loadResources = {};
 
@@ -89,21 +89,46 @@ export const changeLanguage = function(lng: string, options: any = {}, callback?
             i18next.changeLanguage(lng, callback);
         }else if(loadResources[loadPath] != 0){
             loadResources[loadPath] = 0;
-            let backend = new XHR(
-                i18next.services,
-                {
-                  loadPath: loadPath,
-                },
-              );
-            backend.read(lng, ns, function(err, data) {
-               if(err){
-                    loadResources[loadPath] = -1;
-               }else{
-                    loadResources[loadPath] = 1
-               }
-               addResourceBundle(lng, ns, data);
-               i18next.changeLanguage(lng, callback);
-            });
+            var request = new XMLHttpRequest();
+            request.overrideMimeType("application/json")
+            request.open('GET', loadPath, false); 
+            request.send(null);
+
+            if(request.status === 200){
+                loadResources[loadPath] = 1;
+            }else{
+                loadResources[loadPath] = -1;
+            }
+            exports.addResourceBundle(lng, ns, JSON.parse(request.response) || {});
+            i18next.changeLanguage(lng, callback);
+
+            // if($ && $.ajax && _.isFunction($.ajax)){
+            //     let res = $.ajax({async: false, type: 'GET', url: loadPath, dataType: "json", contentType: "application/json"});
+            //     if(res.status === 200){
+            //         loadResources[loadPath] = 1;
+            //     }else{
+            //         loadResources[loadPath] = -1;
+            //     }
+            //     exports.addResourceBundle(lng, ns, res.responseJSON || {});
+            //     i18next.changeLanguage(lng, callback);
+            // }else{
+            //     let backend = new XHR(
+            //         i18next.services,
+            //         {
+            //           loadPath: loadPath,
+            //         },
+            //       );
+            //     backend.read(lng, ns, function(err, data) {
+            //        if(err){
+            //             loadResources[loadPath] = -1;
+            //        }else{
+            //             loadResources[loadPath] = 1
+            //        }
+            //        addResourceBundle(lng, ns, data);
+            //        i18next.changeLanguage(lng, callback);
+            //     });
+            // }
+            
         }
     }else{
         return i18next.changeLanguage(lng, callback);

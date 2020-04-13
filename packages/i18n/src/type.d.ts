@@ -4,3 +4,5 @@ type events = "initialized" | "loaded" | "failedLoading" | "missingKey" | 'added
 declare interface XMLHttpRequest {}
 declare var window;
 declare var Meteor:any;
+declare var $: any;
+declare var XMLHttpRequest: any;
