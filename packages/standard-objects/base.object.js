@@ -259,7 +259,7 @@ module.exports = {
                     doc.modified_by = userId;
                 }
                 var extras = ["spaces", "company", "organizations", "users", "space_users"];
-                if (extras.indexOf(this.object_name) < 0) {
+                if (extras.indexOf(this.object_name) < 0 && userId && doc.space) {
                     /* company_ids/company_id默认值逻辑*/
                     if (!doc.company_id || !doc.company_ids) {
                         var su = Creator.getCollection("space_users").findOne({ space: doc.space, user: userId }, {
@@ -298,7 +298,7 @@ module.exports = {
                     modifier.$set.modified_by = userId;
                 }
                 var extras = ["spaces", "company", "organizations", "users", "space_users"];
-                if (extras.indexOf(this.object_name) < 0) {
+                if (extras.indexOf(this.object_name) < 0 && userId) {
                     /* company_ids/company_id级联修改逻辑*/
                     if (_.has(modifier.$set, "company_ids")) {
                         /*
