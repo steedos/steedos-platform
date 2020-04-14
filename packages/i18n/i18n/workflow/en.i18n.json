@@ -76,7 +76,7 @@
 	"Attachments": "Attachments",
 	"Versions": "Versions",
 	"Current Version": "（Current Version）",
-	"workflow_attachment_free_size_limit": "Sorry, Attachment larger than 1M is not accepted for free version.",
+	"workflow_attachment_free_size_limit": "Sorry, Attachment larger than 10M is not accepted for free version.",
 	"workflow_attachment_paid_size_limit": "Failed to upload, because attachment size is over ",
 	"workflow_attachment_download": "Download",
 	"workflow_attachment_view": "View",
