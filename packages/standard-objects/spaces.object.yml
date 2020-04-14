@@ -70,7 +70,7 @@ fields:
     multiple: true
     group: 账务
     options:
-      - label: 审批王标准版
+      - label: 审批王基础版
         value: workflow.standard
       - label: 审批王专业版扩展包
         value: workflow.professional
