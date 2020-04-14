@@ -69,13 +69,16 @@ fields:
     type: select
     multiple: true
     group: 账务
-    options:
-      - label: 审批王基础版
-        value: workflow.standard
-      - label: 审批王专业版扩展包
-        value: workflow.professional
-      - label: 审批王企业版扩展包
-        value: workflow.enterprise
+    optionsFunction: !!js/function |
+      function () {
+        var modules = db.modules.find().fetch() || [];
+        var options = [];
+        var locale = Steedos.locale();
+        modules.forEach(function(m) {
+          options.push({label: locale=='zh-cn' ? m.name_zh : m.name_en, value: m._id})
+        })
+        return options;
+      }
     omit: true
     hidden: false
   balance:
