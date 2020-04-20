@@ -1,0 +1,83 @@
+name: object_actions
+label: 对象操作
+icon: marketing_actions
+fields:
+  object:
+    type: master_detail
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+  name:
+    type: text
+    searchable: true
+    index: true
+    required: true
+    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_][a-zA-Z0-9_]*$/'
+  label:
+    type: text
+  is_enable:
+    type: boolean
+  visible:
+    type: boolean
+    omit: true
+  'on':
+    type: lookup
+    is_wide: true
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              return [{
+                label: "显示在列表右上角",
+                value: "list",
+                icon: "contact_list"
+              }, {
+                label: "显示在记录查看页右上角",
+                value: "record",
+                icon: "contract"
+              }];
+            }
+  todo:
+    label: 执行的脚本
+    type: textarea
+    required: true
+    is_wide: true
+list_views:
+  all:
+    columns:
+      - name
+      - label
+      - object
+      - 'on'
+      - is_enable
+      - modified
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

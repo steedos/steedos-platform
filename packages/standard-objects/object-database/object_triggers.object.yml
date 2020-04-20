@@ -1,0 +1,165 @@
+name: object_triggers
+icon: asset_relationship
+label: 触发器
+fields:
+  name:
+    type: text
+    searchable: true
+    index: true
+    required: true
+    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_][a-zA-Z0-9_]*$/'
+  label:
+    type: text
+  object:
+    type: text
+  # object:
+  #   type: master_detail
+  #   reference_to: objects
+  #   required: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             var _options;
+
+  #             _options = [];
+
+  #             _.forEach(Creator.objectsByName, function (o, k) {
+  #               return _options.push({
+  #                 label: o.label,
+  #                 value: k,
+  #                 icon: o.icon
+  #               });
+  #             });
+
+  #             return _options;
+  #           }
+  # 'on':
+  #   type: lookup
+  #   required: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return [{
+  #               label: "客户端",
+  #               value: "client",
+  #               icon: "address"
+  #             }, {
+  #               label: "服务端",
+  #               value: "server",
+  #               icon: "address"
+  #             }];
+  #           }
+  # when:
+  #   type: lookup
+  #   required: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return [{
+  #               label: "新增记录之前",
+  #               value: "before.insert",
+  #               icon: "asset_relationship"
+  #             }, {
+  #               label: "新增记录之后",
+  #               value: "after.insert",
+  #               icon: "asset_relationship"
+  #             }, {
+  #               label: "修改记录之前",
+  #               value: "before.update",
+  #               icon: "asset_relationship"
+  #             }, {
+  #               label: "修改记录之后",
+  #               value: "after.update",
+  #               icon: "asset_relationship"
+  #             }, {
+  #               label: "删除记录之前",
+  #               value: "before.remove",
+  #               icon: "asset_relationship"
+  #             }, {
+  #               label: "删除记录之后",
+  #               value: "after.remove",
+  #               icon: "asset_relationship"
+  #             }];
+  #           }
+  # is_enable:
+  #   type: boolean
+  # todo:
+  #   type: textarea
+  #   required: true
+  #   is_wide: true
+list_views:
+  all:
+    columns:
+      - name
+      - label
+      - object
+      # - 'on'
+      # - when
+      # - is_enable
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+# triggers:
+#   after.insert.server.object_triggers:
+#     'on': server
+#     when: after.insert
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc) {
+#               return _syncToObject(doc);
+#             }
+#   after.update.server.object_triggers:
+#     'on': server
+#     when: after.update
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc) {
+#               return _syncToObject(doc);
+#             }
+#   after.remove.server.object_triggers:
+#     'on': server
+#     when: after.remove
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc) {
+#               return _syncToObject(doc);
+#             }
+#   before.delete.server.object_triggers:
+#     'on': server
+#     when: before.remove
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc) {
+#               return check(userId, doc);
+#             }
+#   before.update.server.object_triggers:
+#     'on': server
+#     when: before.update
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc, fieldNames, modifier, options) {
+#               var ref;
+#               check(userId, doc);
+
+#               if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
+#                 console.log("update triggers对象名称不能重复" + doc.name);
+#                 throw new Meteor.Error(500, "对象名称不能重复" + doc.name);
+#               }
+#             }
+#   before.insert.server.object_triggers:
+#     'on': server
+#     when: before.insert
+#     todo: !<tag:yaml.org,2002:js/function> |-
+#       function (userId, doc) {
+#               check(userId, doc);
+
+#               if (isRepeatedName(doc)) {
+#                 console.log("insert triggers对象名称不能重复" + doc.name);
+#                 throw new Meteor.Error(500, "对象名称不能重复");
+#               }
+#             }

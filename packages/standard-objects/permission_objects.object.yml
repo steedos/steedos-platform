@@ -20,6 +20,7 @@ fields:
   object_name:
     label: 对象
     type: lookup
+    reference_to: objects
     index: true
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-

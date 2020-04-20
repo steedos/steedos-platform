@@ -4,14 +4,17 @@ label: 对象
 fields:
   name:
     type: text
+    label: 对象名
     searchable: true
     index: true
     required: true
   label:
     type: text
+    label: 显示名
     required: true
   icon:
     type: lookup
+    label: 图标
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var options;
@@ -122,6 +125,11 @@ fields:
   app_version:
     type: text
     hidden: true
+relatedList:
+  - object_fields
+  - object_actions
+  - object_listviews
+  - permission_objects
 list_views:
   all:
     columns:
@@ -140,9 +148,9 @@ permission_set:
     modifyAllRecords: false
     viewAllRecords: false
   admin:
-    allowCreate: false
-    allowDelete: false
-    allowEdit: false
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
     allowRead: true
-    modifyAllRecords: false
+    modifyAllRecords: true
     viewAllRecords: true
