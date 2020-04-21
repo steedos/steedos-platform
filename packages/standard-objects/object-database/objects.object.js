@@ -1,6 +1,6 @@
 var objectql = require('@steedos/objectql');
 var clone = require("clone");
-
+console.log('load objects.object.js....');
 function isRepeatedName(doc) {
     var other;
     other = Creator.getCollection("objects").find({
@@ -31,6 +31,21 @@ function checkName(name){
     }
     return true
 }
+
+function loadObject(doc){
+    const datasource = objectql.getDataSource();
+    objectql.addObjectConfig(doc, 'default');
+    const _doc = clone(objectql.getObjectConfig(doc.name));
+    datasource.setObject(doc.name, _doc);
+    try {
+        console.log('Creator.loadObjects。。。');
+        Creator.Objects[doc.name] = doc;
+        Creator.loadObjects(doc, doc.name);
+    } catch (error) {
+        console.log('error', error);
+    }
+}
+
 
 Creator.Objects.objects.actions = {
     copy_odata: {
@@ -77,9 +92,7 @@ Creator.Objects.objects.triggers = {
                 console.log(`object对象名称不能重复${doc.name}`);
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
-
-            doc.list_views = {};
-            return doc.custom = true;
+            doc.custom = true;
         }
     },
     "before.update.server.objects": {
@@ -95,7 +108,7 @@ Creator.Objects.objects.triggers = {
                 modifier.$set.custom = true;
             }
             if (modifier.$unset && modifier.$unset.custom) {
-                return delete modifier.$unset.custom;
+                delete modifier.$unset.custom;
             }
         }
     },
@@ -224,21 +237,15 @@ Creator.Objects.objects.triggers = {
         on: "server",
         when: "after.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
-            // console.log('doc', doc);
-            const datasource = objectql.getDataSource();
-            objectql.addObjectConfig(doc, 'default');
-            const _doc = clone(objectql.getObjectConfig(doc.name));
-            datasource.setObject(doc.name, _doc);
-            // console.log('Creator.Objects[doc.name]', doc.name, Creator.Objects[doc.name]);
-            try {
-                Creator.loadObjects(doc, doc.name);
-                // let _newObject = new Creator.Object(doc);
-                // Creator.Objects[_newObject._collection_name] = doc;
-                // console.log('Creator.objectsByName', _.keys(Creator.objectsByName))
-                // console.log('Creator.objectsByName', doc.name, Creator.objectsByName[doc.name]);
-            } catch (error) {
-                console.log('error', error);
-            }
+            loadObject(doc);
         }
-    }
+    },
+    // "after.insert.server.dynamic_load": {
+    //     on: "server",
+    //     when: "after.insert",
+    //     todo: function (userId, doc) {
+    //         loadObject(doc);
+    //     }
+    // },
+
 }

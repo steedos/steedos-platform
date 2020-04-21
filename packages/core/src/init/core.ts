@@ -42,6 +42,10 @@ export const initCreator = () => {
     //     objectql.addObjectConfig(obj, 'default')
     // });
     objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
+    
+    _.each(db.objects.find({}).fetch(), function(object){
+        objectql.addObjectConfig(object, "default");
+    })
 
     let allObjects = objectql.getObjectConfigs('default');
     _.each(allObjects, function (obj) {
