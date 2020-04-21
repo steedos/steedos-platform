@@ -135,6 +135,13 @@ admin_menus:
     object_name: picklists
     parent: menu_advanced
     sort: 70
+  - _id: object_workflows
+    name: 对象流程
+    permission_sets:
+      - admin
+    object_name: object_workflows
+    parent: menu_advanced
+    sort: 80
   - _id: about
     name: 关于
     permission_sets:
