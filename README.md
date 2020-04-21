@@ -78,7 +78,7 @@ permission_set:
 
 ## 访问官网
 
-[华炎魔方官网](https://www.steedos.com/platform/)
+[华炎魔方开源低代码开发平台](https://www.steedos.com/platform/)
 
 ## 查看培训教程
 
