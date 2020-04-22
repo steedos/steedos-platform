@@ -84,6 +84,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
+    private _objectsSpaceRolesPermission: Dictionary<Dictionary<Dictionary<SteedosObjectPermissionType>>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
     private _graphQLSchema: GraphQLSchema;
@@ -120,6 +121,11 @@ export class SteedosDataSourceType implements Dictionary {
         let object = new SteedosObjectType(object_name, this, objectConfig)
         this._objectsConfig[object_name] = objectConfig;
         this._objects[object_name] = object;
+    }
+
+    removeObject(object_name: string){
+        delete this._objectsConfig[object_name];
+        delete this._objects[object_name];
     }
 
     initDriver() {
@@ -241,6 +247,30 @@ export class SteedosDataSourceType implements Dictionary {
 
     getObjectRolesPermission(object_name: string) {
         return this._objectsRolesPermission[object_name]
+    }
+
+    setObjectSpacePermission(object_name: string, spaceId: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
+        let objectPermissions = this._objectsSpaceRolesPermission[object_name]
+        if (!objectPermissions) {
+            this._objectsSpaceRolesPermission[object_name] = {}
+        }
+        let objectSpacePermissions = this._objectsSpaceRolesPermission[object_name][spaceId]
+        if (!objectSpacePermissions) {
+            this._objectsSpaceRolesPermission[object_name][spaceId] = {}
+        }
+        this._objectsSpaceRolesPermission[object_name][spaceId][objectRolePermission.name] = new SteedosObjectPermissionType(object_name, objectRolePermission)
+    }
+
+    getObjectSpaceRolesPermission(object_name: string, spaceId: string) {
+        if(this._objectsSpaceRolesPermission[object_name]){
+            return this._objectsSpaceRolesPermission[object_name][spaceId]
+        }
+    }
+
+    removeObjectSpacePermission(object_name: string, spaceId: string, objectRolePermissionName: string){
+        if(this._objectsSpaceRolesPermission[object_name] && this._objectsSpaceRolesPermission[object_name][spaceId]){
+            delete this._objectsSpaceRolesPermission[object_name][spaceId][objectRolePermissionName];
+        }
     }
 
     async getRoles(userId: SteedosIDType) {

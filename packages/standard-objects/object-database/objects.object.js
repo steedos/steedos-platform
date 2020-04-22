@@ -1,6 +1,3 @@
-var objectql = require('@steedos/objectql');
-var clone = require("clone");
-console.log('load objects.object.js....');
 function isRepeatedName(doc) {
     var other;
     other = Creator.getCollection("objects").find({
@@ -21,7 +18,6 @@ function isRepeatedName(doc) {
 };
 
 function checkName(name){
-    console.log('doc.name', name);
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
         throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
@@ -32,18 +28,37 @@ function checkName(name){
     return true
 }
 
-function loadObject(doc){
-    const datasource = objectql.getDataSource();
-    objectql.addObjectConfig(doc, 'default');
-    const _doc = clone(objectql.getObjectConfig(doc.name));
-    datasource.setObject(doc.name, _doc);
-    try {
-        console.log('Creator.loadObjects。。。');
-        Creator.Objects[doc.name] = doc;
-        Creator.loadObjects(doc, doc.name);
-    } catch (error) {
-        console.log('error', error);
+function initObjectPermission(doc){
+
+    let spaceId =  doc.space;
+    let psetsAdminId = null;
+    let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
+    if(!psetsAdmin){
+        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin'});
+    }else{
+        psetsAdminId = psetsAdmin._id
     }
+    let psetsUserId = null;
+    let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
+    if(!psetsUser){
+        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user'});
+    }else{
+        psetsUserId = psetsUser._id;
+    }
+
+    Creator.getCollection("permission_objects").insert(Object.assign({}, Creator.getObject("base").permission_set.user, {
+        name : "用户",
+        permission_set_id : psetsUserId,
+        object_name : doc.name,
+        space: doc.space
+    }));
+
+    Creator.getCollection("permission_objects").insert(Object.assign({}, Creator.getObject("base").permission_set.admin, {
+        name : "管理员",
+        permission_set_id : psetsAdminId,
+        object_name : doc.name,
+        space: doc.space
+    }));
 }
 
 
@@ -145,35 +160,8 @@ Creator.Objects.objects.triggers = {
                 filter_scope: "space",
                 columns:  [{field: 'name'}]
             });
-            Creator.getCollection("permission_objects").insert({
-                name : "user",
-                permission_set_id : "user",
-                object_name : doc.name,
-                space: doc.space,
-                allowRead : false,
-                allowCreate : false,
-                allowEdit : false,
-                allowDelete : false,
-                viewAllRecords : false,
-                modifyAllRecords : false,
-                viewCompanyRecords : false,
-                modifyCompanyRecords : false
-            });
-
-            Creator.getCollection("permission_objects").insert({
-                name : "admin",
-                permission_set_id : "admin",
-                object_name : doc.name,
-                space: doc.space,
-                allowRead : true,
-                allowCreate : true,
-                allowEdit : true,
-                allowDelete : true,
-                viewAllRecords : true,
-                modifyAllRecords : true,
-                viewCompanyRecords : true,
-                modifyCompanyRecords : true
-            });
+            
+            initObjectPermission(doc);
         }
     },
     "before.remove.server.objects": {
@@ -233,19 +221,12 @@ Creator.Objects.objects.triggers = {
             }
         }
     },
-    "after.update.server.dynamic_load": {
-        on: "server",
-        when: "after.update",
-        todo: function (userId, doc, fieldNames, modifier, options) {
-            loadObject(doc);
-        }
-    },
-    // "after.insert.server.dynamic_load": {
+    // "after.update.server.dynamic_load": {
     //     on: "server",
-    //     when: "after.insert",
-    //     todo: function (userId, doc) {
+    //     when: "after.update",
+    //     todo: function (userId, doc, fieldNames, modifier, options) {
     //         loadObject(doc);
     //     }
-    // },
+    // }
 
 }

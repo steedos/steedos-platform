@@ -169,6 +169,11 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     _objectConfigs.push(config)
 }
 
+export const removeObjectConfig = (object_name: string, datasource: string)=>{
+    _.remove(_objectConfigs, {name: object_name, datasource: datasource});
+    _.remove(_original_objectConfigs, {name: object_name, datasource: datasource});
+}
+
 export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
     if (!json.listenTo) {
         throw new Error('missing attribute listenTo')

@@ -396,7 +396,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         // }
     }
 
-    getObjectRolesPermission() {
+    getObjectRolesPermission(spaceId?: string) {
+        if(spaceId){
+            let permission = this._datasource.getObjectSpaceRolesPermission(this._name, spaceId);
+            if(!_.isEmpty(permission)){
+                console.log("SpaceRolesPermission keys", _.keys(permission));
+                return permission;
+            }
+        }
         return this._datasource.getObjectRolesPermission(this._name)
     }
 
@@ -407,7 +414,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         let roles = userSession.roles
-        let objectRolesPermission = this.getObjectRolesPermission()
+        let objectRolesPermission = this.getObjectRolesPermission(userSession.spaceId)
 
         let userObjectPermission = {
             allowRead: false,
@@ -749,6 +756,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
                 if (spaceId && !objPm.viewAllRecords && objPm.viewCompanyRecords) { // 公司级
                     if (_.isEmpty(userSession.companies)) {
+                        console.log('objPm', objPm);
                         throw new Error("user not belong any company!");
                     }
                     companyFilter = _.map(userSession.companies, function (comp: any) {
