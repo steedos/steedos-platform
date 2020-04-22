@@ -5,12 +5,12 @@ objects_field_app_version:
 objects_field_custom: 规则
 objects_field_description: 描述
 objects_field_enable_api: 允许 API 访问
-objects_field_enable_approvals: 允许的值
 objects_field_enable_audit: 记录字段历史
 objects_field_enable_chatter: 允许添加评论
 objects_field_enable_events: 允许添加事件
 objects_field_enable_files: 允许上传附件
 objects_field_enable_instances: 允许查看申请单
+objects_field_enable_approvals: 显示申请单历史步骤
 objects_field_enable_notes: 允许添加备注
 objects_field_enable_search: 允许搜索
 objects_field_enable_share: 允许共享记录

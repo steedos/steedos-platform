@@ -24,7 +24,7 @@ object_fields_field_searchable: 可搜索
 object_fields_field_sort_no: 排序号
 object_fields_field_sortable: 可排序
 object_fields_field_type: 字段类型
-object_fields_field_type_options_boolean: Checkbox
+object_fields_field_type_options_boolean: 勾选框
 object_fields_field_type_options_currency: 金额
 object_fields_field_type_options_date: 日期
 object_fields_field_type_options_datetime: 日期时间
