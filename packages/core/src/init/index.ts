@@ -5,11 +5,9 @@ import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
 import {initPublicStaticRouter} from '../routes';
 import { InitI18n } from './i18n';
-import { initCoreCollections } from './core.collection';
 
 export async function init() {
     getSteedosSchema();
-    initCoreCollections();
     WebAppInternals.setInlineScriptsAllowed(false);
     initDesignSystem()
     Plugins.init();

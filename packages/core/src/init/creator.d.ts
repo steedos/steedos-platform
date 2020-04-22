@@ -6,4 +6,3 @@ declare var Steedos;
 declare var WebApp;
 declare var WebAppInternals;
 declare var __meteor_runtime_config__;
-declare var db;
