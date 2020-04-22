@@ -29,6 +29,7 @@ function _syncToObject(doc) {
     }
   });
   _.each(table_fields, function (f, k) {
+    k = k + '__c';
     if (fields[k].type === "grid") {
       if (!_.size(fields[k].fields)) {
         fields[k].fields = {};
@@ -65,11 +66,30 @@ function isRepeatedName(doc, name) {
   }
   return false;
 };
+//每个对象只能有一个master_detail
+function hasMultipleMasterDetailTypeFiled(doc) {
+  var other;
+  other = Creator.getCollection("object_fields").find({
+    object: doc.object,
+    space: doc.space,
+    _id: {
+      $ne: doc._id
+    },
+    type: "master_detail"
+  }, {
+    fields: {
+      _id: 1
+    }
+  });
+  if (other.count() > 0) {
+    return true;
+  }
+  return false;
+};
 
-//TODO: 只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+//只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符 TODO 支持表格
 function checkName(name){
-  console.log('doc.name', name);
-  var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
+  var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$'); //支持表格类型的验证表达式(待优化.$.限制只能出现一次): new RegExp('^[a-z]([a-z0-9]|_(?!_))*(\\.\\$\\.\\w+)*[a-z0-9]$')
   if(!reg.test(name)){
     throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
   }
@@ -126,6 +146,10 @@ Creator.Objects.object_fields.triggers = {
         throw new Meteor.Error(doc._name, "对象字段名不能重复");
       }
 
+      if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
+        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      }
+
       if (modifier != null ? (ref2 = modifier.$set) != null ? ref2.reference_to : void 0 : void 0) {
         if (modifier.$set.reference_to.length === 1) {
           _reference_to = modifier.$set.reference_to[0];
@@ -172,6 +196,11 @@ Creator.Objects.object_fields.triggers = {
         // console.log(`insert fields对象名称不能重复${doc.name}`);
         throw new Meteor.Error(doc.name, "对象名称不能重复");
       }
+
+      if(hasMultipleMasterDetailTypeFiled(doc)){
+        throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
+      }
+
       if ((doc != null ? doc.index : void 0) && ((doc != null ? doc.type : void 0) === 'textarea' || (doc != null ? doc.type : void 0) === 'html')) {
         throw new Meteor.Error(500, '多行文本不支持建立索引');
       }
