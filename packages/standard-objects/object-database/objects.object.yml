@@ -125,6 +125,26 @@ fields:
   app_version:
     type: text
     hidden: true
+  # relatedList:
+  #   type: lookup
+  #   label: 相关子表
+  #   multiple: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             var _options;
+
+  #             _options = [];
+
+  #             _.forEach(Creator.objectsByName, function (o, k) {
+  #               return _options.push({
+  #                 label: o.label,
+  #                 value: k,
+  #                 icon: o.icon
+  #               });
+  #             });
+
+  #             return _options;
+  #           }
 relatedList:
   - object_fields
   - object_actions
