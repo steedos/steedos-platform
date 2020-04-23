@@ -452,8 +452,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         })
 
         let spaceId = userSession.spaceId
-        if(isTemplateSpace(spaceId)){
-            return Object.assign({}, userObjectPermission, {allowRead: true, viewAllRecords: true, viewCompanyRecords: true})
+        if (isTemplateSpace(spaceId)) {
+            return Object.assign({}, userObjectPermission, { allowRead: true, viewAllRecords: true, viewCompanyRecords: true })
         }
 
         return userObjectPermission;
@@ -557,7 +557,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
     }
 
-    private isDirectCRUD(methodName: string){
+    private isDirectCRUD(methodName: string) {
         return methodName.startsWith("direct");
     }
 
@@ -583,7 +583,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async runBeforeTriggers(method: string, context: SteedosTriggerContextConfig) {
-        if(method === 'count'){
+        if (method === 'count') {
             method = 'find';
         }
         let when = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
@@ -599,7 +599,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         let userSession = args[args.length - 1]
 
-        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId:  userSession ? userSession.spaceId : undefined}
+        let context: SteedosTriggerContextConfig = { userId: userSession ? userSession.userId : undefined, spaceId: userSession ? userSession.spaceId : undefined }
 
         if (method === 'find' || method === 'findOne' || method === 'count') {
             context.query = args[args.length - 2]
@@ -692,13 +692,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         let returnValue;
-        
-        
-        if(this.isDirectCRUD(method)){
+
+
+        if (this.isDirectCRUD(method)) {
             let userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
-        }else{
+        } else {
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             await this.runBeforeTriggers(method, beforeTriggerContext)
             let afterTriggerContext = await this.getTriggerContext('after', method, args)
@@ -743,13 +743,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
-                if(isCloudAdminSpace(spaceId)){
-                    return 
+                if (isCloudAdminSpace(spaceId)) {
+                    return
                 }
 
                 let spaceFilter, companyFilter, ownerFilter, sharesFilter, clientFilter = query.filters, filters, permissionFilters = [], userFilters = [];
 
-                if(spaceId){
+                if (spaceId) {
                     spaceFilter = `(space eq '${spaceId}')`;
                 }
 
@@ -767,33 +767,35 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     ownerFilter = `(owner eq '${userId}')`;
                 }
 
-                sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+                if (!objPm.viewAllRecords) {
+                    sharesFilter = getUserObjectSharesFilters(this.name, userSession);
+                }
 
-                if(!_.isEmpty(companyFilter)){
+                if (!_.isEmpty(companyFilter)) {
                     permissionFilters.push(`(${companyFilter.join(' or ')})`);
                 }
 
-                if(ownerFilter){
+                if (ownerFilter) {
                     permissionFilters.push(ownerFilter);
                 }
 
-                if(!_.isEmpty(sharesFilter)){
+                if (!_.isEmpty(sharesFilter)) {
                     permissionFilters.push(`(${sharesFilter.join(' or ')})`);
                 }
 
-                if(clientFilter){
+                if (clientFilter) {
                     userFilters.push(clientFilter);
                 }
 
-                if(spaceFilter){
+                if (spaceFilter) {
                     userFilters.push(spaceFilter);
                 }
 
-                if(!userSession.is_space_admin && !_.isEmpty(permissionFilters)){
+                if (!userSession.is_space_admin && !_.isEmpty(permissionFilters)) {
                     filters = permissionFilters.join(' or ');
                 }
 
-                if(!_.isEmpty(userFilters)){
+                if (!_.isEmpty(userFilters)) {
                     filters = filters ? `(${filters}) and (${userFilters.join(' and ')})` : userFilters.join(' and ')
                 }
 
@@ -926,6 +928,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 }
 
-export function getObject(objectName: string, schema?: SteedosSchema){
+export function getObject(objectName: string, schema?: SteedosSchema) {
     return (schema ? schema : getSteedosSchema()).getObject(objectName);
 }
