@@ -8,3 +8,4 @@ admin_menus:
       - admin
     object_name: objects
     parent: menu_advanced
+    sort: 1
