@@ -400,7 +400,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(spaceId){
             let permission = this._datasource.getObjectSpaceRolesPermission(this._name, spaceId);
             if(!_.isEmpty(permission)){
-                console.log("SpaceRolesPermission keys", _.keys(permission));
                 return permission;
             }
         }
