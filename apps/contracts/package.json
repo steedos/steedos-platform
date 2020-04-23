@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": false,
   "scripts": {
-    "changelogs":"lerna version --conventional-commits",
+    "changelogs":"lerna version --conventional-commits --amend",
     "debug": "nodemon server.js",
     "start": "node server",
     "build": "yarn buildPackages",
