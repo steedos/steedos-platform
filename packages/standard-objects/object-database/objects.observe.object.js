@@ -5,7 +5,6 @@ function loadObject(doc){
         console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
         return;
     }
-    console.log('loadObject object', doc.name);
     const datasource = objectql.getDataSource();
     //继承base
     objectql.addObjectConfig(doc, 'default');
@@ -39,26 +38,32 @@ Meteor.startup(function () {
     _removeServerObjects = function (document) {
         removeObject(document);
     };
-    server_objects_init = false;
-    Creator.getCollection("objects").find({}, {
-        fields: {
-            created: 0,
-            created_by: 0,
-            modified: 0,
-            modified_by: 0
-        }
-    }).observe({
-        added: function (newDocument) {
-            if (!server_objects_init) {
-                return _changeServerObjects(newDocument);
+
+    var config = objectql.getSteedosConfig();
+    if(config.tenant && config.tenant.saas){
+        return ;
+    }else{
+        server_objects_init = false;
+        Creator.getCollection("objects").find({}, {
+            fields: {
+                created: 0,
+                created_by: 0,
+                modified: 0,
+                modified_by: 0
             }
-        },
-        changed: function (newDocument, oldDocument) {
-            return _changeServerObjects(newDocument);
-        },
-        removed: function (oldDocument) {
-            return _removeServerObjects(oldDocument);
-        }
-    });
-    server_objects_init = true;
+        }).observe({
+            added: function (newDocument) {
+                if (!server_objects_init) {
+                    return _changeServerObjects(newDocument);
+                }
+            },
+            changed: function (newDocument, oldDocument) {
+                return _changeServerObjects(newDocument);
+            },
+            removed: function (oldDocument) {
+                return _removeServerObjects(oldDocument);
+            }
+        });
+        server_objects_init = true;
+    }
 });

@@ -1,3 +1,5 @@
+var objectql = require('@steedos/objectql');
+
 function isRepeatedName(doc) {
     var other;
     other = Creator.getCollection("objects").find({
@@ -63,6 +65,18 @@ function initObjectPermission(doc){
 
 
 Creator.Objects.objects.actions = {
+    show_object: {
+        label: "预览",
+        visible: true,
+        on: "record",
+        todo: function (object_name, record_id, item_element) {
+            var record = Creator.getObjectById(record_id);
+            if(!record){
+                return toastr.error("未找到记录");
+            }
+            Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+        }
+    },
     copy_odata: {
         label: "复制OData网址",
         visible: true,
@@ -96,11 +110,23 @@ Creator.Objects.objects.actions = {
     }
 }
 
+function allowChangeObject(){
+    var config = objectql.getSteedosConfig();
+    if(config.tenant && config.tenant.saas){
+        return false
+    }else{
+        return true;
+    }
+}
+
 Creator.Objects.objects.triggers = {
     "before.insert.server.objects": {
         on: "server",
         when: "before.insert",
         todo: function (userId, doc) {
+            if(!allowChangeObject()){
+                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+            }
             checkName(doc.name);
             doc.name = doc.name + '__c';
             if (isRepeatedName(doc)) {
@@ -114,6 +140,9 @@ Creator.Objects.objects.triggers = {
         on: "server",
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
+            if(!allowChangeObject()){
+                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+            }
             var ref;
             if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
                 console.log("不能修改name");
@@ -168,6 +197,9 @@ Creator.Objects.objects.triggers = {
         on: "server",
         when: "before.remove",
         todo: function (userId, doc) {
+            if(!allowChangeObject()){
+                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+            }
             var documents, object_collections;
             if (doc.app_unique_id && doc.app_version) {
                 return;

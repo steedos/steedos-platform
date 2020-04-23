@@ -30,9 +30,15 @@ fields:
 
               return options;
             }
-  is_enable:
-    type: boolean
-    defaultValue: true
+  # is_enable:
+  #   type: boolean
+  #   defaultValue: true
+  in_development:
+    type: select
+    label: 开发状态
+    options: "开发中(仅管理员才可以访问对象):1,已部署:0"
+    defaultValue: "1"
+    required: true
   enable_search:
     type: boolean
   enable_files:
@@ -56,22 +62,22 @@ fields:
     type: boolean
   enable_audit:
     type: boolean
-  enable_trash:
-    type: boolean
-  enable_space_global:
-    type: boolean
-    defaultValue: false
+  # enable_trash:
+  #   type: boolean
+  # enable_space_global:
+  #   type: boolean
+  #   defaultValue: false
   enable_approvals:
     type: boolean
     defaultValue: false
-  is_view:
-    type: boolean
-    defaultValue: false
-    omit: true
-  hidden:
-    label: 隐藏
-    type: boolean
-    omit: true
+  # is_view:
+  #   type: boolean
+  #   defaultValue: false
+  #   omit: true
+  # hidden:
+  #   label: 隐藏
+  #   type: boolean
+  #   omit: true
   description:
     label: Description
     type: textarea
@@ -155,7 +161,7 @@ list_views:
     columns:
       - name
       - label
-      - is_enable
+      - in_development
       - modified
     label: 全部
     filter_scope: space
