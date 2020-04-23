@@ -70,7 +70,7 @@ Creator.Objects.objects.actions = {
         visible: true,
         on: "record",
         todo: function (object_name, record_id, item_element) {
-            var record = Creator.getObjectById(record_id);
+            var record = this.record || Creator.getObjectById(record_id);
             if(!record){
                 return toastr.error("未找到记录");
             }
@@ -83,7 +83,7 @@ Creator.Objects.objects.actions = {
         on: "record",
         todo: function (object_name, record_id, item_element) {
             var clipboard, o_name, path, record;
-            record = Creator.getObjectById(record_id);
+            record = this.record || Creator.getObjectById(record_id);
             //enable_api 属性未开放
             if ((record != null ? record.enable_api : void 0) || true) {
                 o_name = record != null ? record.name : void 0;
