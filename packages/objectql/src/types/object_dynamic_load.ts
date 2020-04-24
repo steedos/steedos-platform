@@ -197,13 +197,46 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             object.listeners = {}
         }
         delete json.listenTo
-        json.name = getRandomString(10);
+        json.name = json._id ||getRandomString(10);
         object.listeners[json.name] = json
         if(object.datasource === 'default'){
             util.extend(object, {triggers: transformListenersToTriggers(object, json)})
         }
     } else {
         throw new Error(`Error add listener, object not found: ${object_name}`);
+    }
+}
+
+export const removeObjectListenerConfig = (_id, listenTo, when)=>{
+    if(!_id){
+        throw new Error('[config._id] Can not be empty. can not remove object listener.');
+    }
+    if (!listenTo) {
+        throw new Error('missing attribute listenTo')
+    }
+
+    if (!_.isString(listenTo) ) {
+        throw new Error('listenTo must be a string')
+    }
+
+    let object_name = '';
+
+    if (_.isString(listenTo)) {
+        object_name = listenTo
+    }
+
+    let object:any = getObjectConfig(object_name);
+    if (object) {
+        if(object.listeners){
+            delete object.listeners[_id]
+        }
+
+        if(object.triggers){
+            delete object.triggers[`${_id}_${when}`]
+        }
+
+    } else {
+        throw new Error(`Error remove listener, object not found: ${object_name}`);
     }
 }
 
