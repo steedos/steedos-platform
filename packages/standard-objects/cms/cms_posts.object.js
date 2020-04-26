@@ -1,5 +1,6 @@
 if (!db.cms_posts) {
-  db.cms_posts = new Meteor.Collection('cms_posts');
+  const core = require('@steedos/core');
+  db.cms_posts = core.newCollection('cms_posts');
 }
 
 db.cms_posts.config = {

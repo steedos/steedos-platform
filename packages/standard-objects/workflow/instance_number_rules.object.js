@@ -1,5 +1,6 @@
 if (!db.instance_number_rules) {
-  db.instance_number_rules = new Meteor.Collection('instance_number_rules');
+  const core = require('@steedos/core');
+  db.instance_number_rules = core.newCollection('instance_number_rules');
 }
 
 if (Meteor.isServer) {

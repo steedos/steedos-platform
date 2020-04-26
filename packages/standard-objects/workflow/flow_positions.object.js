@@ -1,5 +1,6 @@
 if (!db.flow_positions) {
-  db.flow_positions = new Meteor.Collection('flow_positions');
+  const core = require('@steedos/core');
+  db.flow_positions = core.newCollection('flow_positions');
 }
 
 db.flow_positions.helpers({

@@ -1,5 +1,6 @@
 const spaceUserCore = require('./space_users.core')
-db.space_users = new Meteor.Collection('space_users');
+const core = require('@steedos/core');
+db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
 

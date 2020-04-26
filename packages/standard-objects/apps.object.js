@@ -1,4 +1,5 @@
-db.apps = new Meteor.Collection('apps');
+const core = require('@steedos/core');
+db.apps = core.newCollection('apps');
 
 db.apps.isInternalApp = function (url) {
     var app_url, i, len, ref;

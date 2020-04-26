@@ -1,4 +1,5 @@
-db.organizations = new Meteor.Collection('organizations');
+const core = require('@steedos/core');
+db.organizations = core.newCollection('organizations');
 
 if (Meteor.isClient) {
     //	db.organizations._simpleSchema.i18n("organizations")

@@ -1,1 +1,2 @@
-db.roles = new Meteor.Collection('roles');
+const core = require('@steedos/core');
+db.roles = core.newCollection('roles');

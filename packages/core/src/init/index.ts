@@ -3,7 +3,7 @@ import { Core, initCreator, initDesignSystem } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
-import {initPublicStaticRouter} from '../routes';
+import { initPublicStaticRouter } from '../routes';
 import { InitI18n } from './i18n';
 
 export async function init() {
@@ -18,3 +18,5 @@ export async function init() {
     InitI18n();
     Core.run();
 }
+
+export * from './collection';

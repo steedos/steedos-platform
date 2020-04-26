@@ -1,5 +1,6 @@
 if (!db.webhooks) {
-  db.webhooks = new Meteor.Collection('webhooks');
+  const core = require('@steedos/core');
+  db.webhooks = core.newCollection('webhooks');
 }
 
 if (Meteor.isServer) {

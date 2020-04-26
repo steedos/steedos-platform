@@ -1,5 +1,6 @@
 if (!db.process_delegation_rules) {
-  db.process_delegation_rules = new Meteor.Collection('process_delegation_rules');
+  const core = require('@steedos/core');
+  db.process_delegation_rules = core.newCollection('process_delegation_rules');
 }
 
 db.process_delegation_rules.helpers({

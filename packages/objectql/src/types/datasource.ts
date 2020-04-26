@@ -58,6 +58,7 @@ export type SteedosDataSourceTypeConfig = {
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
     getRoles?: Function //TODO 尚未开放此功能
     enable_space?: boolean
+    locale?: string //指定新建数据库表的默认语言，如zh，可用于字段的默认排序
 }
 
 export class SteedosDataSourceType implements Dictionary {
