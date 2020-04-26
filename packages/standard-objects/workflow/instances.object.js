@@ -1,5 +1,6 @@
 if (!db.instances) {
-  db.instances = new Meteor.Collection('instances');
+  const core = require('@steedos/core');
+  db.instances = core.newCollection('instances');
 }
 
 if (Meteor.isServer) {

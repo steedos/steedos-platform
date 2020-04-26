@@ -1,4 +1,5 @@
-db.audit_logs = new Meteor.Collection('audit_logs');
+const core = require('@steedos/core');
+db.audit_logs = core.newCollection('audit_logs');
 
 db.audit_logs._simpleSchema = new SimpleSchema({
     c_name: {

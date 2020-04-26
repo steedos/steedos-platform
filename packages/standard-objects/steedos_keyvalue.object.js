@@ -1,4 +1,5 @@
-db.steedos_keyvalues = new Meteor.Collection('steedos_keyvalues');
+const core = require('@steedos/core');
+db.steedos_keyvalues = core.newCollection('steedos_keyvalues');
 
 db.steedos_keyvalues._simpleSchema = new SimpleSchema({
     space: {

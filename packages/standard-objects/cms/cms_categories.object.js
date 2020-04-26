@@ -1,5 +1,6 @@
 if (!db.cms_categories) {
-  db.cms_categories = new Meteor.Collection('cms_categories');
+  const core = require('@steedos/core');
+  db.cms_categories = core.newCollection('cms_categories');
 }
 
 Meteor.startup(function () {

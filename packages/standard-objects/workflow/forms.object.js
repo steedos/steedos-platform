@@ -1,5 +1,6 @@
 if (!db.forms) {
-  db.forms = new Meteor.Collection('forms');
+  const core = require('@steedos/core');
+  db.forms = core.newCollection('forms');
 }
 
 if (Meteor.isServer) {

@@ -1,5 +1,6 @@
 Fiber = require('fibers')
-db.spaces = new Meteor.Collection('spaces');
+const core = require('@steedos/core');
+db.spaces = core.newCollection('spaces');
 
 db.spaces.helpers({
     owner_name: function () {
