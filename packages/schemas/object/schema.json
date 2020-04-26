@@ -36,6 +36,10 @@
             "description": "对象名称",
             "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$"
         },
+        "internal": {
+            "type": "boolean",
+            "description": "内置对象"
+        },
         "table_name": {
             "type": "string",
             "description": "数据库表名称"
