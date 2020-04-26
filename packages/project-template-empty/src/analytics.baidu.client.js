@@ -13,7 +13,9 @@ var _hmt = _hmt || [];
   Meteor.startup(function(){
     Tracker.autorun(function() {
       FlowRouter.watchPathChange();
-      window._hmt.push(['_trackPageview', FlowRouter.current().path]);
+      if (FlowRouter.current().path) {
+        window._hmt.push(['_trackPageview', FlowRouter.current().path]);
+      }
     });
   })
  } catch (error) {
