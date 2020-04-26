@@ -88,7 +88,7 @@ module.exports = {
     },
     afterUpdate: async function () {
         const previousDoc = this.previousDoc;
-        let doc = Object.assign({}, this.doc, {_id: this._id});
+        let doc = Object.assign({}, this.doc, {_id: this.id});
         const userId = this.userId;
 
         if(doc.site){
