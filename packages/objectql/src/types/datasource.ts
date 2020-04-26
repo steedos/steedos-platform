@@ -81,6 +81,7 @@ export class SteedosDataSourceType implements Dictionary {
     private _connectString?: string;
     private _timezone?: string;
     private _options?: any;
+    private _locale?: string;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
@@ -140,7 +141,8 @@ export class SteedosDataSourceType implements Dictionary {
             connectString: this._connectString,
             timezone: this._timezone,
             options: this._options,
-            logging: this._logging
+            logging: this._logging,
+            locale: this._locale
         }
 
         if (_.isString(this.config.driver)) {
@@ -204,6 +206,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._schema = schema
         this._driver = config.driver
         this._logging = config.logging
+        this._locale = config.locale
 
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
