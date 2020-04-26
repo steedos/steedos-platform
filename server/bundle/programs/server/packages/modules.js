@@ -240,7 +240,6 @@ install("meteorhacks:meteorx");
 install("meteorhacks:unblock");
 install("steedos:lightning-design-system");
 install("steedos:odata");
-install("steedos:object-database");
 install("steedos:mailqueue");
 install("chuangbo:cookie");
 install("steedos:sso");
@@ -843,7 +842,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "main": "lib/index.js"
 };
 
@@ -870,7 +869,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "main": "lib/index.js"
 };
 
@@ -897,7 +896,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "main": "lib/index.js"
 };
 
@@ -924,7 +923,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "main": "lib/index.js"
 };
 
