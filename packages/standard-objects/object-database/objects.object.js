@@ -219,6 +219,12 @@ Creator.Objects.objects.triggers = {
         on: "server",
         when: "after.remove",
         todo: function (userId, doc) {
+
+            if(!doc.name.endsWith("__c")){
+                console.warn('warn: Not remove. Invalid custom object -> ', doc.name);
+                return;
+            }        
+
             var e;
             //删除object 后，自动删除fields、actions、triggers、permission_objects
             Creator.getCollection("object_fields").direct.remove({
@@ -245,10 +251,10 @@ Creator.Objects.objects.triggers = {
             console.log("drop collection", doc.name);
             try {
                 //					Creator.getCollection(doc.name)._collection.dropCollection()
-                return Creator.Collections[`c_${doc.space}_${doc.name}`]._collection.dropCollection();
+                return Creator.Collections[doc.name]._collection.dropCollection();
             } catch (error) {
                 e = error;
-                console.error(`c_${doc.space}_${doc.name}`, `${e.stack}`);
+                console.error(doc.name, `${e.stack}`);
                 throw new Meteor.Error(500, `对象(${doc.name})不存在或已被删除`);
             }
         }
