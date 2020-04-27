@@ -24,7 +24,7 @@ const GlobalMessage = ({ settings, location }: any) => {
 
   return (
       <div className={classes.container}>
-       {!settings.already_mail_service && <FormError error="请配置邮件服务" />}
+       {!settings.already_mail_service && <a href="https://developer.steedos.com/developer/steedos_config#%E9%82%AE%E4%BB%B6%E9%85%8D%E7%BD%AE" target="_blank"><FormError error="邮件服务未配置，点击查看帮助" /></a>}
       </div>
   )
 };
