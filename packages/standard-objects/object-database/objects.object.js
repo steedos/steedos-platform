@@ -165,6 +165,7 @@ Creator.Objects.objects.triggers = {
                 object: doc.name,
                 owner: userId,
                 _name: "name",
+                label: "名称",
                 space: doc.space,
                 type: "text",
                 required: true,
@@ -173,6 +174,7 @@ Creator.Objects.objects.triggers = {
             });
             Creator.getCollection("object_listviews").insert({
                 name: "all",
+                label: "所有",
                 space: doc.space,
                 owner: userId,
                 object_name: doc.name,
@@ -182,6 +184,7 @@ Creator.Objects.objects.triggers = {
             });
             Creator.getCollection("object_listviews").insert({
                 name: "recent",
+                label: "最近查看",
                 space: doc.space,
                 owner: userId,
                 object_name: doc.name,
