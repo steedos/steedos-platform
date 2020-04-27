@@ -18,6 +18,7 @@ fields:
     required: true
   label:
     type: text
+    required: true
   is_name:
     type: boolean
     hidden: true
@@ -43,6 +44,7 @@ fields:
             }
   type:
     type: select
+    required: true
     options: "文本:text,长文本:textarea,Html文本:html,选择框:select,Checkbox:boolean,日期:date,日期时间:datetime,数值:number,金额:currency,密码:password,相关表:lookup,主表/子表:master_detail,网址:url,邮件地址:email" #TODO 表格:grid,
   sort_no:
     label: 排序号
