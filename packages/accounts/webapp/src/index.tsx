@@ -19,6 +19,8 @@ history.listen((location, action) => {
     setHistoryLength();
 });
 
+(window as any)._history = history
+
 ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
