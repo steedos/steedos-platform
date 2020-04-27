@@ -153,9 +153,9 @@ fields:
   #           }
 relatedList:
   - object_fields
+  - object_listviews
   - object_actions
   - object_triggers
-  - object_listviews
   - permission_objects
 list_views:
   all:
