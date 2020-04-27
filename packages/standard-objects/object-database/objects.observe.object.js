@@ -25,7 +25,7 @@ function removeObject(doc){
         return;
     }
     const datasource = objectql.getDataSource();
-    datasource.removeObjectConfig(doc.name, 'default');
+    objectql.removeObjectConfig(doc.name, 'default');
     datasource.removeObject(doc.name);
     Creator.removeObject(doc.name);
 }
@@ -53,7 +53,7 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                if (!server_objects_init) {
+                if (!server_objects_init || _.has(newDocument, "fields")) {
                     return _changeServerObjects(newDocument);
                 }
             },
