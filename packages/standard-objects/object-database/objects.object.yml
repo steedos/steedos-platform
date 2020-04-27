@@ -15,6 +15,7 @@ fields:
   icon:
     type: lookup
     label: 图标
+    required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var options;
