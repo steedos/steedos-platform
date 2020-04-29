@@ -535,6 +535,10 @@
                     "type": "array",
                     "description": "列表显示的字段"
                 },
+                "mobile_columns": {
+                    "type": "array",
+                    "description": "手机模式下列表显示的字段"
+                },
                 "extra_columns": {
                     "type": "array",
                     "description": "额外在列表显示的字段"
