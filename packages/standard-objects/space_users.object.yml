@@ -245,3 +245,14 @@ permission_set:
     allowRead: true
     modifyCompanyRecords: true
     viewAllRecords: true
+
+relatedList:
+  - objectName: flow_positions
+    columns:
+      - role
+      - org
+    filters: !!js/function |
+      function(parentRecord) {
+        var userId = _.isString(parentRecord.user) ? parentRecord.user : parentRecord.user._id;
+        return [["users","=",userId]]
+      }
