@@ -29,15 +29,8 @@ var addNotifications = function(userId, doc, assignees){
     Creator.addNotifications(notificationDoc, userId, assignees);
 }
 
-var removeNotifications = function(doc, assignees){
-    var collection = Creator.getCollection("notifications");
-    assignees.forEach(function(assignee){
-        collection.remove({
-            "related_to.o": "events",
-            "related_to.ids": doc._id,
-            owner: assignee
-        });
-    });
+let removeNotifications = function(doc, assignees){
+    Creator.removeNotifications(doc, assignees, "events");
 }
 
 Creator.Objects['events'].triggers = {
@@ -69,6 +62,16 @@ Creator.Objects['events'].triggers = {
                 addNotifications(userId, doc, addAssignees);
             }
             if(removedAssignees.length){
+                removeNotifications(doc, removedAssignees);
+            }
+        }
+    },
+    "before.remove.server.tasks": {
+        on: "server",
+        when: "before.remove",
+        todo: function (userId, doc) {
+            let removedAssignees = doc.assignees;
+            if(removedAssignees && removedAssignees.length){
                 removeNotifications(doc, removedAssignees);
             }
         }

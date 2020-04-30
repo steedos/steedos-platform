@@ -97,6 +97,10 @@ Meteor.startup(function(c){
                 changed: function(id, notification){
                     // 订阅到新通知过来时，重新请求通知数据
                     fetchMyNotifications();
+                },
+                removed: function(id){
+                    // 通知移除时，重新请求通知数据
+                    fetchMyNotifications();
                 }
             });
             // 初始化界面及切换工作区时，需要请求通知数据
