@@ -33,7 +33,7 @@ public:
   cloudAdminSpaceId: cloud_admin
   templateSpaceId: 5e38d51b41386900110ff5c5
 cfs:
-  aliyun:
+  -aliyun:
     region: ${ENV_CFS_ALIYUN_REGION}
     bucket: ${ENV_CFS_ALIYUN_BUCKET}
     accessKeyId: ${ENV_CFS_ALIYUN_ACCESSKEYID}
