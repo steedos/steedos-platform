@@ -2,7 +2,7 @@ import * as express from 'express';
 import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
-import { canRegister, spaceExists } from '../../../core';
+import { canRegister, spaceExists, canSendEmail } from '../../../core';
 import { AccountsServer } from '@accounts/server';
 import validator from 'validator';
 const moment = require('moment');
@@ -62,24 +62,10 @@ const getEmailBody = function (action: string, code: string) {
 
 function sendEmail(to, subject, html){
     const config = getSteedosConfig().email || {};
-    let canSend = true;
-    if(!config){
-        canSend = false;
-    }
-    if (!config) {
-        console.log("Please set email configs in steedos-config.yml")
-        canSend = false;
-    }
-    if (!config.from) {
-        console.log("Please set email configs in steedos-config.yml")
-        canSend = false;
-    }
-    if (!config.url && (!config.host || !config.port || !config.username || !config.password)) {
-        console.log("Please set email configs in steedos-config.yml")
-        canSend = false;
-    }
+    let canSend = canSendEmail();
     //如果没有配置发送邮件服务，则打印log
     if(!canSend){
+        console.log("Please set email configs in steedos-config.yml")
         console.log({
             to: to,
             subject: subject,

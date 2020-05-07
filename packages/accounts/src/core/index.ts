@@ -89,3 +89,34 @@ export const canRegister = async (spaceId, action)=>{
     }
     return tenant.enable_register;
 }
+
+function isEmpty(str){
+  if(!str){
+    return true;
+  }
+
+  if(str === 'undefined'){
+    return true;
+  }
+
+  if(_.isString(str) && str.startsWith("${")){
+    return true;
+  }
+
+  return false;
+}
+
+export const canSendEmail = ()=>{
+  const config = getSteedosConfig().email || {};
+  let canSend = true;
+  if (!config) {
+    canSend = false;
+  }
+  if (isEmpty(config.from)) {
+    canSend = false;
+  }
+  if (isEmpty(config.url) && (isEmpty(config.host) || isEmpty(config.port) || isEmpty(config.username) || isEmpty(config.password))) {
+    canSend = false;
+  }
+  return canSend;
+}

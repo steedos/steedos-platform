@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { AccountsServer } from '@accounts/server';
 import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../../../db';
+import { canSendEmail } from '../../../core';
 
 const config = getSteedosConfig();
 
@@ -39,11 +40,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
       _.assignIn(tenant, config.tenant)
   }
 
-  let already_mail_service = false;
-
-  if(config.email && config.email.url && config.email.from && !config.email.url.startsWith("${")){
-    already_mail_service = true;
-  }
+  let already_mail_service = canSendEmail();
 
   res.json({
     tenant: tenant,
