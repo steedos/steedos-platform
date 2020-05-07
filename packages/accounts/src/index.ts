@@ -13,6 +13,7 @@ import { mongoUrl } from './db';
 import { sendMail } from './mail';
 import { getSteedosConfig, SteedosMongoDriver, getConnection } from '@steedos/objectql'
 import { URL } from 'url';
+import * as bodyParser from 'body-parser';
 
 declare var WebApp;
 declare var Meteor;
@@ -144,7 +145,11 @@ export function init(context){
   }
   getAccountsRouter(context).then( (accountsRouter) => {
     context.app.use("/accounts", accountsRouter);
-    if (typeof WebApp !== 'undefined')
-      WebApp.rawConnectHandlers.use("/accounts", accountsRouter)
+    if (typeof WebApp !== 'undefined'){
+      const app = express();
+      app.use("/accounts", bodyParser.urlencoded({ extended: false }), bodyParser.json(), accountsRouter)
+      WebApp.rawConnectHandlers.use(app)
+    }
+      
   })
 }
