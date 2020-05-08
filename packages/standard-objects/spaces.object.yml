@@ -43,16 +43,6 @@ fields:
     label: 启用用户注册
     type: boolean
     group: 登录界面
-  enable_forget_password: 
-    label: 启用忘记密码
-    type: boolean
-    group: 登录界面
-    defaultValue: true
-  enable_create_tenant: 
-    label: 启用创建企业
-    type: boolean
-    group: 登录界面
-
   is_paid:
     label: 已付费
     type: boolean
