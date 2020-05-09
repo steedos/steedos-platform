@@ -142,6 +142,7 @@ fields:
   locale:
     label: 语言
     type: select
+    required: true
     allowedValues:
       - en-us
       - zh-cn
@@ -150,6 +151,12 @@ fields:
         value: zh-cn
       - label: English
         value: en-us
+    defaultValue:  !!js/function |
+      function(){
+        if(Meteor.isClient){
+          return Meteor.user().locale;
+        }
+      }
   sort_no:
     type: number
     label: 排序号
