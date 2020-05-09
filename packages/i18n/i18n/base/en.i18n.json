@@ -163,6 +163,7 @@
 	"email_login_required": "Login Required",
 	"email_required": "Email Required",
 	"email_format_error": "Email format error",
+	"mobile_format_error": "Mobile format error",
 	"email_exists": "Email exists",
 	"email_at_least_one": "At least one email address",
 	"email_verify_sent": "Verification email sent.",

@@ -177,6 +177,7 @@
 	"email_login_required": "请登录",
 	"email_required": "邮件为空",
 	"email_format_error": "邮件格式错误",
+	"mobile_format_error": "手机号式错误",
 	"email_exists": "邮件已存在",
 	"email_at_least_one": "需要至少一个邮件地址",
 	"email_verify_sent": "验证邮件已发送.",

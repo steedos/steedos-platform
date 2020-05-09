@@ -139,6 +139,17 @@ fields:
   #   group: '-'
   #   hidden: true
   #   name: company
+  locale:
+    label: 语言
+    type: select
+    allowedValues:
+      - en-us
+      - zh-cn
+    options:
+      - label: 简体中文
+        value: zh-cn
+      - label: English
+        value: en-us
   sort_no:
     type: number
     label: 排序号

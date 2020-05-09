@@ -1,5 +1,8 @@
 const spaceUserCore = require('./space_users.core')
 const core = require('@steedos/core');
+const validator = require("validator");
+const objectql = require('@steedos/objectql');
+
 db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
@@ -24,14 +27,23 @@ Meteor.startup(function () {
                 spaceUserExisted = db.space_users.find({space: doc.space,user: doc.user}, {fields: { _id: 1}});
 
             }else{
+                const steedosConfig = objectql.getSteedosConfig();
+                const config = steedosConfig.accounts || {};
                 if (!doc.email && !doc.mobile) {
                     throw new Meteor.Error(400, "contact_need_phone_or_email");
                 }
                 if (doc.email) {
-                    if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(doc.email)) {
+                    if (!validator.isEmail(doc.email)) {
                         throw new Meteor.Error(400, "email_format_error");
                     }
                 }
+
+                if (doc.mobile) {
+                    if (doc.mobile.startsWith('+') || !validator.isMobilePhone(doc.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                        throw new Meteor.Error(400, "mobile_format_error");
+                    }
+                }
+
                 // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
                 selector = [];
                 if (doc.email) {
@@ -80,10 +92,19 @@ Meteor.startup(function () {
                 throw new Meteor.Error(400, "organizations_error_org_admins_only");
             }
             if ((ref = modifier.$set) != null ? ref.email : void 0) {
-                if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(modifier.$set.email)) {
+                if (!validator.isEmail(modifier.$set.email)) {
                     throw new Meteor.Error(400, "email_format_error");
                 }
             }
+
+            if(modifier.$set && modifier.$set.mobile){
+                const steedosConfig = objectql.getSteedosConfig();
+                const config = steedosConfig.accounts || {};
+                if (modifier.$set.mobile.startsWith('+') || !validator.isMobilePhone(modifier.$set.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                    throw new Meteor.Error(400, "mobile_format_error");
+                }
+            }
+
             if (((ref2 = modifier.$set) != null ? ref2.user_accepted : void 0) !== void 0 && !modifier.$set.user_accepted) {
                 if (space.admins.indexOf(doc.user) > 0 || doc.user === space.owner) {
                     throw new Meteor.Error(400, "organizations_error_can_not_set_checkbox_true");
@@ -140,6 +161,7 @@ Meteor.startup(function () {
                 doc.modified_by = userId;
                 doc.modified = new Date();
                 creator = db.users.findOne(userId);
+                doc.locale = doc.locale || creator.locale;
                 if ((!doc.user) && (doc.email || doc.mobile)) {
                     if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
                         if (!doc.invite_state) {
@@ -175,7 +197,7 @@ Meteor.startup(function () {
                         id = db.users._makeNewID();
                         options = {
                             name: doc.name,
-                            locale: creator.locale,
+                            locale: doc.locale,
                             spaces_invited: [doc.space],
                             _id: id,
                             steedos_id: doc.email || id
