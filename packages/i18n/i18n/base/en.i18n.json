@@ -56,7 +56,6 @@
 	"Forgot Password Description": "Enter your email address below and we will send you password reset instructions.",
 	"Email": "Email",
 	"Reset Password": "Reset Password",
-	"Password": "Password",
 	"Log in": "Log in",
 	"Forgot your password?": "Forgot your password?",
 	"Confirm Password": "Confirm Password",
@@ -103,7 +102,6 @@
 	"Developer": "Developer",
 	"Home": "Home",
 	"Profile": "Profile",
-	"Settings": "Settings",
 	"Help": "Help",
 	"New": "New",
 
@@ -355,7 +353,6 @@
 	"billing_pay_records_end_date": "Expiration date",
 	"billing_pay_records_order_total_fee()": "Amount ￥",
 	"billing_pay_records_order_paid()": "Status",
-	"loading_reload_button_title": "Reload",
 	"loading_reload_button_title": "Reload",
 	"apps_members": "Authorized object",
 	"apps_members_users": "Authorized personnel",
