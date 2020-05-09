@@ -407,7 +407,8 @@
 		"print_default_print_title": "Default",
 		"print_custom_print_title": "Custom",
 		"print_button_title": "Print",
-		"print_html_title": "SteedOS"
+		"print_html_title": "SteedOS",
+		"template_files": "Template"
 	},
 	"help": {
 		"href": "<a href = {$href}>Please click here to view this request.</a>",

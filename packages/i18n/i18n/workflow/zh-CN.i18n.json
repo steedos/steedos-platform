@@ -409,7 +409,8 @@
 		"print_default_print_title": "默认",
 		"print_custom_print_title": "自定义",
 		"print_button_title": "打印",
-		"print_html_title": "审批王"
+		"print_html_title": "审批王",
+		"template_files": "模板"
 	},
 	"help": {
 		"href": "<a href = {$href}>请点击查看</a>。",
