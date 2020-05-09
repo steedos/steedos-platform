@@ -33,7 +33,7 @@ async function getAccountsServer (context){
   const rootUrl = process.env.ROOT_URL?process.env.ROOT_URL:'http://127.0.0.1:4000';
   const rootUrlInstance = new URL(rootUrl);
   const siteUrl = rootUrlInstance.origin;
-  var emailFrom = "Steedos <noreply@message.steedos.com>";
+  var emailFrom = "";
   if(config.email && config.email.from){
     emailFrom = config.email.from;
   }
