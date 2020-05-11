@@ -1,0 +1,9 @@
+chat_rooms__object: 房间
+chat_rooms_field_members: 成员
+chat_rooms_field_name: 内容
+chat_rooms_field_owner: 房主
+chat_rooms_field_type: 类型
+chat_rooms_field_type_options_ protected: ' protected'
+chat_rooms_field_type_options_ public: ' public'
+chat_rooms_field_type_options_private: private
+chat_rooms_listview_all: 所有

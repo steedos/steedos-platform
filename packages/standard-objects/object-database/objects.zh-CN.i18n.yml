@@ -1,0 +1,30 @@
+objects__object: 对象
+objects_field_actions: 操作
+objects_field_app_unique_id: 
+objects_field_app_version: 
+objects_field_custom: 规则
+objects_field_description: Description
+objects_field_enable_api: 
+objects_field_enable_approvals: 
+objects_field_enable_audit: 
+objects_field_enable_chatter: 
+objects_field_enable_events: 
+objects_field_enable_files: 
+objects_field_enable_instances: 
+objects_field_enable_notes: 
+objects_field_enable_search: 
+objects_field_enable_share: 
+objects_field_enable_tasks: 
+objects_field_fields: 字段
+objects_field_icon: 图标
+objects_field_in_development: 开发状态
+objects_field_in_development_options_0: 已部署
+objects_field_in_development_options_1: 开发中(仅管理员才可以访问对象)
+objects_field_label: 显示名
+objects_field_list_views: 列表视图
+objects_field_name: 对象名
+objects_field_owner: 
+objects_field_permission_set: 权限设置
+objects_field_sidebar: 左侧列表
+objects_field_triggers: 触发器
+objects_listview_all: 全部

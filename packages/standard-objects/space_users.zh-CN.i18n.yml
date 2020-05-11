@@ -1,0 +1,30 @@
+space_users__object: 人员
+space_users_field_avatar: 头像
+space_users_field_company_id: 主分部
+space_users_field_company_ids: 所属分部
+space_users_field_email: 邮件
+space_users_field_email_notification: 接收邮件通知
+space_users_field_email_verified: 邮件已验证
+space_users_field_hr: 
+space_users_field_invite_state: 邀请状态
+space_users_field_last_logon: 
+space_users_field_locale: 语言
+space_users_field_locale_options_en-us: English
+space_users_field_locale_options_zh-cn: 简体中文
+space_users_field_manager: 上级主管
+space_users_field_mobile: 手机
+space_users_field_mobile_verified: 手机已验证
+space_users_field_name: 姓名
+space_users_field_organization: 主部门
+space_users_field_organizations: 所属部门
+space_users_field_organizations_parents: 所属部门（含上级）
+space_users_field_position: 职务
+space_users_field_sms_notification: 接收短信提醒
+space_users_field_sort_no: 排序号
+space_users_field_user: 
+space_users_field_user_accepted: 有效
+space_users_field_username: 用户名
+space_users_field_work_phone: 工作电话
+space_users_group_-: '-'
+space_users_listview_all: 全部人员
+space_users_listview_disabled: 离职停用人员

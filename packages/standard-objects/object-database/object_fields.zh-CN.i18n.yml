@@ -1,0 +1,41 @@
+object_fields__object: 字段
+object_fields_field__name: 字段名
+object_fields_field_allowedValues: 
+object_fields_field_defaultValue: 
+object_fields_field_description: Description
+object_fields_field_group: 
+object_fields_field_hidden: 
+object_fields_field_index: 
+object_fields_field_is_name: 
+object_fields_field_is_wide: 
+object_fields_field_label: 
+object_fields_field_multiple: 
+object_fields_field_name: 
+object_fields_field_object: 
+object_fields_field_omit: 
+object_fields_field_options: 
+object_fields_field_precision: 
+object_fields_field_readonly: 
+object_fields_field_reference_to: 
+object_fields_field_required: 
+object_fields_field_rows: 
+object_fields_field_scale: 
+object_fields_field_searchable: 
+object_fields_field_sort_no: 排序号
+object_fields_field_sortable: 
+object_fields_field_type: 
+object_fields_field_type_options_boolean: Checkbox
+object_fields_field_type_options_currency: 金额
+object_fields_field_type_options_date: 日期
+object_fields_field_type_options_datetime: 日期时间
+object_fields_field_type_options_email: 邮件地址
+object_fields_field_type_options_html: Html文本
+object_fields_field_type_options_lookup: 相关表
+object_fields_field_type_options_master_detail: 主表/子表
+object_fields_field_type_options_number: 数值
+object_fields_field_type_options_password: 密码
+object_fields_field_type_options_select: 选择框
+object_fields_field_type_options_text: 文本
+object_fields_field_type_options_textarea: 长文本
+object_fields_field_type_options_url: 网址
+object_fields_listview_all: 

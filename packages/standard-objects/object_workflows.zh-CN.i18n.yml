@@ -1,0 +1,19 @@
+object_workflows__object: 对象流程
+object_workflows_field_field_map: 字段映射关系（对象至表单）
+object_workflows_field_field_map.$.object_field: 对象字段
+object_workflows_field_field_map.$.workflow_field: 表单字段
+object_workflows_field_field_map_back: 字段映射关系（表单至对象）
+object_workflows_field_field_map_back.$.object_field: 对象字段
+object_workflows_field_field_map_back.$.workflow_field: 表单字段
+object_workflows_field_field_map_back_script: 表单至对象
+object_workflows_field_field_map_script: 对象至表单
+object_workflows_field_flow_id: 流程
+object_workflows_field_name: 名称
+object_workflows_field_object_name: 对象
+object_workflows_field_sync_attachment: 附件同步方式
+object_workflows_field_sync_attachment_options_all: 同步所有版本
+object_workflows_field_sync_attachment_options_lastest: 同步最新版本
+object_workflows_field_sync_attachment_options_null: 不同步
+object_workflows_group_脚本: 脚本
+object_workflows_listview_all: 全部
+object_workflows_listview_default: 
