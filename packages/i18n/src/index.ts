@@ -161,3 +161,5 @@ export const off = function(event: string, listener: (...args: any[]) => void){
 }
 
 export * from './translation'
+
+export * from './translation.app'
