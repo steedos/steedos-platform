@@ -276,6 +276,20 @@ export function getSteedosConfig(){
                 process.env[key] = calcString(item)
             })
         }
+        let emailConfig = config.email;
+        if(emailConfig){
+            if (!emailConfig.url && emailConfig.host && emailConfig.port && emailConfig.username && emailConfig.password) {
+                let url = `smtps://${emailConfig.username}:${emailConfig.password}@${emailConfig.host}:${emailConfig.port}/`;
+                emailConfig.url = url;
+            }
+            if(emailConfig.url){
+                process.env["MAIL_URL"] = calcString(emailConfig.url);
+            }
+            if(emailConfig.from){
+                // 测试下来注册用户时不用MAIL_FROM这个环境变量也是可以的，这里重写是为了保险起见，怕其他地方用到这个环境变量
+                process.env["MAIL_FROM"] = calcString(emailConfig.from);
+            }
+        }
         STEEDOSCONFIG = calcSteedosConfig(config);
     // }else{
     //     throw new Error('Config file not found: ' + configPath);
