@@ -59,9 +59,16 @@ cfs:
   mi:
     appSecret: ${ENV_PUSH_MI_APPSECRET}
     production: ${ENV_PUSH_MI_PRODUCTION}
--email:
-  from: 华炎云 <noreply@steedos.com>
-  url: xxx
+email:
+  # url: ${MAIL_URL}
+  host: ${MAIL_HOST}
+  port: 465
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  from: ${MAIL_FROM}
+  secure: true
+cron:
+  mailqueue_interval: 1000
 logger:
   enabled: true
   showPackage: true
