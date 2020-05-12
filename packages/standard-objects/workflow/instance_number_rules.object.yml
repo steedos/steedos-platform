@@ -1,16 +1,16 @@
 name: instance_number_rules
 icon: metrics
-label: 流程编号规则
+label: Instance Number Rule
 fields:
   name:
     type: text
-    label: 名称
+    label: Name
     required: true
     name: name
     searchable: true
   year:
     type: number
-    label: 年份
+    label: Year
     readonly: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -21,17 +21,17 @@ fields:
     name: year
   first_number:
     type: number
-    label: 起始序号
+    label: First Number
     defaultValue: 1
     name: first_number
   number:
     type: number
-    label: 序号
+    label: Current Number
     defaultValue: 0
     name: number
   rules:
     type: text
-    label: 编号规则
+    label: Appearance Formular
     required: true
     name: rules
   # company_id:
@@ -47,7 +47,7 @@ list_views:
       - first_number
       - number
       - rules
-    label: 所有
+    label: All Rules
 permission_set:
   user:
     allowCreate: false

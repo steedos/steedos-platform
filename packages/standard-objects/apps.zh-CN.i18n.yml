@@ -40,5 +40,5 @@ apps_field_url: 外部链接
 apps_field_visible: 启用
 apps_group_oauth2: OAuth2
 apps_group_saml: SAML
-apps_group_外接应用: 外接应用
+apps_group_external_application: 外接应用
 apps_listview_all: 所有

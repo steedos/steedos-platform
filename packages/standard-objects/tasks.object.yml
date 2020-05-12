@@ -27,7 +27,7 @@ fields:
     sortable: true
     name: due_date
   state:
-    label: Status
+    label: State
     type: select
     options:
       - label: not Started

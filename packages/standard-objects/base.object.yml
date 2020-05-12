@@ -118,7 +118,7 @@ fields:
     omit: true
     hidden: true
   company_id:
-    label: 分部
+    label: Division
     type: lookup
     reference_to: company
     sortable: true
@@ -190,7 +190,7 @@ fields:
     omit: true
     hidden: true
   company_ids:
-    label: 分部
+    label: All Divisions
     type: lookup
     reference_to: company
     sortable: true
@@ -269,7 +269,7 @@ fields:
     omit: true
     hidden: true
   instance_state:
-    label: 审批状态
+    label: Instance State
     type: select
     options:
       - label: 草稿

@@ -21,6 +21,6 @@ spaces_field_owner: 所有者
 spaces_field_services: 
 spaces_field_start_date: 付费开始时间
 spaces_field_user_limit: 已购买用户数
-spaces_group_登录界面: 登录界面
-spaces_group_账务: 账务
+spaces_group_logon: 登录界面
+spaces_group_payment: 账务
 spaces_listview_all: 所有

@@ -1,5 +1,5 @@
 name: organizations
-label: Organization
+label: Department
 icon: team_member
 enable_search: true
 enable_tree: true
@@ -106,7 +106,7 @@ list_views:
       - sort_no
       - hidden
       - company_id
-    label: All
+    label: All Departments
     filter_scope: space
     sort:
       - field_name: sort_no
@@ -120,7 +120,7 @@ actions:
     'on': list
     todo: standard_query
   addSubOrganization:
-    label: Add a Suborganization
+    label: Add a Branch
     visible: !!js/function |
       function () {
               var permissions;

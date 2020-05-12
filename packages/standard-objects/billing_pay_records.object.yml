@@ -1,41 +1,41 @@
 name: billing_pay_records
-label: 订单
+label: Bill
 table_name: billing_pay_records
 icon: apps
 fields:
   info:
-    label: 详单详情
+    label: Info
     type: object
     blackbox: true
     omit: true
     hidden: true
   total_fee:
-    label: 金额￥
+    label: Total Fee
     type: number
     defaultValue: 100
     omit: true
   paid:
-    label: 已付款
+    label: Paid
     type: boolean
     omit: true
     defaultValue: false
   modules:
-    label: 模块
+    label: Paid Apps
     type: text
     multiple: true
     blackbox: true
     omit: true
   end_date:
-    label: 租用日期至
+    label: End Date
     type: date
     omit: true
   user_count:
-    label: 名额
+    label: Number of Authorized Users
     type: number
     omit: true
 list_views:
   all:
-    label: 所有
+    label: All Bills
     filter_scope: space
     columns: [modules, user_count, end_date, total_fee, paid, created]
 permission_set:

@@ -1,17 +1,17 @@
 name: flow_positions
 icon: metrics
-label: 岗位成员
+label: Workflow Position
 fields:
   role:
     type: master_detail
-    label: 岗位
+    label: Flow Role
     reference_to: flow_roles
     required: true
     name: role
     filterable: true
   users:
     type: lookup
-    label: 成员
+    label: Users
     reference_to: users
     multiple: true
     required: true
@@ -19,7 +19,7 @@ fields:
     filterable: true
   org:
     type: lookup
-    label: 管辖范围
+    label: Department
     reference_to: organizations
     required: true
     name: org
@@ -41,7 +41,7 @@ list_views:
       - users
       - org
       - company_id
-    label: 所有
+    label: All Workflow Positions
 permission_set:
   user:
     allowCreate: false

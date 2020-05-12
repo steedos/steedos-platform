@@ -1,18 +1,18 @@
 name: categories
 icon: metrics
-label: 流程分类
+label: Workflow Category
 fields:
   name:
     type: text
-    label: 名称
+    label: Name
     name: name
     searchable: true
   sort_no:
-    label: 排序号
+    label: Sort Number
     type: number
     name: sort_no
   app:
-    label: 所属应用
+    label: Apps
     type: lookup
     reference_to: apps
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -35,7 +35,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 所有
+    label: All Workflow Categories
     filter_scope: space
     columns:
       - name

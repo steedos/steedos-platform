@@ -1,15 +1,15 @@
 name: dashboard
-label: 门户
+label: Dashboard
 icon: dashboard_ea
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     searchable: true
     index: true
     required: true
   apps:
-    label: 关联应用
+    label: Apps
     type: lookup
     multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -30,14 +30,14 @@ fields:
             }
     filterable: true
   widgets:
-    label: 组件
+    label: Widgets
     type: grid
     is_wide: true
   widgets.$.label:
-    label: 标题
+    label: label
     type: text
   widgets.$.type:
-    label: 类型
+    label: type
     type: lookup
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -74,7 +74,7 @@ fields:
         }];
       }
   widgets.$.position:
-    label: 位置
+    label: position
     type: lookup
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -105,7 +105,7 @@ fields:
     type: textarea
     required: false
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
 list_views:
@@ -114,7 +114,7 @@ list_views:
       - name
       - apps
       - modified
-    label: 全部
+    label: All Dashboard
     filter_scope: space
 permission_set:
   user:

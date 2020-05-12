@@ -1,62 +1,62 @@
 name: instances_statistic
 icon: metrics
-label: 审批效率
+label: Statistic of Processing Instances
 fields:
   user:
     type: master_detail
-    label: 用户
+    label: User
     reference_to: users
     name: user
     filterable: true
   year:
     type: number
-    label: 年度
+    label: Year
     name: year
   month:
     type: number
-    label: 月度
+    label: Month
     name: month
   month_finished_count:
     type: number
-    label: 已处理总数
+    label: Total Number of Processed Instances
     name: month_finished_count
   inbox_count:
     type: number
-    label: 待处理总数
+    label: Total Number of Pending Instances
     name: inbox_count
   month_finished_time:
     type: number
     scale: 2
-    label: 已处理总耗时
+    label: Total Time of Processed Instances
     name: month_finished_time
   inbox_time:
     type: number
     scale: 2
-    label: 待审核总耗时
+    label: Total Time of Pending Instances
     name: inbox_time
   month_finished_avg:
     type: number
     scale: 2
-    label: 已处理平均耗时
+    label: Average Time of Processed Instances
     name: month_finished_avg
   inbox_avg:
     type: number
     scale: 2
-    label: 待处理平均耗时
+    label: Average Time of Pending Instances
     name: inbox_avg
   avg_time:
     type: number
     scale: 2
-    label: 总平均耗时
+    label: Average Time of all Instances
     name: avg_time
   owner_organization:
-    label: 主部门
+    label: Main Department
     type: lookup
     reference_to: organizations
     name: owner_organization
     filterable: true
   owner_organizations:
-    label: 所属部门
+    label: All Departments
     type: lookup
     reference_to: organizations
     multiple: true
@@ -69,7 +69,7 @@ fields:
   #   hidden: false
 list_views:
   all:
-    label: 所有
+    label: All 
     filter_scope: space
     columns:
       - user

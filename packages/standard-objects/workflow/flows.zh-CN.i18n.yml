@@ -66,9 +66,9 @@ flows_field_state: 流程状态
 flows_field_state_options_disabled: 停用
 flows_field_state_options_enabled: 启用
 flows_field_timeout_auto_submit: 超时自动流转
-flows_group_分发: 分发
-flows_group_归档: 归档
-flows_group_模板: 模板
-flows_group_脚本: 脚本
-flows_group_高级: 高级
+flows_group_distribution: 分发
+flows_group_synchronization: 归档
+flows_group_template: 模板
+flows_group_script: 脚本
+flows_group_others: 高级
 flows_listview_all: 所有
