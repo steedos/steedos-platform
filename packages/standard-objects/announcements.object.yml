@@ -1,11 +1,11 @@
 name: announcements
 icon: announcement
-label: 公告
+label: Announcement
 enable_files: true
 enable_chatter: true
 fields:
   name:
-    label: 标题
+    label: Title
     type: text
     defaultValue: ''
     description: ''
@@ -15,27 +15,27 @@ fields:
     is_wide: true
   body:
     type: html
-    label: 正文
+    label: Main Body
     rows: 5
     required: true
     is_wide: true
   members:
     type: lookup
-    label: 发布对象
+    label: Members
     reference_to: users
     required: true
     multiple: true
     filterable: true
     is_wide: true
   created: 
-    label: 发布时间
+    label: Creation Time
   created_by:
-    label: 发布人
+    label: Created by
   modified_by:
-    label: 修改人
+    label: Modified by
 list_views:
   all:
-    label: 所有公告
+    label: All Announcements
     filter_scope: space
     columns:
       - name

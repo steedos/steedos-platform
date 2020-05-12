@@ -1,7 +1,7 @@
 name: base
 fields:
   owner:
-    label: 所有者
+    label: Owner
     type: lookup
     reference_to: users
     sortable: true
@@ -11,19 +11,19 @@ fields:
     hidden: true
   space:
     type: text
-    label: 所属工作区
+    label: Space
     reference_to: spaces
     index: true
     hidden: true
     defaultValue: "{spaceId}"
   created:
     type: datetime
-    label: 创建时间
+    label: Creation Time 
     readonly: true
     sortable: true
     omit: true
   created_by:
-    label: 创建人
+    label: Created by
     type: lookup
     readonly: true
     reference_to: users
@@ -31,14 +31,14 @@ fields:
     index: true
     omit: true
   modified:
-    label: 修改时间
+    label: Modification Time
     type: datetime
     readonly: true
     sortable: true
     index: true
     omit: true
   modified_by:
-    label: 修改人
+    label: Modified by
     type: lookup
     readonly: true
     reference_to: users
@@ -46,12 +46,12 @@ fields:
     omit: true
   is_deleted:
     type: boolean
-    label: 已删除
+    label: Deleted
     omit: true
     index: true
     hidden: true
   deleted:
-    label: 删除时间
+    label: Deletion Time
     type: datetime
     readonly: true
     sortable: true
@@ -59,7 +59,7 @@ fields:
     omit: true
     hidden: true
   deleted_by:
-    label: 删除人
+    label: Deleted by
     type: lookup
     readonly: true
     reference_to: users

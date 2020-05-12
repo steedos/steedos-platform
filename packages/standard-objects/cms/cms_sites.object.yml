@@ -1,20 +1,20 @@
 name: cms_sites
 icon: app
-label: 站点
+label: Site
 fields:
   type:
-    label: 类型
+    label: Type
     type: select
     hidden: true
     omit: true
     defaultValue: "space"
     options:
-      - label: 工作区
+      - label: Space
         value: space
-      - label: 用户
+      - label: User
         value: user
   name:
-    label: 名称
+    label: Name
     type: text
     defaultValue: ''
     description: ''
@@ -23,55 +23,55 @@ fields:
     searchable: true
     is_wide: true
   visibility:
-    label: 可见性
+    label: Visibility
     type: select
     is_wide: true
     defaultValue: team
     required: true
     options:
-      - label: 私有 - 只有站点成员可见
+      - label: Private - Only members can see .
         value: private
-      - label: 公开 - 所有用户可见，只有站点成员可编辑
+      - label: Team - Users accessible , only members can edit .
         value: team
-      - label: 网站 - 匿名可访问，只有站点成员可编辑
+      - label: Public - Anonymous accessible, only members can edit .
         value: public
   enable_post_permissions: 
-    label: 启用文章级权限
+    label: Enable Article Level Permissions
     type: boolean
     defaultValue: false
   order:
-    label: 排序号
+    label: Sort Number
     type: number
   admins:
     type: lookup
-    label: 站点成员
+    label: Site Members
     is_wide: true
     reference_to: users
     multiple: true
     required: true
     defaultValue: "[{userId}]"
   description:
-    label: 描述
+    label: Description
     type: textarea
     rows: 3
     is_wide: true
   cover:
-    label: 封面图片
+    label: Cover
     type: avatar
-    group: 网站
+    group: Site
   avatar:
-    label: Logo图片
+    label: Avatar
     type: avatar
-    group: 网站
+    group: Site
   layout:
-    label: 网站模版
+    label: Layout
     type: textarea
     rows: 3
     is_wide: true
-    group: 网站
+    group: Site
 list_views:
   all:
-    label: 所有
+    label: All Sites
     filter_scope: space
     columns:
       - name
