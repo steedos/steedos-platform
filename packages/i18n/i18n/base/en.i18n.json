@@ -289,6 +289,10 @@
 	"creator_record_remove_swal_title_suc": "%s Successfully deleted",
 	"creator_record_tab_detail": "Detail",
 	"creator_record_tab_chatter": "Comment",
+	"creator_record_chat": "Comment",
+	"creator_record_chat_write": "Write a comment",
+	"creator_record_chat_send": "Send",
+	"creator_record_chat_upload": "upload",
 
 	"change_phone": "Bind Phone Number",
 	"set_password_by_phone": "Reset password",
