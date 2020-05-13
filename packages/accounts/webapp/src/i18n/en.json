@@ -54,7 +54,7 @@
     "accounts.verify_mobile": "Verify Mobile",
     "accounts.verifyCode":"Verify code",
     "accounts.next":"Next",
-    "accounts.reSendCode": "Get Verify code",
+    "accounts.reSendCode": "Resend code",
     "accounts.goBack": "Back",
     "accounts.unenableRegister": "This company is set to prohibit the registration of new accounts, please contact the company administrator.",
     "accounts.userNotFound": "Account information not found",
@@ -79,10 +79,14 @@
     "accounts.title.verifyMobile": "Bind Mobile",
     "accounts.title.verify": "Verify",
     "accounts.emailHelp": "Mail service is not configured，<email_help>View help</email_help>",
-    "accounts.mobilelHelp": "SMS service is not configured，<mobile_help>View help</mobile_help>",
+    "accounts.mobileHelp": "SMS service is not configured，<mobile_help>View help</mobile_help>",
+    "accounts.emailHelp_mobileHelp": "Mail service is not configured，<email_help>View help</email_help>; SMS service is not configured，<mobile_help>View help</mobile_help>.",
     "accounts.codeRequired": "Verify code is required",
     "accounts.codeExpired": "Verify code is expired",
     "accounts.loginWithCode": "Login with Verify code",
     "accounts.loginWithPassword": "Login with password",
-    "accounts.goIn": "Go In"
+    "accounts.goIn": "Go In",
+    "accounts.verifyEmail": "Verify Email",
+    "accounts.verifyMobile": "Verify Mobile",
+    "accounts.verify.info": "A 6-digit code was sent to {name}, enter it within 10 minutes. Didn't get it? Try resending the code."
 }

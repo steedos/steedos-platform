@@ -81,14 +81,14 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   const [token, setToken] = useState<string | "">(_token);
   const [action, setAction] = useState<string | "">("");
   const [name, setName] = useState<string | "">("");
-  const [actionLabel, setActionLabel] = useState<string | "">("");
+  const [actionLabel, setActionLabel] = useState<string | "">("accounts.verifyEmail");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     try {
 
-      if(!code.trim()){
+      if(!code || !code.trim()){
         throw new Error("accounts.codeRequired");
       }
 
@@ -155,11 +155,11 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   useEffect(() => {
 
     if(action.startsWith("email")){
-      setActionLabel('accounts.email');
+      setActionLabel('accounts.verifyEmail');
     }
 
     if(action.startsWith("mobile")){
-      setActionLabel('accounts.mobile');
+      setActionLabel('accounts.verifyMobile');
     }
     
   }, [action,name]);
@@ -168,12 +168,15 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
     <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
       <h4 className={classes.title}>
         <FormattedMessage
-          id="accounts.verify"
-        /><FormattedMessage
-        id={actionLabel}
-      />
+          id={actionLabel}
+        />
       </h4>
-      <Typography variant="body2" gutterBottom>请输入发送至 <b>{name}</b> 的 6 位验证码，有效期十分钟。如未收到，请重新获取验证码。</Typography>
+      <Typography variant="body2" gutterBottom><FormattedMessage
+            id='accounts.verify.info'
+            values={{
+              name: <b>{name}</b>
+            }}
+          /></Typography>
       <FormControl margin="normal">
         <InputLabel htmlFor="verifyCode">
           <FormattedMessage

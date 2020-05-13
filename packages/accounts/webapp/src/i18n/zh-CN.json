@@ -79,10 +79,14 @@
     "accounts.title.verifyMobile": "绑定手机号",
     "accounts.title.verify": "验证",
     "accounts.emailHelp": "邮件服务未配置，<email_help>点击查看帮助</email_help>",
-    "accounts.mobilelHelp": "短信服务未配置，<mobile_help>点击查看帮助</mobile_help>",
+    "accounts.mobileHelp": "短信服务未配置，<mobile_help>点击查看帮助</mobile_help>",
+    "accounts.emailHelp_mobileHelp": "邮件服务未配置，<email_help>点击查看帮助</email_help>；短信服务未配置，<mobile_help>点击查看帮助</mobile_help>",
     "accounts.codeRequired": "验证码不能为空",
     "accounts.codeExpired": "验证码已失效",
     "accounts.loginWithCode": "使用验证码登录",
     "accounts.loginWithPassword": "使用密码登录",
-    "accounts.goIn": "进入"
+    "accounts.goIn": "进入",
+    "accounts.verifyEmail": "验证手机号",
+    "accounts.verifyMobile": "验证邮箱",
+    "accounts.verify.info": "请输入发送至 {name} 的 6 位验证码，有效期10分钟。如未收到，请重新获取验证码。"
 }

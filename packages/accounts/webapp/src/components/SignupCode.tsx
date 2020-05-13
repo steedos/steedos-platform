@@ -45,8 +45,7 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         e.preventDefault();
         setError(null);
         try {
-            console.log('email', email);
-            if (!email.trim()) {
+            if (!email || !email.trim()) {
                 if(tenant.enable_bind_mobile){
                     throw new Error("accounts.mobileRequired");
                 }else {

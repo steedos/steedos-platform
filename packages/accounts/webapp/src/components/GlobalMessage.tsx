@@ -50,9 +50,11 @@ const GlobalMessage = ({ settings, tenant, location }: any) => {
 
       if(showMobileHelp()){
         if(msg){
-          msg = msg + '；'
+          msg = msg + '_mobileHelp'
+        }else{
+          msg = "accounts.mobileHelp"
         }
-        msg = msg + "accounts.mobilelHelp"
+        
       }
       return msg;
     }
