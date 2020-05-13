@@ -15,17 +15,30 @@ const getCookie = (name) => {
     }
     return ''
   }
-const getBrowserLocale = function () {
-  var l, locale;
+const getBrowserLng = function () {
+  var l, lng;
   var navigator = window.navigator;
   l = navigator.userLanguage || navigator.language || 'en';
   if (l.indexOf("zh") >= 0) {
-    locale = "zh-cn";
+    lng = "zh-CN";
   } else {
-    locale = "en-us";
+    lng = "en";
   }
-  return locale;
+  return lng;
 };
+
+const getBrowserLocale = function(){
+  var l, locale;
+    var navigator = window.navigator;
+    l = navigator.userLanguage || navigator.language || 'en';
+    if (l.indexOf("zh") >= 0) {
+      locale = "zh-cn";
+    } else {
+      locale = "en-us";
+    }
+    return locale;
+}
+
 const Login = async (data, history, tenant, location, action)=>{
     if(tenant._id){
       data.spaceId = tenant._id
@@ -131,7 +144,7 @@ const ApplyCode = async (data) =>{
       // if(data.action.startsWith("email") && tenant.already_mail_service != true){
       //   throw new Error("邮件服务未配置，<email_help>点击查看帮助</email_help>");
       // }
-      
+      data.lng = getBrowserLng();
       return await accountsRest.fetch(`code/apply`, {
           method: 'POST',
           body: JSON.stringify(data),
@@ -151,5 +164,6 @@ export {
     Login,
     ApplyCode,
     goInSystem,
-    getBrowserLocale
+    getBrowserLocale,
+    getBrowserLng
 };

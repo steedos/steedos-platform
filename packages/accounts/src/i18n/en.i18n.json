@@ -1,0 +1,9 @@
+{
+    "accounts_emailSubject_emailLogin": "Login With Verification Code",
+    "accounts_emailSubject_emailVerify": "Verify Email",
+    "accounts_emailSubject_emailSignupAccount": "Sign Up",
+    "accounts_emailBody_emailLogin": "Verification code: {$code}, valid for {$EFFECTIVE_TIME} minutes, please do not disclose If not operated by yourself, please ignore.",
+    "accounts_emailBody_emailVerify": "Verification code: {$code}, valid for {$EFFECTIVE_TIME} minutes, please do not disclose If not operated by yourself, please ignore.",
+    "accounts_emailBody_emailSignupAccount": "Verification code: {$code}, valid for {$EFFECTIVE_TIME} minutes, please do not disclose If not operated by yourself, please ignore.",
+    "accounts_sms_message": "您的验证码为：{$code}，该验证码{$EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！"
+}

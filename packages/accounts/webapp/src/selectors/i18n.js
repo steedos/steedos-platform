@@ -2,9 +2,10 @@
 import * as I18n from '../i18n/i18n';
 
 import { getSettings } from '../selectors';
+import { getBrowserLng } from '../client/index'
 
 export function getCurrentUserLocale(state) {
-    return "en"
+    return getBrowserLng();
 }
 
 // This is a placeholder for if we ever implement browser-locale detection

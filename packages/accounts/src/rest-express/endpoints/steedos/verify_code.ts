@@ -12,7 +12,7 @@ const EFFECTIVE_TIME = 10; //10分钟
 const CODE_LENGTH = 6;
 const MAX_FAILURE_COUNT = 10;
 declare var MailQueue;
-declare var Meteor;
+declare var TAPi18n;
 declare var Steedos;
 declare var Creator;
 declare var SMSQueue;
@@ -38,29 +38,33 @@ const getRandomCode = function (length) {
     return output;
 };
 
-const getEmailSubject = function (action: string) {
+const t = function(key, options, lng){
+    return TAPi18n.__(key, options, lng);
+}
+
+const getEmailSubject = function (action: string, lng: string) {
     switch (action) {
         case 'emailLogin':
-            return "验证码登录"
+            return t("accounts_emailSubject_emailLogin", {}, lng);
         case 'emailVerify':
-            return "邮箱验证"
+            return t("accounts_emailSubject_emailVerify", {}, lng);
         case 'emailSignupAccount':
-            return "注册账户"
+            return t("accounts_emailSubject_emailSignupAccount", {}, lng);
     }
 }
 
-const getEmailBody = function (action: string, code: string) {
+const getEmailBody = function (action: string, code: string, lng: string) {
     switch (action) {
         case 'emailLogin':
-            return `验证码：${code}, 有效期${EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。`
+            return t('accounts_emailBody_emailLogin', {code, EFFECTIVE_TIME}, lng)
         case 'emailVerify':
-            return `验证码：${code}, 有效期${EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。`
+            return t('accounts_emailBody_emailVerify', {code, EFFECTIVE_TIME}, lng)
         case 'emailSignupAccount':
-            return `验证码：${code}, 有效期${EFFECTIVE_TIME}分钟，请勿泄漏。如非本人操作，请忽略。`
+            return t('accounts_emailBody_emailSignupAccount', {code, EFFECTIVE_TIME}, lng)
     }
 }
 
-function sendEmail(to, subject, html){
+function sendEmail(to, subject, html, lng: string){
     const config = getSteedosConfig().email || {};
     let canSend = canSendEmail();
     //如果没有配置发送邮件服务，则打印log
@@ -82,8 +86,8 @@ function sendEmail(to, subject, html){
     }
 }
 
-function sendSMS(mobile, code, spaceId){
-    let message = `您的验证码为：${code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`
+function sendSMS(mobile, code, spaceId, lng: string){
+    let message = t('accounts_sms_message', {code, EFFECTIVE_TIME}, lng)
     let canSend = canSendSMS();
     if(!canSend){
         console.log("Please set sms configs in steedos-config.yml")
@@ -97,7 +101,7 @@ function sendSMS(mobile, code, spaceId){
     }
 }
 
-async function sendCode(owner: string, name: string, action: string, spaceId: string) {
+async function sendCode(owner: string, name: string, action: string, spaceId: string, lng: string) {
     const now: any = new Date();
     let filters = [['verifiedAt', '=', null]];
     if(owner){
@@ -131,9 +135,9 @@ async function sendCode(owner: string, name: string, action: string, spaceId: st
         record = await db.insert('users_verify_code', doc);
     }
     if (action.startsWith("email")) {
-        sendEmail(name, getEmailSubject(action), getEmailBody(action, record.code))
+        sendEmail(name, getEmailSubject(action, lng), getEmailBody(action, record.code, lng), lng)
     } else if (action.startsWith("mobile")) {
-        sendSMS(name, record.code, spaceId);
+        sendSMS(name, record.code, spaceId, lng);
     }
     return record._id;
 }
@@ -151,6 +155,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
         let token = req.body.token;
         let spaceId = req.body.spaceId;
         let accessToken = req.body.accessToken;
+        let lng = req.body.lng || 'zh-CN';
 
         if (token) {
             const record = await db.findOne("users_verify_code", token, {});
@@ -164,13 +169,13 @@ export const applyCode = (accountsServer: AccountsServer) => async (
         }
 
         if (!action) {
-            throw new Error("action不能为空")
+            throw new Error("Action is required")
         }
         if (!name || !name.trim()) {
-            throw new Error("name不能为空")
+            throw new Error("Name is required")
         }
         if (ALLOW_ACTIONS.indexOf(action) < 0) {
-            throw new Error("无效的action")
+            throw new Error("Invalid action")
         }
         if(action.endsWith('SignupAccount') && !(await canRegister(spaceId, action))){
             throw new Error('accounts.unenableRegister');
@@ -204,15 +209,15 @@ export const applyCode = (accountsServer: AccountsServer) => async (
         let verifyMobileUser: any = null;
         if(action === 'mobileVerify'){
             if(!accessToken){
-                throw new Error("缺少参数");
+                throw new Error("accounts.invalidRequest");
             }
             let session:any = await accountsServer.findSessionByAccessToken(accessToken)
             if(!session){
-                throw new Error("无效参数");
+                throw new Error("accounts.invalidRequest");
             }
             verifyMobileUser = await accountsServer.findUserById(session.userId);
             if(!verifyMobileUser){
-                throw new Error("未找到用户");
+                throw new Error("Not find user");
             }
             const users = await db.find("users", { filters: [['mobile', '=', name],['_id', '<>', verifyMobileUser.id]] });
             if(users.length > 0){
@@ -235,13 +240,13 @@ export const applyCode = (accountsServer: AccountsServer) => async (
         if(filters.length > 0){
             const users = await db.find("users", { filters: filters });
             if(users.length === 0 && action.endsWith('SignupAccount')){
-                token = await sendCode(null, name, action, spaceId);
+                token = await sendCode(null, name, action, spaceId, lng);
                 return res.send({
                     token
                 });
             }else if (users.length === 1) {
                 const user = users[0];
-                token = await sendCode(user._id, name, action, spaceId);
+                token = await sendCode(user._id, name, action, spaceId, lng);
                 return res.send({
                     token
                 });
