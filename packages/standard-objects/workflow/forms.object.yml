@@ -54,16 +54,16 @@ fields:
     hidden: true
     name: historys
   approve_on_create:
-    label: 是否同意审批
+    label: Approve on Create
     type: boolean
     name: approve_on_create
   approve_on_modify:
-    label: 是否修改审批
+    label: Approve on Modify
     type: boolean
     name: approve_on_modify
   approve_on_delete:
     type: boolean
-    label: 是否删除审批
+    label: Approve on Delete
     name: approve_on_delete
   enable_workflow:
     type: boolean
