@@ -304,6 +304,8 @@
 	"creator_record_remove_swal_text": "是否确定要删除此%s？",
 	"creator_record_remove_swal_suc": "删除成功",
 	"creator_record_remove_swal_title_suc": "%s已删除",
+	"creator_record_tab_detail": "详细",
+	"creator_record_tab_chatter": "评论",
 
 	"change_phone": "绑定手机号",
 	"set_password_by_phone": "重置密码",

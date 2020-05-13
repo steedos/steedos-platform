@@ -287,6 +287,8 @@
 	"creator_record_remove_swal_text": "Are you sure you want to delete this %s ?",
 	"creator_record_remove_swal_suc": "Successfully deleted",
 	"creator_record_remove_swal_title_suc": "%s Successfully deleted",
+	"creator_record_tab_detail": "Detail",
+	"creator_record_tab_chatter": "Comment",
 
 	"change_phone": "Bind Phone Number",
 	"set_password_by_phone": "Reset password",
