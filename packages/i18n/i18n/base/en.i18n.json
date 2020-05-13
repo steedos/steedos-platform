@@ -282,6 +282,11 @@
 	"afModal_update_suc": "Successfully updated",
 	"afModal_cancel": "Cancel",
 
+	"creator_record_remove_swal_title": "Delete %s",
+	"creator_record_remove_swal_text": "Are you sure you want to delete this %s ?",
+	"creator_record_remove_swal_suc": "Successfully deleted",
+	"creator_record_remove_swal_title_suc": "%s Successfully deleted",
+
 	"change_phone": "Bind Phone Number",
 	"set_password_by_phone": "Reset password",
 	"account_phone_invalid": "Your phone is not valid",
