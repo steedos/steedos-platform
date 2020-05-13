@@ -1,5 +1,5 @@
 _id: workflow
-name: 审批王
+name: Workflow
 icon_slds: approval
 is_creator: false
 admin_menus:

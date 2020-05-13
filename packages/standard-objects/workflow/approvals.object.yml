@@ -1,61 +1,61 @@
 name: approvals
 icon: metrics
-label: 历史步骤
+label: Approval
 fields:
   from_user:
-    label: 发送人
+    label: From 
     type: lookup
     reference_to: users
   start_date:
-    label: 发送时间
+    label: Send Time
     type: datetime
     is_name: true
   user:
-    label: 审批人
+    label: Handler
     type: lookup
     reference_to: users
   finish_date:
-    label: 审批时间
+    label: Completion time
     type: datetime
   cost_time:
-    label: 历时时间
+    label: Duration
     type: text
   judge:
-    label: 审批状态
+    label: Judge
     type: select
     options:
-      - label: 提交
+      - label: Submitted
         value: submitted
-      - label: 核准
-        value: approved
-      - label: 驳回
+      - label: Submitted
+        value: submitted
+      - label: Rejected
         value: rejected
-      - label: 已读
+      - label: Readed
         value: readed
-      - label: 重定位
+      - label: Relocated
         value: relocated
-      - label: 退回
+      - label: Returned
         value: returned
-      - label: 取回
+      - label: Retrieved
         value: retrieved
-      - label: 已取回
+      - label: Terminated
         value: terminated
   state:
-    label: 审核状态
+    label: State
     type: select
     options:
-      - label: 草稿
+      - label: Draft
         value: draft
-      - label: 进行中
+      - label: Pending
         value: pending
-      - label: 已结束
+      - label: Completed
         value: completed
   description:
-    label: 批语
+    label: Comments
     type: text
 
   related_to:
-    label: 相关项
+    label: Related to
     type: lookup
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
@@ -72,7 +72,7 @@ fields:
     name: related_to
 list_views:
   all:
-    label: 所有
+    label: All
     filter_scope: space
     columns:
       - start_date
