@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "1.19.2",
+  "version": "1.19.3-alpha.1",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -19,7 +19,8 @@
     "buildClient": "cd webapp && yarn && yarn build && cd ..",
     "osy": "cd ../object-server/ && yarn",
     "os": "npm run osy && cp -r ../object-server/packages/* node_modules/@steedos/ && cp -r ../object-server/apps/contracts/src/* node_modules/@steedos/app-contracts/src/",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "pubNext": "npm publish --tag next --registry https://registry.npmjs.org"
   },
   "dependencies": {
     "@accounts/mongo": "^0.19.0",

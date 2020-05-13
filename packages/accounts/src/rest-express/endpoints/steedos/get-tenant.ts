@@ -16,7 +16,7 @@ export const getTenant = (accountsServer: AccountsServer) => async (
     if (!spaceId)
       throw new Error("accounts.tenant_id_required")
     
-    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "enable_forget_password", "enable_create_tenant"]})
+    const spaceDoc = await db.findOne("spaces", spaceId, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register"]})
 
     if(!spaceDoc){
       return res.send({

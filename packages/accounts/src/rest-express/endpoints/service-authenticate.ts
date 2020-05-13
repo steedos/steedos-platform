@@ -7,6 +7,7 @@ import { setAuthCookies, hashStampedToken } from '../utils/steedos-auth';
 import { db } from '../../db';
 import * as _ from 'lodash';
 import { getUserSpace } from '../utils/users'
+import { canPasswordLogin, canMobilePasswordLogin } from '../../core/index'
 
 export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -18,13 +19,18 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     const ip = requestIp.getClientIp(req);
     const email = req.body.user.email;
     const spaceId = req.body.spaceId;
-    let services: any = accountsServer.getServices()
-    let db = services[serviceName].db
+    let services: any = accountsServer.getServices();
+    let db = services[serviceName].db;
+
+    if(!canPasswordLogin()){
+      throw new Error("已禁止使用密码登录，请联系管理员");
+    }
+
 
     if(/^\+?\d+$/g.test(email)){
       const mobileUser = await db.findUserByMobile(email)
       if(mobileUser && mobileUser._id){
-        if(!(mobileUser as any).mobile_verified){
+        if(!canMobilePasswordLogin(mobileUser)){
           throw new Error("你的手机号未验证，请使用验证码登录");
         }
         req.body.user.id = mobileUser._id;

@@ -17,11 +17,11 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
       spaceId = req.body.user.spaceId
     }
 
-    if(req.body.user && req.body.user.password){
-      throw new Error('禁止密码注册');
-    }
+    // if( req.body.user && req.body.user.password){
+    //   throw new Error('禁止密码注册');
+    // }
 
-    if(!(await canRegister(spaceId, 'registerPassword'))){
+    if(!(await canRegister(spaceId, 'withPassword'))){
       throw new Error('accounts.unenableRegister');
     }
     
@@ -45,15 +45,17 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     }
     res.json(accountsServer.options.ambiguousErrorMessages ? null : userId);
   } catch (err) {
-    if(errors.emailAlreadyExists === err.message && req.body.user.spaceId){
+    if(errors.emailAlreadyExists === err.message){
       try {
-        //如果用户已存在并且输入的密码正确的情况下，直接加入工作区
         const password: any = accountsServer.getServices().password;
         const user = req.body.user
         if(user.email && user.password){
           const foundUser = await password.verifyUserPasswordByEmail(user.email, user.password);
-          if(foundUser && user.spaceId){
-            Creator.addSpaceUsers(req.body.user.spaceId, foundUser.id, true)
+          //如果用户已存在并且输入的密码正确的情况下，直接加入工作区
+          if(foundUser){
+            if(user.spaceId){
+              Creator.addSpaceUsers(req.body.user.spaceId, foundUser.id, true)
+            }
             return res.json(accountsServer.options.ambiguousErrorMessages ? null : foundUser.id);
           }else{
             throw new Error(errors.emailAlreadyExists);

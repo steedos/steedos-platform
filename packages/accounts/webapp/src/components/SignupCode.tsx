@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { getSettings, getTenant } from '../selectors';
 import { accountsRest } from '../accounts';
 import FormError from './FormError';
-import { ApplyCode } from '../client'
+import { ApplyCode } from '../client';
+import { signUpEvent, signUpEventOnError } from '../client/signup.events';
 
 const useStyles = makeStyles({
     formContainer: {
@@ -35,22 +36,32 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
     const type = match.params.type || 'email';
     const searchParams = new URLSearchParams(location.search);
     let spaceId = searchParams.get("X-Space-Id");
+    
+    signUpEventOnError((err: any)=>{
+        setError(err.message);
+    })
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null);
         try {
             if (!email.trim()) {
-                if(tenant.disable_email_register){
+                if(tenant.enable_bind_mobile){
                     throw new Error("请输入手机号");
-                }else if(tenant.enable_mobile_code_login){
-                    throw new Error("请输入邮箱或手机号");
-                }else{
+                }else {
                     throw new Error("请输入邮箱");
                 }
-                
+                // if(tenant.enable_bind_mobile && tenant.enable_bind_email){
+                //     throw new Error("请输入邮箱或手机号");
+                // }else if(tenant.enable_bind_mobile && !tenant.enable_bind_email){
+                //     throw new Error("请输入手机号");
+                // }else if(!tenant.enable_bind_mobile){
+                //     throw new Error("请输入邮箱");
+                // }
             }
-            if (email.trim().indexOf("@") == 0) {
-                throw new Error("无效的邮箱地址");
+
+            if (!tenant.enable_bind_mobile && email.trim().indexOf("@") == 0) {
+                throw new Error("请输入有效的邮箱地址");
             }
 
             let action = 'emailSignupAccount';
@@ -58,26 +69,15 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
                 action = 'mobileSignupAccount'
             }
 
-            if(tenant.disable_email_register && action === 'emailSignupAccount'){
-                throw new Error("无效的手机号");
+            if(tenant.enable_bind_mobile && action === 'emailSignupAccount'){
+                throw new Error("请输入有效的手机号");
             }
 
-            if(!tenant.enable_mobile_code_login && action === 'mobileSignupAccount'){
-                throw new Error("无效的邮箱地址");
+            if(!tenant.enable_bind_mobile && action === 'mobileSignupAccount'){
+                throw new Error("请输入有效的邮箱地址");
             }
 
-            const data = await ApplyCode({
-                name: email,
-                action: action,
-                spaceId: spaceId
-            });
-            if (data.token) {
-                history.push({
-                    pathname: `/verify/${data.token}`,
-                    search: location.search,
-                    state: { email: email.trim() }
-                })
-            }
+            await signUpEvent.emit('inputNext', tenant, history, location, spaceId, email, action);
         } catch (err) {
             setError(err.message);
         }
@@ -87,19 +87,19 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
             <FormControl margin="normal">
                 <InputLabel htmlFor="verifyCode">
-                    {tenant.disable_email_register && 
+                    {/* {tenant.enable_bind_mobile && tenant.enable_bind_email &&
+                        <FormattedMessage
+                            id='accounts.signupCode.email_or_mobile'
+                            defaultMessage='Email or Phone Number'
+                        />
+                    } */}
+                    {tenant.enable_bind_mobile &&
                         <FormattedMessage
                             id='accounts.signupCode.mobile'
                             defaultMessage='Phone Number'
                         />
                     }
-                    {!tenant.disable_email_register && tenant.enable_mobile_code_login &&
-                        <FormattedMessage
-                            id='accounts.signupCode.email_or_mobile'
-                            defaultMessage='Email or Phone Number'
-                        />
-                    }
-                    {!tenant.disable_email_register && !tenant.enable_mobile_code_login &&
+                    {!tenant.enable_bind_mobile &&
                         <FormattedMessage
                             id='accounts.signupCode.email'
                             defaultMessage='Email'

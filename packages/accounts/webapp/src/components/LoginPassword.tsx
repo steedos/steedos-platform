@@ -10,6 +10,7 @@ import { getTenant, getSettings } from '../selectors';
 import FormError from './FormError';
 import { Login } from '../client'
 import { requests } from '../actions/requests'
+import { accountsEvent, accountsEventOnError} from '../client/accounts.events'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -23,9 +24,6 @@ const useStyles = makeStyles({
   }
 });
 
-const SignUpLink = React.forwardRef<Link, any>((props, ref) => (
-  <Link to={{pathname: "/signup", search: props.location.search}} {...props}  ref={ref} />
-));
 const ResetPasswordLink = React.forwardRef<Link, any>((props, ref) => (
   <Link to={{pathname: "/reset-password", search: props.location.search}} {...props} ref={ref} />
 ));
@@ -38,7 +36,11 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
-  
+  const searchParams = new URLSearchParams(location.search);
+  let spaceId = searchParams.get("X-Space-Id");
+  accountsEventOnError((err: any)=>{
+    setError(err.message);
+})
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -67,6 +69,14 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
     }
   };
 
+  const goSignup = ()=>{
+    let state = {};
+    if(email.trim().indexOf("@") > 0){
+      state = { email: email }
+    }
+    accountsEvent.emit('goSignup', tenant, history, location, state)
+  }
+  
   return (
     <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
       <FormControl margin="normal">
@@ -105,8 +115,8 @@ const LoginPassword = ({ history, settings, tenant, location, title, requestLoad
             defaultMessage='Next'
         />
       </Button>
-      {tenant.enable_register &&
-      <Button component={SignUpLink} location={location}>
+      {!spaceId && tenant.enable_register &&
+      <Button onClick={goSignup}>
         <FormattedMessage
             id='accounts.signup'
             defaultMessage='Sign Up'

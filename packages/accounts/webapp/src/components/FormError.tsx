@@ -69,7 +69,19 @@ function MySnackbarContentWrapper(props: Props) {
           <Icon className={clsx(classes.icon, classes.iconVariant)} />
           <FormattedMessage
           id={message}
-          defaultMessage={message} 
+          defaultMessage={message}
+          values={{
+            mobile_help: (...chunks: any) => (
+              <a className="external_link" target="_blank" href="https://developer.steedos.com/developer/steedos_config/#%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%85%8D%E7%BD%AE">
+                {chunks}
+              </a>
+            ),
+            email_help: (...chunks: any) => (
+              <a className="external_link" target="_blank" href="https://developer.steedos.com/developer/steedos_config/#%E9%82%AE%E4%BB%B6%E9%85%8D%E7%BD%AE">
+                {chunks}
+              </a>
+            )
+          }}
         /> 
         </span>
       }

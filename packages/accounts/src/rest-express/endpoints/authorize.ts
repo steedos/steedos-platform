@@ -29,7 +29,7 @@ export const authorize = (accountsServer: AccountsServer) => async (
   let userIdCookie = get(req.cookies, 'X-User-Id') 
   let userAccessTokenCookie = get(req.cookies, 'X-Access-Token');
   let userAuthToken = get(req.cookies, 'X-Auth-Token')
-  let userSpaceId = get(req.cookies, 'X-Space-Id')
+  // let userSpaceId = get(req.cookies, 'X-Space-Id')
   //如果userAccessTokenCookie不存在并且有X-User-Id,X-Auth-Token有效(调用Meteor)，自动生成
   if(userAuthToken && userIdCookie && !userAccessTokenCookie){
     let tokenUserId = await getUserIdByToken(userAuthToken);
@@ -55,13 +55,13 @@ export const authorize = (accountsServer: AccountsServer) => async (
     res.end();
   } else {
     //从cookies中读取X-Space-Id， 并传入login?X-Space-Id=${X-Space-Id}
-    if(userSpaceId){
-      if(query){
-        query = `${query}&X-Space-Id=${userSpaceId}`
-      }else{
-        query = `X-Space-Id=${userSpaceId}`
-      }
-    }
+    // if(userSpaceId){
+    //   if(query){
+    //     query = `${query}&X-Space-Id=${userSpaceId}`
+    //   }else{
+    //     query = `X-Space-Id=${userSpaceId}`
+    //   }
+    // }
     clearAuthCookies(req, res);
     res.redirect("/accounts/a/#/login?" + query);
     res.end();

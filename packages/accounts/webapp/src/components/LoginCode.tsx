@@ -34,8 +34,8 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
     setError(null);
     try {
       if(!email.trim()){
-        if(tenant.enable_mobile_code_login){
-          throw new Error("请输入邮箱或手机号");
+        if(tenant.enable_bind_mobile){
+          throw new Error("请输入手机号");
         }else{
             throw new Error("请输入邮箱");
         }
@@ -48,7 +48,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       if(email.trim().indexOf("@") < 0){
         action = 'mobileLogin'
       }
-      if(!tenant.enable_mobile_code_login && action === 'mobileLogin'){
+      if(!tenant.enable_bind_mobile && action === 'mobileLogin'){
           throw new Error("无效的邮箱地址");
       }
 
@@ -89,13 +89,13 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
       <form onSubmit={onSubmit} className={classes.formContainer} autoCapitalize="none">
         <FormControl margin="normal">
           <InputLabel htmlFor="verifyCode">
-            {tenant.enable_mobile_code_login &&
+            {tenant.enable_bind_mobile &&
                 <FormattedMessage
                 id='accounts.loginCode.email_or_mobile'
                 defaultMessage='Email or Phone Number'
               />
             }
-            {!tenant.enable_mobile_code_login &&
+            {!tenant.enable_bind_mobile &&
                 <FormattedMessage
                 id='accounts.loginCode.email'
                 defaultMessage='Email'
@@ -115,7 +115,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
             defaultMessage='下一步'
           />
         </Button>
-        {tenant.enable_register && tenant.enable_password_login === false &&
+        {!spaceId && tenant.enable_register && tenant.enable_password_login === false &&
         <Button onClick={goSignup}>
           <FormattedMessage
               id='accounts.signup'

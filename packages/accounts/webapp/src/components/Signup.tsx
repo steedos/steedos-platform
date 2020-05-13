@@ -12,7 +12,8 @@ import { loadTranslations } from '../actions/i18n';
 import { loadSettings } from '../actions/settings';
 import { loadTenant } from '../actions/tenant';
 import { getSettings, getTenant } from '../selectors';
-import { ApplyCode } from '../client'
+import { requests } from '../actions/requests'
+import { Login } from '../client'
 
 const useStyles = makeStyles({
   formContainer: {
@@ -32,7 +33,7 @@ const LogInLink = React.forwardRef<Link, any>((props, ref) => {
   )
 });
 
-const Signup = ({ match, history, location, actions, tenant }: any) => {
+const Signup = ({ match, history, location, actions, tenant, requestLoading, requestUnLoading }: any) => {
   const _email = location && location.state ? location.state.email : '';
   const classes = useStyles();
   const [error, setError] = useState<string | null>(null);
@@ -72,12 +73,10 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
         throw new Error('accounts.emailRequired');
       }
 
-      if(tenant.enable_password_login != false && !password.trim()){
+      if(!password.trim()){
         throw new Error('accounts.passwordRequired');
       }
-
-
-
+      requestLoading();
       await accountsPassword.createUser({
         locale: getBrowserLocale(),
         name: name,
@@ -85,26 +84,15 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
         password: password,
         spaceId: spaceId
       });
-      if(tenant.enable_password_login === false){
-        const data = await ApplyCode({
-          name: email,
-          action: 'emailSignupAccount',
-          spaceId: spaceId
-        });
-        if (data.token) {
-            history.push({
-                pathname: `/verify/${data.token}`,
-                search: location.search,
-                state: { email: email }
-            })
-        }
-      }else{
-        history.push({
-          pathname: `/login`,
-          search: location.search
-        })
+      let data = {
+        user: {
+          email: email.trim(),
+        },
+        password
       }
+      await Login(data, history, tenant, location, 'passwordSignupAccount')
     } catch (err) {
+      requestUnLoading();
       setError(err.message);
     }
   };
@@ -143,22 +131,20 @@ const Signup = ({ match, history, location, actions, tenant }: any) => {
         onChange={e => setEmail(e.target.value)}
       />
     </FormControl>
-    {tenant.enable_password_login != false &&
-      <FormControl margin="normal">
-        <InputLabel htmlFor="password">
-          <FormattedMessage
-            id='accounts.password'
-            defaultMessage='Password'
-          />
-        </InputLabel>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+    <FormControl margin="normal">
+      <InputLabel htmlFor="password">
+        <FormattedMessage
+          id='accounts.password'
+          defaultMessage='Password'
         />
-      </FormControl>
-    }
+      </InputLabel>
+      <Input
+        id="password"
+        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+    </FormControl>
     {error && <FormError error={error!} />}
     <Button variant="contained" color="primary" type="submit">
       <FormattedMessage
@@ -189,6 +175,9 @@ function mapDispatchToProps(dispatch: any) {
       loadSettings,
       loadTranslations,
     }, dispatch),
+    requestLoading: () => dispatch(requests("started")),
+    requestUnLoading: () => dispatch(requests("no_started")),
   };
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

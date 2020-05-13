@@ -9,6 +9,7 @@ const pathMap:any = {
     "/login-code": "登录",
     "/login-password": "登录",
     "/signup": "注册",
+    "/signup-password": "注册",
     "/create-tenant": "创建企业",
     "/reset-password": "验证码登录",
     "/update-password": "修改密码",

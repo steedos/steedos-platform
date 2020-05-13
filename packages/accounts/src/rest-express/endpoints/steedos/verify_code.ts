@@ -2,7 +2,7 @@ import * as express from 'express';
 import { getSteedosConfig } from '@steedos/objectql';
 import { sendError } from '../../utils/send-error';
 import { db } from '../../../db';
-import { canRegister, spaceExists, canSendEmail } from '../../../core';
+import { canRegister, spaceExists, canSendEmail, canSendSMS } from '../../../core';
 import { AccountsServer } from '@accounts/server';
 import validator from 'validator';
 const moment = require('moment');
@@ -84,10 +84,17 @@ function sendEmail(to, subject, html){
 
 function sendSMS(mobile, code, spaceId){
     let message = `您的验证码为：${code}，该验证码${EFFECTIVE_TIME}分钟内有效，请勿泄漏于他人！`
-    SMSQueue.send({
-        RecNum: mobile,
-        msg: message
-    }, spaceId)
+    let canSend = canSendSMS();
+    if(!canSend){
+        console.log("Please set sms configs in steedos-config.yml")
+        console.log(message);
+        return;
+    }else{
+        SMSQueue.send({
+            RecNum: mobile,
+            msg: message
+        }, spaceId)
+    }
 }
 
 async function sendCode(owner: string, name: string, action: string, spaceId: string) {
@@ -183,7 +190,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
         if(action.startsWith("mobile")){
 
-            if(tenantConfig && !tenantConfig.enable_mobile_code_login){
+            if(tenantConfig && !tenantConfig.enable_bind_mobile){
                 if(['mobileLogin', 'mobileSignupAccount'].indexOf(action) > -1){
                     throw new Error("请输入有效的邮箱");
                 }
