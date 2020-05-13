@@ -266,9 +266,6 @@ permission_set:
 
 relatedList:
   - objectName: flow_positions
-    columns:
-      - role
-      - org
     filters: !!js/function |
       function(parentRecord) {
         var userId = _.isString(parentRecord.user) ? parentRecord.user : parentRecord.user._id;

@@ -1,24 +1,26 @@
 <template name="instance_attachments" >
 	{{#if showAttachments}}
 		<div class="instance_attachments col-md-12">
-			<div>
-				{{#if showMainTitle}}
-					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "instance_main_attachment"}}</span>
-				{{/if}}
+			{{#if showMainTitle}}
+			<div class="attachments-btns">
+				<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "instance_main_attachment"}}</span>
 
-				<div class="btn btn-default ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
+				<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
 					<input type="file" name="file" class="ins-file-input" id="ins_upload_main_attach">
-					<i class="fa fa-paperclip"></i>
-					<span>{{_ "workflow_attach_upload"}}</span>
+					{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload"}}
+					<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 				</div>
 				{{#if isNode}}
-					<div class="btn btn-default ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
+					<div class="slds-button slds-button_neutral ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none;{{/if}}margin-left: 0.5rem;">
 						<button type="button" class="ins-file-input" id="ins_new_main_file"></button>
-						<i class="fa fa-file-word-o"></i>
-						<span>{{_ "workflow_attach_new"}}</span>
+						<!-- <i class="fa fa-file-word-o"></i> -->
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="edit"}}
+						<span>&nbsp;{{_ "workflow_attach_new"}}</span>
 					</div>
 				{{/if}}
 			</div>
+			{{/if}}
+			{{#if main_attachment}}
 			<div class="attachments-list">
 				<table class='table table-condensed attachments' style="margin-bottom: 0px;">
 					<tbody>
@@ -28,21 +30,40 @@
 					</tbody>
 				</table>
 			</div>
+			{{/if}}
 
-			<div>
+			<div class="attachments-btns">
 				{{#if enabled_edit_normal_attachment}}
 					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
-					<div class="btn btn-default ins-upload" title='{{_ "Attachments"}}'>
+					<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "Attachments"}}'>
 						<input type="file" name="file" class="ins-file-input" id="ins_upload_normal_attach">
-						<i class="fa fa-paperclip"></i>
-						<span>{{_ "workflow_attach_upload"}}</span>
+						{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="upload"}}
+						<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 					</div>
+					{{#if isDraftAndFlowfilesExist}}
+					<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small" aria-expanded="false">
+						<button class="slds-button slds-button_neutral" aria-haspopup="true" data-toggle="dropdown">
+							{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="download"}}
+							<span>&nbsp;{{_t "flow.template_files"}}</span>
+						</button>
+						<div class="dropdown-menu dropdown-menu-left" role="menu">
+							<ul class="slds-dropdown__list list-view-controls">
+								{{#each flow_files}}
+									<li class="slds-dropdown__item" role="presentation">
+										<a href="{{this.url}}" target="_parent" style="color: #006dcc;">{{this.name}}</a>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+					</div>
+					{{/if}}
 				{{else}}
 					{{#with normal_attachments}}
 						<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "Attachments"}}</span>
 					{{/with}}
 				{{/if}}
 			</div>
+			{{#if normal_attachments.length}}
 			<div class="attachments-list">
 				<table class='table table-condensed attachments' style="margin-bottom: 0px;">
 					<tbody>
@@ -52,6 +73,7 @@
 					</tbody>
 				</table>
 			</div>
+			{{/if}}
 		</div>
 	{{/if}}
 </template>

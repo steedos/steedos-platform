@@ -22,8 +22,10 @@ tenant:
   logo_url:
   background_url: 
   enable_register: true
-  enable_forget_password: true
+  enable_forget_password: false
   enable_create_tenant: true
   enable_password_login: true
+  enable_bind_email: false
+  enable_bind_mobile: false
 plugins:
   - "@steedos/accounts"

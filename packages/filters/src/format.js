@@ -5,7 +5,7 @@ const utils = require("./utils");
 const formula = require("./formula");
 
 let extendUserContext = (userContext, utcOffset) => {
-    if (!userContext.now){
+    if (!userContext.now) {
         userContext.now = new Date();
         if (utcOffset) {
             // 注意这里取的值是moment().utcOffset() / 60得到的，不是new Date().getTimezoneOffset() / 60
@@ -30,7 +30,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
         var builtinValue, field, i, isBetweenOperation, option, ref, sub_selector, tempFilters, tempLooperResult, value;
         tempFilters = [];
         tempLooperResult = null;
-        if (filters_loop === "!"){
+        if (filters_loop === "!") {
             return filters_loop;
         }
         if (_.isFunction(filters_loop)) {
@@ -38,7 +38,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
         }
         if (!_.isArray(filters_loop)) {
             if (_.isObject(filters_loop)) {
-				// 当filters不是[Array]类型而是[Object]类型时，进行格式转换
+                // 当filters不是[Array]类型而是[Object]类型时，进行格式转换
                 if (filters_loop.operation) {
                     filters_loop = [filters_loop.field, filters_loop.operation, filters_loop.value];
                 } else {
@@ -66,9 +66,9 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
             // 只有三个元素，可能中间是"or","and"连接符也可能是普通数组，区别对待解析
             if (_.include(["or", "and"], filters_loop[1])) {
                 // 中间有"or","and"连接符，则循环filters_loop，依次用filtersLooper解析其过虑条件
-				// 最后生成的结果格式：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2]), ...]
-				// 因要判断filtersLooper(filters_loop[0])及filtersLooper(filters_loop[2])是否为空
-				// 所以不能直接写：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2])]
+                // 最后生成的结果格式：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2]), ...]
+                // 因要判断filtersLooper(filters_loop[0])及filtersLooper(filters_loop[2])是否为空
+                // 所以不能直接写：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2])]
                 tempFilters = [];
                 i = 0;
                 while (i < filters_loop.length) {
@@ -99,7 +99,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     if (_.isFunction(value)) {
                         value = value();
                     }
-                    if(option === "!="){
+                    if (option === "!=") {
                         // 支持!=为不等于操作
                         option = "<>";
                     }
@@ -154,8 +154,18 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                         if (sub_selector.length) {
                             tempFilters = sub_selector;
                         }
+                    } else if(value === false) {
+                        // boolean类型字段优化，选择否时，应该兼容undefined值的情况
+                        // 主要是为了落地版本，目前我们有的项目yml中一些字段是项目交付上线后再加的，
+                        // 就造成按false搜索时搜索不到老数据（因为老数据中该字段值为空）
+                        if(option === "="){
+                            tempFilters = [[field, "=", false], "or", [field, "=", null]];
+                        }
+                        else if(option === "<>"){
+                            tempFilters = [field, "=", true];
+                        }
                     } else {
-                        if (isBetweenOperation && !_.isArray(value)){
+                        if (isBetweenOperation && !_.isArray(value)) {
                             // between操作符时，value必须是数组，不能是undefined等其他值
                         }
                         else {
@@ -180,9 +190,9 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
             // 超过3个元素的数组，可能中间是"or","and"连接符也可能是普通数组，区别对待解析
             if ((ref = _.intersection(["or", "and"], filters_loop)) != null ? ref.length : void 0) {
                 // 中间有"or","and"连接符，则循环filters_loop，依次用filtersLooper解析其过虑条件
-				// 最后生成的结果格式：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2]), ...]
-				// 因要判断filtersLooper(filters_loop[0])及filtersLooper(filters_loop[2])是否为空
-				// 所以不能直接写：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2])]
+                // 最后生成的结果格式：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2]), ...]
+                // 因要判断filtersLooper(filters_loop[0])及filtersLooper(filters_loop[2])是否为空
+                // 所以不能直接写：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2])]
                 tempFilters = [];
                 i = 0;
                 while (i < filters_loop.length) {
