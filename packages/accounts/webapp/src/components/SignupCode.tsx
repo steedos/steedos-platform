@@ -45,11 +45,12 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
         e.preventDefault();
         setError(null);
         try {
+            console.log('email', email);
             if (!email.trim()) {
                 if(tenant.enable_bind_mobile){
-                    throw new Error("请输入手机号");
+                    throw new Error("accounts.mobileRequired");
                 }else {
-                    throw new Error("请输入邮箱");
+                    throw new Error("accounts.emailRequired");
                 }
                 // if(tenant.enable_bind_mobile && tenant.enable_bind_email){
                 //     throw new Error("请输入邮箱或手机号");
@@ -61,7 +62,7 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
             }
 
             if (!tenant.enable_bind_mobile && email.trim().indexOf("@") == 0) {
-                throw new Error("请输入有效的邮箱地址");
+                throw new Error("accounts.invalidEmail");
             }
 
             let action = 'emailSignupAccount';
@@ -70,11 +71,11 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
             }
 
             if(tenant.enable_bind_mobile && action === 'emailSignupAccount'){
-                throw new Error("请输入有效的手机号");
+                throw new Error("accounts.invalidMobile");
             }
 
             if(!tenant.enable_bind_mobile && action === 'mobileSignupAccount'){
-                throw new Error("请输入有效的邮箱地址");
+                throw new Error("accounts.invalidEmail");
             }
 
             await signUpEvent.emit('inputNext', tenant, history, location, spaceId, email, action);
@@ -116,7 +117,7 @@ const SignupCode = ({ match, settings, history, location, tenant }: any) => {
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage
                     id='accounts.next'
-                    defaultMessage='下一步'
+                    defaultMessage='Next'
                 />
             </Button>
             <Button component={LogInLink} location={location}>

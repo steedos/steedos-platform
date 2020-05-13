@@ -4,7 +4,7 @@ import * as I18n from '../i18n/i18n';
 import { getSettings } from '../selectors';
 
 export function getCurrentUserLocale(state) {
-    return "zh-CN"
+    return "en"
 }
 
 // This is a placeholder for if we ever implement browser-locale detection

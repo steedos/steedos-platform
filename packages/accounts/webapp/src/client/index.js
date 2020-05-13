@@ -150,5 +150,6 @@ export {
     Client4,
     Login,
     ApplyCode,
-    goInSystem
+    goInSystem,
+    getBrowserLocale
 };

@@ -137,7 +137,10 @@ const ChooseTenant = ({ settings, history, tenant, location }: any) => {
                 </Grid>
                 <Grid className={classes.gridItemBtn} item>
                   <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={()=>{chosenTenant(item._id)}}>
-                    进入
+                  <FormattedMessage
+                    id='accounts.goIn'
+                    defaultMessage='Go In'
+                  />
                 </Button>
                 </Grid>
               </Grid>

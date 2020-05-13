@@ -45,14 +45,14 @@ const GlobalMessage = ({ settings, tenant, location }: any) => {
     const getMsg = ()=>{
       let msg = '';
       if(showEmailHelp()){
-        msg = "邮件服务未配置，<email_help>点击查看帮助</email_help>"
+        msg = "accounts.emailHelp"
       }
 
       if(showMobileHelp()){
         if(msg){
           msg = msg + '；'
         }
-        msg = msg + "短信服务未配置，<mobile_help>点击查看帮助</mobile_help>  "
+        msg = msg + "accounts.mobilelHelp"
       }
       return msg;
     }

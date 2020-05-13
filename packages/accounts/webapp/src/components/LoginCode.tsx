@@ -112,7 +112,7 @@ const LoginCode = ({match, settings, history, location, tenant }: any) => {
         <Button variant="contained" color="primary" type="submit">
           <FormattedMessage
             id='accounts.next'
-            defaultMessage='下一步'
+            defaultMessage='Next'
           />
         </Button>
         {!spaceId && tenant.enable_register && tenant.enable_password_login === false &&

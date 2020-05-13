@@ -40,7 +40,7 @@ const VerifyMobile = ({ match, settings, history, location, tenant }: any) => {
         setError(null);
         try {
             if (!mobile.trim()) {
-                throw new Error("请输入手机号");
+                throw new Error("accounts.mobileRequired");
             }
 
             let action = 'mobileVerify';
@@ -82,7 +82,7 @@ const VerifyMobile = ({ match, settings, history, location, tenant }: any) => {
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage
                     id='accounts.next'
-                    defaultMessage='下一步'
+                    defaultMessage='Next'
                 />
             </Button>
         </form>

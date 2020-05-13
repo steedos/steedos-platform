@@ -56,7 +56,7 @@ const GoBack = ({ tenant, history, location }: any) => {
             ><ArrowBackIosOutlined className={clsx(classes.leftIcon, classes.iconSmall)} />
             <FormattedMessage
                     id='accounts.goBack'
-                    defaultMessage='返回'
+                    defaultMessage='Back'
                 />
             </Button>
             }

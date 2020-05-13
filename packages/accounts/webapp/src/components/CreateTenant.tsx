@@ -38,7 +38,7 @@ const CreateTenant = ({ settings, history, tenant, location }: any) => {
     try {
 
       if (!tenantName.trim()) {
-        throw new Error('企业名称不能为空');
+        throw new Error('accounts.tenantNameRequired');
       }
 
       const route = 'api/v4/spaces/register/tenant';

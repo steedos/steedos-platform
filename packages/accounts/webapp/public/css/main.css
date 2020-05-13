@@ -1,3 +1,6 @@
 button[type="submit"]{
     margin-bottom: 28px;
 }
+.MuiButton-label,h4{
+    text-transform: capitalize;
+}

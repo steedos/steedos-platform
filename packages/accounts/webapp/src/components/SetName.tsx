@@ -52,7 +52,7 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
         setError(null);
         try {
             if (!fullname.trim()) {
-                throw new Error("姓名不能为空");
+                throw new Error("accounts.nameRequired");
             }
 
             await accountsRest.authFetch('user', {
@@ -102,7 +102,7 @@ const SetName = ({ match, settings, history, location, tenant }: any) => {
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage
                     id='accounts.next'
-                    defaultMessage='下一步'
+                    defaultMessage='Next'
                 />
             </Button>
         </form>

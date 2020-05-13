@@ -54,7 +54,7 @@ const LoginMethod = ({ match, settings, history, location }: any) => {
             <Button variant="contained" color="primary" type="submit">
                 <FormattedMessage
                     id='accounts.loginWithCode'
-                    defaultMessage='使用验证码登录'
+                    defaultMessage='Login With Verify Code'
                 />
             </Button>
             <Button variant="contained" onClick={e => {
@@ -65,7 +65,7 @@ const LoginMethod = ({ match, settings, history, location }: any) => {
             }}>
                 <FormattedMessage
                     id='accounts.loginWithPassword'
-                    defaultMessage='使用密码登录'
+                    defaultMessage='Login with password'
                 />
             </Button>
         </form>

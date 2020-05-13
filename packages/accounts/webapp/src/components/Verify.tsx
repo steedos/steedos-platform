@@ -63,7 +63,7 @@ const ReApplyCodeBtn = ({ onClick, id, name }: any) => {
       <span className={classes.text}>
       <FormattedMessage
           id='accounts.reSendCode'
-          defaultMessage='获取验证码' 
+          defaultMessage='Get Verify code' 
         />{restTime > 0 ? ` (${restTime}s)` : null}
         </span>
     </Button>
@@ -89,7 +89,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
     try {
 
       if(!code.trim()){
-        throw new Error("请输入验证码");
+        throw new Error("accounts.codeRequired");
       }
 
       const data = {
@@ -118,7 +118,7 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
       setAction(data.action);
       setName(data.name);
       if (data.expired) {
-        setError("验证码已失效");
+        setError("accounts.codeExpired");
       }else{
         let reApplyCodeBtn: any = document.getElementById('reApplyCodeBtn')
         if(reApplyCodeBtn){
@@ -155,11 +155,11 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
   useEffect(() => {
 
     if(action.startsWith("email")){
-      setActionLabel('邮箱');
+      setActionLabel('accounts.email');
     }
 
     if(action.startsWith("mobile")){
-      setActionLabel('手机号');
+      setActionLabel('accounts.mobile');
     }
     
   }, [action,name]);
@@ -169,7 +169,9 @@ const Verify = ({ match, settings, tenant, history, location, setState, requestL
       <h4 className={classes.title}>
         <FormattedMessage
           id="accounts.verify"
-        />{actionLabel}
+        /><FormattedMessage
+        id={actionLabel}
+      />
       </h4>
       <Typography variant="body2" gutterBottom>请输入发送至 <b>{name}</b> 的 6 位验证码，有效期十分钟。如未收到，请重新获取验证码。</Typography>
       <FormControl margin="normal">
