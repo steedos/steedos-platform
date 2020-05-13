@@ -2,7 +2,7 @@ import * as I18n from '../i18n/i18n';
 import { accountsRest } from '../accounts';
 
 export function loadTranslations(locale, url) {
-    console.log('loadTranslations', locale,url);
+    // console.log('loadTranslations', locale,url);
     const translations = {};
     // No need to go to the server for EN
     if (locale === 'en') { 

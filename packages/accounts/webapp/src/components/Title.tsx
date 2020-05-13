@@ -53,7 +53,7 @@ const Title = ({ tenant, location }: any) => {
 
   document.title = pathTitle ? `${pathTitle} | ${tenant.name}` : tenant.name;
   let messageId = getTitle(location.pathname);
-  console.log("messageId", messageId);
+  // console.log("messageId", messageId);
   return (
     <div className={classes.container}>
       {!location.pathname.startsWith("/verify/") && (
