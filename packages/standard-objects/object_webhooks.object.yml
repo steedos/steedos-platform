@@ -1,10 +1,10 @@
 name: object_webhooks
-label: 对象触发器
+label: Object Webhook
 icon: account
 fields:
   object_name:
     type: lookup
-    label: 对象
+    label: Object
     required: true
     is_name: true
     index: true
@@ -25,7 +25,7 @@ fields:
       }
   events:
     type: select
-    label: 事件
+    label: Events
     multiple: true
     options:
       - label: 新增
@@ -36,7 +36,7 @@ fields:
         value: delete
   fields:
     type: lookup
-    label: 推送字段
+    label: Fields
     multiple: true
     is_wide: true
     depend_on:
@@ -62,26 +62,26 @@ fields:
         return _options;
       }
   payload_url:
-    label: URL
+    label: Payload URL
     type: text
     is_wide: true
     # regEx: /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i
     required: true
   content_type:
-    label: 请求数据格式
+    label: Format of Request
     type: text
     defaultValue: application/json
     hidden: true
   active:
-    label: 激活
+    label: Active
     type: boolean
     defaultValue: false
   description:
     type: text
-    label: 描述
+    label: Description
   space:
     type: text
-    label: 所属工作区
+    label: Company
     reference_to: spaces
     index: true
     hidden: true
@@ -94,7 +94,7 @@ list_views:
       - payload_url
       - active
       - description
-    label: 所有
+    label: All Object Webhooks
     filter_scope: space
 permission_set:
   user:

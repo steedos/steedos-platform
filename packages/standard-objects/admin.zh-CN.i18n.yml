@@ -10,4 +10,12 @@ menu_permission_set: 权限组
 menu_apps: 应用程序
 menu_dashboard: 门户
 menu_sessions: 登录会话
+menu_menu_advanced: 业务对象
+menu_permission_objects: 对象权限
+menu_permission_shares: 共享规则
+menu_audit_records: 字段修改历史
+menu_object_webhooks: 事件触发器
+menu_autonumber: 自动编号
+menu_picklists: 下拉框列表
+menu_object_workflows: 对象流程
 menu_about: 关于

@@ -1,6 +1,6 @@
 _id: admin
 url: /app/admin
-name: Setting
+name: Settings
 description: Manage company , users , permissions and so on .
 icon: ion-ios-people-outline
 icon_slds: settings
@@ -81,27 +81,27 @@ admin_menus:
     sort: 60
 
   - _id: menu_advanced
-    name: 业务对象
+    name: Objects
     permission_sets:
       - admin
     expanded: false
     sort: 300
   - _id: permission_objects
-    name: 对象权限
+    name: Permission
     permission_sets:
       - admin
     object_name: permission_objects
     parent: menu_advanced
     sort: 10
   - _id: permission_shares
-    name: 共享规则
+    name: Permission Share
     permission_sets:
       - admin
     object_name: permission_shares
     parent: menu_advanced
     sort: 20
   - _id: audit_records
-    name: 字段修改历史
+    name: Audit Records
     permission_sets:
       - admin
     object_name: audit_records
@@ -115,28 +115,28 @@ admin_menus:
   #   parent: menu_advanced
   #   sort: 40
   - _id: object_webhooks
-    name: 事件触发器
+    name: Object Webhooks
     permission_sets:
       - admin
     object_name: object_webhooks
     parent: menu_advanced
     sort: 50
   - _id: autonumber
-    name: 自动编号
+    name: Auto Numbers
     permission_sets:
       - admin
     object_name: autonumber
     parent: menu_advanced
     sort: 60
   - _id: picklists
-    name: 下拉框列表
+    name: Picklist
     permission_sets:
       - admin
     object_name: picklists
     parent: menu_advanced
     sort: 70
   - _id: object_workflows
-    name: 对象流程
+    name: Object Synchronization Rules
     permission_sets:
       - admin
     object_name: object_workflows

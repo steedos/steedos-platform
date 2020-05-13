@@ -804,7 +804,7 @@ Creator.Objects['space_users'].actions = {
     //     }
     // },
     setPassword: {
-        label: "Modify Password",
+        label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
             if(Session.get("app_id") === 'admin'){
