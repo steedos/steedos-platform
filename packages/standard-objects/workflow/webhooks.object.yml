@@ -22,7 +22,7 @@ fields:
     filterable: true
     searchable: true
     is_wide: true
-    inlineHelpText: '如果未选择流程则应用范围为此工作区全部流程'
+    inlineHelpText: 'If no workflow is selected, the scope of webhook will be all the workflows of this company.'
   payload_url:
     label: Payload URL
     type: text

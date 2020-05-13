@@ -34,7 +34,7 @@ fields:
   filters:
     label: Filters
     type: textarea
-    inlineHelpText: 格式为odata filters
+    inlineHelpText: Format of OData Filters Required.
     is_wide: true
   organizations:
     label: Departments

@@ -71,4 +71,5 @@ flows_group_synchronization: 归档
 flows_group_template: 模板
 flows_group_script: 脚本
 flows_group_others: 高级
+flows_field_allow_select_step_inlineHelpText: 允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性
 flows_listview_all: 所有

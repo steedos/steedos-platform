@@ -5,4 +5,5 @@ webhooks_field_description: 描述
 webhooks_field_flow: 流程
 webhooks_field_name: 名称
 webhooks_field_payload_url: URL
+webhooks_field_flow_inlineHelpText: '如果未选择流程则应用范围为此工作区全部流程'
 webhooks_listview_all: 所有

@@ -312,7 +312,7 @@ fields:
     name: timeout_auto_submit
   allow_select_step:
     label: Applicant can Select Steps and Handlers
-    inlineHelpText: 允许申请人提交申请单时指定流转步骤及步骤处理人, 需要通过流程设计器修改步骤上的属性.
+    inlineHelpText: Allow the applicant to specify the flow steps and step handlers when submitting the application form. You need to modify the properties on the step through the Workflow Designer.
     type: boolean
     group: Others
 list_views:
