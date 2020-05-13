@@ -123,6 +123,7 @@
 	"Accountzoom": "Font size",
 	"Backgroundimage": "Background image",
 	"binding_mailbox": "Binding mailbox",
+	"Reset": "Reset",
 
 	"primary_email_needed": "Setup your primary email",
 	"primary_email_needed_description": "Please enter your primary email address here. You can use this email address to signin steedos, or reset your password.",
@@ -448,6 +449,9 @@
 			"code": "SMS_67200967",
 			"template": "系统通知：您的登录密码已被修改"
 		}
-	}
+	},
+
+	"standard_query": "Search",
+	"standard_query_more": "More"
 
 }

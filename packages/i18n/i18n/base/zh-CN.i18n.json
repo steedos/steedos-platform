@@ -133,6 +133,7 @@
 
 	"OK": "确认",
 	"Cancel": "取消",
+	"Reset": "重置",
 
 	"About": "关于",
 
@@ -467,5 +468,8 @@
 			"code": "SMS_67200967",
 			"template": "系统通知：您的登录密码已被修改"
 		}
-	}
+	},
+
+	"standard_query": "查找",
+	"standard_query_more": "高级"
 }
