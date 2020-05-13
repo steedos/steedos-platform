@@ -154,6 +154,16 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                         if (sub_selector.length) {
                             tempFilters = sub_selector;
                         }
+                    } else if(value === false) {
+                        // boolean类型字段优化，选择否时，应该兼容undefined值的情况
+                        // 主要是为了落地版本，目前我们有的项目yml中一些字段是项目交付上线后再加的，
+                        // 就造成按false搜索时搜索不到老数据（因为老数据中该字段值为空）
+                        if(option === "="){
+                            tempFilters = [[field, "=", false], "or", [field, "=", null]];
+                        }
+                        else if(option === "<>"){
+                            tempFilters = [field, "=", true];
+                        }
                     } else {
                         if (isBetweenOperation && !_.isArray(value)) {
                             // between操作符时，value必须是数组，不能是undefined等其他值
