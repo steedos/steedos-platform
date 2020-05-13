@@ -26,6 +26,9 @@ const getObjectLabelKey = function(objectName){
 }
 
 const getObjectFieldLabelKey = function(objectName, name){
+    if(name){
+        name = name.replace(/\./g, '_');
+    }
     return `${objectName}${KEYSEPARATOR}field${KEYSEPARATOR}${name}`
 }
 
