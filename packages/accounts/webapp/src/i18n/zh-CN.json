@@ -37,10 +37,12 @@
     "accounts.invalidPassword": "无效的密码",
     "accounts.invalidNewPassword": "无效的新密码",
     "accounts.invalidToken": "无效的token",
+    "accounts.invalidCode": "无效的验证码",
     "accounts.verifyEmailLinkExpired": "该邮箱验证链接已失效",
     "accounts.resetPasswordLinkExpired": "该重置密码链接已失效",
     "accounts.usernameAlreadyExists": "该用户名已被注册使用",
     "accounts.emailAlreadyExists": "密码错误, 该邮箱已被注册使用",
+    "accounts.mobileAlreadyExists": "该手机号已被注册使用",
     "accounts.usernameOrEmailRequired": "手机号、邮箱、用户名不能为空",
     "accounts.nameRequired": "姓名不能为空",
     "accounts.emailRequired": "邮箱不能为空",
@@ -88,5 +90,11 @@
     "accounts.goIn": "进入",
     "accounts.verifyEmail": "验证手机号",
     "accounts.verifyMobile": "验证邮箱",
-    "accounts.verify.info": "请输入发送至 {name} 的 6 位验证码，有效期10分钟。如未收到，请重新获取验证码。"
+    "accounts.verify.info": "请输入发送至 {name} 的 6 位验证码，有效期10分钟。如未收到，请重新获取验证码。",
+    "accounts.disablePasswordLogin": "已禁止使用密码登录，请联系管理员",
+    "accounts.disableUnverifiedMobilePasswordLogin": "你的手机号未验证，请使用验证码登录",
+    "accounts.disableUnverifiedEmailPasswordLogin": "你的邮箱未验证，请使用验证码登录",
+    "accounts.invalidRequest": "无效的请求",
+    "accounts.serverError": "服务异常",
+    "accounts.tooManyFailures": "验证次数过多，请10分钟后再试!"
 }

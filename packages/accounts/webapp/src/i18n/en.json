@@ -17,10 +17,12 @@
     "accounts.invalidPassword": "Invalid password",
     "accounts.invalidNewPassword": "Invalid new password",
     "accounts.invalidToken": "Invalid token",
+    "accounts.invalidCode": "Invalid code",
     "accounts.verifyEmailLinkExpired": "Verify email link expired",
     "accounts.resetPasswordLinkExpired": "Reset password link expired",
     "accounts.usernameAlreadyExists": "Username already exists",
     "accounts.emailAlreadyExists": "Invalid password, Email already exists",
+    "accounts.mobileAlreadyExists": "Mobile already exists",
     "accounts.usernameOrEmailRequired": "Mobile or Username or Email is required",
     "accounts.emailRequired": "Email is required",
     "accounts.mobileRequired": "Mobile is required",
@@ -88,5 +90,11 @@
     "accounts.goIn": "Go In",
     "accounts.verifyEmail": "Verify Email",
     "accounts.verifyMobile": "Verify Mobile",
-    "accounts.verify.info": "A 6-digit code was sent to {name}, enter it within 10 minutes. Didn't get it? Try resending the code."
+    "accounts.verify.info": "A 6-digit code was sent to {name}, enter it within 10 minutes. Didn't get it? Try resending the code.",
+    "accounts.disablePasswordLogin": "Login with password is disabled, please contact the administrator",
+    "accounts.disableUnverifiedMobilePasswordLogin": "Your mobile is not verified, please login with the verify code",
+    "accounts.disableUnverifiedEmailPasswordLogin": "Your email is not verified, please login with the verify code",
+    "accounts.invalidRequest": "Invalid request",
+    "accounts.serverError": "Server error",
+    "accounts.tooManyFailures": "Too many failures, please try again in 10 minutes."
 }

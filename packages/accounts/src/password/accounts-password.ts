@@ -603,7 +603,7 @@ export default class AccountsPassword implements AuthenticationService {
       foundUser = await this.db.findUserByEmail(email);
       if(foundUser){
         if(!canEmailPasswordLogin(foundUser)){
-          throw new Error("你的邮箱未验证，请使用验证码登录");
+          throw new Error("accounts.disableUnverifiedEmailPasswordLogin");
         }
       }
     }
@@ -645,7 +645,7 @@ export default class AccountsPassword implements AuthenticationService {
     const verifyRecord: any = await getVerifyRecord(token);
 
     if(!verifyRecord){
-      throw new Error('无效的请求');
+      throw new Error('accounts.invalidRequest');
     }
 
     let foundUser: User | null = null;

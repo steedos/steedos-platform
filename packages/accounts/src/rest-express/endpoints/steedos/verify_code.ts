@@ -75,7 +75,7 @@ function sendEmail(to, subject, html){
     }else{
         MailQueue.send({
             to: to,
-            from: config.from || "华炎云",
+            from: config.from || "华炎魔方",
             subject: subject,
             html: html
         });
@@ -115,7 +115,7 @@ async function sendCode(owner: string, name: string, action: string, spaceId: st
         record = records[0];
 
         if(record.failureCount >= MAX_FAILURE_COUNT){
-            throw new Error(`验证次数过多，请${EFFECTIVE_TIME}分钟后再试!`);
+            throw new Error('accounts.tooManyFailures');
         }
 
         await db.updateOne('users_verify_code', record._id, { expiredAt: new Date(moment().add(EFFECTIVE_TIME, 'm')) });
@@ -159,7 +159,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
                 action = record.action;
                 spaceId = record.space;
             } else {
-                throw new Error("无效的token");
+                throw new Error("accounts.invalidToken");
             }
         }
 
@@ -180,7 +180,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
         if(action.startsWith("email")){
             if(!validator.isEmail(name)){
-                throw new Error("请输入有效的邮箱");
+                throw new Error("accounts.invalidEmail");
             }
         }
 
@@ -192,12 +192,12 @@ export const applyCode = (accountsServer: AccountsServer) => async (
 
             if(tenantConfig && !tenantConfig.enable_bind_mobile){
                 if(['mobileLogin', 'mobileSignupAccount'].indexOf(action) > -1){
-                    throw new Error("请输入有效的邮箱");
+                    throw new Error("accounts.invalidEmail");
                 }
             }
 
             if(name.startsWith('+') || !validator.isMobilePhone(name, config.mobile_phone_locales || ['zh-CN'])){
-                throw new Error("请输入有效的手机号");
+                throw new Error("accounts.invalidMobile");
             }
         }
 
@@ -216,7 +216,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
             }
             const users = await db.find("users", { filters: [['mobile', '=', name],['_id', '<>', verifyMobileUser.id]] });
             if(users.length > 0){
-                throw new Error("该手机号已被其他用户注册");
+                throw new Error("accounts.mobileAlreadyExists");
             }
         }
         
@@ -249,7 +249,7 @@ export const applyCode = (accountsServer: AccountsServer) => async (
                 throw new Error("无效的name");
             }
         }else{
-            throw new Error("无效的请求");
+            throw new Error("accounts.invalidRequest");
         }
 
         
@@ -289,7 +289,7 @@ export const getUserIdByToken = () => async (
         let record = await db.findOne('users_verify_code', token, {});
 
         if(!record){
-            throw new Error("无效的请求")
+            throw new Error("accounts.invalidRequest")
         }
         const now: any = new Date();
         let isEffective = await db.count('users_verify_code', {filters: [['_id', '=', token], ['verifiedAt', '=', null], ['expiredAt', '>', now]]});
@@ -314,10 +314,10 @@ export const getVerifyRecord = async (token: string)=>{
 export const verifyCode = async (owner: string, token: string, code: string, options: any = {}) => {
     const now: any = new Date();
     if (!token) {
-        throw new Error("token不能为空")
+        throw new Error("accounts.invalidToken")
     }
     if (!code) {
-        throw new Error("code不能为空")
+        throw new Error("accounts.codeRequired")
     }
     let failureCount = 0;
     const recordByToken = await db.findOne('users_verify_code', token, {fields: 'failureCount'});
@@ -326,7 +326,7 @@ export const verifyCode = async (owner: string, token: string, code: string, opt
     }
 
     if(failureCount >= MAX_FAILURE_COUNT){
-        throw new Error(`验证次数过多，请${EFFECTIVE_TIME}分钟后再试!`);
+        throw new Error('accounts.tooManyFailures');
     }
 
     let filters = [['code', '=', code], ['verifiedAt', '=', null], ['expiredAt', '>', now]]
@@ -346,13 +346,13 @@ export const verifyCode = async (owner: string, token: string, code: string, opt
             }
         } catch (error) {
             console.log(error);
-            throw new Error("服务异常");
+            throw new Error("accounts.serverError");
         }
     } else {
         if(recordByToken){
             db.updateOne('users_verify_code', token, {failureCount: failureCount + 1})
         }
-        throw new Error("验证码无效");
+        throw new Error("accounts.invalidCode");
     }
 };
 

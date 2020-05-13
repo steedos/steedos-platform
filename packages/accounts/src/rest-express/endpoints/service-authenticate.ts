@@ -23,7 +23,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
     let db = services[serviceName].db;
 
     if(!canPasswordLogin()){
-      throw new Error("已禁止使用密码登录，请联系管理员");
+      throw new Error("accounts.disablePasswordLogin");
     }
 
 
@@ -31,7 +31,7 @@ export const serviceAuthenticate = (accountsServer: AccountsServer) => async (
       const mobileUser = await db.findUserByMobile(email)
       if(mobileUser && mobileUser._id){
         if(!canMobilePasswordLogin(mobileUser)){
-          throw new Error("你的手机号未验证，请使用验证码登录");
+          throw new Error("accounts.disableUnverifiedMobilePasswordLogin");
         }
         req.body.user.id = mobileUser._id;
       }
