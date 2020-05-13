@@ -274,7 +274,10 @@
 
 	"afModal_insert": "Save",
 	"afModal_update": "Save",
+	"afModal_save_insert": "Save And Insert",
+	"afModal_multiple_update": "Update %d selected records",
 	"afModal_remove": "Delete",
+	"afModal_remove_confirm": "Are you sure you want to delete this data?",
 	"afModal_remove_suc": "Successfully deleted",
 	"afModal_update_suc": "Successfully updated",
 	"afModal_cancel": "Cancel",
