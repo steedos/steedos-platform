@@ -291,7 +291,10 @@
 
 	"afModal_insert": "保存",
 	"afModal_update": "保存",
+	"afModal_save_insert": "保存并新建",
+	"afModal_multiple_update": "更新 %d 个选定记录",
 	"afModal_remove": "删除",
+	"afModal_remove_confirm": "是否确定要删除本条数据？",
 	"afModal_remove_suc": "删除成功",
 	"afModal_update_suc": "更新成功",
 	"afModal_cancel": "取消",
