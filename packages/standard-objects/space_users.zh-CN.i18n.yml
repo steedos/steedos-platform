@@ -28,3 +28,6 @@ space_users_field_work_phone: 工作电话
 space_users_group_-: '-'
 space_users_listview_all: 全部人员
 space_users_listview_disabled: 离职停用人员
+space_users_action_invite_space_users: 邀请注册
+space_users_action_setPassword: 修改密码
+

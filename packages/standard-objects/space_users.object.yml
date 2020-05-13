@@ -241,6 +241,11 @@ list_views:
   #   sort:
   #     - - created
   #       - desc
+actions: 
+  invite_space_users: 
+    label: Invite Users
+  setPassword: 
+    label: Modify Password
 permission_set:
   user:
     allowCreate: false

@@ -804,7 +804,7 @@ Creator.Objects['space_users'].actions = {
     //     }
     // },
     setPassword: {
-        label: "更改密码",
+        label: "Modify Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
             if(Session.get("app_id") === 'admin'){
@@ -959,7 +959,7 @@ Creator.Objects['space_users'].actions = {
         }
     },
     invite_space_users: {
-        label: "邀请注册",
+        label: "Invite Users",
         on: "list",
         visible: function(){
             return Creator.isSpaceAdmin();
