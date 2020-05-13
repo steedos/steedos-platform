@@ -1,34 +1,34 @@
 name: cms_files
-label: 附件
+label: Attachments
 icon: drafts
 enable_search: true
 enable_api: true
 hidden: true
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     searchable: true
     index: true
     is_wide: true
     name: name
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
     name: description
   extention:
-    label: 文件后缀
+    label: Extention
     type: text
     disabled: true
     name: extention
   size:
-    label: 文件大小
+    label: Size
     type: filesize
     disabled: true
     name: size
   versions:
-    label: 历史版本
+    label: History Versions
     type: file
     collection: files
     multiple: true
@@ -36,7 +36,7 @@ fields:
     hidden: true
     name: versions
   parent:
-    label: 所属记录
+    label: Parent
     type: lookup
     omit: true
     index: true
@@ -78,13 +78,13 @@ permission_set:
 
 actions:
   standard_new:
-    label: 新建
+    label: New
     visible: false
   standard_open_view:
-    label: 查看
+    label: Open
     visible: true
   standard_edit:
-    label: 编辑
+    label: Edit
     sort: 0
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
@@ -117,7 +117,7 @@ actions:
     'on': record
     todo: standard_edit
   standard_delete:
-    label: 删除
+    label: Delete
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
                 var fileRecord, object_fields_keys, perms, record, ref, select;
@@ -149,7 +149,7 @@ actions:
     'on': record_more
     todo: standard_delete
   download:
-    label: 下载
+    label: Download
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
               var fileRecord;
@@ -181,7 +181,7 @@ actions:
               }
             }
   new_version:
-    label: 上传新版本
+    label: Upgrade
     visible: !<tag:yaml.org,2002:js/function> |- 
       function (object_name, record_id, record_permissions) {
                 var fileRecord, object_fields_keys, perms, record, ref, select;
