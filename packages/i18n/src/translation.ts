@@ -32,6 +32,11 @@ const getObjectFieldLabelKey = function(objectName, name){
     return `${objectName}${KEYSEPARATOR}field${KEYSEPARATOR}${name}`
 }
 
+const getObjectFieldInlineHelpTextLabelKey = function(objectName, name){
+    let fieldLabelKey = getObjectFieldLabelKey(objectName, name);
+    return `${fieldLabelKey}${KEYSEPARATOR}inlineHelpText`
+}
+
 //TODO ${objectName}_group_${key}
 const getObjectFieldGroupKey = function(objectName, name){
     //转小写后，替换掉 % . 空格
@@ -84,6 +89,18 @@ const getObjectFieldLabel = function(lng, objectName, name, def, datasource?){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectFieldLabel(lng, baseObjectName, name, def, datasource)
+        }
+    }
+    return label || def || ''
+}
+
+const getObjectFieldInlineHelpTextLabel = function(lng, objectName, name, def, datasource?){
+    let key = getObjectFieldInlineHelpTextLabelKey(objectName, name);
+    let label = objectT(key, lng);
+    if(!label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
+            label = getObjectFieldInlineHelpTextLabel(lng, baseObjectName, name, def, datasource)
         }
     }
     return label || def || ''
@@ -185,6 +202,9 @@ const translationObject = function(lng: string, objectName: string, object: Stri
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
         field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label, object.datasource);
+        if(field.inlineHelpText){
+            field.inlineHelpText = getObjectFieldInlineHelpTextLabel(lng, objectName, fieldName, field.inlineHelpText, object.datasource)
+        }
         if(field.group){
             field.group = getObjectFieldGroup(lng, objectName, field.group, field.group);
         }
@@ -230,6 +250,9 @@ export const getObjectI18nTemplate = function(lng: string ,objectName: string, _
     template[getObjectLabelKey(objectName)] = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
         template[getObjectFieldLabelKey(objectName, fieldName)] = getObjectFieldLabel(lng, objectName, fieldName, field.label);
+        if(field.inlineHelpText){
+            template[getObjectFieldInlineHelpTextLabelKey(objectName, fieldName)] = getObjectFieldInlineHelpTextLabel(lng, objectName, fieldName, field.inlineHelpText, object.datasource)
+        }
         if(field.group){
             template[getObjectFieldGroupKey(objectName, field.group)] = getObjectFieldGroup(lng, objectName, field.group, field.group);
         }
