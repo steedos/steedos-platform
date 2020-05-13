@@ -6,6 +6,7 @@
   "files": [
     "/package.json",
     "/README",
+    "/plugin.config.yml",
     "/src",
     "/lib",
     "/webapp/src/i18n",

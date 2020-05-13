@@ -1,4 +1,4 @@
 datasources:
   default: 
     objectFiles: 
-      - ./src/objects/**
+      - ./src/i18n/**
