@@ -161,6 +161,12 @@
 										}
 									%>
 									<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+									<% } else if (field.type == "odata") { %>
+										<%
+											var odataValue = ins["values"][field.code];
+											var v = (odataValue && odataValue["@label"]) ? odataValue["@label"] : "";
+										%>
+										<Cell><Data ss:Type="String"><%= v %></Data></Cell>
 								<% } else { %>
 									<%
 										tem_v = ins["values"][field.code];
@@ -228,6 +234,12 @@
 											}
 										%>
 										<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+										<% } else if (sec.type == "odata") { %>
+											<%
+												var odataValue = ins["values"][sec.code];
+												var v = (odataValue && odataValue["@label"]) ? odataValue["@label"] : "";
+											%>
+											<Cell><Data ss:Type="String"><%= v %></Data></Cell>
 									<% } else { %>
 										<%
 											tem_v = ins["values"][sec.code];
@@ -385,6 +397,12 @@
 												}
 											%>
 											<Cell><Data ss:Type="String"><%= v %></Data></Cell>
+											<% } else if (field.type == "odata") { %>
+												<%
+													var odataValue = f_obj[field.code];
+													var v = (odataValue && odataValue["@label"]) ? odataValue["@label"] : "";
+												%>
+												<Cell><Data ss:Type="String"><%= v %></Data></Cell>
 										<% } else { %>
 											<%
 												tem_v = f_obj[field.code];
