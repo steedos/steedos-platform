@@ -22,23 +22,23 @@ flows_field_code_formula: 系统公式
 flows_field_company_id: 分部
 flows_field_created_by: 创建人
 flows_field_current: 步骤
-flows_field_current.created: 创建时间
-flows_field_current.created_by: 创建人
-flows_field_current.modified: 修改时间
-flows_field_current.modified_by: 修改人
-flows_field_current.steps: 步骤
-flows_field_current.steps.$._id: 
-flows_field_current.steps.$.allowBatch: 批量审批
-flows_field_current.steps.$.allowDistribute: 允许分发
-flows_field_current.steps.$.can_edit_main_attach: 允许修改正文
-flows_field_current.steps.$.can_edit_normal_attach: 允许修改附件
-flows_field_current.steps.$.cc_alert: 弹出传阅提醒
-flows_field_current.steps.$.cc_must_finished: 必须等待传阅完成
-flows_field_current.steps.$.disableCC: 禁止传阅
-flows_field_current.steps.$.distribute_optional_flows: 此步骤分发时可选的流程范围
-flows_field_current.steps.$.name: 名称
-flows_field_current.steps.$.oneClickApproval: 一键核准
-flows_field_current.steps.$.oneClickRejection: 一键驳回
+flows_field_current_created: 创建时间
+flows_field_current_created_by: 创建人
+flows_field_current_modified: 修改时间
+flows_field_current_modified_by: 修改人
+flows_field_current_steps: 步骤
+flows_field_current_steps_$__id: 
+flows_field_current_steps_$_allowBatch: 批量审批
+flows_field_current_steps_$_allowDistribute: 允许分发
+flows_field_current_steps_$_can_edit_main_attach: 允许修改正文
+flows_field_current_steps_$_can_edit_normal_attach: 允许修改附件
+flows_field_current_steps_$_cc_alert: 弹出传阅提醒
+flows_field_current_steps_$_cc_must_finished: 必须等待传阅完成
+flows_field_current_steps_$_disableCC: 禁止传阅
+flows_field_current_steps_$_distribute_optional_flows: 此步骤分发时可选的流程范围
+flows_field_current_steps_$_name: 名称
+flows_field_current_steps_$_oneClickApproval: 一键核准
+flows_field_current_steps_$_oneClickRejection: 一键驳回
 flows_field_current_no: 当前序号
 flows_field_description: 备注
 flows_field_distribute_optional_users: 流程被分发时分发对象选择范围
@@ -54,12 +54,12 @@ flows_field_modified_by: 修改人
 flows_field_name: 流程名
 flows_field_name_formula: 标题公式
 flows_field_perms: 权限
-flows_field_perms.orgs_can_add: '授权部门: 新建申请单'
-flows_field_perms.orgs_can_admin: '授权部门: 查看所有申请单，并能执行重定位、转签核、删除操作'
-flows_field_perms.orgs_can_monitor: '授权部门: 查看所有申请单'
-flows_field_perms.users_can_add: '授权用户: 新建申请单'
-flows_field_perms.users_can_admin: '授权用户: 查看所有申请单，并能执行重定位、转签核、删除操作'
-flows_field_perms.users_can_monitor: '授权用户: 查看所有申请单'
+flows_field_perms_orgs_can_add: '授权部门: 新建申请单'
+flows_field_perms_orgs_can_admin: '授权部门: 查看所有申请单，并能执行重定位、转签核、删除操作'
+flows_field_perms_orgs_can_monitor: '授权部门: 查看所有申请单'
+flows_field_perms_users_can_add: '授权用户: 新建申请单'
+flows_field_perms_users_can_admin: '授权用户: 查看所有申请单，并能执行重定位、转签核、删除操作'
+flows_field_perms_users_can_monitor: '授权用户: 查看所有申请单'
 flows_field_print_template: 打印模板
 flows_field_sort_no: 排序号
 flows_field_state: 流程状态
