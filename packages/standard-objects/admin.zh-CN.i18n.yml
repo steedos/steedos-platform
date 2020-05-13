@@ -1,0 +1,13 @@
+app_admin_name: 设置
+app_admin_description: 管理员设置公司、人员、权限等。
+menu_account: 个人账户设置
+menu_account_profile: 我的资料
+menu_account_background: 背景图
+menu_menu_users: 公司设置
+menu_spaces: 公司
+menu_space_users: 部门与用户
+menu_permission_set: 权限组
+menu_apps: 应用程序
+menu_dashboard: 门户
+menu_sessions: 登录会话
+menu_about: 关于

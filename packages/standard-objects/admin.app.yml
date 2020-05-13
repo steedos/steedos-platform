@@ -1,21 +1,21 @@
 _id: admin
 url: /app/admin
-name: 设置
-description: 管理员设置公司、人员、权限等。
+name: Setting
+description: Manage company , users , permissions and so on .
 icon: ion-ios-people-outline
 icon_slds: settings
 is_creator: true
 objects: []
 admin_menus:
   - _id: account
-    name: 个人账户设置
+    name: My Account
     permission_sets:
       - user
     expanded: false
     mobile: false
     sort: 100
   - _id: account_profile
-    name: 我的资料
+    name: My Profile
     permission_sets:
       - user
     parent: account
@@ -23,28 +23,28 @@ admin_menus:
     mobile: false
     sort: 10
   - _id: account_background
-    name: 背景图
+    name: Background
     permission_sets:
       - user
     template_name: account_background
     parent: account
     sort: 20
   - _id: menu_users
-    name: 公司设置
+    name: My Company
     permission_sets:
       - admin
       - organization_admin
     expanded: false
     sort: 200
   - _id: spaces
-    name: 公司
+    name: Company
     permission_sets:
       - admin
     object_name: spaces
     parent: menu_users
     sort: 10
   - _id: space_users
-    name: 部门与用户
+    name: Departments & Users
     permission_sets:
       - admin
       - organization_admin
@@ -52,28 +52,28 @@ admin_menus:
     parent: menu_users
     sort: 20
   - _id: permission_set
-    name: 权限组
+    name: Permission Set
     permission_sets:
       - admin
     object_name: permission_set
     parent: menu_users
     sort: 30
   - _id: apps
-    name: 应用程序
+    name: Apps
     permission_sets:
       - admin
     object_name: apps
     parent: menu_users
     sort: 40
   - _id: dashboard
-    name: 门户
+    name: Dashboard
     permission_sets:
       - admin
     object_name: dashboard
     parent: menu_users
     sort: 50
   - _id: sessions
-    name: 登录会话
+    name: Session
     permission_sets:
       - admin
     object_name: sessions
@@ -143,7 +143,7 @@ admin_menus:
     parent: menu_advanced
     sort: 80
   - _id: about
-    name: 关于
+    name: About Steedos
     permission_sets:
       - user
     template_name: creator_about

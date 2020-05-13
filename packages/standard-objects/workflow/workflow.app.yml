@@ -5,67 +5,67 @@ is_creator: false
 admin_menus:
   # 单位管理员可以创建和设置流程及相关参数。
   - _id: menu_workflow
-    name: 业务流程
+    name: Workflows
     permission_sets:
       - user
     expanded: false
   - _id: flows
-    name: 流程
+    name: Workflows
     permission_sets:
       - admin
       - workflow_admin
     object_name: flows
     parent: menu_workflow
   - _id: flow_roles
-    name: 审批岗位
+    name: Workflow Roles
     permission_sets:
       - admin
       - workflow_admin
     object_name: flow_roles
     parent: menu_workflow
   - _id: flow_positions
-    name: 岗位成员
+    name: Workflow Positions
     permission_sets:
       - admin
       - workflow_admin
     object_name: flow_positions
     parent: menu_workflow
   - _id: categories
-    name: 流程分类
+    name: Workflow Categories
     permission_sets:
       - admin
       - workflow_admin
     object_name: categories
     parent: menu_workflow
   - _id: instance_number_rules
-    name: 流程编号
+    name: Instance Number Rules
     permission_sets:
       - admin
       - workflow_admin
     object_name: instance_number_rules
     parent: menu_workflow
   - _id: space_user_signs
-    name: 图片签名
+    name: User Sign
     permission_sets:
       - admin
       - workflow_admin
     object_name: space_user_signs
     parent: menu_workflow
   - _id: instances_statistic
-    name: 效率统计
+    name: Statistic
     permission_sets:
       - admin
       - workflow_admin
     object_name: instances_statistic
     parent: menu_workflow
   - _id: webhooks
-    name: 流程触发器
+    name: Webhooks
     permission_sets:
       - admin
     object_name: webhooks
     parent: menu_workflow
   - _id: process_delegation_rules
-    name: 流程委托
+    name: Delegation
     permission_sets:
       - user
     object_name: process_delegation_rules
@@ -77,7 +77,7 @@ admin_menus:
   #   object_name: object_workflows
   #   parent: menu_workflow
   - _id: roles
-    name: 审批角色
+    name: Roles
     permission_sets:
       - admin
     object_name: roles
