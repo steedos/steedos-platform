@@ -59,6 +59,8 @@
     "CMS_attachment_view":"查看",
 
     "cms_site_empty_help":"没有文章",
-    "cms_home_mobile_top_title":"请选择站点"
+    "cms_home_mobile_top_title":"请选择站点",
 
+    "cms_sites_action_new_category_of_site":"新建栏目",
+    "cms_categories_action_new_sub_category_of_category":"新建子栏目"
 }

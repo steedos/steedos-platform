@@ -54,5 +54,8 @@
     "CMS_attachment_view": "Preview",
 
     "cms_site_empty_help":"No articles available",
-    "cms_home_mobile_top_title":"Please select a site"
+    "cms_home_mobile_top_title":"Please select a site",
+
+    "cms_sites_action_new_category_of_site":"New Category",
+    "cms_categories_action_new_sub_category_of_category":"New Sub Category"
 }
