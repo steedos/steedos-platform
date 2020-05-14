@@ -248,7 +248,7 @@ actions:
   invite_space_users: 
     label: Invite Users
   setPassword: 
-    label: Modify Password
+    label: Change Password
 permission_set:
   user:
     allowCreate: false
