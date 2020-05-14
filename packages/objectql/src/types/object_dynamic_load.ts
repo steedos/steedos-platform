@@ -84,6 +84,11 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
         addObjectListenerConfig(json);
     })
 
+    let actions = util.loadActions(filePath)
+
+    _.each(actions, (json: SteedosActionTypeConfig) => {
+        addObjectActionConfig(json);
+    })
 }
 
 export const addServerScriptFiles = (filePath: string) => {
@@ -204,6 +209,41 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
         }
     } else {
         throw new Error(`Error add listener, object not found: ${object_name}`);
+    }
+}
+
+export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
+    if (!json.listenTo) {
+        throw new Error('missing attribute listenTo')
+    }
+
+    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
+        throw new Error('listenTo must be a function or string')
+    }
+
+    let object_name = '';
+
+    if (_.isString(json.listenTo)) {
+        object_name = json.listenTo
+    } else if (_.isFunction(json.listenTo)) {
+        object_name = json.listenTo()
+    }
+
+    let object = getObjectConfig(object_name);
+    if (object) {
+        if(!object.listeners){
+            object.listeners = {}
+        }
+        _.each(object.actions, function(action, key){
+            if(json[key]){
+                action.todo = json[key]
+            }
+            if(json[`${key}Visible`]){
+                action.visible = json[`${key}Visible`]
+            }
+        })
+    } else {
+        throw new Error(`Error add action, object not found: ${object_name}`);
     }
 }
 
