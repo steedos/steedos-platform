@@ -477,5 +477,11 @@
 	},
 
 	"standard_query": "查找",
-	"standard_query_more": "高级"
+	"standard_query_more": "高级",
+
+	"app_admin_name": "设置",
+
+	"nw_top_button_history_back": "点击可后退",
+	"nw_top_button_history_forward": "点击可前进",
+	"nw_top_button_refresh": "重新加载此页面"
 }
