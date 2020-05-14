@@ -6,4 +6,4 @@ object_triggers_field_todo: >-
   执行的脚本 <a target="_blank"
   href="https://developer.steedos.com/developer/object_trigger">查看帮助</a>
 object_triggers_field_when: 运行时
-object_triggers_listview_all: 
+object_triggers_listview_all: 所有

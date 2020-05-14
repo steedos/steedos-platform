@@ -66,7 +66,7 @@ function initObjectPermission(doc){
 
 Creator.Objects.objects.actions = {
     show_object: {
-        label: "预览",
+        label: "Preview",
         visible: true,
         on: "record",
         todo: function (object_name, record_id, item_element) {
@@ -78,7 +78,7 @@ Creator.Objects.objects.actions = {
         }
     },
     copy_odata: {
-        label: "复制OData网址",
+        label: "Copy OData URL",
         visible: true,
         on: "record",
         todo: function (object_name, record_id, item_element) {

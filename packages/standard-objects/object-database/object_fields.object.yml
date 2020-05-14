@@ -1,7 +1,7 @@
 name: object_fields
-icon: orders
+icon: Object Fields
 enable_api: true
-label: 字段
+label: Object Fields
 fields:
   name:
     type: text
@@ -12,18 +12,21 @@ fields:
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
   _name:
     type: text
-    label: 字段名
+    label: _name
     searchable: true
     index: true
     required: true
   label:
     type: text
     required: true
+    label: Label
   is_name:
     type: boolean
     hidden: true
+    label: Is Name
   object:
     type: master_detail
+    label: Object
     reference_to: objects
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -44,47 +47,91 @@ fields:
             }
   type:
     type: select
+    label: Type
     required: true
-    options: "文本:text,长文本:textarea,Html文本:html,选择框:select,Checkbox:boolean,日期:date,日期时间:datetime,数值:number,金额:currency,密码:password,相关表:lookup,主表/子表:master_detail,网址:url,邮件地址:email" #TODO 表格:grid,
+    options: 
+      - label: 文本
+        value: text
+      - label: 长文本
+        value: textarea
+      - label: Html文本
+        value: html
+      - label: 选择框
+        value: select
+      - label: Checkbox
+        value: boolean
+      - label: 日期
+        value: date
+      - label: 日期时间
+        value: datetime
+      - label: 数值
+        value: number
+      - label: 金额
+        value: currency
+      - label: 密码
+        value: password
+      - label: 相关表
+        value: lookup
+      - label: 主表/子表
+        value: master_detail
+      - label: 网址
+        value: url
+      - label: 邮件地址
+        value: email     
   sort_no:
-    label: 排序号
+    label: Sort Number
     type: number
     defaultValue: 100
     scale: 0
     sortable: true
   group:
     type: text
+    label: Group
   defaultValue:
     type: text
+    label: Default Value
   allowedValues:
     type: text
     multiple: true
+    label: Allowed Values
   multiple:
     type: boolean
+    label: Multiple
   required:
     type: boolean
+    label: Required
   is_wide:
     type: boolean
+    label: Is Wide
   readonly:
     type: boolean
+    label: Readonly
   hidden:
     type: boolean
+    label: Hidden
   omit:
     type: boolean
+    label: Omit
   index:
     type: boolean
+    label: Is Index Field
   searchable:
     type: boolean
+    label: Searchable
   sortable:
     type: boolean
+    label: Sortable
   precision:
     type: currency
+    label: Precision
     defaultValue: 18
   scale:
     type: currency
+    label: Scale
     defaultValue: 2
   reference_to:
     type: lookup
+    label: Reference to
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -103,8 +150,10 @@ fields:
             }
   rows:
     type: currency
+    label: Rows
   options:
     type: textarea
+    label: Options
     is_wide: true
   description:
     label: Description

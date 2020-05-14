@@ -1,11 +1,12 @@
 name: object_actions
-label: 对象操作
+label: Object Action
 icon: marketing_actions
 fields:
   object:
     type: master_detail
     reference_to: objects
     required: true
+    label: Object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -24,19 +25,24 @@ fields:
             }
   name:
     type: text
+    label: Name
     searchable: true
     index: true
     required: true
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_][a-zA-Z0-9_]*$/'
   label:
     type: text
+    label: Label
   is_enable:
     type: boolean
+    label: Enable
   visible:
     type: boolean
     omit: true
+    label: Visible
   'on':
     type: lookup
+    label: 'On'
     is_wide: true
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -52,7 +58,7 @@ fields:
               }];
             }
   todo:
-    label: 执行的脚本
+    label: Execute Script
     type: textarea
     required: true
     is_wide: true
