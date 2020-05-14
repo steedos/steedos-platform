@@ -65,13 +65,13 @@ module.exports = {
     extend: 'base',
     actions: {
         standard_query: {
-            label: "查找",
+            label: "Search",
             visible: true,
             on: "list",
             todo: "standard_query"
         },
         standard_new: {
-            label: "新建",
+            label: "New",
             visible: function () {
                 var permissions;
                 permissions = Creator.getPermissions();
@@ -83,13 +83,13 @@ module.exports = {
             todo: "standard_new"
         },
         standard_open_view: {
-            label: "查看",
+            label: "Open",
             visible: false,
             on: "list_item",
             todo: "standard_open_view"
         },
         standard_edit: {
-            label: "编辑",
+            label: "Edit",
             sort: 0,
             visible: function (object_name, record_id, record_permissions) {
                 var perms, record;
@@ -109,7 +109,7 @@ module.exports = {
             todo: "standard_edit"
         },
         standard_delete: {
-            label: "删除",
+            label: "Delete",
             visible: function (object_name, record_id, record_permissions) {
                 var perms, record;
                 perms = {};
@@ -128,7 +128,7 @@ module.exports = {
             todo: "standard_delete"
         },
         standard_approve: {
-            label: "发起审批",
+            label: "Initiate Approval",
             visible: function (object_name, record_id, record_permissions) {
                 if(!Session.get("record_id")) {
                     /*只在详细界面显示这个action*/
@@ -163,7 +163,7 @@ module.exports = {
             }
         },
         standard_view_instance: {
-            label: "查看审批单",
+            label: "View Instance",
             visible: function (object_name, record_id, record_permissions) {
                 if(!Session.get("record_id")) {
                     /*只在详细界面显示这个action*/
@@ -222,7 +222,7 @@ module.exports = {
             }
         },
         standard_follow: {
-            label: "关注",
+            label: "Follow",
             visible: function () {
                 if (Creator.getObject()) {
                     return Creator.getObject().enable_follow
