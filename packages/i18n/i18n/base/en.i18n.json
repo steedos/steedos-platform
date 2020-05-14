@@ -462,7 +462,7 @@
 
 	"app_admin_name": "Setup",
 
-	"nw_top_button_history_back": "点击可后退",
-	"nw_top_button_history_forward": "点击可前进",
-	"nw_top_button_refresh": "重新加载此页面"
+	"nw_top_button_history_back": "Click to back",
+	"nw_top_button_history_forward": "Click to forward",
+	"nw_top_button_refresh": "Reload this page"
 }
