@@ -9,4 +9,5 @@ company_field_name: 分部名称
 company_field_organization: 关联部门
 company_field_parent: 上级分部
 company_field_sort_no: 排序号
+space_users_action_updateOrgs: 更新组织
 company_listview_all: 所有

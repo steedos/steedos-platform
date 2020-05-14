@@ -1,64 +1,64 @@
 name: audit_login
-label: 登录日志
+label: Log
 icon: record
 fields:
   username:
-    label: 用户名
+    label: Username
     type: text
     is_name: true
     name: username
     searchable: true
   login_time:
-    label: 登录时间
+    label: Login Time
     type: datetime
     name: login_time
   source_ip:
-    label: IP地址
+    label: IP
     type: text
     name: source_ip
   location:
-    label: 位置
+    label: Location
     type: text
     name: location
   login_type:
-    label: 登录方式
+    label: Login Type
     type: text
     name: login_type
   status:
-    label: 状态
+    label: Status
     type: text
     name: status
   browser:
-    label: 浏览器
+    label: Browser
     type: text
     name: browser
   platform:
-    label: 系统
+    label: Platform
     type: text
     name: platform
   application:
-    label: 应用
+    label: Application
     type: text
     name: application
   client_version:
-    label: 客户端版本
+    label: Client Version
     type: text
     name: client_version
   api_type:
-    label: api类型
+    label: API Type
     type: text
     name: api_type
   api_version:
-    label: api版本
+    label: API Version
     type: text
     name: api_version
   login_url:
-    label: 登录URL
+    label: Login URL
     type: text
     name: login_url
 list_views:
   all:
-    label: 全部
+    label: All Logs
     filter_scope: space
     columns:
       - username
@@ -75,7 +75,7 @@ list_views:
       - api_version
       - login_url
   recent:
-    label: 最近查看
+    label: Recently Viewed Logs
     filter_scope: space
 permission_set:
   user:

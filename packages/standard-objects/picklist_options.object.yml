@@ -1,36 +1,36 @@
 name: picklist_options
-label: 选项列表值
+label: Picklist Options
 icon: order_item
 fields:
   picklist:
     type: master_detail
-    label: 选项列表值集
+    label: Picklist
     reference_to: picklists
     required: true
   name:
     type: text
-    label: 选项名称
+    label: Name
     required: true
   value:
     type: text
-    label: 选项值
-    inlineHelpText: 此字段如果没有值， 选项值 = 选项名称
+    label: Value
+    inlineHelpText: Default Value = Name
   sort_no:
     type: number
-    label: 排序号
-    inlineHelpText: 数值大的显示在前面
+    label: Sort Number
+    inlineHelpText:  High Value First.
   enable:
     type: boolean
-    label: 启用
+    label: Enable
     defaultValue: true
   default:
     type: boolean
-    label: 默认
+    label: Default
     defaultValue: false
-    inlineHelpText: 将此值作为选项列表的默认值
+    inlineHelpText: Use this value as the default for the picklist.
 list_views:
   all:
-    label: 全部
+    label: All Picklist Options
     filter_scope: space
     sort: [["sort_no", "desc"]]
     columns:

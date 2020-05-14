@@ -1,40 +1,40 @@
 name: company
-label: 分部
+label: Division
 icon: account
 enable_api: true
 fields:
   name:
-    label: 分部名称
+    label: Name
     type: text
   code: 
-    label: 分部代码
+    label: Code
     type: text
   parent:
-    label: 上级分部
+    label: Parent
     type: lookup
     reference_to: company
     hidden: true
   organization:
-    label: 关联部门
+    label: Corresponding Department
     type: lookup
     reference_to: organizations
     omit: false
   currency_type:
-    label: 本位币
+    label: Currency Type
     type: text
   admins:
-    label: 管理员
+    label: Admin Users
     type: lookup
     reference_to: users
     multiple: true
     name: admins
     filterable: true
   description:
-    label: 备注
+    label: Description
     type: textarea
     is_wide: true
   sort_no:
-    label: 排序号
+    label: Sort Number
     type: number
     defaultValue: 100
     sortable: true
@@ -63,13 +63,16 @@ fields:
     hidden: true
 list_views:
   all:
-    label: 所有
+    label: All Divisions
     columns:
       - name
       - code
       - organization
       - modified
     filter_scope: space
+actions: 
+  updateOrgs: 
+    label: Update The Whole Company
 permission_set:
   user:
     allowCreate: false

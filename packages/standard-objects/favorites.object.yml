@@ -1,16 +1,16 @@
 name: favorites
-label: 我的收藏夹
+label: My Favorite
 icon: custom.custom11
 fields:
   name: 
     type: text
-    label: 标题
+    label: Name
     required: true
     min: 1
     max: 300
   object_name:
     type: lookup
-    label: 对象
+    label: Object
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
                 var _options;
@@ -27,25 +27,29 @@ fields:
     required: true
     readonly: true
   record_type:
-    label: 类型
+    label: Type
     type: select
-    options: 记录:RECORD,列表:LIST_VIEW
+    options: 
+      - label: Record
+        value: RECORD
+      - label: List View
+        value: LIST_VIEW
     readonly: true
   record_id:
     type: text
-    label: 记录ID或者视图ID（code）
+    label: Record ID or List View ID（code）
     required: true
     hidden: true
   sort_no:
     type: number
-    label: 排序号
-    inlineHelpText: 数值大的显示在前面
+    label: Sort Number
+    inlineHelpText: High Value First
 actions:
   standard_new:
     visible: false
 list_views:
   all:
-    label: 全部
+    label: All 
     filter_scope: space
     sort: [["sort_no", "desc"]]
     columns:

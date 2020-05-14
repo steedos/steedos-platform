@@ -1,26 +1,38 @@
 name: users_verify_code
-label: 验证码
+label: Verify Code
 icon: custom.custom76
 fields:
   name:
-    label: 标识
+    label: Name
     type: text
     index: true
   code:
-    label: 验证码
+    label: Verify Code
     type: text
     min: 6
     max: 6
     required: true
     index: true
   action:
-    label: 验证类型
+    label: Use for
     type: select
-    options: 验证邮箱:emailVerify,验证手机号:mobileVerify,邮箱验证码登录:emailLogin,手机号验证码登录:mobileLogin,邮箱注册账户:emailSignupAccount,手机号注册账户:mobileSignupAccount
+    options:
+      - label: Verify Email
+        value: emailVerify
+      - label: Verify Mobile
+        value: mobileVerify
+      - label: Login with Email
+        value: emailLogin
+      - label: Login with Mobile
+        value: mobileLogin
+      - label: Register with Email
+        value: emailSignupAccount
+      - label: Register with Mobile
+        value: mobileSignupAccount
     required: true
     index: true
   owner:
-    label: 所有者
+    label: Owner
     type: lookup
     reference_to: users
     sortable: true
@@ -30,20 +42,20 @@ fields:
     omit: false
     required: true
   expiredAt:
-    label: 过期时间
+    label: Expiration Time
     type: datetime
     readonly: true
     index: true
   verifiedAt:
-    label: 验证成功时间
+    label: Verification Time
     type: datetime
     index: true
   failureCount:
-    label: 验证失败次数
+    label: Number of Validation Failures
     type: number
 list_views:
   all:
-    label: 所有
+    label: All 
     sort: [["expiredAt", "desc"]]
     columns:
       - name

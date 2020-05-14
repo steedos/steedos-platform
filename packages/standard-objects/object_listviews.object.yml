@@ -1,19 +1,19 @@
 name: object_listviews
-label: 列表视图
+label: Object Listview
 icon: forecasts
 hidden: true
 fields:
   name:
-    label: 列表视图名称
+    label: Name
     type: text
     searchable: true
     index: true
     required: true
   label:
-    label: 显示名称
+    label: Label
     type: text
   object_name:
-    label: 对象
+    label: Object
     type: master_detail
     required: true
     reference_to: objects
@@ -34,7 +34,7 @@ fields:
               return _options;
             }
   filter_scope:
-    label: 过滤范围
+    label: Filter Scope
     type: lookup
     defaultValue: space
     required: true
@@ -54,39 +54,47 @@ fields:
               return _options;
             }
   shared:
-    label: 共享视图到工作区
+    label: Shared to All Users
     type: boolean
   show_count:
-    label: 显示条目数
+    label: Show Record Count
     type: boolean
   type:
-    label: 视图类型
+    label: Type
     type: select
-    options: '列表:grid, 日历视图:calendar'
+    options: 
+      - label: Grid
+        value: grid
+      - label: Calendar
+        value: calendar
     defaultValue: grid
     hidden: true
     omit: true
   scrolling_mode:
-    label: 滚动条样式
-    inlineHelpText: 定义数据列表的滚动条显示样式
+    label: Scrolling Mode
+    inlineHelpText: Define the scroll bar display style for the data list.
     type: select
-    options: >-
-      按照传统的分页显示，点击页码加载对应页面的数据:standard, 通过滚动条切换页面，当滚动到对应页面时，会远程加载数据:virtual,
-      滚动刷新，初始只加载第一页，一边滚动一边加载下一页:infinite
+    options: 
+      - label: Standard ( Click the page number to load the data of the corresponding page. )
+        value: standard
+      - label: Virtual ( Switch the page through the scroll bar. When you scroll to the corresponding page, the data will be loaded remotely. )
+        value: virtual
+      - label: Infinite ( Initially, only the first page will be loaded, and the next page will be loaded while scrolling. )
+        value: infinite
     defaultValue: standard
     hidden: true
     omit: true
   columns:
-    label: 显示的列
+    label: Columns
     type: grid
     is_wide: true
     required: true
   columns.$:
-    label: 显示的列
+    label: Column
     blackbox: true
     type: object
   columns.$.field:
-    label: 字段
+    label: Field
     type: lookup
     multiple: false
     is_wide: false
@@ -102,13 +110,13 @@ fields:
               return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0, true);
             }
   columns.$.width:
-    label: 宽度
+    label: Width
     type: text
   columns.$.wrap:
-    label: 是否换行
+    label: Wrap
     type: boolean
   filter_fields:
-    label: 默认过滤字段
+    label: Default Filter Fields
     type: lookup
     multiple: true
     is_wide: true
@@ -123,15 +131,15 @@ fields:
               return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
             }
   sort:
-    label: 默认排序规则
+    label: Default Sort Order
     type: grid
     is_wide: true
   sort.$:
-    label: 排序条件
+    label: Order
     blackbox: true
     type: object
   sort.$.field_name:
-    label: 排序字段
+    label: Field Name
     type: lookup
     depend_on:
       - object_name
@@ -160,30 +168,34 @@ fields:
               return _options;
             }
   sort.$.order:
-    label: 排序方式
+    label: Sort Order
     type: select
     defaultValue: asc
-    options: '正序:asc,倒序:desc'
+    options:
+      - label: ASC
+        value: asc
+      - label: DESC
+        value: desc
   filters:
-    label: 过滤器
+    label: Filters
     readonly: true
     type: grid
     is_wide: true
   filters.$:
-    label: 过滤条件
+    label: Filter
     blackbox: true
     type: object
   filters.$.field:
-    label: 字段
+    label: Field
     type: text
   filters.$.operation:
-    label: 运算符
+    label: Operator
     type: text
   filters.$.value:
-    label: 值
+    label: Value
     type: text
   filter_logic:
-    label: 过滤逻辑
+    label: Logic
     type: text
     omit: true
 list_views:
@@ -193,7 +205,7 @@ list_views:
       - label
       - shared
       - modified
-    label: 全部
+    label: All Object Listview
     filter_scope: space
 permission_set:
   user:

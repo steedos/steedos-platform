@@ -7,4 +7,5 @@ favorites_field_record_type: 类型
 favorites_field_record_type_options_LIST_VIEW: 列表
 favorites_field_record_type_options_RECORD: 记录
 favorites_field_sort_no: 排序号
+favorites_field_sort_no_inlineHelpText: 数值大的显示在前面
 favorites_listview_all: 全部

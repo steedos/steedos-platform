@@ -1,10 +1,10 @@
 name: object_recent_viewed
-label: 最近查看
+label: View Log
 icon: forecasts
 fields:
   record:
     type: lookup
-    label: 记录
+    label: Record
     omit: true
     is_name: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
