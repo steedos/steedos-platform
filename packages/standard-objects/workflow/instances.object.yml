@@ -1,6 +1,6 @@
 name: instances
 icon: task
-label: Instance
+label: Request
 enable_search: true
 fields:
   name:
