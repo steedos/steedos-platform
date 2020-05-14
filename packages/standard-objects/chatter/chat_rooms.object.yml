@@ -1,23 +1,23 @@
 name: chat_rooms
-label: 房间
+label: Chat Room
 fields:
   name:
     is_name: true
-    label: 内容
+    label: Name
     type: text
     name: name
     searchable: true
   members:
-    label: 成员
+    label: Members
     type: lookup
     reference_to: users
     multiple: true
     name: members
     filterable: true
   owner:
-    label: 房主
+    label: Owner
   type:
-    label: 类型
+    label: Type
     type: select
     options:
       - label: private
@@ -30,7 +30,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 所有
+    label: All Chat Rooms
     columns:
       - name
       - owner
