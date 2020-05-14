@@ -152,7 +152,7 @@
 	"workflow_export_lastmonth": "Export requests last month",
 	"workflow_export_thisyear": "Export requests this year",
 	"workflow_export_all": "Export all requests",
-	"workflow_export_filter": "Filter by process",
+	"workflow_export_filter": "Filter By Workflow",
 
 	"workflow_export_search": "Search for requests according to the workflow",
 	"workflow_export_data": "Export to Excel",
@@ -172,7 +172,7 @@
 	"Workflow Designer": "Workflow Designer",
 	"User Management": "User Management",
 
-	"All flows": "All workflows",
+	"All flows": "All Workflows",
 	"Select a flow": "Select a workflow",
 	"Fill in form": "New Request",
 
@@ -182,7 +182,7 @@
 
 	"Select placeholder": "Please select",
 
-	"workflow_no_category": "No category",
+	"workflow_no_category": "No Category",
 
 	"space_users_error_space_required": "Space required",
 
@@ -637,7 +637,7 @@
 	"set_org_members": "Set department members",
 	"set_applicant_manager": "Set the applicant supervisor",
 	"instance_permissions_error": "You do not have permission to view this request",
-	"star_flows": "Star workflows",
+	"star_flows": "Favorite Workflows",
 
 	"chart_traces": "Chart Traces",
 	"cc_tag": "(Carbon Copying)",
