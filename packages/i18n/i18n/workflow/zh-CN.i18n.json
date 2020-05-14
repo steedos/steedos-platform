@@ -16,6 +16,8 @@
 	"menu_navigation": "导航",
 
 	"Workflow": "审批",
+	
+	"instance__object": "审批",
 
 	"form_new": "新建表单",
 
@@ -654,7 +656,7 @@
 	"set_org_members": "设置部门成员",
 	"set_applicant_manager": "设置申请人上级主管",
 	"instance_permissions_error": "您没有权限查看此申请单",
-	"start_flows": "星标流程",
+	"star_flows": "星标流程",
 
 	"chart_traces": "图形化历程",
 	"cc_tag": "（传阅中）",

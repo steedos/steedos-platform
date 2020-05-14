@@ -16,6 +16,8 @@
 	"menu_navigation": "Navigation",
 
 	"Workflow": "Workflow",
+	
+	"instance__object": "Request",
 
 	"form_new": "New",
 
@@ -635,7 +637,7 @@
 	"set_org_members": "Set department members",
 	"set_applicant_manager": "Set the applicant supervisor",
 	"instance_permissions_error": "You do not have permission to view this request",
-	"start_flows": "Start flows",
+	"star_flows": "Star workflows",
 
 	"chart_traces": "Chart Traces",
 	"cc_tag": "(Carbon Copying)",
