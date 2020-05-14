@@ -1,6 +1,6 @@
 _id: admin
 url: /app/admin
-name: Settings
+name: Setup
 description: Manage company , users , permissions and so on .
 icon: ion-ios-people-outline
 icon_slds: settings
