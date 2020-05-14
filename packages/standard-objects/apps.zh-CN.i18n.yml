@@ -9,8 +9,8 @@ apps_field_is_new_window: 在新窗口打开
 apps_field_is_use_ie: 使用IE打开(需使用Steedos桌面客户端)
 apps_field_is_use_iframe: 使用iframe打开
 apps_field_members: 授权对象
-apps_field_members.organizations: 授权部门
-apps_field_members.users: 授权人员
+apps_field_members_organizations: 授权部门
+apps_field_members_users: 授权人员
 apps_field_mobile: 显示在移动应用中
 apps_field_name: 名称
 apps_field_oauth2_callback_url: 回调 URL

@@ -1,6 +1,6 @@
 audit_login__object: 登录日志
-audit_login_field_api_type: api类型
-audit_login_field_api_version: api版本
+audit_login_field_api_type: API类型
+audit_login_field_api_version: API版本
 audit_login_field_application: 应用
 audit_login_field_browser: 浏览器
 audit_login_field_client_version: 客户端版本

@@ -2,7 +2,7 @@ connected_apps__object: 外部应用
 connected_apps_field_active: 激活
 connected_apps_field_app_logo: 图标
 connected_apps_field_app_website: 应用官网
-connected_apps_field_client_id: Client Id
+connected_apps_field_client_id: Client ID
 connected_apps_field_client_secret: Client Secret
 connected_apps_field_code: API 名称
 connected_apps_field_description: 描述
@@ -16,9 +16,9 @@ connected_apps_field_oauth2_scopes: 范围
 connected_apps_field_oauth2_scopes_options_full: 完全访问权限 (full)
 connected_apps_field_oauth2_scopes_options_openid: 允许访问您的唯一标志符 (openid)
 connected_apps_field_oauth2_scopes_options_profile: '访问基本信息 (id, profile, email, address, phone)'
-connected_apps_field_saml_acs_url: ACS Url
+connected_apps_field_saml_acs_url: ACS URL
 connected_apps_field_saml_enabled: 启用 SAML
-connected_apps_field_saml_entity_id: Entity Id
+connected_apps_field_saml_entity_id: Entity ID
 connected_apps_field_saml_idp_cert: IDP Cert
 connected_apps_field_saml_issuer: Issuer
 connected_apps_field_saml_logout_block: 单点注销绑定
