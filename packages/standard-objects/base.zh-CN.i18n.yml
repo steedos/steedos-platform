@@ -21,8 +21,8 @@ base_field_instance_state_options_pending: 进行中
 base_field_instance_state_options_rejected: 已驳回
 base_field_instance_state_options_terminated: 已取消
 base_field_instances: 申请单
-base_field_instances.$._id: 申请单ID
-base_field_instances.$.state: 申请单状态
+base_field_instances_$__id: 申请单ID
+base_field_instances_$_state: 申请单状态
 base_field_is_deleted: 已删除
 base_field_locked: 已锁定
 base_field_message_count: 评论数
@@ -30,8 +30,8 @@ base_field_modified: 修改时间
 base_field_modified_by: 修改人
 base_field_owner: 所有者
 base_field_sharing: 记录级权限
-base_field_sharing.$: 授权条件
-base_field_sharing.$.o: 授权组织
-base_field_sharing.$.r: 来自规则
-base_field_sharing.$.u: 授权用户
+base_field_sharing_$: 授权条件
+base_field_sharing_$_o: 授权组织
+base_field_sharing_$_r: 来自规则
+base_field_sharing_$_u: 授权用户
 base_field_space: 所属工作区
