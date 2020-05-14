@@ -88,7 +88,7 @@ fields:
     label: Enable
     type: boolean
   todo:
-    label: Execute Script
+    label: Execute Script  <a target="_blank" href="https://developer.steedos.com/developer/object_trigger">View Help</a>
     type: textarea
     required: true
     is_wide: true
@@ -101,6 +101,7 @@ list_views:
       # - 'on'
       - when
       - is_enable
+    label: All
     filter_scope: space
 permission_set:
   user:

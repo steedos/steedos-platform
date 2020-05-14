@@ -1,4 +1,4 @@
-object_fields__object: 字段
+object_fields__object: 对象字段
 object_fields_field__name: 字段名
 object_fields_field_allowedValues: 允许的值
 object_fields_field_defaultValue: 默认值

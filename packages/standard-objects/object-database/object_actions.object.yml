@@ -71,6 +71,7 @@ list_views:
       - 'on'
       - is_enable
       - modified
+    label: All
     filter_scope: space
 permission_set:
   user:
