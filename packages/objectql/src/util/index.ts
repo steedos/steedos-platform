@@ -122,6 +122,25 @@ export const loadTriggers = (filePath: string)=>{
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadActions = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.action.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
         results.push(json)
     })
     return results
@@ -200,6 +219,10 @@ exports.isAppFile = isAppFile
 exports.isTriggerFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.trigger.js')
 }
+
+exports.isActionFile = (filePath: string)=>{
+    return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.action.js')
+  }
 
 exports.isFieldFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.field.yml') || filePath.endsWith('.field.js'))

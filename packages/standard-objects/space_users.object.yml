@@ -208,11 +208,14 @@ list_views:
     columns:
       - name
       - position
+      - sort_no
       - mobile
       - email
     filter_scope: space
     filters: [["user_accepted","=",true]]
     sort:
+      - - sort_no
+        - desc
       - - name
         - asc
   disabled:
