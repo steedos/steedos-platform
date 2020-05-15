@@ -28,11 +28,11 @@ fields:
     label: Events
     multiple: true
     options:
-      - label: 新增
+      - label: create
         value: create
-      - label: 修改
+      - label: update
         value: update
-      - label: 删除
+      - label: delete
         value: delete
   fields:
     type: lookup
