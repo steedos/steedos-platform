@@ -483,5 +483,8 @@
 
 	"nw_top_button_history_back": "点击可后退",
 	"nw_top_button_history_forward": "点击可前进",
-	"nw_top_button_refresh": "重新加载此页面"
+	"nw_top_button_refresh": "重新加载此页面",
+
+	"menu_account": "个人账户设置",
+	"menu_account_background": "背景图"
 }

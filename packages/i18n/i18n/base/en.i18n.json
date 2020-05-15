@@ -464,5 +464,8 @@
 
 	"nw_top_button_history_back": "Click to back",
 	"nw_top_button_history_forward": "Click to forward",
-	"nw_top_button_refresh": "Reload this page"
+	"nw_top_button_refresh": "Reload this page",
+
+	"menu_account": "My Account",
+	"menu_account_background": "Background"
 }
