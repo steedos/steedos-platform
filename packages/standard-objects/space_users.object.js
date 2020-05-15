@@ -832,7 +832,7 @@ Creator.Objects['space_users'].actions = {
                             return toastr.error(error.reason);
                         } else {
                             swal.close();
-                            return toastr.success("更改密码成功");
+                            return toastr.success(t("Change password successfully"));
                         }
                     });
                 } catch (err) {
@@ -843,7 +843,7 @@ Creator.Objects['space_users'].actions = {
             }
 
             swal({
-                title: "更改密码",
+                title: t("Change Password"),
                 type: "input",
                 inputType: "password",
                 inputValue: "",
