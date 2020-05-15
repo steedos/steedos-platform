@@ -116,22 +116,22 @@ fields:
     type: text
     name: current.steps.$.name
   current.steps.$.disableCC:
-    label: No Circulation
+    label: Disable CC
     type: boolean
     readonly: true
     name: current.steps.$.disableCC
   current.steps.$.allowDistribute:
-    label: Allow Distribution
+    label: Can Distribute Instance 
     type: boolean
     readonly: true
     name: current.steps.$.allowDistribute
   current.steps.$.can_edit_main_attach:
-    label: Allow Modification of Main Attachment
+    label: Can Edit Main Attach
     type: boolean
     readonly: true
     name: current.steps.$.can_edit_main_attach
   current.steps.$.can_edit_normal_attach:
-    label: Allow Modification of Attachments
+    label: Can Edit Normal Attach
     type: boolean
     readonly: true
     name: current.steps.$.can_edit_normal_attach
@@ -145,12 +145,12 @@ fields:
     name: current.steps.$.distribute_optional_flows
     filterable: true
   current.steps.$.cc_must_finished:
-    label: Must Wait for Circulation to Complete
+    label: Must Wait for CC finished
     type: boolean
     readonly: true
     name: current.steps.$.cc_must_finished
   current.steps.$.cc_alert:
-    label: Pop up Circular Alert
+    label: Pop up CC Alert
     type: boolean
     readonly: true
     name: current.steps.$.cc_alert
@@ -176,7 +176,7 @@ fields:
     blackbox: true
     name: perms
   perms.users_can_add:
-    label: Users that Can Submit a New Form
+    label: Users that Can Initiate New Request
     type: lookup
     reference_to: users
     multiple: true
@@ -184,7 +184,7 @@ fields:
     name: perms.users_can_add
     filterable: true
   perms.orgs_can_add:
-    label: 'Departments that Can Submit a New Form'
+    label: 'Departments that Can Initiate New Request'
     type: lookup
     reference_to: organizations
     multiple: true
@@ -192,7 +192,7 @@ fields:
     name: perms.orgs_can_add
     filterable: true
   perms.users_can_monitor:
-    label: Users that Can View All Forms
+    label: Users that Can Read All the Reqests
     type: lookup
     reference_to: users
     multiple: true
@@ -200,7 +200,7 @@ fields:
     name: perms.users_can_monitor
     filterable: true
   perms.orgs_can_monitor:
-    label: Departments that Can View All Forms
+    label: Departments that Can Read All the Reqests
     type: lookup
     reference_to: organizations
     multiple: true
@@ -208,7 +208,7 @@ fields:
     name: perms.orgs_can_monitor
     filterable: true
   perms.users_can_admin:
-    label: Users that Can Manage All Forms
+    label: Users that Can Read , Relocat, Reassign or Delete  All the Reqests
     type: lookup
     reference_to: users
     multiple: true
@@ -216,7 +216,7 @@ fields:
     name: perms.users_can_admin
     filterable: true
   perms.orgs_can_admin:
-    label: Departments that Can Manage All Forms
+    label: Departments that Can Read , Relocat, Reassign or Delete  All the Reqests
     type: lookup
     reference_to: organizations
     multiple: true
