@@ -187,6 +187,7 @@ fields:
     omit: true
     hidden: true
     name: user
+    label: User
     filterable: true
   avatar:
     label: Avatar
@@ -197,11 +198,13 @@ fields:
     omit: true
     hidden: true
     name: hr
+    label: HR
   last_logon:
     type: date
     omit: true
     hidden: true
-    name: last_logon    
+    name: last_logon 
+    label: Last Logon Date   
 list_views:
   all:
     label: All Valid Users
