@@ -50,33 +50,33 @@ fields:
     label: Type
     required: true
     options: 
-      - label: 文本
+      - label: text
         value: text
-      - label: 长文本
+      - label: textarea
         value: textarea
       - label: Html文本
         value: html
-      - label: 选择框
+      - label: select
         value: select
       - label: Checkbox
         value: boolean
-      - label: 日期
+      - label: date
         value: date
-      - label: 日期时间
+      - label: datetime
         value: datetime
-      - label: 数值
+      - label: number
         value: number
-      - label: 金额
+      - label: currency
         value: currency
-      - label: 密码
+      - label: password
         value: password
-      - label: 相关表
+      - label: lookup
         value: lookup
-      - label: 主表/子表
+      - label: master_detail
         value: master_detail
-      - label: 网址
+      - label: url
         value: url
-      - label: 邮件地址
+      - label: email
         value: email     
   sort_no:
     label: Sort Number
