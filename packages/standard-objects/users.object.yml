@@ -28,13 +28,15 @@ fields:
     type: text
     unique: true
     omit: true
-    name: Username
+    name: username
+    label: Username
   steedos_id:
     type: text
     unique: true
     readonly: true
     omit: true
     name: steedos_id
+    label: Steedos ID
   locale:
     label: Language
     type: select
@@ -60,21 +62,25 @@ fields:
     type: boolean
     omit: true
     hidden: true
-    name: Primary Email Verified
+    name: primary_email_verified
+    label: Primary Email Verified
   last_logon:
     type: date
     omit: true
     hidden: true
     name: last_logon
+    label: Last Logon Date
   is_cloudadmin:
     type: boolean
     omit: true
     hidden: true
     name: is_cloudadmin
+    label: is CloudAdmin
   is_deleted:
     type: boolean
     omit: true
     hidden: true
+    label: Deleted
   company_id:
     defaultValue: !!js/function |
       function () {
