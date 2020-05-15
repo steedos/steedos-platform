@@ -25,6 +25,7 @@ fields:
     label: valid
     type: boolean
   client_id: 
+    label: Client ID
     type: text
   connected_app_id:
     label: connected App ID

@@ -1,5 +1,5 @@
 sessions__object: 登录会话
-sessions_field_client_id: 
+sessions_field_client_id: Client ID
 sessions_field_connected_app_id: 连接的应用程序
 sessions_field_created: 首次登录时间
 sessions_field_ip: IP地址
