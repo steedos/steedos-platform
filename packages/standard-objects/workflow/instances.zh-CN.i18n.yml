@@ -24,8 +24,8 @@ instances_field_is_recorded_creator: 已归档
 instances_field_name: 文件标题
 instances_field_outbox_users: 已办处理人
 instances_field_record_ids: 记录ID
-instances_field_record_ids.$.ids: 
-instances_field_record_ids.$.o: 
+instances_field_record_ids_$_ids: 
+instances_field_record_ids_$_o: 
 instances_field_related_instances: 相关审批单
 instances_field_state: 审批单状态
 instances_field_state_options_completed: 已完成
