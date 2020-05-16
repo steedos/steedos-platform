@@ -3,6 +3,27 @@ icon: orders
 enable_api: true
 label: Object Fields
 fields:
+  object:
+    type: master_detail
+    label: Object
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
   name:
     type: text
     searchable: true
@@ -62,27 +83,6 @@ fields:
   generated:
     type: boolean
     label: Generated
-  object:
-    type: master_detail
-    label: Object
-    reference_to: objects
-    required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
 
   sort_no:
     label: Sort Number

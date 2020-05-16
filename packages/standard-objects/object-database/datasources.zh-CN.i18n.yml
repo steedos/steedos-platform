@@ -1,0 +1,26 @@
+datasources__object: 数据源
+datasources_field_database: 数据库
+datasources_field_driver: 数据库类型
+datasources_field_driver_options_meteor-mongo: Meteor Mongo
+datasources_field_driver_options_mongo: Mongo
+datasources_field_driver_options_mysql: MySql
+datasources_field_driver_options_oracle: Oracle
+datasources_field_driver_options_postgres: Postgres
+datasources_field_driver_options_sqlite: Sqlite
+datasources_field_driver_options_sqlserver: SqlServer
+datasources_field_enable_space: 启用工作区
+datasources_field_host: 服务器地址
+datasources_field_is_enable: 启用
+datasources_field_label: 显示名称
+datasources_field_locale: 语言
+datasources_field_name: 名称
+datasources_field_options: Options
+datasources_field_password: 密码
+datasources_field_port: 端口
+datasources_field_timezone: 时区
+datasources_field_url: 连接数据库的URL
+datasources_field_username: 用户名
+datasources_field_mssql_options: 连接选项
+datasources_group_other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
+datasources_group_mssql: Mssql
+datasources_listview_all: 所有

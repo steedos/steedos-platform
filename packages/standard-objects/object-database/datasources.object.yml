@@ -1,7 +1,12 @@
 name: datasources
 label: DataSource
-icon: utility.database
+icon: entity
 fields:
+  driver:
+    type: select
+    label: Driver
+    options: Mongo:mongo,Mssql:sqlserver,Postgres:postgres,Oracle:oracle,MySql:mysql,Sqlite:sqlite
+    required: true
   name:
     type: text
     label: Name
@@ -11,49 +16,57 @@ fields:
   label:
     type: text
     label: Label
-  is_enable:
-    type: boolean
-    label: Enable
-  driver:
-    type: select
-    label: Driver
-    options: Meteor Mongo:meteor-mongo,Mongo:mongo,SqlServer:sqlserver,Postgres:postgres,Oracle:oracle,MySql:mysql,Sqlite:sqlite
-    required: true
   url:
     type: text
     label: Url
-    is_wide: true
   host:
     type: text
-    label: Host
+    label: Database host
+    group: Other connection options
   port:
     type: text
-    label: Port
-  username:
-    type: text
-    label: Username
-  password:
-    type: text
-    label: Password
+    label: Database host port
+    group: Other connection options
   database:
     type: text
-    label: Database
-  connectString:
+    label: Database name
+    group: Other connection options
+  username:
     type: text
-    label: Connect string
+    label: Database username
+    group: Other connection options
+  password:
+    type: password
+    label: Database password
+    group: Other connection options
+  mssql_options:
+    type: textarea
+    label: Mssql connection options 
+    is_wide: true
+    group: Mssql
+  connectString:
+    type: textarea
+    label: connectString
+    is_wide: true
+    group: Oracle
   timezone:
     type: text
-    label: Ttimezone
+    label: Timezone
   options:
-    type: text
+    type: object
     label: Options
+    hidden: true
   enable_space:
     type: boolean
     omit: true
+    hidden: true
     label: Enable Space
   locale:
     type: text
     label: Locale
+  is_enable:
+    type: boolean
+    label: Enable
 list_views:
   all:
     columns:

@@ -3,6 +3,10 @@ var schema = objectql.getSteedosSchema();
 
 function loadDataSource(doc){
    console.log('loadDataSource', doc);
+   if(doc.mssql_options){
+       doc.options = JSON.parse(doc.mssql_options)
+       delete doc.mssql_options
+   }
    var datasource = schema.addDataSource(doc.name, doc); 
    datasource.init();
 }
