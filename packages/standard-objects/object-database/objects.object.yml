@@ -2,12 +2,35 @@ name: objects
 icon: orders
 label: Object
 fields:
+  datasource:
+    type: master_detail
+    label: Datasource
+    reference_to: datasources
+    showIcon: false
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function(){
+        var options = [{
+            label: t('objects_field_datasource_defaultValue'),
+            value: 'default'}];
+        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1}}).fetch();
+        _.each(spaceDatasources, function(doc){
+            options.push({label: doc.name, value: doc._id})
+        })
+        return options;
+      }
+    defaultValue: 'default'
   name:
     type: text
     label: Name
     searchable: true
     index: true
     required: true
+  table_name:
+    type: text
+    label: Table Name
+    index: true
+    searchable: true
   label:
     type: text
     label: Label
@@ -39,9 +62,9 @@ fields:
     label: Development State
     options: 
       - label: Developing ( Only administrators can access. )
-        value: 1
+        value: "1"
       - label: Deployed
-        value: 0 
+        value: "0" 
     defaultValue: "1"
     required: true
   enable_search:
@@ -138,6 +161,7 @@ fields:
     label: Custom
     type: boolean
     omit: true
+    hidden: true
   owner:
     type: lookup
     hidden: true

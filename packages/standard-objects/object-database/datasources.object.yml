@@ -1,0 +1,79 @@
+name: datasources
+label: DataSource
+icon: utility.database
+fields:
+  name:
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    required: true
+  label:
+    type: text
+    label: Label
+  is_enable:
+    type: boolean
+    label: Enable
+  driver:
+    type: select
+    label: Driver
+    options: Meteor Mongo:meteor-mongo,Mongo:mongo,SqlServer:sqlserver,Postgres:postgres,Oracle:oracle,MySql:mysql,Sqlite:sqlite
+    required: true
+  url:
+    type: text
+    label: Url
+    is_wide: true
+  host:
+    type: text
+    label: Host
+  port:
+    type: text
+    label: Port
+  username:
+    type: text
+    label: Username
+  password:
+    type: text
+    label: Password
+  database:
+    type: text
+    label: Database
+  connectString:
+    type: text
+    label: Connect string
+  timezone:
+    type: text
+    label: Ttimezone
+  options:
+    type: text
+    label: Options
+  enable_space:
+    type: boolean
+    omit: true
+    label: Enable Space
+  locale:
+    type: text
+    label: Locale
+list_views:
+  all:
+    columns:
+      - name
+      - label
+      - is_enable
+    label: All
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

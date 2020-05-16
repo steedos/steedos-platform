@@ -1,3 +1,12 @@
+function getFieldName(objectName, fieldName){
+  var object = Creator.getCollection("objects").findOne({name: objectName}, {fields: {datasource: 1}})
+  if(object.datasource && object.datasource != 'default'){
+    return fieldName;
+  }else{
+    return `${fieldName}__c`;
+  }
+}
+
 function _syncToObject(doc) {
   var fields, object_fields, table_fields;
   object_fields = Creator.getCollection("object_fields").find({
@@ -29,7 +38,7 @@ function _syncToObject(doc) {
     }
   });
   _.each(table_fields, function (f, k) {
-    k = k + '__c';
+    k = getFieldName(doc.object, k);
     if (fields[k].type === "grid") {
       if (!_.size(fields[k].fields)) {
         fields[k].fields = {};
@@ -140,7 +149,7 @@ Creator.Objects.object_fields.triggers = {
 
       if(_.has(modifier.$set, "_name")){
         checkName(modifier.$set._name)
-        modifier.$set.name = modifier.$set._name + '__c';
+        modifier.$set.name = getFieldName(doc.object, modifier.$set._name);
       }
 
       var _reference_to, object, object_documents, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
@@ -194,7 +203,7 @@ Creator.Objects.object_fields.triggers = {
       if(doc._name === 'name'){
         doc.name = doc._name;
       }else{
-        doc.name = doc._name + '__c';
+        doc.name = getFieldName(doc.object,doc._name);
       }
       if (isRepeatedName(doc)) {
         // console.log(`insert fields对象名称不能重复${doc.name}`);

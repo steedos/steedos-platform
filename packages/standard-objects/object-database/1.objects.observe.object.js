@@ -1,16 +1,30 @@
 var objectql = require('@steedos/objectql');
 
+function getDataSourceName(doc){
+    if(doc.datasource){
+        let datasource = Creator.getCollection("datasources").findOne({_id: doc.datasource})
+        if(datasource){
+            return datasource.name
+        }else if(doc.datasource != 'default'){
+            throw new Error('not find datasource ', doc.datasource);
+        }
+    }
+    return 'default'
+}
+
 function loadObject(doc){
-    if(!doc.name.endsWith("__c")){
+    if(!doc.name.endsWith("__c") && !doc.datasource){
         console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
         return;
     }
-    const datasource = objectql.getDataSource();
+    var datasourceName = getDataSourceName(doc);
+    const datasource = objectql.getDataSource(datasourceName);
     //继承base
-    objectql.addObjectConfig(doc, 'default');
+    objectql.addObjectConfig(doc, datasourceName);
     //获取到继承后的对象
     const _doc = objectql.getObjectConfig(doc.name);
     datasource.setObject(doc.name, _doc);
+    datasource.init();
     try {
         Creator.Objects[doc.name] = doc;
         Creator.loadObjects(doc, doc.name);
@@ -20,12 +34,14 @@ function loadObject(doc){
 }
 
 function removeObject(doc){
-    if(!doc.name.endsWith("__c")){
+    if(!doc.name.endsWith("__c") && !doc.datasource){
         console.warn('warn: Not deleted. Invalid custom object -> ', doc.name);
         return;
     }
-    const datasource = objectql.getDataSource();
-    objectql.removeObjectConfig(doc.name, 'default');
+    var datasourceName = getDataSourceName(doc);
+    console.log('removeObject', doc.name, doc.datasource);
+    const datasource = objectql.getDataSource(datasourceName);
+    objectql.removeObjectConfig(doc.name, datasourceName);
     datasource.removeObject(doc.name);
     Creator.removeObject(doc.name);
 }

@@ -63,6 +63,13 @@ function initObjectPermission(doc){
     }));
 }
 
+function getObjectName(doc, objectName){
+    if(doc.datasource && doc.datasource != 'default'){
+        return objectName;
+      }else{
+        return `${objectName}__c`;
+      }
+}
 
 Creator.Objects.objects.actions = {
     show_object: {
@@ -128,7 +135,7 @@ Creator.Objects.objects.triggers = {
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
             checkName(doc.name);
-            doc.name = doc.name + '__c';
+            doc.name = getObjectName(doc, doc.name);
             if (isRepeatedName(doc)) {
                 console.log(`object对象名称不能重复${doc.name}`);
                 throw new Meteor.Error(500, "对象名称不能重复");
@@ -143,6 +150,11 @@ Creator.Objects.objects.triggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
+
+            if(_.has(modifier.$set, "datasource") && modifier.$set.datasource != doc.datasource){
+                throw new Error("不能修改对象的数据源");
+            }
+
             var ref;
             if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
                 console.log("不能修改name");
@@ -223,7 +235,7 @@ Creator.Objects.objects.triggers = {
         when: "after.remove",
         todo: function (userId, doc) {
 
-            if(!doc.name.endsWith("__c")){
+            if(!doc.name.endsWith("__c") && !doc.datasource){
                 console.warn('warn: Not remove. Invalid custom object -> ', doc.name);
                 return;
             }        

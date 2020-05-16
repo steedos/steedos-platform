@@ -1,5 +1,5 @@
 name: object_fields
-icon: Object Fields
+icon: orders
 enable_api: true
 label: Object Fields
 fields:
@@ -20,31 +20,6 @@ fields:
     type: text
     required: true
     label: Label
-  is_name:
-    type: boolean
-    hidden: true
-    label: Is Name
-  object:
-    type: master_detail
-    label: Object
-    reference_to: objects
-    required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
   type:
     type: select
     label: Type
@@ -78,6 +53,37 @@ fields:
         value: url
       - label: email
         value: email     
+  is_name:
+    type: boolean
+    label: Is Name
+  primary:
+    type: boolean
+    label: Primary Key
+  generated:
+    type: boolean
+    label: Generated
+  object:
+    type: master_detail
+    label: Object
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+
   sort_no:
     label: Sort Number
     type: number
