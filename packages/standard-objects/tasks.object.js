@@ -10,11 +10,11 @@ var addNotifications = function(userId, doc, assignees){
         _id: userId
     }, {
         fields: {
-            name: 1
+            name: 1,
+            locale: 1
         }
     });
-    var lang = Creator.getCollection("users").findOne({_id: userId}).locale;
-    var notificationTitle = fromUser.name + t('tasks_js_addNotifications_notificationTitle', {}, lang );
+    var notificationTitle = fromUser.name + t('tasks_js_addNotifications_notificationTitle', {}, fromUser.locale);
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,
