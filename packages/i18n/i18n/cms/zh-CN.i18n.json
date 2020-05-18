@@ -16,6 +16,7 @@
 
     
     "cms_post_error_remove_reads_fail": "删除文章阅读记录失败",
+    "cms_posts_error_no_object": "未找到当前对象：",
 
     "cms_posts_none": "没有文章.",
     "cms_posts_new": "新建文章",
