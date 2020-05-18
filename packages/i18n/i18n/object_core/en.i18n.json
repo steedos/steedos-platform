@@ -163,5 +163,7 @@
 	"users_email_reset_password": "How to reset your password on Steedos",
 	"users_email_reset_password_body": "Your token code is {$token_code}\r\nTo reset your password, input the token code above at the password reset page or simply click the link below.",
 	"users_email_hello": "Hello",
-	"users_email_thanks": "Thanks."
+	"users_email_thanks": "Thanks.",
+
+	"tasks_js_addNotifications_notificationTitle": " assigned a task to you"	
 }

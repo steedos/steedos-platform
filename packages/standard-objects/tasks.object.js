@@ -13,7 +13,8 @@ var addNotifications = function(userId, doc, assignees){
             name: 1
         }
     });
-    var notificationTitle = fromUser.name + " 为您分配了任务";
+    var lang = Creator.getCollection("users").findOne({_id: userId}).locale;
+    var notificationTitle = fromUser.name + t('tasks_js_addNotifications_notificationTitle', {}, lang );
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,

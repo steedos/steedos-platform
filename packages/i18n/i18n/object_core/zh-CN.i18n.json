@@ -166,6 +166,8 @@
 	"users_email_reset_password": "重新设置您的密码",
 	"users_email_reset_password_body": "您的验证码为：{$token_code}\r\n请在密码重置界面输入上面的验证码，或点击以下链接，重新设置您的登录密码。",
 	"users_email_hello": "您好",
-	"users_email_thanks": "谢谢！"
+	"users_email_thanks": "谢谢！",
+
+	"tasks_js_addNotifications_notificationTitle": "为您分配了一个任务"	
 
 }
