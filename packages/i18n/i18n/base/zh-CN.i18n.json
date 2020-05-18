@@ -486,5 +486,8 @@
 	"nw_top_button_refresh": "重新加载此页面",
 
 	"menu_account": "个人账户设置",
-	"menu_account_background": "背景图"
+	"menu_account_background": "背景图",
+
+	"notifications__object": "通知",
+	"favorites__object": "我的收藏夹"
 }

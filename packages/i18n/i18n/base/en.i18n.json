@@ -467,5 +467,8 @@
 	"nw_top_button_refresh": "Reload this page",
 
 	"menu_account": "My Account",
-	"menu_account_background": "Background"
+	"menu_account_background": "Background",
+
+	"notifications__object": "Notifications",
+	"favorites__object": "My Favorite"
 }
