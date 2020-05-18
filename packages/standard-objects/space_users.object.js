@@ -66,7 +66,7 @@ Meteor.startup(function () {
                 });
     
                 if(userExist.count() > 0){
-                    throw new Meteor.Error(400, t("space_users_error_user_exists"));
+                    throw new Meteor.Error(400, "space_users_error_user_exists");
                 }
                 spaceUserExisted = db.space_users.find({
                     space: doc.space,
