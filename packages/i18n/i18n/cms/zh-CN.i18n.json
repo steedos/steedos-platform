@@ -24,6 +24,7 @@
     "cms_categories_new": "新建栏目",
     "cms_categories_error_has_children": "该栏目下有子栏目，不能删除",
     "cms_categories_error_has_posts": "该栏目下有文章，不能删除",
+    "cms_categories_error_no_object": "未找到当前对象：",
 
 
 
