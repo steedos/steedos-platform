@@ -165,5 +165,6 @@
 	"users_email_hello": "Hello",
 	"users_email_thanks": "Thanks.",
 
-	"tasks_js_addNotifications_notificationTitle": " assigned a task to you"	
+	"tasks_js_addNotifications_notificationTitle": " assigned a task to you",	
+	"events_js_addNotifications_notificationTitle": " assigned an event to you"
 }

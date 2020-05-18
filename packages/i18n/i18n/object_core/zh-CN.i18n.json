@@ -168,6 +168,7 @@
 	"users_email_hello": "您好",
 	"users_email_thanks": "谢谢！",
 
-	"tasks_js_addNotifications_notificationTitle": "为您分配了一个任务"	
+	"tasks_js_addNotifications_notificationTitle": "为您分配了一个任务",
+	"events_js_addNotifications_notificationTitle": "为您安排了日程"
 
 }
