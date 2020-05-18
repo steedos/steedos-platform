@@ -412,8 +412,15 @@
 	"creator_report_drill_down_label": " Drill Down Data",
 	"creator_report_drill_down_total_label": " Total",
 	"creator_report_dropdown_menu_options": "Options",
+	"creator_report_dropdown_menu_options_show": "Show",
+	"creator_report_dropdown_menu_options_grouping": "Grouping",
+	"creator_report_dropdown_menu_options_totaling": "Totaling",
+	"creator_report_dropdown_menu_options_counting": "Counting",
 	"creator_report_dropdown_menu_export_excel": "Export To EXCEL",
 	"creator_report_dropdown_menu_export_pdf": "Export To PDF",
+	"creator_report_switch_chart_open": "Switch To Open Or Close Chart",
+	"creator_report_design_mode": "Design Mode",
+	"creator_report_filter_empty": "Please set the report filters on the right.",
 
 	"creator_listview_update":"list view updated",
 
