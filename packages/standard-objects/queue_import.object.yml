@@ -59,7 +59,7 @@ fields:
     label: Separator
     type: select
     options:
-      - label: 逗号
+      - label: ','
         value: ','
     omit: true
     name: value_separator
@@ -77,7 +77,7 @@ fields:
                 var _object = Creator.getObject(values.object_name);
                 if(_object){
                   var icon = _object.icon;
-                  return [{label: "主键(_id)", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+                  return [{label: "Primary Key ( _id )", value: "_id", icon: "account"}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
                 }
               }else{
                 return []
@@ -99,7 +99,7 @@ fields:
                 var _object = Creator.getObject(values.object_name);
                 if(_object){
                   var icon = _object.icon;
-                  return [{label: "主键(_id)", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+                  return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
                 }
               }else{
                 return []
@@ -172,7 +172,7 @@ permission_set:
 
 actions:
   import:
-    label: 执行导入
+    label: 'Perform Import'
     visible: true
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
