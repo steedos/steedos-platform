@@ -3,8 +3,8 @@ cms_posts_field_body: 正文
 cms_posts_field_category: 栏目
 cms_posts_field_htmlBody: 正文
 cms_posts_field_members: 授权查看
-cms_posts_field_members.organizations: 部门
-cms_posts_field_members.users: 人员
+cms_posts_field_members_organizations: 部门
+cms_posts_field_members_users: 人员
 cms_posts_field_name: 标题
 cms_posts_field_site: 站点
 cms_posts_field_summary: 摘要
