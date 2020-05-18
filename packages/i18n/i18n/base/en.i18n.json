@@ -86,7 +86,7 @@
 	"Support Request": "Support Request",
 	"Online Help": "Online Help",
 	"My Account": "My Account",
-	"Logout": "Logout",
+	"Logout": "Log Out",
 	"Contact Form": "Contact Form",
 	"Full Name": "Full Name",
 	"Body": "Body",
@@ -110,6 +110,7 @@
 	"Settings": "Settings",
 	"Select Space": "Select Space",
 	"Add space": "Add space",
+	"Switch Company": "Switch Company",
 
 	"bqq": "Business QQ",
 	"dingtalk": "Dingtalk",

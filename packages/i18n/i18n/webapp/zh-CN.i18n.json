@@ -10,6 +10,6 @@
 	"webapp_favorites_action_not_support": "此项目不支持收藏夹",
 	"webapp_favorites_action_remove": "删除收藏夹",
 	"webapp_favorites_action_add": "添加收藏夹",
-	"webapp_header_profile_settings": "账户设置",
-	"webapp_header_profile_logout": "注销"
+	"webapp_header_profile_settings": "设置",
+	"webapp_header_profile_logout": "退出"
 }
