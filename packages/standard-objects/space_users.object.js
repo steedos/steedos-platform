@@ -22,7 +22,7 @@ Meteor.startup(function () {
             if(doc.user){
                 user = db.users.findOne({ _id: doc.user }, {fields: { _id: 1}})
                 if(!user){
-                    throw new Meteor.Error(400, "未找到用户");
+                    throw new Meteor.Error(400, "space_users_error_user_not_found");
                 }
                 spaceUserExisted = db.space_users.find({space: doc.space,user: doc.user}, {fields: { _id: 1}});
 
@@ -66,7 +66,7 @@ Meteor.startup(function () {
                 });
     
                 if(userExist.count() > 0){
-                    throw new Meteor.Error(400, "用户已存在, 请使用邀请功能");
+                    throw new Meteor.Error(400, t("space_users_error_user_exists"));
                 }
                 spaceUserExisted = db.space_users.find({
                     space: doc.space,
@@ -79,13 +79,13 @@ Meteor.startup(function () {
             }
 
             if (spaceUserExisted.count() > 0) {
-                throw new Meteor.Error(400, "该用户已在此工作区");
+                throw new Meteor.Error(400, "space_users_error_space_user_exists");
             }
         };
         db.space_users.updatevaildate = function (userId, doc, modifier) {
             var addOrgs, currentUserPhonePrefix, isAllAddOrgsAdmin, isAllSubOrgsAdmin, isOrgAdmin, newOrgs, oldOrgs, phoneNumber, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, repeatEmailUser, repeatNumberUser, space, subOrgs;
             if (doc.invite_state === "refused" || doc.invite_state === "pending") {
-                throw new Meteor.Error(400, "该用户还未接受加入工作区，不能修改他的个人信息");
+                throw new Meteor.Error(400, "space_users_error_unaccepted_user_readonly");
             }
             space = db.spaces.findOne(doc.space);
             if (!space) {
@@ -121,14 +121,14 @@ Meteor.startup(function () {
                 }
             }
             if (((ref5 = modifier.$unset) != null ? ref5.email : void 0) !== void 0) {
-                throw new Meteor.Error(400, "必须填写邮件");
+                throw new Meteor.Error(400, "space_users_error_email_required");
             }
             if (((ref6 = modifier.$set) != null ? ref6.email : void 0) && modifier.$set.email !== doc.email) {
                 repeatEmailUser = db.users.findOne({
                     "email": modifier.$set.email
                 });
                 if (repeatEmailUser && repeatEmailUser._id !== doc.user) {
-                    throw new Meteor.Error(400, "该邮箱已被占用");
+                    throw new Meteor.Error(400, "space_users_error_email_already_existed");
                 }
             }
             if (((ref8 = modifier.$set) != null ? ref8.mobile : void 0) && modifier.$set.mobile !== doc.mobile) {
@@ -976,13 +976,13 @@ Creator.Objects['space_users'].actions = {
             $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
 
             clipboard.on('success', function(e) {
-                toastr.success("企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。");
+                toastr.success("space_users_aciton_invite_space_users_success");
                 e.clearSelection();
                 clipboard.destroy();
             });
             
             clipboard.on('error', function(e) {
-                toastr.error("团队邀请链接复制失败");
+                toastr.error("space_users_aciton_invite_space_users_error");
                 console.error('Action:', e.action);
                 console.error('Trigger:', e.trigger);
                 console.log('address', address);
