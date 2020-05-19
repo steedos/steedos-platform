@@ -91,13 +91,17 @@ export class SteedosSchema {
         return datasource.getObject(object_name)
     }
 
-    addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
-        if(this._datasources[datasource_name]){
+    addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig, readd?: boolean) {
+        if(this._datasources[datasource_name] && !readd){
             throw new Error(`datasource ${datasource_name} existed`);
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
         this._datasources[datasource_name] = datasource
         return datasource;
+    }
+
+    removeDataSource(datasource_name){
+        
     }
 
     /**
