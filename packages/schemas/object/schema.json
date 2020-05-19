@@ -258,6 +258,10 @@
                     "type": "boolean",
                     "description": "将当前字段叫标记为name字段，用于选择数据时的显示名称"
                 },
+                "column_name": {
+                    "type": "string",
+                    "description": "数据库字段名"
+                },
                 "object": {
                     "type": "string",
                     "description": "字段所属对象"

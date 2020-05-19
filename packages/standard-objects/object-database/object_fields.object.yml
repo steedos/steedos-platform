@@ -31,6 +31,12 @@ fields:
     hidden: true
     omit: true
     # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
+  column_name:
+    type: text
+    label: Database column name
+    inlineHelpText: Only supports relational databases
+    searchable: true
+    index: true
   _name:
     type: text
     label: _name
@@ -169,6 +175,7 @@ list_views:
   all:
     columns:
       - name
+      - column_name
       - label
       - type
       - object

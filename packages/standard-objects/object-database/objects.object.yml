@@ -203,7 +203,9 @@ list_views:
   all:
     columns:
       - name
+      - table_name
       - label
+      - datasource
       - in_development
       - modified
     label: All
