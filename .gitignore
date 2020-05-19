@@ -12,7 +12,7 @@
 **/yarn-error.log
 **/lerna-debug.log
 
-**/lib
+/packages/**/lib
 
 **/.vscode/launch.*
 
