@@ -439,6 +439,12 @@
 	"creator_report_switch_chart_open": "切换图表",
 	"creator_report_design_mode": "设计模式",
 	"creator_report_filter_empty": "请在右侧设定报表筛选条件。",
+	"creator_report_caption_sum": "总和",
+	"creator_report_caption_count": "计数",
+	"creator_report_format_sum_count": "总计 (%s条记录)",
+	"creator_report_error_object_not_found": "未找到对象“%s”，请确认该报表指定的对象名是否正确",
+	"creator_report_error_object_field_not_found": "未找到对象“{$object_name}”的字段“{$field_name}”，请确认该报表中指定的字段名是否正确",
+	"creator_report_error_max": "统计数据达{$count}条记录，已超出限制，以下统计结果基于前{$max}条记录",
 
 	"creator_listview_update":"列表视图已更新",
 

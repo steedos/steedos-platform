@@ -421,6 +421,12 @@
 	"creator_report_switch_chart_open": "Switch To Open Or Close Chart",
 	"creator_report_design_mode": "Design Mode",
 	"creator_report_filter_empty": "Please set the report filters on the right.",
+	"creator_report_caption_sum": "Sum",
+	"creator_report_caption_count": "Count",
+	"creator_report_format_sum_count": "Sum (%s records)",
+	"creator_report_error_object_not_found": "Object '%s' was not found. Make sure the object name specified in this report is correct.",
+	"creator_report_error_object_field_not_found": "Field '{$field_name}' for object '{$object_name}' was not found, please confirm that the field name specified in this report is correct.",
+	"creator_report_error_max": "The statistics are up to {$count} records and have exceeded the limit. The following statistics are based on the previous {$max} records.",
 
 	"creator_listview_update":"list view updated",
 
