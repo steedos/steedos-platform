@@ -1,3 +1,11 @@
+function canRemoveNameFileld(doc){
+  var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
+  if(object.datasource && object.datasource != 'default'){
+    return true;
+  }
+  return false;
+}
+
 function getFieldName(objectName, fieldName){
   var object = Creator.getCollection("objects").findOne({name: objectName}, {fields: {datasource: 1}})
   if(object.datasource && object.datasource != 'default'){
@@ -99,6 +107,7 @@ function hasMultipleMasterDetailTypeFiled(doc) {
 //只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符 TODO 支持表格
 function checkName(name){
   var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$'); //支持表格类型的验证表达式(待优化.$.限制只能出现一次): new RegExp('^[a-z]([a-z0-9]|_(?!_))*(\\.\\$\\.\\w+)*[a-z0-9]$')
+  //TODO 撤销注释
   if(!reg.test(name)){
     throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
   }
@@ -223,7 +232,7 @@ Creator.Objects.object_fields.triggers = {
     on: "server",
     when: "before.remove",
     todo: function (userId, doc) {
-      if (doc.name === "name") {
+      if (doc.name === "name" && !canRemoveNameFileld(doc)) {
         throw new Meteor.Error(500, "不能删除此纪录");
       }
     }

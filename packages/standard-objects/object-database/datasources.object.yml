@@ -24,7 +24,8 @@ fields:
     label: Database host
     group: Other connection options
   port:
-    type: text
+    type: number
+    scale: 0
     label: Database host port
     group: Other connection options
   database:
@@ -75,6 +76,11 @@ list_views:
       - is_enable
     label: All
     filter_scope: space
+actions:
+  testConnection:
+    label: Test connection
+    on: record
+    visible: true
 permission_set:
   user:
     allowCreate: false

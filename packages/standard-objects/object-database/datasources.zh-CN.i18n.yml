@@ -1,4 +1,4 @@
-datasources__object: 数据源
+datasources__object: 外部数据源
 datasources_field_database: 数据库
 datasources_field_driver: 数据库类型
 datasources_field_driver_options_meteor-mongo: Meteor Mongo
@@ -24,3 +24,5 @@ datasources_field_mssql_options: 连接选项
 datasources_group_other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
 datasources_group_mssql: Mssql
 datasources_listview_all: 所有
+datasources_action_testConnection: 测试链接
+_datasources_testConnection_ok: 连接成功

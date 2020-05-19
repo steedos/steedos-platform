@@ -1,1 +1,2 @@
 datasources_group_other_connection_options: Other connection options (Please note that other connection options will override parameters set from url.)
+_datasources_testConnection_ok: Test OK
