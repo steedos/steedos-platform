@@ -42,25 +42,16 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     abstract getConnectionOptions(): ConnectionOptions;
 
-    //TODO 查看源码，确认createConnection逻辑，防止reconnect存在隐患
     async connect(reconnect?) {
         if (!this._entities) {
             throw new Error("Entities must be registered before connect");
         }
         if (!this._client || reconnect) {
-            console.log('driver reconnect...');
             let options = this.getConnectionOptions();
             this._client = await createConnection(options);
             this.databaseVersion = await this.getDatabaseVersion();
-            console.log('driver connect end...');
             return true;
         }
-        
-        // else if(reconnect){
-        //     console.log('driver reconnect ', this._url);
-        //     await this.close();
-        //     return await this.connect();
-        // }
     }
 
     async close() {
