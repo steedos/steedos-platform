@@ -976,13 +976,13 @@ Creator.Objects['space_users'].actions = {
             $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
 
             clipboard.on('success', function(e) {
-                toastr.success("space_users_aciton_invite_space_users_success");
+                toastr.success(t("space_users_aciton_invite_space_users_success"));
                 e.clearSelection();
                 clipboard.destroy();
             });
             
             clipboard.on('error', function(e) {
-                toastr.error("space_users_aciton_invite_space_users_error");
+                toastr.error(t("space_users_aciton_invite_space_users_error"));
                 console.error('Action:', e.action);
                 console.error('Trigger:', e.trigger);
                 console.log('address', address);
