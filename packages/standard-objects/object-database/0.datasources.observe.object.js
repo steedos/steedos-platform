@@ -1,6 +1,7 @@
 var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
 var objectCore = require('./objects.core.js');
+const datasourceCore = require('./datasources.core');
 
 function loadDataSourceObjects(doc){
     Creator.getCollection('objects').find({space: doc.space, datasource: doc._id}).forEach(function(object){
@@ -9,14 +10,19 @@ function loadDataSourceObjects(doc){
 }
 
 function loadDataSource(doc, server_datasources_init) {
-    if (doc.mssql_options) {
-        doc.options = JSON.parse(doc.mssql_options)
-        delete doc.mssql_options
-    }
-    var datasource = schema.addDataSource(doc.name, doc, true);
-    datasource.init();
-    if (server_datasources_init) {
-        loadDataSourceObjects(doc);
+    try {
+        datasourceCore.checkDriver(doc.driver);
+        if (doc.mssql_options) {
+            doc.options = JSON.parse(doc.mssql_options)
+            delete doc.mssql_options
+        }
+        var datasource = schema.addDataSource(doc.name, doc, true);
+        datasource.init();
+        if (server_datasources_init) {
+            loadDataSourceObjects(doc);
+        }
+    } catch (error) {
+        console.error(`Load dataSource [${doc.name}] error: `, t(error.message))
     }
 }
 

@@ -1,6 +1,7 @@
 const _ = require("underscore");
 var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
+const datasourceCore = require('./datasources.core');
 const defaultDatasourceName = 'default';
 
 Meteor.publish("datasources", function (spaceId) {
@@ -21,16 +22,20 @@ Creator.Objects['datasources'].methods = {
             var spaceId = userSession.spaceId
             let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq ${spaceId})`});
             if(doc){
+                var datasource;
                 try {
+                    datasourceCore.checkDriver(doc.driver);
                     let datasourceName =  `${recordId}_${spaceId}_${doc.name}__test`
                     doc.name = datasourceName
-                    var datasource = schema.addDataSource(doc.name, doc, true); 
+                    datasource = schema.addDataSource(doc.name, doc, true); 
                     await datasource._adapter.init({});
                     await datasource.close();
                     return res.send({ok: 1});
                 } catch (error) {
-                    await datasource.close();
-                    return res.status(500).send({error: error.toString()});
+                    if(datasource){
+                        await datasource.close();
+                    }
+                    return res.status(500).send({error: error.message || error.toString()});
                 }
             }
             return res.status(404).send({error: 'not find'});
@@ -100,6 +105,11 @@ Creator.Objects.datasources.triggers = {
             if (isRepeatedName(doc._id, doc.name)) {
                 throw new Meteor.Error(500, "数据源名称不能重复");
             }
+
+            if(doc.is_enable){
+                datasourceCore.checkDriver(doc.driver)
+            }
+
             doc.custom = true;
         }
     },
@@ -117,6 +127,10 @@ Creator.Objects.datasources.triggers = {
                 if (isRepeatedName(doc._id, modifier.$set.name)) {
                     throw new Meteor.Error(500, "数据源名称不能重复");
                 }
+            }
+
+            if(_.has(modifier.$set, "is_enable") && modifier.$set.is_enable || _.has(modifier.$set, "driver")){
+                datasourceCore.checkDriver(doc.driver)
             }
         }
     },

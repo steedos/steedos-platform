@@ -21,7 +21,7 @@ function getDataSourceName(doc){
 
 function loadObject(doc){
     if(!doc.name.endsWith("__c") && !doc.datasource){
-        // console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
+        console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
         return;
     }
 
@@ -33,6 +33,12 @@ function loadObject(doc){
 
     var datasourceName = getDataSourceName(doc);
     const datasource = objectql.getDataSource(datasourceName);
+
+    if(!datasource){
+        console.warn(`warn: Not loaded object [${doc.name}]. Cant not find datasource -> `, datasourceName);
+        return ;
+    }
+
     //继承base
     objectql.addObjectConfig(doc, datasourceName);
     //获取到继承后的对象

@@ -35,7 +35,7 @@ module.exports = {
                     console.error(XMLHttpRequest.responseJSON);
                     $("body").removeClass("loading");
                     if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
-                        toastr.error(XMLHttpRequest.responseJSON.error)
+                        toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
                     }
                     else {
                         toastr.error(XMLHttpRequest.responseJSON)
