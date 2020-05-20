@@ -63,12 +63,14 @@ function removeObject(doc){
     var datasourceName = getDataSourceName(doc);
     const datasource = objectql.getDataSource(datasourceName);
     objectql.removeObjectConfig(doc.name, datasourceName);
-    datasource.removeObject(doc.name);
+    if(datasource){
+        datasource.removeObject(doc.name);
+    }
     if(!datasourceName || datasourceName == 'default'){
         Creator.removeObject(doc.name);
     }
 }
 
 module.exports = {
-    loadObject,removeObject
+    loadObject,removeObject,getDataSourceName
 }

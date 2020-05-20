@@ -20,7 +20,7 @@ export class SteedosSchema {
         let objectMap = this.getObjectMap(objectName);
         if(objectMap){
             if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
-                throw new Error(`object name ${objectName} is unique, you can set table_name. see: https://developer.steedos.com/docs/en/object/#%E8%A1%A8%E5%90%8D-table_name`)
+                throw new Error(`object name ${objectName} is unique, you can set table_name. see：https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
             }
         }
         this._objectsMap[objectName] = options

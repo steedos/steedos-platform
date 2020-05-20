@@ -1,6 +1,26 @@
 var objectql = require('@steedos/objectql');
+const _ = require('underscore');
+var objectCore = require('./objects.core.js');
+const internalBaseObjects = ['base', 'core'];
+
+function isInternalObjects(name, datasourceName){
+    if(_.include(internalBaseObjects, name)){
+        return true;
+    }
+
+    let objMap = objectql.getSteedosSchema().getObjectMap(name);
+    if(objMap && (!objMap.datasourceName || objMap.datasourceName != datasourceName)){
+        return true;
+    }
+    return false;
+}
 
 function isRepeatedName(doc) {
+    let datasourceName = objectCore.getDataSourceName(doc);
+    if(isInternalObjects(doc.name, datasourceName)){
+        return true;
+    }
+    
     var other;
     other = Creator.getCollection("objects").find({
         _id: {
