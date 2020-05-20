@@ -81,6 +81,22 @@ Creator.Objects.objects.actions = {
             if(!record){
                 return toastr.error("未找到记录");
             }
+
+            if(record.is_enable === false){
+                return toastr.warning("请先启动对象");
+            }
+
+            if(record.datasource && record.datasource != 'default'){
+                var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
+                if(!datasource){
+                    return toastr.error("未找到数据源");
+                }
+                if(!datasource.is_enable){
+                    return toastr.warning("请先启动数据源");
+                }
+            }
+
+
             Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
         }
     },
@@ -215,19 +231,19 @@ Creator.Objects.objects.triggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
-            var documents, object_collections;
-            if (doc.app_unique_id && doc.app_version) {
-                return;
-            }
-            object_collections = Creator.getCollection(doc.name, doc.space);
-            documents = object_collections.find({}, {
-                fields: {
-                    _id: 1
-                }
-            });
-            if (documents.count() > 0) {
-                throw new Meteor.Error(500, `对象(${doc.name})中已经有记录，请先删除记录后， 再删除此对象`);
-            }
+            // var documents, object_collections;
+            // if (doc.app_unique_id && doc.app_version) {
+            //     return;
+            // }
+            // object_collections = Creator.getCollection(doc.name, doc.space);
+            // documents = object_collections.find({}, {
+            //     fields: {
+            //         _id: 1
+            //     }
+            // });
+            // if (documents.count() > 0) {
+            //     throw new Meteor.Error(500, `对象(${doc.name})中已经有记录，请先删除记录后， 再删除此对象`);
+            // }
         }
     },
     "after.remove.server.objects": {
@@ -263,15 +279,15 @@ Creator.Objects.objects.triggers = {
                 space: doc.space
             });
             //drop collection
-            console.log("drop collection", doc.name);
-            try {
-                //					Creator.getCollection(doc.name)._collection.dropCollection()
-                return Creator.Collections[doc.name]._collection.dropCollection();
-            } catch (error) {
-                e = error;
-                console.error(doc.name, `${e.stack}`);
-                throw new Meteor.Error(500, `对象(${doc.name})不存在或已被删除`);
-            }
+            // console.log("drop collection", doc.name);
+            // try {
+            //     //					Creator.getCollection(doc.name)._collection.dropCollection()
+            //     return Creator.Collections[doc.name]._collection.dropCollection();
+            // } catch (error) {
+            //     e = error;
+            //     console.error(doc.name, `${e.stack}`);
+            //     throw new Meteor.Error(500, `对象(${doc.name})不存在或已被删除`);
+            // }
         }
     },
     // "after.update.server.dynamic_load": {

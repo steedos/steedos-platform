@@ -1,21 +1,36 @@
 var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
+var objectCore = require('./objects.core.js');
 
-function loadDataSource(doc){
-   console.log('loadDataSource', doc);
-   if(doc.mssql_options){
-       doc.options = JSON.parse(doc.mssql_options)
-       delete doc.mssql_options
-   }
-   var datasource = schema.addDataSource(doc.name, doc); 
-   datasource.init();
+function loadDataSourceObjects(doc){
+    Creator.getCollection('objects').find({space: doc.space, datasource: doc._id}).forEach(function(object){
+        objectCore.loadObject(object);
+    })
+}
+
+function loadDataSource(doc, server_datasources_init) {
+    if (doc.mssql_options) {
+        doc.options = JSON.parse(doc.mssql_options)
+        delete doc.mssql_options
+    }
+    var datasource = schema.addDataSource(doc.name, doc, true);
+    datasource.init();
+    if (server_datasources_init) {
+        loadDataSourceObjects(doc);
+    }
+}
+
+function removeDataSource(doc){
+    schema.removeDataSource(doc.name).catch(result => {
+        console.error(result)
+    })
 }
 
 
 Meteor.startup(function () {
     var _change, _remove;
-    _change = function (document) {
-        loadDataSource(document)
+    _change = function (document, server_datasources_init) {
+        loadDataSource(document, server_datasources_init)
     };
     _remove = function (document) {
         removeDataSource(document);
@@ -24,7 +39,8 @@ Meteor.startup(function () {
     if(config.tenant && config.tenant.saas){
         return ;
     }else{
-        Creator.getCollection("datasources").find({}, {
+        server_datasources_init = false;
+        Creator.getCollection("datasources").find({is_enable: true}, {
             fields: {
                 created: 0,
                 created_by: 0,
@@ -33,14 +49,15 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                return _change(newDocument);
+                return _change(newDocument, server_datasources_init);
             },
             changed: function (newDocument, oldDocument) {
-                return _change(newDocument);
+                return _change(newDocument, server_datasources_init);
             },
             removed: function (oldDocument) {
                 return _remove(oldDocument);
             }
         });
+        server_datasources_init = true;
     }
 });

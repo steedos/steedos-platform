@@ -100,8 +100,15 @@ export class SteedosSchema {
         return datasource;
     }
 
-    removeDataSource(datasource_name){
-        
+    async removeDataSource(datasource_name){
+        if(datasource_name != defaultDatasourceName){
+            if(this._datasources[datasource_name]){
+                await this._datasources[datasource_name].close();
+                delete this._datasources[datasource_name];
+            }
+        }else{
+            throw new Error('Can not remove default datasource');
+        }
     }
 
     /**

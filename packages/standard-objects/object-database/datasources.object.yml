@@ -65,6 +65,9 @@ fields:
   locale:
     type: text
     label: Locale
+  logging:
+    type: boolean
+    label: Debug
   is_enable:
     type: boolean
     label: Enable

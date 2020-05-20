@@ -354,7 +354,6 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         // if (!this._entities) {
         //     this._entities = this.getEntities(objects);
         // }
-        console.log('registerEntities', _.keys(objects))
         this._entities = this.getEntities(objects);
     }
 

@@ -54,9 +54,10 @@ fields:
 
               return options;
             }
-  # is_enable:
-  #   type: boolean
-  #   defaultValue: true
+  is_enable:
+    label: Enable
+    type: boolean
+    defaultValue: true
   in_development:
     type: select
     label: Development State
@@ -206,6 +207,7 @@ list_views:
       - table_name
       - label
       - datasource
+      - is_enable
       - in_development
       - modified
     label: All
