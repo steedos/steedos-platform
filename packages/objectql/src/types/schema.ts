@@ -20,7 +20,7 @@ export class SteedosSchema {
         let objectMap = this.getObjectMap(objectName);
         if(objectMap){
             if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
-                throw new Error(`object name ${objectName} is unique, you can set table_name. see：https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
+                throw new Error(`object name ${objectName} is unique, you can set table_name; see：https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
             }
         }
         this._objectsMap[objectName] = options
@@ -102,9 +102,19 @@ export class SteedosSchema {
 
     async removeDataSource(datasource_name){
         if(datasource_name != defaultDatasourceName){
-            if(this._datasources[datasource_name]){
-                await this._datasources[datasource_name].close();
+            let datasource = this._datasources[datasource_name];
+            if(datasource){
                 delete this._datasources[datasource_name];
+                console.log('keys', _.keys(_.find(this._objectsMap, function(map){
+                    return map && map.datasourceName === datasource_name
+                })));
+                _.each(_.keys(_.find(this._objectsMap, function(map){
+                    return map && map.datasourceName === datasource_name
+                })), (key)=>{
+                    console.log('delete this._objectsMap key is', key);
+                    delete this._objectsMap[key]
+                })
+                await datasource.close();
             }
         }else{
             throw new Error('Can not remove default datasource');

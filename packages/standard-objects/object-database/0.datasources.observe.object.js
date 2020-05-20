@@ -9,13 +9,18 @@ function loadDataSourceObjects(doc){
     })
 }
 
-function loadDataSource(doc, server_datasources_init) {
+function loadDataSource(doc, oldDoc, server_datasources_init) {
     try {
         datasourceCore.checkDriver(doc.driver);
         if (doc.mssql_options) {
             doc.options = JSON.parse(doc.mssql_options)
             delete doc.mssql_options
         }
+
+        if(oldDoc && doc.name != oldDoc.name){
+            removeDataSource(oldDoc);
+        }
+
         var datasource = schema.addDataSource(doc.name, doc, true);
         datasource.init();
         if (server_datasources_init) {
@@ -34,11 +39,10 @@ function removeDataSource(doc){
 
 
 Meteor.startup(function () {
-    var _change, _remove;
-    _change = function (document, server_datasources_init) {
-        loadDataSource(document, server_datasources_init)
+    var _change = function (document, oldDocument, server_datasources_init) {
+        loadDataSource(document, oldDocument, server_datasources_init)
     };
-    _remove = function (document) {
+    var _remove = function (document) {
         removeDataSource(document);
     };
     var config = objectql.getSteedosConfig();
@@ -55,10 +59,10 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                return _change(newDocument, server_datasources_init);
+                return _change(newDocument, null, server_datasources_init);
             },
             changed: function (newDocument, oldDocument) {
-                return _change(newDocument, server_datasources_init);
+                return _change(newDocument, oldDocument, server_datasources_init);
             },
             removed: function (oldDocument) {
                 return _remove(oldDocument);
