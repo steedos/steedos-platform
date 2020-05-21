@@ -1,14 +1,26 @@
 var objectql = require('@steedos/objectql');
+const defaultDatasourceName = 'default';
+function canLoadObject(name, datasource){
+    if(!datasource || datasource === defaultDatasourceName){
+        if(!name.endsWith('__c')){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return true;
+    }
+}
 
 function getDataSource(doc){
-    if(doc.datasource && doc.datasource != 'default'){
+    if(doc.datasource && doc.datasource != defaultDatasourceName){
         let datasource = Creator.getCollection("datasources").findOne({_id: doc.datasource})
         return datasource;
     }
 }
 
 function getDataSourceName(doc){
-    if(doc.datasource && doc.datasource != 'default'){
+    if(doc.datasource && doc.datasource != defaultDatasourceName){
         let datasource = Creator.getCollection("datasources").findOne({_id: doc.datasource})
         if(datasource){
             return datasource.name
@@ -16,17 +28,17 @@ function getDataSourceName(doc){
             throw new Error('not find datasource ', doc.datasource);
         }
     }
-    return 'default'
+    return defaultDatasourceName
 }
 
 function loadObject(doc, oldDoc){
-    if(!doc.name.endsWith("__c") && !doc.datasource){
+    if(!canLoadObject(doc.name, doc.datasource)){
         console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
         return;
     }
 
     var datasourceDoc = getDataSource(doc);
-    if(doc.datasource && doc.datasource != 'default' && (!datasourceDoc || !datasourceDoc.is_enable)){
+    if(doc.datasource && doc.datasource != defaultDatasourceName && (!datasourceDoc || !datasourceDoc.is_enable)){
         console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
         return ;
     }
@@ -50,7 +62,7 @@ function loadObject(doc, oldDoc){
     datasource.setObject(doc.name, _doc);
     datasource.init();
     try {
-        if(!datasourceName || datasourceName == 'default'){
+        if(!datasourceName || datasourceName == defaultDatasourceName){
             Creator.Objects[doc.name] = doc;
             Creator.loadObjects(doc, doc.name);
         }
@@ -70,11 +82,15 @@ function removeObject(doc){
     if(datasource){
         datasource.removeObject(doc.name);
     }
-    if(!datasourceName || datasourceName == 'default'){
+    if(!datasourceName || datasourceName == defaultDatasourceName){
         Creator.removeObject(doc.name);
     }
 }
 
+function getObjectFromDB(objectName){
+    return Creator.getCollection("objects").findOne({name: objectName})
+}
+
 module.exports = {
-    loadObject,removeObject,getDataSourceName
+    loadObject,removeObject,getDataSourceName,canLoadObject,getObjectFromDB
 }

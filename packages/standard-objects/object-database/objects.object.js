@@ -254,12 +254,13 @@ Creator.Objects.objects.triggers = {
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
 
-            if(_.has(modifier.$set, "datasource") && modifier.$set.datasource != doc.datasource){
+            if(_.has(modifier.$set, "datasource") && doc.datasource && modifier.$set.datasource != doc.datasource){
                 throw new Error("不能修改对象的数据源");
             }
 
             var ref;
             if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
+                checkName(modifier.$set.name);
                 if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
                     throw new Meteor.Error(500, "对象名称不能重复");
                 }
