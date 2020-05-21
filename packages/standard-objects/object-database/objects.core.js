@@ -40,7 +40,7 @@ function loadObject(doc, oldDoc){
     }
 
     if(oldDoc && doc.name != oldDoc.name){
-        datasource.removeDataSource(oldDoc.name);
+        datasource.removeObject(oldDoc.name);
     }
 
     //继承base

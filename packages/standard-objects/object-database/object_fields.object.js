@@ -148,9 +148,9 @@ Creator.Objects.object_fields.triggers = {
         throw new Error("不能修改对象的name属性");
       }
 
-      if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
-        throw new Error("不能修改所属对象");
-      }
+      // if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
+      //   throw new Error("不能修改所属对象");
+      // }
 
       if (doc.name === 'name' && _.has(modifier.$set, '_name') && doc.name !== modifier.$set._name) {
         throw new Meteor.Error(500, "不能修改此纪录的name属性");

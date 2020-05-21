@@ -165,7 +165,7 @@ function allowChangeObject(){
 function onChangeObjectName(oldName, newDoc){
     console.log('onChangeObjectName', oldName, newDoc.name);
     //修改字段
-    Creator.getCollection("object_fields").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
+    Creator.getCollection("object_fields").update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
         multi: true
     });
     //修改视图
@@ -185,7 +185,7 @@ function onChangeObjectName(oldName, newDoc){
         multi: true
     });
     //字段表中的reference_to
-    Creator.getCollection("object_fields").direct.update({space: newDoc.space, reference_to: oldName}, {$set: {reference_to: newDoc.name}}, {
+    Creator.getCollection("object_fields").update({space: newDoc.space, reference_to: oldName}, {$set: {reference_to: newDoc.name}}, {
         multi: true
     });
 }

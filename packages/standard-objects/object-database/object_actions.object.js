@@ -75,9 +75,9 @@ Creator.Objects.object_actions.triggers = {
     todo: function (userId, doc, fieldNames, modifier, options) {
       modifier.$set = modifier.$set || {}
 
-      if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
-        throw new Error("不能修改所属对象");
-      }
+      // if(_.has(modifier.$set, "object") && modifier.$set.object != doc.object){
+      //   throw new Error("不能修改所属对象");
+      // }
 
       var ref;
       if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
