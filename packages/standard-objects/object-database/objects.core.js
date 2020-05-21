@@ -19,7 +19,7 @@ function getDataSourceName(doc){
     return 'default'
 }
 
-function loadObject(doc){
+function loadObject(doc, oldDoc){
     if(!doc.name.endsWith("__c") && !doc.datasource){
         console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
         return;
@@ -37,6 +37,10 @@ function loadObject(doc){
     if(!datasource){
         console.warn(`warn: Not loaded object [${doc.name}]. Cant not find datasource -> `, datasourceName);
         return ;
+    }
+
+    if(oldDoc && doc.name != oldDoc.name){
+        datasource.removeDataSource(oldDoc.name);
     }
 
     //继承base

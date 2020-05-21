@@ -30,6 +30,10 @@ export class SteedosSchema {
         return this._objectsMap[objectName]
     }
 
+    removeObjectMap(objectName: string){
+        delete this._objectsMap[objectName]
+    }
+
     addDataSourceFromSteedosConfig() {
         let config: any = getSteedosConfig();
         if(config && config.datasources){
@@ -105,10 +109,10 @@ export class SteedosSchema {
             let datasource = this._datasources[datasource_name];
             if(datasource){
                 delete this._datasources[datasource_name];
-                let self = this
+                let self = this;
                 _.each(this._objectsMap, function(map, key){
                     if(map && map.datasourceName === datasource_name){
-                        delete self._objectsMap[key]
+                        self.removeObjectMap(key);
                     }
                 })
                 await datasource.close();

@@ -5,7 +5,7 @@ const datasourceCore = require('./datasources.core');
 
 function loadDataSourceObjects(doc){
     Creator.getCollection('objects').find({space: doc.space, datasource: doc._id}).forEach(function(object){
-        objectCore.loadObject(object);
+        objectCore.loadObject(object, null);
     })
 }
 

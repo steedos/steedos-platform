@@ -163,6 +163,7 @@ function allowChangeObject(){
 }
 
 function onChangeObjectName(oldName, newDoc){
+    console.log('onChangeObjectName', oldName, newDoc.name);
     //修改字段
     Creator.getCollection("object_fields").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
         multi: true
@@ -184,6 +185,9 @@ function onChangeObjectName(oldName, newDoc){
         multi: true
     });
     //字段表中的reference_to
+    Creator.getCollection("object_fields").direct.update({space: newDoc.space, reference_to: oldName}, {$set: {reference_to: newDoc.name}}, {
+        multi: true
+    });
 }
 
 Creator.Objects.objects.triggers = {
@@ -200,32 +204,6 @@ Creator.Objects.objects.triggers = {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
             doc.custom = true;
-        }
-    },
-    "before.update.server.objects": {
-        on: "server",
-        when: "before.update",
-        todo: function (userId, doc, fieldNames, modifier, options) {
-            if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
-            }
-
-            if(_.has(modifier.$set, "datasource") && modifier.$set.datasource != doc.datasource){
-                throw new Error("不能修改对象的数据源");
-            }
-
-            var ref;
-            if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
-                if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
-                    throw new Meteor.Error(500, "对象名称不能重复");
-                }
-            }
-            if (modifier.$set) {
-                modifier.$set.custom = true;
-            }
-            if (modifier.$unset && modifier.$unset.custom) {
-                delete modifier.$unset.custom;
-            }
         }
     },
     "after.insert.server.objects": {
@@ -266,6 +244,42 @@ Creator.Objects.objects.triggers = {
             });
             
             initObjectPermission(doc);
+        }
+    },
+    "before.update.server.objects": {
+        on: "server",
+        when: "before.update",
+        todo: function (userId, doc, fieldNames, modifier, options) {
+            if(!allowChangeObject()){
+                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+            }
+
+            if(_.has(modifier.$set, "datasource") && modifier.$set.datasource != doc.datasource){
+                throw new Error("不能修改对象的数据源");
+            }
+
+            var ref;
+            if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
+                if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
+                    throw new Meteor.Error(500, "对象名称不能重复");
+                }
+            }
+            if (modifier.$set) {
+                modifier.$set.custom = true;
+            }
+            if (modifier.$unset && modifier.$unset.custom) {
+                delete modifier.$unset.custom;
+            }
+        }
+    },
+    "after.update.server.objects": {
+        on: "server",
+        when: "after.update",
+        todo: function (userId, doc, fieldNames, modifier, options) {
+            var set = modifier.$set || {}
+            if(set.name && this.previous.name != doc.name){
+                onChangeObjectName(this.previous.name, doc);
+            }
         }
     },
     "before.remove.server.objects": {

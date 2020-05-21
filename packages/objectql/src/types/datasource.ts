@@ -128,6 +128,7 @@ export class SteedosDataSourceType implements Dictionary {
     removeObject(object_name: string){
         delete this._objectsConfig[object_name];
         delete this._objects[object_name];
+        this.schema.removeObjectMap(object_name);
     }
 
     initDriver() {

@@ -2,11 +2,11 @@ var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
 
 Meteor.startup(function () {
-    var _changeServerObjects, _removeServerObjects, server_objects_init;
-    _changeServerObjects = function (document) {
-        objectCore.loadObject(document)
+    var server_objects_init;
+    var _changeServerObjects = function (document, oldDocument) {
+        objectCore.loadObject(document, oldDocument)
     };
-    _removeServerObjects = function (document) {
+    var _removeServerObjects = function (document) {
         objectCore.removeObject(document);
     };
 
@@ -25,11 +25,11 @@ Meteor.startup(function () {
         }).observe({
             added: function (newDocument) {
                 if (!server_objects_init || _.has(newDocument, "fields")) {
-                    return _changeServerObjects(newDocument);
+                    return _changeServerObjects(newDocument, null);
                 }
             },
             changed: function (newDocument, oldDocument) {
-                return _changeServerObjects(newDocument);
+                return _changeServerObjects(newDocument, oldDocument);
             },
             removed: function (oldDocument) {
                 return _removeServerObjects(oldDocument);
