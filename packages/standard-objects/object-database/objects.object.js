@@ -162,6 +162,30 @@ function allowChangeObject(){
     }
 }
 
+function onChangeObjectName(oldName, newDoc){
+    //修改字段
+    Creator.getCollection("object_fields").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
+        multi: true
+    });
+    //修改视图
+    Creator.getCollection("object_listviews").direct.update({space: newDoc.space, object_name: oldName}, {$set: {object_name: newDoc.name}}, {
+        multi: true
+    });
+    //修改权限
+    Creator.getCollection("permission_objects").direct.update({space: newDoc.space, object_name: oldName}, {$set: {object_name: newDoc.name}}, {
+        multi: true
+    });
+    //修改action
+    Creator.getCollection("object_actions").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
+        multi: true
+    });
+    //修改trigger
+    Creator.getCollection("object_triggers").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
+        multi: true
+    });
+    //字段表中的reference_to
+}
+
 Creator.Objects.objects.triggers = {
     "before.insert.server.objects": {
         on: "server",
@@ -173,7 +197,6 @@ Creator.Objects.objects.triggers = {
             checkName(doc.name);
             doc.name = getObjectName(doc, doc.name);
             if (isRepeatedName(doc)) {
-                console.log(`object对象名称不能重复${doc.name}`);
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
             doc.custom = true;
@@ -193,8 +216,9 @@ Creator.Objects.objects.triggers = {
 
             var ref;
             if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
-                console.log("不能修改name");
-                throw new Meteor.Error(500, "不能修改对象名");
+                if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
+                    throw new Meteor.Error(500, "对象名称不能重复");
+                }
             }
             if (modifier.$set) {
                 modifier.$set.custom = true;
