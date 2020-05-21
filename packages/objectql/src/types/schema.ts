@@ -20,7 +20,7 @@ export class SteedosSchema {
         let objectMap = this.getObjectMap(objectName);
         if(objectMap){
             if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
-                throw new Error(`object name ${objectName} is unique, you can set table_name; see：https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
+                throw new Error(`object name ${objectName} is unique, you can set table_name; see: https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
             }
         }
         this._objectsMap[objectName] = options
@@ -105,14 +105,11 @@ export class SteedosSchema {
             let datasource = this._datasources[datasource_name];
             if(datasource){
                 delete this._datasources[datasource_name];
-                console.log('keys', _.keys(_.find(this._objectsMap, function(map){
-                    return map && map.datasourceName === datasource_name
-                })));
-                _.each(_.keys(_.find(this._objectsMap, function(map){
-                    return map && map.datasourceName === datasource_name
-                })), (key)=>{
-                    console.log('delete this._objectsMap key is', key);
-                    delete this._objectsMap[key]
+                let self = this
+                _.each(this._objectsMap, function(map, key){
+                    if(map && map.datasourceName === datasource_name){
+                        delete self._objectsMap[key]
+                    }
                 })
                 await datasource.close();
             }

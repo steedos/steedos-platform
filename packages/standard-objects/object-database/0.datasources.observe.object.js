@@ -12,22 +12,26 @@ function loadDataSourceObjects(doc){
 function loadDataSource(doc, oldDoc, server_datasources_init) {
     try {
         datasourceCore.checkDriver(doc.driver);
-        if (doc.mssql_options) {
-            doc.options = JSON.parse(doc.mssql_options)
-            delete doc.mssql_options
+        try {
+            if (doc.mssql_options) {
+                doc.options = JSON.parse(doc.mssql_options)
+                delete doc.mssql_options
+            }
+    
+            if(oldDoc && doc.name != oldDoc.name){
+                removeDataSource(oldDoc);
+            }
+    
+            var datasource = schema.addDataSource(doc.name, doc, true);
+            datasource.init();
+            if (server_datasources_init) {
+                loadDataSourceObjects(doc);
+            }
+        } catch (error) {
+            console.error(`Load dataSource [${doc.name}] error: `, error.message)
         }
-
-        if(oldDoc && doc.name != oldDoc.name){
-            removeDataSource(oldDoc);
-        }
-
-        var datasource = schema.addDataSource(doc.name, doc, true);
-        datasource.init();
-        if (server_datasources_init) {
-            loadDataSourceObjects(doc);
-        }
-    } catch (error) {
-        console.error(`Load dataSource [${doc.name}] error: `, t(error.message))
+    } catch (error1) {
+        console.error(`Load dataSource [${doc.name}] error: `, t(error1.message))
     }
 }
 
