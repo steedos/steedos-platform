@@ -20,7 +20,7 @@ function getDataSource(doc){
 }
 
 function getDataSourceName(doc){
-    if(doc.datasource && doc.datasource != defaultDatasourceName){
+    if(doc && doc.datasource && doc.datasource != defaultDatasourceName){
         let datasource = Creator.getCollection("datasources").findOne({_id: doc.datasource})
         if(datasource){
             return datasource.name
