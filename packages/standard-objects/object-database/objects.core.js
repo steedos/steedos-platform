@@ -143,5 +143,5 @@ function getObjectFromDB(objectName){
 }
 
 module.exports = {
-    loadObject,removeObject,getDataSourceName,canLoadObject,getObjectFromDB
+    loadObject,removeObject,getDataSourceName,canLoadObject,getObjectFromDB,getDataSource
 }

@@ -2,7 +2,7 @@ var objectql = require('@steedos/objectql');
 const _ = require('underscore');
 var objectCore = require('./objects.core.js');
 const internalBaseObjects = ['base', 'core'];
-
+const relationalDatabases = ['sqlserver','postgres','oracle','mysql','sqlite'];
 function isCodeObjects(name){
     if(_.include(internalBaseObjects, name)){
         return true;
@@ -96,6 +96,31 @@ function getObjectName(datasource, objectName){
             return `${objectName}__c`;
           }
       }
+}
+
+function isRelationalDatabase(object){
+    var datasource = objectCore.getDataSource(object);
+    if(datasource){
+        return _.include(relationalDatabases, datasource.driver)
+    }
+}
+
+function canEnable(object){
+    if(isRelationalDatabase(object)){
+        if(!object.fields || !_.isArray(object.fields)){
+            return false
+        }else{
+            var hasPrimary = false;
+            _.each(object.fields, function(field){
+                if(field.primary){
+                    hasPrimary = true;
+                }
+            })
+            console.log('hasPrimary', hasPrimary);
+            return hasPrimary
+        }
+    }
+    return true;
 }
 
 Creator.Objects.objects.actions = {
@@ -217,6 +242,11 @@ Creator.Objects.objects.triggers = {
             if (isRepeatedName(doc)) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
+
+            if(isRelationalDatabase(doc)){
+                doc.is_enable = false;
+            }
+
             doc.custom = true;
         }
     },
@@ -268,6 +298,13 @@ Creator.Objects.objects.triggers = {
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
             modifier.$set = modifier.$set || {}
+
+            if(modifier.$set.is_enable){
+                if(!canEnable({fields: doc.fields, datasource: modifier.$set.datasource || doc.datasource})){
+                    throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
+                }
+            }
+
             if ((modifier.$set.name && doc.name !== modifier.$set.name) || modifier.$set.datasource && doc.datasource !== modifier.$set.datasource) {
                 checkName(modifier.$set.name || doc.name);
                 modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name);
