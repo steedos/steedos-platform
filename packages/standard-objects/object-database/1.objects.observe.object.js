@@ -15,7 +15,7 @@ Meteor.startup(function () {
         return ;
     }else{
         server_objects_init = false;
-        Creator.getCollection("objects").find({is_enable: {$ne: false}}, {
+        Creator.getCollection("objects").find({}, {
             fields: {
                 created: 0,
                 created_by: 0,
@@ -29,7 +29,11 @@ Meteor.startup(function () {
                 }
             },
             changed: function (newDocument, oldDocument) {
-                return _changeServerObjects(newDocument, oldDocument);
+                if(newDocument.is_enable === false){
+                    _removeServerObjects(oldDocument);
+                }else{
+                    return _changeServerObjects(newDocument, oldDocument);
+                }
             },
             removed: function (oldDocument) {
                 return _removeServerObjects(oldDocument);

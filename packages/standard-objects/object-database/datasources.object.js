@@ -28,8 +28,13 @@ Creator.Objects['datasources'].methods = {
                     let datasourceName =  `${recordId}_${spaceId}_${doc.name}__test`
                     doc.name = datasourceName
                     datasource = schema.addDataSource(doc.name, doc, true); 
-                    await datasource._adapter.init({});
+                    if(doc.driver === 'mongo'){
+                        await datasource._adapter.connect();
+                    }else{
+                        await datasource._adapter.connect({});
+                    }
                     await datasource.close();
+                    schema.removeDataSource(datasourceName);
                     return res.send({ok: 1});
                 } catch (error) {
                     if(datasource){

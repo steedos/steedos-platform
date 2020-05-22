@@ -174,7 +174,6 @@ function allowChangeObject(){
 }
 
 function onChangeObjectName(oldName, newDoc){
-    console.log('onChangeObjectName', oldName, newDoc.name);
     //修改字段
     Creator.getCollection("object_fields").update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
         multi: true

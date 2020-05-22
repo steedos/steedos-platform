@@ -4,7 +4,7 @@ var objectCore = require('./objects.core.js');
 const datasourceCore = require('./datasources.core');
 
 function loadDataSourceObjects(doc){
-    Creator.getCollection('objects').find({space: doc.space, datasource: doc._id}).forEach(function(object){
+    Creator.getCollection('objects').find({space: doc.space, datasource: doc._id, is_enable: {$ne: false}}).forEach(function(object){
         objectCore.loadObject(object, null);
     })
 }
@@ -24,7 +24,7 @@ function loadDataSource(doc, oldDoc, server_datasources_init) {
     
             var datasource = schema.addDataSource(doc.name, doc, true);
             datasource.init();
-            if (server_datasources_init) {
+            if (server_datasources_init && oldDoc && oldDoc.is_enable === false && doc.is_enable) {
                 loadDataSourceObjects(doc);
             }
         } catch (error) {
@@ -54,7 +54,7 @@ Meteor.startup(function () {
         return ;
     }else{
         server_datasources_init = false;
-        Creator.getCollection("datasources").find({is_enable: true}, {
+        Creator.getCollection("datasources").find({}, {
             fields: {
                 created: 0,
                 created_by: 0,
@@ -66,7 +66,11 @@ Meteor.startup(function () {
                 return _change(newDocument, null, server_datasources_init);
             },
             changed: function (newDocument, oldDocument) {
-                return _change(newDocument, oldDocument, server_datasources_init);
+                if(newDocument.is_enable){
+                    return _change(newDocument, oldDocument, server_datasources_init);
+                }else{
+                    return _remove(oldDocument);
+                }
             },
             removed: function (oldDocument) {
                 return _remove(oldDocument);

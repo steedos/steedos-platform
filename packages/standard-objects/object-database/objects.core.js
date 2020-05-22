@@ -1,5 +1,8 @@
 var objectql = require('@steedos/objectql');
 const defaultDatasourceName = 'default';
+var triggerCore = require('./object_triggers.core.js');
+var permissionCore = require('./permission_objects.core.js');
+
 function canLoadObject(name, datasource){
     if(!datasource || datasource === defaultDatasourceName){
         if(!name.endsWith('__c')){
@@ -29,6 +32,32 @@ function getDataSourceName(doc){
         }
     }
     return defaultDatasourceName
+}
+
+function loadObjectTriggers(object){
+    Creator.getCollection("object_triggers").find({space: object.space, object: object.name, is_enable: true}, {
+        fields: {
+            created: 0,
+            created_by: 0,
+            modified: 0,
+            modified_by: 0
+        }
+    }).forEach(function(trigger){
+        triggerCore.loadObjectTrigger(trigger);
+    })
+}
+
+function loadObjectPermission(object){
+    Creator.getCollection("permission_objects").find({space: object.space, object_name: object.name}, {
+        fields: {
+            created: 0,
+            created_by: 0,
+            modified: 0,
+            modified_by: 0
+        }
+    }).forEach(function(permission){
+        permissionCore.loadObjectPermission(permission);
+    })
 }
 
 function loadObject(doc, oldDoc){
@@ -68,6 +97,10 @@ function loadObject(doc, oldDoc){
         }
     } catch (error) {
         console.log('error', error);
+    }
+    if(!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)){
+        loadObjectTriggers(doc);
+        loadObjectPermission(doc);
     }
 }
 
