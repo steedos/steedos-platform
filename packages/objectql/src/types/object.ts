@@ -9,6 +9,7 @@ import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 
 abstract class SteedosObjectProperties {
+    _id?: string
     name?: string
     extend?: string
     table_name?: string
@@ -212,7 +213,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             this._idFieldName = '_id'
         }
 
-        this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name })
+        this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name, _id: config._id })
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig) {

@@ -31,7 +31,7 @@ Creator.Objects['datasources'].methods = {
                     if(doc.driver === 'mongo'){
                         await datasource._adapter.connect();
                     }else{
-                        await datasource._adapter.connect({});
+                        await datasource._adapter.init({});
                     }
                     await datasource.close();
                     schema.removeDataSource(datasourceName);

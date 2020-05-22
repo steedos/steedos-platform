@@ -31,6 +31,7 @@ fields:
     label: Table Name
     index: true
     searchable: true
+    inlineHelpText: The default data source does not support this property
   label:
     type: text
     label: Label

@@ -32,6 +32,7 @@ objects_field_owner: 拥有者
 objects_field_permission_set: 权限设置
 objects_field_sidebar: 左侧列表
 objects_field_table_name: 数据库表名称
+objects_field_table_name_inlineHelpText: 默认数据源不支持此属性
 objects_field_triggers: 触发器
 objects_listview_all: 全部
 objects_field_datasource_defaultValue: 默认数据源

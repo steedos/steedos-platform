@@ -80,8 +80,23 @@ function loadObject(doc, oldDoc){
         return ;
     }
 
+    if(oldDoc){
+        var oldDatasourceName = getDataSourceName(oldDoc);
+        if(datasourceName != oldDatasourceName){
+            const oldDatasource = objectql.getDataSource(oldDatasourceName);
+            if(oldDatasource){
+                oldDatasource.removeObject(oldDoc.name);
+                objectql.removeObjectConfig(oldDoc.name, oldDatasourceName);
+            }
+        }
+    }
+
     if(oldDoc && doc.name != oldDoc.name){
         datasource.removeObject(oldDoc.name);
+    }
+
+    if(datasourceName === defaultDatasourceName){
+        delete doc.table_name
     }
 
     //继承base

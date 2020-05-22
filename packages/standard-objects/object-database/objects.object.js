@@ -3,21 +3,20 @@ const _ = require('underscore');
 var objectCore = require('./objects.core.js');
 const internalBaseObjects = ['base', 'core'];
 
-function isInternalObjects(name, datasourceName){
+function isCodeObjects(name){
     if(_.include(internalBaseObjects, name)){
         return true;
     }
-
     let objMap = objectql.getSteedosSchema().getObjectMap(name);
-    if(objMap && (!objMap.datasourceName || objMap.datasourceName != datasourceName)){
+    if(objMap && !objMap._id){
         return true;
     }
     return false;
 }
 
 function isRepeatedName(doc) {
-    let datasourceName = objectCore.getDataSourceName(doc);
-    if(isInternalObjects(doc.name, datasourceName)){
+    // let datasourceName = objectCore.getDataSourceName(doc);
+    if(isCodeObjects(doc.name)){
         return true;
     }
     
@@ -86,11 +85,16 @@ function initObjectPermission(doc){
     }));
 }
 
-function getObjectName(doc, objectName){
-    if(doc.datasource && doc.datasource != 'default'){
+function getObjectName(datasource, objectName){
+    console.log('getObjectName', datasource, objectName);
+    if(datasource && datasource != 'default'){
         return objectName;
       }else{
-        return `${objectName}__c`;
+          if(objectName.endsWith('__c')){
+            return objectName;
+          }else{
+            return `${objectName}__c`;
+          }
       }
 }
 
@@ -209,7 +213,7 @@ Creator.Objects.objects.triggers = {
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
             checkName(doc.name);
-            doc.name = getObjectName(doc, doc.name);
+            doc.name = getObjectName(doc.datasource, doc.name);
             if (isRepeatedName(doc)) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
@@ -263,16 +267,11 @@ Creator.Objects.objects.triggers = {
             if(!allowChangeObject()){
                 throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
             }
-
-            if(_.has(modifier.$set, "datasource") && doc.datasource && modifier.$set.datasource != doc.datasource){
-                throw new Error("不能修改对象的数据源");
-            }
-
-            var ref;
-            if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
-                checkName(modifier.$set.name);
-                modifier.$set.name = getObjectName(doc, modifier.$set.name);
-                if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
+            modifier.$set = modifier.$set || {}
+            if ((modifier.$set.name && doc.name !== modifier.$set.name) || modifier.$set.datasource && doc.datasource !== modifier.$set.datasource) {
+                checkName(modifier.$set.name || doc.name);
+                modifier.$set.name = getObjectName(modifier.$set.datasource || doc.datasource, modifier.$set.name || doc.name);
+                if (isRepeatedName({_id: doc._id, name: modifier.$set.name || doc.name, datasource: modifier.$set.datasource || doc.datasource})) {
                     throw new Meteor.Error(500, "对象名称不能重复");
                 }
             }
@@ -289,7 +288,7 @@ Creator.Objects.objects.triggers = {
         when: "after.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             var set = modifier.$set || {}
-            if(set.name && this.previous.name != doc.name){
+            if((set.name || set.datasource) && this.previous.name != doc.name){
                 onChangeObjectName(this.previous.name, doc);
             }
         }
