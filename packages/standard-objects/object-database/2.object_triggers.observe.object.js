@@ -21,7 +21,7 @@ function loadObjectTrigger(doc){
     var dbObject = objectCore.getObjectFromDB(doc.object);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
 
-    if(!objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
+    if(!dbObject || !objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
         console.warn('warn: Not loaded. Invalid custom object_triggers -> ', doc.name);
         return;
     }

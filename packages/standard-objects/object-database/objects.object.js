@@ -40,6 +40,9 @@ function isRepeatedName(doc) {
 };
 
 function checkName(name){
+    if(name.endsWith('__c')){
+        name = name.replace("__c", '')
+    }
     var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$');
     if(!reg.test(name)){
         throw new Error("名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
@@ -261,6 +264,7 @@ Creator.Objects.objects.triggers = {
             var ref;
             if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && doc.name !== modifier.$set.name) {
                 checkName(modifier.$set.name);
+                modifier.$set.name = getObjectName(doc, modifier.$set.name);
                 if (isRepeatedName({_id: doc._id, name: modifier.$set.name, datasource: doc.datasource})) {
                     throw new Meteor.Error(500, "对象名称不能重复");
                 }
