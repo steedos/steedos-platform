@@ -89,8 +89,8 @@ Meteor.startup(function(c){
                 added: function(id, notification){
                     // 订阅到新通知过来时，重新请求通知数据
                     fetchMyNotifications();
-                    if(!Steedos.isMobile()){
-                        // 手机上不走push.js
+                    if(!Steedos.isMobile() && !Steedos.isNode()){
+                        // 手机上和客户端不走push.js
                         handleMyNotifications(id, notification);
                     }
                 },

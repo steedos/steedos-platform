@@ -135,8 +135,8 @@ function sendPushs(message, from, to){
         "createdAt" : now,
         "createdBy" : "<SERVER>",
         "from" : appName,
-        "title" : message.body,
-        "text" : message.name,
+        "title" : message.name,
+        "text" : message.body,
         "payload" : {
             "space" : message.space,
             "host" : Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1),
