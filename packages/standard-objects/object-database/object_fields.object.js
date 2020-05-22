@@ -1,3 +1,5 @@
+var _ = require("underscore");
+
 function canRemoveNameFileld(doc){
   var object = Creator.getCollection("objects").findOne({name: doc.object}, {fields: {datasource: 1}});
   if(object.datasource && object.datasource != 'default'){
@@ -104,6 +106,33 @@ function hasMultipleMasterDetailTypeFiled(doc) {
   return false;
 };
 
+function onChangeName(oldName, newDoc){
+  var newName = newDoc.name
+  Creator.getCollection("object_listviews").direct.find({space: newDoc.space, object_name: newDoc.object}, {fields: {_id:1, columns: 1}}).forEach(function(view){
+    if(_.isArray(view.columns)){
+      var columns = [];
+      _.each(view.columns, function(column){
+        if(_.isString(column)){
+          if(oldName === column){
+            columns.push(newName)
+          }else{
+            columns.push(column)
+          }
+        }else if(_.has(column, 'field')){
+          if(oldName === column.field){
+            columns.push(Object.assign({}, column, {field: newName}))
+          }else{
+            columns.push(column)
+          }
+        }else{
+          columns.push(column)
+        }
+      });
+      Creator.getCollection("object_listviews").update({_id: view._id}, {$set: {columns: columns}});
+    }
+  })
+}
+
 //只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符 TODO 支持表格
 function checkName(name){
   var reg = new RegExp('^[a-z]([a-z0-9]|_(?!_))*[a-z0-9]$'); //支持表格类型的验证表达式(待优化.$.限制只能出现一次): new RegExp('^[a-z]([a-z0-9]|_(?!_))*(\\.\\$\\.\\w+)*[a-z0-9]$')
@@ -122,14 +151,18 @@ Creator.Objects.object_fields.triggers = {
     on: "server",
     when: "after.insert",
     todo: function (userId, doc) {
-      return _syncToObject(doc);
+      _syncToObject(doc);
     }
   },
   "after.update.server.object_fields": {
     on: "server",
     when: "after.update",
-    todo: function (userId, doc) {
-      return _syncToObject(doc);
+    todo: function (userId, doc, fieldNames, modifier, options) {
+      _syncToObject(doc);
+      var set = modifier.$set || {}
+      if(set._name && this.previous.name != doc.name){
+        onChangeName(this.previous.name, doc);
+      }
     }
   },
   "after.remove.server.object_fields": {
