@@ -2,7 +2,7 @@ var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
 
 function loadObjectPermission(doc){
-    var dbObject = objectCore.getObjectFromDB(doc.object);
+    var dbObject = objectCore.getObjectFromDB(doc.object_name);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
 
     if(!objectCore.canLoadObject(dbObject.name, objectDataSourceName)){
@@ -17,7 +17,7 @@ function loadObjectPermission(doc){
 }
 
 function removeObjectPermission(doc){
-    var dbObject = objectCore.getObjectFromDB(doc.object);
+    var dbObject = objectCore.getObjectFromDB(doc.object_name);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
 
     if(!objectCore.canLoadObject(dbObject.name, objectDataSourceName)){

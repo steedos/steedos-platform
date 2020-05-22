@@ -88,6 +88,9 @@ function removeObject(doc){
 }
 
 function getObjectFromDB(objectName){
+    if(!objectName){
+        return 
+    }
     return Creator.getCollection("objects").findOne({name: objectName})
 }
 
