@@ -70,8 +70,8 @@ Meteor.startup(function(c){
                 return;
             }
             var query = Creator.getCollection("notifications").find();
-            if(!Steedos.isMobile()){
-                // 手机上不走push.js
+            if(!Steedos.isMobile() && !Steedos.isNode()){
+                // 手机上和客户端不走push.js
                 if(Push.debug){
                     console.log("init my_notifications observeChanges");
                 }
