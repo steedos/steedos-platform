@@ -119,8 +119,16 @@ Creator.Objects.objects.actions = {
                 }
             }
 
+            var allViews = Creator.odata.query('object_listviews', {$select: '_id', $filter: `(((contains(tolower(object_name),'${record.name}'))) and ((contains(tolower(name),'all'))))`}, true);
 
-            Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+            if(allViews && allViews.length > 0){
+                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
+            }else{
+                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+            }
+
+
+            
         }
     },
     copy_odata: {
