@@ -29,7 +29,7 @@ fields:
         var siteObjectName = "cms_sites";
         var object = Creator.getObject(siteObjectName);
         if(!object){
-          console.error("未找到当前对象：" + siteObjectName);
+          console.error(t("cms_categories_error_no_object") + siteObjectName);
           return [];
         }
         var options, result, sites, queryFilters;

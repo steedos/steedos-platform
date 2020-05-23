@@ -21,7 +21,7 @@ export function addSessionToCache(userId, userSession) {
 }
 
 async function getUser(userId) {
-    let user = await getSteedosSchema().getObject('users').findOne(userId, { fields: ['name', 'username', 'mobile', 'email', 'utcOffset', 'steedos_id'] });
+    let user = await getSteedosSchema().getObject('users').findOne(userId, { fields: ['name', 'username', 'mobile', 'email', 'utcOffset', 'steedos_id', 'locale'] });
     return user;
 }
 
@@ -39,6 +39,7 @@ export async function getUserSession(userId) {
             session.email = user.email;
             session.utcOffset = user.utcOffset;
             session.steedos_id = user.steedos_id;
+            session.locale = user.locale;
             session.expiredAt = expiredAt;
             addSessionToCache(userId, session);
             return session;

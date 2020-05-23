@@ -23,18 +23,23 @@ export type SteedosUserSessionPermissionShares = {
 
 export type SteedosUserSession = {
     userId: SteedosIDType,
-    spaceId: string,
+    spaceId?: string,
     name: string,
     username?: string,
     mobile?: string,
     email?: string,
     utcOffset?: number,
-    roles: string[],
-    space: SteedosUserSessionSpace,
-    spaces: SteedosUserSessionSpace[],
+    locale?: string,
+    roles?: string[],
+    space?: SteedosUserSessionSpace,
+    spaces?: SteedosUserSessionSpace[],
     company?: SteedosUserSessionCompany,
     companies?: SteedosUserSessionCompany[],
-    organization: SteedosUserSessionOrganization,
-    organizations: SteedosUserSessionOrganization[],
-    permission_shares: SteedosUserSessionPermissionShares[]
+    organization?: SteedosUserSessionOrganization,
+    organizations?: SteedosUserSessionOrganization[],
+    permission_shares?: SteedosUserSessionPermissionShares[],
+    company_id?: string,
+    company_ids?: string[],
+    is_space_admin?: boolean,
+    steedos_id?: string
 }

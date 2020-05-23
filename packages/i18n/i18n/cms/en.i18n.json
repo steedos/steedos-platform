@@ -15,6 +15,7 @@
     "cms_sites_back": "Back",
 
     "cms_post_error_remove_reads_fail": "Remove post read history failed",
+    "cms_posts_error_no_object": "Can't find this object : ",
 
     "cms_posts_none": "No posts found.",
     "cms_posts_new": "New post",
@@ -23,6 +24,7 @@
     "cms_categories_error_has_children": "Can't remove because it has children",
     "cms_categories_error_has_posts": "Can't remove because it has posts",
     "cms_categories_new": "New Category",
+    "cms_categories_error_no_object": "Can't find this object : ",
 
     "cms_sites_error_login_required": "Login required",
     "cms_sites_error_site_owner_only": "Site owner only",

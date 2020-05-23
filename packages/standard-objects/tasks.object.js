@@ -10,10 +10,11 @@ var addNotifications = function(userId, doc, assignees){
         _id: userId
     }, {
         fields: {
-            name: 1
+            name: 1,
+            locale: 1
         }
     });
-    var notificationTitle = fromUser.name + " 为您分配了任务";
+    var notificationTitle = fromUser.name + t('tasks_js_addNotifications_notificationTitle', {}, fromUser.locale);
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,

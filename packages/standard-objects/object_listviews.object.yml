@@ -1,5 +1,5 @@
 name: object_listviews
-label: Object Listview
+label: List View
 icon: forecasts
 hidden: true
 fields:
@@ -205,7 +205,7 @@ list_views:
       - label
       - shared
       - modified
-    label: All Object Listview
+    label: All List View
     filter_scope: space
 permission_set:
   user:

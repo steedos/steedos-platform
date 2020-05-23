@@ -123,6 +123,7 @@
 	"Accountzoom": "字体",
 	"Backgroundimage": "背景",
 	"binding_mailbox": "绑定邮箱",
+	"Switch Company": "切换公司",
 
 	"Workflow": "审批",
 
@@ -215,6 +216,7 @@
 
 	"Steedos Cloud": "华炎云",
 
+	"Save": "保存",
 	"Add": "添加",
 	"Edit": "编辑",
 	"Delete": "删除",
@@ -427,6 +429,23 @@
 
 	"creator_report_drill_down_label": "下钻数据",
 	"creator_report_drill_down_total_label": "总",
+	"creator_report_dropdown_menu_options": "选项",
+	"creator_report_dropdown_menu_options_show": "显示",
+	"creator_report_dropdown_menu_options_grouping": "小计",
+	"creator_report_dropdown_menu_options_totaling": "总计",
+	"creator_report_dropdown_menu_options_counting": "记录计数",
+	"creator_report_dropdown_menu_export_excel": "导出为EXCEL",
+	"creator_report_dropdown_menu_export_pdf": "导出为PDF",
+	"creator_report_switch_chart_open": "切换图表",
+	"creator_report_design_mode": "设计模式",
+	"creator_report_filter_empty": "请在右侧设定报表筛选条件。",
+	"creator_report_caption_sum": "总和",
+	"creator_report_caption_count": "计数",
+	"creator_report_format_sum_count": "总计 (%s条记录)",
+	"creator_report_error_object_not_found": "未找到对象“%s”，请确认该报表指定的对象名是否正确",
+	"creator_report_error_object_field_not_found": "未找到对象“{$object_name}”的字段“{$field_name}”，请确认该报表中指定的字段名是否正确",
+	"creator_report_error_max": "统计数据达{$count}条记录，已超出限制，以下统计结果基于前{$max}条记录",
+
 	"creator_listview_update":"列表视图已更新",
 
 	"creator_request_oversized": "请求文件太大了",
@@ -486,5 +505,8 @@
 	"nw_top_button_refresh": "重新加载此页面",
 
 	"menu_account": "个人账户设置",
-	"menu_account_background": "背景图"
+	"menu_account_background": "背景图",
+
+	"notifications__object": "通知",
+	"favorites__object": "我的收藏夹"
 }

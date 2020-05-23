@@ -23,6 +23,7 @@
 	"creator_list_filter_cancel": "取消",
 	"creator_list_filter_save_as": "另存为",
 	"creator_list_filter_save": "保存",
+	"creator_list_filter_apply": "应用",
 	"creator_list_new_filter": "新建筛选条件",
 	"creator_list_add_filter": "添加筛选条件",
 	"creator_list_remove_all_filters": "清空",

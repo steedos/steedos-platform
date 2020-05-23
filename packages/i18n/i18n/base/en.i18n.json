@@ -86,7 +86,7 @@
 	"Support Request": "Support Request",
 	"Online Help": "Online Help",
 	"My Account": "My Account",
-	"Logout": "Logout",
+	"Logout": "Log Out",
 	"Contact Form": "Contact Form",
 	"Full Name": "Full Name",
 	"Body": "Body",
@@ -110,6 +110,7 @@
 	"Settings": "Settings",
 	"Select Space": "Select Space",
 	"Add space": "Add space",
+	"Switch Company": "Switch Company",
 
 	"bqq": "Business QQ",
 	"dingtalk": "Dingtalk",
@@ -201,6 +202,7 @@
 
 	"Steedos Cloud": "Steedos Cloud",
 
+	"Save": "Save",
 	"Add": "Add",
 	"Edit": "Edit",
 	"Delete": "Delete",
@@ -407,8 +409,25 @@
 	"creator_list_no_actions_tip": "no operation",
 	"creator_list_view_permissions_lost": "You do not have permission to access this view",
 
-	"creator_report_drill_down_label": "Drill Down Data",
-	"creator_report_drill_down_total_label": "Total",
+	"creator_report_drill_down_label": " Drill Down Data",
+	"creator_report_drill_down_total_label": " Total",
+	"creator_report_dropdown_menu_options": "Options",
+	"creator_report_dropdown_menu_options_show": "Show",
+	"creator_report_dropdown_menu_options_grouping": "Grouping",
+	"creator_report_dropdown_menu_options_totaling": "Totaling",
+	"creator_report_dropdown_menu_options_counting": "Counting",
+	"creator_report_dropdown_menu_export_excel": "Export To EXCEL",
+	"creator_report_dropdown_menu_export_pdf": "Export To PDF",
+	"creator_report_switch_chart_open": "Switch To Open Or Close Chart",
+	"creator_report_design_mode": "Design Mode",
+	"creator_report_filter_empty": "Please set the report filters on the right.",
+	"creator_report_caption_sum": "Sum",
+	"creator_report_caption_count": "Count",
+	"creator_report_format_sum_count": "Sum (%s records)",
+	"creator_report_error_object_not_found": "Object '%s' was not found. Make sure the object name specified in this report is correct.",
+	"creator_report_error_object_field_not_found": "Field '{$field_name}' for object '{$object_name}' was not found, please confirm that the field name specified in this report is correct.",
+	"creator_report_error_max": "The statistics are up to {$count} records and have exceeded the limit. The following statistics are based on the previous {$max} records.",
+
 	"creator_listview_update":"list view updated",
 
 	"creator_request_oversized": "Request Entity Too Large",
@@ -467,5 +486,8 @@
 	"nw_top_button_refresh": "Reload this page",
 
 	"menu_account": "My Account",
-	"menu_account_background": "Background"
+	"menu_account_background": "Background",
+
+	"notifications__object": "Notifications",
+	"favorites__object": "My Favorite"
 }

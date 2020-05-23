@@ -33,7 +33,7 @@ apps_field_saml_logout_block_options_post: HTTP Post
 apps_field_saml_logout_block_options_redirect: HTTP Redirect
 apps_field_saml_logout_enabled: 启用单点注销
 apps_field_saml_logout_url: 单点注销 URL
-apps_field_saml_name_id_format: Name
+apps_field_saml_name_id_format: 名称
 apps_field_secret: API 密钥
 apps_field_sort: 排序
 apps_field_url: 外部链接

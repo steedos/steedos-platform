@@ -7,7 +7,7 @@ Meteor.autorun(function(){
     var actions = object.actions;
     Object.assign(actions, {
       previewSite: {
-        label: "预览",
+        label: window.t("cms_sites_preview"),
         visible: function (object_name, record_id, record_permissions) {
           var site = Session.get("site");
           var isSitePublic = site && site.visibility === "public";
@@ -34,7 +34,7 @@ Meteor.autorun(function(){
         }
       },
       previewPost: {
-        label: "预览",
+        label: window.t("cms_sites_preview"),
         visible: function (object_name, record_id, record_permissions) {
           var site = Session.get("site");
           var isSitePublic = false;

@@ -82,7 +82,7 @@ fields:
         var objectName = "cms_categories";
         var object = Creator.getObject(objectName);
         if(!object){
-          console.error("未找到当前对象：" + objectName);
+          console.error(t("cms_posts_error_no_object") + objectName);
           return [];
         }
         var options, result, companys, queryFilters;

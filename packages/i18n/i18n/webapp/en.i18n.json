@@ -1,0 +1,15 @@
+{
+	"webapp_notifications": "Notifications",
+	"webapp_notifications_mark_all_as_read": "Mark all as read",
+	"webapp_notifications_empty": "You haven't received any notice.",
+	"webapp_notifications_new_after": " new notices",
+	"webapp_notifications_new_before": "You have ",
+	"webapp_notifications_new_no": "No new notification",
+	"webapp_favorites_edit": "Edit favorites",
+	"webapp_favorites_more": "Favorites list",
+	"webapp_favorites_action_not_support": "This item does not support favorites",
+	"webapp_favorites_action_remove": "Delete from favorites",
+	"webapp_favorites_action_add": "Add to favorites",
+	"webapp_header_profile_settings": "Settings",
+	"webapp_header_profile_logout": "Log Out"
+}

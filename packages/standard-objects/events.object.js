@@ -10,10 +10,11 @@ var addNotifications = function(userId, doc, assignees){
         _id: userId
     }, {
         fields: {
-            name: 1
+            name: 1,
+            locale: 1
         }
     });
-    var notificationTitle = fromUser.name + " 为您安排了日程";
+    var notificationTitle = fromUser.name + t('events_js_addNotifications_notificationTitle', {}, fromUser.locale) ;
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,
