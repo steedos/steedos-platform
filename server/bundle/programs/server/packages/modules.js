@@ -394,7 +394,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "fibers",
-  "version": "3.1.1",
+  "version": "4.0.3",
   "main": "fibers"
 };
 
@@ -606,7 +606,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "react",
-  "version": "16.12.0",
+  "version": "16.13.1",
   "main": "index.js"
 };
 
@@ -767,7 +767,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "qs",
-  "version": "6.9.0",
+  "version": "6.9.4",
   "main": "lib/index.js"
 };
 
@@ -842,7 +842,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.19.9",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -869,7 +869,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.19.9",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -896,7 +896,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.19.9",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -923,7 +923,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.19.9",
+  "version": "1.20.0",
   "main": "lib/index.js"
 };
 
@@ -994,7 +994,34 @@ module.exports = {
 module.useNode();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"cookies":{"package.json":function(require,exports,module){
+}}},"moment":{"package.json":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/moment/package.json                                                                 //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.exports = {
+  "name": "moment",
+  "version": "2.26.0",
+  "main": "./moment.js"
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"moment.js":function(require,exports,module){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                  //
+// node_modules/moment/moment.js                                                                    //
+//                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                    //
+module.useNode();
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}},"cookies":{"package.json":function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                  //
@@ -1057,7 +1084,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "xml2js",
-  "version": "0.4.22",
+  "version": "0.4.23",
   "main": "./lib/xml2js"
 };
 
@@ -1403,7 +1430,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "ejs",
-  "version": "2.7.1",
+  "version": "2.7.4",
   "main": "./lib/ejs.js"
 };
 
@@ -1457,7 +1484,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "jszip",
-  "version": "3.2.2",
+  "version": "3.4.0",
   "main": "./lib/index"
 };
 
