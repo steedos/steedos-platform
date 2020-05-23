@@ -31,7 +31,9 @@ export class SteedosMongoDriver implements SteedosDriver {
         const credentialsUrlPart = (this._config.username && this._config.password)
             ? `${this._config.username}:${this._config.password}@`
             : "";
-
+        if (!this._config.database) {
+            throw new Error('Not find database');
+        }
         return `mongodb://${credentialsUrlPart}${this._config.host || "127.0.0.1"}:${this._config.port || "27017"}/${this._config.database}`;
     }
 
