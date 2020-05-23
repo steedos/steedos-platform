@@ -33,7 +33,7 @@
     "cookies": "^0.6.1",
     "express": "^4.15.4",
     "express-graphql": "^0.7.1",
-    "fibers": "^3.1.1",
+    "fibers": "^4.0.3",
     "globby": "^9.1.0",
     "graphql": "^14.1.1",
     "graphql-type-json": "^0.2.2",

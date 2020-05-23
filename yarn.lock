@@ -1936,10 +1936,10 @@
     tslib "1.10.0"
     validator "^12.2.0"
 
-"@steedos/odata-v4-typeorm@^1.20.0":
-  version "1.20.0"
-  resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-1.20.0.tgz#b1ffc49a5620ce4822e3e2edc72fb46a1355fabc"
-  integrity sha1-sf/EmlYgzkgi4+Ltxy+0ahNV+rw=
+"@steedos/odata-v4-typeorm@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/@steedos/odata-v4-typeorm/download/@steedos/odata-v4-typeorm-0.1.0.tgz#1041ac696775e575f949955efffbb3d2f0131197"
+  integrity sha1-EEGsaWd15XX5SZVe//uz0vATEZc=
   dependencies:
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
@@ -5584,9 +5584,10 @@ fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fibers@3.1.1, fibers@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-3.1.1.tgz#0238902ca938347bd779523692fbeefdf4f688ab"
+fibers@4.0.3, fibers@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npm.taobao.org/fibers/download/fibers-4.0.3.tgz#dda5918280a48507f5d8a96dd9a525e8f4a532e2"
+  integrity sha1-3aWRgoCkhQf12Klt2aUl6PSlMuI=
   dependencies:
     detect-libc "^1.0.3"
 
