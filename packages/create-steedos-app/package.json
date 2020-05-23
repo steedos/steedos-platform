@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": "12.x"
   },
   "bugs": {
     "url": "https://github.com/steedos/steedos-platform/issues"
