@@ -66,11 +66,11 @@ async function createProject(retVal){
             fs.removeSync(path.join(projectDir, projectConfigName))
             const gitignorePath = path.join(projectDir, '.gitignore')
             if(fs.existsSync(gitignorePath)){
-                let data = fs.readFileSync(gitignorePath, 'utf8')
-                data = data + '\r\n' + 'steedos-config.yml'
-                fs.outputFileSync(gitignorePath, data)
+                // let data = fs.readFileSync(gitignorePath, 'utf8')
+                // data = data + '\r\n' + 'steedos-config.yml'
+                // fs.outputFileSync(gitignorePath, data)
             }else{
-                fs.outputFileSync(gitignorePath, 'node_modules' + '\r\n' +'steedos-config.yml')
+                fs.outputFileSync(gitignorePath, 'node_modules')
             }
             spinner.succeed()
             // spinner.info(`Please execute the command: cd ${retVal.projectOptions.name} && yarn && yarn start`);
