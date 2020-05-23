@@ -26,6 +26,7 @@ fields:
             }
   name:
     type: text
+    label: Name
     searchable: true
     index: true
     hidden: true
@@ -39,7 +40,7 @@ fields:
     index: true
   _name:
     type: text
-    label: _name
+    label: Name
     searchable: true
     index: true
     required: true
