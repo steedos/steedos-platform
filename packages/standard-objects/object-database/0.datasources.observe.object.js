@@ -63,7 +63,9 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                return _change(newDocument, null, server_datasources_init);
+                if(newDocument.is_enable){
+                    return _change(newDocument, null, server_datasources_init);
+                }
             },
             changed: function (newDocument, oldDocument) {
                 if(newDocument.is_enable){

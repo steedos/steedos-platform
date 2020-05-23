@@ -25,7 +25,9 @@ Meteor.startup(function () {
         }).observe({
             added: function (newDocument) {
                 if (!server_objects_init || _.has(newDocument, "fields")) {
-                    return _changeServerObjects(newDocument, null);
+                    if(newDocument.is_enable != false){
+                        return _changeServerObjects(newDocument, null);
+                    }
                 }
             },
             changed: function (newDocument, oldDocument) {
