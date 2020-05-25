@@ -128,6 +128,13 @@ fields:
     reference_to: users
     name: manager
     filterable: true
+  contact_id:
+    type: lookup
+    reference_to: contacts
+  is_partner:
+    type: boolean
+  is_customer:
+    type: boolean
   work_phone:
     type: text
     label: Work Phone Number
