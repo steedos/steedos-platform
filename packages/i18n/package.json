@@ -1,7 +1,7 @@
 {
   "name": "@steedos/i18n",
   "private": false,
-  "version": "1.20.0",
+  "version": "1.20.4",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
