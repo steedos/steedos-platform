@@ -30,7 +30,7 @@ workflowClient.prototype.checkFormData = function(){
 
 				if (!fileValue || fileValue === '' || fileValue.length < 1) {
 					$element.parent().addClass("has-error");
-					window.toastr.error($element.attr("title") + "不能为空");
+					window.toastr.error("请填写" + $element.attr("title"));
 					is_pass = false;
 				}
 			}
@@ -50,8 +50,25 @@ workflowClient.prototype.checkFormData = function(){
 
 
 workflowClient.prototype.submit_success = function (data, textStatus) {
-	$("[name='instanceForm']")[0].reset();
-	window.toastr.success("提交成功");
+	var that = this;
+	$.ajax({
+		url: "/api/workflow/open/submit/"+data.data._id,
+		type: 'put',
+		headers: {
+			'x-space-id': window.space
+		},
+		async: false,
+		data: JSON.stringify(data),
+		dataType: 'json',
+		processData: false,
+		contentType: "application/json",
+		success: function(){
+			$("[name='instanceForm']")[0].reset();
+			window.toastr.success("提交成功");
+		},
+		error: that.submit_error
+	});
+
 };
 
 workflowClient.prototype.submit_error = function (jqXHR, textStatus, errorThrown) {
@@ -91,7 +108,7 @@ workflowClient.prototype.submit = function () {
 	var rev;
 
 	$.ajax({
-		url: "/api/workflow/open/drafts?access_token=" + this.access_token,
+		url: "/api/workflow/open/drafts",
 		type: 'POST',
 		headers: {
 			'x-space-id': window.space
@@ -154,4 +171,4 @@ $(document).ready(function () {
 	});
 });
 
-var wc = new workflowClient("","","51a842c87046900538000001-b_OCSaAbjQ_3yYfp3etEjrKzSztz-ygPNezdz2yIB85");
+var wc = new workflowClient("","","");
