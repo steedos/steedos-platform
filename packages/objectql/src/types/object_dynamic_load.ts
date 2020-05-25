@@ -12,12 +12,47 @@ var globby = require('globby');
 export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
 export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
+const _original_objectConfigs: Array<SteedosObjectTypeConfig> = []; //不包括继承部分
 const _objectConfigs: Array<SteedosObjectTypeConfig> = [];
 const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
+const _objectsI18n: Array<any> = [];
 
 let standardObjectsLoaded: boolean = false;
+
+const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
+    if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
+        return ;
+    }
+    config.datasource = datasource;
+    _.remove(_original_objectConfigs, {name: objectName, datasource: datasource});
+    _original_objectConfigs.push(config)
+}
+
+const extendOriginalObjectConfig = function(objectName: string, datasource: string, objectConfig: SteedosObjectTypeConfig){
+    if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
+        return ;
+    }
+    let parentOriginalObjectConfig = getOriginalObjectConfig(objectName);
+    let originalObjectConfig = util.extend({
+        name: objectName,
+        fields: {}
+    }, clone(parentOriginalObjectConfig), objectConfig);
+    addOriginalObjectConfigs(objectName, datasource, clone(originalObjectConfig));
+}
+
+export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
+    return _.find(_original_objectConfigs, {name: object_name})
+}
+
+export const getOriginalObjectConfigs = (datasource: string) => {
+    if (datasource) {
+        return _.filter(_original_objectConfigs, {datasource: datasource})
+    } else {
+        return _original_objectConfigs
+    }
+}
 
 export const getObjectConfigs = (datasource: string) => {
     if (datasource) {
@@ -49,6 +84,11 @@ export const addObjectConfigFiles = (filePath: string, datasource: string) => {
         addObjectListenerConfig(json);
     })
 
+    let actions = util.loadActions(filePath)
+
+    _.each(actions, (json: SteedosActionTypeConfig) => {
+        addObjectActionConfig(json);
+    })
 }
 
 export const addServerScriptFiles = (filePath: string) => {
@@ -63,6 +103,21 @@ export const addServerScriptFiles = (filePath: string) => {
 
 export const getServerScripts = () => {
     return _serverScripts;
+}
+
+export const addObjectI18nFiles = (filePath: string)=>{
+    if(!path.isAbsolute(filePath)){
+        throw new Error(`${filePath} must be an absolute path`);
+    }
+
+    let i18nData = util.loadI18n(filePath)
+    i18nData.forEach(element => {
+        _objectsI18n.push(element)
+    });
+}
+
+export const getObjectsI18n = ()=>{
+    return _objectsI18n;
 }
 
 export const  addClientScriptFiles = (filePath: string) => {
@@ -98,7 +153,9 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
         }
         config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
         delete config.extend
+        extendOriginalObjectConfig(object_name, datasource, clone(objectConfig));
     } else {
+        addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
         if (isMeteor() && (datasource === 'default')) {
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
@@ -113,7 +170,13 @@ export const addObjectConfig = (objectConfig: SteedosObjectTypeConfig, datasourc
     }
     config.datasource = datasource;
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
+    delete config.__filename
     _objectConfigs.push(config)
+}
+
+export const removeObjectConfig = (object_name: string, datasource: string)=>{
+    _.remove(_objectConfigs, {name: object_name, datasource: datasource});
+    _.remove(_original_objectConfigs, {name: object_name, datasource: datasource});
 }
 
 export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
@@ -139,13 +202,81 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             object.listeners = {}
         }
         delete json.listenTo
-        json.name = getRandomString(10);
+        json.name = json._id ||getRandomString(10);
         object.listeners[json.name] = json
         if(object.datasource === 'default'){
             util.extend(object, {triggers: transformListenersToTriggers(object, json)})
         }
     } else {
         throw new Error(`Error add listener, object not found: ${object_name}`);
+    }
+}
+
+export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
+    if (!json.listenTo) {
+        throw new Error('missing attribute listenTo')
+    }
+
+    if (!_.isString(json.listenTo) && !_.isFunction(json.listenTo)) {
+        throw new Error('listenTo must be a function or string')
+    }
+
+    let object_name = '';
+
+    if (_.isString(json.listenTo)) {
+        object_name = json.listenTo
+    } else if (_.isFunction(json.listenTo)) {
+        object_name = json.listenTo()
+    }
+
+    let object = getObjectConfig(object_name);
+    if (object) {
+        if(!object.listeners){
+            object.listeners = {}
+        }
+        _.each(object.actions, function(action, key){
+            if(json[key]){
+                action.todo = json[key]
+            }
+            if(json[`${key}Visible`]){
+                action.visible = json[`${key}Visible`]
+            }
+        })
+    } else {
+        throw new Error(`Error add action, object not found: ${object_name}`);
+    }
+}
+
+export const removeObjectListenerConfig = (_id, listenTo, when)=>{
+    if(!_id){
+        throw new Error('[config._id] Can not be empty. can not remove object listener.');
+    }
+    if (!listenTo) {
+        throw new Error('missing attribute listenTo')
+    }
+
+    if (!_.isString(listenTo) ) {
+        throw new Error('listenTo must be a string')
+    }
+
+    let object_name = '';
+
+    if (_.isString(listenTo)) {
+        object_name = listenTo
+    }
+
+    let object:any = getObjectConfig(object_name);
+    if (object) {
+        if(object.listeners){
+            delete object.listeners[_id]
+        }
+
+        if(object.triggers){
+            delete object.triggers[`${_id}_${when}`]
+        }
+
+    } else {
+        throw new Error(`Error remove listener, object not found: ${object_name}`);
     }
 }
 
@@ -200,8 +331,8 @@ export function addObjectMethod(objectName: string, methodName: string, method: 
     object.methods[methodName] = method
 }
 
+//TODO 写入到addOriginalObjectConfigs
 export function addObjectAction(objectName: string, actionConfig: SteedosActionTypeConfig){
-    
     if (!actionConfig.name) 
         throw new Error(`Error add action, name required`);
 

@@ -440,10 +440,7 @@
       "path": "packages/steedos_devexpress.js"
     },
     {
-      "path": "packages/gwendall_simple-schema-i18n.js",
-      "assets": {
-        "package-tap.i18n": "assets/packages/gwendall_simple-schema-i18n/package-tap.i18n"
-      }
+      "path": "packages/gwendall_simple-schema-i18n.js"
     },
     {
       "path": "packages/francocatena_status.js"
@@ -638,10 +635,6 @@
     {
       "sourceMap": "packages/steedos_odata.js.map",
       "path": "packages/steedos_odata.js"
-    },
-    {
-      "sourceMap": "packages/steedos_object-database.js.map",
-      "path": "packages/steedos_object-database.js"
     },
     {
       "sourceMap": "packages/steedos_mailqueue.js.map",

@@ -10,10 +10,11 @@ var addNotifications = function(userId, doc, assignees){
         _id: userId
     }, {
         fields: {
-            name: 1
+            name: 1,
+            locale: 1
         }
     });
-    var notificationTitle = fromUser.name + " 为您分配了任务";
+    var notificationTitle = fromUser.name + t('tasks_js_addNotifications_notificationTitle', {}, fromUser.locale);
     var notificationDoc = {
         name: notificationTitle,
         body: doc.name,
@@ -29,14 +30,7 @@ var addNotifications = function(userId, doc, assignees){
 }
 
 var removeNotifications = function(doc, assignees){
-    var collection = Creator.getCollection("notifications");
-    assignees.forEach(function(assignee){
-        collection.remove({
-            "related_to.o": "tasks",
-            "related_to.ids": doc._id,
-            owner: assignee
-        });
-    });
+    Creator.removeNotifications(doc, assignees, "tasks");
 }
 
 Creator.Objects['tasks'].triggers = {
@@ -54,14 +48,8 @@ Creator.Objects['tasks'].triggers = {
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {};
-            var docAssignees = doc.assignees;
-            var setAssignees = modifier.$set.assignees;
-            if(!docAssignees){
-                docAssignees = [];
-            }
-            if(!setAssignees){
-                setAssignees = [];
-            }
+            var docAssignees = doc.assignees || [];
+            var setAssignees = modifier.$set.assignees || [];
             var addAssignees = _.difference(setAssignees, docAssignees);
             var removedAssignees = _.difference(docAssignees, setAssignees);
             if(addAssignees.length){
@@ -72,18 +60,14 @@ Creator.Objects['tasks'].triggers = {
             }
         }
     },
-    // "before.remove.server.tasks": {
-    //     on: "server",
-    //     when: "before.remove",
-    //     todo: function (userId, doc) {
-    //         if(doc.assignees && doc.assignees.length){
-    //             doc.assignees.forEach(function(assignee){
-    //                 Creator.getCollection("notifications").remove({
-    //                     o: "tasks",
-    //                     ids: [doc._id]
-    //                 });
-    //             });
-    //         }
-    //     }
-    // }
+    "before.remove.server.tasks": {
+        on: "server",
+        when: "before.remove",
+        todo: function (userId, doc) {
+            let removedAssignees = doc.assignees;
+            if(removedAssignees && removedAssignees.length){
+                removeNotifications(doc, removedAssignees);
+            }
+        }
+    }
 }

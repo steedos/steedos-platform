@@ -1,0 +1,34 @@
+{
+  "name": "create-steedos-app",
+  "version": "1.20.4",
+  "keywords": [
+    "steedos"
+  ],
+  "description": "Create steedos apps with no build configuration.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steedos/steedos-platform.git",
+    "directory": "packages/create-steedos-app"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "12.x"
+  },
+  "bugs": {
+    "url": "https://github.com/steedos/steedos-platform/issues"
+  },
+  "files": [
+    "index.js",
+    "createSteedosApp.js"
+  ],
+  "bin": {
+    "create-steedos-app": "./index.js"
+  },
+  "dependencies": {
+    "@geek/spinner": "^1.0.0",
+    "@steedos/project-template-empty": "^1.20.4",
+    "chalk": "3.0.0",
+    "commander": "4.1.0",
+    "fs-extra": "8.1.0"
+  }
+}

@@ -4,16 +4,17 @@ label: OAuth2 Token
 enable_search: false
 fields:
   userId:
-    label: 用户
+    label: User
     type: lookup
     reference_to: users
     sortable: true
     filterable: true
   expires:
     type: datetime
-    label: 有效期限
+    label: Expiration Time
   clientId:
     type: text
+    label: Client ID
     omit: true
     defaultValue: creator
   accessToken:
@@ -25,7 +26,7 @@ fields:
             }
 list_views:
   all:
-    label: 全部
+    label: All OAuth2 Access Tokens
     columns:
       - userId
       - expires

@@ -1,4 +1,4 @@
-import { SteedosUserSession, isTemplateSpace } from '@steedos/objectql';
+import { SteedosUserSession, isTemplateSpace, wrapAsync } from '@steedos/objectql';
 import { Response } from "express";
 import { getUserIdByToken } from './tokenMap'
 import { getUserSession } from './userSession'
@@ -24,23 +24,31 @@ function reviseSession(session) {
   return session
 }
 
-export async function getSessionByUserId (userId, spaceId?): Promise<SteedosUserSession>{
-  if(!userId){
-    return ;
+export async function getSessionByUserId(userId, spaceId?): Promise<SteedosUserSession> {
+  if (!userId) {
+    return;
   }
 
   let userSession = await getUserSession(userId);
-  if(!userSession){
-    return ;
+  if (!userSession) {
+    return;
   }
 
   let spaceUserSession = {}
-  if(spaceId){
+  if (spaceId) {
     spaceUserSession = await getSpaceUserSession(spaceId, userId);
   }
-  
+
   return assignSession(spaceId, userSession, spaceUserSession);
 }
+
+export function getSessionByUserIdSync(userId, spaceId?): any {
+  let getSessionFn = function () {
+    return getSessionByUserId(userId, spaceId);
+  }
+  return wrapAsync(getSessionFn, {});
+}
+
 
 export async function getSession(token: string, spaceId?: string): Promise<SteedosUserSession> {
   if (!token) {
@@ -48,16 +56,16 @@ export async function getSession(token: string, spaceId?: string): Promise<Steed
   }
 
   let userId = await getUserIdByToken(token);
-  if(!userId){
+  if (!userId) {
     return
   }
 
   let userSession = await getUserSession(userId);
-  if(!userSession){
-    return ;
+  if (!userSession) {
+    return;
   }
   let spaceUserSession = await getSpaceUserSession(spaceId, userId);
-  
+
   return assignSession(spaceId, userSession, spaceUserSession);
 }
 
@@ -72,7 +80,7 @@ export async function auth(request: Request, response: Response): Promise<any> {
     || request.headers['x-space-id'];
   if (authorization && authorization.split(' ')[0] == 'Bearer') {
     let spaceAuthToken = authorization.split(' ')[1];
-    if(!spaceId){
+    if (!spaceId) {
       spaceId = spaceAuthToken.split(',')[0];
     }
     authToken = spaceAuthToken.split(',')[1];
@@ -88,12 +96,12 @@ export async function auth(request: Request, response: Response): Promise<any> {
   }
 
   let user = await getSession(authToken, spaceId);
-  if(isTemplateSpace(spaceId)){
-    return Object.assign({ authToken: authToken }, user, {spaceId: spaceId});
-  }else{
+  if (isTemplateSpace(spaceId)) {
+    return Object.assign({ authToken: authToken }, user, { spaceId: spaceId });
+  } else {
     return Object.assign({ authToken: authToken }, user);
   }
-  
+
 }
 
 // 给Request对象添加user属性，值为SteedosUserSession类型

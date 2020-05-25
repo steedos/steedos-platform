@@ -1,24 +1,24 @@
 name: settings
-label: 设置
+label: Setting
 icon: custom
 fields:
   type:
-    label: 类型
+    label: Type
     type: text
     allowedValues:
       - user
       - space
       - cloud
   object_name:
-    label: 对象名
+    label: Object
     type: text
     index: true
   record_id:
-    label: 记录ID
+    label: Record ID
     type: text
     index: true
   settings:
-    label: 设置
+    label: Settings
     type: object
     blackbox: true
 permission_set:

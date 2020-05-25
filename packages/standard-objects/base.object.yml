@@ -1,7 +1,7 @@
 name: base
 fields:
   owner:
-    label: 所有者
+    label: Owner
     type: lookup
     reference_to: users
     sortable: true
@@ -11,19 +11,19 @@ fields:
     hidden: true
   space:
     type: text
-    label: 所属工作区
+    label: Space
     reference_to: spaces
     index: true
     hidden: true
     defaultValue: "{spaceId}"
   created:
     type: datetime
-    label: 创建时间
+    label: Creation Time 
     readonly: true
     sortable: true
     omit: true
   created_by:
-    label: 创建人
+    label: Created by
     type: lookup
     readonly: true
     reference_to: users
@@ -31,14 +31,14 @@ fields:
     index: true
     omit: true
   modified:
-    label: 修改时间
+    label: Modification Time
     type: datetime
     readonly: true
     sortable: true
     index: true
     omit: true
   modified_by:
-    label: 修改人
+    label: Modified by
     type: lookup
     readonly: true
     reference_to: users
@@ -46,12 +46,12 @@ fields:
     omit: true
   is_deleted:
     type: boolean
-    label: 已删除
+    label: Deleted
     omit: true
     index: true
     hidden: true
   deleted:
-    label: 删除时间
+    label: Deletion Time
     type: datetime
     readonly: true
     sortable: true
@@ -59,7 +59,7 @@ fields:
     omit: true
     hidden: true
   deleted_by:
-    label: 删除人
+    label: Deleted by
     type: lookup
     readonly: true
     reference_to: users
@@ -67,58 +67,58 @@ fields:
     omit: true
     hidden: true
   instances:
-    label: 申请单
+    label: Instances
     type: grid
     omit: true
     hidden: true
   instances.$._id:
-    label: 申请单ID
+    label: Instance ID
     type: text
     omit: true
     hidden: true
   instances.$.state:
-    label: 申请单状态
+    label: State
     type: text
     omit: true
     hidden: true
   sharing:
-    label: 记录级权限
+    label: Record Level Permission
     type: grid
     omit: true
     hidden: true
     blackbox: true
   sharing.$:
-    label: 授权条件
+    label: Authorization
     blackbox: true
     omit: true
     hidden: true
   sharing.$.u:
-    label: 授权用户
+    label: Authorized Users
     type: "[text]"
     omit: true
     hidden: true
   sharing.$.o:
-    label: 授权组织
+    label: Authorized Departments
     type: "[text]"
     omit: true
     hidden: true
   sharing.$.r:
-    label: 来自规则
+    label: Rule
     type: text
     omit: true
     hidden: true
   message_count:
-    label: 评论数
+    label: Number of Messages
     type: number
     omit: true
     hidden: true
   locked:
-    label: 已锁定
+    label: Locked
     type: boolean
     omit: true
     hidden: true
   company_id:
-    label: 分部
+    label: Division
     type: lookup
     reference_to: company
     sortable: true
@@ -190,7 +190,7 @@ fields:
     omit: true
     hidden: true
   company_ids:
-    label: 分部
+    label: All Divisions
     type: lookup
     reference_to: company
     sortable: true
@@ -269,23 +269,40 @@ fields:
     omit: true
     hidden: true
   instance_state:
-    label: 审批状态
+    label: Instance State
     type: select
     options:
-      - label: 草稿
+      - label: Draft
         value: draft
-      - label: 进行中
+      - label: Pending
         value: pending
-      - label: 已完成
+      - label: Completed
         value: completed
-      - label: 已核准
+      - label: Approved
         value: approved
-      - label: 已驳回
+      - label: Rejected
         value: rejected
-      - label: 已取消
+      - label: Terminated
         value: terminated
     omit: true
     hidden: true
+actions: 
+  standard_query:
+    label: Search
+  standard_new: 
+    label: New
+  standard_open_view: 
+    label: Open
+  standard_edit: 
+    label: Edit
+  standard_delete: 
+    label: Delete
+  standard_approve: 
+    label: Initiate Approval
+  standard_view_instance: 
+    label: View Instance
+  standard_follow: 
+    label: Follow
 permission_set:
   none:
     allowCreate: false

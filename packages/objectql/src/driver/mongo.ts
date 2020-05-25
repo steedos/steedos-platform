@@ -7,6 +7,7 @@ import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
+import { wrapAsync } from '../util';
 
 export class SteedosMongoDriver implements SteedosDriver {
     _url: string;
@@ -30,7 +31,9 @@ export class SteedosMongoDriver implements SteedosDriver {
         const credentialsUrlPart = (this._config.username && this._config.password)
             ? `${this._config.username}:${this._config.password}@`
             : "";
-
+        if (!this._config.database) {
+            throw new Error('Not find database');
+        }
         return `mongodb://${credentialsUrlPart}${this._config.host || "127.0.0.1"}:${this._config.port || "27017"}/${this._config.database}`;
     }
 
@@ -142,7 +145,17 @@ export class SteedosMongoDriver implements SteedosDriver {
 
     collection(name: string) {
         if (!this._collections[name]) {
-            this._collections[name] = this._client.db().collection(name);
+            let db = this._client.db();
+            let locale = this._config.locale;
+            if (locale) {
+                wrapAsync(function () {
+                    return db.createCollection(name, {
+                        'collation': { 'locale': locale }
+                    })
+                }, {})
+            }
+
+            this._collections[name] = db.collection(name);
         }
         return this._collections[name];
     };
@@ -256,11 +269,11 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directUpdate(tableName: string, id: SteedosIDType | SteedosQueryOptions, data: Dictionary<any>) {
-       return this.update(tableName, id, data)
+        return this.update(tableName, id, data)
     }
 
     async directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions) {
-       return this.delete(tableName, id)
+        return this.delete(tableName, id)
     }
 
 }

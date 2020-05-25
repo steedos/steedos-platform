@@ -64,6 +64,9 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
             precision: field.precision ? field.precision : (field.scale ? 18 : undefined),
             scale: field.scale
         };
+        if(field.column_name){
+            (columns as any)[fieldName]["name"] = field.column_name
+        }
     }
     if (!primaryColumnCount){
         return null;

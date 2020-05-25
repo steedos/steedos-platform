@@ -1,172 +1,171 @@
 name: forms
 icon: timesheet
-label: 表单
+label: Form
 fields:
   name:
     type: text
-    label: 表单
+    label: Name
     required: true
     searchable: true
     readonly: true
     name: name
   state:
     type: select
-    label: 表单状态
+    label: State
     options:
-      - label: 启用
+      - label: Enabled
         value: enabled
-      - label: 停用
+      - label: Disabled
         value: disabled
     readonly: true
     name: state
     filterable: true
   description:
     type: textarea
-    label: 表单描述
+    label: Description
     is_wide: true
     name: description
   category:
     type: lookup
-    label: 表单分类
+    label: Category
     reference_to: categories
     readonly: true
     name: category
     filterable: true
   is_valid:
     type: boolean
-    label: 是否有效
+    label: Valid
     readonly: true
     name: is_valid
   instance_style:
     type: select
-    label: 样式
+    label: Instance Style
     options:
-      - label: 表格
+      - label: Table
         value: table
-      - label: 默认
+      - label: Default
         value: default
     name: instance_style
     filterable: true
   historys:
-    label: 历史版本
+    label: historys
     blackbox: true
     omit: true
     hidden: true
     name: historys
   approve_on_create:
-    label: 是否同意审批
+    label: Approve on Create
     type: boolean
     name: approve_on_create
   approve_on_modify:
-    label: 是否修改审批
+    label: Approve on Modify
     type: boolean
     name: approve_on_modify
   approve_on_delete:
     type: boolean
-    label: 是否删除审批
+    label: Approve on Delete
     name: approve_on_delete
   enable_workflow:
     type: boolean
-    label: 是否启用工作流
+    label: Enable Workflow
     name: enable_workflow
   enable_view_others:
     type: boolean
-    label: 是否查看其它表单
+    label: Enable View Others
     name: enable_view_others
   current:
-    label: 当前版本
+    label: current
     type: object
     is_wide: true
     readonly: true
     blackbox: true
     name: current
   current.form_script:
-    label: 表单脚本
+    label: Form Script
     type: code
     readonly: true
     name: current.form_script
   current.name_forumla:
-    label: 标题公式
+    label: Name Forumla
     type: code
     readonly: true
     name: current.name_forumla
   current.fields:
-    label: 字段
+    label: Fields
     type: grid
     is_wide: true
     readonly: true
     name: current.fields
   current.fields.$.code:
-    label: 名称
+    label: Code
     type: text
     readonly: true
     name: current.fields.$.code
   current.fields.$.name:
-    label: 显示名
+    label: Name
     type: text
     readonly: true
     name: current.fields.$.name
   current.fields.$.type:
-    label: 类型
+    label: Type
     type: select
     options:
-      - label: 勾选框
+      - label: Checkbox
         value: checkbox
-      - label: 日期-时间
-        value: dateTime
-      - label: 日期
+      - label: DateTimeE
+        value: dateTimeD
+      - label: Date
         value: date
-      - label: 邮件
-        value: email
-      - label: 选择部门
+      - label: EmailGM
+      - label: Group
         value: group
-      - label: 文本
+      - label: Input
         value: input
-      - label: 多选
+      - label: MultiSelect
         value: multiSelect
-      - label: 数值
+      - label: Number
         value: number
-      - label: 密码
+      - label: Password
         value: password
-      - label: 单选
+      - label: Radio
         value: radio
-      - label: 分组
+      - label: Section
         value: section
-      - label: 下拉框
+      - label: Select
         value: select
-      - label: 表格
+      - label: Table
         value: table
-      - label: 网址
+      - label: URL
         value: url
-      - label: 选择用户
+      - label: User
         value: user
-      - label: 地理位置
-        value: geolocation
+      - label: GeolocationR
+        value: geolocationR
     readonly: true
     name: current.fields.$.type
     filterable: true
   current.fields.$.is_required:
-    label: 必填
+    label: Required
     type: boolean
     readonly: true
-    name: current.fields.$.is_required
+    name: current.fields.$.is_requiredW
   current.fields.$.is_wide:
-    label: 宽字段
+    label: Wide
     type: boolean
     readonly: true
     name: current.fields.$.is_wide
   current.fields.$.is_list_display:
-    label: 列表显示
+    label: Display in List
     type: boolean
     readonly: true
     name: current.fields.$.is_list_display
   current.fields.$.is_searchable:
-    label: 可搜索
+    label: Searchable
     type: boolean
     readonly: true
     name: current.fields.$.is_searchable
   current.fields.$.is_multiselect:
-    label: 多选
+    label: Multiselect
     type: boolean
     readonly: true
     name: current.fields.$.is_multiselect
@@ -176,7 +175,7 @@ fields:
   #   hidden: false
 list_views:
   all:
-    label: 所有
+    label: All Forms
     filter_scope: space
     filters:
       - - is_deleted
@@ -200,7 +199,7 @@ actions:
     visible: false
     'on': record_more
   designForm:
-    label: 表单设计器
+    label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions) {
               return true;

@@ -1,10 +1,10 @@
 name: events
-label: 日程
+label: Event
 icon: event
 enable_search: true
 fields:
   name:
-    label: 主题
+    label: Name
     type: text
     required: true
     is_wide: true
@@ -12,7 +12,7 @@ fields:
     index: true
     name: name
   start:
-    label: 开始时间
+    label: Start Timne
     type: datetime
     required: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
@@ -27,7 +27,7 @@ fields:
     sortable: true
     name: start
   end:
-    label: 结束时间
+    label: End Time
     type: datetime
     required: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
@@ -41,7 +41,7 @@ fields:
             }
     name: end
   assignees:
-    label: 分派给
+    label: Assignees
     type: lookup
     reference_to: users
     defaultValue: "{userId}"
@@ -49,7 +49,7 @@ fields:
     name: assignees
     filterable: true
   related_to:
-    label: 相关项
+    label: Related to
     type: lookup
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
@@ -68,22 +68,22 @@ fields:
     name: related_to
     filterable: true
   is_all_day:
-    label: 全天事件
+    label: All Day Event
     type: boolean
     name: is_all_day
   location:
-    label: 地址
+    label: Location
     type: text
     name: location
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
     name: description
 list_views:
   calendar_view:
     type: calendar
-    label: 日历视图
+    label: Calendar View
     filter_scope: space
     filters:
     - - owner 
@@ -107,7 +107,7 @@ list_views:
       startDayHour: 8
       endDayHour: 18
   all:
-    label: 全部
+    label: All Events
     filter_scope: space
     filters:
     - - owner 

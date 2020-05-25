@@ -1,12 +1,12 @@
 name: tasks
-label: 任务
+label: Task
 icon: timesheet_entry
 enable_search: true
 enable_files: true
 enable_chatter: true
 fields:
   name:
-    label: 主题
+    label: Name
     type: text
     required: true
     is_wide: true
@@ -14,7 +14,7 @@ fields:
     index: true
     name: name
   assignees:
-    label: 分派给
+    label: Assignees
     type: lookup
     reference_to: users
     defaultValue: "{userId}"
@@ -22,44 +22,44 @@ fields:
     name: assignees
     filterable: true
   due_date:
-    label: 到期日期
+    label: Due Date
     type: date
     sortable: true
     name: due_date
   state:
-    label: 状态
+    label: State
     type: select
     options:
-      - label: 未开始
+      - label: not Started
         value: not_started
-      - label: 进行中
+      - label: in Progress
         value: in_progress
-      - label: 已完成
+      - label: Completed
         value: completed
-      - label: 等待其他人
+      - label: Waiting
         value: waiting
-      - label: 延期
+      - label: Deferred
         value: deferred
     defaultValue: not_started
     sortable: true
     required: true
     filterable: true
   priority:
-    label: 优先级
+    label: Priority
     type: select
     options:
-      - label: 高
+      - label: High
         value: high
-      - label: 中
+      - label: Normal
         value: normal
-      - label: 低
+      - label: Low
         value: low
     defaultValue: normal
     sortable: true
     required: true
     filterable: true
   related_to:
-    label: 相关项
+    label: Related to
     type: lookup
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
@@ -78,13 +78,13 @@ fields:
     name: related_to
     filterable: true
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
     name: description
 list_views:
   my_open_tasks:
-    label: 待办任务
+    label: My Open Tasks
     filter_scope: space
     filters:
       - - assignees
@@ -94,7 +94,7 @@ list_views:
         - <>
         - completed
   my_closed_tasks:
-    label: 已办任务
+    label: My Closed Tasks
     filter_scope: space
     filters:
       - - assignees
@@ -104,7 +104,7 @@ list_views:
         - =
         - completed
   all:
-    label: 所有任务
+    label: All Tasks
     columns:
       - name
       - due_date
@@ -118,17 +118,17 @@ list_views:
         - '{userId}'
     filter_scope: space
   created_tasks:
-    label: 交办任务
+    label: Tasks Assigned to Me
     filter_scope: space
     filters:
       - - owner
         - =
         - '{userId}'
   recent:
-    label: 最近查看
+    label: Recently Viewed Tasks
   calendar_view:
     type: calendar
-    label: 日历视图
+    label: Calendar View
     filter_scope: space
     filters:
       - - assignees

@@ -1,30 +1,30 @@
 name: roles
-label: 角色
+label: Role
 icon: task
 fields:
   name:
-    label: 角色名称
+    label: Name
     type: text
     required: true
     searchable: true
   parent:
-    label: 上级角色
+    label: Parent Role
     type: lookup
     reference_to: roles
   users:
-    label: 成员
+    label: Users
     type: lookup
     reference_to: users
     multiple: true
     is_wide: true
   description:
-    label: 描述
+    label: Description
     type: textarea
     rows: 3
     is_wide: true
 list_views:
   all:
-    label: 所有角色
+    label: All Roles
     filter_scope: space
     columns:
       - name

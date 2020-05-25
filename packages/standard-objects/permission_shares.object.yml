@@ -1,15 +1,15 @@
 name: permission_shares
-label: 共享规则
+label: Permission Share
 icon: assigned_resource
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     required: true
     searchable: true
     index: true
   object_name:
-    label: 对象
+    label: Object
     type: lookup
     multiple: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
@@ -32,19 +32,19 @@ fields:
     required: true
     filterable: true
   filters:
-    label: 过滤条件
+    label: Filters
     type: textarea
-    inlineHelpText: 格式为odata filters
+    inlineHelpText: Format of OData Filters Required.
     is_wide: true
   organizations:
-    label: 授权组织
+    label: Departments
     type: lookup
     reference_to: organizations
     multiple: true
     defaultValue: []
     filterable: true
   users:
-    label: 授权用户
+    label: Users
     type: lookup
     reference_to: users
     multiple: true
@@ -52,7 +52,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 全部
+    label: All
     filter_scope: space
     columns:
       - name

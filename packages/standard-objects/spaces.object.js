@@ -1,5 +1,8 @@
 Fiber = require('fibers')
-db.spaces = new Meteor.Collection('spaces');
+const core = require('@steedos/core');
+const objectql = require('@steedos/objectql');
+const _ = require("lodash");
+db.spaces = core.newCollection('spaces');
 
 db.spaces.helpers({
     owner_name: function () {
@@ -125,6 +128,7 @@ if (Meteor.isServer) {
         doc.modified_by = userId;
         doc.modified = new Date();
         doc.is_deleted = false;
+        doc.enable_register = true;
         doc.services = doc.services || {};
         if (!userId) {
             throw new Meteor.Error(400, "spaces_error_login_required");
@@ -428,6 +432,27 @@ if (Meteor.isServer) {
 Creator.Objects['spaces'].methods = {
     "tenant": function (req, res) {
         return Fiber(function () {
+            const config = objectql.getSteedosConfig();
+            let tenant = {
+                name: "Steedos",
+                logo_url: undefined,
+                background_url: undefined,
+                enable_create_tenant: true,
+                enable_register: true,
+                enable_forget_password: true
+            }
+    
+            if (config.tenant) {
+                _.assignIn(tenant, config.tenant)
+            }
+
+            if(!tenant.enable_create_tenant){
+                return res.status(500).send({
+                    "message": "禁止注册企业",
+                    "success": false
+                });
+            }
+
             let error = '';
             try {
                 let userSession = req.user;
@@ -460,7 +485,7 @@ Creator.Objects['spaces'].methods = {
                 error = err.message
             }
             return res.status(500).send({
-                "error": error,
+                "message": error,
                 "success": false
             });
         }).run();

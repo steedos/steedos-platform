@@ -1,10 +1,10 @@
 name: space_user_signs
 icon: metrics
-label: 图片签名
+label: User Sign
 fields:
   user:
     type: lookup
-    label: 用户
+    label: User
     reference_to: users
     required: true
     name: user
@@ -12,7 +12,7 @@ fields:
     searchable: true
   sign:
     type: avatar
-    label: 签名
+    label: Sign
     name: sign
   # company_id:
   #   required: false
@@ -25,7 +25,7 @@ list_views:
       - user
       - sign
       - company_id
-    label: 所有
+    label: All User Signs
 permission_set:
   user:
     allowCreate: false

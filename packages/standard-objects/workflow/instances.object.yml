@@ -1,10 +1,10 @@
 name: instances
 icon: task
-label: 审批
+label: Request
 enable_search: true
 fields:
   name:
-    label: 文件标题
+    label: Name
     type: text
     defaultValue: ''
     description: ''
@@ -14,31 +14,31 @@ fields:
     is_wide: true
     name: name
   flow:
-    label: 流程
+    label: Workflow
     type: lookup
     reference_to: flows
     readonly: true
     name: flow
     filterable: true
   flow_version:
-    label: 流程版本号
+    label: Workflow Version
     type: text
     hidden: true
     name: flow_version
   form:
-    label: 表单
+    label: Form
     type: lookup
     reference_to: forms
     readonly: true
     name: form
     filterable: true
   form_version:
-    label: 表单版本号
+    label: Form Version
     type: text
     hidden: true
     name: form_version
   submitter:
-    label: 提交者
+    label: Submitter
     type: master_detail
     reference_to: users
     readonly: true
@@ -46,136 +46,136 @@ fields:
     filterable: true
   submitter_name:
     type: text
-    label: 提交者
+    label: Submitter's Name
     hidden: true
     name: submitter_name
   submit_date:
     type: datetime
-    label: 提交日期
+    label: Submit Date
     name: submit_date
   applicant:
     type: lookup
-    label: 申请人
+    label: Applicant
     reference_to: users
     name: applicant
     filterable: true
   applicant_name:
     type: text
-    label: 申请人
+    label: Applicant's Name
     hidden: true
     name: applicant_name
   applicant_organization:
     type: lookup
-    label: 申请人部门
+    label: Applicant Department
     reference_to: organizations
     name: applicant_organization
     filterable: true
   applicant_organization_name:
     type: text
-    label: 申请人部门名称
+    label: Applicant Department's Name
     hidden: true
     name: applicant_organization_name
   applicant_organization_fullname:
     type: text
-    label: 申请人部门全称
+    label: Applicant Department's Fullname
     hidden: true
     name: applicant_organization_fullname
   code:
-    label: 公式
+    label: Code
     type: text
     hidden: true
     name: code
   values:
     blackbox: true
     omit: true
-    label: 审批单字段
+    label: Field Values
     hidden: true
     name: values
   inbox_users:
     type: lookup
     multiple: true
     reference_to: users
-    label: 待办处理人
+    label: Inbox Users
     name: inbox_users
     filterable: true
   outbox_users:
     type: lookup
     multiple: true
     reference_to: users
-    label: 已办处理人
+    label: Outbox Users
     name: outbox_users
     filterable: true
   traces:
     type: '[Object]'
     blackbox: true
     omit: true
-    label: 步骤审批
+    label: Processing Traces
     hidden: true
     name: traces
   attachments:
     type: '[Object]'
     blackbox: true
     omit: true
-    label: 附件
+    label: Attachments
     hidden: true
     name: attachments
   flow_name:
     type: text
-    label: 流程名
+    label: Workflow Name
     hidden: true
     name: flow_name
   category_name:
     type: text
-    label: 流程分类
+    label: Category Name
     hidden: true
     name: category_name
   category:
-    label: 流程分类
+    label: Category
     type: lookup
     reference_to: categories
     hidden: true
     name: category
     filterable: true
   state:
-    label: 审批单状态
+    label: Processing State
     type: select
     options:
-      - label: 草稿
+      - label: Draft
         value: draft
-      - label: 进行中
+      - label: Pending
         value: pending
-      - label: 已完成
+      - label: Completed
         value: completed
     readonly: true
     name: state
     filterable: true
   is_recorded:
     type: boolean
-    label: 已归档
+    label: Recorded
     name: is_recorded
   is_archived:
     type: boolean
-    label: 已归档(旧)
+    label: Archived
     hidden: true
     name: is_archived
   is_deleted:
     type: boolean
-    label: 已删除
+    label: Deleted
     hidden: true
   is_recorded_creator:
     type: boolean
-    label: 已归档
+    label: Synced
     name: is_recorded_creator
   related_instances:
     type: lookup
     multiple: true
     reference_to: instances
-    label: 相关审批单
+    label: Related Instances
     is_wide: true
     name: related_instances
     filterable: true
   record_ids:
-    label: 记录ID
+    label: Record IDs
     type: grid
     omit: true
     hidden: true
@@ -193,19 +193,19 @@ fields:
   #   omit: false
   #   hidden: false
   current_step_auto_submit:
-    label: 当前步骤超时自动流转
+    label: Auto Submit if Time Out
     type: boolean
     omit: true
     hidden: true
     name: current_step_auto_submit
   applicant_company:
-    label: 申请人所属单位
+    label: Applicant's Division
     type: lookup
     reference_to: company
     name: applicant_company
 list_views:
   all:
-    label: 所有
+    label: All
     filter_scope: space
     columns:
       - name
@@ -214,14 +214,14 @@ list_views:
       - modified
       - state
   inbox:
-    label: 待办文件
+    label: Inbox
     filter_scope: space
     filters:
       - - inbox_users
         - =
         - '{userId}'
   outbox:
-    label: 已办文件
+    label: Outbox
     filter_scope: space
     filters:
       - - outbox_users
@@ -260,7 +260,7 @@ permission_set:
     unrelated_objects: []
 actions:
   view_instance:
-    label: 查看审批单
+    label: View Instance
     visible: true
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-

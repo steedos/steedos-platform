@@ -1,0 +1,102 @@
+name: datasources
+label: DataSource
+icon: entity
+fields:
+  driver:
+    type: select
+    label: Driver
+    options: Mongo:mongo,Mssql:sqlserver,Postgres:postgres,Oracle:oracle,Mysql:mysql,Sqlite:sqlite
+    required: true
+  name:
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    required: true
+  label:
+    type: text
+    label: Label
+  url:
+    type: text
+    label: Url
+  host:
+    type: text
+    label: Database host
+    group: Other connection options
+  port:
+    type: number
+    scale: 0
+    label: Database host port
+    group: Other connection options
+  database:
+    type: text
+    label: Database name
+    group: Other connection options
+  username:
+    type: text
+    label: Database username
+    group: Other connection options
+  password:
+    type: password
+    label: Database password
+    group: Other connection options
+  mssql_options:
+    type: textarea
+    label: Mssql connection options 
+    is_wide: true
+    group: Mssql
+  connectString:
+    type: textarea
+    label: connectString
+    is_wide: true
+    group: Oracle
+  timezone:
+    type: text
+    label: Timezone
+  options:
+    type: object
+    label: Options
+    hidden: true
+  enable_space:
+    type: boolean
+    omit: true
+    hidden: true
+    label: Enable Space
+  locale:
+    type: text
+    label: Locale
+  logging:
+    type: boolean
+    label: Debug
+  is_enable:
+    type: boolean
+    label: Enable
+list_views:
+  all:
+    columns:
+      - name
+      - label
+      - is_enable
+      - driver
+    label: All
+    filter_scope: space
+actions:
+  testConnection:
+    label: Test connection
+    on: record
+    visible: true
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

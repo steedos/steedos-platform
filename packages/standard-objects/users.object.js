@@ -465,20 +465,37 @@ if (Meteor.isServer) {
 
 Steedos.setEmailVerified = function (userId, email, value){
     let user = db.users.findOne({_id: userId, email: email}, {fields: {email_verified: 1}});
+    let now = new Date();
     if(user && _.isBoolean(value) && user.email_verified != value){
-        db.space_users.direct.update({user: userId}, {$set: {email_verified: value}}, {
+        db.space_users.direct.update({user: userId}, {$set: {email_verified: value, modified: now, modified_by: userId}}, {
             multi: true
         });
-        db.users.direct.update({_id: userId}, {$set: {email_verified: value}})
+        db.users.direct.update({_id: userId}, {$set: {email_verified: value, modified: now, modified_by: userId}})
     }
 }
 
 Steedos.setMobileVerified = function (userId, mobile, value){
     let user = db.users.findOne({_id: userId, mobile: mobile}, {fields: {mobile_verified: 1}});
+    let now = new Date();
     if(user && _.isBoolean(value) && user.mobile_verified != value){
-        db.space_users.direct.update({user: userId}, {$set: {mobile_verified: value}}, {
+        db.space_users.direct.update({user: userId}, {$set: {mobile_verified: value, modified: now, modified_by: userId}}, {
             multi: true
         });
-        db.users.direct.update({_id: userId}, {$set: {mobile_verified: value}})
+        db.users.direct.update({_id: userId}, {$set: {mobile_verified: value, modified: now, modified_by: userId}})
+    }
+}
+
+Steedos.setMobile = function(userId, newMobile){
+    let user = db.users.findOne({_id: userId}, {fields: {mobile: 1}});
+    let existed = db.users.find({_id: {$ne: userId}, mobile: newMobile}).count();
+    let now = new Date();
+    if(existed > 0){
+        throw new Error("该手机号已被其他用户注册");
+    }
+    if(user && user.mobile != newMobile){
+        db.space_users.direct.update({user: userId}, {$set: {mobile: newMobile, modified: now, modified_by: userId}}, {
+            multi: true
+        });
+        db.users.direct.update({_id: userId}, {$set: {mobile: newMobile, modified: now, modified_by: userId}})
     }
 }

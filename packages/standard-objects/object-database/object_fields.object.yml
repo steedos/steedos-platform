@@ -1,0 +1,204 @@
+name: object_fields
+icon: orders
+enable_api: true
+label: Object Fields
+fields:
+  object:
+    type: master_detail
+    label: Object
+    reference_to: objects
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+  name:
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    hidden: true
+    omit: true
+    # regEx: !<tag:yaml.org,2002:js/regexp> '/^[a-zA-Z_]\w*(\.\$\.\w+)?[a-zA-Z0-9]*$/'
+  column_name:
+    type: text
+    label: Database column name
+    inlineHelpText: Only supports relational databases
+    searchable: true
+    index: true
+  _name:
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    required: true
+  label:
+    type: text
+    required: true
+    label: Label
+  type:
+    type: select
+    label: Type
+    required: true
+    options: 
+      - label: text
+        value: text
+      - label: textarea
+        value: textarea
+      - label: Html文本
+        value: html
+      - label: select
+        value: select
+      - label: Checkbox
+        value: boolean
+      - label: date
+        value: date
+      - label: datetime
+        value: datetime
+      - label: number
+        value: number
+      - label: currency
+        value: currency
+      - label: password
+        value: password
+      - label: lookup
+        value: lookup
+      - label: master_detail
+        value: master_detail
+      - label: url
+        value: url
+      - label: email
+        value: email     
+  is_name:
+    type: boolean
+    label: Is Name
+  primary:
+    type: boolean
+    label: Primary Key
+  generated:
+    type: boolean
+    label: Generated
+
+  sort_no:
+    label: Sort Number
+    type: number
+    defaultValue: 100
+    scale: 0
+    sortable: true
+  group:
+    type: text
+    label: Group
+  defaultValue:
+    type: text
+    label: Default Value
+  allowedValues:
+    type: text
+    multiple: true
+    label: Allowed Values
+  multiple:
+    type: boolean
+    label: Multiple
+  required:
+    type: boolean
+    label: Required
+  is_wide:
+    type: boolean
+    label: Is Wide
+  readonly:
+    type: boolean
+    label: Readonly
+  hidden:
+    type: boolean
+    label: Hidden
+  omit:
+    type: boolean
+    label: Omit
+  index:
+    type: boolean
+    label: Is Index Field
+  searchable:
+    type: boolean
+    label: Searchable
+  sortable:
+    type: boolean
+    label: Sortable
+  precision:
+    type: currency
+    label: Precision
+    defaultValue: 18
+  scale:
+    type: currency
+    label: Scale
+    defaultValue: 2
+  reference_to:
+    type: lookup
+    label: Reference to
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options;
+
+              _options = [];
+
+              _.forEach(Creator.Objects, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+
+              return _options;
+            }
+  rows:
+    type: currency
+    label: Rows
+  options:
+    type: textarea
+    label: Options
+    is_wide: true
+  description:
+    label: Description
+    type: text
+    is_wide: true
+list_views:
+  all:
+    columns:
+      - name
+      - column_name
+      - label
+      - type
+      - object
+      - sort_no
+      - modified
+    sort:
+      - field_name: sort_no
+        order: asc
+    label: All
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

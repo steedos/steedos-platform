@@ -64,7 +64,7 @@ list_views:
       - account
       - currency
       - contract
-      - due_dat
+      - due_date
     filter_scope: space
   recent:
     label: 最近查看
@@ -74,7 +74,7 @@ list_views:
       - account
       - currency
       - contract
-      - due_dat
+      - due_date
     filter_scope: space
 permission_set:
   user:

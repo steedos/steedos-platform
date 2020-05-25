@@ -1,5 +1,6 @@
 if (!db.cms_sites) {
-  db.cms_sites = new Meteor.Collection('cms_sites');
+  const core = require('@steedos/core');
+  db.cms_sites = core.newCollection('cms_sites');
 }
 
 if (Meteor.isServer) {

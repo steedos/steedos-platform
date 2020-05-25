@@ -1,32 +1,32 @@
 name: reports
-label: 报表
+label: Report
 icon: report
 enable_space_global: true
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     required: true
     searchable: true
     index: true
     name: name
   report_type:
-    label: 报表类型
+    label: Report Type
     type: select
     defaultValue: tabular
     options:
-      - label: 表格
+      - label: Tabular
         value: tabular
-      - label: 摘要
+      - label: Summary
         value: summary
-      - label: 矩阵
+      - label: Matrix
         value: matrix
       - label: JsReport
         value: jsreport
     name: report_type
     filterable: true
   data_source:
-    label: 报表数据来源
+    label: Data Source
     type: select
     defaultValue: odata
     options:
@@ -37,7 +37,7 @@ fields:
     name: data_source
     filterable: true
   object_name:
-    label: 对象名
+    label: Object
     type: lookup
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -56,34 +56,34 @@ fields:
     name: object_name
     filterable: true
   filter_scope:
-    label: 过虑范围
+    label: Filter Scope
     type: select
     defaultValue: space
     hidden: true
     options:
-      - label: 所有
+      - label: All
         value: space
-      - label: 与我相关
+      - label: Mine
         value: mine
     name: filter_scope
     filterable: true
   filters:
-    label: 过滤条件
+    label: Filters
     type: '[Object]'
     omit: true
     name: filters
   filters.$:
-    label: 过滤器
+    label: Filter
     blackbox: true
     omit: true
     hidden: true
     name: filters.$
   filters.$.field:
-    label: 字段名
+    label: Field
     type: text
     name: filters.$.field
   filters.$.operation:
-    label: 操作符
+    label: Operator
     type: select
     defaultValue: =
     options: !<tag:yaml.org,2002:js/function> |- 
@@ -93,16 +93,16 @@ fields:
     name: filters.$.operation
     filterable: true
   filters.$.value:
-    label: 字段值
+    label: Value
     blackbox: true
     name: filters.$.value
   filter_logic:
-    label: 过滤逻辑
+    label: Filter Logic
     type: text
     omit: true
     name: filter_logic
   fields:
-    label: 字段
+    label: Fields
     type: lookup
     multiple: true
     is_wide: true
@@ -116,7 +116,7 @@ fields:
     name: fields
     filterable: true
   rows:
-    label: 行
+    label: Rows
     type: lookup
     multiple: true
     is_wide: true
@@ -130,7 +130,7 @@ fields:
     name: rows
     filterable: true
   columns:
-    label: 列
+    label: Columns
     type: lookup
     multiple: true
     is_wide: true
@@ -144,7 +144,7 @@ fields:
     name: columns
     filterable: true
   values:
-    label: 统计
+    label: Statistical Values
     type: lookup
     multiple: true
     is_wide: true
@@ -158,17 +158,17 @@ fields:
     name: values
     filterable: true
   filter_fields:
-    label: 过滤字段
+    label: Filter Fields
     type: grid
     is_wide: true
     name: filter_fields
   filter_fields.$:
-    label: 过滤字段
+    label: Filter Field
     blackbox: true
     type: object
     name: filter_fields.$
   filter_fields.$.field:
-    label: 字段名称
+    label: Field
     type: lookup
     depend_on:
       - object_name
@@ -179,36 +179,36 @@ fields:
     name: filter_fields.$.field
     filterable: true
   filter_fields.$.required:
-    label: 必填
+    label: Required
     type: boolean
     name: filter_fields.$.required
   options:
-    label: 操作
+    label: Options
     omit: true
     blackbox: true
     name: options
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
     name: description
   charting:
-    label: 显示图表
+    label: Show Chart
     type: boolean
     defaultValue: true
     name: charting
   grouping:
-    label: 显示小计
+    label: Show Group Subtotals
     type: boolean
     defaultValue: true
     name: grouping
   totaling:
-    label: 显示总计
+    label: Show Total
     type: boolean
     defaultValue: true
     name: totaling
   counting:
-    label: 显示记录计数
+    label: Show Record Count
     type: boolean
     defaultValue: true
     name: counting
@@ -247,13 +247,13 @@ list_views:
       - report_type
       - object_name
   all:
-    label: 所有报表
+    label: All Reports
     filter_scope: space
     filter_fields:
       - report_type
       - created
   application:
-    label: 应用报表
+    label: Application Reports
     filter_scope: space
     filters: !<tag:yaml.org,2002:js/function> |- 
       function () {
@@ -265,13 +265,13 @@ list_views:
       - report_type
       - created
   mine:
-    label: 我的报表
+    label: My Reports
     filter_scope: mine
     filter_fields:
       - report_type
       - created
   global:
-    label: 标准报表
+    label: Standard Reports
     filter_scope: space
     filters:
       - - space
@@ -282,7 +282,7 @@ list_views:
       - created
 actions:
   standard_new_by_template:
-    label: 从模板新建
+    label: Pull from Library
     visible: !<tag:yaml.org,2002:js/function> |-
       function () {
               var permissions;

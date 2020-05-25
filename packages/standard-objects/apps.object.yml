@@ -1,9 +1,9 @@
 name: apps
-label: 应用程序
+label: App
 icon: apps
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     defaultValue: ''
     description: ''
@@ -12,11 +12,11 @@ fields:
     searchable: true
     index: true
   code:
-    label: API 名称
+    label: Code (API Name)
     type: text
     required: true    
   icon_slds:
-    label: 图标
+    label: SLDS Icon
     type: lookup
     required: true
     optionsFunction: !!js/function |
@@ -36,15 +36,15 @@ fields:
       }
     filterable: true
   visible:
-    label: 启用
+    label: Visible
     type: boolean
     defaultValue: true
   description:
-    label: 描述
+    label: Description
     type: textarea
     is_wide: true
   objects:
-    label: 主菜单项
+    label: Objects
     type: lookup
     multiple: true
     optionsFunction: !!js/function |
@@ -65,108 +65,108 @@ fields:
             }
     filterable: true
   icon:
-    label: 旧版图标
+    label: Icon
     type: text
     hidden: true
   sort:
-    label: 排序
+    label: Sort Number
     type: number
     defaultValue: 9100
   is_creator:
     type: boolean
-    label: 显示在应用菜单中
+    label: Item of Menu  
     defaultValue: true
   mobile:
     type: boolean
-    label: 显示在移动应用中
+    label: Mobile App
     defaultValue: false
 
   members:
     type: object
-    label: 授权对象
+    label: Members
     is_wide: true
   members.users:
     type: lookup
-    label: 授权人员
+    label: User Members
     reference_to: users
     multiple: true
     filterable: true
   members.organizations:
     type: lookup
-    label: 授权部门
+    label: Department Members
     reference_to: organizations
     multiple: true
     filterable: true
 
   url:
-    label: 外部链接
+    label: URL
     type: url
-    group: 外接应用
+    group: External Application
   is_use_ie:
     type: boolean
-    label: 使用IE打开(需使用Steedos桌面客户端)
+    label: Open in IE (Using Steedos Desktop)
     defaultValue: false
-    group: 外接应用
+    group: External Application
   is_use_iframe:
     type: boolean
-    label: 使用iframe打开
+    label: Open with iframe
     defaultValue: false
-    group: 外接应用
+    group: External Application
   is_new_window:
     type: boolean
-    label: 在新窗口打开
+    label: Open in New Window
     defaultValue: false
-    group: 外接应用
+    group: External Application
   on_click:
     type: textarea
-    label: 链接脚本
+    label: onClick
     rows: 2
     is_wide: true
-    group: 外接应用
+    group: External Application
 
   auth_name:
-    label: 验证域名
+    label: Auth Name
     type: text
-    group: 外接应用
+    group: External Application
   secret:
-    label: API 密钥
+    label: API Secret Key
     type: text
     max: 16
     min: 16
-    group: 外接应用
+    group: External Application
 
   oauth2_enabled:
-    group: OAuth2
-    label: 启用 OAuth2
+    group: OAuth2 
+    label: OAuth2 Enabled
     type: boolean
   oauth2_callback_url:
     group: OAuth2
-    label: 回调 URL
+    label: Callback URL
     type: text
   oauth2_scopes:
     group: OAuth2
-    label: 范围
+    label: Scopes
     type: select
     multiple: true
     options:
-      - label: 允许访问您的唯一标志符 (openid)
+      - label: Access to Your Unique Identifier (openid)
         value: openid
-      - label: 访问基本信息 (id, profile, email, address, phone)
+      - label: Access Basic Information (id, profile, email, address, phone)
         value: profile
-      - label: 完全访问权限 (full)
+      - label: Access Fully (full)
         value: full
   oauth2_logout_enabled: 
     group: OAuth2
-    label: 启用单点注销
+    label: OAuth2 Logout Enabled
     type: boolean
   oauth2_logout_url:
     group: OAuth2
-    label: 单点注销 URL
+    label: OAuth2 Logout URL
     type: url
   
   saml_enabled:
     group: SAML
-    label: 启用 SAML
+    label: SAML Enabled
     type: boolean
   saml_entity_id:
     group: SAML
@@ -182,7 +182,7 @@ fields:
     type: text
   saml_acs_url:
     group: SAML
-    label: ACS Url
+    label: ACS URL
     type: url
   saml_name_id_format:
     group: SAML
@@ -190,15 +190,15 @@ fields:
     type: text
   saml_logout_enabled: 
     group: SAML
-    label: 启用单点注销
+    label: SAML Logout Enabled
     type: boolean
   saml_logout_url:
     group: SAML
-    label: 单点注销 URL
+    label: SAML Logout URL
     type: url
   saml_logout_block:
     group: SAML
-    label: 单点注销绑定
+    label: SAML Logout Block
     type: select
     options: 
       - label: HTTP Redirect
@@ -208,7 +208,7 @@ fields:
 
 list_views:
   all:
-    label: 所有
+    label: All Apps
     filter_scope: space
     columns:
       - name

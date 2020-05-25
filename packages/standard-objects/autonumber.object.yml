@@ -1,32 +1,32 @@
 name: autonumber
-label: 自动编号
+label: Auto Number
 icon: apps
 fields:
   object_name:
-    label: 对象名
+    label: Object
     type: text
     index: true
     required: true
     is_name: true
   field_name:
-    label: 自动编号字段
+    label: Field Name
     type: text
     required: true
     index: true
   current_no:
-    label: 当前编号值
+    label: Current Number
     type: number
     required: true
     defaultValue: 1
   date_from:
-    label: 日期范围开始日期
+    label: Start Date
     type: datetime
   date_to:
-    label: 日期范围截止日期
+    label: End Date
     type: datetime
 list_views:
   all:
-    label: 所有
+    label: All Auto Numbers
     filter_scope: space
     columns:
       - object_name

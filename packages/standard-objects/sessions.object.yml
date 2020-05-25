@@ -1,13 +1,13 @@
 name: sessions
-label: 登录会话
+label: Session
 icon: report
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     required: true
   userId: 
-    label: 用户
+    label: User
     type: lookup
     reference_to: users
     required: true
@@ -16,27 +16,28 @@ fields:
     type: text
     required: true
   userAgent: 
-    label: 用户代理
+    label: User Agent
     type: text
   ip: 
-    label: IP地址
+    label: IP Address
     type: text
   valid:
-    label: 有效
+    label: valid
     type: boolean
   client_id: 
+    label: Client ID
     type: text
   connected_app_id:
-    label: 连接的应用程序
+    label: connected App ID
     type: lookup
     reference_to: connected_apps
   modified:
-    label: 最近登录时间
+    label: Last Login Time
   created:
-    label: 首次登录时间
+    label: First Login Time
 list_views:
   all:
-    label: 所有
+    label: All Session
     columns:
       - userId
       - ip

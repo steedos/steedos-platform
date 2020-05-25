@@ -1,9 +1,9 @@
 name: chat_messages
-label: 消息
+label: Chat Message
 icon: live-chat
 fields:
   related_to:
-    label: 相关
+    label: Related Object Record
     type: lookup
     reference_to: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -13,13 +13,13 @@ fields:
     filterable: true
   name:
     is_name: true
-    label: 内容
+    label: Content
     type: textarea
     required: true
     name: name
     searchable: true
   type:
-    label: 消息类型
+    label: Type
     type: select
     options:
       - label: text
@@ -36,7 +36,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 所有
+    label: All Chat Messages
     columns:
       - related_to
       - name

@@ -1,4 +1,5 @@
-db.space_settings = new Meteor.Collection('space_settings');
+const core = require('@steedos/core');
+db.space_settings = core.newCollection('space_settings');
 
 db.space_settings._simpleSchema = new SimpleSchema({
     space: {

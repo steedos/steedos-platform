@@ -19,4 +19,4 @@ yarn start
 ```
 
 ### 了解更多
-- [开发文档](https://steedos.github.io)
+- [开发文档](https://www.steedos.com/developer/)

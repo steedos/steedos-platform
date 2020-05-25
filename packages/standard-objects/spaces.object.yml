@@ -1,9 +1,9 @@
 name: spaces
-label: 公司
+label: Company
 icon: groups
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     defaultValue: ''
     description: ''
@@ -12,74 +12,67 @@ fields:
     searchable: true
     index: true
   avatar_square:
-    label: Logo(正方形)
+    label: Square Logo
     type: avatar
   avatar:
-    label: 浅色公司Logo
+    label: Light Logo
     type: avatar
     hidden: true
   avatar_dark:
-    label: 深色公司Logo
+    label: Dark Logo
     type: avatar
   owner:
-    label: 所有者
+    label: Owner
     type: lookup
     reference_to: users
     readonly: true
     omit: false
     hidden: false
   admins:
-    label: 管理员
+    label: Admin Users
     type: lookup
     reference_to: users
     index: true
     multiple: true
     filterable: true
   background:
-    label: 登录页背景图
+    label: Background
     type: avatar
-    group: 登录界面
+    group: Logon
   enable_register:
-    label: 启用用户注册
+    label: Enable User Registration
     type: boolean
-    group: 登录界面
-  enable_forget_password: 
-    label: 启用忘记密码
-    type: boolean
-    group: 登录界面
-    defaultValue: true
-  enable_create_tenant: 
-    label: 启用创建企业
-    type: boolean
-    group: 登录界面
-
+    group: Logon
   is_paid:
-    label: 已付费
+    label: Paid
     type: boolean
-    group: 账务
+    group: Payment
     omit: true
     readonly: true
     
   hostname:
-    label: 绑定域名
+    label: Hostname
     type: 'text'
-    group: 账务
+    group: Payment
   modules:
-    label: 已付费应用
+    label: Paid Apps
     type: select
     multiple: true
-    group: 账务
-    options:
-      - label: 审批王标准版
-        value: workflow.standard
-      - label: 审批王专业版扩展包
-        value: workflow.professional
-      - label: 审批王企业版扩展包
-        value: workflow.enterprise
+    group: Payment
+    optionsFunction: !!js/function |
+      function () {
+        var modules = db.modules.find().fetch() || [];
+        var options = [];
+        var locale = Steedos.locale();
+        modules.forEach(function(m) {
+          options.push({label: locale=='zh-cn' ? m.name_zh : m.name_en, value: m._id})
+        })
+        return options;
+      }
     omit: true
     hidden: false
   balance:
-    label: 账户余额
+    label: Account Balance
     type: number
     scale: 2
     omit: true
@@ -94,20 +87,20 @@ fields:
     omit: true
     hidden: true
   user_limit:
-    label: 已购买用户数
+    label: Number of Authorized Users
     type: number
     omit: true
-    group: 账务
+    group: Payment
   start_date:
-    label: 付费开始时间
+    label: Start Time of Authorization
     type: datetime
     omit: true
-    group: 账务
+    group: Payment
   end_date:
-    label: 付费截止时间
+    label: End Time of Authorization
     type: datetime
     omit: true
-    group: 账务
+    group: Payment
   company_id:
     defaultValue: !!js/function |
       function () {
@@ -132,7 +125,7 @@ fields:
     hidden: true
 list_views:
   all:
-    label: 所有
+    label: All Companies
     columns:
       - name
     filter_scope: all
@@ -142,7 +135,7 @@ list_views:
         - '{spaceId}'
 actions:
   pay_records:
-    label: 订单
+    label: Order
     'on': record
     visible: true
     todo: !<tag:yaml.org,2002:js/function> |-
@@ -152,7 +145,7 @@ actions:
               return FlowRouter.go(url);
             }
   upgrade:
-    label: 升级
+    label: Upgrade
     'on': record
     visible: true
     todo: !<tag:yaml.org,2002:js/function> |-

@@ -1,0 +1,30 @@
+objects__object: 对象
+objects_field_actions: 操作
+objects_field_app_unique_id: 
+objects_field_app_version: 
+objects_field_custom: 规则
+objects_field_description: 描述
+objects_field_enable_api: 允许 API 访问
+objects_field_enable_audit: 记录字段历史
+objects_field_enable_chatter: 允许添加评论
+objects_field_enable_events: 允许添加事件
+objects_field_enable_files: 允许上传附件
+objects_field_enable_instances: 允许查看申请单
+objects_field_enable_approvals: 显示申请单历史步骤
+objects_field_enable_notes: 允许添加备注
+objects_field_enable_search: 允许搜索
+objects_field_enable_share: 允许共享记录
+objects_field_enable_space_global: 跨工作区访问数据
+objects_field_enable_tasks: 允许添加任务
+objects_field_enable_trash: 
+objects_field_fields: 字段
+objects_field_hidden: 隐藏
+objects_field_icon: 图标
+objects_field_is_enable: 已启用
+objects_field_is_view: 视图
+objects_field_label: 显示名称
+objects_field_list_views: 列表视图
+objects_field_name: 对象名
+objects_field_permission_set: 权限设置
+objects_field_sidebar: 左侧列表
+objects_field_triggers: 触发器

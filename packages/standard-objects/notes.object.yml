@@ -1,10 +1,10 @@
 name: notes
-label: 备忘
+label: Notes
 icon: note
 enable_search: true
 fields:
   name:
-    label: 标题
+    label: Title
     type: text
     required: true
     is_wide: true
@@ -12,14 +12,14 @@ fields:
     index: true
     name: name
   description:
-    label: 内容
+    label: Description
     type: textarea
     is_wide: true
     searchable: true
     index: true
     name: description
   related_to:
-    label: 相关项
+    label: Related Object Record
     type: lookup
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
@@ -39,7 +39,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 全部
+    label: All Notes
     filter_scope: space
     columns:
       - name
@@ -47,10 +47,10 @@ list_views:
       - created
       - related_to
   recent:
-    label: 最近查看
+    label: Recently Viewed Notes
     filter_scope: space
   mine:
-    label: 我的备忘
+    label: My Notes
     filter_scope: space
     filters:
       - - owner

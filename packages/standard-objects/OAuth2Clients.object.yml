@@ -1,30 +1,30 @@
 name: OAuth2Clients
 icon: entity
-label: OAuth2应用
+label: OAuth2 Client
 enable_search: false
 fields:
   clientName:
     type: text
-    label: 名称
+    label: Name
     is_name: true
     required: true
     searchable: true
   active:
     type: boolean
-    label: 是否激活
+    label: Active
     defaultValue: true
   expires:
     type: number
-    label: 有效期（小时）
+    label: Term of Validity（HOUR）
     defaultValue: '1'
   redirectUri:
     type: text
-    label: 回调URL
+    label: Callback URL
     is_wide: true
     required: true
   clientId:
     type: text
-    label: 客户端ID
+    label: Client ID
     is_wide: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -32,7 +32,7 @@ fields:
             }
   clientSecret:
     type: text
-    label: 密钥
+    label: Secret
     is_wide: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -40,7 +40,7 @@ fields:
             }
 list_views:
   all:
-    label: 全部
+    label: All OAuth2 Clients
     columns:
       - clientName
       - active

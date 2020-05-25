@@ -36,6 +36,10 @@
             "description": "对象名称",
             "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$"
         },
+        "internal": {
+            "type": "boolean",
+            "description": "内置对象"
+        },
         "table_name": {
             "type": "string",
             "description": "数据库表名称"
@@ -253,6 +257,10 @@
                 "is_name": {
                     "type": "boolean",
                     "description": "将当前字段叫标记为name字段，用于选择数据时的显示名称"
+                },
+                "column_name": {
+                    "type": "string",
+                    "description": "数据库字段名"
                 },
                 "object": {
                     "type": "string",
@@ -530,6 +538,10 @@
                 "columns": {
                     "type": "array",
                     "description": "列表显示的字段"
+                },
+                "mobile_columns": {
+                    "type": "array",
+                    "description": "手机模式下列表显示的字段"
                 },
                 "extra_columns": {
                     "type": "array",

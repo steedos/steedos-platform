@@ -1,9 +1,9 @@
 name: follows
-label: 关注
+label: Following
 icon: action.following
 fields:
   object_name:
-    label: 对象
+    label: Object
     type: lookup
     optionsFunction: !!js/function |
       function () {
@@ -26,7 +26,7 @@ fields:
     hidden: false
 list_views:
   all:
-    label: 全部
+    label: All
     filter_scope: space
     columns:
       - object_name

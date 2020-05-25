@@ -1,16 +1,16 @@
 name: permission_objects
-label: 对象权限
+label: Permission
 icon: user
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     searchable: true
     index: true
     required: true
     name: name
   permission_set_id:
-    label: 权限组
+    label: Permission Set
     type: master_detail
     required: true
     reference_to: permission_set
@@ -18,8 +18,9 @@ fields:
     name: permission_set_id
     filterable: true
   object_name:
-    label: 对象
+    label: Object
     type: lookup
+    reference_to: objects
     index: true
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -44,39 +45,39 @@ fields:
     filterable: true
   allowRead:
     type: boolean
-    label: 允许查看
+    label: Allow Read
     name: allowRead
   allowCreate:
-    label: 允许创建
+    label: Allow Create
     type: boolean
     name: allowCreate
   allowEdit:
-    label: 允许编辑
+    label: Allow Edit
     type: boolean
     name: allowEdit
   allowDelete:
-    label: 允许删除
+    label: Allow Delete
     type: boolean
     name: allowDelete
   viewAllRecords:
     type: boolean
-    label: 查看所有记录
+    label: View All Records
     name: viewAllRecords
   modifyAllRecords:
     type: boolean
-    label: 修改所有记录
+    label: Modify All Records
     name: modifyAllRecords
   viewCompanyRecords:
     type: boolean
-    label: 查看本单位
+    label: View Division's Records
     name: viewCompanyRecords
   modifyCompanyRecords:
     type: boolean
-    label: 修改本单位
+    label: Modify Division's Records
     name: modifyCompanyRecords
   disabled_list_views:
     type: lookup
-    label: 禁用列表视图
+    label: Disabled ListViews
     multiple: true
     depend_on:
       - object_name
@@ -104,7 +105,7 @@ fields:
     filterable: true
   disabled_actions:
     type: lookup
-    label: 禁用操作
+    label: Disabled Actions
     multiple: true
     depend_on:
       - object_name
@@ -132,7 +133,7 @@ fields:
     filterable: true
   unreadable_fields:
     type: lookup
-    label: 不可见字段
+    label: Unreadable Fields
     multiple: true
     depend_on:
       - object_name
@@ -165,7 +166,7 @@ fields:
     filterable: true
   uneditable_fields:
     type: lookup
-    label: 不可编辑字段
+    label: Uneditable Fields
     multiple: true
     depend_on:
       - object_name
@@ -203,7 +204,7 @@ fields:
     filterable: true
   unrelated_objects:
     type: lookup
-    label: 禁用关联对象
+    label: Unrelated Objects
     multiple: true
     depend_on:
       - object_name
@@ -232,7 +233,7 @@ fields:
     filterable: true
 list_views:
   all:
-    label: 全部
+    label: All
     columns:
       - name
       - permission_set_id

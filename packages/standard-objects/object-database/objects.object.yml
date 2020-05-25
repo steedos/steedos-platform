@@ -1,0 +1,235 @@
+name: objects
+icon: orders
+label: Object
+fields:
+  datasource:
+    type: master_detail
+    label: Datasource
+    reference_to: datasources
+    showIcon: false
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function(){
+        var options = [{
+            label: t('objects_field_datasource_defaultValue'),
+            value: 'default'}];
+        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1}}).fetch();
+        _.each(spaceDatasources, function(doc){
+            options.push({label: doc.name, value: doc._id})
+        })
+        return options;
+      }
+    defaultValue: 'default'
+  name:
+    type: text
+    label: Name
+    searchable: true
+    index: true
+    required: true
+  table_name:
+    type: text
+    label: Table Name
+    index: true
+    searchable: true
+    inlineHelpText: The default data source does not support this property
+  label:
+    type: text
+    label: Label
+    required: true
+  icon:
+    type: lookup
+    label: Icon
+    required: true
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var options;
+              options = [];
+
+              _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+                return options.push({
+                  value: svg,
+                  label: svg,
+                  icon: svg
+                });
+              });
+
+              return options;
+            }
+  is_enable:
+    label: Enable
+    type: boolean
+    defaultValue: true
+  in_development:
+    type: select
+    label: Development State
+    options: 
+      - label: Developing ( Only administrators can access. )
+        value: "1"
+      - label: Deployed
+        value: "0" 
+    defaultValue: "1"
+    required: true
+  enable_search:
+    type: boolean
+    label: Enable Search
+  enable_files:
+    type: boolean
+    label: Enable Files
+  enable_tasks:
+    type: boolean
+    label: Enable Tasks
+  enable_notes:
+    type: boolean
+    label: Enable Notes
+  enable_events:
+    type: boolean
+    label: Enable Events
+  enable_api:
+    type: boolean
+    defaultValue: true
+    hidden: true
+    label: Enable API
+  enable_share:
+    type: boolean
+    defaultValue: false
+    label: Enable Share
+  enable_instances:
+    type: boolean
+    label: Enable Instances
+  enable_chatter:
+    type: boolean
+    label: Enable Chatter
+  enable_audit:
+    type: boolean
+    label: Enable Audit
+  # enable_trash:
+  #   type: boolean
+  # enable_space_global:
+  #   type: boolean
+  #   defaultValue: false
+  enable_approvals:
+    type: boolean
+    defaultValue: false
+    label: Enable Approvals
+  # is_view:
+  #   type: boolean
+  #   defaultValue: false
+  #   omit: true
+  # hidden:
+  #   label: 隐藏
+  #   type: boolean
+  #   omit: true
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+  sidebar:
+    type: object
+    label: Sidebar
+    blackbox: true
+    omit: true
+    hidden: true
+  fields:
+    type: object
+    label: Fields
+    blackbox: true
+    omit: true
+    hidden: true
+  list_views:
+    type: object
+    label: ListViews
+    blackbox: true
+    omit: true
+    hidden: true
+  actions:
+    type: object
+    label: Actions
+    blackbox: true
+    omit: true
+    hidden: true
+  permission_set:
+    type: object
+    label: Permission Set
+    blackbox: true
+    omit: true
+    hidden: true
+  triggers:
+    type: object
+    label: Triggers
+    blackbox: true
+    omit: true
+    hidden: true
+  custom:
+    label: Custom
+    type: boolean
+    omit: true
+    hidden: true
+  owner:
+    type: lookup
+    hidden: true
+  app_unique_id:
+    type: text
+    hidden: true
+    label: App Unique ID
+  app_version:
+    type: text
+    hidden: true
+    label: App Version 
+  # relatedList:
+  #   type: lookup
+  #   label: 相关子表
+  #   multiple: true
+  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             var _options;
+
+  #             _options = [];
+
+  #             _.forEach(Creator.objectsByName, function (o, k) {
+  #               return _options.push({
+  #                 label: o.label,
+  #                 value: k,
+  #                 icon: o.icon
+  #               });
+  #             });
+
+  #             return _options;
+  #           }
+relatedList:
+  - object_fields
+  - object_listviews
+  - object_actions
+  - object_triggers
+  - permission_objects
+list_views:
+  all:
+    columns:
+      - name
+      - table_name
+      - label
+      - datasource
+      - is_enable
+      - in_development
+      - modified
+    label: All
+    filter_scope: space
+actions: 
+  show_object: 
+    label: Preview
+  copy_odata: 
+    label: Copy OData URL
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

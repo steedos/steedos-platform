@@ -1,7 +1,6 @@
 name: accounts
 label: 签约对象
 icon: account
-enable_search: true
 enable_api: true
 enable_share: true
 enable_trash: false

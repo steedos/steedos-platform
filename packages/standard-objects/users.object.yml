@@ -1,20 +1,20 @@
 name: users
-label: 用户
+label: User
 icon: user
 enable_api: true
 fields:
   avatar:
-    label: 头像
+    label: Avatar
     type: avatar
   name:
-    label: 姓名
+    label: Name
     type: text
     required: true
     searchable: true
     index: true
   mobile:
     type: text
-    label: 手机
+    label: Mobile
     group: '-'
     required: true
     readonly: true
@@ -22,39 +22,40 @@ fields:
     index: true
   email:
     type: text
-    label: 邮件
+    label: Email
     name: email
-
   username:
     type: text
     unique: true
     omit: true
     name: username
+    label: Username
   steedos_id:
     type: text
     unique: true
     readonly: true
     omit: true
     name: steedos_id
+    label: Steedos ID
   locale:
-    label: 语言
+    label: Language
     type: select
     allowedValues:
       - en-us
       - zh-cn
     options:
-      - label: 简体中文
+      - label: Simplified Chinese
         value: zh-cn
       - label: English
         value: en-us
     name: locale
     filterable: true
   utcOffset:
-    label: 时区
+    label: Time Zone
     type: number
     name: utcOffset
   email_notification:
-    label: 接收邮件通知
+    label: Recieve Email Notifications
     type: boolean
     name: email_notification
   primary_email_verified:
@@ -62,20 +63,24 @@ fields:
     omit: true
     hidden: true
     name: primary_email_verified
+    label: Primary Email Verified
   last_logon:
     type: date
     omit: true
     hidden: true
     name: last_logon
+    label: Last Logon Date
   is_cloudadmin:
     type: boolean
     omit: true
     hidden: true
     name: is_cloudadmin
+    label: is CloudAdmin
   is_deleted:
     type: boolean
     omit: true
     hidden: true
+    label: Deleted
   company_id:
     defaultValue: !!js/function |
       function () {
@@ -100,7 +105,7 @@ fields:
     hidden: true
 list_views:
   all:
-    label: 所有
+    label: All
     columns:
       - name
       - username

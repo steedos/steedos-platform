@@ -1,5 +1,6 @@
 if (!db.flow_roles) {
-  db.flow_roles = new Meteor.Collection('flow_roles');
+  const core = require('@steedos/core');
+  db.flow_roles = core.newCollection('flow_roles');
 }
 
 if (Meteor.isClient) {

@@ -1,14 +1,14 @@
 name: connected_apps
-label: 外部应用
+label: External Application
 icon: entity
 enable_api: true
 fields:
   name: 
-    label: 名称
+    label: Name
     type: text
     required: true
   code:
-    label: API 名称
+    label: Code ( API Name )
     type: text
     required: true
   # contact_email: 
@@ -19,31 +19,31 @@ fields:
   #   label: 联系人电话
   #   type: text
   active:
-    label: 激活
+    label: Active
     type: boolean
     defaultValue: true
   app_logo:
-    label: 图标
+    label: Logo
     type: avatar
   description:
-    label: 描述
+    label: Description
     type: textarea
     rows: 3
     is_wide: true
   app_website:
-    label: 应用官网
+    label: Official Website
     type: url
   start_url:
-    label: 开始 URL
+    label: Start URL
     type: text
 
   mobile_start_url:
-    label: 移动开始 URL
+    label: Start URL of Mobile
     type: text
     
   client_id:
     group: API
-    label: Client Id
+    label: Client ID
     type: text
   client_secret:
     group: API
@@ -52,36 +52,36 @@ fields:
 
   oauth2_enabled:
     group: OAuth2
-    label: 启用 OAuth2
+    label: OAuth2 Enabled
     type: boolean
   oauth2_callback_url:
     group: OAuth2
-    label: 回调 URL
+    label: Callback URL
     type: text
   oauth2_scopes:
     group: OAuth2
-    label: 范围
+    label: Scopes
     type: select
     multiple: true
     options:
-      - label: 允许访问您的唯一标志符 (openid)
+      - label: Access to Your Unique Identifier (openid)
         value: openid
-      - label: 访问基本信息 (id, profile, email, address, phone)
+      - label: Access Basic Information (id, profile, email, address, phone)
         value: profile
-      - label: 完全访问权限 (full)
+      - label: Access Fully (full)
         value: full
   oauth2_logout_enabled: 
     group: OAuth2
-    label: 启用单点注销
+    label: OAuth2 Logout Enabled
     type: boolean
   oauth2_logout_url:
     group: OAuth2
-    label: 单点注销 URL
+    label: OAuth2 Logout URL
     type: url
   
   saml_enabled:
     group: SAML
-    label: 启用 SAML
+    label: SAML Enabled
     type: boolean
   saml_entity_id:
     group: SAML
@@ -97,7 +97,7 @@ fields:
     type: text
   saml_acs_url:
     group: SAML
-    label: ACS Url
+    label: ACS URL
     type: url
   saml_name_id_format:
     group: SAML
@@ -105,15 +105,15 @@ fields:
     type: text
   saml_logout_enabled: 
     group: SAML
-    label: 启用单点注销
+    label: SAML Logout Enabled
     type: boolean
   saml_logout_url:
     group: SAML
-    label: 单点注销 URL
+    label: SAML Logout URL
     type: url
   saml_logout_block:
     group: SAML
-    label: 单点注销绑定
+    label: SAML Logout Block
     type: select
     options: 
       - label: HTTP Redirect
@@ -122,7 +122,7 @@ fields:
         value: post
 list_views:
   all:
-    label: 所有
+    label: All External Applications
     columns:
       - name
       - code

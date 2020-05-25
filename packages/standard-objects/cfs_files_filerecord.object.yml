@@ -1,5 +1,5 @@
 name: cfs_files_filerecord
-label: 附件版本
+label: Attachment Version
 table_name: 'cfs.files.filerecord'
 icon: drafts
 enable_search: true
@@ -7,38 +7,38 @@ enable_api: true
 hidden: true
 fields:
   original:
-    label: 文件
+    label: Original
     type: object
     blackbox: true
     omit: true
   "original.name":
-    label: 文件名
+    label: Name
     type: text
     # is_name: true
   "original.size":
-    label: 文件大小
+    label: Size
     type: number
   metadata:
-    label: 属性
+    label: Metadata
     type: object
     blackbox: true
     omit: true
   "metadata.owner":
-    label: 上传者
+    label: Owner
     type: lookup
     reference_to: users
     omit: true
   "metadata.owner_name":
-    label: 上传者
+    label: Owner Name
     type: text
     omit: true
   "metadata.parent":
-    label: 所属文件
+    label: Parent 
     type: master_detail
     reference_to: cms_files
     hidden: true
   uploadedAt: 
-    label: 上传时间
+    label: Upload Time
     type: "datetime"
   created_by:
     hidden: true
@@ -70,7 +70,7 @@ permission_set:
 
 actions:
   download:
-    label: 下载
+    label: Download
     visible: true
     on: record
     todo: !<tag:yaml.org,2002:js/function> |-

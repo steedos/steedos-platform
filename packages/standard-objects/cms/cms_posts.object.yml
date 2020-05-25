@@ -1,13 +1,13 @@
 name: cms_posts
 icon: knowledge
-label: 知识
+label: Knowledge
 enable_files: true
 enable_chatter: true
 sidebar:
   template_name: creator_grid_sidebar_sites
 fields:
   name:
-    label: 标题
+    label: Title
     type: text
     defaultValue: ''
     description: ''
@@ -17,21 +17,21 @@ fields:
     is_wide: true
   summary:
     type: textarea
-    label: 摘要
+    label: Summary
     rows: 2
     is_wide: true
     omit: true
     hidden: true
   body:
     type: markdown
-    label: 正文
+    label: Body
     rows: 5
     is_wide: true
     hidden: true
     omit: true
   htmlBody:
     type: html
-    label: 正文
+    label: Main Body
     required: true
     is_wide: true
   # images:
@@ -47,7 +47,7 @@ fields:
   #   multiple: true
   #   is_wide: true
   site:
-    label: 站点
+    label: Site
     type: lookup
     reference_to: cms_sites
     required: true
@@ -59,7 +59,7 @@ fields:
         return site ? site._id : null;
       }
   category:
-    label: 栏目
+    label: Category
     type: lookup
     reference_to: cms_categories
     sortable: true
@@ -82,7 +82,7 @@ fields:
         var objectName = "cms_categories";
         var object = Creator.getObject(objectName);
         if(!object){
-          console.error("未找到当前对象：" + objectName);
+          console.error(t("cms_posts_error_no_object") + objectName);
           return [];
         }
         var options, result, companys, queryFilters;
@@ -125,17 +125,17 @@ fields:
   #     }
   members:
     type: object
-    label: 授权查看
+    label: Members
     is_wide: true
   members.users:
     type: lookup
-    label: 人员
+    label: User Members
     reference_to: users
     multiple: true
     filterable: true
   members.organizations:
     type: lookup
-    label: 部门
+    label: Organization Members
     reference_to: organizations
     multiple: true
     filterable: true
@@ -164,7 +164,7 @@ fields:
   #   index: true
   #   omit: true
   viewCount:
-    label: 阅读次数
+    label: Count
     type: number
     omit: true
     hidden: true
@@ -250,7 +250,7 @@ fields:
   #   omit: true
 list_views:
   all:
-    label: 所有
+    label: All Knowledge
     filter_scope: space
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {

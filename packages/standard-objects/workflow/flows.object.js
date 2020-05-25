@@ -1,5 +1,6 @@
 if (!db.flows) {
-    db.flows = new Meteor.Collection('flows');
+    const core = require('@steedos/core');
+    db.flows = core.newCollection('flows');
 }
 
 if (Meteor.isServer) {

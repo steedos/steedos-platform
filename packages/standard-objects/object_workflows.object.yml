@@ -1,13 +1,13 @@
 name: object_workflows
-label: 对象流程
+label: Object Synchronization Rule
 icon: apps
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     required: true
   object_name:
-    label: 对象
+    label: Object
     type: master_detail
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
@@ -30,19 +30,19 @@ fields:
               return _options;
             }
   flow_id:
-    label: 流程
+    label: Workflow
     type: lookup
     required: true
     reference_to: flows
   field_map:
-    label: 字段映射关系（对象至表单）
+    label: Field Mappings（from Object to Workflow）
     type: grid
     is_wide: true
     depend_on:
       - object_name
       - flow_id
   field_map.$.workflow_field:
-    label: 表单字段
+    label: Field of Workflow
     type: lookup
     depend_on:
       - flow_id
@@ -51,46 +51,46 @@ fields:
               var fields, flowId, form_fields, form_id, instance_fields, options, res_flow, res_form;
               instance_fields = [{
                 value: "instance.name",
-                label: "申请单名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_instance_name")
               }, {
                 value: "instance.submitter_name",
-                label: "提交人姓名"
+                label: t("object_workflows_field_field_map_$_workflow_field_submitter_name")
               }, {
                 value: "instance.applicant_name",
-                label: "申请人姓名"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_name")
               }, {
                 value: "instance.applicant_company",
-                label: "申请人所属单位"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_company")
               }, {
                 value: "instance.applicant_organization",
-                label: "申请人所属组织"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization")
               }, {
                 value: "instance.applicant_organization_name",
-                label: "申请人所属组织名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_name")
               }, {
                 value: "instance.applicant_organization_fullname",
-                label: "申请人所属组织全名"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname")
               }, {
                 value: "instance.state",
-                label: "申请单状态"
+                label: t("object_workflows_field_field_map_$_workflow_field_state")
               }, {
                 value: "instance.current_step_name",
-                label: "申请单当前步骤名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_current_step_name")
               }, {
                 value: "instance.flow_name",
-                label: "流程名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_flow_name")
               }, {
                 value: "instance.category_name",
-                label: "分类名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_category_name")
               }, {
                 value: "instance.submit_date",
-                label: "提交时间"
+                label: t("object_workflows_field_field_map_$_workflow_field_submit_date")
               }, {
                 value: "instance.finish_date",
-                label: "结束时间"
+                label: t("object_workflows_field_field_map_$_workflow_field_finish_date")
               }, {
                 value: "instance.final_decision",
-                label: "最终意见"
+                label: t("object_workflows_field_field_map_$_workflow_field_final_decision")
               }];
               form_fields = [];
 
@@ -129,7 +129,7 @@ fields:
               return options;
             }
   field_map.$.object_field:
-    label: 对象字段
+    label: Field of Object
     type: lookup
     depend_on:
       - object_name
@@ -139,14 +139,14 @@ fields:
               return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true);
             }
   field_map_back:
-    label: 字段映射关系（表单至对象）
+    label: Field Mappings（from Workflow to Object）
     type: grid
     is_wide: true
     depend_on:
       - object_name
       - flow_id
   field_map_back.$.object_field:
-    label: 对象字段
+    label: Field of Object
     type: lookup
     depend_on:
       - object_name
@@ -156,7 +156,7 @@ fields:
               return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, false, true);
             }
   field_map_back.$.workflow_field:
-    label: 表单字段
+    label: Field of Workflow
     type: lookup
     depend_on:
       - flow_id
@@ -165,46 +165,46 @@ fields:
               var fields, flowId, form_fields, form_id, instance_fields, options, res_flow, res_form;
               instance_fields = [{
                 value: "instance.name",
-                label: "申请单名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_instance_name")
               }, {
                 value: "instance.submitter_name",
-                label: "提交人姓名"
+                label: t("object_workflows_field_field_map_$_workflow_field_submitter_name")
               }, {
                 value: "instance.applicant_name",
-                label: "申请人姓名"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_name")
               }, {
                 value: "instance.applicant_company",
-                label: "申请人所属单位"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_company")
               }, {
                 value: "instance.applicant_organization",
-                label: "申请人所属组织"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization")
               }, {
                 value: "instance.applicant_organization_name",
-                label: "申请人所属组织名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_name")
               }, {
                 value: "instance.applicant_organization_fullname",
-                label: "申请人所属组织全名"
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname")
               }, {
                 value: "instance.state",
-                label: "申请单状态"
+                label: t("object_workflows_field_field_map_$_workflow_field_state")
               }, {
                 value: "instance.current_step_name",
-                label: "申请单当前步骤名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_current_step_name")
               }, {
                 value: "instance.flow_name",
-                label: "流程名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_flow_name")
               }, {
                 value: "instance.category_name",
-                label: "分类名称"
+                label: t("object_workflows_field_field_map_$_workflow_field_category_name")
               }, {
                 value: "instance.submit_date",
-                label: "提交时间"
+                label: t("object_workflows_field_field_map_$_workflow_field_submit_date")
               }, {
                 value: "instance.finish_date",
-                label: "结束时间"
+                label: t("object_workflows_field_field_map_$_workflow_field_finish_date")
               }, {
                 value: "instance.final_decision",
-                label: "最终意见"
+                label: t("object_workflows_field_field_map_$_workflow_field_final_decision")
               }];
               form_fields = [];
 
@@ -272,19 +272,25 @@ fields:
               return options;
             }
   field_map_script:
-    label: 对象至表单
+    label: Synchronization Script（from Object to Workflow）
     type: textarea
     is_wide: true
-    group: 脚本
+    group: Script
   field_map_back_script:
-    label: 表单至对象
+    label: Synchronization Script（from Workflow to Object）
     type: textarea
     is_wide: true
-    group: 脚本
+    group: Script
   sync_attachment:
-    label: 附件同步方式
+    label: Synchronization Mode of Attachment
     type: select
-    options: '不同步:null,同步最新版本:lastest,同步所有版本:all'
+    options: 
+      - label: No Synchronization
+        value: 'null'
+      - label: Synchronize the Latest Version
+        value: lastest
+      - label: Synchronize All Versions
+        value: all
     required: true
 list_views:
   default:
@@ -293,7 +299,7 @@ list_views:
       - object_name
       - flow_id
   all:
-    label: 全部
+    label: All Rules
     filter_scope: space
 permission_set:
   user:

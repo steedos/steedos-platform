@@ -1,5 +1,9 @@
 const spaceUserCore = require('./space_users.core')
-db.space_users = new Meteor.Collection('space_users');
+const core = require('@steedos/core');
+const validator = require("validator");
+const objectql = require('@steedos/objectql');
+
+db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
 
@@ -18,19 +22,28 @@ Meteor.startup(function () {
             if(doc.user){
                 user = db.users.findOne({ _id: doc.user }, {fields: { _id: 1}})
                 if(!user){
-                    throw new Meteor.Error(400, "未找到用户");
+                    throw new Meteor.Error(400, "space_users_error_user_not_found");
                 }
                 spaceUserExisted = db.space_users.find({space: doc.space,user: doc.user}, {fields: { _id: 1}});
 
             }else{
+                const steedosConfig = objectql.getSteedosConfig();
+                const config = steedosConfig.accounts || {};
                 if (!doc.email && !doc.mobile) {
                     throw new Meteor.Error(400, "contact_need_phone_or_email");
                 }
                 if (doc.email) {
-                    if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(doc.email)) {
+                    if (!validator.isEmail(doc.email)) {
                         throw new Meteor.Error(400, "email_format_error");
                     }
                 }
+
+                if (doc.mobile) {
+                    if (doc.mobile.startsWith('+') || !validator.isMobilePhone(doc.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                        throw new Meteor.Error(400, "mobile_format_error");
+                    }
+                }
+
                 // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
                 selector = [];
                 if (doc.email) {
@@ -53,7 +66,7 @@ Meteor.startup(function () {
                 });
     
                 if(userExist.count() > 0){
-                    throw new Meteor.Error(400, "用户已存在, 请使用邀请功能");
+                    throw new Meteor.Error(400, "space_users_error_user_exists");
                 }
                 spaceUserExisted = db.space_users.find({
                     space: doc.space,
@@ -66,23 +79,32 @@ Meteor.startup(function () {
             }
 
             if (spaceUserExisted.count() > 0) {
-                throw new Meteor.Error(400, "该用户已在此工作区");
+                throw new Meteor.Error(400, "space_users_error_space_user_exists");
             }
         };
         db.space_users.updatevaildate = function (userId, doc, modifier) {
             var addOrgs, currentUserPhonePrefix, isAllAddOrgsAdmin, isAllSubOrgsAdmin, isOrgAdmin, newOrgs, oldOrgs, phoneNumber, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, repeatEmailUser, repeatNumberUser, space, subOrgs;
             if (doc.invite_state === "refused" || doc.invite_state === "pending") {
-                throw new Meteor.Error(400, "该用户还未接受加入工作区，不能修改他的个人信息");
+                throw new Meteor.Error(400, "space_users_error_unaccepted_user_readonly");
             }
             space = db.spaces.findOne(doc.space);
             if (!space) {
                 throw new Meteor.Error(400, "organizations_error_org_admins_only");
             }
             if ((ref = modifier.$set) != null ? ref.email : void 0) {
-                if (!/^([A-Z0-9\.\-\_\+])*([A-Z0-9\+\-\_])+\@[A-Z0-9]+([\-][A-Z0-9]+)*([\.][A-Z0-9\-]+){1,8}$/i.test(modifier.$set.email)) {
+                if (!validator.isEmail(modifier.$set.email)) {
                     throw new Meteor.Error(400, "email_format_error");
                 }
             }
+
+            if(modifier.$set && modifier.$set.mobile){
+                const steedosConfig = objectql.getSteedosConfig();
+                const config = steedosConfig.accounts || {};
+                if (modifier.$set.mobile.startsWith('+') || !validator.isMobilePhone(modifier.$set.mobile, config.mobile_phone_locales || ['zh-CN'])) {
+                    throw new Meteor.Error(400, "mobile_format_error");
+                }
+            }
+
             if (((ref2 = modifier.$set) != null ? ref2.user_accepted : void 0) !== void 0 && !modifier.$set.user_accepted) {
                 if (space.admins.indexOf(doc.user) > 0 || doc.user === space.owner) {
                     throw new Meteor.Error(400, "organizations_error_can_not_set_checkbox_true");
@@ -99,14 +121,14 @@ Meteor.startup(function () {
                 }
             }
             if (((ref5 = modifier.$unset) != null ? ref5.email : void 0) !== void 0) {
-                throw new Meteor.Error(400, "必须填写邮件");
+                throw new Meteor.Error(400, "space_users_error_email_required");
             }
             if (((ref6 = modifier.$set) != null ? ref6.email : void 0) && modifier.$set.email !== doc.email) {
                 repeatEmailUser = db.users.findOne({
                     "email": modifier.$set.email
                 });
                 if (repeatEmailUser && repeatEmailUser._id !== doc.user) {
-                    throw new Meteor.Error(400, "该邮箱已被占用");
+                    throw new Meteor.Error(400, "space_users_error_email_already_existed");
                 }
             }
             if (((ref8 = modifier.$set) != null ? ref8.mobile : void 0) && modifier.$set.mobile !== doc.mobile) {
@@ -139,6 +161,7 @@ Meteor.startup(function () {
                 doc.modified_by = userId;
                 doc.modified = new Date();
                 creator = db.users.findOne(userId);
+                doc.locale = doc.locale || creator.locale;
                 if ((!doc.user) && (doc.email || doc.mobile)) {
                     if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
                         if (!doc.invite_state) {
@@ -174,7 +197,7 @@ Meteor.startup(function () {
                         id = db.users._makeNewID();
                         options = {
                             name: doc.name,
-                            locale: creator.locale,
+                            locale: doc.locale,
                             spaces_invited: [doc.space],
                             _id: id,
                             steedos_id: doc.email || id
@@ -476,10 +499,11 @@ Meteor.startup(function () {
                     fields: {
                         email: 1,
                         name: 1,
-                        steedos_id: 1
+                        steedos_id: 1,
+                        email_verified: 1
                     }
                 });
-                if (user.email) {
+                if (user.email && user.email_verified) {
                     locale = Steedos.locale(doc.user, true);
                     space = db.spaces.findOne(doc.space, {
                         fields: {
@@ -780,7 +804,7 @@ Creator.Objects['space_users'].actions = {
     //     }
     // },
     setPassword: {
-        label: "更改密码",
+        label: "Change Password",
         on: "record",
         visible: function (object_name, record_id, record_permissions) {
             if(Session.get("app_id") === 'admin'){
@@ -808,7 +832,7 @@ Creator.Objects['space_users'].actions = {
                             return toastr.error(error.reason);
                         } else {
                             swal.close();
-                            return toastr.success("更改密码成功");
+                            return toastr.success(t("Change password successfully"));
                         }
                     });
                 } catch (err) {
@@ -819,7 +843,7 @@ Creator.Objects['space_users'].actions = {
             }
 
             swal({
-                title: "更改密码",
+                title: t("Change Password"),
                 type: "input",
                 inputType: "password",
                 inputValue: "",
@@ -935,7 +959,7 @@ Creator.Objects['space_users'].actions = {
         }
     },
     invite_space_users: {
-        label: "邀请注册",
+        label: "Invite Users",
         on: "list",
         visible: function(){
             return Creator.isSpaceAdmin();
@@ -952,13 +976,13 @@ Creator.Objects['space_users'].actions = {
             $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
 
             clipboard.on('success', function(e) {
-                toastr.success("企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。");
+                toastr.success(t("space_users_aciton_invite_space_users_success"));
                 e.clearSelection();
                 clipboard.destroy();
             });
             
             clipboard.on('error', function(e) {
-                toastr.error("团队邀请链接复制失败");
+                toastr.error(t("space_users_aciton_invite_space_users_error"));
                 console.error('Action:', e.action);
                 console.error('Trigger:', e.trigger);
                 console.log('address', address);

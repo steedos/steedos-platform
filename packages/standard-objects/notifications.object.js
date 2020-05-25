@@ -135,8 +135,8 @@ function sendPushs(message, from, to){
         "createdAt" : now,
         "createdBy" : "<SERVER>",
         "from" : appName,
-        "title" : message.body,
-        "text" : message.name,
+        "title" : message.name,
+        "text" : message.body,
         "payload" : {
             "space" : message.space,
             "host" : Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1),
@@ -181,5 +181,20 @@ function sendNotifications(message, from, to){
 
     bulk.execute().catch(function (error) {
         console.error("通知数据插入失败，错误信息：", error);
+    });
+}
+
+Creator.removeNotifications = function(doc, assignees, object_name){
+    const collection = Creator.getCollection("notifications");
+    let bulk = collection.rawCollection().initializeUnorderedBulkOp();
+    assignees.forEach(function (assignee) {
+        bulk.find({
+            "related_to.o": object_name,
+            "related_to.ids": doc._id,
+            owner: assignee
+        }).remove();
+    });
+    return bulk.execute().catch(function (error) {
+        console.error("通知数据删除失败，错误信息：", error);
     });
 }

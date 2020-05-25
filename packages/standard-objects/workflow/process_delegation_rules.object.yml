@@ -1,10 +1,10 @@
 name: process_delegation_rules
 icon: metrics
-label: 流程委托
+label: Delegation
 fields:
   from:
     type: lookup
-    label: 委托人
+    label: Client
     reference_to: users
     index: true
     omit: true
@@ -12,7 +12,7 @@ fields:
     filterable: true
   from_name:
     type: text
-    label: 委托人姓名
+    label: Client Name
     readonly: true
     defaultValue: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -21,29 +21,29 @@ fields:
     name: from_name
   to:
     type: lookup
-    label: 被委托人
+    label: Trustee
     reference_to: users
     index: true
     name: to
     filterable: true
   to_name:
     type: text
-    label: 被委托人姓名
+    label: Trustee Name
     omit: true
     name: to_name
   start_time:
     type: datetime
-    label: 委托开始
+    label: Start Time
     required: true
     name: start_time
   end_time:
     type: datetime
-    label: 委托结束
+    label: End Time
     required: true
     name: end_time
   enabled:
     type: boolean
-    label: 启用
+    label: Enabled
     defaultValue: false
     name: enabled
 list_views:
@@ -55,7 +55,7 @@ list_views:
       - start_time
       - end_time
       - enabled
-    label: 所有
+    label: All Delegation
 permission_set:
   user:
     allowCreate: true

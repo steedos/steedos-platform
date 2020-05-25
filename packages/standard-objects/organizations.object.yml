@@ -1,11 +1,11 @@
 name: organizations
-label: 部门
+label: Department
 icon: team_member
 enable_search: true
 enable_tree: true
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     required: true
     searchable: true
@@ -13,7 +13,7 @@ fields:
     sortable: true
     name: name
   fullname:
-    label: 部门全称
+    label: Fullname
     type: text
     omit: true
     hidden: true
@@ -21,7 +21,7 @@ fields:
     name: fullname
     searchable: true
   parent:
-    label: 上级部门
+    label: Superior
     type: lookup
     reference_to: organizations
     sortable: true
@@ -30,34 +30,34 @@ fields:
     name: parent
     filterable: true
   parents:
-    label: 上级部门
+    label: All Superiors
     type: lookup
     reference_to: organizations
     multiple: true
     omit: true
-    group: 系统
+    group: systemfields
     hidden: true
     blackbox: true
     name: parents
     filterable: true
   children:
-    label: 下级部门
+    label: Subordinates
     type: lookup
     reference_to: organizations
     multiple: true
     omit: true
     hidden: true
-    group: 系统
+    group: systemfields
     name: children
     filterable: true
   sort_no:
-    label: 排序号
+    label: Sort Number
     type: number
     defaultValue: 100
     sortable: true
     name: sort_no
   users:
-    label: 成员
+    label: Members
     type: lookup
     reference_to: users
     multiple: true
@@ -65,7 +65,7 @@ fields:
     name: users
     filterable: true
   company_id:
-    label: 所属分部
+    label: Main Division
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -77,7 +77,7 @@ fields:
     # omit: true
     # hidden: false
   company_ids:
-    label: 所属分部
+    label: All Divisions
     defaultValue: !!js/function |
       function () {
         /* 主单位 company_id / 所属单位 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
@@ -89,14 +89,14 @@ fields:
     # omit: true
     # hidden: true
   is_company:
-    label: 分部级
+    label: Divisional
     type: boolean
     hidden: true
     index: true
     name: is_company
     omit: true
   hidden:
-    label: 隐藏
+    label: Hidden
     type: boolean
     name: hidden
 list_views:
@@ -106,7 +106,7 @@ list_views:
       - sort_no
       - hidden
       - company_id
-    label: 所有
+    label: All Departments
     filter_scope: space
     sort:
       - field_name: sort_no
@@ -115,12 +115,12 @@ list_views:
         order: asc
 actions:
   standard_query:
-    label: 查找
+    label: Search
     visible: false
     'on': list
     todo: standard_query
   addSubOrganization:
-    label: 添加子组织
+    label: Add a Branch
     visible: !!js/function |
       function () {
               var permissions;

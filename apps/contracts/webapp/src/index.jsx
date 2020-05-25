@@ -161,6 +161,7 @@ class ContractsAppPlugin {
             'oa_home',
             Home
         );
+        // registry.registerDashboardComponent(["oa","payment"], Home);
     }
 }
 

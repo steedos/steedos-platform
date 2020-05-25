@@ -1,15 +1,15 @@
 name: notifications
-label: 通知
+label: Notification
 icon: quick_text
 fields:
   name: 
-    label: 通知标题
+    label: Title
     type: text
   body:
-    label: 通知描述
+    label: Body
     type: textarea
   related_to:
-    label: 相关记录
+    label: Related Object Record
     type: lookup
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
@@ -22,29 +22,29 @@ fields:
             }
     filterable: true
   related_name:
-    label: 记录标题
+    label: Name of Related Object Record
     type: text
   url:
-    label: 相对链接
+    label: URL
     type: url
   from:
-    label: 发送人
+    label: From
     type: lookup
     reference_to: users
     sortable: true
     index: true
     omit: true
   owner:
-    label: 通知对象
+    label: Owner
     hidden: false
   is_read:
-    label: 已读
+    label: Readed
     type: boolean
   created:
-    label: 通知时间
+    label: Notification Time
 list_views:
   all:
-    label: 全部
+    label: All Notifications
     filter_scope: space
     columns:
       - name

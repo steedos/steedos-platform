@@ -1,9 +1,9 @@
 name: cms_categories
 icon: folder
-label: 栏目
+label: Category
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     defaultValue: ''
     description: ''
@@ -13,12 +13,12 @@ fields:
     searchable: true
     is_wide: true
   description:
-    label: 描述
+    label: Description
     type: textarea
     rows: 3
     is_wide: true
   site:
-    label: 站点
+    label: Site
     type: lookup
     reference_to: cms_sites
     required: true
@@ -29,7 +29,7 @@ fields:
         var siteObjectName = "cms_sites";
         var object = Creator.getObject(siteObjectName);
         if(!object){
-          console.error("未找到当前对象：" + siteObjectName);
+          console.error(t("cms_categories_error_no_object") + siteObjectName);
           return [];
         }
         var options, result, sites, queryFilters;
@@ -54,7 +54,7 @@ fields:
         return result;
       }
   parent:
-    label: 上级栏目
+    label: Parent Category
     type: lookup
     reference_to: cms_categories
     sortable: true
@@ -89,14 +89,14 @@ fields:
         return result;
       }
   parents:
-    label: 上级栏目（多层）
+    label: All Parent Categories
     type: lookup
     reference_to: cms_categories
     sortable: true
     omit: true
     hidden: true
   order:
-    label: 排序号
+    label: Sort Number
     type: number
   # show post list on website homepage
   featured:
@@ -106,7 +106,7 @@ fields:
     omit: true
 list_views:
   all:
-    label: 所有
+    label: All Categories
     filter_scope: space
     columns:
       - name

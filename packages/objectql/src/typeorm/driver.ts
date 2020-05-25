@@ -42,11 +42,11 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     abstract getConnectionOptions(): ConnectionOptions;
 
-    async connect() {
+    async connect(reconnect?) {
         if (!this._entities) {
             throw new Error("Entities must be registered before connect");
         }
-        if (!this._client) {
+        if (!this._client || reconnect) {
             let options = this.getConnectionOptions();
             this._client = await createConnection(options);
             this.databaseVersion = await this.getDatabaseVersion();
@@ -351,9 +351,10 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
     }
 
     registerEntities(objects: Dictionary<SteedosObjectType>) {
-        if (!this._entities) {
-            this._entities = this.getEntities(objects);
-        }
+        // if (!this._entities) {
+        //     this._entities = this.getEntities(objects);
+        // }
+        this._entities = this.getEntities(objects);
     }
 
     async dropTables() {
@@ -367,7 +368,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
 
     async init(objects: Dictionary<SteedosObjectType>) {
         this.registerEntities(objects);
-        await this.connect();
+        await this.connect(true);
     }
 
     abstract getEntities(objects: Dictionary<SteedosObjectType>): Dictionary<EntitySchema>;

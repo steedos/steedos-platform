@@ -9,5 +9,23 @@ public:
     store: "local"
     local: 
       folder: "./storage"
+email:
+  host:
+  port: 465
+  username:
+  password:
+  secure: true
+  from:
+tenant:
+  _id:
+  name: 华炎魔方
+  logo_url:
+  background_url: 
+  enable_register: true
+  enable_forget_password: false
+  enable_create_tenant: true
+  enable_password_login: true
+  enable_bind_email: false
+  enable_bind_mobile: false
 plugins:
   - "@steedos/accounts"

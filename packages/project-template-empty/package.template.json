@@ -13,8 +13,8 @@
   "dependencies": {
       "dotenv-flow": "^3.1.0",
       "@steedos/steedos-plugin-workflow": "^2.0.3",
-      "@steedos/accounts": "^1.11.10",
-      "steedos-server": "^1.18.14"
+      "@steedos/accounts": "^1.19.4",
+      "steedos-server": "^1.20.4"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
@@ -28,6 +28,7 @@
     "**/cryptiles": "^4.1.2",
     "**/bcrypt": "3.0.5",
     "**/samlp": "3.4.1",
-    "**/xmldom": "0.2.1"
+    "**/xmldom": "0.2.1",
+    "**/tslib": "1.11.2"
   }
 }

@@ -1,10 +1,10 @@
 name: flow_roles
 icon: metrics
-label: 审批岗位
+label: Workflow Role
 fields:
   name:
     type: text
-    label: 名称
+    label: Name
     name: name
     searchable: true
   # company_id:
@@ -19,7 +19,7 @@ list_views:
       - modified
     filter_fields:
       - company_id
-    label: 所有
+    label: All Workflow Roles
 permission_set:
   user:
     allowCreate: false

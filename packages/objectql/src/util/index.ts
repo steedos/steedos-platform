@@ -67,6 +67,13 @@ export const loadObjects = (filePath: string) => {
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        try {
+            if(json){
+                json.__filename = matchedPath
+            }
+        } catch (error) {
+            console.error('loadObjects error', matchedPath, error);
+        }
         if (validateObject(json)){
             results.push(json)
         }
@@ -74,6 +81,38 @@ export const loadObjects = (filePath: string) => {
     return results
 }
 
+function getI18nLng(filePath){
+    try {
+        let pathJson = path.parse(filePath);
+        let filename = pathJson.base;
+        if(filename){
+            let f = filename.split('.');
+            if(f.length >= 3){
+                return f[f.length-3]
+            }
+        }
+        console.log(`getI18nLng warn: Invalid file: ${filePath}`);
+    } catch (error) {
+        console.error(`getI18nLng error: ${filePath}`, error)
+    }
+}
+
+export const loadI18n = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.i18n.yml"),
+        path.join(filePath, "*.i18n.json")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        let lng = getI18nLng(matchedPath);
+        if(lng){
+            results.push({lng: lng, data: json})
+        }
+    })
+    return results
+}
 
 export const loadTriggers = (filePath: string)=>{
     let results = []
@@ -83,6 +122,25 @@ export const loadTriggers = (filePath: string)=>{
     const matchedPaths:[string] = globby.sync(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
+        results.push(json)
+    })
+    return results
+}
+
+export const loadActions = (filePath: string)=>{
+    let results = []
+    const filePatten = [
+        path.join(filePath, "*.action.js")
+    ]
+    const matchedPaths:[string] = globby.sync(filePatten);
+    _.each(matchedPaths, (matchedPath:string)=>{
+        let json = loadFile(matchedPath);
+        if(!_.has(json, 'listenTo')){
+            json.listenTo = path.basename(matchedPath).split('.')[0]
+        }
         results.push(json)
     })
     return results
@@ -162,6 +220,10 @@ exports.isTriggerFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.trigger.js')
 }
 
+exports.isActionFile = (filePath: string)=>{
+    return !fs.statSync(filePath).isDirectory() && filePath.endsWith('.action.js')
+  }
+
 exports.isFieldFile = (filePath: string)=>{
   return !fs.statSync(filePath).isDirectory() && (filePath.endsWith('.field.yml') || filePath.endsWith('.field.js'))
 }
@@ -236,6 +298,20 @@ export function getSteedosConfig(){
             _.each(config.env, function(item, key){
                 process.env[key] = calcString(item)
             })
+        }
+        let emailConfig = config.email;
+        if(emailConfig){
+            if (!emailConfig.url && emailConfig.host && emailConfig.port && emailConfig.username && emailConfig.password) {
+                let url = `smtps://${emailConfig.username}:${emailConfig.password}@${emailConfig.host}:${emailConfig.port}/`;
+                emailConfig.url = url;
+            }
+            if(emailConfig.url){
+                process.env["MAIL_URL"] = calcString(emailConfig.url);
+            }
+            if(emailConfig.from){
+                // 测试下来注册用户时不用MAIL_FROM这个环境变量也是可以的，这里重写是为了保险起见，怕其他地方用到这个环境变量
+                process.env["MAIL_FROM"] = calcString(emailConfig.from);
+            }
         }
         STEEDOSCONFIG = calcSteedosConfig(config);
     // }else{

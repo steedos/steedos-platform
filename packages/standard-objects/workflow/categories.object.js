@@ -1,5 +1,6 @@
 if (!db.categories) {
-  db.categories = new Meteor.Collection('categories');
+  const core = require('@steedos/core');
+  db.categories = core.newCollection('categories');
 }
 
 if (Meteor.isServer) {

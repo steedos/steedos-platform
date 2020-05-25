@@ -1,4 +1,5 @@
 export type SteedosListenerConfig = {
+    _id?: string,
     name?: string,
     listenTo?: string | Function,
     beforeFind?: Function,

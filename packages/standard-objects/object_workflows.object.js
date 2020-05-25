@@ -24,4 +24,24 @@ Creator.Objects.object_workflows.triggers = {
       }
     }
   },
+  "before.insert.client.default": {
+    on: "client",
+    when: "before.insert",
+    todo: function (userId, doc) {
+      if (!Steedos.isLegalVersion('', "workflow.enterprise")) {
+        Steedos.spaceUpgradedModal();
+        throw new Meteor.Error('当前工作区版本不能使用此功能，请联络系统管理员升级版本');
+      }
+    }
+  },
+  "before.update.client.default": {
+    on: "client",
+    when: "before.update",
+    todo: function (userId, doc) {
+      if (!Steedos.isLegalVersion('', "workflow.enterprise")) {
+        Steedos.spaceUpgradedModal();
+        throw new Meteor.Error('当前工作区版本不能使用此功能，请联络系统管理员升级版本');
+      }
+    }
+  },
 };

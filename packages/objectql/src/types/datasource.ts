@@ -20,6 +20,7 @@ import {
     SteedosObjectPermissionTypeConfig,
     SteedosObjectPermissionType,
     getAppConfigs,
+    getDashboardConfigs,
     getSteedosSchema
 } from '.';
 import { SteedosDriverConfig } from '../driver';
@@ -57,6 +58,7 @@ export type SteedosDataSourceTypeConfig = {
     objectsRolesPermission?: Dictionary<Dictionary<SteedosObjectPermissionTypeConfig>>
     getRoles?: Function //TODO 尚未开放此功能
     enable_space?: boolean
+    locale?: string //指定新建数据库表的默认语言，如zh，可用于字段的默认排序
 }
 
 export class SteedosDataSourceType implements Dictionary {
@@ -79,10 +81,12 @@ export class SteedosDataSourceType implements Dictionary {
     private _connectString?: string;
     private _timezone?: string;
     private _options?: any;
+    private _locale?: string;
     private _schema: SteedosSchema;
     private _objects: Dictionary<SteedosObjectType> = {};
     private _objectsConfig: Dictionary<SteedosObjectTypeConfig> = {};
     private _objectsRolesPermission: Dictionary<Dictionary<SteedosObjectPermissionType>> = {};
+    private _objectsSpaceRolesPermission: Dictionary<Dictionary<Dictionary<SteedosObjectPermissionType>>> = {};
     private _driver: SteedosDatabaseDriverType | string | SteedosDriver;
     private _logging: boolean | Array<any>;
     private _graphQLSchema: GraphQLSchema;
@@ -121,6 +125,12 @@ export class SteedosDataSourceType implements Dictionary {
         this._objects[object_name] = object;
     }
 
+    removeObject(object_name: string){
+        delete this._objectsConfig[object_name];
+        delete this._objects[object_name];
+        this.schema.removeObjectMap(object_name);
+    }
+
     initDriver() {
         let driverConfig: SteedosDriverConfig = {
             url: this._url,
@@ -132,7 +142,8 @@ export class SteedosDataSourceType implements Dictionary {
             connectString: this._connectString,
             timezone: this._timezone,
             options: this._options,
-            logging: this._logging
+            logging: this._logging,
+            locale: this._locale
         }
 
         if (_.isString(this.config.driver)) {
@@ -196,6 +207,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._schema = schema
         this._driver = config.driver
         this._logging = config.logging
+        this._locale = config.locale
 
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
@@ -240,6 +252,30 @@ export class SteedosDataSourceType implements Dictionary {
 
     getObjectRolesPermission(object_name: string) {
         return this._objectsRolesPermission[object_name]
+    }
+
+    setObjectSpacePermission(object_name: string, spaceId: string, objectRolePermission: SteedosObjectPermissionTypeConfig) {
+        let objectPermissions = this._objectsSpaceRolesPermission[object_name]
+        if (!objectPermissions) {
+            this._objectsSpaceRolesPermission[object_name] = {}
+        }
+        let objectSpacePermissions = this._objectsSpaceRolesPermission[object_name][spaceId]
+        if (!objectSpacePermissions) {
+            this._objectsSpaceRolesPermission[object_name][spaceId] = {}
+        }
+        this._objectsSpaceRolesPermission[object_name][spaceId][objectRolePermission.name] = new SteedosObjectPermissionType(object_name, objectRolePermission)
+    }
+
+    getObjectSpaceRolesPermission(object_name: string, spaceId: string) {
+        if(this._objectsSpaceRolesPermission[object_name]){
+            return this._objectsSpaceRolesPermission[object_name][spaceId]
+        }
+    }
+
+    removeObjectSpacePermission(object_name: string, spaceId: string, objectRolePermissionName: string){
+        if(this._objectsSpaceRolesPermission[object_name] && this._objectsSpaceRolesPermission[object_name][spaceId]){
+            delete this._objectsSpaceRolesPermission[object_name][spaceId][objectRolePermissionName];
+        }
     }
 
     async getRoles(userId: SteedosIDType) {
@@ -360,6 +396,10 @@ export class SteedosDataSourceType implements Dictionary {
     // 暂时保留，兼容creator bootstrap接口
     getAppsConfig() {
         return getAppConfigs()
+    }
+
+    getDashboardsConfig() {
+        return getDashboardConfigs()
     }
 
     async connect() {

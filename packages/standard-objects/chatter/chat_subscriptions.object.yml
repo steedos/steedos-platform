@@ -1,13 +1,13 @@
 name: chat_subscriptions
-label: 订阅
+label: Chat Subscription
 fields:
   name:
-    label: 名称
+    label: Name
     type: text
     name: name
     searchable: true
   related_to:
-    label: 相关
+    label: Related Object Record
     type: lookup
     reference_to: !<tag:yaml.org,2002:js/function> |-
       function () {
@@ -16,20 +16,20 @@ fields:
     name: related_to
     filterable: true
   last_message_text:
-    label: 最新消息预览(文本)
+    label: Last Message
     type: text
     name: last_message_text
   last_message_date:
-    label: 最新消息发送时间
+    label: Send Time of Last Message
     type: datetime
     name: last_message_date
   unread:
-    label: 未读数
+    label: Number of Unread Messages
     type: number
     name: unread
 list_views:
   all:
-    label: 所有
+    label: All
     columns:
       - name
       - related_to

@@ -20,7 +20,7 @@ export class SteedosSchema {
         let objectMap = this.getObjectMap(objectName);
         if(objectMap){
             if(objectName != 'base' && objectName != 'core' && objectMap.datasourceName != options.datasourceName){
-                throw new Error(`object name ${objectName} is unique, you can set table_name. see: https://developer.steedos.com/docs/en/object/#%E8%A1%A8%E5%90%8D-table_name`)
+                throw new Error(`object name ${objectName} is unique, you can set table_name; see: https://developer.steedos.com/developer/object#%E5%AF%B9%E8%B1%A1%E5%90%8D-name`)
             }
         }
         this._objectsMap[objectName] = options
@@ -28,6 +28,10 @@ export class SteedosSchema {
 
     getObjectMap(objectName: string){
         return this._objectsMap[objectName]
+    }
+
+    removeObjectMap(objectName: string){
+        delete this._objectsMap[objectName]
     }
 
     addDataSourceFromSteedosConfig() {
@@ -91,13 +95,31 @@ export class SteedosSchema {
         return datasource.getObject(object_name)
     }
 
-    addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig) {
-        if(this._datasources[datasource_name]){
+    addDataSource(datasource_name: string, datasourceConfig: SteedosDataSourceTypeConfig, readd?: boolean) {
+        if(this._datasources[datasource_name] && !readd){
             throw new Error(`datasource ${datasource_name} existed`);
         }
         let datasource = new SteedosDataSourceType(datasource_name, datasourceConfig, this)
         this._datasources[datasource_name] = datasource
         return datasource;
+    }
+
+    async removeDataSource(datasource_name){
+        if(datasource_name != defaultDatasourceName){
+            let datasource = this._datasources[datasource_name];
+            if(datasource){
+                delete this._datasources[datasource_name];
+                let self = this;
+                _.each(this._objectsMap, function(map, key){
+                    if(map && map.datasourceName === datasource_name){
+                        self.removeObjectMap(key);
+                    }
+                })
+                await datasource.close();
+            }
+        }else{
+            throw new Error('Can not remove default datasource');
+        }
     }
 
     /**

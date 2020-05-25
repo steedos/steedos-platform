@@ -1,4 +1,9 @@
-
+.instance-print .content-wrapper{
+	width: auto;
+}
+.content-wrapper, .right-side{
+	background-color: #ffffff;
+}
 .btn-steedos-workflow{
 	position: fixed;
 	z-index: 10000;

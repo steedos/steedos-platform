@@ -12,7 +12,7 @@
 **/yarn-error.log
 **/lerna-debug.log
 
-**/lib
+/packages/**/lib
 
 **/.vscode/launch.*
 
@@ -34,3 +34,8 @@ packages/odata-v4-typeorm/
 .history/*
 apps/contracts/.env.local
 apps/contracts/storage/**
+
+.yalc
+**/.yalc
+**/yalc.lock
+yalc.lock
