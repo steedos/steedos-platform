@@ -89,6 +89,9 @@ let formatFieldsToGraphqlQuery = (fields) => {
  * @param {*} fields ,请求的字段，支持["a.b.c","m","n"]或"a.b.c,m,n"这种语法
  */
 let formatFiltersToGraphqlQuery = (filters, fields) => {
+    if(!_.isString(filters)){
+        filters = JSON.stringify(filters);
+    }
     let graphqlFields = formatFieldsToGraphqlQuery(fields);
     let graphqlQuery = `
         query {
