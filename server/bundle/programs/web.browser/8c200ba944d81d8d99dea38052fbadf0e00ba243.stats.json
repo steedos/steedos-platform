@@ -3,15 +3,20 @@
     "name": "standard-minifier-js",
     "version": "2.4.0"
   },
+<<<<<<< HEAD:server/bundle/programs/web.browser/8c200ba944d81d8d99dea38052fbadf0e00ba243.stats.json
   "totalMinifiedBytes": 8034332,
   "totalMinifiedGzipBytes": 2023813,
+=======
+  "totalMinifiedBytes": 8035116,
+  "totalMinifiedGzipBytes": 2024140,
+>>>>>>> master:server/bundle/programs/web.browser/6eff6ff0063e80bd0de8a51f9dfecefae0805119.stats.json
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/coffeescript.js": 32,
     "packages/blaze-html-templates.js": 40,
     "packages/modules-runtime.js": 4199,
     "packages/modules.js": [
-      3833901,
+      3834649,
       {
         "node_modules": {
           "meteor": {
@@ -330,13 +335,14 @@
             "filters": {
               "package.json": 89,
               "lib": {
-                "index.js": 136,
+                "index.js": 155,
                 "filter.js": 4945,
                 "date.formatter.js": 2057,
                 "default_date_names.js": 544,
                 "format.js": 2434,
                 "utils.js": 6735,
-                "formula.js": 580
+                "formula.js": 580,
+                "graphql.js": 715
               }
             },
             "i18n": {
@@ -4481,7 +4487,11 @@
     ],
     "packages/steedos_app-base.js": 371,
     "packages/steedos_creator.js": [
+<<<<<<< HEAD:server/bundle/programs/web.browser/8c200ba944d81d8d99dea38052fbadf0e00ba243.stats.json
       565404,
+=======
+      565440,
+>>>>>>> master:server/bundle/programs/web.browser/6eff6ff0063e80bd0de8a51f9dfecefae0805119.stats.json
       {
         "node_modules": {
           "meteor": {
@@ -4509,7 +4519,11 @@
                   "template.grid.js": 432,
                   "grid.coffee": 21800,
                   "template.view.js": 32286,
+<<<<<<< HEAD:server/bundle/programs/web.browser/8c200ba944d81d8d99dea38052fbadf0e00ba243.stats.json
                   "view.coffee": 14878,
+=======
+                  "view.coffee": 14906,
+>>>>>>> master:server/bundle/programs/web.browser/6eff6ff0063e80bd0de8a51f9dfecefae0805119.stats.json
                   "template.app_home.js": 152,
                   "app_home.coffee": 629,
                   "template.app_iframe.js": 384,
@@ -4613,7 +4627,7 @@
                   "template.apps_modal.js": 2071,
                   "apps_modal.coffee": 485
                 },
-                "core.coffee": 8612,
+                "core.coffee": 8620,
                 "favorites.coffee": 1866,
                 "router.coffee": 7480,
                 "subscribe.coffee": 3096,

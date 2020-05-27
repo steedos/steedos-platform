@@ -923,7 +923,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.20.4",
+  "version": "1.20.5",
   "main": "lib/index.js"
 };
 
