@@ -13,8 +13,12 @@ module.exports = {
         })		
     },
     createCustomerSpaceUserVisible: function(object_name, record_id, record_permissions){
+        if(!Creator.isSpaceAdmin()){
+            return false
+        }
+
         var record = Creator.odata.get("contacts", record_id, "account,user", "account($select=is_customer)");
-        if(record.account && record.account.is_customer && !record.user){
+        if(record && record.account && record.account.is_customer && !record.user){
             return true;
         }
     },
@@ -23,8 +27,11 @@ module.exports = {
         FlowRouter.go(Creator.getObjectRouterUrl("space_users", record[0]._id));
     },
     viewCustomerSpaceUserVisible: function(object_name, record_id, record_permissions){
+        if(!Creator.isSpaceAdmin()){
+            return false
+        }
         var record = Creator.odata.get("contacts", record_id, "account,user", "account($select=is_customer)");
-        if(record.account && record.account.is_customer && record.user){
+        if(record && record.user){
             var spaceUser = Creator.odata.query("space_users", {$filter: `(user eq '${record.user}')`, $select: "is_customer"}, true);
             if(spaceUser[0].is_customer){
                 return true;
@@ -45,8 +52,11 @@ module.exports = {
         })		
     },
     createPartnerSpaceUserVisible: function(object_name, record_id, record_permissions){
+        if(!Creator.isSpaceAdmin()){
+            return false
+        }
         var record = Creator.odata.get("contacts", record_id, "account,user", "account($select=is_partner)");
-        if(record.account && record.account.is_partner && !record.user){
+        if(record && record.account && record.account.is_partner && !record.user){
             return true;
         }
     },
@@ -55,8 +65,11 @@ module.exports = {
         FlowRouter.go(Creator.getObjectRouterUrl("space_users", record[0]._id));	
     },
     viewPartnerSpaceUserVisible: function(object_name, record_id, record_permissions){
+        if(!Creator.isSpaceAdmin()){
+            return false
+        }
         var record = Creator.odata.get("contacts", record_id, "account,user", "account($select=is_partner)");
-        if(record.account && record.account.is_partner && record.user){
+        if(record && record.user){
             var spaceUser = Creator.odata.query("space_users", {$filter: `(user eq '${record.user}')`, $select: "is_partner"}, true);
             if(spaceUser[0].is_partner){
                 return true;

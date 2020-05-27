@@ -133,16 +133,16 @@ list_views:
       - mailing_address
 actions:
   createCustomerSpaceUser:
-    label: 创建customer用户
+    label: 创建顾客用户
     on: record_only_more
   viewCustomerSpaceUser:
-    label: 查看customer用户
+    label: 查看顾客用户
     on: record_only_more
   createPartnerSpaceUser:
-    label: 创建partner用户
+    label: 创建合作伙伴用户
     on: record_only_more
   viewPartnerSpaceUser:
-    label: 查看partner用户
+    label: 查看合作伙伴用户
     on: record_only_more
 permission_set:
   user:

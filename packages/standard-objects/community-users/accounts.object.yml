@@ -289,6 +289,23 @@ list_views:
       - rating
       - name
       - address
+actions:
+  enablePartner:
+    label: 作为合作伙伴启用
+    on: record_only_more
+    visible: true
+  disablePartner:
+    label: 禁用合作伙伴账户
+    on: record_only_more
+    visible: true
+  enableCustomer:
+    label: 作为顾客账户启用
+    on: record_only_more
+    visible: true
+  disableCustomer:
+    label: 禁用顾客账户
+    on: record_only_more
+    visible: true
 permission_set:
   user:
     allowCreate: true
