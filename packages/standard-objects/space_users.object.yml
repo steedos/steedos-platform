@@ -133,14 +133,14 @@ fields:
     label: Contact
     reference_to: contacts
     readonly: true
-  is_partner:
+  is_supplier:
     type: boolean
-    label: partner用户
+    label: 供应商
     readonly: true
     # hidden: true
   is_customer:
     type: boolean
-    label: customer用户
+    label: 客户
     readonly: true
     # hidden: true
   work_phone:

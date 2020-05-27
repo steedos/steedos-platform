@@ -4,7 +4,7 @@ Creator.Objects['accounts'].triggers = {
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {};
-            if (_.has(modifier.$set, 'is_partner') || _.has(modifier.$set, 'is_customer')) {
+            if (_.has(modifier.$set, 'is_supplier') || _.has(modifier.$set, 'is_customer')) {
                 if(Creator.isSpaceAdmin(doc.space, userId)){
                     throw new Error('not permission');
                 }
@@ -16,9 +16,9 @@ Creator.Objects['accounts'].triggers = {
         when: "after.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {};
-            if (modifier.$set.is_partner === false) {
+            if (modifier.$set.is_supplier === false) {
                 var contacts = Creator.getCollection("contacts").find({account: doc._id, space: doc.space, user: {$exists: true}}, {fields: {_id:1}}).fetch()
-                db.space_users.direct.update({contact_id:{$in: _.pluck(contacts, '_id')}, is_partner: true, space: doc.space}, {$set: {user_accepted: false}}, {
+                db.space_users.direct.update({contact_id:{$in: _.pluck(contacts, '_id')}, is_supplier: true, space: doc.space}, {$set: {user_accepted: false}}, {
                     multi: true
                 });
             }

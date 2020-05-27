@@ -18,12 +18,12 @@ fields:
     required: true
     sortable: true
     name: name
-  is_partner:
+  is_supplier:
     type: boolean
-    label: 合作伙伴用户
+    label: 供应商
   is_customer:
     type: boolean
-    label: 顾客用户
+    label: 客户
   type:
     label: 类型
     type: select
@@ -291,19 +291,19 @@ list_views:
       - address
 actions:
   enablePartner:
-    label: 作为合作伙伴启用
+    label: 作为供应商启用
     on: record_only_more
     visible: true
   disablePartner:
-    label: 禁用合作伙伴账户
+    label: 禁用供应商账户
     on: record_only_more
     visible: true
   enableCustomer:
-    label: 作为顾客账户启用
+    label: 作为客户启用
     on: record_only_more
     visible: true
   disableCustomer:
-    label: 禁用顾客账户
+    label: 禁用客户账户
     on: record_only_more
     visible: true
 permission_set:

@@ -1,8 +1,8 @@
 module.exports = {
-    enablePartner: function (object_name, record_id, fields) {
-        text = '合作伙伴用户可以从与此业务伙伴关联的联系人创建外部用户。 <br/>是否确定？';
+    enableSupplier: function (object_name, record_id, fields) {
+        text = '启用后，可以为供应商关联的联系人创建供应商用户。是否确定？';
         swal({
-            title: "作为合作伙伴启用",
+            title: "作为供应商启用",
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,
@@ -10,24 +10,24 @@ module.exports = {
             cancelButtonText: t('NO')
         }, function (confirm) {
             if(confirm){
-                Creator.odata.update('accounts', record_id, { is_partner: true })
+                Creator.odata.update('accounts', record_id, { is_supplier: true })
             }
             sweetAlert.close();
         })
     },
-    enablePartnerVisible: function (object_name, record_id, record_permissions) {
+    enableSupplierVisible: function (object_name, record_id, record_permissions) {
         if(!Creator.isSpaceAdmin()){
             return false
         }
         var record = Creator.getCollection(object_name).findOne(record_id);
         if(record){
-            return record.is_partner != true
+            return record.is_supplier != true
         }
     },
-    disablePartner: function (object_name, record_id, fields) {
-        text = '禁用外部用户的业务伙伴将禁用所有与业务伙伴关联的外部用户。 <br/>是否确定？';
+    disableSupplier: function (object_name, record_id, fields) {
+        text = '将禁用所有与此供应商关联的外部用户。 是否确定？';
         swal({
-            title: "禁用合作伙伴账户",
+            title: "禁用供应商账户",
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,
@@ -35,25 +35,24 @@ module.exports = {
             cancelButtonText: t('NO')
         }, function (confirm) {
             if(confirm){
-                //TODO 编写trigger，当is_partner变为false时，禁用相关space users
-                Creator.odata.update('accounts', record_id, { is_partner: false })
+                Creator.odata.update('accounts', record_id, { is_supplier: false })
             }
             sweetAlert.close();
         })
     },
-    disablePartnerVisible: function(object_name, record_id, record_permissions){
+    disableSupplierVisible: function(object_name, record_id, record_permissions){
         if(!Creator.isSpaceAdmin()){
             return false
         }
         var record = Creator.getCollection(object_name).findOne(record_id);
         if(record){
-            return record.is_partner
+            return record.is_supplier
         }
     },
     enableCustomer: function (object_name, record_id, fields) {
-        text = '顾客可以从与此业务伙伴关联的联系人创建外部用户。 <br/>是否确定？';
+        text = '启用后，可以为客户关联的联系人创建客户用户。是否确定？';
         swal({
-            title: "作为顾客账户启用",
+            title: "作为客户启用",
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,
@@ -76,9 +75,9 @@ module.exports = {
         }
     },
     disableCustomer: function (object_name, record_id, fields) {
-        text = '禁用外部用户的顾客将禁用所有与顾客关联的外部用户。 <br/>是否确定？';
+        text = '将禁用所有与此客户关联的外部用户。 是否确定？';
         swal({
-            title: "禁用顾客账户",
+            title: "禁用客户账户",
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,
@@ -86,7 +85,6 @@ module.exports = {
             cancelButtonText: t('NO')
         }, function (confirm) {
             if(confirm){
-                //TODO 编写trigger，当is_customer变为false时，禁用相关space users
                 Creator.odata.update('accounts', record_id, { is_customer: false })
             }
             sweetAlert.close();
