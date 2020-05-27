@@ -50,6 +50,7 @@ Logger = Package['steedos:logger'].Logger;
 MailQueue = Package['steedos:mailqueue'].MailQueue;
 WebhookQueue = Package['steedos:webhookqueue'].WebhookQueue;
 permissionManagerForInitApproval = Package['steedos:creator'].permissionManagerForInitApproval;
+uuflowManagerForInitApproval = Package['steedos:creator'].uuflowManagerForInitApproval;
 InstanceRecordQueue = Package['steedos:instance-record-queue'].InstanceRecordQueue;
 WorkflowManager = Package['steedos:app-workflow'].WorkflowManager;
 uuflowManager = Package['steedos:app-workflow'].uuflowManager;
