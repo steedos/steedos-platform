@@ -20,6 +20,10 @@ fields:
     name: name
   is_partner:
     type: boolean
+    label: 合作伙伴用户
+  is_customer:
+    type: boolean
+    label: 顾客用户
   type:
     label: 类型
     type: select

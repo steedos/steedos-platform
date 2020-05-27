@@ -55,6 +55,11 @@ fields:
   mailing_address:
     type: text
     label: 地址
+  user:
+    type: lookup
+    reference_to: users
+    hidden: true
+    omit: true
 list_views:
   all:
     label: 所有联系人
@@ -126,6 +131,19 @@ list_views:
       - mobile
       - phone
       - mailing_address
+actions:
+  createCustomerSpaceUser:
+    label: 创建customer用户
+    on: record_only_more
+  viewCustomerSpaceUser:
+    label: 查看customer用户
+    on: record_only_more
+  createPartnerSpaceUser:
+    label: 创建partner用户
+    on: record_only_more
+  viewPartnerSpaceUser:
+    label: 查看partner用户
+    on: record_only_more
 permission_set:
   user:
     allowCreate: true

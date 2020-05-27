@@ -150,6 +150,7 @@
 	"space_users_error_email_already_existed": "The Email is already used.",
 	"space_users_error_remove_space_owner": "The space owner can not be removed",
 	"space_users_error_phone_already_existed": "The phone number is already used.",
+	"space_users_error_not_change_contact_id": "Can not change contact",
 
 	"space_users_aciton_invite_space_users_success": "The invitation link has copied to clipboard. Users can quickly join the company by clicking this link.",
 	"space_users_aciton_invite_space_users_error": "Failed to invite user",

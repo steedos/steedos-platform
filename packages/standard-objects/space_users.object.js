@@ -258,6 +258,9 @@ Meteor.startup(function () {
                     return organizationObj.updateUsers();
                 });
             }
+            if(doc.contact_id){
+                Creator.getCollection("contacts").direct.update({_id: doc.contact_id}, {$set: {user: doc.user}})
+            }
             // if (!doc.is_registered_from_space) {
             //     user = db.users.findOne(doc.user, {
             //         fields: {
@@ -325,6 +328,11 @@ Meteor.startup(function () {
             if(modifier.$set.email){
                 modifier.$set.email = modifier.$set.email.toLowerCase().trim();
             }
+
+            if(_.has(modifier.$set, 'contact_id') && doc.contact_id != modifier.$set.contact_id){
+                throw new Meteor.Error(400, "space_users_error_not_change_contact_id");
+            }
+
             db.space_users.updatevaildate(userId, doc, modifier);
             if (modifier.$set.organizations && modifier.$set.organizations.length > 0) {
                 // 修改所有组织后，强制把主组织自动设置为第一个组织

@@ -153,6 +153,7 @@
 	"space_users_error_remove_space_owner": "不能删除工作区拥有者",
 	"space_users_error_remove_space_admins": "不能删除工作区管理员",
 	"space_users_error_phone_already_existed": "该手机号已被其他用户注册",
+	"space_users_error_not_change_contact_id": "不能修改联系人",
 
 	"space_users_aciton_invite_space_users_success": "企业邀请链接已复制到剪贴板，用户点击此链接可以快速加入企业。",
 	"space_users_aciton_invite_space_users_error": "团队邀请链接复制失败",

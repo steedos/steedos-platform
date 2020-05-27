@@ -130,11 +130,19 @@ fields:
     filterable: true
   contact_id:
     type: lookup
+    label: Contact
     reference_to: contacts
+    readonly: true
   is_partner:
     type: boolean
+    label: partner用户
+    readonly: true
+    # hidden: true
   is_customer:
     type: boolean
+    label: customer用户
+    readonly: true
+    # hidden: true
   work_phone:
     type: text
     label: Work Phone Number
