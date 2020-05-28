@@ -5,7 +5,7 @@ Creator.Objects['accounts'].triggers = {
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {};
             if (_.has(modifier.$set, 'is_supplier') || _.has(modifier.$set, 'is_customer')) {
-                if(Creator.isSpaceAdmin(doc.space, userId)){
+                if(!Creator.isSpaceAdmin(doc.space, userId)){
                     throw new Error('not permission');
                 }
             }
