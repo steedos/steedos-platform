@@ -58,8 +58,7 @@ fields:
   user:
     type: lookup
     reference_to: users
-    hidden: true
-    omit: true
+    label: 外部用户
 list_views:
   all:
     label: 所有联系人
@@ -132,17 +131,23 @@ list_views:
       - phone
       - mailing_address
 actions:
+  createSupplierSpaceUser:
+    label: 创建供应商用户
+    on: record_only_more
+  viewSupplierSpaceUser:
+    label: 查看供应商用户
+    on: record_only_more
+  disableSupplierSpaceUser:
+    label: 禁用供应商用户
+    on: record_only_more
   createCustomerSpaceUser:
     label: 创建客户用户
     on: record_only_more
   viewCustomerSpaceUser:
     label: 查看客户用户
     on: record_only_more
-  createSupplierSpaceUser:
-    label: 创建供应商用户
-    on: record_only_more
-  viewSupplierSpaceUser:
-    label: 查看供应商用户
+  disableCustomerSpaceUser:
+    label: 禁用客户用户
     on: record_only_more
 permission_set:
   user:

@@ -290,22 +290,18 @@ list_views:
       - name
       - address
 actions:
-  enablePartner:
+  enableSupplier:
     label: 作为供应商启用
     on: record_only_more
-    visible: true
-  disablePartner:
+  disableSupplier:
     label: 禁用供应商账户
     on: record_only_more
-    visible: true
   enableCustomer:
     label: 作为客户启用
     on: record_only_more
-    visible: true
   disableCustomer:
     label: 禁用客户账户
     on: record_only_more
-    visible: true
 permission_set:
   user:
     allowCreate: true
