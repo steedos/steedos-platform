@@ -23,6 +23,7 @@ fields:
     reference_to: objects
     index: true
     required: true
+    create: false
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
