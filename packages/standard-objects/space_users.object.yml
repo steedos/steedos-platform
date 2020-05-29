@@ -130,7 +130,7 @@ fields:
     filterable: true
   profile:
     type: select
-    options: admin,user,supplier,customer
+    options: Admin:admin,User:user,Supplier:supplier,Customer:customer
     required: true
     defaultValue: user
   contact_id:
@@ -140,12 +140,12 @@ fields:
     readonly: true
   is_supplier:
     type: boolean
-    label: 供应商
+    label: Supplier
     readonly: true
     # hidden: true
   is_customer:
     type: boolean
-    label: 客户
+    label: Customer
     readonly: true
     # hidden: true
   work_phone:
