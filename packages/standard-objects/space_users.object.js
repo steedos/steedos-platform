@@ -151,6 +151,14 @@ Meteor.startup(function () {
             }
             db.space_users.insertVaildate(userId, doc);
 
+            if(doc.profile){
+                if(doc.profile === 'admin' && !Creator.isSpaceAdmin(doc.space, userId)){
+                    throw new Meteor.Error(400, "Only the administrator can set the profile to admin");
+                }
+            }else{
+                doc.profile = 'user'
+            }
+
             if(doc.user){
                 doc.owner = doc.user
                 let userDoc = db.users.findOne({_id: doc.user});
@@ -333,6 +341,12 @@ Meteor.startup(function () {
 
             if(_.has(modifier.$set, 'contact_id') && doc.contact_id != modifier.$set.contact_id){
                 throw new Meteor.Error(400, "space_users_error_not_change_contact_id");
+            }
+
+            if(_.has(modifier.$set, 'profile') && doc.profile != modifier.$set.profile){
+                if(!Creator.isSpaceAdmin(doc.space, userId)){
+                    throw new Meteor.Error(400, "can not change profile");
+                }
             }
 
             db.space_users.updatevaildate(userId, doc, modifier);
