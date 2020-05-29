@@ -92,10 +92,11 @@ let formatFiltersToGraphqlQuery = (filters, fields) => {
     if(!_.isString(filters)){
         filters = JSON.stringify(filters);
     }
+    let filtersWrap  = filters ? `(filters:${filters})` : "";
     let graphqlFields = formatFieldsToGraphqlQuery(fields);
     let graphqlQuery = `
         query {
-            contracts(filters:${filters})${graphqlFields}
+            contracts${filtersWrap}${graphqlFields}
         }
     `;
     return graphqlQuery;
