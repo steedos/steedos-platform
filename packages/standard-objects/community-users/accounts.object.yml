@@ -21,9 +21,13 @@ fields:
   is_supplier:
     type: boolean
     label: 供应商
+    hidden: true
+    omit: true
   is_customer:
     type: boolean
     label: 客户
+    hidden: true
+    omit: true
   type:
     label: 类型
     type: select
