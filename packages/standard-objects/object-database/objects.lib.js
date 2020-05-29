@@ -2,6 +2,11 @@ var objectql = require('@steedos/objectql');
 const defaultDatasourceName = 'default';
 
 function canLoadObject(name, datasource){
+    var config = objectql.getSteedosConfig();
+    if(config.tenant && config.tenant.saas){
+        return false;
+    }
+
     if(!datasource || datasource === defaultDatasourceName){
         if(!name.endsWith('__c')){
             return false;

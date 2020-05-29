@@ -4,6 +4,16 @@ const _ = require('underscore');
 const sessionCacheInMinutes = 10;
 const SPACEUSERCACHENAME = 'space_users_cache';
 
+const internalProfiles = ['admin','user','supplier','customer']
+
+async function getSpaceUserProfile(userId: string, spaceId: string){
+    let filters = `(space eq '${spaceId}') and (user eq '${userId}')`;
+    let spaceUser = await getSteedosSchema().getObject('space_users').find({filters: filters, fields: ['profile'] });
+    if(spaceUser && spaceUser.length > 0){
+        return spaceUser[0].profile
+    }
+}
+
 async function getUserRoles(userId: string, spaceId: string) {
     let roles = ['user'];
     let space = await getSteedosSchema().getObject('spaces').findOne(spaceId, { fields: ['admins'] });
@@ -11,10 +21,18 @@ async function getUserRoles(userId: string, spaceId: string) {
         roles = ['admin'];
     }
 
+    let profile = await getSpaceUserProfile(userId, spaceId);
+
+    if(profile){
+        roles = [profile]
+    }
+
     let filters = `(space eq '${spaceId}') and (users eq '${userId}')`;
-    let permission_sets = await getSteedosSchema().getObject('permission_set').find({ filters: filters, fields: ['name'] });
+    let permission_sets = await getSteedosSchema().getObject('permission_set').find({filters: filters, fields: ['name'] });
     permission_sets.forEach(p => {
-        roles.push(p.name);
+        if(!_.include(internalProfiles, p.name)){
+            roles.push(p.name);
+        }
     });
     return roles;
 }

@@ -398,13 +398,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     getObjectRolesPermission(spaceId?: string) {
+        let globalPermission = this._datasource.getObjectRolesPermission(this._name)
         if(spaceId){
             let permission = this._datasource.getObjectSpaceRolesPermission(this._name, spaceId);
             if(!_.isEmpty(permission)){
-                return permission;
+                return Object.assign({}, globalPermission || {}, permission);
             }
         }
-        return this._datasource.getObjectRolesPermission(this._name)
+        return globalPermission
     }
 
     async getUserObjectPermission(userSession: SteedosUserSession) {
