@@ -152,6 +152,7 @@ Meteor.startup(function () {
             db.space_users.insertVaildate(userId, doc);
 
             if(doc.user){
+                doc.owner = doc.user
                 let userDoc = db.users.findOne({_id: doc.user});
                 let syncProp = spaceUserCore.pickNeedSyncProp(userDoc);
                 Object.assign(doc, syncProp);
@@ -231,6 +232,7 @@ Meteor.startup(function () {
                 if (!doc.name) {
                     throw new Meteor.Error(400, "space_users_error_name_required");
                 }
+                doc.owner = doc.user
             }
             if (doc.organizations && doc.organizations.length > 0) {
                 // 如果主组织未设置或设置的值不在doc.organizations内，则自动设置为第一个组织
