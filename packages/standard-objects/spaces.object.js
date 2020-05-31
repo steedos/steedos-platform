@@ -108,6 +108,7 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         // organizations_parents: [organization_id],
         // company_id: company_id,
         // company_ids: [company_id],
+        profile: 'user',
         space: spaceId,
         owner: userId,
         created_by: userId,
@@ -116,6 +117,10 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
         modified: now
       }
     spaceUsersDB.insert(spaceUsersDoc)
+
+    if(Creator.isSpaceAdmin(spaceId, userId)){
+        spaceUsersDB.direct.update({user: userId, space: spaceId}, {$set: {profile: 'admin'}})
+    }
 }
 
 if (Meteor.isServer) {
@@ -197,13 +202,30 @@ if (Meteor.isServer) {
             children = db.organizations.find({
                 parents: rootOrg._id
             });
-            return children.forEach(function (child) {
-                return db.organizations.direct.update(child._id, {
+            children.forEach(function (child) {
+                db.organizations.direct.update(child._id, {
                     $set: {
                         fullname: child.calculateFullname()
                     }
                 });
             });
+        }
+
+
+        if(_.has(modifier.$set, 'admins')){
+           setAdmins = modifier.$set.admins || []
+           var removedAdmin  =  _.difference(this.previous.admins, setAdmins);
+           if(!_.isEmpty(removedAdmin)){
+                db.space_users.direct.update({space: doc._id, user: {$in: removedAdmin}}, {$set: {profile: 'user'}}, {
+                    multi: true
+                });
+           }
+           var addedAdmin =  _.difference(setAdmins, this.previous.admins);
+           if(!_.isEmpty(addedAdmin)){
+                db.space_users.direct.update({space: doc._id, user: {$in: addedAdmin}}, {$set: {profile: 'admin'}}, {
+                    multi: true
+                });
+           }
         }
     });
     db.spaces.before.remove(function (userId, doc) {
