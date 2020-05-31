@@ -49,8 +49,6 @@ export class Plugins {
         let configPath = path.join(pluginDir, ConfigName)
         if (fs.existsSync(configPath) && !fs.statSync(configPath).isDirectory()) {
             config = util.loadYmlFile(configPath)
-        }else{
-            console.warn(`WARNING: not found ${ConfigName}`, configPath);
         }
         return config;
     }
