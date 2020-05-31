@@ -12,7 +12,6 @@
     "unlink": "lerna exec -- yarn unlink",
     "ver": "lerna version --force-publish",
     "pub": "lerna publish from-package --registry https://registry.npmjs.org",
-    "ver_next": "lerna version --force-publish --npm-tag next",
     "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --npm-tag next",
     "compile": "lerna run compile",
     "prepare": "lerna run prepare",
