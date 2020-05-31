@@ -114,6 +114,7 @@ install("allow-deny");
 install("mongo-decimal", "meteor/mongo-decimal/decimal.js");
 install("binary-heap", "meteor/binary-heap/binary-heap.js");
 install("mongo");
+install("steedos:meteor-fix");
 install("reactive-dict", "meteor/reactive-dict/migration.js");
 install("reactive-var");
 install("accounts-base", "meteor/accounts-base/server_main.js");

@@ -217,6 +217,10 @@
       "path": "packages/mongo.js"
     },
     {
+      "sourceMap": "packages/steedos_meteor-fix.js.map",
+      "path": "packages/steedos_meteor-fix.js"
+    },
+    {
       "sourceMap": "packages/reactive-dict.js.map",
       "path": "packages/reactive-dict.js"
     },
