@@ -39,3 +39,4 @@ apps/contracts/storage/**
 **/.yalc
 **/yalc.lock
 yalc.lock
+packages/project-template-empty/.env.local
