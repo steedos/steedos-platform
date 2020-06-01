@@ -53,15 +53,20 @@ Creator.initListViews = (object_name)->
 	if Meteor.isClient
 		Creator.TabularSelectedIds?[object_name] = []
 
-Creator.convertListView = (default_columens, list_view, list_view_name)->
+Creator.convertListView = (default_view, list_view, list_view_name)->
+	default_columns = default_view.columns
+	default_mobile_columns = default_view.mobile_columns
 	oitem = _.clone(list_view)
 	if !_.has(oitem, "name")
 		oitem.name = list_view_name
 	if !oitem.columns
-		if default_columens
-			oitem.columns = default_columens
+		if default_columns
+			oitem.columns = default_columns
 	if !oitem.columns
 		oitem.columns = ["name"]
+	if !oitem.mobile_columns
+		if default_mobile_columns
+			oitem.mobile_columns = default_mobile_columns
 
 	if Meteor.isClient
 		if Creator.isCloudAdminSpace(Session.get("spaceId")) && !_.include(oitem.columns, 'space')
@@ -218,9 +223,15 @@ Creator.getObjectDefaultView = (object_name)->
 ###
     获取对象的列表默认显示字段
 ###
-Creator.getObjectDefaultColumns = (object_name)->
+Creator.getObjectDefaultColumns = (object_name, use_mobile_columns)->
 	defaultView = Creator.getObjectDefaultView(object_name)
-	return defaultView?.columns
+	columns = defaultView?.columns
+	if use_mobile_columns
+		if defaultView.mobile_columns
+			columns = defaultView.mobile_columns
+		else if columns
+			columns = columns.slice(0,4)
+	return columns
 
 ###
 	获取对象的列表默认额外加载的字段

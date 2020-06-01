@@ -392,16 +392,14 @@ if Meteor.isClient
 	#			expand_fields.push(n)
 		return expand_fields.join(",")
 	
-	Creator.relatedObjectFileUploadHandler = (event, gridContainerWrap)->
+	Creator.relatedObjectFileUploadHandler = (event, callback)->
 		dataset = event.currentTarget.dataset
 		parent = dataset?.parent
-		targetObjectName = dataset?.targetObjectName
 		files = event.currentTarget.files
 		i = 0
 		record_id = Session.get("record_id")
 		object_name = Session.get("object_name")
 		spaceId = Session.get("spaceId")
-		dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
 		while i < files.length
 			file = files[i]
 			if !file.name
@@ -444,7 +442,7 @@ if Meteor.isClient
 							return
 						return
 					toastr.success TAPi18n.__('Attachment was added successfully')
-					Template.creator_grid.refresh dxDataGridInstance
+					callback()
 					return
 				error: (xhr, msg, ex) ->
 					$(document.body).removeClass 'loading'
@@ -470,7 +468,85 @@ if Meteor.isClient
 		currentPath = FlowRouter.current().path
 		if currentPath != urlQuery[urlQuery.length - 1]
 			urlQuery.push currentPath
-	
+
+	Creator.getStandardQuery = (curObjectName, standard_query)->
+		object_fields = Creator.getObject(curObjectName).fields
+		if !standard_query or !standard_query.query or !_.size(standard_query.query) or standard_query.object_name != curObjectName
+			delete Session.keys["standard_query"]
+			return;
+		else
+			object_name = standard_query.object_name
+			query = standard_query.query
+			query_arr = []
+			if standard_query.is_mini
+				_.each query, (val, key)->
+					if object_fields[key]
+						if ["currency", "number"].includes(object_fields[key].type)
+							query_arr.push([key, "=", val])
+						else if ["text", "textarea", "html", "select"].includes(object_fields[key].type)
+							if _.isString(val)
+								vals = val.trim().split(" ")
+								query_or = []
+								vals.forEach (val_item)->
+									# 特殊字符编码
+									val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
+									query_or.push([key, "contains", val_item])
+								if query_or.length > 0
+									query_arr.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: false})
+							else if _.isArray(val)
+								query_arr.push([key, "=", val])
+			else
+				_.each query, (val, key)->
+					if object_fields[key]
+						if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+							query_arr.push([key, ">=", val])
+						else if ["text", "textarea", "html"].includes(object_fields[key].type)
+							if _.isString(val)
+								vals = val.trim().split(" ")
+								query_or = []
+								vals.forEach (val_item)->
+									# 特殊字符编码
+									val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
+									query_or.push([key, "contains", val_item])
+								if query_or.length > 0
+									query_arr.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: false})
+							else if _.isArray(val)
+								query_arr.push([key, "=", val])
+
+						else if ["boolean"].includes(object_fields[key].type)
+							query_arr.push([key, "=", JSON.parse(val)])
+
+						else if ["lookup", "master_detail"].includes(object_fields[key].type)
+							_f = object_fields[key]
+							_reference_to = _f?.reference_to
+							if _.isFunction(_reference_to)
+								_reference_to = _reference_to()
+							if _.isArray(_reference_to)
+								if val?.ids
+									query_arr.push {
+										field: key+".ids"
+										operation: '='
+										value: val?.ids
+									}
+								if val?.o
+									_ro = Creator.getObject(val?.o)
+									query_arr.push {
+										field: key+".o"
+										operation: '='
+										value: _ro._collection_name
+									}
+							else
+								query_arr.push([key, "=", val])
+						else
+							query_arr.push([key, "=", val])
+					else
+						key = key.replace(/(_endLine)$/, "")
+						if object_fields[key] and ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
+							query_arr.push([key, "<=", val])
+
+			is_logic_or = if standard_query.is_mini then true else false
+			options = is_logic_or: is_logic_or
+			return Creator.formatFiltersToDev(query_arr, object_name, options)
 
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->

@@ -126,6 +126,12 @@ Template.creator_list_wrapper.helpers
 		object_name = Session.get "object_name"
 		return Steedos.isMobile() and Creator.getObject(object_name)?.sidebar
 	
+	showAsGrid: ()->
+		object_name = Session.get "object_name"
+		if Creator.getObject(object_name)?.enable_tree
+			return true
+		return !Steedos.isMobile()
+	
 	list_data: ()->
 		object_name = Session.get "object_name"
 		return {object_name: object_name, total: Template.instance().recordsTotal}

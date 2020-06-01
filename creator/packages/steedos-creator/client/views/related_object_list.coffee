@@ -1,3 +1,6 @@
+getRelatedListTemplateId = ()->
+	return "steedos-list-related-object-list"
+
 Template.related_object_list.helpers
 	related_object_name: ()->
 		return Session.get("related_object_name")
@@ -47,7 +50,15 @@ Template.related_object_list.helpers
 		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
 		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
-		data = {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props, pageSize: 50}
+		data = {
+			id: getRelatedListTemplateId(), 
+			related_object_name: related_object_name, 
+			object_name: object_name, 
+			total: Template.instance().recordsTotal, 
+			is_related: true, 
+			related_list_item_props: related_list_item_props,
+			pageSize: 50
+		}
 		if object_name == 'objects'
 			data.record_id = Template.instance()?.record.get().name;
 		return data
@@ -83,11 +94,23 @@ Template.related_object_list.events
 			$(".creator-add").click()
 
 	'click .btn-refresh': (event, template)->
-		dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
-		Template.creator_grid.refresh(dxDataGridInstance)
+		if Steedos.isMobile()
+			Template.list.refresh getRelatedListTemplateId()
+		else
+			dxDataGridInstance = $(event.currentTarget).closest(".related_object_list").find(".gridContainer").dxDataGrid().dxDataGrid('instance')
+			Template.creator_grid.refresh(dxDataGridInstance)
 
 	'change .input-file-upload': (event, template)->
-		Creator.relatedObjectFileUploadHandler event, $(event.currentTarget).closest(".related_object_list")
+		Creator.relatedObjectFileUploadHandler event, ()->
+			if Steedos.isMobile()
+				Template.list.refresh getRelatedListTemplateId()
+			else
+				dataset = event.currentTarget.dataset
+				parent = dataset?.parent
+				targetObjectName = dataset?.targetObjectName
+				gridContainerWrap = $(event.currentTarget).closest(".related_object_list")
+				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
+				Template.creator_grid.refresh dxDataGridInstance
 
 
 Template.related_object_list.onCreated ->

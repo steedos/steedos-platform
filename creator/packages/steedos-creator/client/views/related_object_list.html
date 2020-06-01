@@ -59,7 +59,11 @@
 				<div class="slds-grid table-grid-content">
 					<div class="slds-col slds-no-space">
 						<div class="slds-table tale-content list-table-container td-cell-wrap">
-							{{> Template.dynamic template="creator_grid" data=list_data}}
+							{{#if isMobile}}
+								{{> list options=list_data}}
+							{{else}}
+								{{> Template.dynamic template="creator_grid" data=list_data}}
+							{{/if}}
 						</div>
 					</div>
 				</div>

@@ -23,9 +23,9 @@ Meteor.startup ->
 				return
 			list_views = Creator.getObject(Session.get("object_name")).list_views
 			list_views_byname = Creator.getObject(Session.get("object_name")).list_views
-			defaultColumns = Creator.getObjectDefaultColumns(Session.get("object_name"))
+			defaultView = Creator.getObjectDefaultView(Session.get("object_name"))
 			object_listViews.forEach (listview)->
-				_list_view = Creator.convertListView(defaultColumns, listview, listview.name)
+				_list_view = Creator.convertListView(defaultView, listview, listview.name)
 				if listview.api_name
 					_key = listview.api_name
 				else

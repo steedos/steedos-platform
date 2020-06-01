@@ -273,7 +273,11 @@
 													</div>
 													<div class="slds-card__body">
 														{{#if record}}
-															{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+															{{#if isMobile}}
+																{{> list options=(list_data this)}}
+															{{else}}
+																{{> Template.dynamic template="creator_grid" data=(list_data this)}}
+															{{/if}}
 														{{/if}}
 													</div>
 													<footer class="slds-card__footer"></footer>

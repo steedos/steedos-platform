@@ -129,6 +129,8 @@ Package.onUse(function (api) {
 	api.addFiles('server/routes/s3.coffee', 'server');
 	api.addFiles('server/routes/api_workflow_drafts.coffee', 'server');
 
+	api.addFiles('client/listview.coffee', "client");
+
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
 	api.addFiles('client/layout/sidebar_left.html', 'client');

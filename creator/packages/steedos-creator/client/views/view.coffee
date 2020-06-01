@@ -9,8 +9,11 @@ loadRecordFromOdata = (template, object_name, record_id)->
 	record = Creator.odata.get(object_name, record_id, selectFields, expand)
 	template.record.set(record)
 
+getRelatedListTemplateId = (related_object_name)->
+	return "steedos-list-related-#{related_object_name}"
 
 Template.creator_view.onCreated ->
+	Template.creator_view.currentInstance = this
 	this.recordsTotal = new ReactiveVar({})
 	# this.recordLoad = new ReactiveVar(false)
 	this.record = new ReactiveVar()
@@ -422,7 +425,15 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		related_list_item_props = item
 		related_object_name = item.object_name
-		data = {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
+		console.log("=====list_data===related_object_name=", related_object_name);
+		data = {
+			id: getRelatedListTemplateId(related_object_name)
+			related_object_name: related_object_name, 
+			object_name: object_name, 
+			recordsTotal: Template.instance().recordsTotal, 
+			is_related: true, 
+			related_list_item_props: related_list_item_props
+		}
 		if object_name == 'objects'
 			data.record_id = Creator.getObjectRecord().name
 		else
@@ -653,7 +664,18 @@ Template.creator_view.events
 				$(".btn.creator-edit").click()
 
 	'change .input-file-upload': (event, template)->
-		Creator.relatedObjectFileUploadHandler event, $(".related-object-tabular")
+		Creator.relatedObjectFileUploadHandler event, ()->
+			dataset = event.currentTarget.dataset
+			parent = dataset?.parent
+			targetObjectName = dataset?.targetObjectName
+			console.log("relatedObjectFileUploadHandler==targetObjectName==", targetObjectName);
+			if Steedos.isMobile()
+				Template.list.refresh getRelatedListTemplateId(targetObjectName)
+			else
+				gridContainerWrap = $(".related-object-tabular")
+				dxDataGridInstance = gridContainerWrap.find(".gridContainer.#{targetObjectName}").dxDataGrid().dxDataGrid('instance')
+				Template.creator_grid.refresh dxDataGridInstance
+
 	
 	'click .slds-tabs_card .slds-tabs_default__item': (event) ->
 		currentTarget = $(event.currentTarget)

@@ -28,6 +28,8 @@ set_sessions = (context, redirect)->
 		Session.set("app_id", app_id)
 	object_name = context.params.object_name
 	Session.set("object_name", object_name)
+	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
+	Template.creator_view.currentInstance?.record.set(null)
 	Session.set("record_id", context.params.record_id)
 	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
 	if objectHomeComponent

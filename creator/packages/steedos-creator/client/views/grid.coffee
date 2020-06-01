@@ -1,82 +1,3 @@
-_standardQuery = (curObjectName, standard_query)->
-	object_fields = Creator.getObject(curObjectName).fields
-	if !standard_query or !standard_query.query or !_.size(standard_query.query) or standard_query.object_name != curObjectName
-		delete Session.keys["standard_query"]
-		return;
-	else
-		object_name = standard_query.object_name
-		query = standard_query.query
-		query_arr = []
-		if standard_query.is_mini
-			_.each query, (val, key)->
-				if object_fields[key]
-					if ["currency", "number"].includes(object_fields[key].type)
-						query_arr.push([key, "=", val])
-					else if ["text", "textarea", "html", "select"].includes(object_fields[key].type)
-						if _.isString(val)
-							vals = val.trim().split(" ")
-							query_or = []
-							vals.forEach (val_item)->
-								# 特殊字符编码
-								val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
-								query_or.push([key, "contains", val_item])
-							if query_or.length > 0
-								query_arr.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: false})
-						else if _.isArray(val)
-							query_arr.push([key, "=", val])
-		else
-			_.each query, (val, key)->
-				if object_fields[key]
-					if ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
-						query_arr.push([key, ">=", val])
-					else if ["text", "textarea", "html"].includes(object_fields[key].type)
-						if _.isString(val)
-							vals = val.trim().split(" ")
-							query_or = []
-							vals.forEach (val_item)->
-								# 特殊字符编码
-								val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
-								query_or.push([key, "contains", val_item])
-							if query_or.length > 0
-								query_arr.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: false})
-						else if _.isArray(val)
-							query_arr.push([key, "=", val])
-
-					else if ["boolean"].includes(object_fields[key].type)
-						query_arr.push([key, "=", JSON.parse(val)])
-
-					else if ["lookup", "master_detail"].includes(object_fields[key].type)
-						_f = object_fields[key]
-						_reference_to = _f?.reference_to
-						if _.isFunction(_reference_to)
-							_reference_to = _reference_to()
-						if _.isArray(_reference_to)
-							if val?.ids
-								query_arr.push {
-									field: key+".ids"
-									operation: '='
-									value: val?.ids
-								}
-							if val?.o
-								_ro = Creator.getObject(val?.o)
-								query_arr.push {
-									field: key+".o"
-									operation: '='
-									value: _ro._collection_name
-								}
-						else
-							query_arr.push([key, "=", val])
-					else
-						query_arr.push([key, "=", val])
-				else
-					key = key.replace(/(_endLine)$/, "")
-					if object_fields[key] and ["date", "datetime", "currency", "number"].includes(object_fields[key].type)
-						query_arr.push([key, "<=", val])
-
-		is_logic_or = if standard_query.is_mini then true else false
-		options = is_logic_or: is_logic_or
-		return Creator.formatFiltersToDev(query_arr, object_name, options)
-
 _itemClick = (e, curObjectName, list_view_id)->
 	self = this
 	record = e.data
@@ -148,73 +69,6 @@ _actionItems = (object_name, record_id, record_permissions)->
 			return false
 	return actions
 
-_fields = (object_name, list_view_id)->
-	object = Creator.getObject(object_name)
-	name_field_key = object.NAME_FIELD_KEY
-	if object.name == "organizations"
-		# 显示组织列表时，特殊处理name_field_key为name字段
-		name_field_key = "name"
-	fields = [name_field_key]
-	listView = Creator.getCollection("object_listviews").findOne(list_view_id)
-	if listView
-		fields = listView.columns
-		if !fields
-			defaultColumns = Creator.getObjectDefaultColumns(object_name)
-			if defaultColumns
-				fields = defaultColumns
-	else if object.list_views
-		if object.list_views[list_view_id]?.columns
-			fields = object.list_views[list_view_id].columns
-		else
-			defaultColumns = Creator.getObjectDefaultColumns(object_name)
-			if defaultColumns
-				fields = defaultColumns
-
-	fields = fields.map (field)->
-		if _.isObject(field)
-			n = field.field
-		else
-			n = field
-		if object.fields[n]?.type # and !object.fields[n].hidden
-			# 对于a.b类型的字段，不应该替换字段名
-			#return n.split(".")[0]
-			return n
-		else
-			return undefined
-
-	if Creator.isCommonSpace(Session.get("spaceId")) && fields.indexOf("space") < 0
-		fields.push('space')
-
-	fields = _.compact(fields)
-	fieldsName = Creator.getObjectFieldsName(object_name)
-	# 注意这里intersection函数中两个参数次序不能换，否则字段的先后显示次序就错了
-	return _.intersection(fields, fieldsName)
-
-_removeCurrentRelatedFields = (curObjectName, columns, object_name, is_related)->
-	# 移除主键字段，即columns中的reference_to等于object_name的字段
-	unless object_name
-		return columns
-	fields = Creator.getObject(curObjectName).fields
-	if is_related
-		columns = columns.filter (n)->
-			if fields[n]?.type == "master_detail"
-				if fields[n].multiple
-					# 多选字段不移除
-					return true
-				if fields[n].reference_to
-					ref = fields[n].reference_to
-					if _.isFunction(ref)
-						ref = ref()
-				else
-					ref = fields[n].optionsFunction({}).getProperty("value")
-				if _.isArray(ref)
-					return true
-				else
-					return ref != object_name
-			else
-				return true
-	return columns
-
 _expandFields = (object_name, columns)->
 	expand_fields = []
 	fields = Creator.getObject(object_name).fields
@@ -241,7 +95,7 @@ _expandFields = (object_name, columns)->
 			ref = ref.join(",")
 
 			if ref
-#				expand_fields.push(n + "($select=" + ref + ")")
+				# expand_fields.push(n + "($select=" + ref + ")")
 				expand_fields.push(n)
 			# expand_fields.push n + "($select=name)"
 	return expand_fields
@@ -292,8 +146,8 @@ getColumnItem = (object, list_view, column, list_view_sort, column_default_sort,
 	else
 		columnItem.cssClass += " cell-nowrap"
 		# 不换行的字段如果没配置宽度，则使用默认宽度
-#		if !columnItem.width
-#			columnItem.width = defaultWidth
+		# if !columnItem.width
+		# 	columnItem.width = defaultWidth
 
 	if column_sort_settings and column_sort_settings.length > 0
 		_.each column_sort_settings, (sort)->
@@ -351,13 +205,115 @@ _defaultWidth = (columns, isTree, i)->
 	content_width = $(".gridContainer").width() - subWidth
 	return content_width/column_counts
 
-_depandOnFields = (object_name, columns)->
-	fields = Creator.getObject(object_name).fields
-	depandOnFields = []
-	_.each columns, (column)->
-		if fields[column]?.depend_on
-			depandOnFields = _.union(fields[column].depend_on)
-	return depandOnFields
+_getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_list_item_props) ->
+	self = this
+	curObjectName = curObject.name
+	# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
+	showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props.sort)
+	actions = Creator.getActions(curObjectName)
+	if true || !Steedos.isMobile() && actions.length
+		showColumns.push
+			dataField: "_id_actions"
+			width: 46
+			allowExporting: false
+			allowSorting: false
+			allowReordering: false
+			headerCellTemplate: (container) ->
+				return ""
+			cellTemplate: (container, options) ->
+				htmlText = """
+					<span class="slds-grid slds-grid--align-spread creator-table-actions">
+						<div class="forceVirtualActionMarker forceVirtualAction">
+							<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
+								<span class="slds-icon_container slds-icon-utility-down">
+									<span class="lightningPrimitiveIcon">
+										#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
+									</span>
+									<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
+								</span>
+							</a>
+						</div>
+					</span>
+				"""
+				$("<div>").append(htmlText).appendTo(container);
+
+	if is_related || !curObject.enable_tree
+		nameFieldKey = curObject.NAME_FIELD_KEY
+		needToShowLinkForIndexColumn = false
+		if selectColumns.indexOf(nameFieldKey) < 0
+			needToShowLinkForIndexColumn = true
+		if  true || !Steedos.isMobile()
+			showColumns.splice 0, 0,
+				dataField: "_id_checkbox"
+				width: 30
+				allowResizing: false
+				allowExporting: false
+				allowSorting: false
+				allowReordering: false
+				headerCellTemplate: (container) ->
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
+				cellTemplate: (container, options) ->
+					Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
+
+			showColumns.splice 0, 0,
+				dataField: "_index"
+				width: 50
+				allowResizing: false
+				alignment: "right"
+				allowExporting: true
+				allowSorting: false
+				allowReordering: false
+				caption: ""
+				cellTemplate: (container, options) ->
+					pageSize = self.dxDataGridInstance.pageSize()
+					pageIndex = self.dxDataGridInstance.pageIndex()
+					htmlText = options.rowIndex + 1 + pageSize * pageIndex
+					if needToShowLinkForIndexColumn
+						href = Creator.getObjectUrl(curObjectName, options.data._id)
+						htmlText = "<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>"
+						$("<div>").append(htmlText).appendTo(container)
+					else
+						$("<div>").append(htmlText).appendTo(container)
+	_.every showColumns, (n)->
+		n.sortingMethod = Creator.sortingMethod
+	return showColumns;
+
+_getGridPaging = (object_name, list_view_id) ->
+	return Tracker.nonreactive ()->
+		_grid_paging = Session.get('grid_paging')
+		if _grid_paging?.object_name == object_name && _grid_paging.list_view_id == list_view_id
+			return _grid_paging
+
+_getPageSize = (grid_paging, is_related, selfPageSize) ->
+	localPageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
+	if !is_related and localPageSize
+		pageSize = localPageSize
+	if selfPageSize
+		pageSize = selfPageSize
+	else if is_related
+		pageSize = 5
+	else
+		if grid_paging
+			pageSize = grid_paging.pageSize
+		else
+			pageSize = 50
+		# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
+	return pageSize
+
+_getPageIndex = (grid_paging, curObjectName) ->
+	pageIndex = Tracker.nonreactive ()->
+		if Session.get("page_index")
+			if Session.get("page_index").object_name == curObjectName
+				page_index = Session.get("page_index").page_index
+				return page_index
+			else
+				delete Session.keys["page_index"]
+		else
+			return 0
+
+	if grid_paging
+		pageIndex = grid_paging.pageIndex
+	return pageIndex
 
 Template.creator_grid.onRendered ->
 	self = this
@@ -383,10 +339,11 @@ Template.creator_grid.onRendered ->
 			return
 
 		if !is_related
-			grid_paging = Tracker.nonreactive ()->
-							_grid_paging = Session.get('grid_paging')
-							if _grid_paging?.object_name == object_name && _grid_paging.list_view_id == list_view_id
-								return _grid_paging
+			# grid_paging = Tracker.nonreactive ()->
+			# 				_grid_paging = Session.get('grid_paging')
+			# 				if _grid_paging?.object_name == object_name && _grid_paging.list_view_id == list_view_id
+			# 					return _grid_paging
+			grid_paging = _getGridPaging(object_name, list_view_id)
 		curObjectName = if is_related then related_object_name else object_name
 		curObject = Creator.getObject(curObjectName)
 
@@ -397,245 +354,24 @@ Template.creator_grid.onRendered ->
 
 		record_id = self.data.record_id ||  Session.get("record_id")
 		related_list_item_props = self.data.related_list_item_props || {}
-		listTreeCompany = Session.get('listTreeCompany')
+
 		if Steedos.spaceId() and (is_related or Creator.subs["CreatorListViews"].ready()) and Creator.subs["TabularSetting"].ready()
-			if is_related
-				_obj_name = Creator.formatObjectName(related_object_name)
-				if Creator.getListViewIsRecent(object_name, list_view_id)
-					#url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(related_object_name))}/#{Steedos.spaceId()}/#{_obj_name}/recent"
-					url = "/api/v4/#{_obj_name}/recent"
-					# 因为有权限判断需求，所以最近查看也需要调用过虑条件逻辑，而不应该设置为undefined
-					filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id, list_view_id)
-				else
-					#url = "#{Creator.getObjectODataRouterPrefix(Creator.getObject(related_object_name))}/#{Steedos.spaceId()}/#{_obj_name}"
-					url = "/api/v4/#{_obj_name}"
-					filter = Creator.getODataRelatedFilter(object_name, related_object_name, record_id, list_view_id)
-			else
-				filter_logic = Session.get("filter_logic")
-				filter_scope = Session.get("filter_scope")
-
-				filter_items = Session.get("filter_items")
-				_objFields = creator_obj.fields
-
-				_filters = []
-				_.forEach filter_items, (fi)->
-					if fi.value == undefined
-						# value为undefined时不应该生成过滤条件，dev过滤器不支持
-						return
-					_f = _objFields[fi?.field]
-					if ["text", "textarea", "html", "code"].includes(_f?.type)
-						if _.isString(fi.value)
-							vals = fi.value.trim().split(" ")
-							query_or = []
-							vals.forEach (val_item)->
-								val_item = encodeURIComponent(Creator.convertSpecialCharacter(val_item))
-								query_or.push([fi.field, fi.operation, val_item])
-							if query_or.length > 0
-								is_logic_or = false
-								if ['<>','notcontains'].includes(fi.operation)
-									is_logic_or = false
-								_filters.push Creator.formatFiltersToDev(query_or, object_name, {is_logic_or: is_logic_or})
-					else if ["lookup", "master_detail"].includes(_f?.type)
-						_reference_to = _f?.reference_to
-						if _.isFunction(_reference_to)
-							_reference_to = _reference_to()
-						if _.isArray(_reference_to)
-							if fi.value?.ids
-								_filters.push {
-									field: fi.field+".ids"
-									operation: fi.operation
-									value: fi.value?.ids
-								}
-							if fi.value?.o
-								_ro = Creator.getObject(fi.value?.o)
-								_filters.push {
-									field: fi.field+".o"
-									operation: fi.operation
-									value: _ro._collection_name
-								}
-						else
-							_filters.push fi
-					else
-						_filters.push fi
-
-				if _filters.length > 0
-					# 支持直接把过虑器变更的过虑条件应用到grid列表，而不是非得先保存到视图中才生效
-					filters_set =
-						filter_logic: filter_logic
-						filter_scope: filter_scope
-						filters: _filters
-				_obj_name = Creator.formatObjectName(object_name)
-				if Creator.getListViewIsRecent(object_name, list_view_id)
-					#url = "#{Creator.getObjectODataRouterPrefix(creator_obj)}/#{Steedos.spaceId()}/#{_obj_name}/recent"
-					url = "/api/v4/#{_obj_name}/recent"
-					# 因为有权限判断需求，所以最近查看也需要调用过虑条件逻辑，而不应该设置为undefined
-					filter = Creator.getODataFilter(list_view_id, object_name, filters_set)
-				else
-					#url = "#{Creator.getObjectODataRouterPrefix(creator_obj)}/#{Steedos.spaceId()}/#{_obj_name}"
-					url = "/api/v4/#{_obj_name}"
-					filter = Creator.getODataFilter(list_view_id, object_name, filters_set)
-				standardQuery = _standardQuery(object_name, Session.get("standard_query"))
-				if standardQuery and standardQuery.length
-					if filter
-						filter = [filter, "and", standardQuery]
-					else
-						filter = standardQuery
-
-#				if !filter
-#					filter = [creator_obj.idFieldName, "<>", "-1"]
-				if listTreeCompany and  listTreeCompany!='undefined' and curObject?.filter_company==true
-					listTreeFilter = [ "company", "=" , listTreeCompany ]
-					if filter
-						filter = [ filter, "and", listTreeFilter ]
-					else
-						filter = listTreeFilter
-
-				unless is_related
-					# 左侧sidebar有grid列表时，应该过虑左侧选中值相关数据，相关项列表不支持sidebar
-					sidebarFilter = Session.get("grid_sidebar_filters")
-					if sidebarFilter and sidebarFilter.length
-						if filter
-							filter = [ filter, "and", sidebarFilter ]
-						else
-							filter = sidebarFilter
-			if false && Steedos.isMobile() && curObject.NAME_FIELD_KEY
-				selectColumns = [curObject.NAME_FIELD_KEY]
-			else
-				selectColumns = Tracker.nonreactive ()->
-#					grid_settings = Creator.Collections.settings.findOne({object_name: curObjectName, record_id: "object_gridviews"})
-#					if grid_settings and grid_settings.settings and grid_settings.settings[list_view_id] and grid_settings.settings[list_view_id].column_width
-#						settingColumns = _.keys(grid_settings.settings[list_view_id].column_width)
-#					if settingColumns
-#						defaultColumns = _fields(curObjectName, list_view_id)
-#						selectColumns = _.intersection(settingColumns, defaultColumns)
-#						selectColumns = _.union(selectColumns, defaultColumns)
-#					else
-#						selectColumns = _fields(curObjectName, list_view_id)
-					return _fields(curObjectName, list_view_id)
-				if related_list_item_props.customRelatedListObject && related_list_item_props.columns
-					selectColumns = related_list_item_props.columns
-					selectColumns = selectColumns.map (field)->
-						if _.isObject field
-							return field.field
-						else if _.isString field
-							return field
-						else
-							return undefined
-					selectColumns = _.uniq(_.compact(selectColumns))
-			pageIndex = Tracker.nonreactive ()->
-				if Session.get("page_index")
-					if Session.get("page_index").object_name == curObjectName
-						page_index = Session.get("page_index").page_index
-						return page_index
-					else
-						delete Session.keys["page_index"]
-				else
-					return 0
-
-			if grid_paging
-				pageIndex = grid_paging.pageIndex
-
-			extra_columns = _.intersection(["owner", "company_id", "company_ids", "locked"], _.keys(curObject.fields));
-			if !is_related and curObject.enable_tree
-				extra_columns.push("parent")
-				extra_columns.push("children")
-			# object = Creator.getObject(curObjectName)
-			defaultExtraColumns = Creator.getObjectDefaultExtraColumns(object_name)
-			if defaultExtraColumns
-				extra_columns = _.union extra_columns, defaultExtraColumns
-
-			selectColumns = _removeCurrentRelatedFields(curObjectName, selectColumns, object_name, is_related)
-			#expand_fields 不需要包含 extra_columns
+			url = Creator.getODataEndpointUrl(object_name, list_view_id, is_related, related_object_name)
+			filter = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id)
+			pageIndex = _getPageIndex(grid_paging, curObjectName)
+			selectColumns = Creator.getListviewColumns(curObject, object_name, is_related, list_view_id, related_list_item_props)
+			# #expand_fields 不需要包含 extra_columns
 			expand_fields = _expandFields(curObjectName, selectColumns)
-
-			# 这里如果不加nonreactive，会因为后面customSave函数插入数据造成表Creator.Collections.settings数据变化进入死循环
-			showColumns = Tracker.nonreactive ()-> return _columns(curObjectName, selectColumns, list_view_id, is_related, related_list_item_props.sort)
+			showColumns = _getShowColumns.call(self, curObject, selectColumns, is_related, list_view_id, related_list_item_props)
+			pageSize = _getPageSize(grid_paging, is_related, _pageSize)
+			
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
-			selectColumns = _.union(selectColumns, extra_columns)
-			selectColumns = _.union(selectColumns, _depandOnFields(curObjectName, selectColumns))
-			actions = Creator.getActions(curObjectName)
-			if true || !Steedos.isMobile() && actions.length
-				showColumns.push
-					dataField: "_id_actions"
-					width: 46
-					allowExporting: false
-					allowSorting: false
-					allowReordering: false
-					headerCellTemplate: (container) ->
-						return ""
-					cellTemplate: (container, options) ->
-						htmlText = """
-							<span class="slds-grid slds-grid--align-spread creator-table-actions">
-								<div class="forceVirtualActionMarker forceVirtualAction">
-									<a class="rowActionsPlaceHolder slds-button slds-button--icon-x-small slds-button--icon-border-filled keyboardMode--trigger" aria-haspopup="true" role="button" title="" href="javascript:void(0);" data-toggle="dropdown">
-										<span class="slds-icon_container slds-icon-utility-down">
-											<span class="lightningPrimitiveIcon">
-												#{Blaze.toHTMLWithData Template.steedos_button_icon, {class: "slds-icon slds-icon-text-default slds-icon--xx-small", source: "utility-sprite", name:"down"}}
-											</span>
-											<span class="slds-assistive-text" data-aura-rendered-by="15534:0">显示更多信息</span>
-										</span>
-									</a>
-								</div>
-							</span>
-						"""
-						$("<div>").append(htmlText).appendTo(container);
-
-			if is_related || !curObject.enable_tree
-				nameFieldKey = curObject.NAME_FIELD_KEY
-				needToShowLinkForIndexColumn = false
-				if selectColumns.indexOf(nameFieldKey) < 0
-					needToShowLinkForIndexColumn = true
-				if  true || !Steedos.isMobile()
-					showColumns.splice 0, 0,
-						dataField: "_id_checkbox"
-						width: 30
-						allowResizing: false
-						allowExporting: false
-						allowSorting: false
-						allowReordering: false
-						headerCellTemplate: (container) ->
-							Blaze.renderWithData Template.creator_table_checkbox, {_id: "#", object_name: curObjectName}, container[0]
-						cellTemplate: (container, options) ->
-							Blaze.renderWithData Template.creator_table_checkbox, {_id: options.data._id, object_name: curObjectName}, container[0]
-
-					showColumns.splice 0, 0,
-						dataField: "_index"
-						width: 50
-						allowResizing: false
-						alignment: "right"
-						allowExporting: true
-						allowSorting: false
-						allowReordering: false
-						caption: ""
-						cellTemplate: (container, options) ->
-							pageSize = self.dxDataGridInstance.pageSize()
-							pageIndex = self.dxDataGridInstance.pageIndex()
-							htmlText = options.rowIndex + 1 + pageSize * pageIndex
-							if needToShowLinkForIndexColumn
-								href = Creator.getObjectUrl(curObjectName, options.data._id)
-								htmlText = "<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>"
-								$("<div>").append(htmlText).appendTo(container)
-							else
-								$("<div>").append(htmlText).appendTo(container)
-			_.every showColumns, (n)->
-				n.sortingMethod = Creator.sortingMethod
-			localPageSize = localStorage.getItem("creator_pageSize:"+Meteor.userId())
-			if !is_related and localPageSize
-				pageSize = localPageSize
-			if _pageSize
-				pageSize = _pageSize
-			else if is_related
-				pageSize = 5
-			else
-				if grid_paging
-					pageSize = grid_paging.pageSize
-				else
-					pageSize = 50
-				# localStorage.setItem("creator_pageSize:"+Meteor.userId(),10)
-
+			selectColumns = Creator.unionSelectColumnsWithExtraAndDepandOn(selectColumns, curObject, object_name, is_related)
+			
 			# 对于a.b的字段，发送odata请求时需要转换为a/b
 			selectColumns = selectColumns.map (n)->
 				return n.replace(".", "/");
+
 			if !filter
 				# filter 为undefined时要设置为空，否则dxDataGrid控件会使用上次使用过的filter
 				filter = null
@@ -691,7 +427,7 @@ Template.creator_grid.onRendered ->
 					store:
 						type: "odata"
 						version: 4
-						url: Steedos.absoluteUrl(url)
+						url: url
 						withCredentials: false
 						beforeSend: (request) ->
 							request.headers['X-User-Id'] = Meteor.userId()
@@ -834,7 +570,7 @@ Template.creator_grid.onRendered ->
 			else
 				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 					DevExpress.ui.dxDataGrid = dxDataGrid;
-					# console.log("dxOptions.dataSource.filter=======", dxOptions.dataSource.filter);
+					console.log("dxOptions.dataSource.filter=======", dxOptions.dataSource.filter);
 					self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 					if !is_related && self.$(".gridContainer").length > 0
 						Session.set("grid_paging", null)
