@@ -438,16 +438,15 @@ pushManager.send_to_qq = (to_user, from_user, space_id, instance_id, instance_st
 		console.error e.stack
 
 pushManager.send_email_to_SMTP = (subject, content, to_user, reply_user)->
-	if not to_user.email or not to_user.email_notification
-		return
-	try
-		MailQueue.send
-			to: to_user.email
-			from: pushManager.checkMailFromNameLength(reply_user.name) + ' on ' + Meteor.settings.email.from
-			subject: subject
-			html: content
-	catch e
-		console.error e.stack
+	if to_user.email && to_user.email_verified && to_user.email_notification
+		try
+			MailQueue.send
+				to: to_user.email
+				from: pushManager.checkMailFromNameLength(reply_user.name) + ' on ' + Meteor.settings.email.from
+				subject: subject
+				html: content
+		catch e
+			console.error e.stack
 
 pushManager.checkMailFromNameLength = (name)->
 	return if name.length <= 18 then name else name.substr(0, 18) + '...'
@@ -497,7 +496,7 @@ pushManager.send_message = (steedos_ids, body, current_user_info)->
 
 
 pushManager.send_to_sms = (to_user, message, current_user_info, spaceId)->
-	if Meteor.settings?.workflow?.sms_notification && to_user?.mobile
+	if Meteor.settings?.workflow?.sms_notification && to_user?.mobile && to_user?.mobile_verified
 		spaceUser = db.space_users.findOne({user: to_user._id, space: spaceId}, {fields: {sms_notification: 1}})
 		if spaceUser?.sms_notification
 			SMSQueue.send({

@@ -4,12 +4,19 @@ JSZip = require("jszip");
 exportByFlowIds = (flowIds, res)->
 	flows = db.flows.find({_id: {$in: flowIds}}, {fields: {form: 1}}).fetch();
 	zip = new JSZip();
+	fileNames = {};
 	_.each flows, (flow)->
 		data = steedosExport.form(flow.form);
 		if _.isEmpty(data)
 			fileName = 'null'
 		else
 			fileName = data.name
+		if fileNames[fileName] > 0
+			fileName = "#{fileName} (#{fileNames[fileName]})";
+			fileNames[fileName] = fileNames[fileName] + 1;
+		else
+			fileNames[fileName] = 1;
+
 		zip.file("#{fileName}.json", new Buffer(JSON.stringify(data), 'utf-8'));
 	res.setHeader('Content-type', 'application/octet-stream');
 	res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI('导出的流程文件')+'.zip');
@@ -73,13 +80,21 @@ Meteor.startup ->
 						"success": false
 				return;
 
-		data = steedosExport.form(formId);
+		try
+			data = steedosExport.form(formId);
 
-		if _.isEmpty(data)
-			fileName = 'null'
-		else
-			fileName = data.name
+			if _.isEmpty(data)
+				fileName = 'null'
+			else
+				fileName = data.name
 
-		res.setHeader('Content-type', 'application/x-msdownload');
-		res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(fileName)+'.json');
-		res.end(JSON.stringify(data))
+			res.setHeader('Content-type', 'application/x-msdownload');
+			res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(fileName)+'.json');
+			res.end(JSON.stringify(data))
+		catch e
+			JsonRoutes.sendResult res,
+				code: 500,
+				data:
+					"error": e.message,
+					"success": false
+			return;

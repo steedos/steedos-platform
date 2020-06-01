@@ -87,7 +87,12 @@ InstanceReadOnlyTemplate.afFormGroup = """
 					{{#if equals type 'input'}}
 						<div class="form-group" data-required="{{#if is_required}}true{{/if}}">
 							<label for="7ZQnDsXBGohZMetA5" class="control-label">{{getLabel code}}</label>
-							<input type="text" title="{{getLabel code}}" name="{{code}}" {{getPermissions code}} data-schema-key="{{getLabel code}}" class="form-control">
+							{{#if is_textarea}}
+								<textarea title="{{getLabel code}}" name="{{code}}" {{getPermissions code}} data-schema-key="{{getLabel code}}" class="form-control"></textarea>
+							{{/if}}
+							{{#unless is_textarea}}
+								<input type="text" title="{{getLabel code}}" name="{{code}}" {{getPermissions code}} data-schema-key="{{getLabel code}}" class="form-control">
+							{{/unless}}
 						</div>
 					{{else}}
 						{{#if equals type 'number'}}
@@ -313,6 +318,8 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 					return getLinkText(item, item['@label'], detail_url)
 			else
 				value = getLinkText(value, value['@label'], detail_url)
+		when 'html'
+			value = if value then "<div class=\"steedos-html\">#{value}</div>" else ''
 
 	return value;
 
@@ -613,7 +620,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 
 	creatorService = Meteor.settings.public.webservices?.creator?.url
 	ins_record_ids = instance.record_ids
-
+	locale = _getLocale(user);
 	openFileScript = """
 			if(window.isNode && isNode()){
 				attachs = document.getElementsByClassName("ins_attach_href");
@@ -711,14 +718,14 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 	traceCheck = ""
 	if !_.isEmpty(trace)
 		traceCheck = "checked"
-	if options?.tagger == 'email'
+	if options?.tagger == 'email' || options?.editable
 		showTracesBtn = ""
 	else
 		showTracesBtn = """
 			<div class="navigation-bar btn-group no-print" style="min-width: 600px; z-index: 999">
 				<div class="print-tool">
-					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-attachments" id="cbx-print-attachments" checked="checked"><span>附件</span></label>
-					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces" id="cbx-print-traces" checked="#{traceCheck}"><span>#{t('instance_approval_history')}</span></label>
+					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-attachments" id="cbx-print-attachments" checked="checked"><span>#{TAPi18n.__('instance_attachment', {}, locale)}</span></label>
+					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces" id="cbx-print-traces" checked="#{traceCheck}"><span>#{TAPi18n.__('instance_approval_history', {}, locale)}</span></label>
 				</div>
 			</div>
 			"""
@@ -727,33 +734,38 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 		$( document ).ready(function(){
 			var b = document.getElementById('cbx-print-traces');
 			var t = document.getElementsByClassName('instance-traces')[0];
-			if (b.checked){
+			if (b && b.checked && t){
 				t.style = 'display: block;'
-			} else {
+			} else if(t){
 				t.style = 'display: none;'
 			}
-			b.addEventListener('change', function(e){
-				if (e.target.checked){
-					t.style = 'display: block;'
-				} else {
-					t.style = 'display: none;'
-				}
-			});
+			if(b){
+				b.addEventListener('change', function(e){
+					if (e.target.checked){
+						t.style = 'display: block;'
+					} else {
+						t.style = 'display: none;'
+					}
+				});
+			}
+
 
 			var attachmentsCheckbox = document.getElementById('cbx-print-attachments');
 			var attachmentsView = document.getElementsByClassName('attachments-section')[0];
-			if (attachmentsCheckbox.checked){
+			if (attachmentsCheckbox && attachmentsCheckbox.checked && attachmentsView){
 				attachmentsView.style = 'display: block;'
-			} else {
+			} else if(attachmentsView){
 				attachmentsView.style = 'display: none;'
 			}
-			attachmentsCheckbox.addEventListener('change', function(e){
-				if (e.target.checked){
-					attachmentsView.style = 'display: block;'
-				} else {
-					attachmentsView.style = 'display: none;'
-				}
-			});
+			if(attachmentsCheckbox){
+				attachmentsCheckbox.addEventListener('change', function(e){
+					if (e.target.checked){
+						attachmentsView.style = 'display: block;'
+					} else {
+						attachmentsView.style = 'display: none;'
+					}
+				});
+			}
 		});
 
 	"""

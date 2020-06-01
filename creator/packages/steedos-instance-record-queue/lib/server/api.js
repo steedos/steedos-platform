@@ -49,6 +49,10 @@ InstanceRecordQueue.Configure = function (options) {
 				'metadata.instance': insId,
 				'metadata.current': true
 			}).forEach(function (f) {
+				if (!f.hasStored('instances')) {
+					console.error('syncAttach-file not stored: ', f._id);
+					return;
+				}
 				var newFile = new FS.File(),
 					cmsFileId = Creator.getCollection('cms_files')._makeNewID();
 				newFile.attachData(f.createReadStream('instances'), {
@@ -92,6 +96,7 @@ InstanceRecordQueue.Configure = function (options) {
 						cb(null);
 					});
 					newFile.once('error', function (error) {
+						console.error('syncAttach-error: ', error);
 						cb(error);
 					});
 				})(newFile, Creator, cmsFileId, objectName, newRecordId, spaceId, f);
@@ -101,6 +106,10 @@ InstanceRecordQueue.Configure = function (options) {
 			cfs.instances.find({
 				'metadata.instance': insId
 			}).forEach(function (f) {
+				if (!f.hasStored('instances')) {
+					console.error('syncAttach-file not stored: ', f._id);
+					return;
+				}
 				var newFile = new FS.File(),
 					cmsFileId = f.metadata.parent;
 
@@ -164,6 +173,7 @@ InstanceRecordQueue.Configure = function (options) {
 						cb(null);
 					});
 					newFile.once('error', function (error) {
+						console.error('syncAttach-error: ', error);
 						cb(error);
 					});
 				})(newFile, Creator, cmsFileId, f);
@@ -178,7 +188,7 @@ InstanceRecordQueue.Configure = function (options) {
 		var
 			obj = {},
 			tableFieldCodes = [],
-			tableFieldMap = [];
+			tableFieldMap = [],
 			tableToRelatedMap = {};
 
 		field_map_back = field_map_back || [];
@@ -198,26 +208,26 @@ InstanceRecordQueue.Configure = function (options) {
 
 		var objectFields = objectInfo.fields;
 		var objectFieldKeys = _.keys(objectFields);
-		var relatedObjects = Creator.getRelatedObjects(objectInfo.name,spaceId);
+		var relatedObjects = Creator.getRelatedObjects(objectInfo.name, spaceId);
 		var relatedObjectsKeys = _.pluck(relatedObjects, 'object_name');
-		var formTableFields = _.filter(formFields, function(formField){
+		var formTableFields = _.filter(formFields, function (formField) {
 			return formField.type === 'table'
 		});
-		var formTableFieldsCode =  _.pluck(formTableFields, 'code');
+		var formTableFieldsCode = _.pluck(formTableFields, 'code');
 
-		var getRelatedObjectField = function(key){
-			return _.find(relatedObjectsKeys, function(relatedObjectsKey){
+		var getRelatedObjectField = function (key) {
+			return _.find(relatedObjectsKeys, function (relatedObjectsKey) {
 				return key.startsWith(relatedObjectsKey + '.');
 			})
 		};
 
 		var getFormTableField = function (key) {
-			return _.find(formTableFieldsCode, function(formTableFieldCode){
+			return _.find(formTableFieldsCode, function (formTableFieldCode) {
 				return key.startsWith(formTableFieldCode + '.');
 			})
 		};
 
-		var getFormField = function(_formFields, _fieldCode){
+		var getFormField = function (_formFields, _fieldCode) {
 			var formField = null;
 			_.each(_formFields, function (ff) {
 				if (!formField) {
@@ -231,7 +241,7 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 							}
 						})
-					}else if (ff.type === 'table') {
+					} else if (ff.type === 'table') {
 						_.each(ff.fields, function (f) {
 							if (!formField) {
 								if (f.code === _fieldCode) {
@@ -249,15 +259,15 @@ InstanceRecordQueue.Configure = function (options) {
 			//workflow 的子表到creator object 的相关对象
 			var relatedObjectField = getRelatedObjectField(fm.object_field);
 			var formTableField = getFormTableField(fm.workflow_field);
-			if (relatedObjectField){
+			if (relatedObjectField) {
 				var oTableCode = fm.object_field.split('.')[0];
 				var oTableFieldCode = fm.object_field.split('.')[1];
 				var tableToRelatedMapKey = oTableCode;
-				if(!tableToRelatedMap[tableToRelatedMapKey]){
+				if (!tableToRelatedMap[tableToRelatedMapKey]) {
 					tableToRelatedMap[tableToRelatedMapKey] = {}
 				}
 
-				if(formTableField){
+				if (formTableField) {
 					var wTableCode = fm.workflow_field.split('.')[0];
 					tableToRelatedMap[tableToRelatedMapKey]['_FROM_TABLE_CODE'] = wTableCode
 				}
@@ -348,14 +358,14 @@ InstanceRecordQueue.Configure = function (options) {
 								obj[fm.object_field] = tmp_field_value;
 							}
 						}
-						else if(['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata'){
-							if(oField.multiple && wField.is_multiselect){
+						else if (['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata') {
+							if (oField.multiple && wField.is_multiselect) {
 								obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], '_id'))
-							}else if(!oField.multiple && !wField.is_multiselect){
-								if(!_.isEmpty(values[fm.workflow_field])){
-									obj[fm.object_field] = 	values[fm.workflow_field]._id
+							} else if (!oField.multiple && !wField.is_multiselect) {
+								if (!_.isEmpty(values[fm.workflow_field])) {
+									obj[fm.object_field] = values[fm.workflow_field]._id
 								}
-							}else{
+							} else {
 								obj[fm.object_field] = values[fm.workflow_field];
 							}
 						}
@@ -447,42 +457,42 @@ InstanceRecordQueue.Configure = function (options) {
 			})
 		});
 		var relatedObjs = {};
-		var getRelatedFieldValue = function(valueKey, parent) {
-			return valueKey.split('.').reduce(function(o, x) {
+		var getRelatedFieldValue = function (valueKey, parent) {
+			return valueKey.split('.').reduce(function (o, x) {
 				return o[x];
 			}, parent);
 		};
-		_.each(tableToRelatedMap, function(map, key){
+		_.each(tableToRelatedMap, function (map, key) {
 			var tableCode = map._FROM_TABLE_CODE;
-			if(!tableCode){
+			if (!tableCode) {
 				console.warn('tableToRelated: [' + key + '] missing corresponding table.')
-			}else{
+			} else {
 				var relatedObjectName = key;
 				var relatedObjectValues = [];
 				var relatedObject = Creator.getObject(relatedObjectName, spaceId);
 				_.each(values[tableCode], function (tableValueItem) {
 					var relatedObjectValue = {};
-					_.each(map, function(valueKey, fieldKey){
-						if(fieldKey != '_FROM_TABLE_CODE'){
-							if(valueKey.startsWith('instance.')){
-								relatedObjectValue[fieldKey] = getRelatedFieldValue(valueKey, {'instance': ins});
+					_.each(map, function (valueKey, fieldKey) {
+						if (fieldKey != '_FROM_TABLE_CODE') {
+							if (valueKey.startsWith('instance.')) {
+								relatedObjectValue[fieldKey] = getRelatedFieldValue(valueKey, { 'instance': ins });
 							}
-							else{
+							else {
 								var relatedObjectFieldValue, formFieldKey;
-								if(valueKey.startsWith(tableCode + '.')){
+								if (valueKey.startsWith(tableCode + '.')) {
 									formFieldKey = valueKey.split(".")[1];
-									relatedObjectFieldValue = getRelatedFieldValue(valueKey, {[tableCode]:tableValueItem});
-								}else{
+									relatedObjectFieldValue = getRelatedFieldValue(valueKey, { [tableCode]: tableValueItem });
+								} else {
 									formFieldKey = valueKey;
 									relatedObjectFieldValue = getRelatedFieldValue(valueKey, values)
 								}
 								var formField = getFormField(formFields, formFieldKey);
 								var relatedObjectField = relatedObject.fields[fieldKey];
-								if(formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)){
-									if(!_.isEmpty(relatedObjectFieldValue)){
-										if(relatedObjectField.multiple && formField.is_multiselect){
+								if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)) {
+									if (!_.isEmpty(relatedObjectFieldValue)) {
+										if (relatedObjectField.multiple && formField.is_multiselect) {
 											relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, '_id'))
-										}else if(!relatedObjectField.multiple && !formField.is_multiselect){
+										} else if (!relatedObjectField.multiple && !formField.is_multiselect) {
 											relatedObjectFieldValue = relatedObjectFieldValue._id
 										}
 									}
@@ -537,23 +547,23 @@ InstanceRecordQueue.Configure = function (options) {
 		return {}
 	}
 
-	self.syncRelatedObjectsValue = function(mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins){
+	self.syncRelatedObjectsValue = function (mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins) {
 		var insId = ins._id;
 
-		_.each(relatedObjects, function(relatedObject){
+		_.each(relatedObjects, function (relatedObject) {
 			var objectCollection = Creator.getCollection(relatedObject.object_name, spaceId);
 			var tableMap = {};
-			_.each(relatedObjectsValue[relatedObject.object_name], function(relatedObjectValue){
+			_.each(relatedObjectsValue[relatedObject.object_name], function (relatedObjectValue) {
 				var table_id = relatedObjectValue._table._id;
 				var table_code = relatedObjectValue._table._code;
-				if(!tableMap[table_code]){
+				if (!tableMap[table_code]) {
 					tableMap[table_code] = []
 				};
 				tableMap[table_code].push(table_id);
-				var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({[relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table}, {fields: {_id:1}})
-				if(oldRelatedRecord){
-					Creator.getCollection(relatedObject.object_name, spaceId).update({_id: oldRelatedRecord._id}, {$set: relatedObjectValue})
-				}else{
+				var oldRelatedRecord = Creator.getCollection(relatedObject.object_name, spaceId).findOne({ [relatedObject.foreign_key]: mainRecordId, "instances._id": insId, _table: relatedObjectValue._table }, { fields: { _id: 1 } })
+				if (oldRelatedRecord) {
+					Creator.getCollection(relatedObject.object_name, spaceId).update({ _id: oldRelatedRecord._id }, { $set: relatedObjectValue })
+				} else {
 					relatedObjectValue[relatedObject.foreign_key] = mainRecordId;
 					relatedObjectValue.space = spaceId;
 					relatedObjectValue.owner = ins.applicant;
@@ -569,16 +579,16 @@ InstanceRecordQueue.Configure = function (options) {
 						state: instance_state
 					}];
 					relatedObjectValue.instance_state = instance_state;
-					Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, {validate: false, filter: false})
+					Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
 				}
 			})
 			//清理申请单上被删除子表记录对应的相关表记录
-			_.each(tableMap, function(tableIds, tableCode){
+			_.each(tableMap, function (tableIds, tableCode) {
 				objectCollection.remove({
 					[relatedObject.foreign_key]: mainRecordId,
 					"instances._id": insId,
 					"_table._code": tableCode,
-					"_table._id": {$nin: tableIds}
+					"_table._id": { $nin: tableIds }
 				})
 			})
 		});
@@ -659,9 +669,12 @@ InstanceRecordQueue.Configure = function (options) {
 							ids: [record._id]
 						}
 					})
-					cfs.files.remove({
-						'metadata.record_id': record._id
-					})
+					var removeOldFiles = function (cb) {
+						return cfs.files.remove({
+							'metadata.record_id': record._id
+						}, cb);
+					};
+					Meteor.wrapAsync(removeOldFiles)();
 					// 同步新附件
 					self.syncAttach(sync_attachment, insId, record.space, record._id, objectName);
 				} catch (error) {
@@ -733,7 +746,7 @@ InstanceRecordQueue.Configure = function (options) {
 								}
 							}
 						})
-						var relatedObjects = Creator.getRelatedObjects(ow.object_name,spaceId);
+						var relatedObjects = Creator.getRelatedObjects(ow.object_name, spaceId);
 						var relatedObjectsValue = syncValues.relatedObjectsValue;
 						self.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
 						// workflow里发起审批后，同步时也可以修改相关表的字段值 #1183

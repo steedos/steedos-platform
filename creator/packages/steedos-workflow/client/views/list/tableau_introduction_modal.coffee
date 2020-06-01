@@ -15,7 +15,7 @@ Template.tableau_introduction_modal.helpers
 Template.tableau_introduction_modal.events
 	'click #copyTableauUrl': ()->
 		if !Steedos.isPaidSpace()
-			toastr.info("标准版只能统计一个月内的数据")
+			toastr.info("基础版只能统计一个月内的数据")
 
 Template.tableau_introduction_modal.onDestroyed ->
 	Session.set "inbox_flow_id", undefined

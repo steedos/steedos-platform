@@ -37,9 +37,11 @@ oAuth2Server.collections.accessToken = db.OAuth2AccessTokens;
 // configure a url handler for the /steedos/oauth2/token path.
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.all('/oauth2/token', oAuth2Server.oauthserver.grant());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.all('/oauth2/token', oAuth2Server.oauthserver.grant());
+// 不应该给整个app设置全局的bodyParser，会影响cms正文字段summernote控件中的图片上传控件保存报错：request entity too large
+app.all('/oauth2/token', bodyParser.urlencoded({ extended: true }), bodyParser.json(), oAuth2Server.oauthserver.grant());
 
 WebApp.rawConnectHandlers.use(app);
 

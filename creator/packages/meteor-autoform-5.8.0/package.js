@@ -28,12 +28,6 @@ Package.onUse(function(api) {
   // Common Files
   api.addFiles(['autoform-common.js']);
 
-  // i18n
-
-  api.use('tap:i18n', ['client', 'server']);
-  tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
-  api.addFiles(tapi18nFiles);
-
   // Client Files
   api.addFiles([
     // utilities and general init

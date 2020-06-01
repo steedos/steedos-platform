@@ -73,7 +73,7 @@ Template.creator_report.helpers
 	isChartNeedToShow: ()->
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		return reportObject?.report_type != "jsreport"
+		return reportObject?.report_type != "jsreport" and reportObject?.report_type != "stimulsoft-report"
 	
 	isSavable: ->
 		obj = Creator.getObject()
@@ -114,12 +114,12 @@ Template.creator_report.helpers
 	isBtnSettingsNeedToShow: ->
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		return reportObject?.report_type != "jsreport"
+		return reportObject?.report_type != "jsreport" and reportObject?.report_type != "stimulsoft-report"
 
 	isBtnExportPdfNeedToShow: ->
 		record_id = Session.get "record_id"
 		reportObject = Creator.Reports[record_id] or Creator.getObjectRecord()
-		return reportObject?.report_type == "jsreport"
+		return reportObject?.report_type == "jsreport" and reportObject?.report_type != "stimulsoft-report"
 
 Template.creator_report.events
 
@@ -194,9 +194,15 @@ Template.creator_report.events
 		Template.creator_report_content.renderReport()
 
 	'click .btn-toggle-designer': (event, template)->
+		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
+		unless reportObject
+			return
+		if reportObject.report_type == "stimulsoft-report"
+			url = Creator.getStimulsoftReportDesignerUrl(reportObject._id)
+			window.open(url)
+			return
 		isOpen = !template.is_designer_open.get()
 		template.is_designer_open.set(isOpen)
-		reportObject = Creator.Reports[Session.get("record_id")] or Creator.getObjectRecord()
 		# 这里isOpen为false时要重写option，且每个子属性都不能省略，比如不能直接把fieldPanel设置为false，因为反复切换设计模式时会出现异常
 		switch reportObject?.report_type
 			when 'tabular'

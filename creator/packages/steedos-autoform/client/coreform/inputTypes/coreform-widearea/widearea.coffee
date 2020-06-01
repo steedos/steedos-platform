@@ -39,7 +39,7 @@ AutoForm.addInputType 'widearea',
 		context
 
 Template.afWidearea.onRendered ()->
-	console.log('Template.afWidearea.onRendered');
+#	console.log('Template.afWidearea.onRendered');
 	id = this.data.atts.id
 	Meteor.defer ()->
 		if wideArea

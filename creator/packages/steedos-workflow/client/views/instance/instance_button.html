@@ -1,8 +1,10 @@
 <template name="instance_button">
 	<div class="pull-left instance-left-buttons">
-		<button type="button" class="btn btn-default btn-instance-back hidden">
-			&nbsp;<i class="ion ion-android-arrow-back"></i>&nbsp;
-		</button>
+		{{#unless isMobile}}
+			<button type="button" class="btn btn-default btn-instance-back hidden">
+				&nbsp;<i class="ion ion-android-arrow-back"></i>&nbsp;
+			</button>
+		{{/unless}}
 		{{#if enabled_submit}}
 			<div class="slds-button slds-button_brand slds-button--neutral slds-truncate btn-instance-submit">
 				<a href="javascript:void(0);" title="{{_ 'Send'}}" class="">

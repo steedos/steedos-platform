@@ -141,8 +141,8 @@ Template.instance_suggestion.helpers
 
 		currentApprove = Tracker.nonreactive(InstanceManager.getCurrentApprove);
 		currentStep = InstanceManager.getCurrentStep();
-		if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
-			selectedUser = users
+		# if (currentStep?.step_type == 'start' || !currentApprove?.next_steps) && nextStep?.step_type == 'counterSign' && !_.isEmpty(getStepApproves(nextStep._id))
+		# 	selectedUser = users
 
 		if next_user && next_user.length > 0
 
@@ -314,6 +314,9 @@ Template.instance_suggestion.helpers
 			return InstanceManager.getCurrentApprove()?.description || InstanceSignText.helpers.getLastSignApprove()?.description || ""
 
 	showSelsectInAllUsers: ()->
+		if Meteor.settings.public.workflow?.disable_pick_approve_users
+			return false
+
 		if WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
 			nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"));
 			return nextStep?.allow_pick_approve_users

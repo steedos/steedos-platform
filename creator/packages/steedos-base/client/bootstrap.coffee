@@ -173,7 +173,9 @@ Creator.bootstrapLoaded = new ReactiveVar(false)
 
 handleBootstrapData = (result, callback)->
 	Creator._recordSafeObjectCache = []; # 切换工作区时，情况object缓存
-	Creator.Objects = result.objects
+	Creator.Objects = result.objects;
+	Creator.baseObject = Creator.Objects.base;
+	Creator.objectsByName = {};
 	object_listviews = result.object_listviews
 	Creator.object_workflows = result.object_workflows
 	isSpaceAdmin = Steedos.isSpaceAdmin()
@@ -189,47 +191,19 @@ handleBootstrapData = (result, callback)->
 				_key = _object_listview.api_name
 			else
 				_key = _object_listview._id
+			if !object.list_views
+				object.list_views = {}
 			object.list_views[_key] = _object_listview
 		Creator.loadObjects object, object_name
 
-	_.each result.apps, (app, key) ->
-		if !app._id
-			app._id = key
-		if app.is_creator
-			if isSpaceAdmin
-				# 如果是工作区管理员应该强制把is_creator的应用显示出来
-				app.visible = true
-		else
-			# 非creator应该一律不显示
-			app.visible = false
-
-	sortedApps = _.sortBy _.values(result.apps), 'sort'
-	# 按钮sort排序次序设置Creator.Apps值
-	Creator.Apps = {}
-	adminApp = {}
-	_.each sortedApps, (n) ->
-		if n._id == "admin"
-			adminApp = n
-		else
-			Creator.Apps[n._id] = n
-
-	# admin菜单显示在最后
-	Creator.Apps.admin = adminApp
-
-	apps = result.assigned_apps
-	if apps.length
-		_.each Creator.Apps, (app, key)->
-			if apps.indexOf(key) > -1
-				app.visible = app.is_creator
-			else
-				app.visible = false
-
+	Creator.Apps = ReactSteedos.creatorAppsSelector(ReactSteedos.store.getState())
 	Creator.Menus = result.assigned_menus
 
 	appIds = _.pluck(Creator.getVisibleApps(true), "_id")
 	if (appIds && appIds.length>0)
 		if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
 			Session.set("app_id", appIds[0])
+	Creator.Dashboards = if result.dashboards then result.dashboards else {};
 	Creator.Plugins = if result.plugins then result.plugins else {};
 
 	if _.isFunction(callback)

@@ -19,11 +19,20 @@
         },
         "is_group_company": true, // 是否开启集团功能
         "workflow": {
-            "global_opinions": ["同意", "不同意"]   //全局默认意见选项，在签批窗口中始终显示在自定义意见之前
+            "global_opinions": ["同意", "不同意"],   //全局默认意见选项，在签批窗口中始终显示在自定义意见之前
+            "instance_batch_approval": false, //批量审批，提供开关 instance_batch_approval，并限制到企业版才开通。
+            "instance_allow_distribute": false, //文件分发，提供开关instance_allow_distribute ，并限制到企业版才开通。
+            "hideLastSignApproveDescription": true //不需要默认上次意见
         },
         "password": {
             "policy": "^(?=.*[A-Z])(?![a-z]+$)(?![^A-Za-z0-9]+$)(?!\\d+$)\\S{8,}$",  //密码格式校验规则，值为正则表达式，如果没有配置，则不校验密码格式
             "policyError": "密码必须包含字符、数字和字母，并至少有一个大写字母，且不能少于8位" //密码格式校验失败时的提示消息
+        },
+        //手机号及其验证相关
+        "phone": {
+          "forceAccountBindPhone": false, //强行弹出手机号绑定窗口
+          "expiredDays": 30, //失效时间，forceAccountBindPhone为true时失效后重新强行弹出手机号绑定窗口
+          "showRemindButton": true //显示催办按钮
         }
     },
     "cron": {
@@ -49,7 +58,6 @@
     },
     // 效率统计
     "instances_stat": {
-        "space": "Af8eM6mAHo7wMDqD3",
         "schedule": "10 10 0 * * *" //每天的晚上的 0点10分10秒调用执行
     },
     "weixin": {

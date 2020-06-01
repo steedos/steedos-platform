@@ -368,6 +368,8 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 
 			flow.form = form_id
 
+			flow.category = form.category
+
 			if enabled
 				flow.state = 'enabled'
 				flow.is_valid = true #直接启用的流程设置is valid值为true
@@ -389,7 +391,52 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 			if company_id
 				flow.company_id = company_id
 			#跨工作区导入时，重置流程权限perms
-			if !flow.perms || flow.space !=  spaceId || company_id
+			if flow.perms && flow.space == spaceId
+				perms = {
+					_id: new Mongo.ObjectID()._str
+					users_can_add: []
+					orgs_can_add: orgs_can_add
+					users_can_monitor: []
+					orgs_can_monitor: []
+					users_can_admin: []
+					orgs_can_admin: []
+				}
+
+				users_can_add = perms.users_can_add
+				orgs_can_add = perms.orgs_can_add
+
+				users_can_monitor = perms.users_can_monitor
+				orgs_can_monitor = perms.orgs_can_monitor
+
+				users_can_admin = perms.users_can_admin
+				orgs_can_admin = perms.orgs_can_admin
+
+				if !_.isEmpty(users_can_add)
+					perms.users_can_add = _.pluck(db.space_users.find({user: {$in: users_can_add}}, {fields: {user: 1}}).fetch(), 'user');
+
+				if !_.isEmpty(orgs_can_add)
+					perms.orgs_can_add = _.pluck(db.organizations.find({_id: {$in: orgs_can_add}}, {fields: {_id: 1}}).fetch(), '_id');
+					if _.isEmpty(perms.orgs_can_add)
+						if company_id
+							perms.orgs_can_add  = [company_id]
+						else
+							perms.orgs_can_add  = db.organizations.find({
+								space: spaceId,
+								parent: null
+							}, {fields: {_id: 1}}).fetch().getProperty("_id")
+
+				if !_.isEmpty(users_can_monitor)
+					perms.users_can_monitor = _.pluck(db.space_users.find({user: {$in: users_can_monitor}}, {fields: {user: 1}}).fetch(), 'user');
+				if !_.isEmpty(orgs_can_monitor)
+					perms.orgs_can_monitor = _.pluck(db.organizations.find({_id: {$in: orgs_can_monitor}}, {fields: {_id: 1}}).fetch(), '_id');
+
+				if !_.isEmpty(users_can_admin)
+					perms.users_can_monitor = _.pluck(db.space_users.find({user: {$in: users_can_admin}}, {fields: {user: 1}}).fetch(), 'user');
+				if !_.isEmpty(orgs_can_admin)
+					perms.orgs_can_monitor = _.pluck(db.organizations.find({_id: {$in: orgs_can_admin}}, {fields: {_id: 1}}).fetch(), '_id');
+
+
+			else if !flow.perms || flow.space !=  spaceId
 				orgs_can_add = []
 				if company_id
 					orgs_can_add = [company_id]

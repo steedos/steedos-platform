@@ -29,9 +29,6 @@ Package.onUse(function(api) {
 	api.use('templating@1.2.15');
 	api.use('steedos:objects');
 
-	// tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
-	// api.addFiles(tapi18nFiles, ['client', 'server']);
-	// api.addFiles('package.app.coffee');
 	api.addFiles('models/application_package.coffee', 'server');
 	api.addFiles('server/routes/export.coffee', 'server');
 	api.addFiles('server/routes/import.coffee', 'server');

@@ -141,6 +141,10 @@ if Meteor.isServer
 		psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1, assigned_apps:1}}) || null
 		psetsMember = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'member'}, {fields:{_id:1, assigned_apps:1}}) || null
 		psetsGuest = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'guest'}, {fields:{_id:1, assigned_apps:1}}) || null
+
+		psetsSupplier = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'supplier'}, {fields:{_id:1, assigned_apps:1}}) || null
+		psetsCustomer = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'customer'}, {fields:{_id:1, assigned_apps:1}}) || null
+
 		psetsCurrent = Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
 
 		psetsAdmin_pos = null
@@ -148,6 +152,8 @@ if Meteor.isServer
 		psetsMember_pos = null
 		psetsGuest_pos = null
 		psetsCurrent_pos = null
+		psetsSupplier_pos = null
+		psetsCustomer_pos = null
 
 		if psetsAdmin?._id
 			psetsAdmin_pos = Creator.getCollection("permission_objects").find({permission_set_id: psetsAdmin._id}, {fields: {created: 0, modified: 0, created_by: 0, modified_by: 0}}).fetch()
@@ -157,6 +163,11 @@ if Meteor.isServer
 			psetsMember_pos = Creator.getCollection("permission_objects").find({permission_set_id: psetsMember._id}, {fields: {created: 0, modified: 0, created_by: 0, modified_by: 0}}).fetch()
 		if psetsGuest?._id
 			psetsGuest_pos = Creator.getCollection("permission_objects").find({permission_set_id: psetsGuest._id}, {fields: {created: 0, modified: 0, created_by: 0, modified_by: 0}}).fetch()
+		if psetsSupplier?._id
+			psetsSupplier_pos = Creator.getCollection("permission_objects").find({permission_set_id: psetsSupplier._id}, {fields: {created: 0, modified: 0, created_by: 0, modified_by: 0}}).fetch()
+		if psetsCustomer?._id
+			psetsCustomer_pos = Creator.getCollection("permission_objects").find({permission_set_id: psetsCustomer._id}, {fields: {created: 0, modified: 0, created_by: 0, modified_by: 0}}).fetch()
+
 		if psetsCurrent.length > 0
 			set_ids = _.pluck psetsCurrent, "_id"
 			psetsCurrent_pos = Creator.getCollection("permission_objects").find({permission_set_id: {$in: set_ids}}).fetch()
@@ -172,13 +183,17 @@ if Meteor.isServer
 			psetsUser, 
 			psetsCurrent, 
 			psetsMember, 
-			psetsGuest, 
+			psetsGuest,
+			psetsSupplier,
+			psetsCustomer,
 			isSpaceAdmin, 
 			spaceUser, 
 			psetsAdmin_pos, 
 			psetsUser_pos, 
 			psetsMember_pos, 
-			psetsGuest_pos, 
+			psetsGuest_pos,
+			psetsSupplier_pos,
+			psetsCustomer_pos,
 			psetsCurrent_pos
 		}
 		permissions.assigned_apps = Creator.getAssignedApps.bind(psets)(spaceId, userId)
@@ -188,8 +203,9 @@ if Meteor.isServer
 		_.each Creator.objectsByName, (object, object_name)->
 			_i++
 			if !_.has(object, 'space') || !object.space || object.space == spaceId
-				permissions.objects[object_name] = Creator.convertObject(clone(Creator.Objects[object_name]), spaceId)
-				permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
+				if !_.has(object, 'in_development') || object.in_development == '0' || (object.in_development != '0' && isSpaceAdmin)
+					permissions.objects[object_name] = Creator.convertObject(clone(Creator.Objects[object_name]), spaceId)
+					permissions.objects[object_name]["permissions"] = Creator.getObjectPermissions.bind(psets)(spaceId, userId, object_name)
 		return permissions
 
 	unionPlus = (array, other) ->
@@ -213,6 +229,8 @@ if Meteor.isServer
 	Creator.getAssignedApps = (spaceId, userId)->
 		psetsAdmin = this.psetsAdmin || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'}, {fields:{_id:1, assigned_apps:1}})
 		psetsUser = this.psetsUser || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1, assigned_apps:1}})
+		psetsSupplier = this.psetsMember || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'supplier'}, {fields:{_id:1, assigned_apps:1}})
+		psetsCustomer = this.psetsGuest || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'customer'}, {fields:{_id:1, assigned_apps:1}})
 		# psetsMember = this.psetsMember || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'member'}, {fields:{_id:1, assigned_apps:1}})
 		# psetsGuest = this.psetsGuest || Creator.getCollection("permission_set").findOne({space: spaceId, name: 'guest'}, {fields:{_id:1, assigned_apps:1}})
 		psets =  this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
@@ -221,7 +239,13 @@ if Meteor.isServer
 		if isSpaceAdmin
 			return []
 		else
+			userProfile = Creator.getCollection("space_users").findOne({space: spaceId, user: userId}, {fields: {profile: 1}})?.profile
 			psetBase = psetsUser
+			if userProfile
+				if userProfile == 'supplier'
+					psetBase = psetsSupplier
+				else if userProfile == 'customer'
+					psetBase = psetsCustomer
 			if psetBase?.assigned_apps?.length
 				apps = _.union apps, psetBase.assigned_apps
 			else
@@ -230,7 +254,7 @@ if Meteor.isServer
 			_.each psets, (pset)->
 				if !pset.assigned_apps
 					return
-				if pset.name == "admin" ||  pset.name == "user"
+				if pset.name == "admin" ||  pset.name == "user" || pset.name == 'supplier' || pset.name == 'customer'
 					# 这里之所以要排除admin/user，是因为这两个权限组是所有权限组中users属性无效的权限组，特指工作区管理员和所有用户
 					return
 				apps = _.union apps, pset.assigned_apps
@@ -257,12 +281,13 @@ if Meteor.isServer
 			# 工作区管理员有全部菜单功能
 			result = allMenus
 		else
+			userProfile = Creator.getCollection("space_users").findOne({space: spaceId, user: userId}, {fields: {profile: 1}})?.profile || 'user'
 			currentPsetNames = psets.map (n) ->
 				return n.name
 			menus = allMenus.filter (menu)->
 				psetsMenu = menu.permission_sets
 				# 如果普通用户有权限，则直接返回true
-				if psetsMenu && psetsMenu.indexOf("user") > -1
+				if psetsMenu && psetsMenu.indexOf(userProfile) > -1
 					return true
 				# 否则取当前用户的权限集与menu菜单要求的权限集对比，如果交集大于1个则返回true
 				return _.intersection(currentPsetNames, psetsMenu).length
@@ -325,6 +350,10 @@ if Meteor.isServer
 		psetsUser = if _.isNull(this.psetsUser) or this.psetsUser then this.psetsUser else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'}, {fields:{_id:1}})
 		psetsMember = if _.isNull(this.psetsMember) or this.psetsMember then this.psetsMember else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'member'}, {fields:{_id:1}})
 		psetsGuest = if _.isNull(this.psetsGuest) or this.psetsGuest then this.psetsGuest else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'guest'}, {fields:{_id:1}})
+
+		psetsSupplier = if _.isNull(this.psetsSupplier) or this.psetsSupplier then this.psetsSupplier else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'supplier'}, {fields:{_id:1}})
+		psetsCustomer = if _.isNull(this.psetsCustomer) or this.psetsCustomer then this.psetsCustomer else Creator.getCollection("permission_set").findOne({space: spaceId, name: 'customer'}, {fields:{_id:1}})
+
 		psets = this.psetsCurrent || Creator.getCollection("permission_set").find({users: userId, space: spaceId}, {fields:{_id:1, assigned_apps:1, name:1}}).fetch()
 		isSpaceAdmin = if _.isBoolean(this.isSpaceAdmin) then this.isSpaceAdmin else Creator.isSpaceAdmin(spaceId, userId)
 
@@ -332,12 +361,19 @@ if Meteor.isServer
 		psetsUser_pos = this.psetsUser_pos
 		psetsMember_pos = this.psetsMember_pos
 		psetsGuest_pos = this.psetsGuest_pos
+
+		psetsSupplier_pos = this.psetsSupplier_pos
+		psetsCustomer_pos = this.psetsCustomer_pos
+
 		psetsCurrent_pos = this.psetsCurrent_pos
 
 		opsetAdmin = _.clone(object.permission_set.admin) || {}
 		opsetUser = _.clone(object.permission_set.user) || {}
 		opsetMember = _.clone(object.permission_set.member) || {}
 		opsetGuest = _.clone(object.permission_set.guest) || {}
+
+		opsetSupplier = _.clone(object.permission_set.supplier) || {}
+		opsetCustomer = _.clone(object.permission_set.customer) || {}
 
 		# sharedListViews = Creator.getCollection('object_listviews').find({space: spaceId, object_name: object_name, shared: true}, {fields:{_id:1}}).fetch()
 		# sharedListViews = _.pluck(sharedListViews,"_id")
@@ -417,6 +453,40 @@ if Meteor.isServer
 				opsetGuest.uneditable_fields = posGuest.uneditable_fields
 				opsetGuest.unrelated_objects = posGuest.unrelated_objects
 				opsetGuest.uneditable_related_list = posGuest.uneditable_related_list
+		if psetsSupplier
+			posSupplier = findOne_permission_object(psetsSupplier_pos, object_name, psetsSupplier._id);
+			if posSupplier
+				opsetSupplier.allowCreate = posSupplier.allowCreate
+				opsetSupplier.allowDelete = posSupplier.allowDelete
+				opsetSupplier.allowEdit = posSupplier.allowEdit
+				opsetSupplier.allowRead = posSupplier.allowRead
+				opsetSupplier.modifyAllRecords = posSupplier.modifyAllRecords
+				opsetSupplier.viewAllRecords = posSupplier.viewAllRecords
+				opsetSupplier.modifyCompanyRecords = posSupplier.modifyCompanyRecords
+				opsetSupplier.viewCompanyRecords = posSupplier.viewCompanyRecords
+				opsetSupplier.disabled_list_views = posSupplier.disabled_list_views
+				opsetSupplier.disabled_actions = posSupplier.disabled_actions
+				opsetSupplier.unreadable_fields = posSupplier.unreadable_fields
+				opsetSupplier.uneditable_fields = posSupplier.uneditable_fields
+				opsetSupplier.unrelated_objects = posSupplier.unrelated_objects
+				opsetSupplier.uneditable_related_list = posSupplier.uneditable_related_list
+		if psetsCustomer
+			posCustomer = findOne_permission_object(psetsCustomer_pos, object_name, psetsCustomer._id);
+			if posCustomer
+				opsetCustomer.allowCreate = posCustomer.allowCreate
+				opsetCustomer.allowDelete = posCustomer.allowDelete
+				opsetCustomer.allowEdit = posCustomer.allowEdit
+				opsetCustomer.allowRead = posCustomer.allowRead
+				opsetCustomer.modifyAllRecords = posCustomer.modifyAllRecords
+				opsetCustomer.viewAllRecords = posCustomer.viewAllRecords
+				opsetCustomer.modifyCompanyRecords = posCustomer.modifyCompanyRecords
+				opsetCustomer.viewCompanyRecords = posCustomer.viewCompanyRecords
+				opsetCustomer.disabled_list_views = posCustomer.disabled_list_views
+				opsetCustomer.disabled_actions = posCustomer.disabled_actions
+				opsetCustomer.unreadable_fields = posCustomer.unreadable_fields
+				opsetCustomer.uneditable_fields = posCustomer.uneditable_fields
+				opsetCustomer.unrelated_objects = posCustomer.unrelated_objects
+				opsetCustomer.uneditable_related_list = posCustomer.uneditable_related_list
 
 		if !userId
 			permissions = opsetAdmin
@@ -437,6 +507,10 @@ if Meteor.isServer
 								permissions = opsetMember
 							else if prof is 'guest'
 								permissions = opsetGuest
+							else if prof is 'supplier'
+								permissions = opsetSupplier
+							else if prof is 'customer'
+								permissions = opsetCustomer
 						else # 没有profile则认为是user权限
 							permissions = opsetUser
 					else
@@ -450,7 +524,9 @@ if Meteor.isServer
 				if po.permission_set_id == psetsAdmin?._id or 
 				po.permission_set_id == psetsUser?._id or 
 				po.permission_set_id == psetsMember?._id or 
-				po.permission_set_id == psetsGuest?._id
+				po.permission_set_id == psetsGuest?._id or
+				po.permission_set_id == psetsSupplier?._id or
+				po.permission_set_id == psetsCustomer?._id
 					# 默认的admin/user权限值只实行上面的默认值覆盖，不做算法判断
 					return
 				if po.allowRead

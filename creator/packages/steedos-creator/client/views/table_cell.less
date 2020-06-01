@@ -7,6 +7,12 @@
 		padding: 9.5px;
 		margin: 0 0 10px;
 	}
+	blockquote {
+		padding: 10px 20px;
+		margin: 0 0 20px;
+		font-size: 17.5px;
+		border-left: 5px solid #eeeeee;
+	}
 	h2, .h2 {
 		font-size: 22px;
 	}
@@ -21,9 +27,94 @@
 	p {
 		margin: 0 0 10px;
 	}
+
+	// fix summernote控件字体大小被其他库样式覆盖了，从bootstrap.css的样式中copy过来
+	h1,
+	.h1 {
+		font-size: 36px;
+	}
+	h2,
+	.h2 {
+		font-size: 30px;
+	}
+	h3,
+	.h3 {
+		font-size: 24px;
+	}
+	h4,
+	.h4 {
+		font-size: 18px;
+	}
+	h5,
+	.h5 {
+		font-size: 14px;
+	}
+	h6,
+	.h6 {
+		font-size: 12px;
+	}
+	// 表格样式统一显示为类似saleforce样式效果
+	table{
+		border: solid 1px #dddbda;
+		tr{
+			height: auto!important;
+			width: auto!important;
+			td{
+				border-top: 1px solid #dddbda!important;
+				border-left: 1px solid #dddbda!important;
+				height: auto!important;
+				width: auto!important;
+				white-space: nowrap;
+				padding: .25rem .75rem;
+			}
+			&:first-child{
+				// 因为从excel中copy表格内容进来不带thead/th标签，所以统一把第一行tr/td优化为表头样式
+				td{
+					background-color: #f4f4f4;
+					color: #514f4d;
+					font-weight: 700;
+				}
+			}
+		}
+	}
 }
 .note-editor{
 	.fix-note-editor-in-steedos
+}
+.note-editor{
+	.note-toolbar{
+		// fix summernote控件toolbar样式应该在fix-note-editor-in-steedos代码基础上优化下
+		pre{
+			padding: 3px 6px 6px 6px;
+			margin: 0;
+			color: #777;
+		}
+		blockquote {
+			padding: 5px 10px;
+			margin: 0;
+		}
+		h1, .h1, h2, .h2, h3, .h3 {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		p {
+			margin: 0;
+			padding: 0 0 3px 0;
+		}
+		.btn-default{
+			// fix 审批王申请单中summernote控件toolbar中的btn-default被重写为透明了
+			background-color: #f4f4f4;
+			border-color: #ddd;
+		}
+	}
+}
+.steedos-html{
+	// 审批王html只读字段效果在这里用到
+	.fix-note-editor-in-steedos
+}
+.steedos-html{
+	// fix 审批王申请单html字段只读时可能会出现表格溢出
+	overflow: auto;
 }
 .creator_table_cell {
 	//flex-wrap: wrap;

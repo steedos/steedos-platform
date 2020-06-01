@@ -19,7 +19,7 @@
 									<nav>
 										<ol class="slds-breadcrumb slds-line-height_reset">
 											<li class="slds-breadcrumb__item crm-breadcrumb-item">
-												<span>报表</span>
+												<span>{{objectLabel "reports"}}</span>
 											</li>
 										</ol>
 									</nav>
@@ -35,46 +35,46 @@
 						</div>
 						<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 							{{#if isChartNeedToShow}}
-								<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="切换图表">
+								<button disabled={{isChartDisabled}} class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-chart {{#if isChartOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_report_switch_chart_open"}}">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="chart"}}
 								</button>
 							{{/if}}
 
-							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFiltering}}filtering{{/if}} {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="筛选器">
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-filter {{#if isFiltering}}filtering{{/if}} {{#if isFilterOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_list_filter"}}">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="filterList"}}
 							</button>
 
-							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="刷新">
+							<button class="slds-button slds-button_icon slds-m-left_xx-small slds-button_icon-border-filled btn-refresh" title="{{_ "refresh"}}">
 								{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="refresh"}}
 							</button>
 
 							<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small slds-button slds-button_icon" aria-expanded="false">
 								<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
-									title="{{_ "设置"}}" data-toggle="dropdown">
+									title="{{_ "Settings"}}" data-toggle="dropdown">
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="settings"}}
 									{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="down"}}
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" role="menu">
 									<ul class="slds-dropdown__list list-view-controls">
 										<li class="slds-dropdown__header" role="separator">
-											<span class="slds-text-title--caps">{{_ "设置"}}</span>
+											<span class="slds-text-title--caps">{{_ "Settings"}}</span>
 										</li>
 										{{#if isBtnSettingsNeedToShow}}
 											<li class="slds-dropdown__item btn-settings" role="presentation">
 												<a href="javascript:void(0);" class="" role="option" tabindex="-1">
-													<span>{{_ "选项"}}</span>
+													<span>{{_ "creator_report_dropdown_menu_options"}}</span>
 												</a>
 											</li>
 										{{/if}}
 										<li class="slds-dropdown__item btn-export-excel" role="presentation">
 											<a href="javascript:void(0);" class="" role="option" tabindex="-1">
-												<span>{{_ "导出为EXCEL"}}</span>
+												<span>{{_ "creator_report_dropdown_menu_export_excel"}}</span>
 											</a>
 										</li>
 										{{#if isBtnExportPdfNeedToShow}}
 											<li class="slds-dropdown__item btn-export-pdf" role="presentation">
 												<a href="javascript:void(0);" class="" role="option" tabindex="-1">
-													<span>{{_ "导出为PDF"}}</span>
+													<span>{{_ "creator_report_dropdown_menu_export_pdf"}}</span>
 												</a>
 											</li>
 										{{/if}}
@@ -83,7 +83,7 @@
 							</div>
 							{{#if isDesignerNeedToShow}}
 								{{#if isSavable}}
-									<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="设计模式">
+									<button class="slds-button slds-button_icon slds-button_icon-border-filled btn-toggle-designer {{#if isDesignerOpen}}slds-is-selected{{else}}slds-not-selected{{/if}}" title="{{_ "creator_report_design_mode"}}">
 										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="puzzle"}}
 									</button>
 								{{/if}}
@@ -103,8 +103,8 @@
 								{{/each}}
 								{{#if isSavable}}
 									<li class="slds-button slds-button--neutral slds-truncate record-action-save">
-										<a href="javascript:void(0);" title="保存" class="">
-											<div class="slds-truncate" title="保存">保存</div>
+										<a href="javascript:void(0);" title="{{_ "Save"}}" class="">
+											<div class="slds-truncate" title="{{_ "Save"}}">{{_ "Save"}}</div>
 										</a>
 									</li>
 								{{/if}}
@@ -141,14 +141,14 @@
 									<div class="panelHeader">
 										<div class="centered-header">
 											<button class="slds-button slds-button_neutral btn-filter-cancel {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to cancel changes">
-												取消
+												{{_ "creator_list_filter_cancel"}}
 											</button>
 										</div>
-										<h2 class="panelTitle centered-header {{#if isFilterDirty}}hidden{{/if}}">筛选条件
+										<h2 class="panelTitle centered-header {{#if isFilterDirty}}hidden{{/if}}">{{_ "creator_list_filter"}}
 </h2>
 										<div class="centered-header">
 											<button class="slds-button slds-button_brand btn-filter-apply {{#unless isFilterDirty}}hidden{{/unless}}" type="button" title="Click to apply changes">
-												应用
+												{{_ "creator_list_filter_apply"}}
 											</button>
 											<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small btn-toggle-filter {{#if isFilterDirty}}hidden{{/if}}">
 												{{> steedos_icon class="slds-button__icon slds-button__icon_hint" source="utility-sprite" name="forward"}}

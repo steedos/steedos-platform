@@ -39,9 +39,6 @@ Package.onUse(function(api) {
 
 	api.use('steedos:logger@0.0.2');
 
-	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
-	api.addFiles(tapi18nFiles, ['client', 'server']);
-
 	api.addFiles('core.coffee');
 	api.addFiles('loadStandardObjects.coffee', 'server');
 	api.addFiles('coreSupport.coffee');
@@ -66,7 +63,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/fields.coffee');
 	api.addFiles('lib/triggers.coffee');
 	api.addFiles('lib/permission_sets.coffee');
-	api.addFiles('lib/collections.coffee');
+	api.addFiles('lib/collections.coffee', 'server');
+	api.addFiles('lib/collections-client.coffee', 'client');
 	api.addFiles('lib/actions.coffee');
 	api.addFiles('lib/resources.coffee',  "client");
 	api.addFiles('lib/record_permission.coffee',  "client");

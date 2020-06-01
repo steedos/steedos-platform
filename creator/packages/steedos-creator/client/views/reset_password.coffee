@@ -4,19 +4,19 @@ Template.reset_password_modal.helpers
 		schema =
 			old_pwd:
 				type: String
-				label: "旧密码"
+				label: t "Old Password"
 				autoform:
 					type: "password"
 
 			new_pwd:
 				type: String
-				label: "新密码"
+				label: t "New Password"
 				autoform:
 					type: "password"
 
 			confirm_pwd:
 				type: String
-				label: "确认密码"
+				label: t "Confirm Password"
 				autoform:
 					type: "password"
 
@@ -42,7 +42,7 @@ Template.reset_password_modal.events
 		confirm_pwd = doc.confirm_pwd
 
 		if !old_pwd or !new_pwd or !confirm_pwd
-			toastr.error t('旧密码或新密码为空')
+			toastr.error t('Old_and_new_password_required')
 			return
 
 		result = Steedos.validatePassword new_pwd
@@ -53,12 +53,12 @@ Template.reset_password_modal.events
 		else if new_pwd == confirm_pwd
 			Accounts.changePassword old_pwd, new_pwd, (error) ->
 				if error
-					toastr.error t('旧密码不正确')
+					toastr.error t('Incorrect_Password')
 				else
-					toastr.success t('密码修改成功')
+					toastr.success t('Password_changed_successfully')
 					Modal.hide(template);
 		else
-			toastr.error t('请确认两次输入的密码是否一致')
+			toastr.error t('Confirm_Password_Not_Match')
 		
 
 

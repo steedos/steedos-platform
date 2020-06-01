@@ -20,3 +20,38 @@
         width: 100%;
     }
 }
+.steedos{
+    .modal-dialog{
+        .modal-body{
+            // summernote包的图片上传标签样式优化
+            .form-group.note-group-select-from-files{
+                label:after {
+                    content: "选择文件";
+                    position: absolute;
+                    margin-top: 15px;
+                    left: 15px;
+                    top: 30px;
+                    padding: 3px;
+                    border-radius: 4px;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                    text-align: center;
+                    border: 1px solid #dddbda;
+                    color: #0070d2;
+                    font-weight: 420;
+                    cursor: pointer;
+                    width: 88px;
+                }
+                .note-image-input.form-control{
+                    opacity: 0;
+                    width: 88px;
+                }
+            }
+        }
+    }
+    .dropdown-menu{
+        // 参考saleforce这块是用的12px
+        font-size: 12px;
+        min-width: 172px;
+    }
+}

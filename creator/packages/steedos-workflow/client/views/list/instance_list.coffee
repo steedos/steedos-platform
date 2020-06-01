@@ -45,17 +45,17 @@ Template.instance_list.helpers
 
 			if !space.admins.contains(uid)
 				flow_ids = Tracker.nonreactive(WorkflowManager.getMyAdminOrMonitorFlows)
-				# if query.flow
-				# 	if !flow_ids.includes(query.flow)
-				# 		query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
-				# else
-				# 	query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid},
-				# 		{flow: {$in: flow_ids}}]
 				if query.flow
 					if !flow_ids.includes(query.flow)
-						query.flow = ""
+						query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
 				else
-					query.flow = {$in: flow_ids}
+					query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid},
+						{flow: {$in: flow_ids}}]
+				# if query.flow
+				# 	if !flow_ids.includes(query.flow)
+				# 		query.flow = ""
+				# else
+				# 	query.flow = {$in: flow_ids}
 
 		else
 			query.state = "none"
@@ -255,8 +255,8 @@ Template.instance_list.onCreated ->
 	self.autorun ()->
 		Workflow.renderListColumns()
 
-	# 只有是企业版时，才支持批量审批
-	if Steedos.isLegalVersion('',"workflow.enterprise")
+	# 只有是企业版并且开关instance_batch_approval开时，才支持批量审批
+	if Steedos.isLegalVersion('',"workflow.enterprise") && Meteor.settings.public?.workflow?.instance_batch_approval
 		self.autorun ()->
 			if Session.get("box") == 'inbox' && Session.get("flowId")
 

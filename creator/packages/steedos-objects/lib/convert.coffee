@@ -322,6 +322,23 @@
 						return Creator.eval("(#{val})")
 					else
 						return val;
+
+		if Meteor.isClient
+			_.forEach object.relatedList, (relatedObjInfo)->
+				if _.isObject(relatedObjInfo)
+					_.forEach relatedObjInfo, (val, key)->
+						if key == 'filters' && _.isString(val)
+							try
+								relatedObjInfo[key] = Creator.eval("(#{val})")
+							catch error
+								console.error "filters_code", val
+		else
+			_.forEach object.relatedList, (relatedObjInfo)->
+				if _.isObject(relatedObjInfo)
+					_.forEach relatedObjInfo, (val, key)->
+						if key == 'filters' && _.isFunction(val)
+							relatedObjInfo[key] = val.toString()
+
 		return object
 
 

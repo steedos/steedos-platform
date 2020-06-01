@@ -22,18 +22,18 @@
 											<div class="dropdown-menu dropdown-menu-right chat-message-actions-menu" role="menu">
 												<ul class="dropdown__list">
 													{{#if this.allowEdit}}
-														<li class="slds-dropdown__item cuf-actionItem slds-truncate update-action" role="presentation" title="编辑">
+														<li class="slds-dropdown__item cuf-actionItem slds-truncate update-action" role="presentation" title={{_ "Edit"}}>
 															<a href="javascript:void(0)" role="menuitem" tabindex="-1">
 														<span class="slds-truncate">
-															编辑</span>
+															{{_ "Edit"}}</span>
 															</a>
 														</li>
 													{{/if}}
 													{{#if this.allowDelete}}
-														<li class="slds-dropdown__item cuf-actionItem slds-truncate remove-action" role="presentation" title="删除">
+														<li class="slds-dropdown__item cuf-actionItem slds-truncate remove-action" role="presentation" title={{_ "Delete"}}>
 															<a href="javascript:void(0)" role="menuitem" tabindex="-1">
 															<span class="slds-truncate">
-																删除</span>
+																{{_ "Delete"}}</span>
 															</a>
 														</li>
 													{{/if}}

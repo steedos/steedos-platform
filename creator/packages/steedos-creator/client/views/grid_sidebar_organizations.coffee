@@ -6,6 +6,11 @@ setGridSidebarFilters = (selectedItem)->
 	else
 		Session.set "grid_sidebar_filters", null
 
+resetFilters = ()->
+	Session.set("standard_query", null)
+	Session.set("filter_items", null)
+	$("#grid-search").val('')
+
 _actionItems = (object_name, record_id, record_permissions)->
 	self = this
 	obj = Creator.getObject(object_name)
@@ -37,6 +42,7 @@ _itemDropdownClick = (e, selectionInfo)->
 		dataSource: actionSheetItems
 		showTitle: false
 		usePopover: true
+		width: "auto"
 		onItemClick: (value)->
 			object = Creator.getObject(curObjectName)
 			action = value.itemData.action
@@ -198,6 +204,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 					Session.set "organization", selectionItemData
 				else
 					Session.set "organization", null
+				resetFilters()
 				setGridSidebarFilters(selectionItemData)
 
 

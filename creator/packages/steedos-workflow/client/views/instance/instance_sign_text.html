@@ -19,13 +19,13 @@
 						{{else}}
 							{{#if showApprove this}}
 								{{#if (showSignImage handler ../image_sign)}}
-									{{#if (unempty description)}}
+									<!-- {{#if (unempty description)}} -->
 										<div class="instance-sign-item{{#unless is_finished}} not-finished{{/unless}}">
 											{{{markDownToHtml description}}}
 											&emsp;&emsp;{{> imageSign (imageSignData handler)}}
 											{{formatDate finish_date format}}
 										</div>
-									{{/if}}
+									<!-- {{/if}} -->
 								{{else}}
 									
 									{{#if (unempty description)}}
@@ -37,13 +37,13 @@
 									{{else}}
 										{{#if is_finished}}
 											{{#if (is_readed judge)}}
-												{{#if ../default_description}}
+												<!-- {{#if ../default_description}} -->
 													<div class="instance-sign-item{{#unless is_finished}} not-finished{{/unless}}">
 														{{{markDownToHtml ../default_description}}}
 														&emsp;&emsp;{{handler_name}}
 														{{formatDate finish_date format}}
 													</div>
-												{{/if}}
+												<!-- {{/if}} -->
 											{{/if}}
 										{{/if}}
 									{{/if}}

@@ -1,8 +1,3 @@
-ALY = require('aliyun-sdk');
-Xinge = require('xinge');
-HwPush = require('huawei-push');
-MiPush = require('xiaomi-push');
-
 Aliyun_push = {};
 
 Aliyun_push.sendMessage = (userTokens, notification, callback) ->
@@ -27,6 +22,7 @@ Aliyun_push.sendMessage = (userTokens, notification, callback) ->
 				miTokens.push _.last(arr)
 
 		if !_.isEmpty(aliyunTokens) and Meteor.settings.push?.aliyun
+			ALY = require('aliyun-sdk');
 			if Push.debug
 				console.log "aliyunTokens: #{aliyunTokens}"
 			ALYPUSH = new (ALY.PUSH)(
@@ -45,6 +41,7 @@ Aliyun_push.sendMessage = (userTokens, notification, callback) ->
 			ALYPUSH.pushNoticeToAndroid data, callback
 
 		if !_.isEmpty(xingeTokens) and Meteor.settings.push?.xinge
+			Xinge = require('xinge');
 			if Push.debug
 				console.log "xingeTokens: #{xingeTokens}"
 			XingeApp = new Xinge.XingeApp(Meteor.settings.push.xinge.accessId, Meteor.settings.push.xinge.secretKey)
@@ -62,16 +59,6 @@ Aliyun_push.sendMessage = (userTokens, notification, callback) ->
 		if !_.isEmpty(huaweiTokens) and Meteor.settings.push?.huawei
 			if Push.debug
 				console.log "huaweiTokens: #{huaweiTokens}"
-			# msg = new HwPush.Message
-			# msg.title(notification.title).content(notification.text)
-			# msg.extras(notification.payload)
-			# notification = new HwPush.Notification(
-			# 	appId: Meteor.settings.push.huawei.appId
-			# 	appSecret: Meteor.settings.push.huawei.appSecret
-			# )
-			# _.each huaweiTokens, (t)->
-			# 	notification.send t, msg, callback
-
 
 			package_name = Meteor.settings.push.huawei.appPkgName
 			tokenDataList = []
@@ -85,6 +72,7 @@ Aliyun_push.sendMessage = (userTokens, notification, callback) ->
 
 
 		if !_.isEmpty(miTokens) and Meteor.settings.push?.mi
+			MiPush = require('xiaomi-push');
 			if Push.debug
 				console.log "miTokens: #{miTokens}"
 			msg = new MiPush.Message

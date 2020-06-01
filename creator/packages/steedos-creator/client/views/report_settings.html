@@ -8,20 +8,20 @@
 						<span class="slds-assistive-text">Close</span>
 					</button>
 					<h2 class="slds-text-heading--medium">
-						选项
+						{{_ "creator_report_dropdown_menu_options"}}
 					</h2>
                 </header>
 				<div class="slds-modal__content slds-p-around_medium">
                     <div class="settingsContainer reportsSettingsPanel">
                         <label>
-                            <span>显示</span>
+                            <span>{{_ "creator_report_dropdown_menu_options_show"}}</span>
                         </label>
                         {{#if showGroupingMenu}}
                         <div>
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-grouping">
                                 <span class="slds-checkbox--faux"></span>
-                                 小计
+                                {{_ "creator_report_dropdown_menu_options_grouping"}}
                             </label>
                         </div>
                         {{/if}}
@@ -30,7 +30,7 @@
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-totaling">
                                 <span class="slds-checkbox--faux"></span>
-                                 总计
+                                {{_ "creator_report_dropdown_menu_options_totaling"}}
                             </label>
                         </div>
                         {{/if}}
@@ -39,15 +39,15 @@
                             <label class="slds-checkbox">
                                 <input type="checkbox" class="cbx-counting">
                                 <span class="slds-checkbox--faux"></span>
-                                记录计数
+                                {{_ "creator_report_dropdown_menu_options_counting"}}
                             </label>
                         </div>
                         {{/if}}
                     </div>
                 </div>
                 <div class="slds-modal__footer">
-                    <button class="slds-button slds-button_brand btn-settings-apply">应用</button>
-                    <button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+                    <button class="slds-button slds-button_brand btn-settings-apply">{{_ "OK"}}</button>
+                    <button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ "Cancel"}}</button>
                 </div>
 			</div>
 		</div>

@@ -41,6 +41,31 @@ Template.instancePrint.helpers
 	isShowTraces: ->
 		return Template.instance().isShowTraces?.get()
 
+	isShowTracesSimplify: ->
+		return Template.instance().isShowTracesSimplify?.get()
+
+	simplifyTraces: (traces)->
+		startEndStepIds = []
+		_.each WorkflowManager.getInstanceSteps(), (s)->
+			if s.step_type == "start" || s.step_type == "end"
+				startEndStepIds.push(s._id)
+		if _.isEmpty startEndStepIds
+			return []
+		steps = {}
+		traces.forEach (t, index)->
+			if ['rejected', 'relocated', 'retrieved', 'returned'].includes(t.judge) || startEndStepIds.includes(t.step)
+				delete traces[index]
+				return
+			t.approves?.forEach (a, idx)->
+				if ['terminated', 'reassigned', 'retrieved', 'returned', 'rejected'].includes(a.judge) || ['cc', 'forward', 'distribute'].includes(a.type)
+					delete t.approves[idx]
+					return
+			if _.has steps, t.step
+				delete traces[steps[t.step]]
+			steps[t.step] = index
+
+		return traces
+
 Template.instancePrint.step = 1;
 
 Template.instancePrint.plusFontSize = (node)->
@@ -118,6 +143,14 @@ Template.instancePrint.events
 		else
 			localStorage.removeItem "print_is_show_traces"
 
+	"click .cbx-print-traces-simplify": (event, template) ->
+		isChecked = $(event.currentTarget).is(':checked')
+		template.isShowTracesSimplify.set(isChecked)
+		if isChecked
+			localStorage.setItem "print_is_show_traces_simplify", isChecked
+		else
+			localStorage.removeItem "print_is_show_traces_simplify"
+
 	"change input[name='printWidthA4']": (event, template)->
 		$('#printWidth').val(event.target.value).trigger('change')
 
@@ -128,6 +161,7 @@ Template.instancePrint.onCreated ->
 	Form_formula.initFormScripts()
 	this.isShowAttachments = new ReactiveVar(false)
 	this.isShowTraces = new ReactiveVar(false)
+	this.isShowTracesSimplify = new ReactiveVar(false)
 
 Template.instancePrint.onRendered ->
 
@@ -149,3 +183,13 @@ Template.instancePrint.onRendered ->
 	if localStorage.getItem "print_is_show_traces"
 		Template.instance().isShowTraces.set(true)
 		$(".instance-print .cbx-print-traces").attr("checked",true)
+	if localStorage.getItem "print_is_show_traces_simplify"
+		Template.instance().isShowTracesSimplify.set(true)
+		$(".instance-print .cbx-print-traces-simplify").attr("checked",true)
+
+	# 判断html字段中是否只有table标签，如果是，则加上样式类steedos-html-table-only，其会实现表格撑滿的样式
+	htmlFieldContainer = $(".instance-print .instance .steedos-html")
+	htmlFieldContainer.each (key, item)->
+		htmlItem = $(item);
+		if htmlItem.find("> table").length == htmlItem.children().length
+			htmlItem.addClass("steedos-html-table-only")

@@ -17,7 +17,9 @@ Meteor.publish 'flows', (spaceId)->
 			perms: 1,
 			space: 1,
 			company_id: 1,
-			sort_no: 1
+			sort_no: 1,
+			distribute_optional_users: 1,
+			distribute_to_self: 1
 		}
 	})
 
@@ -105,6 +107,17 @@ Meteor.publish 'flow', (spaceId, flowId)->
 			allow_select_step: 1
 		}
 	})
+Meteor.publish 'flow_files', (spaceId, flowId)->
+	unless this.userId
+		return this.ready()
+
+	unless spaceId
+		return this.ready()
+
+	unless flowId
+		return this.ready()
+
+	return cfs.files.find({ 'metadata.space': spaceId, 'metadata.object_name': 'flows', 'metadata.record_id': flowId })
 
 Meteor.publishComposite 'flows_tabular', (tableName, ids, fields)->
 	check(tableName, String);

@@ -28,6 +28,8 @@ Steedos.subscribeInstance = (instance)->
 	Steedos.subscribeFormVersion(instance.space, instance.form, instance.form_version)
 	Steedos.subs["instance_data"].subscribe("instance_data", instance._id, Session.get("box"))
 	Steedos.subs["Instance"].subscribe("flow", instance.space, instance.flow)
+	if (Session.get("box") == 'draft')
+		Steedos.subs["Instance"].subscribe("flow_files", instance.space, instance.flow)
 	if instance.distribute_from_instances
 		Steedos.subs["Instance"].subscribe("cfs_instances", instance.distribute_from_instances)
 

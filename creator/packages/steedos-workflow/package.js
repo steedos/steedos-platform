@@ -58,11 +58,8 @@ Package.onUse(function(api) {
 	api.use('steedos:slipjs');
 
 	api.use('universe:i18n@1.13.0');
-	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
 
 	api.addFiles('perfect-scrollbar.js', 'client');
-
-	api.addFiles(tapi18nFiles, ['client', 'server']);
 
 	api.addFiles('checkNpm.js', 'server');
 
@@ -368,10 +365,13 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/views/list/admin_process_delegation_rules.html', 'client');
 	api.addFiles('client/views/list/admin_process_delegation_rules.coffee', 'client');
+
+	api.addFiles('client/methods/call_statistics.coffee', 'client');
 	
-	api.addAssets("assets/designer/index.html", "client");
-	api.addAssets("assets/designer/index.js", "client");
-	api.addAssets("assets/designer/index.css", "client");
+	// api.addAssets("assets/designer/index.html", "client");
+	// api.addAssets("assets/designer/index.js", "client");
+	// api.addAssets("assets/designer/index.css", "client");
+	api.addFiles('routes/designer.coffee', 'server');
 
 	// app-workflow plugins
 	// api.addFiles('plugins/flow_import_action.coffee', 'client');

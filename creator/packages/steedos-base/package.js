@@ -71,7 +71,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('checkNpm.js', "server");
 
-	api.addFiles('lib/meteor_fix.js', ['client', 'server']);
 	api.addFiles('lib/steedos_util.js', ['client', 'server']);
 
 	api.addFiles([
@@ -186,7 +185,6 @@ Package.onUse(function(api) {
 		'client/views/sidebar_user_panel.less',
 		'client/dataTables_bootstrap.less',
 		'client/my_contacts_limit.coffee',
-		'client/my_company_ids.coffee',
 		'client/company.coffee'
 	], "client");
 
@@ -300,6 +298,8 @@ Package.onUse(function(api) {
 	api.addFiles('client/layout/notFound_layout.less', 'client');
 
 	api.addFiles('client/autoupdate_cordova.coffee', 'web.cordova');
+
+	api.addFiles('server/startup.coffee', 'server');
 
 
 	api.export('Selector');

@@ -80,16 +80,18 @@
 									   autocomplete="off"
 									   role="textbox"
 									   placeholder="{{_ "Search"}} {{placeholder}}..."
-									   aria-activedescendant="{{value}}" readonly="{{isReadOnly}}" value="{{label}}">
-								{{#if isReadOnly}}
-									<a class="slds-button slds-button_icon slds-input__icon slds-input__icon_right slds-pill__remove">
-										{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="close"}}
-									</a>
-								{{else}}
-									<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-										{{> steedos_icon class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="search"}}
-									</span>
-								{{/if}}
+									   aria-activedescendant="{{value}}" readonly="{{isReadOnly}}" {{readonlyStr}} value="{{label}}">
+								{{#unless fieldReadonly}}
+									{{#if isReadOnly}}
+										<a class="slds-button slds-button_icon slds-input__icon slds-input__icon_right slds-pill__remove">
+											{{> steedos_icon class="slds-button__icon" source="utility-sprite" name="close"}}
+										</a>
+									{{else}}
+										<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+											{{> steedos_icon class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" source="utility-sprite" name="search"}}
+										</span>
+									{{/if}}
+								{{/unless}}
 							{{/with}}
 						</div>
 
@@ -130,7 +132,7 @@
 											</span>
 
 											<span class="slds-m-left--smalllabels slds-truncate slds-media__body media__body-center">
-												<span class="slds-listbox__option-text slds-listbox__option-text_entity">新建{{createTitle}}</span>
+												<span class="slds-listbox__option-text slds-listbox__option-text_entity">{{_ 'New'}} {{createTitle}}</span>
 											</span>
 										</span>
 									</li>

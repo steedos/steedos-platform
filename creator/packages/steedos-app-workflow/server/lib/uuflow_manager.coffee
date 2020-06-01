@@ -2427,7 +2427,7 @@ uuflowManager.sendRemindSMS = (ins_name, deadline, users_id, space_id, ins_id) -
 
 	name = if ins_name.length > 15 then ins_name.substr(0,12) + '...' else ins_name
 
-	db.users.find({_id: {$in: _.uniq(send_users)}, mobile: {$exists: true}}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}}).forEach (user)->
+	db.users.find({_id: {$in: _.uniq(send_users)}, mobile: {$exists: true}, mobile_verified: true}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}}).forEach (user)->
 		utcOffset = if user.hasOwnProperty('utcOffset') then user.utcOffset else 8
 		params = {
 			instance_name: name,

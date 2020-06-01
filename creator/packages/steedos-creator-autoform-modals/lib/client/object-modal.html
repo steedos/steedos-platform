@@ -4,18 +4,18 @@
 			<div class="slds-modal__container">
 				<header class="slds-modal__header">
 					{{#if isMobile}}
-						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
-						<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ 'afModal_cancel'}}</button>
+						<button type="submit" class="slds-button slds-button_brand btn-insert">{{_ 'afModal_insert'}}</button>
 
 						<h2 class="title slds-text-heading--medium">
 							{{{title}}}
 						</h2>
 					{{else}}
-						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="{{_ 'close'}}" data-dismiss="modal">
 							<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
 								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
 							</svg>
-							<span class="slds-assistive-text">Close</span>
+							<span class="slds-assistive-text">{{_ 'close'}}</span>
 						</button>
 						<h2 class="title slds-text-heading--medium">
 							<h2 class="slds-text-heading--medium">{{{title}}}</h2>
@@ -29,13 +29,13 @@
 					{{/autoForm}}
 				</div>
 				<footer class="slds-modal__footer">
-					<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+					<button type="submit" class="slds-button slds-button_brand btn-insert">{{_ 'afModal_insert'}}</button>
 
 					{{#if cmSaveAndInsert}}
-						<button class="slds-button slds-button_neutral btn-insert-and-create">保存并新建</button>
+						<button class="slds-button slds-button_neutral btn-insert-and-create">{{_ 'afModal_save_insert'}}</button>
 					{{/if}}
 
-					<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+					<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ 'afModal_cancel'}}</button>
 				</footer>
 			</div>
 		</div>

@@ -23,15 +23,23 @@ Meteor.startup ->
 			start_date = null
 			end_date = null
 			now = new Date
+			selector = { space: space_id, flow: flow_id }
+			selector.state = {$in: ["pending", "completed"]}
+			uid = current_user_info._id
+			space = db.spaces.findOne(space_id)
+			if !space
+				selector.state = "none"
+
+			if !space.admins.includes(uid)
+				flow_ids = WorkflowManager.getMyAdminOrMonitorFlows(space_id, uid)
+				if !flow_ids.includes(selector.flow)
+					selector.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
+
 			# 0-本月
 			if type is 0
 				start_date = new Date(now.getFullYear(), now.getMonth(), 1)
-				ins_to_xls = db.instances.find({
-					space: space_id,
-					flow: flow_id,
-					state: { $ne: "draft" },
-					submit_date: { $gte: start_date }
-				}, {
+				selector.submit_date = { $gte: start_date }
+				ins_to_xls = db.instances.find(selector, {
 					sort: { submit_date: 1 }
 				}).fetch()
 			# 1-上月
@@ -39,32 +47,20 @@ Meteor.startup ->
 				last_month_date = new Date(new Date(now.getFullYear(), now.getMonth(), 1) - 1000 * 60 * 60 * 24)
 				start_date = new Date(last_month_date.getFullYear(), last_month_date.getMonth(), 1)
 				end_date = new Date(now.getFullYear(), now.getMonth(), 1)
-				ins_to_xls = db.instances.find({
-					space: space_id,
-					flow: flow_id,
-					state: { $ne: "draft" },
-					$and: [{ submit_date: { $gte: start_date } }, { submit_date: { $lte: end_date } }]
-				}, {
+				selector.submit_date = { $gte: start_date, $lte: end_date }
+				ins_to_xls = db.instances.find(selector, {
 					sort: { submit_date: 1 }
 				}).fetch()
 			# 2-整个年度
 			else if type is 2
 				start_date = new Date(now.getFullYear(), 0, 1)
-				ins_to_xls = db.instances.find({
-					space: space_id,
-					flow: flow_id,
-					state: { $ne: "draft" },
-					submit_date: { $gte: start_date }
-				}, {
+				selector.submit_date = { $gte: start_date }
+				ins_to_xls = db.instances.find(selector, {
 					sort: { submit_date: 1 }
 				}).fetch()
 			# 3-所有
 			else if type is 3
-				ins_to_xls = db.instances.find({
-					space: space_id,
-					flow: flow_id,
-					state: { $ne: "draft" }
-				}, {
+				ins_to_xls = db.instances.find(selector, {
 					sort: { submit_date: 1 }
 				}).fetch()
 

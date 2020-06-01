@@ -569,8 +569,14 @@ textarea {
 //     }
 //   }
 // }
+
 .instance-traces {
+  padding-right: 15px;
+}
+
+.instance-table .instance-traces {
   max-width: 700px;
+  padding-right: 0px;
 }
 
 .instance-table, .traces_table_modal{
@@ -966,6 +972,7 @@ textarea {
 .instance-print{
   .instance-table{
     .instance-traces{
+      padding-right: 15px;
       .box-header{
         font-size: 15px;
         padding-left: 0;
@@ -1140,6 +1147,14 @@ _:-ms-fullscreen,
 .instance .instance_attachments{
   padding-left: 0px;
   padding-right: 15px;
+
+  .attachments-btns{
+    margin-bottom: 10px;
+  }
+
+  .attachments-list{
+    margin-bottom: 10px;
+  }
 }
 
 .instance-table .instance_attachments{
@@ -1480,5 +1495,38 @@ _:-ms-fullscreen,
 
   .related-instances-item a:hover{
     text-decoration: underline
+  }
+}
+
+
+.steedos-html{
+  &.steedos-html-table-only{
+    // 审批王中html字段需要把表格撑满,边线也不需要
+    margin: -6px -12px -6px -13px;
+    table{
+      border: none;
+      width: 100%!important;
+    }
+    .instance-table &{
+      margin: -6px;
+      table{
+        tr{
+          &:first-child td {
+            border-top-width: 0!important;
+          }
+          &:last-child td {
+            border-bottom-width: 0!important;
+          }
+          td{
+            &:first-child {
+              border-left-width: 0!important;
+            }
+            &:last-child {
+              border-right-width: 0!important;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { pluginComponentSelector, store, Bootstrap, Dashboard } from '@steedos/react';
+import { store, Bootstrap, Dashboard } from '@steedos/react';
 import { Provider } from 'react-redux';
 
 function DashboardContainer(prop){

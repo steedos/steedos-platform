@@ -60,6 +60,14 @@ body {
 
 		.listViewManager {
 			height: 100%;
+			background: #ffffff;
+			border-radius: 0.25rem;
+			background-clip: padding-box;
+			.slds-page-header{
+				border-top: none;
+				border-left: none;
+				border-right: none;
+			}
 			.forceListViewManagerHeader {
 				.slds-button {
 					cursor: pointer;
@@ -67,7 +75,8 @@ body {
 			}
 			.list-view-controls {
 				.slds-text-title--caps {
-					font-size: 14px;
+					// 参考saleforce这块是用的12px
+					font-size: 12px;
 				}
 			}
 			.table-grid-content {
@@ -548,6 +557,37 @@ margin-left: 216px; }
 				.slds-truncate{
 					.slds-button__icon{
 						visibility: visible;
+					}
+				}
+			}
+		}
+	}
+}
+
+.steedos{
+	.dx-button-text{
+		// 我们不需要自动转大写功能
+		text-transform: unset;
+	}
+	.dx-actionsheet-popover-wrapper{
+		.dx-overlay-content{
+			border: 1px solid #ddd;
+			background: #fff;
+			-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+			box-shadow: 0 6px 12px rgba(0,0,0,.175);
+			border-radius: 6px;
+			min-width: 10rem;
+			.dx-popup-content{
+				padding: 1rem;
+				.dx-actionsheet-item{
+					.dx-button{
+						border-radius: 4px;
+						border-width: 1px;
+						border-style: solid;
+						background-color: #fff;
+						border-color: #ddd;
+						color: #333;
+						box-shadow: none;
 					}
 				}
 			}

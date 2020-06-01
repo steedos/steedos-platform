@@ -292,9 +292,6 @@ instanceButtonHelpers =
 
 
 	enabled_forward: ->
-		if Meteor.settings.public?.workflow?.disableInstanceForward
-			return false
-
 		ins = WorkflowManager.getInstance()
 		if !ins
 			return false
@@ -313,6 +310,8 @@ instanceButtonHelpers =
 			return false
 
 	enabled_distribute: ->
+		if !Steedos.isLegalVersion('',"workflow.enterprise") || !Meteor.settings.public?.workflow?.instance_allow_distribute
+			return false
 		ins = WorkflowManager.getInstance()
 		if !ins
 			return false
@@ -401,7 +400,7 @@ instanceButtonHelpers =
 		return false
 
 	enabled_remind: ->
-		if not Meteor.settings.public or not Meteor.settings.public.phone
+		if not Meteor.settings.public or not Meteor.settings.public.phone or !Meteor.settings.public.phone.showRemindButton
 			return false
 
 		ins = WorkflowManager.getInstance()
@@ -538,17 +537,15 @@ Template.instance_button.onRendered ->
 	copyUrlClipboard.on 'success', (e) ->
 		toastr.success(t("instance_readonly_view_url_copy_success"))
 		e.clearSelection()
-	
-	Meteor.defer ->
-		# 这里加Meteor.defer是因为Workflow.checkInstanceMaxUnfoldedButtonsCount依赖了界面dom加载完成
-		if !Steedos.isMobile()
-			Workflow.checkInstanceMaxUnfoldedButtonsCount()
-		self.autorun ()->
-			buttons = getDefaultButtonsMap()
-			_.forEach buttons, (item, key)->
-				item.enabled = getButtonEnabled(key, item)
-			buttons = getResponsiveButtons buttons, Session.get("workflow_max_unfolded_buttons_count")
-			self.buttons.set buttons
+
+	if !Steedos.isMobile()
+		Workflow.checkInstanceMaxUnfoldedButtonsCount()
+	self.autorun ()->
+		buttons = getDefaultButtonsMap()
+		_.forEach buttons, (item, key)->
+			item.enabled = getButtonEnabled(key, item)
+		buttons = getResponsiveButtons buttons, Session.get("workflow_max_unfolded_buttons_count")
+		self.buttons.set buttons
 
 Template.instance_button.onCreated ->
 	self = this

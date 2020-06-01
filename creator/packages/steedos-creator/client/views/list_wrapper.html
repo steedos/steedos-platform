@@ -98,9 +98,9 @@
 							<div>
 								<div class="search-in-list slds-m-left_large slds-is-relative">
 									<div force-list-view-manager-search-bar_list-view-manager-search-bar="" class="slds-form-element">
-										<label for="grid-search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索{{_ object.label}}</label>
+										<label for="grid-search" class="slds-form-element__label slds-no-flex slds-assistive-text">{{_ "Search"}} {{_ object.label}}</label>
 										<div class="slds-form-element__control slds-grow slds-input-has-icon slds-input-has-icon_left-right">
-											<input type="search" value="{{search_text}}" id="grid-search" placeholder="搜索{{_ object.label}}" name="search-input" class="slds-input">
+											<input type="search" value="{{search_text}}" id="grid-search" placeholder="{{_ 'Search'}} {{_ object.label}}" name="search-input" class="slds-input">
 											<div>
 												{{> steedos_icon class="slds-input__icon slds-input__icon_left" source="utility-sprite" name="search"}}
 											</div>
@@ -244,7 +244,7 @@
 			</div>
 		</div>
 	</div>
-	{{#CreatorAfModal formId="addListView" class="btn btn-primary btn-add-list-view hidden" collection="Creator.Collections.object_listviews" meteormethod="af_insert" fields=object_listviews_fields operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="列表视图" useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal formId="editListView" class="btn btn-primary btn-edit-list-view hidden" collection="Creator.Collections.object_listviews" doc=current_list_view operation="update" meteormethod="af_update" fields="name,label,filter_scope,columns,filter_fields,sort,shared,type,scrolling_mode,show_count" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent collectionName="列表视图" useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-	{{#CreatorAfModal class="btn btn-primary btn-delete-list-view hidden" collection="Creator.Collections.object_listviews" operation="remove" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName="列表视图" onSuccess=delete_on_success useOdataApi=true}} {{_ "Delete"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="addListView" class="btn btn-primary btn-add-list-view hidden" collection="Creator.Collections.object_listviews" meteormethod="af_insert" fields=object_listviews_fields operation="insert" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=object_listviews.label useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal formId="editListView" class="btn btn-primary btn-edit-list-view hidden" collection="Creator.Collections.object_listviews" doc=current_list_view operation="update" meteormethod="af_update" fields="name,label,filter_scope,columns,filter_fields,sort,shared,type,scrolling_mode,show_count" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent collectionName=object_listviews.label useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
+	{{#CreatorAfModal class="btn btn-primary btn-delete-list-view hidden" collection="Creator.Collections.object_listviews" operation="remove" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=insertButtonContent collectionName=object_listviews.label onSuccess=delete_on_success useOdataApi=true}} {{_ "Delete"}} {{/CreatorAfModal}}
 </template>

@@ -747,3 +747,26 @@ WorkflowManager.hasFlowAdminPermission = function (flow_id, space_id, user_id) {
 	return hasPermission;
 
 }
+
+WorkflowManager.getMyAdminOrMonitorFlows = function(spaceId, userId) {
+	var flows, flow_ids = [],
+		curSpaceUser, organization;
+	curSpaceUser = db.space_users.findOne({
+		space: spaceId,
+		'user': userId
+	});
+	if (curSpaceUser) {
+		organizations = db.organizations.find({
+			_id: {
+				$in: curSpaceUser.organizations
+			}
+		}).fetch();
+		flows = db.flows.find();
+		flows.forEach(function(fl) {
+			if (WorkflowManager.canMonitor(fl, curSpaceUser, organizations) || WorkflowManager.canAdmin(fl, curSpaceUser, organizations)) {
+				flow_ids.push(fl._id);
+			}
+		})
+	}
+	return flow_ids;
+};

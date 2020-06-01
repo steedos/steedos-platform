@@ -143,12 +143,14 @@ JsonRoutes.add("post", "/api/workflow/nextStepUsers", function(req, res, next) {
 	var result = [];
 
 	nextStepUsers.forEach(function(su) {
-		var o = {
-			id: su.id,
-			name: su.name
-		};
-		result.push(o);
-	})
+		if(su.user_accepted){
+			var o = {
+				id: su.id,
+				name: su.name
+			};
+			result.push(o);
+		}
+	});
 
 	JsonRoutes.sendResult(res, {
 		code: 200,

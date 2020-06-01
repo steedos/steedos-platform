@@ -98,12 +98,12 @@ if Meteor.isClient
 				record_title = record_title?.name
 
 			if record_title
-				text = "是否确定要删除此#{object.label}\"#{record_title}\""
+				text = t "creator_record_remove_swal_text", "#{object.label} \"#{record_title}\""
 			else
-				text = "是否确定要删除此#{object.label}"
+				text = t "creator_record_remove_swal_text", "#{object.label}"
 			swal
-				title: "删除#{object.label}"
-				text: "<div class='delete-creator-warning'>#{text}？</div>"
+				title: t "creator_record_remove_swal_title", "#{object.label}"
+				text: "<div class='delete-creator-warning'>#{text}</div>"
 				html: true
 				showCancelButton:true
 				confirmButtonText: t('Delete')
@@ -112,9 +112,10 @@ if Meteor.isClient
 					if option
 						Creator.odata.delete object_name, record_id, ()->
 							if record_title
-								info = object.label + "\"#{record_title}\"" + "已删除"
+								# info = object.label + "\"#{record_title}\"" + "已删除"
+								info =t "creator_record_remove_swal_title_suc", object.label + "\"#{record_title}\""
 							else
-								info = "删除成功"
+								info = t('creator_record_remove_swal_suc')
 							toastr.success info
 							# 文件版本为"cfs.files.filerecord"，需要替换为"cfs-files-filerecord"
 							gridObjectNameClass = object_name.replace(/\./g,"-")
@@ -136,7 +137,7 @@ if Meteor.isClient
 							if isOpenerRemove or !dxDataGridInstance
 								if isOpenerRemove
 									window.close()
-								else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar' and object_name != "cms_posts"
+								else if record_id == Session.get("record_id") and !Steedos.isMobile() and list_view_id != 'calendar'
 									appid = Session.get("app_id")
 									unless list_view_id
 										list_view_id = Session.get("list_view_id")

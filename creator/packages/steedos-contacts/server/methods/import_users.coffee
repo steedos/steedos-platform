@@ -20,7 +20,7 @@ Meteor.methods
 			throw new Meteor.Error(401, "只有工作区管理员可以导入用户");
 
 		if !space.is_paid
-			throw new Meteor.Error(401, "标准版不支持此功能");
+			throw new Meteor.Error(401, "基础版不支持此功能");
 
 		accepted_user_count = db.space_users.find({space: space._id, user_accepted: true}).count()
 		if (accepted_user_count + data.length) > space.user_limit

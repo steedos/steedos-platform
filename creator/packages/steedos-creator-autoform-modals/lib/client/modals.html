@@ -5,14 +5,14 @@
 				<header class="slds-modal__header">
 					{{#if isMobile}}
 						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">
-							取消
+							{{_ 'afModal_cancel'}}
 						</button>
 						{{#if $eq cmOperation 'insert'}}
-							<button type="submit" class="slds-button slds-button_brand btn-insert">保存</button>
+							<button type="submit" class="slds-button slds-button_brand btn-insert">{{_ 'afModal_insert'}}</button>
 						{{/if}}
 
 						{{#if $eq cmOperation 'update'}}
-							<button class="slds-button slds-button_brand btn-update">保存</button>
+							<button class="slds-button slds-button_brand btn-update">{{_ 'afModal_update'}}</button>
 						{{/if}}
 						
 						<h2 class="title slds-text-heading--medium">
@@ -47,7 +47,7 @@
 										<label class="slds-checkbox">
 											<input class="keyboardMode--trigger ckb-multiple-update" type="checkbox">
 											<span class="slds-checkbox--faux"></span>
-											<span class="label-multiple-update">更新 {{cmTargetIds.length}} 个选定记录</span>
+											<span class="label-multiple-update">{{_ 'afModal_multiple_update' cmTargetIds.length}}</span>
 										</label>
 									</div>
 								</div>
@@ -56,39 +56,39 @@
 					{{/if}}
 
 					{{#if $eq cmOperation 'remove'}}
-						<div class="remove-prompt slds-text-align--center">是否确定要删除本条数据？</div>
+						<div class="remove-prompt slds-text-align--center">{{_ 'afModal_remove_confirm'}}</div>
 					{{/if}}
 				</div>
 
 				<footer class="slds-modal__footer">
 					{{#if $eq cmOperation 'insert'}}
-						<button type="submit" class="slds-button slds-button_brand btn-insert" disabled={{cmSaving}}>保存</button>
+						<button type="submit" class="slds-button slds-button_brand btn-insert" disabled={{cmSaving}}>{{_ 'afModal_insert'}}</button>
 
 						{{#if cmSaveAndInsert}}
-							<button class="slds-button slds-button_neutral btn-insert-and-create" disabled={{cmSaving}}>保存并新建</button>
+							<button class="slds-button slds-button_neutral btn-insert-and-create" disabled={{cmSaving}}>{{_ 'afModal_save_insert'}}</button>
 						{{/if}}
 
-						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ 'afModal_cancel'}}</button>
 					{{/if}}
 
 					{{#if $eq cmOperation 'update'}}
 
 						{{#if cmShowRemoveButton}}
-							<button class="slds-button slds-button_destructive btn-remove">删除</button>
+							<button class="slds-button slds-button_destructive btn-remove">{{_ 'afModal_remove'}}</button>
 						{{/if}}
 
-						<button class="slds-button slds-button_brand btn-update" disabled={{cmSaving}}>保存</button>
+						<button class="slds-button slds-button_brand btn-update" disabled={{cmSaving}}>{{_ 'afModal_insert'}}</button>
 
 						{{#if cmSaveAndInsert}}
-							<button class="slds-button slds-button_neutral btn-update-and-create" disabled={{cmSaving}}>保存并新建</button>
+							<button class="slds-button slds-button_neutral btn-update-and-create" disabled={{cmSaving}}>{{_ 'afModal_save_insert'}}</button>
 						{{/if}}
 
-						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ 'afModal_cancel'}}</button>
 					{{/if}}
 
 					{{#if $eq cmOperation 'remove'}}
-						<button class="slds-button slds-button_brand btn-remove">删除</button>
-						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">取消</button>
+						<button class="slds-button slds-button_brand btn-remove">{{_ 'afModal_remove'}}</button>
+						<button class="slds-button slds-button_neutral btn-cancel" data-dismiss="modal">{{_ 'afModal_cancel'}}</button>
 					{{/if}}
 				</footer>
 			</div>

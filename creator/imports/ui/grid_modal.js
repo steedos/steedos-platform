@@ -1,5 +1,5 @@
 import './grid_modal.html';
-import { pluginComponentSelector, store, viewStateSelector, createGridModalAction } from '@steedos/react';
+import { store, viewStateSelector, createGridModalAction } from '@steedos/react';
 import GridModalContainer from './containers/GridModal'
 var _ = require("underscore");
 

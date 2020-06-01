@@ -3,8 +3,10 @@ Template.creator_app_home.onRendered ()->
 		isBootstrapLoaded = Creator.bootstrapLoaded.get()
 		appId = Session.get('app_id')
 		if isBootstrapLoaded && appId
-			app = Creator.getApp()
-			if app?.dashboard and !Steedos.isMobile()
+			dashboard = Creator.getAppDashboard()
+			unless dashboard
+				dashboard = Creator.getAppDashboardComponent()
+			if dashboard and !Steedos.isMobile()
 				FlowRouter.go "/app/#{appId}/home"
 			else
 				first_app_obj = _.first(Creator.getAppObjectNames(appId))

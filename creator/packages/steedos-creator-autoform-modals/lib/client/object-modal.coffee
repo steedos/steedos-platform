@@ -202,11 +202,11 @@ Template.CreatorObjectModal.helpers
 		else
 			object_label = Creator.getObject(Template.instance().data.object_name)?.label
 			if Template.instance().data.operation == "update"
-				title = "编辑#{object_label}"
+				title = "#{t('Edit')} #{object_label}"
 			else if Template.instance().data.operation == "insert"
-				title = "新建#{object_label}"
+				title = "#{t('New')} #{object_label}"
 			else if Template.instance().data.operation == "remove"
-				title = "删除#{object_label}"
+				title = "#{t('Delete')} #{object_label}"
 			return title
 	fields: ()->
 		object_name = Template.instance().data.object_name

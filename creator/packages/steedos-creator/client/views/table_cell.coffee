@@ -20,6 +20,15 @@ formatFileSize = (filesize)->
 
 	return rev.toFixed(2) + unit
 
+getSafeObjectUrl = (object_name, record_id, app_id)->
+	if object_name == 'users'
+		object = Creator.getObject("space_users")
+	else
+		object = Creator.getObject(object_name)
+	if object.permissions.get().allowRead
+		return Creator.getObjectUrl(object_name, record_id, app_id);
+
+
 Template.creator_table_cell.onRendered ->
 	self = this
 	self.autorun ->
@@ -141,7 +150,7 @@ Template.creator_table_cell.helpers
 			data.push {value: val?.address || '', id: this._id}
 		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
 			# 有optionsFunction的情况下，reference_to不考虑数组
-			if _.isFunction(_field.optionsFunction) && !_field.reference_to
+			if _.isFunction(_field.optionsFunction) && reference_to != 'company'
 				_values = this.doc || {}
 				_record_val = this.record_val
 				_val = val
@@ -154,16 +163,38 @@ Template.creator_table_cell.helpers
 							_val = [_val._id]
 						else
 							_val = [_val]
-					selectedOptions = _.filter _field.optionsFunction(_record_val || _values), (_o)->
+					_ofOptions =  _field.optionsFunction(_record_val || _values)
+					selectedOptions = _.filter _ofOptions, (_o)->
 						return _val.indexOf(_o?.value) > -1
 					if selectedOptions
 						if val && _.isArray(val) && _.isArray(selectedOptions)
 							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
 						val = selectedOptions.getProperty("label")
-				if reference_to && false
-					_.each val, (v)->
-						href = Creator.getObjectUrl(reference_to, v)
-						data.push {reference_to: reference_to,  rid: v, value: v, id: this._id, href: href}
+				if reference_to
+					if reference_to == 'objects'
+						_.each selectedOptions, (option)->
+							v = option.label
+							_robj = Creator.getObject(option.value)
+							if _robj?._id
+								href = getSafeObjectUrl(reference_to, _robj._id)
+								data.push {reference_to: reference_to,  rid: v, value: v, id: this._id, href: href}
+							else
+								data.push {value: val, id: this._id}
+					else
+						_fvs = this.val
+						if !_.isArray(_fvs)
+							_fvs = if _fvs then [_fvs] else []
+						_.each _fvs, (fv)->
+							if _.isString fv
+								selectedOptions = _.filter _ofOptions, (_o)->
+									return fv == _o?.value
+								data.push {value: selectedOptions.getProperty("label"), id: this._id}
+							else
+								reference_to = fv["reference_to._o"] || reference_to
+								rid = fv._id
+								rvalue = fv['_NAME_FIELD_VALUE']
+								href = getSafeObjectUrl(reference_to, rid)
+								data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: this._id}
 				else
 					data.push {value: val, id: this._id}
 			else
@@ -177,7 +208,7 @@ Template.creator_table_cell.helpers
 						# 如果未能取到expand数据（包括_id对应记录本身被删除的情况），则直接用_id作为值显示出来，且href能指向正确的url
 						rid = v
 						rvalue = v
-					href = Creator.getObjectUrl(reference_to, rid)
+					href = getSafeObjectUrl(reference_to, rid)
 					data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: this._id}
 
 		else if _field.type == "image"
@@ -243,9 +274,9 @@ Template.creator_table_cell.helpers
 				val = ""
 			else if _field.type == "boolean"
 				if this.val
-					val = "是"
+					val = t "YES"
 				else
-					val = "否"
+					val = t "NO"
 			else if _field.type == "select"
 				_options = _field.allOptions || _field.options
 				_values = this.doc || {}

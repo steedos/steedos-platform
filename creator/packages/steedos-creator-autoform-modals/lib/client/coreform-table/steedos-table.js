@@ -127,7 +127,7 @@ if(Meteor.isClient){
        
         $("thead[name='" + field + "Thead']").html(CreatorTable.getThead(field, keys));
 
-        str = "新增一行";
+        str = t("steedos_table_add_item");
 
         keyLength = keys.length + 1
 

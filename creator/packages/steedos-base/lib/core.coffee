@@ -859,6 +859,20 @@ Creator.getDBApps = (space_id)->
 
 	return dbApps
 
+Creator.getDBDashboards = (space_id)->
+	dbDashboards = {}
+	Creator.Collections["dashboard"].find({space: space_id}, {
+		fields: {
+			created: 0,
+			created_by: 0,
+			modified: 0,
+			modified_by: 0
+		}
+	}).forEach (dashboard)->
+		dbDashboards[dashboard._id] = dashboard
+
+	return dbDashboards
+
 if Meteor.isServer
 	Cookies = require("cookies")
 	Steedos.getAuthToken = (req, res)->

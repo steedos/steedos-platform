@@ -363,35 +363,37 @@ Template.creator_view.helpers
 		actions = Creator.getActions()
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
-		record = Creator.getCollection(object_name).findOne(record_id)
-		userId = Meteor.userId()
-		record_permissions = Creator.getRecordPermissions object_name, record, userId
-		actions = _.filter actions, (action)->
-			if action.on == "record" or action.on == "record_only"
-				if typeof action.visible == "function"
-					return action.visible(object_name, record_id, record_permissions)
+		if record_id
+			record = Creator.getCollection(object_name).findOne(record_id)
+			userId = Meteor.userId()
+			record_permissions = Creator.getRecordPermissions object_name, record, userId
+			actions = _.filter actions, (action)->
+				if action.on == "record" or action.on == "record_only"
+					if typeof action.visible == "function"
+						return action.visible(object_name, record_id, record_permissions)
+					else
+						return action.visible
 				else
-					return action.visible
-			else
-				return false
-		return actions
+					return false
+			return actions
 
 	moreActions: ()->
 		actions = Creator.getActions()
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
-		record = Creator.getCollection(object_name).findOne(record_id)
-		userId = Meteor.userId()
-		record_permissions = Creator.getRecordPermissions object_name, record, userId
-		actions = _.filter actions, (action)->
-			if action.on == "record_more"
-				if typeof action.visible == "function"
-					return action.visible(object_name, record_id, record_permissions)
+		if record_id
+			record = Creator.getCollection(object_name).findOne(record_id)
+			userId = Meteor.userId()
+			record_permissions = Creator.getRecordPermissions object_name, record, userId
+			actions = _.filter actions, (action)->
+				if action.on == "record_more" or action.on == "record_only_more"
+					if typeof action.visible == "function"
+						return action.visible(object_name, record_id, record_permissions)
+					else
+						return action.visible
 				else
-					return action.visible
-			else
-				return false
-		return actions
+					return false
+			return actions
 
 	isFileDetail: ()->
 		return "cms_files" == Session.get "object_name"
@@ -420,7 +422,12 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		related_list_item_props = item
 		related_object_name = item.object_name
-		return {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
+		data = {related_object_name: related_object_name, object_name: object_name, recordsTotal: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
+		if object_name == 'objects'
+			data.record_id = Creator.getObjectRecord().name
+		else
+			data.record_id = Session.get("record_id")
+		return data
 
 	enable_chatter: ()->
 		return Creator.getObject(Session.get("object_name"))?.enable_chatter
@@ -590,14 +597,27 @@ Template.creator_view.events
 		full_screen = this.full_screen
 		field = this.field_name
 		_fs = field.split('.')
+		schema = Creator.getObject(Session.get("object_name")).schema
 		if _fs.length > 1
-			schema = Creator.getObject(Session.get("object_name")).schema
 			_obj_fields = _.map(schema._objectKeys[_fs[0] + '.'], (k)->
 				return _fs[0] + '.' + k
 			)
 			field = _fs[0] + ',' + _obj_fields.join(',')
-
-		if this.field.depend_on && _.isArray(this.field.depend_on)
+		if this.field.type == 'grid'
+			fieldName = this.field_name
+			_obj_fields = _.map(schema._objectKeys[fieldName + '.$.'], (k)->
+				return fieldName + '.$.' + k
+			)
+			_.map(_obj_fields, (key)->
+				dependOn = schema._schema[key]?.autoform?.dependOn
+				dependOns = []
+				if _.isArray(dependOn) && dependOn.length > 0
+					dependOns = dependOn.concat(dependOn)
+				dependOns = _.uniq(_.compact(dependOns));
+				if dependOns.length > 0
+					field = field + ',' + dependOns.join(',')
+			)
+		else if this.field.depend_on && _.isArray(this.field.depend_on)
 			field = _.clone(this.field.depend_on)
 			field.push(this.field_name)
 			field = field.join(",")

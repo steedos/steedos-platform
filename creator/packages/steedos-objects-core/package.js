@@ -34,10 +34,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('i18n.coffee');
 
-	api.addFiles('i18n/en.i18n.json');
-	api.addFiles('i18n/zh-CN.i18n.json');
-
-
 	api.addFiles('cfs/cfs.coffee');
 	api.addFiles('cfs/cfs_fix.coffee');
 	// api.addFiles('cfs/cfs_files.coffee');

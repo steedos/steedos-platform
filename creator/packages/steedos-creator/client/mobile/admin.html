@@ -22,7 +22,7 @@
 					<div class="weui-media-box__bd">
 						<h4 class="weui-media-box__title">{{name}}</h4>
 						<p class="weui-media-box__desc">
-							工作区：{{spaceName}}
+							{{_ "Company"}}：{{spaceName}}
 						</p>
 					</div>
 				</a>
@@ -34,7 +34,7 @@
 						<div class="weui-cells">
 							<a class="weui-cell weui-cell_access btn-switch-space">
 								<div class="weui-cell__bd weui-cell_primary">
-									<p>切换工作区</p>
+									<p>{{_ "Switch Company"}}</p>
 								</div>
 								<span class="space-name">{{spaceName}}</span>
 								<span class="weui-cell__ft"></span>
@@ -76,7 +76,7 @@
 						<div class="weui-cells">
 							<a class="weui-cell weui-cell_access btn-change-password">
 								<div class="weui-cell__bd weui-cell_primary">
-									<p>更改密码</p>
+									<p>{{_ "Change Password"}}</p>
 								</div>
 								<span class="weui-cell__ft"></span>
 							</a>
@@ -91,7 +91,7 @@
 						<div class="weui-cells">
 							<a href="{{logoutUrL}}" class="weui-cell weui-cell_access log-out">
 								<div class="weui-cell__bd weui-cell_primary">
-									<p>退出登录</p>
+									<p>{{_ "Logout"}}</p>
 								</div>
 							</a>
 						</div>

@@ -1,6 +1,17 @@
 steedosAuth = require("@steedos/auth");
+steedosI18n = require("@steedos/i18n");
 steedosCore = require("@steedos/core");
 clone = require("clone");
+
+_getLocale = (user)->
+	if user?.locale?.toLocaleLowerCase() == 'zh-cn'
+		locale = "zh-CN"
+	else if user?.locale?.toLocaleLowerCase() == 'en-us'
+		locale = "en"
+	else
+		locale = "zh-CN"
+	return locale
+
 JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	userId = req.headers['x-user-id']
 	spaceId = req.headers['x-space-id'] || req.params?.spaceId
@@ -24,10 +35,15 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 
 	space = Creator.Collections["spaces"].findOne({_id: spaceId}, {fields: {name: 1}})
 
-	result = Creator.getAllPermissions(spaceId, userId)
+	result = Creator.getAllPermissions(spaceId, userId);
+#	console.time('translationObjects');
+	lng = _getLocale(db.users.findOne(userId, {fields: {locale: 1}}))
+	steedosI18n.translationObjects(lng, result.objects);
+#	console.timeEnd('translationObjects');
 	result.user = userSession
 	result.space = space
-	result.apps = clone(Creator.Apps);
+	result.apps = clone(Creator.Apps)
+	result.dashboards = clone(Creator.Dashboards)
 	result.object_listviews = Creator.getUserObjectsListViews(userId, spaceId, result.objects)
 	result.object_workflows = Meteor.call 'object_workflows.get', spaceId, userId
 
@@ -47,8 +63,10 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 				result.objects[_obj.name] = _obj
 			)
 	_.each Creator.steedosSchema.getDataSources(), (datasource, name) ->
-		result.apps = _.extend result.apps, datasource.getAppsConfig()
+		result.apps = _.extend result.apps, clone(datasource.getAppsConfig())
+		result.dashboards = _.extend result.dashboards, datasource.getDashboardsConfig()
 	result.apps = _.extend( result.apps || {}, Creator.getDBApps(spaceId))
+	result.dashboards = _.extend( result.dashboards || {}, Creator.getDBDashboards(spaceId))
 
 	_Apps = {}
 	_.each result.apps, (app, key) ->
@@ -58,7 +76,18 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 			app._dbid = app._id
 			app._id = app.code
 		_Apps[app._id] = app
-	result.apps = _Apps
+	steedosI18n.translationApps(lng, _Apps);
+	result.apps = _Apps;
+	assigned_menus = clone(result.assigned_menus);
+	steedosI18n.translationMenus(lng, assigned_menus);
+	result.assigned_menus = assigned_menus;
+
+	_Dashboards = {}
+	_.each result.dashboards, (dashboard, key) ->
+		if !dashboard._id
+			dashboard._id = key
+		_Dashboards[dashboard._id] = dashboard
+	result.dashboards = _Dashboards
 
 	result.plugins = steedosCore.getPlugins?()
 

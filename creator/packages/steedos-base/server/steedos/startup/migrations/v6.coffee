@@ -13,7 +13,7 @@ Meteor.startup ->
 					"_id": "workflow.standard",
 					"name_en": "Workflow Standard",
 					"name": "workflow.standard",
-					"name_zh": "审批王标准版",
+					"name_zh": "审批王基础版",
 					"listprice": 1.0,
 					"listprice_rmb": 2
 				})

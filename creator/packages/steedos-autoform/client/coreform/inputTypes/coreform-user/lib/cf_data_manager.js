@@ -17,8 +17,8 @@ CFDataManager.getNode = function (spaceId, node, options) {
 		myContactsLimit = Steedos.my_contacts_limit,
 		showLimitedCompanyOnly = options && options.showLimitedCompanyOnly;
 	
-	console.log("CFDataManager.getNode=>myContactsLimit=", myContactsLimit);
-	console.log("CFDataManager.getNode=>options=", options);
+	// console.log("CFDataManager.getNode=>myContactsLimit=", myContactsLimit);
+	// console.log("CFDataManager.getNode=>options=", options);
 	
 	if (showLimitedCompanyOnly) {
 		// 限制显示本单位数据时，不考虑通讯录的权限限制功能逻辑

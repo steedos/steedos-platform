@@ -48,19 +48,19 @@
 				{{#if isNode}}
 					<li class="history-back slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
 						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="点击可后退">
+								title="{{_ "nw_top_button_history_back"}}">
 							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="back"}}
 						</button>
 					</li>
 					<li class="history-forward slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
 						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="点击可前进">
+								title="{{_ "nw_top_button_history_forward"}}">
 							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="forward"}}
 						</button>
 					</li>
 					<li class="refresh slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
 						<button class="slds-button slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-								title="重新加载此页面">
+								title="{{_ "nw_top_button_refresh"}}">
 							{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="refresh"}}
 						</button>
 					</li>
@@ -70,14 +70,14 @@
 				</li>
 				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
 					<a class="creator-button-help slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-							title="帮助" target="_blank" href="{{helpUrl}}">
-						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question" title="帮助"}}
+							title="{{_ "Help"}}">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="question"}}
 					</a>
 				</li>
 				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
 					<button class="creator-button-setup slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-							title="设置">
-						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup" title="Setup"}}
+							title="{{_ "app_admin_name"}}">
+						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup"}}
 					</button>
 				</li>
 				{{#unless isMobile}}
@@ -85,28 +85,8 @@
 						{{> notifications}}
 					</li>
 				{{/unless}}
-				<li class="slds-hide slds-dropdown-trigger slds-dropdown-trigger_click">
-					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-is-disabled"
-							title="Notifications">
-						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="notification" title="Notifications"}}
-					</button>
-				</li>
 				<li class="slds-dropdown-trigger slds-m-left_x-small">
-					<button class="slds-button current-user-link" title="person name" aria-haspopup="true"
-							data-toggle="dropdown">
-          <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
-            <img src="{{avatarURL}}" title="{{displayName}}" style="height: 100%"/>
-          </span>
-					</button>
-					<div class="slds-dropdown slds-dropdown_right" style="right: 8px">
-						<ul class="slds-dropdown__list" role="menu">
-							<li class="slds-dropdown__item" role="presentation">
-								<a href="{{signOutUrl}}" role="menuitem" tabindex="-1">
-									<span class="slds-truncate">{{_ "Sign out"}}</span>
-								</a>
-							</li>
-						</ul>
-					</div>
+					{{> headerProfile}}
 				</li>
 			</ul>
 		</div>

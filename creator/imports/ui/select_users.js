@@ -1,5 +1,5 @@
 import './select_users.html';
-import { pluginComponentSelector, store, viewStateSelector } from '@steedos/react';
+import { store, viewStateSelector } from '@steedos/react';
 import SelectUsersContainer from './containers/SelectUsers.jsx'
 var _ = require("underscore");
 

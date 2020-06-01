@@ -1,8 +1,10 @@
-if (Meteor.isClient) {
-	Meteor.startup(function () {
-		Meteor.autorun(function () {
+Meteor.startup(function(){
+	I18n = require('@steedos/i18n');
+	if (Meteor.isClient) {
+		I18n.on('languageChanged', function(){
 			var lang = TAPi18n.getLanguage();
-			var localMessages = TAPi18n.__("simpleschema.messages", {returnObjectTrees: true});
+			var localMessages = TAPi18n.__("simpleschema.messages", {returnObjects: true});
+			if(_.isString(localMessages)){return;}
 			localMessages.regEx = _.map(localMessages.regEx, function (item) {
 				if (item.exp) {
 					var obj = window;
@@ -43,5 +45,6 @@ if (Meteor.isClient) {
 			var messages = _.extend(_.clone(SimpleSchema._globalMessages), localMessages);
 			SimpleSchema.messages(messages);
 		});
-	});
-}
+	}
+
+})

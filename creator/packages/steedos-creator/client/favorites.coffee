@@ -17,14 +17,14 @@ getActionDisabled = (params)->
 	return true
 
 getAssistiveText = (actionDisabled, actionSelected)->
-	assistiveText = {action: '',more: '收藏夹列表'}
+	assistiveText = {action: '',more: t("webapp_favorites_more"), editFavorites: t("webapp_favorites_edit")}
 	if actionDisabled
-		assistiveText.action = '此项目不支持收藏夹'
+		assistiveText.action = t("webapp_favorites_action_not_support")
 	else
 		if actionSelected
-			assistiveText.action = '删除收藏夹'
+			assistiveText.action = t("webapp_favorites_action_remove")
 		else
-			assistiveText.action = '添加收藏夹'
+			assistiveText.action = t("webapp_favorites_action_add")
 	return assistiveText
 
 Favorites.changeRecords = ()->

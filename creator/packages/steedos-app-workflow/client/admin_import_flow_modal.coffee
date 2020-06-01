@@ -29,7 +29,7 @@ showSuccessElement = (successData, template)->
 		new_flows = successData[k].new_flows
 		newFlowsElement = []
 		_.each new_flows, (fid)->
-			newFlowsElement.push("<a href='/app/admin/flows/view/#{fid}' target='_blank'>查看流程</a>")
+			newFlowsElement.push("<a href='#{Creator.getObjectUrl("flows", fid)}' target='_blank'>查看流程</a>")
 		successElement.push("<p>#{k}: #{newFlowsElement.join('')}</p>")
 	if successElement.length > 0
 		$('.help-block', template.find(".import-files")).append("<div class='callout callout-info'><h4>导入成功的文件(#{successElement.length}条)：</h4>#{successElement.join('')}</div>")

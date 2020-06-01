@@ -44,3 +44,13 @@ Template.cf_organization_list.onRendered ->
 	renderTree "#cf_organizations_tree", false
 
 Template.cf_organization_list.events
+
+Template.cf_organization_list.onDestroyed ->
+	if $("#cf_organizations_tree_self").length > 0
+		console.error('cf_organization_list.onDestroyed。。。renderTree....', (new Date).getTime());
+		templateData = Template.instance().data
+		showLimitedCompanyOnly = templateData.showLimitedCompanyOnly
+		if !showLimitedCompanyOnly
+			renderTree "#cf_organizations_tree_self", true
+		renderTree "#cf_organizations_tree", false
+

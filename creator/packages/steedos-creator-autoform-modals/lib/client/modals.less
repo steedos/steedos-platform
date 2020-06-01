@@ -1,3 +1,9 @@
+.steedos .modal{
+	// 因为下面的creator-auotform-modals定为2000了，所以普通的.modal不能比2000小，
+	// 否则在creator-auotform-modals中再弹出一个普通的.modal就会被creator-auotform-modals盖住
+	// 比如cms的正文字段的插入图片功能弹出的就是普通的.modal
+	z-index: 2000;
+}
 .creator-auotform-modals, .creator-object-modals {
 	zoom: 1 !important;
 	z-index: 2000 !important;
@@ -296,15 +302,22 @@
 	}
 }
 
-#afModal .view-page-section-row{
-	.uiInput.slds-form-element{
-		textarea.form-control {
-			line-height: 1.5rem!important;
-			padding-top: 0.3rem;
-			padding-bottom: 0.3rem;
-			overflow-y: auto;
-		}
-	} 
+.creator-auotform-modals,.creator-object-modals,.standard-query-modal,#afModal,#standQueryModal {
+	.view-page-section-row{
+		.uiInput.slds-form-element{
+			textarea.form-control {
+				line-height: 1.5rem!important;
+				padding-top: 0.3rem;
+				padding-bottom: 0.3rem;
+				overflow-y: auto;
+			}
+			.form-control {
+				&.dx-datebox{
+					padding: 0 0.25rem 0 .75rem;
+				}
+			}
+		} 
+	}
 }
 
 /* safari hack......start:IPAD,iPhone，新建编辑窗口lookup文本框行高没对齐，PC上是好的 #1595*/

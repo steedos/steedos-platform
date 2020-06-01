@@ -17,11 +17,11 @@ JsonRoutes.add 'post', '/api/mini/vip/like/sms', (req, res, next) ->
 		if !toUserId
 			throw new Meteor.Error(500, "No user_id")
 
-		toCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: toUserId }, { fields: { mobile: 1 } })
+		toCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: toUserId }, { fields: { mobile: 1, mobile_verified: 1 } })
 
-		fromCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: userId }, { fields: { name: 1, mobile: 1 } })
+		fromCustomer = Creator.getCollection('vip_customers').findOne({ space: spaceId, owner: userId }, { fields: { name: 1, mobile: 1 , mobile_verified: 1 } })
 
-		if toCustomer.mobile
+		if toCustomer.mobile && toCustomer.mobile_verified && fromCustomer.mobile_verified
 			# 发送手机短信
 			SMSQueue.send({
 				RecNum: toCustomer.mobile,

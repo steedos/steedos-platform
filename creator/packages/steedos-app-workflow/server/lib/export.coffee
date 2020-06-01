@@ -30,8 +30,8 @@ _getFlowByForm = (form, flowId, is_copy, company_id)->
 #
 #				step.approver_orgs = []
 
-		if !is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id != flow.company_id)
-			delete flow.perms
+#		if !is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id != flow.company_id)
+#			delete flow.perms
 
 	return flows;
 
@@ -88,7 +88,8 @@ steedosExport.form = (formId, flowId, is_copy, company_id) ->
 
 			if number_rule_name
 				number_rule = db.instance_number_rules.findOne({space: spaceId, name: number_rule_name}, {fields: {_id: 1, name: 1, year: 1, first_number: 1, rules: 1}})
-
+				if !number_rule
+					throw new Error('not find instance number rule, name is ' + number_rule_name);
 				number_rule.number = 0
 
 				if !instance_number_rules.findPropertyByPK("_id", number_rule._id)

@@ -95,6 +95,9 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 			when 'odata'
 				field.type = 'odata'
 				fields.push field
+			when 'html'
+				field.type = 'html'
+				fields.push field
 			else
 				console.log(f.code, f.name, f.type)
 

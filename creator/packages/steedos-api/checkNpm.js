@@ -7,6 +7,5 @@ checkNpmVersions({
 	'url': '>=0.10.0',
 	'request': '>=2.81.0',
 	'xinge': '>=1.1.3',
-	'huawei-push': '>=0.0.6-0',
 	'xiaomi-push': '>=0.4.5'
 }, 'steedos:api');

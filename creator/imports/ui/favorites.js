@@ -98,5 +98,8 @@ Template.favorites.helpers({
 			var url =Creator.getObjectUrl("favorites", null, '-')
 			FlowRouter.go(getFlowRouterPath(url));
 		}
+	},
+	title: function(){
+		return window.t("favorites__object")
 	}
 });

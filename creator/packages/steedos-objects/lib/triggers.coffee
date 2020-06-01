@@ -43,7 +43,8 @@ Creator.initTriggers = (object_name)->
 	_.each obj.triggers, (trigger, trigger_name)->
 		if Meteor.isServer and trigger.on == "server" and trigger.todo and trigger.when
 			_trigger_hook = initTrigger object_name, trigger
-			Creator._trigger_hooks[object_name].push(_trigger_hook)
+			if _trigger_hook
+				Creator._trigger_hooks[object_name].push(_trigger_hook)
 		if Meteor.isClient and trigger.on == "client" and trigger.todo and trigger.when
 			_trigger_hook = initTrigger object_name, trigger
 			Creator._trigger_hooks[object_name].push(_trigger_hook)

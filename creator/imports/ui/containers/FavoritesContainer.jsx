@@ -6,7 +6,7 @@ function FavoritesContainer(prop){
 	return (
 		<Provider store={store}>
 			<Bootstrap>
-				<Favorites onToggleActionSelected={prop.onToggleActionSelected} recordOnClick={prop.recordOnClick} id={prop.id} editOnClick={prop.editOnClick}></Favorites>
+				<Favorites title={prop.title} onToggleActionSelected={prop.onToggleActionSelected} recordOnClick={prop.recordOnClick} id={prop.id} editOnClick={prop.editOnClick}></Favorites>
 			</Bootstrap>
 		</Provider>
 	)

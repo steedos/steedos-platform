@@ -22,7 +22,7 @@ Meteor.methods
 		Accounts.setPassword(user_id, password, {logout: true})
 
 		# 如果用户手机号通过验证，就发短信提醒
-		if userCP.mobile
+		if userCP.mobile && userCP.mobile_verified
 			lang = 'en'
 			if userCP.locale is 'zh-cn'
 				lang = 'zh-CN'
@@ -33,5 +33,5 @@ Meteor.methods
 				RecNum: userCP.mobile,
 				SignName: '华炎办公',
 				TemplateCode: 'SMS_67200967',
-				msg: TAPi18n.__('sms.change_password.template', {name:currentUser.name}, lang)
+				msg: TAPi18n.__('sms.change_password.template', {}, lang)
 

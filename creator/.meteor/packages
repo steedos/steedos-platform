@@ -21,6 +21,7 @@ logging@1.1.19
 meteor-base@1.3.0
 mobile-experience@1.0.5
 mongo@1.4.2
+steedos:meteor-fix
 random@1.1.0
 rate-limit@1.0.8
 reactive-dict@1.2.0
@@ -129,7 +130,7 @@ steedos:odata
 
 steedos:logger@0.0.2
 
-steedos:object-database
+# steedos:object-database
 
 
 # steedos:weixin
@@ -158,7 +159,6 @@ steedos:webhookqueue
 steedos:creator
 
 steedos:instance-record-queue
-# steedos:instances-statistics
 # steedos:love
 steedos:app-chat
 

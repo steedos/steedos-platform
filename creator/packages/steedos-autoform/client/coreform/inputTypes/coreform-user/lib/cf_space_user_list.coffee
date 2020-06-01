@@ -7,7 +7,7 @@ Template.cf_space_user_list.onCreated ->
 
 		spaceId = Template.instance().data.spaceId || Session.get("cf_space")
 
-		childrens = SteedosDataManager.organizationRemote.find({space: spaceId, hidden: {$ne: true}}, {
+		childrens = SteedosDataManager.organizationRemote.find({space: spaceId, hidden: {$eq: true}}, {
 			fields: {
 				_id: 1
 			}
@@ -16,7 +16,7 @@ Template.cf_space_user_list.onCreated ->
 		orgs = childrens.getProperty("_id")
 
 
-	self.unhidden_orgs = new ReactiveVar(orgs);
+	self.hidden_orgs = new ReactiveVar(orgs);
 
 	Session.set("cf_contact_list_search", false)
 
@@ -75,8 +75,9 @@ Template.cf_space_user_list.helpers
 					else
 						spaceIds = db.spaces.find().fetch().getProperty("_id")
 
-					if !Steedos.isSpaceAdmin()
-						query.organizations = {$in: Template.instance().unhidden_orgs.get()}
+					hidden_orgs = Template.instance().hidden_orgs.get()
+					if !Steedos.isSpaceAdmin() && hidden_orgs?.length
+						query.organizations = {$nin: hidden_orgs}
 
 					query.space = {$in: spaceIds}
 		return query;
@@ -166,3 +167,10 @@ Template.cf_space_user_list.onRendered ->
 
 # CFDataManager.setContactModalValue(@data.defaultValues);
 # $("#contact_list_load").hide();
+
+Template.cf_space_user_list.onDestroyed ->
+	if $("#cf_space_user_list").length > 0
+		console.error('cf_space_user_list.onDestroyed。。。render user list....', (new Date).getTime());
+		TabularTables.cf_tabular_space_user.customData = @data
+		if !@data.multiple
+			$("#cf_reverse").hide();

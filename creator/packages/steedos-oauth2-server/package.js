@@ -41,9 +41,6 @@ Package.onUse(function(api) {
 	api.addFiles('lib/server.js', 'server');
 	api.addFiles('lib/client.js', 'client');
 
-	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
-	api.addFiles(tapi18nFiles, ['client', 'server']);
-
 	api.addFiles('client/oauth2authorize.html', 'client');
 	api.addFiles('client/oauth2authorize.less', 'client');
 	api.addFiles('client/oauth2authorize.coffee', 'client');

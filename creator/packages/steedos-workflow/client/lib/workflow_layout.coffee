@@ -45,6 +45,15 @@ Workflow.renderListLayout = (columns)->
 		else
 			Session.set("workflow_show_as", "2")
 
+getInstanceWrapperWidth = ()->
+	columns = Session.get("workflow_show_as")
+	if columns == "1"
+		return $(".creator-content-wrapper .workflow-main .instance-list-wrapper").outerWidth()
+	else
+		bothWidth = $(".creator-content-wrapper .workflow-main").outerWidth()
+		leftWidth = $(".creator-content-wrapper .workflow-main .instance-list-wrapper").outerWidth()
+		return bothWidth - leftWidth - 36
+
 Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 	# 刷新或第一次进入时判断为手机，则不执行该函数，workflow_max_unfolded_buttons_count值保持为空值
 	maxUnfoldedCount = 3
@@ -52,7 +61,7 @@ Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 		# 这里只是PC上窗口变小为手机时的效果
 		maxUnfoldedCount = 2
 	else
-		width = $(".creator-content-wrapper .instance-wrapper").outerWidth()
+		width = getInstanceWrapperWidth()
 		if width < 400
 			maxUnfoldedCount = 2
 		else if width < 500

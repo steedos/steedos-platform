@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { GridModal, Bootstrap, store } from '@steedos/react';
 
 function GridModalContainer(prop){
-	console.log('GridModalContainer prop', prop);
+	// console.log('GridModalContainer prop', prop);
 	return (
 		<Provider store={store}>
 			<Bootstrap>

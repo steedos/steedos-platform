@@ -81,23 +81,30 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = [Object]
 		else if field.type == "html"
 			fs.type = String
-			fs.autoform.afFieldInput =
-				type: "summernote"
-				class: 'editor'
-				settings:
-					height: 200
-					dialogsInBody: true
-					toolbar:  [
-						['font1', ['style']],
-						['font2', ['bold', 'underline', 'italic', 'clear']],
-						['font3', ['fontname']],
-						['color', ['color']],
-						['para', ['ul', 'ol', 'paragraph']],
-						['table', ['table']],
-						['insert', ['link', 'picture']],
-						['view', ['codeview']]
-					]
-					fontNames: ['Arial', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', '宋体','黑体','微软雅黑','仿宋','楷体','隶书','幼圆']
+			if Meteor.isClient
+				locale = Steedos.locale()
+				if locale == "zh-cn" || locale == "zh-CN"
+					locale = "zh-CN"
+				else
+					locale = "en-US"
+				fs.autoform.afFieldInput =
+					type: "summernote"
+					class: 'summernote-editor'
+					settings:
+						height: 200
+						dialogsInBody: true
+						toolbar:  [
+							['font1', ['style']],
+							['font2', ['bold', 'underline', 'italic', 'clear']],
+							['font3', ['fontname']],
+							['color', ['color']],
+							['para', ['ul', 'ol', 'paragraph']],
+							['table', ['table']],
+							['insert', ['link', 'picture']],
+							['view', ['codeview']]
+						]
+						fontNames: ['Arial', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', '宋体','黑体','微软雅黑','仿宋','楷体','隶书','幼圆']
+						lang: locale
 
 		else if (field.type == "lookup" or field.type == "master_detail")
 			fs.type = String
@@ -300,6 +307,8 @@ Creator.getObjectSchema = (obj) ->
 				fs.decimal = true
 		else if field.type == "boolean"
 			fs.type = Boolean
+			if field.readonly
+				fs.autoform.disabled = true
 			fs.autoform.type = "steedos-boolean-checkbox"
 		else if field.type == "reference"
 			fs.type = String

@@ -4,6 +4,7 @@
         <div class="print-tool">
             <label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-attachments" /><span>{{_ 'instance_attachment'}}</span></label>
             <label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces"/><span>{{_ 'instance_approval_history'}}</span></label>
+            <label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces-simplify"/><span>{{_ 'instance_print_traces_simplify'}}</span></label>
         </div>
         <div class="pull-right">
             <div class="btn-group">
@@ -15,11 +16,11 @@
 		<div class="form-group pull-right">
 			<label class="radio-inline">
 				<input type="radio" name="printWidthA4" id="printWidthAZ" value="210" checked="checked">
-				A4纵向
+				{{_ 'instance_print_a4_vertical'}}
 			</label>
 			<label class="radio-inline">
 				<input type="radio" name="printWidthA4" id="printWidthAH" value="297">
-				A4横向
+				{{_ 'instance_print_a4_horizontal'}}
 			</label>
 			<label class="radio-inline" style="padding-left: 0px;">
 				<div class="input-group input-group-sm">
@@ -54,7 +55,11 @@
                         </div>
                         {{#if unequals 'draft' instance.state}}
                             <div class="{{#unless isShowTraces}} hide {{/unless}}">
-                                {{> Template.dynamic template="instance_traces_table" data=instance.traces}}
+                                {{#if isShowTracesSimplify}}
+                                    {{> Template.dynamic template="instance_traces_table" data=(simplifyTraces instance.traces)}}
+                                {{else}}
+                                    {{> Template.dynamic template="instance_traces_table" data=instance.traces}}
+                                {{/if}}
                             </div>
                         {{/if}}
 				    </div>

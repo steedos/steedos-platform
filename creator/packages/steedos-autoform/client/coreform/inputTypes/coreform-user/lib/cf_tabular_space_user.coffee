@@ -29,7 +29,7 @@ Meteor.startup ()->
 				data: "name",
 				orderable: false,
 				render:  (val, type, doc) ->
-					return "<label data-user='" + doc.user + "' class='for-input'><div class='user-name'><img src='" + Steedos.absoluteUrl() + "avatar/"+doc.user+"?w=28&h=25&fs=14" +"' class='selectTag-profile img-circle'><font>" + doc.name + "</font></div></label>"
+					return "<label data-user='" + doc.user + "' class='for-input'><div class='user-name'><font>" + doc.name + "</font></div></label>"
 			},
 			{
 				data: "sort_no",

@@ -90,9 +90,6 @@ Package.onUse(function (api) {
 	api.use('universe:i18n');
 	api.use('steedos:app-base');
 
-	api.addFiles('i18n/en.i18n.json');
-	api.addFiles('i18n/zh-CN.i18n.json');
-
 	api.addFiles('checkNpm.js', "server");
 
 	api.addFiles('core.coffee');
@@ -127,7 +124,7 @@ Package.onUse(function (api) {
 	api.addFiles('server/publications/space_need_to_confirm.coffee', 'server');
 
 	api.addFiles('server/lib/permission_manager.coffee', 'server');
-	api.addFiles('server/lib/uuflow_manager.coffee', 'server');
+	api.addFiles('server/lib/uuflowManagerForInitApproval.coffee', 'server');
 
 	api.addFiles('server/routes/s3.coffee', 'server');
 	api.addFiles('server/routes/api_workflow_drafts.coffee', 'server');
@@ -358,6 +355,6 @@ Package.onUse(function (api) {
 	api.addAssets('assets/logo.png', 'client');
 	api.addAssets('assets/logo-square.png', 'client');
 
-	api.export(['permissionManagerForInitApproval', 'permissionManagerForInitApproval'], ['server']);
+	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 
 });

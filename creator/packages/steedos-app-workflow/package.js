@@ -38,8 +38,6 @@ Package.onUse(function(api) {
 	api.use('steedos:webhookqueue@0.0.1');
 
 	api.use('universe:i18n@1.13.0');
-	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json'];
-	api.addFiles(tapi18nFiles, ['client', 'server']);
 
 	api.addFiles('checkNpm.js', 'server');
 

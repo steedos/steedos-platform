@@ -19,6 +19,7 @@ _itemClick = (e, object_name, dxSearchGridInstance)->
 		dataSource: actionSheetItems
 		showTitle: false
 		usePopover: true
+		width: "auto"
 		onItemClick: (value)->
 			if !value.itemData.action
 				return false

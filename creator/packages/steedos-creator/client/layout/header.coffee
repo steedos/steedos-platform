@@ -51,9 +51,6 @@ Template.creatorHeader.helpers
 			if space
 				return space.name
 
-	helpUrl: ()->
-		return "https://www.steedos.com/help";
-
 Template.creatorHeader.events
 
 	'click .creator-button-setup': (e, t)->
@@ -77,3 +74,6 @@ Template.creatorHeader.events
 
 	'click .refresh': ()->
 		location.reload()
+
+	'click .creator-button-help': (event, template) ->
+		Steedos.openWindow "https://www.steedos.com/help";

@@ -6,3 +6,5 @@ export * from './favorites';
 export * from './select_users'
 export * from './template_flows_modal'
 export * from './grid_modal'
+export * from './flows_tree_modal'
+export * from './header_profile'

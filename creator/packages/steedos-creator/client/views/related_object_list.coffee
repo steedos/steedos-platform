@@ -14,10 +14,8 @@ Template.related_object_list.helpers
 	
 	record_name: ()->
 		object_name = Session.get "object_name"
-		record_id = Session.get "record_id"
 		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-		if Creator.getCollection(object_name).findOne(record_id)
-			return Creator.getCollection(object_name).findOne(record_id)[name_field_key]
+		return Template.instance()?.record.get()[name_field_key]
 
 	record_url: ()->
 		object_name = Session.get "object_name"
@@ -49,7 +47,10 @@ Template.related_object_list.helpers
 		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 		related_object_name = Session.get "related_object_name"
 		related_list_item_props = relatedList.find((item)-> return item.object_name == related_object_name)
-		return {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props}
+		data = {related_object_name: related_object_name, object_name: object_name, total: Template.instance().recordsTotal, is_related: true, related_list_item_props: related_list_item_props, pageSize: 50}
+		if object_name == 'objects'
+			data.record_id = Template.instance()?.record.get().name;
+		return data
 
 
 Template.related_object_list.events
@@ -57,6 +58,8 @@ Template.related_object_list.events
 		related_object_name = Session.get "related_object_name"
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
+		if object_name == 'objects'
+			record_id = template?.record?.get().name;
 		action_collection_name = Creator.getObject(related_object_name).label
 		
 		ids = Creator.TabularSelectedIds[related_object_name]
@@ -89,3 +92,10 @@ Template.related_object_list.events
 
 Template.related_object_list.onCreated ->
 	this.recordsTotal = new ReactiveVar(0)
+	this.record = new ReactiveVar({});
+	object_name = Session.get "object_name"
+	record_id = Session.get "record_id"
+	self = this
+	this.autorun ()->
+		self.record.set(Creator.getCollection(object_name).findOne(record_id) || {})
+

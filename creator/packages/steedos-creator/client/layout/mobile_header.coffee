@@ -1,6 +1,6 @@
 Template.creatorMobileHeader.helpers
 	isInDetail: ()->
-		if Session.get("record_id") || Session.get("showBackHeader")
+		if Session.get("record_id") || Session.get("instanceId") || Session.get("showBackHeader")
 			return true
 		return false
 

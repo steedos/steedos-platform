@@ -1,9 +1,7 @@
 @urlQuery = new Array()
 checkUserSigned = (context, redirect) ->
 	if Meteor.userId()
-		currentPath = FlowRouter.current().path
-		if currentPath != urlQuery[urlQuery.length - 1]
-			urlQuery.push currentPath
+		Creator.pushCurrentPathToUrlQuery();
 		Meteor.defer(Favorites.changeState);
 	return
 	# listTreeCompany = localStorage.getItem("listTreeCompany")
@@ -28,12 +26,12 @@ set_sessions = (context, redirect)->
 	app_id = context.params.app_id
 	if (app_id != "-")
 		Session.set("app_id", app_id)
-	Session.set("object_name", context.params.object_name)
-	Session.set("record_id", context.params.record_id)
 	object_name = context.params.object_name
-	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", context.params.object_name)
+	Session.set("object_name", object_name)
+	Session.set("record_id", context.params.record_id)
+	objectHomeComponent = ReactSteedos.pluginComponentSelector(ReactSteedos.store.getState(), "ObjectHome", object_name)
 	if objectHomeComponent
-		Session.set("object_home_component", objectHomeComponent.toString());
+		Session.set("object_home_component", object_name);
 	else
 		Session.set("object_home_component", null)
 
@@ -114,6 +112,7 @@ FlowRouter.route '/app/:app_id/home',
 			if Steedos.isMobile()
 				Session.set('hidden_header', true)
 				main = 'dashboard'
+			Steedos.setAppTitle([t("Home"), "Steedos"].join(" | "));
 			BlazeLayout.render Creator.getLayout(),
 				main: main
 	triggersExit: [(context, redirect) ->

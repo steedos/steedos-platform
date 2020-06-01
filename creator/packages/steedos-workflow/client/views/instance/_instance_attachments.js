@@ -232,6 +232,21 @@ InstanceAttachmentTemplate.helpers = {
 		}
 	},
 
+	flow_files: function() {
+		var ins = WorkflowManager.getInstance();
+		if (!ins)
+			return false;
+		return cfs.files.find({ 'metadata.space': ins.space, 'metadata.object_name': 'flows', 'metadata.record_id': ins.flow });
+	},
+
+	isDraftAndFlowfilesExist: function() {
+		var ins = WorkflowManager.getInstance();
+		if (!ins)
+			return false;
+		return (Session.get('box') == 'draft') && !!cfs.files.find({ 'metadata.space': ins.space, 'metadata.object_name': 'flows', 'metadata.record_id': ins.flow }).count();
+	}
+
+
 }
 
 if (Meteor.isServer) {

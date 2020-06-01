@@ -38,7 +38,7 @@ Template.cf_contact_modal.events
 
 		$(target).val(values.getProperty("name").toString()).trigger('change');
 
-		Modal.hide("cf_contact_modal");
+		Modal.hide(template);
 
 		Modal.allowMultiple = false;
 
@@ -47,7 +47,7 @@ Template.cf_contact_modal.events
 #		target = $("#" + template.data.targetId)
 		target.dataset.values = "";
 		$(target).val("").trigger('change');
-		Modal.hide("cf_contact_modal");
+		Modal.hide(template);
 		Modal.allowMultiple = false;
 
 	'click .organization-active': (event, template) ->
@@ -71,3 +71,5 @@ Template.cf_contact_modal.onRendered ->
 	CFDataManager.setContactModalValue(CFDataManager.getFormulaSpaceUsers(@data.defaultValues, @data.spaceId));
 	CFDataManager.handerContactModalValueLabel();
 
+#Template.cf_contact_modal.onDestroyed ->
+#	console.log('cf_contact_modal.onDestroyed。。。');

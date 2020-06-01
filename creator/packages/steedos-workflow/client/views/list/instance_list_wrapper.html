@@ -53,13 +53,13 @@
 				<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
 					<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
 						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_query">
-							<a href="javascript:void(0);" title="查找">
-								<div class="slds-truncate" title="查找">查找</div>
+							<a href="javascript:void(0);" title="{{_ "standard_query"}}">
+								<div class="slds-truncate" title="{{_ "standard_query"}}">{{_ "standard_query"}}</div>
 							</a>
 						</li>
 						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_new">
-							<a href="javascript:void(0);" title="新建">
-								<div class="slds-truncate" title="新建">新建</div>
+							<a href="javascript:void(0);" title="{{_ "New"}}">
+								<div class="slds-truncate" title="{{_ "New"}}">{{_ "New"}}</div>
 							</a>
 						</li>
 					</ul>
@@ -74,9 +74,9 @@
 					<div>
 						<div class="search-in-list slds-m-left_large slds-is-relative">
 							<div force-list-view-manager-search-bar_list-view-manager-search-bar="" class="slds-form-element">
-								<label for="instance_search" class="slds-form-element__label slds-no-flex slds-assistive-text">搜索{{_ objectSearchLabel}}</label>
+								<label for="instance_search" class="slds-form-element__label slds-no-flex slds-assistive-text">{{_ "Search"}} {{_ objectSearchLabel}}</label>
 								<div class="slds-form-element__control slds-grow slds-input-has-icon slds-input-has-icon_left-right">
-									<input type="search" value="{{search_text}}" id="instance_search" placeholder="搜索{{_ objectSearchLabel}}" name="search-input" class="slds-input">
+									<input type="search" value="{{search_text}}" id="instance_search" placeholder='{{_ "Search"}} {{_ objectSearchLabel}}' name="search-input" class="slds-input">
 									<button class="btn btn-default hide" type="button" id="instance_search_button">
 										<i class="fa fa-search"></i>
 									</button>

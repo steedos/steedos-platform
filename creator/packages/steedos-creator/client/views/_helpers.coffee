@@ -4,6 +4,10 @@ Creator.helpers =
 		return Session.get("object_name")
 	object: ()->
 		return Creator.getObject(Session.get("object_name"))
+	object_listviews: ()->
+		return Creator.getObject("object_listviews")
+	objectLabel: (objectName)->
+		return Creator.getObject(objectName).label
 	getOperationLabel: (operation)->
 		switch operation
 			when "=" then return t("creator_filter_operation_equal")

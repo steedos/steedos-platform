@@ -35,7 +35,7 @@ oDataOperation = (type, url, data, object_name)->
 			request.setRequestHeader 'X-Auth-Token', Accounts._storedLoginToken()
 			request.setRequestHeader 'X-Space-Id', Steedos.spaceId()
 		success: (data) ->
-			console.log('oDataOperation success');
+#			console.log('oDataOperation success');
 			if Session.get("cmOperation") == "insert"
 				_id = data.value[0]._id
 			else if Session.get("cmOperation") == "update"
@@ -514,11 +514,11 @@ Template.CreatorAfModal.events
 
 		if t.data.collectionName
 			if t.data.operation == "update"
-				title = "编辑#{t.data.collectionName}"
+				title = "#{window.t('Edit')} #{t.data.collectionName}"
 			else if t.data.operation == "insert"
-				title = "新建#{t.data.collectionName}"
+				title = "#{window.t('New')} #{t.data.collectionName}"
 			else if t.data.operation == "remove"
-				title = "删除#{t.data.collectionName}"
+				title = "#{window.t('Delete')} #{t.data.collectionName}"
 		else
 			title = html
 
@@ -629,7 +629,8 @@ Template.CreatorAfModal.events
 						schema = schemaInstance._schema
 						disabledFields = Creator.getDisabledFields(schema)
 						_.each disabledFields, (disabledField)->
-							delete insertDoc[disabledField]
+							if schema[disabledField].type != Boolean
+								delete insertDoc[disabledField]
 
 					if Session.get("cmOperation") == "insert"
 						data = insertDoc
@@ -672,7 +673,7 @@ Template.CreatorAfModal.events
 						data = updateDoc
 						type = "put"
 
-					console.log "begin......", data
+#					console.log "begin......", data
 					if triggers
 						if Session.get("cmOperation") == "insert"
 							_.each triggers, (trigger, key)->
@@ -705,9 +706,9 @@ Template.CreatorAfModal.events
 					console.log('onError......');
 					console.error error
 					if error.reason
-						toastr?.error?(TAPi18n.__(error.reason))
+						toastr?.error?(TAPi18n.__(error.reason, error.details))
 					else if error.message
-						toastr?.error?(TAPi18n.__(error.message))
+						toastr?.error?(TAPi18n.__(error.message, error.details))
 					else
 						toastr?.error?(error)
 

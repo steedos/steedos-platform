@@ -1,6 +1,6 @@
 InstanceManager = {};
 
-InstanceManager.runFormula = function(fieldCode) {
+InstanceManager.runFormula = function (fieldCode) {
 	var form_version = WorkflowManager.getInstanceFormVersion();
 	var formula_fields = []
 	if (form_version)
@@ -14,7 +14,7 @@ InstanceManager.runFormula = function(fieldCode) {
 	});
 }
 
-InstanceManager.isTableStyle = function(formId) {
+InstanceManager.isTableStyle = function (formId) {
 
 	if (Steedos.isMobile()) {
 		return false;
@@ -26,7 +26,7 @@ InstanceManager.isTableStyle = function(formId) {
 	return false;
 }
 
-InstanceManager.getFormField = function(fieldId) {
+InstanceManager.getFormField = function (fieldId) {
 	var instanceFields = WorkflowManager.getInstanceFields();
 	var field = instanceFields.filterProperty("_id", fieldId);
 
@@ -41,7 +41,7 @@ InstanceManager.getFormField = function(fieldId) {
  * 计算下一步步骤
  * @returns {Array}
  */
-InstanceManager.getNextStepOptions = function() {
+InstanceManager.getNextStepOptions = function () {
 
 	if (ApproveManager.isReadOnly())
 		return []
@@ -76,7 +76,7 @@ InstanceManager.getNextStepOptions = function() {
 	if (nextSteps && nextSteps.length > 0) {
 		var next_step_id = current_session_step_id;
 		var next_step_type = null;
-		nextSteps.forEach(function(step) {
+		nextSteps.forEach(function (step) {
 			var option = {
 				id: step.id,
 				text: step.name,
@@ -89,7 +89,7 @@ InstanceManager.getNextStepOptions = function() {
 			return step_item.id === current_session_step_id;
 		});
 
-		var isValidSessionStepId = _.isEmpty(current_session_step)? false: true;
+		var isValidSessionStepId = _.isEmpty(current_session_step) ? false : true;
 		// 默认选中第一个
 		if (next_step_options.length == 1) {
 			next_step_options[0].selected = 'selected'
@@ -111,7 +111,7 @@ InstanceManager.getNextStepOptions = function() {
 
 				if (_.isObject(session_next_step)) {
 					next_step_id = checkedNextStepRadio.val();
-				}else if (current_next_steps && current_next_steps.length > 0) {
+				} else if (current_next_steps && current_next_steps.length > 0) {
 					//选中已暂存的值
 					var db_next_step = next_step_options.findPropertyByPK("id", current_next_steps[0].step)
 					if (_.isObject(db_next_step)) {
@@ -136,7 +136,7 @@ InstanceManager.getNextStepOptions = function() {
 
 		// Session.set("next_step_id", next_step_id);
 
-		next_step_options.forEach(function(option) {
+		next_step_options.forEach(function (option) {
 			if (option.id == next_step_id) {
 				option.selected = 'selected'
 				next_step_type = option.type
@@ -168,7 +168,7 @@ InstanceManager.getNextStepOptions = function() {
 //   });
 // }
 
-InstanceManager.nextStepUsersWillUpdate = function(changeField, nextStep) {
+InstanceManager.nextStepUsersWillUpdate = function (changeField, nextStep) {
 
 	'use strict';
 
@@ -191,7 +191,7 @@ InstanceManager.nextStepUsersWillUpdate = function(changeField, nextStep) {
 	return false;
 };
 
-InstanceManager.getNextUserOptions = function() {
+InstanceManager.getNextUserOptions = function () {
 
 	var next_user_options = []
 
@@ -224,12 +224,12 @@ InstanceManager.getNextUserOptions = function() {
 
 			}
 
-			nextStepUsers.forEach(function(user) {
+			nextStepUsers.forEach(function (user) {
 				var option = {
-						id: user.id,
-						name: user.name
-					}
-					// 有暂存的步骤
+					id: user.id,
+					name: user.name
+				}
+				// 有暂存的步骤
 				if (current_next_steps && current_next_steps.length > 0) {
 					if (current_next_steps[0].step == next_step_id && _.contains(current_next_steps[0].users, user.id)) {
 						option.selected = true
@@ -275,7 +275,7 @@ InstanceManager.getNextUserOptions = function() {
 // }
 
 
-InstanceManager.getFormFieldByCode = function(fieldCode) {
+InstanceManager.getFormFieldByCode = function (fieldCode) {
 	var instanceFields = WorkflowManager.getInstanceFields();
 	var field = instanceFields.filterProperty("code", fieldCode);
 
@@ -286,7 +286,7 @@ InstanceManager.getFormFieldByCode = function(fieldCode) {
 	return null;
 }
 
-InstanceManager.getApplicantUserId = function() {
+InstanceManager.getApplicantUserId = function () {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		var ins_applicant = $("#ins_applicant");
@@ -323,7 +323,7 @@ function removeMessage(parent_group) {
 	$(".help-block", parent_group).html('');
 }
 
-InstanceManager.checkFormValue = function() {
+InstanceManager.checkFormValue = function () {
 
 	InstanceManager.checkNextStep();
 
@@ -342,7 +342,7 @@ InstanceManager.checkFormValue = function() {
 }
 
 //下一步步骤校验
-InstanceManager.checkNextStep = function() {
+InstanceManager.checkNextStep = function () {
 	var nextSteps_parent_group = $("[name=instance_suggestion_next_step]").closest(".form-group");
 
 	if (ApproveManager.error.nextSteps != '') {
@@ -357,7 +357,7 @@ InstanceManager.checkNextStep = function() {
 		showMessage(nextSteps_parent_group, TAPi18n.__("instance_select_next_step"));
 }
 
-InstanceManager._setError_next_step_users = function(error, error_type, error_cdoe) {
+InstanceManager._setError_next_step_users = function (error, error_type, error_cdoe) {
 	var next_user = $("input[name='nextStepUsers']");
 
 	if (next_user.length > 0) {
@@ -368,7 +368,7 @@ InstanceManager._setError_next_step_users = function(error, error_type, error_cd
 }
 
 //下一步处理人校验
-InstanceManager.handleErrorMessage = function() {
+InstanceManager.handleErrorMessage = function () {
 
 	if ($("input[name='nextStepUsers']").length < 1) {
 		return;
@@ -390,7 +390,7 @@ InstanceManager.handleErrorMessage = function() {
 }
 
 //下一步处理人校验
-InstanceManager.checkNextStepUser = function() {
+InstanceManager.checkNextStepUser = function () {
 
 	if ($("input[name='nextStepUsers']").length < 1) {
 		return;
@@ -412,7 +412,7 @@ InstanceManager.checkNextStepUser = function() {
 		showMessage(nextStepUsers_parent_group, TAPi18n.__("instance_next_step_user"));
 }
 
-InstanceManager.nextStepUserErrorClass = function() {
+InstanceManager.nextStepUserErrorClass = function () {
 
 	if ($("input[name='nextStepUsers']").length < 1) {
 		return;
@@ -435,24 +435,24 @@ InstanceManager.nextStepUserErrorClass = function() {
 }
 
 //如果是驳回必须填写意见
-InstanceManager.checkSuggestion = function(alter) {
+InstanceManager.checkSuggestion = function (alter) {
 	var judge = $("[name='judge']").filter(':checked').val();
 	var suggestion_parent_group = $("#suggestion").parent();
 	if (judge && judge == 'rejected') {
 		if ($("#suggestion").val())
 			removeMessage(suggestion_parent_group);
 		else
-		if (alter == 0)
-			showMessageInblock(suggestion_parent_group, TAPi18n.__("instance_reasons_reject"));
-		else {
-			showMessage(suggestion_parent_group, TAPi18n.__("instance_reasons_reject"));
-		}
+			if (alter == 0)
+				showMessageInblock(suggestion_parent_group, TAPi18n.__("instance_reasons_reject"));
+			else {
+				showMessage(suggestion_parent_group, TAPi18n.__("instance_reasons_reject"));
+			}
 	} else {
 		removeMessage(suggestion_parent_group);
 	}
 }
 
-InstanceManager.checkFormFieldValue = function(field) {
+InstanceManager.checkFormFieldValue = function (field) {
 
 	if (!field)
 		return;
@@ -519,7 +519,7 @@ InstanceManager.checkFormFieldValue = function(field) {
 	}
 }
 
-InstanceManager.getFormFieldValue = function(fieldCode) {
+InstanceManager.getFormFieldValue = function (fieldCode) {
 	return AutoForm.getFieldValue(fieldCode, "instanceform");
 }
 
@@ -558,7 +558,7 @@ function adjustFieldValue(field, value) {
 }
 
 
-InstanceManager.getInstanceValuesByAutoForm = function() {
+InstanceManager.getInstanceValuesByAutoForm = function () {
 
 	var fields = WorkflowManager.getInstanceFields();
 
@@ -568,14 +568,16 @@ InstanceManager.getInstanceValuesByAutoForm = function() {
 
 	var values = {};
 
-	fields.forEach(function(field) {
+	fields.forEach(function (field) {
 		if (field.type == 'table') {
 			t_values = new Array();
 			if (field.sfields) {
-				if (!autoFormValue[field.code])
+				if (!autoFormValue[field.code]) {
+					values[field.code] = t_values;
 					return;
-				autoFormValue[field.code].forEach(function(t_row_value) {
-					field.sfields.forEach(function(sfield) {
+				}
+				autoFormValue[field.code].forEach(function (t_row_value) {
+					field.sfields.forEach(function (sfield) {
 						//if(sfield.type == 'checkbox'){
 						t_row_value[sfield.code] = adjustFieldValue(sfield, t_row_value[sfield.code]);
 						//}
@@ -594,7 +596,7 @@ InstanceManager.getInstanceValuesByAutoForm = function() {
 	return values;
 }
 
-InstanceManager.getCurrentStep = function() {
+InstanceManager.getCurrentStep = function () {
 
 	var instance = WorkflowManager.getInstance();
 
@@ -608,7 +610,7 @@ InstanceManager.getCurrentStep = function() {
 	return WorkflowManager.getInstanceStep(currentStepId);
 }
 
-InstanceManager.getStartStep = function() {
+InstanceManager.getStartStep = function () {
 
 	var instance = WorkflowManager.getInstance();
 
@@ -618,7 +620,7 @@ InstanceManager.getStartStep = function() {
 	return WorkflowManager.getInstanceStep(instance.traces[0].step);
 }
 
-InstanceManager.getCurrentValues = function() {
+InstanceManager.getCurrentValues = function () {
 	var box = Session.get("box"),
 		approve,
 		instanceValue;
@@ -653,14 +655,14 @@ InstanceManager.getCurrentValues = function() {
 	return instanceValue;
 }
 
-InstanceManager.clone = function(obj) {
+InstanceManager.clone = function (obj) {
 	if (!obj) {
 		return
 	}
 	return JSON.parse(JSON.stringify(obj))
 }
 
-InstanceManager.getCurrentApprove = function() {
+InstanceManager.getCurrentApprove = function () {
 	var instance = WorkflowManager.getInstance();
 
 	if (!instance)
@@ -680,8 +682,8 @@ InstanceManager.getCurrentApprove = function() {
 	//传阅的approve返回最新一条
 	if (!currentApprove || currentApprove.type == 'cc') {
 		// 当前是传阅
-		_.each(instance.traces, function(t) {
-			_.each(t.approves, function(a) {
+		_.each(instance.traces, function (t) {
+			_.each(t.approves, function (a) {
 				if (a.type == 'cc' && a.handler == Meteor.userId() && a.is_finished == false) {
 					currentApprove = a;
 				}
@@ -699,7 +701,7 @@ InstanceManager.getCurrentApprove = function() {
 	return currentApprove;
 }
 
-InstanceManager.getMyApprove = function() {
+InstanceManager.getMyApprove = function () {
 
 	var currentApprove = InstanceManager.getCurrentApprove();
 
@@ -714,7 +716,7 @@ InstanceManager.getMyApprove = function() {
 			var selectedNextStepUsers = ApproveManager.getNextStepUsersSelectValue();
 			var nextStepUsers = new Array();
 			if (selectedNextStepUsers instanceof Array) {
-				selectedNextStepUsers.forEach(function(su) {
+				selectedNextStepUsers.forEach(function (su) {
 					nextStepUsers.push(su);
 				});
 			} else if (selectedNextStepUsers) {
@@ -736,7 +738,7 @@ InstanceManager.getMyApprove = function() {
 }
 
 // 申请单暂存
-InstanceManager.saveIns = function() {
+InstanceManager.saveIns = function () {
 	$('body').addClass("loading");
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
@@ -746,7 +748,7 @@ InstanceManager.saveIns = function() {
 
 		if (InstanceManager.isCC(instance)) {
 			var description = $("#suggestion").val();
-			Meteor.call('cc_save', instance._id, description, function(error, result) {
+			Meteor.call('cc_save', instance._id, description, function (error, result) {
 				$('body').removeClass("loading");
 				if (error) {
 					toastr.error(error);
@@ -796,7 +798,7 @@ InstanceManager.saveIns = function() {
 				instance.applicant_organization_name = organization.name;
 				instance.applicant_organization_fullname = organization.fullname;
 			}
-			Meteor.call("draft_save_instance", instance, function(error, result) {
+			Meteor.call("draft_save_instance", instance, function (error, result) {
 				$('body').removeClass("loading");
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
@@ -816,7 +818,7 @@ InstanceManager.saveIns = function() {
 			myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
 
 			if (!_.isEmpty(myApprove) && !_.isEmpty(myApprove._id)) {
-				Meteor.call("inbox_save_instance", myApprove, function(error, result) {
+				Meteor.call("inbox_save_instance", myApprove, function (error, result) {
 					$('body').removeClass("loading");
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
@@ -836,12 +838,12 @@ InstanceManager.saveIns = function() {
 }
 
 // 申请单新建
-InstanceManager.newIns = function(flowId) {
+InstanceManager.newIns = function (flowId) {
 	UUflow_api.post_draft(flowId);
 }
 
 // 申请单删除
-InstanceManager.deleteIns = function() {
+InstanceManager.deleteIns = function () {
 	var instance = WorkflowManager.getInstance();
 	if (!instance)
 		return;
@@ -850,7 +852,7 @@ InstanceManager.deleteIns = function() {
 }
 
 // 申请单提交
-InstanceManager.submitIns = function() {
+InstanceManager.submitIns = function () {
 
 	if (!InstanceEvent.before.instanceSubmit())
 		return;
@@ -875,7 +877,7 @@ InstanceManager.submitIns = function() {
 			Session.set("instance_submitting", true);
 
 			var description = $("#suggestion").val();
-			Meteor.call('cc_submit', instance._id, description, function(error, result) {
+			Meteor.call('cc_submit', instance._id, description, function (error, result) {
 				if (error) {
 					toastr.error(error);
 					Session.set("instance_submitting", false);
@@ -932,15 +934,15 @@ InstanceManager.submitIns = function() {
 }
 
 // 取消申请
-InstanceManager.terminateIns = function(reason) {
+InstanceManager.terminateIns = function (reason) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
-		UUflow_api.post_terminate({_id: instance._id, terminate_reason: reason});
+		UUflow_api.post_terminate({ _id: instance._id, terminate_reason: reason });
 	}
 }
 
 // 导出报表
-InstanceManager.exportIns = function(type) {
+InstanceManager.exportIns = function (type) {
 	spaceId = Session.get("spaceId");
 	flowId = Session.get("flowId");
 	if (spaceId && flowId)
@@ -948,7 +950,7 @@ InstanceManager.exportIns = function(type) {
 }
 
 // 转签核
-InstanceManager.reassignIns = function(user_ids, reason) {
+InstanceManager.reassignIns = function (user_ids, reason) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		instance.inbox_users = user_ids;
@@ -958,15 +960,15 @@ InstanceManager.reassignIns = function(user_ids, reason) {
 }
 
 // 重定位
-InstanceManager.relocateIns = function(step_id, user_ids, reason) {
+InstanceManager.relocateIns = function (step_id, user_ids, reason) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
-		UUflow_api.put_relocate({_id: instance._id, relocate_next_step: step_id, relocate_inbox_users: user_ids, relocate_comment: reason});
+		UUflow_api.put_relocate({ _id: instance._id, relocate_next_step: step_id, relocate_inbox_users: user_ids, relocate_comment: reason });
 	}
 }
 
 // 归档
-InstanceManager.archiveIns = function(insId) {
+InstanceManager.archiveIns = function (insId) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		if (instance.is_archived == true)
@@ -976,7 +978,7 @@ InstanceManager.archiveIns = function(insId) {
 }
 
 // 添加附件
-InstanceManager.addAttach = function(fileObj, isAddVersion) {
+InstanceManager.addAttach = function (fileObj, isAddVersion) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		var state = instance.state;
@@ -991,7 +993,7 @@ InstanceManager.addAttach = function(fileObj, isAddVersion) {
 		var attachs = instance.attachments || [];
 		var hasRepeatedFile = false;
 		var attach_id = Session.get("attach_id");
-		attachs.forEach(function(a) {
+		attachs.forEach(function (a) {
 			if (a.filename == fileName || (isAddVersion == true && a._id == attach_id)) {
 				hasRepeatedFile = true;
 				var his = a.historys;
@@ -1049,7 +1051,7 @@ InstanceManager.addAttach = function(fileObj, isAddVersion) {
 		if (state == "draft") {
 			instance.attachments = attachs;
 			instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-			Meteor.call("draft_save_instance", instance, function(error, result) {
+			Meteor.call("draft_save_instance", instance, function (error, result) {
 				Session.set('change_date', new Date());
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
@@ -1067,7 +1069,7 @@ InstanceManager.addAttach = function(fileObj, isAddVersion) {
 				$.extend(myApprove, InstanceManager.getMyApprove());
 				myApprove.attachments = attachs;
 				myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-				Meteor.call("inbox_save_instance", myApprove, function(error, result) {
+				Meteor.call("inbox_save_instance", myApprove, function (error, result) {
 					Session.set('change_date', new Date());
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
@@ -1083,13 +1085,13 @@ InstanceManager.addAttach = function(fileObj, isAddVersion) {
 }
 
 // 移除附件
-InstanceManager.removeAttach = function() {
+InstanceManager.removeAttach = function () {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		var state = instance.state;
 		var attachs = instance.attachments;
 		var file_id = Session.get("file_id");
-		var newAttachs = attachs.filter(function(item) {
+		var newAttachs = attachs.filter(function (item) {
 			if (item.current._rev != file_id) {
 				return item;
 			} else {
@@ -1106,7 +1108,7 @@ InstanceManager.removeAttach = function() {
 		if (state == "draft") {
 			instance.attachments = newAttachs;
 			instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-			Meteor.call("draft_save_instance", instance, function(error, result) {
+			Meteor.call("draft_save_instance", instance, function (error, result) {
 				Session.set('change_date', new Date());
 				WorkflowManager.instanceModified.set(false);
 				if (result == true) {
@@ -1125,7 +1127,7 @@ InstanceManager.removeAttach = function() {
 				$.extend(myApprove, InstanceManager.getMyApprove());
 				myApprove.attachments = newAttachs;
 				myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
-				Meteor.call("inbox_save_instance", myApprove, function(error, result) {
+				Meteor.call("inbox_save_instance", myApprove, function (error, result) {
 					Session.set('change_date', new Date());
 					WorkflowManager.instanceModified.set(false);
 					if (result == true) {
@@ -1142,34 +1144,38 @@ InstanceManager.removeAttach = function() {
 }
 
 // 上传附件
-InstanceManager.uploadAttach = function(files, isAddVersion, isMainAttach) {
+InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 	check(isAddVersion, Boolean);
 	check(isMainAttach, Boolean);
 
 	$(document.body).addClass("loading");
 	$('.loading-text').text(TAPi18n.__("workflow_attachment_uploading"));
 
-	// 专业版文件大小不能超过100M
-	// 读取settings中附件最大限制,默认100M
-	var maximumFileSize = 100 * 1024 * 1024;
-	var ref, ref1, ref2;
-	var attachment_size_limit = ((ref = Meteor.settings) != null ? (ref1 = ref["public"]) != null ? (ref2 = ref1.workflow) != null ? ref2.attachment_size_limit : void 0 : void 0 : void 0) || 100;
-	
-	if (attachment_size_limit)
-		maximumFileSize = attachment_size_limit * 1024 * 1024;
-	
-	// 免费版大小不能超过1M
-	var freeMaximumFileSize = 1024 * 1024;
-
 	var limitSize, warnStr;
 
 	var is_paid = WorkflowManager.isPaidSpace(Session.get('spaceId'));
 
 	if (is_paid) {
-		limitSize = maximumFileSize;
-		warnStr = t("workflow_attachment_paid_size_limit") + attachment_size_limit + "MB";
+		// 单个附件大小限制: 基础版10M, 专业版50M, 企业版100M
+		// 读取settings中附件最大限制
+		var maximumFileSize = 0;
+		if (Steedos.isLegalVersion('', "workflow.enterprise")) {
+			maximumFileSize = 100;
+		} else if (Steedos.isLegalVersion('', "workflow.professional")) {
+			maximumFileSize = 50;
+		} else if (Steedos.isLegalVersion('', "workflow.standard")) {
+			maximumFileSize = 10;
+		}
+		var ref, ref1, ref2;
+		var attachment_size_limit = ((ref = Meteor.settings) != null ? (ref1 = ref["public"]) != null ? (ref2 = ref1.workflow) != null ? ref2.attachment_size_limit : void 0 : void 0 : void 0);
+		if (attachment_size_limit) {
+			maximumFileSize = attachment_size_limit;
+		}
+		limitSize = maximumFileSize * 1024 * 1024;
+		warnStr = t("workflow_attachment_paid_size_limit") + maximumFileSize + "MB";
 	} else {
-		limitSize = freeMaximumFileSize;
+		// 免费版大小不能超过10M
+		limitSize = 10 * 1024 * 1024;
 		warnStr = t("workflow_attachment_free_size_limit");
 	}
 
@@ -1188,7 +1194,7 @@ InstanceManager.uploadAttach = function(files, isAddVersion, isMainAttach) {
 				type: "warning",
 				confirmButtonText: t('OK'),
 				closeOnConfirm: true
-			}, function() {
+			}, function () {
 				$(document.body).removeClass('loading');
 				$('.loading-text').text("");
 			});
@@ -1232,12 +1238,12 @@ InstanceManager.uploadAttach = function(files, isAddVersion, isMainAttach) {
 			dataType: 'json',
 			processData: false,
 			contentType: false,
-			success: function(responseText, status) {
+			success: function (responseText, status) {
 				var fileObj;
 				$(document.body).removeClass('loading');
 				$('.loading-text').text("");
 				if (responseText.errors) {
-					responseText.errors.forEach(function(e) {
+					responseText.errors.forEach(function (e) {
 						toastr.error(e.errorMessage);
 					});
 					return;
@@ -1245,7 +1251,7 @@ InstanceManager.uploadAttach = function(files, isAddVersion, isMainAttach) {
 
 				toastr.success(TAPi18n.__('Attachment was added successfully'));
 			},
-			error: function(xhr, msg, ex) {
+			error: function (xhr, msg, ex) {
 				$(document.body).removeClass('loading');
 				$('.loading-text').text("");
 				toastr.error(msg);
@@ -1255,11 +1261,11 @@ InstanceManager.uploadAttach = function(files, isAddVersion, isMainAttach) {
 	}
 }
 
-InstanceManager.lockAttach = function(file_id) {
+InstanceManager.lockAttach = function (file_id) {
 	Meteor.call('cfs_instances_lock', file_id, Meteor.userId(), Meteor.user().name)
 }
 
-InstanceManager.isInbox = function() {
+InstanceManager.isInbox = function () {
 	var instance = WorkflowManager.getInstance();
 	var currentUser = Meteor.userId();
 
@@ -1278,7 +1284,7 @@ InstanceManager.isInbox = function() {
 	return false;
 }
 
-InstanceManager.isCC = function(instance) {
+InstanceManager.isCC = function (instance) {
 	if (!instance)
 		return false;
 
@@ -1295,7 +1301,7 @@ InstanceManager.isCC = function(instance) {
 	return false;
 }
 
-InstanceManager.getCCApprove = function(userId, is_finished) {
+InstanceManager.getCCApprove = function (userId, is_finished) {
 
 	var instance = WorkflowManager.getInstance();
 
@@ -1303,9 +1309,9 @@ InstanceManager.getCCApprove = function(userId, is_finished) {
 
 	var rev = {};
 
-	traces.forEach(function(t) {
+	traces.forEach(function (t) {
 		if (t.approves) {
-			t.approves.forEach(function(approve) {
+			t.approves.forEach(function (approve) {
 				if (approve.handler == userId && approve.type == 'cc' && approve.is_finished == is_finished) {
 					rev = approve
 				}
@@ -1316,12 +1322,12 @@ InstanceManager.getCCApprove = function(userId, is_finished) {
 	return rev;
 }
 
-InstanceManager.unlockAttach = function(file_id) {
+InstanceManager.unlockAttach = function (file_id) {
 	Meteor.call('cfs_instances_unlock', file_id);
 }
 
 // 申请单转发/分发
-InstanceManager.forwardIns = function(instance_id, space_id, flow_id, hasSaveInstanceToAttachment, description, isForwardAttachments, selectedUsers, action_type, related) {
+InstanceManager.forwardIns = function (instance_id, space_id, flow_id, hasSaveInstanceToAttachment, description, isForwardAttachments, selectedUsers, action_type, related) {
 
 	if (Session.get("instance_submitting")) {
 		return;
@@ -1342,7 +1348,7 @@ InstanceManager.forwardIns = function(instance_id, space_id, flow_id, hasSaveIns
 		}
 	}
 
-	Meteor.call('forward_instance', instance_id, space_id, flow_id, hasSaveInstanceToAttachment, description, isForwardAttachments, selectedUsers, action_type, related, approve_id, function(error, result) {
+	Meteor.call('forward_instance', instance_id, space_id, flow_id, hasSaveInstanceToAttachment, description, isForwardAttachments, selectedUsers, action_type, related, approve_id, function (error, result) {
 		$('body').removeClass("loading");
 
 		Session.set("instance_submitting", false);
@@ -1379,7 +1385,7 @@ InstanceManager.forwardIns = function(instance_id, space_id, flow_id, hasSaveIns
 }
 
 
-InstanceManager.getUserInboxInstances = function() {
+InstanceManager.getUserInboxInstances = function () {
 	var query = {}
 	query.$or = [{
 		inbox_users: Meteor.userId()
@@ -1391,7 +1397,7 @@ InstanceManager.getUserInboxInstances = function() {
 }
 
 // 取回申请单
-InstanceManager.retrieveIns = function(reason) {
+InstanceManager.retrieveIns = function (reason) {
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		instance.retrieve_comment = reason;
@@ -1399,7 +1405,7 @@ InstanceManager.retrieveIns = function(reason) {
 	}
 }
 
-InstanceManager.fixInstancePosition = function(isNeedToScrollTop) {
+InstanceManager.fixInstancePosition = function (isNeedToScrollTop) {
 	if ($(".instance-wrapper .instance-view").hasClass("suggestion-active")) {
 		var suggestionBoxH = $(".instance-wrapper .instance-suggestion").height();
 		$(".instance-wrapper .instance").css("bottom", suggestionBoxH + 2);
@@ -1407,23 +1413,23 @@ InstanceManager.fixInstancePosition = function(isNeedToScrollTop) {
 		$(".instance-wrapper .instance").css("bottom", 0);
 	}
 	if (isNeedToScrollTop) {
-		setTimeout(function() {
+		setTimeout(function () {
 			$('.instance').scrollTop($('.instance .instance-form').height() + $('.instance-traces').height());
 		}, 1);
 	}
 }
 
 
-InstanceManager.setApproveHaveRead = function(instanceId) {
+InstanceManager.setApproveHaveRead = function (instanceId) {
 	var ins = WorkflowManager.getInstance()
 	if (!ins.is_read) {
 		var myApprove = InstanceManager.getCurrentApprove()
 		if (myApprove) {
-			Meteor.call("set_approve_have_read", ins._id, myApprove.trace, myApprove.id, function(error, result) {});
+			Meteor.call("set_approve_have_read", ins._id, myApprove.trace, myApprove.id, function (error, result) { });
 		} else {
 			var ccApprove = InstanceManager.getCCApprove(Meteor.userId(), false);
 			if (!_.isEmpty(ccApprove)) {
-				Meteor.call("cc_read", ccApprove, function(error, result) {
+				Meteor.call("cc_read", ccApprove, function (error, result) {
 					console.log('set read')
 				});
 			}
@@ -1432,7 +1438,7 @@ InstanceManager.setApproveHaveRead = function(instanceId) {
 	}
 }
 
-InstanceManager.instanceformChangeEvent = function(event) {
+InstanceManager.instanceformChangeEvent = function (event) {
 	var code, error, step, type, v;
 
 	if (ApproveManager.isReadOnly()) {
@@ -1474,8 +1480,8 @@ InstanceManager.instanceformChangeEvent = function(event) {
 		Session.set("ins_applicant", InstanceManager.getApplicantUserId());
 
 		if (InstanceManager.nextStepUsersWillUpdate({
-				name: 'applicant'
-			}, WorkflowManager.getInstanceStep(Session.get("next_step_id")))) {
+			name: 'applicant'
+		}, WorkflowManager.getInstanceStep(Session.get("next_step_id")))) {
 			Session.set("instance_next_user_recalculate", Random.id())
 		}
 
@@ -1491,24 +1497,24 @@ InstanceManager.instanceformChangeEvent = function(event) {
 	}
 }
 
-InstanceManager.isCCMustFinished = function() {
+InstanceManager.isCCMustFinished = function () {
 	var c = InstanceManager.getCurrentStep();
 	if (c && c.cc_must_finished == true) {
 		var ins = WorkflowManager.getInstance();
 		if (ins) {
-			var trace = _.find(ins.traces, function(t) {
+			var trace = _.find(ins.traces, function (t) {
 				return t.step == c._id;
 			});
 			var not_finished_users_name = new Array(),
 				user_id = Meteor.userId();
 			if (InstanceManager.isCC(ins)) {
-				_.each(trace.approves, function(a) {
+				_.each(trace.approves, function (a) {
 					if (a.type == 'cc' && a.from_user == user_id && a.is_finished != true && a.handler != user_id) {
 						not_finished_users_name.push(a.handler_name);
 					}
 				})
 			} else {
-				_.each(trace.approves, function(a) {
+				_.each(trace.approves, function (a) {
 					if (a.type == 'cc' && a.from_user == user_id && a.is_finished != true) {
 						not_finished_users_name.push(a.handler_name);
 					}
@@ -1526,7 +1532,7 @@ InstanceManager.isCCMustFinished = function() {
 	return true;
 }
 
-InstanceManager.getLastApprove = function(traces) {
+InstanceManager.getLastApprove = function (traces) {
 
 	var currentApprove, i, user_id;
 
@@ -1538,7 +1544,7 @@ InstanceManager.getLastApprove = function(traces) {
 
 	while (i >= 0) {
 		if (!currentApprove && traces[i].is_finished) {
-			_.each(traces[i].approves, function(ap) {
+			_.each(traces[i].approves, function (ap) {
 				if (!currentApprove) {
 					if (ap.is_finished && ap.user === user_id && (!ap.type || ap.type == 'reassign') && ['approved', 'submitted', 'rejected'].includes(ap.judge)) {
 						currentApprove = ap;
@@ -1552,7 +1558,7 @@ InstanceManager.getLastApprove = function(traces) {
 	return currentApprove;
 }
 
-InstanceManager.getLastTraceStepId = function(traces) {
+InstanceManager.getLastTraceStepId = function (traces) {
 
 	var i, step_id, trace_id, user_id;
 
@@ -1566,7 +1572,7 @@ InstanceManager.getLastTraceStepId = function(traces) {
 
 	while (i >= 0) {
 		if (!trace_id && traces[i].is_finished) {
-			_.each(traces[i].approves, function(ap) {
+			_.each(traces[i].approves, function (ap) {
 				if (!trace_id) {
 					if (ap.is_finished && ap.user === user_id && (!ap.type || ap.type == 'reassign') && ['approved', 'submitted', 'rejected'].includes(ap.judge)) {
 						trace_id = ap.trace;
@@ -1583,7 +1589,7 @@ InstanceManager.getLastTraceStepId = function(traces) {
 	return step_id;
 }
 
-InstanceManager.getLastCCTraceStepId = function(traces) {
+InstanceManager.getLastCCTraceStepId = function (traces) {
 
 	var i, step_id, trace_id, user_id;
 
@@ -1597,7 +1603,7 @@ InstanceManager.getLastCCTraceStepId = function(traces) {
 
 	while (i >= 0) {
 		if (!trace_id && traces[i].is_finished) {
-			_.each(traces[i].approves, function(ap) {
+			_.each(traces[i].approves, function (ap) {
 				if (!trace_id) {
 					if (ap.is_finished && ap.user === user_id && (!ap.type || ap.type == 'cc') && ['approved', 'submitted', 'rejected'].includes(ap.judge)) {
 						trace_id = ap.trace;
@@ -1614,7 +1620,7 @@ InstanceManager.getLastCCTraceStepId = function(traces) {
 	return step_id;
 }
 
-InstanceManager.getLastCCApprove = function(traces) {
+InstanceManager.getLastCCApprove = function (traces) {
 
 	var currentApprove, i, user_id;
 
@@ -1626,7 +1632,7 @@ InstanceManager.getLastCCApprove = function(traces) {
 
 	while (i >= 0) {
 		if (!currentApprove && traces[i].is_finished) {
-			_.each(traces[i].approves, function(ap) {
+			_.each(traces[i].approves, function (ap) {
 				if (!currentApprove) {
 					if (ap.is_finished && ap.handler === user_id && (!ap.type || ap.type == 'cc') && ['approved', 'submitted', 'rejected'].includes(ap.judge)) {
 						currentApprove = ap;
@@ -1640,7 +1646,7 @@ InstanceManager.getLastCCApprove = function(traces) {
 	return currentApprove;
 }
 
-InstanceManager.isAttachLocked = function(instance_id, user_id) {
+InstanceManager.isAttachLocked = function (instance_id, user_id) {
 	return !!cfs.instances.find({
 		'metadata.instance': instance_id,
 		'metadata.current': true,
@@ -1648,7 +1654,7 @@ InstanceManager.isAttachLocked = function(instance_id, user_id) {
 	}).count()
 }
 
-InstanceManager.getCCStep = function() {
+InstanceManager.getCCStep = function () {
 	var currentApprove = InstanceManager.getCurrentApprove();
 	if (!currentApprove)
 		return false;
@@ -1656,7 +1662,7 @@ InstanceManager.getCCStep = function() {
 	if (!ins)
 		return false;
 	var step;
-	var trace = _.find(ins.traces, function(t) {
+	var trace = _.find(ins.traces, function (t) {
 		return t._id == currentApprove.trace;
 	})
 	if (trace) {
@@ -1665,14 +1671,14 @@ InstanceManager.getCCStep = function() {
 	return step;
 }
 
-InstanceManager.updateApproveSign = function(sign_field_code, description, sign_type, lastSignApprove) {
+InstanceManager.updateApproveSign = function (sign_field_code, description, sign_type, lastSignApprove) {
 	myApprove = InstanceManager.getCurrentApprove()
 	if (myApprove && myApprove.sign_show != true) {
 		Meteor.call('update_approve_sign', myApprove.instance, myApprove.trace, myApprove._id, sign_field_code, description, sign_type || "update", lastSignApprove)
 	}
 }
 
-InstanceManager.getDistributeStep = function() {
+InstanceManager.getDistributeStep = function () {
 	var step;
 	if (InstanceManager.isInbox()) {
 		step = InstanceManager.getCurrentStep();
@@ -1691,10 +1697,10 @@ InstanceManager.getDistributeStep = function() {
 //track：防止计算陷入死循环
 var getCalculateSteps = function (step, track) {
 	var instance_form_values = Session.get("instance_form_values"); //申请单上的值发生变化时，重新计算步骤
-	if(!step){
+	if (!step) {
 		step = InstanceManager.getStartStep();
 	}
-	if(!track){
+	if (!track) {
 		track = []
 	}
 
@@ -1710,7 +1716,7 @@ var getCalculateSteps = function (step, track) {
 	_steps.push(step);
 	var nextSteps = ApproveManager.getNextSteps(WorkflowManager.getInstance(), step, judge, autoFormDoc, form_version.fields, true);
 	_.each(nextSteps, function (nextStep) {
-		if(!_.contains(track, nextStep._id)){
+		if (!_.contains(track, nextStep._id)) {
 			_steps = _steps.concat(getCalculateSteps(nextStep, track.concat(_.pluck(_steps, '_id'))))
 		}
 	})

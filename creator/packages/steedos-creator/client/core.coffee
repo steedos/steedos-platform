@@ -206,6 +206,7 @@ if Meteor.isClient
 		userId = Meteor.userId()
 		related_lists = Creator.getRelatedList(object_name, record_id)
 		related_field_name = ""
+		filtersFunction = ""
 		selector = []
 		addSelector = (select)->
 			if selector.length > 0
@@ -213,8 +214,13 @@ if Meteor.isClient
 			selector.push(select)
 		_.each related_lists, (obj)->
 			if obj.object_name == related_object_name
-				related_field_name = obj.related_field_name
-
+				if obj.filtersFunction
+					filtersFunction = obj.filtersFunction
+				else
+					related_field_name = obj.related_field_name
+		if !related_field_name && !filtersFunction
+			# 关联字段和子表过滤函数都没有的话说明两表之间没任何关联，子表使用默认的视图过滤
+			return undefined
 		related_field_name = related_field_name.replace(/\./g, "/")
 		if list_view_id
 			custom_list_view = Creator.getListView(related_object_name, list_view_id)
@@ -222,6 +228,9 @@ if Meteor.isClient
 				filter_logic = custom_list_view.filter_logic
 				filter_scope = custom_list_view.filter_scope
 				filters = custom_list_view.filters
+				if filtersFunction
+					filters = filtersFunction(Creator.odata.get(object_name, record_id))
+					return filters
 
 				if filter_logic
 					format_logic = Creator.formatLogicFiltersToDev(filters, filter_logic)
@@ -250,8 +259,8 @@ if Meteor.isClient
 			addSelector(["parent/o", "=", object_name])
 			addSelector(["parent/ids", "=", record_id])
 		else if object_name == "objects"
-			record_object_name = Creator.getObjectRecord().name
-			addSelector([related_field_name, "=", record_object_name])
+#			record_object_name = Creator.getObjectRecord().name
+			addSelector([related_field_name, "=", record_id])
 		else
 
 			related_object_fields = Creator.getObject(related_object_name)?.fields
@@ -325,6 +334,16 @@ if Meteor.isClient
 	
 	Creator.getJsReportPdfUrl = (report_id)->
 		url = Creator.getRelativeUrl("/plugins/jsreport/api/report_db/#{report_id}/pdf")
+		url += Creator.getJsReportUrlQuery()
+		return url;
+
+	Creator.getStimulsoftReportViewUrl = (report_id)->
+		url = Creator.getRelativeUrl("/plugins/stimulsoft/web/viewer_db/#{report_id}")
+		url += Creator.getJsReportUrlQuery()
+		return url;
+
+	Creator.getStimulsoftReportDesignerUrl = (report_id)->
+		url = Creator.getRelativeUrl("/plugins/stimulsoft/web/designer_db/#{report_id}")
 		url += Creator.getJsReportUrlQuery()
 		return url;
 	
@@ -446,6 +465,11 @@ if Meteor.isClient
 				isFiltering = true;
 			return !isFiltering;
 		return isFiltering
+	
+	Creator.pushCurrentPathToUrlQuery = ()->
+		currentPath = FlowRouter.current().path
+		if currentPath != urlQuery[urlQuery.length - 1]
+			urlQuery.push currentPath
 	
 
 # 切换工作区时，重置下拉框的选项

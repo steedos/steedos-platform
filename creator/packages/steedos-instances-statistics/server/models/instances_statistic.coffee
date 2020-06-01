@@ -1,1 +1,0 @@
-db.instances_statistic = new Mongo.Collection("instances_statistic")
