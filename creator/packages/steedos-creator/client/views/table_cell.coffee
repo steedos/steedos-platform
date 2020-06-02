@@ -20,15 +20,6 @@ formatFileSize = (filesize)->
 
 	return rev.toFixed(2) + unit
 
-getSafeObjectUrl = (object_name, record_id, app_id)->
-	if object_name == 'users'
-		object = Creator.getObject("space_users")
-	else
-		object = Creator.getObject(object_name)
-	if object.permissions.get().allowRead
-		return Creator.getObjectUrl(object_name, record_id, app_id);
-
-
 Template.creator_table_cell.onRendered ->
 	self = this
 	self.autorun ->
