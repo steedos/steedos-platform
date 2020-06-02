@@ -548,6 +548,221 @@ if Meteor.isClient
 			options = is_logic_or: is_logic_or
 			return Creator.formatFiltersToDev(query_arr, object_name, options)
 
+	Creator.getTableCellData = (props)->
+		data = []
+
+		val = props.val
+
+		object_name = props.object_name
+
+		this_object = Creator.getObject(object_name)
+
+		this_name_field_key = this_object.NAME_FIELD_KEY
+		if object_name == "organizations"
+			# 显示组织列表时，特殊处理name_field_key为name字段
+			this_name_field_key = "name"
+
+		_field = props.field
+
+		if !_field
+			return
+
+		reference_to = props.field?.reference_to
+
+		if _.isFunction(reference_to)
+			reference_to = reference_to()
+
+		if _field.type == "grid"
+			data.push {isTable: true}
+		else if _field.type == "location"
+			data.push {value: val?.address || '', id: props._id}
+		else if (_field.type == "lookup" || _field.type == "master_detail") && !_.isEmpty(val)
+			# 有optionsFunction的情况下，reference_to不考虑数组
+			if _.isFunction(_field.optionsFunction) && reference_to != 'company'
+				_values = props.doc || {}
+				_record_val = props.record_val
+				_val = val
+				if _val
+					if _.isArray(_val)
+						_val = _val.map (_item)->
+							return if _.isObject(_item) then _item._id else _item
+					else
+						if _.isObject(_val)
+							_val = [_val._id]
+						else
+							_val = [_val]
+					_ofOptions =  _field.optionsFunction(_record_val || _values)
+					selectedOptions = _.filter _ofOptions, (_o)->
+						return _val.indexOf(_o?.value) > -1
+					if selectedOptions
+						if val && _.isArray(val) && _.isArray(selectedOptions)
+							selectedOptions = Creator.getOrderlySetByIds(selectedOptions, val, "value")
+						val = selectedOptions.getProperty("label")
+				if reference_to
+					if reference_to == 'objects'
+						_.each selectedOptions, (option)->
+							v = option.label
+							_robj = Creator.getObject(option.value)
+							if _robj?._id
+								href = getSafeObjectUrl(reference_to, _robj._id)
+								data.push {reference_to: reference_to,  rid: v, value: v, id: props._id, href: href}
+							else
+								data.push {value: val, id: props._id}
+					else
+						_fvs = props.val
+						if !_.isArray(_fvs)
+							_fvs = if _fvs then [_fvs] else []
+						_.each _fvs, (fv)->
+							if _.isString fv
+								selectedOptions = _.filter _ofOptions, (_o)->
+									return fv == _o?.value
+								data.push {value: selectedOptions.getProperty("label"), id: props._id}
+							else
+								reference_to = fv["reference_to._o"] || reference_to
+								rid = fv._id
+								rvalue = fv['_NAME_FIELD_VALUE']
+								href = getSafeObjectUrl(reference_to, rid)
+								data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: props._id}
+				else
+					data.push {value: val, id: props._id}
+			else
+				if !_.isArray(val)
+					val = if val then [val] else []
+				_.each val, (v)->
+					reference_to = v["reference_to._o"] || reference_to
+					rid = v._id
+					rvalue = v['_NAME_FIELD_VALUE']
+					if _.isString v
+						# 如果未能取到expand数据（包括_id对应记录本身被删除的情况），则直接用_id作为值显示出来，且href能指向正确的url
+						rid = v
+						rvalue = v
+					href = getSafeObjectUrl(reference_to, rid)
+					data.push {reference_to: reference_to, rid: rid, value: rvalue, href: href, id: props._id}
+
+		else if _field.type == "image"
+			if typeof val is "string"
+				data.push {value: val, id: props._id, isImage: true, baseUrl: Creator.getRelativeUrl("/api/files/images")}
+			else
+				data.push {value: val, id: props._id, isImages: true, baseUrl: Creator.getRelativeUrl("/api/files/images")}
+		else if _field.type == "avatar"
+			if typeof val is "string"
+				data.push {value: val, id: props._id, isImage: true, baseUrl: Creator.getRelativeUrl("/api/files/avatars")}
+			else
+				data.push {value: val, id: props._id, isImages: true, baseUrl: Creator.getRelativeUrl("/api/files/avatars")}
+		else if _field.type == "code"
+			if val
+				val = '...'
+			else
+				val = ''
+			data.push {value: val, id: props._id}
+		else if _field.type == "password"
+			if val
+				val = '******'
+			else
+				val = ''
+			data.push {value: val, id: props._id}
+		else if _field.type == "url"
+			href = val
+			if !href?.startsWith("http")
+				href = Steedos.absoluteUrl(encodeURI(href))
+			data.push({value: val, href: href, id: props._id, isUrl: true})
+		else if _field.type == "email"
+			data.push({value: val, href: href, id: props._id, isEmail: true})
+		else if _field.type == "textarea"
+			if val
+				val = val.replace(/\n/g, '\n<br>');
+				val = val.replace(/ /g, '&nbsp;');
+			data.push {value: val, id: props._id, type: _field.type}
+		else
+			if (val && ["datetime", "date"].indexOf(_field.type) >= 0)
+				if props.agreement == "odata"
+					# 老的datatable列表界面，现在没有在用了，都用DevExtreme的grid列表代替了
+					if _field.type == "datetime"
+						if typeof props.val == "string" and /\d+Z$/.test(props.val)
+							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
+							val = moment(props.val).format('YYYY-MM-DD H:mm')
+						else
+							# DevExtreme的grid列表中this.val是Date类型，需要add offset
+							utcOffset = moment().utcOffset() / 60
+							val = moment(props.val).add(utcOffset, "hours").format('YYYY-MM-DD H:mm')
+					else if _field.type == "date"
+						if typeof props.val == "string" and /\d+Z$/.test(props.val)
+							# "2009-12-11T00:00:00.000Z"这种以Z结尾的值本身就带了时区信息，不需要再add offset了
+							# 日期字段类型统一存储为utc的0点，所以显示的时候也需要按utc时间直接显示
+							val = moment.utc(props.val).format('YYYY-MM-DD')
+						else
+							# DevExtreme的grid列表中this.val是Date类型，本身已经做了时区转换，所以不能用utc时间显示
+							val = moment(props.val).format('YYYY-MM-DD')
+				else
+					if _field.type == "datetime"
+						val = moment(props.val).format('YYYY-MM-DD H:mm')
+					else if _field.type == "date"
+						val = moment.utc(props.val).format('YYYY-MM-DD')
+			else if (props.val == null)
+				val = ""
+			else if _field.type == "boolean"
+				if props.val
+					val = t "YES"
+				else
+					val = t "NO"
+			else if _field.type == "select"
+				_options = _field.allOptions || _field.options
+				_values = props.doc || {}
+				_record_val = props.record_val
+				if _.isFunction(_field.options)
+					_options = _field.options(_record_val || _values)
+				if _.isFunction(_field.optionsFunction)
+					_options = _field.optionsFunction(_record_val || _values)
+				if _.isArray(props.val)
+					self_val = props.val
+					_val = []
+					_.each _options, (_o)->
+						if _.indexOf(self_val, _o.value) > -1
+							_val.push _o.label
+					val = _val.join(",")
+				else
+					val = _.findWhere(_options, {value: props.val})?.label
+				unless val
+					val = props.val
+			else if _field.type == "lookup"
+				if _.isFunction(_field.optionsFunction)
+					_values = props.doc || {}
+					_val = val
+					if _val
+						if !_.isArray(_val)
+							_val = [_val]
+						selectedOptions = _.filter _field.optionsFunction(_values), (_o)->
+							return _val.indexOf(_o.value) > -1
+						if selectedOptions
+							val = selectedOptions.getProperty("label")
+			else if _field.type == "filesize"
+				val = formatFileSize(val)
+			else if ["number", "currency"].indexOf(_field.type) > -1 && _.isNumber(val)
+				fieldScale = 0
+				if _field.scale
+					fieldScale = _field.scale
+				else if _field.scale != 0
+					fieldScale = if _field.type == "currency" then 2 else 0
+				val = Number(val).toFixed(fieldScale)
+				reg = /(\d)(?=(\d{3})+\.)/g
+				if fieldScale == 0
+					reg = /(\d)(?=(\d{3})+\b)/g
+				val = val.replace(reg, '$1,')
+			else if _field.type == "markdown"
+				if !_.isEmpty(val)
+					val = Spacebars.SafeString(marked(val))
+			else if _field.type == "html"
+				if !_.isEmpty(val)
+					val = Spacebars.SafeString(val)
+
+			if props.parent_view != 'record_details' && props.field_name == this_name_field_key
+				href = Creator.getObjectUrl(props.object_name, props._id)
+
+			data.push({value: val, href: href, id: props._id})
+
+		return data;
+
+
 # 切换工作区时，重置下拉框的选项
 Meteor.startup ->
 	Tracker.autorun ()->
