@@ -373,7 +373,7 @@ Template.creator_view.helpers
 			actions = _.filter actions, (action)->
 				if action.on == "record" or action.on == "record_only"
 					if typeof action.visible == "function"
-						return action.visible(object_name, record_id, record_permissions, record)
+						return action.visible(object_name, record_id, record_permissions, Creator.getObjectRecord())
 					else
 						return action.visible
 				else
@@ -391,7 +391,7 @@ Template.creator_view.helpers
 			actions = _.filter actions, (action)->
 				if action.on == "record_more" or action.on == "record_only_more"
 					if typeof action.visible == "function"
-						return action.visible(object_name, record_id, record_permissions, record)
+						return action.visible(object_name, record_id, record_permissions, Creator.getObjectRecord())
 					else
 						return action.visible
 				else
