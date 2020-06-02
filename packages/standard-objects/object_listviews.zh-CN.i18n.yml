@@ -32,3 +32,6 @@ object_listviews_field_type_options_calendar: ' 日历视图'
 object_listviews_field_type_options_grid: 列表
 object_listviews_field_scrolling_mode_inlineHelpText: 定义数据列表的滚动条显示样式
 object_listviews_listview_all: 全部
+object_listviews_field_mobile_columns: 手机端显示的列
+object_listviews_field_mobile_columns_$: 手机端显示的列
+object_listviews_field_mobile_columns_$_field: 字段

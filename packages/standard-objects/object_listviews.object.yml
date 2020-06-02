@@ -199,7 +199,7 @@ fields:
     type: text
     omit: true
   mobile_columns:
-    label: mobile_columns
+    label: Mobile Columns
     type: grid
     is_wide: true
   mobile_columns.$:
