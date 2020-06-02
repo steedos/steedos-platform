@@ -57,7 +57,7 @@ Template.instancePrint.helpers
 				delete traces[index]
 				return
 			t.approves?.forEach (a, idx)->
-				if ['terminated', 'reassigned', 'retrieved', 'returned', 'rejected'].includes(a.judge) || ['cc', 'forward', 'distribute'].includes(a.type)
+				if ['reassigned', 'retrieved', 'returned', 'rejected'].includes(a.judge) || ['cc', 'forward', 'distribute'].includes(a.type)
 					delete t.approves[idx]
 					return
 			if _.has steps, t.step
