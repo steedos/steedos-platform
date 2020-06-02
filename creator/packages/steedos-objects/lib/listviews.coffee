@@ -154,8 +154,18 @@ if Meteor.isClient
 
 			list.push related
 
-		_.each relatedListObjects, (v, k)->
-			list.push v
+
+		spaceId = Session.get("spaceId")
+		userId = Meteor.userId()
+		related_object_names = _.pluck(_.values(relatedListObjects), "object_name")
+		permissions = Creator.getPermissions(object_name, spaceId, userId)
+		unrelated_objects = permissions.unrelated_objects
+		related_object_names = _.difference related_object_names, unrelated_objects
+		_.each relatedListObjects, (v, related_object_name) ->
+			isActive = related_object_names.indexOf(related_object_name) > -1
+			allowRead = Creator.getPermissions(related_object_name, spaceId, userId)?.allowRead
+			if isActive && allowRead
+				list.push v
 
 		return list
 
