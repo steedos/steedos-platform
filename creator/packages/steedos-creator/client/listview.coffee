@@ -182,7 +182,6 @@ Creator.getListViewFilters = (object_name, list_view_id, is_related, related_obj
 	if !filter
 		# filter 为undefined时要设置为空，否则dxDataGrid控件会使用上次使用过的filter
 		filter = null
-	console.log("filter=======", filter);
 	return filter
 
 Creator.getODataEndpointUrl = (object_name, list_view_id, is_related, related_object_name) ->
