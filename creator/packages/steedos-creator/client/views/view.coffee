@@ -425,7 +425,6 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		related_list_item_props = item
 		related_object_name = item.object_name
-		console.log("=====list_data===related_object_name=", related_object_name);
 		data = {
 			id: getRelatedListTemplateId(related_object_name)
 			related_object_name: related_object_name, 
