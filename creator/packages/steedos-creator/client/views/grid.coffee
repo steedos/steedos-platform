@@ -570,7 +570,6 @@ Template.creator_grid.onRendered ->
 			else
 				module.dynamicImport('devextreme/ui/data_grid').then (dxDataGrid)->
 					DevExpress.ui.dxDataGrid = dxDataGrid;
-					console.log("dxOptions.dataSource.filter=======", dxOptions.dataSource.filter);
 					self.dxDataGridInstance = self.$(".gridContainer").dxDataGrid(dxOptions).dxDataGrid('instance')
 					if !is_related && self.$(".gridContainer").length > 0
 						Session.set("grid_paging", null)
