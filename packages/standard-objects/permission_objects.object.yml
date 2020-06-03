@@ -2,13 +2,13 @@ name: permission_objects
 label: Permission
 icon: user
 fields:
-  name:
-    label: Name
-    type: text
-    searchable: true
-    index: true
-    required: true
-    name: name
+  # name:
+  #   label: Name
+  #   type: text
+  #   searchable: true
+  #   index: true
+  #   required: true
+  #   name: name
   permission_set_id:
     label: Permission Set
     type: master_detail
@@ -17,6 +17,7 @@ fields:
     index: true
     name: permission_set_id
     filterable: true
+    sharing: masterRead
   object_name:
     label: Object
     type: lookup
@@ -232,11 +233,18 @@ fields:
             }
     name: unrelated_objects
     filterable: true
+  is_system:
+    type: boolean
+    label: 系统
+    omit: true
+    hidden: true
+    disabled: true
+paging:
+  enabled: false
 list_views:
   all:
     label: All
     columns:
-      - name
       - permission_set_id
       - object_name
       - allowCreate
@@ -247,6 +255,7 @@ list_views:
       - viewAllRecords
       - modifyCompanyRecords
       - viewCompanyRecords
+      - is_system
     filter_scope: space
 permission_set:
   user:
