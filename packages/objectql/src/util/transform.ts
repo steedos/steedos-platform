@@ -1,7 +1,7 @@
 import { SteedosListenerConfig, getObject, SteedosObjectTypeConfig } from '../types'
 import { wrapAsync } from './index'
 import _ = require("underscore");
-const ENUM_WHEN = ['beforeFind','beforeInsert','beforeUpdate','beforeDelete','afterInsert','afterUpdate','afterDelete']
+const ENUM_WHEN = ['beforeFind','beforeInsert','beforeUpdate','beforeDelete','afterFind','afterCount','afterFindOne','afterInsert','afterUpdate','afterDelete']
 
 function getBaseContext(object: SteedosObjectTypeConfig){
     return {
@@ -21,6 +21,12 @@ function getTriggerWhen(when: string){
             return 'before.update';
         case 'beforeDelete':
             return 'before.remove';
+        case 'afterFind':
+            return 'after.find';
+        case 'afterCount':
+            return 'after.count'
+        case 'afterFindOne':
+            return 'after.findOne';
         case 'afterInsert':
             return 'after.insert';
         case 'afterUpdate':
@@ -64,6 +70,23 @@ function proxyBeforeDelete(trigger: Function, baseContext){
     }
 }
 
+function proxyAfterFind(trigger: Function, baseContext){
+    return function(userId, doc){
+        return wrapAsync(trigger, Object.assign({userId, id: doc._id}, baseContext))
+    }
+}
+function proxyAfterCount(trigger: Function, baseContext){
+    return function(userId, doc){
+        return wrapAsync(trigger, Object.assign({userId, id: doc._id}, baseContext))
+    }
+}
+
+function proxyAfterFindOne(trigger: Function, baseContext){
+    return function(userId, doc){
+        return wrapAsync(trigger, Object.assign({userId, id: doc._id}, baseContext))
+    }
+}
+
 function proxyAfterInsert(trigger: Function, baseContext){
     return function(userId, doc){
         return wrapAsync(trigger, Object.assign({userId, doc}, baseContext));
@@ -94,6 +117,12 @@ function transformTrigger(object: SteedosObjectTypeConfig, when: string, trigger
                 return proxyBeforeUpdate(trigger, baseContext)
             case 'beforeDelete':
                 return proxyBeforeDelete(trigger, baseContext)
+            case 'afterFind':
+                return proxyAfterFind(trigger, baseContext)
+            case 'afterCount':
+                return proxyAfterCount(trigger, baseContext)
+            case 'afterFindOne':
+                return proxyAfterFindOne(trigger, baseContext)
             case 'afterInsert':
                 return proxyAfterInsert(trigger, baseContext)
             case 'afterUpdate':
