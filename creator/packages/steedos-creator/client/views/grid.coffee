@@ -315,6 +315,9 @@ _getPageIndex = (grid_paging, curObjectName) ->
 		pageIndex = grid_paging.pageIndex
 	return pageIndex
 
+getObjectpaging = (objectName)->
+	return Creator.getObject(objectName).paging
+
 Template.creator_grid.onRendered ->
 	self = this
 	self.autorun (c)->
@@ -364,7 +367,7 @@ Template.creator_grid.onRendered ->
 			expand_fields = _expandFields(curObjectName, selectColumns)
 			showColumns = _getShowColumns.call(self, curObject, selectColumns, is_related, list_view_id, related_list_item_props)
 			pageSize = _getPageSize(grid_paging, is_related, _pageSize)
-			
+			objectPaging = getObjectpaging(curObjectName);
 			# extra_columns不需要显示在表格上，因此不做_columns函数处理
 			selectColumns = Creator.unionSelectColumnsWithExtraAndDepandOn(selectColumns, curObject, object_name, is_related)
 			
@@ -377,14 +380,16 @@ Template.creator_grid.onRendered ->
 				filter = null
 
 			_listView = Creator.getListView(object_name, list_view_id, true)
-
+			if _.isNumber(objectPaging?.page_size)
+				pageSize = objectPaging?.page_size
 			dxOptions =
 				remoteOperations: true
 				scrolling: 
 					showScrollbar: "always"
-					mode: _listView?.scrolling_mode || "standard"
+					mode: _listView?.scrolling_mode || objectPaging?.mode || "standard"
 				paging:
 					pageSize: pageSize
+					enabled: objectPaging?.enabled
 				pager:
 					showPageSizeSelector: true,
 					allowedPageSizes: [10, 50, 100, 200],
