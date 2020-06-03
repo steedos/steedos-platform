@@ -41,6 +41,8 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 				label: field.label,
 				type: field.type,
 				is_wide: field.is_wide,
+				scale: field.scale,
+				reference_to: field.reference_to,
 				options: field.options,
 				allOptions: field.allOptions,
 				optionsFunction: field.optionsFunction,
