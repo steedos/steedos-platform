@@ -367,13 +367,13 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
 		if record_id
-			record = Creator.getCollection(object_name).findOne(record_id)
+			record = Creator.getObjectRecord()
 			userId = Meteor.userId()
 			record_permissions = Creator.getRecordPermissions object_name, record, userId
 			actions = _.filter actions, (action)->
 				if action.on == "record" or action.on == "record_only"
 					if typeof action.visible == "function"
-						return action.visible(object_name, record_id, record_permissions, Creator.getObjectRecord())
+						return action.visible(object_name, record_id, record_permissions, record)
 					else
 						return action.visible
 				else
@@ -385,13 +385,13 @@ Template.creator_view.helpers
 		object_name = Session.get "object_name"
 		record_id = Session.get "record_id"
 		if record_id
-			record = Creator.getCollection(object_name).findOne(record_id)
+			record = Creator.getObjectRecord()
 			userId = Meteor.userId()
 			record_permissions = Creator.getRecordPermissions object_name, record, userId
 			actions = _.filter actions, (action)->
 				if action.on == "record_more" or action.on == "record_only_more"
 					if typeof action.visible == "function"
-						return action.visible(object_name, record_id, record_permissions, Creator.getObjectRecord())
+						return action.visible(object_name, record_id, record_permissions, record)
 					else
 						return action.visible
 				else
