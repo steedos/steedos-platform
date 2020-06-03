@@ -175,6 +175,29 @@
                 }
             }
         },
+        "paging": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "启用分页"
+                },
+                "page_size": {
+                    "type": "number",
+                    "description": "每页显示记录数量"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "指定滚动模式",
+                    "enum": [
+                        "infinite",
+                        "standard",
+                        "virtual"
+                    ]
+                }
+            }
+        },
         "actions": {
             "type": "object",
             "additionalProperties": false,
