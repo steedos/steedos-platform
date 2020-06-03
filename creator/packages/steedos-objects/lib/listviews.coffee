@@ -215,6 +215,53 @@ Creator.getListViewIsRecent = (object_name, list_view_id)->
 
 
 ###
+    从columns参数中过滤出用于手机端显示的columns
+	规则：
+	1.优先把columns中的name字段排在第一个
+	2.最多只返回4个字段
+	3.考虑宽字段占用整行规则条件下，最多只返回两行
+###
+Creator.pickObjectMobileColumns = (object_name, columns)->
+	result = []
+	maxRows = 2 
+	maxCount = maxRows * 2
+	count = 0
+	object = Creator.getObject(object_name)
+	fields = object.fields
+	unless object
+		return columns
+	nameKey = object.NAME_FIELD_KEY
+	isNameColumn = (item)->
+		if _.isObject(item)
+			return item.field == nameKey
+		else
+			return item == nameKey
+	getField = (item)->
+		if _.isObject(item)
+			return fields[item.field]
+		else
+			return fields[item]
+	if nameKey
+		nameColumn = columns.find (item)->
+			return isNameColumn(item)
+	if nameColumn
+		field = getField(nameColumn)
+		itemCount = if field.is_wide then 2 else 1
+		count += itemCount
+		result.push nameColumn
+	columns.forEach (item)->
+		field = getField(item)
+		unless field
+			return
+		itemCount = if field.is_wide then 2 else 1
+		if !isNameColumn(item) and result.length < maxCount
+			count += itemCount
+			if count <= maxCount
+				result.push item
+	
+	return result
+
+###
     获取默认视图
 ###
 Creator.getObjectDefaultView = (object_name)->
@@ -240,7 +287,7 @@ Creator.getObjectDefaultColumns = (object_name, use_mobile_columns)->
 		if defaultView.mobile_columns
 			columns = defaultView.mobile_columns
 		else if columns
-			columns = columns.slice(0,4)
+			columns = Creator.pickObjectMobileColumns(object_name, columns)
 	return columns
 
 ###

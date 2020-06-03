@@ -9,7 +9,7 @@ _listViewColumns = (object_name, listView, use_mobile_columns)->
 			if defaultView.mobile_columns
 				columns = defaultView.mobile_columns
 			else if columns
-				columns = columns.slice(0,4)
+				columns = Creator.pickObjectMobileColumns(object_name, columns)
 	unless columns
 		defaultColumns = Creator.getObjectDefaultColumns(object_name, use_mobile_columns)
 		if defaultColumns
