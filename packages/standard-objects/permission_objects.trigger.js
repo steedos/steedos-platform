@@ -75,24 +75,24 @@ const getPermissionById = function(id){
 
 function parserFilters(filters){
     let query = {};
-    _.each(filters, function(v,k){
-        console.log(v, k);
-        if(k === '$and'){
-            Object.assign(query, parserFilters(v))
-        }else{
-            if(_.isArray(v)){
-               Object.assign(query, parserFilters(v))
-            }else{
-                 _.each(v, function(item){
-                    Object.assign(query, ...item)
-                })
+    if(_.isArray(filters)){
+        _.each(filters,function(filter){
+            Object.assign(query, parserFilters(filter))
+        })
+    }else{
+        _.each(filters, function (v, k) {
+            if (k === '$and') {
+                Object.assign(query, parserFilters(v))
+            } else {
+                Object.assign(query, {[k]: v})
             }
-        }
-    })
-    return query
+        })
+    }
+    return query;
 }
 
 const find = function(query){
+    console.log('odataMongodb.createFilter(query.filters)', JSON.stringify(odataMongodb.createFilter(query.filters)));
     let filters = parserFilters(odataMongodb.createFilter(query.filters));
     console.log('filters', JSON.stringify(filters));
     let permissionSetId = filters.permission_set_id;
@@ -113,16 +113,47 @@ const find = function(query){
 
 module.exports = {
     afterFind: async function () {
-        let permissionObjects = find(this.query);
-        if(_.isArray(this.data.values)){
-            _.forEach(permissionObjects, (doc)=>{
-                this.data.values.unshift(doc)
-            })
+        console.log('odataMongodb.createFilter(query.filters)', JSON.stringify(odataMongodb.createFilter(this.query.filters)));
+        let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+        console.log('filters', JSON.stringify(filters));
+        let isSystem = filters.is_system;
+        console.log('_.isElement(isSystem)', isSystem, _.isEmpty(isSystem));
+        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+            if(_.isBoolean(isSystem) && isSystem){
+                this.data.values = find(this.query);
+            }else{
+                return ;
+            }
+            if(isSystem.$ne){
+                return 
+            }
+        }else{
+            let permissionObjects = find(this.query);
+            if(_.isArray(this.data.values)){
+                _.forEach(permissionObjects, (doc)=>{
+                    this.data.values.unshift(doc)
+                })
+            }
         }
+        
     },
     afterCount: async function () {
-        let permissionObjects = find(this.query);
-        this.data.values = this.data.values + permissionObjects.length
+        let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+        let isSystem = filters.is_system;
+        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+            if(_.isBoolean(isSystem) && isSystem){
+                this.data.values = find(this.query).length;
+            }else{
+                return ;
+            }
+            if(isSystem.$ne){
+                return 
+            }
+        }else{
+            let permissionObjects = find(this.query);
+            this.data.values = this.data.values + permissionObjects.length
+        }
+        
     },
     afterFindOne: async function () {
         let id = this.id;

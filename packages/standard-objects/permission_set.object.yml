@@ -67,11 +67,11 @@ list_views:
       - type
       - is_system
 relatedList:
-  - objectName: permission_objects
-    filters: !!js/function | 
-      function(parentRecord) {
-        return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
-      }
+  # - objectName: permission_objects
+  #   filters: !!js/function | 
+  #     function(parentRecord) {
+  #       return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
+  #     }
   - objectName: permission_objects
     filters: !!js/function | 
       function(parentRecord) {
