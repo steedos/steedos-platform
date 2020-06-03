@@ -637,6 +637,8 @@ if Meteor.isClient
 				if !_.isArray(val)
 					val = if val then [val] else []
 				_.each val, (v)->
+					if !v
+						return
 					reference_to = v["reference_to._o"] || reference_to
 					rid = v._id
 					rvalue = v['_NAME_FIELD_VALUE']
