@@ -1,5 +1,10 @@
 permission_set__object: 权限组
 permission_set_field_assigned_apps: 授权应用
-permission_set_field_name: 名称
+permission_set_field_name: Code
+permission_set_field_is_system: 系统
+permission_set_field_label: 显示名称
 permission_set_field_users: 成员
+permission_set_field_type: 类别
+permission_set_field_type_options_profile: 简档
+permission_set_field_type_options_permission_set: 权限集
 permission_set_listview_all: 全部

@@ -7,7 +7,14 @@ fields:
     type: text
     searchable: true
     index: true
-    name: name
+    required: true
+  label:
+    label: Label
+    type: text
+    searchable: true
+    index: true
+    is_name: true
+    required: true
   assigned_apps:
     label: Assigned Apps
     type: lookup
@@ -38,13 +45,59 @@ fields:
     is_wide: true
     name: users
     filterable: true
+  type:
+    label: Type
+    type: select
+    options: Profile:profile,Permission set:permission_set
+    defaultValue: permission_set
+  is_system:
+    type: boolean
+    label: 系统
+    omit: true
+    hidden: true
+    disabled: true
 list_views:
   all:
     label: All Permission Set
     filter_scope: space
     columns:
+      - label
       - name
       - users
+      - type
+      - is_system
+relatedList:
+  - objectName: permission_objects
+    filters: !!js/function | 
+      function(parentRecord) {
+        return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
+      }
+  - objectName: permission_objects
+    filters: !!js/function | 
+      function(parentRecord) {
+        return [["is_system","<>",true], ["permission_set_id","=",parentRecord._id]]
+      }
+# actions:
+#   standard_edit: 
+#     visible: !<tag:yaml.org,2002:js/function> |-
+#       function(object_name, recordId, record_permissions, record){
+#         console.log('record', record);
+#         if(record && record.is_custom === false){
+#           return false
+#         }else{
+#           return record_permissions.allowEdit
+#         }
+#       }
+#   standard_delete: 
+#     label: Delete
+#     visible: !<tag:yaml.org,2002:js/function> |-
+#       function(object_name, recordId, record_permissions, record){
+#         if(record && record.is_custom === false){
+#           return false
+#         }else{
+#           return record_permissions.allowDelete
+#         }
+#       }
 permission_set:
   user:
     allowCreate: false
