@@ -12,10 +12,10 @@ space_users_field_locale: 语言
 space_users_field_locale_options_en-us: English
 space_users_field_locale_options_zh-cn: 简体中文
 space_users_field_profile: 简档
-space_users_field_profile_options_admin: 管理员
-space_users_field_profile_options_user: 员工
-space_users_field_profile_options_supplier: 供应商
-space_users_field_profile_options_customer: 客户
+space_users_field_profile_def_options_admin: 管理员
+space_users_field_profile_def_options_user: 员工
+space_users_field_profile_def_options_supplier: 供应商
+space_users_field_profile_def_options_customer: 客户
 space_users_field_is_supplier: 供应商
 space_users_field_is_customer: 客户
 space_users_field_manager: 上级主管
@@ -38,4 +38,3 @@ space_users_listview_all: 全部人员
 space_users_listview_disabled: 离职停用人员
 space_users_action_invite_space_users: 邀请注册
 space_users_action_setPassword: 修改密码
-

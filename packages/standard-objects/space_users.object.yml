@@ -129,10 +129,14 @@ fields:
     name: manager
     filterable: true
   profile:
-    type: select
-    options: Admin:admin,User:user,Supplier:supplier,Customer:customer
+    type: lookup
+    label: Profile
+    reference_to: permission_set
+    showIcon: false
     required: true
+    create: false
     defaultValue: user
+    filters: [["type", "eq", "profile"]]
   contact_id:
     type: lookup
     label: Contact
