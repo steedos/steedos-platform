@@ -136,7 +136,18 @@ fields:
     required: true
     create: false
     defaultValue: user
-    filters: [["type", "eq", "profile"]]
+    optionsFunction: !!js/function |
+      function () {
+        var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+        var result = [];
+        profiles.forEach(function (item) {
+          result.push({
+            label: item.label,
+            value: item.name
+          });
+        });
+        return result;
+      }
   contact_id:
     type: lookup
     label: Contact
