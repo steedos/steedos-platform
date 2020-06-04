@@ -427,7 +427,11 @@
 	"creator_report_error_object_not_found": "Object '%s' was not found. Make sure the object name specified in this report is correct.",
 	"creator_report_error_object_field_not_found": "Field '{$field_name}' for object '{$object_name}' was not found, please confirm that the field name specified in this report is correct.",
 	"creator_report_error_max": "The statistics are up to {$count} records and have exceeded the limit. The following statistics are based on the previous {$max} records.",
-	"creator_report_error_matrix_miss_fields": "A matrix type report requires at least a rows or columns entry",
+	"creator_report_error_tabular_miss_fields": "A 'Rabular' type report requires at least a 'Columns' entry",
+	"creator_report_error_summary_miss_fields": "A 'Aummary' type report requires at least a 'Columns' entry",
+	"creator_report_error_matrix_miss_fields": "A 'Matrix' type report requires at least a 'Rows' or 'Columns' entry",
+	"creator_report_error_stimulsoft_report_miss_fields": "A 'StimulsoftReport' type report requires at least a 'Fields' entry",
+	"creator_report_error_jsreport_miss_fields": "A 'JsReport' type report requires at least a 'Fields' entry",
 
 	"creator_listview_update":"list view updated",
 

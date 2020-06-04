@@ -445,7 +445,11 @@
 	"creator_report_error_object_not_found": "未找到对象“%s”，请确认该报表指定的对象名是否正确",
 	"creator_report_error_object_field_not_found": "未找到对象“{$object_name}”的字段“{$field_name}”，请确认该报表中指定的字段名是否正确",
 	"creator_report_error_max": "统计数据达{$count}条记录，已超出限制，以下统计结果基于前{$max}条记录",
-	"creator_report_error_matrix_miss_fields": "矩阵类型报表至少需要填写行或列项",
+	"creator_report_error_tabular_miss_fields": "表格类型报表至少需要填写”列“项",
+	"creator_report_error_summary_miss_fields": "摘要类型报表至少需要填写”列“项",
+	"creator_report_error_matrix_miss_fields": "矩阵类型报表至少需要填写”行“或”列“项",
+	"creator_report_error_stimulsoft_report_miss_fields": "StimulsoftReport类型报表至少需要填写“字段”项",
+	"creator_report_error_jsreport_miss_fields": "JsReport类型报表至少需要填写“字段”项",
 
 	"creator_listview_update":"列表视图已更新",
 
