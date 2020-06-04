@@ -61,8 +61,8 @@ list_views:
     label: All Permission Set
     filter_scope: space
     columns:
-      - name
       - label
+      - name
       - users
       - type
       - is_system
