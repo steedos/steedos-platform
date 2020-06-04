@@ -5,21 +5,6 @@
 # - this.doc
 # - this._id
 
-formatFileSize = (filesize)->
-	rev = filesize / 1024.00
-	unit = 'KB'
-
-	if rev > 1024.00
-		rev = rev / 1024.00
-		unit = 'MB'
-
-
-	if rev > 1024.00
-		rev = rev / 1024.00
-		unit = 'GB'
-
-	return rev.toFixed(2) + unit
-
 Template.creator_table_cell.onRendered ->
 	self = this
 	self.autorun ->

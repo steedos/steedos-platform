@@ -556,6 +556,21 @@ if Meteor.isClient
 		if object.permissions.get().allowRead
 			return Creator.getObjectUrl(object_name, record_id, app_id);
 
+	Creator.formatFileSize = (filesize)->
+		rev = filesize / 1024.00
+		unit = 'KB'
+
+		if rev > 1024.00
+			rev = rev / 1024.00
+			unit = 'MB'
+
+
+		if rev > 1024.00
+			rev = rev / 1024.00
+			unit = 'GB'
+
+		return rev.toFixed(2) + unit
+
 	Creator.getTableCellData = (props)->
 		data = []
 
@@ -746,7 +761,7 @@ if Meteor.isClient
 						if selectedOptions
 							val = selectedOptions.getProperty("label")
 			else if _field.type == "filesize"
-				val = formatFileSize(val)
+				val = Creator.formatFileSize(val)
 			else if ["number", "currency"].indexOf(_field.type) > -1 && _.isNumber(val)
 				fieldScale = 0
 				if _field.scale
