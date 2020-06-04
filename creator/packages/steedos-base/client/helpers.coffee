@@ -191,6 +191,9 @@ Steedos.Helpers =
 			space_userId = db.space_users.findOne({user: userId, space: Steedos.spaceId()})._id;
 		return "/app/admin/space_users/view/#{space_userId}?ref=users"
 
+	getOpenWindowScript: (href)->
+		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false"
+
 _.extend Steedos, Steedos.Helpers
 
 Template.registerHelpers = (dict) ->

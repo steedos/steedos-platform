@@ -270,7 +270,9 @@ _getShowColumns = (curObject, selectColumns, is_related, list_view_id, related_l
 					htmlText = options.rowIndex + 1 + pageSize * pageIndex
 					if needToShowLinkForIndexColumn
 						href = Creator.getObjectUrl(curObjectName, options.data._id)
-						htmlText = "<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>"
+						htmlText = $("<a href=\"#{href}\" class=\"grid-index-link\">#{htmlText}</a>")
+						if is_related
+							htmlText.attr("onclick", Steedos.getOpenWindowScript(href))
 						$("<div>").append(htmlText).appendTo(container)
 					else
 						$("<div>").append(htmlText).appendTo(container)

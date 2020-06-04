@@ -11,7 +11,7 @@
 				{{else if isImage}}
 					<img class="creator-table-cell-image" src="{{baseUrl}}/{{value}}"/>
 				{{else if isUrl}}
-					<a onclick="window.open('{{href}}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false">{{value}}</a>
+					<a onclick={{getOpenWindowScript href}}>{{value}}</a>
 				{{else if isEmail}}
 					<a href="mailto:{{value}}">{{value}}</a>
 				{{else}}
@@ -20,7 +20,7 @@
 							<a title="{{value}}" class="link-detail list-item-link-{{id}} list-item-link-action" data-action-name={{itemActionName}}>{{value}}</a>
 						{{else}}
 							{{#if openWindow}}
-								<a onclick="window.open('{{href}}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
+								<a onclick={{getOpenWindowScript href}} title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 							{{else}}
 								<a href="{{href}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 							{{/if}}
