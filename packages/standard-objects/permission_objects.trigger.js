@@ -43,7 +43,7 @@ const getInternalPermissionObjects = function(){
         let datasourceObjects = datasource.getObjects();
         _.each(datasourceObjects, function(object, objectName) {
           let objectJSON = object.toConfig();
-          if(!objectJSON.hidden && !_.include(hiddenObjects, objectName)){
+          if(!objectJSON._id && !objectJSON.hidden && !_.include(hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
                 objectsPermissions.push(Object.assign({}, v, {_id: `${code}_${objectName}`, name: `${code}_${objectName}`, permission_set_id: code, object_name: objectName}, baseRecord))
@@ -96,6 +96,12 @@ const find = function(query){
     let filters = parserFilters(odataMongodb.createFilter(query.filters));
     console.log('filters', JSON.stringify(filters));
     let permissionSetId = filters.permission_set_id;
+    if(permissionSetId && !_.include(['admin','user','supplier','customer'], permissionSetId)){
+        var dbPerm = Creator.getCollection("permission_set").findOne({_id: permissionSetId}, {fields:{_id:1, name:1}});
+        if(dbPerm && _.include(['admin','user','supplier','customer'], dbPerm.name)){
+            permissionSetId = dbPerm.name
+        }
+    }
     let objectName = filters.object_name;
     let permissionObjects = getPermissionByFilters((doc)=>{
         if(permissionSetId && objectName){
@@ -107,6 +113,7 @@ const find = function(query){
         if(objectName){
             return objectName === doc.object_name
         }
+        return true;
     });
     return permissionObjects;
 }

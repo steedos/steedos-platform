@@ -17,7 +17,6 @@ fields:
     index: true
     name: permission_set_id
     filterable: true
-    sharing: masterRead
   object_name:
     label: Object
     type: lookup
