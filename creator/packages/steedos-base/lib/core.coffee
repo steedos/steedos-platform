@@ -4,7 +4,7 @@ Steedos =
 	subs: {}
 	isPhoneEnabled: ->
 		return !!Meteor.settings?.public?.phone
-	numberToString: (number, locale)->
+	numberToString: (number, scale, notThousands)->
 		if typeof number == "number"
 			number = number.toString()
 
@@ -12,13 +12,19 @@ Steedos =
 			return '';
 
 		if number != "NaN"
-			unless locale
-				locale = Steedos.locale()
-			if locale == "zh-cn" || locale == "zh-CN"
-				# 中文万分位财务人员看不惯，所以改为国际一样的千分位
-				return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-			else
-				return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+			if scale || scale == 0
+				number = Number(number).toFixed(scale)
+			unless notThousands
+				if !(scale || scale == 0)
+					# 没定义scale时，根据小数点位置算出scale值
+					scale = number.match(/\.(\d+)/)?[1]?.length
+					unless scale
+						scale = 0
+				reg = /(\d)(?=(\d{3})+\.)/g
+				if scale == 0
+					reg = /(\d)(?=(\d{3})+\b)/g
+				number = number.replace(reg, '$1,')
+			return number
 		else
 			return ""
 	valiJquerySymbols: (str)->

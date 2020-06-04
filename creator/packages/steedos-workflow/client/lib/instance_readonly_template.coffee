@@ -307,10 +307,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = Spacebars.SafeString(Markdown(value))
 		when 'number'
 			if value or value == 0
-				if typeof value == 'string'
-					value = parseFloat(value)
-				value = value.toFixed(field.digits)
-				value = Steedos.numberToString value, locale
+				value = Steedos.numberToString value, field.digits
 		when 'odata'
 			detail_url = field.detail_url
 			if field.is_multiselect

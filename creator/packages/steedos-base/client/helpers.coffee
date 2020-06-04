@@ -174,7 +174,7 @@ Steedos.Helpers =
 			return true
 
 	coreformNumberToString: (number, locale)->
-		return Steedos.numberToString number, locale
+		return Steedos.numberToString number
 
 	selfCompanyOrganizationIds: ()->
 		# 返回当前用户所属公司的关联组织Id集合

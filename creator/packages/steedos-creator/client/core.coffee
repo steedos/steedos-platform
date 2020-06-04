@@ -768,11 +768,7 @@ if Meteor.isClient
 					fieldScale = _field.scale
 				else if _field.scale != 0
 					fieldScale = if _field.type == "currency" then 2 else 0
-				val = Number(val).toFixed(fieldScale)
-				reg = /(\d)(?=(\d{3})+\.)/g
-				if fieldScale == 0
-					reg = /(\d)(?=(\d{3})+\b)/g
-				val = val.replace(reg, '$1,')
+				val = Steedos.numberToString(val, fieldScale)
 			else if _field.type == "markdown"
 				if !_.isEmpty(val)
 					val = Spacebars.SafeString(marked(val))

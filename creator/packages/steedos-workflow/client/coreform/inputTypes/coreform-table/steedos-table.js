@@ -506,11 +506,7 @@ SteedosTable.getTDValue = function(field, value) {
                 break;
             case 'number':
                 if (value || value == 0) {
-                    if (typeof(value) == 'string') {
-                        value = parseFloat(value)
-                    }
-                    td_value = value.toFixed(field.digits);
-                    td_value = Steedos.numberToString(td_value);
+                    td_value = Steedos.numberToString(value, field.digits);
                 }
                 break;
             case 'odata':
