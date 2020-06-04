@@ -280,6 +280,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 				}
 				if company_id
 					new_category.company_id = company_id
+					new_category.company_ids = [company_id]
 				db.categories.direct.insert(new_category);
 				form.category = category_id
 			else
@@ -299,8 +300,11 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 						nr.created_by = uid
 						nr.modified = new Date
 						nr.modified_by = uid
+						delete nr.company_id
+						delete nr.company_ids
 						if company_id
 							nr.company_id = company_id
+							nr.company_ids = [company_id]
 						db.instance_number_rules.direct.insert(nr)
 				catch e
 					console.log "steedosImport.workflow", e
@@ -348,8 +352,10 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 		form.current.modified_by = uid
 
 		delete form.company_id
+		delete form.company_ids
 		if company_id
 			form.company_id = company_id
+			form.company_ids = [company_id]
 
 		form.import = true
 
@@ -388,8 +394,10 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 			flow.modified_by = uid
 
 			delete flow.company_id
+			delete flow.company_ids
 			if company_id
 				flow.company_id = company_id
+				flow.company_ids = [company_id]
 			#跨工作区导入时，重置流程权限perms
 			if flow.perms && flow.space == spaceId
 				perms = {
@@ -549,6 +557,7 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 
 							if company_id
 								role.company_id = company_id
+								role.company_ids = [company_id]
 
 							db.flow_roles.direct.insert(role)
 
