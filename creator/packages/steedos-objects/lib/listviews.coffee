@@ -254,7 +254,7 @@ Creator.pickObjectMobileColumns = (object_name, columns)->
 		unless field
 			return
 		itemCount = if field.is_wide then 2 else 1
-		if !isNameColumn(item) and result.length < maxCount
+		if count < maxCount and result.length < maxCount and !isNameColumn(item)
 			count += itemCount
 			if count <= maxCount
 				result.push item
