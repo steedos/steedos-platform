@@ -375,13 +375,13 @@ getFieldTemplates = ()->
 			if !fieldData.className
 				fieldData.className = 'form-control'
 			return {
-				field: "<input id='#{fieldData.name}' placeholder='yyyy-MM-dd HH:mm' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
+				field: "<input id='#{fieldData.name}' placeholder='yyyy-MM-dd' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
 			};
 		dateTime: (fieldData) ->
 			if !fieldData.className
 				fieldData.className = 'form-control'
 			return {
-				field: "<input id='#{fieldData.name}' placeholder='yyyy-MM-dd' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
+				field: "<input id='#{fieldData.name}' placeholder='yyyy-MM-dd HH:mm' type='text' #{Creator.formBuilder.utils.attrString(fieldData)} readonly>",
 			};
 		checkboxBoolean: (fieldData)->
 			if fieldData.value
