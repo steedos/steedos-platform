@@ -92,9 +92,7 @@ function parserFilters(filters){
 }
 
 const find = function(query){
-    console.log('odataMongodb.createFilter(query.filters)', JSON.stringify(odataMongodb.createFilter(query.filters)));
     let filters = parserFilters(odataMongodb.createFilter(query.filters));
-    console.log('filters', JSON.stringify(filters));
     let permissionSetId = filters.permission_set_id;
     if(permissionSetId && !_.include(['admin','user','supplier','customer'], permissionSetId)){
         var dbPerm = Creator.getCollection("permission_set").findOne({_id: permissionSetId}, {fields:{_id:1, name:1}});
@@ -120,11 +118,8 @@ const find = function(query){
 
 module.exports = {
     afterFind: async function () {
-        console.log('odataMongodb.createFilter(query.filters)', JSON.stringify(odataMongodb.createFilter(this.query.filters)));
         let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
-        console.log('filters', JSON.stringify(filters));
         let isSystem = filters.is_system;
-        console.log('_.isElement(isSystem)', isSystem, _.isEmpty(isSystem));
         if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
             if(_.isBoolean(isSystem) && isSystem){
                 this.data.values = find(this.query);

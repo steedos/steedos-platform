@@ -97,9 +97,6 @@ const getInternalPermissionSet = function(spaceId, lng){
 // }
 
 module.exports = {
-    beforeFind: async function () {
-        console.log('beforeFind......');
-    },
     afterFind: async function () {
         if(_.isArray(this.data.values)){
             // let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
@@ -119,7 +116,6 @@ module.exports = {
     afterFindOne: async function () {
         let id = this.id;
         let spaceId = this.spaceId;
-        console.log('afterFindOne this ---> ', this);
         if(id && _.isEmpty(this.data.values)){
             if(_.include(['admin','user','supplier','customer'], id) && spaceId){
                 let dbPerms = Creator.getCollection("permission_set").findOne({space: spaceId, name: id});
