@@ -1,3 +1,10 @@
+var _ = require("underscore");
+function checkType(name, type){
+    if(_.include(['admin','user','supplier','customer'], name) && type != 'profile'){
+        throw new Meteor.Error(500, "API名称为admin,user,supplier,customer时，type必须为简档");
+    }
+}
+
 Creator.Objects['permission_set'].triggers = {
     "before.insert.server.check": {
         on: "server",
@@ -16,6 +23,7 @@ Creator.Objects['permission_set'].triggers = {
                 })) {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
+            checkType(doc.name, doc.type);
         }
     },
     "before.update.server.check": {
@@ -36,6 +44,11 @@ Creator.Objects['permission_set'].triggers = {
                     }
                 })) {
                 throw new Meteor.Error(500, "对象名称不能重复");
+            }
+
+            var set = modifier.$set || {}
+            if(_.has(set, 'name') || _.has(set, 'type')){
+                checkType(set.name || doc.name, set.type || doc.type);
             }
         }
     },
