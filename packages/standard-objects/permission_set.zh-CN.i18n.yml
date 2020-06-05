@@ -8,3 +8,7 @@ permission_set_field_type: 类别
 permission_set_field_type_options_profile: 简档
 permission_set_field_type_options_permission_set: 权限集
 permission_set_listview_all: 全部
+permission_set_admin: 管理员
+permission_set_user: 用户
+permission_set_supplier: 供应商
+permission_set_customer: 客户

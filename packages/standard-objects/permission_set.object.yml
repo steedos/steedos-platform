@@ -66,37 +66,16 @@ list_views:
       - users
       - type
       - is_system
-relatedList:
-  # - objectName: permission_objects
-  #   filters: !!js/function | 
-  #     function(parentRecord) {
-  #       return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
-  #     }
-  - objectName: permission_objects
-    filters: !!js/function | 
-      function(parentRecord) {
-        return [["is_system","<>",true], ["permission_set_id","=",parentRecord._id]]
-      }
-# actions:
-#   standard_edit: 
-#     visible: !<tag:yaml.org,2002:js/function> |-
-#       function(object_name, recordId, record_permissions, record){
-#         console.log('record', record);
-#         if(record && record.is_custom === false){
-#           return false
-#         }else{
-#           return record_permissions.allowEdit
-#         }
+# relatedList:
+#   - objectName: permission_objects
+#     filters: !!js/function | 
+#       function(parentRecord) {
+#         return [["is_system","=",true], ["permission_set_id","=",parentRecord._id]]
 #       }
-#   standard_delete: 
-#     label: Delete
-#     visible: !<tag:yaml.org,2002:js/function> |-
-#       function(object_name, recordId, record_permissions, record){
-#         if(record && record.is_custom === false){
-#           return false
-#         }else{
-#           return record_permissions.allowDelete
-#         }
+#   - objectName: permission_objects
+#     filters: !!js/function | 
+#       function(parentRecord) {
+#         return [["is_system","<>",true], ["permission_set_id","=",parentRecord._id]]
 #       }
 permission_set:
   user:

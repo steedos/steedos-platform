@@ -1,5 +1,6 @@
 const _ = require('underscore');
 const odataMongodb = require("odata-v4-mongodb");
+const auth = require("@steedos/auth");
 
 const permissions = {
     allowEdit: false,
@@ -38,13 +39,28 @@ function parserFilters(filters){
     return query;
 }
 
-const getInternalPermissionSet = function(spaceId){
+const getLng = function(userId){
+    return Steedos.locale(userId, true);
+}
+
+const getLngInternalPermissionSet = function(lng){
+    let lngInternalPermissionSet = [];
+    _.each(internalPermissionSet, function(ps){
+        lngInternalPermissionSet.push(Object.assign({}, ps, {label: TAPi18n.__(`permission_set_${ps.name}`, {}, lng)}))
+    })
+    return lngInternalPermissionSet;
+}
+
+const getInternalPermissionSet = function(spaceId, lng){
+    
+    let lngInternalPermissionSet = getLngInternalPermissionSet(lng);
+
     if(!spaceId){
-        return internalPermissionSet;
+        return lngInternalPermissionSet;
     }
     let dbPerms = Creator.getCollection("permission_set").find({space: spaceId, name: {$in: ['admin','user','supplier','customer']}}, {fields:{_id:1, name:1}}).fetch();
     let perms = [];
-    _.forEach(internalPermissionSet, function(doc){
+    _.forEach(lngInternalPermissionSet, function(doc){
         if(!_.find(dbPerms, function(p){
             return p.name === doc.name
         })){
@@ -54,31 +70,31 @@ const getInternalPermissionSet = function(spaceId){
     return perms;
 }
 
-const geByFilters = function(spaceId, filtersFun){
-    let all = getInternalPermissionSet(spaceId);
-    let pers = []
-    _.each(all, function(doc){
-        if(filtersFun(doc)){
-            pers.push(doc)
-        }
-    })
-    return pers;
-}
+// const geByFilters = function(spaceId, filtersFun){
+//     let all = getInternalPermissionSet(spaceId);
+//     let pers = []
+//     _.each(all, function(doc){
+//         if(filtersFun(doc)){
+//             pers.push(doc)
+//         }
+//     })
+//     return pers;
+// }
 
-const find = function(query){
-    let filters = parserFilters(odataMongodb.createFilter(query.filters));
-    console.log('filters', JSON.stringify(filters));
+// const find = function(query){
+//     let filters = parserFilters(odataMongodb.createFilter(query.filters));
+//     console.log('filters', JSON.stringify(filters));
 
-    return geByFilters(query.space, (doc)=>{
-        let rev = true;
-        _.each(filters, function(v, k){
-            if(_.isString(v) && _.has(doc, k)){
-                rev = doc[k] === v
-            }
-        })
-        return rev;
-    })
-}
+//     return geByFilters(query.space, (doc)=>{
+//         let rev = true;
+//         _.each(filters, function(v, k){
+//             if(_.isString(v) && _.has(doc, k)){
+//                 rev = doc[k] === v
+//             }
+//         })
+//         return rev;
+//     })
+// }
 
 module.exports = {
     beforeFind: async function () {
@@ -94,7 +110,8 @@ module.exports = {
             //         return ;
             //     }
             // }
-            _.forEach(getInternalPermissionSet(this.spaceId), (doc)=>{
+            let lng = getLng(this.userId);
+            _.forEach(getInternalPermissionSet(this.spaceId, lng), (doc)=>{
                 this.data.values.unshift(doc)
             })
         }
@@ -111,7 +128,8 @@ module.exports = {
                     return ;
                 }
             }
-            Object.assign(this.data.values, _.find(internalPermissionSet, (doc)=>{
+            let lng = getLng(this.userId);
+            Object.assign(this.data.values, _.find(getLngInternalPermissionSet(lng), (doc)=>{
                 return doc._id === id
             }))
         }
