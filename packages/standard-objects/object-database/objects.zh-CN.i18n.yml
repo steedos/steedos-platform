@@ -34,5 +34,6 @@ objects_field_sidebar: 左侧列表
 objects_field_table_name: 数据库表名称
 objects_field_table_name_inlineHelpText: 默认数据源不支持此属性
 objects_field_triggers: 触发器
+objects_field_is_system: 系统
 objects_listview_all: 全部
 objects_field_datasource_defaultValue: 默认数据源

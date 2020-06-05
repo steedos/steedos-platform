@@ -198,7 +198,7 @@ const convertObject = function (object: StringMap) {
 }
 
 //TODO 处理继承字段base, core 的字段
-const translationObject = function(lng: string, objectName: string, object: StringMap){
+export const translationObject = function(lng: string, objectName: string, object: StringMap){
     object.label = getObjectLabel(lng, objectName, object.label);
     _.each(object.fields, function(field, fieldName){
         field.label = getObjectFieldLabel(lng, objectName, fieldName, field.label, object.datasource);

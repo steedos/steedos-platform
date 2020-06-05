@@ -36,6 +36,7 @@ fields:
     type: text
     label: Label
     required: true
+    is_name: true
   icon:
     type: lookup
     label: Icon
@@ -175,6 +176,12 @@ fields:
     type: text
     hidden: true
     label: App Version 
+  is_system:
+    type: boolean
+    label: System
+    omit: true
+    hidden: true
+    disabled: true
   # relatedList:
   #   type: lookup
   #   label: 相关子表
@@ -204,13 +211,13 @@ relatedList:
 list_views:
   all:
     columns:
+      - label
       - name
       - table_name
-      - label
       - datasource
       - is_enable
       - in_development
-      - modified
+      - is_system
     label: All
     filter_scope: space
 actions: 

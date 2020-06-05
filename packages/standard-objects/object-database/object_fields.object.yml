@@ -48,6 +48,7 @@ fields:
     type: text
     required: true
     label: Label
+    is_name: true
   type:
     type: select
     label: Type
@@ -175,9 +176,9 @@ fields:
 list_views:
   all:
     columns:
+      - label
       - name
       - column_name
-      - label
       - type
       - object
       - sort_no
