@@ -113,6 +113,7 @@ if Meteor.isClient
 							sort: objOrName.sort
 							related_field_name: ''
 							customRelatedListObject: true
+							label: objOrName.label
 						relatedListObjects[objOrName.objectName] = related
 
 		list = []
@@ -150,6 +151,8 @@ if Meteor.isClient
 					related.filtersFunction = relatedObject.filtersFunction
 				if relatedObject.customRelatedListObject
 					related.customRelatedListObject = relatedObject.customRelatedListObject
+				if relatedObject.label
+					related.label = relatedObject.label
 				delete relatedListObjects[related_object_name]
 
 			list.push related

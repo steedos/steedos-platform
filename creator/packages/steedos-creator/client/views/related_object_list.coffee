@@ -6,7 +6,11 @@ Template.related_object_list.helpers
 		return Session.get("related_object_name")
 
 	related_object_label: ()->
-		return Creator.getObject(Session.get("related_object_name")).label
+		related_object_name = Session.get("related_object_name")
+		relatedList = Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
+		relatedObj = _.find relatedList, (rl) ->
+			return rl.object_name == related_object_name
+		return relatedObj.label || Creator.getObject(related_object_name).label
 
 	is_file: ()->
 		return Session.get("related_object_name") == "cms_files"

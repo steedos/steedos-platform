@@ -307,6 +307,9 @@ Template.creator_view.helpers
 	related_list: ()->
 		return Creator.getRelatedList(Session.get("object_name"), Session.get("record_id"))
 
+	related_object_label: (relatedListObjLabel, relatedObjLabel) ->
+		return relatedListObjLabel || relatedObjLabel
+
 	related_list_count: (obj)->
 		if obj
 			object_name = obj.object_name
