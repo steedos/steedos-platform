@@ -1,29 +1,7 @@
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const odataMongodb = require("odata-v4-mongodb");
-
-const hiddenObjects = [
-    'core',
-    'base',
-    'users',
-    'flows',
-    'forms',
-    'instances',
-    'settings',
-    'object_recent_viewed',
-    'OAuth2Clients',
-    'OAuth2AccessTokens',
-    'follows',
-    'favorites',
-    'audit_records',
-    'users_verify_code',
-    'users_verify_code',
-    'users_verify_code',
-    'users_verify_code',
-    'users_verify_code',
-    'users_verify_code',
-    'users_verify_code',
-]
+const InternalData = require("./core/internalData");
 
 const permissions = {
     allowEdit: false,
@@ -43,7 +21,7 @@ const getInternalPermissionObjects = function(){
         let datasourceObjects = datasource.getObjects();
         _.each(datasourceObjects, function(object, objectName) {
           let objectJSON = object.toConfig();
-          if(!objectJSON._id && !objectJSON.hidden && !_.include(hiddenObjects, objectName)){
+          if(!objectJSON._id && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
                 objectsPermissions.push(Object.assign({}, v, {_id: `${code}_${objectName}`, name: `${code}_${objectName}`, permission_set_id: code, object_name: objectName}, baseRecord))
@@ -132,9 +110,7 @@ module.exports = {
         }else{
             let permissionObjects = find(this.query);
             if(_.isArray(this.data.values)){
-                _.forEach(permissionObjects, (doc)=>{
-                    this.data.values.unshift(doc)
-                })
+                this.data.values = this.data.values.concat(permissionObjects)
             }
         }
         

@@ -113,9 +113,7 @@ module.exports = {
             //     }
             // }
             let lng = getLng(this.userId);
-            _.forEach(getInternalPermissionSet(this.spaceId, lng), (doc)=>{
-                this.data.values.unshift(doc)
-            })
+            this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
         }
     },
     afterCount: async function () {
