@@ -120,5 +120,8 @@ Template.related_object_list.onCreated ->
 	record_id = Session.get "record_id"
 	self = this
 	this.autorun ()->
-		self.record.set(Creator.getCollection(object_name).findOne(record_id) || {})
+		_record = Creator.getCollection(object_name).findOne(record_id)
+		if !_record
+			_record = Creator.odata.get(object_name, record_id)
+		self.record.set( _record || {})
 
