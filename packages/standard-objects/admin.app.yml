@@ -86,13 +86,13 @@ admin_menus:
       - admin
     expanded: false
     sort: 300
-  - _id: permission_objects
-    name: Permission
-    permission_sets:
-      - admin
-    object_name: permission_objects
-    parent: menu_advanced
-    sort: 10
+  # - _id: permission_objects
+  #   name: Permission
+  #   permission_sets:
+  #     - admin
+  #   object_name: permission_objects
+  #   parent: menu_advanced
+  #   sort: 10
   - _id: permission_shares
     name: Permission Share
     permission_sets:
