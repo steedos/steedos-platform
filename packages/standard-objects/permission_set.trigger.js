@@ -44,6 +44,11 @@ const getLng = function(userId){
 }
 
 const getLngInternalPermissionSet = function(lng){
+
+    if(!lng){
+        return internalPermissionSet;
+    }
+
     let lngInternalPermissionSet = [];
     _.each(internalPermissionSet, function(ps){
         lngInternalPermissionSet.push(Object.assign({}, ps, {label: TAPi18n.__(`permission_set_${ps.name}`, {}, lng)}))
@@ -112,6 +117,10 @@ module.exports = {
                 this.data.values.unshift(doc)
             })
         }
+    },
+    afterCount: async function () {
+        this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
+        
     },
     afterFindOne: async function () {
         let id = this.id;
