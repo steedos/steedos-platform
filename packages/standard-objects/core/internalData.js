@@ -168,7 +168,9 @@ function getObjectFields(objectName, userId){
     if(object){
         let fields = [];
         _.each(object.fields, function(field){
-            fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
+            if(!field._id){
+                fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
+            }
         })
         return fields
     }
@@ -185,7 +187,9 @@ function getObjectActions(objectName, userId){
     if(object){
         let actions = [];
         _.each(object.actions, function(action){
-            actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
+            if(!action._id){
+                actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
+            }
         })
         return actions
     }
@@ -247,12 +251,16 @@ function getObjectListViews(objectName, userId){
         let listViews = [];
         if(Creator.getObject(objectName)){
             _.each(Creator.getObject(objectName).list_views, function(listView){
-                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object: objectName, is_enable: true, record_permissions: permissions}))
+                if(!listView._id){
+                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object: objectName, is_enable: true, record_permissions: permissions}))
+                }
             })
         }else{
             _.each(object.list_views, function(listView, _name){
-                let name = listView.name || _name
-                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}))
+                if(!listView._id){
+                    let name = listView.name || _name
+                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}))
+                }
             })
         }
         return listViews

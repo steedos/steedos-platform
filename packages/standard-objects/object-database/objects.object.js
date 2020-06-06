@@ -52,20 +52,20 @@ function checkName(name){
     return true
 }
 
-function initObjectPermission(doc){
-
+function initObjectPermission(userId, doc){
+    let lng = Steedos.locale(userId, true)
     let spaceId =  doc.space;
     let psetsAdminId = null;
     let psetsAdmin = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'admin'});
     if(!psetsAdmin){
-        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile'});
+        psetsAdminId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'admin', type: 'profile', label: TAPi18n.__(`permission_set_admin`, {}, lng)});
     }else{
         psetsAdminId = psetsAdmin._id
     }
     let psetsUserId = null;
     let psetsUser = Creator.getCollection("permission_set").findOne({space: spaceId, name: 'user'});
     if(!psetsUser){
-        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile'});
+        psetsUserId = Creator.getCollection("permission_set").insert({space: spaceId, name: 'user', type: 'profile', label: TAPi18n.__(`permission_set_user`, {}, lng)});
     }else{
         psetsUserId = psetsUser._id;
     }
@@ -287,7 +287,7 @@ Creator.Objects.objects.triggers = {
                 columns:  [{field: 'name'}]
             });
             
-            initObjectPermission(doc);
+            initObjectPermission(userId, doc);
         }
     },
     "before.update.server.objects": {
