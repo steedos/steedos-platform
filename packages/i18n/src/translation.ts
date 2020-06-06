@@ -85,7 +85,7 @@ const getObjectLabel = function(lng, name, def){
 const getObjectFieldLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectFieldLabelKey(objectName, name);
     let label = objectT(key, lng);
-    if(!label && !def){
+    if(!label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectFieldLabel(lng, baseObjectName, name, def, datasource)
@@ -97,7 +97,7 @@ const getObjectFieldLabel = function(lng, objectName, name, def, datasource?){
 const getObjectFieldInlineHelpTextLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectFieldInlineHelpTextLabelKey(objectName, name);
     let label = objectT(key, lng);
-    if(!label && !def){
+    if(!label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectFieldInlineHelpTextLabel(lng, baseObjectName, name, def, datasource)
@@ -114,7 +114,7 @@ const getObjectFieldGroup = function(lng, objectName, name, def){
 const getObjectFieldOptionsLabel = function(lng, objectName, name, value, def, datasource?){
     let key = getObjectFieldOptionsLabelKey(objectName, name, value);
     let label = objectT(key, lng);
-    if(!label && !def){
+    if(!label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectFieldOptionsLabel(lng, baseObjectName, name, value, def, datasource)
@@ -127,7 +127,7 @@ const getObjectFieldOptionsLabel = function(lng, objectName, name, value, def, d
 const getObjectActionLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectActionLabelKey(objectName, name);
     let label = objectT(key, lng);
-    if(!label && !def){
+    if(!label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectActionLabel(lng, baseObjectName, name, def, datasource)
@@ -139,7 +139,7 @@ const getObjectActionLabel = function(lng, objectName, name, def, datasource?){
 const getObjectListviewLabel = function(lng, objectName, name, def, datasource?){
     let key = getObjectListviewLabelKey(objectName, name);
     let label = objectT(key, lng);
-    if(!label && !def){
+    if(!label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = getObjectListviewLabel(lng, baseObjectName, name, def, datasource)
