@@ -56,21 +56,25 @@ getInstanceWrapperWidth = ()->
 
 Workflow.checkInstanceMaxUnfoldedButtonsCount = ()->
 	# 刷新或第一次进入时判断为手机，则不执行该函数，workflow_max_unfolded_buttons_count值保持为空值
-	maxUnfoldedCount = 3
 	if Steedos.isMobile()
 		# 这里只是PC上窗口变小为手机时的效果
 		maxUnfoldedCount = 2
 	else
+		moreWidth = 90
+		if Steedos.locale() == "zh-cn"
+			# 只有中文可以保持比较紧凑的空间
+			moreWidth = 0
+		maxUnfoldedCount = 3
 		width = getInstanceWrapperWidth()
-		if width < 400
+		if width < 400 + moreWidth
 			maxUnfoldedCount = 2
-		else if width < 500
+		else if width < 500 + moreWidth
 			maxUnfoldedCount = 3
-		else if width < 600
+		else if width < 600 + moreWidth
 			maxUnfoldedCount = 4
-		else if width < 700
+		else if width < 700 + moreWidth
 			maxUnfoldedCount = 5
-		else if width < 800
+		else if width < 800 + moreWidth
 			maxUnfoldedCount = 6
 		else
 			maxUnfoldedCount = 7
