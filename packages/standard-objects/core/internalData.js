@@ -107,7 +107,7 @@ const getLng = function(userId){
     return Steedos.locale(userId, true);
 }
 
-exports.getObjects = function(userId){
+function getObjects(userId){
     let objects = {};
     let lng = getLng(userId)
     _.each(Creator.steedosSchema.getDataSources(), function(datasource, name) {
@@ -126,12 +126,35 @@ exports.getObjects = function(userId){
       return _.values(objects);
 }
 
+exports.getObjects = getObjects
+
+exports.findObjects = function(userId, filters){
+    let query = parserFilters(filters);
+    let isSystem = query.is_system;
+    let datasource = query.datasource;
+    let objects = getObjects(userId);
+
+    if(datasource){
+        objects = _.filter(objects, function(obj){ return obj.datasource === datasource})
+    }
+
+    if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+        if(_.isBoolean(isSystem) && isSystem){
+            return objects;
+        }else{
+            return [];
+        }
+    }else{
+        return objects;
+    }
+}
 function getObject(id, userId){
     try {
-        let lng = getLng(userId)
-        let object = clone(objectql.getObject(id).toConfig());
+        let lng = getLng(userId);
+        let _object = objectql.getObject(id)
+        let object = clone(_object.toConfig());
         object._id = object.name;
-        object.datasource = "default";
+        object.datasource = _object.datasource.name;
         steedosI18n.translationObject(lng, object.name, object)
         return Object.assign({}, object, objectBaseFields);
     } catch (error) {
@@ -145,7 +168,7 @@ function getObjectFields(objectName, userId){
     if(object){
         let fields = [];
         _.each(object.fields, function(field){
-            fields.push(Object.assign({_id: `${objectName}_${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
+            fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
         })
         return fields
     }
@@ -155,4 +178,89 @@ exports.getObjectFields = getObjectFields
 exports.getObjectField = function(objectName, userId, fieldId){
     let fields = getObjectFields(objectName, userId);
     return _.find(fields, function(field){ return field._id === fieldId})
+}
+
+function getObjectActions(objectName, userId){
+    let object = getObject(objectName, userId);
+    if(object){
+        let actions = [];
+        _.each(object.actions, function(action){
+            actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
+        })
+        return actions
+    }
+}
+exports.getObjectActions = getObjectActions
+
+exports.getObjectAction = function(objectName, userId, id){
+    let actions = getObjectActions(objectName, userId);
+    return _.find(actions, function(action){ return action._id === id})
+}
+
+function getTriggerWhen(when){
+    switch (when) {
+        case 'before.insert':
+            return 'beforeInsert'
+        case 'after.insert':
+            return 'afterInsert'
+        case 'before.update':
+            return 'beforeUpdate'
+        case 'after.update':
+            return 'afterUpdate'
+        case 'before.remove':
+            return 'beforeDelete'
+        case 'after.remove':
+            return 'afterDelete'
+        default:
+            return when
+    }
+}
+
+function getObjectTriggers(objectName, userId){
+    let object = getObject(objectName, userId);
+    if(object){
+        let triggers = [];
+        if(Creator.getObject(objectName)){
+            _.each(Creator.getObject(objectName).triggers, function(trigger){
+                let when = getTriggerWhen(trigger.when);
+                triggers.push(Object.assign({_id: `${objectName}.${trigger.name}`, object: objectName, is_enable: true, record_permissions: permissions}, trigger, {when: when, todo: trigger.todo.toString()}))
+            })
+        }else{
+            _.each(object.triggers, function(trigger, _name){
+                let name = trigger.name || _name
+                triggers.push(Object.assign({_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}, trigger))
+            })
+        }
+        return triggers
+    }
+}
+exports.getObjectTriggers = getObjectTriggers
+
+exports.getObjectTrigger = function(objectName, userId, id){
+    let triggers = getObjectTriggers(objectName, userId);
+    return _.find(triggers, function(trigger){ return trigger._id === id})
+}
+
+function getObjectListViews(objectName, userId){
+    let object = getObject(objectName, userId);
+    if(object){
+        let listViews = [];
+        if(Creator.getObject(objectName)){
+            _.each(Creator.getObject(objectName).list_views, function(listView){
+                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object: objectName, is_enable: true, record_permissions: permissions}))
+            })
+        }else{
+            _.each(object.list_views, function(listView, _name){
+                let name = listView.name || _name
+                listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}))
+            })
+        }
+        return listViews
+    }
+}
+exports.getObjectListViews = getObjectListViews
+
+exports.getObjectListView = function(objectName, userId, id){
+    let listViews = getObjectListViews(objectName, userId);
+    return _.find(listViews, function(listView){ return listView._id === id})
 }

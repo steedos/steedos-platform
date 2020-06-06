@@ -38,12 +38,17 @@ function getTriggerWhen(when: string){
     }
 }
 
-function transformListenerToTrigger(object: SteedosObjectTypeConfig, when: string, todo: Function){
-    return {
+function transformListenerToTrigger(object: SteedosObjectTypeConfig, when: string, todo: Function, json){
+    let trigger:any = {
         on: 'server',
         when: getTriggerWhen(when),
         todo: transformTrigger(object, when, todo)
     }
+
+    if(json._id){
+        trigger._id =json._id
+    }
+    return trigger
 }
 
 function proxyBeforeFind(trigger: Function, baseContext){
@@ -141,7 +146,7 @@ export function transformListenersToTriggers(object: SteedosObjectTypeConfig, js
     let triggers = {}
     _.each(ENUM_WHEN, (_when)=>{
         if(json[_when]){
-            triggers[`${triggerPrefix}_${_when}`] = transformListenerToTrigger(object, _when, json[_when])
+            triggers[`${triggerPrefix}_${_when}`] = transformListenerToTrigger(object, _when, json[_when], json)
         }
     })
     return triggers;

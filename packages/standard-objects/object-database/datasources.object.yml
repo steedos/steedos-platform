@@ -16,6 +16,8 @@ fields:
   label:
     type: text
     label: Label
+    required: true
+    is_name: true
   url:
     type: text
     label: Url
@@ -74,8 +76,8 @@ fields:
 list_views:
   all:
     columns:
-      - name
       - label
+      - name
       - is_enable
       - driver
     label: All

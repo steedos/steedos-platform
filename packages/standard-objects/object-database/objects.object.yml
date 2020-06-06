@@ -13,9 +13,9 @@ fields:
         var options = [{
             label: t('objects_field_datasource_defaultValue'),
             value: 'default'}];
-        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1}}).fetch();
+        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1, label:1}}).fetch();
         _.each(spaceDatasources, function(doc){
-            options.push({label: doc.name, value: doc._id})
+            options.push({label: doc.label || doc.name, value: doc._id})
         })
         return options;
       }
@@ -202,6 +202,8 @@ fields:
 
   #             return _options;
   #           }
+paging:
+  enabled: false
 relatedList:
   - object_fields
   - object_listviews
@@ -209,6 +211,32 @@ relatedList:
   - object_triggers
   - permission_objects
 list_views:
+  customize:
+    columns:
+      - label
+      - name
+      - table_name
+      - datasource
+      - is_enable
+      - in_development
+      - is_system
+    label: Customize
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
+  system:
+    columns:
+      - label
+      - name
+      - table_name
+      - datasource
+      - is_enable
+      - in_development
+      - is_system
+    label: System
+    filters:
+      - ["is_system","=",true]
+    filter_scope: space
   all:
     columns:
       - label

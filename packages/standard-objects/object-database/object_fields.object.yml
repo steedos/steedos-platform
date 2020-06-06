@@ -173,6 +173,8 @@ fields:
     label: Description
     type: text
     is_wide: true
+paging:
+  enabled: false
 list_views:
   all:
     columns:

@@ -92,6 +92,8 @@ fields:
     type: textarea
     required: true
     is_wide: true
+paging:
+  enabled: false
 list_views:
   all:
     columns:

@@ -4,18 +4,18 @@ module.exports = {
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let fields = InternalData.getObjectFields(filters.object, this.userId);
-            if(fields){
-                this.data.values = this.data.values.concat(fields)
+            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            if(triggers){
+                this.data.values = this.data.values.concat(triggers)
             }
         }
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
         if(filters.object){
-            let fields = InternalData.getObjectFields(filters.object, this.userId);
-            if(fields){
-                this.data.values = this.data.values + fields.length
+            let triggers = InternalData.getObjectTriggers(filters.object, this.userId);
+            if(triggers){
+                this.data.values = this.data.values + triggers.length
             }
         }
     },
@@ -24,9 +24,9 @@ module.exports = {
             let id = this.id
             let objectName = id.substr(0, id.indexOf("."));
             if(objectName){
-                let field = InternalData.getObjectField(objectName, this.userId, id);
-                if(field){
-                    this.data.values = field;
+                let trigger = InternalData.getObjectTrigger(objectName, this.userId, id);
+                if(trigger){
+                    this.data.values = trigger;
                 }
             }
         }

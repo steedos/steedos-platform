@@ -118,7 +118,6 @@ module.exports = {
     },
     afterCount: async function () {
         this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
-        
     },
     afterFindOne: async function () {
         let id = this.id;

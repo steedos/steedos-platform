@@ -198,6 +198,8 @@ fields:
     label: Logic
     type: text
     omit: true
+paging:
+  enabled: false
 list_views:
   all:
     columns:
