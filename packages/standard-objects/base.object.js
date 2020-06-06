@@ -259,12 +259,15 @@ module.exports = {
                     doc.modified_by = userId;
                 }
                 var extras = ["spaces", "company", "organizations", "users", "space_users"];
-                if (extras.indexOf(this.object_name) < 0 && userId && doc.space) {
+                if (extras.indexOf(this.object_name) < 0 && doc.space) {
                     /* company_ids/company_id默认值逻辑*/
                     if (!doc.company_id || !doc.company_ids) {
-                        var su = Creator.getCollection("space_users").findOne({ space: doc.space, user: userId }, {
-                            fields: { company_id: 1 }
-                        });
+                        var su;
+                        if(userId){
+                            su = Creator.getCollection("space_users").findOne({ space: doc.space, user: userId }, {
+                                fields: { company_id: 1 }
+                            });
+                        }
                         if (!doc.company_id) {
                             if (doc.company_ids && doc.company_ids.length) {
                                 /* 如果用户在界面上指定了company_ids，则取第一个值 */
@@ -298,7 +301,7 @@ module.exports = {
                     modifier.$set.modified_by = userId;
                 }
                 var extras = ["spaces", "company", "organizations", "users", "space_users"];
-                if (extras.indexOf(this.object_name) < 0 && userId) {
+                if (extras.indexOf(this.object_name) < 0) {
                     /* company_ids/company_id级联修改逻辑*/
                     if (_.has(modifier.$set, "company_ids")) {
                         /*

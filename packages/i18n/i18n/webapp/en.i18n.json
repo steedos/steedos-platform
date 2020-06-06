@@ -11,5 +11,15 @@
 	"webapp_favorites_action_remove": "Delete from favorites",
 	"webapp_favorites_action_add": "Add to favorites",
 	"webapp_header_profile_settings": "Settings",
-	"webapp_header_profile_logout": "Log Out"
+	"webapp_header_profile_logout": "Log Out",
+	"webapp_dashboard_widgets_type_instances_pendings": "Requests Inbox",
+	"webapp_dashboard_widgets_type_apps": "Apps",
+	"webapp_dashboard_widgets_type_announcements_week": "Announcements This Week",
+	"webapp_dashboard_widgets_type_tasks_today": "Tasks Today",
+	"webapp_dashboard_widgets_type_events_today": "Tvents today",
+	"webapp_dashboard_widgets_type_html": "HTML",
+	"webapp_dashboard_widgets_position_center_top": "Left Top",
+	"webapp_dashboard_widgets_position_center_bottom_left": "Left Bottom Left",
+	"webapp_dashboard_widgets_position_center_bottom_right": "Left Bottom Right",
+	"webapp_dashboard_widgets_position_center_right": "Right"
 }
