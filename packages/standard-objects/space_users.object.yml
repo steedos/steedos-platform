@@ -211,9 +211,9 @@ list_views:
     columns:
       - name
       - position
-      - sort_no
       - mobile
       - email
+      - sort_no
     filter_scope: space
     filters: [["user_accepted","=",true]]
     sort:
