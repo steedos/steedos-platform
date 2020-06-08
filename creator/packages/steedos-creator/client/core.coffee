@@ -549,6 +549,8 @@ if Meteor.isClient
 			return Creator.formatFiltersToDev(query_arr, object_name, options)
 
 	Creator.getSafeObjectUrl = (object_name, record_id, app_id)->
+		unless _.isString(object_name)
+			return ""
 		if object_name == 'users'
 			object = Creator.getObject("space_users")
 		else
