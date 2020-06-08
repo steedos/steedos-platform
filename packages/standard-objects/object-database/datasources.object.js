@@ -104,7 +104,7 @@ Creator.Objects.datasources.triggers = {
         when: "before.insert",
         todo: function (userId, doc) {
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
             checkName(doc.name);
             if (isRepeatedName(doc._id, doc.name)) {
@@ -124,7 +124,7 @@ Creator.Objects.datasources.triggers = {
         todo: function (userId, doc, fieldNames, modifier, options) {
             modifier.$set = modifier.$set || {}
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
 
             if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
@@ -144,7 +144,7 @@ Creator.Objects.datasources.triggers = {
         when: "before.remove",
         todo: function (userId, doc) {
             if(!allowChangeDatasource()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义数据源的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义数据源的功能，请部署私有云版本");
             }
             var documents = Creator.getCollection("objects").find({datasource: doc._id}, {
                 fields: {

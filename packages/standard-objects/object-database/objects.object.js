@@ -235,7 +235,7 @@ Creator.Objects.objects.triggers = {
         when: "before.insert",
         todo: function (userId, doc) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             checkName(doc.name);
             doc.name = getObjectName(doc.datasource, doc.name);
@@ -295,7 +295,7 @@ Creator.Objects.objects.triggers = {
         when: "before.update",
         todo: function (userId, doc, fieldNames, modifier, options) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             modifier.$set = modifier.$set || {}
 
@@ -335,7 +335,7 @@ Creator.Objects.objects.triggers = {
         when: "before.remove",
         todo: function (userId, doc) {
             if(!allowChangeObject()){
-                throw new Meteor.Error(500, "已经超出贵公司允许自定义对象的最大数量");
+                throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
             }
             // var documents, object_collections;
             // if (doc.app_unique_id && doc.app_version) {
