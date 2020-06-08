@@ -2,11 +2,11 @@ _listViewColumns = (object_name, listView, use_mobile_columns)->
 	columns = listView?.columns
 	if use_mobile_columns
 		# 手机上优先取当前视图mobile_columns，其次取默认视图mobile_columns，最后才取当前视图columns前4个
-		if listView.mobile_columns
+		if listView?.mobile_columns
 			columns = listView.mobile_columns
 		else
 			defaultView = Creator.getObjectDefaultView(object_name)
-			if defaultView.mobile_columns
+			if defaultView?.mobile_columns
 				columns = defaultView.mobile_columns
 			else if columns
 				columns = Creator.pickObjectMobileColumns(object_name, columns)

@@ -287,7 +287,7 @@ Creator.getObjectDefaultColumns = (object_name, use_mobile_columns)->
 	defaultView = Creator.getObjectDefaultView(object_name)
 	columns = defaultView?.columns
 	if use_mobile_columns
-		if defaultView.mobile_columns
+		if defaultView?.mobile_columns
 			columns = defaultView.mobile_columns
 		else if columns
 			columns = Creator.pickObjectMobileColumns(object_name, columns)
