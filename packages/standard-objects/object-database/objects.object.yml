@@ -94,6 +94,9 @@ fields:
     type: boolean
     defaultValue: false
     label: Enable Share
+  enable_workflow:
+    type: boolean
+    label: Enable Workflow
   enable_instances:
     type: boolean
     label: Enable Instances
