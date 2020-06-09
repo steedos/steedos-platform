@@ -8,7 +8,7 @@
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
 import { Validators } from '../validators';
 const Future  = require('fibers/future');
-
+const crypto = require('crypto')
 const yaml = require('js-yaml');
 const fs = require("fs");
 const path = require("path");
@@ -384,4 +384,18 @@ export function isCloudAdminSpace(spaceId){
         return true
     }
     return false
+}
+
+export function getMD5(data){
+    let md5 = crypto.createHash('md5');
+    return md5.update(data).digest('hex');
+}
+
+export function JSONStringify(data) {
+    return JSON.stringify(data, function (key, val) {
+        if (typeof val === 'function') {
+            return val + '';
+        }
+        return val;
+    })
 }

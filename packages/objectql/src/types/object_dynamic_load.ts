@@ -1,7 +1,7 @@
 import { SteedosActionTypeConfig } from './action'
 import _ = require('lodash')
 import path = require('path')
-import { getRandomString } from '../util'
+import { getMD5, JSONStringify } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
 import { isMeteor, transformListenersToTriggers } from '../util'
 
@@ -202,7 +202,7 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             object.listeners = {}
         }
         delete json.listenTo
-        json.name = json._id ||getRandomString(10);
+        json.name = json._id || getMD5(JSONStringify(json));
         object.listeners[json.name] = json
         if(object.datasource === 'default'){
             util.extend(object, {triggers: transformListenersToTriggers(object, json)})
