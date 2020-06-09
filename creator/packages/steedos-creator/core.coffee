@@ -121,6 +121,20 @@ Creator.getObjectFilterFieldOptions = (object_name)->
 
 	return _options
 
+Creator.getObjectFieldOptions = (object_name)->
+	_options = []
+	unless object_name
+		return _options
+	_object = Creator.getObject(object_name)
+	fields = _object?.fields
+	permission_fields = Creator.getFields(object_name)
+	icon = _object?.icon
+	_.forEach fields, (f, k)->
+		if !_.include(["grid","object", "[Object]", "[object]", "Object", "avatar", "image", "markdown", "html"], f.type)
+			if !/\w+\./.test(k) and _.indexOf(permission_fields, k) > -1
+				_options.push {label: f.label || k, value: k, icon: icon}
+	return _options
+
 ###
 filters: 要转换的filters
 fields: 对象字段
