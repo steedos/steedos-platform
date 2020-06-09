@@ -27,7 +27,7 @@ fields:
 
               _.forEach(Creator.Apps, function (o, k) {
                 return _options.push({
-                  label: o.name,
+                  label: o.label || o.name,
                   value: k,
                   icon: o.icon_slds
                 });
@@ -43,8 +43,8 @@ fields:
     reference_to: users
     multiple: true
     is_wide: true
-    name: users
     filterable: true
+    inlineHelpText: When the type is a profile, no user needs to be selected
   type:
     label: Type
     type: select
@@ -66,6 +66,10 @@ list_views:
       - users
       - type
       - is_system
+actions:
+  customize:
+    label: Customize
+    on: record_only
 # relatedList:
 #   - objectName: permission_objects
 #     filters: !!js/function | 
