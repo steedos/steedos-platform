@@ -273,14 +273,14 @@ function getObjectListViews(objectName, userId){
         if(Creator.getObject(objectName)){
             _.each(Creator.getObject(objectName).list_views, function(listView){
                 if(!listView._id || listView._id === listView.name){
-                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object: objectName, is_enable: true, record_permissions: permissions}))
+                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object_name: objectName, is_enable: true, record_permissions: permissions}))
                 }
             })
         }else{
             _.each(object.list_views, function(listView, _name){
                 if(!listView._id || listView._id === _name){
                     let name = listView.name || _name
-                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}))
+                    listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object_name: objectName, is_enable: true, record_permissions: permissions}))
                 }
             })
         }

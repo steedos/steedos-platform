@@ -107,8 +107,12 @@ fields:
               if (!(values != null ? values.object_name : void 0)) {
                 values.object_name = Session.get("object_name");
               }
+              
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
 
-              return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0, true);
+              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
   columns.$.width:
     label: Width
@@ -128,8 +132,10 @@ fields:
               if (!(values != null ? values.object_name : void 0)) {
                 values.object_name = Session.get("object_name");
               }
-
-              return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0);
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
+              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0);
             }
   sort:
     label: Default Sort Order
@@ -147,7 +153,9 @@ fields:
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon;
-
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
               _options = [];
               _object = Creator.getObject(values != null ? values.object_name : void 0);
               fields = Creator.getFields(values != null ? values.object_name : void 0);
@@ -220,7 +228,11 @@ fields:
                 values.object_name = Session.get("object_name");
               }
 
-              return Creator.getObjectFilterFieldOptions(values != null ? values.object_name : void 0, true);
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
+
+              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
 paging:
   enabled: false
