@@ -136,6 +136,7 @@ fields:
     required: true
     create: false
     defaultValue: user
+    inlineHelpText: Can create profiles in permission set
     optionsFunction: !!js/function |
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
