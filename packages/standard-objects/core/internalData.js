@@ -110,7 +110,7 @@ function getObjects(userId){
         var datasourceObjects = datasource.getObjects();
           _.each(datasourceObjects, function(v, k) {
             var _obj = clone(v.toConfig());
-            if(!_obj._id && !_.include(hiddenObjects, k)){
+            if(!_obj._id && !_obj.hidden &&  !_.include(hiddenObjects, k)){
                 _obj._id = k;
                 _obj.name = k;
                 _obj.datasource = name;
