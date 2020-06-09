@@ -159,12 +159,17 @@ function getObject(id, userId){
 }
 exports.getObject = getObject
 
+function getOriginalObjectFields(objectName){
+    return objectql.getOriginalObjectConfig(objectName).fields
+}
+
 function getObjectFields(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
         let fields = [];
+        let originalFieldsName = ['created','created_by','modified','modified_by'].concat(_.keys(getOriginalObjectFields(objectName)));
         _.each(object.fields, function(field){
-            if(!field._id){
+            if(!field._id && _.include(originalFieldsName, field.name)){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
             }
         })
@@ -178,12 +183,17 @@ exports.getObjectField = function(objectName, userId, fieldId){
     return _.find(fields, function(field){ return field._id === fieldId})
 }
 
+function getOriginalObjectActions(objectName){
+    return objectql.getOriginalObjectConfig(objectName).actions || {}
+}
+
 function getObjectActions(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
         let actions = [];
+        let originalActions = _.keys(getOriginalObjectActions(objectName))
         _.each(object.actions, function(action){
-            if(!action._id){
+            if(!action._id && _.include(originalActions, action.name)){ //
                 actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
             }
         })
@@ -219,16 +229,31 @@ function getTriggerWhen(when){
 function getObjectTriggers(objectName, userId){
     let object = getObject(objectName, userId);
     if(object){
+        let baseTriggers, baseTriggersKey=[];
+        if(objectName != 'base' && objectName != 'core'){
+            if(object.datasource === 'default'){
+                baseTriggers = getObjectTriggers('base', userId);
+            }else{
+                baseTriggers = getObjectTriggers('core', userId);
+            }
+            if(baseTriggers){
+                baseTriggersKey = _.pluck(baseTriggers, 'name');
+            }
+        }
         let triggers = [];
         if(Creator.getObject(objectName)){
             _.each(Creator.getObject(objectName).triggers, function(trigger){
-                let when = getTriggerWhen(trigger.when);
-                triggers.push(Object.assign({_id: `${objectName}.${trigger.name}`, object: objectName, is_enable: true, record_permissions: permissions}, trigger, {when: when, todo: trigger.todo.toString()}))
+                if(!_.include(baseTriggersKey, trigger.name)){
+                    let when = getTriggerWhen(trigger.when);
+                    triggers.push(Object.assign({_id: `${objectName}.${trigger.name}`, object: objectName, is_enable: true, record_permissions: permissions}, trigger, {when: when, todo: trigger.todo.toString()}))
+                }
             })
         }else{
             _.each(object.triggers, function(trigger, _name){
                 let name = trigger.name || _name
-                triggers.push(Object.assign({_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}, trigger))
+                if(!_.include(baseTriggersKey, name)){
+                    triggers.push(Object.assign({_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}, trigger))
+                }
             })
         }
         return triggers

@@ -33,6 +33,7 @@ fields:
   label:
     type: text
     label: Label
+    is_name: true
   is_enable:
     type: boolean
     label: Enable
@@ -85,8 +86,8 @@ paging:
 list_views:
   all:
     columns:
-      - name
       - label
+      - name
       - object
       - 'on'
       - is_enable

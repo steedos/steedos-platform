@@ -12,6 +12,7 @@ fields:
   label:
     label: Label
     type: text
+    is_name: true
   object_name:
     label: Object
     type: master_detail
@@ -226,8 +227,8 @@ paging:
 list_views:
   all:
     columns:
-      - name
       - label
+      - name
       - shared
       - modified
     label: All List View
