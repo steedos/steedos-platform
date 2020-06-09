@@ -1,7 +1,7 @@
 var _ = require("underscore");
 function checkType(name, type){
     if(_.include(['admin','user','supplier','customer'], name) && type != 'profile'){
-        throw new Meteor.Error(500, "API名称为admin,user,supplier,customer时，type必须为简档");
+        throw new Meteor.Error(500, "API名称为admin,user,supplier,customer时，类别必须为简档");
     }
 }
 
