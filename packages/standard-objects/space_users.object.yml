@@ -131,7 +131,6 @@ fields:
   profile:
     type: lookup
     label: Profile
-    reference_to: permission_set
     showIcon: false
     required: true
     create: false
@@ -338,7 +337,8 @@ permission_set:
     allowRead: true
     modifyCompanyRecords: true
     viewAllRecords: true
-
+    uneditable_fields:
+      - profile
 relatedList:
   - objectName: flow_positions
     filters: !!js/function |

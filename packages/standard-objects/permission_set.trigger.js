@@ -130,11 +130,12 @@ module.exports = {
                     return ;
                 }
             }
-            let lng = getLng(this.userId);
-            Object.assign(this.data.values, _.find(getLngInternalPermissionSet(lng), (doc)=>{
-                return doc._id === id
-            }))
+            if(this.userId){
+                let lng = getLng(this.userId);
+                Object.assign(this.data.values, _.find(getLngInternalPermissionSet(lng), (doc)=>{
+                    return doc._id === id
+                }))
+            }
         }
-        // console.log('afterFindOne......', this);
     }
 }
