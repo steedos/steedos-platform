@@ -170,6 +170,10 @@ if (Meteor.isServer) {
                 return modifier.$set.admins.push(modifier.$set.owner);
             }
         }
+
+        if(_.has(modifier.$set, 'admins') && _.isEmpty(modifier.$set.admins)){
+            throw new Meteor.Error(400, "spaces_error_space_admins_required");
+        }
     });
     // 管理员不能为空
     // if (!modifier.$set.admins)
