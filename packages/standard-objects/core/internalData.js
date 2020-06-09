@@ -18,16 +18,13 @@ const objectBaseFields = {
 
 const hiddenObjects = [
     'core',
-    'apps',
     'audit_login',
     'autonumber',
     'cfs_files_filerecord',
     'cms_files',
-    'company',
     'connected_apps',
     'object_webhooks',
     'object_workflows',
-    'organizations',
     'roles',
     'sessions',
     'spaces',
@@ -69,7 +66,6 @@ const hiddenObjects = [
     'picklists',
     'picklist_options',
     'queue_import',
-    'space_users',
     'object_listviews',
     'notifications',
     'cms_categories',
@@ -251,13 +247,13 @@ function getObjectListViews(objectName, userId){
         let listViews = [];
         if(Creator.getObject(objectName)){
             _.each(Creator.getObject(objectName).list_views, function(listView){
-                if(!listView._id){
+                if(!listView._id || listView._id === listView.name){
                     listViews.push(Object.assign({}, listView, {_id: `${objectName}.${listView.name}`, object: objectName, is_enable: true, record_permissions: permissions}))
                 }
             })
         }else{
             _.each(object.list_views, function(listView, _name){
-                if(!listView._id){
+                if(!listView._id || listView._id === _name){
                     let name = listView.name || _name
                     listViews.push(Object.assign({}, listView, {_id: `${objectName}.${name}`, name: name, object: objectName, is_enable: true, record_permissions: permissions}))
                 }
