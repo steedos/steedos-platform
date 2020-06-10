@@ -12,9 +12,9 @@
   "license": "ISC",
   "dependencies": {
       "dotenv-flow": "^3.1.0",
-      "@steedos/steedos-plugin-workflow": "^2.0.3",
-      "@steedos/accounts": "^1.19.4",
-      "steedos-server": "^1.20.7"
+      "@steedos/steedos-plugin-workflow": "^2.0.8",
+      "@steedos/accounts": "^1.19.5",
+      "steedos-server": "^1.20.8"
   },
   "devDependencies": {
       "nodemon": "^1.19.1"
@@ -26,9 +26,10 @@
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
     "**/cryptiles": "^4.1.2",
-    "**/bcrypt": "3.0.5",
+    "**/bcrypt": "3.0.6",
     "**/samlp": "3.4.1",
     "**/xmldom": "0.2.1",
-    "**/tslib": "1.11.2"
+    "**/tslib": "1.11.2",
+    "**/fibers": "^4.0.3"
   }
 }

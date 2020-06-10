@@ -210,10 +210,10 @@ list_views:
     label: All Valid Users
     columns:
       - name
-      - position
-      - sort_no
       - mobile
       - email
+      - position
+      - sort_no
     filter_scope: space
     filters: [["user_accepted","=",true]]
     sort:
@@ -225,9 +225,9 @@ list_views:
     label: Invalid Users
     columns:
       - name
-      - position
       - mobile
       - email
+      - position
       - user_accepted
     filter_scope: space
     filters: [["user_accepted","!=",true]]

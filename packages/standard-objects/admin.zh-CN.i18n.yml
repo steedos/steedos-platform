@@ -9,7 +9,7 @@ menu_spaces: 公司
 menu_space_users: 部门与用户
 menu_permission_set: 权限组
 menu_apps: 应用程序
-menu_dashboard: 门户
+menu_dashboard: 主页
 menu_sessions: 登录会话
 menu_menu_advanced: 业务对象
 menu_permission_objects: 对象权限
@@ -22,3 +22,4 @@ menu_object_workflows: 对象流程
 menu_about: 关于
 menu_object_manager: 对象管理
 menu_datasources_manager: 数据源
+menu_company: 分部

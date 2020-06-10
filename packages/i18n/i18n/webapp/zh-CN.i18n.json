@@ -11,5 +11,15 @@
 	"webapp_favorites_action_remove": "删除收藏夹",
 	"webapp_favorites_action_add": "添加收藏夹",
 	"webapp_header_profile_settings": "设置",
-	"webapp_header_profile_logout": "退出"
+	"webapp_header_profile_logout": "退出",
+	"webapp_dashboard_widgets_type_instances_pendings": "待审核文件",
+	"webapp_dashboard_widgets_type_apps": "应用",
+	"webapp_dashboard_widgets_type_announcements_week": "本周公告",
+	"webapp_dashboard_widgets_type_tasks_today": "今日任务",
+	"webapp_dashboard_widgets_type_events_today": "今日日程",
+	"webapp_dashboard_widgets_type_html": "HTML",
+	"webapp_dashboard_widgets_position_center_top": "左上角",
+	"webapp_dashboard_widgets_position_center_bottom_left": "左下角左侧",
+	"webapp_dashboard_widgets_position_center_bottom_right": "左下角右侧",
+	"webapp_dashboard_widgets_position_center_right": "右边栏"
 }

@@ -252,7 +252,7 @@ Creator.Objects.object_fields.triggers = {
         throw new Meteor.Error(doc.name, "对象名称不能重复");
       }
 
-      if(hasMultipleMasterDetailTypeFiled(doc)){
+      if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
         throw new Meteor.Error(doc.name, "每个对象只能有一个[主表/子表]类型字段");
       }
 

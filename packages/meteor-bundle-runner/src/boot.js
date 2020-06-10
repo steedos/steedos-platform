@@ -466,6 +466,7 @@ var runMain = Profile("Run main()", function () {
   if (process.env.METEOR_PARENT_PID) {
     startCheckForLiveParent(process.env.METEOR_PARENT_PID);
   }
+  console.log(`Project is running at ${process.env.ROOT_URL}`);
 });
 
 var loadProjectBundles = function(){

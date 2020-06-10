@@ -1,4 +1,5 @@
 const _ = require('underscore');
+const { formatFiltersToODataQuery } = require("./format");
 
 // 把"a.b.c"这种字符fieldName转换为{"a":{"b":{"c":{}}}}这种json
 let expandFieldName = (initial, fieldName) => {
@@ -88,14 +89,15 @@ let formatFieldsToGraphqlQuery = (fields) => {
  * @param {*} filters ,请求的过滤条件
  * @param {*} fields ,请求的字段，支持["a.b.c","m","n"]或"a.b.c,m,n"这种语法
  */
-let formatFiltersToGraphqlQuery = (filters, fields) => {
+let formatFiltersToGraphqlQuery = (filters, fields, userContext, odataProtocolVersion, forceLowerCase) => {
     if(!_.isString(filters)){
-        filters = JSON.stringify(filters);
+        filters = formatFiltersToODataQuery(filters, userContext, odataProtocolVersion, forceLowerCase);
     }
+    let filtersWrap  = filters ? `(filters:"${filters}")` : "";
     let graphqlFields = formatFieldsToGraphqlQuery(fields);
     let graphqlQuery = `
         query {
-            contracts(filters:${filters})${graphqlFields}
+            contracts${filtersWrap}${graphqlFields}
         }
     `;
     return graphqlQuery;
