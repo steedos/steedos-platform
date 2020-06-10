@@ -287,9 +287,52 @@ function getObjectListViews(objectName, userId){
         return listViews
     }
 }
+
+function formatListView(listView){
+    if(!listView){
+        return ;
+    }
+    let data = clone(listView);
+    let columns = [];
+    _.each(data.columns, function(column){
+        if(_.isString(column)){
+            columns.push({field: column})
+        }else{
+            columns.push(column);
+        }
+    })
+    data.columns = columns;
+
+
+    let mobile_columns = [];
+    _.each(data.mobile_columns, function(column){
+        if(_.isString(column)){
+            mobile_columns.push({field: column})
+        }else{
+            mobile_columns.push(column);
+        }
+    })
+    data.mobile_columns = mobile_columns;
+
+    let sort = [];
+    _.each(data.sort, function(item){
+        if(_.isArray(item)){
+            if(item.length == 2){
+                sort.push({field_name: item[0], order: item[1]});
+            }else if(item.length == 1){
+                sort.push({field_name: item[0]});
+            }
+        }else{
+            sort.push(item)
+        }
+    })
+    data.sort = sort;
+    return data;
+}
+
 exports.getObjectListViews = getObjectListViews
 
 exports.getObjectListView = function(objectName, userId, id){
     let listViews = getObjectListViews(objectName, userId);
-    return _.find(listViews, function(listView){ return listView._id === id})
+    return formatListView(_.find(listViews, function(listView){ return listView._id === id}))
 }
