@@ -285,6 +285,7 @@ Meteor.methods
 							userInfo = db.users.findOne(user_id, { fields: { username: 1 } })
 							if userInfo.username
 								su_doc.username = userInfo.username
+							su_doc.user = user_id
 
 						db.space_users.insert(su_doc)
 			catch e
