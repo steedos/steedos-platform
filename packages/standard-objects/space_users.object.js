@@ -806,7 +806,7 @@ Creator.Objects['space_users'].actions = {
     import: {
         label: "导入",
         on: "list",
-        visible: true,
+        visible: false,
         // visible: function (object_name, record_id, record_permissions) {
         //     if(Steedos.isMobile()){
         //         return false;
