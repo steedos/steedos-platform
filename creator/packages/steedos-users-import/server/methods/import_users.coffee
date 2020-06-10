@@ -34,7 +34,6 @@ Meteor.methods
 
 		currentUser = db.users.findOne({_id: _self.userId},{fields:{locale:1,phone:1}})
 		currentUserLocale = currentUser.locale
-		currentUserPhonePrefix = Accounts.getPhonePrefix currentUser
 
 		# 数据统一校验
 
@@ -74,10 +73,9 @@ Meteor.methods
 			if item.username
 				selector.push {username: item.username}
 			if item.email
-				selector.push {"emails.address": item.email}
+				selector.push {email: item.email}
 			if item.phone
-				phoneNumber = currentUserPhonePrefix + item.phone
-				selector.push {"phone.number": phoneNumber}
+				selector.push {mobile: item.phone}
 
 			userExist = db.users.find({$or: selector})
 
@@ -147,10 +145,9 @@ Meteor.methods
 				# if item.username
 				# 	selector.push {username: item.username}
 				if item.email
-					selector.push {"emails.address": item.email}
+					selector.push {email: item.email}
 				if item.phone
-					phoneNumber = currentUserPhonePrefix + item.phone
-					selector.push {"phone.number": phoneNumber}
+					selector.push {mobile: item.phone}
 				userExist = db.users.find({$or: selector})
 				if userExist.count() > 1
 					throw new Meteor.Error(400, "用户名、手机号、邮箱信息有误，无法匹配到同一账号")
@@ -193,18 +190,15 @@ Meteor.methods
 						udoc.name = item.name
 
 					if item.email
-						udoc.emails = [{address: item.email, verified: false}]
+						udoc.email = item.email
+						udoc.email_verified = false
 
 					if item.username
 						udoc.username = item.username
 
 					if item.phone
-						udoc.phone = {
-							number: currentUserPhonePrefix + item.phone
-							mobile: item.phone
-							verified: false
-							modified: now
-						}
+						udoc.mobile = item.phone
+						udoc.mobile_verified = false
 					user_id = db.users.insert(udoc)
 
 					if item.password
@@ -248,8 +242,8 @@ Meteor.methods
 						if space_user.invite_state == "refused" or space_user.invite_state == "pending"
 							throw new Meteor.Error(400, "该用户还未接受加入工作区，不能修改他的个人信息")
 						else
-							if item.username
-								db.users.update({_id: user_id},{$set:{username: item.username}})
+#							if item.username
+#								db.users.update({_id: user_id},{$set:{username: item.username}})
 							if item.password
 								Accounts.setPassword(user_id, item.password, {logout: false})
 
