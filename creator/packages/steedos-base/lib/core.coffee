@@ -896,7 +896,7 @@ if Meteor.isClient
 #			console.log('remove current_app_id...');
 #			sessionStorage.removeItem('current_app_id')
 	Steedos.getCurrentAppId = ()->
-		if Session.get('current_app_id')
-			return Session.get('current_app_id')
+		if Session.get('app_id')
+			return Session.get('app_id')
 		else
 			return sessionStorage.getItem('current_app_id');
