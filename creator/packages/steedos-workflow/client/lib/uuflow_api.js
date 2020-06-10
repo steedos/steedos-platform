@@ -701,6 +701,10 @@ UUflow_api.post_forward = function (instance_id, space_id, flow_id, hasSaveInsta
 
 			if (action_type == "forward") {
 				toastr.success(TAPi18n.__("forward_instance_success"));
+				var new_ins_id = responseText && responseText.new_ins_ids && responseText.new_ins_ids[0];
+				if(new_ins_id && !Steedos.isMobile()){
+					Steedos.openWindow("/app/workflow/instances/view/" + new_ins_id);
+				}
 			} else if (action_type == "distribute") {
 				toastr.success(TAPi18n.__("instance_distribute_success"));
 			}
