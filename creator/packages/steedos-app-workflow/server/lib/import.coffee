@@ -537,12 +537,10 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 						approveRoleById = _.find approveRolesByIds, (_role)->
 							return _role._id == step.approver_roles[_index]
 						flow_role_query = {space: spaceId, name: role_name}
-
-						if approveRoleById?.company_id && company_id
+						if (!approveRoleById && company_id) || (approveRoleById?.company_id && company_id)
 							flow_role_query.company_id = company_id
 						else
 							flow_role_query.company_id = {$exists: false}
-
 						role = db.flow_roles.findOne(flow_role_query, {fields: {_id: 1}})
 						if _.isEmpty(role)
 							role_id = db.flow_roles._makeNewID()
@@ -558,7 +556,6 @@ steedosImport.workflow = (uid, spaceId, form, enabled, company_id, options)->
 							if company_id
 								role.company_id = company_id
 								role.company_ids = [company_id]
-
 							db.flow_roles.direct.insert(role)
 
 							approve_roles.push(role_id)
