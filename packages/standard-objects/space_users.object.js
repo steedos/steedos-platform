@@ -7,6 +7,24 @@ db.space_users = core.newCollection('space_users');
 
 db.space_users._simpleSchema = new SimpleSchema;
 
+function addSpaceAdmin(spaceId, userId){
+    let space = db.spaces.findOne({_id: spaceId}, {fields: {admins: 1}});
+    if(space){
+        let admins = space.admins || [];
+        admins.push(userId);
+        db.spaces.update({_id: space._id}, {$set:{admins: _.uniq(admins)}})
+    }
+}
+
+function removeSpaceAdmin(spaceId, userId){
+    let space = db.spaces.findOne({_id: spaceId}, {fields: {admins: 1}});
+    if(space){
+        let admins = space.admins || [];
+        admins = _.difference(admins, [userId]);
+        db.spaces.update({_id: space._id}, {$set:{admins: _.uniq(admins)}})
+    }
+}
+
 Meteor.startup(function () {
     if (Meteor.isServer) {
         db.space_users.insertVaildate = function (userId, doc) {
@@ -271,6 +289,11 @@ Meteor.startup(function () {
             if(doc.contact_id){
                 Creator.getCollection("contacts").direct.update({_id: doc.contact_id}, {$set: {user: doc.user}})
             }
+
+            if(doc.profile === 'admin'){
+                addSpaceAdmin(doc.space, doc.user);
+            }
+
             // if (!doc.is_registered_from_space) {
             //     user = db.users.findOne(doc.user, {
             //         fields: {
@@ -346,6 +369,14 @@ Meteor.startup(function () {
             if(_.has(modifier.$set, 'profile') && doc.profile != modifier.$set.profile){
                 if(!Creator.isSpaceAdmin(doc.space, userId)){
                     throw new Meteor.Error(400, "can not change profile");
+                }
+
+                if(doc.profile === 'admin'){
+                    removeSpaceAdmin(doc.space, doc.user);
+                }
+
+                if(modifier.$set.profile === 'admin'){
+                    addSpaceAdmin(doc.space, doc.user);
                 }
             }
 
@@ -775,7 +806,7 @@ Creator.Objects['space_users'].actions = {
     import: {
         label: "导入",
         on: "list",
-        visible: false,
+        visible: true,
         // visible: function (object_name, record_id, record_permissions) {
         //     if(Steedos.isMobile()){
         //         return false;
