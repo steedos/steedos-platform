@@ -50,10 +50,6 @@ getDefaultButtonsMap = ()->
 		name: t("instance_approval_history")
 		classNames: "btn-trace-list"
 		enabled: false
-	forward:
-		name: t("instance_forward_title")
-		classNames: "btn-instance-forward"
-		enabled: false
 	distribute:
 		name: t("instance_distribute_title")
 		classNames: "btn-instance-distribute"
@@ -77,6 +73,10 @@ getDefaultButtonsMap = ()->
 	reopen:
 		name: t("instance_reopen_title")
 		classNames: "btn-instance-hide"
+		enabled: false
+	forward:
+		name: t("instance_forward_title")
+		classNames: "btn-instance-forward"
 		enabled: false
 
 getButtonEnabled = (_id, button)->
@@ -296,13 +296,13 @@ instanceButtonHelpers =
 		if !ins
 			return false
 
-		# 传阅的申请单不允许转发
-		if (InstanceManager.isCC(ins))
-			return false
+		# # 传阅的申请单不允许转发
+		# if (InstanceManager.isCC(ins))
+		# 	return false
 
-		# 待审核箱不显示转发
-		if InstanceManager.isInbox()
-			return false
+		# # 待审核箱不显示转发
+		# if InstanceManager.isInbox()
+		# 	return false
 
 		if ins.state != "draft"
 			return true
