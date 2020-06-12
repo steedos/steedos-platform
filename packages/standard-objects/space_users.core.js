@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const NEEDSYNCATTRIBUTES = ['name', 'username', 'email', 'email_verified', 'mobile', 
-'mobile_verified', 'locale', 'avatar', 'last_logon', 'email_notification', 'sms_notification'];
+'mobile_verified', 'locale', 'avatar', 'last_logon', 'email_notification', 'sms_notification', 'password_expired'];
 
 getNeedSyncSet = function(doc, modifierSet){
     let syncSet = {};
