@@ -192,6 +192,9 @@ fields:
   avatar:
     label: Avatar
     type: avatar
+  password_expired:
+    label: Password expired
+    type: boolean
   hr:
     type: object
     blackbox: true
