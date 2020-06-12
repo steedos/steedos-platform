@@ -13,6 +13,16 @@ getCookie = (name)->
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
 
+Steedos.goResetPassword = (redirect)->
+	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
+	if accountsUrl
+		if !redirect
+			redirect = location.href.replace("/steedos/sign-in", "").replace("/steedos/logout", "")
+		if _.isFunction(Steedos.isCordova) && Steedos.isCordova()
+			rootUrl = new URL(__meteor_runtime_config__.ROOT_URL)
+			accountsUrl = rootUrl.origin + accountsUrl
+		window.location.href = accountsUrl + "/a/#/update-password?redirect_uri=" + redirect;
+
 Steedos.redirectToSignIn = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl 
@@ -77,6 +87,8 @@ Setup.validate = (onSuccess)->
 		if data.webservices
 			Steedos.settings.webservices = data.webservices
 		Setup.lastUserId = data.userId
+		if data.password_expired
+			Steedos.goResetPassword()
 		if data.spaceId 
 			Setup.lastSpaceId = data.spaceId
 			if (data.spaceId != Session.get("spaceId"))
