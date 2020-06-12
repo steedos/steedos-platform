@@ -18,5 +18,5 @@ widgets:
   - position: RIGHT
     type: html
     label: 自定义html
-    content: <style>a.test-html-link{color:red;}</style><a class="test-html-link">左侧带Label效果，自定义样式为红色链接</a>
+    html: <style>a.test-html-link{color:red;}</style><a class="test-html-link">左侧带Label效果，自定义样式为红色链接</a>
 
