@@ -263,6 +263,8 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+    uneditable_fields:
+      - password_expired
   admin:
     allowCreate: true
     allowDelete: false
