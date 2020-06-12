@@ -75,8 +75,7 @@ Template.instance_pick_approve_users.helpers
 			spaceUsers = WorkflowManager.remoteSpaceUsers.find({user: {$in: diff}}, {fields: {user:1, name:1}})
 		# 此段代码用于解决user排序问题
 		_.each spaceUsers, (spaceUser)->
-			href = Creator.getSafeObjectUrl('users', spaceUser.user);
-			stepApproves.push {id: spaceUser.user, name: spaceUser.name, href: href};
+			stepApproves.push {id: spaceUser.user, name: spaceUser.name};
 		_.each stepApproves, (stepApprove)->
 			stepApprove.stepId = stepId;
 		rvalue = [];
@@ -90,7 +89,8 @@ Template.instance_pick_approve_users.helpers
 				rvalue.push(stepApprove)
 		return rvalue
 
-	getOpenWindowScript: (href)->
+	getOpenWindowScript: (userId)->
+		href = Creator.getSafeObjectUrl('users', userId);
 		return "window.open('#{href}','_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes');return false"
 
 	hasSelectedUser: ()->
