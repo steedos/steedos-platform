@@ -184,7 +184,7 @@ Steedos.Helpers =
 	getObjectBadge: (object)->
 		spaceId = Steedos.getSpaceId()
 		if object.name == "instances"
-			return Steedos.getBadge("workflow", spaceId)
+			return Steedos.getWorkflowBadge()
 	getUserRouter: (userId)->
 		if !userId
 			userId = Steedos.userId();
@@ -406,6 +406,27 @@ TemplateHelpers =
 	# 			locale = "zh-cn"
 	# 		else
 	# 			locale = "en-us"
+
+	getWorkflowBadge: ()->
+		if _.isEmpty(Session.get("workflow_categories"))
+			# categorys = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
+			# if categorys?.length
+			# 	# 有分类时，数量只显示在分类下面的子菜单，即流程菜单链接的右侧，总菜单不计算和显示数量
+			# 	return ""
+			spaceId = Steedos.spaceId()
+			return Steedos.getBadge("workflow", spaceId)
+		else
+			getInboxCount = (categoryIds)->
+				count = 0
+				flow_instances = db.flow_instances.findOne(Steedos.getSpaceId())
+				categoryIds.forEach (categoryId)->
+					_.each flow_instances?.flows, (_f)->
+						if _f.category == categoryId
+							count += _f?.count || 0
+				return count
+			count = getInboxCount(Session.get("workflow_categories"))
+			if count
+				return count
 
 	getBadge: (appId, spaceId)->
 		appId = if appId then appId else Steedos.getAppName()

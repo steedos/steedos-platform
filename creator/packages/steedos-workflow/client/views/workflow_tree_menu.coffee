@@ -1,12 +1,3 @@
-getInboxCount = (categoryIds)->
-	count = 0
-	flow_instances = db.flow_instances.findOne(Steedos.getSpaceId())
-	categoryIds.forEach (categoryId)->
-		_.each flow_instances?.flows, (_f)->
-			if _f.category == categoryId
-				count += _f?.count || 0
-	return count
-
 getInboxCategory = (category_id)->
 	inboxInstancesFlow = []
 	category = db.categories.findOne({_id: category_id})
@@ -36,17 +27,7 @@ getDraftCount = ()->
 	return db.instances.find({state:"draft",space:spaceId,submitter:userId,$or:[{inbox_users: {$exists:false}}, {inbox_users: []}]}).count()
 
 getInboxBadge = ()->
-	if _.isEmpty(Session.get("workflow_categories"))
-		# categorys = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
-		# if categorys?.length
-		# 	# 有分类时，数量只显示在分类下面的子菜单，即流程菜单链接的右侧，总菜单不计算和显示数量
-		# 	return ""
-		spaceId = Steedos.spaceId()
-		return Steedos.getBadge("workflow", spaceId)
-	else
-		count = getInboxCount(Session.get("workflow_categories"))
-		if count
-			return count
+	return Steedos.getWorkflowBadge();
 
 getSpaceName = (_id)->
 	return db.spaces.findOne({_id: _id})?.name
