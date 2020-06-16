@@ -32,8 +32,10 @@ Template.creatorSidebarLeft.helpers
 		else
 			return false
 
-	object_url: ()->
-		return Creator.getRelativeUrl("/app/-/#{String(this)}")
+	object_url: (_id)->
+		unless _id
+			_id = "-"
+		return Creator.getRelativeUrl("/app/#{_id}/#{String(this)}")
 
 	settings_url: ()->
 		return Creator.getRelativeUrl('/user_settings')
