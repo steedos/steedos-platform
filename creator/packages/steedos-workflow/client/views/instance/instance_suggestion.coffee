@@ -313,6 +313,13 @@ Template.instance_suggestion.helpers
 		else
 			return InstanceManager.getCurrentApprove()?.description || InstanceSignText.helpers.getLastSignApprove()?.description || ""
 
+	approve_placeholder: ()->
+		instance = WorkflowManager.getInstance();
+		if instance.state == "draft"
+			return t("workflow_draft_suggestion_placeholder")
+		else 
+			return t("workflow_suggestion_placeholder")
+
 	showSelsectInAllUsers: ()->
 		if Meteor.settings.public.workflow?.disable_pick_approve_users
 			return false
