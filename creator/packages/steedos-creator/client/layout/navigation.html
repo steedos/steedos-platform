@@ -45,9 +45,9 @@
 					<li class="slds-context-bar__item {{object_class_name this}}">
 						<a data-object-name="{{this}}" href="{{object_url}}" class="slds-context-bar__label-action creator-object-nav-{{this}}">
 							<span class="slds-truncate">{{_ object_i.label}}</span>
-							{{#if getObjectBadge object_i}}
-								<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{getObjectBadge object_i}}</span>
-							{{/if}}
+							{{#with getObjectBadge object_i app_id}}
+								<span class="slds-notification-badge slds-incoming-notification slds-show-notification">{{this}}</span>
+							{{/with}}
 						</a>
 					</li>
 				{{/each}}
