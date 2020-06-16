@@ -21,8 +21,8 @@ Template.creatorSidebarLeft.helpers
 					objects.push v
 		return objects
 
-	isActive: (obj)->
-		if (obj == Session.get("object_name"))
+	isActive: (obj, appId)->
+		if (obj == Session.get("object_name") && appId == Session.get("app_id"))
 			return true
 
 	hideObjects: (_id)->

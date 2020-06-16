@@ -20,7 +20,7 @@
 								<li><h4 id="favoriteChannel"><span>{{app_name _id}}</span></h4></li>
 								{{#unless hideObjects _id}}
 									{{#each app_objects _id}}
-										<li class="{{#if isActive this}}active{{/if}}">
+										<li class="{{#if isActive this ../_id}}active{{/if}}">
 											<a id="sidebarItem_town-square" data-object-name="{{this}}" class="sidebar-item creator-object-nav-{{this}}"
 											href="{{object_url ../_id}}">
 												<span class="icon icon__globe">
