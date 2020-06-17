@@ -493,19 +493,37 @@ TemplateHelpers =
 			return badge
 
 	getWorkflowCategoriesBadge: (workflow_categories, spaceId)->
+		userId = Meteor.userId()
+		unless spaceId
+			spaceId = Steedos.spaceId()
+		unless spaceId and userId
+			return
 		count = 0
+		authToken = Accounts._storedLoginToken()
+		headers = {}
+		headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+		headers['X-User-Id'] = userId
+		headers['X-Auth-Token'] = authToken
 		$.ajax
 			url: Steedos.absoluteUrl('/api/workflow/open/pending?limit=0&spaceId=' + spaceId + "&workflow_categories=" + workflow_categories.join(','))
 			type: 'get'
 			async: false
 			dataType: 'json'
+			headers: headers
 			success: (responseText, status)->
 				if (responseText.errors)
 					toastr.error(responseText.errors);
 					return;
 				count = responseText.count;
-			error: (xhr, msg, ex) ->
-				toastr.error(msg);
+			error: (jqXHR, textStatus, errorThrown) ->
+				error = jqXHR.responseJSON
+				console.error error
+				if error?.reason
+					toastr?.error?(TAPi18n.__(error.reason))
+				else if error?.message
+					toastr?.error?(TAPi18n.__(error.message))
+				else
+					toastr?.error?(error)
 		if count
 			return count
 
