@@ -27,9 +27,9 @@ getDraftCount = ()->
 	return db.instances.find({state:"draft",space:spaceId,submitter:userId,$or:[{inbox_users: {$exists:false}}, {inbox_users: []}]}).count()
 
 getInboxBadge = ()->
-	spaceId = Steedos.getSpaceId()
+	# spaceId = Steedos.getSpaceId()
 	appId = Session.get("app_id")
-	return Steedos.getInstanceBadge(appId, spaceId);
+	return Steedos.getWorkflowBadge(appId);
 
 getSpaceName = (_id)->
 	return db.spaces.findOne({_id: _id})?.name

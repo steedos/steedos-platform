@@ -189,9 +189,8 @@ Steedos.Helpers =
 			console.log("zero....");
 			return 0
 		if object.name == "instances"
-			console.log("====getObjectBadge==appId==", appId);
-			# return Steedos.getWorkflowBadge()
-			return Steedos.getInstanceBadge(appId, spaceId)
+			return Steedos.getWorkflowBadge(appId)
+			# return Steedos.getInstanceBadge(appId, spaceId)
 
 	getUserRouter: (userId)->
 		if !userId
@@ -436,12 +435,35 @@ TemplateHelpers =
 	# 		if count
 	# 			return count
 
-	getInstanceBadge: (appId, spaceId)->
+	getWorkflowBadge: (appId)->
 		workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')
-		if workflow_categories.length > 0
-			return Steedos.getWorkflowCategoriesBadge(workflow_categories, spaceId)
+		if _.isEmpty(workflow_categories)
+			# categorys = WorkflowManager.getSpaceCategories(Session.get("spaceId"), Session.get("workflow_categories"))
+			# if categorys?.length
+			# 	# 有分类时，数量只显示在分类下面的子菜单，即流程菜单链接的右侧，总菜单不计算和显示数量
+			# 	return ""
+			spaceId = Steedos.spaceId()
+			return Steedos.getBadge("workflow", spaceId)
 		else
-			Steedos.getBadge("workflow", spaceId)
+			getInboxCount = (categoryIds)->
+				count = 0
+				flow_instances = db.flow_instances.findOne(Steedos.getSpaceId())
+				categoryIds.forEach (categoryId)->
+					_.each flow_instances?.flows, (_f)->
+						if _f.category == categoryId
+							count += _f?.count || 0
+				return count
+			# count = getInboxCount(Session.get("workflow_categories"))
+			count = getInboxCount(workflow_categories)
+			if count
+				return count
+
+	# getInstanceBadge: (appId, spaceId)->
+	# 	workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')
+	# 	if workflow_categories.length > 0
+	# 		return Steedos.getWorkflowCategoriesBadge(workflow_categories, spaceId)
+	# 	else
+	# 		return Steedos.getBadge("workflow", spaceId)
 
 	getBadge: (appId, spaceId)->
 		appId = if appId then appId else Steedos.getAppName()
