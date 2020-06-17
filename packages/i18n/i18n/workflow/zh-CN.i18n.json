@@ -222,6 +222,7 @@
 
 	"workflow_select_an_app": "应用",
 	"workflow_suggestion_placeholder": "请填写意见。",
+	"workflow_draft_suggestion_placeholder": "请填写备注。",
 
 	"instance_opinion_title": "常用意见",
 	"instance_opinion_btn": "常用</br>意见",

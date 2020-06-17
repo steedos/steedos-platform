@@ -192,6 +192,9 @@ fields:
   avatar:
     label: Avatar
     type: avatar
+  password_expired:
+    label: Password expired
+    type: boolean
   hr:
     type: object
     blackbox: true
@@ -260,6 +263,8 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+    uneditable_fields:
+      - password_expired
   admin:
     allowCreate: true
     allowDelete: false

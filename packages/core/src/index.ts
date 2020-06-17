@@ -19,3 +19,5 @@ export * from './routes'
 export { default as Util } from './util'
 
 export * from './plugins'
+
+export { coreExpress } from "./express-middleware";

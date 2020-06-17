@@ -10,13 +10,13 @@ export const validate = async (req: express.Request, res: express.Response) => {
     if (userSession.userId) {
         setAuthCookies(req, res, userSession.userId, userSession.authToken, userSession.spaceId);
 
-        let user = await getSteedosSchema().getObject('users').findOne(userSession.userId, { fields: ['utcOffset'] });
+        let user = await getSteedosSchema().getObject('users').findOne(userSession.userId, { fields: ['utcOffset','password_expired'] });
 
         if (!user.hasOwnProperty('utcOffset')) {
             await getSteedosSchema().getObject('users').update(userSession.userId, { 'utcOffset': utcOffset })
         }
 
-        return res.send(userSession);
+        return res.send(Object.assign({}, userSession, {password_expired: user.password_expired}));
     }
     return res.status(401).send({
         "error": "Validate Request -- Missing X-Auth-Token",

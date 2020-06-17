@@ -221,6 +221,7 @@
 
 	"workflow_select_an_app": "Steedos Apps",
 	"workflow_suggestion_placeholder": "Please fill in comments.",
+	"workflow_draft_suggestion_placeholder": "Please fill in comments.",
 
 	"instance_opinion_title": "Opinions",
 	"instance_opinion_btn": "Opinions",

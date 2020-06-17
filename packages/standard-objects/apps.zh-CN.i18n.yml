@@ -22,6 +22,7 @@ apps_field_oauth2_scopes_options_full: 完全访问权限 (full)
 apps_field_oauth2_scopes_options_openid: 允许访问您的唯一标志符 (openid)
 apps_field_oauth2_scopes_options_profile: '访问基本信息 (id, profile, email, address, phone)'
 apps_field_objects: 主菜单项
+apps_field_mobile_objects: 移动端菜单项
 apps_field_on_click: 链接脚本
 apps_field_saml_acs_url: ACS Url
 apps_field_saml_enabled: 启用 SAML
