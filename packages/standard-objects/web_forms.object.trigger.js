@@ -1,9 +1,16 @@
+const { translationObject } = require('@steedos/i18n');
+const { getUserLocale } = require('@steedos/core').Util;
+
 const generatHtml = (doc)=>{
     const fields = doc.fields;
-    const object = Creator.getObject(doc.object_name);
+    let object = Creator.getObject(doc.object_name);
     if(!object){
         throw new Error("web_forms_error_object_name_not_found");
     }
+    const webForm = Creator.getCollection("web_forms").findOne(doc._id, {fields: {owner: 1}});
+    const owner = Creator.getCollection("users").findOne(webForm.owner, {fields: {locale: 1}});
+    const lng = getUserLocale(owner);
+    translationObject(lng, doc.object_name, object);
     const objectFields = object.fields;
     let formUrl = `/api/v4/${doc.object_name}/web_forms`;
     formUrl = Steedos.absoluteUrl(formUrl);
@@ -51,6 +58,7 @@ const generatHtml = (doc)=>{
 
     <input type="submit" name="submit">
 </form>`;
+    console.log("====code====", code);
     return code;
 }
 
