@@ -1,0 +1,88 @@
+name: web_forms
+label: Web Forms
+icon: account
+enable_api: true
+fields:
+  object_name:
+    label: Object
+    type: lookup
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+                var _options;
+              _options = [];
+              _.forEach(Creator.Objects, function (o, k) {
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                });
+              });
+              return _options;
+            }
+    required: true
+    is_wide: true
+    filterable: true
+    index: true
+  fields:
+    label: Fields
+    type: lookup
+    multiple: true
+    required: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
+      function (values) {
+                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+            }
+    filterable: true
+  record_owner:
+    label: Owner
+    type: lookup
+    reference_to: users
+    sortable: true
+    index: true
+  notification_users:
+    type: lookup
+    label: Notification Users
+    reference_to: users
+    multiple: true
+    filterable: true
+  generated_html: 
+    label: Generated Html
+    type: code
+    is_wide: true
+    omit: true
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+list_views:
+  all:
+    label: All Web Forms
+    columns:
+      - object_name
+      - record_owner
+      - modified
+    filter_scope: space
+actions: 
+  copy: 
+    label: Copy Html Code
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+    modifyCompanyRecords: false
+    viewCompanyRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

@@ -179,6 +179,8 @@
 	"users_email_thanks": "谢谢！",
 
 	"tasks_js_addNotifications_notificationTitle": "为您分配了一个任务",
-	"events_js_addNotifications_notificationTitle": "为您安排了日程"
+	"events_js_addNotifications_notificationTitle": "为您安排了日程",
+	
+	"web_forms_error_object_name_not_found": "关联对象未找到"
 
 }

@@ -1909,10 +1909,10 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
 
-"@steedos/accounts@^1.19.3-alpha.1":
-  version "1.19.4"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.4.tgz#1e3516635e5cc294bcd7df533527960c03487770"
-  integrity sha1-HjUWY15cwpS8199TNSeWDANId3A=
+"@steedos/accounts@^1.19.5":
+  version "1.19.5"
+  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.19.5.tgz#c7e94a6fdad8cd1ce0c7e1af7dbf9103f49043f9"
+  integrity sha1-x+lKb9rYzRzgx+Gvfb+RA/SQQ/k=
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -1944,9 +1944,10 @@
     odata-v4-parser "0.1.13"
     odata-v4-sql "^0.1.2"
 
-"@steedos/steedos-model-generator@^0.5.34":
-  version "0.5.34"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-model-generator/-/steedos-model-generator-0.5.34.tgz#5ef4dc0fcdfad5d12b4b1befaad055f345d9b25f"
+"@steedos/steedos-model-generator@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.npm.taobao.org/@steedos/steedos-model-generator/download/@steedos/steedos-model-generator-1.20.0.tgz#d5a8e0c5b11db1831b2e9b3fdb2e477ac7c2beed"
+  integrity sha1-1ajgxbEdsYMbLps/2y5HesfCvu0=
   dependencies:
     change-case "^3.1.0"
     fs-extra "^7.0.1"
@@ -1954,7 +1955,7 @@
     inquirer "^6.2.2"
     mssql "^4.3.2"
     mysql "^2.16.0"
-    oracledb "^3.1.2"
+    oracledb "^4.2.0"
     pg "^7.8.1"
     reflect-metadata "^0.1.13"
     sqlite3 "^4.0.6"
@@ -1963,17 +1964,18 @@
     yargs "^13.2.1"
     yn "^2.0.0"
 
-"@steedos/steedos-plugin-workflow@^1.0.2":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.0.3.tgz#0facdea34785107fec525c89197bbdf7d23958a3"
+"@steedos/steedos-plugin-workflow@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.1.tgz#e96115e4dba012dc5c454a3d38dab0f4ca7f9a44"
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
     underscore "^1.9.1"
 
-"@steedos/steedos-plugin-workflow@^1.9.1":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-1.9.1.tgz#e96115e4dba012dc5c454a3d38dab0f4ca7f9a44"
+"@steedos/steedos-plugin-workflow@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.npm.taobao.org/@steedos/steedos-plugin-workflow/download/@steedos/steedos-plugin-workflow-2.0.8.tgz#7614b762710fa7262816bb5a817dfcbc7a788958"
+  integrity sha1-dhS3YnEPpyYoFrtagX38vHp4iVg=
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
@@ -9228,9 +9230,10 @@ optionator@^0.8.1, optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
-oracledb@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/oracledb/-/oracledb-3.1.2.tgz#4d7df7b8eda161d4e645837cd43c530232d139e8"
+oracledb@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npm.taobao.org/oracledb/download/oracledb-4.2.0.tgz#b4d97957d206f7c2d1c2286cc80e91ff2d45fce8"
+  integrity sha1-tNl5V9IG98LRwihsyA6R/y1F/Og=
 
 os-browserify@^0.2.1:
   version "0.2.1"
