@@ -34,7 +34,40 @@ fields:
     defaultIcon: service_contract
     optionsFunction: !<tag:yaml.org,2002:js/function> |- 
       function (values) {
-                return Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true, true);
+              var object_name = values != null ? values.object_name : void 0;
+              var is_skip_hide = true;
+              var supportFieldTypes = ["text", "textarea", "boolean", "select"];
+              var _object, _options, fields, icon;
+              _options = [];
+              if (!object_name) {
+                  return _options;
+              }
+              _object = Creator.getObject(object_name);
+              fields = _object != null ? _object.fields : void 0;
+              icon = _object != null ? _object.icon : void 0;
+              _.forEach(fields, function (f, k) {
+                  if (is_skip_hide && f.hidden) {
+                      return;
+                  }
+                  if (supportFieldTypes.indexOf(f.type) < 0) {
+                      return;
+                  }
+                  if (f.type === "select") {
+                      _options.push({
+                          label: "" + (f.label || k),
+                          value: k,
+                          icon: icon
+                      });
+                  } else {
+                      _options.push({
+                          label: f.label || k,
+                          value: k,
+                          icon: icon
+                      });
+                  }
+              });
+
+              return _options;
             }
     filterable: true
   record_owner:
