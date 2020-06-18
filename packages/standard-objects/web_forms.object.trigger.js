@@ -24,14 +24,29 @@ const generatHtml = (doc)=>{
                     fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label><input id="${tempField.name}" name="${tempField.name}" type="text" /><br>\r\n`);
                     break;
                 case "textarea":
-                    fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label><textarea name="${tempField.name}"></textarea><br>\r\n`);
+                    fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label><textarea id="${tempField.name}" name="${tempField.name}"></textarea><br>\r\n`);
                     break;
                 case "select":
                     if(tempField.options && tempField.options.length){
-                        let selectOptions = tempField.options.map((item)=>{
-                            return `<option value="${item.value}">${item.label}</option>`
-                        });
-                        let selectInput = `<select name="${tempField.name}">\r\n${selectOptions.join("\r\n")}\r\n</select>`;
+                        let selectInput,selectOptions;
+                        if(tempField.multiple){
+                            selectOptions = tempField.options.map((item)=>{
+                                return `
+                                    <span>
+                                        <input id="${item.value}" name="${tempField.name}" type="checkbox" value="${item.value}">
+                                        <label for="${item.value}">
+                                            <span>${item.label}</span>
+                                        </label>
+                                    </span>`;
+                            });
+                            selectInput = `<div>\r\n${selectOptions.join("\r\n")}\r\n</div>`;
+                        }
+                        else{
+                            selectOptions = tempField.options.map((item)=>{
+                                return `<option value="${item.value}">${item.label}</option>`
+                            });
+                            selectInput = `<select id="${tempField.name}" name="${tempField.name}">\r\n${selectOptions.join("\r\n")}\r\n</select>`;
+                        }
                         fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label>${selectInput}<br>\r\n`);
                     }
                     break;
