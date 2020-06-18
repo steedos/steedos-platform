@@ -36,7 +36,7 @@ fields:
       function (values) {
               var object_name = values != null ? values.object_name : void 0;
               var is_skip_hide = true;
-              var supportFieldTypes = ["text", "textarea", "boolean", "select"];
+              var supportFieldTypes = ["text", "textarea", "select"];
               var _object, _options, fields, icon;
               _options = [];
               if (!object_name) {

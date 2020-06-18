@@ -26,6 +26,15 @@ const generatHtml = (doc)=>{
                 case "textarea":
                     fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label><textarea name="${tempField.name}"></textarea><br>\r\n`);
                     break;
+                case "select":
+                    if(tempField.options && tempField.options.length){
+                        let selectOptions = tempField.options.map((item)=>{
+                            return `<option value="${item.value}">${item.label}</option>`
+                        });
+                        let selectInput = `<select name="${tempField.name}">\r\n${selectOptions.join("\r\n")}\r\n</select>`;
+                        fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label>${selectInput}<br>\r\n`);
+                    }
+                    break;
                 default:
                     fieldsCode.push(`<label for="${tempField.name}">${tempField.label}</label><input id="${tempField.name}" name="${tempField.name}" type="text" /><br>\r\n`);
                     break;
