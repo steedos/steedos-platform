@@ -210,8 +210,12 @@ handleBootstrapData = (result, callback)->
 
 	Creator.Apps = ReactSteedos.creatorAppsSelector(ReactSteedos.store.getState())
 	Creator.Menus = result.assigned_menus
-
-	appIds = _.pluck(Creator.getVisibleApps(true), "_id")
+	if Steedos.isMobile()
+		mobileApps = _.filter Creator.getVisibleApps(true), (item)->
+			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
+		appIds = _.pluck(mobileApps, "_id")
+	else
+		appIds = _.pluck(Creator.getVisibleApps(true), "_id")
 	if (appIds && appIds.length>0)
 		if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
 			Session.set("app_id", appIds[0])
