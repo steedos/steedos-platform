@@ -67,8 +67,9 @@ list_views:
       - modified
     filter_scope: space
 actions: 
-  copy: 
+  copyHtmlCode: 
     label: Copy Html Code
+    on: record_only
 permission_set:
   user:
     allowCreate: false

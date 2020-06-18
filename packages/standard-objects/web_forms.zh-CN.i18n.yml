@@ -5,4 +5,5 @@ web_forms_field_record_owner: 责任人
 web_forms_field_notification_users: 通知用户
 web_forms_field_generated_html: 表单HTML
 web_forms_field_description: 描述
+web_forms_action_copyHtmlCode: 复制表单HTML
 
