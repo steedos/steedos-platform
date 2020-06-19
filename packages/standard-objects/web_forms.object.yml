@@ -71,7 +71,7 @@ fields:
             }
     filterable: true
   record_owner:
-    label: Owner
+    label: Record Owner
     type: lookup
     reference_to: users
     sortable: true

@@ -3,15 +3,16 @@ const Fiber = require('fibers');
 import { getSteedosSchema } from '@steedos/objectql';
 import { translationObject } from '@steedos/i18n';
 import Util from '../util';
+const clone = require("clone");
 
 const addNotifications:any = function (object:any, doc:any, members:any, lng: string) {
-    console.log("===addNotifications====members===", members);
     if (!members || !members.length) {
         return;
     }
     const nameKey = object.NAME_FIELD_KEY;
-    translationObject(lng, object.name, object);
-    const notificationTitle = object.label;
+    let _object = clone(object.toConfig());
+    translationObject(lng, object.name, _object);
+    const notificationTitle = _object.label;
     let notificationBody = doc[nameKey];
     if(!notificationBody){
         notificationBody = TAPi18n.__("web_forms_default_notification_body", {}, lng);
@@ -61,9 +62,9 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
                 "success": false
             })
         }
-        let owner = formDoc.record_owner ? formDoc.record_owner : null;
+        let record_owner = formDoc.record_owner ? formDoc.record_owner : null;
         let space = formDoc.space ? formDoc.space : null;
-        let entityDoc = { ...bodyParams, owner, space };
+        let entityDoc = { ...bodyParams, record_owner, space };
         let entity = await object.insert(entityDoc);
         if (entity) {
             let body = {};
