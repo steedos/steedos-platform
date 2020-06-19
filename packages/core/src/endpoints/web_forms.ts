@@ -41,7 +41,8 @@ const callback = (res: any, returnUrl: string, error?: string)=>{
     }
     if(returnUrl && !isDebug){
         if(error){
-            returnUrl += `?error=${error}`;
+            let pre = returnUrl.indexOf("?") > 0 ? "&" : "?";
+            returnUrl += `${pre}error=${error}`;
         }
         res.redirect(returnUrl);
     }
