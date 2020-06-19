@@ -28,7 +28,6 @@ const addNotifications:any = function (object:any, doc:any, members:any, lng: st
         from: null,
         space: doc.space
     };
-    console.log("===addNotifications====notificationDoc===", notificationDoc);
     Fiber(function () {
         Creator.addNotifications(notificationDoc, null, members);
     }).run();

@@ -80,7 +80,6 @@ const generatHtml = (doc)=>{
     ${fieldsCode}
     <input type="submit" name="submit">
 </form>`;
-    console.log("====code====", code);
     return code;
 }
 
