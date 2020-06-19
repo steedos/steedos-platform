@@ -81,8 +81,7 @@ Creator.Objects.object_actions.triggers = {
 
       var ref;
       if ((modifier != null ? (ref = modifier.$set) != null ? ref.name : void 0 : void 0) && isRepeatedName(doc, modifier.$set.name)) {
-        console.log(`update actions对象名称不能重复${doc.name}`);
-        throw new Meteor.Error(500, "对象名称不能重复");
+        throw new Meteor.Error(500, "名称不能重复");
       }
     }
   },
@@ -92,8 +91,7 @@ Creator.Objects.object_actions.triggers = {
     todo: function (userId, doc) {
       doc.visible = true;
       if (isRepeatedName(doc)) {
-        console.log(`insert actions对象名称不能重复${doc.name}`);
-        throw new Meteor.Error(500, `对象名称不能重复${doc.name}`);
+        throw new Meteor.Error(500, `名称不能重复${doc.name}`);
       }
     }
   }

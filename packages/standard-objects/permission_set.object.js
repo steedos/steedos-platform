@@ -21,7 +21,7 @@ Creator.Objects['permission_set'].triggers = {
                         name: 1
                     }
                 })) {
-                throw new Meteor.Error(500, "对象名称不能重复");
+                throw new Meteor.Error(500, "API名称不能重复");
             }
             checkType(doc.name, doc.type);
         }
@@ -43,7 +43,7 @@ Creator.Objects['permission_set'].triggers = {
                         name: 1
                     }
                 })) {
-                throw new Meteor.Error(500, "对象名称不能重复");
+                throw new Meteor.Error(500, "API名称不能重复");
             }
 
             var set = modifier.$set || {}

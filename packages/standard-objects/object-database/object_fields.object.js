@@ -197,8 +197,7 @@ Creator.Objects.object_fields.triggers = {
       var _reference_to, object, object_documents, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7;
 
       if(_.has(modifier.$set, 'name') &&  isRepeatedName(doc, modifier.$set.name)){
-        // console.log(`update fields对象名称不能重复${doc._name}`);
-        throw new Meteor.Error(doc._name, "对象字段名不能重复");
+        throw new Meteor.Error(doc._name, "字段名不能重复");
       }
 
       if(_.has(modifier.$set, 'type') && modifier.$set.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
@@ -248,8 +247,7 @@ Creator.Objects.object_fields.triggers = {
         doc.name = getFieldName(doc.object,doc._name);
       }
       if (isRepeatedName(doc)) {
-        // console.log(`insert fields对象名称不能重复${doc.name}`);
-        throw new Meteor.Error(doc.name, "对象名称不能重复");
+        throw new Meteor.Error(doc.name, "字段名不能重复");
       }
 
       if(doc.type === 'master_detail' && hasMultipleMasterDetailTypeFiled(doc)){
