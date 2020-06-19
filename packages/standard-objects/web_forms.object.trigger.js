@@ -30,16 +30,16 @@ const generatHtml = (doc)=>{
                     if(tempField.options && tempField.options.length){
                         let selectInput,selectOptions;
                         if(tempField.multiple){
+                            // 多选时input控件的name要带[]后缀，以强制转为数组提交
                             selectOptions = tempField.options.map((item)=>{
-                                return `
-                                    <span>
-                                        <input id="${item.value}" name="${tempField.name}" type="checkbox" value="${item.value}">
-                                        <label for="${item.value}">
-                                            <span>${item.label}</span>
-                                        </label>
-                                    </span>`;
+                                return `        <span>
+            <input id="${item.value}" name="${tempField.name}[]" type="checkbox" value="${item.value}">
+            <label for="${item.value}">
+                <span>${item.label}</span>
+            </label>
+        </span>`;
                             });
-                            selectInput = `<div>\r\n${selectOptions.join("\r\n")}\r\n</div>`;
+                            selectInput = `\r\n    <div>\r\n${selectOptions.join("\r\n")}\r\n    </div>`;
                         }
                         else{
                             selectOptions = tempField.options.map((item)=>{
@@ -60,13 +60,10 @@ const generatHtml = (doc)=>{
     let code = `<!--  ----------------------------------------------------------------------  -->
 <!--  注意：请将以下 <META> 元素添加到您的网页 <HEAD> 中。如有必要，请修改 charset 参数以指定 HTML 页的字符集。    -->
 <!--  ----------------------------------------------------------------------  -->
-
 <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-
 <!--  ----------------------------------------------------------------------  -->
 <!--  注意：请将以下 <FORM> 元素添加到您的网页中。                                  -->
 <!--  ----------------------------------------------------------------------  -->
-
 <form action=${formUrl} method="POST">
     <input type=hidden name="steedos_form_id" value="${doc._id}">
     <input type=hidden name="retURL" value="http://www.steedos.com/">
@@ -77,9 +74,7 @@ const generatHtml = (doc)=>{
     <!--  <input type="hidden" name="debugEmail"                                  -->
     <!--  value="zhuangjianguo@steedos.com">                                      -->
     <!--  ----------------------------------------------------------------------  -->
-
     ${fieldsCode}
-
     <input type="submit" name="submit">
 </form>`;
     console.log("====code====", code);
