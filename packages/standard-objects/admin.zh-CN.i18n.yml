@@ -19,6 +19,7 @@ menu_object_webhooks: 事件触发器
 menu_autonumber: 自动编号
 menu_picklists: 下拉框列表
 menu_object_workflows: 对象流程
+menu_web_forms: 在线表单
 menu_about: 关于
 menu_object_manager: 对象管理
 menu_datasources_manager: 数据源
