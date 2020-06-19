@@ -87,6 +87,11 @@ fields:
     type: code
     is_wide: true
     omit: true
+  return_url:
+    label: Return URL
+    type: text
+    is_wide: true
+    required: true
   description:
     label: Description
     type: textarea

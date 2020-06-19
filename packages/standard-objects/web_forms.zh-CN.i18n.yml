@@ -4,6 +4,7 @@ web_forms_field_fields: 显示字段
 web_forms_field_record_owner: 责任人
 web_forms_field_notification_users: 通知用户
 web_forms_field_generated_html: 表单HTML
+web_forms_field_return_url: 返回地址
 web_forms_field_description: 描述
 web_forms_listview_all: 全部表单
 web_forms_action_copyHtmlCode: 复制表单HTML

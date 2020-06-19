@@ -69,14 +69,8 @@ const generatHtml = (doc)=>{
 <!--  ----------------------------------------------------------------------  -->
 <form action=${formUrl} method="POST">
     <input type=hidden name="steedos_form_id" value="${doc._id}">
-    <input type=hidden name="retURL" value="http://www.steedos.com/">
+    <input type=hidden name="return_url" value="${doc.return_url}">
 
-    <!--  ----------------------------------------------------------------------  -->
-    <!--  注意：这些字段是可选的调试元素。如果希望在调试模式下进行测试，请取消这些行的留言。    -->
-    <!--  <input type="hidden" name="debug" value=1>                              -->
-    <!--  <input type="hidden" name="debugEmail"                                  -->
-    <!--  value="zhuangjianguo@steedos.com">                                      -->
-    <!--  ----------------------------------------------------------------------  -->
     ${fieldsCode}
     <input type="submit" name="submit">
 </form>`;
