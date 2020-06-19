@@ -821,6 +821,9 @@ AbstractXHRObject.prototype._start = function(method, url, payload, opts) {
         }
     }
 
+    let x_user_id = Meteor.userId() || localStorage.getItem("accounts:userId");
+    that.xhr.setRequestHeader('x-user-id', x_user_id);
+
     that.xhr.onreadystatechange = function() {
         if (that.xhr) {
             var x = that.xhr;
@@ -1272,7 +1275,8 @@ var WebSocketTransport = SockJS.websocket = function(ri, trans_url) {
     that.url = url;
     var Constructor = _window.WebSocket || _window.MozWebSocket;
 
-    that.ws = new Constructor(that.url);
+    let x_user_id = Meteor.userId() || localStorage.getItem("accounts:userId");
+    that.ws = new Constructor(that.url + `?userId=${x_user_id}`);
     that.ws.onmessage = function(e) {
         that.ri._didMessage(e.data);
     };
