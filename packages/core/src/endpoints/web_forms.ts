@@ -4,13 +4,12 @@ import { getSteedosSchema } from '@steedos/objectql';
 import { translationObject } from '@steedos/i18n';
 import Util from '../util';
 
-const addNotifications:any = function (object:any, doc:any, members:any) {
+const addNotifications:any = function (object:any, doc:any, members:any, lng: string) {
     console.log("===addNotifications====members===", members);
     if (!members || !members.length) {
         return;
     }
     const nameKey = object.NAME_FIELD_KEY;
-    const lng = Util.getLocale("zh-cn");
     translationObject(lng, object.name, object);
     const notificationTitle = object.label;
     let notificationBody = doc[nameKey];
@@ -49,7 +48,7 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
         let bodyParams = req.body;
         const formId = bodyParams.steedos_form_id;
         const objectWebForms = getSteedosSchema().getObject("web_forms");
-        let formDoc = await objectWebForms.findOne(formId, { fields: ["space", "object_name", "record_owner", "notification_users"]});
+        let formDoc = await objectWebForms.findOne(formId, { fields: ["space", "object_name", "record_owner", "notification_users", "owner"]});
         if (!formDoc) {
             return res.status(401).send({
                 "error": `Validate Request -- The Web Form '${formId}' Not Fount`,
@@ -71,7 +70,9 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
             body['entity'] = entity;
             body['success'] = true;
             try{
-                addNotifications(object, entityDoc, formDoc.notification_users);
+                const owner = await getSteedosSchema().getObject("users").findOne(formDoc.owner, { fields: ["locale"]});
+                const lng = Util.getUserLocale(owner);
+                addNotifications(object, entityDoc, formDoc.notification_users, lng);
                 res.status(200).send(body);
             }
             catch (error) {
