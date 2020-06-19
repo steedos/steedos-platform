@@ -1,6 +1,8 @@
 import * as express from 'express';
-import { getSteedosSchema } from '@steedos/objectql';
 const Fiber = require('fibers');
+import { getSteedosSchema } from '@steedos/objectql';
+import { translationObject } from '@steedos/i18n';
+import Util from '../util';
 
 const addNotifications:any = function (object:any, doc:any, members:any) {
     console.log("===addNotifications====members===", members);
@@ -8,10 +10,12 @@ const addNotifications:any = function (object:any, doc:any, members:any) {
         return;
     }
     const nameKey = object.NAME_FIELD_KEY;
+    const lng = Util.getLocale("zh-cn");
+    translationObject(lng, object.name, object);
     const notificationTitle = object.label;
     let notificationBody = doc[nameKey];
     if(!notificationBody){
-        notificationBody = "在线表单有一条新记录提交。";
+        notificationBody = TAPi18n.__("web_forms_default_notification_body", {}, lng);
     }
     let notificationDoc = {
         name: notificationTitle,
