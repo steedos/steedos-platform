@@ -4,6 +4,7 @@ import path = require('path')
 import { getMD5, JSONStringify } from '../util'
 import { SteedosObjectTypeConfig, SteedosListenerConfig, SteedosObjectPermissionTypeConfig, addAllConfigFiles } from '.'
 import { isMeteor, transformListenersToTriggers } from '../util'
+import { Dictionary } from "@salesforce/ts-types";
 
 var util = require('../util')
 var clone = require('clone')
@@ -18,6 +19,7 @@ const _routerConfigs: Array<any> = [];
 const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
+const _lazyLoadListeners: Dictionary<any> = {};
 
 let standardObjectsLoaded: boolean = false;
 
@@ -40,6 +42,24 @@ const extendOriginalObjectConfig = function(objectName: string, datasource: stri
         fields: {}
     }, clone(parentOriginalObjectConfig), objectConfig);
     addOriginalObjectConfigs(objectName, datasource, clone(originalObjectConfig));
+}
+
+const addLazyLoadListeners = function(objectName: string, json: SteedosListenerConfig){
+    if(!_lazyLoadListeners[objectName]){
+        _lazyLoadListeners[objectName] = []
+    }
+    _lazyLoadListeners[objectName].push(json)
+}
+
+const getLazyLoadListeners = function(objectName: string){
+    return _lazyLoadListeners[objectName]
+}
+
+export const loadObjectLazyListenners = function(objectName: string){
+    let listenners = getLazyLoadListeners(objectName);
+    _.each(listenners, function(listenner){
+        addObjectListenerConfig(clone(listenner));
+    })
 }
 
 export const getOriginalObjectConfig = (object_name: string):SteedosObjectTypeConfig => {
@@ -208,7 +228,8 @@ export const addObjectListenerConfig = (json: SteedosListenerConfig) => {
             util.extend(object, {triggers: transformListenersToTriggers(object, json)})
         }
     } else {
-        throw new Error(`Error add listener, object not found: ${object_name}`);
+        addLazyLoadListeners(object_name, json);
+        // throw new Error(`Error add listener, object not found: ${object_name}`);
     }
 }
 
