@@ -138,5 +138,23 @@ module.exports = {
         if(id && _.isEmpty(this.data.values)){
             Object.assign(this.data.values, getPermissionById(id))
         }
+    },
+    beforeInsert: function(){
+        let doc = this.doc;
+        let existedCount = Creator.getCollection("permission_objects").direct.find({permission_set_id: doc.permission_set_id, object_name: doc.object_name, space: doc.space}).count()
+        if(existedCount > 0){
+            throw new Error("此对象已有权限对象记录")
+        }
+    },
+    beforeUpdate: async function () {
+        let oldDoc = Creator.getCollection("permission_objects").direct.findOne({_id: this.id})
+        let doc = this.doc;
+        let permission_set_id = doc.permission_set_id || oldDoc.permission_set_id
+        let object_name = doc.object_name || oldDoc.object_name
+        let space = oldDoc.space
+        let existedCount = Creator.getCollection("permission_objects").direct.find({permission_set_id: permission_set_id, object_name: object_name, space: space, _id: {$ne: this.id}}).count()
+        if(existedCount > 0){
+            throw new Error("此对象已有权限对象记录")
+        }
     }
 }
