@@ -196,10 +196,46 @@ fields:
     type: object
   filters.$.field:
     label: Field
-    type: text
+    type: lookup
+    showIcon: false
+    depend_on:
+      - object_name
+    optionsFunction: !!js/function |
+      function(values){
+        if(values.object_name){
+          return Creator.getObjectFilterFieldOptions(values.object_name)
+        }
+        return []
+      }
   filters.$.operation:
     label: Operator
-    type: text
+    type: lookup
+    showIcon: false
+    optionsFunction: !!js/function |
+      function(values){
+        if(values.object_name){
+          if(!this.template){
+            let options = Creator.getFieldOperation();
+            Creator.pushBetweenBuiltinOptionals('date', options);
+            return options;
+          }
+          var index = Number(this.template.data.name.split('.')[1]);
+          var filters = values.filters
+          if(filters && filters.length > index){
+            var filter = filters[index];
+            var field = filter.field;
+            if(field){
+              var object_fields = Creator.getObject(values.object_name).fields
+              var filter_field_type;
+              if(object_fields[field]){
+                filter_field_type = object_fields[field].type
+                return Creator.getFieldOperation(filter_field_type);
+              }
+            }
+          }
+        }
+        return [];
+      }
   filters.$.value:
     label: Value
     type: text

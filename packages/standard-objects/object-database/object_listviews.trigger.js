@@ -22,11 +22,13 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let view = InternalData.getObjectListView(objectName, this.userId, id);
-                if(view){
-                    this.data.values = view;
+            if(_.isString(id)){
+                let objectName = id.substr(0, id.indexOf("."));
+                if(objectName){
+                    let view = InternalData.getObjectListView(objectName, this.userId, id);
+                    if(view){
+                        this.data.values = view;
+                    }
                 }
             }
         }
