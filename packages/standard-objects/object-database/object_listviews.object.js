@@ -1,3 +1,19 @@
+const _ = require("underscore");
+
+function transformFilters(filters){
+  let _filters = [];
+  _.each(filters, function(filter){
+    if(_.isObject(filter)){
+      if(filter.operation && filter.operation.startsWith("between_time_")){
+        filter.value = filter.operation.split("between_time_")[1];
+        filter.operation = 'between';
+      }
+    }
+    _filters.push(filter);
+  })
+  return _filters;
+}
+
 Creator.Objects['object_listviews'].triggers = {
   "before.insert.cilent.object_listviews": {
     on: "client",
@@ -28,6 +44,20 @@ Creator.Objects['object_listviews'].triggers = {
     todo: function (userId, doc) {
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
         doc.shared = false;
+      }
+      doc.filters = transformFilters(doc.filters);
+    }
+  },
+  "before.update.server.object_listviews": {
+    on: "server",
+    when: "before.update",
+    todo: function (userId, doc, fieldNames, modifier, options) {
+      modifier.$set = modifier.$set || {}
+      if (modifier.$set.shared && !Steedos.isSpaceAdmin(doc.space, userId)) {
+        modifier.$set.shared = false;
+      }
+      if(modifier.$set.filters){
+        modifier.$set.filters = transformFilters(modifier.$set.filters);
       }
     }
   },
