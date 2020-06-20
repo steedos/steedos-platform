@@ -61,10 +61,12 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 	columns = _.without(columns, undefined, null);
 	let pageSize = 20;
 	let pager = true;
+	let showIllustration = true;
 	if(is_related && recordsTotal){
 		// 详细界面相关列表
 		pageSize = 5;
 		pager = false;
+		showIllustration = false;
 	}
 	let endpoint = Creator.getODataEndpointUrl(object_name, list_view_id, is_related, related_object_name);
 	let isFiltering = Creator.getIsFiltering();
@@ -88,7 +90,8 @@ const getListProps = ({id, object_name, related_object_name, is_related, records
 		filteringText: filteringText,
 		moreLinkHref: (props)=> {
 			return Creator.getRelatedObjectUrl(object_name, "-", record_id, related_object_name)
-		}
+		},
+		showIllustration: showIllustration
 	}
 }
 
