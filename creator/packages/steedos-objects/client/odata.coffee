@@ -257,7 +257,7 @@ Creator.odata.update = (object_name,record_id,doc,callback)->
 					toastr?.error?(TAPi18n.__(error.message))
 				else
 					toastr?.error?(error)
-Creator.odata.insert = (object_name,doc)->
+Creator.odata.insert = (object_name,doc,callback)->
 	_object_name = Creator.formatObjectName(object_name)
 	spaceId = Steedos.spaceId()
 	unless spaceId
@@ -276,11 +276,12 @@ Creator.odata.insert = (object_name,doc)->
 				request.setRequestHeader('X-Auth-Token', Accounts._storedLoginToken())
 				request.setRequestHeader('X-Space-Id', Steedos.spaceId())
 
-			# success: (data) ->
-			# 	if callback and typeof callback == "function"
-			# 		callback()
-			# 	else
-			# 		toastr?.success?(t("afModal_remove_suc"))
+			success: (data) ->
+			 	if callback and typeof callback == "function"
+				 	result = data.value[0]
+			 		callback(result)
+#			 	else
+#			 		toastr?.success?(t("afModal_remove_suc"))
 
 			error: (jqXHR, textStatus, errorThrown) ->
 				error = jqXHR.responseJSON.error
@@ -291,3 +292,4 @@ Creator.odata.insert = (object_name,doc)->
 					toastr?.error?(TAPi18n.__(error.message))
 				else
 					toastr?.error?(error)
+				callback(false, error)
