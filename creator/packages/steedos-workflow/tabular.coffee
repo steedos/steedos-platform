@@ -112,7 +112,8 @@ instancesListTableTabular = (flowId, fields)->
 
 					isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
 					if Favorites.isRecordSelected("instances", doc._id)
-						unread = '<svg aria-hidden="true" class="slds-button__icon instance-favorite-selected"><use href="/assets/icons/utility-sprite/svg/symbols.svg#favorite"></use></svg>'
+						iconUrl = Steedos.absoluteUrl("/assets/icons/utility-sprite/svg/symbols.svg#favorite")
+						unread = '<svg aria-hidden="true" class="slds-button__icon instance-favorite-selected"><use href="' + iconUrl + '"></use></svg>'
 					else if Session.get("box") == 'inbox' && doc.is_read == false
 						unread = '<i class="ion ion-record unread"></i>'
 					else if Session.get("box") == 'monitor' && doc.is_hidden == true
