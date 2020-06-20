@@ -1276,7 +1276,7 @@ var WebSocketTransport = SockJS.websocket = function(ri, trans_url) {
     var Constructor = _window.WebSocket || _window.MozWebSocket;
 
     let x_user_id = Meteor.userId() || localStorage.getItem("accounts:userId");
-    that.ws = new Constructor(that.url + `?userId=${x_user_id}`);
+    that.ws = new Constructor(that.url + `?x_user_id=${x_user_id}`);
     that.ws.onmessage = function(e) {
         that.ri._didMessage(e.data);
     };
