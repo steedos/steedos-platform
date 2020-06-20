@@ -38,6 +38,8 @@ Template.creator_view.onCreated ->
 
 loadRecord = ()->
 	object_name = Session.get "object_name"
+	if object_name == "users"
+		return
 	record_id = Session.get "record_id"
 	object = Creator.getObject(object_name)
 
