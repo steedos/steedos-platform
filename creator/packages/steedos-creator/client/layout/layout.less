@@ -85,10 +85,30 @@
                 margin-top: 0px;
                 .related-object-tabular{
                     margin-top: 7px !important;
-                    border: none;
+                    // border: none;
                     .slds-card__header{
                         padding-top: 7px;
-                        margin-bottom: 7px;
+                        padding-bottom: 7px;
+                        margin-bottom: 0;
+                        &>.slds-media{
+                            min-height: 2rem;
+                        }
+                    }
+                    .slds-card__body{
+                        margin: 0;
+                        .steedos-list{
+                            &>.slds-grid{
+                                margin-top: -.25rem;
+                                .slds-split-view__list-item{
+                                    &:last-child{
+                                        border-bottom: none;
+                                    }
+                                }
+                            }
+                            .steedos-list-footer{
+                                margin-bottom: 0.5rem;
+                            }
+                        }
                     }
                 }
             }
