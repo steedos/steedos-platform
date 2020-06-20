@@ -110,7 +110,10 @@ instancesListTableTabular = (flowId, fields)->
 
 					unread = ''
 
-					if Session.get("box") == 'inbox' && doc.is_read == false
+					isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
+					if Favorites.isRecordSelected("instances", doc._id)
+						unread = '<svg aria-hidden="true" class="slds-button__icon instance-favorite-selected"><use href="/assets/icons/utility-sprite/svg/symbols.svg#favorite"></use></svg>'
+					else if Session.get("box") == 'inbox' && doc.is_read == false
 						unread = '<i class="ion ion-record unread"></i>'
 					else if Session.get("box") == 'monitor' && doc.is_hidden == true
 						unread = '<i class="fa fa-lock"></i>'

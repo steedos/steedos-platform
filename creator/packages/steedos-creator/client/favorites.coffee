@@ -52,6 +52,11 @@ Favorites.changeState = ()->
 		store.dispatch(SteedosReact.changeActionDisabled(actionDisabled, 'steedos-header-favorites'))
 		store.dispatch(SteedosReact.changeAssistiveText(getAssistiveText(actionDisabled, actionSelected), 'steedos-header-favorites'))
 
+Favorites.getActionSelected = getActionSelected
+
+Favorites.isRecordSelected = (object_name, record_id)->
+	return getActionSelected({record_id}, object_name)
+
 Meteor.startup ()->
 	Meteor.autorun ()->
 		if Creator.subs["CreatorFavorites"].ready("myFavorites") && Creator.bootstrapLoaded.get()
