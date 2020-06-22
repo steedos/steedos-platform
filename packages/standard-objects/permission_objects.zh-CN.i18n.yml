@@ -17,3 +17,5 @@ permission_objects_field_unrelated_objects: 禁用关联对象
 permission_objects_field_viewAllRecords: 查看所有记录
 permission_objects_field_viewCompanyRecords: 查看本单位
 permission_objects_listview_all: 全部
+permission_objects_listview_customize: 自定义
+permission_objects_listview_system: 系统

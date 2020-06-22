@@ -241,6 +241,40 @@ fields:
 paging:
   enabled: false
 list_views:
+  customize:
+    columns:
+      - permission_set_id
+      - object_name
+      - allowCreate
+      - allowDelete
+      - allowEdit
+      - allowRead
+      - modifyAllRecords
+      - viewAllRecords
+      - modifyCompanyRecords
+      - viewCompanyRecords
+      - is_system
+    label: Customize
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
+  system:
+    columns:
+      - permission_set_id
+      - object_name
+      - allowCreate
+      - allowDelete
+      - allowEdit
+      - allowRead
+      - modifyAllRecords
+      - viewAllRecords
+      - modifyCompanyRecords
+      - viewCompanyRecords
+      - is_system
+    label: System
+    filters:
+      - ["is_system","=",true]
+    filter_scope: space
   all:
     label: All
     columns:
