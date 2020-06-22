@@ -471,8 +471,17 @@ Creator.getActions = (object_name, spaceId, userId)->
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
 	_.each actions, (action)->
-		if Steedos.isMobile() && action.on == "record" && action.name != 'standard_edit'
-			action.on = 'record_more'
+		# 手机上只显示编辑按钮，其他的放到折叠下拉菜单中
+		if Steedos.isMobile() && ["record", "record_only"].indexOf(action.on) > -1 && action.name != 'standard_edit'
+			if action.on == "record_only"
+				action.on = 'record_only_more'
+			else
+				action.on = 'record_more'
+
+	if Steedos.isMobile() && ["cms_files", "cfs.files.filerecord"].indexOf(object_name) > -1
+		# 附件特殊处理，下载按钮放在主菜单，编辑按钮放到底下折叠下拉菜单中
+		actions.find((n)-> return n.name == "standard_edit")?.on = "record_more"
+		actions.find((n)-> return n.name == "download")?.on = "record"
 
 	actions = _.filter actions, (action)->
 		return _.indexOf(disabled_actions, action.name) < 0
