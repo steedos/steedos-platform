@@ -136,7 +136,15 @@ module.exports = {
             }
         }else{
             let permissionObjects = find(this.query);
-            this.data.values = this.data.values + permissionObjects.length
+            let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+            let permissionSetId = filters.permission_set_id;
+            let query = {};
+            let dbPOsCounts = 0;
+            if(permissionSetId){
+                query = {permission_set_id: permissionSetId}
+                dbPOsCounts = Creator.getCollection("permission_objects").direct.find(query).count();
+            }
+            this.data.values = this.data.values + permissionObjects.length - dbPOsCounts
         }
         
     },

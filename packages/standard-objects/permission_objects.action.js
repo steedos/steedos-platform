@@ -9,9 +9,23 @@ module.exports = {
             }
         })
         delete newDoc.is_system;
-        Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: Session.get("record_id")}), function(result, error){
+
+        let permissionSetId = doc.permission_set_id
+
+        if(_.include(['admin','user','supplier','customer'], doc.permission_set_id)){
+            let dbPst = Creator.odata.query('permission_set', {$select: "_id", $filter: "(name eq '"+doc.permission_set_id+"') and (space eq '"+Steedos.getSpaceId()+"')"}, true)
+            if(dbPst && dbPst.length > 0){
+                permissionSetId = dbPst[0]._id;
+            }
+        }
+        Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){
             if(result){
-                FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
+                if(Session.get("object_name") === 'permission_objects'){
+                    FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
+                }else{
+                    href = Creator.getObjectUrl(object_name, result._id);
+                    window.open(href,'_blank','width=800, height=600, left=50, top= 50, toolbar=no, status=no, menubar=no, resizable=yes, scrollbars=yes')
+                }
             }
         });
     },
