@@ -110,7 +110,14 @@ module.exports = {
         }else{
             let permissionObjects = find(this.query);
             if(_.isArray(this.data.values)){
-                this.data.values = this.data.values.concat(permissionObjects)
+                let that = this;
+                const dbObjectsName = _.pluck(that.data.values, 'object_name');
+                _.each(permissionObjects, function(_po){
+                    if(!_.include(dbObjectsName, _po.object_name)){
+                        that.data.values.push(_po);
+                    }
+                })
+                // this.data.values = this.data.values.concat(permissionObjects)
             }
         }
         

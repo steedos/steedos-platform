@@ -1,4 +1,5 @@
 permission_objects__object: 对象权限
+permission_objects_action_customize: 自定义
 permission_objects_field_allowCreate: 允许创建
 permission_objects_field_allowDelete: 允许删除
 permission_objects_field_allowEdit: 允许编辑

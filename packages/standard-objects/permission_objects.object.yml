@@ -256,6 +256,10 @@ list_views:
       - viewCompanyRecords
       - is_system
     filter_scope: space
+actions:
+  customize:
+    label: Customize
+    on: record
 permission_set:
   user:
     allowCreate: false
