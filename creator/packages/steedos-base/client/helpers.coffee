@@ -779,6 +779,10 @@ TemplateHelpers =
 							console.error 'download error source' + error.source
 							console.error 'download error target' + error.target
 							console.error 'upload error code: ' + error.code
+							if error.http_status == 404
+								toastr.error t("creator_files_download_error_not_found")
+							else
+								toastr.error error.body
 				), (error) ->
 					$(document.body).removeClass 'loading'
 					console.error 'upload error code: ' + error.code
