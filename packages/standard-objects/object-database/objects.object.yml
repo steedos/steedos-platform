@@ -214,6 +214,17 @@ relatedList:
   # - object_triggers
   - permission_objects
 list_views:
+  all:
+    columns:
+      - label
+      - name
+      - table_name
+      - datasource
+      - is_enable
+      - in_development
+      - is_system
+    label: All
+    filter_scope: space
   customize:
     columns:
       - label
@@ -239,17 +250,6 @@ list_views:
     label: System
     filters:
       - ["is_system","=",true]
-    filter_scope: space
-  all:
-    columns:
-      - label
-      - name
-      - table_name
-      - datasource
-      - is_enable
-      - in_development
-      - is_system
-    label: All
     filter_scope: space
 actions: 
   show_object: 
