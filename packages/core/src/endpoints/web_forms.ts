@@ -80,9 +80,9 @@ export const postObjectWebForm = async (req: express.Request, res: express.Respo
         if (formDoc.object_name !== key) {
             return callback(res, returnUrl, `Validate Request -- The Web Form's Object Name is not equal to ${key}`);
         }
-        let record_owner = formDoc.record_owner ? formDoc.record_owner : null;
+        let owner = formDoc.record_owner ? formDoc.record_owner : null;
         let space = formDoc.space ? formDoc.space : null;
-        let entityDoc = { ...bodyParams, record_owner, space };
+        let entityDoc = { ...bodyParams, owner, space };
         let entity = await object.insert(entityDoc);
         if (entity) {
             try{
