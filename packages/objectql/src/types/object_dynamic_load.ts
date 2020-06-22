@@ -20,6 +20,7 @@ const _clientScripts: Array<string> = [];
 const _serverScripts: Array<string> = [];
 const _objectsI18n: Array<any> = [];
 const _lazyLoadListeners: Dictionary<any> = {};
+const _lazyLoadActions: Dictionary<any> = {};
 
 let standardObjectsLoaded: boolean = false;
 
@@ -42,6 +43,24 @@ const extendOriginalObjectConfig = function(objectName: string, datasource: stri
         fields: {}
     }, clone(parentOriginalObjectConfig), objectConfig);
     addOriginalObjectConfigs(objectName, datasource, clone(originalObjectConfig));
+}
+
+const addLazyLoadActions = function(objectName: string, json: SteedosActionTypeConfig){
+    if(!_lazyLoadActions[objectName]){
+        _lazyLoadActions[objectName] = []
+    }
+    _lazyLoadActions[objectName].push(json)
+}
+
+const getLazyLoadActions = function(objectName: string){
+    return _lazyLoadActions[objectName]
+}
+
+export const loadObjectLazyActions = function(objectName: string){
+    let actions = getLazyLoadActions(objectName);
+    _.each(actions, function(action){
+        addObjectActionConfig(clone(action));
+    })
 }
 
 const addLazyLoadListeners = function(objectName: string, json: SteedosListenerConfig){
@@ -264,7 +283,8 @@ export const addObjectActionConfig = (json: SteedosActionTypeConfig)=>{
             }
         })
     } else {
-        throw new Error(`Error add action, object not found: ${object_name}`);
+        // throw new Error(`Error add action, object not found: ${object_name}`);
+        addLazyLoadActions(object_name, json)
     }
 }
 
