@@ -29,6 +29,11 @@ if Meteor.isClient
 					item_element: item_element
 					record: record
 				}, todoArgs
+			else
+				toastr.warning(t("_object_actions_none_todo"))
+		else
+			toastr.warning(t("_object_actions_none_todo"))
+
 				
 
 	Creator.actions 
