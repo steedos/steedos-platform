@@ -1,4 +1,5 @@
 var objectql = require('@steedos/objectql');
+var yaml = require('js-yaml');
 const _ = require('underscore');
 var objectCore = require('./objects.core.js');
 const internalBaseObjects = ['base', 'core'];
@@ -123,75 +124,72 @@ function canEnable(object){
     return true;
 }
 
-Creator.Objects.objects.actions = {
-    show_object: {
-        label: "Preview",
-        visible: true,
-        on: "record",
-        todo: function (object_name, record_id, item_element) {
-            var record = this.record || Creator.getObjectById(record_id);
-            if(!record){
-                return toastr.error("未找到记录");
-            }
+// Creator.Objects.objects.actions = {
+//     show_object: {
+//         label: "Preview",
+//         visible: true,
+//         on: "record",
+//         todo: function (object_name, record_id, item_element) {
+//             var record = this.record || Creator.getObjectById(record_id);
+//             if(!record){
+//                 return toastr.error("未找到记录");
+//             }
 
-            if(record.is_enable === false){
-                return toastr.warning("请先启动对象");
-            }
+//             if(record.is_enable === false){
+//                 return toastr.warning("请先启动对象");
+//             }
 
-            if(record.datasource && record.datasource != 'default'){
-                var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
-                if(!datasource){
-                    return toastr.error("未找到数据源");
-                }
-                if(!datasource.is_enable){
-                    return toastr.warning("请先启动数据源");
-                }
-            }
+//             if(record.datasource && record.datasource != 'default'){
+//                 var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
+//                 if(!datasource){
+//                     return toastr.error("未找到数据源");
+//                 }
+//                 if(!datasource.is_enable){
+//                     return toastr.warning("请先启动数据源");
+//                 }
+//             }
 
-            var allViews = Creator.odata.query('object_listviews', {$select: '_id', $filter: `(((contains(tolower(object_name),'${record.name}'))) and ((contains(tolower(name),'all'))))`}, true);
+//             var allViews = Creator.odata.query('object_listviews', {$select: '_id', $filter: `(((contains(tolower(object_name),'${record.name}'))) and ((contains(tolower(name),'all'))))`}, true);
 
-            if(allViews && allViews.length > 0){
-                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
-            }else{
-                Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
-            }
-
-
-            
-        }
-    },
-    copy_odata: {
-        label: "Copy OData URL",
-        visible: true,
-        on: "record",
-        todo: function (object_name, record_id, item_element) {
-            var clipboard, o_name, path, record;
-            record = this.record || Creator.getObjectById(record_id);
-            //enable_api 属性未开放
-            if ((record != null ? record.enable_api : void 0) || true) {
-                o_name = record != null ? record.name : void 0;
-                path = SteedosOData.getODataPath(Session.get("spaceId"), o_name);
-                item_element.attr('data-clipboard-text', path);
-                if (!item_element.attr('data-clipboard-new')) {
-                    clipboard = new Clipboard(item_element[0]);
-                    item_element.attr('data-clipboard-new', true);
-                    clipboard.on('success', function (e) {
-                        return toastr.success('复制成功');
-                    });
-                    clipboard.on('error', function (e) {
-                        toastr.error('复制失败');
-                        return console.error("e");
-                    });
-                    if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {
-                        return item_element.trigger("click");
-                    }
-                }
-            } else {
-                return toastr.error('复制失败: 未启用API');
-            }
-        }
-    }
-}
+//             if(allViews && allViews.length > 0){
+//                 Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/" + allViews[0]._id))
+//             }else{
+//                 Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
+//             }
+//         }
+//     },
+//     copy_odata: {
+//         label: "Copy OData URL",
+//         visible: true,
+//         on: "record",
+//         todo: function (object_name, record_id, item_element) {
+//             var clipboard, o_name, path, record;
+//             record = this.record || Creator.getObjectById(record_id);
+//             //enable_api 属性未开放
+//             if ((record != null ? record.enable_api : void 0) || true) {
+//                 o_name = record != null ? record.name : void 0;
+//                 path = SteedosOData.getODataPath(Session.get("spaceId"), o_name);
+//                 item_element.attr('data-clipboard-text', path);
+//                 if (!item_element.attr('data-clipboard-new')) {
+//                     clipboard = new Clipboard(item_element[0]);
+//                     item_element.attr('data-clipboard-new', true);
+//                     clipboard.on('success', function (e) {
+//                         return toastr.success('复制成功');
+//                     });
+//                     clipboard.on('error', function (e) {
+//                         toastr.error('复制失败');
+//                         return console.error("e");
+//                     });
+//                     if (item_element[0].tagName === 'LI' || item_element.hasClass('view-action')) {
+//                         return item_element.trigger("click");
+//                     }
+//                 }
+//             } else {
+//                 return toastr.error('复制失败: 未启用API');
+//             }
+//         }
+//     }
+// }
 
 function allowChangeObject(){
     var config = objectql.getSteedosConfig();
@@ -405,3 +403,18 @@ Creator.Objects.objects.triggers = {
     // }
 
 }
+
+// Creator.Objects['objects'].methods = {
+//     export_yml: async function (req, res) {
+//         return Fiber(function () {
+//             let { _id } = req.params
+//             let obj =  Creator.getCollection("objects").findOne({_id: _id})
+//             let dataStr = yaml.safeDump(obj);
+//             let fileName = obj.name;
+//             res.setHeader('Content-type', 'application/x-msdownload');
+//             res.setHeader('Content-Disposition', 'attachment;filename='+encodeURI(fileName)+'.object.yml');
+//             res.end(dataStr);
+//         }).run();
+        
+//     }
+// }
