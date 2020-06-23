@@ -149,6 +149,13 @@ admin_menus:
     object_name: object_workflows
     parent: menu_advanced
     sort: 80
+  - _id: web_forms
+    name: Web Forms
+    permission_sets:
+      - admin
+    object_name: web_forms
+    parent: menu_advanced
+    sort: 90
   - _id: about
     name: About Steedos
     permission_sets:

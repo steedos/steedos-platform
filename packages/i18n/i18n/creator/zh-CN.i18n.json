@@ -122,5 +122,7 @@
 	"creator_list_show_as": "显示为",
 	"creator_list_show_as_one_column": "列表",
 	"creator_list_show_as_two_columns": "列表 ｜ 记录",
-	"creator_list_show_as_three_columns": "菜单 ｜ 列表 ｜ 记录"
+	"creator_list_show_as_three_columns": "菜单 ｜ 列表 ｜ 记录",
+
+	"creator_files_download_error_not_found": "未找到附件，可能该附件已被删除。"
 }

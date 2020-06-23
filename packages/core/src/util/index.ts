@@ -117,6 +117,29 @@ const util = {
       url = rootUrl + url;
     }
     return url;
+  },
+
+  /**
+   * Returns the locale string of the user
+   */
+  getUserLocale: (user: any)=>{
+    let userLocale = user && user.locale && user.locale.toLocaleLowerCase();
+    return util.getLocale(userLocale);
+  },
+
+  /**
+   * Returns the locale string of the user locale
+   */
+  getLocale: (userLocale: string)=>{
+    let locale: string;
+    if (userLocale === 'zh-cn') {
+      locale = "zh-CN";
+    } else if (userLocale == 'en-us') {
+      locale = "en";
+    } else {
+      locale = "zh-CN";
+    }
+    return locale;
   }
 };
 

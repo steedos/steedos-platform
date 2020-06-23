@@ -178,5 +178,8 @@
 	"tasks_js_addNotifications_notificationTitle": " assigned a task to you",	
 	"events_js_addNotifications_notificationTitle": " assigned an event to you",
 	
-	"wweb_forms_error_object_name_not_found": "Object not found"
+	"wweb_forms_error_object_name_not_found": "Object not found", 
+	"web_forms_aciton_copyHtmlCode_success": "The form HTML code has been copied to the clipboard and can be copied to the web page to fill in the form online.",
+	"web_forms_aciton_copyHtmlCode_error": "The form HTML code copy failed.",
+	"web_forms_default_notification_body": "The Web form has a new record submission."
 }

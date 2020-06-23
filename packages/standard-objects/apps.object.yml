@@ -14,7 +14,8 @@ fields:
   code:
     label: Code (API Name)
     type: text
-    required: true    
+    required: true
+    searchable: true
   icon_slds:
     label: SLDS Icon
     type: lookup
