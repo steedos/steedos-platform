@@ -70,7 +70,8 @@ const hiddenObjects = [
     'notifications',
     'cms_categories',
     'cms_posts',
-    'cms_sites'
+    'cms_sites',
+    'cfs_instances_filerecord'
 ]
 
 exports.hiddenObjects = hiddenObjects
