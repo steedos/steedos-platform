@@ -191,12 +191,28 @@ InstanceManager.nextStepUsersWillUpdate = function (changeField, nextStep) {
 	return false;
 };
 
+InstanceManager.getStepApproveSelectedHandlerIds = function () {
+	var handlerIds;
+	var instance = WorkflowManager.getInstance();
+	if (instance) {
+		var step_approve = instance.step_approve;
+		if (step_approve) {
+			var currentStep = InstanceManager.getCurrentStep();
+			if (!_.isEmpty(step_approve[currentStep._id])) {
+				handlerIds = step_approve[currentStep._id];
+			}
+		}
+	}
+	return handlerIds;
+}
+
 InstanceManager.getNextUserOptions = function () {
 
 	var next_user_options = []
 
 	var next_step_id = Session.get("next_step_id");
 	var next_user_multiple = Session.get("next_user_multiple")
+	var stepApproveSelectedHandlerIds = InstanceManager.getStepApproveSelectedHandlerIds();
 	if (next_step_id) {
 
 		var instance = WorkflowManager.getInstance();
@@ -218,6 +234,10 @@ InstanceManager.getNextUserOptions = function () {
 				if (nextStep.deal_type == "pickupAtRuntime") {
 					if (nextStep.step_type != 'counterSign') { // 会签节点不默认选择处理人。 #1350
 						nextStepUsers = WorkflowManager.getUsers(lastStepHandlers);
+					} else {
+						if (stepApproveSelectedHandlerIds) {
+							nextStepUsers = stepApproveSelectedHandlerIds;
+						}
 					}
 
 				}
@@ -244,6 +264,10 @@ InstanceManager.getNextUserOptions = function () {
 						if (nextStep.step_type != 'counterSign') {
 							// 设置下一步处理人默认值为最近一次处理人
 							if (lastStepHandlers.includes(user.id)) {
+								option.selected = true;
+							}
+						} else {
+							if (stepApproveSelectedHandlerIds) {
 								option.selected = true;
 							}
 						}
