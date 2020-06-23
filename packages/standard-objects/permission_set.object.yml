@@ -58,8 +58,30 @@ fields:
     disabled: true
 list_views:
   all:
-    label: All Permission Set
+    label: All
     filter_scope: space
+    columns:
+      - label
+      - name
+      - users
+      - type
+      - is_system
+  permission_set:
+    label: Permission Set
+    filter_scope: space
+    filters:
+      - [["type", "=", "permission_set"]]
+    columns:
+      - label
+      - name
+      - users
+      - type
+      - is_system
+  profile:
+    label: Profile
+    filter_scope: space
+    filters:
+      - [["type", "=", "profile"]]
     columns:
       - label
       - name
@@ -96,3 +118,12 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+# form:
+#   validate: !!js/function |
+#     function(formValues){
+#       if(formValues && formValues.type === 'profile'){
+#         $("[name='users']", $("form")).parent().parent().hide()
+#       }else{
+#         $("[name='users']", $("form")).parent().parent().show()
+#       }
+#     }

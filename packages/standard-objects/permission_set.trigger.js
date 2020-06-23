@@ -1,6 +1,5 @@
 const _ = require('underscore');
-const odataMongodb = require("odata-v4-mongodb");
-const auth = require("@steedos/auth");
+const InternalData = require('./core/internalData');
 
 const permissions = {
     allowEdit: false,
@@ -20,24 +19,6 @@ const internalPermissionSet = [
     {_id: 'supplier', name: 'supplier',label: 'supplier', ...baseRecord},
     {_id: 'customer', name: 'customer', label: 'customer',...baseRecord}
 ];
-
-function parserFilters(filters){
-    let query = {};
-    if(_.isArray(filters)){
-        _.each(filters,function(filter){
-            Object.assign(query, parserFilters(filter))
-        })
-    }else{
-        _.each(filters, function (v, k) {
-            if (k === '$and') {
-                Object.assign(query, parserFilters(v))
-            } else {
-                Object.assign(query, {[k]: v})
-            }
-        })
-    }
-    return query;
-}
 
 const getLng = function(userId){
     return Steedos.locale(userId, true);
@@ -104,20 +85,19 @@ const getInternalPermissionSet = function(spaceId, lng){
 module.exports = {
     afterFind: async function () {
         if(_.isArray(this.data.values)){
-            // let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
-            // if(filters._id && _.include(['admin','user','supplier','customer'], filters._id)){
-            //     let dbPerms = Creator.getCollection("permission_set").find({space: filters.spaceId, name: filters._id}).fetch();
-            //     if(dbPerms){
-            //         this.data.values = dbPerms
-            //         return ;
-            //     }
-            // }
-            let lng = getLng(this.userId);
-            this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
+            let filters = InternalData.parserFilters(this.query.filters);
+            if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
+                let lng = getLng(this.userId);
+                this.data.values = this.data.values.concat(getInternalPermissionSet(this.spaceId, lng))
+            }
+            
         }
     },
     afterCount: async function () {
-        this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
+        let filters = InternalData.parserFilters(this.query.filters);
+        if(!_.has(filters, 'type') || (_.has(filters, 'type') && filters.type === 'profile')){
+            this.data.values = this.data.values + getInternalPermissionSet(this.spaceId, null).length
+        }
     },
     afterFindOne: async function () {
         let id = this.id;

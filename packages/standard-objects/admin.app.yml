@@ -63,6 +63,15 @@ admin_menus:
     permission_sets:
       - admin
     object_name: permission_set
+    list_view: permission_set
+    parent: menu_users
+    sort: 30
+  - _id: profile
+    name: Profile
+    permission_sets:
+      - admin
+    object_name: permission_set
+    list_view: profile
     parent: menu_users
     sort: 30
   - _id: apps
