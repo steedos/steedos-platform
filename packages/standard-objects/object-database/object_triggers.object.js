@@ -54,6 +54,9 @@ Creator.Objects.object_triggers.triggers = {
       when: "before.insert",
       todo: function(userId, doc) {
         check(userId, doc);
+        if(true){
+          throw new Meteor.Error(500, "请在代码中定义trigger");
+        }
         if (isRepeatedName(doc)) {
           throw new Meteor.Error(500, "名称不能重复");
         }
