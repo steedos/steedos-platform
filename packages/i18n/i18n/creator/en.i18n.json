@@ -121,6 +121,8 @@
 	"creator_list_show_as": "Show As",
 	"creator_list_show_as_one_column": "List",
 	"creator_list_show_as_two_columns": "List ｜ Record",
-	"creator_list_show_as_three_columns": "Menu ｜ List ｜ Record"
+	"creator_list_show_as_three_columns": "Menu ｜ List ｜ Record",
+
+	"creator_files_download_error_not_found": "No attachment found. It may have been deleted."
 
 }
