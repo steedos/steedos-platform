@@ -75,10 +75,29 @@
 					</a>
 				</li>
 				<li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-					<button class="creator-button-setup slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
+					<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
 							title="{{_ "app_admin_name"}}">
 						{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup"}}
 					</button>
+					<div class="slds-dropdown slds-dropdown_right slds-nubbin_top-right" style="margin-top: 0.75rem;">
+						<ul class="slds-dropdown__list" role="menu" style="min-width: 170px">
+							<li class="creator-button-setup slds-dropdown__item" role="presentation">
+								<a href="javascript:void(0);" role="menuitem" tabindex="0">
+									  <span class="slds-truncate" title="{{_ "app_admin_name"}}">
+										{{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="setup"}}{{_ "app_admin_name"}}</span>
+								</a>
+							</li>
+							{{#if showViewObject}}
+								<li class="slds-has-divider_top-space" role="separator"></li>
+								<li class="slds-dropdown__item show-object" role="presentation">
+									<a href="javascript:void(0);" role="menuitem" tabindex="0">
+										  <span class="slds-truncate" title="{{_ "view_object"}}">
+											  {{> steedos_button_icon class="slds-button__icon slds-global-header__icon" source="utility-sprite" name="sobject"}}{{_ "view_object"}}</span>
+									</a>
+								</li>
+							{{/if}}
+						</ul>
+					</div>
 				</li>
 				{{#unless isMobile}}
 					<li class="slds-dropdown-trigger slds-dropdown-trigger_click">

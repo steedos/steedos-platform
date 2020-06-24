@@ -50,6 +50,15 @@ Template.creatorHeader.helpers
 			space = db.spaces.findOne(spaceId)
 			if space
 				return space.name
+	showViewObject: ()->
+		if !Steedos.isSpaceAdmin()
+			return false
+		objectName = Session.get("object_name")
+		if objectName && window._SteedosHiddenObjects && !_.include(window._SteedosHiddenObjects, objectName)
+			return true
+		else
+			return false
+
 
 Template.creatorHeader.events
 
@@ -77,3 +86,12 @@ Template.creatorHeader.events
 
 	'click .creator-button-help': (event, template) ->
 		Steedos.openWindow "https://www.steedos.com/help";
+
+	'click .slds-dropdown-trigger_click': (event, template) ->
+		if $(event.currentTarget).hasClass('slds-is-open')
+			$(event.currentTarget).removeClass('slds-is-open')
+		else
+			$(event.currentTarget).addClass('slds-is-open')
+	'click .show-object': ()->
+		object = Creator.getObject(Session.get("object_name"))
+		Steedos.openWindow Steedos.absoluteUrl(Creator.getObjectUrl("objects", object._id, 'admin'))
