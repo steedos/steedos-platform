@@ -129,6 +129,7 @@
 	"instance_select_next_step": "请选择下一步步骤",
 	"instance_multi_next_step_tips": "步骤选项有多个，请选择下一步步骤，并使用底部发送按钮提交文件",
 	"instance_next_step_user": "请选择下一步处理人",
+	"instance_next_step_user_countersign": "会签节点下一步需要预先指定好处理人，请联系管理员",
 	"instance_reasons_reject": "驳回时必须填写意见",
 	"instance_field": "字段",
 	"instance_is_required": "为必填",
