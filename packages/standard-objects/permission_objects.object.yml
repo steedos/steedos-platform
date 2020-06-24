@@ -88,7 +88,11 @@ fields:
               var _object, _options, list_views;
 
               _options = [];
-              _object = Creator.getObject(values.object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               list_views = _object.list_views;
 
               _.forEach(list_views, function (f, k) {
@@ -116,7 +120,11 @@ fields:
               var _object, _options, actions;
 
               _options = [];
-              _object = Creator.getObject(values.object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               actions = _object.actions;
 
               _.forEach(actions, function (f, k) {
@@ -149,7 +157,11 @@ fields:
               }
 
               _options = [];
-              _object = Creator.getObject(object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               fields = _object.fields;
               icon = _object.icon;
 
@@ -183,7 +195,11 @@ fields:
               }
 
               _options = [];
-              _object = Creator.getObject(object_name);
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              _object = Creator.getObject(objectName);
               fields = _object.fields;
               icon = _object.icon;
 
@@ -214,7 +230,11 @@ fields:
               var _options, related_object_names, related_objects;
 
               _options = [];
-              related_objects = Creator.getObject(values.object_name).related_objects;
+              var objectName = values.object_name;
+              if(_.isObject(values.object_name)){
+                objectName = objectName.name
+              }
+              related_objects = Creator.getObject(objectName).related_objects;
               related_object_names = _.uniq(_.pluck(related_objects, "object_name"));
 
               _.forEach(related_object_names, function (i) {
