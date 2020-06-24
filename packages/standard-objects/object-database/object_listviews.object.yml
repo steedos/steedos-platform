@@ -13,6 +13,7 @@ fields:
     label: Label
     type: text
     is_name: true
+    required: true
   object_name:
     label: Object
     type: master_detail
@@ -187,7 +188,6 @@ fields:
         value: desc
   filters:
     label: Filters
-    readonly: true
     type: grid
     is_wide: true
   filters.$:

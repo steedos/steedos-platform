@@ -34,8 +34,7 @@ Creator.Objects['object_listviews'].triggers = {
       if (!doc.columns) {
         doc.columns = columns;
       }
-      doc.filters = ((ref = Session.get("cmDoc")) != null ? ref.filters : void 0) || [];
-      return console.log(doc);
+      // doc.filters = ((ref = Session.get("cmDoc")) != null ? ref.filters : void 0) || [];
     }
   },
   "before.insert.server.object_listviews": {
