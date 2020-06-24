@@ -144,7 +144,9 @@ module.exports = {
                 query = {permission_set_id: permissionSetId}
                 dbPOsCounts = Creator.getCollection("permission_objects").direct.find(query).count();
             }
-            this.data.values = this.data.values + permissionObjects.length - dbPOsCounts
+            if(permissionObjects.length > 0){
+                this.data.values = this.data.values + permissionObjects.length - dbPOsCounts
+            }
         }
         
     },
