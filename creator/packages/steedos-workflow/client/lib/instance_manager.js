@@ -430,10 +430,17 @@ InstanceManager.checkNextStepUser = function () {
 	var nextStepId = ApproveManager.getNextStepsSelectValue();
 	var nextStep = WorkflowManager.getInstanceStep(nextStepId);
 
-	if (value.length > 0 || (nextStep && nextStep.step_type == 'end'))
+	if (value.length > 0 || (nextStep && nextStep.step_type == 'end')) {
 		removeMessage(nextStepUsers_parent_group);
-	else
-		showMessage(nextStepUsers_parent_group, TAPi18n.__("instance_next_step_user"));
+	} else {
+		var currentStep = InstanceManager.getCurrentStep();
+		if (currentStep.step_type == 'counterSign') {
+			showMessage(nextStepUsers_parent_group, TAPi18n.__("instance_next_step_user_countersign"));
+		} else {
+			showMessage(nextStepUsers_parent_group, TAPi18n.__("instance_next_step_user"));
+		}
+	}
+
 }
 
 InstanceManager.nextStepUserErrorClass = function () {
