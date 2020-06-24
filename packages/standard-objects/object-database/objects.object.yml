@@ -73,39 +73,50 @@ fields:
   enable_search:
     type: boolean
     label: Enable Search
+    group: Advanced
   enable_files:
     type: boolean
     label: Enable Files
+    group: Advanced
   enable_tasks:
     type: boolean
     label: Enable Tasks
+    group: Advanced
   enable_notes:
     type: boolean
     label: Enable Notes
+    group: Advanced
   enable_events:
     type: boolean
     label: Enable Events
+    group: Advanced
   enable_api:
     type: boolean
     defaultValue: true
     hidden: true
     label: Enable API
+    group: Advanced
   enable_share:
     type: boolean
     defaultValue: false
     label: Enable Share
+    group: Advanced
   enable_workflow:
     type: boolean
     label: Enable Workflow
+    group: Advanced
   enable_instances:
     type: boolean
     label: Enable Instances
+    group: Advanced
   enable_chatter:
     type: boolean
     label: Enable Chatter
+    group: Advanced
   enable_audit:
     type: boolean
     label: Enable Audit
+    group: Advanced
   # enable_trash:
   #   type: boolean
   # enable_space_global:
@@ -115,6 +126,7 @@ fields:
     type: boolean
     defaultValue: false
     label: Enable Approvals
+    group: Advanced
   # is_view:
   #   type: boolean
   #   defaultValue: false
