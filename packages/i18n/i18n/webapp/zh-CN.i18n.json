@@ -21,5 +21,18 @@
 	"webapp_dashboard_widgets_position_center_top": "左上角",
 	"webapp_dashboard_widgets_position_center_bottom_left": "左下角左侧",
 	"webapp_dashboard_widgets_position_center_bottom_right": "左下角右侧",
-	"webapp_dashboard_widgets_position_center_right": "右边栏"
+	"webapp_dashboard_widgets_position_center_right": "右边栏",
+	"webapp_dashboard_widgets_apps_tiles_section_label": "所有应用",
+	"webapp_dashboard_widgets_apps_links_section_label": "所有对象",
+	"webapp_dashboard_widgets_object_label": "对象名称",
+	"webapp_dashboard_widgets_object_all_link_label": "查看全部",
+	"webapp_dashboard_widgets_object_illustration_message_body": "没有可显示的项目。",
+	"webapp_dashboard_widgets_instances_pendings_label": "待审核文件",
+	"webapp_dashboard_widgets_instances_pendings_illustration_message_body": "您没有待审核文件。",
+	"webapp_dashboard_widgets_announcements_week_label": "本周公告",
+	"webapp_dashboard_widgets_announcements_week_illustration_message_body": "本周没有新公告。",
+	"webapp_dashboard_widgets_tasks_today_label": "今日任务",
+	"webapp_dashboard_widgets_tasks_today_illustration_message_body": "您今天没有待办任务。",
+	"webapp_dashboard_widgets_events_today_label": "今日日程",
+	"webapp_dashboard_widgets_events_today_illustration_message_body": "您今天没有日程。"
 }
