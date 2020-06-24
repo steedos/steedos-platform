@@ -13,11 +13,15 @@ setParentMenuExpanded = (currentMenu)->
 
 Template.creatorSidebar.onRendered ->
 	current_object_name = FlowRouter.current()?.queryParams?.ref || Creator.getObject()?.name
+	listViewId = FlowRouter.current()?.params?.list_view_id
 	current_admin_template_name = Session.get("admin_template_name")
 	# 根据当前所在界面实现自动选中相关菜单，同时展开父层菜单（支持任意多层）
 	if current_object_name
 		currentMenu = Creator.Menus.find (menu)->
-			return menu.object_name == current_object_name
+			if menu.list_view
+				return menu.object_name == current_object_name && menu.list_view == listViewId
+			else
+				return menu.object_name == current_object_name
 	else if current_admin_template_name
 		currentMenu = Creator.Menus.find (menu)->
 			return menu.template_name == current_admin_template_name
@@ -41,6 +45,7 @@ Template.creatorSidebar.onRendered ->
 			# - object_name 指向对象, url=/app/admin/{object_name}/grid/all/
 			object_name = e.itemData?.object_name
 			template_name = e.itemData?.template_name
+			list_view = e.itemData?.list_view
 			if object_name or template_name
 				e.component.selectItem(e.itemData)
 			if object_name
@@ -50,11 +55,14 @@ Template.creatorSidebar.onRendered ->
 				else if object_name == "users"
 					menuUrl = Steedos.getUserRouter()
 				else
-					listViews = Creator.getListViews(object_name)
-					if listViews && listViews.length > 0
-						menuUrl = "/app/admin/#{object_name}/grid/#{listViews[0]?._id}"
+					if list_view
+						menuUrl = "/app/admin/#{object_name}/grid/#{list_view}"
 					else
-						menuUrl = "/app/admin/#{object_name}/grid/all"
+						listViews = Creator.getListViews(object_name)
+						if listViews && listViews.length > 0
+							menuUrl = "/app/admin/#{object_name}/grid/#{listViews[0]?._id}"
+						else
+							menuUrl = "/app/admin/#{object_name}/grid/all"
 			else if template_name
 				menuUrl = "/app/admin/page/#{template_name}"
 			

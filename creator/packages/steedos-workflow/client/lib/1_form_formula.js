@@ -310,7 +310,7 @@ Form_formula.getNextStepsFromCondition = function(step, autoFormDoc, fields){
 
 Form_formula.init_formula_values = function(fields, autoFormDoc){
 
-    var approver = localStorage.getItem("Meteor.userId");
+    var approver = Meteor.userId();
 
     var applicant = InstanceManager.getApplicantUserId();
 
