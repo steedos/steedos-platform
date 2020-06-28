@@ -134,7 +134,6 @@ fields:
     showIcon: false
     required: true
     create: false
-    defaultValue: user
     inlineHelpText: Can create profiles in permission set
     optionsFunction: !!js/function |
       function () {
