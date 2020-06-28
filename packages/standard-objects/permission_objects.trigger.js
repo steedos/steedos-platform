@@ -2,6 +2,7 @@ const _ = require('underscore');
 const objectql = require("@steedos/objectql");
 const odataMongodb = require("odata-v4-mongodb");
 const InternalData = require("./core/internalData");
+const auth = require("@steedos/auth");
 
 const permissions = {
     allowEdit: false,
@@ -123,31 +124,33 @@ module.exports = {
         
     },
     afterCount: async function () {
-        let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
-        let isSystem = filters.is_system;
-        if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
-            if(_.isBoolean(isSystem) && isSystem){
-                this.data.values = find(this.query).length;
-            }else{
-                return ;
-            }
-            if(isSystem.$ne){
-                return 
-            }
-        }else{
-            let permissionObjects = find(this.query);
-            let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
-            let permissionSetId = filters.permission_set_id;
-            let query = {};
-            let dbPOsCounts = 0;
-            if(permissionSetId){
-                query = {permission_set_id: permissionSetId}
-                dbPOsCounts = Creator.getCollection("permission_objects").direct.find(query).count();
-            }
-            if(permissionObjects.length > 0){
-                this.data.values = this.data.values + permissionObjects.length - dbPOsCounts
-            }
-        }
+        let result = await objectql.getObject('permission_objects').find(this.query, await auth.getSessionByUserId(this.userId, this.spaceId))
+        this.data.values = result.length
+        // let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+        // let isSystem = filters.is_system;
+        // if(!_.isEmpty(isSystem) || _.isBoolean(isSystem)){
+        //     if(_.isBoolean(isSystem) && isSystem){
+        //         this.data.values = find(this.query).length;
+        //     }else{
+        //         return ;
+        //     }
+        //     if(isSystem.$ne){
+        //         return 
+        //     }
+        // }else{
+        //     let permissionObjects = find(this.query);
+        //     let filters = parserFilters(odataMongodb.createFilter(this.query.filters));
+        //     let permissionSetId = filters.permission_set_id;
+        //     let query = {};
+        //     let dbPOsCounts = 0;
+        //     if(permissionSetId){
+        //         query = {permission_set_id: permissionSetId}
+        //         dbPOsCounts = Creator.getCollection("permission_objects").direct.find(query).count();
+        //     }
+        //     if(permissionObjects.length > 0){
+        //         this.data.values = this.data.values + permissionObjects.length - dbPOsCounts
+        //     }
+        // }
         
     },
     afterFindOne: async function () {
