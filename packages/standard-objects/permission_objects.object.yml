@@ -183,7 +183,6 @@ fields:
     multiple: true
     depend_on:
       - object_name
-      - unreadable_fields
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function (values) {
               var _object, _options, fields, icon, object_name;
@@ -204,20 +203,15 @@ fields:
               icon = _object.icon;
 
               _.forEach(fields, function (f, k) {
-                if (!f.omit) {
-                  if (_.indexOf(values.unreadable_fields, k) < 0) {
-                    return _options.push({
-                      label: f.label || k,
-                      value: k,
-                      icon: icon
-                    });
-                  }
-                }
+                return _options.push({
+                  label: f.label || k,
+                  value: k,
+                  icon: icon
+                });
               });
 
               return _options;
             }
-    name: uneditable_fields
     filterable: true
   unrelated_objects:
     type: lookup
