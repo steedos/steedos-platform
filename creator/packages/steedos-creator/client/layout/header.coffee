@@ -94,4 +94,4 @@ Template.creatorHeader.events
 			$(event.currentTarget).addClass('slds-is-open')
 	'click .show-object': ()->
 		object = Creator.getObject(Session.get("object_name"))
-		Steedos.openWindow Steedos.absoluteUrl(Creator.getObjectUrl("objects", object._id, 'admin'))
+		Steedos.openWindow Creator.getObjectUrl("objects", object._id, 'admin')
