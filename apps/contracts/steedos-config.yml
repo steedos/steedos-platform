@@ -81,7 +81,6 @@ logger:
   partner_key: ${ENV_BILLING_PARTNER_KEY}
 plugins:
   - "@steedos/accounts"
-  - "@steedos/plugin-enterprise"
 tenant:
   saas: true
   enable_password_login: true
