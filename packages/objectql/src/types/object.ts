@@ -426,11 +426,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
             modifyAllRecords: false,
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
-            disabled_list_views: [],
-            disabled_actions: [],
-            unreadable_fields: [],
-            uneditable_fields: [],
-            unrelated_objects: []
+            disabled_list_views: null,
+            disabled_actions: null,
+            unreadable_fields: null,
+            uneditable_fields: null,
+            unrelated_objects: null
         }
 
         if (_.isEmpty(roles)) {
@@ -446,12 +446,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if (v === false && _v === true) {
                             userObjectPermission[k] = _v
                         }
-                    } else if (_.isArray(v) && _.isArray(_v)) {
-                        userObjectPermission[k] = _.union(v, _v)
+                    } else if ((_.isArray(v) || _.isNull(v))) {
+                        if(!_.isArray(_v)){
+                            _v = []
+                        }
+                        if(_.isNull(v)){
+                            userObjectPermission[k] = _v
+                        }else{
+                            userObjectPermission[k] = _.intersection(v, _v)
+                        }
                     }
                 })
             }
         })
+
+
+        userObjectPermission.disabled_list_views = userObjectPermission.disabled_list_views || []
+        userObjectPermission.disabled_actions = userObjectPermission.disabled_actions || []
+        userObjectPermission.unreadable_fields = userObjectPermission.unreadable_fields || []
+        userObjectPermission.uneditable_fields = userObjectPermission.uneditable_fields || []
+        userObjectPermission.unrelated_objects = userObjectPermission.unrelated_objects || []
 
         let spaceId = userSession.spaceId
         if (isTemplateSpace(spaceId)) {
@@ -631,16 +645,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (userObjectUnreadableFields.length > 0) {
             let queryFields = [];
 
-            if (!(query.fields && query.fields.length)) {
-                queryFields = _.keys(this.toConfig().fields)
-            }
-
             if (_.isArray(query.fields)) {
                 queryFields = query.fields
             } else if (_.isString(query.fields)) {
                 queryFields = query.fields.split(',')
             }
 
+            if (!(query.fields && query.fields.length)) {
+                queryFields = _.keys(this.toConfig().fields)
+                _.each(queryFields, function(fieldName, index){
+                    if(fieldName && fieldName.indexOf("$") > -1){
+                        delete queryFields[index];
+                    }
+                })
+                queryFields = _.compact(queryFields)
+            }
             queryFields = _.difference(queryFields, userObjectUnreadableFields)
 
             if (queryFields.length < 1) {
