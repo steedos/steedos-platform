@@ -127,6 +127,10 @@ fields:
     defaultValue: false
     label: Enable Approvals
     group: Advanced
+  enable_web_forms:
+    type: boolean
+    defaultValue: fasle
+    label: Enable Web Forms
   # is_view:
   #   type: boolean
   #   defaultValue: false

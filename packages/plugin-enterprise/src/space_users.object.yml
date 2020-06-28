@@ -1,0 +1,7 @@
+extend: space_users
+fields:
+  company_id:
+    hidden: false
+  company_ids:
+    omit: true
+    hidden: false

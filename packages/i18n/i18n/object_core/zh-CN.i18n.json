@@ -184,5 +184,6 @@
 	"web_forms_error_object_name_not_found": "关联对象未找到", 
 	"web_forms_aciton_copyHtmlCode_success": "表单HTML已复制到剪贴板，复制到网页中即可实现在线填写表单。",
 	"web_forms_aciton_copyHtmlCode_error": "表单HTML复制失败。",
-	"web_forms_default_notification_body": "在线表单有一条新记录提交。"
+	"web_forms_default_notification_body": "在线表单有一条新记录提交。",
+	"web_forms_select_option_none": "--无--"
 }

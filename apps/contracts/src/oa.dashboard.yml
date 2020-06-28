@@ -6,7 +6,6 @@ apps:
 widgets: 
   - position: CENTER_TOP
     type: instances_pendings
-    label: 待审批
   - position: CENTER_TOP
     type: apps
   - position: CENTER_TOP
