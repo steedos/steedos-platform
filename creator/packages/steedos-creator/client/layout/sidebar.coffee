@@ -30,7 +30,7 @@ Template.creatorSidebar.onRendered ->
 		setParentMenuExpanded currentMenu
 	
 	$('#sidebar-menu').dxTreeView
-		items: Creator.Menus
+		items: _.uniq(Creator.Menus, (menu)-> return menu._id)
 		dataStructure: 'plain'
 		parentIdExpr: 'parent'
 		keyExpr: '_id'
