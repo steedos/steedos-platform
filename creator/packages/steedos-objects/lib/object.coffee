@@ -7,6 +7,9 @@ Creator.formatObjectName = (object_name)->
 	return object_name
 
 Creator.Object = (options)->
+	_baseObject = Creator.baseObject
+	if Meteor.isClient
+		_baseObject = {actions:{} , fields: {}, triggers: {}, permission_set: {}}
 	self = this
 	if (!options.name)
 		console.error(options)
@@ -77,7 +80,7 @@ Creator.Object = (options)->
 					field.hidden = false
 
 	if !options.database_name || options.database_name == 'meteor-mongo'
-		_.each Creator.baseObject.fields, (field, field_name)->
+		_.each _baseObject.fields, (field, field_name)->
 			if !self.fields[field_name]
 				self.fields[field_name] = {}
 			self.fields[field_name] = _.extend(_.clone(field), self.fields[field_name])
@@ -88,14 +91,14 @@ Creator.Object = (options)->
 		oitem = Creator.convertListView(defaultView, item, item_name)
 		self.list_views[item_name] = oitem
 
-	self.triggers = _.clone(Creator.baseObject.triggers)
+	self.triggers = _.clone(_baseObject.triggers)
 	_.each options.triggers, (item, item_name)->
 		if !self.triggers[item_name]
 			self.triggers[item_name] = {}
 		self.triggers[item_name].name = item_name
 		self.triggers[item_name] = _.extend(_.clone(self.triggers[item_name]), item)
 
-	self.actions = _.clone(Creator.baseObject.actions)
+	self.actions = _.clone(_baseObject.actions)
 	_.each options.actions, (item, item_name)->
 		if !self.actions[item_name]
 			self.actions[item_name] = {}
@@ -109,7 +112,7 @@ Creator.Object = (options)->
 	self.related_objects = Creator.getObjectRelateds(self.name)
 
 	# 让所有object默认有所有list_views/actions/related_objects/readable_fields/editable_fields完整权限，该权限可能被数据库中设置的admin/user权限覆盖
-	self.permission_set = _.clone(Creator.baseObject.permission_set)
+	self.permission_set = _.clone(_baseObject.permission_set)
 	# defaultListViews = _.keys(self.list_views)
 	# defaultActions = _.keys(self.actions)
 	# defaultRelatedObjects = _.pluck(self.related_objects,"object_name")
