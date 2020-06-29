@@ -12,6 +12,14 @@ _getLocale = (user)->
 		locale = "zh-CN"
 	return locale
 
+getUserProfileObjectsLayout = (userId, spaceId)->
+	spaceUser = Creator.getCollection("space_users").findOne({space: spaceId, user: userId}, {fields: {profile: 1}})
+	if spaceUser && spaceUser.profile
+		console.log('spaceUser.profile', spaceUser.profile);
+		console.log('spaceId', spaceId);
+		return Creator.getCollection("object_layouts").find({space: spaceId, profile: spaceUser.profile}).fetch();
+
+
 JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	userId = req.headers['x-user-id']
 	spaceId = req.headers['x-space-id'] || req.params?.spaceId
@@ -90,6 +98,32 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 	result.dashboards = _Dashboards
 
 	result.plugins = steedosCore.getPlugins?()
+
+	objectsLayout = getUserProfileObjectsLayout(userId, spaceId);
+
+	if objectsLayout
+		_.each objectsLayout, (objectLayout)->
+			_object = clone(result.objects[objectLayout.object_name]);
+			if _object
+				_fields = {};
+				_.each objectLayout.fields, (_item)->
+					_fields[_item.field] = _object.fields[_item.field]
+					if _.has(_item, 'group')
+						_fields[_item.field].group = _item.group
+					if _item.permission
+						if _item.permission == 'readonly'
+							_fields[_item.field].readonly = true
+							_fields[_item.field].required = false
+						if _item.permission == 'required'
+							_fields[_item.field].readonly = false
+							_fields[_item.field].required = true
+				_object.fields = _fields
+
+				_actions = {};
+				_.each objectLayout.actions, (actionName)->
+					_actions[actionName] = _object.actions[actionName]
+				_object.actions = _actions
+			result.objects[objectLayout.object_name] = _object
 
 	JsonRoutes.sendResult res,
 		code: 200,
