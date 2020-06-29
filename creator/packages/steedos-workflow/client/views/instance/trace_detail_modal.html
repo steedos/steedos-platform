@@ -51,15 +51,15 @@
 						</div>
 					{{/if}}
 					{{#if unempty this.finish_date}}
-						{{#if getApproveStatusText this.judge}}
+						{{#if getApproveStatusText this.judge this.auto_submitted}}
 							<div class="weui-cell">
 								<div class="weui-cell__hd">
 									<span class="weui-label">{{_t "instance_approve_status_text_label"}}</span>
 								</div>
 								<div class="weui-cell__bd weui-cell_primary text-muted">
-									<span class="weui-input status {{this.judge}}">
-										<span class='{{getApproveStatusIcon this.judge}}'></span>
-										<span>{{getApproveStatusText this.judge}}</span>
+									<span class="weui-input status {{getApproveJudgeClass this.judge this.auto_submitted}}">
+										<span class='{{getApproveStatusIcon this.judge this.auto_submitted}}'></span>
+										<span>{{getApproveStatusText this.judge this.auto_submitted}}</span>
 									</span>
 								</div>
 							</div>

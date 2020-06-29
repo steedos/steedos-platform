@@ -48,7 +48,9 @@ TracesTemplate.helpers =
 		if approved and approved.type == 'cc'
 			return true
 		false
-	getApproveStatusIcon: (approveJudge) ->
+	getApproveStatusIcon: (approveJudge, autoSubmitted) ->
+		if autoSubmitted == true
+			return 'ion ion-android-alarm-clock'
 		#已结束的显示为核准/驳回/取消申请，并显示处理状态图标
 		approveStatusIcon = undefined
 		switch approveJudge
@@ -74,7 +76,7 @@ TracesTemplate.helpers =
 				approveStatusIcon = ''
 				break
 		approveStatusIcon
-	getApproveStatusText: (approveJudge) ->
+	getApproveStatusText: (approveJudge, autoSubmitted) ->
 		if Meteor.isServer
 			locale = Template.instance().view.template.steedosData.locale
 			if locale.toLocaleLowerCase() == 'zh-cn'
@@ -82,6 +84,8 @@ TracesTemplate.helpers =
 		else
 			locale = Session.get("TAPi18n::loaded_lang")
 		#已结束的显示为核准/驳回/取消申请，并显示处理状态图标
+		if autoSubmitted == true
+			return TAPi18n.__('instance_approve_timeout_auto_submitted', {}, locale)
 		approveStatusText = undefined
 		switch approveJudge
 			when 'approved'
@@ -112,6 +116,12 @@ TracesTemplate.helpers =
 				approveStatusText = ''
 				break
 		approveStatusText
+	
+	getApproveJudgeClass: (approveJudge, autoSubmitted) ->
+		if autoSubmitted == true
+			return 'autoSubmitted'
+		return approveJudge
+
 	_t: (key)->
 		return TAPi18n.__(key)
 
