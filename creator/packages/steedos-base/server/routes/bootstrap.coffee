@@ -15,9 +15,7 @@ _getLocale = (user)->
 getUserProfileObjectsLayout = (userId, spaceId)->
 	spaceUser = Creator.getCollection("space_users").findOne({space: spaceId, user: userId}, {fields: {profile: 1}})
 	if spaceUser && spaceUser.profile
-		console.log('spaceUser.profile', spaceUser.profile);
-		console.log('spaceId', spaceId);
-		return Creator.getCollection("object_layouts").find({space: spaceId, profile: spaceUser.profile}).fetch();
+		return Creator.getCollection("object_layouts")?.find({space: spaceId, profile: spaceUser.profile}).fetch();
 
 
 JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
