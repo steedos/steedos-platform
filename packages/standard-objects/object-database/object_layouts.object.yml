@@ -1,0 +1,122 @@
+name: object_layouts
+label: Object Layouts
+icon: utility.layout
+fields:
+  label:
+    type: text
+    required: true
+    label: Label
+    is_name: true
+  object_name:
+    label: Object
+    type: master_detail
+    required: true
+    reference_to: objects
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function () {
+              var _options = [];
+              _.forEach(Creator.objectsByName, function (o, k) {
+                return _options.push({
+                  label: o.label,
+                  value: k,
+                  icon: o.icon
+                });
+              });
+              return _options;
+            }
+  profile:
+    type: lookup
+    label: Assign to profiles
+    showIcon: false
+    multiple: true
+    required: true
+    create: false
+    defaultValue: user
+    optionsFunction: !!js/function |
+      function () {
+        var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+        var result = [];
+        profiles.forEach(function (item) {
+          result.push({
+            label: item.label,
+            value: item.name
+          });
+        });
+        return result;
+      }
+  actions:
+    label: Actions
+    type: lookup
+    multiple: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              if (!(values != null ? values.object_name : void 0)) {
+                values.object_name = Session.get("object_name");
+              }
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
+              var _options = [];
+              _.each(Creator.getObject(values.object_name).actions, function(v, k){
+                _options.push({label: v.label || v.name, value: k});
+              })
+              return _options;
+            }
+  fields:
+    type: grid
+    is_wide: true
+    required: true
+  fields.$:
+    label: Field
+    blackbox: true
+    type: object
+  fields.$.field:
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: true
+    depend_on:
+      - object_name
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              if (!(values != null ? values.object_name : void 0)) {
+                values.object_name = Session.get("object_name");
+              }
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
+              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
+            }
+  fields.$.group:
+    label: Group
+    type: text
+  fields.$.permission:
+    label: Permission
+    type: select
+    options: Readonly:readonly,Required:required
+list_views:
+  all:
+    columns:
+      - label
+      - profile
+      - object_name
+    label: All
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: false
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true
