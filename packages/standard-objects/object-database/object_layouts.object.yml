@@ -1,6 +1,6 @@
 name: object_layouts
 label: Object Layouts
-icon: utility.layout
+icon: custom.custom104
 fields:
   label:
     type: text
