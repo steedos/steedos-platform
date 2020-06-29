@@ -102,6 +102,20 @@ admin_menus:
   #   object_name: permission_objects
   #   parent: menu_advanced
   #   sort: 10
+  - _id: object_manager
+    name: Object Manager
+    permission_sets:
+      - admin
+    object_name: objects
+    parent: menu_advanced
+    sort: 1
+  - _id: datasources_manager
+    name: Datasources
+    permission_sets:
+      - admin
+    object_name: datasources
+    parent: menu_advanced
+    sort: 2
   - _id: permission_shares
     name: Permission Share
     permission_sets:
