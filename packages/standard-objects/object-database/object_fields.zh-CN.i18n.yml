@@ -43,3 +43,4 @@ object_fields_field_type_options_text: 文本
 object_fields_field_type_options_textarea: 长文本
 object_fields_field_type_options_url: 网址
 object_fields_listview_all: 所有
+object_fields_group_advanced: 高级

@@ -82,6 +82,18 @@ fields:
         value: url
       - label: email
         value: email     
+  defaultValue:
+    type: text
+    label: Default Value
+  group:
+    type: text
+    label: Group
+  sort_no:
+    label: Sort Number
+    type: number
+    defaultValue: 100
+    scale: 0
+    sortable: true
   is_name:
     type: boolean
     label: Is Name
@@ -91,29 +103,12 @@ fields:
   generated:
     type: boolean
     label: Generated
-
-  sort_no:
-    label: Sort Number
-    type: number
-    defaultValue: 100
-    scale: 0
-    sortable: true
-  group:
-    type: text
-    label: Group
-  defaultValue:
-    type: text
-    label: Default Value
-  allowedValues:
-    type: text
-    multiple: true
-    label: Allowed Values
-  multiple:
-    type: boolean
-    label: Multiple
   required:
     type: boolean
     label: Required
+  multiple:
+    type: boolean
+    label: Multiple
   is_wide:
     type: boolean
     label: Is Wide
@@ -139,13 +134,16 @@ fields:
     type: currency
     label: Precision
     defaultValue: 18
+    group: Advanced
   scale:
     type: currency
     label: Scale
     defaultValue: 2
+    group: Advanced
   reference_to:
     type: lookup
     label: Reference to
+    group: Advanced
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               var _options;
@@ -165,14 +163,23 @@ fields:
   rows:
     type: currency
     label: Rows
+    scale: 0
+    group: Advanced
+  allowedValues:
+    type: text
+    multiple: true
+    label: Allowed Values
+    group: Advanced
   options:
     type: textarea
     label: Options
     is_wide: true
+    group: Advanced
   description:
     label: Description
     type: text
     is_wide: true
+    group: Advanced
 paging:
   enabled: false
 list_views:
