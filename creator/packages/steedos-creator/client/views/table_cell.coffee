@@ -68,7 +68,8 @@ Template.creator_table_cell.onRendered ->
 				else
 					extraVal = currentDoc[extra_field]
 				cellOption = {_id: currentDoc._id, val: extraVal, doc: currentDoc, field: this_object.fields[extra_field], field_name: extra_field, object_name:object_name, hideIcon: true, is_detail_view: true}
-				Blaze.renderWithData Template.creator_table_cell, cellOption, extraContainer[0]
+				if cellOption.field
+					Blaze.renderWithData Template.creator_table_cell, cellOption, extraContainer[0]
 
 Template.creator_table_cell.helpers Creator.helpers
 
