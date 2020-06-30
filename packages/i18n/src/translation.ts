@@ -45,6 +45,9 @@ const getObjectFieldGroupKey = function(objectName, name){
 }
 
 const getObjectFieldOptionsLabelKey = function(objectName, name, value){
+    if(name){
+        name = name.replace(/\./g, '_');
+    }
     return `${objectName}${KEYSEPARATOR}field${KEYSEPARATOR}${name}${KEYSEPARATOR}options${KEYSEPARATOR}${value}`
 }
 
