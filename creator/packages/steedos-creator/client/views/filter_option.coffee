@@ -90,6 +90,7 @@ Template.filter_option.helpers
 				schema.value = clone obj_schema[schema_key]
 				if ["lookup", "master_detail", "select", "checkbox"].includes(filter_field_type)
 					schema.value.autoform.multiple = true
+					schema.value.autoform.optionsLimit = 5
 					schema.value.type = [String]
 					if schema.value.autoform.create
 						delete schema.value.autoform.create
