@@ -479,7 +479,9 @@ Template.creator_view.helpers
 	showBack: ()->
 		if Session.get("record_id") && (_.has(FlowRouter.current()?.queryParams, 'ref'))
 			return false
-		return true
+		# return true
+		# 先不显示返回按钮 【相关记录的链接，不要弹出新窗口 #461】
+		return false
 
 Template.creator_view.events
 

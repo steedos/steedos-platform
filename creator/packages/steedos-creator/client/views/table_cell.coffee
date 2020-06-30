@@ -81,11 +81,15 @@ Template.creator_table_cell.helpers
 	openWindow: ()->
 		if Steedos.isMobile()
 			return false
-		if Template.instance().data?.open_window || Template.instance().data?.is_related
+		# if Template.instance().data?.open_window || Template.instance().data?.is_related
+		# data?.is_related应该是标识`/app/contracts/contracts/EzxhPBf9k9eR5qjqs/contract_receipts/grid`这样的列表主字段链接
+		if Template.instance().data?.open_window
 			return true
 		object_name = this.object_name
 		this_object = Creator.getObject(object_name)
-		if this_object?.open_window == true || this.reference_to # 所有的相关链接 改为弹出新窗口 #735
+		# if this_object?.open_window == true || this.reference_to # 所有的相关链接 改为弹出新窗口 #735
+		# this.reference_to应该是所有相关项的标识
+		if this_object?.open_window == true
 			return true
 		else
 			return false
