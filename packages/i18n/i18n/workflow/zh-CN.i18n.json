@@ -724,7 +724,7 @@
 
 	"url_invalid": "无效的链接",
 
-	"instance_approve_timeout_auto_submitted": "超时通过",
+	"instance_approve_timeout_auto_submitted": "超时自动跳过",
 
 	"categories_in_use": "分类在使用中，不能删除",
 
