@@ -108,8 +108,9 @@ JsonRoutes.add 'post', '/api/steedos/weixin/card/recharge', (req, res, next) ->
                     })
                 else
                     console.error result
-            ), ()->
-                console.log 'Failed to bind environment'
+            ), (e)->
+                console.log 'Failed to bind environment: api_steedos_weixin_card_recharge.coffee'
+                console.log e.stack
             )
         )
 

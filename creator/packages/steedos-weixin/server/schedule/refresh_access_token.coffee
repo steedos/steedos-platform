@@ -26,6 +26,6 @@ Meteor.startup ->
 						console.error err
 
 		), (e) ->
-			console.log 'Failed to bind environment'
+			console.log 'Failed to bind environment: refresh_access_token.coffee'
 			console.log e.stack
 		)

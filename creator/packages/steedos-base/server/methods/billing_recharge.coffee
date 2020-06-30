@@ -59,8 +59,9 @@ Meteor.methods
 					obj.end_date = end_date
 					obj.user_count = user_count
 					db.billing_pay_records.insert(obj)
-			), ()->
-				console.log 'Failed to bind environment'
+			), (e)->
+				console.log 'Failed to bind environment: billing_recharge.coffee'
+				console.log e.stack
 			)
 		)
 

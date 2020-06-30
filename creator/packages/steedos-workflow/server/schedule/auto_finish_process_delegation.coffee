@@ -35,5 +35,6 @@ Meteor.startup ->
 				console.error e.stack
 				go_next = true
 
-		, ()->
-			console.log 'Failed to bind environment'
+		, (e)->
+			console.log 'Failed to bind environment: auto_finish_process_delegation.coffee'
+			console.log e.stack

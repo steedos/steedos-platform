@@ -32,8 +32,9 @@ Meteor.startup ->
 				console.error e.stack
 				go_next = true
 
-		, ()->
-			console.log 'Failed to bind environment'
+		, (e)->
+			console.log 'Failed to bind environment: timeout_auto_submit.coffee'
+			console.log e.stack
 
 Meteor.methods
 	timeout_auto_submit: (ins_id)->

@@ -131,8 +131,9 @@ Meteor.startup(function () {
 
       go_next = true;
 
-    }, function () {
-      console.log('Failed to bind environment');
+    }, function (e) {
+      console.log('Failed to bind environment: statistics.js');
+      console.log(e.stack);
     }));
 
   }

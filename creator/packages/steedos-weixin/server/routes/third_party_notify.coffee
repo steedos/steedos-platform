@@ -29,7 +29,7 @@ JsonRoutes.add 'post', '/api/weixin/thirdparty/notify', (req, res, next) ->
 				)
 			), (err)->
 				console.error err.stack
-				console.log 'Failed to bind environment'
+				console.log 'Failed to bind environment: third_party_notify.coffee'
 			)
 		)
 

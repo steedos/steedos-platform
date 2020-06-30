@@ -26,7 +26,7 @@ JsonRoutes.add 'post', '/api/billing/recharge/notify', (req, res, next) ->
 				)
 			), (err)->
 				console.error err.stack
-				console.log 'Failed to bind environment'
+				console.log 'Failed to bind environment: api_billing_recharge_notify.coffee'
 			)
 		)
 		

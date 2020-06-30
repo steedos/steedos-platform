@@ -15,7 +15,7 @@ JsonRoutes.add 'post', '/api/weixin/thirdparty/:appId/push', (req, res, next) ->
 				)
 			), (err)->
 				console.error err.stack
-				console.log 'Failed to bind environment'
+				console.log 'Failed to bind environment: third_party_push.coffee'
 			)
 		)
 

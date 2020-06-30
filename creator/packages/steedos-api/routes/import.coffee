@@ -211,7 +211,7 @@ JsonRoutes.add "post", "/api/import/space_org_users", (req, res, next) ->
 						text: JSON.stringify({'result': result})
 
 			), (err)->
-				console.error 'Failed to bind environment'
+				console.error 'Failed to bind environment: import.coffee'
 				console.error err
 			)
 
