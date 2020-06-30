@@ -79,10 +79,15 @@ Meteor.startup ->
 			lang = 'en'
 			if current_user_info.locale is 'zh-cn'
 				lang = 'zh-CN'
+			
+			utcOffset = timezoneoffset / -60
+			
+			formatDate = (date, formater) ->
+				return moment(date).utcOffset(utcOffset).format(formater)
 
 			ret = template({
 				lang: lang,
-				timezoneoffset: timezoneoffset,
+				formatDate: formatDate,
 				form_name: form_name,
 				fields: fields,
 				table_fields: table_fields,
