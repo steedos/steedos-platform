@@ -15,7 +15,9 @@ Template.creator_table_cell.onRendered ->
 #		record = Creator.getCollection(object_name).findOne(record_id)
 		# record = self.data.doc
 		# 这里不可以用self.data.doc，因为当编辑记录后保存时，不能触发autorun再进入
-		record = Template.creator_view.currentInstance.record.get()
+		record = Template.creator_view.currentInstance?.record.get()
+		unless record
+			record = self.data.doc
 		if record
 			if  _field?.type == "grid"
 				val = _field.name.split('.').reduce (o, x) ->
