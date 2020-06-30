@@ -96,7 +96,11 @@ fields:
   fields.$.permission:
     label: Permission
     type: select
-    options: Readonly:readonly,Required:required
+    options: 
+      - label: Readonly
+        value: readonly
+      - label: Required
+        value: required
 list_views:
   all:
     columns:
