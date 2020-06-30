@@ -2,7 +2,7 @@
 
 华炎魔方是一款全新的低代码开发工具，开发人员只需编写配置文件，就能构建功能强大的管理软件。
 
-- [了解华炎魔方](https://www.steedos.com/plaform/?from=github)
+- [了解华炎魔方](https://www.steedos.com/platform/?from=github)
 - [如何使用华炎魔方，快速开发随需定制的管理系统？](https://www.steedos.com/developer/)
 - [基于华炎魔方开发的OA系统实例](https://github.com/steedos/steedos-project-saas)
 - [基于华炎魔方开发的合同管理系统实例](https://github.com/steedos/steedos-contracts-app)
