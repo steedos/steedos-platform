@@ -227,7 +227,7 @@ relatedList:
   - object_fields
   - object_listviews
   - object_actions
-  # - object_triggers
+  - object_layouts
   - permission_objects
 list_views:
   all:

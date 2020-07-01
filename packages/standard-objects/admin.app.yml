@@ -109,13 +109,6 @@ admin_menus:
     object_name: objects
     parent: menu_advanced
     sort: 1
-  - _id: object_layouts
-    name: Object Layouts
-    permission_sets:
-      - admin
-    object_name: object_layouts
-    parent: menu_advanced
-    sort: 1.5
   - _id: datasources_manager
     name: Datasources
     permission_sets:

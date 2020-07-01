@@ -24,14 +24,13 @@ fields:
               });
               return _options;
             }
-  profile:
+  profiles:
     type: lookup
-    label: Assign to profiles
+    label: Profile
     showIcon: false
     multiple: true
     required: true
     create: false
-    defaultValue: user
     optionsFunction: !!js/function |
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
@@ -104,8 +103,8 @@ list_views:
   all:
     columns:
       - label
-      - profile
       - object_name
+      - profiles
     label: All
     filter_scope: space
 permission_set:
