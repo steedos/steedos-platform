@@ -322,6 +322,8 @@ permission_set:
     viewAllRecords: true
     uneditable_fields:
       - profile
+      - password_expired
+      - organizations
   admin:
     allowCreate: true
     allowDelete: false
