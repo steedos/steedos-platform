@@ -49,6 +49,7 @@ Template.standard_query_modal.helpers
 			schema[field] = obj_schema[field]
 			delete schema[field].min
 			delete schema[field].max
+			schema[field].optional = true
 			if !(object_fields[field].searchable || object_fields[field].filterable)
 				schema[field].autoform.group = t "standard_query_more"
 			if object_fields[field].searchable || object_fields[field].filterable
