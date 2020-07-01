@@ -24,6 +24,10 @@ Creator.Objects['permission_set'].triggers = {
                 throw new Meteor.Error(500, "API名称不能重复");
             }
             checkType(doc.name, doc.type);
+
+            if(doc.type === 'profile'){
+                delete doc.users
+            }
         }
     },
     "before.update.server.check": {
@@ -49,6 +53,19 @@ Creator.Objects['permission_set'].triggers = {
             var set = modifier.$set || {}
             if(_.has(set, 'name') || _.has(set, 'type')){
                 checkType(set.name || doc.name, set.type || doc.type);
+            }
+
+            if(_.has(set, 'type') || _.has(set, 'users')){
+                var type = set.type || doc.type;
+                var users = set.users || doc.users
+                if(type === 'profile' && users.length > 0){
+                    console.log('update...', modifier.$set.users, _.has(set, 'users'));
+                    if(_.has(set, 'users')){
+                        modifier.$set.users = []
+                    }else{
+                        modifier.$unset.users = 1
+                    }
+                }
             }
         }
     },

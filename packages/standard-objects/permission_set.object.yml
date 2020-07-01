@@ -15,6 +15,11 @@ fields:
     index: true
     is_name: true
     required: true
+  type:
+    label: Type
+    type: select
+    options: Profile:profile,Permission set:permission_set
+    defaultValue: permission_set
   assigned_apps:
     label: Assigned Apps
     type: lookup
@@ -44,12 +49,9 @@ fields:
     multiple: true
     is_wide: true
     filterable: true
+    depend_on:
+      - type
     inlineHelpText: When the type is a profile, no user needs to be selected
-  type:
-    label: Type
-    type: select
-    options: Profile:profile,Permission set:permission_set
-    defaultValue: permission_set
   is_system:
     type: boolean
     label: System
@@ -122,8 +124,8 @@ permission_set:
 #   validate: !!js/function |
 #     function(formValues){
 #       if(formValues && formValues.type === 'profile'){
-#         $("[name='users']", $("form")).parent().parent().hide()
-#       }else{
-#         $("[name='users']", $("form")).parent().parent().show()
+#         if(formValues.users && formValues.users.length > 0){
+#           toastr.warning("简档不需要设置成员")
+#         }
 #       }
 #     }
