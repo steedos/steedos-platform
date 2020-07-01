@@ -70,7 +70,7 @@
 					<Cell><Data ss:Type="String"><%= ins["name"] %></Data></Cell>
 					<Cell><Data ss:Type="String"><%= ins["applicant_name"] %></Data></Cell>
 					<Cell><Data ss:Type="String"><%= ins["applicant_organization_fullname"] %></Data></Cell>
-					<Cell><Data ss:Type="String"><%= moment(ins["submit_date"].getTime()+(ins["submit_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= formatDate(ins["submit_date"], TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
 					<%
 						var state_str = "";
 						if (ins["state"] == "pending") {
@@ -104,7 +104,7 @@
 						var current_trace = _.last(ins["traces"]);
 					%>
 					<Cell><Data ss:Type="String"><%= current_trace.name %></Data></Cell>
-					<Cell><Data ss:Type="String"><%= moment(current_trace["start_date"].getTime()+(current_trace["start_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+					<Cell><Data ss:Type="String"><%= formatDate(current_trace["start_date"], TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
 					<% _.each(fields, function(field){ %>
 						<% if (field.type != "table" && field.type != "section") { %>
 							<% if (!ins["values"] || !ins["values"][field.code]) { %>
@@ -130,13 +130,13 @@
 										var v = ins["values"][field.code];
 										if (typeof(v) == "string" && v) {
 											try {
-												v = new Date(v);
+												v = formatDate(v, TAPi18n.__('instance.formatter.date.export_date',{},lang));
 											} catch (e) {
 												console.error(e);
 											}
 										}
 										if (v instanceof Date) {
-											v = moment(v).format(TAPi18n.__('instance.formatter.date.export_date',{},lang));
+											v = formatDate(v, TAPi18n.__('instance.formatter.date.export_date',{},lang));
 										}
 										if (!v) {
 											v = "";
@@ -148,13 +148,13 @@
 										var v = ins["values"][field.code];
 										if (typeof(v) == "string" && v) {
 											try {
-												v = new Date(v);
+												v = formatDate(v, TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
 											} catch (e) {
 												console.error(e);
 											}
 										}
 										if (v instanceof Date) {
-											v = moment(v).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
+											v = formatDate(v, TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
 										}
 										if (!v) {
 											v = "";
@@ -307,7 +307,7 @@
 								<Cell><Data ss:Type="String"><%= ins["name"] %></Data></Cell>
 								<Cell><Data ss:Type="String"><%= ins["applicant_name"] %></Data></Cell>
 								<Cell><Data ss:Type="String"><%= ins["applicant_organization_fullname"] %></Data></Cell>
-								<Cell><Data ss:Type="String"><%= moment(ins["submit_date"].getTime()+(ins["submit_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= formatDate(ins["submit_date"], TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
 								<%
 									var state_str = "";
 									if (ins["state"] == "pending") {
@@ -341,7 +341,7 @@
 									var current_trace = _.last(ins["traces"]);
 								%>
 								<Cell><Data ss:Type="String"><%= current_trace.name %></Data></Cell>
-								<Cell><Data ss:Type="String"><%= moment(current_trace["start_date"].getTime()+(current_trace["start_date"].getTimezoneOffset()-timezoneoffset)*60*1000).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
+								<Cell><Data ss:Type="String"><%= formatDate(current_trace["start_date"], TAPi18n.__('instance.formatter.date.export_datetime',{},lang)) %></Data></Cell>
 								<% _.each(table_field.fields, function(field) { %>
 									<% if (!f_obj[field.code]) { %>
 										<Cell><Data ss:Type="String"><%= "" %></Data></Cell>
@@ -366,13 +366,13 @@
 												var v = f_obj[field.code];
 												if (typeof(v) == "string" && v) {
 													try {
-														v = new Date(v);
+														v = formatDate(v, TAPi18n.__('instance.formatter.date.export_date',{},lang));
 													} catch (e) {
 														console.error(e);
 													}
 												}
 												if (v instanceof Date) {
-													v = moment(v).format(TAPi18n.__('instance.formatter.date.export_date',{},lang));
+													v = formatDate(v, TAPi18n.__('instance.formatter.date.export_date',{},lang));
 												}
 												if (!v) {
 													v = "";
@@ -384,13 +384,13 @@
 												var v = f_obj[field.code];
 												if (typeof(v) == "string" && v) {
 													try {
-														v = new Date(v);
+														v = formatDate(v, TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
 													} catch (e) {
 														console.error(e);
 													}
 												}
 												if (v instanceof Date) {
-													v = moment(v).format(TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
+													v = formatDate(v, TAPi18n.__('instance.formatter.date.export_datetime',{},lang));
 												}
 												if (!v) {
 													v = "";
