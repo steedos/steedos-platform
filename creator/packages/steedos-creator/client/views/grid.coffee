@@ -403,6 +403,7 @@ Template.creator_grid.onRendered ->
 				columnResizingMode: "widget"
 				showRowLines: true
 				savingTimeout: 1000
+				noDataText: t("list_view_no_records")
 				stateStoring:{
 		   			type: "custom"
 					enabled: true
