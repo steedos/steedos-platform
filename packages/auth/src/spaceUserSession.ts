@@ -1,15 +1,15 @@
-import { getSteedosSchema, addConfig, getConfig, removeConfig} from '@steedos/objectql';
+import { getSteedosSchema, addConfig, getConfig, removeConfig } from '@steedos/objectql';
 import { isExpried } from './utils'
 const _ = require('underscore');
 const sessionCacheInMinutes = 10;
 const SPACEUSERCACHENAME = 'space_users_cache';
 
-const internalProfiles = ['admin','user','supplier','customer']
+const internalProfiles = ['admin', 'user', 'supplier', 'customer']
 
-async function getSpaceUserProfile(userId: string, spaceId: string){
+async function getSpaceUserProfile(userId: string, spaceId: string) {
     let filters = `(space eq '${spaceId}') and (user eq '${userId}')`;
-    let spaceUser = await getSteedosSchema().getObject('space_users').find({filters: filters, fields: ['profile'] });
-    if(spaceUser && spaceUser.length > 0){
+    let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: filters, fields: ['profile'] });
+    if (spaceUser && spaceUser.length > 0) {
         return spaceUser[0].profile
     }
 }
@@ -23,14 +23,14 @@ async function getUserRoles(userId: string, spaceId: string) {
 
     let profile = await getSpaceUserProfile(userId, spaceId);
 
-    if(profile){
+    if (profile) {
         roles = [profile]
     }
 
     let filters = `(space eq '${spaceId}') and (users eq '${userId}')`;
-    let permission_sets = await getSteedosSchema().getObject('permission_set').find({filters: filters, fields: ['name'] });
+    let permission_sets = await getSteedosSchema().getObject('permission_set').find({ filters: filters, fields: ['name'] });
     permission_sets.forEach(p => {
-        if(!_.include(internalProfiles, p.name)){
+        if (!_.include(internalProfiles, p.name)) {
             roles.push(p.name);
         }
     });
@@ -70,7 +70,7 @@ async function getUserPermissionShares(spaceUser) {
     return await getSteedosSchema().getObject('permission_shares').find({ filters: filters, fields: ['_id', 'object_name'] });
 }
 
-export function getSpaceSessionFromCache(spaceId, userId){
+export function getSpaceSessionFromCache(spaceId, userId) {
     let spaceUserSession = getConfig(SPACEUSERCACHENAME, `${spaceId}-${userId}`)
     if (!spaceUserSession) {
         return null;
@@ -82,7 +82,7 @@ export function getSpaceSessionFromCache(spaceId, userId){
     return spaceUserSession;
 }
 
-export function addSpaceSessionToCache(spaceId, userId, spaceUserSession){
+export function addSpaceSessionToCache(spaceId, userId, spaceUserSession) {
     spaceUserSession._id = `${spaceId}-${userId}`
     addConfig(SPACEUSERCACHENAME, spaceUserSession);
 }
@@ -127,9 +127,18 @@ export async function getSpaceUserSession(spaceId, userId) {
             spaceSession.permission_shares = await getUserPermissionShares(su);
             addSpaceSessionToCache(spaceId, userId, spaceSession);
             return spaceSession;
-        }else{
+        } else {
             spaceSession = { roles: ['guest'], expiredAt: expiredAt };
         }
     }
     return spaceSession;
+}
+
+export async function updateSpaceUserSessionRolesCache(spaceId, userId) {
+    let spaceSession: any = getSpaceSessionFromCache(spaceId, userId);
+    if (spaceSession) {
+        spaceSession.roles = await getUserRoles(userId, spaceId);
+        return true;
+    }
+    return false;
 }

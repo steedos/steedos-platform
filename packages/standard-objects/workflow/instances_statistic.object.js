@@ -46,8 +46,6 @@ Meteor.startup(function () {
   if (InstancesStat.rule && InstancesStat.rule.schedule) {
     // 开始同步任务，同步任务的schedule
     schedule.scheduleJob(InstancesStat.rule.schedule, Meteor.bindEnvironment(InstancesStat.run));
-  } else {
-    logger.error("Miss settings: instances_stat.schedule");
   }
 });
 
