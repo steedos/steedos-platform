@@ -161,9 +161,9 @@ Template.instance_list.helpers
 
 	illustrationMessageBody: ()->
 		if Session.get("box") == "inbox"
-			return "您没有待审核文件。"
+			return t("webapp_dashboard_widgets_instances_pendings_illustration_message_body")
 		else
-			return "没有可显示的项目。";
+			return t("list_view_no_records")
 
 	isEmpty: ()->
 		return !(Tabular.tableRecords.find().fetch()[0]?.recordsTotal)
