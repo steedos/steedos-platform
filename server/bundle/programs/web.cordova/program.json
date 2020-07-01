@@ -2,34 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "2723450c1ac2af94c5c13c4434250ae496e798b3.js",
+      "path": "64d16e80e2e3971ff5abe44dd4dd71cb5719527d.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/2723450c1ac2af94c5c13c4434250ae496e798b3.js?meteor_js_resource=true",
-      "size": 11423598,
-      "hash": "2723450c1ac2af94c5c13c4434250ae496e798b3",
-      "sri": "nPYe1lb0ZQAkxbwpuj7vxISWspDw0Mm4kaDu3YJWKhtV7kdBAG9OCfUL+Eg5PcCsBwsWyTpDZVVcs7k8FGKOxA=="
+      "url": "/__cordova/64d16e80e2e3971ff5abe44dd4dd71cb5719527d.js?meteor_js_resource=true",
+      "size": 11424747,
+      "hash": "64d16e80e2e3971ff5abe44dd4dd71cb5719527d",
+      "sri": "jMP+zyT9jX1NWPfyQqzVBhtbuQCgYw6R9oXRnh9uoezNC0qsaDCo6DQYr5tHozGtr6scSwzIjuCZGQ7wFjihzw=="
     },
     {
-      "path": "2723450c1ac2af94c5c13c4434250ae496e798b3.stats.json",
+      "path": "64d16e80e2e3971ff5abe44dd4dd71cb5719527d.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/2723450c1ac2af94c5c13c4434250ae496e798b3.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/64d16e80e2e3971ff5abe44dd4dd71cb5719527d.stats.json?meteor_js_resource=true",
       "size": 180905,
-      "hash": "c76bebdf0394a6e58f0f8fca9c1191bcca82bb34",
-      "sri": "86iyCbPpGzau9yCes+MsVD/RqpmW56SqWkpEM9xWNufPv1X7sFCDK/8rrOsMfoI6/ekPv5UGK+nkVvQNKrpR0g=="
+      "hash": "e6611a5383a3a46dd37d0b8a2013d8bad5445d1c",
+      "sri": "7Jcl/f2hQTfzVCbxyavLnh9P+M1PEjy8VVI0kvCXNv1i1ImMOyDFjjyotv5/USRAQo2G1zn1AQfRYrPwGDjreQ=="
     },
     {
-      "path": "5810e66c7627b1eb0a3d03351074ee59213de76e.css",
+      "path": "88232ba8bf251256c8e40747c27915a5af4f12fd.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/__cordova/5810e66c7627b1eb0a3d03351074ee59213de76e.css?meteor_css_resource=true",
-      "size": 1659194,
-      "hash": "5810e66c7627b1eb0a3d03351074ee59213de76e",
-      "sri": "ML8+sKiIZFbRmfJk6GbLngSrG7zcm5+HusQzP2YxICLnC1g2Nli9GQOv/DhzykvxTJrH8pJZNIwAWAUb/Yg57Q=="
+      "url": "/__cordova/88232ba8bf251256c8e40747c27915a5af4f12fd.css?meteor_css_resource=true",
+      "size": 1659460,
+      "hash": "88232ba8bf251256c8e40747c27915a5af4f12fd",
+      "sri": "PJIwDMBz50SBepF07fITBT7oiWHSBh89+9lSQerZvdTm03uRYkM85cHUSqKD2mW6CIENqH3XjLQk11Kr7U/b/Q=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
