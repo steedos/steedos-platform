@@ -9,7 +9,11 @@
 		</span>
 		<button type="button" class="close" id="instance_search_tip_close_btn"><span>&times;</span></button>
 	</div>
-	<div class="instance-list {{is_select_bar_show}}">
+	<div class="instance-list {{is_select_bar_show}} {{#if isEmpty}}instance-list-empty{{/if}}">
+
+		{{#if isEmpty}}
+			<div>{{> React component=illustration path=illustrationPath messageBody=illustrationMessageBody}}</div>
+		{{/if}}
 
 		<!--此写法只为解决不同在待审核与其他箱切换时，分页错误的问题。此写法可以创建2个tabular view-->
 		{{#if is_inbox}}

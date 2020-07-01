@@ -153,6 +153,21 @@ Template.instance_list.helpers
 	showBatchBtn: ()->
 		return Session.get("workflow_batch_instances_count") > 0
 
+	illustration: ()->
+		return ReactDesignSystem.Illustration
+
+	illustrationPath: ()->
+		return Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results")
+
+	illustrationMessageBody: ()->
+		if Session.get("box") == "inbox"
+			return "您没有待审核文件。"
+		else
+			return "没有可显示的项目。";
+
+	isEmpty: ()->
+		return !(Tabular.tableRecords.find().fetch()[0]?.recordsTotal)
+
 
 Template.instance_list._changeOrder = ()->
 
