@@ -108,13 +108,14 @@ JsonRoutes.add "get", "/api/bootstrap/:spaceId/",(req, res, next)->
 					_fields[_item.field] = _object.fields[_item.field]
 					if _.has(_item, 'group')
 						_fields[_item.field].group = _item.group
-					if _item.permission
-						if _item.permission == 'readonly'
-							_fields[_item.field].readonly = true
-							_fields[_item.field].required = false
-						if _item.permission == 'required'
-							_fields[_item.field].readonly = false
-							_fields[_item.field].required = true
+					if _item.required
+						_fields[_item.field].readonly = false
+						_fields[_item.field].disabled = false
+						_fields[_item.field].required = true
+					else if _item.readonly
+						_fields[_item.field].readonly = true
+						_fields[_item.field].disabled = true
+						_fields[_item.field].required = false
 				_object.fields = _fields
 
 #				_actions = {};
