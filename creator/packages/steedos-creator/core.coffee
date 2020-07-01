@@ -470,6 +470,10 @@ Creator.getActions = (object_name, spaceId, userId)->
 	disabled_actions = permissions.disabled_actions
 	actions = _.sortBy(_.values(obj.actions) , 'sort');
 
+	if _.has(obj, 'allow_actions')
+		actions = _.filter actions, (action)->
+			return _.include(obj.allow_actions, action.name)
+
 	_.each actions, (action)->
 		# 手机上只显示编辑按钮，其他的放到折叠下拉菜单中
 		if Steedos.isMobile() && ["record", "record_only"].indexOf(action.on) > -1 && action.name != 'standard_edit'

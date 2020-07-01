@@ -9,7 +9,7 @@ Creator.formatObjectName = (object_name)->
 Creator.Object = (options)->
 	_baseObject = Creator.baseObject
 	if Meteor.isClient
-		_baseObject = {actions:{} , fields: {}, triggers: {}, permission_set: {}}
+		_baseObject = {actions: Creator.baseObject.actions , fields: {}, triggers: {}, permission_set: {}}
 	self = this
 	if (!options.name)
 		console.error(options)
@@ -27,6 +27,9 @@ Creator.Object = (options)->
 		self.is_enable = true
 	else
 		self.is_enable = false
+	if Meteor.isClient
+		if _.has(options, 'allow_actions')
+			self.allow_actions = options.allow_actions
 	self.enable_search = options.enable_search
 	self.enable_files = options.enable_files
 	self.enable_tasks = options.enable_tasks
