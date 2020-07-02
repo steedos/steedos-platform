@@ -11,7 +11,7 @@
 				{{else if isImage}}
 					<img class="creator-table-cell-image" src="{{baseUrl}}/{{value}}"/>
 				{{else if isUrl}}
-					<a onclick={{getOpenWindowScript href}}>{{value}}</a>
+					<a onclick="{{getOpenWindowScript(href)}}">{{value}}</a>
 				{{else if isEmail}}
 					<a href="mailto:{{value}}">{{value}}</a>
 				{{else}}
@@ -20,7 +20,7 @@
 							<a title="{{value}}" class="link-detail list-item-link-{{id}} list-item-link-action" data-action-name={{itemActionName}}>{{value}}</a>
 						{{else}}
 							{{#if openWindow}}
-								<a onclick={{getOpenWindowScript href}} title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
+								<a onclick="{{getOpenWindowScript(href)}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 							{{else}}
 								<a href="{{href}}" title="{{value}}" class="link-detail list-item-link-{{id}}">{{value}}</a>
 							{{/if}}
@@ -39,13 +39,13 @@
 		{{#if showEditIcon}}
 			<span class="triggerContainer">
 				<button type="button" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small {{#if editable}}table-cell-edit{{/if}}" tabindex="-1" title="{{_ 'edit'}}">
-				{{#if editable}}
-					{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
-				{{else}}
-					{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
-				{{/if}}
+					{{#if editable}}
+						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_edit" source="utility-sprite" name="edit"}}
+					{{else}}
+						{{> steedos_button_icon class="slds-button__icon slds-button__icon_hint slds-button__icon_lock" source="utility-sprite" name="lock"}}
+					{{/if}}
 					<span class="slds-assistive-text">Edit</span>
-			</button>
+				</button>
 			</span>
 		{{/if}}
 	</span>
